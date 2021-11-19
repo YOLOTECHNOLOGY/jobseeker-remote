@@ -1,0 +1,162 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.footer {
+  display: flex;
+  border-top: 1px solid $dividerLine;
+  position: relative;
+
+  &Container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 15px;
+
+    @include md {
+      padding: 10px 7% 20px 7%;
+    }
+  }
+
+  &MobileContainer {
+    @include md {
+      display: none;
+    }
+  }
+
+  &Wrapper {
+    @include flex();
+    margin-top: 25px;
+    margin-left: 15%;
+    margin-right: 15%;
+    color: $black;
+  }
+
+  &Link {
+    color: $black;
+    font-weight: bold;
+
+    &:hover {
+      color: $primaryBlue;
+    }
+  }
+
+  &Links {
+    margin-top: 40px;
+  }
+}
+
+/* Desktop */
+.footerDesktop {
+  &Wrapper {
+    display: none;
+
+    @include md {
+      display: block;
+    }
+  }
+
+  &LinksWrapper {
+    @include md {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  &SocialWrapper {
+    @include md {
+      @include flex(column);
+    }
+
+    & img:hover {
+      filter: sepia(1) saturate(60) hue-rotate(210deg);
+    }
+  }
+
+  &SocialLinks {
+    @include md {
+      @include flex();
+      width: 180px;
+      float: right;
+    }
+  }
+
+  &SupportWrapper {
+    @include md {
+      width: 520px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    @include lg {
+      width: 600px;
+    }
+  }
+
+  &LinkList {
+    list-style: none;
+    -webkit-padding-start: 0;
+    margin-bottom: 0;
+
+    & > li {
+      margin-bottom: 0.6em;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+/** Misc **/
+.scrollUpButton {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  background: $white-3;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 11px 0 rgba(35, 121, 234, 0.19);
+  position: absolute;
+  top: -31px;
+  display: flex;
+  text-align: center;
+  flex-direction: row;
+  justify-content: center;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  color: $primaryBlue;
+  border: 0;
+  z-index: 2;
+  outline: 0;
+}
+
+.footerCopyrightWrapper {
+  display: flex;
+  line-height: 6px;
+  margin: 30px 0;
+
+  @include msd {
+    margin: 30px 7%;
+  }
+}
+
+.copyrightWrapper {
+  display: flex;
+
+  &.mobile {
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .copyrightCompanies {
+    display: inline-block;
+    text-align: left;
+  }
+}
+
+.footerColumn {
+  margin-right: 15px;
+}

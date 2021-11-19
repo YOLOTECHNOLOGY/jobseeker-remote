@@ -1,0 +1,50 @@
+/*******************************************/
+/*                INITIAL                  */
+/*******************************************/
+
+$minWidth: 1024px;
+$sideWidth: 205px;
+
+/*******************************************/
+/*               BOX SHADOW                */
+/*******************************************/
+
+$box-shadow-1: 0px 3px 6px rgba(149, 150, 150, 0.6);
+
+/*******************************************/
+/*                 COLORS                  */
+/*******************************************/
+
+// $primaryBlue: #2379ea;
+$primaryBlue: #2379ea;
+$darkBlue: #163f72;
+$lightgrey: #bcbcbc;
+$darkgrey: #707070;
+// background
+$white-1: #f9f9f9;
+// border
+$white-2: #f0f0f0;
+// standard white
+$white-3: #ffffff;
+$overlay: #353535;
+$dividerLine: #dedede;
+$red: #d30000;
+$black: #353535;
+
+/*******************************************/
+/*                 SIZES                  */
+/*******************************************/
+
+$desktop-font-size-sm: 13px;
+$desktop-font-size-base: 14px;
+$desktop-font-size-lg: 16px;
+$desktop-font-size-xl: 18px;
+$desktop-font-size-xxl: 21px;
+$desktop-font-size-xxxl: 32px;
+
+$mobile-font-size-sm: 10px;
+$mobile-font-size-base: 11px;
+$mobile-font-size-lg: 12px;
+$mobile-font-size-xl: 14px;
+$mobile-font-size-xxl: 18px;
+$mobile-font-size-xxxl: 20px;

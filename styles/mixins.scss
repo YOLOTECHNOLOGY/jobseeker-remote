@@ -1,0 +1,51 @@
+@mixin flex($direction: row, $justify-content: space-between) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+}
+
+@mixin transition($ms: 0ms, $timingFunction: linear) {
+  transition: $ms all $timingFunction;
+}
+
+// Device sizes
+// Very small devices
+@mixin xsm {
+  @media (max-width: 400px) {
+    @content;
+  }
+}
+// Small devices
+@mixin sm {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
+// Medium small devices (Ipad)
+@mixin msd {
+  @media (max-width: 799px) {
+    @content;
+  }
+}
+
+// Medium devices
+@mixin md {
+  @media (min-width: 800px) {
+    @content;
+  }
+}
+
+// Large devices
+@mixin lg {
+  @media (min-width: 992px) {
+    @content;
+  }
+}
+
+// Extra large devices
+@mixin xl {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}

@@ -1,0 +1,124 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+
+@mixin containers {
+  margin-left: 7%;
+  margin-right: 7%;
+  height: 100%;
+  display: flex;
+}
+
+.logo {
+  width: 120px;
+  height: 29px;
+
+  @include md {
+    width: 150px;
+    height: 40px;
+  }
+}
+
+.header {
+  width: 100%;
+  height: 70px;
+  margin-top: 0;
+
+  @include msd {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+
+  @include sm {
+    height: 50px;
+  }
+}
+
+.headerContainer {
+  @include containers();
+}
+
+.headerLogo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.headerLinksWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 100px;
+
+  @include msd {
+    display: none;
+  }
+}
+
+.headerLinksList {
+  display: none;
+
+  @include md {
+    flex-direction: row;
+    display: flex;
+    height: 100%;
+    margin-left: auto;
+  }
+}
+
+.headerLink {
+  padding: 0 20px;
+  height: 100%;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  letter-spacing: 0.05em;
+
+  @include md {
+    padding: 0 15px;
+  }
+
+  @include lg {
+    padding: 0 25px;
+  }
+
+  &::after {
+    width: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    content: '';
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: transform 0.3s;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+
+.headerLinkWrapper {
+  padding-top: 10px;
+  display: flex;
+  justify-content: flex-end !important;
+
+  &Extra {
+    cursor: pointer;
+
+    &Text {
+      font-size: 11px !important;
+      font-weight: normal;
+      margin-left: 20px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+      color: $darkgrey;
+
+      &:hover {
+        border-bottom: 1px solid $darkgrey;
+      }
+    }
+  }
+}

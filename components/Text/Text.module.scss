@@ -1,0 +1,104 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+
+.text {
+  font-weight: 300;
+  letter-spacing: 1px;
+
+  @include sm {
+    letter-spacing: 0.5px;
+  }
+
+  &P {
+    margin: 1rem 0;
+    line-height: 1.4;
+  }
+
+  &H1 {
+    margin: 0.67rem 0;
+  }
+
+  &H2 {
+    margin: 0.75rem 0;
+  }
+
+  &H3 {
+    margin: 0.83rem 0;
+  }
+
+  &H5 {
+    margin: 1.5rem 0;
+  }
+
+  &SM {
+    font-size: $mobile-font-size-sm;
+    @include md {
+      font-size: $desktop-font-size-sm;
+    }
+  }
+
+  &Base {
+    font-size: $mobile-font-size-base;
+    line-height: 20px;
+    @include md {
+      font-size: $desktop-font-size-base;
+    }
+  }
+
+  &LG {
+    font-size: $mobile-font-size-lg;
+    @include md {
+      font-size: $desktop-font-size-lg;
+    }
+  }
+
+  &XL {
+    font-size: $mobile-font-size-xl;
+    @include md {
+      font-size: $desktop-font-size-xl;
+    }
+  }
+
+  &XXL {
+    font-size: $mobile-font-size-xxl;
+    @include md {
+      font-size: $desktop-font-size-xxl;
+    }
+  }
+
+  &XXXL {
+    font-size: $mobile-font-size-xxxl;
+    line-height: 45px;
+    @include md {
+      font-size: $desktop-font-size-xxxl;
+    }
+  }
+
+  &Bold {
+    font-weight: 700;
+  }
+
+  &Italic {
+    font-style: italic;
+  }
+
+  &Block {
+    display: block;
+  }
+
+  &White {
+    color: $white-3;
+  }
+
+  &PrimaryBlue {
+    color: $primaryBlue;
+  }
+
+  &Lightgrey {
+    color: $lightgrey;
+  }
+
+  &Black {
+    color: $black;
+  }
+}
