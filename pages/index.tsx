@@ -4,6 +4,8 @@ import styles from 'styles/Home.module.scss'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 
+import JobCard from 'components/JobCard'
+
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -17,6 +19,8 @@ export default function Home() {
         <h1 className={styles.title}>
           Nextjs Boilerplate.
         </h1>
+
+        <JobCard/>
       </main>
       <Footer />
     </div>

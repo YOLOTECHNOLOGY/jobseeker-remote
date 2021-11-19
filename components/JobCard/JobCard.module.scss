@@ -1,0 +1,14 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.JobCard {
+  display: flex;
+
+  &ImageWrapper {
+    width: 20%;
+  }
+
+  &DetailWrapper {
+    width: 80%;
+  }
+}
