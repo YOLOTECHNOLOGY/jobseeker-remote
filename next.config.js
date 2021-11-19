@@ -10,6 +10,9 @@ module.exports = {
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'node_modules')],
+  },
+  images: {
+    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com']
   }
 }
   
