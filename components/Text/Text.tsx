@@ -38,6 +38,7 @@ const Text = ({
     text: true,
     textBold: bold,
     textItalic: italic,
+    textXSM: textStyle === 'xsm',
     textSM: textStyle === 'sm',
     textBase: textStyle === 'base',
     textLG: textStyle === 'lg',

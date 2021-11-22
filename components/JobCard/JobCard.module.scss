@@ -1,0 +1,62 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.JobCard {
+  display: flex;
+  border: 1px solid $lightgrey;
+  width: 422px;
+  padding: 28px 0;
+  
+  &.isSelected {
+    background-color: rgba($primaryBlue, 0.05);
+  }
+  
+  &:hover {
+    background-color: rgba($primaryBlue, 0.05);
+    cursor: pointer;
+  }
+}
+
+.JobCardImage {
+  &Wrapper {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+  }
+
+  &Content {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba($lightgrey, 0.2);
+  }
+}
+
+.JobCardDetail {
+  &Wrapper {
+    padding-top: 6px;
+    width: 75%;
+  }
+
+  &Title {
+    display: block;
+  }
+
+  &Tag {
+    margin: 16px 0;
+  }
+
+  &Item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+
+    span {
+      margin-left: 8px;
+      padding-top: 4px;
+    }
+  }
+}

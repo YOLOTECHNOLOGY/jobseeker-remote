@@ -28,13 +28,16 @@ $white-2: #f0f0f0;
 $white-3: #ffffff;
 $overlay: #353535;
 $dividerLine: #dedede;
-$red: #d30000;
+$red: #FF4747;
 $black: #353535;
+$pink: #FF3A99;
+$cyan: #00BAD3;
 
 /*******************************************/
 /*                 SIZES                  */
 /*******************************************/
 
+$desktop-font-size-xsm: 11px;
 $desktop-font-size-sm: 13px;
 $desktop-font-size-base: 14px;
 $desktop-font-size-lg: 16px;
@@ -42,6 +45,7 @@ $desktop-font-size-xl: 18px;
 $desktop-font-size-xxl: 21px;
 $desktop-font-size-xxxl: 32px;
 
+$mobile-font-size-xsm: 8px;
 $mobile-font-size-sm: 10px;
 $mobile-font-size-base: 11px;
 $mobile-font-size-lg: 12px;
