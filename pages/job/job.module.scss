@@ -1,0 +1,215 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.job {
+  display: flex;
+  padding: 0 7%;
+}
+
+.jobList {
+  border: 1px solid red;
+  width: 25%;
+}
+
+.jobDetail {
+  border: 1px solid green;
+  width: 50%;
+  padding: 0 30px 40px;
+
+  &Header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &Image {
+    width: 78px;
+    height: 78px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba($lightgrey, 0.2);
+  }
+
+  &Info {
+    width: 80%;
+    margin-left: 30px;
+  }
+
+  &Title {
+    display: block;
+  }
+
+  &Company {
+    display: block;
+    margin: 16px 0;
+  }
+
+  &Buttons {
+    display: flex;
+    margin-top: 16px;
+
+    button {
+      margin-right: 20px;
+    }
+  }
+
+  &PostedAt {
+    text-align: right;
+    display: block;
+    margin-top: 28px;
+  }
+}
+
+.jobDetailPref {
+  border-top: 1px solid $lightgrey;
+  border-bottom: 1px solid $lightgrey;
+  background-color: $white-1;
+  padding: 20px;
+  margin-top: 10px;
+
+  &List {
+    list-style-type: none;
+    display: flex;
+  }
+
+  &Item {
+    width: 25%;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &Text {
+    margin-left: 10px;
+    span {
+      display: block
+    }
+  }
+
+  &Value {
+    margin-top: 2px;
+  }
+}
+
+.jobDetailSection {
+  margin-top: 26px;
+  margin-bottom: 4px;
+
+  &Title {
+    display: block;
+  }
+
+  &Body {
+    margin-top: 16px;
+    display: block;
+  }
+
+  &SubTitle {
+    margin-top: 18px;
+    display: block;
+  }
+
+  &SubBodyLink {
+    color: $primaryBlue;
+    text-decoration: underline;
+  }
+}
+
+.jobDetailBenefits {
+  &List {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &Item {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    margin: 12px 0 10px;
+  }
+
+  &Text {
+    margin-left: 28px;
+  }
+}
+
+.jobDetailSkills {
+  &List {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 22px;
+  }
+
+  &Item {
+    background-color: rgba($lightgrey, 0.2);
+    border-radius: 16px;
+    padding: 2px 16px;
+    margin-right: 28px;
+    margin-bottom: 16px;
+  }
+
+  &Text {
+    color: $darkgrey;
+  }
+}
+
+.aboutCompany {
+  border: 1px solid $lightgrey;
+  border-radius: 4px;
+  padding: 21px 42px 15px;
+  margin-top: 34px;
+
+  span {
+    display: block;
+  }
+
+  &Header {
+    margin-bottom: 16px;
+  }
+
+  &Title {
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  &Detail {
+    display: flex;
+    margin-bottom: 16px;
+
+    span {
+      margin-right: 26px;
+      position: relative;
+      
+      &:not(:last-child) {
+        &::after {
+          position: absolute;
+          content: '';
+          height: 18px;
+          width: 1px;
+          background-color: $lightgrey;
+          top: 0;
+          right: -13px;
+        }
+      }
+    }
+  }
+
+  &More {
+    text-align: right;
+    margin-top: 5px;
+
+    span {
+      display: inline;
+      padding: 4px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.jobAds {
+  width: 20%;
+}
