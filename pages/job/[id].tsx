@@ -7,6 +7,7 @@ import Layout from 'components/Layout'
 import Button from 'components/Button'
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
+import JobCard from 'components/JobCard'
 
 /* Styles */
 import styles from './job.module.scss'
@@ -20,13 +21,16 @@ import {
   EquityIcon, 
   MealAllowanceIcon,
   EmployeeStockIcon,
-  HousingAllowanceIcon
+  HousingAllowanceIcon,
+  MoreIcon,
+  NotificationIcon
 } from 'images'
 
 const Job = () => {
   const dummyCompanyDetail = 'Loop Contact Solutions is a contact center uniquely designed to help subscription businesses acquire and keep more customers who purchase more products over longer periods of time. The result is the achievement of Loop\'s core value proposition to significantly improve recurring revenues, profits and market share for our subscription business clients. Loop Contact Solutions is a contact center uniquely designed to help subscription businesses acquire and keep more customers who purchase more products over longer periods of time. The result is the achievement of Loop\'s core value proposition to significantly improve recurring revenues, profits and market share for our subscription business clients.'
   const [companyDetail, setCompanyDetail] = useState(dummyCompanyDetail)
   const [isFullDetail, setIsFullDetail] = useState(false)
+  const [jobSelectedId, setJobSelectedId] = useState(null)
 
   useEffect(() => {
     handleCompanyDisplay()
@@ -34,19 +38,81 @@ const Job = () => {
 
   const handleCompanyDisplay = () => {
     if (!isFullDetail && dummyCompanyDetail.length > 352) {
-      setCompanyDetail(dummyCompanyDetail.slice(0, 352))
+      setCompanyDetail(`${dummyCompanyDetail.slice(0, 352)}...`)
       return
     }
     setCompanyDetail(dummyCompanyDetail)
   }
-  
+  const handleJobSelection = (id) => setJobSelectedId(id)
+
   return (
     <Layout>
       <div className={styles.job}>
-        <div className={styles.jobList}></div>
+        <div className={styles.jobList}>
+          <div className={styles.jobListOption}>
+            <Text textStyle='xl' bold>5,777 jobs found</Text>
+            <div className={styles.jobListOptionAlerts}>
+              <div 
+                className={styles.jobListOptionAlertsItem} 
+                onClick={() => console.log('Enable Alerts')}
+              >
+                <Text textStyle='base'>Enable job alerts</Text>
+                </div>
+              <div 
+                className={styles.jobListOptionAlertsItem}
+                onClick={() => console.log('Manage Alerts')}
+              >
+                <Image src={NotificationIcon} width='20' height='20'/>
+              </div>
+            </div>
+          </div>
+          <div className={styles.jobListContent}>
+            <JobCard
+              id={0}
+              image='https://wallpaperaccess.com/full/6133725.jpg'
+              title='Operation Manager Lorem Ipsum'
+              tag='urgent'
+              company='Loop Contact Solutions Inc.'
+              location='Makati'
+              salary='₱75k - ₱80k'
+              postedAt='23 August 2021'
+              selectedId={jobSelectedId}
+              handleSelection={handleJobSelection}
+            />
+            <JobCard
+              id={2}
+              image='https://wallpaperaccess.com/full/6133725.jpg'
+              title='Operation Manager Lorem Ipsum'
+              tag='fullTime'
+              company='Loop Contact Solutions Inc.'
+              location='Makati'
+              salary='₱75k - ₱80k'
+              postedAt='23 August 2021'
+              selectedId={jobSelectedId}
+              handleSelection={handleJobSelection}
+            />
+            <JobCard
+              id={3}
+              image='https://wallpaperaccess.com/full/6133725.jpg'
+              title='Operation Manager Lorem Ipsum'
+              tag='featured'
+              company='Loop Contact Solutions Inc.'
+              location='Makati'
+              salary='₱75k - ₱80k'
+              postedAt='23 August 2021'
+              selectedId={jobSelectedId}
+              handleSelection={handleJobSelection}
+            />
+          </div>
+        </div>
         <div className={styles.jobDetail}>
+          <div className={styles.jobDetailOption}>
+            <div className={styles.jobDetailOptionImage}>
+              <Image src={MoreIcon} width='20' height='20'></Image>
+            </div>
+          </div>
           <div className={styles.jobDetailHeader}>
-            <div className={styles.jobDetailImage}></div>
+            <div className={styles.jobDetailImage} style={{ backgroundImage: `url(${'https://wallpaperaccess.com/full/6133725.jpg'})`}}/>
             <div className={styles.jobDetailInfo}>
               <Text textStyle='xxl' bold className={styles.jobDetailTitle}>Operation Manager lorem ipsum dolor sit amet lorem ipsum dolor sit amet</Text>
               <Text textStyle='lg' className={styles.jobDetailCompany}>Loop Contact Solutions Inc.</Text>
