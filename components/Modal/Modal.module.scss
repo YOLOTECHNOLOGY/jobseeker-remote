@@ -19,8 +19,14 @@
     position: relative;
     margin: 0 5%;
 
+    &.isFullWidth {
+      @include md {
+        margin: 0 20%;
+      }
+    }
+
     @include md {
-      margin: 0 20%;
+      margin: 0 30%;
     }
   }
 
