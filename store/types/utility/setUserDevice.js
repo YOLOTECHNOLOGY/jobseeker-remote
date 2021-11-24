@@ -1,0 +1,1 @@
+export const SET_USER_DEVICE = 'SET_USER_DEVICE'
