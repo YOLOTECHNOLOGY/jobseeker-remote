@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux'
 import { HYDRATE } from 'next-redux-wrapper'
 
+import configReducers from './config'
+
 // TODO: Import and List reducers here
-const combinedReducer = combineReducers({})
+const combinedReducer = combineReducers({
+  config: configReducers
+})
 
 /* 
   Note:

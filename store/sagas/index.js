@@ -1,10 +1,11 @@
 import { all } from 'redux-saga/effects'
 
-// import watchLoginUser from 'store/sagas/eduLoan/subscribeEduLoan'
+// Config
+import watchFetchConfig from 'store/sagas/config/fetchConfig'
 
 function* rootSaga() {
   yield all([
-    // watchSubscribeEduLoan(),
+    watchFetchConfig(),
   ])
 }
 

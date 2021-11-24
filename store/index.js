@@ -13,7 +13,7 @@ const bindMiddleware = (middleware) => {
   return applyMiddleware(...middleware)
 }
 
-const configureStore = () => {
+export const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware()
   const store = createStore(rootReducer, bindMiddleware([sagaMiddleware]))
 

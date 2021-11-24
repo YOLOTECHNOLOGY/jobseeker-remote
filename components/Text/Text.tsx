@@ -18,6 +18,7 @@ interface TextProps {
   textColor?: string
   textStyle?: string
   block?: boolean
+  onClick?: () => void
   // enableUnescape?: boolean
 }
 
