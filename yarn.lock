@@ -392,6 +392,13 @@
   dependencies:
     glob "7.1.7"
 
+"@next/eslint-plugin-next@^12.0.4":
+  version "12.0.4"
+  resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-12.0.4.tgz#f1751715634e200a868aa3fa42b4c3391254de81"
+  integrity sha512-3N+LG+wQQB0JLfMj4YKkefWnjcsFVBmixRWdzbVBnt/cxbVZ0izf+BR1MzvrPX1oaP0OrYk8X/9Mn9Yftuajvg==
+  dependencies:
+    glob "7.1.7"
+
 "@next/polyfill-module@11.1.0":
   version "11.1.0"
   resolved "https://registry.yarnpkg.com/@next/polyfill-module/-/polyfill-module-11.1.0.tgz#ee6b9117a1f9bb137479dfa51d5a9e38e066a62f"
@@ -1321,6 +1328,14 @@ convert-source-map@^1.5.0:
   integrity sha512-+OQdjP49zViI/6i7nIJpA8rAl4sV/JdPfU9nZs3VqOwGIgizICvuN2ru6fMd+4llL0tar18UYJXfZ/TWtmhUjA==
   dependencies:
     safe-buffer "~5.1.1"
+
+cookie-universal@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/cookie-universal/-/cookie-universal-2.1.5.tgz#9a6cefbfb61c750a1b8ee2610bf71566bd719544"
+  integrity sha512-nqOOmEkovCQxNYGIyzhcwsmh4c7xnxe7RWdiYFOoml9MP4L32IlU3LdPC7r7nQEnnM+9Uxlk/UhtvBl5is6M/w==
+  dependencies:
+    "@types/cookie" "^0.3.3"
+    cookie "^0.4.0"
 
 cookie@^0.4.0:
   version "0.4.1"
