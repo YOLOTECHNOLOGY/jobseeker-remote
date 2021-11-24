@@ -17,4 +17,5 @@ export const SalaryIcon = `${S3BucketJobseeker}/SalaryIcon.svg`
 export const TelcomAllowanceIcon = `${S3BucketJobseeker}/TelcomAllowanceIcon.svg`
 export const TransportAllowanceIcon = `${S3BucketJobseeker}/TransportAllowanceIcon.svg`
 export const CompanyIcon = `${S3BucketJobseeker}/CompanyIcon.svg`
+export const MoreIcon = `${S3BucketJobseeker}/MoreIcon.svg`
 export const CloseIcon = `${S3BucketJobseeker}/CloseIcon.svg`

@@ -20,7 +20,7 @@ const JobTag = ({ tag }: JobTagProps) => {
 
   return (
     <div className={classNamesCombined([styles.JobTag, tagClass])}>
-      <Text textStyle='base' bold>{text}</Text>
+      <Text textStyle='sm' bold>{text}</Text>
     </div>
   )
 }
