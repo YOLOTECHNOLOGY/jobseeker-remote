@@ -8,6 +8,7 @@ import Button from 'components/Button'
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
 import JobCard from 'components/JobCard'
+import Modal from 'components/Modal'
 
 /* Styles */
 import styles from './job.module.scss'
@@ -31,6 +32,7 @@ const Job = () => {
   const [companyDetail, setCompanyDetail] = useState(dummyCompanyDetail)
   const [isFullDetail, setIsFullDetail] = useState(false)
   const [jobSelectedId, setJobSelectedId] = useState(null)
+  const [jobAlert, setJobAlert] = useState(false)
 
   useEffect(() => {
     handleCompanyDisplay()
@@ -54,7 +56,7 @@ const Job = () => {
             <div className={styles.jobListOptionAlerts}>
               <div 
                 className={styles.jobListOptionAlertsItem} 
-                onClick={() => console.log('Enable Alerts')}
+                onClick={() => setJobAlert(!jobAlert)}
               >
                 <Text textStyle='base'>Enable job alerts</Text>
                 </div>
@@ -358,6 +360,27 @@ const Job = () => {
         </div>
         <div className={styles.jobAds}></div>
       </div>
+
+      <Modal
+        showModal={jobAlert}
+        handleModal={() => setJobAlert(!jobAlert)}
+        headerTitle='Enable Job Alert'
+        handleFirstButton={() => console.log('first Button')}
+        handleSecondButton={() => console.log('Second Button')}
+        firstButtonText='Keep'
+        secondButtonText='Delete'
+      >
+        <Text textStyle='base'>Job alert for ‘Lorem Ipsum’ enabled. 
+          <Text 
+            className={styles.jobModalEnableAlert}
+            textColor='primaryBlue' 
+            onClick={() => {
+              setJobAlert(!jobAlert)
+            }}>
+              {' '} Manage alert.
+          </Text>
+        </Text>
+      </Modal>
     </Layout>
   )
 }
