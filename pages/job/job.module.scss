@@ -261,6 +261,76 @@
   }
 }
 
+.jobAlerts {
+  &List {
+    list-style-type: none;
+  }
+
+  &Item {
+    padding: 15px 0 30px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid rgba($lightgrey, 0.5);
+    }
+
+    &:not(:first-child) {
+      padding: 27px 0 12px;
+    }
+  }
+
+  &ItemHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  &ItemBody {
+    span {
+      display: block;
+      margin-bottom: 2px;
+    }
+  }
+
+  &ItemAction {
+    display: flex;
+    align-items: center;
+
+    div {
+      margin-left: 16px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.jobManageJobAlert {
+  &Header {
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: space-between;
+
+    & > div {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &Group {
+    margin-top: 10px;
+
+    label {
+      margin-bottom: 4px;
+    }
+  }
+
+  &GroupHeader {
+    margin-bottom: 4px;
+  }
+}
+
 .jobAds {
   width: 14%;
   background-color: $white-1;

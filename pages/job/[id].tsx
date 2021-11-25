@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Radio, RadioGroup, FormControlLabel} from '@mui/material'
 
 /* Components */
 import Image from 'next/image'
@@ -8,6 +9,7 @@ import Button from 'components/Button'
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
 import JobCard from 'components/JobCard'
+import Modal from 'components/Modal'
 
 /* Styles */
 import styles from './job.module.scss'
@@ -23,7 +25,9 @@ import {
   EmployeeStockIcon,
   HousingAllowanceIcon,
   MoreIcon,
-  NotificationIcon
+  NotificationIcon,
+  CreateIcon,
+  DeleteIcon
 } from 'images'
 
 const Job = () => {
@@ -31,6 +35,11 @@ const Job = () => {
   const [companyDetail, setCompanyDetail] = useState(dummyCompanyDetail)
   const [isFullDetail, setIsFullDetail] = useState(false)
   const [jobSelectedId, setJobSelectedId] = useState(null)
+  const [modalJobAlert, setModalJobAlert] = useState(false)
+  const [modalManageJobAlert, setModalManageJobAlert] = useState(false)
+  const [modalDeleteJobAlert, setModalDeleteJobAlert] = useState(false)
+  const [frequency, setFrequency] = useState('daily')
+  const [notifiedAt, setNotifiedAt] = useState('email')
 
   useEffect(() => {
     handleCompanyDisplay()
@@ -44,6 +53,178 @@ const Job = () => {
     setCompanyDetail(dummyCompanyDetail)
   }
   const handleJobSelection = (id) => setJobSelectedId(id)
+
+  const ModalJobAlerts = () => {
+    return (
+      <Modal
+        headerTitle='Job Alerts'
+        showModal={modalJobAlert}
+        handleModal={() => setModalJobAlert(false)}
+        firstButtonText='Done'
+        handleFirstButton={() => setModalJobAlert(false)}
+      >
+        <ul className={styles.jobAlertsList}>
+          <li className={styles.jobAlertsItem}>
+            <div className={styles.jobAlertsItemHeader}>
+              <Text textStyle='lg' bold>Marketing</Text>
+              <div className={styles.jobAlertsItemAction}>
+                <Image
+                  src={CreateIcon} 
+                  width='18' 
+                  height='18'
+                  onClick={() => {
+                    setModalJobAlert(false)
+                    setModalManageJobAlert(true)
+                  }}
+                  className={styles.jobAlertsItemButton}
+                />
+                <Image
+                  src={DeleteIcon} 
+                  width='18' 
+                  height='18'
+                  onClick={() => {
+                    setModalJobAlert(false)
+                    setModalDeleteJobAlert(true)
+                  }}
+                  className={styles.jobAlertsItemButton}
+                />
+              </div>
+            </div>
+            <div className={styles.jobAlertsItemBody}>
+              <Text textStyle='base'>Manila</Text>
+              <Text textStyle='base'>Filters: Full-time, Marketing/Business Dev </Text>
+              <Text textStyle='base'>Frequency: Daily via email</Text>
+            </div>
+          </li>
+          <li className={styles.jobAlertsItem}>
+            <div className={styles.jobAlertsItemHeader}>
+              <Text textStyle='lg' bold>Marketing</Text>
+              <div className={styles.jobAlertsItemAction}>
+                <Image
+                  src={CreateIcon} 
+                  width='20' 
+                  height='20'
+                  onClick={() => {
+                    setModalJobAlert(false)
+                    setModalManageJobAlert(true)
+                  }}
+                  className={styles.jobAlertsItemButton}
+                />
+                <Image
+                  src={DeleteIcon} 
+                  width='20' 
+                  height='20'
+                  onClick={() => {
+                    setModalJobAlert(false)
+                    setModalDeleteJobAlert(true)
+                  }}
+                  className={styles.jobAlertsItemButton}
+                />
+              </div>
+            </div>
+            <div className={styles.jobAlertsItemBody}>
+              <Text textStyle='base'>Manila</Text>
+              <Text textStyle='base'>Filters: Full-time, Marketing/Business Dev </Text>
+              <Text textStyle='base'>Frequency: Daily via email</Text>
+            </div>
+          </li>
+        </ul>
+      </Modal>
+    )
+  }
+
+  const ModalManageJobAlert = () => {
+    const handleChange = (event, isFrequency) => {
+      if (isFrequency) {
+        setFrequency(event.target.value)
+        return
+      }
+      setNotifiedAt(event.target.value)
+    }
+
+    return (
+      <Modal
+        headerTitle='Manage Job Alert'
+        showModal={modalManageJobAlert}
+        handleModal={() => setModalManageJobAlert(false)}
+        firstButtonText='Back'
+        handleFirstButton={() => {
+          setModalManageJobAlert(false)
+          setModalJobAlert(true)
+        }}
+        secondButtonText='Done'
+        handleSecondButton={() => {
+          setModalManageJobAlert(false)
+          setModalJobAlert(true)
+        }}
+      >
+        <div className={styles.jobManageJobAlert}>
+          <div className={styles.jobManageJobAlertHeader}>
+            <Text textStyle='lg' bold>Marketing</Text>
+            <Image
+              src={DeleteIcon} 
+              width='18' 
+              height='18'
+              onClick={() => {
+                setModalJobAlert(false)
+                setModalManageJobAlert(false)
+                setModalDeleteJobAlert(true)
+              }}
+            />
+          </div> 
+          <div className={styles.jobManageJobAlertBody}>
+            <div className={styles.jobManageJobAlertGroup}>
+              <Text textStyle='base' className={styles.jobManageJobAlertGroupHeader}>Alert Frequency</Text>
+              <RadioGroup
+                aria-label="frequency"
+                name="controlled-radio-buttons-group"
+                value={frequency}
+                onChange={(e) => handleChange(e, true)}
+              >
+                <FormControlLabel value="daily" control={<Radio />} label={<Text textStyle='base'>Daily</Text>} />
+                <FormControlLabel value="weekly" control={<Radio />} label={<Text textStyle='base'>Weekly</Text>} />
+              </RadioGroup>
+            </div>
+
+            <div className={styles.jobManageJobAlertGroup}>
+              <Text textStyle='base' className={styles.jobManageJobAlertGroupHeader}>Get notified via:</Text>
+              <RadioGroup
+                aria-label="frequency"
+                name="controlled-radio-buttons-group"
+                value={notifiedAt}
+                onChange={handleChange}
+              >
+                <FormControlLabel value="email" control={<Radio />} label={<Text textStyle='base'>Email</Text>} />
+              </RadioGroup>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    )
+  }
+
+  const ModalDeleteJobAlert = () => {
+    return (
+      <Modal
+        headerTitle='Delete Job Alert'
+        showModal={modalDeleteJobAlert}
+        handleModal={() => setModalDeleteJobAlert(false)}
+        firstButtonText='Keep'
+        handleFirstButton={() => {
+          setModalDeleteJobAlert(false)
+          setModalJobAlert(true)
+        }}
+        secondButtonText='Delete'
+        handleSecondButton={() => {
+          setModalDeleteJobAlert(false)
+          setModalJobAlert(true)
+        }}
+      >
+        <Text textStyle='base'>You are about to delete the job alert for “Marketing, Manila”.
+        <br/> This cannot be undone</Text>    
+      </Modal>
+    )
+  }
 
   return (
     <Layout>
@@ -60,7 +241,7 @@ const Job = () => {
                 </div>
               <div 
                 className={styles.jobListOptionAlertsItem}
-                onClick={() => console.log('Manage Alerts')}
+                onClick={() => setModalJobAlert(true)}
               >
                 <Image src={NotificationIcon} width='20' height='20'/>
               </div>
@@ -358,6 +539,10 @@ const Job = () => {
         </div>
         <div className={styles.jobAds}></div>
       </div>
+
+      <ModalJobAlerts />
+      <ModalManageJobAlert />
+      <ModalDeleteJobAlert />
     </Layout>
   )
 }
