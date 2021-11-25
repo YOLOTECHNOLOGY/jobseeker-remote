@@ -26,6 +26,7 @@ type ModalProps = {
   handleSecondButton?: Function
   firstButtonText?: string
   secondButtonText?: string
+  isFullWidth?: boolean
 }
 
 const Modal = ({
@@ -42,6 +43,7 @@ const Modal = ({
   handleSecondButton,
   firstButtonText,
   secondButtonText,
+  isFullWidth,
   ...rest
 }: ModalProps) => {
   const ref = useRef(null)
@@ -71,7 +73,7 @@ const Modal = ({
       {...rest}
     >
       <div>
-        <div ref={ref} className={classNames([styles.modalContent, className])}>
+        <div ref={ref} className={classNames([styles.modalContent, className, isFullWidth ? styles.isFullWidth : ''])}>
           <div>
             <div className={styles.modalHeader}>
               <Text textStyle='xl' bold className={styles.modalHeaderTitle}>{headerTitle}</Text>

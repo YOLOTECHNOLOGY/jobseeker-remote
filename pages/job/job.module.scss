@@ -331,6 +331,14 @@
   }
 }
 
+.jobModal {
+  &EnableAlert {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
 .jobAds {
   width: 14%;
   background-color: $white-1;
