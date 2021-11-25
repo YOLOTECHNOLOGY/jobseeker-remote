@@ -20,7 +20,7 @@ module.exports = {
     includePaths: [path.join(__dirname, 'node_modules')],
   },
   images: {
-    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com']
-  }
+    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl'],
+  },
 }
   
