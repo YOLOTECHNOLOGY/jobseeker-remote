@@ -66,6 +66,23 @@
     }
   }
 
+  &OptionList {
+    position: absolute;
+    top: 45px;
+    right: 14px;
+    background-color: $white-3;
+    box-shadow: $box-shadow-1;
+  }
+
+  &OptionItem {
+    padding: 15px 20px;
+    
+    &:hover {
+      cursor: pointer;
+      background-color: $white-1;
+    }
+  }
+
   &Header {
     display: flex;
     justify-content: space-between;

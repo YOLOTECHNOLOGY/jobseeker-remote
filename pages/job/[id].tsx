@@ -35,6 +35,8 @@ const Job = () => {
   const [companyDetail, setCompanyDetail] = useState(dummyCompanyDetail)
   const [isFullDetail, setIsFullDetail] = useState(false)
   const [jobSelectedId, setJobSelectedId] = useState(null)
+  const [jobDetailOption, setJobDetailOption] = useState(false)
+
   const [modalEnableJobAlert, setModalEnableJobAlert] = useState(false)
   const [modalJobAlertList, setModalJobAlertList] = useState(false)
   const [modalManageJobAlert, setModalManageJobAlert] = useState(false)
@@ -319,10 +321,22 @@ const Job = () => {
           </div>
         </div>
         <div className={styles.jobDetail}>
-          <div className={styles.jobDetailOption}>
+          <div className={styles.jobDetailOption} onClick={() => setJobDetailOption(!jobDetailOption)}>
             <div className={styles.jobDetailOptionImage}>
               <Image src={MoreIcon} width='20' height='20'></Image>
             </div>
+
+            { jobDetailOption && (
+              <div className={styles.jobDetailOptionList}>
+                <div className={styles.jobDetailOptionItem}>
+                  <Text textStyle='base'>Share this job</Text>
+                </div>
+                <div className={styles.jobDetailOptionItem}>
+                  <Text textStyle='base'>Report job</Text>
+                </div>
+              </div>
+            )}
+            
           </div>
           <div className={styles.jobDetailHeader}>
             <div className={styles.jobDetailImage} style={{ backgroundImage: `url(${'https://wallpaperaccess.com/full/6133725.jpg'})`}}/>
