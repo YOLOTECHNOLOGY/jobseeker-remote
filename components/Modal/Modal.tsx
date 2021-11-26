@@ -20,7 +20,7 @@ type ModalProps = {
   handleModal: Function
   clearError?: Function
   disableCloseModal?: boolean
-  closeModalOnOutsideClick?: object
+  closeModalOnOutsideClick?: boolean
   headerTitle: string
   handleFirstButton?: Function
   handleSecondButton?: Function
@@ -47,6 +47,8 @@ const Modal = ({
   ...rest
 }: ModalProps) => {
   const ref = useRef(null)
+  const hasFirstButton = handleFirstButton && firstButtonText
+  const hasSecondButton = handleSecondButton && secondButtonText
 
   const handleClickOutside = event => {
     if (ref.current && !ref.current.contains(event.target)) {
@@ -93,14 +95,16 @@ const Modal = ({
             <div className={styles.modalBody}>
               {children}
             </div>
-            <div className={styles.modalFooter}>
-              {handleFirstButton && firstButtonText && (
-                <Button onClick={() => handleFirstButton()}>{firstButtonText}</Button>
-              )}
-              {handleSecondButton && secondButtonText && (
-                <Button onClick={() => handleSecondButton()}>{secondButtonText}</Button>
-              )}
-            </div>
+            {(hasFirstButton || hasSecondButton) && (
+              <div className={styles.modalFooter}>
+                {hasFirstButton && (
+                  <Button onClick={() => handleFirstButton()}>{firstButtonText}</Button>
+                )}
+                {hasSecondButton && (
+                  <Button onClick={() => handleSecondButton()}>{secondButtonText}</Button>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

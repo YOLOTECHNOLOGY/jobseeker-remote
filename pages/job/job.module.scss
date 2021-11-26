@@ -76,6 +76,7 @@
 
   &OptionItem {
     padding: 15px 20px;
+    display: block;
     
     &:hover {
       cursor: pointer;
@@ -350,6 +351,105 @@
 
 .jobModal {
   &EnableAlert {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.share {
+  padding-bottom: 25px;
+
+  &List {
+    list-style-type: none;
+    margin: 14px 0 45px;
+    padding: 0;
+    display: flex;
+  }
+
+  &Item {
+    margin-right: 70px;
+  }
+
+  &ItemLink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 0;
+
+    &::before,
+    &::after {
+      height: 0;
+    }
+  }
+
+  &ItemImg {
+    margin-bottom: 15px;
+  }
+
+  &Footer {
+    position: relative;
+  }
+
+  &FooterTooltip {
+    position: absolute;
+    top: -5px;
+    right: 0;
+    background-color: #3eb993;
+    padding: 1px 6px 3px;
+    border-radius: 4px;
+
+    &::after {
+      position: absolute;
+      content: '';
+      bottom: -5px;
+      right: 12px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 6.9px 4px 0 4px;
+      border-color: #3eb993 transparent transparent transparent;
+    }
+  }
+
+  &FooterLink {
+    position: relative;
+    padding-right: 45px;
+    background-color: #f4f3f3;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+
+  &FooterLinkText {
+    white-space: pre;
+    font-size: $mobile-font-size-sm;
+    color: $darkgrey;
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 14px;
+
+    &:focus {
+      outline: none;
+    }
+
+    @include md {
+      font-size: $desktop-font-size-sm;
+    }
+  }
+
+  &FooterCopy {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 36px;
+    height: 100%;
+    background-color: #f4f3f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     &:hover {
       cursor: pointer;
     }
