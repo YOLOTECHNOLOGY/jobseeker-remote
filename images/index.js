@@ -18,3 +18,7 @@ export const TelcomAllowanceIcon = `${S3BucketJobseeker}/TelcomAllowanceIcon.svg
 export const TransportAllowanceIcon = `${S3BucketJobseeker}/TransportAllowanceIcon.svg`
 export const CompanyIcon = `${S3BucketJobseeker}/CompanyIcon.svg`
 export const CloseIcon = `${S3BucketJobseeker}/CloseIcon.svg`
+export const Plus = `${S3BucketJobseeker}/plus.svg`
+export const Minus = `${S3BucketJobseeker}/minus.svg`
+export const ChevronUpIcon = `${S3BucketJobseeker}/ChevronUp.svg`
+export const ChevronDownIcon = `${S3BucketJobseeker}/ChevronDownIcon.svg`

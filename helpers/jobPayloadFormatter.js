@@ -103,6 +103,17 @@ const handleJobLocation = (jobLocation) => {
   return formatJobLocation
 }
 
+const formatLocationConfig = (locationList) => {
+  const locationConfig = locationList.map(region => {
+      return {
+        label: region.display_name,
+        value: region.value,
+        subList: region.locations
+      }
+    })
+  return locationConfig
+}
+
 const handleIsCompanyVerified = (isVerified) => {
   return isVerified ? 1 : 0
 }
@@ -270,4 +281,5 @@ export {
   capitalizeFirstAlphabet,
   SEOJobSearchMetaBuilder,
   getPredefinedParamsFromUrl,
+  formatLocationConfig,
 }

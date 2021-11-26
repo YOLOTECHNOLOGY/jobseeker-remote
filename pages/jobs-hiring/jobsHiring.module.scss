@@ -1,0 +1,118 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.searchSection {
+  position:relative;
+  height: 230px;
+  // opacity: 0.1;
+  background-color: $bg-lightgrey;
+  border-bottom: 1px solid $lightgrey;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 7%;
+  .searchAndLocationContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .filtersContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 10px;
+  }
+}
+.searchField {
+  height: 40px;
+  width: 60%;
+}
+.locationField {
+  height: 40px;
+  width: 30%;
+}
+.sortField {
+  width: 150px;
+}
+
+.quickLinkSection {
+  display: flex;
+  flex-direction: column;
+  margin:20px 0;
+
+  .quickLinkTitle {
+    display: flex;
+  }
+
+  .popularSearchContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+
+    @include msd{
+      flex-direction: column;
+    }
+
+
+    .popularSearch {
+      display: flex;
+      flex-wrap: wrap;
+
+      .link {
+        margin: 5px 15px;
+
+        &:hover {
+          cursor: pointer;
+          color:$primaryBlue;
+          text-decoration: underline;
+          
+          & > * {
+            color:$primaryBlue;
+            font-weight: bold;
+            transition: 100ms all ease-in-out;
+          }
+        }
+      }
+    }
+  }
+
+  .topCompaniesContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    @include msd{
+      flex-direction: column;
+    }
+
+    .topCompanies{
+      display:flex;
+      flex-direction: row;
+    }
+
+    .topCompaniesLogo {
+      display: flex;
+      margin: 5px 15px;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        transition: 100ms all ease-in-out;
+      }
+    }
+  }
+}
+
+.moreFiltersBtn{
+  color:$black;
+  background-color:$lightgrey;
+  border: 1px solid $darkgrey;
+  text-transform: capitalize;
+
+  &:hover{
+    background-color: $lightgrey;
+  }
+}
