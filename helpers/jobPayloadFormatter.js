@@ -2,6 +2,8 @@
 import { thousandsToNumber, unslugify } from 'helpers/formatter'
 /* Vendors */
 import moment from 'moment'
+import slugify from 'slugify'
+
 
 const handleSalary = (salary) => {
   if (Array.isArray(salary) && salary.length && !salary.includes('All')) {
@@ -66,9 +68,9 @@ const handleIndustry = (industry) => {
   if (Array.isArray(industry) && industry.length && !industry.includes('All')) {
     industryKey = industry.join(',')
   }
-//   if (Array.isArray(industry) && industry.length && !industry.includes('All')) {
-//     industryKey = industry.join(',').replace(/&/gi, '%26')
-//   }
+  //   if (Array.isArray(industry) && industry.length && !industry.includes('All')) {
+  //     industryKey = industry.join(',').replace(/&/gi, '%26')
+  //   }
 
   return industryKey
 }
@@ -104,13 +106,13 @@ const handleJobLocation = (jobLocation) => {
 }
 
 const formatLocationConfig = (locationList) => {
-  const locationConfig = locationList.map(region => {
-      return {
-        label: region.display_name,
-        value: region.value,
-        subList: region.locations
-      }
-    })
+  const locationConfig = locationList.map((region) => {
+    return {
+      label: region.display_name,
+      value: region.value,
+      subList: region.locations,
+    }
+  })
   return locationConfig
 }
 
@@ -209,20 +211,20 @@ const SEOJobSearchMetaBuilder = (query, location, category, path) => {
 }
 
 const getPredefinedParamsFromUrl = (
+  routerQuery,
   catList,
   locList,
-  query,
-  currentQuery,
-  updateSearchQuery,
   clearAllFilters
 ) => {
+  const { keyword } = routerQuery
   let predefinedQuery = null
   let predefinedLocation = null
-  let predefinedCategory = null 
-  let matchedLocation = null 
+  let predefinedCategory = null
+  let matchedLocation = null
   let matchedCategory = null
-  const queryParser = urlQueryParser(query)
-  if (!currentQuery && query && queryParser) {
+  const queryParser = urlQueryParser(keyword)
+  console.log('queryParser', queryParser)
+  if (queryParser) {
     if (queryParser.length > 0) {
       queryParser.forEach((value, index) => {
         matchedLocation = locList.filter((loc) => {
@@ -242,7 +244,7 @@ const getPredefinedParamsFromUrl = (
             (!matchedLocation && !matchedCategory) ||
             (matchedLocation.length === 0 && matchedCategory.length === 0)
           ) {
-            updateSearchQuery([unslugify(value)])
+            // updateSearchQuery([unslugify(value)])
             predefinedQuery = [unslugify(value)]
           }
         } else if (queryParser.length === 2 && index === 0) {
@@ -266,6 +268,173 @@ const getPredefinedParamsFromUrl = (
   }
 }
 
+const getPayload = (routerQueries) => {
+  const { keyword } = routerQueries
+
+  const payloadObj = {
+    query: keyword
+    // // query: payloadQuery ? payloadQuery.toLowerCase() : payloadQuery,
+    // page: isNaN(page) ? 1 : Number(page),
+    // salary: salaryRange,
+    // workExperience: workExperience,
+    // education: education,
+    // jobType: jobType,
+    // industry: industry,
+    // isVerified: isVerified,
+    // sort: sortParam,
+    // applicationStatus: applicationStatus,
+    // viewPage: activeView,
+    // jobCategory: payloadJobCategory,
+    // jobLocation: payloadJobLocation,
+    // companyName,
+  }
+  return payloadObj
+}
+
+// e.g of url = query-jobs?
+const appendSingleQueryPattern = (query) => {
+  // query can be value from user query OR location OR category
+  if (query && !query.includes('job-search')) {
+    return query + '-jobs'
+  }
+  return query
+}
+
+// e.g of url = query-jobs-in-location?
+const appendDoubleQueryPattern = (query, location) => {
+  // query can be value from user query OR category
+  return query && location ? query + '-jobs-in-' + location : null
+}
+
+// e.g of url = job-search?
+const appendGeneralQueryPattern = () => {
+  return 'job-search'
+}
+
+const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFilters) => {
+  let queryParam = ''
+  const filteredData = []
+  // eslint-disable-next-line
+  // query && !location && !category
+  if (
+    queryType && !sanitisedLocValue && !jobCategory 
+  ) {
+    queryParam = appendSingleQueryPattern(queryType)
+  } else if (
+    // !query && 1 location && !category
+    !queryType &&
+    sanitisedLocValue &&
+    !jobCategory
+  ) {
+    queryParam = appendSingleQueryPattern(sanitisedLocValue)
+  } else if (
+    // !query && !location && 1 category
+    !queryType &&
+    !sanitisedLocValue &&
+    jobCategory 
+  ) {
+    queryParam = appendSingleQueryPattern(category)
+  }
+
+  // query && 1 location && !category
+  if (
+    queryType && sanitisedLocValue && !jobCategory
+  ) {
+    queryParam = appendDoubleQueryPattern(queryType, sanitisedLocValue)
+  }
+
+  // query && !location && 1 category
+  if (
+    queryType && !sanitisedLocValue &&jobCategory 
+  ) {
+    queryParam = appendSingleQueryPattern(queryType)
+    // filteredData.push({ key: 'jobCategory', data: category })
+  }
+
+  // !query && 1 location && 1 category
+  if (
+    !queryType &&
+    sanitisedLocValue
+    && jobCategory
+  ) {
+    queryParam = appendDoubleQueryPattern(category, sanitisedLocValue)
+  }
+
+  // query && 1 location && 1 category
+  if (
+    queryType &&
+    sanitisedLocValue &&
+    jobCategory 
+  ) {
+    queryParam = appendDoubleQueryPattern(queryType, sanitisedLocValue)
+    filteredData.push({ key: 'jobCategory', data: category })
+  }
+
+  // query && (multiple location || multiple category || other filters)
+  if (
+    queryType && sanitisedLocValue && 
+    ((jobCategory && jobCategory.length > 1))
+  ) {
+    if (sanitisedLocValue) {
+      // E.g: dev-jobs-in-makati
+      queryParam = appendDoubleQueryPattern(queryType, sanitisedLocValue)
+    }
+    if (jobCategory && jobCategory.length > 1) {
+      // E.g: dev-jobs?jobLocation=1,2,3&jobCategory=1
+      filteredData.push({ key: 'jobCategory', data: category })
+    } else if (jobCategory && jobCategory.length === 1) {
+      filteredData.push({ key: 'jobCategory', data: category })
+      queryParam = appendSingleQueryPattern(queryType)
+    }
+  }
+
+  // !query && (multiple location || multiple category || other filters)
+  if (
+    !queryType &&
+    (jobCategory && jobCategory.length > 1)
+  ) {
+    if (sanitisedLocValue) {
+      queryParam = appendSingleQueryPattern(sanitisedLocValue)
+    }
+    if (jobCategory && jobCategory.length > 1 && sanitisedLocValue) {
+      filteredData.push({ key: 'jobCategory', data: category })
+      queryParam = appendGeneralQueryPattern()
+    } else if (jobCategory && jobCategory.length === 1 && !sanitisedLocValue) {
+      queryParam = appendSingleQueryPattern(category)
+    }
+  }
+
+  // If clearAllFilters is true, only extract searchQuery
+  if (clearAllFilters) {
+    if (queryType && queryParser && queryParser.length > 0) {
+      const matchedLocation = locationList.filter((loc) => {
+        return loc.value === unslugify(queryParser[0])
+      })
+      const matchedCategory = categoryList.filter((cat) => {
+        return cat.value === queryParser[0]
+      })
+      if (
+        (!matchedLocation && !matchedCategory) ||
+        (matchedLocation &&
+          matchedLocation.length === 0 &&
+          matchedCategory &&
+          matchedCategory.length === 0)
+      ) {
+        queryParam = appendSingleQueryPattern(queryParser[0])
+      }
+    } else if (!queryType && queryParser && queryParser.length > 0) {
+      queryParam = ''
+    }
+  }
+
+  // If !query, !jobLocation && !jobCategory
+  if (!queryType && !sanitisedLocValue && !jobCategory) {
+    queryParam = ''
+  }
+
+  return slugify(queryParam).toLowerCase()
+}
+
 export {
   handleSalary,
   handleWorkExperience,
@@ -282,4 +451,6 @@ export {
   SEOJobSearchMetaBuilder,
   getPredefinedParamsFromUrl,
   formatLocationConfig,
+  getPayload,
+  conditionChecker,
 }

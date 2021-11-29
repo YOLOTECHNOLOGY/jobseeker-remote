@@ -9,7 +9,6 @@ import { fetchConfigService } from 'store/services/config/fetchConfig'
 function* fetchConfigReq(action) {
   try {
     const { data } = yield call(fetchConfigService, action.payload)
-    console.log('saga data', data)
     yield put(fetchConfigSuccess(data.data))
   } catch (error) {
     yield put(fetchConfigFailed(error))

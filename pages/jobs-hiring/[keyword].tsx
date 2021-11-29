@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
-// import { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { END } from 'redux-saga'
 
 // import moment from 'moment'
@@ -31,7 +31,17 @@ import SEO from 'components/SEO'
 import JobSearchFilters from 'components/JobSearchFilters'
 
 /* Styles */
-import styles from './jobsHiring.module.scss'
+import styles from './JobsHiring.module.scss'
+
+/* Helpers*/
+import {
+  categoryParser,
+  conditionChecker,
+  getPayload,
+  getPredefinedParamsFromUrl,
+  urlQueryParser,
+} from 'helpers/jobPayloadFormatter'
+import { flat } from 'helpers/formatter'
 // import { formatLocationConfig } from 'helpers/jobPayloadFormatter'
 // import breakpointStyles from 'styles/breakpoint.module.scss'
 // import classNames from 'classnames'
@@ -131,61 +141,141 @@ const renderPopularSearch = () => {
   )
 }
 
+const getLocationList = (config) => {
+  const locList =
+    config &&
+    config.inputs &&
+    config.inputs.location_lists
+      .map((region) =>
+        region.locations.map((loc) => ({
+          ...loc,
+          // loc value all lower case
+          value: loc.value.toLowerCase(),
+        }))
+      )
+      .reduce((a, c) => a.concat(c), [])
+
+  return locList
+}
+
 const JobSearchPage = (props: JobSearchPageProps) => {
   const { seoMetaTitle, seoMetaDescription, config, topCompanies } = props
+  const router = useRouter()
   const dispatch = useDispatch()
   const jobsList = useSelector((store: any) => store.job.jobsList)
   const [isShowFilter, setIsShowFilter] = useState(false)
-
+  const prevPayload = useRef(null)
+  const catList = config && config.inputs && config.inputs.job_category_lists
+  const locList = getLocationList(config)
 
   // filters config
   // const locationList = formatLocationConfig(config.inputs.location_lists)
 
   useEffect(() => {
-    console.log('1')
+    // predefined data from url
+    const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
+      router.query,
+      catList,
+      locList
+    )
+    console.log('router query changed', router.query)
+    const abc = getPredefinedParamsFromUrl(router.query, catList, locList)
+    // get payload to fetch
     const payload = {
-      query: 'test',
-      // query: payloadQuery ? payloadQuery.toLowerCase() : payloadQuery,
-      //    page: isNaN(page) ? 1 : Number(page),
-      //    salary: salaryRange,
-      //    workExperience: workExperience,
-      //    education: education,
-      //    jobType: jobType,
-      //    industry: industry,
-      //    isVerified: isVerified,
-      //    sort: sortParam,
-      //    applicationStatus: applicationStatus,
-      //    viewPage: activeView,
-      //    jobCategory: payloadJobCategory,
-      //    jobLocation: payloadJobLocation,
-      //    companyName,
+      query: predefinedQuery[0],
+      jobLocation:predefinedLocation[0],
     }
+    // const payload = getPayload(router.query)
+    console.log('payload abc', abc)
+    console.log('payload getPayload', payload)
+    // get defaultValue of keyword search
+
     dispatch(fetchJobsListRequest(payload))
-    console.log('2')
-  }, [])
+  }, [router.query])
 
   const sortOptions = [
     { label: 'Relevance', value: 1 },
     { label: 'Latest', value: 2 },
     { label: 'Ascending', value: 3 },
   ]
-  //   const sampleJobType = ['Relevance', 'Latest', 'Ascending']
-  console.log('config from server', config)
-  console.log('jobsList', jobsList)
+
   // console.log('locationList', locationList)
   const handleShowFilter = () => {
     setIsShowFilter(!isShowFilter)
     console.log('triggered')
   }
-  const jobTypeOption = config.inputs.job_types.map((jobType) => Object.values(jobType)).flat(2)
-  const salaryRangeOption = config.filters.salary_range_filters
-    .map((range) => {
+  const jobTypeOption = flat(config.inputs.job_types.map((jobType) => Object.values(jobType)))
+
+  const salaryRangeOption = flat(
+    config.filters.salary_range_filters.map((range) => {
       return Object.values(range)[0] === '10K - 30K' ? 'Below 30K' : Object.values(range)
     })
-    .flat(2)
+  )
   console.log('jobTypeOption', jobTypeOption)
   console.log('salaryRangeOption', salaryRangeOption)
-  
+
+  // const onSearchSubmit = () => {
+
+  // }
+
+  const onKeywordSearch = (val) => {
+    const { predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
+      router.query,
+      catList,
+      locList
+    )
+    console.log('search val', val)
+    // const queryParam = conditionChecker(val)
+
+    console.log('router', router)
+    console.log('process.env.HOST_PATH', process.env.HOST_PATH)
+
+    const { keyword, ...rest } = router.query
+    const queryObject = Object.assign({}, { ...rest })
+    console.log('onKeywordSearch keyword', keyword)
+    console.log('onKeywordSearch queryObject', queryObject)
+
+    const queryParam = conditionChecker(val, predefinedLocation, predefinedCategory)
+    console.log('onKeywordSearch queryParam', queryParam)
+    router.push(
+      {
+        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam}`,
+        query: queryObject,
+        //  query: {
+        //    ...router.query,
+        //    page: Number(prevSort) !== Number(sortOption) ? 1 : page,
+        //  },
+      },
+      undefined,
+      { shallow: true }
+    )
+    console.log('queryParam', queryParam)
+  }
+
+  const onLocationSearch = (event, value) => {
+    const { predefinedQuery, predefinedCategory } = getPredefinedParamsFromUrl(
+      router.query,
+      catList,
+      locList
+    )
+    const { keyword, ...rest } = router.query
+    const queryObject = Object.assign({}, { ...rest })
+    console.log('onLocationSearch value', value)
+    const sanitisedLocValue = categoryParser(value.value)
+    console.log('sanitisedLocValue', sanitisedLocValue)
+    const queryParam = conditionChecker(predefinedQuery, sanitisedLocValue, predefinedCategory)
+    console.log('onLocationSearch queryParam', queryParam)
+    router.push(
+      {
+        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam}`,
+        query: queryObject,
+      },
+      undefined,
+      { shallow: true }
+    )
+    console.log('queryParam', queryParam)
+  }
+
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} />
@@ -197,9 +287,19 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             variant='outlined'
             size='small'
             className={styles.searchField}
+            // defaultValue={}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault()
+                onKeywordSearch((e.target as HTMLInputElement).value)
+              }
+            }}
           />
-          <MaterialLocationField className={styles.locationField} />
-          <MaterialButton variant='contained'>Search</MaterialButton>
+          <MaterialLocationField className={styles.locationField} onChange={onLocationSearch} />
+          <MaterialButton variant='contained'>
+            {/* <MaterialButton variant='contained' onClick={onSearchSubmit}> */}
+            Search
+          </MaterialButton>
         </div>
         <div className={styles.filtersContainer}>
           <MaterialBasicSelect
@@ -223,8 +323,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             className={styles.sortField}
             greyBg
           />
-          <MaterialButton variant='contained' className={styles.moreFiltersBtn} onClick={
-            handleShowFilter}>
+          <MaterialButton
+            variant='contained'
+            className={styles.moreFiltersBtn}
+            onClick={handleShowFilter}
+          >
             More Filters
           </MaterialButton>
         </div>
@@ -254,12 +357,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             </div>
           </div>
         </div>
-      <JobSearchFilters
-        isShowFilter={isShowFilter}
-        // onApplyFilter={handleApplyFilter}
-        // onResetFilter={handleResetFilter}
-        onShowFilter={handleShowFilter}
-      />
+        <JobSearchFilters
+          isShowFilter={isShowFilter}
+          // onApplyFilter={handleApplyFilter}
+          // onResetFilter={handleResetFilter}
+          onShowFilter={handleShowFilter}
+        />
       </div>
     </Layout>
   )

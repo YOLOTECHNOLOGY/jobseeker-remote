@@ -35,10 +35,10 @@ const theme = createTheme({
     },
   },
 })
-const MaterialTextField = ({ id, label, variant, size, className } : MaterialTextFieldProps) => {
+const MaterialTextField = ({ id, label, variant, size, className, ...rest } : MaterialTextFieldProps) => {
   return (
     <ThemeProvider theme={theme}>
-      <TextField id={id} label={label} variant={variant} size={size} className={className} />
+      <TextField id={id} label={label} variant={variant} size={size} className={className} {...rest}/>
     </ThemeProvider>
   )
 }
