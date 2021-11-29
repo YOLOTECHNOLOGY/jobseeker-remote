@@ -1,5 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+
+/* Vendors */
 import { Radio, RadioGroup, FormControlLabel} from '@mui/material'
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton
+} from 'react-share'
 
 /* Components */
 import Image from 'next/image'
@@ -27,7 +34,11 @@ import {
   MoreIcon,
   NotificationIcon,
   CreateIcon,
-  DeleteIcon
+  DeleteIcon,
+  FacebookIcon,
+  LinkedinIcon,
+  TwitterIcon,
+  CopyIcon
 } from 'images'
 
 const Job = () => {
@@ -41,8 +52,13 @@ const Job = () => {
   const [modalJobAlertList, setModalJobAlertList] = useState(false)
   const [modalManageJobAlert, setModalManageJobAlert] = useState(false)
   const [modalDeleteJobAlert, setModalDeleteJobAlert] = useState(false)
+  const [modalShare, setModalShare] = useState(false)
   const [frequency, setFrequency] = useState('daily')
   const [notifiedAt, setNotifiedAt] = useState('email')
+  const [isDoneCopy, setIsDoneCopy] = useState(false)
+
+  const jobLinkRef = useRef(null)
+  const jobDetailUrl = `/job/1`
 
   useEffect(() => {
     handleCompanyDisplay()
@@ -56,6 +72,13 @@ const Job = () => {
     setCompanyDetail(dummyCompanyDetail)
   }
   const handleJobSelection = (id) => setJobSelectedId(id)
+  const handleCopyLink = (link) => {
+    navigator.clipboard.writeText(link)
+    setIsDoneCopy(true)
+    setTimeout(() => {
+      setIsDoneCopy(false)
+    }, 5000)
+  }
 
   const ModalEnableJobAlert = () => {
     return (
@@ -260,6 +283,97 @@ const Job = () => {
     )
   }
 
+  const ModalShare = () => {
+    return (
+      <Modal
+        headerTitle='Share this job'
+        showModal={modalShare}
+        handleModal={() => setModalShare(false)}
+      >
+        <div className={styles.share}>
+          <div className={styles.shareList}>
+            <div className={styles.shareItem}>
+              <FacebookShareButton
+                url={jobDetailUrl}
+                className={styles.shareItemLink}
+              >
+                <img
+                  src={FacebookIcon}
+                  alt="facebook"
+                  height="56px"
+                  width="56px"
+                  className={styles.shareItemImg}
+                />
+                <Text textStyle="base">
+                  Facebook
+                </Text>
+              </FacebookShareButton>
+            </div>
+            <div className={styles.shareItem}>
+              <TwitterShareButton
+                url={jobDetailUrl}
+                className={styles.shareItemLink}
+              >
+                <img
+                  src={TwitterIcon}
+                  alt="twitter"
+                  height="56px"
+                  width="56px"
+                  className={styles.shareItemImg}
+                />
+                <Text textStyle="base" textColor="warmgrey">
+                  Twitter
+                </Text>
+              </TwitterShareButton>
+            </div>
+            <div className={styles.shareItem}>
+              <LinkedinShareButton
+                url={jobDetailUrl}
+                className={styles.shareItemLink}
+              >
+                <img
+                  src={LinkedinIcon}
+                  alt="linkedIn"
+                  height="56px"
+                  width="56px"
+                  className={styles.shareItemImg}
+                />
+                <Text textStyle="base" textColor="warmgrey">
+                  Linkedin
+                </Text>
+              </LinkedinShareButton>
+            </div>
+          </div>
+          <div className={styles.shareFooter}>
+            <Text textStyle="lg">Page Link</Text>
+            {isDoneCopy ? (
+              <div className={styles.shareFooterTooltip}>
+                <Text textStyle="sm" textColor="white">
+                  Link copied
+                </Text>
+              </div>
+            ) : null}
+            <div className={styles.shareFooterLink}>
+              <input
+                value={jobDetailUrl}
+                ref={jobLinkRef}
+                onClick={() => jobLinkRef.current.select()}
+                className={styles.shareFooterLinkText}
+                readOnly
+              />
+              <div
+                onClick={() => handleCopyLink(jobDetailUrl)}
+                className={styles.shareFooterCopy}
+              >
+                <img src={CopyIcon} alt="close" height="18px" width="18px" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    )
+  }
+
   return (
     <Layout>
       <div className={styles.job}>
@@ -328,11 +442,14 @@ const Job = () => {
 
             { jobDetailOption && (
               <div className={styles.jobDetailOptionList}>
-                <div className={styles.jobDetailOptionItem}>
-                  <Text textStyle='base'>Share this job</Text>
+                <Link to='/' external className={styles.jobDetailOptionItem}>
+                  <Text textStyle='lg'>View in new tab</Text>
+                </Link>
+                <div className={styles.jobDetailOptionItem} onClick={() => setModalShare(true)}>
+                  <Text textStyle='lg'>Share this job</Text>
                 </div>
                 <div className={styles.jobDetailOptionItem}>
-                  <Text textStyle='base'>Report job</Text>
+                  <Text textStyle='lg'>Report job</Text>
                 </div>
               </div>
             )}
@@ -590,6 +707,7 @@ const Job = () => {
       <ModalJobAlerts />
       <ModalManageJobAlert />
       <ModalDeleteJobAlert />
+      <ModalShare />
     </Layout>
   )
 }

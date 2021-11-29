@@ -21,3 +21,7 @@ export const MoreIcon = `${S3BucketJobseeker}/MoreIcon.svg`
 export const CloseIcon = `${S3BucketJobseeker}/CloseIcon.svg`
 export const CreateIcon = `${S3BucketJobseeker}/CreateIcon.svg`
 export const DeleteIcon = `${S3BucketJobseeker}/DeleteIcon.svg`
+export const FacebookIcon = `${S3BucketJobseeker}/FacebookIcon.svg`
+export const TwitterIcon = `${S3BucketJobseeker}/TwitterIcon.svg`
+export const LinkedinIcon = `${S3BucketJobseeker}/LinkedinIcon.svg`
+export const CopyIcon = `${S3BucketJobseeker}/CopyIcon.svg`
