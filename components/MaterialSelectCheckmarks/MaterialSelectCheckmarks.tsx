@@ -42,8 +42,9 @@ const MaterialSelectCheckmarks = ({
   className,
   onSelect,
   greyBg,
+  defaultValue,
 }: MaterialSelectCheckMarksProps) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([])
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(defaultValue || [])
   const handleChange = (event: SelectChangeEvent) => {
     const {
       target: { value },
@@ -62,8 +63,7 @@ const MaterialSelectCheckmarks = ({
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            backgroundColor: greyBg ? '#BCBCBC' : '',
-            opacity:'40%'
+            backgroundColor: greyBg ? '#E2E2E2' : '',
           },
         },
       },

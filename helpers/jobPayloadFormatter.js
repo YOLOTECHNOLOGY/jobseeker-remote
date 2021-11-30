@@ -248,12 +248,11 @@ const getPredefinedParamsFromUrl = (
   let matchedLocation = null
   let matchedCategory = null
   const queryParser = urlQueryParser(keyword)
-  console.log('queryParser', queryParser)
   if (queryParser) {
     if (queryParser.length > 0) {
       queryParser.forEach((value, index) => {
         matchedLocation = locList.filter((loc) => {
-          return loc.value === unslugify(value)
+          return loc.value.toLowerCase() === unslugify(value)
         })
         matchedCategory = catList.filter((cat) => {
           return cat.key === value
@@ -469,7 +468,7 @@ const getLocationList = (config) => {
         region.locations.map((loc) => ({
           ...loc,
           // loc value all lower case
-          value: loc.value.toLowerCase(),
+          value: loc.value,
         }))
       )
       .reduce((a, c) => a.concat(c), [])

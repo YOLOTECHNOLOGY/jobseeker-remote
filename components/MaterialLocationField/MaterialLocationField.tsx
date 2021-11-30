@@ -1,4 +1,5 @@
 import React from 'react'
+// import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 /* Material */
@@ -42,31 +43,30 @@ const formatLocationConfig = (locationList) => {
   return locationConfig
 }
 
-const MaterialLocationField = ({ id, className, ...rest }: any) => {
-  console.log('id', id)
-  // console.log('options', options)
-
-  //   const options = top100Films.map((option) => {
-  //     const firstLetter = option.title[0].toUpperCase()
-  //     return {
-  //       firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-  //       ...option,
-  //     }
-  //   })
-  // console.log('optionasadsd', options)
-  // console.log(
-  //   'optionasadsadasdasdadd',
-  //   options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))
-  // )
-  const locationList = useSelector((store: any) => store.config.config.response?.inputs.location_lists)
+const MaterialLocationField = ({ id, className, defValue, ...rest }: any) => {
+  // const [selectedLocation, setSelectedLocation] = useState(defValue.value)
+  const locationList = useSelector(
+    (store: any) => store.config.config.response?.inputs.location_lists
+  )
   const formattedLocationList = flat(formatLocationConfig(locationList), 2)
+    const defaultOption = formattedLocationList.find((v) => defValue.value === v.value)
+    console.log('defaultOption', defaultOption)
+
+    const indexOfDefaultOption =
+      formattedLocationList.findIndex((loc) => loc.value === defaultOption?.value) || null
+
+    console.log('indexOfDefaultOption', indexOfDefaultOption)
+
+    const xyz = Object.assign({}, formattedLocationList[indexOfDefaultOption])
+    console.log('xyz', xyz)
+
   return (
     <ThemeProvider theme={autocompleteTheme}>
       <Autocomplete
         id='location-autocomplete'
         options={formattedLocationList}
-        groupBy={(option :any) => option.region}
-        getOptionLabel={(option :any) => option.value}
+        groupBy={(option: any) => option.region}
+        getOptionLabel={(option: any) => option.value || ''}
         size='small'
         className={className}
         renderInput={(params) => (
@@ -74,55 +74,14 @@ const MaterialLocationField = ({ id, className, ...rest }: any) => {
             <TextField id='location' label='Location' variant='outlined' size='small' {...params} />
           </ThemeProvider>
         )}
+        defaultValue={xyz}
+        // inputValue={selectedLocation}
+        // onInputChance={(_event, newLocation) => {
+        //   setSelectedLocation(newLocation)
+        // }}
         {...rest}
       />
     </ThemeProvider>
   )
 }
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-// const top100Films = [
-//   { title: 'The Shawshank Redemption', year: 1994 },
-//   { title: 'The Godfather', year: 1972 },
-//   { title: 'The Godfather: Part II', year: 1974 },
-//   { title: 'The Dark Knight', year: 2008 },
-//   { title: '12 Angry Men', year: 1957 },
-//   { title: "Schindler's List", year: 1993 },
-//   { title: 'Pulp Fiction', year: 1994 },
-//   {
-//     title: 'The Lord of the Rings: The Return of the King',
-//     year: 2003,
-//   },
-//   { title: 'The Good, the Bad and the Ugly', year: 1966 },
-//   { title: 'Fight Club', year: 1999 },
-//   {
-//     title: 'The Lord of the Rings: The Fellowship of the Ring',
-//     year: 2001,
-//   },
-//   {
-//     title: 'Star Wars: Episode V - The Empire Strikes Back',
-//     year: 1980,
-//   },
-//   { title: 'Forrest Gump', year: 1994 },
-//   { title: 'Inception', year: 2010 },
-//   {
-//     title: 'The Lord of the Rings: The Two Towers',
-//     year: 2002,
-//   },
-//   { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-//   { title: 'Goodfellas', year: 1990 },
-//   { title: 'The Matrix', year: 1999 },
-//   { title: 'Seven Samurai', year: 1954 },
-//   {
-//     title: 'Star Wars: Episode IV - A New Hope',
-//     year: 1977,
-//   },
-//   { title: 'City of God', year: 2002 },
-//   { title: 'Se7en', year: 1995 },
-//   { title: 'The Silence of the Lambs', year: 1991 },
-//   { title: "It's a Wonderful Life", year: 1946 },
-//   { title: 'Life Is Beautiful', year: 1997 },
-//   { title: 'The Usual Suspects', year: 1995 },
-//   { title: 'Léon: The Professional', year: 1994 },
-
-// ]
 export default MaterialLocationField

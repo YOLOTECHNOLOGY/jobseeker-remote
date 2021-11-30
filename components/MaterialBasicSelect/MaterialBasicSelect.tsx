@@ -4,8 +4,9 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-const MaterialBasicSelect = ({ id, label, options, className, onSelect, greyBg }: any) => {
-  const [value, setValue] = useState('')
+
+const MaterialBasicSelect = ({ id, label, options, className, onSelect, greyBg, defaultValue }: any) => {
+  const [value, setValue] = useState(defaultValue || '')
   const handleChange = (event: SelectChangeEvent) => {
     setValue(event.target.value as string)
     if (onSelect) {
@@ -17,7 +18,7 @@ const MaterialBasicSelect = ({ id, label, options, className, onSelect, greyBg }
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            backgroundColor: greyBg ? '#BCBCBC' : '',
+            backgroundColor: greyBg ? '#E2E2E2' : '',
           },
         },
       },

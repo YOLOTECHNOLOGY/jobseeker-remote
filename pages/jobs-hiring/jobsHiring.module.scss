@@ -120,11 +120,11 @@
 
 .moreFiltersBtn {
   color: $black;
-  background-color: $lightgrey;
-  border: 1px solid $darkgrey;
+  background-color: $lightgrey-2;
+  border: 1px solid $lightgrey;
   text-transform: capitalize;
 
   &:hover {
-    background-color: $lightgrey;
+    background-color: $lightgrey-2;
   }
 }
