@@ -6,6 +6,7 @@ import FormControl from '@mui/material/FormControl'
 import ListItemText from '@mui/material/ListItemText'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
+import OutlinedInput from '@mui/material/OutlinedInput'
 
 // const ITEM_HEIGHT = 48
 // const ITEM_PADDING_TOP = 8
@@ -42,17 +43,18 @@ const MaterialSelectCheckmarks = ({
   onSelect,
   greyBg,
 }: MaterialSelectCheckMarksProps) => {
-  const [value, setValue] = useState<string[]>([])
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const handleChange = (event: SelectChangeEvent) => {
     const {
       target: { value },
     } = event
-    setValue(
-      // On autofill we get a the stringified value.
-      typeof value === 'string' ? value.split(',') : value
+    // On autofill we get a the stringified value.
+    const formattedValue = typeof value === 'string' ? value.split(',') : value
+    setSelectedOptions(
+     formattedValue
     )
     if (onSelect){
-      onSelect()
+      onSelect(formattedValue)
     }
   }
   const theme = createTheme({
@@ -61,6 +63,7 @@ const MaterialSelectCheckmarks = ({
         styleOverrides: {
           root: {
             backgroundColor: greyBg ? '#BCBCBC' : '',
+            opacity:'40%'
           },
         },
       },
@@ -80,6 +83,7 @@ const MaterialSelectCheckmarks = ({
       },
     },
   })
+  console.log('selectedOptions', selectedOptions)
   return (
     <ThemeProvider theme={theme}>
       <FormControl className={className} size='small'>
@@ -88,15 +92,17 @@ const MaterialSelectCheckmarks = ({
           labelId={`${id}-select-label`}
           id={id}
           multiple
-          value={value}
+          value={selectedOptions}
           label={label}
           onChange={handleChange}
+          input={<OutlinedInput label='Tag' />}
+          renderValue={(selected) => selected.join(', ')}
           // MenuProps={MenuProps}
         >
           {options &&
             options.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                <Checkbox checked={value.indexOf(option) > -1} size='small' />
+              <MenuItem key={option} value={option}>
+                <Checkbox checked={selectedOptions.indexOf(option) > -1} size='small' />
                 <ListItemText primary={option} />
               </MenuItem>
             ))}

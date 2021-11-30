@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /* Vendor */
 import classNames from 'classnames/bind'
@@ -14,19 +14,29 @@ import Button from 'components/Button'
 import Accordian from 'components/Accordian'
 
 /* Helpers */
-// import { buildQueryParams, getConfigMatchingKeyFromValue } from 'helpers/utility'
+import {
+  categoryParser,
+  conditionChecker,
+  getPayload,
+  getPredefinedParamsFromUrl,
+  handleSalary,
+  urlQueryParser,
+  getLocationList,
+} from 'helpers/jobPayloadFormatter'
 
 /* Style */
 import styles from './JobSearchFilters.module.scss'
 
 /* Images */
 import { CloseIcon } from 'images'
+import MaterialAutocompleteLimitTags from 'components/MaterialAutocompleteLimitTags'
 
 interface NavSearchFilterProps {
   isShowFilter: boolean
   onShowFilter: Function
   onApplyFilter: Function
   onResetFilter: Function
+  displayQuickLinks: Boolean
 }
 
 interface SearchFilters {
@@ -45,15 +55,18 @@ type optionsType = {
 const NavSearchFilter = ({
   isShowFilter,
   onShowFilter,
-//   onApplyFilter,
-//   onResetFilter,
-}: NavSearchFilterProps) => {
+  onApplyFilter,
+  displayQuickLinks,
+}: //   onResetFilter,
+NavSearchFilterProps) => {
   const router = useRouter()
   //   const { keyword } = router.query
   const queryParams = router.query
   const config = useSelector((state: any) => state.config.config.response)
   console.log('jobSearchFilters config', config)
   const jobCategoryList = config.inputs.job_category_lists
+  const locationList = getLocationList(config)
+
   const industryList = config.inputs.industry_lists.map((industry) => ({
     key: Object.values(industry)[0],
     value: Object.values(industry)[0],
@@ -66,78 +79,25 @@ const NavSearchFilter = ({
     key: Object.values(edu)[0],
     value: Object.values(edu)[0],
   }))
-  console.log('jobCategoryList', jobCategoryList)
-  console.log('industryList', industryList)
-  console.log('expLvlList', expLvlList)
-  console.log('eduLevelList', eduLevelList)
-  
+  // console.log('jobCategoryList', jobCategoryList)
+  // console.log('industryList', industryList)
+  // console.log('expLvlList', expLvlList)
+  // console.log('eduLevelList', eduLevelList)
+
   //   const courseLevelConfig = config.course_levels
   //   const categoryConfig = config.course_categories
   //   const learningMethodConfig = config.course_methods
   //   const courseProviderConfig = config.course_providers
   const filterRef = useRef(null)
 
-  //   // check if keyword matches category, otherwise it's a search keyword
-  //   // check for queryParams, match each queryParams to config, make it into a default values
-  //   let searchQuery: string | string[] = ''
-  //   let categoryMatched = null
-  //   let courseLevelMatched = null
-  //   let learningMethodMatched = null
-  //   let courseProviderMatched = null
-  //   // map to config if keyword exists && is not 'search-courses'
-  //   if (keyword && keyword !== 'search-courses') {
-  //     categoryMatched = categoryConfig
-  //       ? getConfigMatchingKeyFromValue(keyword, 'seo-value', categoryConfig)
-  //       : null
-  //     courseLevelMatched = courseLevelConfig
-  //       ? getConfigMatchingKeyFromValue(keyword, 'seo-value', courseLevelConfig)
-  //       : null
-  //     learningMethodMatched = learningMethodConfig
-  //       ? getConfigMatchingKeyFromValue(keyword, 'seo-value', learningMethodConfig)
-  //       : null
-  //     courseProviderMatched = courseProviderConfig
-  //       ? getConfigMatchingKeyFromValue(keyword, 'seo-value', courseProviderConfig)
-  //       : null
+  // let defaultValues = {}
+  // const appendDefaultKeyValue = (fieldName, value) => {
+  //   const data = {
+  //     ...defaultValues,
+  //     [fieldName]: value.toString().split(','),
   //   }
-  //   const isReservedKeywordFilter =
-  //     categoryMatched || courseLevelMatched || learningMethodMatched || courseProviderMatched
-
-  //   const getFilterCount = () => {
-  //     let count = 0
-  //     Object.entries<any>(queryParams).forEach(([key, value]) => {
-  //       const val = value.split(',')
-  //       if (key !== 'keyword' && key !== 'search') {
-  //         // ensure value exist and is not an empty array
-  //         if (val && val.length !== 0) {
-  //           val.forEach(() => {
-  //             count++
-  //           })
-  //         }
-  //       }
-  //     })
-
-  //     return count
-  //   }
-
-  //   const count = getFilterCount()
-
-  // if keyword exist && is not 'search-courses' && !isReservedKeywordFilter OR
-  // keyword is isReservedKeywordFilter && count > 0, searchQuery = keyword
-  //   if (
-  //     (!isReservedKeywordFilter && keyword !== 'search-courses') ||
-  //     (isReservedKeywordFilter && count > 1)
-  //   ) {
-  //     searchQuery = keyword
-  //   }
-
-  let defaultValues = {}
-  const appendDefaultKeyValue = (fieldName, value) => {
-    const data = {
-      ...defaultValues,
-      [fieldName]: value.toString().split(','),
-    }
-    return data
-  }
+  //   return data
+  // }
 
   // if there is NO filter && keyword matches any filter config, append the filter into defaultValues object
   //   if (count === 0) {
@@ -148,17 +108,17 @@ const NavSearchFilter = ({
   //   }
 
   // append all queryParams EXCEPT keyword and search into defaultValues object
-  Object.entries(queryParams).forEach(([key, value]) => {
-    if (key !== 'keyword' && key !== 'search') {
-      defaultValues = appendDefaultKeyValue(key, value)
-    }
-  })
+  // Object.entries(queryParams).forEach(([key, value]) => {
+  //   if (key !== 'keyword' && key !== 'search') {
+  //     defaultValues = appendDefaultKeyValue(key, value)
+  //   }
+  // })
 
   const { register, handleSubmit, reset } = useForm()
 
   const cx = classNames.bind(styles)
-  const isShowFilterClass = cx({ isShow: isShowFilter })
-
+  const isShowFilterClass = cx({ isShow: isShowFilter, displayQuickLinks: displayQuickLinks })
+  const [selectedCategories, setSelectedCategories] = useState([])
   //   useEffect(() => {
   //     // set defaultValue after config has been initialised
   //     // TODO: refactor to use defaultValues in useForm() if config can be initialised from getServerSidedProps
@@ -170,11 +130,11 @@ const NavSearchFilter = ({
   const handleApplyFilter = (data) => {
     const values = Object.values(data)
     const allFalsyValues = values.filter((val) => !!val)
-    if (allFalsyValues.length !== 0) {
-      //   courseURLFilterParameterBuilder(data)
-      //   onApplyFilter(data)
+    if (allFalsyValues.length !== 0 || selectedCategories) {
+      urlFilterParameterBuilder(data)
+      // onApplyFilter(data)
     }
-    // onShowFilter()
+    onShowFilter()
   }
 
   const handleResetFilter = () => {
@@ -182,44 +142,64 @@ const NavSearchFilter = ({
     // onResetFilter({})
   }
 
-  //   const courseURLFilterParameterBuilder = (data) => {
-  //     // include truthy value into array
-  //     // if array length is only 1 => router.push seo value
-  //     // if array length > 1 => build filter parameter ?fieldName=seo-value
-  //     const filterData = []
-  //     let isSingleFilter = false
-  //     for (const [key, value] of Object.entries<any>(data)) {
-  //       if (value && value.length !== 0) {
-  //         if (key !== 'page') {
-  //           filterData.push({
-  //             // ensure to only push unduplicated results
-  //             [key]: Array.from(new Set(value)),
-  //           })
-  //           if (value.length <= 1) isSingleFilter = true
-  //         }
-  //       }
-  //     }
+  const urlFilterParameterBuilder = (data) => {
+    const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
+      router.query,
+      jobCategoryList,
+      locationList
+    )
+    const { keyword, ...rest } = router.query
 
-  //     // if only 1 filter is selected && no searchQuery, match the filter to config to find a matching key
-  //     if (!searchQuery && filterData && filterData.length <= 1 && isSingleFilter) {
-  //       filterData.map((a) => {
-  //         router.push(`/courses/${Object.values(a)}`)
-  //         return Object.values(a)
-  //       })
-  //     } else {
-  //       // if more than 1 filter and searchQuery is null
-  //       let queryString = buildQueryParams(filterData)
+    // include truthy value into array
+    // if array length is only 1 => router.push seo value
+    // if array length > 1 => build filter parameter ?fieldName=seo-value
+    let filterData = {}
+    let isSingleFilter = false
+    // for checkbox filters
+    for (const [key, value] of Object.entries<any>(data)) {
+      if (value && value.length !== 0) {
+        if (key !== 'page') {
+          filterData = {
+            ...filterData,
+            // ensure to only push unduplicated results
+            [key]: Array.from(new Set(value)).join(','),
+            // [key]: Array.from(new Set(value)),
+          }
+          if (value.length <= 1) isSingleFilter = true
+        }
+      }
+    }
+    console.log('jobSearchFilters filterData', filterData)
 
-  //       // set queryString to empty string if it is just '?'
-  //       if (queryString === '?') queryString = ''
+    let categoryObject = null
+    let queryParam = ''
+    const categories = selectedCategories.map((val) => val.key)
+    // for mui specialization filter
+    if (selectedCategories && selectedCategories.length > 1) {
+      queryParam =
+        conditionChecker(predefinedQuery, predefinedLocation, null) || 'job-search'
+      categoryObject = Object.assign({}, { category: categories.join() })
+    } else if (selectedCategories && selectedCategories.length === 1) {
+      queryParam = conditionChecker(predefinedQuery, predefinedLocation, categories) || 'job-search'
+    } else{
+      queryParam =
+        conditionChecker(predefinedQuery, predefinedLocation, null) || 'job-search'
+    }
 
-  //       if (!searchQuery) {
-  //         router.push(`/courses/search-courses` + queryString)
-  //       } else {
-  //         router.push(`/courses/${searchQuery}` + queryString)
-  //       }
-  //     }
-  //   }
+    const queryObject = Object.assign({}, { ...rest, ...filterData, ...categoryObject })
+    router.push(
+      {
+        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam}`,
+        query: queryObject,
+      },
+      undefined,
+      { shallow: true }
+    )
+  }
+
+  const handleSpecializationChange = (event, value) => {
+    setSelectedCategories(value)
+  }
 
   const SearchFilters = ({
     title,
@@ -259,7 +239,10 @@ const NavSearchFilter = ({
   }
 
   const handleClickedOutside = (e) => {
-    if (isShowFilter && !filterRef.current.contains(e.target)) onShowFilter()
+    // hardcoding to detect clicking on MUI component
+    const isClickingOnSpecializationMUI = e.target.id.includes('specialization-option')
+    if (isShowFilter && !filterRef.current.contains(e.target) && !isClickingOnSpecializationMUI)
+      onShowFilter()
   }
 
   useEffect(() => {
@@ -281,13 +264,36 @@ const NavSearchFilter = ({
       </div>
       <form className={styles.searchFilterForm} onSubmit={handleSubmit(handleApplyFilter)}>
         <div className={styles.searchFilterBody}>
-          <SearchFilters
+          <div className={styles.searchFilterSection}>
+            <Accordian
+              chevronIcon
+              paddedContent
+              isNotCollapsible={true}
+              defaultOpenState={true}
+              title={
+                <Text textStyle='lg' bold>
+                  Specialization
+                </Text>
+              }
+              className={styles.searchFilterAccordion}
+            >
+              <MaterialAutocompleteLimitTags
+                id='specialization'
+                options={jobCategoryList}
+                limitTagCount={8}
+                // defaultValue={}
+                onChange={handleSpecializationChange}
+                style={{ margin: 0, paddingTop: '20px' }}
+              />
+            </Accordian>
+          </div>
+          {/* <SearchFilters
             title='Specialization'
             fieldName='specialisation'
             options={jobCategoryList}
             defaultOpenState={true}
             isNotCollapsible={true}
-          />
+          /> */}
           <SearchFilters
             title='Industry'
             fieldName='industry'

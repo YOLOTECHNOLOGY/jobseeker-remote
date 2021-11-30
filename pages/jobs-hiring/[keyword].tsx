@@ -39,7 +39,9 @@ import {
   conditionChecker,
   getPayload,
   getPredefinedParamsFromUrl,
+  handleSalary,
   urlQueryParser,
+  getLocationList,
 } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
 // import { formatLocationConfig } from 'helpers/jobPayloadFormatter'
@@ -141,23 +143,6 @@ const renderPopularSearch = () => {
   )
 }
 
-const getLocationList = (config) => {
-  const locList =
-    config &&
-    config.inputs &&
-    config.inputs.location_lists
-      .map((region) =>
-        region.locations.map((loc) => ({
-          ...loc,
-          // loc value all lower case
-          value: loc.value.toLowerCase(),
-        }))
-      )
-      .reduce((a, c) => a.concat(c), [])
-
-  return locList
-}
-
 const JobSearchPage = (props: JobSearchPageProps) => {
   const { seoMetaTitle, seoMetaDescription, config, topCompanies } = props
   const router = useRouter()
@@ -168,8 +153,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const catList = config && config.inputs && config.inputs.job_category_lists
   const locList = getLocationList(config)
 
-  // filters config
-  // const locationList = formatLocationConfig(config.inputs.location_lists)
+  const displayQuickLinks = router.query.keyword === 'job-search'
 
   useEffect(() => {
     // predefined data from url
@@ -182,8 +166,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const abc = getPredefinedParamsFromUrl(router.query, catList, locList)
     // get payload to fetch
     const payload = {
-      query: predefinedQuery[0],
-      jobLocation:predefinedLocation[0],
+      query: predefinedQuery ? predefinedQuery[0] : null,
+      jobLocation: predefinedLocation ? predefinedLocation[0] : null,
+      salary: router.query?.salary,
+      jobType: router.query?.jobtype,
+      industry: router.query?.industry,
+      education: router.query?.qualification,
+      workExperience: router.query?.workExperience,
     }
     // const payload = getPayload(router.query)
     console.log('payload abc', abc)
@@ -194,9 +183,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }, [router.query])
 
   const sortOptions = [
-    { label: 'Relevance', value: 1 },
-    { label: 'Latest', value: 2 },
-    { label: 'Ascending', value: 3 },
+    { label: 'Newest', value: 1 },
+    { label: 'Relevance', value: 2 },
+    { label: 'Highest Salary', value: 3 },
   ]
 
   // console.log('locationList', locationList)
@@ -211,9 +200,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       return Object.values(range)[0] === '10K - 30K' ? 'Below 30K' : Object.values(range)
     })
   )
-  console.log('jobTypeOption', jobTypeOption)
-  console.log('salaryRangeOption', salaryRangeOption)
-
   // const onSearchSubmit = () => {
 
   // }
@@ -276,10 +262,83 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     console.log('queryParam', queryParam)
   }
 
+  const onSortSelection = (selectedOption) => {
+    console.log('selectedOption', selectedOption)
+    const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
+      router.query,
+      catList,
+      locList
+    )
+    const queryParam =
+      conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory) || 'job-search'
+    const { keyword, ...rest } = router.query
+    const queryObject = Object.assign({}, { ...rest, sort: selectedOption })
+    router.push(
+      {
+        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam}`,
+        query: queryObject,
+      },
+      undefined,
+      { shallow: true }
+    )
+  }
+
+  const onSalarySelection = (selectedOptions) => {
+    // const [salaryFrom, salaryTo ]= handleSalary(selectedOptions)
+    const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
+      router.query,
+      catList,
+      locList
+    )
+    const queryParam =
+      conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory) || 'job-search'
+    const { keyword, ...rest } = router.query
+    const queryObject = Object.assign({}, { ...rest, salary: selectedOptions.join(',') })
+    router.push(
+      {
+        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam}`,
+        query: queryObject,
+      },
+      undefined,
+      { shallow: true }
+    )
+  }
+
+  const onJobTypeSelection = (selectedOptions) => {
+    const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
+      router.query,
+      catList,
+      locList
+    )
+    const queryParam =
+      conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory) || 'job-search'
+    const { keyword, ...rest } = router.query
+    const queryObject = Object.assign({}, { ...rest, jobtype: selectedOptions.join(',') })
+    router.push(
+      {
+        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam}`,
+        query: queryObject,
+      },
+      undefined,
+      { shallow: true }
+    )
+  }
+
+  const handleApplyFilter = (data) => {
+    const values = Object.values(data)
+    const allFalsyValues = values.filter((val) => !!val)
+    if (allFalsyValues.length !== 0) {
+      // courseURLFilterParameterBuilder(data)
+      // onApplyFilter(data)
+    }
+    // onShowFilter()
+    console.log('handleApplyFilter data')
+  }
+
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} />
-      <div className={styles.searchSection}>
+      <div className={displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection}>
         <div className={styles.searchAndLocationContainer}>
           <MaterialTextField
             id='search'
@@ -307,6 +366,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             label='Sort by'
             options={sortOptions}
             className={styles.sortField}
+            onSelect={onSortSelection}
             greyBg
           />
           <MaterialSelectCheckmarks
@@ -314,6 +374,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             label='Job Type'
             options={jobTypeOption}
             className={styles.sortField}
+            onSelect={onJobTypeSelection}
             greyBg
           />
           <MaterialSelectCheckmarks
@@ -321,6 +382,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             label='Salary'
             options={salaryRangeOption}
             className={styles.sortField}
+            onSelect={onSalarySelection}
             greyBg
           />
           <MaterialButton
@@ -331,7 +393,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             More Filters
           </MaterialButton>
         </div>
-        <div className={styles.quickLinkSection}>
+        <div
+          className={displayQuickLinks ? styles.quickLinkSectionExpanded : styles.quickLinkSection}
+        >
           <div className={styles.popularSearchContainer}>
             <Text textStyle='sm' bold textColor='lightgrey' className={styles.quickLinkTitle}>
               Popular Search:
@@ -353,11 +417,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                   >
                     <Image src={company.logo} alt={company.name} width='30' height='30' />
                   </Link>
-                ))}
+              ))}
             </div>
           </div>
         </div>
         <JobSearchFilters
+          displayQuickLinks={displayQuickLinks}
           isShowFilter={isShowFilter}
           // onApplyFilter={handleApplyFilter}
           // onResetFilter={handleResetFilter}

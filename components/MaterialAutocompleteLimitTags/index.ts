@@ -1,0 +1,3 @@
+import MaterialAutocompleteLimitTags from './MaterialAutocompleteLimitTags'
+
+export default MaterialAutocompleteLimitTags

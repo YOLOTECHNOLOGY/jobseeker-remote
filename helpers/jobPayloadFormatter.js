@@ -5,32 +5,57 @@ import moment from 'moment'
 import slugify from 'slugify'
 
 
-const handleSalary = (salary) => {
-  if (Array.isArray(salary) && salary.length && !salary.includes('All')) {
-    let formattedSalaryFrom = ''
-    let formattedSalaryTo = ''
+const handleSalary = (salaryRanges) => {
+  const sanitiseSalaryRange = salaryRanges.map(range => range === 'Below 30K' ? '10K - 30K' : range)
+  let salaryFrom = '' 
+  let salaryTo = ''
 
-    formattedSalaryFrom = salary
-      .filter((salary) => salary !== 'Above_200K')
-      .map((formattedSalaryTo) => thousandsToNumber(formattedSalaryTo.split('_to_')[0]))
+  salaryFrom = sanitiseSalaryRange
+    .filter((salary) => salary !== 'Above_200K')
+    .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split(' - ')[0]))
 
-    formattedSalaryTo = salary
-      .filter((salary) => salary !== 'Above_200K')
-      .map((formattedSalaryTo) => thousandsToNumber(formattedSalaryTo.split('_to_')[1]))
+  salaryTo = sanitiseSalaryRange
+    .filter((salary) => salary !== 'Above_200K')
+    .map((salaryTo) => 
+      thousandsToNumber('' + salaryTo.split(' - ')[1]))
 
-    if (salary.includes('Above_200K')) {
-      formattedSalaryFrom.push('200001')
-      formattedSalaryTo.push('400000')
-    }
-
-    formattedSalaryFrom = formattedSalaryFrom.join(',')
-    formattedSalaryTo = formattedSalaryTo.join(',')
-
-    return [formattedSalaryFrom, formattedSalaryTo]
+  if (sanitiseSalaryRange.includes('Above_200K')) {
+    salaryFrom.push('200001')
+    salaryTo.push('400000')
   }
 
-  return ['', '']
+  salaryFrom = salaryFrom.join(',')
+  salaryTo = salaryTo.join(',')
+
+  return [salaryFrom, salaryTo]
 }
+
+// const handleSalary = (salary) => {
+//   if (Array.isArray(salary) && salary.length && !salary.includes('All')) {
+//     let formattedSalaryFrom = ''
+//     let formattedSalaryTo = ''
+
+//     formattedSalaryFrom = salary
+//       .filter((salary) => salary !== 'Above_200K')
+//       .map((formattedSalaryTo) => thousandsToNumber(formattedSalaryTo.split('_to_')[0]))
+
+//     formattedSalaryTo = salary
+//       .filter((salary) => salary !== 'Above_200K')
+//       .map((formattedSalaryTo) => thousandsToNumber(formattedSalaryTo.split('_to_')[1]))
+
+//     if (salary.includes('Above_200K')) {
+//       formattedSalaryFrom.push('200001')
+//       formattedSalaryTo.push('400000')
+//     }
+
+//     formattedSalaryFrom = formattedSalaryFrom.join(',')
+//     formattedSalaryTo = formattedSalaryTo.join(',')
+
+//     return [formattedSalaryFrom, formattedSalaryTo]
+//   }
+
+//   return ['', '']
+// }
 
 const handleWorkExperience = (workExperience) => {
   let xpLvls = ''
@@ -333,7 +358,7 @@ const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFil
     !sanitisedLocValue &&
     jobCategory 
   ) {
-    queryParam = appendSingleQueryPattern(category)
+    queryParam = appendSingleQueryPattern(jobCategory)
   }
 
   // query && 1 location && !category
@@ -357,7 +382,7 @@ const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFil
     sanitisedLocValue
     && jobCategory
   ) {
-    queryParam = appendDoubleQueryPattern(category, sanitisedLocValue)
+    queryParam = appendDoubleQueryPattern(jobCategory, sanitisedLocValue)
   }
 
   // query && 1 location && 1 category
@@ -367,7 +392,7 @@ const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFil
     jobCategory 
   ) {
     queryParam = appendDoubleQueryPattern(queryType, sanitisedLocValue)
-    filteredData.push({ key: 'jobCategory', data: category })
+    filteredData.push({ key: 'jobCategory', data: jobCategory })
   }
 
   // query && (multiple location || multiple category || other filters)
@@ -381,9 +406,9 @@ const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFil
     }
     if (jobCategory && jobCategory.length > 1) {
       // E.g: dev-jobs?jobLocation=1,2,3&jobCategory=1
-      filteredData.push({ key: 'jobCategory', data: category })
+      filteredData.push({ key: 'jobCategory', data: jobCategory })
     } else if (jobCategory && jobCategory.length === 1) {
-      filteredData.push({ key: 'jobCategory', data: category })
+      filteredData.push({ key: 'jobCategory', data: jobCategory })
       queryParam = appendSingleQueryPattern(queryType)
     }
   }
@@ -397,10 +422,10 @@ const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFil
       queryParam = appendSingleQueryPattern(sanitisedLocValue)
     }
     if (jobCategory && jobCategory.length > 1 && sanitisedLocValue) {
-      filteredData.push({ key: 'jobCategory', data: category })
+      filteredData.push({ key: 'jobCategory', data: jobCategory })
       queryParam = appendGeneralQueryPattern()
     } else if (jobCategory && jobCategory.length === 1 && !sanitisedLocValue) {
-      queryParam = appendSingleQueryPattern(category)
+      queryParam = appendSingleQueryPattern(jobCategory)
     }
   }
 
@@ -435,6 +460,23 @@ const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFil
   return slugify(queryParam).toLowerCase()
 }
 
+const getLocationList = (config) => {
+  const locList =
+    config &&
+    config.inputs &&
+    config.inputs.location_lists
+      .map((region) =>
+        region.locations.map((loc) => ({
+          ...loc,
+          // loc value all lower case
+          value: loc.value.toLowerCase(),
+        }))
+      )
+      .reduce((a, c) => a.concat(c), [])
+
+  return locList
+}
+
 export {
   handleSalary,
   handleWorkExperience,
@@ -453,4 +495,5 @@ export {
   formatLocationConfig,
   getPayload,
   conditionChecker,
+  getLocationList
 }

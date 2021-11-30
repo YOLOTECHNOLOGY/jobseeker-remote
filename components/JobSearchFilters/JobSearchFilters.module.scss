@@ -4,7 +4,7 @@
 .searchFilter {
   display: none;
   position: absolute;
-  top: 230px;
+  top: 139px;
   right: 0;
   width: 600px;
   height: auto;
@@ -14,6 +14,12 @@
 
   &.isShow {
     display: block;
+  }
+
+  &.isShow.displayQuickLinks{
+    display: block;
+    @extend .searchFilter;
+    top:230px;
   }
 
   &Header {

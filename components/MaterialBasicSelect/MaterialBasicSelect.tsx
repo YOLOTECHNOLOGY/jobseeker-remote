@@ -9,7 +9,7 @@ const MaterialBasicSelect = ({ id, label, options, className, onSelect, greyBg }
   const handleChange = (event: SelectChangeEvent) => {
     setValue(event.target.value as string)
     if (onSelect) {
-      onSelect()
+      onSelect(event.target.value)
     }
   }
   const theme = createTheme({
