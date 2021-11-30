@@ -49,6 +49,7 @@
     "react-hook-form": "^7.19.5",
     "react-redux": "^7.2.6",
     "react-saga": "^0.3.1",
+    "react-share": "^4.4.0",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-saga": "^1.1.3",

@@ -20,12 +20,13 @@ type ModalProps = {
   handleModal: Function
   clearError?: Function
   disableCloseModal?: boolean
-  closeModalOnOutsideClick?: object
+  closeModalOnOutsideClick?: boolean
   headerTitle: string
   handleFirstButton?: Function
   handleSecondButton?: Function
   firstButtonText?: string
   secondButtonText?: string
+  isFullWidth?: boolean
 }
 
 const Modal = ({
@@ -42,9 +43,12 @@ const Modal = ({
   handleSecondButton,
   firstButtonText,
   secondButtonText,
+  isFullWidth,
   ...rest
 }: ModalProps) => {
   const ref = useRef(null)
+  const hasFirstButton = handleFirstButton && firstButtonText
+  const hasSecondButton = handleSecondButton && secondButtonText
 
   const handleClickOutside = event => {
     if (ref.current && !ref.current.contains(event.target)) {
@@ -71,7 +75,7 @@ const Modal = ({
       {...rest}
     >
       <div>
-        <div ref={ref} className={classNames([styles.modalContent, className])}>
+        <div ref={ref} className={classNames([styles.modalContent, className, isFullWidth ? styles.isFullWidth : ''])}>
           <div>
             <div className={styles.modalHeader}>
               <Text textStyle='xl' bold className={styles.modalHeaderTitle}>{headerTitle}</Text>
@@ -91,14 +95,16 @@ const Modal = ({
             <div className={styles.modalBody}>
               {children}
             </div>
-            <div className={styles.modalFooter}>
-              {handleFirstButton && firstButtonText && (
-                <Button onClick={() => handleFirstButton()}>{firstButtonText}</Button>
-              )}
-              {handleSecondButton && secondButtonText && (
-                <Button onClick={() => handleSecondButton()}>{secondButtonText}</Button>
-              )}
-            </div>
+            {(hasFirstButton || hasSecondButton) && (
+              <div className={styles.modalFooter}>
+                {hasFirstButton && (
+                  <Button onClick={() => handleFirstButton()}>{firstButtonText}</Button>
+                )}
+                {hasSecondButton && (
+                  <Button onClick={() => handleSecondButton()}>{secondButtonText}</Button>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
