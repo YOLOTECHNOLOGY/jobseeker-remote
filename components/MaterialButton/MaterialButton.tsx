@@ -17,11 +17,21 @@ const MaterialButton = ({
   children,
   disabled,
   isLoading,
+  ...rest
 }: MaterialButtonProps) => {
   const theme = createTheme({
     palette: {
       primary: {
         main: '#2379EA',
+      },
+    },
+    components: {
+      MuiButton: {
+         styleOverrides: {
+          root: {
+            fontSize: '13px',
+          },
+        }
       },
     },
   })
@@ -32,7 +42,7 @@ const MaterialButton = ({
           {children}
         </LoadingButton>
       ) : (
-        <Button variant={variant} className={className} disabled={disabled}>
+        <Button variant={variant} className={className} disabled={disabled} {...rest}>
           {children}
         </Button>
       )}

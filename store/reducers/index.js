@@ -2,10 +2,16 @@ import { combineReducers } from 'redux'
 import { HYDRATE } from 'next-redux-wrapper'
 
 import configReducers from './config'
+import utilityReducers from './utility'
+import jobsReducers from './jobs'
+import companiesReducers from './companies'
 
 // TODO: Import and List reducers here
 const combinedReducer = combineReducers({
-  config: configReducers
+  config: configReducers,
+  utility: utilityReducers,
+  job: jobsReducers,
+  companies:companiesReducers,
 })
 
 /* 
