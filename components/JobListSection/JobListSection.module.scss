@@ -3,7 +3,7 @@
 
 .job {
   display: flex;
-//   padding: 0 7%;
+  padding: 0 7%;
   position: relative;
 }
 
@@ -17,10 +17,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    // padding: 0 25px 0;
+    padding: 0 25px 0 9%;
     position: absolute;
-    width: inherit;
-    // width: 32.42%;
+    width: 32.42%;
     left: 0;
     background-color: $white-3;
   }
@@ -28,7 +27,6 @@
   &OptionAlerts {
     display: flex;
     align-items: center;
-    margin-right:20px;
 
     span {
       margin-right: 15px;
@@ -77,7 +75,7 @@
   }
 
   &OptionItem {
-    padding: 15px 20px;
+    padding: 12px 20px;
     display: block;
     
     &:hover {
@@ -325,6 +323,10 @@
   }
 }
 
+.jobModalBody {
+  padding: 20px 40px;
+}
+
 .jobManageJobAlert {
   &Header {
     margin-bottom: 22px;
@@ -454,6 +456,58 @@
 
     &:hover {
       cursor: pointer;
+    }
+  }
+}
+
+.report {
+  &Item {
+    padding: 0 40px;
+    position: relative;
+
+    span {
+      display: block;
+      padding: 35px 0;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba($lightgrey, 0.2);
+    }
+    
+    &:not(:last-child) {
+      span {
+        border-bottom: 1px solid rgba($lightgrey, 0.5);
+      }
+    }
+  }
+
+  &ItemIcon {
+    position: absolute;
+    top: 50%;
+    right: 40px;
+    transform: translateY(-50%);
+  }
+}
+
+.reportDetail {
+  &Item {
+    padding: 0 40px;
+
+    &:not(:last-child) {
+      .reportDetailRadioGroup {
+        border-bottom: 1px solid rgba($lightgrey, 0.5);
+      }
+    }
+  }
+
+  &Label {
+    padding: 35px 0;
+    margin-left: 6px;
+
+    span {
+      display: block;
+      line-height: 1.5;
     }
   }
 }

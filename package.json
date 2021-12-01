@@ -7,7 +7,7 @@
     "build:production": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit --skipLibCheck",
     "postinstall": "husky install",
     "prepare": "husky install",
     "commitmsg": "node node_modules/commitplease .git/COMMIT_EDITMSG"
