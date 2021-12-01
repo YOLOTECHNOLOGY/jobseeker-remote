@@ -83,7 +83,7 @@ const MaterialSelectCheckmarks = ({
       },
     },
   })
-  console.log('selectedOptions', selectedOptions)
+  // console.log('selectedOptions', selectedOptions)
   return (
     <ThemeProvider theme={theme}>
       <FormControl className={className} size='small'>

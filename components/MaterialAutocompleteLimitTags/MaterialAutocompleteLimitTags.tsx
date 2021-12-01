@@ -26,8 +26,6 @@ const MaterialAutocompleteLimitTags = ({
   onChange,
   ...rest
 }: MaterialAutoCompleteLimitTagsProps) => {
-  console.log('options', options)
-
   const theme = createTheme({
     components: {
       MuiAutocomplete: {

@@ -30,33 +30,6 @@ const handleSalary = (salaryRanges) => {
   return [salaryFrom, salaryTo]
 }
 
-// const handleSalary = (salary) => {
-//   if (Array.isArray(salary) && salary.length && !salary.includes('All')) {
-//     let formattedSalaryFrom = ''
-//     let formattedSalaryTo = ''
-
-//     formattedSalaryFrom = salary
-//       .filter((salary) => salary !== 'Above_200K')
-//       .map((formattedSalaryTo) => thousandsToNumber(formattedSalaryTo.split('_to_')[0]))
-
-//     formattedSalaryTo = salary
-//       .filter((salary) => salary !== 'Above_200K')
-//       .map((formattedSalaryTo) => thousandsToNumber(formattedSalaryTo.split('_to_')[1]))
-
-//     if (salary.includes('Above_200K')) {
-//       formattedSalaryFrom.push('200001')
-//       formattedSalaryTo.push('400000')
-//     }
-
-//     formattedSalaryFrom = formattedSalaryFrom.join(',')
-//     formattedSalaryTo = formattedSalaryTo.join(',')
-
-//     return [formattedSalaryFrom, formattedSalaryTo]
-//   }
-
-//   return ['', '']
-// }
-
 const handleWorkExperience = (workExperience) => {
   let xpLvls = ''
 

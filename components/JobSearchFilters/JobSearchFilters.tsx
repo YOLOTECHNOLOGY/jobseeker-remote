@@ -30,7 +30,6 @@ import MaterialAutocompleteLimitTags from 'components/MaterialAutocompleteLimitT
 interface NavSearchFilterProps {
   isShowFilter: boolean
   onShowFilter: Function
-  onApplyFilter: Function
   onResetFilter: Function
   displayQuickLinks: Boolean
 }
@@ -51,7 +50,6 @@ type optionsType = {
 const NavSearchFilter = ({
   isShowFilter,
   onShowFilter,
-  onApplyFilter,
   displayQuickLinks,
   onResetFilter,
 }: 
@@ -97,7 +95,6 @@ NavSearchFilterProps) => {
 
   useEffect(() => {
     // set defaultValue after config has been initialised
-    // TODO: refactor to use defaultValues in useForm() if config can be initialised from getServerSidedProps
     if (Object.keys(defaultValues).length !== 0) {
       reset(defaultValues)
     }
@@ -108,7 +105,6 @@ NavSearchFilterProps) => {
     const allFalsyValues = values.filter((val) => !!val)
     if (allFalsyValues.length !== 0 || selectedCategories) {
       urlFilterParameterBuilder(data)
-      // onApplyFilter(data)
     }
     onShowFilter()
   }
@@ -119,13 +115,13 @@ NavSearchFilterProps) => {
   }
 
   const urlFilterParameterBuilder = (data) => {
-    const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
+    const { predefinedQuery, predefinedLocation } = getPredefinedParamsFromUrl(
       router.query,
       jobCategoryList,
       locationList
     )
+    // eslint-disable-next-line
     const { keyword, ...rest } = router.query
-
     // include truthy value into array
     // if array length is only 1 => router.push seo value
     // if array length > 1 => build filter parameter ?fieldName=seo-value
@@ -142,25 +138,24 @@ NavSearchFilterProps) => {
         }
       }
     }
-    console.log('jobSearchFilters filterData', filterData)
 
     let categoryObject = null
     let queryParam = ''
     const categories = selectedCategories.map((val) => val.key)
     // for mui specialization filter
     if (selectedCategories && selectedCategories.length > 1) {
-      queryParam = conditionChecker(predefinedQuery, predefinedLocation, null) || 'job-search'
+      queryParam = conditionChecker(predefinedQuery, predefinedLocation, null)
       categoryObject = Object.assign({}, { category: categories.join() })
     } else if (selectedCategories && selectedCategories.length === 1) {
-      queryParam = conditionChecker(predefinedQuery, predefinedLocation, categories) || 'job-search'
+      queryParam = conditionChecker(predefinedQuery, predefinedLocation, categories)
     } else {
-      queryParam = conditionChecker(predefinedQuery, predefinedLocation, null) || 'job-search'
+      queryParam = conditionChecker(predefinedQuery, predefinedLocation, null)
     }
 
     const queryObject = Object.assign({}, { ...rest, ...filterData, ...categoryObject })
     router.push(
       {
-        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam}`,
+        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
         query: queryObject,
       },
       undefined,
@@ -252,7 +247,6 @@ NavSearchFilterProps) => {
                 id='specialization'
                 options={jobCategoryList}
                 limitTagCount={8}
-                // defaultValue={}
                 onChange={handleSpecializationChange}
                 style={{ margin: 0, paddingTop: '20px' }}
               />
@@ -272,7 +266,6 @@ NavSearchFilterProps) => {
             defaultOpenState={true}
             isNotCollapsible={true}
           />
-          {/* <SearchFilters title='Course Fee' fieldName="courseFee" options={filterOptions.courseFee}/> */}
           <SearchFilters
             title='Qualification'
             fieldName='qualification'

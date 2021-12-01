@@ -29,6 +29,7 @@ import Text from 'components/Text'
 import Link from 'components/Link'
 import SEO from 'components/SEO'
 import JobSearchFilters from 'components/JobSearchFilters'
+import JobListSection from 'components/JobListSection'
 
 /* Styles */
 import styles from './JobsHiring.module.scss'
@@ -41,6 +42,7 @@ import {
   getLocationList,
 } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
+import { useFirstRender } from 'helpers/useFirstRender'
 
 interface JobSearchPageProps {
   seoMetaTitle: string
@@ -141,14 +143,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const { seoMetaTitle, seoMetaDescription, config, topCompanies } = props
   const router = useRouter()
   const dispatch = useDispatch()
+  const firstRender = useFirstRender()
   const jobsList = useSelector((store: any) => store.job.jobsList)
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlQuery, setUrlQuery] = useState()
   const [urlLocation, setUrlLocation] = useState([])
   const catList = config && config.inputs && config.inputs.job_category_lists
   const locList = getLocationList(config)
-  
-  console.log('locList', locList)
 
   const displayQuickLinks = router.query.keyword === 'job-search'
   const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
@@ -157,32 +158,27 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     locList
   )
   useEffect(() => {
-    console.log('predefinedLocation', predefinedLocation)
+    console.log('router query changed', router.query)
     if (predefinedQuery) setUrlQuery(predefinedQuery.toString())
     if (predefinedLocation) {
       const matchedLocation = locList.filter((loc) => {
         return loc.value === predefinedLocation.toString()
       })
-      console.log('matchedLocation', matchedLocation)
       setUrlLocation(matchedLocation[0])
     }
-    console.log('router query changed', router.query)
-    const abc = getPredefinedParamsFromUrl(router.query, catList, locList)
-    // get payload to fetch
     const payload = {
       query: predefinedQuery ? predefinedQuery[0] : null,
       jobLocation: predefinedLocation ? predefinedLocation[0] : null,
+      jobCategories:
+        firstRender && predefinedCategory ? predefinedCategory[0] : router.query?.category,
       salary: router.query?.salary,
       jobType: router.query?.jobtype,
       industry: router.query?.industry,
       education: router.query?.qualification,
       workExperience: router.query?.workExperience,
+      sort: router.query?.sort,
     }
-    // const payload = getPayload(router.query)
-    console.log('payload abc', abc)
     console.log('payload getPayload', payload)
-    // get defaultValue of keyword search
-
     dispatch(fetchJobsListRequest(payload))
   }, [router.query])
 
@@ -194,7 +190,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   const handleShowFilter = () => {
     setIsShowFilter(!isShowFilter)
-    console.log('triggered')
   }
   const jobTypeOption = flat(config.inputs.job_types.map((jobType) => Object.values(jobType)))
 
@@ -207,7 +202,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const updateUrl = (queryParam, queryObject) => {
     router.push(
       {
-        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam}`,
+        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
         query: queryObject,
       },
       undefined,
@@ -215,89 +210,65 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     )
   }
   const onKeywordSearch = (val) => {
-
-    console.log('search val', val)
-    // const queryParam = conditionChecker(val)
-
-    console.log('router', router)
-    console.log('process.env.HOST_PATH', process.env.HOST_PATH)
-
+    // eslint-disable-next-line
     const { keyword, ...rest } = router.query
-    const queryObject = Object.assign({}, { ...rest })
-    console.log('onKeywordSearch keyword', keyword)
-    console.log('onKeywordSearch queryObject', queryObject)
-
+    const queryObject = Object.assign({}, { sort: 2, ...rest })
     const queryParam = conditionChecker(val, predefinedLocation, predefinedCategory)
-    console.log('onKeywordSearch queryParam', queryParam)
     updateUrl(queryParam, queryObject)
-    console.log('queryParam', queryParam)
   }
 
   const onLocationSearch = (event, value) => {
-    // const { predefinedQuery, predefinedCategory } = getPredefinedParamsFromUrl(
-    //   router.query,
-    //   catList,
-    //   locList
-    // )
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
     const queryObject = Object.assign({}, { ...rest })
     let queryParam = 'job-search'
-    if (value){
+    if (value) {
       const sanitisedLocValue = categoryParser(value.value)
       queryParam = conditionChecker(predefinedQuery, sanitisedLocValue, predefinedCategory)
-    }else{
+    } else {
       queryParam = conditionChecker(predefinedQuery, null, predefinedCategory)
     }
     updateUrl(queryParam, queryObject)
   }
 
   const onSortSelection = (selectedOption) => {
-    console.log('selectedOption', selectedOption)
-    const queryParam =
-      conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory) || 'job-search'
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
+    const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
     const queryObject = Object.assign({}, { ...rest, sort: selectedOption })
     updateUrl(queryParam, queryObject)
   }
 
   const onSalarySelection = (selectedOptions) => {
-    // const [salaryFrom, salaryTo ]= handleSalary(selectedOptions)
-    // const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
-    //   router.query,
-    //   catList,
-    //   locList
-    // )
-    const queryParam =
-      conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory) || 'job-search'
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
+    const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
     const queryObject = Object.assign({}, { ...rest, salary: selectedOptions.join(',') })
     updateUrl(queryParam, queryObject)
   }
 
   const onJobTypeSelection = (selectedOptions) => {
-    const queryParam =
-      conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory) || 'job-search'
+    // eslint-disable-next-line
     const { keyword, ...rest } = router.query
+    const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
     const queryObject = Object.assign({}, { ...rest, jobtype: selectedOptions.join(',') })
     updateUrl(queryParam, queryObject)
   }
 
   const handleResetFilter = () => {
-    const { predefinedQuery, predefinedLocation, predefinedCategory } =
-      getPredefinedParamsFromUrl(router.query, catList, locList)
-    const queryParam =
-      conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory) || 'job-search'
+    const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
+      router.query,
+      catList,
+      locList
+    )
+    const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
     // exclude all filters in jobSearchFilters
     // eslint-disable-next-line
     const { keyword, category, industry, education, workExperience, ...rest } = router.query
-    const queryObject = Object.assign({}, { ...rest})
+    const queryObject = Object.assign({}, { ...rest })
     updateUrl(queryParam, queryObject)
   }
 
-  console.log('hahahah urlLocation', urlLocation)
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} />
@@ -336,7 +307,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             className={styles.sortField}
             onSelect={onSortSelection}
             greyBg
-            defaultValue={router.query?.sort}
+            defaultValue={router.query?.sort ? router.query?.sort : 1}
           />
           <MaterialSelectCheckmarks
             id='jobtype'
@@ -398,6 +369,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           onResetFilter={handleResetFilter}
           onShowFilter={handleShowFilter}
         />
+        <div style={{ display: 'block' }}>
+          <JobListSection />
+        </div>
       </div>
     </Layout>
   )

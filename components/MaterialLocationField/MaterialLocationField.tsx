@@ -50,15 +50,15 @@ const MaterialLocationField = ({ id, className, defValue, ...rest }: any) => {
   )
   const formattedLocationList = flat(formatLocationConfig(locationList), 2)
     const defaultOption = formattedLocationList.find((v) => defValue.value === v.value)
-    console.log('defaultOption', defaultOption)
+    // console.log('defaultOption', defaultOption)
 
     const indexOfDefaultOption =
       formattedLocationList.findIndex((loc) => loc.value === defaultOption?.value) || null
 
-    console.log('indexOfDefaultOption', indexOfDefaultOption)
+    // console.log('indexOfDefaultOption', indexOfDefaultOption)
 
     const xyz = Object.assign({}, formattedLocationList[indexOfDefaultOption])
-    console.log('xyz', xyz)
+    // console.log('xyz', xyz)
 
   return (
     <ThemeProvider theme={autocompleteTheme}>
