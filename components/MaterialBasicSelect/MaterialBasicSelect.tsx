@@ -1,12 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 
-const MaterialBasicSelect = ({ id, label, options, className, onSelect, greyBg, defaultValue }: any) => {
+const MaterialBasicSelect = ({
+  id,
+  label,
+  options,
+  className,
+  onSelect,
+  greyBg,
+  defaultValue,
+}: any) => {
   const [value, setValue] = useState(defaultValue || '')
+
+  useEffect(()=>{
+    setValue(defaultValue)
+  },[defaultValue])
+
   const handleChange = (event: SelectChangeEvent) => {
     setValue(event.target.value as string)
     if (onSelect) {

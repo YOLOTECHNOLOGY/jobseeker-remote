@@ -212,7 +212,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const onKeywordSearch = (val) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
-    const queryObject = Object.assign({}, { sort: 2, ...rest })
+    let queryObject = {}
+    queryObject = Object.assign({}, { ...rest, sort: val.length > 0 ? 2 : 1 })
     const queryParam = conditionChecker(val, predefinedLocation, predefinedCategory)
     updateUrl(queryParam, queryObject)
   }
@@ -280,7 +281,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             variant='outlined'
             size='small'
             className={styles.searchField}
-            value={urlQuery}
+            defaultValue={urlQuery}
             onChange={(e: any) => setUrlQuery(e.target.value)}
             onKeyPress={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
