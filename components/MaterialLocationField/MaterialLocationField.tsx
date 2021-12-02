@@ -48,17 +48,17 @@ const MaterialLocationField = ({ id, className, defValue, ...rest }: any) => {
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs.location_lists
   )
-  const formattedLocationList = flat(formatLocationConfig(locationList), 2)
-    const defaultOption = formattedLocationList.find((v) => defValue.value === v.value)
-    // console.log('defaultOption', defaultOption)
+  const formattedLocationList = flat(formatLocationConfig(locationList))
+  const defaultOption = formattedLocationList.find((v) => defValue.value === v.value)
+  // console.log('defaultOption', defaultOption)
 
-    const indexOfDefaultOption =
-      formattedLocationList.findIndex((loc) => loc.value === defaultOption?.value) || null
+  const indexOfDefaultOption =
+    formattedLocationList.findIndex((loc) => loc.value === defaultOption?.value) || null
 
-    // console.log('indexOfDefaultOption', indexOfDefaultOption)
+  // console.log('indexOfDefaultOption', indexOfDefaultOption)
 
-    const xyz = Object.assign({}, formattedLocationList[indexOfDefaultOption])
-    // console.log('xyz', xyz)
+  const xyz = Object.assign({}, formattedLocationList[indexOfDefaultOption])
+  // console.log('xyz', xyz)
 
   return (
     <ThemeProvider theme={autocompleteTheme}>

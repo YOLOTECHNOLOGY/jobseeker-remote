@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 /* Vendors */
 import { Radio, RadioGroup, FormControlLabel } from '@mui/material'
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share'
+import { useForm } from 'react-hook-form'
 
 /* Components */
 import Image from 'next/image'
@@ -34,11 +35,73 @@ import {
   LinkedinIcon,
   TwitterIcon,
   CopyIcon,
+  ArrowForwardIcon
 } from 'images'
 
 const JobListSection = () => {
   const dummyCompanyDetail =
     "Loop Contact Solutions is a contact center uniquely designed to help subscription businesses acquire and keep more customers who purchase more products over longer periods of time. The result is the achievement of Loop's core value proposition to significantly improve recurring revenues, profits and market share for our subscription business clients. Loop Contact Solutions is a contact center uniquely designed to help subscription businesses acquire and keep more customers who purchase more products over longer periods of time. The result is the achievement of Loop's core value proposition to significantly improve recurring revenues, profits and market share for our subscription business clients."
+  
+  const reportOptions = [
+    [
+      {
+        label: 'I think it\'s a scam, phishing or malware',
+        subLabel: 'Ex: someone asks for personal information or money or posts suspicious links',
+        value: 'scam_1'
+      },
+      {
+        
+        label: 'I think it\'s promotional or spam',
+        subLabel: 'Ex: someone advertises a product for monetary gain or posts irrelevant content for high visibility',
+        value: 'scam_2'
+      },
+    ],
+    [
+      {
+        label: 'I think it\'s discriminatory, or advocates, or supports discrimination',
+        subLabel: 'Ex: discriminates based off of age or sex',
+        value: 'discrimination_1'
+      },
+      {
+        label: 'I think it\'s offensive or harassing',
+        subLabel: 'Ex: threats of violence or unwelcome advances',
+        value: 'discrimination_2'
+      },
+      {
+        label: 'I think it shows or promotes extreme violence or terrorism',
+        subLabel: 'Ex: torture, rape or abuse, terrorist acts, or recruitment for terrorism',
+        value: 'discrimination_3'
+      },
+    ],
+    [
+      {
+        label: 'The job is closed',
+        subLabel: 'Ex: it’s no longer accepting applicants',
+        value: 'broken_1'
+      },
+      {
+        label: 'The job has an incorrect company',
+        subLabel: 'Ex: the job has the wrong company name or page display',
+        value: 'broken_2'
+      },
+      {
+        label: 'This job has an incorrect location',
+        subLabel: 'Ex: the city, state, province or country is incorrect',
+        value: 'broken_3'
+      },
+      {
+        label: 'The job has incorrect formatting',
+        subLabel: 'Ex: its job details has missing text, gramatical errors, or other formatting mistakes',
+        value: 'broken_4'
+      },
+      {
+        label: 'This job does not belong on Bossjob',
+        subLabel: 'Ex: the job from this page should not be posted on Bossjob',
+        value: 'broken_5'
+      },
+    ]
+  ]
+  
   const [companyDetail, setCompanyDetail] = useState(dummyCompanyDetail)
   const [isFullDetail, setIsFullDetail] = useState(false)
   const [jobSelectedId, setJobSelectedId] = useState(null)
@@ -49,6 +112,10 @@ const JobListSection = () => {
   const [modalManageJobAlert, setModalManageJobAlert] = useState(false)
   const [modalDeleteJobAlert, setModalDeleteJobAlert] = useState(false)
   const [modalShare, setModalShare] = useState(false)
+  const [modalReport, setModalReport] = useState(false)
+  const [modalReportDetail, setModalReportDetail] = useState(false)
+  const [modalReportSelected, setModalReportSelected] = useState(null)
+  const [modalReportSelectedItem, setModalReportSelectedItem] = useState('')
   const [frequency, setFrequency] = useState('daily')
   const [notifiedAt, setNotifiedAt] = useState('email')
   const [isDoneCopy, setIsDoneCopy] = useState(false)
@@ -92,20 +159,22 @@ const JobListSection = () => {
         firstButtonText='Keep'
         secondButtonText='Delete'
       >
-        <Text textStyle='base'>
-          Job alert for ‘Lorem Ipsum’ enabled.
-          <Text
-            className={styles.jobModalEnableAlert}
-            textColor='primaryBlue'
-            onClick={() => {
-              setModalEnableJobAlert(false)
-              setModalJobAlertList(true)
-            }}
-          >
-            {' '}
-            Manage alert.
+        <div className={styles.jobModalBody}>
+          <Text textStyle='base'>
+            Job alert for ‘Lorem Ipsum’ enabled.
+            <Text
+              className={styles.jobModalEnableAlert}
+              textColor='primaryBlue'
+              onClick={() => {
+                setModalEnableJobAlert(false)
+                setModalJobAlertList(true)
+              }}
+            >
+              {' '}
+              Manage alert.
+            </Text>
           </Text>
-        </Text>
+        </div>
       </Modal>
     )
   }
@@ -119,76 +188,78 @@ const JobListSection = () => {
         firstButtonText='Done'
         handleFirstButton={() => setModalJobAlertList(false)}
       >
-        <ul className={styles.jobAlertsList}>
-          <li className={styles.jobAlertsItem}>
-            <div className={styles.jobAlertsItemHeader}>
-              <Text textStyle='lg' bold>
-                Marketing
-              </Text>
-              <div className={styles.jobAlertsItemAction}>
-                <Image
-                  src={CreateIcon}
-                  width='18'
-                  height='18'
-                  onClick={() => {
-                    setModalJobAlertList(false)
-                    setModalManageJobAlert(true)
-                  }}
-                  className={styles.jobAlertsItemButton}
-                />
-                <Image
-                  src={DeleteIcon}
-                  width='18'
-                  height='18'
-                  onClick={() => {
-                    setModalJobAlertList(false)
-                    setModalDeleteJobAlert(true)
-                  }}
-                  className={styles.jobAlertsItemButton}
-                />
+        <div className={styles.jobModalBody}>
+          <ul className={styles.jobAlertsList}>
+            <li className={styles.jobAlertsItem}>
+              <div className={styles.jobAlertsItemHeader}>
+                <Text textStyle='lg' bold>
+                  Marketing
+                </Text>
+                <div className={styles.jobAlertsItemAction}>
+                  <Image
+                    src={CreateIcon}
+                    width='18'
+                    height='18'
+                    onClick={() => {
+                      setModalJobAlertList(false)
+                      setModalManageJobAlert(true)
+                    }}
+                    className={styles.jobAlertsItemButton}
+                  />
+                  <Image
+                    src={DeleteIcon}
+                    width='18'
+                    height='18'
+                    onClick={() => {
+                      setModalJobAlertList(false)
+                      setModalDeleteJobAlert(true)
+                    }}
+                    className={styles.jobAlertsItemButton}
+                  />
+                </div>
               </div>
-            </div>
-            <div className={styles.jobAlertsItemBody}>
-              <Text textStyle='base'>Manila</Text>
-              <Text textStyle='base'>Filters: Full-time, Marketing/Business Dev </Text>
-              <Text textStyle='base'>Frequency: Daily via email</Text>
-            </div>
-          </li>
-          <li className={styles.jobAlertsItem}>
-            <div className={styles.jobAlertsItemHeader}>
-              <Text textStyle='lg' bold>
-                Marketing
-              </Text>
-              <div className={styles.jobAlertsItemAction}>
-                <Image
-                  src={CreateIcon}
-                  width='20'
-                  height='20'
-                  onClick={() => {
-                    setModalJobAlertList(false)
-                    setModalManageJobAlert(true)
-                  }}
-                  className={styles.jobAlertsItemButton}
-                />
-                <Image
-                  src={DeleteIcon}
-                  width='20'
-                  height='20'
-                  onClick={() => {
-                    setModalJobAlertList(false)
-                    setModalDeleteJobAlert(true)
-                  }}
-                  className={styles.jobAlertsItemButton}
-                />
+              <div className={styles.jobAlertsItemBody}>
+                <Text textStyle='base'>Manila</Text>
+                <Text textStyle='base'>Filters: Full-time, Marketing/Business Dev </Text>
+                <Text textStyle='base'>Frequency: Daily via email</Text>
               </div>
-            </div>
-            <div className={styles.jobAlertsItemBody}>
-              <Text textStyle='base'>Manila</Text>
-              <Text textStyle='base'>Filters: Full-time, Marketing/Business Dev </Text>
-              <Text textStyle='base'>Frequency: Daily via email</Text>
-            </div>
-          </li>
-        </ul>
+            </li>
+            <li className={styles.jobAlertsItem}>
+              <div className={styles.jobAlertsItemHeader}>
+                <Text textStyle='lg' bold>
+                  Marketing
+                </Text>
+                <div className={styles.jobAlertsItemAction}>
+                  <Image
+                    src={CreateIcon}
+                    width='20'
+                    height='20'
+                    onClick={() => {
+                      setModalJobAlertList(false)
+                      setModalManageJobAlert(true)
+                    }}
+                    className={styles.jobAlertsItemButton}
+                  />
+                  <Image
+                    src={DeleteIcon}
+                    width='20'
+                    height='20'
+                    onClick={() => {
+                      setModalJobAlertList(false)
+                      setModalDeleteJobAlert(true)
+                    }}
+                    className={styles.jobAlertsItemButton}
+                  />
+                </div>
+              </div>
+              <div className={styles.jobAlertsItemBody}>
+                <Text textStyle='base'>Manila</Text>
+                <Text textStyle='base'>Filters: Full-time, Marketing/Business Dev </Text>
+                <Text textStyle='base'>Frequency: Daily via email</Text>
+              </div>
+            </li>
+          </ul>
+        </div>
       </Modal>
     )
   }
@@ -218,62 +289,64 @@ const JobListSection = () => {
           setModalJobAlertList(true)
         }}
       >
-        <div className={styles.jobManageJobAlert}>
-          <div className={styles.jobManageJobAlertHeader}>
-            <Text textStyle='lg' bold>
-              Marketing
-            </Text>
-            <Image
-              src={DeleteIcon}
-              width='18'
-              height='18'
-              onClick={() => {
-                setModalJobAlertList(false)
-                setModalManageJobAlert(false)
-                setModalDeleteJobAlert(true)
-              }}
-            />
-          </div>
-          <div className={styles.jobManageJobAlertBody}>
-            <div className={styles.jobManageJobAlertGroup}>
-              <Text textStyle='base' className={styles.jobManageJobAlertGroupHeader}>
-                Alert Frequency
+        <div className={styles.jobModalBody}>
+          <div className={styles.jobManageJobAlert}>
+            <div className={styles.jobManageJobAlertHeader}>
+              <Text textStyle='lg' bold>
+                Marketing
               </Text>
-              <RadioGroup
-                aria-label='frequency'
-                name='controlled-radio-buttons-group'
-                value={frequency}
-                onChange={(e) => handleChange(e, true)}
-              >
-                <FormControlLabel
-                  value='daily'
-                  control={<Radio />}
-                  label={<Text textStyle='base'>Daily</Text>}
-                />
-                <FormControlLabel
-                  value='weekly'
-                  control={<Radio />}
-                  label={<Text textStyle='base'>Weekly</Text>}
-                />
-              </RadioGroup>
+              <Image
+                src={DeleteIcon}
+                width='18'
+                height='18'
+                onClick={() => {
+                  setModalJobAlertList(false)
+                  setModalManageJobAlert(false)
+                  setModalDeleteJobAlert(true)
+                }}
+              />
             </div>
+            <div className={styles.jobManageJobAlertBody}>
+              <div className={styles.jobManageJobAlertGroup}>
+                <Text textStyle='base' className={styles.jobManageJobAlertGroupHeader}>
+                  Alert Frequency
+                </Text>
+                <RadioGroup
+                  aria-label='frequency'
+                  name='controlled-radio-buttons-group'
+                  value={frequency}
+                  onChange={(e) => handleChange(e, true)}
+                >
+                  <FormControlLabel
+                    value='daily'
+                    control={<Radio />}
+                    label={<Text textStyle='base'>Daily</Text>}
+                  />
+                  <FormControlLabel
+                    value='weekly'
+                    control={<Radio />}
+                    label={<Text textStyle='base'>Weekly</Text>}
+                  />
+                </RadioGroup>
+              </div>
 
-            <div className={styles.jobManageJobAlertGroup}>
-              <Text textStyle='base' className={styles.jobManageJobAlertGroupHeader}>
-                Get notified via:
-              </Text>
-              <RadioGroup
-                aria-label='frequency'
-                name='controlled-radio-buttons-group'
-                value={notifiedAt}
-                onChange={handleChange}
-              >
-                <FormControlLabel
-                  value='email'
-                  control={<Radio />}
-                  label={<Text textStyle='base'>Email</Text>}
-                />
-              </RadioGroup>
+              <div className={styles.jobManageJobAlertGroup}>
+                <Text textStyle='base' className={styles.jobManageJobAlertGroupHeader}>
+                  Get notified via:
+                </Text>
+                <RadioGroup
+                  aria-label='frequency'
+                  name='controlled-radio-buttons-group'
+                  value={notifiedAt}
+                  onChange={handleChange}
+                >
+                  <FormControlLabel
+                    value='email'
+                    control={<Radio />}
+                    label={<Text textStyle='base'>Email</Text>}
+                  />
+                </RadioGroup>
+              </div>
             </div>
           </div>
         </div>
@@ -298,10 +371,12 @@ const JobListSection = () => {
           setModalJobAlertList(true)
         }}
       >
-        <Text textStyle='base'>
-          You are about to delete the job alert for “Marketing, Manila”.
-          <br /> This cannot be undone
-        </Text>
+        <div className={styles.jobModalBody}>
+          <Text textStyle='base'>
+            You are about to delete the job alert for “Marketing, Manila”.
+            <br /> This cannot be undone
+          </Text>
+        </div>
       </Modal>
     )
   }
@@ -378,6 +453,96 @@ const JobListSection = () => {
               </div>
             </div>
           </div>
+        </div>
+      </Modal>
+    )
+  }
+
+  const ModalReport = () => {
+    const reportList = [
+      'I think it’s spam or scam',
+      'I think it’s discriminatory or offensive',
+      'I think something is broken'
+    ]
+    return (
+      <Modal
+        className={styles.ModalReport}
+        headerTitle='Why are you reporting this job?'
+        showModal={modalReport}
+        handleModal={() => setModalReport(false)}
+      >
+        <div className={styles.report}>
+          {reportList.map((report, i) => (
+            <div 
+              key={i}
+              className={styles.reportItem} 
+              onClick={() => {
+                setModalReport(false)
+                setModalReportDetail(true)
+                setModalReportSelected(i)
+                setModalReportSelectedItem(reportOptions[i][0].value)
+              }}
+            >
+              <Text>{report}</Text>
+              <div className={styles.reportItemIcon}>
+                <Image src={ArrowForwardIcon} width='20' height='20'/>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Modal>
+    )
+  }
+
+  const ModalReportDetail = () => {
+    const { register, handleSubmit } = useForm()
+    const onSubmit = (data) => {
+      console.log(data)
+      setModalReportDetail(false)
+    }
+
+    const handleChange = (event) => {
+      setModalReportSelectedItem(event.target.value)
+    }
+
+    return (
+      <Modal
+        headerTitle='Tell us a little more'
+        showModal={modalReportDetail}
+        handleModal={() => setModalReportDetail(false)}
+        firstButtonText='Back'
+        handleFirstButton={() => {
+          setModalReportDetail(false)
+          setModalReport(true)
+          setModalReportSelected(0)
+        }}
+        secondButtonText='Submit'
+        handleSecondButton={handleSubmit(onSubmit)}
+      >
+        <div className={styles.reportDetail}>
+          {reportOptions[modalReportSelected]?.map((option, i) => (
+            <div className={styles.reportDetailItem} key={i}>
+              <RadioGroup
+                aria-label="reportDetail"
+                name="controlled-radio-buttons-group"
+                value={modalReportSelectedItem}
+                onChange={handleChange}
+                className={styles.reportDetailRadioGroup}
+              >
+                <FormControlLabel 
+                  {...register('reportDetail')}
+                  value={option.value} 
+                  control={<Radio />} 
+                  label={
+                    <div className={styles.reportDetailLabel}>
+                      <Text textStyle='lg'>{option.label}</Text>
+                      <Text textStyle='base' textColor='lightgrey'>{option.subLabel}</Text>
+                    </div>
+                  } 
+                />
+              </RadioGroup>
+            </div>
+          ))}
         </div>
       </Modal>
     )
@@ -462,7 +627,7 @@ const JobListSection = () => {
                 <div className={styles.jobDetailOptionItem} onClick={() => setModalShare(true)}>
                   <Text textStyle='lg'>Share this job</Text>
                 </div>
-                <div className={styles.jobDetailOptionItem}>
+                <div className={styles.jobDetailOptionItem} onClick={() => setModalReport(true)}>
                   <Text textStyle='lg'>Report job</Text>
                 </div>
               </div>
@@ -717,6 +882,8 @@ const JobListSection = () => {
       <ModalManageJobAlert />
       <ModalDeleteJobAlert />
       <ModalShare />
+      <ModalReport />
+      <ModalReportDetail />
     </React.Fragment>
   )
 }
