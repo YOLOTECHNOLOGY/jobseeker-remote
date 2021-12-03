@@ -14,6 +14,7 @@ import { wrapper } from 'store'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
 import { fetchFeaturedCompaniesRequest } from 'store/actions/companies/fetchFeaturedCompanies'
+import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
@@ -180,6 +181,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     }
     console.log('payload getPayload', payload)
     dispatch(fetchJobsListRequest(payload))
+    dispatch(fetchJobAlertsListRequest(1406))
   }, [router.query])
 
   const sortOptions = [
@@ -267,6 +269,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const { keyword, category, industry, education, workExperience, ...rest } = router.query
     const queryObject = Object.assign({}, { ...rest })
     updateUrl(queryParam, queryObject)
+  }
+
+  const fetchJobAlertsList = () => {
+    // TODO: Get userId
+    console.log('called')
+    dispatch(fetchJobAlertsListRequest(1406))
   }
 
   return (
@@ -371,7 +379,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         />
       </div>
       <div style={{ display: 'block' }}>
-        <JobListSection />
+        <JobListSection 
+          query={predefinedQuery}
+          fetchJobAlertsList={() => fetchJobAlertsList()}
+        />
       </div>
     </Layout>
   )

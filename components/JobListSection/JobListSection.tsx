@@ -38,7 +38,15 @@ import {
   ArrowForwardIcon
 } from 'images'
 
-const JobListSection = () => {
+type JobSelectionProps = {
+  query?: string
+  fetchJobAlertsList?: Function
+}
+
+const JobListSection = ({
+  query,
+  fetchJobAlertsList
+}: JobSelectionProps) => {
   const dummyCompanyDetail =
     "Loop Contact Solutions is a contact center uniquely designed to help subscription businesses acquire and keep more customers who purchase more products over longer periods of time. The result is the achievement of Loop's core value proposition to significantly improve recurring revenues, profits and market share for our subscription business clients. Loop Contact Solutions is a contact center uniquely designed to help subscription businesses acquire and keep more customers who purchase more products over longer periods of time. The result is the achievement of Loop's core value proposition to significantly improve recurring revenues, profits and market share for our subscription business clients."
   
@@ -161,7 +169,12 @@ const JobListSection = () => {
       >
         <div className={styles.jobModalBody}>
           <Text textStyle='base'>
-            Job alert for ‘Lorem Ipsum’ enabled.
+            {
+              query?.[0]
+                ? <span>Job alert for ‘<Text textStyle='base' bold>{query[0]}</Text>’ enabled.</span>
+                : <span>No selected keyword.</span>
+            }
+            
             <Text
               className={styles.jobModalEnableAlert}
               textColor='primaryBlue'
@@ -565,7 +578,10 @@ const JobListSection = () => {
               </div>
               <div
                 className={styles.jobListOptionAlertsItem}
-                onClick={() => setModalJobAlertList(true)}
+                onClick={() => {
+                  setModalJobAlertList(true)
+                  fetchJobAlertsList()
+                }}
               >
                 <Image src={NotificationIcon} width='20' height='20' />
               </div>
