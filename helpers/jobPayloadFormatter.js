@@ -6,102 +6,32 @@ import slugify from 'slugify'
 
 
 const handleSalary = (salaryRanges) => {
-  const sanitiseSalaryRange = salaryRanges.map(range => range === 'Below 30K' ? '10K - 30K' : range)
   let salaryFrom = '' 
   let salaryTo = ''
-
-  salaryFrom = sanitiseSalaryRange
-    .filter((salary) => salary !== 'Above_200K')
-    .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split(' - ')[0]))
-
-  salaryTo = sanitiseSalaryRange
-    .filter((salary) => salary !== 'Above_200K')
-    .map((salaryTo) => 
-      thousandsToNumber('' + salaryTo.split(' - ')[1]))
-
-  if (sanitiseSalaryRange.includes('Above_200K')) {
-    salaryFrom.push('200001')
-    salaryTo.push('400000')
+  if (salaryRanges){
+    const sanitiseSalaryRange = salaryRanges.map(range => range === 'Below 30K' ? '10K - 30K' : range)
+  
+    salaryFrom = sanitiseSalaryRange
+      .filter((salary) => salary !== 'Above_200K')
+      .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split(' - ')[0]))
+  
+    salaryTo = sanitiseSalaryRange
+      .filter((salary) => salary !== 'Above_200K')
+      .map((salaryTo) => 
+        thousandsToNumber('' + salaryTo.split(' - ')[1]))
+  
+    if (sanitiseSalaryRange.includes('Above_200K')) {
+      salaryFrom.push('200001')
+      salaryTo.push('400000')
+    }
+  
+    salaryFrom = salaryFrom.join(',')
+    salaryTo = salaryTo.join(',')
+  
   }
-
-  salaryFrom = salaryFrom.join(',')
-  salaryTo = salaryTo.join(',')
-
   return [salaryFrom, salaryTo]
 }
 
-const handleWorkExperience = (workExperience) => {
-  let xpLvls = ''
-
-  if (Array.isArray(workExperience) && workExperience.length && !workExperience.includes('All')) {
-    xpLvls = workExperience.join(',')
-  }
-
-  return xpLvls
-}
-
-const handleEducation = (education) => {
-  let degree = ''
-
-  if (Array.isArray(education) && education.length && !education.includes('All')) {
-    degree = education.join(',')
-  }
-
-  return degree
-}
-
-const handleJobType = (jobType) => {
-  let formatJobType = ''
-
-  if (Array.isArray(jobType) && jobType.length && !jobType.includes('All')) {
-    formatJobType = jobType.join(',')
-  }
-
-  return formatJobType
-}
-
-const handleIndustry = (industry) => {
-  let industryKey = ''
-
-  if (Array.isArray(industry) && industry.length && !industry.includes('All')) {
-    industryKey = industry.join(',')
-  }
-  //   if (Array.isArray(industry) && industry.length && !industry.includes('All')) {
-  //     industryKey = industry.join(',').replace(/&/gi, '%26')
-  //   }
-
-  return industryKey
-}
-
-const handleApplicationStatus = (applicationStatus) => {
-  let formatApplicationStatus = ''
-
-  if (Array.isArray(applicationStatus) && applicationStatus.length) {
-    formatApplicationStatus = applicationStatus.join(',')
-  }
-
-  return formatApplicationStatus
-}
-
-const handleJobCategory = (jobCategory, skipEncode = false) => {
-  let category = ''
-
-  if (Array.isArray(jobCategory) && jobCategory.length && !jobCategory.includes('All')) {
-    category = skipEncode ? jobCategory.join(',') : jobCategory.join(',').replace(/&/gi, '%26')
-  }
-
-  return category
-}
-
-const handleJobLocation = (jobLocation) => {
-  let formatJobLocation = ''
-
-  if (Array.isArray(jobLocation) && jobLocation.length && !jobLocation.includes('All')) {
-    formatJobLocation = jobLocation.join(',')
-  }
-
-  return formatJobLocation
-}
 
 const formatLocationConfig = (locationList) => {
   const locationConfig = locationList.map((region) => {
@@ -112,10 +42,6 @@ const formatLocationConfig = (locationList) => {
     }
   })
   return locationConfig
-}
-
-const handleIsCompanyVerified = (isVerified) => {
-  return isVerified ? 1 : 0
 }
 
 const urlQueryParser = (string) => {
@@ -263,29 +189,6 @@ const getPredefinedParamsFromUrl = (
     predefinedCategory,
     predefinedLocation,
   }
-}
-
-const getPayload = (routerQueries) => {
-  const { keyword } = routerQueries
-
-  const payloadObj = {
-    query: keyword
-    // // query: payloadQuery ? payloadQuery.toLowerCase() : payloadQuery,
-    // page: isNaN(page) ? 1 : Number(page),
-    // salary: salaryRange,
-    // workExperience: workExperience,
-    // education: education,
-    // jobType: jobType,
-    // industry: industry,
-    // isVerified: isVerified,
-    // sort: sortParam,
-    // applicationStatus: applicationStatus,
-    // viewPage: activeView,
-    // jobCategory: payloadJobCategory,
-    // jobLocation: payloadJobLocation,
-    // companyName,
-  }
-  return payloadObj
 }
 
 // e.g of url = query-jobs?
@@ -451,21 +354,12 @@ const getLocationList = (config) => {
 
 export {
   handleSalary,
-  handleWorkExperience,
-  handleEducation,
-  handleJobType,
-  handleIndustry,
-  handleApplicationStatus,
-  handleJobCategory,
-  handleJobLocation,
-  handleIsCompanyVerified,
   urlQueryParser,
   categoryParser,
   capitalizeFirstAlphabet,
   SEOJobSearchMetaBuilder,
   getPredefinedParamsFromUrl,
   formatLocationConfig,
-  getPayload,
   conditionChecker,
   getLocationList
 }
