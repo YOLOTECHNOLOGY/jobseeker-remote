@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 /* Vendors */
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import { END } from 'redux-saga'
 
@@ -145,7 +145,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
-  const jobsList = useSelector((store: any) => store.job.jobsList)
+  // const jobsList = useSelector((store: any) => store.job.jobsList)
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlQuery, setUrlQuery] = useState()
   const [urlLocation, setUrlLocation] = useState([])

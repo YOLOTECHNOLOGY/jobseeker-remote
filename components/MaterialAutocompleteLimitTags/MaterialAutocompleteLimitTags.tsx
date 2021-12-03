@@ -17,6 +17,11 @@ interface MaterialAutoCompleteLimitTagsProps {
   //   label?: string
 }
 
+type OptionType = {
+  value: string
+  label: string | boolean
+};
+
 const MaterialAutocompleteLimitTags = ({
   id,
   options,
@@ -67,7 +72,9 @@ const MaterialAutocompleteLimitTags = ({
         options={options}
         getOptionLabel={(option) => option.value}
         // inputValue={(a)=>console.log('a', a)}
-        onChange={onChange}
+        onChange={(
+          e: React.ChangeEvent<HTMLInputElement>,
+        ): void => onChange(e)}
         defaultValue={defaultValue}
         //   defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
         renderInput={(params) => (
