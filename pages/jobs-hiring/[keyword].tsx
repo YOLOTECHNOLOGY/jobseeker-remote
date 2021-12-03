@@ -49,6 +49,7 @@ interface JobSearchPageProps {
   seoMetaDescription: string
   config: configObject
   topCompanies: companyObject[]
+  defaultPage: number
 }
 
 type configObject = {
@@ -140,7 +141,7 @@ const renderPopularSearch = () => {
 }
 
 const JobSearchPage = (props: JobSearchPageProps) => {
-  const { seoMetaTitle, seoMetaDescription, config, topCompanies } = props
+  const { seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage } = props
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
@@ -177,8 +178,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       education: router.query?.qualification,
       workExperience: router.query?.workExperience,
       sort: router.query?.sort,
+      page:router.query?.page ? Number(router.query.page) : 1,
     }
-    console.log('payload getPayload', payload)
     dispatch(fetchJobsListRequest(payload))
   }, [router.query])
 
@@ -209,6 +210,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       { shallow: true }
     )
   }
+
   const onKeywordSearch = (val) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
@@ -371,7 +373,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           onShowFilter={handleShowFilter}
         />
         <div style={{ display: 'block' }}>
-          <JobListSection />
+          <JobListSection defaultPage={defaultPage}/>
         </div>
       </div>
     </Layout>
@@ -379,7 +381,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
-  const { keyword } = query
+  const { keyword, page } = query
   store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesRequest())
   store.dispatch(END)
@@ -392,6 +394,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       config,
       topCompanies,
       key: keyword,
+      defaultPage:Number(page),
     },
   }
 })

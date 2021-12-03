@@ -27,7 +27,7 @@ function* fetchJobsListReq(action) {
       size,
     } = action.payload
 
-    const [salaryFrom, salaryTo ]= handleSalary(salary.split(','))
+    const [salaryFrom, salaryTo ]= handleSalary(salary?.split(','))
     const payload = {
       query,
       job_locations: jobLocation,
@@ -39,6 +39,7 @@ function* fetchJobsListReq(action) {
       xp_lvls: workExperience,
       job_types: jobType,
       sort,
+      page,
       source: 'web',
     }
 
@@ -49,7 +50,7 @@ function* fetchJobsListReq(action) {
       yield put(fetchJobsListSuccess(response.data))
     }
   } catch (error) {
-    console.log('err', err)
+    console.log('error', error)
     yield put(fetchJobsListFailed(error))
   }
 }
