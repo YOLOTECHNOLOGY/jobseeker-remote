@@ -1,23 +1,23 @@
 import axios from 'axios'
 import { getCookie } from 'helpers/cookies'
-import { configureStore } from 'store'
+// import { configureStore } from 'store'
 // import { logout } from 'shared/helpers/authentication'
 
 const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken) => {
-  let remoteAddress = ''
-  let isMobile = ''
+  // let remoteAddress = ''
+  // let isMobile = ''
 
   if (typeof window !== 'undefined') {
-    const { store } = configureStore(window.__PRELOADED_STATE__, false)
+    // const { store } = configureStore(window.__PRELOADED_STATE__, false)
 
-    remoteAddress = store.getState().Public.utils.setRemoteIp.ip
-    isMobile = store.getState().Public.utils.setUserDevice.userAgent.isMobile
+    // remoteAddress = store.getState().Public.utils.setRemoteIp.ip
+    // isMobile = store.getState().Public.utils.setUserDevice.userAgent.isMobile
   }
 
   let url = ''
   let headers = {
-    remoteAddress: remoteAddress,
-    source: isMobile ? 'mobile-web' : 'web',
+    // remoteAddress: remoteAddress,
+    // source: isMobile ? 'mobile-web' : 'web',
   }
 
   switch (baseURL) {

@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 /* Vendors */
 import { Radio, RadioGroup, FormControlLabel } from '@mui/material'
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 
 /* Components */
@@ -13,6 +14,9 @@ import Text from 'components/Text'
 import JobTag from 'components/JobTag'
 import JobCard from 'components/JobCard'
 import Modal from 'components/Modal'
+
+/* Material Components */
+import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 
 /* Styles */
 import styles from './JobListSection.module.scss'
@@ -38,15 +42,18 @@ import {
   ArrowForwardIcon
 } from 'images'
 
-type JobSelectionProps = {
+interface JobListSectionProps {
+  defaultPage: number
   query?: string
   fetchJobAlertsList?: Function
 }
 
-const JobListSection = ({
+const JobListSection = ({ 
+  defaultPage,
   query,
   fetchJobAlertsList
-}: JobSelectionProps) => {
+}: JobListSectionProps) => {
+  const router = useRouter()
   const dummyCompanyDetail =
     "Loop Contact Solutions is a contact center uniquely designed to help subscription businesses acquire and keep more customers who purchase more products over longer periods of time. The result is the achievement of Loop's core value proposition to significantly improve recurring revenues, profits and market share for our subscription business clients. Loop Contact Solutions is a contact center uniquely designed to help subscription businesses acquire and keep more customers who purchase more products over longer periods of time. The result is the achievement of Loop's core value proposition to significantly improve recurring revenues, profits and market share for our subscription business clients."
   
@@ -149,6 +156,11 @@ const JobListSection = ({
     setTimeout(() => {
       setIsDoneCopy(false)
     }, 5000)
+  }
+
+  const handlePaginationClick = (event, val) => {
+    router.query.page = val
+    router.push(router, undefined, { shallow: true })
   }
 
   const ModalEnableJobAlert = () => {
@@ -624,6 +636,9 @@ const JobListSection = ({
               selectedId={jobSelectedId}
               handleSelection={handleJobSelection}
             />
+          </div>
+          <div className={styles.paginationWrapper}>
+            <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={defaultPage} totalPages={105} />
           </div>
         </div>
         <div className={styles.jobDetail}>

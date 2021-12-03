@@ -1,0 +1,3 @@
+import MaterialRoundedPagination from './MaterialRoundedPagination'
+
+export default MaterialRoundedPagination

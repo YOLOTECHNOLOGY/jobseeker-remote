@@ -50,6 +50,7 @@ interface JobSearchPageProps {
   seoMetaDescription: string
   config: configObject
   topCompanies: companyObject[]
+  defaultPage: number
 }
 
 type configObject = {
@@ -141,7 +142,7 @@ const renderPopularSearch = () => {
 }
 
 const JobSearchPage = (props: JobSearchPageProps) => {
-  const { seoMetaTitle, seoMetaDescription, config, topCompanies } = props
+  const { seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage } = props
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
@@ -178,8 +179,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       education: router.query?.qualification,
       workExperience: router.query?.workExperience,
       sort: router.query?.sort,
+      page:router.query?.page ? Number(router.query.page) : 1,
     }
-    console.log('payload getPayload', payload)
     dispatch(fetchJobsListRequest(payload))
     dispatch(fetchJobAlertsListRequest(1406))
   }, [router.query])
@@ -211,10 +212,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       { shallow: true }
     )
   }
+
   const onKeywordSearch = (val) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
-    const queryObject = Object.assign({}, { sort: 2, ...rest })
+    let queryObject = {}
+    queryObject = Object.assign({}, { ...rest, sort: val.length > 0 ? 2 : 1 })
     const queryParam = conditionChecker(val, predefinedLocation, predefinedCategory)
     updateUrl(queryParam, queryObject)
   }
@@ -288,7 +291,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             variant='outlined'
             size='small'
             className={styles.searchField}
-            value={urlQuery}
+            defaultValue={urlQuery}
             onChange={(e: any) => setUrlQuery(e.target.value)}
             onKeyPress={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
@@ -377,19 +380,20 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           onResetFilter={handleResetFilter}
           onShowFilter={handleShowFilter}
         />
-      </div>
-      <div style={{ display: 'block' }}>
-        <JobListSection 
-          query={predefinedQuery}
-          fetchJobAlertsList={() => fetchJobAlertsList()}
-        />
+        <div style={{ display: 'block' }}>
+          <JobListSection 
+            defaultPage={defaultPage}
+            query={predefinedQuery}
+            fetchJobAlertsList={() => fetchJobAlertsList()}
+          />
+        </div>
       </div>
     </Layout>
   )
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
-  const { keyword } = query
+  const { keyword, page } = query
   store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesRequest())
   store.dispatch(END)
@@ -402,6 +406,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       config,
       topCompanies,
       key: keyword,
+      defaultPage:Number(page),
     },
   }
 })
