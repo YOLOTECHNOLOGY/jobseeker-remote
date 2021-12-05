@@ -1,8 +1,8 @@
 import configuredAxios from 'helpers/configuredAxios'
 
-const updateJobAlertService = ({userId}) => {
-  const axios = configuredAxios('data', 'public')
-  return axios.put(`/api/v2/subscribejob/${userId}`)
+const updateJobAlertService = (payload) => {
+  const axios = configuredAxios('data', 'protected')
+  return axios.put(`/subscribejob/${payload.id}`, { ...payload })
 }
 
 export { updateJobAlertService }

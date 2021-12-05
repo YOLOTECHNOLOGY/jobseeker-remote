@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 /* Vendors */
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { END } from 'redux-saga'
 
@@ -15,6 +15,9 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
 import { fetchFeaturedCompaniesRequest } from 'store/actions/companies/fetchFeaturedCompanies'
 import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
+import { deleteJobAlertRequest } from 'store/actions/alerts/deleteJobAlert'
+import { updateJobAlertRequest } from 'store/actions/alerts/updateJobAlert'
+import { createJobAlertRequest } from 'store/actions/alerts/createJobAlert'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
@@ -152,6 +155,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [urlLocation, setUrlLocation] = useState([])
   const catList = config && config.inputs && config.inputs.job_category_lists
   const locList = getLocationList(config)
+  const [jobAlertList, setJobAlertList] = useState(null)
+  const [createdJobAlert, setCreatedJobAlert] = useState(null)
 
   const displayQuickLinks = router.query.keyword === 'job-search'
   const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
@@ -159,6 +164,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     catList,
     locList
   )
+  const createdJobAlertResponse = useSelector((store: any) => store.alerts.createJobAlert.response)
+  const jobAlertListResponse = useSelector((store: any) => store.alerts.fetchJobAlertsList.response)
+  const isDeletingJobAlert = useSelector((store: any) => store.alerts.deleteJobAlert.fetching)
+  const isUpdatingJobAlert = useSelector((store: any) => store.alerts.updateJobAlert.fetching)
+
   useEffect(() => {
     console.log('router query changed', router.query)
     if (predefinedQuery) setUrlQuery(predefinedQuery.toString())
@@ -182,8 +192,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       page:router.query?.page ? Number(router.query.page) : 1,
     }
     dispatch(fetchJobsListRequest(payload))
-    dispatch(fetchJobAlertsListRequest(1406))
   }, [router.query])
+
+  useEffect(() => {
+    if (jobAlertListResponse) setJobAlertList(jobAlertListResponse)
+    if (createdJobAlertResponse) setCreatedJobAlert(createdJobAlertResponse)
+
+  }, [jobAlertListResponse, createdJobAlertResponse])
 
   const sortOptions = [
     { label: 'Newest', value: 1 },
@@ -274,10 +289,23 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     updateUrl(queryParam, queryObject)
   }
 
-  const fetchJobAlertsList = () => {
-    // TODO: Get userId
-    console.log('called')
-    dispatch(fetchJobAlertsListRequest(1406))
+  const handleFetchJobAlertsList = () => {
+    // TODO: Get userId = 2524
+    dispatch(fetchJobAlertsListRequest(2524))
+  }
+
+  const handleDeleteJobAlert = (alertId) => {
+    dispatch(deleteJobAlertRequest(alertId))
+  }
+
+  const handleUpdateJobAlert = (payload) => {
+    dispatch(updateJobAlertRequest(payload))
+  }
+
+  const handleCreateJobAlert = (payload) => {
+    // TODO: Get userId = 2524
+    payload.user_id = 2524
+    dispatch(createJobAlertRequest(payload))
   }
 
   return (
@@ -380,13 +408,21 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           onResetFilter={handleResetFilter}
           onShowFilter={handleShowFilter}
         />
-        <div style={{ display: 'block' }}>
-          <JobListSection 
-            defaultPage={defaultPage}
-            query={predefinedQuery}
-            fetchJobAlertsList={() => fetchJobAlertsList()}
-          />
-        </div>
+      </div>
+      <div style={{ display: 'block' }}>
+        <JobListSection 
+          defaultPage={defaultPage}
+          query={predefinedQuery}
+          location={urlLocation}
+          jobAlertsList={jobAlertList}
+          createdJobAlert={createdJobAlert}
+          fetchJobAlertsList={handleFetchJobAlertsList}
+          deleteJobAlert={handleDeleteJobAlert}
+          updateJobAlert={handleUpdateJobAlert}
+          createJobAlert={handleCreateJobAlert}
+          isDeletingJobAlert={isDeletingJobAlert}
+          isUpdatingJobAlert={isUpdatingJobAlert}
+        />
       </div>
     </Layout>
   )

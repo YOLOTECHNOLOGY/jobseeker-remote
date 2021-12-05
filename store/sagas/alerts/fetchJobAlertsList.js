@@ -7,7 +7,6 @@ import {
 import { fetchJobAlertsListService } from 'store/services/alerts/fetchJobAlertsList'
 
 function* fetchJobAlertsListReq(action) {
-  console.log('saga---', action.payload)
   try {
     const { data } = yield call(fetchJobAlertsListService, action.payload)
     yield put(fetchJobAlertsListSuccess(data.data))

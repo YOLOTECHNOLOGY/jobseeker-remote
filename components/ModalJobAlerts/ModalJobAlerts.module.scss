@@ -1,0 +1,93 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.ModalEnableJobAlertText {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.ModalJobAlertBody {
+  padding: 20px 40px;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.ModalJobAlertsListBody {
+  height: 500px;
+  padding: 0;
+}
+
+.ModalJobAlerts {
+  &List {
+    list-style-type: none;
+  }
+
+  &Item {
+    padding: 30px 40px 0;
+
+    &:not(:last-child) {
+      .jobAlertsItemBody {
+        border-bottom: 1px solid rgba($lightgrey, 0.5);
+      }
+    }
+
+    &:hover {
+      background-color: rgba($lightgrey, 0.1);
+    }
+  }
+
+  &ItemHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  &ItemBody {
+    padding-bottom: 30px;
+
+    span {
+      display: block;
+      margin-bottom: 2px;
+    }
+  }
+
+  &ItemAction {
+    display: flex;
+    align-items: center;
+
+    div {
+      margin-left: 16px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.ModalUpdateJobAlert {
+  &Header {
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: space-between;
+
+    & > div {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &Group {
+    margin-top: 10px;
+
+    label {
+      margin-bottom: 4px;
+    }
+  }
+
+  &GroupHeader {
+    margin-bottom: 4px;
+  }
+}

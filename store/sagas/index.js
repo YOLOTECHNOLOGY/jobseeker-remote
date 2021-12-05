@@ -18,6 +18,7 @@ import watchPostReport from 'store/sagas/reports/postReport'
 import watchFetchJobAlertsList from 'store/sagas/alerts/fetchJobAlertsList'
 import watchUpdateJobAlert from 'store/sagas/alerts/updateJobAlert'
 import watchDeleteJobAlert from 'store/sagas/alerts/deleteJobAlert'
+import watchCreateJobAlert from 'store/sagas/alerts/createJobAlert'
 
 function* rootSaga() {
   yield all([
@@ -25,12 +26,14 @@ function* rootSaga() {
     watchFetchJobsList(),
     watchFetchJobDetail(),
     watchFetchFeaturedCompanies(),
+    watchFetchCompanyDetail(),
+    
     watchPostReport(),
 
     watchFetchJobAlertsList(),
     watchUpdateJobAlert(),
-    watchDeleteJobAlert()
-    watchFetchCompanyDetail()
+    watchDeleteJobAlert(),
+    watchCreateJobAlert()
   ])
 }
 
