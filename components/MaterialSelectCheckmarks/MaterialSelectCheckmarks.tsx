@@ -81,9 +81,30 @@ const MaterialSelectCheckmarks = ({
           },
         },
       },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            fontSize: '14px',
+            transform: 'translate(14px, 10px) scale(1)',
+            '&.Mui-focused': {
+              fontSize: '10px',
+              transform: 'translate(14px, -10px) scale(1)',
+            },
+          },
+        },
+      },
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            fontSize: '14px',
+          },
+          input: {
+            padding: '10.5px 14px !important',
+          },
+        },
+      },
     },
   })
-  // console.log('selectedOptions', selectedOptions)
   return (
     <ThemeProvider theme={theme}>
       <FormControl className={className} size='small'>
