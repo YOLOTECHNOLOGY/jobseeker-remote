@@ -5,6 +5,8 @@ import configReducers from './config'
 import utilityReducers from './utility'
 import jobsReducers from './jobs'
 import companiesReducers from './companies'
+import reportsReducers from './reports'
+import alertsReducers from './alerts'
 
 // TODO: Import and List reducers here
 const combinedReducer = combineReducers({
@@ -12,6 +14,8 @@ const combinedReducer = combineReducers({
   utility: utilityReducers,
   job: jobsReducers,
   companies:companiesReducers,
+  reports: reportsReducers,
+  alerts: alertsReducers,
 })
 
 /* 

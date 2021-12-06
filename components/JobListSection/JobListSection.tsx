@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 
 /* Vendors */
-import { Radio, RadioGroup, FormControlLabel } from '@mui/material'
-import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share'
 import { useRouter } from 'next/router'
-import { useForm } from 'react-hook-form'
 
 /* Components */
 import Image from 'next/image'
@@ -13,7 +10,10 @@ import Button from 'components/Button'
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
 import JobCard from 'components/JobCard'
-import Modal from 'components/Modal'
+
+import ModalShare from 'components/ModalShare'
+import ModalJobAlerts from 'components/ModalJobAlerts'
+import ModalReportJob from 'components/ModalReportJob'
 
 /* Material Components */
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
@@ -32,105 +32,54 @@ import {
   EmployeeStockIcon,
   HousingAllowanceIcon,
   MoreIcon,
-  NotificationIcon,
-  CreateIcon,
-  DeleteIcon,
-  FacebookIcon,
-  LinkedinIcon,
-  TwitterIcon,
-  CopyIcon,
-  ArrowForwardIcon
+  NotificationIcon
 } from 'images'
 
 interface JobListSectionProps {
   defaultPage: number
+  query?: string
+  jobAlertsList?: any
+  createdJobAlert?: Object
+  fetchJobAlertsList?: Function
+  deleteJobAlert?: Function
+  isDeletingJobAlert?: boolean
+  updateJobAlert?: Function
+  isUpdatingJobAlert?: boolean
+  createJobAlert?: Function
+  location?: any
 }
 
-const JobListSection = ({ defaultPage }: JobListSectionProps) => {
+const JobListSection = ({ 
+  defaultPage,
+  query,
+  fetchJobAlertsList,
+  jobAlertsList,
+  createdJobAlert,
+  deleteJobAlert,
+  isDeletingJobAlert,
+  updateJobAlert,
+  isUpdatingJobAlert,
+  createJobAlert,
+  location,
+}: JobListSectionProps) => {
   const router = useRouter()
   const dummyCompanyDetail =
     "Loop Contact Solutions is a contact center uniquely designed to help subscription businesses acquire and keep more customers who purchase more products over longer periods of time. The result is the achievement of Loop's core value proposition to significantly improve recurring revenues, profits and market share for our subscription business clients. Loop Contact Solutions is a contact center uniquely designed to help subscription businesses acquire and keep more customers who purchase more products over longer periods of time. The result is the achievement of Loop's core value proposition to significantly improve recurring revenues, profits and market share for our subscription business clients."
-  
-  const reportOptions = [
-    [
-      {
-        label: 'I think it\'s a scam, phishing or malware',
-        subLabel: 'Ex: someone asks for personal information or money or posts suspicious links',
-        value: 'scam_1'
-      },
-      {
-        
-        label: 'I think it\'s promotional or spam',
-        subLabel: 'Ex: someone advertises a product for monetary gain or posts irrelevant content for high visibility',
-        value: 'scam_2'
-      },
-    ],
-    [
-      {
-        label: 'I think it\'s discriminatory, or advocates, or supports discrimination',
-        subLabel: 'Ex: discriminates based off of age or sex',
-        value: 'discrimination_1'
-      },
-      {
-        label: 'I think it\'s offensive or harassing',
-        subLabel: 'Ex: threats of violence or unwelcome advances',
-        value: 'discrimination_2'
-      },
-      {
-        label: 'I think it shows or promotes extreme violence or terrorism',
-        subLabel: 'Ex: torture, rape or abuse, terrorist acts, or recruitment for terrorism',
-        value: 'discrimination_3'
-      },
-    ],
-    [
-      {
-        label: 'The job is closed',
-        subLabel: 'Ex: it’s no longer accepting applicants',
-        value: 'broken_1'
-      },
-      {
-        label: 'The job has an incorrect company',
-        subLabel: 'Ex: the job has the wrong company name or page display',
-        value: 'broken_2'
-      },
-      {
-        label: 'This job has an incorrect location',
-        subLabel: 'Ex: the city, state, province or country is incorrect',
-        value: 'broken_3'
-      },
-      {
-        label: 'The job has incorrect formatting',
-        subLabel: 'Ex: its job details has missing text, gramatical errors, or other formatting mistakes',
-        value: 'broken_4'
-      },
-      {
-        label: 'This job does not belong on Bossjob',
-        subLabel: 'Ex: the job from this page should not be posted on Bossjob',
-        value: 'broken_5'
-      },
-    ]
-  ]
   
   const [companyDetail, setCompanyDetail] = useState(dummyCompanyDetail)
   const [isFullDetail, setIsFullDetail] = useState(false)
   const [jobSelectedId, setJobSelectedId] = useState(null)
   const [jobDetailOption, setJobDetailOption] = useState(false)
+  
+  const [isShowModalShare, setIsShowModalShare] = useState(false)
+  const [isShowModalEnableJobAlerts, setIsShowModalEnableJobAlerts] = useState(false)
+  const [isShowModalManageJobAlerts, setIsShowModalManageJobAlerts] = useState(false)
+  const [isShowReportJob, setIsShowReportJob] = useState(false)
 
-  const [modalEnableJobAlert, setModalEnableJobAlert] = useState(false)
-  const [modalJobAlertList, setModalJobAlertList] = useState(false)
-  const [modalManageJobAlert, setModalManageJobAlert] = useState(false)
-  const [modalDeleteJobAlert, setModalDeleteJobAlert] = useState(false)
-  const [modalShare, setModalShare] = useState(false)
-  const [modalReport, setModalReport] = useState(false)
-  const [modalReportDetail, setModalReportDetail] = useState(false)
-  const [modalReportSelected, setModalReportSelected] = useState(null)
-  const [modalReportSelectedItem, setModalReportSelectedItem] = useState('')
-  const [frequency, setFrequency] = useState('daily')
-  const [notifiedAt, setNotifiedAt] = useState('email')
-  const [isDoneCopy, setIsDoneCopy] = useState(false)
-
-  const jobLinkRef = useRef(null)
-  const jobDetailUrl = `/job/1`
+  let jobDetailUrl = ''
+  if (typeof window !== 'undefined') {
+    jobDetailUrl = `${window.location.origin}/job/path-name`
+  }
 
   useEffect(() => {
     handleCompanyDisplay()
@@ -144,422 +93,21 @@ const JobListSection = ({ defaultPage }: JobListSectionProps) => {
     setCompanyDetail(dummyCompanyDetail)
   }
   const handleJobSelection = (id) => setJobSelectedId(id)
-  const handleCopyLink = (link) => {
-    navigator.clipboard.writeText(link)
-    setIsDoneCopy(true)
-    setTimeout(() => {
-      setIsDoneCopy(false)
-    }, 5000)
-  }
 
   const handlePaginationClick = (event, val) => {
     router.query.page = val
     router.push(router, undefined, { shallow: true })
   }
 
-  const ModalEnableJobAlert = () => {
-    return (
-      <Modal
-        showModal={modalEnableJobAlert}
-        handleModal={() => setModalEnableJobAlert(false)}
-        headerTitle='Enable Job Alert'
-        handleFirstButton={() => {
-          setModalEnableJobAlert(false)
-        }}
-        handleSecondButton={() => {
-          setModalEnableJobAlert(false)
-          setModalDeleteJobAlert(true)
-        }}
-        firstButtonText='Keep'
-        secondButtonText='Delete'
-      >
-        <div className={styles.jobModalBody}>
-          <Text textStyle='base'>
-            Job alert for ‘Lorem Ipsum’ enabled.
-            <Text
-              className={styles.jobModalEnableAlert}
-              textColor='primaryBlue'
-              onClick={() => {
-                setModalEnableJobAlert(false)
-                setModalJobAlertList(true)
-              }}
-            >
-              {' '}
-              Manage alert.
-            </Text>
-          </Text>
-        </div>
-      </Modal>
-    )
-  }
-
-  const ModalJobAlerts = () => {
-    return (
-      <Modal
-        headerTitle='Job Alerts'
-        showModal={modalJobAlertList}
-        handleModal={() => setModalJobAlertList(false)}
-        firstButtonText='Done'
-        handleFirstButton={() => setModalJobAlertList(false)}
-      >
-        <div className={styles.jobModalBody}>
-          <ul className={styles.jobAlertsList}>
-            <li className={styles.jobAlertsItem}>
-              <div className={styles.jobAlertsItemHeader}>
-                <Text textStyle='lg' bold>
-                  Marketing
-                </Text>
-                <div className={styles.jobAlertsItemAction}>
-                  <Image
-                    src={CreateIcon}
-                    width='18'
-                    height='18'
-                    onClick={() => {
-                      setModalJobAlertList(false)
-                      setModalManageJobAlert(true)
-                    }}
-                    className={styles.jobAlertsItemButton}
-                  />
-                  <Image
-                    src={DeleteIcon}
-                    width='18'
-                    height='18'
-                    onClick={() => {
-                      setModalJobAlertList(false)
-                      setModalDeleteJobAlert(true)
-                    }}
-                    className={styles.jobAlertsItemButton}
-                  />
-                </div>
-              </div>
-              <div className={styles.jobAlertsItemBody}>
-                <Text textStyle='base'>Manila</Text>
-                <Text textStyle='base'>Filters: Full-time, Marketing/Business Dev </Text>
-                <Text textStyle='base'>Frequency: Daily via email</Text>
-              </div>
-            </li>
-            <li className={styles.jobAlertsItem}>
-              <div className={styles.jobAlertsItemHeader}>
-                <Text textStyle='lg' bold>
-                  Marketing
-                </Text>
-                <div className={styles.jobAlertsItemAction}>
-                  <Image
-                    src={CreateIcon}
-                    width='20'
-                    height='20'
-                    onClick={() => {
-                      setModalJobAlertList(false)
-                      setModalManageJobAlert(true)
-                    }}
-                    className={styles.jobAlertsItemButton}
-                  />
-                  <Image
-                    src={DeleteIcon}
-                    width='20'
-                    height='20'
-                    onClick={() => {
-                      setModalJobAlertList(false)
-                      setModalDeleteJobAlert(true)
-                    }}
-                    className={styles.jobAlertsItemButton}
-                  />
-                </div>
-              </div>
-              <div className={styles.jobAlertsItemBody}>
-                <Text textStyle='base'>Manila</Text>
-                <Text textStyle='base'>Filters: Full-time, Marketing/Business Dev </Text>
-                <Text textStyle='base'>Frequency: Daily via email</Text>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </Modal>
-    )
-  }
-
-  const ModalManageJobAlert = () => {
-    const handleChange = (event, isFrequency) => {
-      if (isFrequency) {
-        setFrequency(event.target.value)
-        return
-      }
-      setNotifiedAt(event.target.value)
-    }
-
-    return (
-      <Modal
-        headerTitle='Manage Job Alert'
-        showModal={modalManageJobAlert}
-        handleModal={() => setModalManageJobAlert(false)}
-        firstButtonText='Back'
-        handleFirstButton={() => {
-          setModalManageJobAlert(false)
-          setModalJobAlertList(true)
-        }}
-        secondButtonText='Done'
-        handleSecondButton={() => {
-          setModalManageJobAlert(false)
-          setModalJobAlertList(true)
-        }}
-      >
-        <div className={styles.jobModalBody}>
-          <div className={styles.jobManageJobAlert}>
-            <div className={styles.jobManageJobAlertHeader}>
-              <Text textStyle='lg' bold>
-                Marketing
-              </Text>
-              <Image
-                src={DeleteIcon}
-                width='18'
-                height='18'
-                onClick={() => {
-                  setModalJobAlertList(false)
-                  setModalManageJobAlert(false)
-                  setModalDeleteJobAlert(true)
-                }}
-              />
-            </div>
-            <div className={styles.jobManageJobAlertBody}>
-              <div className={styles.jobManageJobAlertGroup}>
-                <Text textStyle='base' className={styles.jobManageJobAlertGroupHeader}>
-                  Alert Frequency
-                </Text>
-                <RadioGroup
-                  aria-label='frequency'
-                  name='controlled-radio-buttons-group'
-                  value={frequency}
-                  onChange={(e) => handleChange(e, true)}
-                >
-                  <FormControlLabel
-                    value='daily'
-                    control={<Radio />}
-                    label={<Text textStyle='base'>Daily</Text>}
-                  />
-                  <FormControlLabel
-                    value='weekly'
-                    control={<Radio />}
-                    label={<Text textStyle='base'>Weekly</Text>}
-                  />
-                </RadioGroup>
-              </div>
-
-              <div className={styles.jobManageJobAlertGroup}>
-                <Text textStyle='base' className={styles.jobManageJobAlertGroupHeader}>
-                  Get notified via:
-                </Text>
-                <RadioGroup
-                  aria-label='frequency'
-                  name='controlled-radio-buttons-group'
-                  value={notifiedAt}
-                  onChange={handleChange}
-                >
-                  <FormControlLabel
-                    value='email'
-                    control={<Radio />}
-                    label={<Text textStyle='base'>Email</Text>}
-                  />
-                </RadioGroup>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Modal>
-    )
-  }
-
-  const ModalDeleteJobAlert = () => {
-    return (
-      <Modal
-        headerTitle='Delete Job Alert'
-        showModal={modalDeleteJobAlert}
-        handleModal={() => setModalDeleteJobAlert(false)}
-        firstButtonText='Keep'
-        handleFirstButton={() => {
-          setModalDeleteJobAlert(false)
-          setModalJobAlertList(true)
-        }}
-        secondButtonText='Delete'
-        handleSecondButton={() => {
-          setModalDeleteJobAlert(false)
-          setModalJobAlertList(true)
-        }}
-      >
-        <div className={styles.jobModalBody}>
-          <Text textStyle='base'>
-            You are about to delete the job alert for “Marketing, Manila”.
-            <br /> This cannot be undone
-          </Text>
-        </div>
-      </Modal>
-    )
-  }
-
-  const ModalShare = () => {
-    return (
-      <Modal
-        headerTitle='Share this job'
-        showModal={modalShare}
-        handleModal={() => setModalShare(false)}
-      >
-        <div className={styles.share}>
-          <div className={styles.shareList}>
-            <div className={styles.shareItem}>
-              <FacebookShareButton url={jobDetailUrl} className={styles.shareItemLink}>
-                <img
-                  src={FacebookIcon}
-                  alt='facebook'
-                  height='56px'
-                  width='56px'
-                  className={styles.shareItemImg}
-                />
-                <Text textStyle='base'>Facebook</Text>
-              </FacebookShareButton>
-            </div>
-            <div className={styles.shareItem}>
-              <TwitterShareButton url={jobDetailUrl} className={styles.shareItemLink}>
-                <img
-                  src={TwitterIcon}
-                  alt='twitter'
-                  height='56px'
-                  width='56px'
-                  className={styles.shareItemImg}
-                />
-                <Text textStyle='base' textColor='warmgrey'>
-                  Twitter
-                </Text>
-              </TwitterShareButton>
-            </div>
-            <div className={styles.shareItem}>
-              <LinkedinShareButton url={jobDetailUrl} className={styles.shareItemLink}>
-                <img
-                  src={LinkedinIcon}
-                  alt='linkedIn'
-                  height='56px'
-                  width='56px'
-                  className={styles.shareItemImg}
-                />
-                <Text textStyle='base' textColor='warmgrey'>
-                  Linkedin
-                </Text>
-              </LinkedinShareButton>
-            </div>
-          </div>
-          <div className={styles.shareFooter}>
-            <Text textStyle='lg'>Page Link</Text>
-            {isDoneCopy ? (
-              <div className={styles.shareFooterTooltip}>
-                <Text textStyle='sm' textColor='white'>
-                  Link copied
-                </Text>
-              </div>
-            ) : null}
-            <div className={styles.shareFooterLink}>
-              <input
-                value={jobDetailUrl}
-                ref={jobLinkRef}
-                onClick={() => jobLinkRef.current.select()}
-                className={styles.shareFooterLinkText}
-                readOnly
-              />
-              <div onClick={() => handleCopyLink(jobDetailUrl)} className={styles.shareFooterCopy}>
-                <img src={CopyIcon} alt='close' height='18px' width='18px' />
-              </div>
-            </div>
-          </div>
-        </div>
-      </Modal>
-    )
-  }
-
-  const ModalReport = () => {
-    const reportList = [
-      'I think it’s spam or scam',
-      'I think it’s discriminatory or offensive',
-      'I think something is broken'
-    ]
-    return (
-      <Modal
-        className={styles.ModalReport}
-        headerTitle='Why are you reporting this job?'
-        showModal={modalReport}
-        handleModal={() => setModalReport(false)}
-      >
-        <div className={styles.report}>
-          {reportList.map((report, i) => (
-            <div 
-              key={i}
-              className={styles.reportItem} 
-              onClick={() => {
-                setModalReport(false)
-                setModalReportDetail(true)
-                setModalReportSelected(i)
-                setModalReportSelectedItem(reportOptions[i][0].value)
-              }}
-            >
-              <Text>{report}</Text>
-              <div className={styles.reportItemIcon}>
-                <Image src={ArrowForwardIcon} width='20' height='20'/>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Modal>
-    )
-  }
-
-  const ModalReportDetail = () => {
-    const { register, handleSubmit } = useForm()
-    const onSubmit = (data) => {
-      console.log(data)
-      setModalReportDetail(false)
-    }
-
-    const handleChange = (event) => {
-      setModalReportSelectedItem(event.target.value)
-    }
-
-    return (
-      <Modal
-        headerTitle='Tell us a little more'
-        showModal={modalReportDetail}
-        handleModal={() => setModalReportDetail(false)}
-        firstButtonText='Back'
-        handleFirstButton={() => {
-          setModalReportDetail(false)
-          setModalReport(true)
-          setModalReportSelected(0)
-        }}
-        secondButtonText='Submit'
-        handleSecondButton={handleSubmit(onSubmit)}
-      >
-        <div className={styles.reportDetail}>
-          {reportOptions[modalReportSelected]?.map((option, i) => (
-            <div className={styles.reportDetailItem} key={i}>
-              <RadioGroup
-                aria-label="reportDetail"
-                name="controlled-radio-buttons-group"
-                value={modalReportSelectedItem}
-                onChange={handleChange}
-                className={styles.reportDetailRadioGroup}
-              >
-                <FormControlLabel 
-                  {...register('reportDetail')}
-                  value={option.value} 
-                  control={<Radio />} 
-                  label={
-                    <div className={styles.reportDetailLabel}>
-                      <Text textStyle='lg'>{option.label}</Text>
-                      <Text textStyle='base' textColor='lightgrey'>{option.subLabel}</Text>
-                    </div>
-                  } 
-                />
-              </RadioGroup>
-            </div>
-          ))}
-        </div>
-      </Modal>
-    )
+  const handleCreateJobAlert = () => {
+    createJobAlert({
+      keyword: query?.[0],
+      frequency_id: 1,
+      is_active: 1,
+      job_category_key: "all",
+      location_key: location ? location.key : "all"
+    })
+    setIsShowModalEnableJobAlerts(true)
   }
 
   return (
@@ -573,13 +121,15 @@ const JobListSection = ({ defaultPage }: JobListSectionProps) => {
             <div className={styles.jobListOptionAlerts}>
               <div
                 className={styles.jobListOptionAlertsItem}
-                onClick={() => setModalEnableJobAlert(true)}
+                onClick={() => handleCreateJobAlert()}
               >
-                <Text textStyle='base'>Enable job alerts</Text>
+                <Text textStyle='base'>Enable job alert</Text>
               </div>
               <div
                 className={styles.jobListOptionAlertsItem}
-                onClick={() => setModalJobAlertList(true)}
+                onClick={() => {
+                  setIsShowModalManageJobAlerts(true)
+                }}
               >
                 <Image src={NotificationIcon} width='20' height='20' />
               </div>
@@ -638,13 +188,13 @@ const JobListSection = ({ defaultPage }: JobListSectionProps) => {
 
             {jobDetailOption && (
               <div className={styles.jobDetailOptionList}>
-                <Link to='/' external className={styles.jobDetailOptionItem}>
+                <Link to={jobDetailUrl} external className={styles.jobDetailOptionItem}>
                   <Text textStyle='lg'>View in new tab</Text>
                 </Link>
-                <div className={styles.jobDetailOptionItem} onClick={() => setModalShare(true)}>
+                <div className={styles.jobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
                   <Text textStyle='lg'>Share this job</Text>
                 </div>
-                <div className={styles.jobDetailOptionItem} onClick={() => setModalReport(true)}>
+                <div className={styles.jobDetailOptionItem} onClick={() => setIsShowReportJob(true)}>
                   <Text textStyle='lg'>Report job</Text>
                 </div>
               </div>
@@ -894,13 +444,29 @@ const JobListSection = ({ defaultPage }: JobListSectionProps) => {
         <div className={styles.jobAds}></div>
       </div>
 
-      <ModalEnableJobAlert />
-      <ModalJobAlerts />
-      <ModalManageJobAlert />
-      <ModalDeleteJobAlert />
-      <ModalShare />
-      <ModalReport />
-      <ModalReportDetail />
+      <ModalJobAlerts
+        query={query}
+        isShowModalEnableJobAlerts={isShowModalEnableJobAlerts}
+        handleShowModalEnableJobAlerts={setIsShowModalEnableJobAlerts}
+        isShowModalManageJobAlerts={isShowModalManageJobAlerts}
+        handleShowModalManageJobAlerts={setIsShowModalManageJobAlerts}
+        jobAlertsList={jobAlertsList}
+        createdJobAlert={createdJobAlert}
+        handleFetchJobAlertsList={fetchJobAlertsList}
+        handleDeleteJobAlert={deleteJobAlert}
+        handleUpdateJobAlert={updateJobAlert}
+        isUpdatingJobAlert={isUpdatingJobAlert}
+        isDeletingJobAlert={isDeletingJobAlert}
+      />
+      <ModalReportJob 
+        isShowReportJob={isShowReportJob}
+        handleShowReportJob={setIsShowReportJob}
+      />
+      <ModalShare 
+        jobDetailUrl={jobDetailUrl}
+        isShowModalShare={isShowModalShare}
+        handleShowModalShare={setIsShowModalShare}
+      />
     </React.Fragment>
   )
 }

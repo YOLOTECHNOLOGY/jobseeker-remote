@@ -1,0 +1,54 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.ModalReportJob {
+  &Item {
+    padding: 0 40px;
+    position: relative;
+
+    span {
+      display: block;
+      padding: 35px 0;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba($lightgrey, 0.2);
+    }
+    
+    &:not(:last-child) {
+      span {
+        border-bottom: 1px solid rgba($lightgrey, 0.5);
+      }
+    }
+  }
+
+  &ItemIcon {
+    position: absolute;
+    top: 50%;
+    right: 40px;
+    transform: translateY(-50%);
+  }
+}
+
+.ModalReportJobDetail {
+  &Item {
+    padding: 0 40px;
+
+    &:not(:last-child) {
+      .ModalReportJobDetailRadioGroup {
+        border-bottom: 1px solid rgba($lightgrey, 0.5);
+      }
+    }
+  }
+
+  &Label {
+    padding: 35px 0;
+    margin-left: 6px;
+
+    span {
+      display: block;
+      line-height: 1.5;
+    }
+  }
+}
