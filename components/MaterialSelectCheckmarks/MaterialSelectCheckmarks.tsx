@@ -91,6 +91,9 @@ const MaterialSelectCheckmarks = ({
               transform: 'translate(14px, -10px) scale(1)',
             },
           },
+          shrink: {
+            transform: 'translate(14px, -9px) scale(0.75)',
+          },
         },
       },
       MuiInputBase: {
