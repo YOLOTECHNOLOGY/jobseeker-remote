@@ -13,14 +13,13 @@ type JobTagProps = {
 }
 
 const JobTag = ({ tag }: JobTagProps) => {
-  const text = tag === 'fullTime' ? 'Full-time' : tag.charAt(0).toUpperCase() + tag.slice(1)
 
   const cx = classNames.bind(styles)
   const tagClass = cx(tag)
 
   return (
     <div className={classNamesCombined([styles.JobTag, tagClass])}>
-      <Text textStyle='sm' bold>{text}</Text>
+      <Text textStyle='sm' bold>{tag}</Text>
     </div>
   )
 }
