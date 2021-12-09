@@ -22,6 +22,7 @@
   width: 100%;
   height: 70px;
   margin-top: 0;
+  border-bottom: 1px solid rgba($lightgrey, 0.5);
 
   @include msd {
     position: sticky;
@@ -48,7 +49,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 100px;
+  margin-left: 20px;
 
   @include msd {
     display: none;
@@ -98,6 +99,30 @@
   &:last-child {
     padding-right: 0;
   }
+
+  &Text {
+    &.isActive {
+      color: $primaryBlue;
+      font-weight: 500;
+    }
+
+    &:hover {
+      color: $primaryBlue;
+    }
+  }
+
+  &Login {
+    padding-right: 0;
+  }
+
+  &Icon {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.headerButton {
+  padding: 20px;
 }
 
 .headerLinkWrapper {
@@ -119,6 +144,52 @@
       &:hover {
         border-bottom: 1px solid $darkgrey;
       }
+    }
+  }
+}
+
+.profile {
+  &Wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  &PlaceHolder {
+    width: 35px;
+    height: 35px;
+    background-color: $lightgrey;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 30px;
+  }
+
+  &Caret {
+    position: absolute;
+    top: 40%;
+    right: 10px;
+    transform: translateY(-50%);
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: '';
+      height: 8px;
+      width: 2px;
+      top: 50%;
+      background-color: $darkgrey;
+    }
+
+    &::before {
+      left: -2px;
+      transform: rotate(-45deg);
+    }
+
+    &::after {
+      right: -5px;
+      transform: rotate(45deg);
     }
   }
 }
