@@ -2,7 +2,7 @@ import React from 'react'
 
 import useAdSlot from 'helpers/useAdSlot'
 import useTransitionState from 'helpers/useTransitionState'
-import ads from 'config/adConfig'
+import ads from 'lib/config/adConfig'
 
 interface adSlotProps {
   adSlot: string
@@ -13,7 +13,7 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
 
   const ad = ads[adSlot]
 
-  if (process.env.CUSTOM_NODE_ENV === 'production') {
+  if (process.env.ENV === 'production') {
     useAdSlot({
       mapping: ad.mapping ? ad.mapping : null,
       id: ad.id,
