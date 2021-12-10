@@ -141,7 +141,7 @@ NavSearchFilterProps) => {
 
     let categoryObject = null
     let queryParam = ''
-    const categories = selectedCategories.map((val) => val.key)
+    const categories = selectedCategories && selectedCategories.map((val) => val.key)
     // for mui specialization filter
     if (selectedCategories && selectedCategories.length >= 1) {
       queryParam = conditionChecker(predefinedQuery, predefinedLocation, null)

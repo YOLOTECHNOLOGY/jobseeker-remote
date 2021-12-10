@@ -15,6 +15,7 @@ module.exports = {
     DOCUMENT_GENERATOR_URL: process.env.DOCUMENT_GENERATOR_URL,
     RECO_URL: process.env.RECO_URL,
     PAYMENT_URL: process.env.PAYMENT_URL,
+    GA_TRACKING_ID: process.env.GA_TRACKING_ID,
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'node_modules')],

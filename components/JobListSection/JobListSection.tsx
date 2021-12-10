@@ -10,6 +10,7 @@ import Button from 'components/Button'
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
 import JobCard from 'components/JobCard'
+import AdSlot from 'components/AdSlot'
 
 import ModalShare from 'components/ModalShare'
 import ModalJobAlerts from 'components/ModalJobAlerts'
@@ -174,7 +175,11 @@ const JobListSection = ({
             />
           </div>
           <div className={styles.paginationWrapper}>
-            <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={defaultPage} totalPages={105} />
+            <MaterialRoundedPagination
+              onChange={handlePaginationClick}
+              defaultPage={defaultPage}
+              totalPages={105}
+            />
           </div>
         </div>
         <div className={styles.jobDetail}>
@@ -191,10 +196,16 @@ const JobListSection = ({
                 <Link to={jobDetailUrl} external className={styles.jobDetailOptionItem}>
                   <Text textStyle='lg'>View in new tab</Text>
                 </Link>
-                <div className={styles.jobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
+                <div
+                  className={styles.jobDetailOptionItem}
+                  onClick={() => setIsShowModalShare(true)}
+                >
                   <Text textStyle='lg'>Share this job</Text>
                 </div>
-                <div className={styles.jobDetailOptionItem} onClick={() => setIsShowReportJob(true)}>
+                <div
+                  className={styles.jobDetailOptionItem}
+                  onClick={() => setIsShowReportJob(true)}
+                >
                   <Text textStyle='lg'>Report job</Text>
                 </div>
               </div>
@@ -441,7 +452,17 @@ const JobListSection = ({
             </div>
           </div>
         </div>
-        <div className={styles.jobAds}></div>
+        <div className={styles.jobAds}>
+          <div className={styles.skyscraperBanner}>
+            <AdSlot adSlot={'job-page-skyscraper-1'} />
+          </div>
+          <div className={styles.skyscraperBanner}>
+            <AdSlot adSlot={'job-page-skyscraper-2'} />
+          </div>
+          <div className={styles.skyscraperBanner}>
+            <AdSlot adSlot={'job-page-skyscraper-3'} />
+          </div>
+        </div>
       </div>
 
       <ModalJobAlerts
@@ -458,11 +479,8 @@ const JobListSection = ({
         isUpdatingJobAlert={isUpdatingJobAlert}
         isDeletingJobAlert={isDeletingJobAlert}
       />
-      <ModalReportJob 
-        isShowReportJob={isShowReportJob}
-        handleShowReportJob={setIsShowReportJob}
-      />
-      <ModalShare 
+      <ModalReportJob isShowReportJob={isShowReportJob} handleShowReportJob={setIsShowReportJob} />
+      <ModalShare
         jobDetailUrl={jobDetailUrl}
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}
