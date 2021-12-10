@@ -1,8 +1,17 @@
 import React from 'react'
+import Image from 'next/image'
 
 /* Components */
 import Link from 'components/Link'
 import Text from 'components/Text'
+
+/* Images */
+import {
+  FacebookIconGrey,
+  InstagramIconGrey,
+  TwitterIconGrey,
+  ChevronUpIcon
+} from 'images'
 
 import styles from './Footer.module.scss'
 
@@ -19,7 +28,7 @@ const Footer = ({ showButton }: FooterProps) => {
         className={styles.scrollUpButton}
         onClick={() => scrollToBottom()}
       >
-        {/* <Image src={ChevronUpIcon} alt='chevron-up' width='15' height='15' /> */}
+        <Image src={ChevronUpIcon} alt='chevron-up' width='15' height='15' />
       </button>
 
       <div className={styles.footerContainer}>
@@ -30,208 +39,145 @@ const Footer = ({ showButton }: FooterProps) => {
             <div className={styles.footerDesktopSupportWrapper}>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Header
+                  About
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 1'
+                      title='Terms & Conditions'
                     >
-                      <Text textStyle='sm'>Link 1</Text>
+                      <Text textStyle='sm'>Terms & Conditions</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 2'
+                      title='Legal'
                     >
-                      <Text textStyle='sm'>Link 2</Text>
+                      <Text textStyle='sm'>Legal</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 3'
+                      title='Mobile'
                     >
-                      <Text textStyle='sm'>Link 3</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to='/'
-                      title='Link 4'
-                    >
-                      <Text textStyle='sm'>Link 4</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to='/'
-                      title='Link 5'
-                    >
-                      <Text textStyle='sm'>Link 5</Text>
+                      <Text textStyle='sm'>Mobile</Text>
                     </Link>
                   </li>
                 </ul>
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Header
+                  Jobseeker
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 1'
+                      title='All jobs'
                     >
-                      <Text textStyle='sm'>Link 1</Text>
+                      <Text textStyle='sm'>All jobs</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 2'
+                      title='Jobs in Makati'
                     >
-                      <Text textStyle='sm'>Link 2</Text>
+                      <Text textStyle='sm'>Jobs in Makati</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 3'
+                      title='Jobs in Manila'
                     >
-                      <Text textStyle='sm'>Link 3</Text>
+                      <Text textStyle='sm'>Jobs in Manila</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 4'
+                      title='Create job alert'
                     >
-                      <Text textStyle='sm'>Link 4</Text>
+                      <Text textStyle='sm'>Create job alert</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 5'
+                      title='Create resume'
                     >
-                      <Text textStyle='sm'>Link 5</Text>
+                      <Text textStyle='sm'>Create resume</Text>
                     </Link>
                   </li>
                 </ul>
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Header
+                  Employers
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 1'
+                      title='Post a job'
                     >
-                      <Text textStyle='sm'>Link 1</Text>
+                      <Text textStyle='sm'>Post a job</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 2'
+                      title='Prices & packages'
                     >
-                      <Text textStyle='sm'>Link 2</Text>
+                      <Text textStyle='sm'>Prices & packages</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 3'
+                      title='Partners'
                     >
-                      <Text textStyle='sm'>Link 3</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to='/'
-                      title='Link 4'
-                    >
-                      <Text textStyle='sm'>Link 4</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to='/'
-                      title='Link 5'
-                    >
-                      <Text textStyle='sm'>Link 5</Text>
+                      <Text textStyle='sm'>Partners</Text>
                     </Link>
                   </li>
                 </ul>
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Header
+                  Headhunters
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 1'
+                      title='Bosshunt'
                     >
-                      <Text textStyle='sm'>Link 1</Text>
+                      <Text textStyle='sm'>Bosshunt</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to='/'
-                      title='Link 2'
+                      title='Request Demo'
                     >
-                      <Text textStyle='sm'>Link 2</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to='/'
-                      title='Link 3'
-                    >
-                      <Text textStyle='sm'>Link 3</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to='/'
-                      title='Link 4'
-                    >
-                      <Text textStyle='sm'>Link 4</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to='/'
-                      title='Link 5'
-                    >
-                      <Text textStyle='sm'>Link 5</Text>
+                      <Text textStyle='sm'>Request Demo</Text>
                     </Link>
                   </li>
                 </ul>
@@ -241,31 +187,31 @@ const Footer = ({ showButton }: FooterProps) => {
               <div>
                 <div className={styles.footerDesktopSocialLinks}>
                   <Link to='//twitter.com/Bossjobph' external title='Bossjob Twitter'>
-                    {/* <img
-                      src={Twitter}
+                    <img
+                      src={TwitterIconGrey}
                       title='Twitter logo'
                       alt='Twitter logo'
                       height='20'
                       width='25'
-                    /> */}
+                    />
                   </Link>
                   <Link to='//www.instagram.com/Bossjobph' external title='Bossjob Instagram'>
-                    {/* <img
-                      src={Instagram}
+                    <img
+                      src={InstagramIconGrey}
                       title='Instagram logo'
                       alt='Instagram logo'
                       height='20'
                       width='25'
-                    /> */}
+                    />
                   </Link>
                   <Link to='//www.facebook.com/Bossjobph' external title='Bossjob Facebook'>
-                    {/* <img
-                      src={Facebook}
+                    <img
+                      src={FacebookIconGrey}
                       title='Facebook logo'
                       alt='Facebook logo'
                       height='20'
                       width='25'
-                    /> */}
+                    />
                   </Link>
                 </div>
               </div>
