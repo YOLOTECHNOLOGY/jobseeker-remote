@@ -12,7 +12,6 @@
 
   &Option {
     height: 68px;
-    border-top: 1px solid rgba($lightgrey, 0.6);
     border-bottom: 1px solid rgba($lightgrey, 0.6);
     display: flex;
     justify-content: space-between;
@@ -22,6 +21,13 @@
     width: 32.42%;
     left: 0;
     background-color: $white-3;
+
+    &.isSticky {
+      position: fixed;
+      top: 139px;
+      border-bottom: 1px solid rgba($lightgrey, 0.6);
+      z-index: 1;
+    }
   }
 
   &OptionAlerts {
@@ -45,21 +51,43 @@
   }
 }
 
-.jobDetail {
-  border: 1px solid rgba($lightgrey, 0.6);
+.jobDetailInfoSection {
   width: 56%;
-  padding: 0 50px 100px;
+  border-top: 0;
+  border: 1px solid rgba($lightgrey, 0.6);
+}
+
+.jobDetail {
+  position: relative;
+
+  &Content {
+    padding: 0 50px 320px;
+    height: 100vh;
+    overflow-y: scroll;
+    position: fixed;
+    width: 47.5%;
+  }
 
   &Option {
     height: 68px;
     position: relative;
+
+    &.isSticky {
+      height: 68px;
+      width: 47.4%;
+      position: fixed;
+      top: 139px;
+      z-index: 1;
+      background-color: $white-3;
+    }
   }
 
   &OptionImage {
     padding: 6px;
     position: absolute;
-    top: 10px;
-    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 30px;
 
     &:hover {
       cursor: pointer;
@@ -170,6 +198,7 @@
   &Body {
     margin-top: 16px;
     display: block;
+    padding: 0 20px;
   }
 
   &SubTitle {

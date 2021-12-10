@@ -286,6 +286,7 @@ const ModalJobAlerts = ({
                     handleShowModalEnableJobAlerts(false)
                     setSelectedJobAlert(createdJobAlert)
                     setModalUpdateJobAlert(true)
+                    setFrequency(createdJobAlert.frequency_id)
                   }}
                 >
                   {' '}
