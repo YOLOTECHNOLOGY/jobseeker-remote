@@ -10,7 +10,6 @@ import classNamesCombined from 'classnames'
 /* Components */
 import Image from 'next/image'
 import Link from 'components/Link'
-import Button from 'components/Button'
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
 import JobCard from 'components/JobCard'
@@ -24,6 +23,7 @@ import ModalReportJob from 'components/ModalReportJob'
 
 /* Material Components */
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
+import MaterialButton from 'components/MaterialButton'
 
 /* Helpers */
 import { numberToThousands } from 'helpers/formatter'
@@ -235,11 +235,6 @@ const JobListSection = ({
             ))}
           </div>
           <div className={styles.paginationWrapper}>
-            <MaterialRoundedPagination
-              onChange={handlePaginationClick}
-              defaultPage={defaultPage}
-              totalPages={105}
-            />
             <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={defaultPage} totalPages={totalPages} />
           </div>
         </div>
@@ -285,10 +280,12 @@ const JobListSection = ({
                     </Text>
                     <JobTag tag={selectedJob?.['job_type']} />
                     <div className={styles.jobDetailButtons}>
-                      <Button primary>
+                      <MaterialButton variant='contained'>
                         <Link to={selectedJob?.['external_apply_url']} external>Apply Now</Link>
-                      </Button>
-                      <Button secondary>Save Job</Button>
+                      </MaterialButton>
+                      <MaterialButton variant='outlined'>
+                        Save Job
+                      </MaterialButton>
                     </div>
                     <Text textStyle='xsm' className={styles.jobDetailPostedAt}>
                       Posted on {moment(new Date(selectedJob?.['published_at'])).format('DD MMMM YYYY')}
