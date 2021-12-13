@@ -20,7 +20,7 @@ type JobCardProps = {
   salary: string,
   postedAt: string,
   selectedId?: number,
-  handleSelection?: Function
+  handleSelectedId?: Function
 }
 
 const JobCard = ({
@@ -32,8 +32,9 @@ const JobCard = ({
   location,
   salary,
   postedAt,
-  handleSelection,
-  selectedId
+  handleSelectedId,
+  selectedId,
+  ...rest
 }: JobCardProps) => {
   const cx = classNames.bind(styles)
   const isSelectedClass = cx({ isSelected: selectedId == id })
@@ -41,7 +42,7 @@ const JobCard = ({
   return (
     <div 
       className={classNamesCombined([styles.JobCard, isSelectedClass])} 
-      onClick={() => handleSelection(id)}
+      onClick={() => handleSelectedId(id)}
     >
       <div className={styles.JobCardImageWrapper}>
         <div className={styles.JobCardImageContent} style={{ backgroundImage: `url(${image})`}} />

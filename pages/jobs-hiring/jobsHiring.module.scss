@@ -24,6 +24,14 @@
       margin-right: 15px;
     }
   }
+
+  &.isSticky {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: $white-1;
+    z-index: 1;
+  }
 }
 
 .searchSectionExpanded {

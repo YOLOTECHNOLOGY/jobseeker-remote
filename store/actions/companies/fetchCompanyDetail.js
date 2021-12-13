@@ -4,8 +4,9 @@ import {
   FETCH_COMPANY_DETAIL_FAILED,
 } from 'store/types/companies/fetchCompanyDetail'
 
-const fetchCompanyDetailRequest = () => ({
+const fetchCompanyDetailRequest = (payload) => ({
   type: FETCH_COMPANY_DETAIL_REQUEST,
+  payload,
 })
 
 const fetchCompanyDetailSuccess = (payload) => ({

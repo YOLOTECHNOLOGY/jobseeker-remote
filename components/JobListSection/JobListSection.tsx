@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 /* Vendors */
 import { useRouter } from 'next/router'
+import moment from 'moment'
+import slugify from 'slugify'
+import classNames from 'classnames/bind'
+import classNamesCombined from 'classnames'
 
 /* Components */
 import Image from 'next/image'
@@ -11,6 +15,8 @@ import Text from 'components/Text'
 import JobTag from 'components/JobTag'
 import JobCard from 'components/JobCard'
 import AdSlot from 'components/AdSlot'
+import JobCardLoader from 'components/Loader/JobCard'
+import JobDetailLoader from 'components/Loader/JobDetail'
 
 import ModalShare from 'components/ModalShare'
 import ModalJobAlerts from 'components/ModalJobAlerts'
@@ -18,6 +24,10 @@ import ModalReportJob from 'components/ModalReportJob'
 
 /* Material Components */
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
+
+/* Helpers */
+import { numberToThousands } from 'helpers/formatter'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Styles */
 import styles from './JobListSection.module.scss'
@@ -28,16 +38,21 @@ import {
   LocationIcon,
   EducationIcon,
   SalaryIcon,
-  EquityIcon,
+  EquityIncentiveIcon,
   MealAllowanceIcon,
-  EmployeeStockIcon,
+  EmployeeStockPurchaseIcon,
   HousingAllowanceIcon,
+  CommissionIcon,
+  PerformanceBonusIcon,
+  TelecommunicationAllowanceIcon,
+  OtherAllowancesIcon,  
   MoreIcon,
   NotificationIcon
 } from 'images'
 
 interface JobListSectionProps {
   defaultPage: number
+  jobList?: any
   query?: string
   jobAlertsList?: any
   createdJobAlert?: Object
@@ -48,10 +63,19 @@ interface JobListSectionProps {
   isUpdatingJobAlert?: boolean
   createJobAlert?: Function
   location?: any
+  isJobListFetching?: boolean
+  selectedJob?: Object
+  selectedJobId?: number
+  handleSelectedJobId?: Function
+  totalPages?: number
+  handleCompanyDetail?: Function
+  companyDetail?: Object
+  isJobDetailFetching?: boolean
 }
 
 const JobListSection = ({ 
   defaultPage,
+  jobList,
   query,
   fetchJobAlertsList,
   jobAlertsList,
@@ -62,14 +86,21 @@ const JobListSection = ({
   isUpdatingJobAlert,
   createJobAlert,
   location,
-}: JobListSectionProps) => {
+  isJobListFetching,
+  selectedJob,
+  selectedJobId,
+  handleSelectedJobId,
+  totalPages,
+  companyDetail,
+  isJobDetailFetching
+}: JobListSectionProps) => {  
+  const { width } = useWindowDimensions()
   const router = useRouter()
-  const dummyCompanyDetail =
-    "Loop Contact Solutions is a contact center uniquely designed to help subscription businesses acquire and keep more customers who purchase more products over longer periods of time. The result is the achievement of Loop's core value proposition to significantly improve recurring revenues, profits and market share for our subscription business clients. Loop Contact Solutions is a contact center uniquely designed to help subscription businesses acquire and keep more customers who purchase more products over longer periods of time. The result is the achievement of Loop's core value proposition to significantly improve recurring revenues, profits and market share for our subscription business clients."
-  
-  const [companyDetail, setCompanyDetail] = useState(dummyCompanyDetail)
-  const [isFullDetail, setIsFullDetail] = useState(false)
-  const [jobSelectedId, setJobSelectedId] = useState(null)
+  const prevScrollY = useRef(0)
+
+  const [isSticky, setIsSticky] = useState(false)
+  const [companyDescription, setCompanyDescription] = useState('')
+  const [isFullDescription, setIsFullDescription] = useState(false)
   const [jobDetailOption, setJobDetailOption] = useState(false)
   
   const [isShowModalShare, setIsShowModalShare] = useState(false)
@@ -78,22 +109,31 @@ const JobListSection = ({
   const [isShowReportJob, setIsShowReportJob] = useState(false)
 
   let jobDetailUrl = ''
+  let companyUrl = ''
   if (typeof window !== 'undefined') {
-    jobDetailUrl = `${window.location.origin}/job/path-name`
+    jobDetailUrl = `${window.location.origin}/job/${slugify(selectedJob?.['job_title'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.['id']}`
+    companyUrl = `${window.location.origin}/company/${slugify(companyDetail?.['name'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${companyDetail?.['id']}`
   }
+
+  const cx = classNames.bind(styles)
+  const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
-    handleCompanyDisplay()
-  }, [isFullDetail])
+    handleCompanyDescription()
+  }, [companyDetail, isFullDescription])
 
-  const handleCompanyDisplay = () => {
-    if (!isFullDetail && dummyCompanyDetail.length > 352) {
-      setCompanyDetail(`${dummyCompanyDetail.slice(0, 352)}...`)
+  useEffect(() => {
+    window.addEventListener('scroll', updateScrollPosition)
+    return () => window.removeEventListener('scroll', updateScrollPosition)
+  }, [])
+
+  const handleCompanyDescription = () => {
+    if (!isFullDescription && companyDetail?.['description']?.length > 352) {
+      setCompanyDescription(`${companyDetail?.['description'].slice(0, 352)}...`)
       return
     }
-    setCompanyDetail(dummyCompanyDetail)
+    setCompanyDescription(companyDetail?.['description'])
   }
-  const handleJobSelection = (id) => setJobSelectedId(id)
 
   const handlePaginationClick = (event, val) => {
     router.query.page = val
@@ -105,19 +145,49 @@ const JobListSection = ({
       keyword: query?.[0],
       frequency_id: 1,
       is_active: 1,
-      job_category_key: "all",
-      location_key: location ? location.key : "all"
+      job_category_key: 'all',
+      location_key: location?.length > 0 ? location.key : 'all'
     })
     setIsShowModalEnableJobAlerts(true)
+  }
+
+  const handleBenefitIcon = (benefit) => {
+    const Icon = `${benefit.replace(/ /g,'')}Icon`
+
+    switch(Icon) {
+      case 'EquityIncentiveIcon':
+        return <Image src={EquityIncentiveIcon} alt='logo' width='22' height='22' />
+      case 'MealAllowanceIcon':
+        return <Image src={MealAllowanceIcon} alt='logo' width='22' height='22' />
+      case 'EmployeeStockPurchaseIcon':
+        return <Image src={EmployeeStockPurchaseIcon} alt='logo' width='22' height='22' />
+      case 'HousingAllowanceIcon':
+        return <Image src={HousingAllowanceIcon} alt='logo' width='22' height='22' />
+      case 'CommissionIcon':
+        return <Image src={CommissionIcon} alt='logo' width='22' height='22' />
+      case 'PerformanceBonusIcon':
+        return <Image src={PerformanceBonusIcon} alt='logo' width='22' height='22' />
+      case 'TelecommunicationAllowanceIcon':
+        return <Image src={TelecommunicationAllowanceIcon} alt='logo' width='22' height='22' />
+      default:
+        return <Image src={OtherAllowancesIcon} alt='logo' width='22' height='22' />
+    }
+  }
+
+  const updateScrollPosition = () => {
+    if (width > 798) {
+      prevScrollY.current = window.pageYOffset
+      setIsSticky(prevScrollY.current > 70 ? true : false)
+    }
   }
 
   return (
     <React.Fragment>
       <div className={styles.job}>
         <div className={styles.jobList}>
-          <div className={styles.jobListOption}>
+          <div className={classNamesCombined([styles.jobListOption, isStickyClass])}>
             <Text textStyle='xl' bold>
-              5,777 jobs found
+              {jobList?.total_num} jobs found
             </Text>
             <div className={styles.jobListOptionAlerts}>
               <div
@@ -137,42 +207,32 @@ const JobListSection = ({
             </div>
           </div>
           <div className={styles.jobListContent}>
-            <JobCard
-              id={0}
-              image='https://wallpaperaccess.com/full/6133725.jpg'
-              title='Operation Manager Lorem Ipsum'
-              tag='urgent'
-              company='Loop Contact Solutions Inc.'
-              location='Makati'
-              salary='₱75k - ₱80k'
-              postedAt='23 August 2021'
-              selectedId={jobSelectedId}
-              handleSelection={handleJobSelection}
-            />
-            <JobCard
-              id={2}
-              image='https://wallpaperaccess.com/full/6133725.jpg'
-              title='Operation Manager Lorem Ipsum'
-              tag='fullTime'
-              company='Loop Contact Solutions Inc.'
-              location='Makati'
-              salary='₱75k - ₱80k'
-              postedAt='23 August 2021'
-              selectedId={jobSelectedId}
-              handleSelection={handleJobSelection}
-            />
-            <JobCard
-              id={3}
-              image='https://wallpaperaccess.com/full/6133725.jpg'
-              title='Operation Manager Lorem Ipsum'
-              tag='featured'
-              company='Loop Contact Solutions Inc.'
-              location='Makati'
-              salary='₱75k - ₱80k'
-              postedAt='23 August 2021'
-              selectedId={jobSelectedId}
-              handleSelection={handleJobSelection}
-            />
+            {isJobListFetching && (
+              <React.Fragment>
+                <JobCardLoader />
+                <JobCardLoader />
+                <JobCardLoader />
+                <JobCardLoader />
+              </React.Fragment>
+            )}
+            {!isJobListFetching && jobList?.jobs?.length > 0 && jobList.jobs.map((job) => (
+              <JobCard
+                key={job.id}
+                id={job.id}
+                image={job.company_logo}
+                title={job.job_title}
+                tag={job.job_type}
+                company={job.company_name}
+                location={job.company_location}
+                salary={`${numberToThousands(job?.salary_range_from)}K - ${numberToThousands(job?.salary_range_to)}K` }
+                postedAt={`${moment(new Date(job.updated_at)).format('DD MMMM YYYY')}`}
+                selectedId={selectedJobId}
+                handleSelectedId={() => {
+                  handleSelectedJobId(job.id)
+                  setIsFullDescription(false)
+                }}
+              />
+            ))}
           </div>
           <div className={styles.paginationWrapper}>
             <MaterialRoundedPagination
@@ -180,277 +240,221 @@ const JobListSection = ({
               defaultPage={defaultPage}
               totalPages={105}
             />
+            <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={defaultPage} totalPages={totalPages} />
           </div>
         </div>
-        <div className={styles.jobDetail}>
-          <div
-            className={styles.jobDetailOption}
-            onClick={() => setJobDetailOption(!jobDetailOption)}
-          >
-            <div className={styles.jobDetailOptionImage}>
-              <Image src={MoreIcon} width='20' height='20'></Image>
-            </div>
-
-            {jobDetailOption && (
-              <div className={styles.jobDetailOptionList}>
-                <Link to={jobDetailUrl} external className={styles.jobDetailOptionItem}>
-                  <Text textStyle='lg'>View in new tab</Text>
-                </Link>
-                <div
-                  className={styles.jobDetailOptionItem}
-                  onClick={() => setIsShowModalShare(true)}
+        <div className={styles.jobDetailInfoSection}>
+          {(isJobDetailFetching || isJobListFetching) && (
+            <JobDetailLoader />
+          )}
+          {!isJobDetailFetching && selectedJob && (
+            <div className={styles.jobDetail}>
+              <div className={classNamesCombined([styles.jobDetailOption, isStickyClass])}>
+                <div 
+                  className={styles.jobDetailOptionImage}
+                  onClick={() => setJobDetailOption(!jobDetailOption)}
                 >
-                  <Text textStyle='lg'>Share this job</Text>
+                  <Image src={MoreIcon} width='20' height='20'></Image>
                 </div>
-                <div
-                  className={styles.jobDetailOptionItem}
-                  onClick={() => setIsShowReportJob(true)}
-                >
-                  <Text textStyle='lg'>Report job</Text>
+                {jobDetailOption && (
+                  <div className={styles.jobDetailOptionList}>
+                    <Link to={jobDetailUrl} external className={styles.jobDetailOptionItem}>
+                      <Text textStyle='lg'>View in new tab</Text>
+                    </Link>
+                    <div className={styles.jobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
+                      <Text textStyle='lg'>Share this job</Text>
+                    </div>
+                    <div className={styles.jobDetailOptionItem} onClick={() => setIsShowReportJob(true)}>
+                      <Text textStyle='lg'>Report job</Text>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className={styles.jobDetailContent}>
+                <div className={styles.jobDetailHeader}>
+                  <div
+                    className={styles.jobDetailImage}
+                    style={{ backgroundImage: `url(${selectedJob?.['company_logo']})` }}
+                  />
+                  <div className={styles.jobDetailInfo}>
+                    <Text textStyle='xxl' bold className={styles.jobDetailTitle}>
+                      {selectedJob?.['job_title']}
+                    </Text>
+                    <Text textStyle='lg' className={styles.jobDetailCompany}>
+                      {selectedJob?.['company_name']}
+                    </Text>
+                    <JobTag tag={selectedJob?.['job_type']} />
+                    <div className={styles.jobDetailButtons}>
+                      <Button primary>
+                        <Link to={selectedJob?.['external_apply_url']} external>Apply Now</Link>
+                      </Button>
+                      <Button secondary>Save Job</Button>
+                    </div>
+                    <Text textStyle='xsm' className={styles.jobDetailPostedAt}>
+                      Posted on {moment(new Date(selectedJob?.['published_at'])).format('DD MMMM YYYY')}
+                    </Text>
+                  </div>
+                </div>
+                <div className={styles.jobDetailPref}>
+                  <ul className={styles.jobDetailPrefList}>
+                    <li className={styles.jobDetailPrefItem}>
+                      <Image src={LocationIcon} alt='logo' width='18' height='18' />
+                      <span className={styles.jobDetailPrefText}>
+                        <Text
+                          textStyle='base'
+                          textColor='lightgrey'
+                          className={styles.jobDetailPrefField}
+                        >
+                          Location
+                        </Text>
+                        <Text textStyle='base' bold className={styles.jobDetailPrefValue}>
+                          {selectedJob?.['job_location']}
+                        </Text>
+                      </span>
+                    </li>
+                    <li className={styles.jobDetailPrefItem}>
+                      <Image src={BriefcaseIcon} alt='logo' width='20' height='20' />
+                      <span className={styles.jobDetailPrefText}>
+                        <Text
+                          textStyle='base'
+                          textColor='lightgrey'
+                          className={styles.jobDetailPrefField}
+                        >
+                          Experience
+                        </Text>
+                        <Text textStyle='base' bold className={styles.jobDetailPrefValue}>
+                          {selectedJob?.['xp_lvl']}
+                        </Text>
+                      </span>
+                    </li>
+                    <li className={styles.jobDetailPrefItem}>
+                      <Image src={EducationIcon} alt='logo' width='20' height='20' />
+                      <span className={styles.jobDetailPrefText}>
+                        <Text
+                          textStyle='base'
+                          textColor='lightgrey'
+                          className={styles.jobDetailPrefField}
+                        >
+                          Education
+                        </Text>
+                        <Text textStyle='base' bold className={styles.jobDetailPrefValue}>
+                          {selectedJob?.['degree']}
+                        </Text>
+                      </span>
+                    </li>
+                    <li className={styles.jobDetailPrefItem}>
+                      <Image src={SalaryIcon} alt='logo' width='20' height='20' />
+                      <span className={styles.jobDetailPrefText}>
+                        <Text
+                          textStyle='base'
+                          textColor='lightgrey'
+                          className={styles.jobDetailPrefField}
+                        >
+                          Salary
+                        </Text>
+                        <Text textStyle='base' bold className={styles.jobDetailPrefValue}>
+                          {`${numberToThousands(selectedJob?.['salary_range_from'])}K - ${numberToThousands(selectedJob?.['salary_range_to'])}K` }
+                        </Text>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+                <div className={styles.jobDetailSection}>
+                  <Text textStyle='lg' bold className={styles.jobDetailSectionTitle}>
+                    Job Description
+                  </Text>
+                  <div className={styles.jobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.['job_description_html'] }} />
+                </div>
+                <div className={styles.jobDetailSection}>
+                  <Text textStyle='lg' bold className={styles.jobDetailSectionTitle}>
+                    Requirements
+                  </Text>
+                  <div className={styles.jobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.['job_requirements_html'] }} />
+                </div>
+                <div className={styles.jobDetailSection}>
+                  <Text textStyle='lg' bold className={styles.jobDetailSectionTitle}>
+                    Benefits
+                  </Text>
+                  <ul className={styles.jobDetailBenefitsList}>
+                    {selectedJob?.['benefits']?.map((benefit) => (
+                      <li className={styles.jobDetailBenefitsItem} key={benefit.id}>
+                        {handleBenefitIcon(benefit.name)}
+                        <Text textStyle='base' className={styles.jobDetailBenefitsText}>
+                          {benefit.name}
+                        </Text>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className={styles.jobDetailSection}>
+                  <Text textStyle='lg' bold className={styles.jobDetailSectionTitle}>
+                    Skills/Software
+                  </Text>
+                  <ul className={styles.jobDetailSkillsList}>
+                    {selectedJob?.['job_skills'].split(',').map((skill) => (
+                      <li className={styles.jobDetailSkillsItem} key={skill}>
+                        <Text bold textStyle='base' className={styles.jobDetailSkillsText}>
+                          {skill}
+                        </Text>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className={styles.jobDetailSection}>
+                  <Text textStyle='lg' bold className={styles.jobDetailSectionTitle}>
+                    Additional Information
+                  </Text>
+                  <Text textStyle='base' bold className={styles.jobDetailSectionSubTitle}>
+                    Working Location
+                  </Text>
+                  <Text textStyle='base' className={styles.jobDetailSectionSubBody}>
+                    {`${selectedJob?.['job_location']}, ${selectedJob?.['job_region']}, ${selectedJob?.['job_country']}`}
+                  </Text>
+                  <Text textStyle='base' bold className={styles.jobDetailSectionSubTitle}>
+                    Specialization
+                  </Text>
+                  {selectedJob?.['categories'].map((category) => (
+                    <Link to='/' key={category.id} className={styles.jobDetailSectionSubBody}>
+                      <Text textStyle='base' className={styles.jobDetailSectionSubBodyLink}>
+                        {' '}{category.value}
+                      </Text>
+                    </Link>
+                  ))}
+                </div>
+                <div className={styles.aboutCompany}>
+                  <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
+                    About the company
+                  </Text>
+                  <Link to={companyUrl} className={styles.aboutCompanyTitle}>
+                    <Text bold textStyle='xl' textColor='primaryBlue'>
+                      {companyDetail?.['name']}
+                    </Text>
+                  </Link>
+                  <div className={styles.aboutCompanyDetail}>
+                    <Text textStyle='base'>{companyDetail?.['industry']}</Text>
+                    <Text textStyle='base'>{companyDetail?.['company_size']} employees</Text>
+                  </div>
+                  <div className={styles.aboutCompanyInfo}>
+                    <Text textStyle='base'>{companyDescription || ''}</Text>
+                  </div>
+                  {companyDetail?.['description']?.length > 352 && (
+                    <div className={styles.aboutCompanyMore}>
+                      <span
+                        onClick={() => {
+                          setIsFullDescription(!isFullDescription)
+                          handleCompanyDescription()
+                        }}
+                      >
+                        <Text textStyle='base' textColor='primaryBlue'>
+                          {isFullDescription ? '...read less' : '...read more'}
+                        </Text>
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
-            )}
-          </div>
-          <div className={styles.jobDetailHeader}>
-            <div
-              className={styles.jobDetailImage}
-              style={{ backgroundImage: `url(${'https://wallpaperaccess.com/full/6133725.jpg'})` }}
-            />
-            <div className={styles.jobDetailInfo}>
-              <Text textStyle='xxl' bold className={styles.jobDetailTitle}>
-                Operation Manager lorem ipsum dolor sit amet lorem ipsum dolor sit amet
-              </Text>
-              <Text textStyle='lg' className={styles.jobDetailCompany}>
-                Loop Contact Solutions Inc.
-              </Text>
-              <JobTag tag='featured' />
-              <div className={styles.jobDetailButtons}>
-                <Button primary>Apply Now</Button>
-                <Button secondary>Save Job</Button>
-              </div>
-              <Text textStyle='xsm' className={styles.jobDetailPostedAt}>
-                Posted on 23 August 2021
-              </Text>
             </div>
-          </div>
-          <div className={styles.jobDetailPref}>
-            <ul className={styles.jobDetailPrefList}>
-              <li className={styles.jobDetailPrefItem}>
-                <Image src={LocationIcon} alt='logo' width='18' height='18' />
-                <span className={styles.jobDetailPrefText}>
-                  <Text
-                    textStyle='base'
-                    textColor='lightgrey'
-                    className={styles.jobDetailPrefField}
-                  >
-                    Location
-                  </Text>
-                  <Text textStyle='base' bold className={styles.jobDetailPrefValue}>
-                    Makati
-                  </Text>
-                </span>
-              </li>
-              <li className={styles.jobDetailPrefItem}>
-                <Image src={BriefcaseIcon} alt='logo' width='20' height='20' />
-                <span className={styles.jobDetailPrefText}>
-                  <Text
-                    textStyle='base'
-                    textColor='lightgrey'
-                    className={styles.jobDetailPrefField}
-                  >
-                    Experience
-                  </Text>
-                  <Text textStyle='base' bold className={styles.jobDetailPrefValue}>
-                    1 - 3 years
-                  </Text>
-                </span>
-              </li>
-              <li className={styles.jobDetailPrefItem}>
-                <Image src={EducationIcon} alt='logo' width='20' height='20' />
-                <span className={styles.jobDetailPrefText}>
-                  <Text
-                    textStyle='base'
-                    textColor='lightgrey'
-                    className={styles.jobDetailPrefField}
-                  >
-                    Education
-                  </Text>
-                  <Text textStyle='base' bold className={styles.jobDetailPrefValue}>
-                    Bachelor
-                  </Text>
-                </span>
-              </li>
-              <li className={styles.jobDetailPrefItem}>
-                <Image src={SalaryIcon} alt='logo' width='20' height='20' />
-                <span className={styles.jobDetailPrefText}>
-                  <Text
-                    textStyle='base'
-                    textColor='lightgrey'
-                    className={styles.jobDetailPrefField}
-                  >
-                    Salary
-                  </Text>
-                  <Text textStyle='base' bold className={styles.jobDetailPrefValue}>
-                    ₱75k - ₱80k
-                  </Text>
-                </span>
-              </li>
-            </ul>
-          </div>
-          <div className={styles.jobDetailSection}>
-            <Text textStyle='lg' bold className={styles.jobDetailSectionTitle}>
-              Job Description
-            </Text>
-            <Text textStyle='base' className={styles.jobDetailSectionBody}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at diam ante. Cras
-              varius mauris lectus, vitae cursus turpis malesuada ut. Proin imperdiet faucibus
-              dolor, gravida vestibulum nibh ultricies sodales. Duis ultricies metus ultrices
-              laoreet pretium. Praesent augue orci, mollis ut libero at, malesuada cursus neque.
-              Mauris accumsan libero eu felis hendrerit, at congue augue pulvinar. Vivamus ligula
-              tortor, auctor et finibus id, lobortis et turpis. Sed rhoncus dapibus neque vel
-              tempor.
-            </Text>
-          </div>
-          <div className={styles.jobDetailSection}>
-            <Text textStyle='lg' bold className={styles.jobDetailSectionTitle}>
-              Requirements
-            </Text>
-            <Text textStyle='base' className={styles.jobDetailSectionBody}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at diam ante. Cras
-              varius mauris lectus, vitae cursus turpis malesuada ut. Proin imperdiet faucibus
-              dolor, gravida vestibulum nibh ultricies sodales. Duis ultricies metus ultrices
-              laoreet pretium. Praesent augue orci, mollis ut libero at, malesuada cursus neque.
-              Mauris accumsan libero eu felis hendrerit, at congue augue pulvinar. Vivamus ligula
-              tortor, auctor et finibus id, lobortis et turpis. Sed rhoncus dapibus neque vel
-              tempor.
-            </Text>
-          </div>
-          <div className={styles.jobDetailSection}>
-            <Text textStyle='lg' bold className={styles.jobDetailSectionTitle}>
-              Benefits
-            </Text>
-            <ul className={styles.jobDetailBenefitsList}>
-              <li className={styles.jobDetailBenefitsItem}>
-                <Image src={EquityIcon} alt='logo' width='22' height='22' />
-                <Text textStyle='base' className={styles.jobDetailBenefitsText}>
-                  Equity Incentive
-                </Text>
-              </li>
-              <li className={styles.jobDetailBenefitsItem}>
-                <Image src={MealAllowanceIcon} alt='logo' width='22' height='22' />
-                <Text textStyle='base' className={styles.jobDetailBenefitsText}>
-                  Meal Allowance
-                </Text>
-              </li>
-              <li className={styles.jobDetailBenefitsItem}>
-                <Image src={EmployeeStockIcon} alt='logo' width='22' height='22' />
-                <Text textStyle='base' className={styles.jobDetailBenefitsText}>
-                  Employee Stock Purchase
-                </Text>
-              </li>
-              <li className={styles.jobDetailBenefitsItem}>
-                <Image src={HousingAllowanceIcon} alt='logo' width='22' height='22' />
-                <Text textStyle='base' className={styles.jobDetailBenefitsText}>
-                  Housing Allowance
-                </Text>
-              </li>
-            </ul>
-          </div>
-          <div className={styles.jobDetailSection}>
-            <Text textStyle='lg' bold className={styles.jobDetailSectionTitle}>
-              Skills/Software
-            </Text>
-            <ul className={styles.jobDetailSkillsList}>
-              <li className={styles.jobDetailSkillsItem}>
-                <Text bold textStyle='base' className={styles.jobDetailSkillsText}>
-                  Javascript
-                </Text>
-              </li>
-              <li className={styles.jobDetailSkillsItem}>
-                <Text bold textStyle='base' className={styles.jobDetailSkillsText}>
-                  CSS
-                </Text>
-              </li>
-              <li className={styles.jobDetailSkillsItem}>
-                <Text bold textStyle='base' className={styles.jobDetailSkillsText}>
-                  Javascript
-                </Text>
-              </li>
-              <li className={styles.jobDetailSkillsItem}>
-                <Text bold textStyle='base' className={styles.jobDetailSkillsText}>
-                  CSS
-                </Text>
-              </li>
-              <li className={styles.jobDetailSkillsItem}>
-                <Text bold textStyle='base' className={styles.jobDetailSkillsText}>
-                  Javascript
-                </Text>
-              </li>
-              <li className={styles.jobDetailSkillsItem}>
-                <Text bold textStyle='base' className={styles.jobDetailSkillsText}>
-                  CSS
-                </Text>
-              </li>
-              <li className={styles.jobDetailSkillsItem}>
-                <Text bold textStyle='base' className={styles.jobDetailSkillsText}>
-                  Javascript
-                </Text>
-              </li>
-              <li className={styles.jobDetailSkillsItem}>
-                <Text bold textStyle='base' className={styles.jobDetailSkillsText}>
-                  CSS
-                </Text>
-              </li>
-            </ul>
-          </div>
-          <div className={styles.jobDetailSection}>
-            <Text textStyle='lg' bold className={styles.jobDetailSectionTitle}>
-              Additional Information
-            </Text>
-            <Text textStyle='base' bold className={styles.jobDetailSectionSubTitle}>
-              Working Location
-            </Text>
-            <Text textStyle='base' className={styles.jobDetailSectionSubBody}>
-              111 Paseo de Roxas Building Legazpi Village, Makati City, Philippines
-            </Text>
-            <Text textStyle='base' bold className={styles.jobDetailSectionSubTitle}>
-              Specialization
-            </Text>
-            <Link to='/' className={styles.jobDetailSectionSubBody}>
-              <Text textStyle='base' className={styles.jobDetailSectionSubBodyLink}>
-                Telesales/Telemarketing, Sales - Financial Services, Marketing/Business Dev
-              </Text>
-            </Link>
-          </div>
-          <div className={styles.aboutCompany}>
-            <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
-              About the company
-            </Text>
-            <Link to='/' className={styles.aboutCompanyTitle}>
-              <Text bold textStyle='xl' textColor='primaryBlue'>
-                Loop Contact Solutions Inc.
-              </Text>
-            </Link>
-            <div className={styles.aboutCompanyDetail}>
-              <Text textStyle='base'>BPO</Text>
-              <Text textStyle='base'>0 - 50 employees</Text>
-            </div>
-            <div className={styles.aboutCompanyInfo}>
-              <Text textStyle='base'>{companyDetail}</Text>
-            </div>
-            <div className={styles.aboutCompanyMore}>
-              <span
-                onClick={() => {
-                  handleCompanyDisplay()
-                  setIsFullDetail(!isFullDetail)
-                }}
-              >
-                <Text textStyle='base' textColor='primaryBlue'>
-                  {!isFullDetail ? '...read more' : '...read less'}
-                </Text>
-              </span>
-            </div>
-          </div>
+          )}
         </div>
         <div className={styles.jobAds}>
           <div className={styles.skyscraperBanner}>

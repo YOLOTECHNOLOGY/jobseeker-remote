@@ -99,6 +99,7 @@
     list-style: none;
     -webkit-padding-start: 0;
     margin-bottom: 0;
+    margin-top: 40px;
 
     & > li {
       margin-bottom: 0.6em;
@@ -131,6 +132,10 @@
   border: 0;
   z-index: 2;
   outline: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .footerCopyrightWrapper {

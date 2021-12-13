@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { END } from 'redux-saga'
+import classNames from 'classnames/bind'
+import classNamesCombined from 'classnames'
 
 // import moment from 'moment'
 import slugify from 'slugify'
@@ -14,6 +16,9 @@ import { wrapper } from 'store'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
 import { fetchFeaturedCompaniesRequest } from 'store/actions/companies/fetchFeaturedCompanies'
+import { fetchCompanyDetailRequest } from 'store/actions/companies/fetchCompanyDetail'
+import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
+
 import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
 import { deleteJobAlertRequest } from 'store/actions/alerts/deleteJobAlert'
 import { updateJobAlertRequest } from 'store/actions/alerts/updateJobAlert'
@@ -47,6 +52,7 @@ import {
 } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 interface JobSearchPageProps {
   seoMetaTitle: string
@@ -149,7 +155,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
-  // const jobsList = useSelector((store: any) => store.job.jobsList)
+  const { width } = useWindowDimensions()
+  const prevScrollY = useRef(0)
+
+  const [isSticky, setIsSticky] = useState(false)
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlQuery, setUrlQuery] = useState()
   const [urlLocation, setUrlLocation] = useState([])
@@ -157,6 +166,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const locList = getLocationList(config)
   const [jobAlertList, setJobAlertList] = useState(null)
   const [createdJobAlert, setCreatedJobAlert] = useState(null)
+  const [selectedJob, setSelectedJob] = useState(null)
+  const [selectedJobId, setSelectedJobId] = useState(null)
+  const [companyDetail, setCompanyDetail] = useState(null)
 
   const displayQuickLinks = router.query.keyword === 'job-search'
   const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
@@ -164,10 +176,21 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     catList,
     locList
   )
+
+  const jobListResponse = useSelector((store: any) => store.job.jobList.response)
+  const isJobListFetching = useSelector((store: any) => store.job.jobList.fetching)
+  
+  const jobDetailResponse = useSelector((store: any) => store.job.jobDetail.response)
+  const isJobDetailFetching = useSelector((store: any) => store.job.jobDetail.fetching)
+
   const createdJobAlertResponse = useSelector((store: any) => store.alerts.createJobAlert.response)
   const jobAlertListResponse = useSelector((store: any) => store.alerts.fetchJobAlertsList.response)
+  const companyDetailResponse = useSelector((store: any) => store.companies.companyDetail.response)
   const isDeletingJobAlert = useSelector((store: any) => store.alerts.deleteJobAlert.fetching)
   const isUpdatingJobAlert = useSelector((store: any) => store.alerts.updateJobAlert.fetching)
+  
+  const cx = classNames.bind(styles)
+  const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
     console.log('router query changed', router.query)
@@ -195,10 +218,35 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }, [router.query])
 
   useEffect(() => {
+    window.addEventListener('scroll', updateScrollPosition)
+    return () => window.removeEventListener('scroll', updateScrollPosition)
+  }, [])
+
+  useEffect(() => {
     if (jobAlertListResponse) setJobAlertList(jobAlertListResponse)
     if (createdJobAlertResponse) setCreatedJobAlert(createdJobAlertResponse)
 
   }, [jobAlertListResponse, createdJobAlertResponse])
+
+  useEffect(() => {
+    if (jobListResponse?.data?.jobs.length > 0) {
+      handleFetchJobDetail(jobListResponse.data?.jobs?.[0].id) 
+      setSelectedJobId(jobListResponse.data?.jobs?.[0].id)
+    } 
+  }, [jobListResponse])
+
+  useEffect(() => {
+    if (jobDetailResponse?.data) setSelectedJob(jobDetailResponse.data)
+  }, [jobDetailResponse])
+
+  useEffect(() => {
+    if (selectedJobId) dispatch(handleFetchJobDetail(selectedJobId))
+    if (selectedJob) dispatch(fetchCompanyDetailRequest(selectedJob.company_id))
+  }, [selectedJobId])
+
+  useEffect(() => {
+    if (companyDetailResponse?.data) setCompanyDetail(companyDetailResponse.data)
+  }, [companyDetailResponse])
 
   const sortOptions = [
     { label: 'Newest', value: 1 },
@@ -289,29 +337,38 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     updateUrl(queryParam, queryObject)
   }
 
+  const handleFetchCompanyDetail = (companyId) => dispatch(fetchCompanyDetailRequest(companyId))
+
+  const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest(jobId))
+
+  const handleSelectedJobId = (jobId) => setSelectedJobId(jobId)
+
+  const handleUpdateJobAlert = (payload) => dispatch(updateJobAlertRequest(payload))
+
+  const handleDeleteJobAlert = (alertId) => dispatch(deleteJobAlertRequest(alertId))
+
   const handleFetchJobAlertsList = () => {
     // TODO: Get userId = 2524
     dispatch(fetchJobAlertsListRequest(2524))
   }
-
-  const handleDeleteJobAlert = (alertId) => {
-    dispatch(deleteJobAlertRequest(alertId))
-  }
-
-  const handleUpdateJobAlert = (payload) => {
-    dispatch(updateJobAlertRequest(payload))
-  }
-
+  
   const handleCreateJobAlert = (payload) => {
     // TODO: Get userId = 2524
     payload.user_id = 2524
     dispatch(createJobAlertRequest(payload))
   }
 
+  const updateScrollPosition = () => {
+    if (width > 798) {
+      prevScrollY.current = window.pageYOffset
+      setIsSticky(prevScrollY.current > 70 ? true : false)
+    }
+  }
+
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} />
-      <div className={displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection}>
+      <div className={classNamesCombined([displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection, isStickyClass])}>
         <div className={styles.searchAndLocationContainer}>
           <MaterialTextField
             id='search'
@@ -412,6 +469,15 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       <div style={{ display: 'block' }}>
         <JobListSection 
           defaultPage={defaultPage}
+          jobList={jobListResponse?.data || null}
+          isJobListFetching={isJobListFetching}
+          isJobDetailFetching={isJobDetailFetching}
+          selectedJob={selectedJob}
+          selectedJobId={selectedJobId}
+          handleSelectedJobId={handleSelectedJobId}
+          handleCompanyDetail={handleFetchCompanyDetail}
+          companyDetail={companyDetail}
+          totalPages={jobListResponse?.data?.total_num}
           query={predefinedQuery}
           location={urlLocation}
           jobAlertsList={jobAlertList}
