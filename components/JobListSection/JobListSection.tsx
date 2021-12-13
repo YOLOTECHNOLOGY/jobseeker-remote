@@ -14,6 +14,7 @@ import Button from 'components/Button'
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
 import JobCard from 'components/JobCard'
+import AdSlot from 'components/AdSlot'
 import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
 
@@ -234,6 +235,11 @@ const JobListSection = ({
             ))}
           </div>
           <div className={styles.paginationWrapper}>
+            <MaterialRoundedPagination
+              onChange={handlePaginationClick}
+              defaultPage={defaultPage}
+              totalPages={105}
+            />
             <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={defaultPage} totalPages={totalPages} />
           </div>
         </div>
@@ -250,7 +256,6 @@ const JobListSection = ({
                 >
                   <Image src={MoreIcon} width='20' height='20'></Image>
                 </div>
-
                 {jobDetailOption && (
                   <div className={styles.jobDetailOptionList}>
                     <Link to={jobDetailUrl} external className={styles.jobDetailOptionItem}>
@@ -451,7 +456,17 @@ const JobListSection = ({
             </div>
           )}
         </div>
-        <div className={styles.jobAds}></div>
+        <div className={styles.jobAds}>
+          <div className={styles.skyscraperBanner}>
+            <AdSlot adSlot={'job-page-skyscraper-1'} />
+          </div>
+          <div className={styles.skyscraperBanner}>
+            <AdSlot adSlot={'job-page-skyscraper-2'} />
+          </div>
+          <div className={styles.skyscraperBanner}>
+            <AdSlot adSlot={'job-page-skyscraper-3'} />
+          </div>
+        </div>
       </div>
 
       <ModalJobAlerts
@@ -468,11 +483,8 @@ const JobListSection = ({
         isUpdatingJobAlert={isUpdatingJobAlert}
         isDeletingJobAlert={isDeletingJobAlert}
       />
-      <ModalReportJob 
-        isShowReportJob={isShowReportJob}
-        handleShowReportJob={setIsShowReportJob}
-      />
-      <ModalShare 
+      <ModalReportJob isShowReportJob={isShowReportJob} handleShowReportJob={setIsShowReportJob} />
+      <ModalShare
         jobDetailUrl={jobDetailUrl}
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}

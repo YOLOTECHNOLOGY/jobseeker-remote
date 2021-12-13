@@ -508,7 +508,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       config,
       topCompanies,
       key: keyword,
-      defaultPage:Number(page),
+      defaultPage: page ? Number(page) : 1,
     },
   }
 })

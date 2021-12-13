@@ -318,8 +318,18 @@
 
 .jobAds {
   width: 14%;
-  background-color: $white-1;
   margin: 10px;
+
+  .skyscraperBanner {
+    display:flex;
+    width:160px;
+    height:600px;
+    margin-bottom:30px;
+    box-sizing: border-box;
+    overflow:hidden;
+    cursor:pointer;
+    background-color: $white-1;
+  }
 }
 
 .paginationWrapper{
