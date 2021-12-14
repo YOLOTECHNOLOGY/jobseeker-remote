@@ -476,6 +476,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           </div>
         </div>
         <JobSearchFilters
+          urlDefaultValues={defaultValues}
           displayQuickLinks={displayQuickLinks}
           isShowFilter={isShowFilter}
           onResetFilter={handleResetFilter}
@@ -522,7 +523,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const topCompanies = storeState.companies.featuredCompanies.response
   const catList = config && config.inputs && config.inputs.job_category_lists
   const locList = getLocationList(config) 
-
   const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
     query,
     catList,
@@ -545,6 +545,13 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       return loc.value === predefinedLocation.toString()
     })
     defaultValues.urlLocation = matchedLocation[0]
+  }
+  if (query && query.category){
+    const urlCategory = query?.category.split(',')
+    const matchedCategory = catList.filter((cat) => {
+      return urlCategory.includes(cat.key)
+    })
+    defaultValues.category = matchedCategory
   }
   return {
     props: {

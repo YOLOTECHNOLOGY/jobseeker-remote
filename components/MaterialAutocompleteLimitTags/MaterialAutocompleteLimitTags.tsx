@@ -5,7 +5,6 @@ import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 
 interface MaterialAutoCompleteLimitTagsProps {
-  //   children?: React.ReactNode
   style?: React.CSSProperties
   id: string
   limitTagCount: number
@@ -14,7 +13,6 @@ interface MaterialAutoCompleteLimitTagsProps {
   className?: string
   defaultValue?: any
   onChange: Function
-  //   label?: string
 }
 
 type OptionType = {
@@ -72,8 +70,6 @@ const MaterialAutocompleteLimitTags = ({
       },
     },
   })
-
-  // console.log('MaterialAutoCompleteLimitTags options', options)
 
   return (
     <ThemeProvider theme={theme}>

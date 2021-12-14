@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import useAdSlot from 'helpers/useAdSlot'
 import useTransitionState from 'helpers/useTransitionState'
@@ -9,9 +9,11 @@ interface adSlotProps {
 }
 
 const AdSlot = ({ adSlot }: adSlotProps) => {
+  // NOTE: to utilise isFirstRender instead of isTransitioning to prevent ads from refreshing if needed
   const isTransitioning = useTransitionState()
 
   const ad = ads[adSlot]
+  // console.log(`${ad.adUnit} isTransitioning`, isTransitioning)
 
   if (process.env.ENV === 'production') {
     useAdSlot({
@@ -26,4 +28,4 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
   return <div id={`div-gpt-ad-${ad.id}`} />
 }
 
-export default AdSlot
+export default memo(AdSlot)
