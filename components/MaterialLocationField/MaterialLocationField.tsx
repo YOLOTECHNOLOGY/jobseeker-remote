@@ -13,11 +13,32 @@ import { flat } from 'helpers/formatter'
 
 const textFieldTheme = createTheme({
   components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          fontSize: '15px',
+          letterSpacing: '1px',
+        },
+      },
+    },
     MuiInputLabel: {
       styleOverrides: {
+        root: {
+          fontSize: '14px',
+          letterSpacing: '1px',
+          transform: 'translate(14px, 10px) scale(1)',
+          '&.Mui-focused': {
+            fontSize: '10px',
+            transform: 'translate(14px, -10px) scale(1)',
+          },
+        },
+        shrink: {
+          fontSize: '10px',
+          transform: 'translate(14px, -10px) scale(1)',
+        },
         outlined: {
           '&.MuiInputLabel-shrink': {
-            fontSize: '13px',
+            fontSize: '10px',
           },
         },
       },

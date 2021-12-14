@@ -9,6 +9,8 @@
   display: flex;
   flex-direction: column;
   padding: 20px 7%;
+  z-index:10;
+
   .searchAndLocationContainer {
     display: flex;
     flex-direction: row;
@@ -37,6 +39,7 @@
 .searchSectionExpanded {
   @extend .searchSection;
   height: 230px;
+  z-index:10;
 }
 
 .searchField {
@@ -63,6 +66,7 @@
 
 .quickLinkTitle {
   display: flex;
+  letter-spacing: 1px;
 }
 
 .popularSearchContainer {
@@ -81,7 +85,11 @@
     flex-wrap: wrap;
 
     .link {
-      margin: 5px 15px;
+      margin:0 10px; 
+
+      & > span {
+        letter-spacing: 1px;
+      }
 
       &:hover {
         cursor: pointer;

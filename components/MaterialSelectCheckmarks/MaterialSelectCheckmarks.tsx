@@ -78,6 +78,7 @@ const MaterialSelectCheckmarks = ({
         styleOverrides: {
           root: {
             fontSize: '13px',
+            letterSpacing: '1px',
           },
         },
       },
@@ -85,6 +86,7 @@ const MaterialSelectCheckmarks = ({
         styleOverrides: {
           root: {
             fontSize: '14px',
+            letterSpacing: '1px',
             transform: 'translate(14px, 10px) scale(1)',
             '&.Mui-focused': {
               fontSize: '10px',
@@ -100,6 +102,7 @@ const MaterialSelectCheckmarks = ({
         styleOverrides: {
           root: {
             fontSize: '14px',
+            letterSpacing: '1px',
           },
           input: {
             padding: '10.5px 14px !important',

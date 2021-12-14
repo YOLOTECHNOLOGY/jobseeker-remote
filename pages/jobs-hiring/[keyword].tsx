@@ -155,7 +155,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
-  const { width } = useWindowDimensions()
+  const { width, height } = useWindowDimensions()
   const prevScrollY = useRef(0)
 
   const [isSticky, setIsSticky] = useState(false)
@@ -169,8 +169,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [selectedJob, setSelectedJob] = useState(null)
   const [selectedJobId, setSelectedJobId] = useState(null)
   const [companyDetail, setCompanyDetail] = useState(null)
+  const { keyword, ...rest } = router.query
+  const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
 
-  const displayQuickLinks = router.query.keyword === 'job-search'
   const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
     router.query,
     catList,
@@ -188,12 +189,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const companyDetailResponse = useSelector((store: any) => store.companies.companyDetail.response)
   const isDeletingJobAlert = useSelector((store: any) => store.alerts.deleteJobAlert.fetching)
   const isUpdatingJobAlert = useSelector((store: any) => store.alerts.updateJobAlert.fetching)
-  
+
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
     console.log('router query changed', router.query)
+    setDisplayQuickLinks(false)
     if (predefinedQuery) setUrlQuery(predefinedQuery.toString())
     if (predefinedLocation) {
       const matchedLocation = locList.filter((loc) => {
@@ -359,16 +361,31 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const updateScrollPosition = () => {
+    console.log('height', height)
+    console.log('window.pageYOffset', window.pageYOffset)
+    console.log('prevScrollY.current', prevScrollY.current)
     if (width > 798) {
+      console.log('triggered')
       prevScrollY.current = window.pageYOffset
       setIsSticky(prevScrollY.current > 70 ? true : false)
+      setDisplayQuickLinks(
+        prevScrollY.current > 70
+          ? false
+          : keyword === 'job-search' && Object.entries(rest).length === 0
+        // : keyword === 'job-search' && Object.entries(rest).length === 0
+      )
     }
   }
 
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} />
-      <div className={classNamesCombined([displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection, isStickyClass])}>
+      <div
+        className={classNamesCombined([
+          displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection,
+          isStickyClass,
+        ])}
+      >
         <div className={styles.searchAndLocationContainer}>
           <MaterialTextField
             id='search'
@@ -427,6 +444,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             variant='contained'
             className={styles.moreFiltersBtn}
             onClick={handleShowFilter}
+            style={{ letterSpacing: '1px' }}
           >
             More Filters
           </MaterialButton>
@@ -467,7 +485,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         />
       </div>
       <div style={{ display: 'block' }}>
-        <JobListSection 
+        <JobListSection
           defaultPage={defaultPage}
           jobList={jobListResponse?.data || null}
           isJobListFetching={isJobListFetching}

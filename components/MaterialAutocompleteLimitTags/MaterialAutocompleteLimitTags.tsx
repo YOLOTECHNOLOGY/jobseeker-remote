@@ -38,7 +38,10 @@ const MaterialAutocompleteLimitTags = ({
           tag: {
             height: '20px',
           },
-          input:{
+          input: {
+            fontSize: '13px',
+          },
+          option:{
             fontSize:'13px'
           }
         },
@@ -53,8 +56,17 @@ const MaterialAutocompleteLimitTags = ({
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            // fontSize: '13px',
-            lineHeight: '1rem',
+            fontSize: '14px',
+            letterSpacing: '1px',
+          },
+          shrink: {
+            fontSize: '10px',
+            transform: 'translate(14px, -10px) scale(1)',
+          },
+          outlined: {
+            '&.MuiInputLabel-shrink': {
+              fontSize: '10px',
+            },
           },
         },
       },
@@ -72,9 +84,7 @@ const MaterialAutocompleteLimitTags = ({
         options={options}
         getOptionLabel={(option) => option.value}
         // inputValue={(a)=>console.log('a', a)}
-        onChange={(
-          e: React.ChangeEvent<HTMLInputElement>,
-        ): void => onChange(e)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>, value): void => onChange(e, value)}
         defaultValue={defaultValue}
         //   defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
         renderInput={(params) => (
