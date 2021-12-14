@@ -83,10 +83,11 @@ const MaterialAutocompleteLimitTags = ({
         id={id}
         options={options}
         getOptionLabel={(option) => option.value}
-        // inputValue={(a)=>console.log('a', a)}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>, value): void => onChange(e, value)}
+        onChange={(
+          e: React.ChangeEvent<HTMLInputElement>,
+          value
+        ): void => onChange(e, value)}
         defaultValue={defaultValue}
-        //   defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
         renderInput={(params) => (
           <TextField
             {...params}

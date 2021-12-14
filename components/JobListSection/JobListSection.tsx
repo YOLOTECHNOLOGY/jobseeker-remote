@@ -10,10 +10,10 @@ import classNamesCombined from 'classnames'
 /* Components */
 import Image from 'next/image'
 import Link from 'components/Link'
-import Button from 'components/Button'
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
 import JobCard from 'components/JobCard'
+import AdSlot from 'components/AdSlot'
 import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
 
@@ -23,6 +23,7 @@ import ModalReportJob from 'components/ModalReportJob'
 
 /* Material Components */
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
+import MaterialButton from 'components/MaterialButton'
 
 /* Helpers */
 import { numberToThousands } from 'helpers/formatter'
@@ -250,7 +251,6 @@ const JobListSection = ({
                 >
                   <Image src={MoreIcon} width='20' height='20'></Image>
                 </div>
-
                 {jobDetailOption && (
                   <div className={styles.jobDetailOptionList}>
                     <Link to={jobDetailUrl} external className={styles.jobDetailOptionItem}>
@@ -280,10 +280,12 @@ const JobListSection = ({
                     </Text>
                     <JobTag tag={selectedJob?.['job_type']} />
                     <div className={styles.jobDetailButtons}>
-                      <Button primary>
+                      <MaterialButton variant='contained'>
                         <Link to={selectedJob?.['external_apply_url']} external>Apply Now</Link>
-                      </Button>
-                      <Button secondary>Save Job</Button>
+                      </MaterialButton>
+                      <MaterialButton variant='outlined'>
+                        Save Job
+                      </MaterialButton>
                     </div>
                     <Text textStyle='xsm' className={styles.jobDetailPostedAt}>
                       Posted on {moment(new Date(selectedJob?.['published_at'])).format('DD MMMM YYYY')}
@@ -451,7 +453,17 @@ const JobListSection = ({
             </div>
           )}
         </div>
-        <div className={styles.jobAds}></div>
+        <div className={styles.jobAds}>
+          <div className={styles.skyscraperBanner}>
+            <AdSlot adSlot={'job-page-skyscraper-1'} />
+          </div>
+          <div className={styles.skyscraperBanner}>
+            <AdSlot adSlot={'job-page-skyscraper-2'} />
+          </div>
+          <div className={styles.skyscraperBanner}>
+            <AdSlot adSlot={'job-page-skyscraper-3'} />
+          </div>
+        </div>
       </div>
 
       <ModalJobAlerts
@@ -468,11 +480,8 @@ const JobListSection = ({
         isUpdatingJobAlert={isUpdatingJobAlert}
         isDeletingJobAlert={isDeletingJobAlert}
       />
-      <ModalReportJob 
-        isShowReportJob={isShowReportJob}
-        handleShowReportJob={setIsShowReportJob}
-      />
-      <ModalShare 
+      <ModalReportJob isShowReportJob={isShowReportJob} handleShowReportJob={setIsShowReportJob} />
+      <ModalShare
         jobDetailUrl={jobDetailUrl}
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}
