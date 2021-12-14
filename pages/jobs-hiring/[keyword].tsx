@@ -151,7 +151,7 @@ const renderPopularSearch = () => {
 }
 
 const JobSearchPage = (props: JobSearchPageProps) => {
-  const { seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage } = props
+  const { seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage, defaultValues, predefinedQuery, predefinedLocation, predefinedCategory } = props
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
@@ -160,8 +160,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   const [isSticky, setIsSticky] = useState(false)
   const [isShowFilter, setIsShowFilter] = useState(false)
-  const [urlQuery, setUrlQuery] = useState()
-  const [urlLocation, setUrlLocation] = useState([])
+  const [urlQuery, setUrlQuery] = useState(defaultValues?.urlQuery)
+  const [urlLocation, setUrlLocation] = useState(defaultValues?.urlLocation)
   const catList = config && config.inputs && config.inputs.job_category_lists
   const locList = getLocationList(config)
   const [jobAlertList, setJobAlertList] = useState(null)
@@ -171,12 +171,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [companyDetail, setCompanyDetail] = useState(null)
   const { keyword, ...rest } = router.query
   const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
-
-  const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
-    router.query,
-    catList,
-    locList
-  )
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
   const isJobListFetching = useSelector((store: any) => store.job.jobList.fetching)
@@ -195,7 +189,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   useEffect(() => {
     console.log('router query changed', router.query)
-    setDisplayQuickLinks(false)
+    if (!firstRender) setDisplayQuickLinks(false)
     if (predefinedQuery) setUrlQuery(predefinedQuery.toString())
     if (predefinedLocation) {
       const matchedLocation = locList.filter((loc) => {
@@ -361,9 +355,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const updateScrollPosition = () => {
-    console.log('height', height)
-    console.log('window.pageYOffset', window.pageYOffset)
-    console.log('prevScrollY.current', prevScrollY.current)
+    // console.log('height', height)
+    // console.log('window.pageYOffset', window.pageYOffset)
+    // console.log('prevScrollY.current', prevScrollY.current)
     if (width > 798) {
       console.log('triggered')
       prevScrollY.current = window.pageYOffset
@@ -404,6 +398,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           />
           <MaterialLocationField
             className={styles.locationField}
+            // defValue={defaultLocation}
             defValue={urlLocation}
             onChange={onLocationSearch}
           />
@@ -420,7 +415,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             className={styles.sortField}
             onSelect={onSortSelection}
             greyBg
-            defaultValue={router.query?.sort ? router.query?.sort : 1}
+            defaultValue={defaultValues?.sort}
+            // defaultValue={router.query?.sort ? router.query?.sort : 1}
           />
           <MaterialSelectCheckmarks
             id='jobtype'
@@ -429,7 +425,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             className={styles.sortField}
             onSelect={onJobTypeSelection}
             greyBg
-            defaultValue={router.query?.jobtype ? router.query.jobtype.split(',') : null}
+            defaultValue={defaultValues?.jobType}
+            // defaultValue={router.query?.jobtype ? router.query.jobtype.split(',') : null}
           />
           <MaterialSelectCheckmarks
             id='salary'
@@ -438,7 +435,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             className={styles.sortField}
             onSelect={onSalarySelection}
             greyBg
-            defaultValue={router.query?.salary ? router.query.salary.split(',') : null}
+            defaultValue={defaultValues?.salary}
+            // defaultValue={router.query?.salary ? router.query.salary.split(',') : null}
           />
           <MaterialButton
             variant='contained'
@@ -514,6 +512,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
   const { keyword, page } = query
+  // store actions
   store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesRequest())
   store.dispatch(END)
@@ -521,12 +520,42 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const storeState = store.getState()
   const config = storeState.config.config.response
   const topCompanies = storeState.companies.featuredCompanies.response
+  const catList = config && config.inputs && config.inputs.job_category_lists
+  const locList = getLocationList(config) 
+
+  const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
+    query,
+    catList,
+    locList
+  )
+
+  const defaultValues: any = {
+    urlQuery: '',
+    urlLocation: [],
+    sort: query?.sort ? query?.sort : 1,
+    jobType: query?.jobtype ? query?.jobtype.split(',') : null,
+    salary: query?.salary ? query?.salary.split(',') : null,
+  }
+
+  if (predefinedQuery) {
+    defaultValues.urlQuery = predefinedQuery.toString()
+  }
+  if (predefinedLocation) {
+    const matchedLocation = locList.filter((loc) => {
+      return loc.value === predefinedLocation.toString()
+    })
+    defaultValues.urlLocation = matchedLocation[0]
+  }
   return {
     props: {
       config,
       topCompanies,
       key: keyword,
       defaultPage:Number(page),
+      defaultValues,
+      predefinedQuery,
+      predefinedLocation,
+      predefinedCategory,
     },
   }
 })

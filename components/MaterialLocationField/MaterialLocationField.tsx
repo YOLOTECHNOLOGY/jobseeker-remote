@@ -64,23 +64,12 @@ const formatLocationConfig = (locationList) => {
   return locationConfig
 }
 
-const MaterialLocationField = ({ id, className, defValue, ...rest }: any) => {
+const MaterialLocationField = ({ className, defValue, ...rest }: any) => {
   // const [selectedLocation, setSelectedLocation] = useState(defValue.value)
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs.location_lists
   )
   const formattedLocationList = flat(formatLocationConfig(locationList))
-  const defaultOption = formattedLocationList.find((v) => defValue.value === v.value)
-  // console.log('defaultOption', defaultOption)
-
-  const indexOfDefaultOption =
-    formattedLocationList.findIndex((loc) => loc.value === defaultOption?.value) || null
-
-  // console.log('indexOfDefaultOption', indexOfDefaultOption)
-
-  const xyz = Object.assign({}, formattedLocationList[indexOfDefaultOption])
-  // console.log('xyz', xyz)
-
   return (
     <ThemeProvider theme={autocompleteTheme}>
       <Autocomplete
@@ -95,11 +84,7 @@ const MaterialLocationField = ({ id, className, defValue, ...rest }: any) => {
             <TextField id='location' label='Location' variant='outlined' size='small' {...params} />
           </ThemeProvider>
         )}
-        defaultValue={xyz}
-        // inputValue={selectedLocation}
-        // onInputChance={(_event, newLocation) => {
-        //   setSelectedLocation(newLocation)
-        // }}
+        defaultValue={defValue}
         {...rest}
       />
     </ThemeProvider>
