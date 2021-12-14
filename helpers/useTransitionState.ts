@@ -14,7 +14,6 @@ function useTransitionState() {
 
   const [isTransitioning, setIsTransitioning] = useState(false)
 
-  console.log('isTransitioning', isTransitioning)
   const setTransitionStarted = () => {
     setIsTransitioning(true)
 

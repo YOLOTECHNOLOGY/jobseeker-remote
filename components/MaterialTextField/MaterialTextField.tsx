@@ -19,18 +19,24 @@ interface MaterialTextFieldProps extends React.ButtonHTMLAttributes<HTMLButtonEl
 
 const theme = createTheme({
   components: {
-    // MuiOutlinedInput: {
-    //   styleOverrides: {
-    //     input: {
-    //       fontSize: '14px',
-    //     },
-    //   },
-    // },
     MuiInputLabel: {
       styleOverrides: {
+        root: {
+          fontSize: '14px',
+          transform: 'translate(14px, 10px) scale(1)',
+          letterSpacing: '1px',
+          '&.Mui-focused': {
+            fontSize: '10px',
+            transform: 'translate(14px, -10px) scale(1)',
+          },
+        },
+        shrink: {
+          fontSize: '10px',
+          transform: 'translate(14px, -10px) scale(1)',
+        },
         outlined: {
           '&.MuiInputLabel-shrink': {
-            fontSize: '13px',
+            fontSize: '10px',
           },
         },
       },

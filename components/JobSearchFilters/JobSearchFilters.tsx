@@ -12,6 +12,7 @@ import Image from 'next/image'
 import Text from 'components/Text'
 import Button from 'components/Button'
 import Accordian from 'components/Accordian'
+import MaterialAutocompleteLimitTags from 'components/MaterialAutocompleteLimitTags'
 
 /* Helpers */
 import {
@@ -25,9 +26,9 @@ import styles from './JobSearchFilters.module.scss'
 
 /* Images */
 import { CloseIcon } from 'images'
-import MaterialAutocompleteLimitTags from 'components/MaterialAutocompleteLimitTags'
 
 interface NavSearchFilterProps {
+  urlDefaultValues: any
   isShowFilter: boolean
   onShowFilter: Function
   onResetFilter: Function
@@ -48,12 +49,12 @@ type optionsType = {
 }
 
 const NavSearchFilter = ({
+  urlDefaultValues,
   isShowFilter,
   onShowFilter,
   displayQuickLinks,
   onResetFilter,
-}: 
-NavSearchFilterProps) => {
+}: NavSearchFilterProps) => {
   const router = useRouter()
   const { keyword } = router.query
   const queryParams = router.query
@@ -249,6 +250,7 @@ NavSearchFilterProps) => {
                 limitTagCount={8}
                 onChange={handleSpecializationChange}
                 style={{ margin: 0, paddingTop: '20px' }}
+                defaultValue={urlDefaultValues?.category}
               />
             </Accordian>
           </div>

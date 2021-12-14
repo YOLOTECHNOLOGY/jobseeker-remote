@@ -35,6 +35,23 @@ const MaterialBasicSelect = ({
           },
         },
       },
+      MuiInputBase: {
+        styleOverrides: {
+          input: {
+            fontSize: '14px',
+            letterSpacing: '1px',
+          },
+        },
+      },
+      MuiMenuItem: {
+        styleOverrides: {
+          root: {
+            fontSize: '13px',
+            letterSpacing: '1px',
+            padding:'10px 16px'
+          },
+        },
+      },
     },
   })
   return (
