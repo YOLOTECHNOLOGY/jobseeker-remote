@@ -13,7 +13,6 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
   const isTransitioning = useTransitionState()
 
   const ad = ads[adSlot]
-  // console.log(`${ad.adUnit} isTransitioning`, isTransitioning)
 
   if (process.env.ENV === 'production') {
     useAdSlot({

@@ -155,7 +155,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
-  const { width, height } = useWindowDimensions()
+  const { width } = useWindowDimensions()
   const prevScrollY = useRef(0)
 
   const [isSticky, setIsSticky] = useState(false)
@@ -355,18 +355,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const updateScrollPosition = () => {
-    // console.log('height', height)
-    // console.log('window.pageYOffset', window.pageYOffset)
-    // console.log('prevScrollY.current', prevScrollY.current)
     if (width > 798) {
-      console.log('triggered')
       prevScrollY.current = window.pageYOffset
       setIsSticky(prevScrollY.current > 70 ? true : false)
       setDisplayQuickLinks(
         prevScrollY.current > 70
           ? false
           : keyword === 'job-search' && Object.entries(rest).length === 0
-        // : keyword === 'job-search' && Object.entries(rest).length === 0
       )
     }
   }
@@ -416,7 +411,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             onSelect={onSortSelection}
             greyBg
             defaultValue={defaultValues?.sort}
-            // defaultValue={router.query?.sort ? router.query?.sort : 1}
           />
           <MaterialSelectCheckmarks
             id='jobtype'
@@ -426,7 +420,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             onSelect={onJobTypeSelection}
             greyBg
             defaultValue={defaultValues?.jobType}
-            // defaultValue={router.query?.jobtype ? router.query.jobtype.split(',') : null}
           />
           <MaterialSelectCheckmarks
             id='salary'
@@ -436,7 +429,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             onSelect={onSalarySelection}
             greyBg
             defaultValue={defaultValues?.salary}
-            // defaultValue={router.query?.salary ? router.query.salary.split(',') : null}
           />
           <MaterialButton
             variant='contained'
