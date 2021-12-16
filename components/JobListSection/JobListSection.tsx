@@ -177,7 +177,7 @@ const JobListSection = ({
   const updateScrollPosition = () => {
     if (width > 798) {
       prevScrollY.current = window.pageYOffset
-      setIsSticky(prevScrollY.current > 70 ? true : false)
+      setIsSticky(prevScrollY.current >= 70 ? true : false)
     }
   }
 
@@ -265,7 +265,7 @@ const JobListSection = ({
                   </div>
                 )}
               </div>
-              <div className={styles.jobDetailContent}>
+              <div className={classNamesCombined([styles.jobDetailContent, isStickyClass])}>
                 <div className={styles.jobDetailHeader}>
                   <div
                     className={styles.jobDetailImage}

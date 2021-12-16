@@ -63,9 +63,14 @@
   &Content {
     padding: 0 50px 320px;
     height: 100vh;
+    position: relative;
     overflow-y: scroll;
-    position: fixed;
-    width: 47.5%;
+    width: 100%;
+
+    &.isSticky {
+      position: fixed;
+      width: 47.5%;
+    }
   }
 
   &Option {
@@ -76,7 +81,7 @@
       height: 68px;
       width: 47.4%;
       position: fixed;
-      top: 139px;
+      top: 142px;
       z-index: 1;
       background-color: $white-3;
     }
