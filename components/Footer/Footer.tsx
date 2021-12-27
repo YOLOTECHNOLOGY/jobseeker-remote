@@ -79,7 +79,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to='/'
+                      to='/jobs-hiring'
                       title='All jobs'
                     >
                       <Text textStyle='sm'>All jobs</Text>
@@ -88,7 +88,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to='/'
+                      to='/jobs-hiring/makati-jobs'
                       title='Jobs in Makati'
                     >
                       <Text textStyle='sm'>Jobs in Makati</Text>
@@ -97,7 +97,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to='/'
+                      to='/jobs-hiring/manila-jobs'
                       title='Jobs in Manila'
                     >
                       <Text textStyle='sm'>Jobs in Manila</Text>
@@ -115,7 +115,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to='/'
+                      to='/resumetemplate'
                       title='Create resume'
                     >
                       <Text textStyle='sm'>Create resume</Text>
