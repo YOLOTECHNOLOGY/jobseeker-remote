@@ -2,7 +2,7 @@ import React from 'react'
 
 /* Components */
 import Header from 'components/Header'
-// import Footer from 'components/Footer'
+import Footer from 'components/Footer'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -14,7 +14,7 @@ const Layout = ({ children, className }: LayoutProps) => {
     <div className={className}>
       <Header />
       {children}
-      {/* <Footer /> */}
+      <Footer />
     </div>
   )
 }

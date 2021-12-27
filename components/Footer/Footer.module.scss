@@ -5,15 +5,15 @@
   display: flex;
   border-top: 1px solid $dividerLine;
   position: relative;
+  background-color: $white-3;
 
   &Container {
     width: 100%;
     box-sizing: border-box;
     padding: 10px;
-    margin-top: 15px;
 
     @include md {
-      padding: 10px 7% 20px 7%;
+      padding: 25px 7% 20px 7%;
     }
   }
 

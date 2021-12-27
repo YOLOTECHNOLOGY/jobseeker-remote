@@ -61,15 +61,16 @@
   position: relative;
 
   &Content {
-    padding: 0 50px 320px;
+    padding: 0 50px 500px;
     height: 100vh;
     position: relative;
     overflow-y: scroll;
     width: 100%;
+    background-color: $white-3;
 
     &.isSticky {
       position: fixed;
-      width: 47.5%;
+      width: 47.4%;
     }
   }
 
