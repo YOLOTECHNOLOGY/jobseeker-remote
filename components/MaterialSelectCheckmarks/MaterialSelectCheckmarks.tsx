@@ -25,7 +25,7 @@ interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLB
   className?: string
   label?: string
   options?: Array<OptionType>
-  onSelect?: Function
+  onSelect?: any
   greyBg?: boolean
 }
 
@@ -44,7 +44,7 @@ const MaterialSelectCheckmarks = ({
   greyBg,
   defaultValue,
 }: MaterialSelectCheckMarksProps) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>(defaultValue || [])
+  const [selectedOptions, setSelectedOptions] = useState<any>(defaultValue || [])
   const handleChange = (event: SelectChangeEvent) => {
     const {
       target: { value },
@@ -123,11 +123,11 @@ const MaterialSelectCheckmarks = ({
           label={label}
           onChange={handleChange}
           input={<OutlinedInput label='Tag' />}
-          renderValue={(selected) => selected.join(', ')}
+          renderValue={(selected:any) => selected.join(', ')}
           // MenuProps={MenuProps}
         >
           {options &&
-            options.map((option) => (
+            options.map((option: any) => (
               <MenuItem key={option} value={option}>
                 <Checkbox checked={selectedOptions.indexOf(option) > -1} size='small' />
                 <ListItemText primary={option} />

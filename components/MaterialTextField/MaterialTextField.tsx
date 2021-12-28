@@ -4,18 +4,20 @@ import TextField from '@mui/material/TextField'
 // import { inputLabelClasses } from "@material-ui/core/InputLabel";
 // import { styled } from "@material-ui/core/styles"
 
-interface MaterialTextFieldProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type Input = React.InputHTMLAttributes<HTMLInputElement>
+type MaterialTextFieldProps = {
   children?: React.ReactNode
   style?: React.CSSProperties
   defaultValue?: string
-  onChange: Function
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   className?: string
   label?: string
   size?: 'small' | 'medium'
   variant?: 'outlined' | 'filled' | 'standard'
   isLoading?: boolean
   disabled?: boolean
-}
+  color?: string
+} & Omit<Input, 'size'>
 
 const theme = createTheme({
   components: {
@@ -43,7 +45,7 @@ const theme = createTheme({
     },
   },
 })
-const MaterialTextField = ({ id, label, variant, size, className, defaultValue, ...rest } : MaterialTextFieldProps) => {
+const MaterialTextField = ({ id, label, variant, size, color, className, defaultValue, ...rest} : MaterialTextFieldProps) => {
   const [value, setValue] = useState(defaultValue)
 
   useEffect(()=>{
@@ -55,7 +57,7 @@ const MaterialTextField = ({ id, label, variant, size, className, defaultValue, 
   }
   return (
     <ThemeProvider theme={theme}>
-      <TextField id={id} label={label} value={value} onChange={handleChange} variant={variant} size={size} className={className} {...rest}/>
+      <TextField id={id} label={label} color={color as any} value={value} onChange={handleChange} variant={variant as any} size={size} className={className} {...rest}/>
     </ThemeProvider>
   )
 }

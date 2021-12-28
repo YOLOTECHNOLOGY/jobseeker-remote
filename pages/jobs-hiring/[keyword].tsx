@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
+// @ts-ignore
 import { END } from 'redux-saga'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
@@ -60,6 +61,10 @@ interface JobSearchPageProps {
   config: configObject
   topCompanies: companyObject[]
   defaultPage: number
+  defaultValues: any
+  predefinedQuery: any
+  predefinedLocation: any
+  predefinedCategory: any
 }
 
 type configObject = {
@@ -521,12 +526,15 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     locList
   )
 
+  const queryJobType: any = query?.jobtype
+  const querySalary: any = query?.salary
+
   const defaultValues: any = {
     urlQuery: '',
     urlLocation: [],
     sort: query?.sort ? query?.sort : 1,
-    jobType: query?.jobtype ? query?.jobtype.split(',') : null,
-    salary: query?.salary ? query?.salary.split(',') : null,
+    jobType: queryJobType ? queryJobType.split(',') : null,
+    salary: querySalary ? querySalary.split(',') : null,
   }
 
   if (predefinedQuery) {
@@ -539,7 +547,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     defaultValues.urlLocation = matchedLocation[0]
   }
   if (query && query.category){
-    const urlCategory = query?.category.split(',')
+    let urlCategory:any = query?.category
+    urlCategory = urlCategory.split(',')
     const matchedCategory = catList.filter((cat) => {
       return urlCategory.includes(cat.key)
     })

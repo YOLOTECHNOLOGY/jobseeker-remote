@@ -11,6 +11,7 @@ interface MaterialButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
   isLoading?: boolean
   disabled?: boolean
 }
+
 const MaterialButton = ({
   variant,
   className,
@@ -42,7 +43,7 @@ const MaterialButton = ({
           {children}
         </LoadingButton>
       ) : (
-        <Button variant={variant} className={className} disabled={disabled} {...rest}>
+        <Button variant={variant} className={className} disabled={disabled} {...rest as any}>
           {children}
         </Button>
       )}
