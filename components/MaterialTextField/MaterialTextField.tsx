@@ -8,7 +8,7 @@ interface MaterialTextFieldProps extends React.ButtonHTMLAttributes<HTMLButtonEl
   children?: React.ReactNode
   style?: React.CSSProperties
   defaultValue?: string
-  onChange: Function
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   className?: string
   label?: string
   size?: 'small' | 'medium'
@@ -55,7 +55,7 @@ const MaterialTextField = ({ id, label, variant, size, className, defaultValue, 
   }
   return (
     <ThemeProvider theme={theme}>
-      <TextField id={id} label={label} value={value} onChange={handleChange} variant={variant} size={size} className={className} {...rest}/>
+      <TextField id={id} label={label} value={value} onChange={handleChange} variant={variant} size={size} className={className} {...rest as any}/>
     </ThemeProvider>
   )
 }
