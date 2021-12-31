@@ -156,7 +156,9 @@ const renderPopularSearch = () => {
 }
 
 const JobSearchPage = (props: JobSearchPageProps) => {
-  const { seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage, defaultValues, predefinedQuery, predefinedLocation, predefinedCategory } = props
+  const { seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage, defaultValues, 
+    // predefinedQuery, predefinedLocation, predefinedCategory
+   } = props
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
@@ -189,6 +191,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const isDeletingJobAlert = useSelector((store: any) => store.alerts.deleteJobAlert.fetching)
   const isUpdatingJobAlert = useSelector((store: any) => store.alerts.updateJobAlert.fetching)
 
+  const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
+    router.query,
+    catList,
+    locList
+  )
+
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
 
@@ -213,7 +221,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       education: router.query?.qualification,
       workExperience: router.query?.workExperience,
       sort: router.query?.sort,
-      page:router.query?.page ? Number(router.query.page) : 1,
+      page: router.query?.page ? Number(router.query.page) : 1,
     }
     dispatch(fetchJobsListRequest(payload))
   }, [router.query])
@@ -388,7 +396,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             size='small'
             className={styles.searchField}
             defaultValue={urlQuery}
-            onChange={(e: any) => setUrlQuery(e.target.value)}
             onKeyPress={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()
@@ -520,7 +527,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const topCompanies = storeState.companies.featuredCompanies.response
   const catList = config && config.inputs && config.inputs.job_category_lists
   const locList = getLocationList(config) 
-  const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
+  const { predefinedQuery, predefinedLocation
+    // , predefinedCategory
+   } = getPredefinedParamsFromUrl(
     query,
     catList,
     locList
@@ -561,9 +570,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       key: keyword,
       defaultPage:page ? Number(page) : 1,
       defaultValues,
-      predefinedQuery,
-      predefinedLocation,
-      predefinedCategory,
+      // predefinedQuery,
+      // predefinedLocation,
+      // predefinedCategory,
     },
   }
 })
