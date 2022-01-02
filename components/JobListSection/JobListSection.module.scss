@@ -5,6 +5,10 @@
   display: flex;
   padding: 0 7%;
   position: relative;
+
+  @include msd {
+    padding: 0 6%;
+  }
 }
 
 .jobList {
@@ -28,6 +32,10 @@
       border-bottom: 1px solid rgba($lightgrey, 0.6);
       z-index: 1;
     }
+
+    @include msd {
+      width: 100%;
+    }
   }
 
   &OptionAlerts {
@@ -49,12 +57,20 @@
   &Content {
     margin-top: 68px;
   }
+
+  @include msd {
+    width: 100%;
+  }
 }
 
 .jobDetailInfoSection {
   width: 56%;
   border-top: 0;
   border: 1px solid rgba($lightgrey, 0.6);
+
+  @include msd {
+    display: none;
+  }
 }
 
 .jobDetail {
@@ -106,6 +122,7 @@
     right: 14px;
     background-color: $white-3;
     box-shadow: $box-shadow-1;
+    z-index: 1;
   }
 
   &OptionItem {
@@ -336,8 +353,19 @@
     cursor:pointer;
     background-color: $white-1;
   }
+
+  @include msd {
+    display: none;
+  }
 }
 
 .paginationWrapper{
   margin: 20px 0;
+
+  @include msd {
+    button {
+      height: 30px;
+      min-width: 30px;
+    }
+  }
 }
