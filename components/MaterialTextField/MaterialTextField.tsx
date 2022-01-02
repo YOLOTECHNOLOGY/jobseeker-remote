@@ -9,7 +9,6 @@ type MaterialTextFieldProps = {
   children?: React.ReactNode
   style?: React.CSSProperties
   defaultValue?: string
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   className?: string
   label?: string
   size?: 'small' | 'medium'
