@@ -16,6 +16,11 @@
     background-color: rgba($primaryBlue, 0.05);
     cursor: pointer;
   }
+
+  @include msd {
+    border-right: 1px solid rgba($lightgrey, 0.6);
+    padding: 24px 0;
+  }
 }
 
 .JobCardImage {
@@ -23,16 +28,25 @@
     width: 25%;
     display: flex;
     justify-content: center;
+    
+    @include msd {
+      width: 30%;
+    }
   }
 
   &Content {
     width: 64px;
     height: 64px;
-    border-radius: 10px;
+    border-radius: 6px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-color: rgba($lightgrey, 0.2);
+
+    @include msd {
+      width: 50px;
+      height: 50px;
+    }
   }
 }
 

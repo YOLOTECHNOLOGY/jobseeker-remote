@@ -8,6 +8,11 @@
   width: 100%;
   padding: 28px 0;
   height: 265px;
+
+  @include msd {
+    border-right: 1px solid rgba($lightgrey, 0.6);
+    padding: 24px 14px;
+  }
 }
 
 .JobCardLoaderImage {
@@ -15,5 +20,22 @@
     width: 25%;
     display: flex;
     justify-content: center;
+    
+    @include msd {
+      margin-right: 8px;
+
+      svg {
+        width: 50px !important;
+        height: 50px !important;
+      }
+    }
+  }
+}
+
+.JobCardDetailWrapper {
+  height: 100%;
+
+  @include msd {
+    width: 70%;
   }
 }
