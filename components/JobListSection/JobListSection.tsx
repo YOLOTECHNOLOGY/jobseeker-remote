@@ -16,6 +16,7 @@ import JobCard from 'components/JobCard'
 import AdSlot from 'components/AdSlot'
 import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
+import ReadMore from 'components/ReadMore'
 
 import ModalShare from 'components/ModalShare'
 import ModalJobAlerts from 'components/ModalJobAlerts'
@@ -99,8 +100,6 @@ const JobListSection = ({
   const prevScrollY = useRef(0)
 
   const [isSticky, setIsSticky] = useState(false)
-  const [companyDescription, setCompanyDescription] = useState('')
-  const [isFullDescription, setIsFullDescription] = useState(false)
   const [jobDetailOption, setJobDetailOption] = useState(false)
   
   const [isShowModalShare, setIsShowModalShare] = useState(false)
@@ -119,21 +118,9 @@ const JobListSection = ({
   const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
-    handleCompanyDescription()
-  }, [companyDetail, isFullDescription])
-
-  useEffect(() => {
     window.addEventListener('scroll', updateScrollPosition)
     return () => window.removeEventListener('scroll', updateScrollPosition)
   }, [])
-
-  const handleCompanyDescription = () => {
-    if (!isFullDescription && companyDetail?.['description']?.length > 352) {
-      setCompanyDescription(`${companyDetail?.['description'].slice(0, 352)}...`)
-      return
-    }
-    setCompanyDescription(companyDetail?.['description'])
-  }
 
   const handlePaginationClick = (event, val) => {
     router.query.page = val
@@ -229,7 +216,6 @@ const JobListSection = ({
                 selectedId={selectedJobId}
                 handleSelectedId={() => {
                   handleSelectedJobId(job.id)
-                  setIsFullDescription(false)
                 }}
               />
             ))}
@@ -431,23 +417,10 @@ const JobListSection = ({
                     <Text textStyle='base'>{companyDetail?.['industry']}</Text>
                     <Text textStyle='base'>{companyDetail?.['company_size']} employees</Text>
                   </div>
-                  <div className={styles.aboutCompanyInfo}>
-                    <Text textStyle='base'>{companyDescription || ''}</Text>
-                  </div>
-                  {companyDetail?.['description']?.length > 352 && (
-                    <div className={styles.aboutCompanyMore}>
-                      <span
-                        onClick={() => {
-                          setIsFullDescription(!isFullDescription)
-                          handleCompanyDescription()
-                        }}
-                      >
-                        <Text textStyle='base' textColor='primaryBlue'>
-                          {isFullDescription ? '...read less' : '...read more'}
-                        </Text>
-                      </span>
-                    </div>
-                  )}
+                  <ReadMore
+                    size={352}
+                    text={companyDetail?.['description']}
+                  />
                 </div>
               </div>
             </div>
