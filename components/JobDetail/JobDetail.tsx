@@ -10,6 +10,7 @@ import Image from 'next/image'
 import Link from 'components/Link'
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
+import ReadMore from 'components/ReadMore'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
@@ -43,10 +44,6 @@ interface IJobDetailProps {
   setIsShowModalShare: Function
   setIsShowReportJob: Function
   isSticky?: Boolean
-  companyDescription?: string
-  setCompanyDescription?: Function
-  isFullDescription?: Boolean
-  setIsFullDescription?: Function
   companyUrl?: string
   jobDetailUrl?: string
 }
@@ -57,10 +54,6 @@ const JobDetail = ({
   setIsShowModalShare,
   setIsShowReportJob,
   isSticky,
-  companyDescription,
-  setCompanyDescription,
-  isFullDescription,
-  setIsFullDescription,
   jobDetailUrl,
   companyUrl
 }: IJobDetailProps) => {
@@ -90,14 +83,6 @@ const JobDetail = ({
       default:
         return <Image src={OtherAllowancesIcon} alt='logo' width='22' height='22' />
     }
-  }
-
-  const handleCompanyDescription = () => {
-    if (!isFullDescription && companyDetail?.['description']?.length > 352) {
-      setCompanyDescription(`${companyDetail?.['description'].slice(0, 352)}...`)
-      return
-    }
-    setCompanyDescription(companyDetail?.['description'])
   }
 
   return (
@@ -294,23 +279,10 @@ const JobDetail = ({
             <Text textStyle='base'>{companyDetail?.['industry']}</Text>
             <Text textStyle='base'>{companyDetail?.['company_size']} employees</Text>
           </div>
-          <div className={styles.aboutCompanyInfo}>
-            <Text textStyle='base'>{companyDescription || ''}</Text>
-          </div>
-          {companyDetail?.['description']?.length > 352 && (
-            <div className={styles.aboutCompanyMore}>
-              <span
-                onClick={() => {
-                  setIsFullDescription(!isFullDescription)
-                  handleCompanyDescription()
-                }}
-              >
-                <Text textStyle='base' textColor='primaryBlue'>
-                  {isFullDescription ? '...read less' : '...read more'}
-                </Text>
-              </span>
-            </div>
-          )}
+          <ReadMore
+            size={352}
+            text={companyDetail?.['description']}
+          />
         </div>
       </div>
     </div>

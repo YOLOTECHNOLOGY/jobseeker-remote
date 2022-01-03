@@ -83,8 +83,6 @@ const JobListSection = ({
   const prevScrollY = useRef(0)
 
   const [isSticky, setIsSticky] = useState(false)
-  const [companyDescription, setCompanyDescription] = useState('')
-  const [isFullDescription, setIsFullDescription] = useState(false)
   
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowModalEnableJobAlerts, setIsShowModalEnableJobAlerts] = useState(false)
@@ -102,21 +100,9 @@ const JobListSection = ({
   const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
-    handleCompanyDescription()
-  }, [companyDetail, isFullDescription])
-
-  useEffect(() => {
     window.addEventListener('scroll', updateScrollPosition)
     return () => window.removeEventListener('scroll', updateScrollPosition)
   }, [])
-
-  const handleCompanyDescription = () => {
-    if (!isFullDescription && companyDetail?.['description']?.length > 352) {
-      setCompanyDescription(`${companyDetail?.['description'].slice(0, 352)}...`)
-      return
-    }
-    setCompanyDescription(companyDetail?.['description'])
-  }
 
   const handlePaginationClick = (event, val) => {
     router.query.page = val
@@ -189,7 +175,6 @@ const JobListSection = ({
                 selectedId={selectedJobId}
                 handleSelectedId={() => {
                   handleSelectedJobId(job.id)
-                  setIsFullDescription(false)
                 }}
               />
             ))}
@@ -209,10 +194,6 @@ const JobListSection = ({
               setIsShowModalShare={setIsShowModalShare}
               setIsShowReportJob={setIsShowReportJob}
               isSticky={isSticky}
-              companyDescription={companyDescription}
-              setCompanyDescription={setCompanyDescription}
-              isFullDescription={isFullDescription}
-              setIsFullDescription={setIsFullDescription}
               jobDetailUrl={jobDetailUrl}
               companyUrl={companyUrl}
             />
