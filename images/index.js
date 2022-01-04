@@ -35,3 +35,4 @@ export const TwitterIconGrey = `${S3BucketJobseeker}/TwitterIconGrey.svg`
 export const InstagramIconGrey = `${S3BucketJobseeker}/InstagramIconGrey.svg`
 export const ChatIcon = `${S3BucketJobseeker}/ChatIcon.svg`
 export const DefaultJobseekerAvatar = `${S3BucketJobseeker}/DefaultJobseekerAvatar.png`
+export const FilterIcon = `${S3BucketJobseeker}/FilterIcon.svg`

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 // @ts-ignore
 import { END } from 'redux-saga'
-import classNames from 'classnames/bind'
+// import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 
 // import moment from 'moment'
@@ -43,6 +43,7 @@ import JobListSection from 'components/JobListSection'
 
 /* Styles */
 import styles from './JobsHiring.module.scss'
+import breakpointStyles from 'styles/breakpoint.module.scss'
 
 /* Helpers*/
 import {
@@ -54,6 +55,9 @@ import {
 import { flat } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+
+/* Images */
+import { FilterIcon } from 'images'
 
 interface JobSearchPageProps {
   seoMetaTitle: string
@@ -165,7 +169,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const { width } = useWindowDimensions()
   const prevScrollY = useRef(0)
 
-  const [isSticky, setIsSticky] = useState(false)
+  // const [isSticky, setIsSticky] = useState(false)
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlQuery, setUrlQuery] = useState(defaultValues?.urlQuery)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.urlLocation)
@@ -197,8 +201,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     locList
   )
 
-  const cx = classNames.bind(styles)
-  const isStickyClass = cx({ isSticky: isSticky })
+  // const cx = classNames.bind(styles)
+  // const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
     console.log('router query changed', router.query)
@@ -370,7 +374,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const updateScrollPosition = () => {
     if (width > 798) {
       prevScrollY.current = window.pageYOffset
-      setIsSticky(prevScrollY.current > 70 ? true : false)
+      // setIsSticky(prevScrollY.current > 70 ? true : false)
       setDisplayQuickLinks(
         prevScrollY.current > 70
           ? false
@@ -385,7 +389,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       <div
         className={classNamesCombined([
           displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection,
-          isStickyClass,
+          // isStickyClass,
         ])}
       >
         <div className={styles.searchAndLocationContainer}>
@@ -486,6 +490,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           onResetFilter={handleResetFilter}
           onShowFilter={handleShowFilter}
         />
+      </div>
+      <div className={breakpointStyles.hideOnTabletAndDesktop}>
+        <div className={styles.moreFiltersSection} onClick={() => handleShowFilter()}>
+          <Image src={FilterIcon} alt='filter' width='15' height='15' />
+          <Text className={styles.moreFiltersText}>More Filters</Text>
+        </div>
       </div>
       <div style={{ display: 'block' }}>
         <JobListSection

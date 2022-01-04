@@ -31,6 +31,10 @@
       top: 139px;
       border-bottom: 1px solid rgba($lightgrey, 0.6);
       z-index: 1;
+
+      @include sm{
+        position:unset;
+      }
     }
 
     @include msd {

@@ -11,11 +11,20 @@
   padding: 20px 7%;
   z-index:10;
 
+  @include sm{
+    height:180px;
+  }
+
   .searchAndLocationContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    @include sm{
+      flex-direction: column;
+    }
   }
+
   .filtersContainer {
     display: flex;
     flex-direction: row;
@@ -24,6 +33,11 @@
 
     & > * {
       margin-right: 15px;
+    }
+
+    @include sm{
+      display:none;
+      // height:180px;
     }
   }
 
@@ -40,15 +54,29 @@
   @extend .searchSection;
   height: 230px;
   z-index:10;
+
+  @include sm{
+    height:180px;
+  }
 }
 
 .searchField {
   height: 40px;
   width: 60%;
+
+  @include sm{
+    width:100%;
+    margin-bottom:3%;
+  }
 }
 .locationField {
   height: 40px;
   width: 30%;
+
+  @include sm{
+    width:100%;
+    margin-bottom:3%;
+  }
 }
 .sortField {
   width: 150px;
@@ -62,6 +90,10 @@
   display: flex;
   flex-direction: column;
   margin: 20px 0;
+
+  @include sm{
+    display:none;
+  }
 }
 
 .quickLinkTitle {
@@ -106,7 +138,26 @@
   }
 }
 
+.moreFiltersSection{
+  height:50px;
+  width:100%;
+  border-bottom: 1px solid $lightgrey;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  .moreFiltersText{
+    margin:0 10px;
+  }
+
+  &:hover{
+    cursor:pointer;
+  }
+}
+
 .topCompaniesContainer {
+  width:100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
