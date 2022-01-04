@@ -16,6 +16,7 @@ module.exports = {
     RECO_URL: process.env.RECO_URL,
     PAYMENT_URL: process.env.PAYMENT_URL,
     GA_TRACKING_ID: process.env.GA_TRACKING_ID,
+    DATA_BOSSJOB_JOB_URL: process.env.DATA_BOSSJOB_JOB_URL,
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'node_modules')],
