@@ -312,7 +312,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     updateUrl(queryParam, queryObject)
   }
 
-  const onSortSelection = (selectedOption) => {
+  const onSortSelection = (selectedOption ) => {
+    // NOTE: there is a different sort selection logic when selecting sort in Mobile, refer to JobSearchFilters
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
     const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
@@ -346,7 +347,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     // exclude all filters in jobSearchFilters
     // eslint-disable-next-line
     const { keyword, category, industry, education, workExperience, ...rest } = router.query
-    const queryObject = Object.assign({}, { ...rest })
+    const queryObject = Object.assign({}, { ...rest, sort: 1 })
     updateUrl(queryParam, queryObject)
   }
 
@@ -489,6 +490,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           isShowFilter={isShowFilter}
           onResetFilter={handleResetFilter}
           onShowFilter={handleShowFilter}
+          sortOptions={sortOptions}
         />
       </div>
       <div className={breakpointStyles.hideOnTabletAndDesktop}>
