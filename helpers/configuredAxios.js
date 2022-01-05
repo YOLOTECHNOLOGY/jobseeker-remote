@@ -19,7 +19,6 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     // remoteAddress: remoteAddress,
     // source: isMobile ? 'mobile-web' : 'web',
   }
-
   switch (baseURL) {
     case 'data':
       url = process.env.DATA_BOSSJOB_URL
@@ -41,6 +40,9 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
       break
     case 'payment':
       url = process.env.PAYMENT_URL
+      break
+    case 'job':
+      url = process.env.DATA_BOSSJOB_JOB_URL
       break
     default:
       break

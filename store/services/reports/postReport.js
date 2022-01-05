@@ -1,9 +1,9 @@
 import configuredAxios from 'helpers/configuredAxios'
 
-const postReportService = () => {
-  const axios = configuredAxios('data', 'public')
-  // return axios.post(`/companies/features`)
-  return
+const postReportService = (payload) => {
+  const axios = configuredAxios('job', 'public')
+
+  return axios.post(`/jobs/${payload.jobId}/report`, {report_reason_id: payload.jobReasonId})
 }
 
 export { postReportService }

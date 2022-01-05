@@ -25,6 +25,8 @@ import { deleteJobAlertRequest } from 'store/actions/alerts/deleteJobAlert'
 import { updateJobAlertRequest } from 'store/actions/alerts/updateJobAlert'
 import { createJobAlertRequest } from 'store/actions/alerts/createJobAlert'
 
+import { postReportRequest } from 'store/actions/reports/postReport'
+
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
 import MaterialTextField from 'components/MaterialTextField'
@@ -182,6 +184,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [companyDetail, setCompanyDetail] = useState(null)
   const { keyword, ...rest } = router.query
   const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
+  const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
   const isJobListFetching = useSelector((store: any) => store.job.jobList.fetching)
@@ -361,6 +364,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   const handleDeleteJobAlert = (alertId) => dispatch(deleteJobAlertRequest(alertId))
 
+  const handlePostReportJob = (payload) => dispatch(postReportRequest(payload))
+
   const handleFetchJobAlertsList = () => {
     // TODO: Get userId = 2524
     dispatch(fetchJobAlertsListRequest(2524))
@@ -521,6 +526,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           createJobAlert={handleCreateJobAlert}
           isDeletingJobAlert={isDeletingJobAlert}
           isUpdatingJobAlert={isUpdatingJobAlert}
+          reportJobReasonList={reportJobReasonList}
+          handlePostReportJob={handlePostReportJob}
         />
       </div>
     </Layout>

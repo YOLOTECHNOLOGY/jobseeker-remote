@@ -18,20 +18,31 @@ import { ArrowForwardIcon } from 'images'
 interface ModalReportJobProps {
   isShowReportJob?: boolean
   handleShowReportJob?: Function
+  reportJobReasonList?: any
+  selectedJobId?: number
+  handlePostReportJob?: Function
 }
 
 const ModalReportJob = ({
   isShowReportJob,
-  handleShowReportJob
+  handleShowReportJob,
+  reportJobReasonList,
+  selectedJobId,
+  handlePostReportJob
 }: ModalReportJobProps) => {
   const [modalReportDetail, setModalReportDetail] = useState(false)
   const [modalReportSelected, setModalReportSelected] = useState(null)
   const [modalReportSelectedItem, setModalReportSelectedItem] = useState('')
 
+  const reportList = [
+    { category: 'spam', description: 'I think it’s spam or scam' },
+    { category: 'discrimination', description: 'I think it’s discriminatory or offensive' },
+    { category: 'broken', description: 'I think something is broken' }
+  ]
 
   const { register, handleSubmit } = useForm()
   const onSubmit = (data) => {
-    console.log(data)
+    handlePostReportJob({jobId: selectedJobId, jobReasonId: data.reportDetail})
     setModalReportDetail(false)
   }
 
@@ -39,70 +50,9 @@ const ModalReportJob = ({
     setModalReportSelectedItem(event.target.value)
   }
 
-  const reportOptions = [
-    [
-      {
-        label: 'I think it\'s a scam, phishing or malware',
-        subLabel: 'Ex: someone asks for personal information or money or posts suspicious links',
-        value: 'scam_1'
-      },
-      {
-        
-        label: 'I think it\'s promotional or spam',
-        subLabel: 'Ex: someone advertises a product for monetary gain or posts irrelevant content for high visibility',
-        value: 'scam_2'
-      },
-    ],
-    [
-      {
-        label: 'I think it\'s discriminatory, or advocates, or supports discrimination',
-        subLabel: 'Ex: discriminates based off of age or sex',
-        value: 'discrimination_1'
-      },
-      {
-        label: 'I think it\'s offensive or harassing',
-        subLabel: 'Ex: threats of violence or unwelcome advances',
-        value: 'discrimination_2'
-      },
-      {
-        label: 'I think it shows or promotes extreme violence or terrorism',
-        subLabel: 'Ex: torture, rape or abuse, terrorist acts, or recruitment for terrorism',
-        value: 'discrimination_3'
-      },
-    ],
-    [
-      {
-        label: 'The job is closed',
-        subLabel: 'Ex: it’s no longer accepting applicants',
-        value: 'broken_1'
-      },
-      {
-        label: 'The job has an incorrect company',
-        subLabel: 'Ex: the job has the wrong company name or page display',
-        value: 'broken_2'
-      },
-      {
-        label: 'This job has an incorrect location',
-        subLabel: 'Ex: the city, state, province or country is incorrect',
-        value: 'broken_3'
-      },
-      {
-        label: 'The job has incorrect formatting',
-        subLabel: 'Ex: its job details has missing text, gramatical errors, or other formatting mistakes',
-        value: 'broken_4'
-      },
-      {
-        label: 'This job does not belong on Bossjob',
-        subLabel: 'Ex: the job from this page should not be posted on Bossjob',
-        value: 'broken_5'
-      },
-    ]
-  ]
-  const reportList = [
-    'I think it’s spam or scam',
-    'I think it’s discriminatory or offensive',
-    'I think something is broken'
-  ]
+  const handleSelectedReportJob = (category) => {
+    return reportJobReasonList.filter((report) => report.category === category)
+  }
 
   if (modalReportDetail) {
     return (
@@ -114,13 +64,13 @@ const ModalReportJob = ({
         handleFirstButton={() => {
           setModalReportDetail(false)
           handleShowReportJob(true)
-          setModalReportSelected(0)
+          setModalReportSelected(modalReportSelected)
         }}
         secondButtonText='Submit'
         handleSecondButton={handleSubmit(onSubmit)}
       >
         <div className={styles.ModalReportJobDetail}>
-          {reportOptions[modalReportSelected]?.map((option, i) => (
+          {handleSelectedReportJob(modalReportSelected.category).map((option, i) => (
             <div className={styles.ModalReportJobDetailItem} key={i}>
               <RadioGroup
                 aria-label="reportDetail"
@@ -131,12 +81,12 @@ const ModalReportJob = ({
               >
                 <FormControlLabel 
                   {...register('reportDetail')}
-                  value={option.value} 
+                  value={option.id} 
                   control={<Radio />} 
                   label={
                     <div className={styles.ModalReportJobDetailLabel}>
-                      <Text textStyle='lg'>{option.label}</Text>
-                      <Text textStyle='base' textColor='lightgrey'>{option.subLabel}</Text>
+                      <Text textStyle='lg'>{option.title}</Text>
+                      <Text textStyle='base' textColor='lightgrey'>{option.description}</Text>
                     </div>
                   } 
                 />
@@ -162,11 +112,11 @@ const ModalReportJob = ({
             onClick={() => {
               handleShowReportJob(false)
               setModalReportDetail(true)
-              setModalReportSelected(i)
-              setModalReportSelectedItem(reportOptions[i][0].value)
+              setModalReportSelected(report)
+              setModalReportSelectedItem(handleSelectedReportJob(report.category)[0].id)
             }}
           >
-            <Text>{report}</Text>
+            <Text>{report.description}</Text>
             <div className={styles.ModalReportJobItemIcon}>
               <Image src={ArrowForwardIcon} width='20' height='20'/>
             </div>
