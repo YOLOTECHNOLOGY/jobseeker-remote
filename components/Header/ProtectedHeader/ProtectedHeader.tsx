@@ -33,9 +33,9 @@ const ProtectedHeader = () => {
               <li className={styles.headerLink}>
                 <Link
                   title='Jobs'
-                  to='/'
+                  to='/jobs-hiring/job-search'
                 >
-                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>Jobss</Text>
+                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>Jobs</Text>
                 </Link>
               </li>
               <li className={styles.headerLink}>
