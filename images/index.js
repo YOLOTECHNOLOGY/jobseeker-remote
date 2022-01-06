@@ -41,3 +41,4 @@ export const facebook = `${S3BucketJobseeker}/facebook.svg`
 export const instagram = `${S3BucketJobseeker}/instagram.svg`
 export const twitter = `${S3BucketJobseeker}/twitter.svg`
 export const linkedin = `${S3BucketJobseeker}/linkedin.svg`
+export const FilterIcon = `${S3BucketJobseeker}/FilterIcon.svg`

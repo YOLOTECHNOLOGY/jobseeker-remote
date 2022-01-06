@@ -104,7 +104,10 @@ const JobDetail = ({
             <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
               <Text textStyle='lg'>Share this job</Text>
             </div>
-            <div className={styles.JobDetailOptionItem} onClick={() => setIsShowReportJob(true)}>
+            <div className={styles.JobDetailOptionItem} onClick={() => {
+              setIsShowReportJob(true)
+              setJobDetailOption(false)
+            }}>
               <Text textStyle='lg'>Report job</Text>
             </div>
             <div className={styles.JobDetailOptionItem} onClick={() => console.log('View Resume')}>

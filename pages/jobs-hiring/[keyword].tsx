@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 // @ts-ignore
 import { END } from 'redux-saga'
-import classNames from 'classnames/bind'
+// import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 
 // import moment from 'moment'
@@ -25,6 +25,8 @@ import { deleteJobAlertRequest } from 'store/actions/alerts/deleteJobAlert'
 import { updateJobAlertRequest } from 'store/actions/alerts/updateJobAlert'
 import { createJobAlertRequest } from 'store/actions/alerts/createJobAlert'
 
+import { postReportRequest } from 'store/actions/reports/postReport'
+
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
 import MaterialTextField from 'components/MaterialTextField'
@@ -43,6 +45,7 @@ import JobListSection from 'components/JobListSection'
 
 /* Styles */
 import styles from './JobsHiring.module.scss'
+import breakpointStyles from 'styles/breakpoint.module.scss'
 
 /* Helpers*/
 import {
@@ -54,6 +57,9 @@ import {
 import { flat } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+
+/* Images */
+import { FilterIcon } from 'images'
 
 interface JobSearchPageProps {
   seoMetaTitle: string
@@ -165,7 +171,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const { width } = useWindowDimensions()
   const prevScrollY = useRef(0)
 
-  const [isSticky, setIsSticky] = useState(false)
+  // const [isSticky, setIsSticky] = useState(false)
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlQuery, setUrlQuery] = useState(defaultValues?.urlQuery)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.urlLocation)
@@ -178,6 +184,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [companyDetail, setCompanyDetail] = useState(null)
   const { keyword, ...rest } = router.query
   const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
+  const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
   const isJobListFetching = useSelector((store: any) => store.job.jobList.fetching)
@@ -197,8 +204,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     locList
   )
 
-  const cx = classNames.bind(styles)
-  const isStickyClass = cx({ isSticky: isSticky })
+  // const cx = classNames.bind(styles)
+  // const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
     console.log('router query changed', router.query)
@@ -308,7 +315,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     updateUrl(queryParam, queryObject)
   }
 
-  const onSortSelection = (selectedOption) => {
+  const onSortSelection = (selectedOption ) => {
+    // NOTE: there is a different sort selection logic when selecting sort in Mobile, refer to JobSearchFilters
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
     const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
@@ -342,7 +350,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     // exclude all filters in jobSearchFilters
     // eslint-disable-next-line
     const { keyword, category, industry, education, workExperience, ...rest } = router.query
-    const queryObject = Object.assign({}, { ...rest })
+    const queryObject = Object.assign({}, { ...rest, sort: 1 })
     updateUrl(queryParam, queryObject)
   }
 
@@ -355,6 +363,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleUpdateJobAlert = (payload) => dispatch(updateJobAlertRequest(payload))
 
   const handleDeleteJobAlert = (alertId) => dispatch(deleteJobAlertRequest(alertId))
+
+  const handlePostReportJob = (payload) => dispatch(postReportRequest(payload))
 
   const handleFetchJobAlertsList = () => {
     // TODO: Get userId = 2524
@@ -370,7 +380,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const updateScrollPosition = () => {
     if (width > 798) {
       prevScrollY.current = window.pageYOffset
-      setIsSticky(prevScrollY.current > 70 ? true : false)
+      // setIsSticky(prevScrollY.current > 70 ? true : false)
       setDisplayQuickLinks(
         prevScrollY.current > 70
           ? false
@@ -385,7 +395,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       <div
         className={classNamesCombined([
           displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection,
-          isStickyClass,
+          // isStickyClass,
         ])}
       >
         <div className={styles.searchAndLocationContainer}>
@@ -485,7 +495,14 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           isShowFilter={isShowFilter}
           onResetFilter={handleResetFilter}
           onShowFilter={handleShowFilter}
+          sortOptions={sortOptions}
         />
+      </div>
+      <div className={breakpointStyles.hideOnTabletAndDesktop}>
+        <div className={styles.moreFiltersSection} onClick={() => handleShowFilter()}>
+          <Image src={FilterIcon} alt='filter' width='15' height='15' />
+          <Text className={styles.moreFiltersText}>More Filters</Text>
+        </div>
       </div>
       <div style={{ display: 'block' }}>
         <JobListSection
@@ -509,6 +526,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           createJobAlert={handleCreateJobAlert}
           isDeletingJobAlert={isDeletingJobAlert}
           isUpdatingJobAlert={isUpdatingJobAlert}
+          reportJobReasonList={reportJobReasonList}
+          handlePostReportJob={handlePostReportJob}
         />
       </div>
     </Layout>

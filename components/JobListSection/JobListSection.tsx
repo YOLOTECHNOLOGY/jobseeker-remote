@@ -55,6 +55,8 @@ interface JobListSectionProps {
   handleCompanyDetail?: Function
   companyDetail?: Object
   isJobDetailFetching?: boolean
+  reportJobReasonList?: any
+  handlePostReportJob?: Function
 }
 
 const JobListSection = ({ 
@@ -76,7 +78,9 @@ const JobListSection = ({
   handleSelectedJobId,
   totalPages,
   companyDetail,
-  isJobDetailFetching
+  isJobDetailFetching,
+  reportJobReasonList,
+  handlePostReportJob
 }: JobListSectionProps) => {  
   const { width } = useWindowDimensions()
   const router = useRouter()
@@ -226,7 +230,13 @@ const JobListSection = ({
         isUpdatingJobAlert={isUpdatingJobAlert}
         isDeletingJobAlert={isDeletingJobAlert}
       />
-      <ModalReportJob isShowReportJob={isShowReportJob} handleShowReportJob={setIsShowReportJob} />
+      <ModalReportJob 
+        isShowReportJob={isShowReportJob} 
+        handleShowReportJob={setIsShowReportJob} 
+        reportJobReasonList={reportJobReasonList}
+        selectedJobId={selectedJob?.['id']}
+        handlePostReportJob={handlePostReportJob}
+      />
       <ModalShare
         jobDetailUrl={jobDetailUrl}
         isShowModalShare={isShowModalShare}

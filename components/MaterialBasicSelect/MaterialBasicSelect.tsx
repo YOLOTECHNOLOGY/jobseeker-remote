@@ -11,8 +11,10 @@ const MaterialBasicSelect = ({
   options,
   className,
   onSelect,
+  onOpen,
   greyBg,
   defaultValue,
+  ...rest
 }: any) => {
   const [value, setValue] = useState(defaultValue || '')
 
@@ -64,6 +66,8 @@ const MaterialBasicSelect = ({
           value={value}
           label={label}
           onChange={handleChange}
+          onOpen={onOpen}
+          {...rest}
         >
           {options &&
             options.map((option) => (

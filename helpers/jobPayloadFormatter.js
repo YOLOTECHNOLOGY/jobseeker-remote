@@ -194,10 +194,10 @@ const getPredefinedParamsFromUrl = (
 // e.g of url = query-jobs?
 const appendSingleQueryPattern = (query) => {
   // query can be value from user query OR location OR category
-  if (query && !query.includes('job-search')) {
+  if (query && query.length !== 0 && !query.includes('job-search')) {
     return query + '-jobs'
   }
-  return query
+  return query && query.length === 0 ? '' : query
 }
 
 // e.g of url = query-jobs-in-location?

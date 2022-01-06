@@ -13,6 +13,7 @@ import Text from 'components/Text'
 import Button from 'components/Button'
 import Accordian from 'components/Accordian'
 import MaterialAutocompleteLimitTags from 'components/MaterialAutocompleteLimitTags'
+import MaterialBasicSelect from 'components/MaterialBasicSelect'
 
 /* Helpers */
 import {
@@ -20,6 +21,7 @@ import {
   getPredefinedParamsFromUrl,
   getLocationList,
 } from 'helpers/jobPayloadFormatter'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Style */
 import styles from './JobSearchFilters.module.scss'
@@ -33,6 +35,7 @@ interface NavSearchFilterProps {
   onShowFilter: Function
   onResetFilter: Function
   displayQuickLinks: Boolean
+  sortOptions: object
 }
 
 interface SearchFilters {
@@ -54,6 +57,7 @@ const NavSearchFilter = ({
   onShowFilter,
   displayQuickLinks,
   onResetFilter,
+  sortOptions,
 }: NavSearchFilterProps) => {
   const router = useRouter()
   const { keyword } = router.query
@@ -73,11 +77,15 @@ const NavSearchFilter = ({
     key: Object.values(edu)[0],
     value: Object.values(edu)[0],
   }))
+  const { width } = useWindowDimensions()
   const filterRef = useRef(null)
-  const { register, handleSubmit, reset } = useForm()
+  const sortRef = useRef(null)
+  const { register, handleSubmit, reset, setValue } = useForm()
   const cx = classNames.bind(styles)
   const isShowFilterClass = cx({ isShow: isShowFilter, displayQuickLinks: displayQuickLinks })
   const [selectedCategories, setSelectedCategories] = useState([])
+  const [displayMobileSort, setDisplayMobileSort] = useState(false)
+
   let defaultValues = {}
   const appendDefaultKeyValue = (fieldName, value) => {
     const data = {
@@ -99,13 +107,22 @@ const NavSearchFilter = ({
     if (Object.keys(defaultValues).length !== 0) {
       reset(defaultValues)
     }
+    if (width < 576){
+      setDisplayMobileSort(true)
+    }else{
+      setDisplayMobileSort(false)
+    }
   }, [config, keyword])
 
   const handleApplyFilter = (data) => {
     const values = Object.values(data)
     const allFalsyValues = values.filter((val) => !!val)
+    const updatedData = {
+      ...data,
+      sort:[data.sort]
+    }
     if (allFalsyValues.length !== 0 || selectedCategories) {
-      urlFilterParameterBuilder(data)
+      urlFilterParameterBuilder(updatedData)
     }
     onShowFilter()
   }
@@ -208,8 +225,14 @@ const NavSearchFilter = ({
   const handleClickedOutside = (e) => {
     // hardcoding to detect clicking on MUI component
     const isClickingOnSpecializationMUI = e.target.id.includes('specialization-option')
-    if (isShowFilter && !filterRef.current.contains(e.target) && !isClickingOnSpecializationMUI)
-      onShowFilter()
+    const isClickingOnSort = sortRef.current === 'sort'
+    if (
+      isShowFilter &&
+      !filterRef.current.contains(e.target) &&
+      !isClickingOnSpecializationMUI &&
+      !isClickingOnSort
+    )
+    onShowFilter()
   }
 
   useEffect(() => {
@@ -231,6 +254,37 @@ const NavSearchFilter = ({
       </div>
       <form className={styles.searchFilterForm} onSubmit={handleSubmit(handleApplyFilter)}>
         <div className={styles.searchFilterBody}>
+          {displayMobileSort && (
+            <div className={styles.searchFilterSection}>
+              <Accordian
+                chevronIcon
+                paddedContent
+                isNotCollapsible={true}
+                defaultOpenState={true}
+                title={
+                  <Text textStyle='lg' bold>
+                    Sort by
+                  </Text>
+                }
+                className={styles.searchFilterAccordion}
+              >
+                <MaterialBasicSelect
+                  sortRef={sortRef}
+                  id='sort'
+                  label='Sort by'
+                  options={sortOptions}
+                  className={styles.sortField}
+                  onSelect={(e) => setValue('sort', e)}
+                  onOpen={(e) => {
+                    if (e.target.id === 'sort') {
+                      sortRef.current = 'sort'
+                    }
+                  }}
+                  defaultValue={urlDefaultValues?.sort}
+                />
+              </Accordian>
+            </div>
+          )}
           <div className={styles.searchFilterSection}>
             <Accordian
               chevronIcon
