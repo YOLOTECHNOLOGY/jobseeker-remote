@@ -1,6 +1,10 @@
 const path = require('path')
+const redirectionPaths = require('./lib/redirection')
 
 module.exports = {
+  async redirects() {
+    return redirectionPaths
+  },
   reactStrictMode: true,
   env: {
     ENV: process.env.ENV,
@@ -16,6 +20,8 @@ module.exports = {
     RECO_URL: process.env.RECO_URL,
     PAYMENT_URL: process.env.PAYMENT_URL,
     GA_TRACKING_ID: process.env.GA_TRACKING_ID,
+    OLD_PROJECT_URL: process.env.OLD_PROJECT_URL,
+    NEW_PROJECT_URL: process.env.NEW_PROJECT_URL,
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'node_modules')],

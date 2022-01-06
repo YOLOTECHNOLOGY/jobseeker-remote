@@ -65,12 +65,17 @@
   }
 
   &SocialWrapper {
+    margin-top:25px; 
+    
     @include md {
       @include flex(column);
     }
 
-    & img:hover {
-      filter: sepia(1) saturate(60) hue-rotate(210deg);
+    .socialLink{
+      &:hover{
+        transform:scale(1.1);
+        transition: 100ms all ease-in-out;
+      }
     }
   }
 
@@ -84,14 +89,10 @@
 
   &SupportWrapper {
     @include md {
-      width: 520px;
+      width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-    }
-
-    @include lg {
-      width: 600px;
     }
   }
 
@@ -99,10 +100,10 @@
     list-style: none;
     -webkit-padding-start: 0;
     margin-bottom: 0;
-    margin-top: 40px;
+    margin-top: 25px;
 
     & > li {
-      margin-bottom: 0.6em;
+      margin-bottom: 0.2em;
 
       &:last-child {
         margin-bottom: 0;
@@ -148,17 +149,25 @@
   }
 }
 
-.copyrightWrapper {
-  display: flex;
+.copyright{
+  display:flex;
+  margin-top:1.5rem;
+  text-align: right;
+  justify-content: center;
 
-  &.mobile {
-    flex-direction: column;
-    margin: 0;
-  }
-
-  .copyrightCompanies {
-    display: inline-block;
-    text-align: left;
+  .copyrightWrapper {
+    display: flex;
+    flex-direction: row;
+  
+    &.mobile {
+      flex-direction: column;
+      margin: 0;
+    }
+  
+    .copyrightCompanies {
+      display: inline-block;
+      text-align: left;
+    }
   }
 }
 

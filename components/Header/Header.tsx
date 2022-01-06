@@ -1,11 +1,12 @@
 /* Components */
-// import PublicHeader from './PublicHeader'
-import ProtectedHeader from './ProtectedHeader'
+import PublicHeader from './PublicHeader'
+// import ProtectedHeader from './ProtectedHeader'
 
 const Header = () => {
   return (
     <div>
-      <ProtectedHeader />
+      <PublicHeader />
+      {/* <ProtectedHeader /> */}
     </div>
   )
 }

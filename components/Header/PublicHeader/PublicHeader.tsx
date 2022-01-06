@@ -32,7 +32,7 @@ const PublicHeader = () => {
               <li className={styles.headerLink}>
                 <Link
                   title='Jobs'
-                  to='/'
+                  to='/jobs-hiring/job-search'
                 >
                   <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>Jobs</Text>
                 </Link>
@@ -40,7 +40,8 @@ const PublicHeader = () => {
               <li className={styles.headerLink}>
                 <Link
                   title='Headhunt Me'
-                  to='/'
+                  to={`${process.env.OLD_PROJECT_URL}/headhunt-me`}
+                  aTag
                 >
                   <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>Headhunt Me</Text>
                 </Link>
@@ -48,7 +49,8 @@ const PublicHeader = () => {
               <li className={styles.headerLink}>
                 <Link
                   title='Courses'
-                  to='/'
+                  to="https://academy.bossjob.ph/courses/search-courses"
+                  aTag                  
                 >
                   <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>Courses</Text>
                 </Link>
@@ -56,7 +58,8 @@ const PublicHeader = () => {
               <li className={styles.headerLink}>
                 <Link
                   title='Career Guide'
-                  to='/'
+                  to='https://blog.bossjob.ph/'
+                  aTag
                 >
                   <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>Career Guide</Text>
                 </Link>
@@ -69,14 +72,15 @@ const PublicHeader = () => {
             <li className={styles.headerLink}>
               <Link
                 title='Employer'
-                to='/'
+                to={`${process.env.OLD_PROJECT_URL}/employer`}
+                aTag
               >
                 <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>Employer</Text>
               </Link>
             </li>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
               <Link
-                title='Headhunt Me'
+                title='Login'
                 to='/'
               >
                 <Button>Log in</Button>
