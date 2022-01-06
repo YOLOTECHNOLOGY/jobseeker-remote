@@ -57,6 +57,7 @@ const Text = ({
     textWhite: textColor === 'white',
     textPrimaryBlue: textColor === 'primaryBlue',
     textLightgrey: textColor === 'lightgrey',
+    textDarkgrey: textColor === 'darkgrey',
     textBlack: textColor === 'black',
   }
   const cx = classNames.bind(styles)
