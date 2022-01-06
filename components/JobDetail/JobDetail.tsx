@@ -36,16 +36,19 @@ import {
   TelecommunicationAllowanceIcon,
   OtherAllowancesIcon,  
   MoreIcon,
+  ExpireIcon
 } from 'images'
 
 interface IJobDetailProps {
   selectedJob: any
   companyDetail: any
-  setIsShowModalShare: Function
-  setIsShowReportJob: Function
+  setIsShowModalShare?: Function
+  setIsShowReportJob?: Function
+  setIsShowModalWithdrawApplication?: Function
   isSticky?: Boolean
   companyUrl?: string
   jobDetailUrl?: string
+  category?: string
 }
 
 const JobDetail = ({
@@ -53,9 +56,11 @@ const JobDetail = ({
   companyDetail,
   setIsShowModalShare,
   setIsShowReportJob,
+  setIsShowModalWithdrawApplication,
   isSticky,
   jobDetailUrl,
-  companyUrl
+  companyUrl,
+  category
 }: IJobDetailProps) => {
   const [jobDetailOption, setJobDetailOption] = useState(false)
   
@@ -85,6 +90,10 @@ const JobDetail = ({
     }
   }
 
+  const isCategoryApplied = category === 'applied'
+  const isCategorySaved = category === 'saved'
+  const publicJobUrl = isCategoryApplied ? `${jobDetailUrl}?isApplied=true` : jobDetailUrl
+
   return (
     <div className={styles.JobDetail}>
       <div className={classNamesCombined([styles.JobDetailOption, isStickyClass])}>
@@ -98,21 +107,32 @@ const JobDetail = ({
         {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
         {jobDetailOption && (
           <div className={styles.JobDetailOptionList}>
-            <Link to={jobDetailUrl} external className={styles.JobDetailOptionItem}>
+            <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
               <Text textStyle='lg'>View in new tab</Text>
             </Link>
+            {!isCategoryApplied && (
+              <div className={styles.JobDetailOptionItem} onClick={() => {
+                setIsShowReportJob(true)
+                setJobDetailOption(false)
+              }}>
+                <Text textStyle='lg'>Report job</Text>
+              </div>
+            )}
+            {isCategoryApplied && (
+              <>
+                <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalWithdrawApplication(true)}>
+                  <Text textStyle='lg'>Withdraw Application</Text>
+                </div>
+              </>
+            )}
+                
             <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
               <Text textStyle='lg'>Share this job</Text>
             </div>
-            <div className={styles.JobDetailOptionItem} onClick={() => {
-              setIsShowReportJob(true)
-              setJobDetailOption(false)
-            }}>
-              <Text textStyle='lg'>Report job</Text>
-            </div>
-            <div className={styles.JobDetailOptionItem} onClick={() => console.log('View Resume')}>
+
+            {/* <div className={styles.JobDetailOptionItem} onClick={() => console.log('View Resume')}>
               <Text textStyle='lg'>View Resume</Text>
-            </div>
+            </div> */}
           </div>
         )}
       </div>
@@ -130,17 +150,34 @@ const JobDetail = ({
               {selectedJob?.['company_name']}
             </Text>
             <JobTag tag={selectedJob?.['job_type']} />
-            <div className={styles.JobDetailButtons}>
-              <MaterialButton variant='contained'>
-                <Link to={selectedJob?.['external_apply_url']} external>Apply Now</Link>
-              </MaterialButton>
-              <MaterialButton variant='outlined'>
-                Save Job
-              </MaterialButton>
+            <div className={styles.JobDetailButtonsWrapper}>
+              {!isCategoryApplied && (
+                <>
+                  <div className={styles.JobDetailButtons}>
+                    {selectedJob?.['status_key'] === '-active' && (
+                      <MaterialButton variant='contained'>
+                        <Link to={selectedJob?.['external_apply_url']} external>Apply Now</Link>
+                      </MaterialButton>
+                    )}
+                    {selectedJob?.['status_key'] === 'active' && (
+                      <Text textStyle='base' className={styles.JobDetailStatus}>
+                        <Image src={ExpireIcon} height="16" width="16"/>
+                        <span>This job is no longer hiring</span>
+                      </Text>
+                    )}
+
+                    <MaterialButton variant='outlined'>
+                      { isCategorySaved ? 'Saved' : 'Save Job' }
+                    </MaterialButton>
+                  </div>
+                  {!isCategoryApplied || !isCategorySaved && (
+                    <Text textStyle='xsm' className={styles.JobDetailPostedAt}>
+                      Posted on {moment(new Date(selectedJob?.['published_at'])).format('DD MMMM YYYY')}
+                    </Text>
+                  )}
+                </>
+              )}
             </div>
-            <Text textStyle='xsm' className={styles.JobDetailPostedAt}>
-              Posted on {moment(new Date(selectedJob?.['published_at'])).format('DD MMMM YYYY')}
-            </Text>
           </div>
         </div>
         <div className={styles.JobDetailPref}>
@@ -207,6 +244,19 @@ const JobDetail = ({
             </li>
           </ul>
         </div>
+        {isCategoryApplied && (
+          <div className={styles.JobDetailApplicationHistory}>
+            <Text textStyle='lg' bold>Application History</Text>
+            <div className={styles.JobDetailApplicationHistoryList}>
+              <div className={styles.JobDetailApplicationHistoryItem}>
+                <Text textStyle='base'>Application withdrawn -  1 month ago</Text>
+              </div>
+              <div className={styles.JobDetailApplicationHistoryItem}>
+                <Text textStyle='base'>Application submitted - 3 months ago</Text>
+              </div>
+            </div>
+          </div>
+        )}
         <div className={styles.JobDetailSection}>
           <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
             Job Description

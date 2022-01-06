@@ -5,6 +5,8 @@ import watchFetchConfig from 'store/sagas/config/fetchConfig'
 
 // Job
 import watchFetchJobsList from 'store/sagas/jobs/fetchJobsList'
+import watchFetchAppliedJobsList from 'store/sagas/jobs/fetchAppliedJobsList'
+import watchFetchSavedJobsList from 'store/sagas/jobs/fetchSavedJobsList'
 import watchFetchJobDetail from 'store/sagas/jobs/fetchJobDetail'
 
 // Companies 
@@ -27,6 +29,8 @@ function* rootSaga() {
     watchFetchJobDetail(),
     watchFetchFeaturedCompanies(),
     watchFetchCompanyDetail(),
+    watchFetchAppliedJobsList(),
+    watchFetchSavedJobsList(),
     
     watchPostReport(),
 

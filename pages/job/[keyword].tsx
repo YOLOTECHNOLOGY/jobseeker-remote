@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 // @ts-ignore
 import { END } from 'redux-saga'
@@ -49,6 +50,7 @@ import {
   TelecommunicationAllowanceIcon,
   OtherAllowancesIcon,  
   MoreIcon,
+  ExpireIcon
 } from 'images'
 
 interface IJobDetail {
@@ -57,6 +59,7 @@ interface IJobDetail {
 
 const Job = ({ jobDetail }: IJobDetail) => {
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const [companyDetail, setCompanyDetail] = useState(null)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
@@ -102,6 +105,9 @@ const Job = ({ jobDetail }: IJobDetail) => {
         return <Image src={OtherAllowancesIcon} alt='logo' width='22' height='22' />
     }
   }
+
+  const isAppliedQueryParam = router.query.isApplied
+  const hasApplied = isAppliedQueryParam === 'true' ? true : false
 
   return (
     <Layout>
@@ -153,14 +159,27 @@ const Job = ({ jobDetail }: IJobDetail) => {
                 {jobDetail?.['company_name']}
               </Text>
             </Link>
-            <div className={styles.JobDetailPrimaryActions}>
-              <MaterialButton variant='contained'>
-                <Link to={jobDetail?.['external_apply_url']} external>Apply Now</Link>
-              </MaterialButton>
-              <MaterialButton variant='outlined'>
-                Save Job
-              </MaterialButton>
-            </div>
+            {isAppliedQueryParam && !hasApplied && (
+              <div className={styles.JobDetailPrimaryActionsCategory}>
+                <Text textStyle='base' className={styles.JobDetailStatus}>
+                  <Image src={ExpireIcon} height="16" width="16"/>
+                  <span>This job is no longer hiring</span>
+                </Text>
+                <MaterialButton variant='outlined'>
+                  Save Job
+                </MaterialButton>
+              </div>
+            )}
+            {!isAppliedQueryParam && (
+              <div className={styles.JobDetailPrimaryActions}>
+                <MaterialButton variant='contained'>
+                  <Link to={jobDetail?.['external_apply_url']} external>Apply Now</Link>
+                </MaterialButton>
+                <MaterialButton variant='outlined'>
+                  Save Job
+                </MaterialButton>
+              </div>
+            )}
           </div>
           <div className={styles.JobDetailPref}>
             <ul className={styles.JobDetailPrefList}>
@@ -228,6 +247,19 @@ const Job = ({ jobDetail }: IJobDetail) => {
               </li>
             </ul>
           </div>
+          {hasApplied && (
+            <div className={styles.JobDetailApplicationHistory}>
+              <Text textStyle='lg' bold>Application History</Text>
+              <div className={styles.JobDetailApplicationHistoryList}>
+                <div className={styles.JobDetailApplicationHistoryItem}>
+                  <Text textStyle='base'>Application withdrawn -  1 month ago</Text>
+                </div>
+                <div className={styles.JobDetailApplicationHistoryItem}>
+                  <Text textStyle='base'>Application submitted - 3 months ago</Text>
+                </div>
+              </div>
+            </div>
+          )}
           <div className={styles.JobDetailSection}>
             <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
               Job Description
