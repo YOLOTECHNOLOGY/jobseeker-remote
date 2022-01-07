@@ -4,6 +4,14 @@ import React, { useState } from 'react'
 import moment from 'moment'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
+import {
+  Timeline,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot
+} from '@mui/lab'
 
 /* Components */
 import Image from 'next/image'
@@ -245,16 +253,23 @@ const JobDetail = ({
           </ul>
         </div>
         {isCategoryApplied && (
-          <div className={styles.JobDetailApplicationHistory}>
+          <div className={styles.JobDetailApplicationWrapper}>
             <Text textStyle='lg' bold>Application History</Text>
-            <div className={styles.JobDetailApplicationHistoryList}>
-              <div className={styles.JobDetailApplicationHistoryItem}>
-                <Text textStyle='base'>Application withdrawn -  1 month ago</Text>
-              </div>
-              <div className={styles.JobDetailApplicationHistoryItem}>
-                <Text textStyle='base'>Application submitted - 3 months ago</Text>
-              </div>
-            </div>
+            <Timeline className={styles.JobDetailApplicationTimeline}>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot className={styles.JobDetailApplicationTimelineFirst}/>
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent><Text textStyle='base'>Application withdrawn -  1 month ago</Text></TimelineContent>
+              </TimelineItem>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineDot />
+                </TimelineSeparator>
+                <TimelineContent><Text textStyle='base'>Application submitted - 3 months ago</Text></TimelineContent>
+              </TimelineItem>
+            </Timeline>
           </div>
         )}
         <div className={styles.JobDetailSection}>
