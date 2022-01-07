@@ -112,6 +112,27 @@
   }
 }
 
+.footerMobileSections{
+  margin-top: 20px;
+}
+
+.footerMobileDownloadApp{
+  display:flex;
+  flex-direction: row;
+  margin-top:20px;
+}
+
+.footerMobileSocialLinks{
+  display:flex;
+  width:100%;
+  justify-content: flex-start; 
+
+  & > * {
+    margin-top: 20px;
+    margin-right: 15px;
+  }
+}
+
 /** Misc **/
 .scrollUpButton {
   border-radius: 50%;
@@ -168,6 +189,10 @@
       display: inline-block;
       text-align: left;
     }
+  }
+
+  @include sm{
+    display:none;
   }
 }
 

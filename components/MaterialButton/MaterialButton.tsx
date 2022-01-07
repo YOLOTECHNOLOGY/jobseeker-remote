@@ -8,16 +8,20 @@ interface MaterialButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
   style?: React.CSSProperties
   className?: string
   variant?: 'text' | 'contained' | 'outlined'
+  size?: 'small' | 'medium' | 'large'
+  capitalize?: boolean
   isLoading?: boolean
   disabled?: boolean
 }
 
 const MaterialButton = ({
   variant,
+  size,
   className,
   children,
   disabled,
   isLoading,
+  capitalize,
   ...rest
 }: MaterialButtonProps) => {
   const theme = createTheme({
@@ -39,11 +43,18 @@ const MaterialButton = ({
   return (
     <ThemeProvider theme={theme}>
       {isLoading ? (
-        <LoadingButton variant={variant} className={className} loading={isLoading}>
+        <LoadingButton variant={variant} size={size} className={className} loading={isLoading}>
           {children}
         </LoadingButton>
       ) : (
-        <Button variant={variant} className={className} disabled={disabled} {...rest as any}>
+        <Button
+          variant={variant}
+          size={size}
+          className={className}
+          disabled={disabled}
+          style={{textTransform: !capitalize ? 'uppercase' : 'capitalize'}}
+          {...(rest as any)}
+        >
           {children}
         </Button>
       )}
