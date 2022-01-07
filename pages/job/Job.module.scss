@@ -38,6 +38,17 @@
     }
   }
 
+  &Status {
+    color: #F30000;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+
+    div {
+      margin-right: 10px;
+    }
+  }
+
   &Primary {
     border: 1px solid $lightgrey;
     border-radius: 4px;
@@ -113,6 +124,25 @@
 
     @include msd {
       justify-content: space-between;
+    }
+  }
+
+  &PrimaryActionsCategory {
+    display: flex;
+    margin-top: 20px;
+
+    button {
+      margin-right: 20px;
+    }
+
+    @include msd {
+      flex-direction: column;
+      align-items: center;
+
+      button {
+        margin-top: 10px;
+        margin-right: 0;
+      }
     }
   }
 
@@ -368,5 +398,35 @@
 
   &CTA {
     color: $primaryBlue;
+  }
+}
+
+.JobDetailApplication {
+  &Wrapper {
+    border: 1px solid $primaryBlue;
+    border-radius: 4px;
+    margin: 20px 0;
+    padding: 20px;
+  }
+
+  &Timeline {
+    padding: 0;
+    margin-top: 12px;
+
+    li {
+      &::before {
+        flex: none;
+        padding: 0;
+      }
+
+      &:last-child {
+        min-height: 0;
+      }
+    }
+  }
+
+  &TimelineFirst {
+    background-color: $primaryBlue;
+    box-shadow: $primaryBlue;
   }
 }
