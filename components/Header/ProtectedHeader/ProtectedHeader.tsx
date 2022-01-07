@@ -9,6 +9,7 @@ import styles from '../Header.module.scss'
 import Link from 'components/Link'
 import Text from 'components/Text'
 import Button from 'components/Button'
+import Hamburger from 'components/Hamburger'
 
 /* Images */
 import { BossjobLogo, DefaultJobseekerAvatar, ChatIcon } from 'images'
@@ -19,49 +20,39 @@ const ProtectedHeader = () => {
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/'}>
-            <img
-              id={styles.logo}
-              src={BossjobLogo}
-              title="Bossjob logo"
-              alt="Bossjob logo"
-            />
+            <img id={styles.logo} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
           </Link>
         </div>
         <div className={styles.headerLinksWrapper}>
           <ul className={styles.headerLinksList}>
             <React.Fragment>
               <li className={styles.headerLink}>
-                <Link
-                  title='Jobs'
-                  to='/jobs-hiring/job-search'
-                >
-                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>Jobs</Text>
+                <Link title='Jobs' to='/jobs-hiring/job-search'>
+                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
+                    Jobs
+                  </Text>
                 </Link>
               </li>
               <li className={styles.headerLink}>
-                <Link
-                  title='Headhunt Me'
-                  to='/'
-                >
-                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>Headhunt Me</Text>
+                <Link title='Headhunt Me' to='/'>
+                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
+                    Headhunt Me
+                  </Text>
                 </Link>
               </li>
               <li className={styles.headerLink}>
-                <Link
-                  title='Courses'
-                  to='/'
-                >
-                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>Courses</Text>
+                <Link title='Courses' to='/'>
+                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
+                    Courses
+                  </Text>
                 </Link>
               </li>
               <li className={styles.headerLink}>
-                <Link
-                  className={styles.headerLinkIcon}
-                  title='Chats'
-                  to='/'
-                >
+                <Link className={styles.headerLinkIcon} title='Chats' to='/'>
                   <Image src={ChatIcon} width='20' height='20' />
-                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>Chats</Text>
+                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
+                    Chats
+                  </Text>
                 </Link>
               </li>
             </React.Fragment>
@@ -70,31 +61,31 @@ const ProtectedHeader = () => {
         <ul className={styles.headerLinksList}>
           <React.Fragment>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
-              <Link
-                title='Manage Me'
-                to='/'
-              >
+              <Link title='Manage Me' to='/'>
                 <Button primary>Manage Resume</Button>
               </Link>
             </li>
             <li className={styles.headerLink}>
               <div>
                 <div>
-                  <div
-                    className={styles.profileWrapper}
-                  >
+                  <div className={styles.profileWrapper}>
                     <img
                       src={DefaultJobseekerAvatar}
                       className={styles.profilePlaceHolder}
-                      alt="avatar"
+                      alt='avatar'
                     />
-                    <div className={styles.profileCaret}/>
+                    <div className={styles.profileCaret} />
                   </div>
                 </div>
               </div>
             </li>
           </React.Fragment>
         </ul>
+        <div className={styles.mobileIconWrapper}>
+          <div className={styles.icon}>
+            <Hamburger />
+          </div>
+        </div>
       </nav>
     </div>
   )
