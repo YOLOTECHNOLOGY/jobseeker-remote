@@ -193,3 +193,26 @@
     }
   }
 }
+
+
+.mobileIconWrapper {
+  display: none;
+
+  .icon {
+    margin: 0 15px;
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  @include msd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+  }
+}
