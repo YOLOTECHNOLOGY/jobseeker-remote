@@ -131,10 +131,10 @@ const JobDetail = ({
             </Text>
             <JobTag tag={selectedJob?.['job_type']} />
             <div className={styles.JobDetailButtons}>
-              <MaterialButton variant='contained'>
+              <MaterialButton variant='contained' capitalize>
                 <Link to={selectedJob?.['external_apply_url']} external>Apply Now</Link>
               </MaterialButton>
-              <MaterialButton variant='outlined'>
+              <MaterialButton variant='outlined' capitalize>
                 Save Job
               </MaterialButton>
             </div>

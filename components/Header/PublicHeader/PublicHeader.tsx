@@ -9,6 +9,7 @@ import Link from 'components/Link'
 import Text from 'components/Text'
 import Button from 'components/Button'
 import Hamburger from 'components/Hamburger'
+import MaterialButton from 'components/MaterialButton'
 
 /* Images */
 import { BossjobLogo } from 'images'
@@ -67,12 +68,16 @@ const PublicHeader = () => {
             </li>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
               <Link title='Log In' to='/'>
-                <Button>Log in</Button>
+                <MaterialButton variant='text' size='medium' capitalize>
+                  Log in
+                </MaterialButton>
               </Link>
             </li>
             <li className={styles.headerLink}>
               <Link title='Sign Up' to='/'>
-                <Button primary>Sign up</Button>
+                <MaterialButton variant='outlined' size='medium' capitalize>
+                  Sign up
+                </MaterialButton>
               </Link>
             </li>
           </React.Fragment>
