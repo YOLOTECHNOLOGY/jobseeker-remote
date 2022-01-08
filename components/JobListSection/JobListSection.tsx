@@ -46,6 +46,7 @@ interface JobListSectionProps {
   updateJobAlert?: Function
   isUpdatingJobAlert?: boolean
   createJobAlert?: Function
+  isCreatingJobAlert?: boolean
   location?: any
   isJobListFetching?: boolean
   selectedJob?: Object
@@ -71,6 +72,7 @@ const JobListSection = ({
   updateJobAlert,
   isUpdatingJobAlert,
   createJobAlert,
+  isCreatingJobAlert,
   location,
   isJobListFetching,
   selectedJob,
@@ -80,7 +82,7 @@ const JobListSection = ({
   companyDetail,
   isJobDetailFetching,
   reportJobReasonList,
-  handlePostReportJob
+  handlePostReportJob,
 }: JobListSectionProps) => {  
   const { width } = useWindowDimensions()
   const router = useRouter()
@@ -92,13 +94,7 @@ const JobListSection = ({
   const [isShowModalEnableJobAlerts, setIsShowModalEnableJobAlerts] = useState(false)
   const [isShowModalManageJobAlerts, setIsShowModalManageJobAlerts] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
-
-  let jobDetailUrl = ''
-  let companyUrl = ''
-  if (typeof window !== 'undefined') {
-    jobDetailUrl = `${window.location.origin}/job/${slugify(selectedJob?.['job_title'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.['id']}`
-    companyUrl = `${window.location.origin}/company/${slugify(companyDetail?.['name'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${companyDetail?.['id']}`
-  }
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
 
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
@@ -108,19 +104,31 @@ const JobListSection = ({
     return () => window.removeEventListener('scroll', updateScrollPosition)
   }, [])
 
+  const handleFormatWindowUrl = (pathname, name, id) => {
+    if (typeof window !== 'undefined') {
+      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${id}`
+    }
+    return ''
+  }
+
   const handlePaginationClick = (event, val) => {
     router.query.page = val
     router.push(router, undefined, { shallow: true })
   }
 
-  const handleCreateJobAlert = () => {
+  const handleCreateJobAlertData = (email) => {
     createJobAlert({
+      email,
       keyword: query?.[0],
       frequency_id: 1,
       is_active: 1,
       job_category_key: 'all',
       location_key: location?.length > 0 ? location.key : 'all'
     })
+  }
+ 
+  const handleCreateJobAlert = (email?:any) => {
+    handleCreateJobAlertData(email)
     setIsShowModalEnableJobAlerts(true)
   }
 
@@ -130,6 +138,9 @@ const JobListSection = ({
       setIsSticky(prevScrollY.current >= 70 ? true : false)
     }
   }
+
+  let jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
+  let companyUrl = handleFormatWindowUrl('company', companyDetail?.['name'], companyDetail?.['id'])
 
   return (
     <React.Fragment>
@@ -142,18 +153,23 @@ const JobListSection = ({
             <div className={styles.jobListOptionAlerts}>
               <div
                 className={styles.jobListOptionAlertsItem}
-                onClick={() => handleCreateJobAlert()}
+                onClick={() => {
+                  if (isUserAuthenticated) handleCreateJobAlert()
+                  if (!isUserAuthenticated) setIsShowModalEnableJobAlerts(true)
+                }}
               >
                 <Text textStyle='base'>Enable job alert</Text>
               </div>
-              <div
-                className={styles.jobListOptionAlertsItem}
-                onClick={() => {
-                  setIsShowModalManageJobAlerts(true)
-                }}
-              >
-                <Image src={NotificationIcon} width='20' height='20' />
-              </div>
+              {isUserAuthenticated && (
+                <div
+                  className={styles.jobListOptionAlertsItem}
+                  onClick={() => {
+                    setIsShowModalManageJobAlerts(true)
+                  }}
+                >
+                  <Image src={NotificationIcon} width='20' height='20' />
+                </div>
+              )}
             </div>
           </div>
           <div className={styles.jobListContent}>
@@ -218,6 +234,7 @@ const JobListSection = ({
 
       <ModalJobAlerts
         query={query}
+        location={location}
         isShowModalEnableJobAlerts={isShowModalEnableJobAlerts}
         handleShowModalEnableJobAlerts={setIsShowModalEnableJobAlerts}
         isShowModalManageJobAlerts={isShowModalManageJobAlerts}
@@ -227,8 +244,11 @@ const JobListSection = ({
         handleFetchJobAlertsList={fetchJobAlertsList}
         handleDeleteJobAlert={deleteJobAlert}
         handleUpdateJobAlert={updateJobAlert}
+        handleCreateJobAlert={handleCreateJobAlertData}
         isUpdatingJobAlert={isUpdatingJobAlert}
         isDeletingJobAlert={isDeletingJobAlert}
+        isCreatingJobAlert={isCreatingJobAlert}
+        isPublicPostReportJob={isUserAuthenticated === false}
       />
       <ModalReportJob 
         isShowReportJob={isShowReportJob} 

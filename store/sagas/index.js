@@ -22,6 +22,9 @@ import watchUpdateJobAlert from 'store/sagas/alerts/updateJobAlert'
 import watchDeleteJobAlert from 'store/sagas/alerts/deleteJobAlert'
 import watchCreateJobAlert from 'store/sagas/alerts/createJobAlert'
 
+// Users 
+import WatchRegisterUser from 'store/sagas/users/registerUser'
+
 function* rootSaga() {
   yield all([
     watchFetchConfig(),
@@ -37,7 +40,9 @@ function* rootSaga() {
     watchFetchJobAlertsList(),
     watchUpdateJobAlert(),
     watchDeleteJobAlert(),
-    watchCreateJobAlert()
+    watchCreateJobAlert(),
+
+    WatchRegisterUser()
   ])
 }
 

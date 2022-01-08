@@ -19,6 +19,7 @@ import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
 import { fetchFeaturedCompaniesRequest } from 'store/actions/companies/fetchFeaturedCompanies'
 import { fetchCompanyDetailRequest } from 'store/actions/companies/fetchCompanyDetail'
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
+import { registerUserRequest } from 'store/actions/users/registerUser'
 
 import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
 import { deleteJobAlertRequest } from 'store/actions/alerts/deleteJobAlert'
@@ -184,6 +185,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [companyDetail, setCompanyDetail] = useState(null)
   const { keyword, ...rest } = router.query
   const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
+
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
@@ -192,11 +194,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const jobDetailResponse = useSelector((store: any) => store.job.jobDetail.response)
   const isJobDetailFetching = useSelector((store: any) => store.job.jobDetail.fetching)
 
-  const createdJobAlertResponse = useSelector((store: any) => store.alerts.createJobAlert.response)
+  const createdJobAlertResponse = useSelector((store: any) => store.alerts.createJobAlert)
+  const isCreatingJobAlert = useSelector((store: any) => store.alerts.createJobAlert.fetching)
   const jobAlertListResponse = useSelector((store: any) => store.alerts.fetchJobAlertsList.response)
-  const companyDetailResponse = useSelector((store: any) => store.companies.companyDetail.response)
   const isDeletingJobAlert = useSelector((store: any) => store.alerts.deleteJobAlert.fetching)
   const isUpdatingJobAlert = useSelector((store: any) => store.alerts.updateJobAlert.fetching)
+
+  const companyDetailResponse = useSelector((store: any) => store.companies.companyDetail.response)
 
   const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
     router.query,
@@ -366,6 +370,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   const handlePostReportJob = (payload) => dispatch(postReportRequest(payload))
 
+  const handleRegisterUser = (payload) => dispatch(registerUserRequest(payload))
+
   const handleFetchJobAlertsList = () => {
     // TODO: Get userId = 2524
     dispatch(fetchJobAlertsListRequest(2524))
@@ -373,7 +379,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   
   const handleCreateJobAlert = (payload) => {
     // TODO: Get userId = 2524
-    payload.user_id = 2524
+    // payload.user_id = 2524
     dispatch(createJobAlertRequest(payload))
   }
 
@@ -526,6 +532,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           createJobAlert={handleCreateJobAlert}
           isDeletingJobAlert={isDeletingJobAlert}
           isUpdatingJobAlert={isUpdatingJobAlert}
+          isCreatingJobAlert={isCreatingJobAlert}
           reportJobReasonList={reportJobReasonList}
           handlePostReportJob={handlePostReportJob}
         />

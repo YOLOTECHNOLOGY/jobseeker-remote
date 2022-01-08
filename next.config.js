@@ -23,6 +23,9 @@ module.exports = {
     OLD_PROJECT_URL: process.env.OLD_PROJECT_URL,
     NEW_PROJECT_URL: process.env.NEW_PROJECT_URL,
     DATA_BOSSJOB_JOB_URL: process.env.DATA_BOSSJOB_JOB_URL,
+    CLIENT_ID: process.env.CLIENT_ID,
+    CLIENT_SECRET: process.env.CLIENT_SECRET,
+    COUNTRY_KEY: process.env.COUNTRY_KEY
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'node_modules')],
