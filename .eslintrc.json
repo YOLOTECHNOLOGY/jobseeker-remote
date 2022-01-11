@@ -18,7 +18,7 @@
       "jsx": true
     },
     "ecmaVersion": 11,
-    "project": "./tsconfig.json",
+    "project": "./tsconfig.json"
     // "sourceType": "module"
   },
   "plugins": [
@@ -33,6 +33,14 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/ban-ts-comment": "off",
+    "no-console": [
+      "error",
+      { "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
     "@typescript-eslint/ban-types": [
       "error",
       {
