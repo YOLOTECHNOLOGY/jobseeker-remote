@@ -9,33 +9,38 @@ import { registerUserService } from 'store/services/users/registerUser'
 
 function* createJobAlertReq(action) {
   const { payload } = action
+  console.log('creating-job.payload', payload)
   try {
-    const first_name = payload.email.split('@')[0]
-    const randomPassword =
-      Math.random()
-        .toString(36)
-        .substring(2, 15) +
-      Math.random()
-        .toString(36)
-        .substring(2, 15)
-        
-    const userPayload = {
-      email: payload.email,
-      first_name: first_name,
-      last_name: '',
-      password: randomPassword,
-      source: 'jobalert',
-      country_key: process.env.COUNTRY_KEY,
-      terms_and_condition: false,
-      client_id: process.env.CLIENT_ID,
-      client_secret: process.env.CLIENT_SECRET
+    let registerUserResponse
+
+    if (payload.email) {
+      const first_name = payload.email.split('@')[0]
+      const randomPassword =
+        Math.random()
+          .toString(36)
+          .substring(2, 15) +
+        Math.random()
+          .toString(36)
+          .substring(2, 15)
+          
+      const userPayload = {
+        email: payload.email,
+        first_name: first_name,
+        last_name: '',
+        password: randomPassword,
+        source: 'jobalert',
+        country_key: process.env.COUNTRY_KEY,
+        terms_and_condition: false,
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET
+      }
+
+      registerUserResponse = yield call(registerUserService, userPayload)
     }
 
-    const registerUserResponse = yield call(registerUserService, userPayload)
-
-    if (registerUserResponse.status === 201) {
+    if (registerUserResponse?.status === 201 || payload.user_id) {
       const jobAlertPayload = {
-        user_id: registerUserResponse.data.data.id,
+        user_id: registerUserResponse?.data?.data.id || payload.user_id,
         keyword: payload.query,
         frequency_id: payload.frequency_id,
         is_active: payload.is_active,

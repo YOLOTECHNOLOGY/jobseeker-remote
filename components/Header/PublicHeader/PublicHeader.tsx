@@ -7,7 +7,7 @@ import styles from '../Header.module.scss'
 /* components */
 import Link from 'components/Link'
 import Text from 'components/Text'
-import Button from 'components/Button'
+// import Button from 'components/Button'
 import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 

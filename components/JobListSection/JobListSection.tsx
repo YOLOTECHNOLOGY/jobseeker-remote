@@ -100,6 +100,7 @@ const JobListSection = ({
   const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
+    setIsUserAuthenticated(false)
     window.addEventListener('scroll', updateScrollPosition)
     return () => window.removeEventListener('scroll', updateScrollPosition)
   }, [])
@@ -117,8 +118,11 @@ const JobListSection = ({
   }
 
   const handleCreateJobAlertData = (email) => {
+    // TODO: Get userId = 2524
+    const userId = 2524
     createJobAlert({
       email,
+      user_id: userId,
       keyword: query?.[0],
       frequency_id: 1,
       is_active: 1,
@@ -139,8 +143,8 @@ const JobListSection = ({
     }
   }
 
-  let jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
-  let companyUrl = handleFormatWindowUrl('company', companyDetail?.['name'], companyDetail?.['id'])
+  const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
+  const companyUrl = handleFormatWindowUrl('company', companyDetail?.['name'], companyDetail?.['id'])
 
   return (
     <React.Fragment>

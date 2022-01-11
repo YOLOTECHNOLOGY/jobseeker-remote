@@ -58,7 +58,6 @@ const ModalJobAlerts = ({
   location,
   query,
 }: ModalJobAlertsProps) => {
-  console.log('createdJobAlert---', createdJobAlert)
   const { register, handleSubmit, formState: { errors } } = useForm()
 
   const [modalUpdateJobAlert, setModalUpdateJobAlert] = useState(false)
@@ -68,6 +67,7 @@ const ModalJobAlerts = ({
   const [notifiedAt, setNotifiedAt] = useState('email')
   const [jobAlertResponse, setJobAlertResponse] = useState(null)
   const [formEmail, setFormEmail] = useState('')
+  const [jobAlertError, setJobAlertError] = useState(null)
 
   useEffect(() => {
     if (isShowModalManageJobAlerts && !isDeletingJobAlert) {
@@ -79,11 +79,21 @@ const ModalJobAlerts = ({
 
   useEffect(() => {
     if (createdJobAlert) setJobAlertResponse(createdJobAlert?.response)
+    if (createdJobAlert?.error) {
+      const errorResponseData = createdJobAlert.error.response?.data
+      setJobAlertError(errorResponseData?.data[0].message[0])
+    }
   }, [createdJobAlert])
 
   const onSubmit = ({email}) => {
     handleCreateJobAlert(email)
     setJobAlertResponse(null)
+  }
+
+  const resetModalJobAlertState = () => {
+    setJobAlertResponse(null)
+    setFormEmail('')
+    setJobAlertError(null)
   }
 
   // Modal - Job Alerts List
@@ -261,7 +271,7 @@ const ModalJobAlerts = ({
         <div className={styles.ModalJobAlertBody}>
           <Text textStyle='base'>
             {selectedJobAlert && (
-              <span>You are about to delete the job alert for <strong>“{selectedJobAlert?.keyword}, {titleCase(selectedJobAlert?.location_key)}“</strong>.</span>
+              <span>You are about to delete the job alert for <strong>“{selectedJobAlert?.keyword}, {selectedJobAlert?.location_key ? titleCase(selectedJobAlert?.location_key) : ''}“</strong>.</span>
             )}
             <br /> This cannot be undone
           </Text>
@@ -305,7 +315,8 @@ const ModalJobAlerts = ({
                 value={formEmail}
                 onChange={(e) => setFormEmail(e.target.value)}
               />
-              {errors.email && <span>This field is required</span>}
+              {errors.email && <Text textStyle='sm' textColor='red'>This field is required</Text>}
+              {jobAlertError && <Text textStyle='sm' textColor='red'>{jobAlertError}</Text>}
             </div>
             <Text textStyle='xsm' tagName='p'>By creating this job alert, you agree to the Bossjob {' '}
               <Link to={'/'}>
@@ -326,14 +337,12 @@ const ModalJobAlerts = ({
         showModal={isShowModalEnableJobAlerts}
         handleModal={() => {
           handleShowModalEnableJobAlerts(false)
-          setJobAlertResponse(null)
-          setFormEmail('')
+          resetModalJobAlertState()
         }}
         firstButtonText='Done'
         handleFirstButton={() => {
           handleShowModalEnableJobAlerts(false)
-          setJobAlertResponse(null)
-          setFormEmail('')
+          resetModalJobAlertState()
         }}
       >
         <div className={styles.ModalJobAlertBody}>
@@ -368,7 +377,7 @@ const ModalJobAlerts = ({
         }}
         handleSecondButton={() => {
           handleShowModalEnableJobAlerts(false)
-          setSelectedJobAlert(createdJobAlert)
+          setSelectedJobAlert(jobAlertResponse)
           setModalDeleteJobAlert(true)
         }}
         firstButtonText='Keep'
@@ -376,17 +385,17 @@ const ModalJobAlerts = ({
       >
         <div className={styles.ModalJobAlertBody}>
           <Text textStyle='base'>
-            {createdJobAlert && (
+            {jobAlertResponse && (
               <React.Fragment>
-                <span>Job alert for ‘<Text textStyle='base' bold>{createdJobAlert?.keyword}</Text>’ enabled.</span>
+                <span>Job alert for ‘<Text textStyle='base' bold>{query}</Text>’ enabled.</span>
                 <Text
                   className={styles.ModalEnableJobAlertText}
                   textColor='primaryBlue'
                   onClick={() => {
                     handleShowModalEnableJobAlerts(false)
-                    setSelectedJobAlert(createdJobAlert)
+                    setSelectedJobAlert(jobAlertResponse)
                     setModalUpdateJobAlert(true)
-                    setFrequency(createdJobAlert.frequency_id)
+                    setFrequency(jobAlertResponse.frequency_id)
                   }}
                 >
                   {' '}
@@ -394,7 +403,7 @@ const ModalJobAlerts = ({
                 </Text>
               </React.Fragment>
             )}
-            {!createdJobAlert && (
+            {!jobAlertResponse && (
               <span>No selected keyword.</span>
             )}
           </Text>

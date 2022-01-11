@@ -19,7 +19,6 @@ import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
 import { fetchFeaturedCompaniesRequest } from 'store/actions/companies/fetchFeaturedCompanies'
 import { fetchCompanyDetailRequest } from 'store/actions/companies/fetchCompanyDetail'
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
-import { registerUserRequest } from 'store/actions/users/registerUser'
 
 import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
 import { deleteJobAlertRequest } from 'store/actions/alerts/deleteJobAlert'
@@ -370,18 +369,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   const handlePostReportJob = (payload) => dispatch(postReportRequest(payload))
 
-  const handleRegisterUser = (payload) => dispatch(registerUserRequest(payload))
-
   const handleFetchJobAlertsList = () => {
     // TODO: Get userId = 2524
     dispatch(fetchJobAlertsListRequest(2524))
   }
   
-  const handleCreateJobAlert = (payload) => {
-    // TODO: Get userId = 2524
-    // payload.user_id = 2524
-    dispatch(createJobAlertRequest(payload))
-  }
+  const handleCreateJobAlert = (payload) => dispatch(createJobAlertRequest(payload))
 
   const updateScrollPosition = () => {
     if (width > 798) {
