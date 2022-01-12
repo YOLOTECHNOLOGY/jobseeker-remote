@@ -127,7 +127,7 @@ const JobListSection = ({
       frequency_id: 1,
       is_active: 1,
       job_category_key: 'all',
-      location_key: location?.length > 0 ? location.key : 'all'
+      location_key: location?.key || 'all'
     })
   }
  

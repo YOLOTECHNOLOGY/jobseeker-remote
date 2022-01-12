@@ -47,6 +47,7 @@ export const formatSalaryWithComma = (x) => {
 
 // transform first letter of every word into uppercase
 export const titleCase = (x) => {
+  if (!x) return ''
   return x
     .toLowerCase()
     .replace(/./, (x) => x.toUpperCase())

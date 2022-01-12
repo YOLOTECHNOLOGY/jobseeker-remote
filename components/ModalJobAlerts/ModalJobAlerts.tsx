@@ -69,6 +69,9 @@ const ModalJobAlerts = ({
   const [formEmail, setFormEmail] = useState('')
   const [jobAlertError, setJobAlertError] = useState(null)
 
+  // eslint-disable-next-line no-console
+  console.log(notifiedAt)
+
   useEffect(() => {
     if (isShowModalManageJobAlerts && !isDeletingJobAlert) {
       if (isDeletingJobAlert || !isUpdatingJobAlert) {
@@ -96,6 +99,15 @@ const ModalJobAlerts = ({
     setJobAlertError(null)
   }
 
+  const formatLocationKeyDisplay = (locationKey) => {
+    if (!locationKey) return ''
+
+    const locationKeysSplit = locationKey.split('_')
+    const locationKeys = []
+    locationKeysSplit.map((location) => locationKeys.push(titleCase(location)))
+    return locationKeys.join(' ')
+  }
+
   // Modal - Job Alerts List
   // TODO: Implement Filters data from endpoint
   const ModalJobAlertsList = () => {
@@ -112,8 +124,8 @@ const ModalJobAlerts = ({
             {jobAlertsList?.length > 0 && jobAlertsList.map((alert)  => (
               <li key={alert.id} className={styles.ModalJobAlertsItem}>
                 <div className={styles.ModalJobAlertsItemHeader}>
-                  <Text textStyle='lg' bold>
-                    {alert.keyword}
+                  <Text textStyle='xl' bold>
+                    {titleCase(alert.keyword)}
                   </Text>
                   <div className={styles.ModalJobAlertsItemAction}>
                     <Image
@@ -142,7 +154,7 @@ const ModalJobAlerts = ({
                   </div>
                 </div>
                 <div className={styles.ModalJobAlertsItemBody}>
-                  <Text textStyle='base' bold>{titleCase(alert.location_key)}</Text>
+                  <Text textStyle='base' bold>{formatLocationKeyDisplay(alert.location_key)}</Text>
                   <Text textStyle='base'>Filters: Full-time, Marketing/Business Dev </Text>
                   <Text textStyle='base'>Frequency: {alert.frequency} via email</Text>
                 </div>
@@ -187,9 +199,7 @@ const ModalJobAlerts = ({
         <div className={styles.ModalJobAlertBody}>
           <div className={styles.ModalUpdateJobAlert}>
             <div className={styles.ModalUpdateJobAlertHeader}>
-              <Text textStyle='lg' bold>
-                {selectedJobAlert?.keyword}
-              </Text>
+              <Text textStyle='xl' bold>{titleCase(selectedJobAlert?.keyword)}</Text>
               <Image
                 src={DeleteIcon}
                 width='18'
@@ -201,9 +211,14 @@ const ModalJobAlerts = ({
                 }}
               />
             </div>
+            <div className={styles.ModalUpdateJobAlertSub}>
+              <Text textStyle='base' bold>{formatLocationKeyDisplay(selectedJobAlert?.location_key)}</Text>
+              <Text textStyle='base'>Filters: Full-time, Marketing/Business Dev </Text>
+            </div>
+
             <div className={styles.ModalUpdateJobAlertBody}>
               <div className={styles.ModalUpdateJobAlertGroup}>
-                <Text textStyle='base' className={styles.ModalUpdateJobAlertGroupHeader}>
+                <Text textStyle='base' bold className={styles.ModalUpdateJobAlertGroupHeader}>
                   Alert Frequency
                 </Text>
                 <RadioGroup
@@ -221,24 +236,6 @@ const ModalJobAlerts = ({
                     value='2'
                     control={<Radio />}
                     label={<Text textStyle='base'>Weekly</Text>}
-                  />
-                </RadioGroup>
-              </div>
-
-              <div className={styles.ModalUpdateJobAlertGroup}>
-                <Text textStyle='base' className={styles.ModalUpdateJobAlertGroupHeader}>
-                  Get notified via:
-                </Text>
-                <RadioGroup
-                  aria-label='notifiedAt'
-                  name='controlled-radio-buttons-group'
-                  value={notifiedAt}
-                  onChange={handleChange}
-                >
-                  <FormControlLabel
-                    value='email'
-                    control={<Radio />}
-                    label={<Text textStyle='base'>Email</Text>}
                   />
                 </RadioGroup>
               </div>
@@ -271,7 +268,7 @@ const ModalJobAlerts = ({
         <div className={styles.ModalJobAlertBody}>
           <Text textStyle='base'>
             {selectedJobAlert && (
-              <span>You are about to delete the job alert for <strong>“{selectedJobAlert?.keyword}, {selectedJobAlert?.location_key ? titleCase(selectedJobAlert?.location_key) : ''}“</strong>.</span>
+              <span>You are about to delete the job alert for <strong>“{titleCase(selectedJobAlert?.keyword)}, {selectedJobAlert?.location_key ? formatLocationKeyDisplay(selectedJobAlert?.location_key) : ''}“</strong>.</span>
             )}
             <br /> This cannot be undone
           </Text>
@@ -289,7 +286,7 @@ const ModalJobAlerts = ({
           showModal={isShowModalEnableJobAlerts}
           handleModal={() => {
             handleShowModalEnableJobAlerts(false)
-            setJobAlertResponse(null)
+            resetModalJobAlertState()
           }}
           firstButtonText={`${isCreatingJobAlert ? 'Submitting...' : 'Submit'}`}
           handleFirstButton={handleSubmit(onSubmit)}

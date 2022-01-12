@@ -26,10 +26,14 @@ const ModalWithdrawApplication = ({
       handleModal={() => handleShowModalWithdrawApplication(false)}
       firstButtonText='Back'
       handleFirstButton={() => {
+        // eslint-disable-next-line no-console
         console.log('Back')
       }}
       secondButtonText='Withdraw'
-      handleSecondButton={() => console.log('Withdraw')}
+      handleSecondButton={() => 
+        // eslint-disable-next-line no-console
+        console.log('Withdraw')
+      }
     >
       <div className={styles.ModalWithdrawApplication}>
         <Text textStyle='lg'>You are about to withdraw your application. This cannot be undone.</Text>

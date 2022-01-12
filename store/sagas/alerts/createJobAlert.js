@@ -9,7 +9,6 @@ import { registerUserService } from 'store/services/users/registerUser'
 
 function* createJobAlertReq(action) {
   const { payload } = action
-  console.log('creating-job.payload', payload)
   try {
     let registerUserResponse
 
@@ -41,13 +40,13 @@ function* createJobAlertReq(action) {
     if (registerUserResponse?.status === 201 || payload.user_id) {
       const jobAlertPayload = {
         user_id: registerUserResponse?.data?.data.id || payload.user_id,
-        keyword: payload.query,
+        keyword: payload.keyword,
         frequency_id: payload.frequency_id,
         is_active: payload.is_active,
         job_category_key: payload.job_category_key,
         location_key: payload.location_key
       }
-
+      
       const { data } = yield call(createJobAlertService, jobAlertPayload)
       yield put(createJobAlertSuccess(data.data))
     }

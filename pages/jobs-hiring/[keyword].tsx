@@ -211,6 +211,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   // const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
+    // eslint-disable-next-line no-console
     console.log('router query changed', router.query)
     if (!firstRender) setDisplayQuickLinks(false)
     if (predefinedQuery) setUrlQuery(predefinedQuery.toString())
