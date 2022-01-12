@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 /* Redux */
 import { connect } from 'react-redux'
@@ -17,7 +17,7 @@ interface HamburgerMenuProps {
 }
 
 const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
-  const router = useRouter()
+  // const router = useRouter()
 
   useEffect(() => {
     //  disable body from scrolling when hamburger menu is open

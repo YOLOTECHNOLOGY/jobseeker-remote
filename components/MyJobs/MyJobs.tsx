@@ -142,20 +142,20 @@ const MyJobs = ({
                 <JobCardLoader />
               </React.Fragment>
             )}
-            {!isAppliedJobsListFetching && appliedJobsListResponse?.data?.job_applications.map((job_application) => (
+            {!isAppliedJobsListFetching && appliedJobsListResponse?.data?.job_applications.map((jobApplication) => (
               <JobCard
-                key={job_application.job.job_id}
-                id={job_application.job.job_id}
-                image={job_application.company.logo}
-                title={job_application.job.job_title}
-                tag={job_application.job.job_type}
-                company={job_application.company.name}
-                location={job_application.job.job_location}
-                salary={`${numberToThousands(job_application.job.salary_range_from)}K - ${numberToThousands(job_application.job.salary_range_to)}K` }
-                postedAt={`${moment(new Date(job_application.created_at)).format('DD MMMM YYYY')}`}
+                key={jobApplication.job.job_id}
+                id={jobApplication.job.job_id}
+                image={jobApplication.company.logo}
+                title={jobApplication.job.job_title}
+                tag={jobApplication.job.job_type}
+                company={jobApplication.company.name}
+                location={jobApplication.job.job_location}
+                salary={`${numberToThousands(jobApplication.job.salary_range_from)}K - ${numberToThousands(jobApplication.job.salary_range_to)}K` }
+                postedAt={`${moment(new Date(jobApplication.created_at)).format('DD MMMM YYYY')}`}
                 selectedId={selectedJobId}
                 handleSelectedId={() => {
-                  handleSelectedJobId(job_application.job.job_id)
+                  handleSelectedJobId(jobApplication.job.job_id)
                 }}
               />
             ))}

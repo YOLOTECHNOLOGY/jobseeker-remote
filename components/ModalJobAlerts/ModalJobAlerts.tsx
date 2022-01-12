@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react'
 import { Radio, RadioGroup, FormControlLabel } from '@mui/material'
 import classNames from 'classnames/bind'
 import Image from 'next/image'
+import { useForm } from 'react-hook-form'
+import TextField from '@mui/material/TextField'
 
 /* Helpers */
 import { titleCase } from 'helpers/formatter'
@@ -11,6 +13,7 @@ import { titleCase } from 'helpers/formatter'
 /* Components */
 import Text from 'components/Text'
 import Modal from 'components/Modal'
+import Link from 'components/Link'
 
 /* Images */
 import { CreateIcon, DeleteIcon } from 'images'
@@ -20,6 +23,7 @@ import styles from './ModalJobAlerts.module.scss'
 
 interface ModalJobAlertsProps {
   query?: any
+  location?: any
   jobAlertsList?: any
   createdJobAlert?: any
   isShowModalEnableJobAlerts?: boolean
@@ -29,8 +33,11 @@ interface ModalJobAlertsProps {
   handleFetchJobAlertsList?: Function
   handleDeleteJobAlert?: Function
   handleUpdateJobAlert?: Function
+  handleCreateJobAlert?: Function
   isDeletingJobAlert?: boolean
   isUpdatingJobAlert?: boolean
+  isCreatingJobAlert?: boolean
+  isPublicPostReportJob?: boolean
 }
 
 const ModalJobAlerts = ({
@@ -43,14 +50,24 @@ const ModalJobAlerts = ({
   handleFetchJobAlertsList,
   handleDeleteJobAlert,
   handleUpdateJobAlert,
+  handleCreateJobAlert,
   isDeletingJobAlert,
-  isUpdatingJobAlert
+  isUpdatingJobAlert,
+  isCreatingJobAlert,
+  isPublicPostReportJob,
+  location,
+  query,
 }: ModalJobAlertsProps) => {
+  const { register, handleSubmit, formState: { errors } } = useForm()
+
   const [modalUpdateJobAlert, setModalUpdateJobAlert] = useState(false)
   const [modalDeleteJobAlert, setModalDeleteJobAlert] = useState(false)
   const [selectedJobAlert, setSelectedJobAlert] = useState(null)
   const [frequency, setFrequency] = useState(0)
   const [notifiedAt, setNotifiedAt] = useState('email')
+  const [jobAlertResponse, setJobAlertResponse] = useState(null)
+  const [formEmail, setFormEmail] = useState('')
+  const [jobAlertError, setJobAlertError] = useState(null)
 
   useEffect(() => {
     if (isShowModalManageJobAlerts && !isDeletingJobAlert) {
@@ -59,6 +76,25 @@ const ModalJobAlerts = ({
       }
     }
   }, [isShowModalManageJobAlerts, isDeletingJobAlert, isUpdatingJobAlert])
+
+  useEffect(() => {
+    if (createdJobAlert) setJobAlertResponse(createdJobAlert?.response)
+    if (createdJobAlert?.error) {
+      const errorResponseData = createdJobAlert.error.response?.data
+      setJobAlertError(errorResponseData?.data[0].message[0])
+    }
+  }, [createdJobAlert])
+
+  const onSubmit = ({email}) => {
+    handleCreateJobAlert(email)
+    setJobAlertResponse(null)
+  }
+
+  const resetModalJobAlertState = () => {
+    setJobAlertResponse(null)
+    setFormEmail('')
+    setJobAlertError(null)
+  }
 
   // Modal - Job Alerts List
   // TODO: Implement Filters data from endpoint
@@ -235,10 +271,83 @@ const ModalJobAlerts = ({
         <div className={styles.ModalJobAlertBody}>
           <Text textStyle='base'>
             {selectedJobAlert && (
-              <span>You are about to delete the job alert for <strong>“{selectedJobAlert?.keyword}, {titleCase(selectedJobAlert?.location_key)}“</strong>.</span>
+              <span>You are about to delete the job alert for <strong>“{selectedJobAlert?.keyword}, {selectedJobAlert?.location_key ? titleCase(selectedJobAlert?.location_key) : ''}“</strong>.</span>
             )}
             <br /> This cannot be undone
           </Text>
+        </div>
+      </Modal>
+    )
+  }
+
+  // Public Job Alerts
+  if (isPublicPostReportJob) {
+    if (!jobAlertResponse?.id){      
+      return (
+        <Modal
+          headerTitle='Enable Job Alert'
+          showModal={isShowModalEnableJobAlerts}
+          handleModal={() => {
+            handleShowModalEnableJobAlerts(false)
+            setJobAlertResponse(null)
+          }}
+          firstButtonText={`${isCreatingJobAlert ? 'Submitting...' : 'Submit'}`}
+          handleFirstButton={handleSubmit(onSubmit)}
+        >
+          <div className={styles.ModalJobAlertBody}>
+            <Text textStyle='lg'>
+              Get email updtes for {' '}
+              <Text textStyle='base' bold>{query}</Text> 
+              {location && location.length !== 0 && (
+                <>
+                  {' '} jobs in {' '}
+                  <Text textStyle='base' bold>{location.value}</Text>
+                </>
+              )}.
+            </Text>
+            <div>
+              <TextField 
+                {...register('email', { required: true })} 
+                className={styles.ModalJobAlertBodyInput}
+                id='outlined-basic' 
+                label='Email' 
+                variant='outlined'
+                value={formEmail}
+                onChange={(e) => setFormEmail(e.target.value)}
+              />
+              {errors.email && <Text textStyle='sm' textColor='red'>This field is required</Text>}
+              {jobAlertError && <Text textStyle='sm' textColor='red'>{jobAlertError}</Text>}
+            </div>
+            <Text textStyle='xsm' tagName='p'>By creating this job alert, you agree to the Bossjob {' '}
+              <Link to={'/'}>
+                <Text textColor='primaryBlue'>Term of Use</Text>
+              </Link>
+              {' '} and {' '} 
+              <Link to={'/'}>
+                <Text textColor='primaryBlue'>Privacy Policy</Text>.
+              </Link>
+              {' '} You can unsubscribe from these emails at any time.</Text>
+          </div>
+        </Modal>
+      )
+    }
+    return (
+      <Modal
+        headerTitle='Enable Job Alert'
+        showModal={isShowModalEnableJobAlerts}
+        handleModal={() => {
+          handleShowModalEnableJobAlerts(false)
+          resetModalJobAlertState()
+        }}
+        firstButtonText='Done'
+        handleFirstButton={() => {
+          handleShowModalEnableJobAlerts(false)
+          resetModalJobAlertState()
+        }}
+      >
+        <div className={styles.ModalJobAlertBody}>
+          <Text textStyle='xxl' bold tagName='p' className={styles.ModalJobAlertBodyEnabled}>Job alert is enabled.</Text>
+          <Text textStyle='lg' tagName='p' className={styles.ModalJobAlertBodyEnabled}>Please check your email to verify your account. </Text>
         </div>
       </Modal>
     )
@@ -268,7 +377,7 @@ const ModalJobAlerts = ({
         }}
         handleSecondButton={() => {
           handleShowModalEnableJobAlerts(false)
-          setSelectedJobAlert(createdJobAlert)
+          setSelectedJobAlert(jobAlertResponse)
           setModalDeleteJobAlert(true)
         }}
         firstButtonText='Keep'
@@ -276,17 +385,17 @@ const ModalJobAlerts = ({
       >
         <div className={styles.ModalJobAlertBody}>
           <Text textStyle='base'>
-            {createdJobAlert && (
+            {jobAlertResponse && (
               <React.Fragment>
-                <span>Job alert for ‘<Text textStyle='base' bold>{createdJobAlert?.keyword}</Text>’ enabled.</span>
+                <span>Job alert for ‘<Text textStyle='base' bold>{query}</Text>’ enabled.</span>
                 <Text
                   className={styles.ModalEnableJobAlertText}
                   textColor='primaryBlue'
                   onClick={() => {
                     handleShowModalEnableJobAlerts(false)
-                    setSelectedJobAlert(createdJobAlert)
+                    setSelectedJobAlert(jobAlertResponse)
                     setModalUpdateJobAlert(true)
-                    setFrequency(createdJobAlert.frequency_id)
+                    setFrequency(jobAlertResponse.frequency_id)
                   }}
                 >
                   {' '}
@@ -294,7 +403,7 @@ const ModalJobAlerts = ({
                 </Text>
               </React.Fragment>
             )}
-            {!createdJobAlert && (
+            {!jobAlertResponse && (
               <span>No selected keyword.</span>
             )}
           </Text>

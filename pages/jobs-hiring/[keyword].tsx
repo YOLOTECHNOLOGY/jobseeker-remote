@@ -184,6 +184,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [companyDetail, setCompanyDetail] = useState(null)
   const { keyword, ...rest } = router.query
   const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
+
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
@@ -192,11 +193,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const jobDetailResponse = useSelector((store: any) => store.job.jobDetail.response)
   const isJobDetailFetching = useSelector((store: any) => store.job.jobDetail.fetching)
 
-  const createdJobAlertResponse = useSelector((store: any) => store.alerts.createJobAlert.response)
+  const createdJobAlertResponse = useSelector((store: any) => store.alerts.createJobAlert)
+  const isCreatingJobAlert = useSelector((store: any) => store.alerts.createJobAlert.fetching)
   const jobAlertListResponse = useSelector((store: any) => store.alerts.fetchJobAlertsList.response)
-  const companyDetailResponse = useSelector((store: any) => store.companies.companyDetail.response)
   const isDeletingJobAlert = useSelector((store: any) => store.alerts.deleteJobAlert.fetching)
   const isUpdatingJobAlert = useSelector((store: any) => store.alerts.updateJobAlert.fetching)
+
+  const companyDetailResponse = useSelector((store: any) => store.companies.companyDetail.response)
 
   const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
     router.query,
@@ -371,11 +374,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     dispatch(fetchJobAlertsListRequest(2524))
   }
   
-  const handleCreateJobAlert = (payload) => {
-    // TODO: Get userId = 2524
-    payload.user_id = 2524
-    dispatch(createJobAlertRequest(payload))
-  }
+  const handleCreateJobAlert = (payload) => dispatch(createJobAlertRequest(payload))
 
   const updateScrollPosition = () => {
     if (width > 798) {
@@ -526,6 +525,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           createJobAlert={handleCreateJobAlert}
           isDeletingJobAlert={isDeletingJobAlert}
           isUpdatingJobAlert={isUpdatingJobAlert}
+          isCreatingJobAlert={isCreatingJobAlert}
           reportJobReasonList={reportJobReasonList}
           handlePostReportJob={handlePostReportJob}
         />

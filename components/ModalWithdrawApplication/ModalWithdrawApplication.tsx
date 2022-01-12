@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react'
+// import React, { useState, useRef } from 'react'
 
 /* Vendors */
-import { useForm } from 'react-hook-form'
+// import { useForm } from 'react-hook-form'
 
 /* Components */
 import Modal from 'components/Modal'

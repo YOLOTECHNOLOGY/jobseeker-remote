@@ -11,6 +11,15 @@
   padding: 20px 40px;
   max-height: 500px;
   overflow-y: scroll;
+
+  &Input {
+    width: 100%;
+    margin: 16px 0 8px;
+  }
+
+  &Enabled {
+    text-align: center;
+  }
 }
 
 .ModalJobAlertsListBody {
