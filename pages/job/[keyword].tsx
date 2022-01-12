@@ -142,7 +142,13 @@ const Job = ({ jobDetail }: IJobDetail) => {
                 <div className={styles.JobDetailOptionItem} onClick={() => setIsShowReportJob(true)}>
                   <Text textStyle='lg'>Report job</Text>
                 </div>
-                <div className={styles.JobDetailOptionItem} onClick={() => console.log('View Resume')}>
+                <div 
+                  className={styles.JobDetailOptionItem} 
+                  onClick={() => 
+                    // eslint-disable-next-line no-console
+                    console.log('View Resume')
+                  }
+                >
                   <Text textStyle='lg'>View Resume</Text>
                 </div>
               </div>

@@ -77,7 +77,7 @@
 
 .ModalUpdateJobAlert {
   &Header {
-    margin-bottom: 22px;
+    margin-bottom: 12px;
     display: flex;
     justify-content: space-between;
 
@@ -85,6 +85,15 @@
       &:hover {
         cursor: pointer;
       }
+    }
+  }
+
+  &Sub {
+    margin-bottom: 20px;
+
+    span {
+      display: block;
+      margin-bottom: 6px;
     }
   }
 
