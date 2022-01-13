@@ -7,6 +7,7 @@ import moment from 'moment'
 import slugify from 'slugify'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
+import { Tabs, Tab } from '@mui/material'
 
 /* Redux Actions */
 import { fetchAppliedJobsListRequest } from 'store/actions/jobs/fetchAppliedJobsList'
@@ -96,8 +97,7 @@ const MyJobs = ({
 
   const handleSelectedJobId = (jobId) => {
     if (width < 768) {
-      const mobileIsApplied = category === 'applied' ? true : false
-      router.push(`/job/${slugify(selectedJob?.['job_title'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.['id']}?isApplied=${mobileIsApplied}`)
+      router.push(`/job/${slugify(selectedJob?.['job_title'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.['id']}?isApplied=${isAppliedCategory}`)
       return
     }
     setSelectedJobId(jobId)
@@ -121,7 +121,40 @@ const MyJobs = ({
       <SEO title={"Job Title"} description={"Job Description"} />
       <div className={styles.MyJobs}>
         <div className={styles.MyJobsList}>
-          <div className={classNamesCombined([styles.MyJobsMenu])}>
+          <Tabs
+            value={category}
+            className={classNamesCombined([styles.MyJobsMenu])}
+          >
+            <Tab 
+              className={styles.MyJobsMenuTab}
+              value="saved" 
+              label={
+                <Link 
+                  to={'/my-jobs/saved?sort=2'}
+                  className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}
+                >
+                  <Text bold>
+                    Saved Jobs
+                  </Text>
+                </Link>
+              }
+            />
+            <Tab 
+              className={styles.MyJobsMenuTab}
+              value="applied" 
+              label={
+                <Link 
+                  to={'/my-jobs/applied?sort=2'}
+                  className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}
+                >
+                  <Text bold>
+                    Applied Jobs
+                  </Text>
+                </Link>
+              }
+            />
+          </Tabs>
+          {/* <div className={classNamesCombined([styles.MyJobsMenu])}>
             <Link to={'/my-jobs/saved?sort=2'} className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}>
               <Text textStyle='xl' bold>
                 Saved Jobs
@@ -132,7 +165,7 @@ const MyJobs = ({
                 Applied Jobs
               </Text>
             </Link>
-          </div>
+          </div> */}
           <div className={styles.MyJobsListContent}>
             {isAppliedJobsListFetching && (
               <React.Fragment>

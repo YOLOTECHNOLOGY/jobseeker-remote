@@ -355,6 +355,20 @@
         margin-left: 20px;
       }
     }
+
+    @include msd {
+      flex-direction: column;
+      
+      span {
+        &:not(:last-child) {
+          border-right: none;
+        }
+
+        &:last-child {
+          margin-left: 0;
+        }
+      }
+    }
   }
 
   &More {
