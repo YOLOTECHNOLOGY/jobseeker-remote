@@ -113,3 +113,8 @@ export const htmlTrim = (x) => {
 }
 
 export const flat = (arrayToBeFlattened) => Array.prototype.concat.apply([], arrayToBeFlattened)
+
+export const truncateWords = (words, maxLen) => {
+  if (words.length <= maxLen) return words
+  return words.substr(0, maxLen) + '...'
+}

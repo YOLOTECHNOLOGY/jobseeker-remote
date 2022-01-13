@@ -31,7 +31,7 @@ import ModalShare from 'components/ModalShare'
 import ModalReportJob from 'components/ModalReportJob'
 
 /* Helpers */
-import { numberToThousands } from 'helpers/formatter'
+import { numberToThousands, truncateWords } from 'helpers/formatter'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -39,6 +39,9 @@ import { wrapper } from 'store'
 /* Redux Actions */
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 import { fetchCompanyDetailRequest } from 'store/actions/companies/fetchCompanyDetail'
+import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+
+import { postReportRequest } from 'store/actions/reports/postReport'
 
 /* Styles */
 import styles from './Job.module.scss'
@@ -62,10 +65,14 @@ import {
 } from 'images'
 
 interface IJobDetail {
-  jobDetail: any
+  jobDetail: any,
+  config: any
 }
 
-const Job = ({ jobDetail }: IJobDetail) => {
+const Job = ({
+  jobDetail,
+  config
+}: IJobDetail) => {
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -82,6 +89,9 @@ const Job = ({ jobDetail }: IJobDetail) => {
   }
 
   const companyDetailResponse = useSelector((store: any) => store.companies.companyDetail?.response?.data)
+  const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
+
+  const handlePostReportJob = (payload) => dispatch(postReportRequest(payload))
 
   useEffect(() => {
     if (jobDetail) dispatch(fetchCompanyDetailRequest(jobDetail.company_id))
@@ -133,44 +143,29 @@ const Job = ({ jobDetail }: IJobDetail) => {
             {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
             {jobDetailOption && (
               <div className={styles.JobDetailOptionList}>
-                <Link to={jobDetailUrl} external className={styles.JobDetailOptionItem}>
-                  <Text textStyle='lg'>View in new tab</Text>
-                </Link>
                 <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
                   <Text textStyle='lg'>Share this job</Text>
                 </div>
                 <div className={styles.JobDetailOptionItem} onClick={() => setIsShowReportJob(true)}>
                   <Text textStyle='lg'>Report job</Text>
                 </div>
-                <div 
-                  className={styles.JobDetailOptionItem} 
-                  onClick={() => 
-                    // eslint-disable-next-line no-console
-                    console.log('View Resume')
-                  }
-                >
-                  <Text textStyle='lg'>View Resume</Text>
-                </div>
               </div>
             )}
             <div className={styles.JobDetailPrimaryInfo}>
-              <div 
-                className={styles.JobDetailPrimaryInfoImage} 
-                style={{ backgroundImage: `url(${jobDetail?.['company_logo']})` }}
-              />
-              <Text textStyle='xxl' bold className={styles.JobDetailPrimaryInfoTitle}>
-                {jobDetail?.['job_title']}
+              <img src={jobDetail?.company_logo} className={styles.JobDetailPrimaryInfoImage} alt={`${jobDetail?.company_name} logo`}/>
+              <Text textStyle='xxl' tagName='h1' bold className={styles.JobDetailPrimaryInfoTitle}>
+                {jobDetail?.job_title}
               </Text>
             </div>
             <div className={styles.JobDetailPrimarySub}>
-              <JobTag tag={jobDetail?.['job_type']}/>
+              <JobTag tag={jobDetail?.job_type}/>
               <Text textStyle='sm' className={styles.JobDetailPostedAt}>
-                Posted on {moment(new Date(jobDetail?.['published_at'])).format('DD MMMM YYYY')}
+                Posted on {moment(new Date(jobDetail?.published_at)).format('DD MMMM YYYY')}
               </Text>
             </div>
-            <Link to={'/'}>
-              <Text textStyle='lg' className={styles.JobDetailCompany}>
-                {jobDetail?.['company_name']}
+            <Link to={companyUrl}>
+              <Text textStyle='xl' className={styles.JobDetailCompany}>
+                {jobDetail?.company_name}
               </Text>
             </Link>
             {isAppliedQueryParam && !hasApplied && (
@@ -187,7 +182,7 @@ const Job = ({ jobDetail }: IJobDetail) => {
             {!isAppliedQueryParam && (
               <div className={styles.JobDetailPrimaryActions}>
                 <MaterialButton variant='contained'>
-                  <Link to={jobDetail?.['external_apply_url']} external>Apply Now</Link>
+                  <Link to={jobDetail?.external_apply_url} external>Apply Now</Link>
                 </MaterialButton>
                 <MaterialButton variant='outlined'>
                   Save Job
@@ -209,7 +204,7 @@ const Job = ({ jobDetail }: IJobDetail) => {
                   </Text>
                   <Link to={'/'}>
                     <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                      {jobDetail?.['job_location']}
+                      {jobDetail?.job_location}
                     </Text>
                   </Link> 
                 </span>
@@ -225,7 +220,7 @@ const Job = ({ jobDetail }: IJobDetail) => {
                     Experience
                   </Text>
                   <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                    {jobDetail?.['xp_lvl']}
+                    {jobDetail?.xp_lvl}
                   </Text>
                 </span>
               </li>
@@ -240,7 +235,7 @@ const Job = ({ jobDetail }: IJobDetail) => {
                     Education
                   </Text>
                   <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                    {jobDetail?.['degree']}
+                    {jobDetail?.degree}
                   </Text>
                 </span>
               </li>
@@ -255,7 +250,7 @@ const Job = ({ jobDetail }: IJobDetail) => {
                     Salary
                   </Text>
                   <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                    {`${numberToThousands(jobDetail?.['salary_range_from'])}K - ${numberToThousands(jobDetail?.['salary_range_to'])}K` }
+                    {`${numberToThousands(jobDetail?.salary_range_from)}K - ${numberToThousands(jobDetail?.salary_range_to)}K` }
                   </Text>
                 </span>
               </li>
@@ -282,23 +277,23 @@ const Job = ({ jobDetail }: IJobDetail) => {
             </div>
           )}
           <div className={styles.JobDetailSection}>
-            <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
+            <Text textStyle='lg' tagName='h2' bold className={styles.JobDetailSectionTitle}>
               Job Description
             </Text>
-            <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: jobDetail?.['job_description_html'] }} />
+            <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: jobDetail?.job_description_html }} />
           </div>
           <div className={styles.JobDetailSection}>
-            <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
+            <Text textStyle='lg' tagName='h2' bold className={styles.JobDetailSectionTitle}>
               Requirements
             </Text>
-            <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: jobDetail?.['job_requirements_html'] }} />
+            <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: jobDetail?.job_requirements_html }} />
           </div>
           <div className={styles.JobDetailSection}>
-            <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
+            <Text textStyle='lg' tagName='h2' bold className={styles.JobDetailSectionTitle}>
               Benefits
             </Text>
             <ul className={styles.JobDetailBenefitsList}>
-              {jobDetail?.['benefits']?.map((benefit) => (
+              {jobDetail?.benefits?.map((benefit) => (
                 <li className={styles.JobDetailBenefitsItem} key={benefit.id}>
                   {handleBenefitIcon(benefit.name)}
                   <Text textStyle='base' className={styles.JobDetailBenefitsText}>
@@ -309,11 +304,11 @@ const Job = ({ jobDetail }: IJobDetail) => {
             </ul>
           </div>
           <div className={styles.JobDetailSection}>
-            <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
+            <Text textStyle='lg' tagName='h2' bold className={styles.JobDetailSectionTitle}>
               Skills/Software
             </Text>
             <ul className={styles.JobDetailSkillsList}>
-              {jobDetail?.['job_skills'].split(',').map((skill) => (
+              {jobDetail?.job_skills.split(',').map((skill) => (
                 <li className={styles.JobDetailSkillsItem} key={skill}>
                   <Text bold textStyle='base' className={styles.JobDetailSkillsText}>
                     {skill}
@@ -326,16 +321,16 @@ const Job = ({ jobDetail }: IJobDetail) => {
             <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
               Additional Information
             </Text>
-            <Text textStyle='base' bold className={styles.JobDetailSectionSubTitle}>
+            <Text textStyle='base' tagName='h2' bold className={styles.JobDetailSectionSubTitle}>
               Working Location
             </Text>
             <Text textStyle='base' className={styles.JobDetailSectionSubBody}>
-              {`${jobDetail?.['job_location']}, ${jobDetail?.['job_region']}, ${jobDetail?.['job_country']}`}
+              {`${jobDetail?.job_location}, ${jobDetail?.job_region}, ${jobDetail?.job_country}`}
             </Text>
-            <Text textStyle='base' bold className={styles.JobDetailSectionSubTitle}>
+            <Text textStyle='base' tagName='h2' bold className={styles.JobDetailSectionSubTitle}>
               Specialization
             </Text>
-            {jobDetail?.['categories'].map((category) => (
+            {jobDetail?.categories.map((category) => (
               <Link to='/' key={category.id} className={styles.JobDetailSectionSubBody}>
                 <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
                   {' '}{category.value}
@@ -348,13 +343,13 @@ const Job = ({ jobDetail }: IJobDetail) => {
             <div className={styles.JobDetailRecruiterInfo}>
               <div 
                 className={styles.JobDetailRecruiterInfoImage}
-                style={{ backgroundImage: `url(${jobDetail?.['company_logo']})` }}
+                style={{ backgroundImage: `url(${jobDetail?.recruiter_avatar})` }}
               />
               <div className={styles.JobDetailRecruiterInfoText}>
-                <Text textStyle='base' bold>Joe Doe</Text>
+                <Text textStyle='base' bold>{jobDetail?.recruiter_first_name} {jobDetail?.recruiter_last_name}</Text>
                 <span>
                   <Text textStyle='base'>Marketing Manager {' '}</Text>
-                  <Text textStyle='base'>{' '}- 100% response rate, responds within a month | Last active on 29/12/2021</Text>
+                  <Text textStyle='base'>{' '}- {jobDetail?.application_response_rate}% response rate, responds {jobDetail?.application_response_time} | Last active on {moment(jobDetail?.recruiter_last_active_at).format('MM/DD/YYYY')}</Text>
                 </span>
               </div>
             </div>
@@ -365,16 +360,16 @@ const Job = ({ jobDetail }: IJobDetail) => {
             </Text>
             <Link to={companyUrl} className={styles.aboutCompanyTitle}>
               <Text bold textStyle='xl' textColor='primaryBlue'>
-                {companyDetail?.['name']}
+                {companyDetail?.name}
               </Text>
             </Link>
             <div className={styles.aboutCompanyDetail}>
-              <Text textStyle='base'>{companyDetail?.['industry']}</Text>
-              <Text textStyle='base'>{companyDetail?.['company_size']} employees</Text>
+              <Text textStyle='base'>{companyDetail?.industry}</Text>
+              <Text textStyle='base'>{companyDetail?.company_size} employees</Text>
             </div>
             <ReadMore
               size={352}
-              text={companyDetail?.['description']}
+              text={companyDetail?.description}
             />
           </div>
         </div>
@@ -384,35 +379,29 @@ const Job = ({ jobDetail }: IJobDetail) => {
               <Text textStyle='xxl' bold>Similar Jobs</Text>
             </div>
             <div className={styles.JobDetailSidebarCardList}>
-              <Link to={'/'} className={styles.JobDetailSidebarCard}>
-                <Text textStyle='xl' tagName='p' bold>Operation Manager Lorem Ipsum</Text>
+              <Link external to={'/job/1'} className={styles.JobDetailSidebarCard}>
+                <Text 
+                  className={styles.JobDetailSidebarCardTitle} 
+                  textStyle='xl' 
+                  tagName='p' 
+                  bold
+                >
+                  {truncateWords('Operation Manager Lorem Ipsum Manager Lorem IpsumManager Lorem IpsumManager Lorem IpsumManager Lorem Ipsum', 80)}
+                </Text>
                 <Text textStyle='base' tagName='p'>Loop Contact Solutions Inc.</Text>
                 <Text textStyle='base' tagName='p' textColor='darkgrey'>Makati</Text>
                 <Text textStyle='base' tagName='p' textColor='darkgrey'>₱75k - ₱80k</Text>
                 <Text textStyle='xsm' tagName='p'>Posted on 23 August 2021</Text>
-                <Text 
-                  textStyle='base' 
-                  tagName='p' 
-                  bold
-                  className={styles.JobDetailSidebarCardCTA}
-                >
-                  Apply Now
-                </Text>
-              </Link>
-              <Link to={'/'} className={styles.JobDetailSidebarCard}>
-                <Text textStyle='xl' tagName='p' bold>Operation Manager Lorem Ipsum</Text>
-                <Text textStyle='base' tagName='p'>Loop Contact Solutions Inc.</Text>
-                <Text textStyle='base' tagName='p' textColor='darkgrey'>Makati</Text>
-                <Text textStyle='base' tagName='p' textColor='darkgrey'>₱75k - ₱80k</Text>
-                <Text textStyle='xsm' tagName='p'>Posted on 23 August 2021</Text>
-                <Text 
-                  textStyle='base' 
-                  tagName='p' 
-                  bold
-                  className={styles.JobDetailSidebarCardCTA}
-                >
-                  Apply Now
-                </Text>
+                <Link external to={'/job/1'}>
+                  <Text 
+                    textStyle='base' 
+                    tagName='p' 
+                    bold
+                    className={styles.JobDetailSidebarCardCTA}
+                  >
+                    Apply Now
+                  </Text>
+                </Link>
               </Link>
             </div>
           </div>
@@ -421,39 +410,34 @@ const Job = ({ jobDetail }: IJobDetail) => {
               <Text textStyle='xxl' bold>Recommended Courses</Text>
             </div>
             <div className={styles.JobDetailSidebarCardList}>
-              <Link to={'/'} className={styles.JobDetailSidebarCard}>
-                <Text textStyle='xl' tagName='p' bold>2022 Complete Python Bootcamp From Zero to Hero in Python</Text>
+              <Link external to={'/'} className={styles.JobDetailSidebarCard}>
+                <Text className={styles.JobDetailSidebarCardTitle} textStyle='xl' tagName='p' bold>{truncateWords('2022 Complete Python Bootcamp From Zero to Hero in Python', 80)}</Text>
                 <Text textStyle='base' tagName='p'>Intermediate</Text>
                 <Text textStyle='base' tagName='p' textColor='darkgrey'>Online Learning</Text>
-                <Text textStyle='base' tagName='p' textColor='darkgrey'>₱80k</Text><Text 
-                  textStyle='base' 
-                  tagName='p' 
-                  bold
-                  className={styles.JobDetailSidebarCardCTA}
-                >
-                  Get Started
-                </Text>
-              </Link>
-            </div>
-            <div className={styles.JobDetailSidebarCardList}>
-              <Link to={'/'} className={styles.JobDetailSidebarCard}>
-                <Text textStyle='xl' tagName='p' bold>2022 Complete Python Bootcamp From Zero to Hero in Python</Text>
-                <Text textStyle='base' tagName='p'>Intermediate</Text>
-                <Text textStyle='base' tagName='p' textColor='darkgrey'>Online Learning</Text>
-                <Text textStyle='base' tagName='p' textColor='darkgrey'>₱80k</Text><Text 
-                  textStyle='base' 
-                  tagName='p' 
-                  bold
-                  className={styles.JobDetailSidebarCardCTA}
-                >
-                  Get Started
-                </Text>
+                <Text textStyle='base' tagName='p' textColor='darkgrey'>₱80k</Text>
+                <Link external to={'/'}>
+                  <Text 
+                    textStyle='base' 
+                    tagName='p' 
+                    bold
+                    className={styles.JobDetailSidebarCardCTA}
+                  >
+                    Get Started
+                  </Text>
+                </Link>
               </Link>
             </div>
           </div>
         </div>
       </div>
-      <ModalReportJob isShowReportJob={isShowReportJob} handleShowReportJob={setIsShowReportJob} />
+      <ModalReportJob 
+        isShowReportJob={isShowReportJob} 
+        handleShowReportJob={setIsShowReportJob} 
+        reportJobReasonList={reportJobReasonList}
+        selectedJobId={jobDetail.id}
+        handlePostReportJob={handlePostReportJob}
+      />
+
       <ModalShare
         jobDetailUrl={jobDetailUrl}
         isShowModalShare={isShowModalShare}
@@ -471,14 +455,18 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   // store actions
   store.dispatch(fetchJobDetailRequest(jobId))
+  store.dispatch(fetchConfigRequest())
+
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const jobDetail = storeState.job.jobDetail.response.data
+  const config = storeState.config.config.response
 
   return {
     props: {
-      jobDetail
+      jobDetail,
+      config
     }
   }
 })
