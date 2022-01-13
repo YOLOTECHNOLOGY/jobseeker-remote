@@ -65,7 +65,8 @@
     "import/extensions": "off"
   },
   "ignorePatterns": [
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "lib/redirection.js"
   ],
   "settings": {
     "import/extensions": [

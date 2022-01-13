@@ -8,7 +8,13 @@
 
   @include msd {
     flex-direction: column;
-    padding: 10px 6% 100px;
+    padding: 10px 5% 100px;
+  }
+
+  &Company {
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &Content {
@@ -89,9 +95,7 @@
     width: 78px;
     height: 78px;
     border-radius: 4px;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
+    object-fit: contain;
     margin-right: 20px;
 
     @include msd {
@@ -304,12 +308,14 @@
 
 .LeaderBoard {
   height: 90px;
-  width: 100%;
+  width: 970px;
   background-color: $white-2;
-  margin-bottom: 40px;
+  margin: 0 auto 40px;
 
   @include msd {
-    height: 100px;
+    width: 300px;
+    max-width: 100%;
+    height: 200px;
     margin-bottom: 20px;
   }
 }
@@ -398,6 +404,15 @@
 
   &CTA {
     color: $primaryBlue;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  &Title {
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
