@@ -44,7 +44,7 @@ import JobSearchFilters from 'components/JobSearchFilters'
 import JobListSection from 'components/JobListSection'
 
 /* Styles */
-import styles from './JobsHiring.module.scss'
+import styles from './jobsHiring.module.scss'
 import breakpointStyles from 'styles/breakpoint.module.scss'
 
 /* Helpers*/
