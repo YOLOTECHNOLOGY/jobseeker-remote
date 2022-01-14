@@ -1,0 +1,6 @@
+[
+    {
+        "name": "prod-jobseeker-client-container",
+        "imageUri": "760225532191.dkr.ecr.ap-southeast-1.amazonaws.com/prod-jobseeker-client:latest"
+    }
+]

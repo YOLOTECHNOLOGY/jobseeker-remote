@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - echo Installing Something...
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR....
+      - aws --version
+      # Login to Elastic container registry
+      - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 760225532191.dkr.ecr.ap-southeast-1.amazonaws.com
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Login to docker hub
+      - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+      - echo Building the Docker image with REPO URI $REPOSITORY_URI
+      - |
+        docker build \
+          --build-arg ENV=$ENV \
+          -t $REPOSITORY_URI .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:latest
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker image ls -a
+      - docker push $REPOSITORY_URI:latest
