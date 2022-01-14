@@ -49,6 +49,17 @@ import styles from './Home.module.scss'
 import breakpointStyles from 'styles/breakpoint.module.scss'
 // import classNamesCombined from 'classnames'
 
+type configObject = {
+  inputs: any
+  filters: any
+}
+
+type companyObject = {
+  id: number
+  logo: string
+  name: string
+}
+
 interface HomeProps {
   config: configObject
   topCompanies: companyObject[]
@@ -242,7 +253,7 @@ const Home = (props: HomeProps) => {
                 onKeyPress={(e) => {
                   if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault()
-                    onSearch((e.target as HTMLInputElement).value)
+                    onSearch()
                   }
                 }}
               />
@@ -253,7 +264,6 @@ const Home = (props: HomeProps) => {
                 onChange={onLocationSearch}
               />
               <MaterialButton variant='contained' onClick={onSearch}>
-                {/* <MaterialButton variant='contained' onClick={onSearchSubmit}> */}
                 Search
               </MaterialButton>
             </div>
@@ -702,7 +712,6 @@ const Home = (props: HomeProps) => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
-  // const { keyword, page } = query
   // store actions
   store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesRequest())
@@ -711,14 +720,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const storeState = store.getState()
   const config = storeState.config.config.response
   const topCompanies = storeState.companies.featuredCompanies.response
-  // const catList = config && config.inputs && config.inputs.job_category_lists
-  // const locList = getLocationList(config)
-  // const {
-  //   predefinedQuery,
-  //   predefinedLocation,
-  //   // , predefinedCategory
-  // } = getPredefinedParamsFromUrl(query, catList, locList)
-
   return {
     props: {
       config,
