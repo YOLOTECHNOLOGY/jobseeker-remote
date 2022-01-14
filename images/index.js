@@ -37,9 +37,24 @@ export const ChatIcon = `${S3BucketJobseeker}/ChatIcon.svg`
 export const DefaultJobseekerAvatar = `${S3BucketJobseeker}/DefaultJobseekerAvatar.png`
 export const DownloadOnAppStore = `${S3BucketJobseeker}/DownloadOnAppStore.svg`
 export const DownloadOnGooglePlay = `${S3BucketJobseeker}/DownloadOnGooglePlay.svg`
+export const FilterIcon = `${S3BucketJobseeker}/FilterIcon.svg`
+export const ExpireIcon = `${S3BucketJobseeker}/ExpireIcon.svg`
+
+/* Footer Social Links Logo */
 export const facebook = `${S3BucketJobseeker}/facebook.svg`
 export const instagram = `${S3BucketJobseeker}/instagram.svg`
 export const twitter = `${S3BucketJobseeker}/twitter.svg`
 export const linkedin = `${S3BucketJobseeker}/linkedin.svg`
-export const FilterIcon = `${S3BucketJobseeker}/FilterIcon.svg`
-export const ExpireIcon = `${S3BucketJobseeker}/ExpireIcon.svg`
+
+/* Landing Page Images */
+export const BuildProfessionalResume = `${S3BucketJobseeker}/BuildProfessionalResume.png`
+export const ChatDirectlyWithBoss = `${S3BucketJobseeker}/ChatDirectlyWithBoss.png`
+export const GetHeadhunted = `${S3BucketJobseeker}/GetHeadhunted.png`
+export const LevelUpCareer = `${S3BucketJobseeker}/LevelUpCareer.png`
+export const BusinessInsider = `${S3BucketJobseeker}/BusinessInsider.svg`
+export const GrabVentures = `${S3BucketJobseeker}/GrabVentures.svg`
+export const KrAsia = `${S3BucketJobseeker}/KrAsia.svg`
+export const MoneyMax = `${S3BucketJobseeker}/MoneyMax.svg`
+export const TechInAsia = `${S3BucketJobseeker}/TechInAsia.svg`
+
+
