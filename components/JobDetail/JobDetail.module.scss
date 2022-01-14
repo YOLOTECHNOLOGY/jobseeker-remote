@@ -15,6 +15,7 @@
     &.isSticky {
       position: fixed;
       width: 47.4%;
+      top: 70px;
     }
   }
 
@@ -26,7 +27,7 @@
       height: 68px;
       width: 47.4%;
       position: fixed;
-      top: 142px;
+      top: 0;
       z-index: 1;
       background-color: $white-3;
     }
