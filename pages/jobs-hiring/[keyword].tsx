@@ -26,6 +26,8 @@ import { createJobAlertRequest } from 'store/actions/alerts/createJobAlert'
 
 import { postReportRequest } from 'store/actions/reports/postReport'
 
+import { postSaveJobRequest} from 'store/actions/jobs/postSaveJob'
+
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
 import MaterialTextField from 'components/MaterialTextField'
@@ -363,6 +365,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   
   const handleCreateJobAlert = (payload) => dispatch(createJobAlertRequest(payload))
 
+  const handlePostSaveJob = (payload) => dispatch(postSaveJobRequest(payload))
+
   const updateScrollPosition = () => {
     if (width > 798) {
       prevScrollY.current = window.pageYOffset
@@ -513,6 +517,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           isCreatingJobAlert={isCreatingJobAlert}
           reportJobReasonList={reportJobReasonList}
           handlePostReportJob={handlePostReportJob}
+
+          handlePostSaveJob={handlePostSaveJob}
         />
       </div>
     </Layout>

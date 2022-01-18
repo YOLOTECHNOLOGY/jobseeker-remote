@@ -17,7 +17,6 @@ function* fetchSavedJobsListReq(action) {
     }
 
     const response = yield call(fetchSavedJobsListService, payload)
-    console.log('response', response)
 
     if (response.status === 200 || response.status === 201) {
       yield put(fetchSavedJobsListSuccess(response.data))

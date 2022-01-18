@@ -10,9 +10,9 @@ import classNamesCombined from 'classnames'
 import { Tabs, Tab } from '@mui/material'
 
 /* Redux Actions */
+import { fetchSavedJobsListRequest } from 'store/actions/jobs/fetchSavedJobsList'
 import { fetchAppliedJobsListRequest } from 'store/actions/jobs/fetchAppliedJobsList'
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
-import { fetchCompanyDetailRequest } from 'store/actions/companies/fetchCompanyDetail'
 
 /* Components */
 import Layout from 'components/Layout'
@@ -55,24 +55,30 @@ const MyJobs = ({
 
   const [selectedJobId, setSelectedJobId] = useState(null)
   const [selectedJob, setSelectedJob] = useState(null)
-  const [companyDetail, setCompanyDetail] = useState(null)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowModalWithdrawApplication, setIsShowModalWithdrawApplication] = useState(false)
 
   const appliedJobsListResponse = useSelector((store: any) => store.job.appliedJobsList.response)
   const isAppliedJobsListFetching = useSelector((store: any) => store.job.appliedJobsList.fetching)
+
+  const savedJobsListResponse = useSelector((store: any) => store.job.savedJobsList.response)
+  const isSavedJobsListFetching = useSelector((store: any) => store.job.savedJobsList.fetching)
   
   const jobDetailResponse = useSelector((store: any) => store.job.jobDetail.response)
   const isJobDetailFetching = useSelector((store: any) => store.job.jobDetail.fetching)
 
-  const companyDetailResponse = useSelector((store: any) => store.companies.companyDetail.response)
 
   useEffect(() => {
     const payload = {
-      sort: router.query?.sort,
+      size: router.query?.size,
       page: router.query?.page ? Number(router.query.page) : 1,
     }
-    dispatch(fetchAppliedJobsListRequest(payload))
+    if (isAppliedCategory) {
+      dispatch(fetchAppliedJobsListRequest(payload))
+      return
+    }
+
+    dispatch(fetchSavedJobsListRequest(payload))
   }, [router.query])
 
   useEffect(() => {
@@ -83,17 +89,19 @@ const MyJobs = ({
   }, [appliedJobsListResponse])
 
   useEffect(() => {
-    if (jobDetailResponse?.data) setSelectedJob(jobDetailResponse.data)
+    if (savedJobsListResponse?.data?.saved_jobs.length > 0) {
+      handleFetchJobDetail(savedJobsListResponse.data?.saved_jobs?.[0].job.id) 
+      setSelectedJobId(savedJobsListResponse.data?.saved_jobs?.[0].job.id)
+    }
+  }, [savedJobsListResponse])
+
+  useEffect(() => {
+    if (jobDetailResponse) setSelectedJob(jobDetailResponse)
   }, [jobDetailResponse])
 
   useEffect(() => {
     if (selectedJobId) dispatch(handleFetchJobDetail(selectedJobId))
-    if (selectedJob) dispatch(fetchCompanyDetailRequest(selectedJob.company_id))
   }, [selectedJobId])
-
-  useEffect(() => {
-    if (companyDetailResponse?.data) setCompanyDetail(companyDetailResponse.data)
-  }, [companyDetailResponse])
 
   const handleSelectedJobId = (jobId) => {
     if (width < 768) {
@@ -109,12 +117,15 @@ const MyJobs = ({
     router.push(router, undefined, { shallow: true })
   }
 
-  let jobDetailUrl = ''
-  let companyUrl = ''
-  if (typeof window !== 'undefined') {
-    jobDetailUrl = `${window.location.origin}/job/${slugify(selectedJob?.['job_title'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.['id']}`
-    companyUrl = `${window.location.origin}/company/${slugify(companyDetail?.['name'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${companyDetail?.['id']}`
+  const handleFormatWindowUrl = (pathname, name, id) => {
+    if (typeof window !== 'undefined') {
+      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${id}`
+    }
+    return ''
   }
+
+  const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
+  const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
   return (
     <Layout>
@@ -130,7 +141,7 @@ const MyJobs = ({
               value="saved" 
               label={
                 <Link 
-                  to={'/my-jobs/saved?sort=2'}
+                  to={'/my-jobs/saved?page=1&size=10'}
                   className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}
                 >
                   <Text bold>
@@ -144,7 +155,7 @@ const MyJobs = ({
               value="applied" 
               label={
                 <Link 
-                  to={'/my-jobs/applied?sort=2'}
+                  to={'/my-jobs/applied?page=1&size=10'}
                   className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}
                 >
                   <Text bold>
@@ -154,20 +165,8 @@ const MyJobs = ({
               }
             />
           </Tabs>
-          {/* <div className={classNamesCombined([styles.MyJobsMenu])}>
-            <Link to={'/my-jobs/saved?sort=2'} className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}>
-              <Text textStyle='xl' bold>
-                Saved Jobs
-              </Text>
-            </Link>
-            <Link to={'/my-jobs/applied?sort=2'} className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}>
-              <Text textStyle='xl' bold>
-                Applied Jobs
-              </Text>
-            </Link>
-          </div> */}
           <div className={styles.MyJobsListContent}>
-            {isAppliedJobsListFetching && (
+            {isAppliedJobsListFetching || isSavedJobsListFetching && (
               <React.Fragment>
                 <JobCardLoader />
                 <JobCardLoader />
@@ -175,13 +174,26 @@ const MyJobs = ({
                 <JobCardLoader />
               </React.Fragment>
             )}
-            {!isAppliedJobsListFetching && appliedJobsListResponse?.data?.job_applications.map((jobApplication) => (
+            {!isSavedJobsListFetching && !isAppliedCategory && savedJobsListResponse?.data?.saved_jobs.map((jobSaved) => (
+              <JobCard
+                key={jobSaved.id}
+                id={jobSaved.id}
+                image={jobSaved.job.company_logo}
+                title={jobSaved.job.job_title}
+                company={jobSaved.job.company_name}
+                location={jobSaved.job.location_value}
+                salary={jobSaved.job.salary_range_value}
+                postedAt={jobSaved.job.published_at}
+                selectedId={selectedJobId}
+                handleSelectedId={() => handleSelectedJobId(jobSaved.job.id)}
+              />
+            ))}
+            {!isAppliedJobsListFetching && isAppliedCategory && appliedJobsListResponse?.data?.job_applications.map((jobApplication) => (
               <JobCard
                 key={jobApplication.job.job_id}
                 id={jobApplication.job.job_id}
                 image={jobApplication.company.logo}
                 title={jobApplication.job.job_title}
-                tag={jobApplication.job.job_type}
                 company={jobApplication.company.name}
                 location={jobApplication.job.job_location}
                 salary={`${numberToThousands(jobApplication.job.salary_range_from)}K - ${numberToThousands(jobApplication.job.salary_range_to)}K` }
@@ -198,7 +210,7 @@ const MyJobs = ({
           </div>
         </div>
         <div className={styles.MyJobsDetailInfoSection}>
-          {(isJobDetailFetching || isAppliedJobsListFetching) && (
+          {(isJobDetailFetching || isAppliedJobsListFetching || isSavedJobsListFetching) && (
             <JobDetailLoader />
           )}
           {!isJobDetailFetching && selectedJob && (

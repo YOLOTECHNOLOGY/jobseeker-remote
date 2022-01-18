@@ -52,6 +52,7 @@ interface IJobDetailProps {
   companyUrl?: string
   jobDetailUrl?: string
   category?: string
+  handlePostSaveJob?: Function
 }
 
 const JobDetail = ({
@@ -62,7 +63,8 @@ const JobDetail = ({
   isSticky,
   jobDetailUrl,
   companyUrl,
-  category
+  category,
+  handlePostSaveJob
 }: IJobDetailProps) => {
   const [jobDetailOption, setJobDetailOption] = useState(false)
   
@@ -166,7 +168,7 @@ const JobDetail = ({
                   </Text>
                 )} */}
 
-                <MaterialButton variant='outlined'>
+                <MaterialButton variant='outlined' onClick={() => handlePostSaveJob({job_id: selectedJob?.id})}>
                   { isCategorySaved ? 'Saved' : 'Save Job' }
                 </MaterialButton>
               </div>

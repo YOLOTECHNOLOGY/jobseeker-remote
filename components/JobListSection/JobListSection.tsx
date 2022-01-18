@@ -56,6 +56,7 @@ interface JobListSectionProps {
   isJobDetailFetching?: boolean
   reportJobReasonList?: any
   handlePostReportJob?: Function
+  handlePostSaveJob?: Function
 }
 
 const JobListSection = ({ 
@@ -80,6 +81,7 @@ const JobListSection = ({
   isJobDetailFetching,
   reportJobReasonList,
   handlePostReportJob,
+  handlePostSaveJob
 }: JobListSectionProps) => {  
   const { width } = useWindowDimensions()
   const router = useRouter()
@@ -247,6 +249,7 @@ const JobListSection = ({
               isSticky={isSticky}
               jobDetailUrl={jobDetailUrl}
               companyUrl={companyUrl}
+              handlePostSaveJob={handlePostSaveJob}
             />
           )}
         </div>
