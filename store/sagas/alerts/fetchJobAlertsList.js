@@ -9,7 +9,7 @@ import { fetchJobAlertsListService } from 'store/services/alerts/fetchJobAlertsL
 function* fetchJobAlertsListReq(action) {
   try {
     const { data } = yield call(fetchJobAlertsListService, action.payload)
-    yield put(fetchJobAlertsListSuccess(data))
+    yield put(fetchJobAlertsListSuccess(data.data))
   } catch (error) {
     yield put(fetchJobAlertsListFailed(error))
   }

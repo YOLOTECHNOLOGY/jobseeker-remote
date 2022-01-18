@@ -53,7 +53,7 @@ function* createJobAlertReq(action) {
     }
     
     const { data } = yield call(createJobAlertService, jobAlertPayload)
-    yield put(createJobAlertSuccess(data))
+    yield put(createJobAlertSuccess(data.data))
     // }
   } catch (error) {
     console.log('error-saga', error)
