@@ -17,7 +17,6 @@ import { wrapper } from 'store'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
 import { fetchFeaturedCompaniesRequest } from 'store/actions/companies/fetchFeaturedCompanies'
-import { fetchCompanyDetailRequest } from 'store/actions/companies/fetchCompanyDetail'
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 
 import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
@@ -181,7 +180,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [createdJobAlert, setCreatedJobAlert] = useState(null)
   const [selectedJob, setSelectedJob] = useState(null)
   const [selectedJobId, setSelectedJobId] = useState(null)
-  const [companyDetail, setCompanyDetail] = useState(null)
   const { keyword, ...rest } = router.query
   const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
 
@@ -198,8 +196,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const jobAlertListResponse = useSelector((store: any) => store.alerts.fetchJobAlertsList.response)
   const isDeletingJobAlert = useSelector((store: any) => store.alerts.deleteJobAlert.fetching)
   const isUpdatingJobAlert = useSelector((store: any) => store.alerts.updateJobAlert.fetching)
-
-  const companyDetailResponse = useSelector((store: any) => store.companies.companyDetail.response)
 
   const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
     router.query,
@@ -256,17 +252,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }, [jobListResponse])
 
   useEffect(() => {
-    if (jobDetailResponse?.data) setSelectedJob(jobDetailResponse.data)
+    if (jobDetailResponse) setSelectedJob(jobDetailResponse)
   }, [jobDetailResponse])
 
   useEffect(() => {
     if (selectedJobId) dispatch(handleFetchJobDetail(selectedJobId))
-    if (selectedJob) dispatch(fetchCompanyDetailRequest(selectedJob.company_id))
   }, [selectedJobId])
-
-  useEffect(() => {
-    if (companyDetailResponse?.data) setCompanyDetail(companyDetailResponse.data)
-  }, [companyDetailResponse])
 
   const sortOptions = [
     { label: 'Newest', value: 1 },
@@ -358,8 +349,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     updateUrl(queryParam, queryObject)
   }
 
-  const handleFetchCompanyDetail = (companyId) => dispatch(fetchCompanyDetailRequest(companyId))
-
   const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest(jobId))
 
   const handleSelectedJobId = (jobId) => setSelectedJobId(jobId)
@@ -370,10 +359,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   const handlePostReportJob = (payload) => dispatch(postReportRequest(payload))
 
-  const handleFetchJobAlertsList = () => {
-    // TODO: Get userId = 2524
-    dispatch(fetchJobAlertsListRequest(2524))
-  }
+  const handleFetchJobAlertsList = () => dispatch(fetchJobAlertsListRequest())
   
   const handleCreateJobAlert = (payload) => dispatch(createJobAlertRequest(payload))
 
@@ -513,8 +499,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           selectedJob={selectedJob}
           selectedJobId={selectedJobId}
           handleSelectedJobId={handleSelectedJobId}
-          handleCompanyDetail={handleFetchCompanyDetail}
-          companyDetail={companyDetail}
           totalPages={jobListResponse?.data?.total_num}
           query={predefinedQuery}
           location={urlLocation}

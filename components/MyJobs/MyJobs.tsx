@@ -204,7 +204,6 @@ const MyJobs = ({
           {!isJobDetailFetching && selectedJob && (
             <JobDetail 
               selectedJob={selectedJob}
-              companyDetail={companyDetail}
               jobDetailUrl={jobDetailUrl}
               companyUrl={companyUrl}
               category={category}

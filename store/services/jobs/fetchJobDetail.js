@@ -7,7 +7,7 @@ const fetchJobDetailService =(jobId) => {
 //     return axios.get(`${process.env.DATA_BOSSJOB_URL}/jobs/${payload}`)
 //   } else {
     // pass in accessToken when user is logged in to track for 'who-view-job' feature
-    const axios = configuredAxios('data', 'protected')
+    const axios = configuredAxios('job', 'public')
     return axios.get(`/jobs/${jobId}`)
 //   }
 }

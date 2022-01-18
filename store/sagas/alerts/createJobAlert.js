@@ -37,19 +37,24 @@ function* createJobAlertReq(action) {
       registerUserResponse = yield call(registerUserService, userPayload)
     }
 
-    if (registerUserResponse?.status === 201 || payload.user_id) {
-      const jobAlertPayload = {
-        user_id: registerUserResponse?.data?.data.id || payload.user_id,
-        keyword: payload.keyword,
-        frequency_id: payload.frequency_id,
-        is_active: payload.is_active,
-        job_category_key: payload.job_category_key,
-        location_key: payload.location_key
-      }
-      
-      const { data } = yield call(createJobAlertService, jobAlertPayload)
-      yield put(createJobAlertSuccess(data.data))
+    // if (registerUserResponse?.status === 201 || payload.user_id) {
+    const jobAlertPayload = {
+      user_id: 1820, //ToDo: Fetch UserID
+      keyword: payload.keyword,
+      location: payload.location,
+      job_category_key: payload.job_category_key,
+      industry_key: payload.industry_key,
+      xp_lvl_key: payload.xp_lvl_key,
+      degree_key: payload.degree_key,
+      job_type_key: payload.job_type_key,
+      salary_range_key: payload.salary_range_key,
+      is_company_verified: payload.is_company_verified,
+      frequency_id: payload.frequency_id,
     }
+    
+    const { data } = yield call(createJobAlertService, jobAlertPayload)
+    yield put(createJobAlertSuccess(data))
+    // }
   } catch (error) {
     console.log('error-saga', error)
     yield put(createJobAlertFailed(error))

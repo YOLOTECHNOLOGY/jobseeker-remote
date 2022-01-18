@@ -8,7 +8,7 @@ import styles from './ReadMore.module.scss'
 
 interface ReadMoreProps {
   size?: number
-  text?: string
+  text?: any
 }
 
 const ReadMore = ({
@@ -33,7 +33,9 @@ const ReadMore = ({
   return (
     <div className={styles.ReadMore}>
       <div className={styles.ReadMoreDescription}>
-        <Text textStyle='base'>{description || ''}</Text>
+        <Text textStyle='base'>
+          <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: description || '' }} />  
+        </Text>
       </div>
       {description?.length > size && (
         <div className={styles.ReadMoreAction}>
