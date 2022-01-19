@@ -60,14 +60,14 @@ const autocompleteTheme = createTheme({
 })
 
 const formatLocationConfig = (locationList) => {
-  const locationConfig = locationList.map((region) => region.locations)
+  const locationConfig = locationList?.map((region) => region.locations)
   return locationConfig
 }
 
 const MaterialLocationField = ({ className, defValue, ...rest }: any) => {
   // const [selectedLocation, setSelectedLocation] = useState(defValue.value)
   const locationList = useSelector(
-    (store: any) => store.config.config.response?.inputs.location_lists
+    (store: any) => store.config.config.response?.inputs?.location_lists
   )
   const formattedLocationList = flat(formatLocationConfig(locationList))
   return (
