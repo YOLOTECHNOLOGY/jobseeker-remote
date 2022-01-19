@@ -6,9 +6,12 @@ import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 
 function* fetchJobDetailReq(actions) {
   try {
-    const { payload } = actions
+    const payload = {
+      jobId: actions.payload.jobId,
+      status: actions.payload.status || ''
+    }
 
-    const jobDetailResponse = yield call(fetchJobDetailService, payload)
+    const jobDetailResponse = yield call(fetchJobDetailService, {...payload})
 
     if (jobDetailResponse.status >= 200 && jobDetailResponse.status < 300) {
       /*

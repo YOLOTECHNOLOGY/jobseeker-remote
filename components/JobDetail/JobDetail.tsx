@@ -40,7 +40,7 @@ import {
   TelecommunicationAllowanceIcon,
   OtherAllowancesIcon,  
   MoreIcon,
-  // ExpireIcon
+  ExpireIcon,
 } from 'images'
 
 interface IJobDetailProps {
@@ -156,17 +156,17 @@ const JobDetail = ({
             <JobTag tag={selectedJob?.job_type_value} />
             <div className={styles.JobDetailButtonsWrapper}>
               <div className={styles.JobDetailButtons}>
-                {!selectedJob?.is_applied && (
+                {selectedJob?.status_key === 'active'  && (
                   <MaterialButton variant='contained'>
                     <Link to={selectedJob?.external_apply_url} external>Apply Now</Link>
                   </MaterialButton>
                 )}
-                {/* {selectedJob?.status_key === 'active' && (
+                {selectedJob?.status_key !== 'active' && (
                   <Text textStyle='base' className={styles.JobDetailStatus}>
                     <Image src={ExpireIcon} height="16" width="16"/>
                     <span>This job is no longer hiring</span>
                   </Text>
-                )} */}
+                )}
 
                 <MaterialButton variant='outlined' onClick={() => handlePostSaveJob({job_id: selectedJob?.id})}>
                   { isCategorySaved ? 'Saved' : 'Save Job' }

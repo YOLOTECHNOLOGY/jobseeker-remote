@@ -104,13 +104,6 @@ const JobListSection = ({
     return () => window.removeEventListener('scroll', updateScrollPosition)
   }, [])
 
-  const handleFormatWindowUrl = (pathname, name, id) => {
-    if (typeof window !== 'undefined') {
-      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${id}`
-    }
-    return ''
-  }
-
   const handlePaginationClick = (event, val) => {
     router.query.page = val
     router.push(router, undefined, { shallow: true })
@@ -171,6 +164,13 @@ const JobListSection = ({
       return from
     }
     return `${numberToThousands(from)}K - ${numberToThousands(to)}K`
+  }
+
+  const handleFormatWindowUrl = (pathname, name, id) => {
+    if (typeof window !== 'undefined') {
+      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${id}`
+    }
+    return ''
   }
 
   const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
