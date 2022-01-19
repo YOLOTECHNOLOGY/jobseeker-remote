@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 
 // @ts-ignore
 import { END } from 'redux-saga'
 
 /* Vendors */
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import slugify from 'slugify'
 import moment from 'moment'
 import {
@@ -31,14 +31,13 @@ import ModalShare from 'components/ModalShare'
 import ModalReportJob from 'components/ModalReportJob'
 
 /* Helpers */
-import { numberToThousands, truncateWords } from 'helpers/formatter'
+import { truncateWords } from 'helpers/formatter'
 
 /* Action Creators */
 import { wrapper } from 'store'
 
 /* Redux Actions */
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
-import { fetchCompanyDetailRequest } from 'store/actions/companies/fetchCompanyDetail'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 import { postReportRequest } from 'store/actions/reports/postReport'
@@ -76,30 +75,23 @@ const Job = ({
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const [companyDetail, setCompanyDetail] = useState(null)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
   const [jobDetailOption, setJobDetailOption] = useState(false)
 
-  let jobDetailUrl = ''
-  let companyUrl = ''
-  if (typeof window !== 'undefined') {
-    jobDetailUrl = `${window.location.origin}/job/${slugify(jobDetail?.['job_title'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobDetail?.['id']}`
-    companyUrl = `${window.location.origin}/company/${slugify(companyDetail?.['name'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${companyDetail?.['id']}`
+  const handleFormatWindowUrl = (pathname, name, id) => {
+    if (typeof window !== 'undefined') {
+      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${id}`
+    }
+    return ''
   }
 
-  const companyDetailResponse = useSelector((store: any) => store.companies.companyDetail?.response?.data)
+  const jobDetailUrl = handleFormatWindowUrl('job', jobDetail?.['job_title'], jobDetail?.['id'])
+  const companyUrl = handleFormatWindowUrl('company', jobDetail?.['company']?.['name'], jobDetail?.['company']?.['id'])
+
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const handlePostReportJob = (payload) => dispatch(postReportRequest(payload))
-
-  useEffect(() => {
-    if (jobDetail) dispatch(fetchCompanyDetailRequest(jobDetail.company_id))
-  }, [jobDetail])
-
-  useEffect(() => {
-    if (companyDetailResponse) setCompanyDetail(companyDetailResponse)
-  }, [companyDetailResponse])
 
   const handleBenefitIcon = (benefit) => {
     const Icon = `${benefit.replace(/ /g,'')}Icon`
@@ -152,40 +144,40 @@ const Job = ({
               </div>
             )}
             <div className={styles.JobDetailPrimaryInfo}>
-              <img src={jobDetail?.company_logo} className={styles.JobDetailPrimaryInfoImage} alt={`${jobDetail?.company_name} logo`}/>
+              <img src={jobDetail?.company?.logo} className={styles.JobDetailPrimaryInfoImage} alt={`${jobDetail?.company?.name} logo`}/>
               <Text textStyle='xxl' tagName='h1' bold className={styles.JobDetailPrimaryInfoTitle}>
                 {jobDetail?.job_title}
               </Text>
             </div>
             <div className={styles.JobDetailPrimarySub}>
-              <JobTag tag={jobDetail?.job_type}/>
+              <JobTag tag={jobDetail?.job_type_value}/>
               <Text textStyle='sm' className={styles.JobDetailPostedAt}>
-                Posted on {moment(new Date(jobDetail?.published_at)).format('DD MMMM YYYY')}
+                Posted on {jobDetail?.published_at}
               </Text>
             </div>
             <Link to={companyUrl}>
               <Text textStyle='xl' className={styles.JobDetailCompany}>
-                {jobDetail?.company_name}
+                {jobDetail?.company?.company?.name}
               </Text>
             </Link>
-            {isAppliedQueryParam && !hasApplied && (
-              <div className={styles.JobDetailPrimaryActionsCategory}>
-                <Text textStyle='base' className={styles.JobDetailStatus}>
-                  <Image src={ExpireIcon} height="16" width="16"/>
-                  <span>This job is no longer hiring</span>
-                </Text>
-                <MaterialButton variant='outlined'>
-                  Save Job
-                </MaterialButton>
-              </div>
+            {isAppliedQueryParam && (
+              <Text>{jobDetail?.company?.name}</Text>
             )}
             {!isAppliedQueryParam && (
               <div className={styles.JobDetailPrimaryActions}>
-                <MaterialButton variant='contained'>
-                  <Link to={jobDetail?.external_apply_url} external>Apply Now</Link>
-                </MaterialButton>
+                {jobDetail?.status_key === 'active' && (
+                  <MaterialButton variant='contained'>
+                    <Link to={jobDetail?.external_apply_url} external>Apply Now</Link>
+                  </MaterialButton>
+                )}
+                {jobDetail?.status_key !== 'active' && (
+                  <Text textStyle='base' className={styles.JobDetailStatus}>
+                    <Image src={ExpireIcon} height="16" width="16"/>
+                    <span>This job is no longer hiring</span>
+                  </Text>
+                )}
                 <MaterialButton variant='outlined'>
-                  Save Job
+                  {jobDetail?.is_saved ? 'Saved' : 'Save'} Job
                 </MaterialButton>
               </div>
             )}
@@ -204,7 +196,7 @@ const Job = ({
                   </Text>
                   <Link to={'/'}>
                     <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                      {jobDetail?.job_location}
+                      {jobDetail?.location.value}
                     </Text>
                   </Link> 
                 </span>
@@ -220,7 +212,7 @@ const Job = ({
                     Experience
                   </Text>
                   <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                    {jobDetail?.xp_lvl}
+                    {jobDetail?.xp_lvl.value}
                   </Text>
                 </span>
               </li>
@@ -235,7 +227,7 @@ const Job = ({
                     Education
                   </Text>
                   <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                    {jobDetail?.degree}
+                    {jobDetail?.degree.value}
                   </Text>
                 </span>
               </li>
@@ -250,7 +242,7 @@ const Job = ({
                     Salary
                   </Text>
                   <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                    {`${numberToThousands(jobDetail?.salary_range_from)}K - ${numberToThousands(jobDetail?.salary_range_to)}K` }
+                    {jobDetail?.salary_range_value }
                   </Text>
                 </span>
               </li>
@@ -308,10 +300,10 @@ const Job = ({
               Skills/Software
             </Text>
             <ul className={styles.JobDetailSkillsList}>
-              {jobDetail?.job_skills.split(',').map((skill) => (
+              {jobDetail?.skills.map((skill) => (
                 <li className={styles.JobDetailSkillsItem} key={skill}>
                   <Text bold textStyle='base' className={styles.JobDetailSkillsText}>
-                    {skill}
+                    {skill.value}
                   </Text>
                 </li>
               ))}
@@ -325,7 +317,7 @@ const Job = ({
               Working Location
             </Text>
             <Text textStyle='base' className={styles.JobDetailSectionSubBody}>
-              {`${jobDetail?.job_location}, ${jobDetail?.job_region}, ${jobDetail?.job_country}`}
+              {`${jobDetail?.location.value}, ${jobDetail?.job_region}, ${jobDetail?.job_country}`}
             </Text>
             <Text textStyle='base' tagName='h2' bold className={styles.JobDetailSectionSubTitle}>
               Specialization
@@ -360,16 +352,16 @@ const Job = ({
             </Text>
             <Link to={companyUrl} className={styles.aboutCompanyTitle}>
               <Text bold textStyle='xl' textColor='primaryBlue'>
-                {companyDetail?.name}
+                {jobDetail?.company?.name}
               </Text>
             </Link>
             <div className={styles.aboutCompanyDetail}>
-              <Text textStyle='base'>{companyDetail?.industry}</Text>
-              <Text textStyle='base'>{companyDetail?.company_size} employees</Text>
+              <Text textStyle='base'>{jobDetail?.company?.industry_value}</Text>
+              <Text textStyle='base'>{jobDetail?.company?.company_size_value} employees</Text>
             </div>
             <ReadMore
               size={352}
-              text={companyDetail?.description}
+              text={jobDetail?.company?.description_html}
             />
           </div>
         </div>
@@ -454,13 +446,14 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobId = keywordQueryArray?.slice(-1)[0]
 
   // store actions
-  store.dispatch(fetchJobDetailRequest(jobId))
+  // TODO: Check if User is LoggedIn then change status: 'protected'
+  store.dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
   store.dispatch(fetchConfigRequest())
 
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const jobDetail = storeState.job.jobDetail.response.data
+  const jobDetail = storeState.job?.jobDetail?.response
   const config = storeState.config.config.response
 
   return {

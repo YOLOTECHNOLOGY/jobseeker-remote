@@ -48,8 +48,6 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
       break
   }
 
-  const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYmViNTNlMTlmN2M3NTliOTVjNDQ0OWYwMWQ5MmFiMzg1MmRhM2JhOTc2Y2NiYTcyZDRlNTBiNDBiZDFhMGExMjJiZTQ1MTlhY2NjZjNlMzUiLCJpYXQiOjE2NDI1MDY5ODUuNDQ0NTY4LCJuYmYiOjE2NDI1MDY5ODUuNDQ0NTc0LCJleHAiOjE2NDMxMTE3ODUuMjA0NTQzLCJzdWIiOiIxODIwIiwic2NvcGVzIjpbXX0.eCs96nXrxP8z55S-MUq10oVeIJW-zkFI_9W008edsQ1phJ4pPf2NRXUZqocSVUFQMseSWyGZtYfftWwvfw2ULeIzdWmFEnYNz5EV7mHtY2dsimO4m81RbJ9E5zS5mnp5u5CmCnT3PN_UFl7NEAmM3qx7PDrpRyFPwI5KKiQL5LcLLC8bxWpKhzquHgqKvJt1wcwEof2j9Sl3akpnf-KboVMvsjjpYrNUUx6xxEeZ0j1ahYLRqXiwR21Oms3LkyWYGVb6l8bUJ3jeS-RMi-8nnJnYyfkrIGTmLp-5XSXojaI-ukjrcc_GZpMA76wT39ZPZLVS6QaaLyeKeLZkFS0aPyhJqQp0zn9uPLNJlzy2vURe2I7nn78Mxqk7Ebg0ZGbAyPF8MTqqBpLkyd2U6JZhTj1IwhfFIdi5Y0wbkXDf-kdxLcm8ou3LEKa7oSE9bw-TvqSMZ7qR_zlRyiunc0RO3kzKg3WqVRM707gXcK58v5L_O8w2E66wlizxtGCdOQhhpFRLZMIaR6n4fMLFyf3qcFaOQWQuRXbiagWXFEqY76cTg4XO9P8A-S6pGzFjrJJHUett53fIQtu5CJBmDXYaaCsZwv2OVWOCQcb4MJPNcHcXnfSgHzGBMEKr8cYd3h1A0EhtQI3B5kYmn4aX_Uclxe4jIxd9jQsV6ytZJOP28SA'
-
   /*  TO REFACTOR */
   // Usecase: for roboheadhunting, need to pass specifically 'Bossjob-Token'
   if (baseURL === 'bosshunt' && type === 'protected' && getCookie('accessToken')) {
@@ -58,10 +56,10 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
       'Bossjob-Token': `Bearer ${getCookie('accessToken')}`,
     }
   }
-  else if (baseURL === 'job' && type === 'protected' && token) {
+  else if (baseURL === 'job' && type === 'protected' && getCookie('accessToken')) {
     headers = {
       ...headers,
-      'Bossjob-Token': `Bearer ${token}`,
+      'Bossjob-Token': `Bearer ${getCookie('accessToken')}`,
     }
   }
   else {

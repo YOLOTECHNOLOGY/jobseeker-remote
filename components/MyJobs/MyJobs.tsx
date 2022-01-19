@@ -110,7 +110,7 @@ const MyJobs = ({
     }
     setSelectedJobId(jobId)
   }
-  const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest(jobId))
+  const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest({jobId, status: 'protected'}))
 
   const handlePaginationClick = (event, val) => {
     router.query.page = val

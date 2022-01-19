@@ -351,7 +351,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     updateUrl(queryParam, queryObject)
   }
 
-  const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest(jobId))
+  // TODO: Check if User is LoggedIn then change status: 'protected'
+  const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
 
   const handleSelectedJobId = (jobId) => setSelectedJobId(jobId)
 
