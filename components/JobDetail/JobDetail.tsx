@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 /* Vendors */
-import moment from 'moment'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import {
@@ -23,9 +22,6 @@ import ReadMore from 'components/ReadMore'
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
 
-/* Helpers */
-import { numberToThousands } from 'helpers/formatter'
-
 /* Styles */
 import styles from './JobDetail.module.scss'
 
@@ -44,12 +40,11 @@ import {
   TelecommunicationAllowanceIcon,
   OtherAllowancesIcon,  
   MoreIcon,
-  ExpireIcon
+  // ExpireIcon
 } from 'images'
 
 interface IJobDetailProps {
   selectedJob: any
-  companyDetail: any
   setIsShowModalShare?: Function
   setIsShowReportJob?: Function
   setIsShowModalWithdrawApplication?: Function
@@ -57,18 +52,19 @@ interface IJobDetailProps {
   companyUrl?: string
   jobDetailUrl?: string
   category?: string
+  handlePostSaveJob?: Function
 }
 
 const JobDetail = ({
   selectedJob,
-  companyDetail,
   setIsShowModalShare,
   setIsShowReportJob,
   setIsShowModalWithdrawApplication,
   isSticky,
   jobDetailUrl,
   companyUrl,
-  category
+  category,
+  handlePostSaveJob
 }: IJobDetailProps) => {
   const [jobDetailOption, setJobDetailOption] = useState(false)
   
@@ -148,42 +144,38 @@ const JobDetail = ({
         <div className={styles.JobDetailHeader}>
           <div
             className={styles.JobDetailImage}
-            style={{ backgroundImage: `url(${selectedJob?.['company_logo']})` }}
+            style={{ backgroundImage: `url(${selectedJob?.company?.logo})` }}
           />
           <div className={styles.JobDetailInfo}>
             <Text textStyle='xxl' bold className={styles.JobDetailTitle}>
-              {selectedJob?.['job_title']}
+              {selectedJob?.job_title}
             </Text>
             <Text textStyle='lg' className={styles.JobDetailCompany}>
-              {selectedJob?.['company_name']}
+              {selectedJob?.company?.name}
             </Text>
-            <JobTag tag={selectedJob?.['job_type']} />
+            <JobTag tag={selectedJob?.job_type_value} />
             <div className={styles.JobDetailButtonsWrapper}>
-              {!isCategoryApplied && (
-                <>
-                  <div className={styles.JobDetailButtons}>
-                    {selectedJob?.['status_key'] === '-active' && (
-                      <MaterialButton variant='contained'>
-                        <Link to={selectedJob?.['external_apply_url']} external>Apply Now</Link>
-                      </MaterialButton>
-                    )}
-                    {selectedJob?.['status_key'] === 'active' && (
-                      <Text textStyle='base' className={styles.JobDetailStatus}>
-                        <Image src={ExpireIcon} height="16" width="16"/>
-                        <span>This job is no longer hiring</span>
-                      </Text>
-                    )}
+              <div className={styles.JobDetailButtons}>
+                {!selectedJob?.is_applied && (
+                  <MaterialButton variant='contained'>
+                    <Link to={selectedJob?.external_apply_url} external>Apply Now</Link>
+                  </MaterialButton>
+                )}
+                {/* {selectedJob?.status_key === 'active' && (
+                  <Text textStyle='base' className={styles.JobDetailStatus}>
+                    <Image src={ExpireIcon} height="16" width="16"/>
+                    <span>This job is no longer hiring</span>
+                  </Text>
+                )} */}
 
-                    <MaterialButton variant='outlined'>
-                      { isCategorySaved ? 'Saved' : 'Save Job' }
-                    </MaterialButton>
-                  </div>
-                  {!isCategoryApplied || !isCategorySaved && (
-                    <Text textStyle='xsm' className={styles.JobDetailPostedAt}>
-                      Posted on {moment(new Date(selectedJob?.['published_at'])).format('DD MMMM YYYY')}
-                    </Text>
-                  )}
-                </>
+                <MaterialButton variant='outlined' onClick={() => handlePostSaveJob({job_id: selectedJob?.id})}>
+                  { isCategorySaved ? 'Saved' : 'Save Job' }
+                </MaterialButton>
+              </div>
+              {(!isCategoryApplied || !isCategorySaved) && (
+                <Text textStyle='xsm' className={styles.JobDetailPostedAt}>
+                  Posted on {selectedJob?.published_at}
+                </Text>
               )}
             </div>
           </div>
@@ -201,7 +193,7 @@ const JobDetail = ({
                   Location
                 </Text>
                 <Text textStyle='base' bold className={styles.JobDetailPrefValue}>
-                  {selectedJob?.['job_location']}
+                  {selectedJob?.location?.value}
                 </Text>
               </span>
             </li>
@@ -216,7 +208,7 @@ const JobDetail = ({
                   Experience
                 </Text>
                 <Text textStyle='base' bold className={styles.JobDetailPrefValue}>
-                  {selectedJob?.['xp_lvl']}
+                  {selectedJob?.xp_lvl?.value}
                 </Text>
               </span>
             </li>
@@ -231,7 +223,7 @@ const JobDetail = ({
                   Education
                 </Text>
                 <Text textStyle='base' bold className={styles.JobDetailPrefValue}>
-                  {selectedJob?.['degree']}
+                  {selectedJob?.degree?.value}
                 </Text>
               </span>
             </li>
@@ -246,7 +238,7 @@ const JobDetail = ({
                   Salary
                 </Text>
                 <Text textStyle='base' bold className={styles.JobDetailPrefValue}>
-                  {`${numberToThousands(selectedJob?.['salary_range_from'])}K - ${numberToThousands(selectedJob?.['salary_range_to'])}K` }
+                  {selectedJob?.salary_range_value}
                 </Text>
               </span>
             </li>
@@ -276,20 +268,20 @@ const JobDetail = ({
           <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
             Job Description
           </Text>
-          <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.['job_description_html'] }} />
+          <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.job_description_html }} />
         </div>
         <div className={styles.JobDetailSection}>
           <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
             Requirements
           </Text>
-          <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.['job_requirements_html'] }} />
+          <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.job_requirements_html }} />
         </div>
         <div className={styles.JobDetailSection}>
           <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
             Benefits
           </Text>
           <ul className={styles.JobDetailBenefitsList}>
-            {selectedJob?.['benefits']?.map((benefit) => (
+            {selectedJob?.benefits?.map((benefit) => (
               <li className={styles.JobDetailBenefitsItem} key={benefit.id}>
                 {handleBenefitIcon(benefit.name)}
                 <Text textStyle='base' className={styles.JobDetailBenefitsText}>
@@ -304,10 +296,10 @@ const JobDetail = ({
             Skills/Software
           </Text>
           <ul className={styles.JobDetailSkillsList}>
-            {selectedJob?.['job_skills'].split(',').map((skill) => (
-              <li className={styles.JobDetailSkillsItem} key={skill}>
+            {selectedJob?.skills?.map((skill, i) => (
+              <li className={styles.JobDetailSkillsItem} key={i}>
                 <Text bold textStyle='base' className={styles.JobDetailSkillsText}>
-                  {skill}
+                  {skill.value}
                 </Text>
               </li>
             ))}
@@ -321,17 +313,19 @@ const JobDetail = ({
             Working Location
           </Text>
           <Text textStyle='base' className={styles.JobDetailSectionSubBody}>
-            {`${selectedJob?.['job_location']}, ${selectedJob?.['job_region']}, ${selectedJob?.['job_country']}`}
+            {`${selectedJob?.location?.value}`}
           </Text>
           <Text textStyle='base' bold className={styles.JobDetailSectionSubTitle}>
             Specialization
           </Text>
-          {selectedJob?.['categories'].map((category) => (
-            <Link to='/' key={category.id} className={styles.JobDetailSectionSubBody}>
-              <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
-                {' '}{category.value}
-              </Text>
-            </Link>
+          {selectedJob?.categories?.map((category) => (
+            <>
+              <Link to='/' key={category.id} className={styles.JobDetailSectionSubBody}>
+                <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
+                  {' '}{category.value}
+                </Text>
+              </Link>{', '}
+            </>
           ))}
         </div>
         <div className={styles.aboutCompany}>
@@ -340,16 +334,16 @@ const JobDetail = ({
           </Text>
           <Link to={companyUrl} className={styles.aboutCompanyTitle}>
             <Text bold textStyle='xl' textColor='primaryBlue'>
-              {companyDetail?.['name']}
+              {selectedJob?.company?.name}
             </Text>
           </Link>
           <div className={styles.aboutCompanyDetail}>
-            <Text textStyle='base'>{companyDetail?.['industry']}</Text>
-            <Text textStyle='base'>{companyDetail?.['company_size']} employees</Text>
+            <Text textStyle='base'>{selectedJob?.company?.industry_value}</Text>
+            <Text textStyle='base'>{selectedJob?.company?.company_size_value} employees</Text>
           </div>
           <ReadMore
             size={352}
-            text={companyDetail?.['description']}
+            text={selectedJob?.company?.description_html}
           />
         </div>
       </div>

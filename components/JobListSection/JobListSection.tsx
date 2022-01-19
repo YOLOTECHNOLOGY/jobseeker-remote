@@ -53,11 +53,10 @@ interface JobListSectionProps {
   selectedJobId?: number
   handleSelectedJobId?: Function
   totalPages?: number
-  handleCompanyDetail?: Function
-  companyDetail?: Object
   isJobDetailFetching?: boolean
   reportJobReasonList?: any
   handlePostReportJob?: Function
+  handlePostSaveJob?: Function
 }
 
 const JobListSection = ({ 
@@ -79,10 +78,10 @@ const JobListSection = ({
   selectedJobId,
   handleSelectedJobId,
   totalPages,
-  companyDetail,
   isJobDetailFetching,
   reportJobReasonList,
   handlePostReportJob,
+  handlePostSaveJob
 }: JobListSectionProps) => {  
   const { width } = useWindowDimensions()
   const router = useRouter()
@@ -118,22 +117,46 @@ const JobListSection = ({
   }
 
   const handleCreateJobAlertData = (email) => {
-    // TODO: Get userId = 2524
-    const userId = 2524
+    const { query } = router
     createJobAlert({
-      email,
-      user_id: userId,
-      keyword: query?.[0],
-      frequency_id: 1,
-      is_active: 1,
-      job_category_key: 'all',
-      location_key: location?.key || 'all'
+      email: email,
+      keyword: formatKeywordAndLocation(query?.keyword, 'keyword'),
+      location: formatKeywordAndLocation(query?.keyword, 'location'),
+      job_category_key: query?.category ? query?.category : 'all',
+      industry_key: query?.industry ? formatToUnderscore(query?.industry) : 'all',
+      xp_lvl_key: query?.workExperience ? formatToReplace(query?.workExperience, 'to') : 'all',
+      degree_key: query?.qualification ? formatToUnderscore(query?.qualification) : 'all',
+      job_type_key: query?.jobtype ? formatToReplace(query?.jobtype, '_'): 'all',
+      salary_range_key: query?.salary ? formatToReplace(query?.salary, 'to') : 'all',
+      is_company_verified: 1,
+      frequency_id: 1
     })
   }
- 
+
+  const formatToUnderscore = (data) => {
+    return data.toLowerCase().replace(/ /g, '_')
+  }
+
+  const formatToReplace = (data, replacedTo) => {
+    return formatToUnderscore(data).replace(/-/g, replacedTo)
+  }
+
   const handleCreateJobAlert = (email?:any) => {
     handleCreateJobAlertData(email)
     setIsShowModalEnableJobAlerts(true)
+  }
+
+  const formatKeywordAndLocation = (data, keyword) => {
+    let results = []
+    if (data.includes('jobs-in')) {
+      results = data.split('-jobs-in-')
+    }
+
+    if (keyword === 'keyword') {
+      if (results[0]) return results[0]
+      return data.split('-jobs')[0]
+    }
+    if (keyword === 'location') return results[1] ? results[1].replace(/-/g, '_') : 'all'
   }
 
   const updateScrollPosition = () => {
@@ -143,8 +166,15 @@ const JobListSection = ({
     }
   }
 
+  const handleSalaryDisplay = (from: string, to: string) => {
+    if (from === 'Login to view salary' || to === 'Login to view salary') {
+      return from
+    }
+    return `${numberToThousands(from)}K - ${numberToThousands(to)}K`
+  }
+
   const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
-  const companyUrl = handleFormatWindowUrl('company', companyDetail?.['name'], companyDetail?.['id'])
+  const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
   return (
     <React.Fragment>
@@ -162,7 +192,7 @@ const JobListSection = ({
                   if (!isUserAuthenticated) setIsShowModalEnableJobAlerts(true)
                 }}
               >
-                <Text textStyle='base'>Enable job alert</Text>
+                <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
               </div>
               {isUserAuthenticated && (
                 <div
@@ -193,8 +223,8 @@ const JobListSection = ({
                 title={job.job_title}
                 tag={job.job_type}
                 company={job.company_name}
-                location={job.company_location}
-                salary={`${numberToThousands(job?.salary_range_from)}K - ${numberToThousands(job?.salary_range_to)}K` }
+                location={job.job_location}
+                salary={handleSalaryDisplay(job.salary_range_from, job.salary_range_to)}
                 postedAt={`${moment(new Date(job.updated_at)).format('DD MMMM YYYY')}`}
                 selectedId={selectedJobId}
                 handleSelectedId={() => {
@@ -211,15 +241,15 @@ const JobListSection = ({
           {(isJobDetailFetching || isJobListFetching) && (
             <JobDetailLoader />
           )}
-          {!isJobDetailFetching && selectedJob && (
+          {!isJobDetailFetching && selectedJob?.['id'] && (
             <JobDetail 
               selectedJob={selectedJob}
-              companyDetail={companyDetail}
               setIsShowModalShare={setIsShowModalShare}
               setIsShowReportJob={setIsShowReportJob}
               isSticky={isSticky}
               jobDetailUrl={jobDetailUrl}
               companyUrl={companyUrl}
+              handlePostSaveJob={handlePostSaveJob}
             />
           )}
         </div>
