@@ -167,7 +167,7 @@ const Job = ({
               <div className={styles.JobDetailPrimaryActions}>
                 {jobDetail?.status_key === 'active' && (
                   <MaterialButton variant='contained'>
-                    <Link to={jobDetail?.external_apply_url} external>Apply Now</Link>
+                    <Link to={jobDetail?.external_apply_url || '/'} external>Apply Now</Link>
                   </MaterialButton>
                 )}
                 {jobDetail?.status_key !== 'active' && (
@@ -285,8 +285,8 @@ const Job = ({
               Benefits
             </Text>
             <ul className={styles.JobDetailBenefitsList}>
-              {jobDetail?.benefits?.map((benefit) => (
-                <li className={styles.JobDetailBenefitsItem} key={benefit.id}>
+              {jobDetail?.benefits?.map((benefit, i) => (
+                <li className={styles.JobDetailBenefitsItem} key={i}>
                   {handleBenefitIcon(benefit.name)}
                   <Text textStyle='base' className={styles.JobDetailBenefitsText}>
                     {benefit.name}
@@ -300,8 +300,8 @@ const Job = ({
               Skills/Software
             </Text>
             <ul className={styles.JobDetailSkillsList}>
-              {jobDetail?.skills.map((skill) => (
-                <li className={styles.JobDetailSkillsItem} key={skill}>
+              {jobDetail?.skills.map((skill, i) => (
+                <li className={styles.JobDetailSkillsItem} key={i}>
                   <Text bold textStyle='base' className={styles.JobDetailSkillsText}>
                     {skill.value}
                   </Text>
@@ -322,8 +322,8 @@ const Job = ({
             <Text textStyle='base' tagName='h2' bold className={styles.JobDetailSectionSubTitle}>
               Specialization
             </Text>
-            {jobDetail?.categories.map((category) => (
-              <Link to='/' key={category.id} className={styles.JobDetailSectionSubBody}>
+            {jobDetail?.categories.map((category, i) => (
+              <Link to='/' key={i} className={styles.JobDetailSectionSubBody}>
                 <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
                   {' '}{category.value}
                 </Text>
@@ -350,7 +350,7 @@ const Job = ({
             <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
               About the company
             </Text>
-            <Link to={companyUrl} className={styles.aboutCompanyTitle}>
+            <Link to={companyUrl || '/'} className={styles.aboutCompanyTitle}>
               <Text bold textStyle='xl' textColor='primaryBlue'>
                 {jobDetail?.company?.name}
               </Text>
@@ -384,7 +384,7 @@ const Job = ({
                 <Text textStyle='base' tagName='p' textColor='darkgrey'>Makati</Text>
                 <Text textStyle='base' tagName='p' textColor='darkgrey'>₱75k - ₱80k</Text>
                 <Text textStyle='xsm' tagName='p'>Posted on 23 August 2021</Text>
-                <Link external to={'/job/1'}>
+                <div>
                   <Text 
                     textStyle='base' 
                     tagName='p' 
@@ -393,7 +393,7 @@ const Job = ({
                   >
                     Apply Now
                   </Text>
-                </Link>
+                </div>
               </Link>
             </div>
           </div>
@@ -407,7 +407,7 @@ const Job = ({
                 <Text textStyle='base' tagName='p'>Intermediate</Text>
                 <Text textStyle='base' tagName='p' textColor='darkgrey'>Online Learning</Text>
                 <Text textStyle='base' tagName='p' textColor='darkgrey'>₱80k</Text>
-                <Link external to={'/'}>
+                <div>
                   <Text 
                     textStyle='base' 
                     tagName='p' 
@@ -416,7 +416,7 @@ const Job = ({
                   >
                     Get Started
                   </Text>
-                </Link>
+                </div>
               </Link>
             </div>
           </div>
@@ -455,7 +455,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const storeState = store.getState()
   const jobDetail = storeState.job?.jobDetail?.response
   const config = storeState.config.config.response
-
   return {
     props: {
       jobDetail,

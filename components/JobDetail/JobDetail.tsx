@@ -53,6 +53,7 @@ interface IJobDetailProps {
   jobDetailUrl?: string
   category?: string
   handlePostSaveJob?: Function
+  applicationHistory?: any
 }
 
 const JobDetail = ({
@@ -64,7 +65,8 @@ const JobDetail = ({
   jobDetailUrl,
   companyUrl,
   category,
-  handlePostSaveJob
+  handlePostSaveJob,
+  applicationHistory
 }: IJobDetailProps) => {
   const [jobDetailOption, setJobDetailOption] = useState(false)
   
@@ -111,23 +113,23 @@ const JobDetail = ({
         {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
         {jobDetailOption && (
           <div className={styles.JobDetailOptionList}>
-            <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
-              <Text textStyle='lg'>View in new tab</Text>
-            </Link>
             {!isCategoryApplied && (
-              <div className={styles.JobDetailOptionItem} onClick={() => {
-                setIsShowReportJob(true)
-                setJobDetailOption(false)
-              }}>
-                <Text textStyle='lg'>Report job</Text>
-              </div>
-            )}
-            {isCategoryApplied && (
               <>
-                <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalWithdrawApplication(true)}>
-                  <Text textStyle='lg'>Withdraw Application</Text>
+                <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
+                  <Text textStyle='lg'>View in new tab</Text>
+                </Link>
+                <div className={styles.JobDetailOptionItem} onClick={() => {
+                  setIsShowReportJob(true)
+                  setJobDetailOption(false)
+                }}>
+                  <Text textStyle='lg'>Report job</Text>
                 </div>
               </>
+            )}
+            {isCategoryApplied && (
+              <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalWithdrawApplication(true)}>
+                <Text textStyle='lg'>Withdraw Application</Text>
+              </div>
             )}
                 
             <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
@@ -244,23 +246,19 @@ const JobDetail = ({
             </li>
           </ul>
         </div>
-        {isCategoryApplied && (
+        {isCategoryApplied && applicationHistory?.length > 0 && (
           <div className={styles.JobDetailApplicationWrapper}>
             <Text textStyle='lg' bold>Application History</Text>
             <Timeline className={styles.JobDetailApplicationTimeline}>
-              <TimelineItem>
-                <TimelineSeparator>
-                  <TimelineDot className={styles.JobDetailApplicationTimelineFirst}/>
-                  <TimelineConnector />
-                </TimelineSeparator>
-                <TimelineContent><Text textStyle='base'>Application withdrawn -  1 month ago</Text></TimelineContent>
-              </TimelineItem>
-              <TimelineItem>
-                <TimelineSeparator>
-                  <TimelineDot />
-                </TimelineSeparator>
-                <TimelineContent><Text textStyle='base'>Application submitted - 3 months ago</Text></TimelineContent>
-              </TimelineItem>
+              {applicationHistory.map((history, i) => (
+                <TimelineItem key={i}>
+                  <TimelineSeparator>
+                    <TimelineDot className={i === 0 ? styles.JobDetailApplicationTimelineFirst : ''}/>
+                    <TimelineConnector />
+                  </TimelineSeparator>
+                  <TimelineContent><Text textStyle='base'>{history.value} -  {history.elapsed_time}</Text></TimelineContent>
+                </TimelineItem>
+              ))}
             </Timeline>
           </div>
         )}
@@ -281,8 +279,8 @@ const JobDetail = ({
             Benefits
           </Text>
           <ul className={styles.JobDetailBenefitsList}>
-            {selectedJob?.benefits?.map((benefit) => (
-              <li className={styles.JobDetailBenefitsItem} key={benefit.id}>
+            {selectedJob?.benefits?.map((benefit, i) => (
+              <li className={styles.JobDetailBenefitsItem} key={i}>
                 {handleBenefitIcon(benefit.name)}
                 <Text textStyle='base' className={styles.JobDetailBenefitsText}>
                   {benefit.name}
@@ -318,9 +316,9 @@ const JobDetail = ({
           <Text textStyle='base' bold className={styles.JobDetailSectionSubTitle}>
             Specialization
           </Text>
-          {selectedJob?.categories?.map((category) => (
+          {selectedJob?.categories?.map((category, i) => (
             <>
-              <Link to='/' key={category.id} className={styles.JobDetailSectionSubBody}>
+              <Link to='/' key={i} className={styles.JobDetailSectionSubBody}>
                 <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
                   {' '}{category.value}
                 </Text>
