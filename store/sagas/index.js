@@ -9,6 +9,7 @@ import watchFetchJobDetail from 'store/sagas/jobs/fetchJobDetail'
 
 import watchFetchAppliedJobsList from 'store/sagas/jobs/fetchAppliedJobsList'
 import watchFetchAppliedJobDetail from 'store/sagas/jobs/fetchAppliedJobDetail'
+import watchWithdrawAppliedJob from 'store/sagas/jobs/withdrawAppliedJob'
 
 import watchFetchSavedJobsList from 'store/sagas/jobs/fetchSavedJobsList'
 import watchFetchSavedJobDetail from 'store/sagas/jobs/fetchSavedJobDetail'
@@ -41,6 +42,7 @@ function* rootSaga() {
 
     watchFetchAppliedJobsList(),
     watchFetchAppliedJobDetail(),
+    watchWithdrawAppliedJob(),
 
     watchFetchSavedJobsList(),
     watchFetchSavedJobDetail(),

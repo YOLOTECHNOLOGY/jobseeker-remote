@@ -5,6 +5,7 @@ import fetchJobDetailReducer from './fetchJobDetail'
 
 import fetchAppliedJobsListReducer from './fetchAppliedJobsList'
 import fetchAppliedJobDetailReducer from './fetchAppliedJobDetail'
+import withdrawAppliedJobReducer from './withdrawAppliedJob'
 
 import fetchSavedJobsListReducer from './fetchSavedJobsList'
 import fetchSavedJobDetailReducer from './fetchSavedJobDetail'
@@ -17,6 +18,7 @@ const jobsReducers = combineReducers({
 
   appliedJobsList: fetchAppliedJobsListReducer,
   appliedJobDetail: fetchAppliedJobDetailReducer,
+  withdrawAppliedJob: withdrawAppliedJobReducer,
 
   savedJobsList: fetchSavedJobsListReducer,
   savedJobDetail: fetchSavedJobDetailReducer,

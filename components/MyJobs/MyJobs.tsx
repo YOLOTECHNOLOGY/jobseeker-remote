@@ -15,6 +15,8 @@ import { fetchSavedJobDetailRequest } from 'store/actions/jobs/fetchSavedJobDeta
 import { fetchAppliedJobsListRequest } from 'store/actions/jobs/fetchAppliedJobsList'
 import { fetchAppliedJobDetailRequest } from 'store/actions/jobs/fetchAppliedJobDetail'
 
+import { withdrawAppliedJobRequest } from 'store/actions/jobs/withdrawAppliedJob'
+
 /* Components */
 import Layout from 'components/Layout'
 import SEO from 'components/SEO'
@@ -62,6 +64,7 @@ const MyJobs = ({
   const [jobsList, setJobsList] = useState([])
   const [totalPages, setTotalPages] = useState(null)
   const [applicationHistories, setApplicationHistories] = useState([])
+  const [appliedJobId, setAppliedJobId] = useState(null)
 
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowModalWithdrawApplication, setIsShowModalWithdrawApplication] = useState(false)
@@ -77,6 +80,10 @@ const MyJobs = ({
 
   const savedJobDetailResponse = useSelector((store: any) => store.job.savedJobDetail.response)
   const isSavedJobDetailFetching = useSelector((store: any) => store.job.savedJobDetail.fetching)
+
+  const withdrawAppliedJobResponse = useSelector((store: any) => store.job.withdrawAppliedJob.response)
+  const isWithdrawAppliedJobFetching = useSelector((store: any) => store.job.withdrawAppliedJob.fetching)
+  
   
   useEffect(() => {
     window.addEventListener('scroll', updateScrollPosition)
@@ -106,6 +113,7 @@ const MyJobs = ({
   useEffect(() => {
     if (appliedJobDetailResponse) {
       setSelectedJob(appliedJobDetailResponse?.job)
+      setAppliedJobId(appliedJobDetailResponse?.id)
       setApplicationHistories(appliedJobDetailResponse?.application_histories)
     }
   }, [appliedJobDetailResponse])
@@ -128,10 +136,6 @@ const MyJobs = ({
     }
   }, [jobsList])
 
-  useEffect(() => {
-    handleFetchJobDetail(selectedJobId, category) 
-  }, [selectedJobId])
-
   const updateScrollPosition = () => {
     if (width > 798) {
       prevScrollY.current = window.pageYOffset
@@ -144,7 +148,9 @@ const MyJobs = ({
       router.push(`/job/${slugify(selectedJob?.['job_title'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.['id']}?isApplied=${isAppliedCategory}`)
       return
     }
+
     setSelectedJobId(jobId)
+    handleFetchJobDetail(jobId, category) 
   }
 
   const handleFetchJobDetail = (id, source) => {
@@ -154,6 +160,10 @@ const MyJobs = ({
     }
     
     dispatch(fetchSavedJobDetailRequest(id))
+  }
+
+  const handleWithdrawApplication = (payload) => {
+    dispatch(withdrawAppliedJobRequest(payload))
   }
 
   const handlePaginationClick = (event, val) => {
@@ -168,7 +178,7 @@ const MyJobs = ({
     return ''
   }
 
-  const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
+  const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], isAppliedCategory ? appliedJobId : selectedJob?.['id'])
   const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
   return (
@@ -218,9 +228,9 @@ const MyJobs = ({
                 <JobCardLoader />
               </React.Fragment>
             )}
-            {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && jobsList?.map((jobs) => (
+            {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && jobsList?.map((jobs, i) => (
               <JobCard
-                key={jobs.id}
+                key={i}
                 id={jobs.id}
                 image={jobs.job.company_logo}
                 title={jobs.job.job_title}
@@ -234,11 +244,11 @@ const MyJobs = ({
             ))}
           </div>
           <div className={styles.paginationWrapper}>
-            <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} totalPages={totalPages} />
+            <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} totalPages={totalPages || 1} />
           </div>
         </div>
         <div className={styles.MyJobsDetailInfoSection}>
-          {(isAppliedJobDetailFetching || isSavedJobDetailFetching) || (isAppliedJobsListFetching || isSavedJobsListFetching) && (
+          {(isAppliedJobDetailFetching || isSavedJobDetailFetching) || isAppliedJobsListFetching || isSavedJobsListFetching && (
             <JobDetailLoader />
           )}
           {(!isAppliedJobDetailFetching || !isSavedJobDetailFetching) && selectedJob?.id && (
@@ -273,8 +283,12 @@ const MyJobs = ({
         handleShowModalShare={setIsShowModalShare}
       />
       <ModalWithdrawApplication
+        appliedJobId={appliedJobId}
         isShowModalWithdrawApplication={isShowModalWithdrawApplication}
         handleShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
+        handleWithdrawApplication={handleWithdrawApplication}
+        isWithdrawAppliedJobFetching={isWithdrawAppliedJobFetching}
+        withdrawAppliedJobResponse={withdrawAppliedJobResponse}
       />
     </Layout>
   )

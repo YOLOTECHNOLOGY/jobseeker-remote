@@ -3,6 +3,7 @@ import fetchJobDetail from './fetchJobDetail'
 
 import fetchAppliedJobsList from './fetchAppliedJobsList'
 import fetchAppliedJobDetail from './fetchAppliedJobDetail'
+import withdrawAppliedJob from './withdrawAppliedJob'
 
 import fetchSavedJobsList from './fetchSavedJobsList'
 import fetchSavedJobDetail from './fetchSavedJobDetail'
@@ -15,6 +16,7 @@ export default {
 
   fetchAppliedJobsList,
   fetchAppliedJobDetail,
+  withdrawAppliedJob,
 
   fetchSavedJobsList,
   fetchSavedJobDetail,

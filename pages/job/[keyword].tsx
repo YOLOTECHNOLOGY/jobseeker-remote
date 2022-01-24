@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 // @ts-ignore
@@ -37,6 +37,8 @@ import { truncateWords } from 'helpers/formatter'
 import { wrapper } from 'store'
 
 /* Redux Actions */
+import { fetchAppliedJobDetailRequest } from 'store/actions/jobs/fetchAppliedJobDetail'
+
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
@@ -65,11 +67,13 @@ import {
 
 interface IJobDetail {
   jobDetail: any,
+  applicationHistory: any,
   config: any
 }
 
 const Job = ({
   jobDetail,
+  applicationHistory,
   config
 }: IJobDetail) => {
   const dispatch = useDispatch()
@@ -79,15 +83,20 @@ const Job = ({
   const [isShowReportJob, setIsShowReportJob] = useState(false)
   const [jobDetailOption, setJobDetailOption] = useState(false)
 
+  const [jobDetailUrl, setJobDetailUrl] = useState('/')
+  const [companyUrl, setCompanyUrl] = useState('/')
+
+  useEffect(() => {
+    setJobDetailUrl(handleFormatWindowUrl('job', jobDetail?.['job_title'], jobDetail?.['id']))
+    setCompanyUrl(handleFormatWindowUrl('company', jobDetail?.['company']?.['name'], jobDetail?.['company']?.['id']))
+  }, [jobDetail])
+
   const handleFormatWindowUrl = (pathname, name, id) => {
     if (typeof window !== 'undefined') {
       return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${id}`
     }
     return ''
   }
-
-  const jobDetailUrl = handleFormatWindowUrl('job', jobDetail?.['job_title'], jobDetail?.['id'])
-  const companyUrl = handleFormatWindowUrl('company', jobDetail?.['company']?.['name'], jobDetail?.['company']?.['id'])
 
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
@@ -157,12 +166,9 @@ const Job = ({
             </div>
             <Link to={companyUrl}>
               <Text textStyle='xl' className={styles.JobDetailCompany}>
-                {jobDetail?.company?.company?.name}
+                {jobDetail?.company?.name}
               </Text>
             </Link>
-            {isAppliedQueryParam && (
-              <Text>{jobDetail?.company?.name}</Text>
-            )}
             {!isAppliedQueryParam && (
               <div className={styles.JobDetailPrimaryActions}>
                 {jobDetail?.status_key === 'active' && (
@@ -196,7 +202,7 @@ const Job = ({
                   </Text>
                   <Link to={'/'}>
                     <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                      {jobDetail?.location.value}
+                      {jobDetail?.location?.value}
                     </Text>
                   </Link> 
                 </span>
@@ -212,7 +218,7 @@ const Job = ({
                     Experience
                   </Text>
                   <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                    {jobDetail?.xp_lvl.value}
+                    {jobDetail?.xp_lvl?.value}
                   </Text>
                 </span>
               </li>
@@ -227,7 +233,7 @@ const Job = ({
                     Education
                   </Text>
                   <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                    {jobDetail?.degree.value}
+                    {jobDetail?.degree?.value}
                   </Text>
                 </span>
               </li>
@@ -252,19 +258,15 @@ const Job = ({
             <div className={styles.JobDetailApplicationWrapper}>
               <Text textStyle='lg' bold>Application History</Text>
               <Timeline className={styles.JobDetailApplicationTimeline}>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot className={styles.JobDetailApplicationTimelineFirst}/>
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <TimelineContent><Text textStyle='base'>Application withdrawn -  1 month ago</Text></TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                  </TimelineSeparator>
-                  <TimelineContent><Text textStyle='base'>Application submitted - 3 months ago</Text></TimelineContent>
-                </TimelineItem>
+                {applicationHistory?.map((history, i) => (
+                  <TimelineItem key={i}>
+                    <TimelineSeparator>
+                      <TimelineDot className={i === 0 ? styles.JobDetailApplicationTimelineFirst : ''}/>
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent><Text textStyle='base'>{history.value} -  {history.elapsed_time}</Text></TimelineContent>
+                  </TimelineItem>
+                ))}
               </Timeline>
             </div>
           )}
@@ -300,7 +302,7 @@ const Job = ({
               Skills/Software
             </Text>
             <ul className={styles.JobDetailSkillsList}>
-              {jobDetail?.skills.map((skill, i) => (
+              {jobDetail?.skills?.map((skill, i) => (
                 <li className={styles.JobDetailSkillsItem} key={i}>
                   <Text bold textStyle='base' className={styles.JobDetailSkillsText}>
                     {skill.value}
@@ -317,12 +319,12 @@ const Job = ({
               Working Location
             </Text>
             <Text textStyle='base' className={styles.JobDetailSectionSubBody}>
-              {`${jobDetail?.location.value}, ${jobDetail?.job_region}, ${jobDetail?.job_country}`}
+              {`${jobDetail?.location?.value}, ${jobDetail?.job_region}, ${jobDetail?.job_country}`}
             </Text>
             <Text textStyle='base' tagName='h2' bold className={styles.JobDetailSectionSubTitle}>
               Specialization
             </Text>
-            {jobDetail?.categories.map((category, i) => (
+            {jobDetail?.categories?.map((category, i) => (
               <Link to='/' key={i} className={styles.JobDetailSectionSubBody}>
                 <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
                   {' '}{category.value}
@@ -440,25 +442,38 @@ const Job = ({
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
-  const { keyword } = query
+  const { keyword, isApplied } = query
   const keywordQuery:any = keyword
-  const keywordQueryArray = keywordQuery?.split('-')
-  const jobId = keywordQueryArray?.slice(-1)[0]
+  const jobId = keywordQuery?.split('-').pop()
 
   // store actions
-  // TODO: Check if User is LoggedIn then change status: 'protected'
-  store.dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
+  if (isApplied === 'true') {
+    store.dispatch(fetchAppliedJobDetailRequest(jobId))
+  } else {
+    // TODO: Check if User is LoggedIn then change status: 'protected'
+    store.dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
+  }
   store.dispatch(fetchConfigRequest())
-
   store.dispatch(END)
+
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const jobDetail = storeState.job?.jobDetail?.response
+  const jobDetail = storeState.job?.jobDetail
+  const appliedJobDetail = storeState.job?.appliedJobDetail
   const config = storeState.config.config.response
-  return {
-    props: {
-      jobDetail,
-      config
+
+  if (jobDetail || appliedJobDetail) {
+    if (jobDetail.error || appliedJobDetail.error) {
+      return {
+        notFound: true,
+      }
+    }
+    return {
+      props: {
+        config,
+        jobDetail: jobDetail?.response?.id ? jobDetail?.response : appliedJobDetail?.response?.job,
+        applicationHistory: appliedJobDetail?.response?.application_histories || null,
+      }
     }
   }
 })

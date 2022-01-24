@@ -257,10 +257,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     if (jobDetailResponse) setSelectedJob(jobDetailResponse)
   }, [jobDetailResponse])
 
-  useEffect(() => {
-    if (selectedJobId) dispatch(handleFetchJobDetail(selectedJobId))
-  }, [selectedJobId])
-
   const sortOptions = [
     { label: 'Newest', value: 1 },
     { label: 'Relevance', value: 2 },
@@ -354,7 +350,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   // TODO: Check if User is LoggedIn then change status: 'protected'
   const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
 
-  const handleSelectedJobId = (jobId) => setSelectedJobId(jobId)
+  const handleSelectedJobId = (jobId) => {
+    setSelectedJobId(jobId)
+    handleFetchJobDetail(jobId)
+  }
 
   const handleUpdateJobAlert = (payload) => dispatch(updateJobAlertRequest(payload))
 

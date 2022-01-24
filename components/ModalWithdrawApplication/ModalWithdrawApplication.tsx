@@ -1,4 +1,4 @@
-// import React, { useState, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 
 /* Vendors */
 // import { useForm } from 'react-hook-form'
@@ -13,12 +13,33 @@ import styles from './ModalWithdrawApplication.module.scss'
 interface IModalWithdrawApplication {
   isShowModalWithdrawApplication?: boolean
   handleShowModalWithdrawApplication?: Function
+  handleWithdrawApplication?: Function
+  appliedJobId?: number
+  isWithdrawAppliedJobFetching?: boolean
+  withdrawAppliedJobResponse?: any
 }
 
 const ModalWithdrawApplication = ({
   isShowModalWithdrawApplication,
-  handleShowModalWithdrawApplication
+  handleShowModalWithdrawApplication,
+  handleWithdrawApplication,
+  appliedJobId,
+  isWithdrawAppliedJobFetching,
+  withdrawAppliedJobResponse
 }: IModalWithdrawApplication) => {
+  const [hasWithdrawed, setHasWithdrawed] = useState(false)
+
+  useEffect(() => {
+    if (withdrawAppliedJobResponse?.message === 'success') {
+      setHasWithdrawed(true)
+    }
+  }, [withdrawAppliedJobResponse])
+
+  const handleText = () => {
+    if (hasWithdrawed) return 'Done'
+    return isWithdrawAppliedJobFetching ? 'Updating...' : 'Withdraw'
+  }
+
   return (
     <Modal
       headerTitle='Withdraw Application'
@@ -26,14 +47,14 @@ const ModalWithdrawApplication = ({
       handleModal={() => handleShowModalWithdrawApplication(false)}
       firstButtonText='Back'
       handleFirstButton={() => {
-        // eslint-disable-next-line no-console
-        console.log('Back')
+        handleShowModalWithdrawApplication(false)
       }}
-      secondButtonText='Withdraw'
-      handleSecondButton={() => 
-        // eslint-disable-next-line no-console
-        console.log('Withdraw')
-      }
+      secondButtonText={handleText()}
+      handleSecondButton={() => {
+        if (!hasWithdrawed) {
+          handleWithdrawApplication({appliedJobId})
+        }
+      }}
     >
       <div className={styles.ModalWithdrawApplication}>
         <Text textStyle='lg'>You are about to withdraw your application. This cannot be undone.</Text>
