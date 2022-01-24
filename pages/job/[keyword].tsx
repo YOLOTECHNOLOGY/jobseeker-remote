@@ -38,6 +38,7 @@ import { wrapper } from 'store'
 
 /* Redux Actions */
 import { fetchAppliedJobDetailRequest } from 'store/actions/jobs/fetchAppliedJobDetail'
+import { fetchSimilarJobsRequest } from 'store/actions/jobs/fetchSimilarJobs'
 
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
@@ -68,13 +69,15 @@ import {
 interface IJobDetail {
   jobDetail: any,
   applicationHistory: any,
-  config: any
+  config: any,
+  similarJobs: any
 }
 
 const Job = ({
   jobDetail,
   applicationHistory,
-  config
+  config,
+  similarJobs
 }: IJobDetail) => {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -127,6 +130,15 @@ const Job = ({
 
   const isAppliedQueryParam = router.query.isApplied
   const hasApplied = isAppliedQueryParam === 'true' ? true : false
+
+  const handleApplyJob = (jobId) => {
+    // eslint-disable-next-line no-console
+    console.log(jobId)
+  }
+
+  const handleRedirectToJob = (jobTitle, jobId) => {
+    router.push(handleFormatWindowUrl('job', jobTitle, jobId))
+  }
 
   return (
     <Layout>
@@ -325,11 +337,14 @@ const Job = ({
               Specialization
             </Text>
             {jobDetail?.categories?.map((category, i) => (
-              <Link to='/' key={i} className={styles.JobDetailSectionSubBody}>
-                <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
-                  {' '}{category.value}
-                </Text>
-              </Link>
+              <span key={i}>
+                <Link to='/' className={styles.JobDetailSectionSubBody}>
+                  <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
+                    {' '}{category.value}
+                  </Text>
+                </Link>
+                {', '}
+              </span>
             ))}
           </div>
           <div className={styles.JobDetailRecruiter}>
@@ -373,30 +388,36 @@ const Job = ({
               <Text textStyle='xxl' bold>Similar Jobs</Text>
             </div>
             <div className={styles.JobDetailSidebarCardList}>
-              <Link external to={'/job/1'} className={styles.JobDetailSidebarCard}>
-                <Text 
-                  className={styles.JobDetailSidebarCardTitle} 
-                  textStyle='xl' 
-                  tagName='p' 
-                  bold
+              {similarJobs?.length > 0 && similarJobs.map((job) => (
+                <div 
+                  key={job.id} 
+                  onClick={() => handleRedirectToJob(job.truncated_job_title, job.id)} 
+                  className={styles.JobDetailSidebarCard}
                 >
-                  {truncateWords('Operation Manager Lorem Ipsum Manager Lorem IpsumManager Lorem IpsumManager Lorem IpsumManager Lorem Ipsum', 80)}
-                </Text>
-                <Text textStyle='base' tagName='p'>Loop Contact Solutions Inc.</Text>
-                <Text textStyle='base' tagName='p' textColor='darkgrey'>Makati</Text>
-                <Text textStyle='base' tagName='p' textColor='darkgrey'>₱75k - ₱80k</Text>
-                <Text textStyle='xsm' tagName='p'>Posted on 23 August 2021</Text>
-                <div>
                   <Text 
-                    textStyle='base' 
+                    className={styles.JobDetailSidebarCardTitle} 
+                    textStyle='xl' 
                     tagName='p' 
                     bold
-                    className={styles.JobDetailSidebarCardCTA}
                   >
-                    Apply Now
+                    {job.truncated_job_title}
                   </Text>
+                  <Text textStyle='base' tagName='p'>{job.company_name}</Text>
+                  <Text textStyle='base' tagName='p' textColor='darkgrey'>{job.location_value}</Text>
+                  <Text textStyle='base' tagName='p' textColor='darkgrey'>{job.salary_range_value}</Text>
+                  <Text textStyle='xsm' tagName='p'>Posted on {job.published_at}</Text>
+                  <div className={styles.JobDetailSidebarCardApply} onClick={() => handleApplyJob(job.id)}>
+                    <Text 
+                      textStyle='base' 
+                      tagName='p' 
+                      bold
+                      className={styles.JobDetailSidebarCardCTA}
+                    >
+                      Apply Now
+                    </Text>
+                  </div>
                 </div>
-              </Link>
+              ))}
             </div>
           </div>
           <div className={styles.JobDetailSidebarSection}>
@@ -446,24 +467,30 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const keywordQuery:any = keyword
   const jobId = keywordQuery?.split('-').pop()
 
-  // store actions
-  if (isApplied === 'true') {
-    store.dispatch(fetchAppliedJobDetailRequest(jobId))
-  } else {
-    // TODO: Check if User is LoggedIn then change status: 'protected'
-    store.dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
+  if (jobId) {
+    // store actions
+    if (isApplied === 'true') {
+      store.dispatch(fetchAppliedJobDetailRequest(jobId))
+    } else {
+      // TODO: Check if User is LoggedIn then change status: 'protected'
+      store.dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
+    }
+
+    store.dispatch(fetchSimilarJobsRequest({jobId}))
   }
+
   store.dispatch(fetchConfigRequest())
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const jobDetail = storeState.job?.jobDetail
+  const similarJobs = storeState.job?.similarJobs
   const appliedJobDetail = storeState.job?.appliedJobDetail
   const config = storeState.config.config.response
 
-  if (jobDetail || appliedJobDetail) {
-    if (jobDetail.error || appliedJobDetail.error) {
+  if (jobDetail || appliedJobDetail || similarJobs) {
+    if (jobDetail.error || appliedJobDetail.error || similarJobs.error) {
       return {
         notFound: true,
       }
@@ -473,6 +500,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         config,
         jobDetail: jobDetail?.response?.id ? jobDetail?.response : appliedJobDetail?.response?.job,
         applicationHistory: appliedJobDetail?.response?.application_histories || null,
+        similarJobs: similarJobs?.response || [],
       }
     }
   }

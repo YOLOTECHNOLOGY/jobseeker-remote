@@ -411,6 +411,10 @@
 .JobDetailSidebarCard {
   margin-top: 24px;
   display: block;
+    
+  &:hover {
+    cursor: pointer;
+  }
 
   p {
     margin: 8px auto;
@@ -426,6 +430,15 @@
   &Title {
     &:hover {
       text-decoration: underline;
+    }
+  }
+
+  &Apply {
+    background-color: transparent;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
     }
   }
 }
