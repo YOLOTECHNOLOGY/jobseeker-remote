@@ -64,13 +64,10 @@ const ModalJobAlerts = ({
   const [modalDeleteJobAlert, setModalDeleteJobAlert] = useState(false)
   const [selectedJobAlert, setSelectedJobAlert] = useState(null)
   const [frequency, setFrequency] = useState(1)
-  const [notifiedAt, setNotifiedAt] = useState('email')
+  // const [notifiedAt, setNotifiedAt] = useState('email')
   const [jobAlertResponse, setJobAlertResponse] = useState(null)
   const [formEmail, setFormEmail] = useState('')
   const [jobAlertError, setJobAlertError] = useState(null)
-
-  // eslint-disable-next-line no-console
-  console.log(notifiedAt)
 
   useEffect(() => {
     if (isShowModalManageJobAlerts && !isDeletingJobAlert) {
@@ -173,7 +170,7 @@ const ModalJobAlerts = ({
         setFrequency(event.target.value)
         return
       }
-      setNotifiedAt(event.target.value)
+      // setNotifiedAt(event.target.value)
     }
 
     return (

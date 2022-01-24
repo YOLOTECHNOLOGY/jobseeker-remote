@@ -35,6 +35,7 @@ import JobDetailLoader from 'components/Loader/JobDetail'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { titleCase } from 'helpers/formatter'
 
 /* Styles */
 import styles from './MyJobs.module.scss'
@@ -181,9 +182,10 @@ const MyJobs = ({
   const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], isAppliedCategory ? appliedJobId : selectedJob?.['id'])
   const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
+
   return (
     <Layout>
-      <SEO title={"Job Title"} description={"Job Description"} />
+      <SEO title={`${titleCase(category)} Jobs - Career Platform for Professionals in Philippines`} description={"Bossjob - Career Platform for Professionals in Philippines"} />
       <div className={styles.MyJobs}>
         <div className={styles.MyJobsList}>
           <Tabs
@@ -195,6 +197,7 @@ const MyJobs = ({
               value="saved" 
               label={
                 <Link 
+                  aTag
                   to={'/my-jobs/saved?page=1&size=10'}
                   className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}
                 >
@@ -209,6 +212,7 @@ const MyJobs = ({
               value="applied" 
               label={
                 <Link 
+                  aTag
                   to={'/my-jobs/applied?page=1&size=10'}
                   className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}
                 >
@@ -243,12 +247,14 @@ const MyJobs = ({
               />
             ))}
           </div>
-          <div className={styles.paginationWrapper}>
-            <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} totalPages={totalPages || 1} />
-          </div>
+          {totalPages && (
+            <div className={styles.paginationWrapper}>
+              <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} totalPages={totalPages || 1} />
+            </div>
+          )}
         </div>
         <div className={styles.MyJobsDetailInfoSection}>
-          {(isAppliedJobDetailFetching || isSavedJobDetailFetching) || isAppliedJobsListFetching || isSavedJobsListFetching && (
+          {(isAppliedJobDetailFetching || isSavedJobDetailFetching) && (
             <JobDetailLoader />
           )}
           {(!isAppliedJobDetailFetching || !isSavedJobDetailFetching) && selectedJob?.id && (
@@ -262,6 +268,11 @@ const MyJobs = ({
               setIsShowModalShare={setIsShowModalShare}
               setIsShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
             />
+          )}
+          {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && !selectedJob && (
+            <div className={styles.MyJobsDetailInfoEmpty}>
+              <Text textStyle='xl' bold>No {category} jobs found </Text>
+            </div>
           )}
         </div>
         <div className={styles.MyJobsAds}>
