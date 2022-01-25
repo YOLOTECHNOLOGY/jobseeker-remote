@@ -503,7 +503,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           selectedJob={selectedJob}
           selectedJobId={selectedJobId}
           handleSelectedJobId={handleSelectedJobId}
-          totalPages={jobListResponse?.data?.total_num}
+          totalPages={jobListResponse?.data?.total_pages}
           query={predefinedQuery}
           location={urlLocation}
           jobAlertsList={jobAlertList}

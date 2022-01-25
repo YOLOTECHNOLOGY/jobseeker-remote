@@ -58,6 +58,7 @@ const MyJobs = ({
   const cx = classNames.bind(styles)
   const isAppliedCategoryActive = cx({ MyJobsMenuLinkIsActive: isAppliedCategory})
   const isSavedCategoryActive = cx({ MyJobsMenuLinkIsActive: !isAppliedCategory})
+  const isStickyClass = cx({ isSticky: isSticky })
 
   const [selectedJobId, setSelectedJobId] = useState(null)
   const [selectedJob, setSelectedJob] = useState(null)
@@ -84,7 +85,6 @@ const MyJobs = ({
 
   const withdrawAppliedJobResponse = useSelector((store: any) => store.job.withdrawAppliedJob.response)
   const isWithdrawAppliedJobFetching = useSelector((store: any) => store.job.withdrawAppliedJob.fetching)
-  
   
   useEffect(() => {
     window.addEventListener('scroll', updateScrollPosition)
@@ -187,103 +187,109 @@ const MyJobs = ({
     <Layout>
       <SEO title={`${titleCase(category)} Jobs - Career Platform for Professionals in Philippines`} description={"Bossjob - Career Platform for Professionals in Philippines"} />
       <div className={styles.MyJobs}>
-        <div className={styles.MyJobsList}>
-          <Tabs
-            value={category}
-            className={classNamesCombined([styles.MyJobsMenu])}
-          >
-            <Tab 
-              className={styles.MyJobsMenuTab}
-              value="saved" 
-              label={
-                <Link 
-                  aTag
-                  to={'/my-jobs/saved?page=1&size=10'}
-                  className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}
-                >
-                  <Text bold>
-                    Saved Jobs
-                  </Text>
-                </Link>
-              }
-            />
-            <Tab 
-              className={styles.MyJobsMenuTab}
-              value="applied" 
-              label={
-                <Link 
-                  aTag
-                  to={'/my-jobs/applied?page=1&size=10'}
-                  className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}
-                >
-                  <Text bold>
-                    Applied Jobs
-                  </Text>
-                </Link>
-              }
-            />
-          </Tabs>
-          <div className={styles.MyJobsListContent}>
-            {isAppliedJobsListFetching || isSavedJobsListFetching && (
-              <React.Fragment>
-                <JobCardLoader />
-                <JobCardLoader />
-                <JobCardLoader />
-                <JobCardLoader />
-              </React.Fragment>
-            )}
-            {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && jobsList?.map((jobs, i) => (
-              <JobCard
-                key={i}
-                id={jobs.id}
-                image={jobs.job.company_logo}
-                title={jobs.job.job_title}
-                company={jobs.job.company_name}
-                location={jobs.job.location_value}
-                salary={jobs.job.salary_range_value}
-                postedAt={jobs.job.published_at}
-                selectedId={selectedJobId}
-                handleSelectedId={() => handleSelectedJobId(jobs.id)}
-              />
-            ))}
+        <div className={classNamesCombined([styles.MyJobsMenu, isStickyClass])}>
+          <div className={styles.container}>
+            <div className={styles.MyJobsMenuContent}>
+              <Tabs
+                value={category}
+              >
+                <Tab 
+                  className={styles.MyJobsMenuTab}
+                  value="saved" 
+                  label={
+                    <Link 
+                      aTag
+                      to={'/my-jobs/saved?page=1&size=10'}
+                      className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}
+                    >
+                      <Text bold>
+                        Saved Jobs
+                      </Text>
+                    </Link>
+                  }
+                />
+                <Tab 
+                  className={styles.MyJobsMenuTab}
+                  value="applied" 
+                  label={
+                    <Link 
+                      aTag
+                      to={'/my-jobs/applied?page=1&size=10'}
+                      className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}
+                    >
+                      <Text bold>
+                        Applied Jobs
+                      </Text>
+                    </Link>
+                  }
+                />
+              </Tabs>
+            </div>
+            <div className={styles.MyJobsMenuOtherContent}/>
           </div>
-          {totalPages && (
+        </div>
+        <div className={classNamesCombined([styles.container, styles.MyJobsContent])}>
+          <div className={styles.MyJobsList}>
+            <div className={styles.MyJobsListContent}>
+              {isAppliedJobsListFetching || isSavedJobsListFetching && (
+                <React.Fragment>
+                  <JobCardLoader />
+                  <JobCardLoader />
+                  <JobCardLoader />
+                  <JobCardLoader />
+                </React.Fragment>
+              )}
+              {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && jobsList?.map((jobs, i) => (
+                <JobCard
+                  key={i}
+                  id={jobs.id}
+                  image={jobs.job.company_logo}
+                  title={jobs.job.job_title}
+                  company={jobs.job.company_name}
+                  location={jobs.job.location_value}
+                  salary={jobs.job.salary_range_value}
+                  postedAt={jobs.job.published_at}
+                  selectedId={selectedJobId}
+                  handleSelectedId={() => handleSelectedJobId(jobs.id)}
+                />
+              ))}
+            </div>
             <div className={styles.paginationWrapper}>
               <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} totalPages={totalPages || 1} />
             </div>
-          )}
-        </div>
-        <div className={styles.MyJobsDetailInfoSection}>
-          {(isAppliedJobDetailFetching || isSavedJobDetailFetching) && (
-            <JobDetailLoader />
-          )}
-          {(!isAppliedJobDetailFetching || !isSavedJobDetailFetching) && selectedJob?.id && (
-            <JobDetail 
-              selectedJob={selectedJob}
-              jobDetailUrl={jobDetailUrl}
-              companyUrl={companyUrl}
-              isSticky={isSticky}
-              category={category}
-              applicationHistory={applicationHistories}
-              setIsShowModalShare={setIsShowModalShare}
-              setIsShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
-            />
-          )}
-          {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && !selectedJob && (
-            <div className={styles.MyJobsDetailInfoEmpty}>
-              <Text textStyle='xl' bold>No {category} jobs found </Text>
+          </div>
+          <div className={styles.MyJobsDetailInfoSection}>
+            {(isAppliedJobDetailFetching || isSavedJobDetailFetching) && (
+              <JobDetailLoader />
+            )}
+            {(!isAppliedJobDetailFetching || !isSavedJobDetailFetching) && selectedJob?.id && (
+              <JobDetail 
+                selectedJob={selectedJob}
+                jobDetailUrl={jobDetailUrl}
+                companyUrl={companyUrl}
+                isSticky={isSticky}
+                category={category}
+                applicationHistory={applicationHistories}
+                setIsShowModalShare={setIsShowModalShare}
+                setIsShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
+              />
+            )}
+            {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && !selectedJob && (
+              <div className={styles.MyJobsDetailInfoEmpty}>
+                <Text textStyle='xl' bold>No {category} jobs found </Text>
+              </div>
+            )}
+          </div>
+          <div className={styles.MyJobsAds}>
+            <div className={styles.skyscraperBanner}>
+              <AdSlot adSlot={'job-page-skyscraper-1'} />
             </div>
-          )}
-        </div>
-        <div className={styles.MyJobsAds}>
-          <div className={styles.skyscraperBanner}>
-            <AdSlot adSlot={'job-page-skyscraper-1'} />
-          </div>
-          <div className={styles.skyscraperBanner}>
-            <AdSlot adSlot={'job-page-skyscraper-2'} />
-          </div>
-          <div className={styles.skyscraperBanner}>
-            <AdSlot adSlot={'job-page-skyscraper-3'} />
+            <div className={styles.skyscraperBanner}>
+              <AdSlot adSlot={'job-page-skyscraper-2'} />
+            </div>
+            <div className={styles.skyscraperBanner}>
+              <AdSlot adSlot={'job-page-skyscraper-3'} />
+            </div>
           </div>
         </div>
       </div>

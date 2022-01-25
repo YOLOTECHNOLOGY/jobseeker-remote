@@ -40,6 +40,7 @@ function* fetchJobsListReq(action) {
       job_types: jobType,
       sort,
       page,
+      size: 30,
       source: 'web',
     }
 

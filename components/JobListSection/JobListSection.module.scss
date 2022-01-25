@@ -1,14 +1,12 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
-.job {
-  display: flex;
-  padding: 0 7%;
-  position: relative;
+.container {
+  @extend .GlobalContainer;
+}
 
-  @include msd {
-    padding: 0 6%;
-  }
+.jobContent {
+  display: flex;
 }
 
 .jobList {
@@ -16,29 +14,32 @@
 
   &Option {
     height: 68px;
-    border-bottom: 1px solid rgba($lightgrey, 0.6);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 25px 0 9%;
     position: absolute;
-    width: 32.42%;
+    width: 100%;
     left: 0;
-    background-color: $white-3;
+    display: flex;
 
     &.isSticky {
-      position: fixed;
       top: 0;
-      border-bottom: 1px solid rgba($lightgrey, 0.6);
-      z-index: 1;
+      position: fixed;
 
       @include sm{
-        position:unset;
+        position: unset;
       }
     }
 
     @include msd {
       width: 100%;
+    }
+
+    &::after {
+      position: absolute;
+      content: '';
+      height: 1px;
+      width: 30%;
+      background-color: rgba($lightgrey, 0.6);
+      bottom: 0;
+      left: 0;
     }
   }
 
@@ -47,7 +48,6 @@
     align-items: center;
 
     span {
-      margin-right: 15px;
       color: $darkgrey;
     }
 
@@ -55,11 +55,38 @@
       &:hover {
         cursor: pointer;
       }
+
+      &:last-child {
+        margin-left: 15px;
+      }
     }
+  }
+
+  &OptionContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    background-color: $white-3;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba($lightgrey, 0.6);
+
+    @include msd{
+      width: 100%;
+    }
+  }
+
+  &OptionOtherContent {
+    width: 70%;
   }
 
   &Content {
     margin-top: 68px;
+
+    @include msd {
+      padding: 0 20px;
+    }
   }
 
   @include msd {
@@ -69,8 +96,9 @@
 
 .jobDetailInfoSection {
   width: 56%;
-  border-top: 0;
-  border: 1px solid rgba($lightgrey, 0.6);
+  border-left: 1px solid rgba($lightgrey, 0.6);
+  border-bottom: 1px solid rgba($lightgrey, 0.6);
+  border-right: 1px solid rgba($lightgrey, 0.6);
 
   @include msd {
     display: none;
@@ -87,17 +115,24 @@
 
 .jobAds {
   width: 14%;
-  margin: 10px;
+  margin: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 
   .skyscraperBanner {
     display:flex;
     width:160px;
     height:600px;
-    margin-bottom:30px;
+    margin-bottom:20px;
     box-sizing: border-box;
     overflow:hidden;
     cursor:pointer;
     background-color: $white-1;
+
+    @include msd{
+      width: 100%;
+    }
   }
 
   @include msd {
