@@ -317,14 +317,14 @@ const JobDetail = ({
             Specialization
           </Text>
           {selectedJob?.categories?.map((category, i) => (
-            <div key={i}>
+            <span key={i}>
               <Link to='/' className={styles.JobDetailSectionSubBody}>
                 <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
                   {' '}{category.value}
                 </Text>
               </Link>
-              {i > 0 && <span>{', '}</span>}
-            </div>
+              {', '}
+            </span>
           ))}
         </div>
         <div className={styles.aboutCompany}>

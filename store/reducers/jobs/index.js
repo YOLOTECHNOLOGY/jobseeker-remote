@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 
 import fetchJobsListReducer from './fetchJobsList'
 import fetchJobDetailReducer from './fetchJobDetail'
+import fetchSimilarJobsReducer from './fetchSimilarJobs'
 
 import fetchAppliedJobsListReducer from './fetchAppliedJobsList'
 import fetchAppliedJobDetailReducer from './fetchAppliedJobDetail'
@@ -15,6 +16,7 @@ import deleteSaveJobReducer from './deleteSaveJob'
 const jobsReducers = combineReducers({
   jobList: fetchJobsListReducer,
   jobDetail: fetchJobDetailReducer,
+  similarJobs: fetchSimilarJobsReducer,
 
   appliedJobsList: fetchAppliedJobsListReducer,
   appliedJobDetail: fetchAppliedJobDetailReducer,
