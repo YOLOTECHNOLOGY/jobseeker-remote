@@ -179,89 +179,96 @@ const JobListSection = ({
   return (
     <React.Fragment>
       <div className={styles.job}>
-        <div className={styles.jobList}>
-          <div className={classNamesCombined([styles.jobListOption, isStickyClass])}>
-            <Text textStyle='xl' bold>
-              {jobList?.total_num} jobs found
-            </Text>
-            <div className={styles.jobListOptionAlerts}>
-              <div
-                className={styles.jobListOptionAlertsItem}
-                onClick={() => {
-                  if (isUserAuthenticated) handleCreateJobAlert()
-                  if (!isUserAuthenticated) setIsShowModalEnableJobAlerts(true)
-                }}
-              >
-                <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
-              </div>
-              {isUserAuthenticated && (
+        <div className={classNamesCombined([styles.jobListOption, isStickyClass])}>
+          <div className={styles.container}>
+            <div className={styles.jobListOptionContent}>
+              <Text textStyle='xl' bold>
+                {jobList?.total_num} jobs found
+              </Text>
+              <div className={styles.jobListOptionAlerts}>
                 <div
                   className={styles.jobListOptionAlertsItem}
                   onClick={() => {
-                    setIsShowModalManageJobAlerts(true)
+                    if (isUserAuthenticated) handleCreateJobAlert()
+                    if (!isUserAuthenticated) setIsShowModalEnableJobAlerts(true)
                   }}
                 >
-                  <Image src={NotificationIcon} width='20' height='20' />
+                  <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
                 </div>
+                {isUserAuthenticated && (
+                  <div
+                    className={styles.jobListOptionAlertsItem}
+                    onClick={() => {
+                      setIsShowModalManageJobAlerts(true)
+                    }}
+                  >
+                    <Image src={NotificationIcon} width='20' height='20' />
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className={styles.jobListOptionOtherContent}/>
+          </div>
+        </div>
+        <div className={classNamesCombined([styles.container, styles.jobContent])}>
+          <div className={styles.jobList}>
+            <div className={styles.jobListContent}>
+              {isJobListFetching && (
+                <React.Fragment>
+                  <JobCardLoader />
+                  <JobCardLoader />
+                  <JobCardLoader />
+                  <JobCardLoader />
+                </React.Fragment>
               )}
+              {!isJobListFetching && jobList?.jobs?.length > 0 && jobList.jobs.map((job) => (
+                <JobCard
+                  key={job.id}
+                  id={job.id}
+                  image={job.company_logo}
+                  title={job.job_title}
+                  tag={job.job_type}
+                  company={job.company_name}
+                  location={job.job_location}
+                  salary={handleSalaryDisplay(job.salary_range_from, job.salary_range_to)}
+                  postedAt={`${moment(new Date(job.updated_at)).format('DD MMMM YYYY')}`}
+                  selectedId={selectedJobId}
+                  handleSelectedId={() => {
+                    handleSelectedJobId(job.id)
+                  }}
+                />
+              ))}
+            </div>
+            <div className={styles.paginationWrapper}>
+              <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={defaultPage} totalPages={totalPages} />
             </div>
           </div>
-          <div className={styles.jobListContent}>
-            {isJobListFetching && (
-              <React.Fragment>
-                <JobCardLoader />
-                <JobCardLoader />
-                <JobCardLoader />
-                <JobCardLoader />
-              </React.Fragment>
+          <div className={styles.jobDetailInfoSection}>
+            {(isJobDetailFetching || isJobListFetching) && (
+              <JobDetailLoader />
             )}
-            {!isJobListFetching && jobList?.jobs?.length > 0 && jobList.jobs.map((job) => (
-              <JobCard
-                key={job.id}
-                id={job.id}
-                image={job.company_logo}
-                title={job.job_title}
-                tag={job.job_type}
-                company={job.company_name}
-                location={job.job_location}
-                salary={handleSalaryDisplay(job.salary_range_from, job.salary_range_to)}
-                postedAt={`${moment(new Date(job.updated_at)).format('DD MMMM YYYY')}`}
-                selectedId={selectedJobId}
-                handleSelectedId={() => {
-                  handleSelectedJobId(job.id)
-                }}
+            {!isJobDetailFetching && selectedJob?.['id'] && (
+              <JobDetail 
+                selectedJob={selectedJob}
+                setIsShowModalShare={setIsShowModalShare}
+                setIsShowReportJob={setIsShowReportJob}
+                isSticky={isSticky}
+                jobDetailUrl={jobDetailUrl}
+                companyUrl={companyUrl}
+                handlePostSaveJob={handlePostSaveJob}
               />
-            ))}
+            )}
           </div>
-          <div className={styles.paginationWrapper}>
-            <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={defaultPage} totalPages={totalPages} />
-          </div>
-        </div>
-        <div className={styles.jobDetailInfoSection}>
-          {(isJobDetailFetching || isJobListFetching) && (
-            <JobDetailLoader />
-          )}
-          {!isJobDetailFetching && selectedJob?.['id'] && (
-            <JobDetail 
-              selectedJob={selectedJob}
-              setIsShowModalShare={setIsShowModalShare}
-              setIsShowReportJob={setIsShowReportJob}
-              isSticky={isSticky}
-              jobDetailUrl={jobDetailUrl}
-              companyUrl={companyUrl}
-              handlePostSaveJob={handlePostSaveJob}
-            />
-          )}
-        </div>
-        <div className={styles.jobAds}>
-          <div className={styles.skyscraperBanner}>
-            <AdSlot adSlot={'job-page-skyscraper-1'} />
-          </div>
-          <div className={styles.skyscraperBanner}>
-            <AdSlot adSlot={'job-page-skyscraper-2'} />
-          </div>
-          <div className={styles.skyscraperBanner}>
-            <AdSlot adSlot={'job-page-skyscraper-3'} />
+          <div className={styles.jobAds}>
+            <div className={styles.skyscraperBanner}>
+              <AdSlot adSlot={'job-page-skyscraper-1'} />
+            </div>
+            <div className={styles.skyscraperBanner}>
+              <AdSlot adSlot={'job-page-skyscraper-2'} />
+            </div>
+            <div className={styles.skyscraperBanner}>
+              <AdSlot adSlot={'job-page-skyscraper-3'} />
+            </div>
           </div>
         </div>
       </div>

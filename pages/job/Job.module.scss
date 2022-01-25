@@ -2,7 +2,8 @@
 @import 'styles/mixins.scss';
 
 .JobDetail {
-  padding: 20px 7% 100px;
+  @extend .GlobalContainer;
+  padding: 20px 0 100px;
   display: flex;
   justify-content: space-between;
 
@@ -391,7 +392,7 @@
 }
 
 .JobDetailSidebar {
-  width: 23%;
+  width: 22%;
   padding-top: 126px;
 
   @include msd {
