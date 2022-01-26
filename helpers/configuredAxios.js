@@ -29,6 +29,9 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     case 'auth':
       url = process.env.AUTH_BOSSJOB_URL
       break
+    case 'job':
+      url = process.env.JOB_BOSSJOB_URL
+      break
     case 'search':
       url = process.env.SEARCH_BOSSJOB_URL
       break
