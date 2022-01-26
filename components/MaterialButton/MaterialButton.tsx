@@ -29,14 +29,19 @@ const MaterialButton = ({
       primary: {
         main: '#2379EA',
       },
+      secondary: {
+        main: '#FFFFFF',
+        dark: '#FFFFFF',
+        contrastText: '#2379EA',
+      },
     },
     components: {
       MuiButton: {
-         styleOverrides: {
+        styleOverrides: {
           root: {
             fontSize: '13px',
           },
-        }
+        },
       },
     },
   })

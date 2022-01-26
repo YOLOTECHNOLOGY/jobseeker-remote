@@ -2,15 +2,16 @@ import { call, put, takeLatest } from 'redux-saga/effects'
 // import { call, put, takeLatest, select } from 'redux-saga/effects'
 import { FETCH_JOB_DETAIL_REQUEST } from 'store/types/jobs/fetchJobDetail'
 import { fetchJobDetailSuccess, fetchJobDetailFailed } from 'store/actions/jobs/fetchJobDetail'
-import { fetchCompanyDetailSuccess, fetchCompanyDetailFailed } from 'store/actions/companies/fetchCompanyDetail'
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
-import { fetchCompanyDetailService } from 'store/services/companies/fetchCompanyDetail'
 
 function* fetchJobDetailReq(actions) {
   try {
-    const { payload } = actions
+    const payload = {
+      jobId: actions.payload.jobId,
+      status: actions.payload.status || ''
+    }
 
-    const jobDetailResponse = yield call(fetchJobDetailService, payload)
+    const jobDetailResponse = yield call(fetchJobDetailService, {...payload})
 
     if (jobDetailResponse.status >= 200 && jobDetailResponse.status < 300) {
       /*
@@ -58,25 +59,7 @@ function* fetchJobDetailReq(actions) {
       //   //   recipientChatUserResponse.data.data.status
       //   jobDetailResponse.data.data['applicationInfo'] = applicationExistedInfo.data.data
       // }
-
-      yield put(
-        fetchJobDetailSuccess(jobDetailResponse.data)
-      )
-
-      try {
-        const companyDetailResponse = yield call(
-          fetchCompanyDetailService,
-          jobDetailResponse.data.data.company_id
-        )
-
-        yield put(
-          fetchCompanyDetailSuccess(
-            companyDetailResponse.data
-          )
-        )
-      } catch (err) {
-        yield put(fetchCompanyDetailFailed(err))
-      }
+      yield put(fetchJobDetailSuccess(jobDetailResponse.data.data))
     }
   } catch (err) {
     yield put(fetchJobDetailFailed(err))

@@ -2,7 +2,8 @@
 @import 'styles/mixins.scss';
 
 .JobDetail {
-  padding: 20px 7% 100px;
+  @extend .GlobalContainer;
+  padding: 20px 0 100px;
   display: flex;
   justify-content: space-between;
 
@@ -95,7 +96,7 @@
     width: 78px;
     height: 78px;
     border-radius: 4px;
-    object-fit: contain;
+    object-fit: cover;
     margin-right: 20px;
 
     @include msd {
@@ -391,7 +392,7 @@
 }
 
 .JobDetailSidebar {
-  width: 23%;
+  width: 22%;
   padding-top: 126px;
 
   @include msd {
@@ -411,6 +412,10 @@
 .JobDetailSidebarCard {
   margin-top: 24px;
   display: block;
+    
+  &:hover {
+    cursor: pointer;
+  }
 
   p {
     margin: 8px auto;
@@ -426,6 +431,15 @@
   &Title {
     &:hover {
       text-decoration: underline;
+    }
+  }
+
+  &Apply {
+    background-color: transparent;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
     }
   }
 }

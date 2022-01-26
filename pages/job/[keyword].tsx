@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { END } from 'redux-saga'
 
 /* Vendors */
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import slugify from 'slugify'
 import moment from 'moment'
 import {
@@ -31,14 +31,16 @@ import ModalShare from 'components/ModalShare'
 import ModalReportJob from 'components/ModalReportJob'
 
 /* Helpers */
-import { numberToThousands, truncateWords } from 'helpers/formatter'
+import { truncateWords } from 'helpers/formatter'
 
 /* Action Creators */
 import { wrapper } from 'store'
 
 /* Redux Actions */
+import { fetchAppliedJobDetailRequest } from 'store/actions/jobs/fetchAppliedJobDetail'
+import { fetchSimilarJobsRequest } from 'store/actions/jobs/fetchSimilarJobs'
+
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
-import { fetchCompanyDetailRequest } from 'store/actions/companies/fetchCompanyDetail'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 import { postReportRequest } from 'store/actions/reports/postReport'
@@ -66,40 +68,42 @@ import {
 
 interface IJobDetail {
   jobDetail: any,
-  config: any
+  applicationHistory: any,
+  config: any,
+  similarJobs: any
 }
 
 const Job = ({
   jobDetail,
-  config
+  applicationHistory,
+  config,
+  similarJobs
 }: IJobDetail) => {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const [companyDetail, setCompanyDetail] = useState(null)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
   const [jobDetailOption, setJobDetailOption] = useState(false)
 
-  let jobDetailUrl = ''
-  let companyUrl = ''
-  if (typeof window !== 'undefined') {
-    jobDetailUrl = `${window.location.origin}/job/${slugify(jobDetail?.['job_title'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobDetail?.['id']}`
-    companyUrl = `${window.location.origin}/company/${slugify(companyDetail?.['name'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${companyDetail?.['id']}`
+  const [jobDetailUrl, setJobDetailUrl] = useState('/')
+  const [companyUrl, setCompanyUrl] = useState('/')
+
+  useEffect(() => {
+    setJobDetailUrl(handleFormatWindowUrl('job', jobDetail?.['job_title'], jobDetail?.['id']))
+    setCompanyUrl(handleFormatWindowUrl('company', jobDetail?.['company']?.['name'], jobDetail?.['company']?.['id']))
+  }, [jobDetail])
+
+  const handleFormatWindowUrl = (pathname, name, id) => {
+    if (typeof window !== 'undefined') {
+      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${id}`
+    }
+    return ''
   }
 
-  const companyDetailResponse = useSelector((store: any) => store.companies.companyDetail?.response?.data)
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const handlePostReportJob = (payload) => dispatch(postReportRequest(payload))
-
-  useEffect(() => {
-    if (jobDetail) dispatch(fetchCompanyDetailRequest(jobDetail.company_id))
-  }, [jobDetail])
-
-  useEffect(() => {
-    if (companyDetailResponse) setCompanyDetail(companyDetailResponse)
-  }, [companyDetailResponse])
 
   const handleBenefitIcon = (benefit) => {
     const Icon = `${benefit.replace(/ /g,'')}Icon`
@@ -127,6 +131,15 @@ const Job = ({
   const isAppliedQueryParam = router.query.isApplied
   const hasApplied = isAppliedQueryParam === 'true' ? true : false
 
+  const handleApplyJob = (jobId) => {
+    // eslint-disable-next-line no-console
+    console.log(jobId)
+  }
+
+  const handleRedirectToJob = (jobTitle, jobId) => {
+    router.push(handleFormatWindowUrl('job', jobTitle, jobId))
+  }
+
   return (
     <Layout>
       <SEO title={jobDetail.job_title} description={jobDetail.job_description} />
@@ -152,40 +165,37 @@ const Job = ({
               </div>
             )}
             <div className={styles.JobDetailPrimaryInfo}>
-              <img src={jobDetail?.company_logo} className={styles.JobDetailPrimaryInfoImage} alt={`${jobDetail?.company_name} logo`}/>
+              <img src={jobDetail?.company?.logo} className={styles.JobDetailPrimaryInfoImage} alt={`${jobDetail?.company?.name} logo`}/>
               <Text textStyle='xxl' tagName='h1' bold className={styles.JobDetailPrimaryInfoTitle}>
                 {jobDetail?.job_title}
               </Text>
             </div>
             <div className={styles.JobDetailPrimarySub}>
-              <JobTag tag={jobDetail?.job_type}/>
+              <JobTag tag={jobDetail?.job_type_value}/>
               <Text textStyle='sm' className={styles.JobDetailPostedAt}>
-                Posted on {moment(new Date(jobDetail?.published_at)).format('DD MMMM YYYY')}
+                Posted on {jobDetail?.published_at}
               </Text>
             </div>
             <Link to={companyUrl}>
               <Text textStyle='xl' className={styles.JobDetailCompany}>
-                {jobDetail?.company_name}
+                {jobDetail?.company?.name}
               </Text>
             </Link>
-            {isAppliedQueryParam && !hasApplied && (
-              <div className={styles.JobDetailPrimaryActionsCategory}>
-                <Text textStyle='base' className={styles.JobDetailStatus}>
-                  <Image src={ExpireIcon} height="16" width="16"/>
-                  <span>This job is no longer hiring</span>
-                </Text>
-                <MaterialButton variant='outlined'>
-                  Save Job
-                </MaterialButton>
-              </div>
-            )}
             {!isAppliedQueryParam && (
               <div className={styles.JobDetailPrimaryActions}>
-                <MaterialButton variant='contained'>
-                  <Link to={jobDetail?.external_apply_url} external>Apply Now</Link>
-                </MaterialButton>
+                {jobDetail?.status_key === 'active' && (
+                  <MaterialButton variant='contained'>
+                    <Link to={jobDetail?.external_apply_url || '/'} external>Apply Now</Link>
+                  </MaterialButton>
+                )}
+                {jobDetail?.status_key !== 'active' && (
+                  <Text textStyle='base' className={styles.JobDetailStatus}>
+                    <Image src={ExpireIcon} height="16" width="16"/>
+                    <span>This job is no longer hiring</span>
+                  </Text>
+                )}
                 <MaterialButton variant='outlined'>
-                  Save Job
+                  {jobDetail?.is_saved ? 'Saved' : 'Save'} Job
                 </MaterialButton>
               </div>
             )}
@@ -204,7 +214,7 @@ const Job = ({
                   </Text>
                   <Link to={'/'}>
                     <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                      {jobDetail?.job_location}
+                      {jobDetail?.location?.value}
                     </Text>
                   </Link> 
                 </span>
@@ -220,7 +230,7 @@ const Job = ({
                     Experience
                   </Text>
                   <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                    {jobDetail?.xp_lvl}
+                    {jobDetail?.xp_lvl?.value}
                   </Text>
                 </span>
               </li>
@@ -235,7 +245,7 @@ const Job = ({
                     Education
                   </Text>
                   <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                    {jobDetail?.degree}
+                    {jobDetail?.degree?.value}
                   </Text>
                 </span>
               </li>
@@ -250,7 +260,7 @@ const Job = ({
                     Salary
                   </Text>
                   <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
-                    {`${numberToThousands(jobDetail?.salary_range_from)}K - ${numberToThousands(jobDetail?.salary_range_to)}K` }
+                    {jobDetail?.salary_range_value }
                   </Text>
                 </span>
               </li>
@@ -260,19 +270,15 @@ const Job = ({
             <div className={styles.JobDetailApplicationWrapper}>
               <Text textStyle='lg' bold>Application History</Text>
               <Timeline className={styles.JobDetailApplicationTimeline}>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot className={styles.JobDetailApplicationTimelineFirst}/>
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <TimelineContent><Text textStyle='base'>Application withdrawn -  1 month ago</Text></TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                  </TimelineSeparator>
-                  <TimelineContent><Text textStyle='base'>Application submitted - 3 months ago</Text></TimelineContent>
-                </TimelineItem>
+                {applicationHistory?.map((history, i) => (
+                  <TimelineItem key={i}>
+                    <TimelineSeparator>
+                      <TimelineDot className={i === 0 ? styles.JobDetailApplicationTimelineFirst : ''}/>
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent><Text textStyle='base'>{history.value} -  {history.elapsed_time}</Text></TimelineContent>
+                  </TimelineItem>
+                ))}
               </Timeline>
             </div>
           )}
@@ -293,8 +299,8 @@ const Job = ({
               Benefits
             </Text>
             <ul className={styles.JobDetailBenefitsList}>
-              {jobDetail?.benefits?.map((benefit) => (
-                <li className={styles.JobDetailBenefitsItem} key={benefit.id}>
+              {jobDetail?.benefits?.map((benefit, i) => (
+                <li className={styles.JobDetailBenefitsItem} key={i}>
                   {handleBenefitIcon(benefit.name)}
                   <Text textStyle='base' className={styles.JobDetailBenefitsText}>
                     {benefit.name}
@@ -308,10 +314,10 @@ const Job = ({
               Skills/Software
             </Text>
             <ul className={styles.JobDetailSkillsList}>
-              {jobDetail?.job_skills.split(',').map((skill) => (
-                <li className={styles.JobDetailSkillsItem} key={skill}>
+              {jobDetail?.skills?.map((skill, i) => (
+                <li className={styles.JobDetailSkillsItem} key={i}>
                   <Text bold textStyle='base' className={styles.JobDetailSkillsText}>
-                    {skill}
+                    {skill.value}
                   </Text>
                 </li>
               ))}
@@ -325,17 +331,20 @@ const Job = ({
               Working Location
             </Text>
             <Text textStyle='base' className={styles.JobDetailSectionSubBody}>
-              {`${jobDetail?.job_location}, ${jobDetail?.job_region}, ${jobDetail?.job_country}`}
+              {`${jobDetail?.location?.value}, ${jobDetail?.job_region}, ${jobDetail?.job_country}`}
             </Text>
             <Text textStyle='base' tagName='h2' bold className={styles.JobDetailSectionSubTitle}>
               Specialization
             </Text>
-            {jobDetail?.categories.map((category) => (
-              <Link to='/' key={category.id} className={styles.JobDetailSectionSubBody}>
-                <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
-                  {' '}{category.value}
-                </Text>
-              </Link>
+            {jobDetail?.categories?.map((category, i) => (
+              <span key={i}>
+                <Link to='/' className={styles.JobDetailSectionSubBody}>
+                  <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
+                    {' '}{category.value}
+                  </Text>
+                </Link>
+                {', '}
+              </span>
             ))}
           </div>
           <div className={styles.JobDetailRecruiter}>
@@ -358,18 +367,18 @@ const Job = ({
             <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
               About the company
             </Text>
-            <Link to={companyUrl} className={styles.aboutCompanyTitle}>
+            <Link to={companyUrl || '/'} className={styles.aboutCompanyTitle}>
               <Text bold textStyle='xl' textColor='primaryBlue'>
-                {companyDetail?.name}
+                {jobDetail?.company?.name}
               </Text>
             </Link>
             <div className={styles.aboutCompanyDetail}>
-              <Text textStyle='base'>{companyDetail?.industry}</Text>
-              <Text textStyle='base'>{companyDetail?.company_size} employees</Text>
+              <Text textStyle='base'>{jobDetail?.company?.industry_value}</Text>
+              <Text textStyle='base'>{jobDetail?.company?.company_size_value} employees</Text>
             </div>
             <ReadMore
               size={352}
-              text={companyDetail?.description}
+              text={jobDetail?.company?.description_html}
             />
           </div>
         </div>
@@ -379,30 +388,36 @@ const Job = ({
               <Text textStyle='xxl' bold>Similar Jobs</Text>
             </div>
             <div className={styles.JobDetailSidebarCardList}>
-              <Link external to={'/job/1'} className={styles.JobDetailSidebarCard}>
-                <Text 
-                  className={styles.JobDetailSidebarCardTitle} 
-                  textStyle='xl' 
-                  tagName='p' 
-                  bold
+              {similarJobs?.length > 0 && similarJobs.map((job) => (
+                <div 
+                  key={job.id} 
+                  onClick={() => handleRedirectToJob(job.truncated_job_title, job.id)} 
+                  className={styles.JobDetailSidebarCard}
                 >
-                  {truncateWords('Operation Manager Lorem Ipsum Manager Lorem IpsumManager Lorem IpsumManager Lorem IpsumManager Lorem Ipsum', 80)}
-                </Text>
-                <Text textStyle='base' tagName='p'>Loop Contact Solutions Inc.</Text>
-                <Text textStyle='base' tagName='p' textColor='darkgrey'>Makati</Text>
-                <Text textStyle='base' tagName='p' textColor='darkgrey'>₱75k - ₱80k</Text>
-                <Text textStyle='xsm' tagName='p'>Posted on 23 August 2021</Text>
-                <Link external to={'/job/1'}>
                   <Text 
-                    textStyle='base' 
+                    className={styles.JobDetailSidebarCardTitle} 
+                    textStyle='xl' 
                     tagName='p' 
                     bold
-                    className={styles.JobDetailSidebarCardCTA}
                   >
-                    Apply Now
+                    {job.truncated_job_title}
                   </Text>
-                </Link>
-              </Link>
+                  <Text textStyle='base' tagName='p'>{job.company_name}</Text>
+                  <Text textStyle='base' tagName='p' textColor='darkgrey'>{job.location_value}</Text>
+                  <Text textStyle='base' tagName='p' textColor='darkgrey'>{job.salary_range_value}</Text>
+                  <Text textStyle='xsm' tagName='p'>Posted on {job.published_at}</Text>
+                  <div className={styles.JobDetailSidebarCardApply} onClick={() => handleApplyJob(job.id)}>
+                    <Text 
+                      textStyle='base' 
+                      tagName='p' 
+                      bold
+                      className={styles.JobDetailSidebarCardCTA}
+                    >
+                      Apply Now
+                    </Text>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
           <div className={styles.JobDetailSidebarSection}>
@@ -415,7 +430,7 @@ const Job = ({
                 <Text textStyle='base' tagName='p'>Intermediate</Text>
                 <Text textStyle='base' tagName='p' textColor='darkgrey'>Online Learning</Text>
                 <Text textStyle='base' tagName='p' textColor='darkgrey'>₱80k</Text>
-                <Link external to={'/'}>
+                <div>
                   <Text 
                     textStyle='base' 
                     tagName='p' 
@@ -424,7 +439,7 @@ const Job = ({
                   >
                     Get Started
                   </Text>
-                </Link>
+                </div>
               </Link>
             </div>
           </div>
@@ -448,25 +463,45 @@ const Job = ({
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
-  const { keyword } = query
+  const { keyword, isApplied } = query
   const keywordQuery:any = keyword
-  const keywordQueryArray = keywordQuery?.split('-')
-  const jobId = keywordQueryArray?.slice(-1)[0]
+  const jobId = keywordQuery?.split('-').pop()
 
-  // store actions
-  store.dispatch(fetchJobDetailRequest(jobId))
+  if (jobId) {
+    // store actions
+    if (isApplied === 'true') {
+      store.dispatch(fetchAppliedJobDetailRequest(jobId))
+    } else {
+      // TODO: Check if User is LoggedIn then change status: 'protected'
+      store.dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
+    }
+
+    store.dispatch(fetchSimilarJobsRequest({jobId}))
+  }
+
   store.dispatch(fetchConfigRequest())
-
   store.dispatch(END)
+
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const jobDetail = storeState.job.jobDetail.response.data
+  const jobDetail = storeState.job?.jobDetail
+  const similarJobs = storeState.job?.similarJobs
+  const appliedJobDetail = storeState.job?.appliedJobDetail
   const config = storeState.config.config.response
 
-  return {
-    props: {
-      jobDetail,
-      config
+  if (jobDetail || appliedJobDetail || similarJobs) {
+    if (jobDetail.error || appliedJobDetail.error || similarJobs.error) {
+      return {
+        notFound: true,
+      }
+    }
+    return {
+      props: {
+        config,
+        jobDetail: jobDetail?.response?.id ? jobDetail?.response : appliedJobDetail?.response?.job,
+        applicationHistory: appliedJobDetail?.response?.application_histories || null,
+        similarJobs: similarJobs?.response || [],
+      }
     }
   }
 })

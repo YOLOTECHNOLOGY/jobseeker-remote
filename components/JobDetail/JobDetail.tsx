@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 /* Vendors */
-import moment from 'moment'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import {
@@ -23,9 +22,6 @@ import ReadMore from 'components/ReadMore'
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
 
-/* Helpers */
-import { numberToThousands } from 'helpers/formatter'
-
 /* Styles */
 import styles from './JobDetail.module.scss'
 
@@ -44,12 +40,11 @@ import {
   TelecommunicationAllowanceIcon,
   OtherAllowancesIcon,  
   MoreIcon,
-  ExpireIcon
+  ExpireIcon,
 } from 'images'
 
 interface IJobDetailProps {
   selectedJob: any
-  companyDetail: any
   setIsShowModalShare?: Function
   setIsShowReportJob?: Function
   setIsShowModalWithdrawApplication?: Function
@@ -57,18 +52,21 @@ interface IJobDetailProps {
   companyUrl?: string
   jobDetailUrl?: string
   category?: string
+  handlePostSaveJob?: Function
+  applicationHistory?: any
 }
 
 const JobDetail = ({
   selectedJob,
-  companyDetail,
   setIsShowModalShare,
   setIsShowReportJob,
   setIsShowModalWithdrawApplication,
   isSticky,
   jobDetailUrl,
   companyUrl,
-  category
+  category,
+  handlePostSaveJob,
+  applicationHistory
 }: IJobDetailProps) => {
   const [jobDetailOption, setJobDetailOption] = useState(false)
   
@@ -115,23 +113,23 @@ const JobDetail = ({
         {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
         {jobDetailOption && (
           <div className={styles.JobDetailOptionList}>
-            <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
-              <Text textStyle='lg'>View in new tab</Text>
-            </Link>
             {!isCategoryApplied && (
-              <div className={styles.JobDetailOptionItem} onClick={() => {
-                setIsShowReportJob(true)
-                setJobDetailOption(false)
-              }}>
-                <Text textStyle='lg'>Report job</Text>
-              </div>
-            )}
-            {isCategoryApplied && (
               <>
-                <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalWithdrawApplication(true)}>
-                  <Text textStyle='lg'>Withdraw Application</Text>
+                <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
+                  <Text textStyle='lg'>View in new tab</Text>
+                </Link>
+                <div className={styles.JobDetailOptionItem} onClick={() => {
+                  setIsShowReportJob(true)
+                  setJobDetailOption(false)
+                }}>
+                  <Text textStyle='lg'>Report job</Text>
                 </div>
               </>
+            )}
+            {isCategoryApplied && (
+              <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalWithdrawApplication(true)}>
+                <Text textStyle='lg'>Withdraw Application</Text>
+              </div>
             )}
                 
             <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
@@ -148,42 +146,38 @@ const JobDetail = ({
         <div className={styles.JobDetailHeader}>
           <div
             className={styles.JobDetailImage}
-            style={{ backgroundImage: `url(${selectedJob?.['company_logo']})` }}
+            style={{ backgroundImage: `url(${selectedJob?.company?.logo})` }}
           />
           <div className={styles.JobDetailInfo}>
             <Text textStyle='xxl' bold className={styles.JobDetailTitle}>
-              {selectedJob?.['job_title']}
+              {selectedJob?.job_title}
             </Text>
             <Text textStyle='lg' className={styles.JobDetailCompany}>
-              {selectedJob?.['company_name']}
+              {selectedJob?.company?.name}
             </Text>
-            <JobTag tag={selectedJob?.['job_type']} />
+            <JobTag tag={selectedJob?.job_type_value} />
             <div className={styles.JobDetailButtonsWrapper}>
-              {!isCategoryApplied && (
-                <>
-                  <div className={styles.JobDetailButtons}>
-                    {selectedJob?.['status_key'] === '-active' && (
-                      <MaterialButton variant='contained'>
-                        <Link to={selectedJob?.['external_apply_url']} external>Apply Now</Link>
-                      </MaterialButton>
-                    )}
-                    {selectedJob?.['status_key'] === 'active' && (
-                      <Text textStyle='base' className={styles.JobDetailStatus}>
-                        <Image src={ExpireIcon} height="16" width="16"/>
-                        <span>This job is no longer hiring</span>
-                      </Text>
-                    )}
+              <div className={styles.JobDetailButtons}>
+                {selectedJob?.status_key === 'active'  && (
+                  <MaterialButton variant='contained'>
+                    <Link to={selectedJob?.external_apply_url} external>Apply Now</Link>
+                  </MaterialButton>
+                )}
+                {selectedJob?.status_key !== 'active' && (
+                  <Text textStyle='base' className={styles.JobDetailStatus}>
+                    <Image src={ExpireIcon} height="16" width="16"/>
+                    <span>This job is no longer hiring</span>
+                  </Text>
+                )}
 
-                    <MaterialButton variant='outlined'>
-                      { isCategorySaved ? 'Saved' : 'Save Job' }
-                    </MaterialButton>
-                  </div>
-                  {!isCategoryApplied || !isCategorySaved && (
-                    <Text textStyle='xsm' className={styles.JobDetailPostedAt}>
-                      Posted on {moment(new Date(selectedJob?.['published_at'])).format('DD MMMM YYYY')}
-                    </Text>
-                  )}
-                </>
+                <MaterialButton variant='outlined' onClick={() => handlePostSaveJob({job_id: selectedJob?.id})}>
+                  { isCategorySaved ? 'Saved' : 'Save Job' }
+                </MaterialButton>
+              </div>
+              {(!isCategoryApplied || !isCategorySaved) && (
+                <Text textStyle='xsm' className={styles.JobDetailPostedAt}>
+                  Posted on {selectedJob?.published_at}
+                </Text>
               )}
             </div>
           </div>
@@ -201,7 +195,7 @@ const JobDetail = ({
                   Location
                 </Text>
                 <Text textStyle='base' bold className={styles.JobDetailPrefValue}>
-                  {selectedJob?.['job_location']}
+                  {selectedJob?.location?.value}
                 </Text>
               </span>
             </li>
@@ -216,7 +210,7 @@ const JobDetail = ({
                   Experience
                 </Text>
                 <Text textStyle='base' bold className={styles.JobDetailPrefValue}>
-                  {selectedJob?.['xp_lvl']}
+                  {selectedJob?.xp_lvl?.value}
                 </Text>
               </span>
             </li>
@@ -231,7 +225,7 @@ const JobDetail = ({
                   Education
                 </Text>
                 <Text textStyle='base' bold className={styles.JobDetailPrefValue}>
-                  {selectedJob?.['degree']}
+                  {selectedJob?.degree?.value}
                 </Text>
               </span>
             </li>
@@ -246,29 +240,25 @@ const JobDetail = ({
                   Salary
                 </Text>
                 <Text textStyle='base' bold className={styles.JobDetailPrefValue}>
-                  {`${numberToThousands(selectedJob?.['salary_range_from'])}K - ${numberToThousands(selectedJob?.['salary_range_to'])}K` }
+                  {selectedJob?.salary_range_value}
                 </Text>
               </span>
             </li>
           </ul>
         </div>
-        {isCategoryApplied && (
+        {isCategoryApplied && applicationHistory?.length > 0 && (
           <div className={styles.JobDetailApplicationWrapper}>
             <Text textStyle='lg' bold>Application History</Text>
             <Timeline className={styles.JobDetailApplicationTimeline}>
-              <TimelineItem>
-                <TimelineSeparator>
-                  <TimelineDot className={styles.JobDetailApplicationTimelineFirst}/>
-                  <TimelineConnector />
-                </TimelineSeparator>
-                <TimelineContent><Text textStyle='base'>Application withdrawn -  1 month ago</Text></TimelineContent>
-              </TimelineItem>
-              <TimelineItem>
-                <TimelineSeparator>
-                  <TimelineDot />
-                </TimelineSeparator>
-                <TimelineContent><Text textStyle='base'>Application submitted - 3 months ago</Text></TimelineContent>
-              </TimelineItem>
+              {applicationHistory.map((history, i) => (
+                <TimelineItem key={i}>
+                  <TimelineSeparator>
+                    <TimelineDot className={i === 0 ? styles.JobDetailApplicationTimelineFirst : ''}/>
+                    <TimelineConnector />
+                  </TimelineSeparator>
+                  <TimelineContent><Text textStyle='base'>{history.value} -  {history.elapsed_time}</Text></TimelineContent>
+                </TimelineItem>
+              ))}
             </Timeline>
           </div>
         )}
@@ -276,21 +266,21 @@ const JobDetail = ({
           <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
             Job Description
           </Text>
-          <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.['job_description_html'] }} />
+          <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.job_description_html }} />
         </div>
         <div className={styles.JobDetailSection}>
           <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
             Requirements
           </Text>
-          <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.['job_requirements_html'] }} />
+          <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.job_requirements_html }} />
         </div>
         <div className={styles.JobDetailSection}>
           <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
             Benefits
           </Text>
           <ul className={styles.JobDetailBenefitsList}>
-            {selectedJob?.['benefits']?.map((benefit) => (
-              <li className={styles.JobDetailBenefitsItem} key={benefit.id}>
+            {selectedJob?.benefits?.map((benefit, i) => (
+              <li className={styles.JobDetailBenefitsItem} key={i}>
                 {handleBenefitIcon(benefit.name)}
                 <Text textStyle='base' className={styles.JobDetailBenefitsText}>
                   {benefit.name}
@@ -304,10 +294,10 @@ const JobDetail = ({
             Skills/Software
           </Text>
           <ul className={styles.JobDetailSkillsList}>
-            {selectedJob?.['job_skills'].split(',').map((skill) => (
-              <li className={styles.JobDetailSkillsItem} key={skill}>
+            {selectedJob?.skills?.map((skill, i) => (
+              <li className={styles.JobDetailSkillsItem} key={i}>
                 <Text bold textStyle='base' className={styles.JobDetailSkillsText}>
-                  {skill}
+                  {skill.value}
                 </Text>
               </li>
             ))}
@@ -321,17 +311,20 @@ const JobDetail = ({
             Working Location
           </Text>
           <Text textStyle='base' className={styles.JobDetailSectionSubBody}>
-            {`${selectedJob?.['job_location']}, ${selectedJob?.['job_region']}, ${selectedJob?.['job_country']}`}
+            {`${selectedJob?.location?.value}`}
           </Text>
           <Text textStyle='base' bold className={styles.JobDetailSectionSubTitle}>
             Specialization
           </Text>
-          {selectedJob?.['categories'].map((category) => (
-            <Link to='/' key={category.id} className={styles.JobDetailSectionSubBody}>
-              <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
-                {' '}{category.value}
-              </Text>
-            </Link>
+          {selectedJob?.categories?.map((category, i) => (
+            <span key={i}>
+              <Link to='/' className={styles.JobDetailSectionSubBody}>
+                <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
+                  {' '}{category.value}
+                </Text>
+              </Link>
+              {', '}
+            </span>
           ))}
         </div>
         <div className={styles.aboutCompany}>
@@ -340,16 +333,16 @@ const JobDetail = ({
           </Text>
           <Link to={companyUrl} className={styles.aboutCompanyTitle}>
             <Text bold textStyle='xl' textColor='primaryBlue'>
-              {companyDetail?.['name']}
+              {selectedJob?.company?.name}
             </Text>
           </Link>
           <div className={styles.aboutCompanyDetail}>
-            <Text textStyle='base'>{companyDetail?.['industry']}</Text>
-            <Text textStyle='base'>{companyDetail?.['company_size']} employees</Text>
+            <Text textStyle='base'>{selectedJob?.company?.industry_value}</Text>
+            <Text textStyle='base'>{selectedJob?.company?.company_size_value} employees</Text>
           </div>
           <ReadMore
             size={352}
-            text={companyDetail?.['description']}
+            text={selectedJob?.company?.description_html}
           />
         </div>
       </div>

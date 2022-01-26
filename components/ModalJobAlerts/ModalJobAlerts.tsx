@@ -63,14 +63,11 @@ const ModalJobAlerts = ({
   const [modalUpdateJobAlert, setModalUpdateJobAlert] = useState(false)
   const [modalDeleteJobAlert, setModalDeleteJobAlert] = useState(false)
   const [selectedJobAlert, setSelectedJobAlert] = useState(null)
-  const [frequency, setFrequency] = useState(0)
-  const [notifiedAt, setNotifiedAt] = useState('email')
+  const [frequency, setFrequency] = useState(1)
+  // const [notifiedAt, setNotifiedAt] = useState('email')
   const [jobAlertResponse, setJobAlertResponse] = useState(null)
   const [formEmail, setFormEmail] = useState('')
   const [jobAlertError, setJobAlertError] = useState(null)
-
-  // eslint-disable-next-line no-console
-  console.log(notifiedAt)
 
   useEffect(() => {
     if (isShowModalManageJobAlerts && !isDeletingJobAlert) {
@@ -125,7 +122,7 @@ const ModalJobAlerts = ({
               <li key={alert.id} className={styles.ModalJobAlertsItem}>
                 <div className={styles.ModalJobAlertsItemHeader}>
                   <Text textStyle='xl' bold>
-                    {titleCase(alert.keyword)}
+                    {titleCase(alert.keyword_value)}
                   </Text>
                   <div className={styles.ModalJobAlertsItemAction}>
                     <Image
@@ -136,7 +133,7 @@ const ModalJobAlerts = ({
                         handleShowModalManageJobAlerts(false)
                         setModalUpdateJobAlert(true)
                         setSelectedJobAlert(alert)
-                        setFrequency(alert.frequency_id)
+                        setFrequency(alert.frequency_value === 'Daily' ? 1 : 2)
                       }}
                       className={styles.ModalJobAlertsItemButton}
                     />
@@ -154,9 +151,9 @@ const ModalJobAlerts = ({
                   </div>
                 </div>
                 <div className={styles.ModalJobAlertsItemBody}>
-                  <Text textStyle='base' bold>{formatLocationKeyDisplay(alert.location_key)}</Text>
-                  <Text textStyle='base'>Filters: Full-time, Marketing/Business Dev </Text>
-                  <Text textStyle='base'>Frequency: {alert.frequency} via email</Text>
+                  <Text textStyle='base' bold>{formatLocationKeyDisplay(alert.location_value)}</Text>
+                  <Text textStyle='base'>Filters: {alert.filters} </Text>
+                  <Text textStyle='base'>Frequency: via {alert.frequency_value}</Text>
                 </div>
               </li>
             ))}
@@ -173,7 +170,7 @@ const ModalJobAlerts = ({
         setFrequency(event.target.value)
         return
       }
-      setNotifiedAt(event.target.value)
+      // setNotifiedAt(event.target.value)
     }
 
     return (
@@ -199,7 +196,7 @@ const ModalJobAlerts = ({
         <div className={styles.ModalJobAlertBody}>
           <div className={styles.ModalUpdateJobAlert}>
             <div className={styles.ModalUpdateJobAlertHeader}>
-              <Text textStyle='xl' bold>{titleCase(selectedJobAlert?.keyword)}</Text>
+              <Text textStyle='xl' bold>{titleCase(selectedJobAlert?.keyword_value)}</Text>
               <Image
                 src={DeleteIcon}
                 width='18'
@@ -212,8 +209,8 @@ const ModalJobAlerts = ({
               />
             </div>
             <div className={styles.ModalUpdateJobAlertSub}>
-              <Text textStyle='base' bold>{formatLocationKeyDisplay(selectedJobAlert?.location_key)}</Text>
-              <Text textStyle='base'>Filters: Full-time, Marketing/Business Dev </Text>
+              <Text textStyle='base' bold>{selectedJobAlert?.location_value}</Text>
+              <Text textStyle='base'>Filters: {selectedJobAlert?.filters}</Text>
             </div>
 
             <div className={styles.ModalUpdateJobAlertBody}>
@@ -268,7 +265,7 @@ const ModalJobAlerts = ({
         <div className={styles.ModalJobAlertBody}>
           <Text textStyle='base'>
             {selectedJobAlert && (
-              <span>You are about to delete the job alert for <strong>“{titleCase(selectedJobAlert?.keyword)}, {selectedJobAlert?.location_key ? formatLocationKeyDisplay(selectedJobAlert?.location_key) : ''}“</strong>.</span>
+              <span>You are about to delete the job alert for <strong>“{titleCase(selectedJobAlert?.keyword_value)}, {selectedJobAlert?.location_value}“</strong>.</span>
             )}
             <br /> This cannot be undone
           </Text>

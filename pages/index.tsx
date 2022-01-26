@@ -157,7 +157,7 @@ const Home = (props: HomeProps) => {
           title='Finance jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='white'>Finance jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>Finance jobs</Text>
         </Link>
         <Link
           className={styles.link}
@@ -165,7 +165,7 @@ const Home = (props: HomeProps) => {
           title='Sales jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='white'>Sales jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>Sales jobs</Text>
         </Link>
         <Link
           className={styles.link}
@@ -173,10 +173,10 @@ const Home = (props: HomeProps) => {
           title='Marketing jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='white'>Marketing jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>Marketing jobs</Text>
         </Link>
         <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs' aTag>
-          <Text textStyle='sm' textColor='white'>Makati jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>Makati jobs</Text>
         </Link>
         <Link
           className={styles.link}
@@ -184,7 +184,7 @@ const Home = (props: HomeProps) => {
           title='IT jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='white'>IT jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>IT jobs</Text>
         </Link>
         <Link
           className={styles.link}
@@ -192,7 +192,7 @@ const Home = (props: HomeProps) => {
           title='Overseas jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='white'>Overseas jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>Overseas jobs</Text>
         </Link>
         <Link
           className={styles.link}
@@ -200,7 +200,7 @@ const Home = (props: HomeProps) => {
           title='Customer Service jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='white'>Customer Service jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>Customer Service jobs</Text>
         </Link>
         <Link
           className={styles.link}
@@ -208,10 +208,10 @@ const Home = (props: HomeProps) => {
           title='₱30K + jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='white'>₱30K + jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>₱30K + jobs</Text>
         </Link>
         <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs' aTag>
-          <Text textStyle='sm' textColor='white'>Manila jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>Manila jobs</Text>
         </Link>
         <Link
           className={styles.link}
@@ -219,7 +219,7 @@ const Home = (props: HomeProps) => {
           title='Full Time jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='white'>Full Time jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>Full Time jobs</Text>
         </Link>
       </div>
     )
@@ -232,7 +232,7 @@ const Home = (props: HomeProps) => {
           <Text
             tagName='h1'
             textStyle='xxxl'
-            textColor='white'
+            textColor='primaryBlue'
             bold
             className={breakpointStyles.hideOnMobileAndTablet}
           >
@@ -256,7 +256,7 @@ const Home = (props: HomeProps) => {
                     onSearch()
                   }
                 }}
-              />
+                />
               <MaterialLocationField
                 className={styles.locationField}
                 // defValue={defaultLocation}
@@ -281,21 +281,7 @@ const Home = (props: HomeProps) => {
               {width >= 799 ? (
                 <div className={styles.topCompaniesList}>
                   {topCompanies?.map((company, index) => {
-                    if (index < 25) {
-                      return (
-                        <Link
-                          key={company.id}
-                          className={styles.topCompaniesLogo}
-                          to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
-                          external
-                        >
-                          <Image src={company.logo} alt={company.name} width='60' height='60' />
-                        </Link>
-                      )
-                    }
-                  })}
-                  {topCompanies?.map((company, index) => {
-                    if (index < 12) {
+                    if (index < 24) {
                       return (
                         <Link
                           key={company.id}

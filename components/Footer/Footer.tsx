@@ -15,6 +15,7 @@ import {
   instagram,
   twitter,
   linkedin,
+  youtube,
 } from 'images'
 
 import styles from './Footer.module.scss'
@@ -341,7 +342,7 @@ const Footer = ({ showButton }: FooterProps) => {
                 Download Bossjob App
               </Text>
               <div className={styles.footerMobileDownloadApp}>
-                <div style={{marginRight:'15px'}}>
+                <div style={{ marginRight: '15px' }}>
                   <Image src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
                 </div>
                 <div>
@@ -364,14 +365,6 @@ const Footer = ({ showButton }: FooterProps) => {
                 </Link>
                 <Link
                   className={styles.socialLink}
-                  to='//twitter.com/Bossjobph'
-                  external
-                  title='Bossjob Twitter'
-                >
-                  <Image src={twitter} alt='twitter' width='32' height='32' />
-                </Link>
-                <Link
-                  className={styles.socialLink}
                   to='//www.linkedin.com/company/bossjob-yolo-technology/'
                   external
                   title='Bossjob LinkedIn'
@@ -385,6 +378,22 @@ const Footer = ({ showButton }: FooterProps) => {
                   title='Bossjob Instagram'
                 >
                   <Image src={instagram} alt='instagram' width='32' height='32' />
+                </Link>
+                <Link
+                  className={styles.socialLink}
+                  to='//www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'
+                  external
+                  title='Bossjob Youtube'
+                >
+                  <Image src={youtube} alt='youtube' width='32' height='32' />
+                </Link>
+                <Link
+                  className={styles.socialLink}
+                  to='//twitter.com/Bossjobph'
+                  external
+                  title='Bossjob Twitter'
+                >
+                  <Image src={twitter} alt='twitter' width='32' height='32' />
                 </Link>
               </div>
             </div>
@@ -706,14 +715,6 @@ const Footer = ({ showButton }: FooterProps) => {
                       </Link>
                       <Link
                         className={styles.socialLink}
-                        to='//twitter.com/Bossjobph'
-                        external
-                        title='Bossjob Twitter'
-                      >
-                        <Image src={twitter} alt='twitter' width='32' height='32' />
-                      </Link>
-                      <Link
-                        className={styles.socialLink}
                         to='//www.linkedin.com/company/bossjob-yolo-technology/'
                         external
                         title='Bossjob LinkedIn'
@@ -727,6 +728,22 @@ const Footer = ({ showButton }: FooterProps) => {
                         title='Bossjob Instagram'
                       >
                         <Image src={instagram} alt='instagram' width='32' height='32' />
+                      </Link>
+                      <Link
+                        className={styles.socialLink}
+                        to='//www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'
+                        external
+                        title='Bossjob Youtube'
+                      >
+                        <Image src={youtube} alt='youtube' width='32' height='32' />
+                      </Link>
+                      <Link
+                        className={styles.socialLink}
+                        to='//twitter.com/Bossjobph'
+                        external
+                        title='Bossjob Twitter'
+                      >
+                        <Image src={twitter} alt='twitter' width='32' height='32' />
                       </Link>
                     </div>
                   </div>

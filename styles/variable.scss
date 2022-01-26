@@ -58,3 +58,13 @@ $mobile-font-size-lg: 12px;
 $mobile-font-size-xl: 14px;
 $mobile-font-size-xxl: 18px;
 $mobile-font-size-xxxl: 20px;
+
+
+/*******************************************/
+/*                 Custom                  */
+/*******************************************/
+.GlobalContainer {
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+}
