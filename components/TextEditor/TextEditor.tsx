@@ -1,17 +1,19 @@
-import React, { useCallback, useState, forwardRef, Ref, PropsWithChildren } from 'react'
+import React, { useCallback, useState, useEffect, forwardRef, Ref, PropsWithChildren } from 'react'
+
+/* Vendors */
 import isHotkey from 'is-hotkey'
+import { Editor, Transforms, Element as SlateElement } from 'slate'
+
 import { Editable, withReact, useSlate, Slate, ReactEditor } from 'slate-react'
-import {
-  Editor,
-  Transforms,
-  createEditor,
-  Descendant,
-  Element as SlateElement,
-} from 'slate'
+import { createEditor, Descendant } from 'slate'
 import { withHistory } from 'slate-history'
 
 /* Components */
 import Image from 'next/image'
+
+/* Helpers */
+import { getItem, setItem, removeItem } from 'helpers/localStorage'
+import { HOTKEYS, STORAGE_NAME, LIST_TYPES, serialize, deserialize } from 'helpers/richTextEditor'
 
 /* Styles */
 import styles from './TextEditor.module.scss'
@@ -24,25 +26,66 @@ interface BaseProps {
   [key: string]: unknown
 }
 
-const HOTKEYS = {
-  'mod+b': 'bold',
-  'mod+i': 'italic',
-  'mod+u': 'underline',
-  'mod+`': 'code',
-}
-
-const LIST_TYPES = ['numbered-list', 'bulleted-list']
-
-const TextEditor = () => {
+const TextEditorField = () => {
   const [value, setValue] = useState<Descendant[]>(initialEditorValue)
   // renderLeaf activates bold, italic, underline
   // const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
   const renderElement = useCallback((props) => <Element {...props} />, [])
   const [editor] = useState(() => withHistory(withReact(createEditor() as ReactEditor)))
 
+  useEffect(() => {
+    const initialValue = JSON.parse(getItem(STORAGE_NAME)) || initialEditorValue
+    setValue(initialValue)
+    editor.children = initialValue
+
+    return () => {
+      removeItem(STORAGE_NAME)
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log('value', value)
+  }, [value])
+
+  const onChange = (value) => {
+    setValue(value)
+
+    const isAstChange = editor.operations.some((op) => 'set_selection' !== op.type)
+    if (isAstChange) {
+      // Save the value to Local Storage.
+      const content = JSON.stringify(value)
+      console.log('serialize value', serialize(value))
+      const abc = {
+        children:value
+      }
+      const htmlValue = console.log('serialize abc', serialize(abc))
+      const contentObject =  JSON.stringify({
+        html: htmlValue,
+        slate: content
+      })
+      // const contentObject =  JSON.stringify({
+      //   html: htmlValue,
+      //   slate: content
+      // })
+      setItem(STORAGE_NAME, content)
+      // setItem(STORAGE_NAME, serialize(content))
+    }
+  }
+
+  const onKeyDown = (event) => {
+    for (const hotkey in HOTKEYS) {
+      if (isHotkey(hotkey, event as any)) {
+        event.preventDefault()
+        const mark = HOTKEYS[hotkey]
+        toggleMark(editor, mark)
+      }
+    }
+    console.log('onKeyDown event.target.value', event.target.value)
+  }
+
   return (
     <div className={styles.textEditor}>
-      <Slate editor={editor} value={value} onChange={(value) => setValue(value)}>
+      <Slate editor={editor} value={value} onChange={onChange}>
         <div className={styles.toolBar}>
           <NumberedListButton format='numbered-list' />
           <BulletedListButton format='bulleted-list' />
@@ -54,15 +97,7 @@ const TextEditor = () => {
             placeholder='Type here...'
             spellCheck
             autoFocus
-            onKeyDown={(event) => {
-              for (const hotkey in HOTKEYS) {
-                if (isHotkey(hotkey, event as any)) {
-                  event.preventDefault()
-                  const mark = HOTKEYS[hotkey]
-                  toggleMark(editor, mark)
-                }
-              }
-            }}
+            onKeyDown={onKeyDown}
             className={styles.editable}
           />
         </div>
@@ -134,7 +169,7 @@ const Element = ({ attributes, children, element }) => {
   }
 }
 
-const BulletedListButton = ({ format } : any) => {
+const BulletedListButton = ({ format }: any) => {
   const editor = useSlate()
   return (
     <IconButton
@@ -150,7 +185,7 @@ const BulletedListButton = ({ format } : any) => {
   )
 }
 
-const NumberedListButton = ({ format } : any) => {
+const NumberedListButton = ({ format }: any) => {
   const editor = useSlate()
   return (
     <IconButton
@@ -211,5 +246,4 @@ const initialEditorValue = [
   },
 ]
 
-
-export default TextEditor
+export default TextEditorField
