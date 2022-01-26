@@ -1,4 +1,4 @@
-import { Node, Text, Editor, Transforms, Element as SlateElement } from 'slate'
+import { Text } from 'slate'
 import escapeHtml from 'escape-html'
 
 const STORAGE_NAME = 'slate-rte'
@@ -10,15 +10,10 @@ const HOTKEYS = {
   'mod+`': 'code',
 }
 
-const LIST_TYPES = ['numbered-list', 'bulleted-list']
+const LIST_TYPES = ['numbered-list', 'bulleted-list', 'list-item']
 
 // Define a serializing function that takes a value and returns a string.
 const serialize = (node) => {
-  console.log('node', node)
-  console.log('Text.isText(node)', Text.isText(node))
-  console.log('node.text', node.text)
-  console.log('node.type', node.type)
-  console.log('node.children', node.children)
   if (Text.isText(node)) {
     let string = escapeHtml(node.text)
     if (node.bold) {
@@ -49,7 +44,6 @@ const serialize = (node) => {
 
 // Define a deserializing function that takes a string and returns a value.
 const deserialize = (string) => {
-  console.log('deserialize string', string)
   // Return a value array of children derived by splitting the string.
   return string.split('\n').map((line) => {
     return {

@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect, forwardRef, Ref, PropsWithChil
 
 /* Vendors */
 import isHotkey from 'is-hotkey'
-import { Editor, Transforms, Element as SlateElement } from 'slate'
+import { Editor, Transforms, Range, Element as SlateElement } from 'slate'
 
 import { Editable, withReact, useSlate, Slate, ReactEditor } from 'slate-react'
 import { createEditor, Descendant } from 'slate'
@@ -13,7 +13,7 @@ import Image from 'next/image'
 
 /* Helpers */
 import { getItem, setItem, removeItem } from 'helpers/localStorage'
-import { HOTKEYS, STORAGE_NAME, LIST_TYPES, serialize, deserialize } from 'helpers/richTextEditor'
+import { HOTKEYS, STORAGE_NAME, LIST_TYPES } from 'helpers/richTextEditor'
 
 /* Styles */
 import styles from './TextEditor.module.scss'
@@ -24,6 +24,12 @@ import { VectorBulletedListIcon, VectorNumberedListIcon } from 'images'
 interface BaseProps {
   className: string
   [key: string]: unknown
+}
+type CustomText = { text: string; strong?: boolean }
+
+type CustomElement = {
+  type: string
+  children: CustomText[]
 }
 
 const TextEditorField = () => {
@@ -43,10 +49,6 @@ const TextEditorField = () => {
     }
   }, [])
 
-  useEffect(() => {
-    console.log('value', value)
-  }, [value])
-
   const onChange = (value) => {
     setValue(value)
 
@@ -54,21 +56,29 @@ const TextEditorField = () => {
     if (isAstChange) {
       // Save the value to Local Storage.
       const content = JSON.stringify(value)
-      console.log('serialize value', serialize(value))
-      const abc = {
-        children:value
-      }
-      const htmlValue = console.log('serialize abc', serialize(abc))
-      const contentObject =  JSON.stringify({
-        html: htmlValue,
-        slate: content
-      })
-      // const contentObject =  JSON.stringify({
-      //   html: htmlValue,
-      //   slate: content
-      // })
+      // const contentObj = {
+      //   children: value,
+      // }
+      // const htmlValue = console.log('serialize abc', serialize(contentObj))
       setItem(STORAGE_NAME, content)
       // setItem(STORAGE_NAME, serialize(content))
+    }
+  }
+
+  const handleBackspace: React.KeyboardEventHandler<HTMLDivElement> = (event) => {
+    if (event.key === 'Backspace') {
+      const { selection } = editor
+      if (
+        selection &&
+        selection.focus.offset === 0 &&
+        selection.anchor.offset === 0 &&
+        Range.isCollapsed(selection)
+      ) {
+        const node = editor.children[selection.anchor.path[0]]
+        if (LIST_TYPES.includes((node as CustomElement).type)) {
+          toggleBlock(editor, 'list-item')
+        }
+      }
     }
   }
 
@@ -80,7 +90,7 @@ const TextEditorField = () => {
         toggleMark(editor, mark)
       }
     }
-    console.log('onKeyDown event.target.value', event.target.value)
+    handleBackspace(event)
   }
 
   return (
