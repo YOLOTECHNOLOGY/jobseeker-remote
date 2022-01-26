@@ -121,10 +121,12 @@ const toggleBlock = (editor, format) => {
   const isList = LIST_TYPES.includes(format)
 
   Transforms.unwrapNodes(editor, {
+    // @ts-ignore
     match: (n) => !Editor.isEditor(n) && SlateElement.isElement(n) && LIST_TYPES.includes(n.type),
     split: true,
   })
   const newProperties: Partial<SlateElement> = {
+    // @ts-ignore
     type: isActive ? 'paragraph' : isList ? 'list-item' : format,
   }
   Transforms.setNodes<SlateElement>(editor, newProperties)
@@ -152,6 +154,7 @@ const isBlockActive = (editor, format) => {
   const [match] = Array.from(
     Editor.nodes(editor, {
       at: Editor.unhangRange(editor, selection),
+      // @ts-ignore
       match: (n) => !Editor.isEditor(n) && SlateElement.isElement(n) && n.type === format,
     })
   )
