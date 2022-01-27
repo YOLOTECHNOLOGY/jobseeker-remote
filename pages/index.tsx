@@ -246,7 +246,7 @@ const Home = (props: HomeProps) => {
                 variant='outlined'
                 size='small'
                 className={styles.searchField}
-                onChange={(e)=>{
+                onChange={(e) => {
                   e.preventDefault()
                   setSearchValue(e.target.value)
                 }}
@@ -256,7 +256,7 @@ const Home = (props: HomeProps) => {
                     onSearch()
                   }
                 }}
-                />
+              />
               <MaterialLocationField
                 className={styles.locationField}
                 // defValue={defaultLocation}
@@ -267,9 +267,7 @@ const Home = (props: HomeProps) => {
                 Search
               </MaterialButton>
             </div>
-            <div className={styles.quickLinksContainer}>
-              {renderQuickLinks()}
-            </div>
+            <div className={styles.quickLinksContainer}>{renderQuickLinks()}</div>
           </div>
         </section>
         <div className={styles.main}>
@@ -407,21 +405,29 @@ const Home = (props: HomeProps) => {
                   className={activeFeatureImg === 1 ? styles.active : ''}
                   src={BuildProfessionalResume}
                   alt='Build Professional Resume'
+                  width='535'
+                  height='432'
                 />
                 <img
                   className={activeFeatureImg === 2 ? styles.active : ''}
                   src={ChatDirectlyWithBoss}
                   alt='Build Professional Resume'
+                  width='554'
+                  height='382'
                 />
                 <img
                   className={activeFeatureImg === 3 ? styles.active : ''}
                   src={GetHeadhunted}
                   alt='Build Professional Resume'
+                  width='555'
+                  height='427'
                 />
                 <img
                   className={activeFeatureImg === 4 ? styles.active : ''}
                   src={LevelUpCareer}
                   alt='Build Professional Resume'
+                  width='520'
+                  height='382'
                 />
               </div>
               <div className={styles.flatDisplay}>
@@ -520,7 +526,17 @@ const Home = (props: HomeProps) => {
           <Text tagName='h1' textStyle='xxxl' bold>
             Bossjob in the news
           </Text>
-          <div className={styles.video} />
+          <div className={styles.video}>
+            <iframe
+              width='560'
+              height='315'
+              src='https://www.youtube.com/embed/_taCBqITsGM'
+              title='YouTube video player'
+              frameBorder='0'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              allowFullScreen
+            />
+          </div>
           <div className={styles.featureList}>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
