@@ -33,6 +33,9 @@ import watchCreateJobAlert from 'store/sagas/alerts/createJobAlert'
 // Users 
 import WatchRegisterUser from 'store/sagas/users/registerUser'
 
+// Auth
+import WatchSocialLogin from 'store/sagas/auth/socialLogin'
+
 function* rootSaga() {
   yield all([
     watchFetchConfig(),
@@ -59,7 +62,9 @@ function* rootSaga() {
     watchDeleteJobAlert(),
     watchCreateJobAlert(),
 
-    WatchRegisterUser()
+    WatchRegisterUser(),
+
+    WatchSocialLogin()
   ])
 }
 

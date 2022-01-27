@@ -16,6 +16,8 @@ type MaterialTextFieldProps = {
   isLoading?: boolean
   disabled?: boolean
   color?: string
+  InputProps?: any
+  refs?: any
 } & Omit<Input, 'size'>
 
 const theme = createTheme({

@@ -55,6 +55,36 @@ const App = ({ Component, pageProps }: AppProps) => {
           `,
         }}
       ></Script>
+
+      {/* Google One Tap Sign in */}
+      <Script src="https://accounts.google.com/gsi/client" async defer/>
+      <Script
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.onload = function () {
+              google.accounts.id.initialize({
+                client_id: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
+                callback: handleGoogleOneTapLoginResponse,
+                cancel_on_tap_outside: false
+              });
+              google.accounts.id.prompt((notification) => {
+                if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                  console.log(notification.getNotDisplayedReason())
+                }
+              });
+            };
+
+            function handleGoogleOneTapLoginResponse(CredentialResponse) {
+              var accessToken = CredentialResponse.credential;
+              var activeKey = 1;
+              if (window.location.pathname.includes('/employer')) {
+                activeKey = 2;
+              }
+              window.location.replace("/api/googleLoginHandler?access_token=" + accessToken + "&active_key=" + activeKey);
+            }
+          `
+        }}
+      />
       <CookiesProvider>
         <Component {...pageProps} />
       </CookiesProvider>

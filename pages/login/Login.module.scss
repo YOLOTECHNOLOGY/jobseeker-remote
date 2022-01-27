@@ -1,0 +1,58 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+
+.LoginDivider {
+  position: relative;
+  height: 16px;
+  margin-top: 28px;
+
+  &Text {
+    color: $lightgrey;
+    position: absolute;
+    background-color: $white-3;
+    width: 100px;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: $lightgrey-2;
+    top: 50%;
+    left: 0;
+  }
+}
+
+.LoginForm {
+  margin-top: 30px;
+
+  &Input {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+}
+
+.LoginForgotPasswordLink {
+  text-align: right;
+  margin-bottom: 30px;
+
+  span {
+    text-decoration: underline;
+  }
+}
+
+.LoginButton {
+  width: 100%;
+}
+
+.LoginAgreement {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+}

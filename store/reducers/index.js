@@ -9,6 +9,7 @@ import companiesReducers from './companies'
 import reportsReducers from './reports'
 import alertsReducers from './alerts'
 import usersReducers from './users'
+import authReducers from './auth'
 
 
 // TODO: Import and List reducers here
@@ -21,6 +22,7 @@ const combinedReducer = combineReducers({
   reports: reportsReducers,
   alerts: alertsReducers,
   users: usersReducers,
+  auth: authReducers,
 })
 
 /* 
