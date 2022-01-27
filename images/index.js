@@ -39,6 +39,9 @@ export const DownloadOnAppStore = `${S3BucketJobseeker}/DownloadOnAppStore.svg`
 export const DownloadOnGooglePlay = `${S3BucketJobseeker}/DownloadOnGooglePlay.svg`
 export const FilterIcon = `${S3BucketJobseeker}/FilterIcon.svg`
 export const ExpireIcon = `${S3BucketJobseeker}/ExpireIcon.svg`
+export const VectorBulletedListIcon = `${S3BucketJobseeker}/VectorBulletedListIcon.svg`
+export const VectorNumberedListIcon = `${S3BucketJobseeker}/VectorNumberedListIcon.svg`
+
 
 /* Footer Social Links Logo */
 export const facebook = `${S3BucketJobseeker}/facebook.svg`
