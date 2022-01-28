@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import { wrapper } from 'store'
 import { CookiesProvider } from 'react-cookie'
+import { ConnectedRouter } from 'connected-next-router'
+
 import 'styles/globals.scss'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
@@ -57,6 +59,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       ></Script>
 
       {/* Google One Tap Sign in */}
+      <Script src="https://apis.google.com/js/platform.js"/>
       <Script src="https://accounts.google.com/gsi/client" async defer/>
       <Script
         dangerouslySetInnerHTML={{
@@ -80,14 +83,64 @@ const App = ({ Component, pageProps }: AppProps) => {
               if (window.location.pathname.includes('/employer')) {
                 activeKey = 2;
               }
-              window.location.replace("/api/googleLoginHandler?access_token=" + accessToken + "&active_key=" + activeKey);
+              window.location.replace("/handlers/googleLoginHandler?access_token=" + accessToken + "&active_key=" + activeKey);
             }
           `
         }}
       />
-      <CookiesProvider>
-        <Component {...pageProps} />
-      </CookiesProvider>
+
+      {/* Facebook */}
+      <Script
+        dangerouslySetInnerHTML={{
+          __html: `
+            function initialize() {	
+              FB.init({	
+                appId            : ${ process.env.CUSTOM_NODE_ENV === 'production' ? '2026042927653653' : '2111002932479859'},
+                autoLogAppEvents : true,	
+                xfbml            : true,	
+                version          : 'v6.0'	
+              });	
+
+              FB.Event.subscribe('messenger_checkbox', function(e) {
+                console.log("messenger_checkbox event");
+                console.log(e);
+                if (e.event == 'rendered') {
+                  console.log("Plugin was rendered");
+                } else if (e.event == 'checkbox') {
+                  var checkboxState = e.state;
+                  console.log("Checkbox state: " + checkboxState);
+                } else if (e.event == 'not_you') {
+                  console.log("User clicked 'not you'");
+                } else if (e.event == 'hidden') {
+                  console.log("Plugin was hidden");
+                }
+              });
+            };	
+            if(window.FB === undefined) {	
+              window.fbAsyncInit = function() {	
+                initialize();	
+              };	
+            }	
+            else {	
+              initialize();	
+            }	
+
+            (function(d, s, id){	
+              var js, fjs = d.getElementsByTagName(s)[0];	
+              if (d.getElementById(id)) {return;}	
+              js = d.createElement(s); js.id = id;	
+              js.src = "https://connect.facebook.net/en_US/sdk.js";	
+              fjs.parentNode.insertBefore(js, fjs);	
+            }(document, 'script', 'facebook-jssdk'));	
+            `
+        }}
+      />
+
+      <ConnectedRouter>
+        <CookiesProvider>
+          <Component {...pageProps} />
+        </CookiesProvider>
+      </ConnectedRouter>
     </>
   )
 }

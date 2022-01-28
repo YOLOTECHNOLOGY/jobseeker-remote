@@ -34,7 +34,11 @@ import watchCreateJobAlert from 'store/sagas/alerts/createJobAlert'
 import WatchRegisterUser from 'store/sagas/users/registerUser'
 
 // Auth
-import WatchSocialLogin from 'store/sagas/auth/socialLogin'
+import watchSocialLogin from 'store/sagas/auth/socialLogin'
+import watchLogin from 'store/sagas/auth/login'
+
+// Recruiters
+import watchFetchRecruiterSubscriptionFeature from 'store/sagas/recruiters/fetchRecruiterSubscriptionFeature'
 
 function* rootSaga() {
   yield all([
@@ -64,7 +68,10 @@ function* rootSaga() {
 
     WatchRegisterUser(),
 
-    WatchSocialLogin()
+    watchSocialLogin(),
+    watchLogin(),
+
+    watchFetchRecruiterSubscriptionFeature()
   ])
 }
 

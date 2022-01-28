@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { HYDRATE } from 'next-redux-wrapper'
+import { routerReducer } from 'connected-next-router'
 
 import navigationBarReducers from './navigationBar'
 import configReducers from './config'
@@ -10,6 +11,7 @@ import reportsReducers from './reports'
 import alertsReducers from './alerts'
 import usersReducers from './users'
 import authReducers from './auth'
+import recruitersReducers from './recruiters'
 
 
 // TODO: Import and List reducers here
@@ -23,6 +25,8 @@ const combinedReducer = combineReducers({
   alerts: alertsReducers,
   users: usersReducers,
   auth: authReducers,
+  recruiters: recruitersReducers,
+  router: routerReducer
 })
 
 /* 
@@ -37,6 +41,10 @@ const rootReducer = (state, action) => {
     const nextState = {
       ...state, // use previous state
       ...action.payload, // apply delta from hydration
+    }
+    if (typeof window !== 'undefined' && state?.router) {
+      // preserve router value on client side navigation
+      nextState.router = state.router
     }
     // preserve any client state on server when HYDRATE is triggered by doing so:
     return nextState

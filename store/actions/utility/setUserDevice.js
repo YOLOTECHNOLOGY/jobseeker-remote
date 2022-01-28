@@ -5,6 +5,6 @@ const setUserDevice = (userAgent) => ({
   userAgent,
 })
 
-export default {
+export {
   setUserDevice,
 }

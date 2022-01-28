@@ -28,9 +28,15 @@ const SocialMediaAuth = ({
       />
       <Linkedin
         className={styles.SocialButton}
+        callBackMethod={callbackRequest}
+        redirect={router.query.redirect}
+        isLogin
       />
       <Facebook
         className={styles.SocialButton}
+        callBackMethod={callbackRequest}
+        redirect={router.query.redirect}
+        isLogin
       />
     </div>
   )

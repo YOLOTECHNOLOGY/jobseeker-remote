@@ -1,15 +1,29 @@
 import { call, put, takeLatest, fork } from 'redux-saga/effects'
+import { push } from 'react-router-redux'
+
 import { setCookie } from 'helpers/cookies'
+import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
+import { getItem, removeItem } from 'helpers/localStorage'
+import { applyPendingJobId } from 'helpers/constants'
 
 import { SOCIAL_LOGIN_REQUEST } from 'store/types/auth/socialLogin'
+import { FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS } from 'store/types/recruiters/fetchRecruiterSubscriptionFeature'
+
 import {
   socialLoginSuccess,
   socialLoginFailed,
 } from 'store/actions/auth/socialLogin'
+import { 
+  fetchRecruiterSubscriptionFeatureSuccess, 
+  fetchRecruiterSubscriptionFeatureFailed 
+} from 'store/actions/recruiters/fetchRecruiterSubscriptionFeature'
 
 import { socialLoginService } from 'store/services/auth/socialLogin'
 import { checkEmailExistService } from 'store/services/auth/checkEmailExist'
 import { checkSocialUserExistService } from 'store/services/auth/checkSocialUserExist'
+import { loginToBosshuntService } from 'store/services/auth/loginToBosshunt'
+
+import { fetchRecruiterSubscriptionFeatureService } from 'store/services/recruiters/fetchRecruiterSubscriptionFeature'
 
 function* socialLoginReq(actions) {
   const {
@@ -34,6 +48,7 @@ function* socialLoginReq(actions) {
     last_name: lastName,
     avatar: pictureUrl,
     source: 'web',
+    ...(yield* getUtmCampaignData())
   }
 
   if (activeKey) {
@@ -59,22 +74,22 @@ function* login(payload, redirect, fromRegister = false) {
       const loginData = response.data.data
 
       const userCookie = {
-        active_key: response.data.data.active_key,
-        id: response.data.data.id,
-        first_name: response.data.data.first_name,
-        last_name: response.data.data.last_name,
-        email: response.data.data.email,
-        phone_num: response.data.data.phone_num,
-        is_mobile_verified: response.data.data.is_mobile_verified,
-        avatar: response.data.data.avatar,
-        additional_info: response.data.data.additional_info,
-        is_email_verify: response.data.data.is_email_verify,
-        notice_period_id: response.data.data.notice_period_id,
-        is_profile_completed: response.data.data.is_profile_completed,
+        active_key: loginData.active_key,
+        id: loginData.id,
+        first_name: loginData.first_name,
+        last_name: loginData.last_name,
+        email: loginData.email,
+        phone_num: loginData.phone_num,
+        is_mobile_verified: loginData.is_mobile_verified,
+        avatar: loginData.avatar,
+        additional_info: loginData.additional_info,
+        is_email_verify: loginData.is_email_verify,
+        notice_period_id: loginData.notice_period_id,
+        is_profile_completed: loginData.is_profile_completed,
         recruiter_latest_work_xp:
-          (response.data.data.recruiter_latest_work_xp && {
-            company_id: response.data.data.recruiter_latest_work_xp.company_id,
-            job_title: response.data.data.recruiter_latest_work_xp.job_title
+          (loginData.recruiter_latest_work_xp && {
+            company_id: loginData.recruiter_latest_work_xp.company_id,
+            job_title: loginData.recruiter_latest_work_xp.job_title
           }) ||
           null
       }
@@ -88,6 +103,7 @@ function* login(payload, redirect, fromRegister = false) {
         url = redirect
       }
 
+      removeUtmCampaign()
       if (window !== 'undefined' && window.gtag && fromRegister) {
         if (parseInt(userCookie.active_key) === 1) {
           yield window.gtag('event', 'conversion', {
@@ -99,12 +115,19 @@ function* login(payload, redirect, fromRegister = false) {
           })
         }
       }
+
       yield call(setCookie, 'user', userCookie)
       yield call(
         setCookie,
         'accessToken',
-        response.data.data.authentication.access_token
+        loginData.authentication.access_token
       )
+
+      yield fork(fetchRecruiterSubscriptionFeature, loginData)
+      yield take(FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS)
+
+      yield put(push(url))
+      // yield put(destroy('companyJobForm')) // Reset Jobs Form
     }
   } catch (err) {
     yield put(socialLoginFailed(error))
@@ -144,6 +167,53 @@ function* checkSocialUserExist(payload, redirect) {
       }
 
       yield fork(login, loginPayload, redirect)
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+function* fetchRecruiterSubscriptionFeature(user) {
+  try {
+    const subscriptionFeature = yield call(fetchRecruiterSubscriptionFeatureService)
+    if (subscriptionFeature.status >= 200 && subscriptionFeature.status < 300) {
+      yield put(fetchRecruiterSubscriptionFeatureSuccess(subscriptionFeature.data))
+
+      if (
+        user.active_key === 2 &&
+        subscriptionFeature.data.data.bosshunt_ats === true
+      ) {
+        // Login to bosshunt
+        const randomPassword =
+          Math.random()
+            .toString(36)
+            .substring(2, 15) +
+          Math.random()
+            .toString(36)
+            .substring(2, 15)
+
+        const loginBosshuntPayload = {
+          email: user.email,
+          password: randomPassword,
+          first_name: user.first_name,
+          last_name: user.last_name
+        }
+
+        yield fork(logintToBosshunt, loginBosshuntPayload)
+      }
+    }
+    yield call(setCookie, 'splan', subscriptionFeature.data.data)
+  } catch (err) {
+    yield put(fetchRecruiterSubscriptionFeatureFailed(err))
+  }
+}
+
+function* logintToBosshunt(payload) {
+  try {
+    const bosshuntLogin = yield call(loginToBosshuntService, payload)
+
+    if (bosshuntLogin.status >= 200 && bosshuntLogin.status < 300) {
+      yield call(setCookie, 'bosshuntAuthToken', bosshuntLogin.data.data.token)
     }
   } catch (err) {
     console.error(err)

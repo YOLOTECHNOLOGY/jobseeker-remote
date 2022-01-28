@@ -25,7 +25,9 @@ module.exports = {
     NEW_PROJECT_URL: process.env.NEW_PROJECT_URL,
     CLIENT_ID: process.env.CLIENT_ID,
     CLIENT_SECRET: process.env.CLIENT_SECRET,
-    COUNTRY_KEY: process.env.COUNTRY_KEY
+    COUNTRY_KEY: process.env.COUNTRY_KEY,
+    LINKEDIN_CLIENT_ID: process.env.LINKEDIN_CLIENT_ID,
+    LINKEDIN_CLIENT_SECRET: process.env.LINKEDIN_CLIENT_SECRET
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'node_modules')],

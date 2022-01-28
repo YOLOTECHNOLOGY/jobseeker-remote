@@ -1,5 +1,11 @@
-import socialLogin from './socialLogin'
+import { combineReducers } from 'redux'
 
-export default {
-  socialLogin
-}
+import socialLoginReducer from './socialLogin'
+import loginReducer from './login'
+
+const authReducers = combineReducers({
+  socialLogin: socialLoginReducer,
+  login: loginReducer
+})
+
+export default authReducers

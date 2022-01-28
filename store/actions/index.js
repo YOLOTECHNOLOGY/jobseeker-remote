@@ -7,6 +7,7 @@ import alerts from './alerts'
 import navigationBar from './navigationBar'
 import users from './users'
 import auth from './auth'
+import recruiters from './recruiters'
 
 const actions = {
   config,
@@ -17,7 +18,8 @@ const actions = {
   alerts,
   navigationBar,
   users,
-  auth
+  auth,
+  recruiters
 }
 
 export default actions

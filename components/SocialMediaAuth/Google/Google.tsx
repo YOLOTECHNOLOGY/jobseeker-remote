@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
+// import { gapi, loadAuth2 } from 'gapi-script'
+// const { gapi } = require('gapi-script')
 
 /* Styles */
 import styles from '../SocialMediaAuth.module.scss'
@@ -16,6 +18,8 @@ interface IGoogle {
   loading?: boolean
 }
 
+declare const window: any;
+
 const Google = ({
   className,
   activeKey,
@@ -28,28 +32,27 @@ const Google = ({
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      (window as any).gapi?.load('client:auth2', initClient())
+      setGoogleAuth(null)
+      // gapi.load('client:auth2', () => initClient())
     }
-
   }, [])
 
-  const initClient = () => {
-    if (typeof window !== 'undefined') {
-      (window as any).gapi.client
-        .init({
-          apiKey: 'AIzaSyAFYSp8vzxmXF_PourfSFW6t0VynH5d9Vs',
-          clientId:
-            '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
-          scope: 'https://www.googleapis.com/auth/userinfo.profile'
-        })
-        .then(() => {
-          setGoogleAuth((window as any).gapi.auth2.getAuthInstance())
-        })
-    } 
-  }
+  // const initClient = () => {
+  //   window.gapi.client
+  //     .init({
+  //       apiKey: 'AIzaSyAFYSp8vzxmXF_PourfSFW6t0VynH5d9Vs',
+  //       clientId:
+  //         '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
+  //       scope: 'https://www.googleapis.com/auth/userinfo.profile'
+  //     })
+  //     .then(() => {
+  //       console.log('hellow')
+  //       setGoogleAuth(window.gapi.auth2.getAuthInstance())
+  //     })
+  // }
 
   const handleAuthClick = () => {
-    googleAuth.signIn().then(() => {
+    googleAuth?.signIn().then(() => {
       handleSigninStatus()
     })
   }
@@ -62,7 +65,7 @@ const Google = ({
       const accessToken = user.getAuthResponse().id_token
 
       if (typeof window !== 'undefined') {
-        const request = (window as any).gapi.client.request({
+        const request = window.gapi.client.request({
           method: 'GET',
           path:
             'https://www.googleapis.com/oauth2/v2/userinfo?fields=id,email,family_name,given_name,picture'
@@ -94,7 +97,7 @@ const Google = ({
       className={
         loading || !googleAuth
           ? classNames(className, styles.ButtonWrapper, styles.GoogleButton, styles.disabled)
-          : classNames(className, styles.buttonWrapper, styles.GoogleButton)
+          : classNames(className, styles.ButtonWrapper, styles.GoogleButton)
       }
       onClick={handleAuthClick}
     >

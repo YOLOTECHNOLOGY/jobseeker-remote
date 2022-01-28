@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -17,17 +18,38 @@ import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 
 /* Redux Actions */
 import { socialLoginRequest } from 'store/actions/auth/socialLogin'
+import { loginRequest } from 'store/actions/auth/login'
 
 /* Styles */
 import styles from './Login.module.scss'
 
 const Login = () => {  
-  const { register, formState: { errors } } = useForm()
-  const [email, setEmail] = useState('')
+  const router = useRouter()
+  const dispatch = useDispatch()
+
+  const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false);
 
+  const isLoginFetching = useSelector((store: any) => store.auth.login.fetching)
+
   const handleOnShowPassword = () => setShowPassword(!showPassword)
+
+  const handleLogin = () => {
+    let redirect: string | string[] = ''
+    if (router.query && (router.query.redirectFullPath || router.query.redirect)) {
+      redirect = router.query?.redirectFullPath ? router.query.redirectFullPath : router.query.redirect
+    }
+
+    const loginPayload = {
+      login,
+      password,
+      redirect,
+      applyJobExternalRedirect: ''
+    }
+
+    dispatch(loginRequest(loginPayload))
+  }
 
   return (
     <AuthLayout 
@@ -46,29 +68,29 @@ const Login = () => {
         <div className={styles.LoginDivider}>
           <Text textStyle='lg'  className={styles.LoginDividerText}>Or</Text>
         </div>
+
         <form className={styles.LoginForm}>
           <MaterialTextField 
-            refs={{...register('email', { required: true })}} 
             className={styles.LoginFormInput}
             id='email' 
             label='Email Address' 
             variant='outlined'
+            value={login}
             size='small'
-            value={email}
+            defaultValue={login}
             autoComplete='off'
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setLogin(e.target.value)}
           />
-          {errors.email && <Text textStyle='sm' textColor='red'>This field is required</Text>}
           
           <MaterialTextField 
-            refs={{...register('password', { required: true })}} 
             className={styles.LoginFormInput}
             type={showPassword ? "text" : "password"}
             id='password' 
             label='Password' 
             variant='outlined'
-            size='small'
             value={password}
+            size='small'
+            defaultValue={password}
             autoComplete='off'
             onChange={(e) => setPassword(e.target.value)}
             InputProps={{
@@ -85,7 +107,6 @@ const Login = () => {
               ),
             }}
           />
-          {errors.password && <Text textStyle='sm' textColor='red'>This field is required</Text>}
 
           <div className={styles.LoginForgotPasswordLink}>
             <Link to={'/'}>
@@ -98,6 +119,8 @@ const Login = () => {
             size='large' 
             variant='contained'
             className={styles.LoginButton}
+            isLoading={isLoginFetching}
+            onClick={() => handleLogin()}
           >
             <Text textStyle='xl' textColor='white' bold>Log In</Text>
           </MaterialButton>
