@@ -18,6 +18,7 @@ const textFieldTheme = createTheme({
         root: {
           fontSize: '15px',
           letterSpacing: '1px',
+          backgroundColor: 'white'
         },
       },
     },

@@ -37,16 +37,6 @@
     width: 100%;
   }
 
-  &::after {
-    position: absolute;
-    content: '';
-    height: 1px;
-    width: 30%;
-    background-color: rgba($lightgrey, 0.6);
-    bottom: 0;
-    left: 0;
-  }
-
   &Tab {
     margin-right: 20px;
 
@@ -60,7 +50,7 @@
     display: flex;
     align-items: center;
     display: block;
-    padding: 24px 16px; 
+    padding: 11px 16px; 
     text-align: center;
 
     &IsActive {
@@ -81,9 +71,16 @@
   }
 
   &Content {
-    width: 30%;
+    width: 29.9%;
+    height: 40px;
     background-color: $white-3;
+    border-left: 1px solid rgba($lightgrey, 0.6);
     border-bottom: 1px solid rgba($lightgrey, 0.6);
+    border-right: 1px solid rgba($lightgrey, 0.6);
+
+    & .MuiTabs-root {
+      min-height: 40px;
+    }
 
     @include msd {
       width: 100%
@@ -111,7 +108,7 @@
   }
 
   &Content {
-    margin-top: 68px;
+    margin-top: 40px;
 
     @include msd {
       margin-top: 58px;
@@ -124,7 +121,7 @@
 }
 
 .MyJobsDetailInfoSection {
-  width: 56%;
+  width: 56.5%;
   border-left: 1px solid rgba($lightgrey, 0.6);
   border-right: 1px solid rgba($lightgrey, 0.6);
   border-bottom: 1px solid rgba($lightgrey, 0.6);

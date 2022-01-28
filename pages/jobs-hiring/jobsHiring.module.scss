@@ -1,14 +1,17 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
+.searchSectionContainer {
+  @extend .GlobalContainer;
+}
+
 .searchSection {
   position: relative;
   height: 139px;
-  background-color: $bg-lightgrey;
-  border-bottom: 1px solid $lightgrey;
+  background-color: $white-1;
   display: flex;
   flex-direction: column;
-  padding: 20px 7%;
+  padding: 20px 0;
   z-index:10;
 
   @include sm{
@@ -16,6 +19,7 @@
   }
 
   .searchAndLocationContainer {
+    @extend .GlobalContainer;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -26,6 +30,7 @@
   }
 
   .filtersContainer {
+    @extend .GlobalContainer;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -37,7 +42,6 @@
 
     @include sm{
       display:none;
-      // height:180px;
     }
   }
 
@@ -102,6 +106,7 @@
 }
 
 .popularSearchContainer {
+  @extend .GlobalContainer;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -157,6 +162,7 @@
 }
 
 .topCompaniesContainer {
+  @extend .GlobalContainer;
   width:100%;
   display: flex;
   flex-direction: row;
@@ -186,12 +192,6 @@
 }
 
 .moreFiltersBtn {
-  color: $black;
-  background-color: $lightgrey-2;
-  border: 1px solid $lightgrey;
   text-transform: capitalize;
-
-  &:hover {
-    background-color: $lightgrey-2;
-  }
+  letter-spacing: 1px;
 }
