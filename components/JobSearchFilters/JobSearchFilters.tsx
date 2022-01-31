@@ -119,7 +119,7 @@ const NavSearchFilter = ({
     const allFalsyValues = values.filter((val) => !!val)
     const updatedData = {
       ...data,
-      sort:[data.sort]
+      sort: [data.sort || router.query.sort]
     }
     if (allFalsyValues.length !== 0 || selectedCategories) {
       urlFilterParameterBuilder(updatedData)
@@ -128,8 +128,16 @@ const NavSearchFilter = ({
   }
 
   const handleResetFilter = () => {
+    setSelectedCategories([])
+
     reset({})
     onResetFilter({})
+  }
+
+  const onRemoveProperty = (propertyName, object) => {
+    // eslint-disable-next-line
+    const { [propertyName]: propertyValue, ...newObject } = { ...object }
+    return { ...newObject }
   }
 
   const urlFilterParameterBuilder = (data) => {
@@ -159,18 +167,24 @@ const NavSearchFilter = ({
 
     let categoryObject = null
     let queryParam = ''
+    let queryObject = null
+
     const categories = selectedCategories && selectedCategories.map((val) => val.key)
     // for mui specialization filter
     if (selectedCategories && selectedCategories.length >= 1) {
       queryParam = conditionChecker(predefinedQuery, predefinedLocation, null)
       categoryObject = Object.assign({}, { category: categories.join() })
+      queryObject = Object.assign({}, { ...rest, ...filterData, ...categoryObject })
+
     } else if (selectedCategories && selectedCategories.length === 0) {
       queryParam = conditionChecker(predefinedQuery, predefinedLocation, categories)
+      queryObject = Object.assign({}, { ...onRemoveProperty('category', {...rest}), ...filterData })
+
     } else {
       queryParam = conditionChecker(predefinedQuery, predefinedLocation, null)
+      queryObject = Object.assign({}, { ...rest, ...filterData })
     }
 
-    const queryObject = Object.assign({}, { ...rest, ...filterData, ...categoryObject })
     router.push(
       {
         pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
@@ -236,6 +250,13 @@ const NavSearchFilter = ({
   }
 
   useEffect(() => {
+    if (!queryParams.industry) reset({industry: ''})
+    if (!queryParams.qualification) reset({qualification: ''})
+    if (!queryParams.workExperience) reset({workExperience: ''})
+    if (!queryParams.category) {
+      setSelectedCategories([])
+    }
+
     document.addEventListener('click', handleClickedOutside, true)
     return () => {
       document.removeEventListener('click', handleClickedOutside, true)

@@ -33,7 +33,7 @@ const MaterialBasicSelect = ({
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            backgroundColor: greyBg ? '#E2E2E2' : '',
+            backgroundColor: greyBg ? '#E2E2E2' : 'white',
           },
         },
       },

@@ -20,6 +20,14 @@
     display: block;
     @extend .searchFilter;
     top:230px;
+
+    .searchFilterBody {
+      height: calc(100vh - 362px);
+
+      @include msd {
+        height: calc(100vh - 100px);
+      }
+    }
   }
 
   &Header {
@@ -37,7 +45,7 @@
 
   &Body {
     padding: 10px 25px 77px 25px;
-    height: calc(100vh - 206px);
+    height: calc(100vh - 270px);
     overflow-y: scroll;
 
     @include msd {
@@ -120,6 +128,7 @@
     bottom: 0;
     width: 100%;
     background-color: $white-3;
+    z-index: 1;
   }
 
   &Reset {

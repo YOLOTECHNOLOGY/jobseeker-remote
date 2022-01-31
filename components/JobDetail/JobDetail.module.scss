@@ -5,31 +5,49 @@
   position: relative;
 
   &Content {
-    padding: 0 50px 500px;
+    padding: 0 25px 250px;
     height: 100vh;
     position: relative;
     overflow-y: scroll;
     width: 100%;
     background-color: $white-3;
 
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $white-3; 
+      border-radius: 10px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: $white-2; 
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: $white-2; 
+    }
+
     &.isSticky {
       position: fixed;
-      width: 43.6%;
-      top: 70px;
+      width: 760px;
+      top: 40px;
     }
   }
 
   &Option {
-    height: 68px;
+    height: 40px;
     position: relative;
 
     &.isSticky {
-      height: 68px;
+      height: 40px;
       position: fixed;
       top: 0;
       z-index: 1;
       background-color: $white-3;
-      width: 43.6%;
+      width: 760px;
     }
   }
 
@@ -125,10 +143,8 @@
 }
 
 .JobDetailPref {
-  border-top: 1px solid $lightgrey;
-  border-bottom: 1px solid $lightgrey;
   background-color: $white-1;
-  padding: 20px 30px;
+  padding: 25px;
   margin-top: 10px;
 
   &List {
