@@ -65,6 +65,8 @@
 
     @include msd{
       width: 100%;
+      border: none;
+      padding: 0;
     }
   }
 
@@ -76,7 +78,7 @@
     margin-top: 40px;
 
     @include msd {
-      padding: 0 20px;
+      padding: 0;
     }
   }
 

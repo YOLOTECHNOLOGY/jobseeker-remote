@@ -48,16 +48,39 @@
     height: calc(100vh - 270px);
     overflow-y: scroll;
 
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $white-3; 
+      border-radius: 10px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: $white-2; 
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: $white-2; 
+    }
+
     @include msd {
       height: calc(100vh - 100px);
     }
   }
 
   &Section {
-    padding: 20px 0 15px;
+    padding: 15px 0 10px;
 
     &:not(:first-child) {
       border-top: 1px solid $lightgrey;
+
+      @include msd {
+        border: none;
+      }
     }
   }
 
@@ -116,6 +139,10 @@
         }
       }
     }
+  }
+
+  &OptionsColumn {
+    flex-direction: column;
   }
 
   &Footer {
