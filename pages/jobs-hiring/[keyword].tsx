@@ -212,8 +212,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   useEffect(() => {
     // eslint-disable-next-line no-console
     console.log('router query changed', router.query)
-    const {industry, education, workExperience, category} = router.query
-    setHasMoreFilters(industry || education || workExperience || category ? true : false)
+    const {industry, education, workExperience, category, jobtype, salary} = router.query
+    let isWithJobTypeAndSalary
+    if (width < 799) {
+      isWithJobTypeAndSalary = jobtype || salary
+    }
+    setHasMoreFilters(industry || education || workExperience || category || isWithJobTypeAndSalary ? true : false)
 
     if (!firstRender) setDisplayQuickLinks(false)
     if (predefinedQuery) setUrlQuery(predefinedQuery.toString())
@@ -357,9 +361,17 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     )
     const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
     // exclude all filters in jobSearchFilters
+    let queryObject
+    if (width < 799) {
     // eslint-disable-next-line
-    const { keyword, category, industry, qualification, education, workExperience, ...rest } = router.query
-    const queryObject = Object.assign({}, { ...rest, sort: 1 })
+      const { keyword, category, industry, qualification, education, workExperience, salary, jobtype, ...rest } = router.query
+      queryObject = Object.assign({}, { ...rest, sort: 1 })
+      updateUrl(queryParam, queryObject)
+      return
+    }
+    // eslint-disable-next-line
+    const { keyword, category, industry, qualification, education, workExperience, salary, jobtype, ...rest } = router.query
+    queryObject = Object.assign({}, { ...rest, sort: 1 })
     updateUrl(queryParam, queryObject)
   }
 
@@ -513,6 +525,20 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         />
       </div>
       <div className={breakpointStyles.hideOnTabletAndDesktop}>
+        {hasMoreFilters && (
+          <div className={styles.resetFilterBtnMobile}>
+            <MaterialButton
+            variant='text'
+            className={styles.moreFiltersBtn}
+            onClick={handleResetFilter}
+            capitalize
+          >
+            Reset Filters
+          </MaterialButton>
+          </div>
+          
+        )}
+
         <div className={styles.moreFiltersSection} onClick={() => handleShowFilter()}>
           <Image src={FilterIcon} alt='filter' width='15' height='15' />
           <Text className={styles.moreFiltersText}>More Filters</Text>

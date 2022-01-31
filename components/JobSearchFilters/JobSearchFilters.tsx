@@ -44,6 +44,7 @@ interface SearchFilters {
   options: Array<optionsType>
   defaultOpenState?: boolean
   isNotCollapsible?: boolean
+  isColumn?: boolean
 }
 
 type optionsType = {
@@ -57,7 +58,7 @@ const NavSearchFilter = ({
   onShowFilter,
   displayQuickLinks,
   onResetFilter,
-  sortOptions,
+  sortOptions
 }: NavSearchFilterProps) => {
   const router = useRouter()
   const { keyword } = router.query
@@ -77,6 +78,15 @@ const NavSearchFilter = ({
     key: Object.values(edu)[0],
     value: Object.values(edu)[0],
   }))
+  const jobTypeList = config.inputs.job_types.map((jobType) => ({
+    key: Object.values(jobType)[0],
+    value: Object.values(jobType)[0],
+  }))
+  const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
+    key: Object.values(range)[0] === '10K - 30K' ? 'Below 30K' : Object.values(range)[0],
+    value: Object.values(range)[0] === '10K - 30K' ? 'Below 30K' : Object.values(range)[0],
+  }))
+
   const { width } = useWindowDimensions()
   const filterRef = useRef(null)
   const sortRef = useRef(null)
@@ -107,11 +117,7 @@ const NavSearchFilter = ({
     if (Object.keys(defaultValues).length !== 0) {
       reset(defaultValues)
     }
-    if (width < 576){
-      setDisplayMobileSort(true)
-    }else{
-      setDisplayMobileSort(false)
-    }
+    setDisplayMobileSort(width < 576 ? true : false)
   }, [config, keyword])
 
   const handleApplyFilter = (data) => {
@@ -205,7 +211,10 @@ const NavSearchFilter = ({
     options,
     defaultOpenState,
     isNotCollapsible,
+    isColumn
   }: SearchFilters) => {
+    const isFilterColumnClass = cx({ searchFilterOptionsColumn: isColumn })
+
     return (
       <div className={styles.searchFilterSection}>
         <Accordian
@@ -220,7 +229,7 @@ const NavSearchFilter = ({
           }
           className={styles.searchFilterAccordion}
         >
-          <div className={styles.searchFilterOptions}>
+          <div className={classNamesCombined([styles.searchFilterOptions, isFilterColumnClass])}>
             {options &&
               options.map((option, i) => {
                 return (
@@ -250,13 +259,6 @@ const NavSearchFilter = ({
   }
 
   useEffect(() => {
-    if (!queryParams.industry) reset({industry: ''})
-    if (!queryParams.qualification) reset({qualification: ''})
-    if (!queryParams.workExperience) reset({workExperience: ''})
-    if (!queryParams.category) {
-      setSelectedCategories([])
-    }
-
     document.addEventListener('click', handleClickedOutside, true)
     return () => {
       document.removeEventListener('click', handleClickedOutside, true)
@@ -282,11 +284,6 @@ const NavSearchFilter = ({
                 paddedContent
                 isNotCollapsible={true}
                 defaultOpenState={true}
-                title={
-                  <Text textStyle='lg' bold>
-                    Sort by
-                  </Text>
-                }
                 className={styles.searchFilterAccordion}
               >
                 <MaterialBasicSelect
@@ -304,6 +301,22 @@ const NavSearchFilter = ({
                   defaultValue={urlDefaultValues?.sort}
                 />
               </Accordian>
+              <SearchFilters
+                title='Job Type'
+                fieldName='jobtype'
+                options={jobTypeList}
+                defaultOpenState={true}
+                isNotCollapsible={true}
+                isColumn
+              />
+              <SearchFilters
+                title='Salary'
+                fieldName='salary'
+                options={salaryRangeList}
+                defaultOpenState={true}
+                isNotCollapsible={true}
+                isColumn
+              />
             </div>
           )}
           <div className={styles.searchFilterSection}>
