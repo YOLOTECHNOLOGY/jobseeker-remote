@@ -291,7 +291,7 @@ const ModalJobAlerts = ({
           <div className={styles.ModalJobAlertBody}>
             <Text textStyle='lg'>
               Get email updtes for {' '}
-              <Text textStyle='base' bold>{query}</Text> 
+              <Text textStyle='base' bold>{query ? query : 'all'}</Text> 
               {location && location.length !== 0 && (
                 <>
                   {' '} jobs in {' '}
