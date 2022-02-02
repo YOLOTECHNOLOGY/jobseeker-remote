@@ -17,6 +17,7 @@ import MaterialTextField from 'components/MaterialTextField'
 import SEO from 'components/SEO'
 import AuthLayout from 'components/AuthLayout'
 import Text from 'components/Text'
+import { TextField } from '@mui/material'
 
 /* Styles */
 import styles from './ChangePassword.module.scss'
@@ -30,6 +31,7 @@ const ChangePassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isPasswordMatch, setIsPasswordMatch] = useState(false)
+
   const { register, handleSubmit, formState: { errors }} = useForm()
 
   const isResettingPassword = useSelector((store: any) => store.auth.resetPassword.fetching)
@@ -47,10 +49,17 @@ const ChangePassword = () => {
     dispatch(resetPasswordRequest({ login, otp, password: data.password}))
   }
 
-  const handleDisplayErrors = (errorObject) => {
-    if (errorObject?.type === 'required') return errorText('This field is required.')
-    if (errorObject?.type === 'minLength') return errorText('Must be 8 characters or more.')
-    if (errorObject?.type === 'maxLength') return errorText('Must be 16 characters or less.')
+  const handleDisplayErrors = (field) => {
+    switch(field?.type) {
+      case 'required':
+        return errorText('This field is required.')
+      case 'minLength':
+        return errorText('Must be 8 characters or more.')
+      case 'maxLength':
+        return errorText('Must be 16 characters or less.')
+      default:
+        return errorText('')
+    }
   }
 
   const errorText = (text) => {
@@ -74,8 +83,8 @@ const ChangePassword = () => {
       </div>
 
       <form className={styles.ChangePasswordForm} onSubmit={handleSubmit(handleResetPassword)}>
-        <MaterialTextField 
-          refs={{...register('password', { required: true, minLength: 8, maxLength: 16 })}}
+        <TextField
+          {...register('password', { required: true, minLength: 8, maxLength: 16 })} 
           className={styles.ChangePasswordFormInput}
           id='password' 
           name='password'
@@ -85,9 +94,7 @@ const ChangePassword = () => {
           size='small'
           value={password}
           autoComplete='off'
-          onChange={(e) => {
-            setPassword(e.target.value)
-          }}
+          onChange={(e) => setPassword(e.target.value)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -102,7 +109,11 @@ const ChangePassword = () => {
             ),
           }}
         />
-        <div className={styles.ChangePasswordFieldError}>{handleDisplayErrors(errors.password)}</div>
+        <div className={styles.ChangePasswordFieldError}>
+          {errors.password?.type === 'required' && !password && handleDisplayErrors(errors.password)}
+          {errors.password?.type === 'minLength' && password?.length < 8 && handleDisplayErrors(errors.password)}
+          {errors.password?.type === 'maxLength' && password?.length > 16 && handleDisplayErrors(errors.password)}
+        </div>
 
         <MaterialTextField 
           refs={{...register('confirmPassword', { required: true, minLength: 8, maxLength: 16 })}}
@@ -130,21 +141,26 @@ const ChangePassword = () => {
             ),
           }}
         />
-        <div className={styles.ChangePasswordFieldErrorConfirm}>{handleDisplayErrors(errors.confirmPassword)}</div>
+        <div className={styles.ChangePasswordFieldErrorConfirm}>
+          {errors.confirmPassword?.type === 'required' && !confirmPassword && handleDisplayErrors(errors.confirmPassword)}
+          {errors.confirmPassword?.type === 'minLength' && confirmPassword?.length < 8 && handleDisplayErrors(errors.confirmPassword)}
+          {errors.confirmPassword?.type === 'maxLength' && confirmPassword?.length > 16 && handleDisplayErrors(errors.confirmPassword)}
+        </div>
+
         {confirmPassword && !isPasswordMatch && (
           <div className={styles.ChangePasswordFieldError}>{errorText('This field must match with your password field.')}</div>
         )}
 
-          <MaterialButton 
-            capitalize 
-            size='large' 
-            variant='contained'
-            className={styles.ChangePasswordFormButton}
-            type='submit'
-            isLoading={isResettingPassword}
-          >
-            <Text textStyle='xl' textColor='white' bold>Reset Password</Text>
-          </MaterialButton>
+        <MaterialButton 
+          capitalize 
+          size='large' 
+          variant='contained'
+          className={styles.ChangePasswordFormButton}
+          type='submit'
+          isLoading={isResettingPassword}
+        >
+          <Text textStyle='xl' textColor='white' bold>Reset Password</Text>
+        </MaterialButton>
         </form>
     </AuthLayout>
   )
