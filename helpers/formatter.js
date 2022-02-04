@@ -118,3 +118,7 @@ export const truncateWords = (words, maxLen) => {
   if (words.length <= maxLen) return words
   return words.substr(0, maxLen) + '...'
 }
+
+export const numberWithCommas = (number) => {
+  return `₱${number?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
+}
