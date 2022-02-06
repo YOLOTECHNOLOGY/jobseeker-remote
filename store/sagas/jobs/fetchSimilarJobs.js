@@ -5,7 +5,6 @@ import { fetchSimilarJobsSuccess, fetchSimilarJobsFailed } from 'store/actions/j
 import { fetchSimilarJobsService } from 'store/services/jobs/fetchSimilarJobs'
 
 function* fetchSimilarJobsReq(actions) {
-  console.log('actions----', actions)
   try {
     const payload = {
       jobId: actions.payload.jobId

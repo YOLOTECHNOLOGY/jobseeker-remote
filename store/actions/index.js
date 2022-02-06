@@ -6,6 +6,7 @@ import reports from './reports'
 import alerts from './alerts'
 import navigationBar from './navigationBar'
 import users from './users'
+import courses from './courses'
 
 const actions = {
   config,
@@ -15,7 +16,8 @@ const actions = {
   reports,
   alerts,
   navigationBar,
-  users
+  users,
+  courses
 }
 
 export default actions

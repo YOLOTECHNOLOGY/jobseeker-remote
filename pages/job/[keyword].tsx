@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { END } from 'redux-saga'
 
 /* Vendors */
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import slugify from 'slugify'
 import moment from 'moment'
 import {
@@ -26,12 +26,13 @@ import SEO from 'components/SEO'
 import JobTag from 'components/JobTag'
 import Image from 'next/image'
 import ReadMore from 'components/ReadMore'
+import JobDetailSidebarCard from 'components/Loader/JobDetailSidebarCard'
 
 import ModalShare from 'components/ModalShare'
 import ModalReportJob from 'components/ModalReportJob'
 
 /* Helpers */
-import { truncateWords } from 'helpers/formatter'
+import { numberWithCommas } from 'helpers/formatter'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -39,6 +40,7 @@ import { wrapper } from 'store'
 /* Redux Actions */
 import { fetchAppliedJobDetailRequest } from 'store/actions/jobs/fetchAppliedJobDetail'
 import { fetchSimilarJobsRequest } from 'store/actions/jobs/fetchSimilarJobs'
+import { fetchRecommendedCoursesRequest } from 'store/actions/courses/fetchRecommendedCourses'
 
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
@@ -69,15 +71,13 @@ import {
 interface IJobDetail {
   jobDetail: any,
   applicationHistory: any,
-  config: any,
-  similarJobs: any
+  config: any
 }
 
 const Job = ({
   jobDetail,
   applicationHistory,
-  config,
-  similarJobs
+  config
 }: IJobDetail) => {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -88,11 +88,33 @@ const Job = ({
 
   const [jobDetailUrl, setJobDetailUrl] = useState('/')
   const [companyUrl, setCompanyUrl] = useState('/')
+  const [recommendedCourses, setRecommendedCourses] = useState(null)
+  const [similarJobs, setSimilarJobs] = useState(null)
+
+  const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
+  const categoryLists = config && config.inputs && config.inputs.job_category_lists
+
+  const recommendedCoursesResponse = useSelector((store: any) => store.courses.recommendedCourses.response)
+  const isRecommendedCoursesFetching = useSelector((store: any) => store.courses.recommendedCourses.fetching)
+
+  const similarJobsResponse = useSelector((store: any) => store.job.similarJobs.response)
+  const isSimilarJobsFetching = useSelector((store: any) => store.job.similarJobs.fetching)
 
   useEffect(() => {
     setJobDetailUrl(handleFormatWindowUrl('job', jobDetail?.['job_title'], jobDetail?.['id']))
     setCompanyUrl(handleFormatWindowUrl('company', jobDetail?.['company']?.['name'], jobDetail?.['company']?.['id']))
+
+    handleFetchRecommendedCourses()
+    handleFetchSimilarJobs()
   }, [jobDetail])
+
+  useEffect(() => {
+    if (recommendedCoursesResponse) setRecommendedCourses(recommendedCoursesResponse)
+  }, [recommendedCoursesResponse])
+
+  useEffect(() => {
+    if (similarJobsResponse) setSimilarJobs(similarJobsResponse)
+  }, [similarJobsResponse])
 
   const handleFormatWindowUrl = (pathname, name, id) => {
     if (typeof window !== 'undefined') {
@@ -100,8 +122,6 @@ const Job = ({
     }
     return ''
   }
-
-  const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const handlePostReportJob = (payload) => dispatch(postReportRequest(payload))
 
@@ -138,6 +158,33 @@ const Job = ({
 
   const handleRedirectToJob = (jobTitle, jobId) => {
     router.push(handleFormatWindowUrl('job', jobTitle, jobId))
+  }
+
+  const getJobDetailCategoryIds = () => {
+    const jobCategoryIds = []
+    jobDetail?.categories?.map((cat) => {
+      categoryLists.filter((catList) => {
+        if (catList.value === cat.value) {
+          jobCategoryIds.push(catList.id)
+        }
+      })
+    })
+    return jobCategoryIds?.length > 0 ? jobCategoryIds.join(',') : null
+  }
+
+  const handleFetchRecommendedCourses = () => {
+    const payload = {
+      size: 5,
+      job_category_ids: getJobDetailCategoryIds(),
+      xp_lvl_key: jobDetail?.xp_lvl.key
+    }
+    dispatch(fetchRecommendedCoursesRequest(payload))
+  }
+
+  const handleFetchSimilarJobs = () => dispatch(fetchSimilarJobsRequest({jobId: jobDetail.id}))
+
+  const handleCoursePath = (title, id) => {
+    return `${process.env.ACADEMY_CLIENT_URL}/course/${slugify(title || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${id}`
   }
 
   return (
@@ -352,13 +399,13 @@ const Job = ({
             <div className={styles.JobDetailRecruiterInfo}>
               <div 
                 className={styles.JobDetailRecruiterInfoImage}
-                style={{ backgroundImage: `url(${jobDetail?.recruiter_avatar})` }}
+                style={{ backgroundImage: `url(${jobDetail?.recruiter.avatar})` }}
               />
               <div className={styles.JobDetailRecruiterInfoText}>
-                <Text textStyle='base' bold>{jobDetail?.recruiter_first_name} {jobDetail?.recruiter_last_name}</Text>
+                <Text textStyle='base' bold>{jobDetail?.recruiter.full_name}</Text>
                 <span>
-                  <Text textStyle='base'>Marketing Manager {' '}</Text>
-                  <Text textStyle='base'>{' '}- {jobDetail?.application_response_rate}% response rate, responds {jobDetail?.application_response_time} | Last active on {moment(jobDetail?.recruiter_last_active_at).format('MM/DD/YYYY')}</Text>
+                  <Text textStyle='base'>{jobDetail?.recruiter.job_title} {' '}</Text>
+                  <Text textStyle='base'>{' '}- {jobDetail?.recruiter.application_response_rate}% response rate, responds {jobDetail?.recruiter.application_response_time} | Last active on {moment(jobDetail?.recruiter.last_active_at).format('MM/DD/YYYY')}</Text>
                 </span>
               </div>
             </div>
@@ -388,7 +435,16 @@ const Job = ({
               <Text textStyle='xxl' bold>Similar Jobs</Text>
             </div>
             <div className={styles.JobDetailSidebarCardList}>
-              {similarJobs?.length > 0 && similarJobs.map((job) => (
+              {isSimilarJobsFetching && (
+                <>
+                  <JobDetailSidebarCard/>
+                  <JobDetailSidebarCard/>
+                  <JobDetailSidebarCard/>
+                  <JobDetailSidebarCard/>
+                  <JobDetailSidebarCard/>
+                </>
+              )}
+              {!isSimilarJobsFetching && similarJobs?.length > 0 && similarJobs.map((job) => (
                 <div 
                   key={job.id} 
                   onClick={() => handleRedirectToJob(job.truncated_job_title, job.id)} 
@@ -425,22 +481,33 @@ const Job = ({
               <Text textStyle='xxl' bold>Recommended Courses</Text>
             </div>
             <div className={styles.JobDetailSidebarCardList}>
-              <Link external to={'/'} className={styles.JobDetailSidebarCard}>
-                <Text className={styles.JobDetailSidebarCardTitle} textStyle='xl' tagName='p' bold>{truncateWords('2022 Complete Python Bootcamp From Zero to Hero in Python', 80)}</Text>
-                <Text textStyle='base' tagName='p'>Intermediate</Text>
-                <Text textStyle='base' tagName='p' textColor='darkgrey'>Online Learning</Text>
-                <Text textStyle='base' tagName='p' textColor='darkgrey'>₱80k</Text>
-                <div>
-                  <Text 
-                    textStyle='base' 
-                    tagName='p' 
-                    bold
-                    className={styles.JobDetailSidebarCardCTA}
-                  >
-                    Get Started
-                  </Text>
-                </div>
-              </Link>
+              {isRecommendedCoursesFetching && (
+                <>
+                  <JobDetailSidebarCard/>
+                  <JobDetailSidebarCard/>
+                  <JobDetailSidebarCard/>
+                  <JobDetailSidebarCard/>
+                  <JobDetailSidebarCard/>
+                </>
+              )}
+              {!isRecommendedCoursesFetching && recommendedCourses?.length > 0 && recommendedCourses.map((course) => (
+                <Link key={course.id} external to={`${handleCoursePath(course.truncated_name, course.id)}`} className={styles.JobDetailSidebarCard}>
+                  <Text className={styles.JobDetailSidebarCardTitle} textStyle='xl' tagName='p' bold>{course.truncated_name}</Text>
+                  <Text textStyle='base' tagName='p'>{course.level_value}</Text>
+                  <Text textStyle='base' tagName='p' textColor='darkgrey'>{course.method_value}</Text>
+                  <Text textStyle='base' tagName='p' textColor='darkgrey'>{numberWithCommas(course.price)}</Text>
+                  <div>
+                    <Text 
+                      textStyle='base' 
+                      tagName='p' 
+                      bold
+                      className={styles.JobDetailSidebarCardCTA}
+                    >
+                      Get Started
+                    </Text>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -475,8 +542,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       // TODO: Check if User is LoggedIn then change status: 'protected'
       store.dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
     }
-
-    store.dispatch(fetchSimilarJobsRequest({jobId}))
   }
 
   store.dispatch(fetchConfigRequest())
@@ -485,12 +550,11 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const jobDetail = storeState.job?.jobDetail
-  const similarJobs = storeState.job?.similarJobs
   const appliedJobDetail = storeState.job?.appliedJobDetail
   const config = storeState.config.config.response
 
-  if (jobDetail || appliedJobDetail || similarJobs) {
-    if (jobDetail.error || appliedJobDetail.error || similarJobs.error) {
+  if (jobDetail || appliedJobDetail) {
+    if (jobDetail.error || appliedJobDetail.error) {
       return {
         notFound: true,
       }
@@ -500,7 +564,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         config,
         jobDetail: jobDetail?.response?.id ? jobDetail?.response : appliedJobDetail?.response?.job,
         applicationHistory: appliedJobDetail?.response?.application_histories || null,
-        similarJobs: similarJobs?.response || [],
       }
     }
   }
