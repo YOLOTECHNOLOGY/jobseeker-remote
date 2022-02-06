@@ -20,10 +20,12 @@ const ResetPassword = () => {
 
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
+  const [isOtpSent, setIsOtpSent] = useState(false)
 
   const handleSendResetPasswordCode = () => {
     if (email) {
       dispatch(sendResetPasswordCodeRequest({ email }))
+      setIsOtpSent(true)
     }
   }
 
@@ -61,12 +63,17 @@ const ResetPassword = () => {
               autoComplete='off'
               onChange={(e) => setEmail(e.target.value)}
             />
-            <div
-              className={styles.ResetPasswordOTP}
-              onClick={() => handleSendResetPasswordCode()}
-            >
-             <Text textStyle='base' textColor='primaryBlue'>Get OTP</Text>
-            </div>
+            {!isOtpSent && (
+              <div
+                className={styles.ResetPasswordOTP}
+                onClick={() => handleSendResetPasswordCode()}
+              >
+              <Text textStyle='base' textColor='primaryBlue'>Get OTP</Text>
+              </div>
+            )}
+            {isOtpSent && (
+              <Text className={styles.ResetPasswordOTP} textStyle='base' textColor='darkgrey'>OTP Sent</Text>
+            )}
           </div>
 
           <MaterialTextField 
