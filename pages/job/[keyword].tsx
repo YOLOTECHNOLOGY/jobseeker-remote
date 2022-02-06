@@ -405,7 +405,7 @@ const Job = ({
                 <Text textStyle='base' bold>{jobDetail?.recruiter.full_name}</Text>
                 <span>
                   <Text textStyle='base'>{jobDetail?.recruiter.job_title} {' '}</Text>
-                  <Text textStyle='base'>{' '}- {jobDetail?.recruiter.application_response_time}% response rate, responds {jobDetail?.recruiter.application_response_rate} | Last active on {moment(jobDetail?.recruiter.last_active_at).format('MM/DD/YYYY')}</Text>
+                  <Text textStyle='base'>{' '}- {jobDetail?.recruiter.application_response_rate}% response rate, responds {jobDetail?.recruiter.application_response_time} | Last active on {moment(jobDetail?.recruiter.last_active_at).format('MM/DD/YYYY')}</Text>
                 </span>
               </div>
             </div>
