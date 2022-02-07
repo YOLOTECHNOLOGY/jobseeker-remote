@@ -33,23 +33,34 @@ const Google = ({
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setGoogleAuth(null)
-      // gapi.load('client:auth2', () => initClient())
+      const handleClientLoad = () => window.gapi.load('client:auth2', initClient)
+      const initClient = () => {
+        window.gapi.client
+          .init({
+            apiKey: 'AIzaSyAFYSp8vzxmXF_PourfSFW6t0VynH5d9Vs',
+            clientId: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
+            scope: 'https://www.googleapis.com/auth/userinfo.profile',
+          })
+          .then(() => {
+            console.log('oauth loaded')
+            setGoogleAuth(window.gapi.auth2.getAuthInstance())
+          })
+      }
+
+       const script = document.createElement('script')
+
+       script.src = 'https://apis.google.com/js/api.js'
+       script.async = true
+       script.defer = true
+       script.onload = handleClientLoad
+
+       document.body.appendChild(script)
+
+       return () => {
+         document.body.removeChild(script)
+       }
     }
   }, [])
-
-  // const initClient = () => {
-  //   window.gapi.client
-  //     .init({
-  //       apiKey: 'AIzaSyAFYSp8vzxmXF_PourfSFW6t0VynH5d9Vs',
-  //       clientId:
-  //         '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
-  //       scope: 'https://www.googleapis.com/auth/userinfo.profile'
-  //     })
-  //     .then(() => {
-  //       console.log('hellow')
-  //       setGoogleAuth(window.gapi.auth2.getAuthInstance())
-  //     })
-  // }
 
   const handleAuthClick = () => {
     googleAuth?.signIn().then(() => {
@@ -86,7 +97,9 @@ const Google = ({
             isLogin: isLogin ? true : false
           }
 
+          console.log('before callback')
           callBackMethod(payload)
+          console.log('after callback')
         })
       }
     }
