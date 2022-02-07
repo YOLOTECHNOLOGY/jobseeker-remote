@@ -6,6 +6,9 @@ import login from './login'
 
 import checkEmailAndOTPStatus from './checkEmailAndOTPStatus'
 
+import registerJobseeker from './registerJobseeker'
+import registerRecruiter from './registerRecruiter'
+
 export default {
   socialLogin,
   checkEmailExist,
@@ -13,5 +16,8 @@ export default {
   loginToBosshunt,
   login,
 
-  checkEmailAndOTPStatus
+  checkEmailAndOTPStatus,
+
+  registerJobseeker,
+  registerRecruiter
 }
