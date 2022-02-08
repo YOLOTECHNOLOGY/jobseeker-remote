@@ -1,5 +1,5 @@
-import { call, put, takeLatest, fork } from 'redux-saga/effects'
-import { push } from 'react-router-redux'
+import { call, put, takeLatest, fork, take } from 'redux-saga/effects'
+import { push } from 'connected-next-router'
 import { setCookie } from 'helpers/cookies'
 
 import { RESET_PASSWORD_REQUEST } from 'store/types/auth/resetPassword'
@@ -31,12 +31,12 @@ function* fetchRecruiterSubscriptionFeature() {
 
 function* resetPasswordReq(actions) {
   try {
-    const { password, login, otp } = actions.payload
+    const { password, email, otp } = actions.payload
 
     const payload = {
       new_password: password,
-      otp: otp,
-      login: login
+      otp,
+      email
     }
     const response = yield call(resetPasswordService, payload)
 
@@ -45,17 +45,12 @@ function* resetPasswordReq(actions) {
         resetPasswordSuccess(response.data)
       )
 
-      yield call(
-        setCookie,
-        'accessToken',
-        response.data.data.authentication.access_token
-      )
-
       yield fork(fetchRecruiterSubscriptionFeature)
       yield take(FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS)
-      yield put(push('/change-password-success'))
+      yield put(push('/change-password/success'))
     }
   } catch (err) {
+    console.log(err)
     yield put(resetPasswordFailed(err))
   }
 }

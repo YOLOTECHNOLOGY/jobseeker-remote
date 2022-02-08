@@ -10,7 +10,7 @@ function* sendResetPasswordCodeReq(actions) {
   try {
     const { email } = actions.payload
     let payload = {
-      login: email
+      email
     }
     const response = yield call(sendResetPasswordCodeService, payload)
     if (response.status >= 200 && response.status < 300) {

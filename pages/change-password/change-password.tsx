@@ -25,7 +25,7 @@ import styles from './ChangePassword.module.scss'
 const ChangePassword = () => {
   const dispatch = useDispatch()
   const router = useRouter()
-  const { login, otp } = router.query
+  const { email, otp } = router.query
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false);
@@ -46,24 +46,7 @@ const ChangePassword = () => {
   }
 
   const handleResetPassword = (data) => {
-    dispatch(resetPasswordRequest({ login, otp, password: data.password}))
-  }
-
-  const handleDisplayErrors = (field) => {
-    switch(field?.type) {
-      case 'required':
-        return errorText('This field is required.')
-      case 'minLength':
-        return errorText('Must be 8 characters or more.')
-      case 'maxLength':
-        return errorText('Must be 16 characters or less.')
-      default:
-        return errorText('')
-    }
-  }
-
-  const errorText = (text) => {
-    return <Text textStyle='sm' textColor='red'>{text}</Text>
+    dispatch(resetPasswordRequest({ email, otp, password: data.password}))
   }
 
   return (
@@ -84,7 +67,20 @@ const ChangePassword = () => {
 
       <form className={styles.ChangePasswordForm} onSubmit={handleSubmit(handleResetPassword)}>
         <TextField
-          {...register('password', { required: true, minLength: 8, maxLength: 16 })} 
+          {...register('password', { 
+            required: {
+              value: true,
+              message: 'This field is required.'
+            }, 
+            minLength: {
+              value: 8,
+              message: 'Must be 8 characters or more.'
+            }, 
+            maxLength: {
+              value: 16,
+              message: 'Must be 16 characters or less.'
+            }
+          })} 
           className={styles.ChangePasswordFormInput}
           id='password' 
           name='password'
@@ -110,13 +106,24 @@ const ChangePassword = () => {
           }}
         />
         <div className={styles.ChangePasswordFieldError}>
-          {errors.password?.type === 'required' && !password && handleDisplayErrors(errors.password)}
-          {errors.password?.type === 'minLength' && password?.length < 8 && handleDisplayErrors(errors.password)}
-          {errors.password?.type === 'maxLength' && password?.length > 16 && handleDisplayErrors(errors.password)}
+          {errors.password && <Text textStyle='sm' textColor='red'>{errors.password.message}</Text>}
         </div>
 
         <MaterialTextField 
-          refs={{...register('confirmPassword', { required: true, minLength: 8, maxLength: 16 })}}
+          refs={{...register('confirmPassword', {
+            required: {
+              value: true,
+              message: 'This field is required.'
+            }, 
+            minLength: {
+              value: 8,
+              message: 'Must be 8 characters or more.'
+            }, 
+            maxLength: {
+              value: 16,
+              message: 'Must be 16 characters or less.'
+            }
+          })}}
           className={styles.ChangePasswordFormInput}
           id='confirmPassword' 
           name='confirmPassword'
@@ -142,13 +149,13 @@ const ChangePassword = () => {
           }}
         />
         <div className={styles.ChangePasswordFieldErrorConfirm}>
-          {errors.confirmPassword?.type === 'required' && !confirmPassword && handleDisplayErrors(errors.confirmPassword)}
-          {errors.confirmPassword?.type === 'minLength' && confirmPassword?.length < 8 && handleDisplayErrors(errors.confirmPassword)}
-          {errors.confirmPassword?.type === 'maxLength' && confirmPassword?.length > 16 && handleDisplayErrors(errors.confirmPassword)}
+          {errors.confirmPassword && <Text textStyle='sm' textColor='red'>{errors.confirmPassword.message}</Text>}
         </div>
 
         {confirmPassword && !isPasswordMatch && (
-          <div className={styles.ChangePasswordFieldError}>{errorText('This field must match with your password field.')}</div>
+          <div className={styles.ChangePasswordFieldError}>
+            <Text textStyle='sm' textColor='red'>This field must match with your password field.</Text>
+          </div>
         )}
 
         <MaterialButton 
