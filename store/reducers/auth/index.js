@@ -7,13 +7,19 @@ import sendResetPasswordCodeReducer from './sendResetPasswordCode'
 import checkResetPasswordCodeReducer from './checkResetPasswordCode'
 import resetPasswordReducer from './resetPassword'
 
+import registerJobseekerReducer from './registerJobseeker'
+import registerRecruiterReducer from './registerRecruiter'
+
 const authReducers = combineReducers({
   socialLogin: socialLoginReducer,
   login: loginReducer,
 
   sendResetPasswordCode: sendResetPasswordCodeReducer,
   checkResetPasswordCode: checkResetPasswordCodeReducer,
-  resetPassword: resetPasswordReducer
+  resetPassword: resetPasswordReducer,
+
+  registerJobseeker: registerJobseekerReducer,
+  registerRecruiter: registerRecruiterReducer
 })
 
 export default authReducers

@@ -1,12 +1,12 @@
 import configuredAxios from 'helpers/configuredAxios'
 
-const resetPasswordService = (payload) => {
+const registerJobseekerService = (payload) => {
   const axios = configuredAxios('auth', 'public')
-  return axios.post(`/reset-password`, {
+  return axios.post(`/register`, {
     ...payload,
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET
   })
 }
 
-export { resetPasswordService }
+export { registerJobseekerService }
