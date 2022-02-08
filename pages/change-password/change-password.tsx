@@ -25,7 +25,7 @@ import styles from './ChangePassword.module.scss'
 const ChangePassword = () => {
   const dispatch = useDispatch()
   const router = useRouter()
-  const { login, otp } = router.query
+  const { email, otp } = router.query
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false);
@@ -46,7 +46,7 @@ const ChangePassword = () => {
   }
 
   const handleResetPassword = (data) => {
-    dispatch(resetPasswordRequest({ login, otp, password: data.password}))
+    dispatch(resetPasswordRequest({ email, otp, password: data.password}))
   }
 
   return (
