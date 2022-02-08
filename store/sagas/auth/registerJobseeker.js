@@ -2,6 +2,7 @@ import { take, fork, call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
 
 import { setCookie } from 'helpers/cookies'
+import { setItem } from 'helpers/localStorage'
 import { isFromCreateResume } from 'helpers/constants'
 import { removeUtmCampaign } from 'helpers/utmCampaign'
 
@@ -28,7 +29,8 @@ function* registerJobSeekerReq(actions) {
       password,
       first_name,
       last_name,
-      terms_and_condition
+      terms_and_condition,
+      is_subscribe
     } = actions.payload
 
     const registerJobseekerPayload = {
@@ -36,6 +38,7 @@ function* registerJobSeekerReq(actions) {
       first_name,
       last_name,
       password,
+      is_subscribe,
       source: 'web',
       country_key: process.env.COUNTRY_KEY,
       terms_and_condition: terms_and_condition,
@@ -87,6 +90,7 @@ function* registerJobSeekerReq(actions) {
       yield put(push(jobId ? `/dashboard/job/${jobId}` : '/dashboard/jobs-hiring/'))
     }
   } catch (err) {
+    console.log(err)
     yield put(registerJobseekerFailed(err))
   }
 }

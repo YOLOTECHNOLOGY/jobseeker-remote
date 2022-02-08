@@ -36,7 +36,7 @@ const Register = () => {
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [secondCondition, setSecondCondition] = useState(true)
+  const [isSubscribe, setIsSubscribe] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
   const { register, handleSubmit, formState: { errors }} = useForm()
 
@@ -56,7 +56,8 @@ const Register = () => {
       password,
       first_name: firstName,
       last_name: lastName,
-      terms_and_condition: false
+      terms_and_condition: false,
+      is_subscribe: isSubscribe
     }
 
     if (!isEmployer) dispatch(registerJobseekerRequest({ ...payload, jobId: router.query?.jobId || '' }))
@@ -183,8 +184,8 @@ const Register = () => {
               control={
                 <Checkbox 
                   defaultChecked
-                  value={secondCondition}
-                  onChange={(e) => setSecondCondition(e.target.checked)}
+                  value={isSubscribe}
+                  onChange={(e) => setIsSubscribe(e.target.checked)}
                 />
               } 
               label={<Text textStyle='sm'>Email me exclusive newsletters & job updates from Bossjob.</Text>} 

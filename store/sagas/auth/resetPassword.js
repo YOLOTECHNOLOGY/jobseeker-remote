@@ -30,13 +30,14 @@ function* fetchRecruiterSubscriptionFeature() {
 }
 
 function* resetPasswordReq(actions) {
+  console.log('resetPassword: ', actions)
   try {
     const { password, login, otp } = actions.payload
 
     const payload = {
       new_password: password,
       otp: otp,
-      login: login
+      email: login
     }
     const response = yield call(resetPasswordService, payload)
 
@@ -56,6 +57,7 @@ function* resetPasswordReq(actions) {
       yield put(push('/change-password-success'))
     }
   } catch (err) {
+    console.log(err)
     yield put(resetPasswordFailed(err))
   }
 }
