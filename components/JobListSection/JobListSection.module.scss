@@ -13,7 +13,7 @@
   width: 30%;
 
   &Option {
-    height: 68px;
+    height: 40px;
     position: absolute;
     width: 100%;
     left: 0;
@@ -30,16 +30,6 @@
 
     @include msd {
       width: 100%;
-    }
-
-    &::after {
-      position: absolute;
-      content: '';
-      height: 1px;
-      width: 30%;
-      background-color: rgba($lightgrey, 0.6);
-      bottom: 0;
-      left: 0;
     }
   }
 
@@ -71,9 +61,12 @@
     background-color: $white-3;
     padding: 0 20px;
     border-bottom: 1px solid rgba($lightgrey, 0.6);
+    border-left: 1px solid rgba($lightgrey, 0.6);
 
     @include msd{
       width: 100%;
+      border: none;
+      padding: 0;
     }
   }
 
@@ -82,10 +75,10 @@
   }
 
   &Content {
-    margin-top: 68px;
+    margin-top: 40px;
 
     @include msd {
-      padding: 0 20px;
+      padding: 0;
     }
   }
 

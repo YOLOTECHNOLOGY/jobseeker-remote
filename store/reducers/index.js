@@ -12,6 +12,7 @@ import alertsReducers from './alerts'
 import usersReducers from './users'
 import authReducers from './auth'
 import recruitersReducers from './recruiters'
+import coursesReducers from './courses'
 
 
 // TODO: Import and List reducers here
@@ -26,7 +27,8 @@ const combinedReducer = combineReducers({
   users: usersReducers,
   auth: authReducers,
   recruiters: recruitersReducers,
-  router: routerReducer
+  router: routerReducer,
+  courses: coursesReducers
 })
 
 /* 

@@ -44,6 +44,12 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     case 'payment':
       url = process.env.PAYMENT_URL
       break
+    case 'job':
+      url = process.env.DATA_BOSSJOB_JOB_URL
+      break
+    case 'academy':
+      url = process.env.ACADEMY_URL
+      break
     default:
       break
   }

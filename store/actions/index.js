@@ -8,6 +8,7 @@ import navigationBar from './navigationBar'
 import users from './users'
 import auth from './auth'
 import recruiters from './recruiters'
+import courses from './courses'
 
 const actions = {
   config,
@@ -19,7 +20,8 @@ const actions = {
   navigationBar,
   users,
   auth,
-  recruiters
+  recruiters,
+  courses
 }
 
 export default actions
