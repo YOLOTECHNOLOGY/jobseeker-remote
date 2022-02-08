@@ -64,8 +64,13 @@ const Register = () => {
     if (isEmployer) dispatch(registerRecruiterRequest({ ...payload, redirect }))
   }
 
+
+  const callbackRequest = (payload) => {
+    dispatch(socialLoginRequest(payload))
+  }
+
   return (
-    <AuthLayout 
+    <AuthLayout
       headingText='Join Bossjob, kick-start your career'
       ctaSignup
       isEmployer={isEmployer}
@@ -77,21 +82,21 @@ const Register = () => {
       />
 
       <div className={styles.Register}>
-        <SocialMediaAuth
-          callbackRequest={socialLoginRequest}
-        />
+        <SocialMediaAuth callbackRequest={callbackRequest} />
         <div className={styles.RegisterDivider}>
-          <Text textStyle='lg'  className={styles.RegisterDividerText}>Or</Text>
+          <Text textStyle='lg' className={styles.RegisterDividerText}>
+            Or
+          </Text>
         </div>
 
         <form className={styles.RegisterForm} onSubmit={handleSubmit(handleRegister)}>
           <div className={styles.RegisterFormName}>
             <div>
-              <MaterialTextField 
-                refs={{...register('firstName', { required: true })}}
+              <MaterialTextField
+                refs={{ ...register('firstName', { required: true }) }}
                 className={styles.RegisterFormInput}
-                name='firstName' 
-                label='First Name' 
+                name='firstName'
+                label='First Name'
                 variant='outlined'
                 value={firstName}
                 size='small'
@@ -99,13 +104,17 @@ const Register = () => {
                 autoComplete='off'
                 onChange={(e) => setFirstName(e.target.value)}
               />
-              {errors.firstName && (<Text textColor='red' textStyle='sm'>This field is required.</Text>)}
+              {errors.firstName && (
+                <Text textColor='red' textStyle='sm'>
+                  This field is required.
+                </Text>
+              )}
             </div>
 
-            <MaterialTextField 
+            <MaterialTextField
               className={styles.RegisterFormInput}
-              id='lastName' 
-              label='Last Name' 
+              id='lastName'
+              label='Last Name'
               variant='outlined'
               value={lastName}
               size='small'
@@ -115,20 +124,22 @@ const Register = () => {
             />
           </div>
 
-          <MaterialTextField 
-            refs={{...register('email', { 
-              required: {
-                value: true,
-                message: 'This field is required.'
-              }, 
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: "Enter a valid e-mail address.",
-              } 
-            })}}
+          <MaterialTextField
+            refs={{
+              ...register('email', {
+                required: {
+                  value: true,
+                  message: 'This field is required.',
+                },
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  message: 'Enter a valid e-mail address.',
+                },
+              }),
+            }}
             className={styles.RegisterFormInput}
-            id='email' 
-            label='Email Address' 
+            id='email'
+            label='Email Address'
             variant='outlined'
             value={email}
             size='small'
@@ -136,28 +147,32 @@ const Register = () => {
             autoComplete='off'
             onChange={(e) => setEmail(e.target.value)}
           />
-          {errors.email && (<Text textColor='red' textStyle='sm'>{errors.email.message}</Text>)}
-          
+          {errors.email && (
+            <Text textColor='red' textStyle='sm'>
+              {errors.email.message}
+            </Text>
+          )}
+
           <TextField
-            {...register('password', { 
+            {...register('password', {
               required: {
                 value: true,
-                message: 'This field is required.'
-              }, 
+                message: 'This field is required.',
+              },
               minLength: {
                 value: 8,
-                message: 'Must be 8 characters or more.'
-              }, 
+                message: 'Must be 8 characters or more.',
+              },
               maxLength: {
                 value: 16,
-                message: 'Must be 16 characters or less.'
-              } 
+                message: 'Must be 16 characters or less.',
+              },
             })}
             className={styles.RegisterFormInput}
-            id='password' 
+            id='password'
             name='password'
-            type={showPassword ? "text" : "password"}
-            label='Password' 
+            type={showPassword ? 'text' : 'password'}
+            label='Password'
             variant='outlined'
             size='small'
             value={password}
@@ -165,9 +180,9 @@ const Register = () => {
             onChange={(e) => setPassword(e.target.value)}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
+                <InputAdornment position='end'>
                   <IconButton
-                    aria-label="toggle password visibility"
+                    aria-label='toggle password visibility'
                     onClick={handleOnShowPassword}
                     onMouseDown={handleOnShowPassword}
                   >
@@ -177,30 +192,40 @@ const Register = () => {
               ),
             }}
           />
-          {errors.password && (<Text textColor='red' textStyle='sm'>{errors.password.message}</Text>)}
+          {errors.password && (
+            <Text textColor='red' textStyle='sm'>
+              {errors.password.message}
+            </Text>
+          )}
 
           <div className={styles.RegisterEmailNewsletter}>
-            <FormControlLabel 
+            <FormControlLabel
               control={
-                <Checkbox 
+                <Checkbox
                   defaultChecked
                   value={isSubscribe}
                   onChange={(e) => setIsSubscribe(e.target.checked)}
                 />
-              } 
-              label={<Text textStyle='sm'>Email me exclusive newsletters & job updates from Bossjob.</Text>} 
+              }
+              label={
+                <Text textStyle='sm'>
+                  Email me exclusive newsletters & job updates from Bossjob.
+                </Text>
+              }
             />
           </div>
 
-          <MaterialButton 
-            capitalize 
-            size='large' 
+          <MaterialButton
+            capitalize
+            size='large'
             variant='contained'
             className={styles.RegisterButton}
             isLoading={isRegisteringJobseeker || isRegisteringRecruiter}
             type='submit'
           >
-            <Text textStyle='xl' textColor='white' bold>Sign up</Text>
+            <Text textStyle='xl' textColor='white' bold>
+              Sign up
+            </Text>
           </MaterialButton>
 
           <Text className={styles.RegisterAgreement} textStyle='sm'>
