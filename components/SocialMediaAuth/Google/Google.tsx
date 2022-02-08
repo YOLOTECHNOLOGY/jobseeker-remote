@@ -42,7 +42,6 @@ const Google = ({
             scope: 'https://www.googleapis.com/auth/userinfo.profile',
           })
           .then(() => {
-            console.log('oauth loaded')
             setGoogleAuth(window.gapi.auth2.getAuthInstance())
           })
       }
@@ -68,7 +67,7 @@ const Google = ({
     })
   }
 
-  const handleSigninStatus = () => {
+  const handleSigninStatus = async () => {
     const user = googleAuth.currentUser.get()
     const isAuthorized = user.hasGrantedScopes('profile')
 
@@ -96,10 +95,7 @@ const Google = ({
             activeKey: activeKey,
             isLogin: isLogin ? true : false
           }
-
-          console.log('before callback')
           callBackMethod(payload)
-          console.log('after callback')
         })
       }
     }

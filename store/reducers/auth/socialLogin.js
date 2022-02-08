@@ -6,6 +6,7 @@ import {
 
 const initialState = {
   fetching: false,
+  payload: {},
   response: {},
   error: null,
 }
@@ -16,6 +17,7 @@ export default function socialLogin(state = initialState, action) {
       return {
         ...state,
         fetching: true,
+        payload: action.payload
       }
     case SOCIAL_LOGIN_SUCCESS:
       return {

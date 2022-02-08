@@ -50,6 +50,7 @@ const Facebook = ({
             }
 
             callBackMethod(payload)
+            console.log('after callback facebook')
           })
         } else {
           // User cancelled login or did not fully authorize

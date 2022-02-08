@@ -51,29 +51,30 @@ const Login = () => {
     dispatch(loginRequest(loginPayload))
   }
 
+  const callbackRequest = (payload) => {
+    dispatch(socialLoginRequest(payload))
+  }
+
   return (
-    <AuthLayout 
-      headingText='Log in to Bossjob'
-      ctaSignup
-    >
+    <AuthLayout headingText='Log in to Bossjob' ctaSignup>
       <SEO
         title='Login - Bossjob'
         description='Bossjob - Career Platform for Professionals in Philippines'
         canonical='/login'
       />
       <div className={styles.Login}>
-        <SocialMediaAuth
-          callbackRequest={socialLoginRequest}
-        />
+        <SocialMediaAuth callbackRequest={callbackRequest} />
         <div className={styles.LoginDivider}>
-          <Text textStyle='lg'  className={styles.LoginDividerText}>Or</Text>
+          <Text textStyle='lg' className={styles.LoginDividerText}>
+            Or
+          </Text>
         </div>
 
         <form className={styles.LoginForm}>
-          <MaterialTextField 
+          <MaterialTextField
             className={styles.LoginFormInput}
-            id='email' 
-            label='Email Address' 
+            id='email'
+            label='Email Address'
             variant='outlined'
             value={login}
             size='small'
@@ -81,12 +82,12 @@ const Login = () => {
             autoComplete='off'
             onChange={(e) => setLogin(e.target.value)}
           />
-          
-          <MaterialTextField 
+
+          <MaterialTextField
             className={styles.LoginFormInput}
-            type={showPassword ? "text" : "password"}
-            id='password' 
-            label='Password' 
+            type={showPassword ? 'text' : 'password'}
+            id='password'
+            label='Password'
             variant='outlined'
             value={password}
             size='small'
@@ -95,9 +96,9 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
+                <InputAdornment position='end'>
                   <IconButton
-                    aria-label="toggle password visibility"
+                    aria-label='toggle password visibility'
                     onClick={handleOnShowPassword}
                     onMouseDown={handleOnShowPassword}
                   >
@@ -110,19 +111,23 @@ const Login = () => {
 
           <div className={styles.LoginForgotPasswordLink}>
             <Link to={'/'}>
-              <Text textStyle='base' textColor='darkgrey'>Forgot Password</Text>
+              <Text textStyle='base' textColor='darkgrey'>
+                Forgot Password
+              </Text>
             </Link>
           </div>
 
-          <MaterialButton 
-            capitalize 
-            size='large' 
+          <MaterialButton
+            capitalize
+            size='large'
             variant='contained'
             className={styles.LoginButton}
             isLoading={isLoginFetching}
             onClick={() => handleLogin()}
           >
-            <Text textStyle='xl' textColor='white' bold>Log In</Text>
+            <Text textStyle='xl' textColor='white' bold>
+              Log In
+            </Text>
           </MaterialButton>
 
           <Text className={styles.LoginAgreement} textStyle='sm'>

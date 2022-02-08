@@ -1,5 +1,5 @@
 import { call, put, takeLatest, fork } from 'redux-saga/effects'
-import { push } from 'react-router-redux'
+import { push } from 'connected-next-router'
 
 import { setCookie } from 'helpers/cookies'
 import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
@@ -7,23 +7,14 @@ import { getItem, removeItem } from 'helpers/localStorage'
 import { applyPendingJobId } from 'helpers/constants'
 
 import { SOCIAL_LOGIN_REQUEST } from 'store/types/auth/socialLogin'
-import { FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS } from 'store/types/recruiters/fetchRecruiterSubscriptionFeature'
 
 import {
   socialLoginSuccess,
   socialLoginFailed,
 } from 'store/actions/auth/socialLogin'
-import { 
-  fetchRecruiterSubscriptionFeatureSuccess, 
-  fetchRecruiterSubscriptionFeatureFailed 
-} from 'store/actions/recruiters/fetchRecruiterSubscriptionFeature'
-
 import { socialLoginService } from 'store/services/auth/socialLogin'
 import { checkEmailExistService } from 'store/services/auth/checkEmailExist'
 import { checkSocialUserExistService } from 'store/services/auth/checkSocialUserExist'
-import { loginToBosshuntService } from 'store/services/auth/loginToBosshunt'
-
-import { fetchRecruiterSubscriptionFeatureService } from 'store/services/recruiters/fetchRecruiterSubscriptionFeature'
 
 function* socialLoginReq(actions) {
   const {
@@ -39,7 +30,7 @@ function* socialLoginReq(actions) {
     isLogin
   } = actions.payload
 
-  let payload = {
+  const payload = {
     social_type: socialType,
     user_id: userId,
     token: accessToken,
@@ -95,7 +86,7 @@ function* login(payload, redirect, fromRegister = false) {
       }
 
       let url = '/dashboard'
-
+      
       if (getItem(applyPendingJobId)) {
         url = `/dashboard/job/${getItem(applyPendingJobId)}/apply`
         yield call(removeItem, applyPendingJobId)
@@ -123,14 +114,13 @@ function* login(payload, redirect, fromRegister = false) {
         loginData.authentication.access_token
       )
 
-      yield fork(fetchRecruiterSubscriptionFeature, loginData)
-      yield take(FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS)
-
-      yield put(push(url))
+      console.log('url to be redirected to', url)
+      yield put(push({pathname:`https://dev.bossjob.com.ph/dashboard/jobseeker`}))
+      // yield put(push(url))
       // yield put(destroy('companyJobForm')) // Reset Jobs Form
     }
   } catch (err) {
-    yield put(socialLoginFailed(error))
+    yield put(socialLoginFailed(err))
   }
 }
 
@@ -151,7 +141,7 @@ function* checkSocialUserExist(payload, redirect) {
       response.status >= 200 &&
       response.status < 300
     ) {
-      let loginPayload = {
+      const loginPayload = {
         social_type: payload.socialType,
         user_id: payload.userId,
         token: payload.accessToken,
@@ -167,53 +157,6 @@ function* checkSocialUserExist(payload, redirect) {
       }
 
       yield fork(login, loginPayload, redirect)
-    }
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-function* fetchRecruiterSubscriptionFeature(user) {
-  try {
-    const subscriptionFeature = yield call(fetchRecruiterSubscriptionFeatureService)
-    if (subscriptionFeature.status >= 200 && subscriptionFeature.status < 300) {
-      yield put(fetchRecruiterSubscriptionFeatureSuccess(subscriptionFeature.data))
-
-      if (
-        user.active_key === 2 &&
-        subscriptionFeature.data.data.bosshunt_ats === true
-      ) {
-        // Login to bosshunt
-        const randomPassword =
-          Math.random()
-            .toString(36)
-            .substring(2, 15) +
-          Math.random()
-            .toString(36)
-            .substring(2, 15)
-
-        const loginBosshuntPayload = {
-          email: user.email,
-          password: randomPassword,
-          first_name: user.first_name,
-          last_name: user.last_name
-        }
-
-        yield fork(logintToBosshunt, loginBosshuntPayload)
-      }
-    }
-    yield call(setCookie, 'splan', subscriptionFeature.data.data)
-  } catch (err) {
-    yield put(fetchRecruiterSubscriptionFeatureFailed(err))
-  }
-}
-
-function* logintToBosshunt(payload) {
-  try {
-    const bosshuntLogin = yield call(loginToBosshuntService, payload)
-
-    if (bosshuntLogin.status >= 200 && bosshuntLogin.status < 300) {
-      yield call(setCookie, 'bosshuntAuthToken', bosshuntLogin.data.data.token)
     }
   } catch (err) {
     console.error(err)

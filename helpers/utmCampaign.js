@@ -30,11 +30,11 @@ function* getUtmCampaignData() {
       return { ...utmCampaign }
     })()
     : {}
-  const deviceData = yield select(getDeviceData)
+  // const deviceData = yield select(getDeviceData)
 
   return {
     ...utmCampaign,
-    ...deviceData
+    // ...deviceData
   }
 }
 
