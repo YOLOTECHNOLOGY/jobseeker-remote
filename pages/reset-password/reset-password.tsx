@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 /* Components */
 import MaterialButton from 'components/MaterialButton'
@@ -21,6 +21,8 @@ const ResetPassword = () => {
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
   const [isOtpSent, setIsOtpSent] = useState(false)
+
+  const isVerifyingCode = useSelector((store: any) => store.auth.checkResetPasswordCode.fetching)
 
   const handleSendResetPasswordCode = () => {
     if (email) {
@@ -93,6 +95,7 @@ const ResetPassword = () => {
             size='large' 
             variant='contained'
             className={styles.ResetPasswordFormButton}
+            isLoading={isVerifyingCode}
             onClick={() => handleCheckResetPasswordCode()}
           >
             <Text textStyle='xl' textColor='white' bold>Reset Password</Text>
