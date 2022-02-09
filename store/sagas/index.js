@@ -31,10 +31,23 @@ import watchDeleteJobAlert from 'store/sagas/alerts/deleteJobAlert'
 import watchCreateJobAlert from 'store/sagas/alerts/createJobAlert'
 
 // Users 
-import WatchRegisterUser from 'store/sagas/users/registerUser'
+import watchRegisterUser from 'store/sagas/users/registerUser'
+
+// Auth
+import watchSocialLogin from 'store/sagas/auth/socialLogin'
+import watchLogin from 'store/sagas/auth/login'
+import watchCheckResetPasswordCode from 'store/sagas/auth/checkResetPasswordCode'
+import watchSendResetPasswordCode from 'store/sagas/auth/sendResetPasswordCode'
+
+import watchResetPassword from 'store/sagas/auth/resetPassword'
+import watchRegisterJobseeker from 'store/sagas/auth/registerJobseeker'
+import watchRegisterRecruiter from 'store/sagas/auth/registerRecruiter'
+
+// Recruiters
+import watchFetchRecruiterSubscriptionFeature from 'store/sagas/recruiters/fetchRecruiterSubscriptionFeature'
 
 // Users 
-import WatchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
+import watchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
 
 function* rootSaga() {
   yield all([
@@ -62,9 +75,20 @@ function* rootSaga() {
     watchDeleteJobAlert(),
     watchCreateJobAlert(),
 
-    WatchRegisterUser(),
+    watchRegisterUser(),
 
-    WatchFetchRecommendedCourses()
+    watchSocialLogin(),
+    watchLogin(),
+    watchCheckResetPasswordCode(),
+    watchSendResetPasswordCode(),
+    watchResetPassword(),
+
+    watchFetchRecruiterSubscriptionFeature(),
+
+    watchRegisterJobseeker(),
+    watchRegisterRecruiter(),
+
+    watchFetchRecommendedCourses()
   ])
 }
 

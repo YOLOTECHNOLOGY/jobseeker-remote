@@ -5,7 +5,6 @@ import { withdrawAppliedJobSuccess, withdrawAppliedJobFailed } from 'store/actio
 import { withdrawAppliedJobService } from 'store/services/jobs/withdrawAppliedJob'
 
 function* withdrawAppliedJobReq(action) {
-  console.log('action', action)
   try {
     const payload = {
       appliedJobId: action.payload.appliedJobId

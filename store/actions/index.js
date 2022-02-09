@@ -6,6 +6,8 @@ import reports from './reports'
 import alerts from './alerts'
 import navigationBar from './navigationBar'
 import users from './users'
+import auth from './auth'
+import recruiters from './recruiters'
 import courses from './courses'
 
 const actions = {
@@ -17,6 +19,8 @@ const actions = {
   alerts,
   navigationBar,
   users,
+  auth,
+  recruiters,
   courses
 }
 
