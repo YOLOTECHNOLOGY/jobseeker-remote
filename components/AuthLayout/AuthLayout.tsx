@@ -40,32 +40,41 @@ const AuthLayout = ({
           {isBackToLogin && (
             <Text tagName='p' textStyle='base'>
               <Link to={'/login'} className={styles.AuthCTALink}>
-                <Text textColor='primaryBlue' underline>{' '}Back to Login</Text>
-              </Link> 
+                <Text textColor='primaryBlue' underline>
+                  {' '}
+                  Back to Login
+                </Text>
+              </Link>
             </Text>
           )}
           {isLogin && (
             <Text tagName='p' textStyle='base'>
-              New to Bossjob? 
+              New to Bossjob?
               <Link to='/register' className={styles.AuthCTALink}>
-                <Text textColor='primaryBlue' underline>{' '}Sign up now</Text>
-              </Link>  
+                <Text textColor='primaryBlue' underline>
+                  {' '}
+                  Sign up now
+                </Text>
+              </Link>
             </Text>
           )}
           {!isLogin && (
             <Text tagName='p' textStyle='base'>
               Already on Bossjob?
               <Link to='/login' className={styles.AuthCTALink}>
-                <Text textColor='primaryBlue' underline>{' '}Log in</Text>
-              </Link>  
+                <Text textColor='primaryBlue' underline>
+                  {' '}
+                  Log in
+                </Text>
+              </Link>
             </Text>
           )}
           {!isEmployer && (
             <Text tagName='p' textStyle='base'>
               Looking to hire people? Sign up as
-              <Link to='/register/employer' className={styles.AuthCTALink}>
-                <Text textColor='primaryBlue'>{' '} Employer</Text>
-              </Link>  
+              <Link to={`${process.env.OLD_PROJECT_URL}/login`} className={styles.AuthCTALink} aTag>
+                <Text textColor='primaryBlue'> Employer</Text>
+              </Link>
             </Text>
           )}
         </>

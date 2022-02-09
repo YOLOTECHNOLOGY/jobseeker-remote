@@ -56,7 +56,7 @@ const Login = () => {
   }
 
   return (
-    <AuthLayout headingText='Log in to Bossjob' ctaSignup>
+    <AuthLayout headingText='Log in to Bossjob' ctaSignup isLogin>
       <SEO
         title='Login - Bossjob'
         description='Bossjob - Career Platform for Professionals in Philippines'

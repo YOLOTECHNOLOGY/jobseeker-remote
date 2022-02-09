@@ -2,7 +2,7 @@
 @import 'styles/variable.scss';
 
 .AuthLayout {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   background-color: $lightgrey-3;
 
@@ -20,7 +20,7 @@
 
   &Body {
     @extend .GlobalContainer;
-    margin-top: 50px;
+    padding: 50px 0;
     
     @include msd {
       padding: 0 20px;
