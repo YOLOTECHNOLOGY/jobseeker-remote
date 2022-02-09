@@ -46,6 +46,9 @@ import watchRegisterRecruiter from 'store/sagas/auth/registerRecruiter'
 // Recruiters
 import watchFetchRecruiterSubscriptionFeature from 'store/sagas/recruiters/fetchRecruiterSubscriptionFeature'
 
+// Users 
+import WatchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
+
 function* rootSaga() {
   yield all([
     watchFetchConfig(),
@@ -84,6 +87,8 @@ function* rootSaga() {
 
     watchRegisterJobseeker(),
     watchRegisterRecruiter()
+
+    WatchFetchRecommendedCourses()
   ])
 }
 

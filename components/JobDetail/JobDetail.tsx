@@ -159,7 +159,7 @@ const JobDetail = ({
             <div className={styles.JobDetailButtonsWrapper}>
               <div className={styles.JobDetailButtons}>
                 {selectedJob?.status_key === 'active'  && (
-                  <MaterialButton variant='contained'>
+                  <MaterialButton variant='contained' capitalize>
                     <Link to={selectedJob?.external_apply_url} external>Apply Now</Link>
                   </MaterialButton>
                 )}
@@ -170,7 +170,7 @@ const JobDetail = ({
                   </Text>
                 )}
 
-                <MaterialButton variant='outlined' onClick={() => handlePostSaveJob({job_id: selectedJob?.id})}>
+                <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob({job_id: selectedJob?.id})}>
                   { isCategorySaved ? 'Saved' : 'Save Job' }
                 </MaterialButton>
               </div>

@@ -6,6 +6,7 @@ import alerts from './alerts'
 import users from './users'
 import auth from './auth'
 import recruiters from './recruiters'
+import courses from './courses'
 
 export default {
   config,
@@ -15,5 +16,6 @@ export default {
   alerts,
   users,
   auth,
-  recruiters
+  recruiters,
+  courses
 }

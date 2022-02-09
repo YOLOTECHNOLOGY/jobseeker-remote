@@ -20,6 +20,14 @@
     display: block;
     @extend .searchFilter;
     top:230px;
+
+    .searchFilterBody {
+      height: calc(100vh - 362px);
+
+      @include msd {
+        height: calc(100vh - 100px);
+      }
+    }
   }
 
   &Header {
@@ -37,8 +45,27 @@
 
   &Body {
     padding: 10px 25px 77px 25px;
-    height: calc(100vh - 206px);
+    height: calc(100vh - 270px);
     overflow-y: scroll;
+
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $white-3; 
+      border-radius: 10px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: $white-2; 
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: $white-2; 
+    }
 
     @include msd {
       height: calc(100vh - 100px);
@@ -46,10 +73,14 @@
   }
 
   &Section {
-    padding: 20px 0 15px;
+    padding: 15px 0 10px;
 
     &:not(:first-child) {
       border-top: 1px solid $lightgrey;
+
+      @include msd {
+        border: none;
+      }
     }
   }
 
@@ -110,6 +141,10 @@
     }
   }
 
+  &OptionsColumn {
+    flex-direction: column;
+  }
+
   &Footer {
     padding: 10px 25px;
     border-top: 2px solid $lightgrey;
@@ -120,6 +155,7 @@
     bottom: 0;
     width: 100%;
     background-color: $white-3;
+    z-index: 1;
   }
 
   &Reset {

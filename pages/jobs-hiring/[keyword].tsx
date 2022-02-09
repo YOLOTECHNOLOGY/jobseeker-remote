@@ -184,6 +184,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [selectedJobId, setSelectedJobId] = useState(null)
   const { keyword, ...rest } = router.query
   const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
+  const [hasMoreFilters, setHasMoreFilters] = useState(false)
 
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
@@ -211,6 +212,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   useEffect(() => {
     // eslint-disable-next-line no-console
     console.log('router query changed', router.query)
+    const {industry, education, workExperience, category, jobtype, salary} = router.query
+    let isWithJobTypeAndSalary
+    if (width < 799) {
+      isWithJobTypeAndSalary = jobtype || salary
+    }
+    setHasMoreFilters(industry || education || workExperience || category || isWithJobTypeAndSalary ? true : false)
+
     if (!firstRender) setDisplayQuickLinks(false)
     if (predefinedQuery) setUrlQuery(predefinedQuery.toString())
     if (predefinedLocation) {
@@ -285,6 +293,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     )
   }
 
+  const onRemoveProperty = (propertyName, object) => {
+    // eslint-disable-next-line
+    const { [propertyName]: propertyValue, ...newObject } = { ...object }
+    return { ...newObject }
+  }
+
   const onKeywordSearch = (val) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
@@ -321,7 +335,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
     const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
-    const queryObject = Object.assign({}, { ...rest, salary: selectedOptions.join(',') })
+    const removedProperty = onRemoveProperty('salary', {...rest})
+    const queryObject = selectedOptions?.length > 0 
+                        ? Object.assign({}, { ...rest, salary: selectedOptions.join(',') }) 
+                        : Object.assign({}, { ...removedProperty })
     updateUrl(queryParam, queryObject)
   }
 
@@ -329,7 +346,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
     const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
-    const queryObject = Object.assign({}, { ...rest, jobtype: selectedOptions.join(',') })
+    const removedProperty = onRemoveProperty('jobtype', {...rest})
+    const queryObject = selectedOptions?.length > 0 
+                        ? Object.assign({}, { ...rest, jobtype: selectedOptions.join(',') }) 
+                        : Object.assign({}, { ...removedProperty })
     updateUrl(queryParam, queryObject)
   }
 
@@ -341,9 +361,17 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     )
     const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
     // exclude all filters in jobSearchFilters
+    let queryObject
+    if (width < 799) {
     // eslint-disable-next-line
-    const { keyword, category, industry, education, workExperience, ...rest } = router.query
-    const queryObject = Object.assign({}, { ...rest, sort: 1 })
+      const { keyword, category, industry, qualification, education, workExperience, salary, jobtype, ...rest } = router.query
+      queryObject = Object.assign({}, { ...rest, sort: 1 })
+      updateUrl(queryParam, queryObject)
+      return
+    }
+    // eslint-disable-next-line
+    const { keyword, category, industry, qualification, education, workExperience, salary, jobtype, ...rest } = router.query
+    queryObject = Object.assign({}, { ...rest, sort: 1 })
     updateUrl(queryParam, queryObject)
   }
 
@@ -409,7 +437,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             defValue={urlLocation}
             onChange={onLocationSearch}
           />
-          <MaterialButton variant='contained'>
+          <MaterialButton variant='contained' capitalize>
             {/* <MaterialButton variant='contained' onClick={onSearchSubmit}> */}
             Search
           </MaterialButton>
@@ -421,7 +449,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             options={sortOptions}
             className={styles.sortField}
             onSelect={onSortSelection}
-            greyBg
             defaultValue={defaultValues?.sort}
           />
           <MaterialSelectCheckmarks
@@ -430,7 +457,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             options={jobTypeOption}
             className={styles.sortField}
             onSelect={onJobTypeSelection}
-            greyBg
             defaultValue={defaultValues?.jobType}
           />
           <MaterialSelectCheckmarks
@@ -439,17 +465,27 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             options={salaryRangeOption}
             className={styles.sortField}
             onSelect={onSalarySelection}
-            greyBg
             defaultValue={defaultValues?.salary}
           />
           <MaterialButton
             variant='contained'
             className={styles.moreFiltersBtn}
             onClick={handleShowFilter}
-            style={{ letterSpacing: '1px' }}
+            capitalize
           >
             More Filters
           </MaterialButton>
+
+          {hasMoreFilters && (
+            <MaterialButton
+              variant='text'
+              className={styles.moreFiltersBtn}
+              onClick={handleResetFilter}
+              capitalize
+            >
+              Reset Filters
+            </MaterialButton>
+          )}
         </div>
         <div
           className={displayQuickLinks ? styles.quickLinkSectionExpanded : styles.quickLinkSection}
@@ -489,6 +525,20 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         />
       </div>
       <div className={breakpointStyles.hideOnTabletAndDesktop}>
+        {hasMoreFilters && (
+          <div className={styles.resetFilterBtnMobile}>
+            <MaterialButton
+            variant='text'
+            className={styles.moreFiltersBtn}
+            onClick={handleResetFilter}
+            capitalize
+          >
+            Reset Filters
+          </MaterialButton>
+          </div>
+          
+        )}
+
         <div className={styles.moreFiltersSection} onClick={() => handleShowFilter()}>
           <Image src={FilterIcon} alt='filter' width='15' height='15' />
           <Text className={styles.moreFiltersText}>More Filters</Text>

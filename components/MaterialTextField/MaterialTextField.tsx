@@ -44,6 +44,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "white"
+        }
+      }
+    }
   },
 })
 const MaterialTextField = ({ id, label, variant, size, color, className, defaultValue, refs, ...rest} : MaterialTextFieldProps) => {
@@ -58,7 +65,18 @@ const MaterialTextField = ({ id, label, variant, size, color, className, default
   }
   return (
     <ThemeProvider theme={theme}>
-      <TextField {...refs} id={id} label={label} color={color as any} value={value} onChange={handleChange} variant={variant as any} size={size} className={className} {...rest}/>
+      <TextField 
+        {...refs}
+        id={id} 
+        label={label} 
+        color={color as any} 
+        value={value} 
+        onChange={handleChange} 
+        variant={variant as any} 
+        size={size} 
+        className={className} 
+        {...rest}
+      />
     </ThemeProvider>
   )
 }

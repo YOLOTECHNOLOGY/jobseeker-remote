@@ -2,8 +2,7 @@
 @import 'styles/variable.scss';
 
 @mixin containers {
-  margin-left: 7%;
-  margin-right: 7%;
+  @extend .GlobalContainer;
   height: 100%;
   display: flex;
 }

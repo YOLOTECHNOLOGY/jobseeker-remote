@@ -18,6 +18,7 @@ import Image from 'next/image'
 import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
+import LazyLoad from 'components/LazyLoad'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
@@ -25,10 +26,7 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialLocationField from 'components/MaterialLocationField'
 
 /* Helpers*/
-import {
-  categoryParser,
-  conditionChecker,
-} from 'helpers/jobPayloadFormatter'
+import { categoryParser, conditionChecker } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Images */
@@ -137,7 +135,7 @@ const Home = (props: HomeProps) => {
     if (locationValue) {
       const sanitisedLocValue = categoryParser(locationValue.value)
       queryParam = conditionChecker(searchValue, sanitisedLocValue)
-    } else if (searchValue){
+    } else if (searchValue) {
       queryParam = conditionChecker(searchValue)
     }
     updateUrl(queryParam, null)
@@ -157,7 +155,9 @@ const Home = (props: HomeProps) => {
           title='Finance jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>Finance jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>
+            Finance jobs
+          </Text>
         </Link>
         <Link
           className={styles.link}
@@ -165,7 +165,9 @@ const Home = (props: HomeProps) => {
           title='Sales jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>Sales jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>
+            Sales jobs
+          </Text>
         </Link>
         <Link
           className={styles.link}
@@ -173,10 +175,14 @@ const Home = (props: HomeProps) => {
           title='Marketing jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>Marketing jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>
+            Marketing jobs
+          </Text>
         </Link>
         <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs' aTag>
-          <Text textStyle='sm' textColor='primaryBlue'>Makati jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>
+            Makati jobs
+          </Text>
         </Link>
         <Link
           className={styles.link}
@@ -184,7 +190,9 @@ const Home = (props: HomeProps) => {
           title='IT jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>IT jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>
+            IT jobs
+          </Text>
         </Link>
         <Link
           className={styles.link}
@@ -192,7 +200,9 @@ const Home = (props: HomeProps) => {
           title='Overseas jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>Overseas jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>
+            Overseas jobs
+          </Text>
         </Link>
         <Link
           className={styles.link}
@@ -200,7 +210,9 @@ const Home = (props: HomeProps) => {
           title='Customer Service jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>Customer Service jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>
+            Customer Service jobs
+          </Text>
         </Link>
         <Link
           className={styles.link}
@@ -208,10 +220,14 @@ const Home = (props: HomeProps) => {
           title='₱30K + jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>₱30K + jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>
+            ₱30K + jobs
+          </Text>
         </Link>
         <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs' aTag>
-          <Text textStyle='sm' textColor='primaryBlue'>Manila jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>
+            Manila jobs
+          </Text>
         </Link>
         <Link
           className={styles.link}
@@ -219,7 +235,9 @@ const Home = (props: HomeProps) => {
           title='Full Time jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>Full Time jobs</Text>
+          <Text textStyle='sm' textColor='primaryBlue'>
+            Full Time jobs
+          </Text>
         </Link>
       </div>
     )
@@ -229,46 +247,46 @@ const Home = (props: HomeProps) => {
     <div className={styles.container}>
       <Layout>
         <section className={styles.searchAndQuickLinkSection}>
-          <Text
-            tagName='h1'
-            textStyle='xxxl'
-            textColor='primaryBlue'
-            bold
-            className={breakpointStyles.hideOnMobileAndTablet}
-          >
-            Find Jobs for Professionals in Phillipines
-          </Text>
-          <div className={styles.searchSection}>
-            <div className={styles.searchAndLocationContainer}>
-              <MaterialTextField
-                id='search'
-                label='Search for job title, keyword or company'
-                variant='outlined'
-                size='small'
-                className={styles.searchField}
-                onChange={(e)=>{
-                  e.preventDefault()
-                  setSearchValue(e.target.value)
-                }}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
+          <div className={styles.commonContainer}>
+            <Text
+              tagName='h1'
+              textStyle='xxxl'
+              textColor='primaryBlue'
+              bold
+              className={breakpointStyles.hideOnMobileAndTablet}
+            >
+              Find Jobs for Professionals in Phillipines
+            </Text>
+            <div className={styles.searchSection}>
+              <div className={styles.searchAndLocationContainer}>
+                <MaterialTextField
+                  id='search'
+                  label='Search for job title, keyword or company'
+                  variant='outlined'
+                  size='small'
+                  className={styles.searchField}
+                  onChange={(e) => {
                     e.preventDefault()
-                    onSearch()
-                  }
-                }}
+                    setSearchValue(e.target.value)
+                  }}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault()
+                      onSearch()
+                    }
+                  }}
                 />
-              <MaterialLocationField
-                className={styles.locationField}
-                // defValue={defaultLocation}
-                // defValue={urlLocation}
-                onChange={onLocationSearch}
-              />
-              <MaterialButton variant='contained' onClick={onSearch}>
-                Search
-              </MaterialButton>
-            </div>
-            <div className={styles.quickLinksContainer}>
-              {renderQuickLinks()}
+                <MaterialLocationField
+                  className={styles.locationField}
+                  // defValue={defaultLocation}
+                  // defValue={urlLocation}
+                  onChange={onLocationSearch}
+                />
+                <MaterialButton variant='contained' onClick={onSearch}>
+                  Search
+                </MaterialButton>
+              </div>
+              <div className={styles.quickLinksContainer}>{renderQuickLinks()}</div>
             </div>
           </div>
         </section>
@@ -354,173 +372,203 @@ const Home = (props: HomeProps) => {
           </div>
         </div>
         <div className={styles.whatCanYouDoSection}>
-          <section className={styles.whatYouCanDo}>
-            <div className={styles.content}>
-              <div className={styles.left}>
-                <Text tagName='h1' textStyle='xxxl' bold>
-                  What can you do with Bossjob?
-                </Text>
-                <span
-                  ref={firstFeatureImgNode}
-                  onClick={() => updateActiveFeature(1)}
-                  className={activeFeature === 1 ? styles.active : ''}
-                >
-                  Build Professional Resume
-                  <p>
-                    Choose from Bossjob's ready-to-use resume templates to win interviews
-                    effortlessly
-                  </p>
-                </span>
-                <span
-                  ref={secondFeatureImgNode}
-                  onClick={() => updateActiveFeature(2)}
-                  className={activeFeature === 2 ? styles.active : ''}
-                >
-                  Chat directly with Boss
-                  <p>Get instant feedback and all your queries answered by the hiring manager</p>
-                </span>
-                <span
-                  ref={thirdFeatureImgNode}
-                  onClick={() => updateActiveFeature(3)}
-                  className={activeFeature === 3 ? styles.active : ''}
-                >
-                  Get Headhunted
-                  <p>
-                    Opt in to be headhunted by Bossjob's Robo-headhunter, an A.I.-powered
-                    headhunterbot matching you with suitable jobs round the clock
-                  </p>
-                </span>
-                <span
-                  ref={fourthFeatureImgNode}
-                  onClick={() => updateActiveFeature(4)}
-                  className={activeFeature === 4 ? styles.active : ''}
-                >
-                  Level Up Your Career
-                  <p>
-                    100,00+ cheap courses & certifications readily available to equip you with
-                    skills for your next career jump
-                  </p>
-                </span>
+          <div className={styles.commonContainer}>
+            <section className={styles.whatYouCanDo}>
+              <div className={styles.content}>
+                <div className={styles.left}>
+                  <Text tagName='h1' textStyle='xxxl' bold>
+                    What can you do with Bossjob?
+                  </Text>
+                  <span
+                    ref={firstFeatureImgNode}
+                    onClick={() => updateActiveFeature(1)}
+                    className={activeFeature === 1 ? styles.active : ''}
+                  >
+                    Build Professional Resume
+                    <p>
+                      Choose from Bossjob's ready-to-use resume templates to win interviews
+                      effortlessly
+                    </p>
+                  </span>
+                  <span
+                    ref={secondFeatureImgNode}
+                    onClick={() => updateActiveFeature(2)}
+                    className={activeFeature === 2 ? styles.active : ''}
+                  >
+                    Chat directly with Boss
+                    <p>Get instant feedback and all your queries answered by the hiring manager</p>
+                  </span>
+                  <span
+                    ref={thirdFeatureImgNode}
+                    onClick={() => updateActiveFeature(3)}
+                    className={activeFeature === 3 ? styles.active : ''}
+                  >
+                    Get Headhunted
+                    <p>
+                      Opt in to be headhunted by Bossjob's Robo-headhunter, an A.I.-powered
+                      headhunterbot matching you with suitable jobs round the clock
+                    </p>
+                  </span>
+                  <span
+                    ref={fourthFeatureImgNode}
+                    onClick={() => updateActiveFeature(4)}
+                    className={activeFeature === 4 ? styles.active : ''}
+                  >
+                    Level Up Your Career
+                    <p>
+                      100,00+ cheap courses & certifications readily available to equip you with
+                      skills for your next career jump
+                    </p>
+                  </span>
+                </div>
+                <div className={styles.right}>
+                  <img
+                    className={activeFeatureImg === 1 ? styles.active : ''}
+                    src={BuildProfessionalResume}
+                    alt='Build Professional Resume'
+                    width='535'
+                    height='432'
+                  />
+                  <img
+                    className={activeFeatureImg === 2 ? styles.active : ''}
+                    src={ChatDirectlyWithBoss}
+                    alt='Chat Directly'
+                    width='554'
+                    height='382'
+                  />
+                  <img
+                    className={activeFeatureImg === 3 ? styles.active : ''}
+                    src={GetHeadhunted}
+                    alt='Get Headhunted'
+                    width='555'
+                    height='427'
+                  />
+                  <img
+                    className={activeFeatureImg === 4 ? styles.active : ''}
+                    src={LevelUpCareer}
+                    alt='Level Up Your Career'
+                    width='520'
+                    height='382'
+                  />
+                </div>
+                <div className={styles.flatDisplay}>
+                  <h2 className={styles.h2}>What can you do with Bosshunt?</h2>
+                  <LazyLoad>
+                    <div className={styles.flatDisplayContent}>
+                      <div className={styles.featureContainer}>
+                        <img
+                          className={styles.flatDisplayImage}
+                          src={BuildProfessionalResume}
+                          alt='Build Professional Resume'
+                          width='335'
+                          height='265'
+                        />
+                        <div className={styles.featureText}>
+                          <p className={styles.title}>
+                            {' '}
+                            <Text textColor='primaryBlue' textStyle='xxxl' bold>
+                              {' '}
+                              Build Professional Resume{' '}
+                            </Text>
+                          </p>
+                          <p className={styles.description}>
+                            {' '}
+                            Choose from Bossjob's ready-to-use resume templates to win interviews
+                            effortlessly
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={styles.flatDisplayContent}>
+                      <div className={styles.featureContainer}>
+                        <img
+                          className={styles.flatDisplayImage}
+                          src={ChatDirectlyWithBoss}
+                          alt='Chat Directly'
+                          width='335'
+                          height='265'
+                        />
+                        <div className={styles.featureText}>
+                          <p className={styles.title}>
+                            {' '}
+                            <Text textColor='primaryBlue' textStyle='xxxl' bold>
+                              Chat directly with Boss
+                            </Text>
+                          </p>
+                          <p className={styles.description}>
+                            {' '}
+                            Get instant feedback and all your queries answered by the hiring manager
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={styles.flatDisplayContent}>
+                      <div className={styles.featureContainer}>
+                        <img
+                          className={styles.flatDisplayImage}
+                          src={GetHeadhunted}
+                          alt='Get Headhunted'
+                          width='335'
+                          height='274'
+                        />
+                        <div className={styles.featureText}>
+                          <p className={styles.title}>
+                            {' '}
+                            <Text textColor='primaryBlue' textStyle='xxxl' bold>
+                              Get Headhunted{' '}
+                            </Text>
+                          </p>
+                          <p className={styles.description}>
+                            Opt in to be headhunted by Bossjob's Robo-headhunter, an A.I.-powered
+                            headhunterbot matching you with suitable jobs round the clock
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={styles.flatDisplayContent}>
+                      <div className={styles.featureContainer}>
+                        <img
+                          className={styles.flatDisplayImage}
+                          src={LevelUpCareer}
+                          alt='Level Up Your Career'
+                          width='335'
+                          height='265'
+                        />
+                        <div className={styles.featureText}>
+                          <p className={styles.title}>
+                            <Text textColor='primaryBlue' textStyle='xxxl' bold>
+                              {' '}
+                              Level Up Your Career{' '}
+                            </Text>
+                          </p>
+                          <p className={styles.description}>
+                            100,00+ cheap courses & certifications readily available to equip you
+                            with skills for your next career jump
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </LazyLoad>
+                </div>
               </div>
-              <div className={styles.right}>
-                <img
-                  className={activeFeatureImg === 1 ? styles.active : ''}
-                  src={BuildProfessionalResume}
-                  alt='Build Professional Resume'
-                />
-                <img
-                  className={activeFeatureImg === 2 ? styles.active : ''}
-                  src={ChatDirectlyWithBoss}
-                  alt='Build Professional Resume'
-                />
-                <img
-                  className={activeFeatureImg === 3 ? styles.active : ''}
-                  src={GetHeadhunted}
-                  alt='Build Professional Resume'
-                />
-                <img
-                  className={activeFeatureImg === 4 ? styles.active : ''}
-                  src={LevelUpCareer}
-                  alt='Build Professional Resume'
-                />
-              </div>
-              <div className={styles.flatDisplay}>
-                <h2 className={styles.h2}>What can you do with Bosshunt?</h2>
-                <div className={styles.flatDisplayContent}>
-                  <div className={styles.featureContainer}>
-                    <img
-                      className={styles.flatDisplayImage}
-                      src={BuildProfessionalResume}
-                      alt='Build Professional Resume'
-                    />
-                    <div className={styles.featureText}>
-                      <p className={styles.title}>
-                        {' '}
-                        <Text textColor='primaryBlue' textStyle='xxxl' bold>
-                          {' '}
-                          Build Professional Resume{' '}
-                        </Text>
-                      </p>
-                      <p className={styles.description}>
-                        {' '}
-                        Choose from Bossjob's ready-to-use resume templates to win interviews
-                        effortlessly
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.flatDisplayContent}>
-                  <div className={styles.featureContainer}>
-                    <img
-                      className={styles.flatDisplayImage}
-                      src={ChatDirectlyWithBoss}
-                      alt='Build Professional Resume'
-                    />
-                    <div className={styles.featureText}>
-                      <p className={styles.title}>
-                        {' '}
-                        <Text textColor='primaryBlue' textStyle='xxxl' bold>
-                          Chat directly with Boss
-                        </Text>
-                      </p>
-                      <p className={styles.description}>
-                        {' '}
-                        Get instant feedback and all your queries answered by the hiring manager
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.flatDisplayContent}>
-                  <div className={styles.featureContainer}>
-                    <img
-                      className={styles.flatDisplayImage}
-                      src={GetHeadhunted}
-                      alt='Build Professional Resume'
-                    />
-                    <div className={styles.featureText}>
-                      <p className={styles.title}>
-                        {' '}
-                        <Text textColor='primaryBlue' textStyle='xxxl' bold>
-                          Get Headhunted{' '}
-                        </Text>
-                      </p>
-                      <p className={styles.description}>
-                        Opt in to be headhunted by Bossjob's Robo-headhunter, an A.I.-powered
-                        headhunterbot matching you with suitable jobs round the clock
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.flatDisplayContent}>
-                  <div className={styles.featureContainer}>
-                    <img
-                      className={styles.flatDisplayImage}
-                      src={LevelUpCareer}
-                      alt='Build Professional Resume'
-                    />
-                    <div className={styles.featureText}>
-                      <p className={styles.title}>
-                        <Text textColor='primaryBlue' textStyle='xxxl' bold>
-                          {' '}
-                          Level Up Your Career{' '}
-                        </Text>
-                      </p>
-                      <p className={styles.description}>
-                        100,00+ cheap courses & certifications readily available to equip you with
-                        skills for your next career jump
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
         <div className={styles.newsFeatureSection}>
           <Text tagName='h1' textStyle='xxxl' bold>
             Bossjob in the news
           </Text>
-          <div className={styles.video} />
+          <LazyLoad className={styles.video}>
+            <iframe
+              width='560'
+              height='315'
+              src='https://www.youtube.com/embed/_taCBqITsGM'
+              title='YouTube video player'
+              frameBorder='0'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              allowFullScreen
+            />
+          </LazyLoad>
           <div className={styles.featureList}>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
@@ -690,7 +738,9 @@ const Home = (props: HomeProps) => {
           </div>
         </div>
         <div className={styles.bannerSection}>
-          <Text className={styles.bannerSectionText}>Client Banner Here</Text>
+          <div className={styles.commonContainer}>
+            <Text className={styles.bannerSectionText}>Client Banner Here</Text>
+          </div>
         </div>
       </Layout>
     </div>
