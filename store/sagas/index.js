@@ -31,7 +31,7 @@ import watchDeleteJobAlert from 'store/sagas/alerts/deleteJobAlert'
 import watchCreateJobAlert from 'store/sagas/alerts/createJobAlert'
 
 // Users 
-import WatchRegisterUser from 'store/sagas/users/registerUser'
+import watchRegisterUser from 'store/sagas/users/registerUser'
 
 // Auth
 import watchSocialLogin from 'store/sagas/auth/socialLogin'
@@ -47,7 +47,7 @@ import watchRegisterRecruiter from 'store/sagas/auth/registerRecruiter'
 import watchFetchRecruiterSubscriptionFeature from 'store/sagas/recruiters/fetchRecruiterSubscriptionFeature'
 
 // Users 
-import WatchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
+import watchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
 
 function* rootSaga() {
   yield all([
@@ -75,7 +75,7 @@ function* rootSaga() {
     watchDeleteJobAlert(),
     watchCreateJobAlert(),
 
-    WatchRegisterUser(),
+    watchRegisterUser(),
 
     watchSocialLogin(),
     watchLogin(),
@@ -86,9 +86,9 @@ function* rootSaga() {
     watchFetchRecruiterSubscriptionFeature(),
 
     watchRegisterJobseeker(),
-    watchRegisterRecruiter()
+    watchRegisterRecruiter(),
 
-    WatchFetchRecommendedCourses()
+    watchFetchRecommendedCourses()
   ])
 }
 

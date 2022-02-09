@@ -110,7 +110,7 @@ const Login = () => {
           />
 
           <div className={styles.LoginForgotPasswordLink}>
-            <Link to={'/'}>
+            <Link to={'/reset-password'}>
               <Text textStyle='base' textColor='darkgrey'>
                 Forgot Password
               </Text>
