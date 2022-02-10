@@ -77,7 +77,7 @@ const Step1 = () => {
         <div className={styles.Step1Subscribe}>
           <FormControlLabel
             control={
-              <Switch defaultChecked name='subscript' />
+              <Switch defaultChecked name='subscribe' />
             }
             label={<Text textStyle='sm'>I’d like to join Headhunt Me to discover more job opportunities.</Text>}
           />

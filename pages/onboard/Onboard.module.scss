@@ -25,6 +25,14 @@
   }
 }
 
+.StepField {
+  margin-top: 20px;
+
+  &Header {
+    margin-bottom: 10px;
+  }
+}
+
 .Step1 {
   &Contact {
     display: flex;
@@ -96,5 +104,52 @@
 
   &Create {
     text-align: center;
+  }
+}
+
+.Step3 {
+  &ExpList {
+    border-bottom: 1px solid $lightgrey;
+    padding-bottom: 20px;
+  }
+
+  &ExpItem {
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &ExpActions {
+    display: flex;
+  }
+
+  &ExpActionItem {
+    margin-left: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &Date {
+    display: flex;
+
+    & > * {
+      width: 30%;
+      margin-right: 30px;
+    }
+  }
+
+  &Editor {
+    margin-top: 20px;
+
+    & > * {
+      padding: 0;
+    }
   }
 }

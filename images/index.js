@@ -42,6 +42,8 @@ export const ExpireIcon = `${S3BucketJobseeker}/ExpireIcon.svg`
 export const VectorBulletedListIcon = `${S3BucketJobseeker}/VectorBulletedListIcon.svg`
 export const VectorNumberedListIcon = `${S3BucketJobseeker}/VectorNumberedListIcon.svg`
 export const InfoIcon = `${S3BucketJobseeker}/InfoIcon.svg`
+export const CreateFilledIcon = `${S3BucketJobseeker}/CreateFilledIcon.svg`
+export const DeleteFilledIcon = `${S3BucketJobseeker}/DeleteFilledIcon.svg`
 
 
 /* Footer Social Links Logo */
