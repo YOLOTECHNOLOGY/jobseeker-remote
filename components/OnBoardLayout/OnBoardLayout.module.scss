@@ -32,6 +32,10 @@
   &Content {
     width: 617px;
     margin: 0 auto;
+
+    @include msd {
+      width: 100%;
+    }
   }
 
   &Footer {
@@ -55,7 +59,7 @@
   }
 
   &Heading {
-    height: 73px;
+    height: 50px;
     text-align: center;
 
     h2 {
@@ -64,7 +68,7 @@
   }
 
   &Multistep {
-    margin: 15px auto 10px;
+    margin: 5px 0 15px;
     text-align: center;
   }
 }

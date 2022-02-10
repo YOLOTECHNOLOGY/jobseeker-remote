@@ -37,22 +37,28 @@ const Step1 = () => {
           </div>
         </div>
 
-        <MaterialLocationField
-          className={styles.StepFullwidth}
-          label='Current Location *'
-        />
+        <div className={styles.StepField}>
+          <MaterialLocationField
+            className={styles.StepFullwidth}
+            label='Current Location *'
+          />
+        </div>
 
-        <MaterialBasicSelect
-          className={styles.StepFullwidth}
-          label='Availability *'
-          options={[{label: 'Full-time', value: 'full-time'}]}
-        />
+        <div className={styles.StepField}>
+          <MaterialBasicSelect
+            className={styles.StepFullwidth}
+            label='Availability *'
+            options={[{label: 'Full-time', value: 'full-time'}]}
+          />
+        </div>
 
-        <MaterialBasicSelect
-          className={styles.StepFullwidth}
-          label="I’m looking for jobs in these specializations *"
-          options={[{label: 'Full-time', value: 'full-time'}]}
-        />
+        <div className={styles.StepField}>
+          <MaterialBasicSelect
+            className={styles.StepFullwidth}
+            label="I’m looking for jobs in these specializations *"
+            options={[{label: 'Full-time', value: 'full-time'}]}
+          />
+        </div>
 
         <div className={styles.Step1Salary}>
           <Text textColor='darkgrey' textStyle='base' bold>Expected salary per month *</Text>

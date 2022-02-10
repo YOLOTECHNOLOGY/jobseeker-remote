@@ -5,18 +5,15 @@ import classNames from 'classnames/bind'
 import Switch from '@mui/material/Switch';
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Image from 'next/image'
 
 import Text from 'components/Text'
 import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
-import TextEditorField from 'components/TextEditor/TextEditor'
 
 // Images
 import { 
-  InfoIcon, 
   DeleteFilledIcon, 
   CreateFilledIcon, 
   AddOutlineIcon 
@@ -26,28 +23,25 @@ import {
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton';
 
-const Step3 = () => {
+const Step4 = () => {
   const [showForm, setShowForm] = useState(false)
 
   return (
     <OnBoardLayout
-      headingText={<Text bold textStyle='xxxl' tagName='h2'> Add your work experience 💼</Text>}
-      currentStep={3}
+      headingText={<Text bold textStyle='xxxl' tagName='h2'>All about your education 🎓</Text>}
+      currentStep={4}
       totalStep={4}
       // backFnBtn={() => console.log('back')}
       // nextFnBtn={() => console.log('next')}
     >
-      <div className={styles.StepNotice}>
-        <Image src={InfoIcon} alt='' width='30' height='30' />
-        <Text textStyle='base'>Fill in your complete work experiences will increase your chances of being shortlisted by 83%.</Text>
-      </div>
       <div className={styles.StepDataList}>
         <div className={styles.StepDataItem}>
           <div className={styles.StepDataInfo}>
-            <Text bold textStyle='base' tagName='p'>Project Manager</Text>
-            <Text textStyle='base' tagName='p'>Bossjob</Text>
-            <Text textStyle='base' tagName='p'>Manila - NCR Region</Text>
+            <Text bold textStyle='base' tagName='p'>School Name</Text>
+            <Text textStyle='base' tagName='p'>Degree Type</Text>
             <Text textStyle='base' tagName='p'>December 2017 to Present</Text>
+            <Text textStyle='base' tagName='p'>Manila - NCR Region</Text>
+            <Text textStyle='base' tagName='p'>Field of Study</Text>
           </div>
           <div className={styles.StepDataActions}>
             <div 
@@ -68,15 +62,15 @@ const Step3 = () => {
       {!showForm && (
         <div className={styles.StepFormToggle} onClick={() => setShowForm(!showForm)}>
           <img src={AddOutlineIcon} width='18' height='18' />
-          <Text textColor='primaryBlue' textStyle='sm'>Add a work experience</Text>
+          <Text textColor='primaryBlue' textStyle='sm'>Add a education</Text>
         </div>
       )}
       {showForm && (
-        <div className={classNames(styles.StepForm, styles.Step3Form)}>
+        <div className={classNames(styles.StepForm, styles.Step4Form)}>
           <div className={styles.StepField}>
             <MaterialTextField
               className={styles.StepFullwidth}
-              label='Job Title *'
+              label='School Name *'
               size='small'
             />
           </div>
@@ -84,28 +78,21 @@ const Step3 = () => {
           <div className={styles.StepField}>
             <MaterialTextField
               className={styles.StepFullwidth}
-              label='Company Name *'
+              label='Education Level *'
               size='small'
-            />
-          </div>
-
-          <div className={styles.StepField}>
-            <MaterialLocationField
-              className={styles.StepFullwidth}
-              label='Location *'
             />
           </div>
 
           <div className={styles.StepFieldGroup}>
             <div className={styles.StepFieldHeader}>
-              <Text textStyle='base' bold>Working Period *</Text>
+              <Text textStyle='base' bold>Study Period *</Text>
             </div>
             <div className={styles.StepFieldBody}>
               <FormControlLabel
                 control={
-                  <Switch defaultChecked name='currentJob' />
+                  <Switch defaultChecked name='currentStudent' />
                 }
-                label={<Text textStyle='base'>I currently work here</Text>}
+                label={<Text textStyle='base'>Currently attending</Text>}
               />
             </div>
           </div>
@@ -151,39 +138,26 @@ const Step3 = () => {
           </div>
 
           <div className={styles.StepField}>
-            <MaterialBasicSelect
-              className={styles.StepFullwidth}
-              label='Job Function'
-              options={[{label: 'Full-time', value: 'full-time'}]}
-            />
-          </div>
-
-          <div className={styles.StepField}>
-            <MaterialBasicSelect
-              className={styles.StepFullwidth}
-              label='Industry'
-              options={[{label: 'Full-time', value: 'full-time'}]}
-            />
+            <MaterialLocationField
+            className={styles.StepFullwidth}
+            label='Location *'
+          />
           </div>
 
           <div className={styles.StepField}>
             <MaterialTextField
               className={styles.StepFullwidth}
-              label='Monthly Salary'
+              label='Field of Study'
               size='small'
             />
-          </div>
-
-          <div className={styles.Step3Editor}>
-            <TextEditorField />
           </div>
 
           <div className={styles.StepField}>
             <FormControlLabel
               control={
-                <Checkbox defaultChecked name='noWorkExperience' />
+                <Checkbox defaultChecked name='noEducation' />
               }
-              label={<Text textStyle='base'>I have no work experience</Text>}
+              label={<Text textStyle='base'>I do not want to enter my Education now</Text>}
             />
           </div>
 
@@ -201,4 +175,4 @@ const Step3 = () => {
   )
 }
 
-export default Step3
+export default Step4

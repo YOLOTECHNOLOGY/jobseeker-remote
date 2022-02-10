@@ -30,6 +30,28 @@ const MaterialBasicSelect = ({
   }
   const theme = createTheme({
     components: {
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            fontSize: '14px',
+            transform: 'translate(14px, 10px) scale(1)',
+            letterSpacing: '1px',
+            '&.Mui-focused': {
+              fontSize: '10px',
+              transform: 'translate(14px, -10px) scale(1)',
+            },
+          },
+          shrink: {
+            fontSize: '10px',
+            transform: 'translate(14px, -10px) scale(1)',
+          },
+          outlined: {
+            '&.MuiInputLabel-shrink': {
+              fontSize: '10px',
+            },
+          },
+        },
+      },
       MuiOutlinedInput: {
         styleOverrides: {
           root: {

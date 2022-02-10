@@ -32,7 +32,13 @@ type CustomElement = {
   children: CustomText[]
 }
 
-const TextEditorField = () => {
+interface ITextEditorField {
+  autoFocus?: boolean
+}
+
+const TextEditorField = ({
+  autoFocus
+}: ITextEditorField) => {
   const [value, setValue] = useState<Descendant[]>(initialEditorValue)
   // renderLeaf activates bold, italic, underline
   // const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
@@ -106,7 +112,7 @@ const TextEditorField = () => {
             // renderLeaf={renderLeaf}
             placeholder='Type here...'
             spellCheck
-            autoFocus
+            autoFocus={autoFocus}
             onKeyDown={onKeyDown}
             className={styles.editable}
           />
