@@ -65,7 +65,7 @@ const formatLocationConfig = (locationList) => {
   return locationConfig
 }
 
-const MaterialLocationField = ({ className, defValue, ...rest }: any) => {
+const MaterialLocationField = ({ className, label, defValue, ...rest }: any) => {
   // const [selectedLocation, setSelectedLocation] = useState(defValue.value)
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
@@ -82,7 +82,7 @@ const MaterialLocationField = ({ className, defValue, ...rest }: any) => {
         className={className}
         renderInput={(params) => (
           <ThemeProvider theme={textFieldTheme}>
-            <TextField id='location' label='Location' variant='outlined' size='small' {...params} />
+            <TextField id='location' label={label ? label : 'Location'} variant='outlined' size='small' {...params} />
           </ThemeProvider>
         )}
         defaultValue={defValue}

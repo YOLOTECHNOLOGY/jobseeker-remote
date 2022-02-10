@@ -1,0 +1,100 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.StepForm {
+  margin-top: 20px;
+}
+
+.StepFullwidth {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.StepNotice {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba($primaryBlue, 0.1);
+  padding: 10px;
+  border-radius: 4px;
+
+  span {
+    display: block;
+    width: 90%;
+    line-height: 20px;
+    color:rgb(13, 60, 97);
+  }
+}
+
+.Step1 {
+  &Contact {
+    display: flex;
+    justify-content: space-between;
+  }
+  &ContactCountry {
+    width: 20%;
+  }
+  &ContactNumber {
+    width: 78%;
+  }
+
+  &ContactNumberField {
+    width: 100%;
+  }
+
+  &ContactDigits {
+    margin-top: 4px;
+    margin-left: 15px;
+  }
+
+  &Salary {
+    margin-top: 20px;
+  }
+
+  &SalaryRanges {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &SalaryRange {
+    width: 48%;
+  }
+
+  &Subscribe {
+    margin-top: 20px;
+  }
+}
+
+.Step2 {
+  &Caption {
+    text-align: center;
+    display: block;
+  }
+
+  &Upload {
+    margin-top: 20px;
+    text-align: center;
+
+    span {
+      display: block;
+    }
+  }
+
+  &UploadError {
+    margin-bottom: 10px;
+  }
+
+  &UploadAllowed {
+    margin-top: 10px;
+  }
+
+  &UploadDivider {
+    display: block;
+    margin: 30px 0;
+    text-align: center;
+  }
+
+  &Create {
+    text-align: center;
+  }
+}
