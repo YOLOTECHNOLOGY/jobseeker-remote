@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import classNames from 'classnames/bind'
+import { useForm } from 'react-hook-form'
 
 // Components
 import Switch from '@mui/material/Switch';
@@ -28,6 +29,20 @@ import MaterialButton from 'components/MaterialButton';
 
 const Step3 = () => {
   const [showForm, setShowForm] = useState(false)
+
+  const [jobTitle, setJobTitle] = useState('')
+  const [companyName, setCompanyName] = useState('')
+  const [isCurrentJob, setIsCurrentJob] = useState(false)
+  const [fromMonth, setFromMonth] = useState('')
+  const [fromYear, setFromYear] = useState('')
+  const [toMonth, setToMonth] = useState('')
+  const [toYear, setToYear] = useState('')
+  const [jobFunction, setJobFunction] = useState('')
+  const [industry, setIndustry] = useState('')
+  const [salary, setSalary] = useState('')
+  
+  const { register, handleSubmit, formState: { errors }} = useForm()
+  
   const requiredLabel = (text: string) => {
     return (
       <>
@@ -37,13 +52,22 @@ const Step3 = () => {
     )
   }
 
+  const errorText = (errorMessage: string) => {
+    return <Text textStyle='sm' textColor='red' tagName='p' className={styles.StepFieldError}>{errorMessage}</Text>
+  }
+
+  const handleNextOrSave = (data) => {
+    // eslint-disable-next-line no-console
+    console.log('data: ', data)
+  }
+
   return (
     <OnBoardLayout
       headingText={<Text bold textStyle='xxxl' tagName='h2'> Add your work experience 💼</Text>}
       currentStep={3}
       totalStep={4}
       // backFnBtn={() => console.log('back')}
-      // nextFnBtn={() => console.log('next')}
+      nextFnBtn={handleSubmit(handleNextOrSave)}
     >
       <div className={styles.StepNotice}>
         <Image src={InfoIcon} alt='' width='30' height='30' />
@@ -83,25 +107,55 @@ const Step3 = () => {
         <div className={classNames(styles.StepForm, styles.Step3Form)}>
           <div className={styles.StepField}>
             <MaterialTextField
+              fieldRef={{...register('jobTitle', { 
+                required: {
+                  value: true,
+                  message: 'This field is required.'
+                }
+              })}}
               className={styles.StepFullwidth}
               label={requiredLabel('Job Title')}
               size='small'
+              value={jobTitle}
+              defaultValue={jobTitle}
+              onChange={(e) => setJobTitle(e.target.value)}
+              error={errors.jobTitle ? true : false}
             />
+            {errors.jobTitle && errorText(errors.jobTitle.message)}
           </div>
 
           <div className={styles.StepField}>
             <MaterialTextField
+              fieldRef={{...register('companyName', { 
+                required: {
+                  value: true,
+                  message: 'This field is required.'
+                }
+              })}}
               className={styles.StepFullwidth}
               label={requiredLabel('Company Name')}
               size='small'
+              value={companyName}
+              defaultValue={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              error={errors.companyName ? true : false}
             />
+            {errors.companyName && errorText(errors.companyName.message)}
           </div>
 
           <div className={styles.StepField}>
             <MaterialLocationField
+              fieldRef={{...register('companyLocation', { 
+                required: {
+                  value: true,
+                  message: 'This field is required.'
+                }
+              })}}
               className={styles.StepFullwidth}
               label={requiredLabel('Location')}
+              error={errors.companyLocation ? true : false}
             />
+            {errors.companyLocation && errorText(errors.companyLocation.message)}
           </div>
 
           <div className={styles.StepFieldGroup}>
@@ -111,7 +165,7 @@ const Step3 = () => {
             <div className={styles.StepFieldBody}>
               <FormControlLabel
                 control={
-                  <Switch defaultChecked name='currentJob' />
+                  <Switch checked={isCurrentJob} onChange={() => setIsCurrentJob(!isCurrentJob)} name='currentJob' />
                 }
                 label={<Text textStyle='base'>I currently work here</Text>}
               />
@@ -125,15 +179,37 @@ const Step3 = () => {
             <div className={classNames(styles.StepFieldBody, styles.StepFieldDate)}>
               <div className={styles.StepFieldDateItem}>
                 <MaterialBasicSelect
-                  label='Month'
-                  options={[{label: 'Full-time', value: 'full-time'}]}
+                  className={styles.StepFullwidth}
+                  fieldRef={{...register('fromMonth', { 
+                    required: {
+                      value: true,
+                      message: 'This field is required.'
+                    }
+                  })}}
+                  label={'Month'}
+                  value={fromMonth}
+                  onChange={(e) => setFromMonth(e.target.value)}
+                  error={errors.fromMonth ? true : false}
+                  options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
                 />
+                {errors.fromMonth && errorText(errors.fromMonth.message)}
               </div>
               <div className={styles.StepFieldDateItem}>
                 <MaterialBasicSelect
-                  label='Year'
-                  options={[{label: 'Full-time', value: 'full-time'}]}
+                  className={styles.StepFullwidth}
+                  fieldRef={{...register('fromYear', { 
+                    required: {
+                      value: true,
+                      message: 'This field is required.'
+                    }
+                  })}}
+                  label={'YearTo'}
+                  value={fromYear}
+                  onChange={(e) => setFromYear(e.target.value)}
+                  error={errors.fromYear ? true : false}
+                  options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
                 />
+                {errors.fromYear && errorText(errors.fromYear.message)}
               </div>
             </div>
           </div>
@@ -145,15 +221,37 @@ const Step3 = () => {
             <div className={classNames(styles.StepFieldBody, styles.StepFieldDate)}>
               <div className={styles.StepFieldDateItem}>
                 <MaterialBasicSelect
-                  label='Month'
-                  options={[{label: 'Full-time', value: 'full-time'}]}
+                  className={styles.StepFullwidth}
+                  fieldRef={{...register('toMonth', { 
+                    required: {
+                      value: true,
+                      message: 'This field is required.'
+                    }
+                  })}}
+                  label={'Month'}
+                  value={toMonth}
+                  onChange={(e) => setToMonth(e.target.value)}
+                  error={errors.toMonth ? true : false}
+                  options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
                 />
+                {errors.toMonth && errorText(errors.toMonth.message)}
               </div>
               <div className={styles.StepFieldDateItem}>
                 <MaterialBasicSelect
-                  label='Year'
-                  options={[{label: 'Full-time', value: 'full-time'}]}
+                  className={styles.StepFullwidth}
+                  fieldRef={{...register('toYear', { 
+                    required: {
+                      value: true,
+                      message: 'This field is required.'
+                    }
+                  })}}
+                  label={'Year'}
+                  value={toYear}
+                  onChange={(e) => setToYear(e.target.value)}
+                  error={errors.toYear ? true : false}
+                  options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
                 />
+                {errors.toYear && errorText(errors.toYear.message)}
               </div>
             </div>
           </div>
@@ -162,6 +260,8 @@ const Step3 = () => {
             <MaterialBasicSelect
               className={styles.StepFullwidth}
               label='Job Function'
+              value={jobFunction}
+              onChange={(e) => setJobFunction(e.target.value)}
               options={[{label: 'Full-time', value: 'full-time'}]}
             />
           </div>
@@ -170,6 +270,8 @@ const Step3 = () => {
             <MaterialBasicSelect
               className={styles.StepFullwidth}
               label='Industry'
+              value={industry}
+              onChange={(e) => setIndustry(e.target.value)}
               options={[{label: 'Full-time', value: 'full-time'}]}
             />
           </div>
@@ -179,6 +281,9 @@ const Step3 = () => {
               className={styles.StepFullwidth}
               label='Monthly Salary'
               size='small'
+              value={salary}
+              defaultValue={salary}
+              onChange={(e) => setSalary(e.target.value)}
             />
           </div>
 
@@ -196,7 +301,7 @@ const Step3 = () => {
           </div>
 
           <div className={styles.StepFormActions}>
-            <MaterialButton variant='contained' capitalize>
+            <MaterialButton variant='contained' capitalize onClick={handleSubmit(handleNextOrSave)}>
               <Text textColor='white'>Save</Text>
             </MaterialButton>
             <MaterialButton variant='outlined' capitalize>

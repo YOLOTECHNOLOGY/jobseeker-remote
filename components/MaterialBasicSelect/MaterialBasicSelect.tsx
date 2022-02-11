@@ -14,6 +14,7 @@ const MaterialBasicSelect = ({
   onOpen,
   greyBg,
   defaultValue,
+  fieldRef,
   ...rest
 }: any) => {
   const [value, setValue] = useState(defaultValue || '')
@@ -83,6 +84,7 @@ const MaterialBasicSelect = ({
       <FormControl className={className} size='small'>
         <InputLabel id={`${id}-select-label`}>{label}</InputLabel>
         <Select
+          {...fieldRef}
           labelId={`${id}-select-label`}
           id={id}
           value={value}

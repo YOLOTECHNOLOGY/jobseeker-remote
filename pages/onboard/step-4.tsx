@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import classNames from 'classnames/bind'
+import { useForm } from 'react-hook-form'
 
 // Components
 import Switch from '@mui/material/Switch';
@@ -25,6 +26,20 @@ import MaterialButton from 'components/MaterialButton';
 
 const Step4 = () => {
   const [showForm, setShowForm] = useState(false)
+
+  const [schoolName, setSchoolName] = useState('')
+  const [educationLevel, setEducationLevel] = useState('')
+  const [fromMonth, setFromMonth] = useState('')
+  const [fromYear, setFromYear] = useState('')
+  const [toMonth, setToMonth] = useState('')
+  const [toYear, setToYear] = useState('')
+  const [fieldStudy, setFieldStudy] = useState('')
+  const [isCurrentStudying, setIsCurrentStudying] = useState(false)
+  const [isSkipEducation, setIsSkipEducation] = useState(false)
+
+
+  const { register, handleSubmit, formState: { errors }} = useForm()
+
   const requiredLabel = (text: string) => {
     return (
       <>
@@ -32,6 +47,15 @@ const Step4 = () => {
         <span className={styles.StepFieldRequired}>*</span>
       </>
     )
+  }
+
+  const errorText = (errorMessage: string) => {
+    return <Text textStyle='sm' textColor='red' tagName='p' className={styles.StepFieldError}>{errorMessage}</Text>
+  }
+
+  const handleNextOrSave = (data) => {
+    // eslint-disable-next-line no-console
+    console.log('data: ', data)
   }
 
   return (
@@ -77,18 +101,40 @@ const Step4 = () => {
         <div className={classNames(styles.StepForm, styles.Step4Form)}>
           <div className={styles.StepField}>
             <MaterialTextField
+              fieldRef={{...register('schoolName', { 
+                required: {
+                  value: true,
+                  message: 'This field is required.'
+                }
+              })}}
               className={styles.StepFullwidth}
               label={requiredLabel('School Name')}
               size='small'
+              value={schoolName}
+              defaultValue={schoolName}
+              onChange={(e) => setSchoolName(e.target.value)}
+              error={errors.schoolName ? true : false}
             />
+            {errors.schoolName && errorText(errors.schoolName.message)}
           </div>
 
           <div className={styles.StepField}>
             <MaterialTextField
+              fieldRef={{...register('educationLevel', { 
+                required: {
+                  value: true,
+                  message: 'This field is required.'
+                }
+              })}}
               className={styles.StepFullwidth}
-              label={requiredLabel('Education Level')}
+              label={requiredLabel('School Name')}
               size='small'
+              value={educationLevel}
+              defaultValue={educationLevel}
+              onChange={(e) => setEducationLevel(e.target.value)}
+              error={errors.educationLevel ? true : false}
             />
+            {errors.educationLevel && errorText(errors.educationLevel.message)}
           </div>
 
           <div className={styles.StepFieldGroup}>
@@ -98,7 +144,7 @@ const Step4 = () => {
             <div className={styles.StepFieldBody}>
               <FormControlLabel
                 control={
-                  <Switch defaultChecked name='currentStudent' />
+                  <Switch checked={isCurrentStudying} onChange={() => setIsCurrentStudying(!isCurrentStudying)} name='currentStudent' />
                 }
                 label={<Text textStyle='base'>Currently attending</Text>}
               />
@@ -112,15 +158,37 @@ const Step4 = () => {
             <div className={classNames(styles.StepFieldBody, styles.StepFieldDate)}>
               <div className={styles.StepFieldDateItem}>
                 <MaterialBasicSelect
-                  label='Month'
-                  options={[{label: 'Full-time', value: 'full-time'}]}
+                  className={styles.StepFullwidth}
+                  fieldRef={{...register('fromMonth', { 
+                    required: {
+                      value: true,
+                      message: 'This field is required.'
+                    }
+                  })}}
+                  label={'Month'}
+                  value={fromMonth}
+                  onChange={(e) => setFromMonth(e.target.value)}
+                  error={errors.fromMonth ? true : false}
+                  options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
                 />
+                {errors.fromMonth && errorText(errors.fromMonth.message)}
               </div>
               <div className={styles.StepFieldDateItem}>
                 <MaterialBasicSelect
-                  label='Year'
-                  options={[{label: 'Full-time', value: 'full-time'}]}
+                  className={styles.StepFullwidth}
+                  fieldRef={{...register('fromYear', { 
+                    required: {
+                      value: true,
+                      message: 'This field is required.'
+                    }
+                  })}}
+                  label={'YearTo'}
+                  value={fromYear}
+                  onChange={(e) => setFromYear(e.target.value)}
+                  error={errors.fromYear ? true : false}
+                  options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
                 />
+                {errors.fromYear && errorText(errors.fromYear.message)}
               </div>
             </div>
           </div>
@@ -132,45 +200,78 @@ const Step4 = () => {
             <div className={classNames(styles.StepFieldBody, styles.StepFieldDate)}>
               <div className={styles.StepFieldDateItem}>
                 <MaterialBasicSelect
-                  label='Month'
-                  options={[{label: 'Full-time', value: 'full-time'}]}
+                  className={styles.StepFullwidth}
+                  fieldRef={{...register('toMonth', { 
+                    required: {
+                      value: true,
+                      message: 'This field is required.'
+                    }
+                  })}}
+                  label={'Month'}
+                  value={toMonth}
+                  onChange={(e) => setToMonth(e.target.value)}
+                  error={errors.toMonth ? true : false}
+                  options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
                 />
+                {errors.toMonth && errorText(errors.toMonth.message)}
               </div>
               <div className={styles.StepFieldDateItem}>
                 <MaterialBasicSelect
-                  label='Year'
-                  options={[{label: 'Full-time', value: 'full-time'}]}
+                  className={styles.StepFullwidth}
+                  fieldRef={{...register('toYear', { 
+                    required: {
+                      value: true,
+                      message: 'This field is required.'
+                    }
+                  })}}
+                  label={'Year'}
+                  value={toYear}
+                  onChange={(e) => setToYear(e.target.value)}
+                  error={errors.toYear ? true : false}
+                  options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
                 />
+                {errors.toYear && errorText(errors.toYear.message)}
               </div>
             </div>
           </div>
 
           <div className={styles.StepField}>
             <MaterialLocationField
-            className={styles.StepFullwidth}
-            label={requiredLabel('Location')}
-          />
+              fieldRef={{...register('schoolLocation', { 
+                required: {
+                  value: true,
+                  message: 'This field is required.'
+                }
+              })}}
+              className={styles.StepFullwidth}
+              label={requiredLabel('Location')}
+              error={errors.schoolLocation ? true : false}
+            />
+            {errors.schoolLocation && errorText(errors.schoolLocation.message)}
           </div>
 
           <div className={styles.StepField}>
             <MaterialTextField
               className={styles.StepFullwidth}
-              label='Field of Study'
+              label={'Field of Study'}
               size='small'
+              value={fieldStudy}
+              defaultValue={fieldStudy}
+              onChange={(e) => setFieldStudy(e.target.value)}
             />
           </div>
 
           <div className={styles.StepField}>
             <FormControlLabel
               control={
-                <Checkbox defaultChecked name='noEducation' />
+                <Checkbox checked={isSkipEducation} onChange={() => setIsSkipEducation(!isSkipEducation)} name='noEducation' />
               }
               label={<Text textStyle='base'>I do not want to enter my Education now</Text>}
             />
           </div>
 
           <div className={styles.StepFormActions}>
-            <MaterialButton variant='contained' capitalize>
+            <MaterialButton variant='contained' capitalize onClick={handleSubmit(handleNextOrSave)}>
               <Text textColor='white'>Save</Text>
             </MaterialButton>
             <MaterialButton variant='outlined' capitalize>
