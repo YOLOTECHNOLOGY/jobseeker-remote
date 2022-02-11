@@ -70,6 +70,10 @@
       width: 100%;
     }
   }
+
+  &Required {
+    color: $red;
+  }
 }
 
 .StepData {

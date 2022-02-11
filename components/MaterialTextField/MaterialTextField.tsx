@@ -10,7 +10,7 @@ type MaterialTextFieldProps = {
   style?: React.CSSProperties
   defaultValue?: string
   className?: string
-  label?: string
+  label?: string |  React.ReactNode
   size?: 'small' | 'medium'
   variant?: 'outlined' | 'filled' | 'standard'
   isLoading?: boolean

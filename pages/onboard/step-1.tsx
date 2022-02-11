@@ -11,6 +11,15 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import styles from './Onboard.module.scss'
 
 const Step1 = () => {
+  const requiredLabel = (text: string) => {
+    return (
+      <>
+        <span>{text}</span>
+        <span className={styles.StepFieldRequired}>*</span>
+      </>
+    )
+  }
+
   return (
     <OnBoardLayout
       headingText={<Text bold textStyle='xxxl' tagName='h2'>Let’s get you a job! 🎉👏 <br/> Tell us about yourself.</Text>}
@@ -30,7 +39,7 @@ const Step1 = () => {
           <div className={styles.Step1ContactNumber}>
             <MaterialTextField
               className={styles.Step1ContactNumberField}
-              label='Contact Number *'
+              label={requiredLabel('Contact Number')}
               size='small'
             />
             <Text className={styles.Step1ContactDigits} textStyle='sm' textColor='darkgrey'>9 - 10 digits</Text>
@@ -40,28 +49,35 @@ const Step1 = () => {
         <div className={styles.StepField}>
           <MaterialLocationField
             className={styles.StepFullwidth}
-            label='Current Location *'
+            label={requiredLabel('Current Location')}
           />
         </div>
 
         <div className={styles.StepField}>
           <MaterialBasicSelect
             className={styles.StepFullwidth}
-            label='Availability *'
-            options={[{label: 'Full-time', value: 'full-time'}]}
+            label={requiredLabel('Availability')}
+            value='Daily'
+            defaultValue='Daily'
+            options={[{label: 'Daily', value: 'Daily'}]}
           />
         </div>
 
         <div className={styles.StepField}>
           <MaterialBasicSelect
             className={styles.StepFullwidth}
-            label="I’m looking for jobs in these specializations *"
-            options={[{label: 'Full-time', value: 'full-time'}]}
+            label={requiredLabel('I’m looking for jobs in these specializations')}
+            value='Fronten Developer'
+            defaultValue='Fronten Developer'
+            options={[{label: 'Fronten Developer', value: 'Fronten Developer'}]}
           />
         </div>
 
         <div className={styles.Step1Salary}>
-          <Text textColor='darkgrey' textStyle='base' bold>Expected salary per month *</Text>
+          <Text textColor='darkgrey' textStyle='base' bold>
+            Expected salary per month 
+            <span className={styles.StepFieldRequired}>*</span>
+          </Text>
           <div className={styles.Step1SalaryRanges}>
             <MaterialBasicSelect
               className={styles.Step1SalaryRange}

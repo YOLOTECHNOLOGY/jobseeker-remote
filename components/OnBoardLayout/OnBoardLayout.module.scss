@@ -59,16 +59,20 @@
   }
 
   &Heading {
-    height: 50px;
-    text-align: center;
+    // height: 73px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
 
     h2 {
       line-height: 1.2;
+      margin: 0;
     }
   }
 
   &Multistep {
-    margin: 5px 0 15px;
+    margin-bottom: 15px;
     text-align: center;
   }
 }

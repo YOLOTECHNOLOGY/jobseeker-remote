@@ -28,6 +28,14 @@ import MaterialButton from 'components/MaterialButton';
 
 const Step3 = () => {
   const [showForm, setShowForm] = useState(false)
+  const requiredLabel = (text: string) => {
+    return (
+      <>
+        <span>{text}</span>
+        <span className={styles.StepFieldRequired}>*</span>
+      </>
+    )
+  }
 
   return (
     <OnBoardLayout
@@ -76,7 +84,7 @@ const Step3 = () => {
           <div className={styles.StepField}>
             <MaterialTextField
               className={styles.StepFullwidth}
-              label='Job Title *'
+              label={requiredLabel('Job Title')}
               size='small'
             />
           </div>
@@ -84,7 +92,7 @@ const Step3 = () => {
           <div className={styles.StepField}>
             <MaterialTextField
               className={styles.StepFullwidth}
-              label='Company Name *'
+              label={requiredLabel('Company Name')}
               size='small'
             />
           </div>
@@ -92,13 +100,13 @@ const Step3 = () => {
           <div className={styles.StepField}>
             <MaterialLocationField
               className={styles.StepFullwidth}
-              label='Location *'
+              label={requiredLabel('Location')}
             />
           </div>
 
           <div className={styles.StepFieldGroup}>
             <div className={styles.StepFieldHeader}>
-              <Text textStyle='base' bold>Working Period *</Text>
+              <Text textStyle='base' bold>Working Period <span className={styles.StepFieldRequired}>*</span></Text>
             </div>
             <div className={styles.StepFieldBody}>
               <FormControlLabel
