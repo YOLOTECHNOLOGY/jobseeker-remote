@@ -259,7 +259,7 @@ const Job = ({
                   >
                     Location
                   </Text>
-                  <Link to={'/'}>
+                  <Link to={'/'} className={styles.JobDetailHoverItem}>
                     <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
                       {jobDetail?.location?.value}
                     </Text>
