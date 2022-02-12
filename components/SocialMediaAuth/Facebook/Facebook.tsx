@@ -50,6 +50,7 @@ const Facebook = ({
             }
 
             callBackMethod(payload)
+            // eslint-disable-next-line no-console
             console.log('after callback facebook')
           })
         } else {

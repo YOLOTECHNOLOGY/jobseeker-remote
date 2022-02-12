@@ -223,7 +223,10 @@
   
     &SubBodyLink {
       color: $primaryBlue;
-      text-decoration: underline;
+      
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     @include msd {
@@ -305,6 +308,12 @@
       width: 80%;
     }
   }
+
+  &HoverItem {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .LeaderBoard {
@@ -336,8 +345,13 @@
   }
 
   &Title {
+
     margin-bottom: 12px;
-    display: block;
+    display: inline-block;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &Detail {
