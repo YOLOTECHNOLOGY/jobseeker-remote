@@ -5,6 +5,7 @@ import { setCookie } from 'helpers/cookies'
 import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
 import { getItem, removeItem } from 'helpers/localStorage'
 import { applyPendingJobId } from 'helpers/constants'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import { SOCIAL_LOGIN_REQUEST } from 'store/types/auth/socialLogin'
 
@@ -85,13 +86,16 @@ function* login(payload, redirect, fromRegister = false) {
           null
       }
 
-      let url = '/dashboard'
+      // let url = '/dashboard'
+      let redirectUrl = `${process.env.OLD_PROJECT_URL}/dashboard/jobs-hiring`
       
       if (getItem(applyPendingJobId)) {
-        url = `/dashboard/job/${getItem(applyPendingJobId)}/apply`
+        // url = `/dashboard/job/${getItem(applyPendingJobId)}/apply`
+        redirectUrl = `${process.env.OLD_PROJECT_URL}/dashboard/job/${getItem(applyPendingJobId)}/apply`
         yield call(removeItem, applyPendingJobId)
       } else if (redirect) {
-        url = redirect
+        // url = redirect
+        redirectUrl = redirect
       }
 
       removeUtmCampaign()
@@ -114,8 +118,9 @@ function* login(payload, redirect, fromRegister = false) {
         loginData.authentication.access_token
       )
 
-      console.log('url to be redirected to', url)
-      yield put(push({pathname:`https://dev.bossjob.com.ph/dashboard/jobseeker`}))
+      const path = authPathToOldProject(loginData.authentication.access_token, redirectUrl)
+      // console.log('path to be redirected to', path)
+      yield put(push(path))
       // yield put(push(url))
       // yield put(destroy('companyJobForm')) // Reset Jobs Form
     }
