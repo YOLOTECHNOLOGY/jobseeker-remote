@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames/bind'
 // @ts-ignore
@@ -32,6 +33,7 @@ import styles from './Onboard.module.scss'
 
 const Step1 = (props: any) => {
   const { config } = props
+  const router = useRouter()
 
   const countryList = getCountryList(config)
   const noticeList = getNoticePeriodList(config)
@@ -92,6 +94,7 @@ const Step1 = (props: any) => {
 
     // eslint-disable-next-line no-console
     console.log('data: ', data)
+    router.push('/jobseeker-complete-profile/10')
   }
 
   return (
