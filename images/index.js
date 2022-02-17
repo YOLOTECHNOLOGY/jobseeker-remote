@@ -53,6 +53,9 @@ export const instagram = `${S3BucketJobseeker}/instagram.svg`
 export const twitter = `${S3BucketJobseeker}/twitter.svg`
 export const linkedin = `${S3BucketJobseeker}/linkedin.svg`
 export const youtube = `${S3BucketJobseeker}/youtube.svg`
+export const GoogleLogo = `${S3BucketJobseeker}/google-logo.png`
+export const LinkedinLogo = `${S3BucketJobseeker}/linkedin-logo.png`
+export const FacebookLogo = `${S3BucketJobseeker}/facebook-logo.png`
 
 /* Landing Page Images */
 export const BuildProfessionalResume = `${S3BucketJobseeker}/BuildProfessionalResume.png`

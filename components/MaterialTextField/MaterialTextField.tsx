@@ -16,7 +16,9 @@ type MaterialTextFieldProps = {
   isLoading?: boolean
   disabled?: boolean
   color?: string
-  error?: any, fieldRef?: any
+  error?: any
+  InputProps?: any
+  refs?: any
 } & Omit<Input, 'size'>
 
 const theme = createTheme({
@@ -53,7 +55,7 @@ const theme = createTheme({
     }
   },
 })
-const MaterialTextField = ({ id, label, variant, error, fieldRef, size, color, className, defaultValue, ...rest} : MaterialTextFieldProps) => {
+const MaterialTextField = ({ id, label, variant, error, refs, size, color, className, defaultValue, ...rest} : MaterialTextFieldProps) => {
   const [value, setValue] = useState(defaultValue)
 
   useEffect(()=>{
@@ -66,7 +68,7 @@ const MaterialTextField = ({ id, label, variant, error, fieldRef, size, color, c
   return (
     <ThemeProvider theme={theme}>
       <TextField 
-        {...fieldRef}
+        {...refs}
         id={id} 
         label={label} 
         color={color as any} 

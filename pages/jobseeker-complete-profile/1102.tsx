@@ -101,7 +101,7 @@ const Step4 = () => {
         <div className={classNames(styles.StepForm, styles.Step4Form)}>
           <div className={styles.StepField}>
             <MaterialTextField
-              fieldRef={{...register('schoolName', { 
+              refs={{...register('schoolName', { 
                 required: {
                   value: true,
                   message: 'This field is required.'
@@ -120,7 +120,7 @@ const Step4 = () => {
 
           <div className={styles.StepField}>
             <MaterialTextField
-              fieldRef={{...register('educationLevel', { 
+              refs={{...register('educationLevel', { 
                 required: {
                   value: true,
                   message: 'This field is required.'

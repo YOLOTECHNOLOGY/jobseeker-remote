@@ -67,14 +67,14 @@ const PublicHeader = () => {
               </Link>
             </li>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
-              <Link title='Log In' to='/'>
+              <Link title='Log In' to='/login'>
                 <MaterialButton variant='text' size='medium' capitalize>
                   Log in
                 </MaterialButton>
               </Link>
             </li>
             <li className={styles.headerLink}>
-              <Link title='Sign Up' to='/'>
+              <Link title='Sign Up' to='/register'>
                 <MaterialButton variant='outlined' size='medium' capitalize>
                   Sign up
                 </MaterialButton>

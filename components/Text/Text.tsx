@@ -19,6 +19,7 @@ interface TextProps {
   textStyle?: string
   block?: boolean
   onClick?: () => void
+  underline?: boolean
   // enableUnescape?: boolean
 }
 
@@ -32,6 +33,7 @@ const Text = ({
   textStyle,
   textColor = 'black',
   block,
+  underline,
   // enableUnescape,
   ...rest
 }: TextProps) => {
@@ -39,6 +41,7 @@ const Text = ({
     text: true,
     textBold: bold,
     textItalic: italic,
+    textUnderline: underline,
     textXSM: textStyle === 'xsm',
     textSM: textStyle === 'sm',
     textBase: textStyle === 'base',

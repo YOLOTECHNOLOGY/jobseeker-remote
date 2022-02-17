@@ -115,7 +115,7 @@ const Step1 = (props: any) => {
           />
           <div className={styles.Step1ContactNumber}>
             <MaterialTextField
-              fieldRef={{...register('contactNumber', { 
+              refs={{...register('contactNumber', { 
                 required: {
                   value: true,
                   message: 'This field is required.'
