@@ -1,5 +1,5 @@
 // import { stringify } from 'query-string'
-import { thousandsToNumber, unslugify } from 'helpers/formatter'
+import { flat, thousandsToNumber, unslugify } from 'helpers/formatter'
 /* Vendors */
 import moment from 'moment'
 import slugify from 'slugify'
@@ -352,6 +352,37 @@ const getLocationList = (config) => {
   return locList
 }
 
+const getSmsCountryList = (config) => {
+  return config?.inputs?.sms_country_lists.map((sms) => ({ ...sms, label: sms.code }))
+}
+
+const getJobCategoryList = (config) => {
+  return flat(config?.inputs?.job_category_lists.map((jobCategory) => Object.values(jobCategory)[2]))
+}
+
+const getNoticePeriodList = (config) => {
+  return config?.inputs?.notice_period_lists.map((notice) => ({ ...notice, label: notice.value, value: notice.id }))
+}
+
+const getSalaryOptions = (config, salaryFrom, hasComparedTo) => {
+  const salaryConfig = config?.inputs?.salary_ranges
+  if (salaryConfig && salaryConfig.length === 0) return salaryConfig
+
+  const _salaryTo = hasComparedTo ? salaryFrom * salaryConfig.upper_bound_scale : salaryConfig.to
+  const _salaryFrom = salaryFrom ? salaryFrom + salaryConfig.interval : salaryConfig.from
+  
+  let salaryOptions = []
+  for (
+    let salary = _salaryFrom;
+    salary <= _salaryTo;
+    salary += salaryConfig.interval
+  ) {
+    salaryOptions.push({label: salary, value: salary})
+  }
+
+  return salaryOptions
+}
+
 export {
   handleSalary,
   urlQueryParser,
@@ -361,5 +392,9 @@ export {
   getPredefinedParamsFromUrl,
   formatLocationConfig,
   conditionChecker,
-  getLocationList
+  getLocationList,
+  getNoticePeriodList,
+  getSmsCountryList,
+  getJobCategoryList,
+  getSalaryOptions
 }

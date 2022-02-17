@@ -46,6 +46,7 @@ const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
+          fontSize: '14px',
           backgroundColor: "white"
         }
       }

@@ -29,7 +29,7 @@ const OnBoardLayout = ({
   return (
     <div className={styles.OnBoardLayout}>
       <div className={styles.OnBoardLayoutHeader}>
-        <Link title='Home' to={'/'}>
+        <Link title='Home' to='/jobs-hiring/job-search'>
           <img id={styles.logo} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
         </Link>
       </div>

@@ -23,10 +23,12 @@ interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLB
   children?: React.ReactNode
   style?: React.CSSProperties
   className?: string
-  label?: string
+  label?: string | React.ReactNode
   options?: Array<OptionType>
   onSelect?: any
   greyBg?: boolean
+  fieldRef?: any,
+  error?: any
 }
 
 interface OptionType {
@@ -43,6 +45,8 @@ const MaterialSelectCheckmarks = ({
   onSelect,
   greyBg,
   defaultValue,
+  fieldRef,
+  error
 }: MaterialSelectCheckMarksProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(defaultValue || [])
   const handleChange = (event: SelectChangeEvent) => {
@@ -92,6 +96,7 @@ const MaterialSelectCheckmarks = ({
               fontSize: '10px',
               transform: 'translate(14px, -10px) scale(1)',
             },
+            backgroundColor: '#fff'
           },
           shrink: {
             transform: 'translate(14px, -9px) scale(0.75)',
@@ -116,6 +121,8 @@ const MaterialSelectCheckmarks = ({
       <FormControl className={className} size='small'>
         <InputLabel id={`${id}-select-label`}>{label}</InputLabel>
         <Select
+          {...fieldRef}
+          error={error}
           labelId={`${id}-select-label`}
           id={id}
           multiple

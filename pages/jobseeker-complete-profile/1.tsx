@@ -1,5 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+// @ts-ignore
+import { END } from 'redux-saga'
+
+/* Redux Actions */
+import { wrapper } from 'store'
+import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 // Components
 import Switch from '@mui/material/Switch'
@@ -9,18 +15,54 @@ import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
+import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
+
+/* Helpers*/
+import {
+  getNoticePeriodList,
+  getSmsCountryList,
+  getJobCategoryList,
+  getSalaryOptions
+} from 'helpers/jobPayloadFormatter'
 
 // Styles
 import styles from './Onboard.module.scss'
 
-const Step1 = () => {
+const Step1 = (props: any) => {
+  const { config } = props
+
+  const noticeList = getNoticePeriodList(config)
+  const smsCountryList = getSmsCountryList(config)
+  const jobCategoryList = getJobCategoryList(config)
+  const salaryFromOptions = getSalaryOptions(config)
+
   const [contactNumber, setContactNumber] = useState('')
-  const [availability, setAvailability] = useState('')
+  const [location, setLocation] = useState(null)
+  const [noticePeriod, setNoticePeriod] = useState('')
   const [specialization, setSpecialization] = useState('')
-  const [fromDate, setFromDate] = useState('')
-  const [toDate, setToDate] = useState('')
+
+  const [salaryFrom, setSalaryFrom] = useState(salaryFromOptions[0].value)
+  const [salaryTo, setSalaryTo] = useState('')
+  const [salaryToOptions, setSalaryToOptions] = useState([])
+  const [hasSelectedSpecMore, setHasSelectedSpecMore] = useState(false)
 
   const { register, handleSubmit, formState: { errors }} = useForm()
+
+  useEffect(() => {
+    getSalaryToOptions(salaryFrom)
+  }, [salaryFrom])
+  
+  useEffect(() => {
+    getSalaryToOptions(salaryFrom)
+  }, [])
+
+  const getSalaryToOptions = (salaryFrom) => {
+    const salaryOptions = getSalaryOptions(config, salaryFrom, true)
+    setSalaryTo(salaryOptions[0].value)
+    setSalaryToOptions(salaryOptions)
+  }
+
+  const onLocationSearch = (_, value) => setLocation(value)
 
   const requiredLabel = (text: string) => {
     return (
@@ -36,6 +78,9 @@ const Step1 = () => {
   }
 
   const handleNext = (data) => {
+    setHasSelectedSpecMore(data.specialization.length > 3 ? true : false)
+
+
     // eslint-disable-next-line no-console
     console.log('data: ', data)
   }
@@ -52,9 +97,9 @@ const Step1 = () => {
           <MaterialBasicSelect
             className={styles.Step1ContactCountry}
             label='Country'
-            value='+63'
-            defaultValue='+63'
-            options={[{label: '+63', value: '+63'}]}
+            value='Philippines'
+            defaultValue='Philippines'
+            options={smsCountryList}
           />
           <div className={styles.Step1ContactNumber}>
             <MaterialTextField
@@ -97,6 +142,8 @@ const Step1 = () => {
             className={styles.StepFullwidth}
             label={requiredLabel('Current Location')}
             error={errors.location ? true : false}
+            defaultValue={location}
+            onChange={onLocationSearch}
           />
           {errors.location && errorText(errors.location.message)}
         </div>
@@ -104,23 +151,23 @@ const Step1 = () => {
         <div className={styles.StepField}>
           <MaterialBasicSelect
             className={styles.StepFullwidth}
-            fieldRef={{...register('availability', { 
+            fieldRef={{...register('notice_period', { 
               required: {
                 value: true,
                 message: 'This field is required.'
               }
             })}}
             label={requiredLabel('Availability')}
-            value={availability}
-            onChange={(e) => setAvailability(e.target.value)}
-            error={errors.availability ? true : false}
-            options={[{label: '', value: ''}, {label: '1 Month', value: '1 Month'}]}
+            value={noticePeriod}
+            onChange={(e) => setNoticePeriod(e.target.value)}
+            error={errors.notice_period ? true : false}
+            options={noticeList}
           />
-          {errors.availability && errorText(errors.availability.message)}
+          {errors.notice_period && errorText(errors.notice_period.message)}
         </div>
 
         <div className={styles.StepField}>
-          <MaterialBasicSelect
+          <MaterialSelectCheckmarks
             className={styles.StepFullwidth}
             fieldRef={{...register('specialization', { 
               required: {
@@ -130,10 +177,14 @@ const Step1 = () => {
             })}}
             label={requiredLabel('I’m looking for jobs in these specializations')}
             value={specialization}
-            onChange={(e) => setSpecialization(e.target.value)}
-            error={errors.specialization ? true : false}
-            options={[{label: '', value: ''}, {label: 'Fronten Developer', value: 'Fronten Developer'}]}
+            onSelect={(e) => {
+              setSpecialization(e)
+              setHasSelectedSpecMore(e.length > 3 ? true : false)
+            }}
+            error={errors.specialization ? true : false || hasSelectedSpecMore}
+            options={jobCategoryList}
           />
+          <Text textStyle='xsm' textColor={hasSelectedSpecMore ? 'red' : 'darkgrey'}>(Max of 3 Categories)</Text>
           {errors.specialization && errorText(errors.specialization.message)}
         </div>
 
@@ -146,38 +197,40 @@ const Step1 = () => {
             <div className={styles.Step1SalaryRange}>
               <MaterialBasicSelect
                 className={styles.StepFullwidth}
-                fieldRef={{...register('fromDate', { 
+                fieldRef={{...register('salaryFrom', { 
                   required: {
                     value: true,
                     message: 'This field is required.'
                   }
                 })}}
                 label={requiredLabel('From')}
-                value={fromDate}
-                onChange={(e) => setFromDate(e.target.value)}
-                error={errors.fromDate ? true : false}
-                options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
+                value={salaryFrom}
+                onChange={(e) => setSalaryFrom(e.target.value)}
+                error={errors.salaryFrom ? true : false}
+                options={salaryFromOptions}
               />
-              {errors.fromDate && errorText(errors.fromDate.message)}
+              {errors.salaryFrom && errorText(errors.salaryFrom.message)}
             </div>
             
-            <div className={styles.Step1SalaryRange}>
-              <MaterialBasicSelect
-                className={styles.StepFullwidth}
-                fieldRef={{...register('toDate', { 
-                  required: {
-                    value: true,
-                    message: 'This field is required.'
-                  }
-                })}}
-                label={requiredLabel('To')}
-                value={toDate}
-                onChange={(e) => setToDate(e.target.value)}
-                error={errors.toDate ? true : false}
-                options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
-              />
-              {errors.toDate && errorText(errors.toDate.message)}
-            </div>
+            {salaryTo && (
+              <div className={styles.Step1SalaryRange}>
+                <MaterialBasicSelect
+                  className={styles.StepFullwidth}
+                  fieldRef={{...register('salaryTo', { 
+                    required: {
+                      value: true,
+                      message: 'This field is required.'
+                    }
+                  })}}
+                  label={requiredLabel('To')}
+                  value={salaryTo}
+                  onChange={(e) => setSalaryTo(e.target.value)}
+                  error={errors.salaryTo ? true : false}
+                  options={salaryToOptions}
+                />
+                {errors.salaryTo && errorText(errors.salaryTo.message)}
+              </div>
+            )}
           </div>
         </div>
         
@@ -193,5 +246,19 @@ const Step1 = () => {
     </OnBoardLayout>
   )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
+  store.dispatch(fetchConfigRequest())
+  store.dispatch(END)
+  await (store as any).sagaTask.toPromise()
+  const storeState = store.getState()
+  const config = storeState.config.config.response
+
+  return {
+    props: {
+      config,
+    },
+  }
+})
 
 export default Step1
