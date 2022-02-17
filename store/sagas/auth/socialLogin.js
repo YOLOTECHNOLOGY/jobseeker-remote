@@ -87,7 +87,7 @@ function* login(payload, redirect, fromRegister = false) {
       }
 
       // let url = '/dashboard'
-      let redirectUrl = `${process.env.OLD_PROJECT_URL}/dashboard/jobs-hiring`
+      let redirectUrl = `${process.env.OLD_PROJECT_URL}/dashboard/jobseeker`
       
       if (getItem(applyPendingJobId)) {
         // url = `/dashboard/job/${getItem(applyPendingJobId)}/apply`

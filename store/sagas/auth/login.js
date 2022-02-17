@@ -1,22 +1,15 @@
-import { take, fork, call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
 import { setCookie } from 'helpers/cookies'
 
 import { LOGIN_REQUEST } from 'store/types/auth/login'
-import { FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS } from 'store/types/recruiters/fetchRecruiterSubscriptionFeature'
 
 import {
   loginSuccess,
   loginFailed,
 } from 'store/actions/auth/login'
-import { 
-  fetchRecruiterSubscriptionFeatureSuccess, 
-  fetchRecruiterSubscriptionFeatureFailed 
-} from 'store/actions/recruiters/fetchRecruiterSubscriptionFeature'
 
-import { fetchRecruiterSubscriptionFeatureService } from 'store/services/recruiters/fetchRecruiterSubscriptionFeature'
 import { loginService } from 'store/services/auth/login'
-import { loginToBosshuntService } from 'store/services/auth/loginToBosshunt'
 
 function* loginReq(actions) {
   try {
@@ -27,7 +20,7 @@ function* loginReq(actions) {
       applyJobExternalRedirect
     } = actions.payload
 
-    let loginPayload = {
+    const loginPayload = {
       login,
       password
     }
@@ -72,16 +65,12 @@ function* loginReq(actions) {
         loginData.authentication.access_token
       )
 
-      yield fork(fetchRecruiterSubscriptionFeature, loginData, password)
-      yield take(FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS)
-
       // redirect users to complete profile page when users login as jobseeker and require to update their profile or their profile is not completed
       let url =
         loginData.active_key === 1 &&
-        (loginData.is_profile_update_required ||
-          !loginData.is_profile_completed)
+        (loginData.is_profile_update_required || !loginData.is_profile_completed)
           ? '/jobseeker-complete-profile'
-          : '/dashboard'
+          : `${process.env.OLD_PROJECT_URL}/dashboard/jobseeker`
 
       if (redirect && applyJobExternalRedirect) {
         yield put(
@@ -104,45 +93,6 @@ function* loginReq(actions) {
   }
 }
 
-function* fetchRecruiterSubscriptionFeature(user, password) {
-  try {
-    const subscriptionFeature = yield call(fetchRecruiterSubscriptionFeatureService)
-
-    if (subscriptionFeature.status >= 200 && subscriptionFeature.status < 300) {
-      yield put(fetchRecruiterSubscriptionFeatureSuccess(subscriptionFeature.data))
-
-      if (
-        user.active_key === 2 &&
-        subscriptionFeature.data.data.bosshunt_ats === true
-      ) {
-        // Login to bosshunt with bossjob account
-        const loginBosshuntPayload = {
-          email: user.email,
-          password: password,
-          first_name: user.first_name,
-          last_name: user.last_name
-        }
-
-        yield fork(logintToBosshunt, loginBosshuntPayload)
-      }
-    }
-    yield call(setCookie, 'splan', subscriptionFeature.data.data)
-  } catch (err) {
-    yield put(fetchRecruiterSubscriptionFeatureFailed(err))
-  }
-}
-
-function* logintToBosshunt(payload) {
-  try {
-    const bosshuntLogin = yield call(loginToBosshuntService, payload)
-
-    if (bosshuntLogin.status >= 200 && bosshuntLogin.status < 300) {
-      yield call(setCookie, 'bosshuntAuthToken', bosshuntLogin.data.data.token)
-    }
-  } catch (err) {
-    console.error(err)
-  }
-}
 
 export default function* loginSaga() {
   yield takeLatest(LOGIN_REQUEST, loginReq)
