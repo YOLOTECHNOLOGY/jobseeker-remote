@@ -372,15 +372,25 @@ const getSalaryOptions = (config, salaryFrom, hasComparedTo) => {
   const _salaryFrom = salaryFrom ? salaryFrom + salaryConfig.interval : salaryConfig.from
   
   let salaryOptions = []
-  for (
-    let salary = _salaryFrom;
-    salary <= _salaryTo;
-    salary += salaryConfig.interval
-  ) {
-    salaryOptions.push({label: salary, value: salary})
-  }
-
+  for (let salary = _salaryFrom; salary <= _salaryTo; salary += salaryConfig.interval) salaryOptions.push({label: salary, value: salary})
   return salaryOptions
+}
+
+const getCountryList = (config) => {
+  const countryLists = config?.inputs?.country_lists
+  if (countryLists && countryLists.length === 0) return countryLists
+
+  let countryOptions = Object.values(countryLists).map(country => {
+    return {
+      label: Object.values(country)[0],
+      value: Object.keys(country)[0],
+      key: Object.keys(country)[0]
+    }
+  })
+
+  countryOptions = countryOptions.filter(country => country.key !== 'ph')
+
+  return countryOptions
 }
 
 export {
@@ -396,5 +406,6 @@ export {
   getNoticePeriodList,
   getSmsCountryList,
   getJobCategoryList,
-  getSalaryOptions
+  getSalaryOptions,
+  getCountryList
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import classNames from 'classnames/bind'
 // @ts-ignore
 import { END } from 'redux-saga'
 
@@ -22,7 +23,8 @@ import {
   getNoticePeriodList,
   getSmsCountryList,
   getJobCategoryList,
-  getSalaryOptions
+  getSalaryOptions,
+  getCountryList
 } from 'helpers/jobPayloadFormatter'
 
 // Styles
@@ -31,6 +33,7 @@ import styles from './Onboard.module.scss'
 const Step1 = (props: any) => {
   const { config } = props
 
+  const countryList = getCountryList(config)
   const noticeList = getNoticePeriodList(config)
   const smsCountryList = getSmsCountryList(config)
   const jobCategoryList = getJobCategoryList(config)
@@ -38,8 +41,11 @@ const Step1 = (props: any) => {
 
   const [contactNumber, setContactNumber] = useState('')
   const [location, setLocation] = useState(null)
+  const [country, setCountry] = useState('')
+  const [isShowCountry, setIsShowCountry] = useState(false)
   const [noticePeriod, setNoticePeriod] = useState('')
   const [specialization, setSpecialization] = useState('')
+  const [headhuntMe, setHeadhuntMe] = useState(true)
 
   const [salaryFrom, setSalaryFrom] = useState(salaryFromOptions[0].value)
   const [salaryTo, setSalaryTo] = useState('')
@@ -62,7 +68,10 @@ const Step1 = (props: any) => {
     setSalaryToOptions(salaryOptions)
   }
 
-  const onLocationSearch = (_, value) => setLocation(value)
+  const onLocationSearch = (_, value) => {
+    setIsShowCountry(value?.key === 'overseas' ? true : false)
+    setLocation(value)
+  }
 
   const requiredLabel = (text: string) => {
     return (
@@ -142,10 +151,31 @@ const Step1 = (props: any) => {
             className={styles.StepFullwidth}
             label={requiredLabel('Current Location')}
             error={errors.location ? true : false}
+            value={location}
             defaultValue={location}
             onChange={onLocationSearch}
           />
           {errors.location && errorText(errors.location.message)}
+
+          {isShowCountry && (
+            <div className={classNames(styles.StepField, styles.StepFieldCountry)}>
+              <MaterialBasicSelect
+                className={styles.StepFullwidth}
+                fieldRef={{...register('country', { 
+                  required: {
+                    value: true,
+                    message: 'This field is required.'
+                  }
+                })}}
+                label={requiredLabel('Country')}
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                error={errors.country ? true : false}
+                options={countryList}
+              />
+              {errors.country && errorText(errors.country.message)}
+            </div>
+          )}
         </div>
 
         <div className={styles.StepField}>
@@ -237,7 +267,10 @@ const Step1 = (props: any) => {
         <div className={styles.Step1Subscribe}>
           <FormControlLabel
             control={
-              <Switch defaultChecked name='subscribe' />
+              <Switch 
+                checked={headhuntMe}
+                onChange={(e) => setHeadhuntMe(e.target.checked)}
+              />
             }
             label={<Text textStyle='sm'>I’d like to join Headhunt Me to discover more job opportunities.</Text>}
           />
