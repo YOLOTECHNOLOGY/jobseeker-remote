@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames/bind'
 // @ts-ignore
@@ -8,6 +8,8 @@ import { END } from 'redux-saga'
 /* Redux Actions */
 import { wrapper } from 'store'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { updateUserCompleteProfileRequest } from 'store/actions/users/updateUserCompleteProfile'
 
 // Components
 import Switch from '@mui/material/Switch'
@@ -24,37 +26,43 @@ import {
   getNoticePeriodList,
   getSmsCountryList,
   getJobCategoryList,
+  getJobCategoryIds,
   getSalaryOptions,
-  getCountryList
+  getCountryList,
+  getLocationList
 } from 'helpers/jobPayloadFormatter'
 
 // Styles
 import styles from './Onboard.module.scss'
 
 const Step1 = (props: any) => {
-  const { config } = props
-  const router = useRouter()
+  const currentStep = 1
+  const dispatch = useDispatch()
+  const { config, userDetail, accessToken } = props
 
+  const locList = getLocationList(config)
   const countryList = getCountryList(config)
   const noticeList = getNoticePeriodList(config)
   const smsCountryList = getSmsCountryList(config)
   const jobCategoryList = getJobCategoryList(config)
   const salaryFromOptions = getSalaryOptions(config)
-
-  const [contactNumber, setContactNumber] = useState('')
+  
+  const [contactNumber, setContactNumber] = useState(userDetail?.phone_num)
   const [location, setLocation] = useState(null)
   const [country, setCountry] = useState('')
   const [isShowCountry, setIsShowCountry] = useState(false)
-  const [noticePeriod, setNoticePeriod] = useState('')
+  const [noticePeriod, setNoticePeriod] = useState(userDetail.notice_period_id)
   const [specialization, setSpecialization] = useState('')
   const [headhuntMe, setHeadhuntMe] = useState(true)
 
-  const [salaryFrom, setSalaryFrom] = useState(salaryFromOptions[0].value)
-  const [salaryTo, setSalaryTo] = useState('')
+  const [salaryFrom, setSalaryFrom] = useState(Number(userDetail.job_preference.salary_range_from) || salaryFromOptions[0].value)
+  const [salaryTo, setSalaryTo] = useState(null)
   const [salaryToOptions, setSalaryToOptions] = useState([])
   const [hasSelectedSpecMore, setHasSelectedSpecMore] = useState(false)
 
-  const { register, handleSubmit, formState: { errors }} = useForm()
+  const { register, handleSubmit, setValue, formState: { errors }} = useForm()
+
+  const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserCompleteProfile.fetching)
 
   useEffect(() => {
     getSalaryToOptions(salaryFrom)
@@ -62,6 +70,18 @@ const Step1 = (props: any) => {
   
   useEffect(() => {
     getSalaryToOptions(salaryFrom)
+    if (userDetail) {
+      if (userDetail.location) {
+        const matchedLocation = locList.filter((loc) => {
+          return loc.value === userDetail.location.toString()
+        })
+        setLocation(matchedLocation[0])
+        setValue('location', matchedLocation[0])
+      }
+
+      setSalaryTo(Number(userDetail.job_preference.salary_range_to))
+    }
+
   }, [])
 
   const getSalaryToOptions = (salaryFrom) => {
@@ -89,20 +109,39 @@ const Step1 = (props: any) => {
   }
 
   const handleNext = (data) => {
-    setHasSelectedSpecMore(data.specialization.length > 3 ? true : false)
+    const { specialization, salaryFrom, salaryTo, contactNumber, noticePeriod } = data
+    setHasSelectedSpecMore(specialization.length > 3 ? true : false)
 
+    if (specialization.length > 3) return
+    const payload = {
+      preferences: {
+        job_category_id: getJobCategoryIds(config, specialization),
+        salary_range_from: Number(salaryFrom),
+        salary_range_to: Number(salaryTo),
+        location_key: location?.key || ''
+      },
+      profile: {
+        phone_num: contactNumber,
+        country_key: country || '',
+        location_key: location?.key || '',
+        notice_period_id: noticePeriod,
+      },
+      accessToken,
+      currentStep
+    }
 
     // eslint-disable-next-line no-console
-    console.log('data: ', data)
-    router.push('/jobseeker-complete-profile/10')
+    console.log({data, payload})
+    dispatch(updateUserCompleteProfileRequest(payload))
   }
 
   return (
     <OnBoardLayout
       headingText={<Text bold textStyle='xxxl' tagName='h2'>Let’s get you a job! 🎉👏 <br/> Tell us about yourself.</Text>}
-      currentStep={1}
+      currentStep={currentStep}
       totalStep={4}
       nextFnBtn={handleSubmit(handleNext)}
+      isUpdating={isUpdatingUserProfile}
     >
       <div className={styles.StepForm}>
         <div className={styles.Step1Contact}>
@@ -184,7 +223,7 @@ const Step1 = (props: any) => {
         <div className={styles.StepField}>
           <MaterialBasicSelect
             className={styles.StepFullwidth}
-            fieldRef={{...register('notice_period', { 
+            fieldRef={{...register('noticePeriod', { 
               required: {
                 value: true,
                 message: 'This field is required.'
@@ -193,10 +232,10 @@ const Step1 = (props: any) => {
             label={requiredLabel('Availability')}
             value={noticePeriod}
             onChange={(e) => setNoticePeriod(e.target.value)}
-            error={errors.notice_period ? true : false}
+            error={errors.noticePeriod ? true : false}
             options={noticeList}
           />
-          {errors.notice_period && errorText(errors.notice_period.message)}
+          {errors.noticePeriod && errorText(errors.noticePeriod.message)}
         </div>
 
         <div className={styles.StepField}>
@@ -283,16 +322,22 @@ const Step1 = (props: any) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+  const accessToken = req.cookies.accessToken
+
   store.dispatch(fetchConfigRequest())
+  store.dispatch(fetchUserOwnDetailRequest({accessToken}))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
+  const userDetail = storeState.users.fetchUserOwnDetail.response
 
   return {
     props: {
       config,
+      userDetail,
+      accessToken
     },
   }
 })

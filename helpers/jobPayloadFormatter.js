@@ -360,6 +360,20 @@ const getJobCategoryList = (config) => {
   return flat(config?.inputs?.job_category_lists.map((jobCategory) => Object.values(jobCategory)[2]))
 }
 
+const getJobCategoryIds = (config, categories) => {
+  const categoryLists = config?.inputs?.job_category_lists
+  let categoryIds = []
+  categoryLists.forEach((category) => {
+    categories.map((cat) => {
+      if (category.value === cat) {
+        categoryIds.push(category.id)
+      }
+    })
+  })
+
+  return categoryIds
+}
+
 const getNoticePeriodList = (config) => {
   return config?.inputs?.notice_period_lists.map((notice) => ({ ...notice, label: notice.value, value: notice.id }))
 }
@@ -406,6 +420,7 @@ export {
   getNoticePeriodList,
   getSmsCountryList,
   getJobCategoryList,
+  getJobCategoryIds,
   getSalaryOptions,
   getCountryList
 }

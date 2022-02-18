@@ -33,6 +33,8 @@ import watchCreateJobAlert from 'store/sagas/alerts/createJobAlert'
 // Users 
 import WatchRegisterUser from 'store/sagas/users/registerUser'
 import WatchUpdateUserCompleteProfile from 'store/sagas/users/updateUserCompleteProfile'
+import watchFetchUserOwnDetail from 'store/sagas/users/fetchUserOwnDetail'
+import watchUploadUserResume from 'store/sagas/users/uploadUserResume'
 
 // Courses 
 import watchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
@@ -78,6 +80,8 @@ function* rootSaga() {
 
     WatchRegisterUser(),
     WatchUpdateUserCompleteProfile(),
+    watchFetchUserOwnDetail(),
+    watchUploadUserResume(),
 
     watchSocialLogin(),
     watchLogin(),

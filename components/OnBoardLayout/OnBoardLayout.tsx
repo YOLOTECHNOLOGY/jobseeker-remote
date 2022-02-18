@@ -15,7 +15,8 @@ interface IOnBoardLayout {
   totalStep: number | 4
   children:  React.ReactNode
   backFnBtn?: Function
-  nextFnBtn?: Function
+  nextFnBtn?: Function,
+  isUpdating?: boolean
 }
 
 const OnBoardLayout = ({
@@ -25,6 +26,7 @@ const OnBoardLayout = ({
   children,
   backFnBtn,
   nextFnBtn,
+  isUpdating
 }: IOnBoardLayout) => {
   return (
     <div className={styles.OnBoardLayout}>
@@ -61,7 +63,7 @@ const OnBoardLayout = ({
             </div>
             <div>
               {nextFnBtn && (
-                <Button primary onClick={() => nextFnBtn()}>
+                <Button isLoading={isUpdating} primary onClick={() => nextFnBtn()}>
                   <Text textColor='white' bold>Next</Text>
                 </Button>
               )}
