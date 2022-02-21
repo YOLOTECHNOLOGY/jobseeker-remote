@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 // @ts-ignore
 import { END } from 'redux-saga'
 
@@ -18,6 +19,7 @@ import styles from './Onboard.module.scss'
 
 const Step2 = (props: any) => {
   const currentStep = 2
+  const router = useRouter()
   const dispatch = useDispatch()
   const { userDetail, accessToken } = props
 
@@ -83,6 +85,7 @@ const Step2 = (props: any) => {
             variant='outlined'
             size='large'
             capitalize
+            onClick={() => router.push('/jobseeker-complete-profile/1101')}
           >
             <Text textColor='primary' bold>Create Free Resume</Text>
           </MaterialButton>

@@ -122,3 +122,9 @@ export const truncateWords = (words, maxLen) => {
 export const numberWithCommas = (number) => {
   return `₱${number?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
 }
+
+export const formatSalary = (salary) => {
+  if (salary) {
+    return `₱${parseInt(salary).toLocaleString()}`
+  }
+}

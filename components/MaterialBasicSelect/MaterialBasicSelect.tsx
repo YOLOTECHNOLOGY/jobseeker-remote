@@ -15,6 +15,7 @@ const MaterialBasicSelect = ({
   greyBg,
   defaultValue,
   fieldRef,
+  disabled,
   ...rest
 }: any) => {
   const [value, setValue] = useState(defaultValue || '')
@@ -91,6 +92,7 @@ const MaterialBasicSelect = ({
           label={label}
           onChange={handleChange}
           onOpen={onOpen}
+          disabled={disabled}
           {...rest}
         >
           {options &&

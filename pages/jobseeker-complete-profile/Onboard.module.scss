@@ -199,13 +199,23 @@
 }
 
 .Step3 {
+  &FormWrapper {
+    .Step3Form:not(:last-child) {
+      padding-bottom: 20px;
+      border-bottom: 1px dotted rgba($lightgrey, 0.5);
+      margin-bottom: 20px;
+    }
+  }
   &Form {
     margin-top: 5px;
   }
 
   &Editor {
     margin-top: 15px;
-
+    div[class*='TextEditor_textEditor'] {
+      padding: 0;
+    }
+    
     & > * {
       padding: 0;
 

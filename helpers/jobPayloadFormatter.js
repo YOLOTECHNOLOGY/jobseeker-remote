@@ -407,6 +407,19 @@ const getCountryList = (config) => {
   return countryOptions
 }
 
+const getIndustryList = (config) => {
+  const industryList = config?.inputs?.industry_lists
+  if (industryList && industryList.length === 0) return industryList
+
+  return industryList.map((industry) => {
+    return {
+      label: Object.values(industry)[0],
+      value: Object.keys(industry)[0],
+      keys: Object.keys(industry)[0],
+    }
+  })
+}
+
 export {
   handleSalary,
   urlQueryParser,
@@ -422,5 +435,6 @@ export {
   getJobCategoryList,
   getJobCategoryIds,
   getSalaryOptions,
-  getCountryList
+  getCountryList,
+  getIndustryList
 }
