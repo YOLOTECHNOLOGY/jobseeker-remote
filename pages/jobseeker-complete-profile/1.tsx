@@ -99,13 +99,13 @@ const Step1 = (props: any) => {
     return (
       <>
         <span>{text}</span>
-        <span className={styles.StepFieldRequired}>*</span>
+        <span className={styles.stepFieldRequired}>*</span>
       </>
     )
   }
 
   const errorText = (errorMessage: string) => {
-    return <Text textStyle='sm' textColor='red' tagName='p' className={styles.StepFieldError}>{errorMessage}</Text>
+    return <Text textStyle='sm' textColor='red' tagName='p' className={styles.stepFieldError}>{errorMessage}</Text>
   }
 
   const handleNext = (data) => {
@@ -143,16 +143,16 @@ const Step1 = (props: any) => {
       nextFnBtn={handleSubmit(handleNext)}
       isUpdating={isUpdatingUserProfile}
     >
-      <div className={styles.StepForm}>
-        <div className={styles.Step1Contact}>
+      <div className={styles.stepForm}>
+        <div className={styles.step1Contact}>
           <MaterialBasicSelect
-            className={styles.Step1ContactCountry}
+            className={styles.step1ContactCountry}
             label='Country'
             value='Philippines'
             defaultValue='Philippines'
             options={smsCountryList}
           />
-          <div className={styles.Step1ContactNumber}>
+          <div className={styles.step1ContactNumber}>
             <MaterialTextField
               refs={{...register('contactNumber', { 
                 required: {
@@ -168,7 +168,7 @@ const Step1 = (props: any) => {
                   message: 'Must be 10 characters or less.'
                 }
               })}}
-              className={styles.Step1ContactNumberField}
+              className={styles.step1ContactNumberField}
               label={requiredLabel('Contact Number')}
               size='small'
               type='number'
@@ -177,12 +177,12 @@ const Step1 = (props: any) => {
               defaultValue={contactNumber}
               onChange={(e) => setContactNumber(e.target.value)}
             />
-            <Text className={styles.Step1ContactDigits} textStyle='sm' textColor='darkgrey'>9 - 10 digits</Text>
+            <Text className={styles.step1ContactDigits} textStyle='sm' textColor='darkgrey'>9 - 10 digits</Text>
             {errors.contactNumber && errorText(errors.contactNumber.message)}
           </div>
         </div>
 
-        <div className={styles.StepField}>
+        <div className={styles.stepField}>
           <MaterialLocationField
             fieldRef={{...register('location', { 
               required: {
@@ -190,7 +190,7 @@ const Step1 = (props: any) => {
                 message: 'This field is required.'
               }
             })}}
-            className={styles.StepFullwidth}
+            className={styles.stepFullwidth}
             label={requiredLabel('Current Location')}
             error={errors.location ? true : false}
             value={location}
@@ -200,9 +200,9 @@ const Step1 = (props: any) => {
           {errors.location && errorText(errors.location.message)}
 
           {isShowCountry && (
-            <div className={classNames(styles.StepField, styles.StepFieldCountry)}>
+            <div className={classNames(styles.stepField, styles.stepFieldCountry)}>
               <MaterialBasicSelect
-                className={styles.StepFullwidth}
+                className={styles.stepFullwidth}
                 fieldRef={{...register('country', { 
                   required: {
                     value: true,
@@ -220,9 +220,9 @@ const Step1 = (props: any) => {
           )}
         </div>
 
-        <div className={styles.StepField}>
+        <div className={styles.stepField}>
           <MaterialBasicSelect
-            className={styles.StepFullwidth}
+            className={styles.stepFullwidth}
             fieldRef={{...register('noticePeriod', { 
               required: {
                 value: true,
@@ -238,9 +238,9 @@ const Step1 = (props: any) => {
           {errors.noticePeriod && errorText(errors.noticePeriod.message)}
         </div>
 
-        <div className={styles.StepField}>
+        <div className={styles.stepField}>
           <MaterialSelectCheckmarks
-            className={styles.StepFullwidth}
+            className={styles.stepFullwidth}
             fieldRef={{...register('specialization', { 
               required: {
                 value: true,
@@ -260,15 +260,15 @@ const Step1 = (props: any) => {
           {errors.specialization && errorText(errors.specialization.message)}
         </div>
 
-        <div className={styles.Step1Salary}>
+        <div className={styles.step1Salary}>
           <Text textColor='darkgrey' textStyle='base' bold>
             Expected salary per month 
-            <span className={styles.StepFieldRequired}>*</span>
+            <span className={styles.stepFieldRequired}>*</span>
           </Text>
-          <div className={styles.Step1SalaryRanges}>
-            <div className={styles.Step1SalaryRange}>
+          <div className={styles.step1SalaryRanges}>
+            <div className={styles.step1SalaryRange}>
               <MaterialBasicSelect
-                className={styles.StepFullwidth}
+                className={styles.stepFullwidth}
                 fieldRef={{...register('salaryFrom', { 
                   required: {
                     value: true,
@@ -285,9 +285,9 @@ const Step1 = (props: any) => {
             </div>
             
             {salaryTo && (
-              <div className={styles.Step1SalaryRange}>
+              <div className={styles.step1SalaryRange}>
                 <MaterialBasicSelect
-                  className={styles.StepFullwidth}
+                  className={styles.stepFullwidth}
                   fieldRef={{...register('salaryTo', { 
                     required: {
                       value: true,
@@ -306,7 +306,7 @@ const Step1 = (props: any) => {
           </div>
         </div>
         
-        <div className={styles.Step1Subscribe}>
+        <div className={styles.step1Subscribe}>
           <FormControlLabel
             control={
               <Switch 

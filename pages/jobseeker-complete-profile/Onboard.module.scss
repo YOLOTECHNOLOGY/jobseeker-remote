@@ -1,7 +1,7 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
-.StepForm {
+.stepForm {
   margin-top: 20px;
 
   &Actions {
@@ -28,11 +28,11 @@
   }
 }
 
-.StepFullwidth {
+.stepFullwidth {
   width: 100%;
 }
 
-.StepNotice {
+.stepNotice {
   display: flex;
   justify-content: space-between;
   background-color: rgba($primaryBlue, 0.1);
@@ -47,7 +47,7 @@
   }
 }
 
-.StepField {
+.stepField {
   margin-top: 15px;
 
   &Header {
@@ -84,7 +84,7 @@
   }
 }
 
-.StepData {
+.stepData {
   &Item {
     padding-top: 20px;
     display: flex;
@@ -95,6 +95,27 @@
 
     p {
       margin: 0;
+    }
+  }
+
+  &Description{
+    ul, ol {
+      display: block;
+      margin-left: 20px;
+
+      li {
+        font-size: 14px;
+        color: $black;
+        font-weight: 300;
+        line-height: 20px;
+      }
+    }
+
+    p {
+      font-size: 14px;
+      color: $black;
+      font-weight: 300;
+      line-height: 20px;
     }
   }
 
@@ -111,7 +132,7 @@
   }
 }
 
-.Step1 {
+.step1 {
   &Contact {
     display: flex;
     justify-content: space-between;
@@ -160,7 +181,7 @@
   }
 }
 
-.Step2 {
+.step2 {
   &Caption {
     text-align: center;
     display: block;
@@ -198,9 +219,9 @@
   }
 }
 
-.Step3 {
+.step3 {
   &FormWrapper {
-    .Step3Form:not(:last-child) {
+    .step3Form:not(:last-child) {
       padding-bottom: 20px;
       border-bottom: 1px dotted rgba($lightgrey, 0.5);
       margin-bottom: 20px;

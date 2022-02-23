@@ -6,17 +6,19 @@ import { TextField } from '@mui/material'
 
 interface MaterialDatePickerProps {
   value?: any,
-  onChange?: Function,
+  onDateChange: Function,
   label?: string,
   inputFormat?: string,
+  format?: string,
   views?:any
 }
 
 const MaterialDatePicker = ({
   value,
-  onChange,
+  onDateChange,
   label,
   inputFormat,
+  format,
   views,
   ...rest
 }: MaterialDatePickerProps) => {
@@ -30,7 +32,6 @@ const MaterialDatePicker = ({
             letterSpacing: '1px',
             '&.Mui-focused': {
               fontSize: '10px',
-              // transform: 'translate(14px, -10px) scale(1)',
             },
           },
           shrink: {
@@ -61,12 +62,14 @@ const MaterialDatePicker = ({
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
+          disableMaskedInput={true}
           views={views}
           label={label}
           inputFormat={inputFormat || ''}
           value={value}
-          onChange={() => onChange}
-          renderInput={(params) => <TextField {...params} helperText={null} />}
+          onChange={(date) => onDateChange(date)}
+          renderInput={(params) => <TextField aria-readonly {...params} helperText={null} />}
+          maxDate={new Date()}
         />
       </LocalizationProvider>
     </ThemeProvider>

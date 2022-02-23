@@ -34,10 +34,12 @@ type CustomElement = {
 
 interface ITextEditorField {
   autoFocus?: boolean
+  fieldOnChange?: Function
 }
 
 const TextEditorField = ({
-  autoFocus
+  autoFocus,
+  fieldOnChange,
 }: ITextEditorField) => {
   const [value, setValue] = useState<Descendant[]>(initialEditorValue)
   // renderLeaf activates bold, italic, underline
@@ -67,6 +69,7 @@ const TextEditorField = ({
       // }
       // const htmlValue = console.log('serialize abc', serialize(contentObj))
       setItem(STORAGE_NAME, content)
+      fieldOnChange(content)
       // setItem(STORAGE_NAME, serialize(content))
     }
   }

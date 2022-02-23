@@ -22,11 +22,14 @@ function* updateUserCompleteProfileReq({ payload }) {
     preferences, 
     profile, 
     accessToken, 
-    workExperiences,
+    workExperienceData,
     isDelete,
+    isUpdate,
     workExperienceId,
     currentStep 
   } = payload
+
+  console.log(payload)
 
   try {
     if (currentStep === 1) {
@@ -58,9 +61,26 @@ function* updateUserCompleteProfileReq({ payload }) {
           workExperienceId
         }
         yield call(deleteUserWorkExperienceService, deletePayload)
-
         yield fetchUserWorkExperienceSaga(accessToken)
       }
+
+      if (isUpdate) {
+        const updateWorkExperiencePayload = {
+          accessToken,
+          workExperienceId,
+          workExperienceData
+        }
+        console.log('updateWorkExperiencePayload: ', updateWorkExperiencePayload)
+        yield call(updateUserWorkExperienceService, updateWorkExperiencePayload)
+        yield fetchUserWorkExperienceSaga(accessToken)
+      }
+
+      if (!isDelete && !isUpdate) {
+        const payload = { accessToken, workExperience: workExperienceData}
+        yield call(addUserWorkExperienceService, payload)
+        yield fetchUserWorkExperienceSaga(accessToken)
+      }
+      
     }
   } catch (error) {
     yield put(updateUserCompleteProfileFailed(error))

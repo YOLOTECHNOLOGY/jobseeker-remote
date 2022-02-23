@@ -59,14 +59,14 @@ const Step2 = (props: any) => {
       currentStep={currentStep}
       totalStep={4}
     >
-      <div className={styles.StepForm}>
-        <Text className={styles.Step2Caption} textStyle='xl'>
+      <div className={styles.stepForm}>
+        <Text className={styles.step2Caption} textStyle='xl'>
           You can build an online resume to apply for jobs and export it <br/> with different templates. You can also upload your resume, it <br/>will be saved to your profile.
         </Text>
 
-        <div className={styles.Step2Upload}>
+        <div className={styles.step2Upload}>
           {errorMessage && (
-            <Text textColor='red' textStyle='xsm' className={styles.Step2UploadError}>{errorMessage}</Text>
+            <Text textColor='red' textStyle='xsm' className={styles.step2UploadError}>{errorMessage}</Text>
           )}
 
           <MaterialButton capitalize variant="contained" component="label" >
@@ -74,13 +74,13 @@ const Step2 = (props: any) => {
             {!isUploading && <Text textColor='white' bold>Upload your Resume</Text>}
             <input type="file" hidden accept=".pdf, .doc, .docx" onChange={(e) => setResume(e.target.files[0])}/>
           </MaterialButton>
-          <Text textColor='darkgrey' textStyle='xsm' className={styles.Step2UploadAllowed}>PDF, DOC, DOCX. file, max 5MB</Text>
+          <Text textColor='darkgrey' textStyle='xsm' className={styles.step2UploadAllowed}>PDF, DOC, DOCX. file, max 5MB</Text>
           <Text textColor='darkgrey' textStyle='xsm' bold tagName='p'>(Resume: { resumeName })</Text>
         </div>
 
-        <Text textStyle='lg' className={styles.Step2UploadDivider}>OR</Text>
+        <Text textStyle='lg' className={styles.step2UploadDivider}>OR</Text>
 
-        <div className={styles.Step2Create}>
+        <div className={styles.step2Create}>
           <MaterialButton
             variant='outlined'
             size='large'
