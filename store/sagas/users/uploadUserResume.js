@@ -1,4 +1,5 @@
 import {call, put, takeLatest } from 'redux-saga/effects'
+import { push } from 'connected-next-router'
 import { UPLOAD_USER_RESUME_REQUEST } from 'store/types/users/uploadUserResume'
 import {
   uploadUserResumeSuccess,
@@ -15,6 +16,7 @@ function* uploadUserResumeReq({ payload }) {
     }
     const { data } = yield call(uploadUserResumeService, resumePayload)
     yield put(uploadUserResumeSuccess(data.data))
+    yield put(push('/jobseeker-complete-profile/1101'))
   } catch (error) {
     yield put(uploadUserResumeFailed(error.response.data))
   }

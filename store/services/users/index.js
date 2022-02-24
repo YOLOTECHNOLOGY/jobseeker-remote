@@ -7,6 +7,10 @@ import fetchUserWorkExperience from './fetchUserWorkExperience'
 import addUserWorkExperience from './addUserWorkExperience'
 import updateUserWorkExperience from './updateUserWorkExperience'
 import deleteUserWorkExperience from './deleteUserWorkExperience'
+import fetchUserEducation from './fetchUserEducation'
+import addUserEducation from './addUserEducation'
+import deleteUserEducation from './deleteUserEducation'
+import updateUserEducation from './updateUserEducation'
 
 export default {
   registerUser,
@@ -17,5 +21,9 @@ export default {
   fetchUserWorkExperience,
   addUserWorkExperience,
   updateUserWorkExperience,
-  deleteUserWorkExperience
+  deleteUserWorkExperience,
+  fetchUserEducation,
+  addUserEducation,
+  deleteUserEducation,
+  updateUserEducation
 }

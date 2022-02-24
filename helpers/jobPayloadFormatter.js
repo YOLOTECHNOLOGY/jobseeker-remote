@@ -420,6 +420,19 @@ const getIndustryList = (config) => {
   })
 }
 
+const getDegreeList = (config) => {
+  const degreeList = config?.inputs?.degrees
+  if (degreeList && degreeList.length === 0) return degreeList
+
+  return degreeList.map((degree) => {
+    return {
+      label: Object.values(degree)[0],
+      value: Object.keys(degree)[0],
+      keys: Object.keys(degree)[0],
+    }
+  })
+}
+
 export {
   handleSalary,
   urlQueryParser,
@@ -436,5 +449,6 @@ export {
   getJobCategoryIds,
   getSalaryOptions,
   getCountryList,
-  getIndustryList
+  getIndustryList,
+  getDegreeList
 }

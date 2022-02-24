@@ -16,7 +16,7 @@ import { updateUserCompleteProfileRequest } from 'store/actions/users/updateUser
 
 // Components
 import Switch from '@mui/material/Switch';
-// import Checkbox from '@mui/material/Checkbox'
+import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Image from 'next/image'
 
@@ -79,12 +79,14 @@ const Step3 = (props: any) => {
   const [industry, setIndustry] = useState('')
   const [salary, setSalary] = useState('')
   const [description, setDescription] = useState('')
-  const [workExperienceId, setWorkExperienceId] = useState(null)
 
+  const [workExperienceId, setWorkExperienceId] = useState(null)
   const [workExperience, setWorkExperience] = useState(userDetail?.work_experiences)
   const [showForm, setShowForm] = useState(workExperience?.length > 0 ? false : true)
   const [showFormActions, setShowFormActions] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(true)
+  const [hasNoWorkExperience, setHasNoWorkExperience] = useState(false)
   
   const { register, formState: { errors }} = useForm()
   const userWorkExperiences = useSelector((store: any) => store.users.fetchUserWorkExperience.response)
@@ -98,6 +100,7 @@ const Step3 = (props: any) => {
     if (userWorkExperiences) {
       setWorkExperience(userWorkExperiences || [])
       setShowForm(userWorkExperiences.length > 0 ? false : true)
+      setIsDisabled(userWorkExperiences.length > 0 ? false : true)
     }
   }, [userWorkExperiences])
 
@@ -107,9 +110,25 @@ const Step3 = (props: any) => {
     const periodTo = workPeriodToMonth && workPeriodToYear
 
     if (isCurrentJob) {
-      setShowFormActions(requireFields && periodFrom ? true : false)
+      if (requireFields && periodFrom) {
+        setShowFormActions(true)
+        setIsDisabled(false)
+      }
+
+      if (!requireFields && !periodFrom) {
+        setShowFormActions(false)
+        setIsDisabled(true)
+      }
     } else {
-      setShowFormActions(requireFields && periodFrom && periodTo ? true : false)
+      if (requireFields && periodFrom && periodTo) {
+        setShowFormActions(true)
+        setIsDisabled(false)
+      }
+
+      if (!requireFields && !periodFrom && !periodTo) {
+        setShowFormActions(false)
+        setIsDisabled(true)
+      }
     }
   }, [
     jobTitle, 
@@ -121,6 +140,18 @@ const Step3 = (props: any) => {
     workPeriodToMonth,
     workPeriodToYear
   ])
+
+  useEffect(() => {
+    if (hasNoWorkExperience) {
+      setIsDisabled(false)
+      handleCancelForm()
+    } 
+
+    if (!hasNoWorkExperience) {
+      setIsDisabled(true)
+      handleShowForm()
+    }
+  }, [hasNoWorkExperience])
   
   const requiredLabel = (text: string) => {
     return (
@@ -217,7 +248,7 @@ const Step3 = (props: any) => {
     }
     setItem(STORAGE_NAME, workExperience.description)
     setDescription(workExperience.description)
-    setJobFunction('')
+    setJobFunction(workExperience.job_categories)
   }
 
   const handleDeleteExperience = (id) => {
@@ -233,13 +264,14 @@ const Step3 = (props: any) => {
 
   const handleSaveForm = () => {
     // eslint-disable-next-line no-console
+    console.log('handleSaveForm.jobFunction--', jobFunction)
     const workExperienceData = {
       job_title: jobTitle,
       company: companyName,
       country_key: country || 'ph',
       company_industry_key: industry,
       is_currently_work_here: isCurrentJob,
-      job_category_id: jobFunction?.length > 0 ? getJobCategoryIds(config, jobFunction) : [],
+      job_category_ids: jobFunction?.length > 0 ? getJobCategoryIds(config, jobFunction).join(',') : '',
       salary: Number(salary),
       working_period_from: `${moment(new Date(workPeriodFromYear)).format('yyyy')}-${moment(new Date(workPeriodFromMonth)).format('MM-DD')}`,
       working_period_to: isCurrentJob ? null : `${moment(new Date(workPeriodToYear)).format('yyyy')}-${moment(new Date(workPeriodToMonth)).format('MM-DD')}`,
@@ -268,8 +300,9 @@ const Step3 = (props: any) => {
       headingText={<Text bold textStyle='xxxl' tagName='h2'> Add your work experience 💼</Text>}
       currentStep={currentStep}
       totalStep={4}
-      // nextFnBtn={() => console.log('Next')}
+      nextFnBtn={() => router.push('/jobseeker-complete-profile/1102')}
       backFnBtn={() => router.push('/jobseeker-complete-profile/10')}
+      isDisabled={isDisabled}
     >
       <div className={styles.stepNotice}>
         <Image src={InfoIcon} alt='' width='30' height='30' />
@@ -284,6 +317,7 @@ const Step3 = (props: any) => {
                 <Text textStyle='base' tagName='p'>{experience.company}</Text>
                 <Text textStyle='base' tagName='p'>{experience.location} - {getLocation(experience.location)[0].region}</Text>
                 <Text textStyle='base' tagName='p'>{moment(experience.working_period_from).format("MMMM yyyy")} to {experience.is_currently_work_here ? 'Present' : experience.working_period_to}</Text>
+                <Text textStyle='base' tagName='p'>{experience.job_categories.join(', ')}</Text>
                 <Text textStyle='base' tagName='p'>{experience.company_industry}</Text>
                 <Text textStyle='base' tagName='p'>{formatSalary(experience.salary)} per month</Text>
                 <Text textStyle='base' tagName='p'>Description: </Text>
@@ -485,7 +519,7 @@ const Step3 = (props: any) => {
         </div>
       )}
 
-      {!showForm && (
+      {!showForm && !hasNoWorkExperience && (
         <div 
           className={styles.stepFormToggle} 
           onClick={() => handleShowForm() }
@@ -495,14 +529,20 @@ const Step3 = (props: any) => {
         </div>
       )}
 
-      {/* <div className={styles.stepField}>
-        <FormControlLabel
-          control={
-            <Checkbox defaultChecked name='noWorkExperience' />
-          }
-          label={<Text textStyle='base'>I have no work experience</Text>}
-        />
-      </div> */}
+      {workExperience.length === 0 && (
+        <div className={styles.stepField}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                name='noWorkExperience' 
+                onChange={() => setHasNoWorkExperience(!hasNoWorkExperience)}
+                checked={hasNoWorkExperience}
+              />
+            }
+            label={<Text textStyle='base'>I have no work experience</Text>}
+          />
+        </div>
+      )}
 
       {showFormActions && showForm && (
         <div className={styles.stepFormActions}>

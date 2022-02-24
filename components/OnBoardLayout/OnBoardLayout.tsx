@@ -16,7 +16,8 @@ interface IOnBoardLayout {
   children:  React.ReactNode
   backFnBtn?: Function
   nextFnBtn?: Function,
-  isUpdating?: boolean
+  isUpdating?: boolean,
+  isDisabled?: boolean
 }
 
 const OnBoardLayout = ({
@@ -26,7 +27,8 @@ const OnBoardLayout = ({
   children,
   backFnBtn,
   nextFnBtn,
-  isUpdating
+  isUpdating,
+  isDisabled
 }: IOnBoardLayout) => {
   return (
     <div className={styles.OnBoardLayout}>
@@ -63,7 +65,7 @@ const OnBoardLayout = ({
             </div>
             <div>
               {nextFnBtn && (
-                <Button isLoading={isUpdating} primary onClick={() => nextFnBtn()}>
+                <Button isLoading={isUpdating} primary onClick={() => nextFnBtn()} disabled={isDisabled}>
                   <Text textColor='white' bold>Next</Text>
                 </Button>
               )}

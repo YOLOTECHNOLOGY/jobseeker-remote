@@ -1,6 +1,17 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
-import { useForm } from 'react-hook-form'
+import moment from 'moment'
+// @ts-ignore
+import { END } from 'redux-saga'
+
+/* Redux Actions */
+import { wrapper } from 'store'
+import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { fetchUserEducationRequest } from 'store/actions/users/fetchUserEducation'
+import { updateUserCompleteProfileRequest } from 'store/actions/users/updateUserCompleteProfile'
 
 // Components
 import Switch from '@mui/material/Switch';
@@ -12,6 +23,14 @@ import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
+import MaterialDatePicker from 'components/MaterialDatePicker'
+
+/* Helpers*/
+import {
+  getCountryList,
+  getLocationList,
+  getDegreeList
+} from 'helpers/jobPayloadFormatter'
 
 // Images
 import { 
@@ -24,21 +43,38 @@ import {
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton';
 
-const Step4 = () => {
-  const [showForm, setShowForm] = useState(false)
+const Step4 = (props: any) => {
+  const { config, userDetail, accessToken } = props
+  
+  const currentStep = 4
+  const router = useRouter()
+  const dispatch = useDispatch()
 
-  const [schoolName, setSchoolName] = useState('')
-  const [educationLevel, setEducationLevel] = useState('')
-  const [fromMonth, setFromMonth] = useState('')
-  const [fromYear, setFromYear] = useState('')
-  const [toMonth, setToMonth] = useState('')
-  const [toYear, setToYear] = useState('')
+  const degreeList = getDegreeList(config)
+  const countryList = getCountryList(config)
+  const locList = getLocationList(config)
+
+  const [showFormActions, setShowFormActions] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+
+  const [school, setSchool] = useState('')
+  const [degree, setDegree] = useState('')
+  const [location, setLocation] = useState(null)
+  const [country, setCountry] = useState('')
+  const [isShowCountry, setIsShowCountry] = useState(false)
+  const [studyPeriodFromMonth, setStudyPeriodFromMonth] = useState(null)
+  const [studyPeriodFromYear, setStudyPeriodFromYear] = useState(null)
+  const [studyPeriodToMonth, setStudyPeriodToMonth] = useState(null)
+  const [studyPeriodToYear, setStudyPeriodToYear] = useState(null)
   const [fieldStudy, setFieldStudy] = useState('')
   const [isCurrentStudying, setIsCurrentStudying] = useState(false)
-  const [isSkipEducation, setIsSkipEducation] = useState(false)
+  const [hasNoEducation, setHasNoEducation] = useState(false)
+  const [educationId, setEducationId] = useState(null)
+  const [educations, setEducations] = useState(userDetail?.educations)
+  const [showForm, setShowForm] = useState(educations?.length > 0 ? false : true)
+  const [isDisabled, setIsDisabled] = useState(true)
 
-
-  const { register, handleSubmit, formState: { errors }} = useForm()
+  const userEducations = useSelector((store: any) => store.users.fetchUserEducation.response)
 
   const requiredLabel = (text: string) => {
     return (
@@ -49,13 +85,153 @@ const Step4 = () => {
     )
   }
 
-  const errorText = (errorMessage: string) => {
-    return <Text textStyle='sm' textColor='red' tagName='p' className={styles.stepFieldError}>{errorMessage}</Text>
+  useEffect(() => {
+    dispatch(fetchUserEducationRequest({accessToken}))
+  }, [])
+
+  useEffect(() => {
+    if (userEducations) {
+      setEducations(userEducations || [])
+      setShowForm(userEducations.length > 0 ? false : true)
+    }
+  }, [userEducations])
+
+  useEffect(() => {
+    const requireFields = school && degree
+    const periodFrom = studyPeriodFromMonth && studyPeriodFromYear
+    const periodTo = studyPeriodToMonth && studyPeriodToYear
+
+    if (isCurrentStudying) {
+      if (requireFields && periodFrom) {
+        setShowFormActions(true)
+        setIsDisabled(false)
+      }
+
+      if (!requireFields && !periodFrom) {
+        setShowFormActions(false)
+        setIsDisabled(true)
+      }
+    } else {
+      if (requireFields && periodFrom && periodTo) {
+        setShowFormActions(true)
+        setIsDisabled(false)
+      }
+
+      if (!requireFields && !periodFrom && !periodTo) {
+        setShowFormActions(false)
+        setIsDisabled(true)
+      }
+    }
+  }, [
+    school, 
+    degree, 
+    location, 
+    isCurrentStudying, 
+    studyPeriodFromMonth,
+    studyPeriodFromYear,
+    studyPeriodToMonth,
+    studyPeriodToYear
+  ])
+
+  useEffect(() => {
+    if (hasNoEducation) {
+      setIsDisabled(false)
+      handleCancelForm()
+    } 
+
+    if (!hasNoEducation) {
+      setIsDisabled(true)
+      handleShowForm()
+    }
+  }, [hasNoEducation])
+
+  const getLocation = (location) => {
+    if (!location) return
+    return locList.filter((loc) => loc.value.toLowerCase() === location.toLowerCase())
   }
 
-  const handleNextOrSave = (data) => {
+  const onLocationSearch = (_, value) => {
+    setIsShowCountry(value?.key === 'overseas' ? true : false)
+    setLocation(value)
+  }
+
+  const handleShowForm = () => {
+    setShowForm(!showForm)
+    setIsEditing(false)
+    handleResetForm()
+  }
+
+  const handleSelectEducation = (education) => {
+    setIsEditing(true)
+    setShowForm(true)
+    setEducationId(education.id)
+    setSchool(education.school)
+    setDegree(degreeList.filter((degree) => degree.label === education.degree)[0].value)
+    setLocation(getLocation(education.location)[0])
+    if (education.location.toLowerCase() === 'overseas') {
+      setCountry(countryList.filter((country) => country.key === education.country_key)[0].value)
+      setIsShowCountry(true)
+    }
+    setStudyPeriodFromMonth(education.study_period_from)
+    setStudyPeriodFromYear(education.study_period_from)
+    setStudyPeriodToMonth(education.study_period_to)
+    setStudyPeriodToYear(education.study_period_to)
+    setFieldStudy(education.field_of_study)
+    setIsCurrentStudying(education.is_currently_studying)
+  }
+
+  const handleResetForm = () => {
+    setSchool('')
+    setDegree('')
+    setLocation(null)
+    setCountry('')
+    setIsShowCountry(false)
+    setStudyPeriodFromMonth(null)
+    setStudyPeriodFromYear(null)
+    setStudyPeriodToMonth(null)
+    setStudyPeriodToYear(null)
+    setFieldStudy('')
+    setIsCurrentStudying(false)
+  }
+
+  const handleCancelForm = () => {
+    handleResetForm()
+    setShowForm(false)
+    setIsEditing(false)
+  }
+
+  const handleSaveForm = () => {
     // eslint-disable-next-line no-console
-    console.log('data: ', data)
+    const educationData = {
+      school: school,
+      country_key: country || 'ph',
+      is_currently_studying: isCurrentStudying,
+      study_period_from: `${moment(new Date(studyPeriodFromYear)).format('yyyy')}-${moment(new Date(studyPeriodFromYear)).format('MM-DD')}`,
+      study_period_to: isCurrentStudying ? null : `${moment(new Date(studyPeriodToYear)).format('yyyy')}-${moment(new Date(studyPeriodToMonth)).format('MM-DD')}`,
+      location_key: location?.key || '',
+      field_of_study: fieldStudy,
+      degree_key: degree
+    }
+
+    const educationPayload = {
+      accessToken,
+      currentStep,
+      isUpdate: isEditing,
+      educationId,
+      educationData
+    }
+    dispatch(updateUserCompleteProfileRequest(educationPayload))
+  }
+
+  const handleDeleteEducation = (id) => {
+    const deletePayload = {
+      accessToken,
+      educationId: id,
+      isDelete: true,
+      currentStep
+    }
+
+    dispatch(updateUserCompleteProfileRequest(deletePayload))
   }
 
   return (
@@ -63,78 +239,61 @@ const Step4 = () => {
       headingText={<Text bold textStyle='xxxl' tagName='h2'>All about your education 🎓</Text>}
       currentStep={4}
       totalStep={4}
-      // backFnBtn={() => console.log('back')}
+      backFnBtn={() => router.push('/jobseeker-complete-profile/1101')}
       // nextFnBtn={() => console.log('next')}
+      isDisabled={isDisabled}
     >
-      <div className={styles.stepDataList}>
-        <div className={styles.stepDataItem}>
-          <div className={styles.stepDataInfo}>
-            <Text bold textStyle='base' tagName='p'>School Name</Text>
-            <Text textStyle='base' tagName='p'>Degree Type</Text>
-            <Text textStyle='base' tagName='p'>December 2017 to Present</Text>
-            <Text textStyle='base' tagName='p'>Manila - NCR Region</Text>
-            <Text textStyle='base' tagName='p'>Field of Study</Text>
-          </div>
-          <div className={styles.stepDataActions}>
-            <div 
-              className={styles.stepDataActionItem} 
-              // onClick={() => {}}
-            >
-              <img src={CreateFilledIcon} width='18' height='18' />
+      {educations.length > 0 && (
+        <div className={styles.stepDataList}>
+          {educations.map((education) => (
+            <div className={styles.stepDataItem} key={education.id}>
+              <div className={styles.stepDataInfo}>
+                <Text bold textStyle='base' tagName='p'>{education.school}</Text>
+                <Text textStyle='base' tagName='p'>{education.degree}</Text>
+                <Text textStyle='base' tagName='p'>{moment(education.working_period_from).format("MMMM yyyy")} to {education.is_currently_studying ? 'Present' : education.working_period_to}</Text>
+                <Text textStyle='base' tagName='p'>{education.location} - {getLocation(education.location)[0].region}</Text>
+                <Text textStyle='base' tagName='p'>{education.field_of_study}</Text>
+              </div>
+              <div className={styles.stepDataActions}>
+                <div 
+                  className={styles.stepDataActionItem} 
+                  onClick={() => handleSelectEducation(education)}
+                >
+                  <img src={CreateFilledIcon} width='18' height='18' />
+                </div>
+                <div 
+                  className={styles.stepDataActionItem} 
+                  onClick={() => handleDeleteEducation(education.id)}
+                >
+                  <img src={DeleteFilledIcon} width='18' height='18' />
+                </div>
+              </div>
             </div>
-            <div 
-              className={styles.stepDataActionItem} 
-              // onClick={() => {}}
-            >
-              <img src={DeleteFilledIcon} width='18' height='18' />
-            </div>
-          </div>
-        </div>
-      </div>
-      {!showForm && (
-        <div className={styles.stepFormToggle} onClick={() => setShowForm(!showForm)}>
-          <img src={AddOutlineIcon} width='18' height='18' />
-          <Text textColor='primaryBlue' textStyle='sm'>Add a education</Text>
+          ))}
         </div>
       )}
+
       {showForm && (
         <div className={classNames(styles.stepForm, styles.step4Form)}>
           <div className={styles.stepField}>
             <MaterialTextField
-              refs={{...register('schoolName', { 
-                required: {
-                  value: true,
-                  message: 'This field is required.'
-                }
-              })}}
               className={styles.stepFullwidth}
               label={requiredLabel('School Name')}
               size='small'
-              value={schoolName}
-              defaultValue={schoolName}
-              onChange={(e) => setSchoolName(e.target.value)}
-              error={errors.schoolName ? true : false}
+              value={school}
+              defaultValue={school}
+              onChange={(e) => setSchool(e.target.value)}
             />
-            {errors.schoolName && errorText(errors.schoolName.message)}
           </div>
 
           <div className={styles.stepField}>
-            <MaterialTextField
-              refs={{...register('educationLevel', { 
-                required: {
-                  value: true,
-                  message: 'This field is required.'
-                }
-              })}}
+            <MaterialBasicSelect
               className={styles.stepFullwidth}
-              label={requiredLabel('School Name')}
-              size='small'
-              value={educationLevel}
-              defaultValue={educationLevel}
-              onChange={(e) => setEducationLevel(e.target.value)}
-              error={errors.educationLevel ? true : false}
+              label={requiredLabel('Education Level')}
+              value={degree}
+              onChange={(e) => setDegree(e.target.value)}
+              options={degreeList}
             />
-            {errors.educationLevel && errorText(errors.educationLevel.message)}
           </div>
 
           <div className={styles.stepFieldGroup}>
@@ -144,7 +303,11 @@ const Step4 = () => {
             <div className={styles.stepFieldBody}>
               <FormControlLabel
                 control={
-                  <Switch checked={isCurrentStudying} onChange={() => setIsCurrentStudying(!isCurrentStudying)} name='currentStudent' />
+                  <Switch 
+                    checked={isCurrentStudying} 
+                    onChange={() => setIsCurrentStudying(!isCurrentStudying)} 
+                    name='currentStudent' 
+                  />
                 }
                 label={<Text textStyle='base'>Currently attending</Text>}
               />
@@ -157,98 +320,75 @@ const Step4 = () => {
             </div>
             <div className={classNames(styles.stepFieldBody, styles.stepFieldDate)}>
               <div className={styles.stepFieldDateItem}>
-                <MaterialBasicSelect
-                  className={styles.stepFullwidth}
-                  fieldRef={{...register('fromMonth', { 
-                    required: {
-                      value: true,
-                      message: 'This field is required.'
-                    }
-                  })}}
-                  label={'Month'}
-                  value={fromMonth}
-                  onChange={(e) => setFromMonth(e.target.value)}
-                  error={errors.fromMonth ? true : false}
-                  options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
+                <MaterialDatePicker
+                  label="Month"
+                  views={['month']}
+                  inputFormat="MMM"
+                  value={studyPeriodFromMonth}
+                  onDateChange={(value) => setStudyPeriodFromMonth(value)}
                 />
-                {errors.fromMonth && errorText(errors.fromMonth.message)}
               </div>
               <div className={styles.stepFieldDateItem}>
-                <MaterialBasicSelect
-                  className={styles.stepFullwidth}
-                  fieldRef={{...register('fromYear', { 
-                    required: {
-                      value: true,
-                      message: 'This field is required.'
-                    }
-                  })}}
-                  label={'YearTo'}
-                  value={fromYear}
-                  onChange={(e) => setFromYear(e.target.value)}
-                  error={errors.fromYear ? true : false}
-                  options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
+                <MaterialDatePicker
+                  label="Year"
+                  views={['year']}
+                  inputFormat="yyyy"
+                  value={studyPeriodFromYear}
+                  onDateChange={(year) => setStudyPeriodFromYear(year)}
                 />
-                {errors.fromYear && errorText(errors.fromYear.message)}
               </div>
             </div>
           </div>
 
-          <div className={styles.stepField}>
-            <div className={styles.stepFieldHeader}>
-              <Text textStyle='base' bold>To</Text>
-            </div>
-            <div className={classNames(styles.stepFieldBody, styles.stepFieldDate)}>
-              <div className={styles.stepFieldDateItem}>
-                <MaterialBasicSelect
-                  className={styles.stepFullwidth}
-                  fieldRef={{...register('toMonth', { 
-                    required: {
-                      value: true,
-                      message: 'This field is required.'
-                    }
-                  })}}
-                  label={'Month'}
-                  value={toMonth}
-                  onChange={(e) => setToMonth(e.target.value)}
-                  error={errors.toMonth ? true : false}
-                  options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
-                />
-                {errors.toMonth && errorText(errors.toMonth.message)}
+          {!isCurrentStudying && (
+            <div className={styles.stepField}>
+              <div className={styles.stepFieldHeader}>
+                <Text textStyle='base' bold>To</Text>
               </div>
-              <div className={styles.stepFieldDateItem}>
-                <MaterialBasicSelect
-                  className={styles.stepFullwidth}
-                  fieldRef={{...register('toYear', { 
-                    required: {
-                      value: true,
-                      message: 'This field is required.'
-                    }
-                  })}}
-                  label={'Year'}
-                  value={toYear}
-                  onChange={(e) => setToYear(e.target.value)}
-                  error={errors.toYear ? true : false}
-                  options={[{label: '', value: ''}, {label: 'PHP', value: 'PHP'}]}
-                />
-                {errors.toYear && errorText(errors.toYear.message)}
+              <div className={classNames(styles.stepFieldBody, styles.stepFieldDate)}>
+                <div className={styles.stepFieldDateItem}>
+                  <MaterialDatePicker
+                    label="Month"
+                    views={['month']}
+                    inputFormat="MMM"
+                    value={studyPeriodToMonth}
+                    onDateChange={(value) => setStudyPeriodToMonth(value)}
+                  />
+                </div>
+                <div className={styles.stepFieldDateItem}>
+                  <MaterialDatePicker
+                    label="Year"
+                    views={['year']}
+                    inputFormat="yyyy"
+                    value={studyPeriodToYear}
+                    onDateChange={(year) => setStudyPeriodToYear(year)}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           <div className={styles.stepField}>
             <MaterialLocationField
-              fieldRef={{...register('schoolLocation', { 
-                required: {
-                  value: true,
-                  message: 'This field is required.'
-                }
-              })}}
               className={styles.stepFullwidth}
               label={requiredLabel('Location')}
-              error={errors.schoolLocation ? true : false}
+              value={location}
+              defaultValue={location}
+              onChange={onLocationSearch}
             />
-            {errors.schoolLocation && errorText(errors.schoolLocation.message)}
           </div>
+
+          {isShowCountry && (
+            <div className={classNames(styles.stepField, styles.stepFieldCountry)}>
+              <MaterialBasicSelect
+                className={styles.stepFullwidth}
+                label={requiredLabel('Country')}
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                options={countryList}
+              />
+            </div>
+          )}
 
           <div className={styles.stepField}>
             <MaterialTextField
@@ -260,28 +400,65 @@ const Step4 = () => {
               onChange={(e) => setFieldStudy(e.target.value)}
             />
           </div>
+        </div>
+      )}
 
-          <div className={styles.stepField}>
-            <FormControlLabel
-              control={
-                <Checkbox checked={isSkipEducation} onChange={() => setIsSkipEducation(!isSkipEducation)} name='noEducation' />
-              }
-              label={<Text textStyle='base'>I do not want to enter my Education now</Text>}
-            />
-          </div>
+      {educations.length === 0 && (
+        <div className={styles.stepField}>
+          <FormControlLabel
+            control={
+              <Checkbox 
+                checked={hasNoEducation} 
+                onChange={() => setHasNoEducation(!hasNoEducation)} 
+                name='noEducation' 
+              />
+            }
+            label={<Text textStyle='base'>I do not want to enter my Education now</Text>}
+          />
+        </div>
+      )}
 
-          <div className={styles.stepFormActions}>
-            <MaterialButton variant='contained' capitalize onClick={handleSubmit(handleNextOrSave)}>
-              <Text textColor='white'>Save</Text>
-            </MaterialButton>
-            <MaterialButton variant='outlined' capitalize>
+      {!showForm && !hasNoEducation && (
+        <div className={styles.stepFormToggle} onClick={() => handleShowForm()}>
+          <img src={AddOutlineIcon} width='18' height='18' />
+          <Text textColor='primaryBlue' textStyle='sm'>Add a education</Text>
+        </div>
+      )}
+
+      {showFormActions && showForm && (
+        <div className={styles.stepFormActions}>
+          <MaterialButton variant='contained' capitalize onClick={handleSaveForm}>
+            <Text textColor='white'>Save</Text>
+          </MaterialButton>
+
+          {isEditing && (
+            <MaterialButton variant='outlined' capitalize onClick={handleCancelForm}>
               <Text textColor='primaryBlue'>Cancel</Text>
             </MaterialButton>
-          </div>
+          )}
         </div>
       )}
     </OnBoardLayout>
   )
 }
 
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+  const accessToken = req.cookies.accessToken
+
+  store.dispatch(fetchConfigRequest())
+  store.dispatch(fetchUserOwnDetailRequest({accessToken}))
+  store.dispatch(END)
+  await (store as any).sagaTask.toPromise()
+  const storeState = store.getState()
+  const config = storeState.config.config.response
+  const userDetail = storeState.users.fetchUserOwnDetail.response
+
+  return {
+    props: {
+      config,
+      userDetail,
+      accessToken
+    },
+  }
+})
 export default Step4

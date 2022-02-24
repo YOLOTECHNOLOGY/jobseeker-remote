@@ -52,13 +52,14 @@ const Step1 = (props: any) => {
   const [country, setCountry] = useState('')
   const [isShowCountry, setIsShowCountry] = useState(false)
   const [noticePeriod, setNoticePeriod] = useState(userDetail.notice_period_id)
-  const [specialization, setSpecialization] = useState('')
+  const [specialization, setSpecialization] = useState(userDetail.job_preference.job_categories || '')
   const [headhuntMe, setHeadhuntMe] = useState(true)
 
   const [salaryFrom, setSalaryFrom] = useState(Number(userDetail.job_preference.salary_range_from) || salaryFromOptions[0].value)
   const [salaryTo, setSalaryTo] = useState(null)
   const [salaryToOptions, setSalaryToOptions] = useState([])
   const [hasSelectedSpecMore, setHasSelectedSpecMore] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(true)
 
   const { register, handleSubmit, setValue, formState: { errors }} = useForm()
 
@@ -66,10 +67,13 @@ const Step1 = (props: any) => {
 
   useEffect(() => {
     getSalaryToOptions(salaryFrom)
+  }, [])
+
+  useEffect(() => {
+    getSalaryToOptions(salaryFrom)
   }, [salaryFrom])
   
   useEffect(() => {
-    getSalaryToOptions(salaryFrom)
     if (userDetail) {
       if (userDetail.location) {
         const matchedLocation = locList.filter((loc) => {
@@ -79,10 +83,32 @@ const Step1 = (props: any) => {
         setValue('location', matchedLocation[0])
       }
 
+      setSpecialization(userDetail.job_preference.job_categories)
       setSalaryTo(Number(userDetail.job_preference.salary_range_to))
     }
+  }, [userDetail])
 
-  }, [])
+  useEffect(() => {
+    if (
+      contactNumber &&
+      location &&
+      noticePeriod &&
+      (specialization?.length > 0 && specialization?.length <= 3) &&
+      salaryFrom &&
+      salaryTo
+    ) {
+      setIsDisabled(false)
+    } else {
+      setIsDisabled(true)
+    }
+  }, [
+    contactNumber,
+    location,
+    noticePeriod,
+    specialization,
+    salaryFrom,
+    salaryTo
+  ])
 
   const getSalaryToOptions = (salaryFrom) => {
     const salaryOptions = getSalaryOptions(config, salaryFrom, true)
@@ -108,14 +134,14 @@ const Step1 = (props: any) => {
     return <Text textStyle='sm' textColor='red' tagName='p' className={styles.stepFieldError}>{errorMessage}</Text>
   }
 
-  const handleNext = (data) => {
+  const handleUpdateProfile = (data) => {
     const { specialization, salaryFrom, salaryTo, contactNumber, noticePeriod } = data
     setHasSelectedSpecMore(specialization.length > 3 ? true : false)
 
     if (specialization.length > 3) return
     const payload = {
       preferences: {
-        job_category_id: getJobCategoryIds(config, specialization),
+        job_category_ids: getJobCategoryIds(config, specialization).join(','),
         salary_range_from: Number(salaryFrom),
         salary_range_to: Number(salaryTo),
         location_key: location?.key || ''
@@ -130,8 +156,6 @@ const Step1 = (props: any) => {
       currentStep
     }
 
-    // eslint-disable-next-line no-console
-    console.log({data, payload})
     dispatch(updateUserCompleteProfileRequest(payload))
   }
 
@@ -140,8 +164,9 @@ const Step1 = (props: any) => {
       headingText={<Text bold textStyle='xxxl' tagName='h2'>Let’s get you a job! 🎉👏 <br/> Tell us about yourself.</Text>}
       currentStep={currentStep}
       totalStep={4}
-      nextFnBtn={handleSubmit(handleNext)}
+      nextFnBtn={handleSubmit(handleUpdateProfile)}
       isUpdating={isUpdatingUserProfile}
+      isDisabled={isDisabled}
     >
       <div className={styles.stepForm}>
         <div className={styles.step1Contact}>
@@ -249,6 +274,7 @@ const Step1 = (props: any) => {
             })}}
             label={requiredLabel('I’m looking for jobs in these specializations')}
             value={specialization}
+            defaultValue={specialization}
             onSelect={(e) => {
               setSpecialization(e)
               setHasSelectedSpecMore(e.length > 3 ? true : false)
