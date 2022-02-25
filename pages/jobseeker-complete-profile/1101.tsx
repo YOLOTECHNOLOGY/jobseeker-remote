@@ -88,8 +88,9 @@ const Step3 = (props: any) => {
   const [isDisabled, setIsDisabled] = useState(true)
   const [hasNoWorkExperience, setHasNoWorkExperience] = useState(false)
   
-  const { register, formState: { errors }} = useForm()
+  const { formState: { errors }} = useForm()
   const userWorkExperiences = useSelector((store: any) => store.users.fetchUserWorkExperience.response)
+  const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserCompleteProfile.fetching)
 
   useEffect(() => {
     removeItem(STORAGE_NAME)
@@ -264,7 +265,6 @@ const Step3 = (props: any) => {
 
   const handleSaveForm = () => {
     // eslint-disable-next-line no-console
-    console.log('handleSaveForm.jobFunction--', jobFunction)
     const workExperienceData = {
       job_title: jobTitle,
       company: companyName,
@@ -311,7 +311,7 @@ const Step3 = (props: any) => {
       {workExperience?.length > 0 && (
         <div className={styles.stepDataList}>
           {workExperience.map((experience) => (
-            <div className={styles.stepDataItem} key={experience.key}>
+            <div className={styles.stepDataItem} key={experience.id}>
               <div className={styles.stepDataInfo}>
                 <Text bold textStyle='base' tagName='p'>{experience.job_title}</Text>
                 <Text textStyle='base' tagName='p'>{experience.company}</Text>
@@ -385,12 +385,6 @@ const Step3 = (props: any) => {
               <div className={classNames(styles.stepField, styles.stepFieldCountry)}>
                 <MaterialBasicSelect
                   className={styles.stepFullwidth}
-                  fieldRef={{...register('country', { 
-                    required: {
-                      value: true,
-                      message: 'This field is required.'
-                    }
-                  })}}
                   label={requiredLabel('Country')}
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
@@ -476,7 +470,6 @@ const Step3 = (props: any) => {
             <div className={styles.stepField}>
               <MaterialSelectCheckmarks
                 className={styles.stepFullwidth}
-                fieldRef={{...register('jobCategory')}}
                 label={'Job Functions'}
                 name='jobCategory'
                 value={jobFunction}
@@ -488,7 +481,6 @@ const Step3 = (props: any) => {
 
             <div className={styles.stepField}>
               <MaterialBasicSelect
-                {...register('industry')}
                 className={styles.stepFullwidth}
                 label='Industry'
                 value={industry}
@@ -499,7 +491,6 @@ const Step3 = (props: any) => {
 
             <div className={styles.stepField}>
               <MaterialTextField
-                refs={{...register('salary')}}
                 className={styles.stepFullwidth}
                 label='Monthly Salary'
                 size='small'
@@ -511,7 +502,6 @@ const Step3 = (props: any) => {
             
             <div className={styles.step3Editor}>
               <TextEditorField
-                {...register('jobDescription')}
                 fieldOnChange={(value) => setDescription(value)}
               />
             </div>
@@ -546,7 +536,7 @@ const Step3 = (props: any) => {
 
       {showFormActions && showForm && (
         <div className={styles.stepFormActions}>
-          <MaterialButton variant='contained' capitalize onClick={handleSaveForm}>
+          <MaterialButton variant='contained' capitalize onClick={handleSaveForm} isLoading={isUpdatingUserProfile}>
             <Text textColor='white'>Save</Text>
           </MaterialButton>
           {isEditing && (
@@ -562,6 +552,14 @@ const Step3 = (props: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies.accessToken
+  if (!accessToken) {
+    return { 
+      redirect: { 
+        destination: '/login?redirect=/jobseeker-complete-profile/1101', 
+        permanent: false, 
+      }
+    }
+  }
 
   store.dispatch(fetchConfigRequest())
   store.dispatch(fetchUserOwnDetailRequest({accessToken}))

@@ -97,6 +97,14 @@ const Step2 = (props: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies.accessToken
+  if (!accessToken) {
+    return { 
+      redirect: { 
+        destination: '/login?redirect=/jobseeker-complete-profile/10', 
+        permanent: false, 
+      }
+    }
+  }
 
   store.dispatch(fetchUserOwnDetailRequest({accessToken}))
   store.dispatch(END)

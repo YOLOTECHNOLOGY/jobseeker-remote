@@ -1,7 +1,7 @@
 // Components
 import Link from 'components/Link'
 import Text from 'components/Text'
-import Button from 'components/Button'
+import MaterialButton from 'components/MaterialButton'
 
 // Images
 import { BossjobLogo } from 'images'
@@ -58,16 +58,16 @@ const OnBoardLayout = ({
           <div className={styles.OnBoardLayoutFooter}>
             <div>
               {backFnBtn && (
-                <Button secondary onClick={() => backFnBtn()}>
+                <MaterialButton variant='outlined' capitalize onClick={() => backFnBtn()}>
                   <Text textColor='primary' bold>Back</Text>
-                </Button>
+                </MaterialButton>
               )}
             </div>
             <div>
               {nextFnBtn && (
-                <Button isLoading={isUpdating} primary onClick={() => nextFnBtn()} disabled={isDisabled}>
+                <MaterialButton isLoading={isUpdating} variant='contained' capitalize onClick={() => nextFnBtn()} disabled={isDisabled}>
                   <Text textColor='white' bold>Next</Text>
-                </Button>
+                </MaterialButton>
               )}
             </div>
           </div>

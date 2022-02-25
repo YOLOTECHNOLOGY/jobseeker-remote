@@ -52,7 +52,7 @@ const Step1 = (props: any) => {
   const [country, setCountry] = useState('')
   const [isShowCountry, setIsShowCountry] = useState(false)
   const [noticePeriod, setNoticePeriod] = useState(userDetail.notice_period_id)
-  const [specialization, setSpecialization] = useState(userDetail.job_preference.job_categories || '')
+  const [specialization, setSpecialization] = useState(userDetail?.job_preference?.job_categories || '')
   const [headhuntMe, setHeadhuntMe] = useState(true)
 
   const [salaryFrom, setSalaryFrom] = useState(Number(userDetail.job_preference.salary_range_from) || salaryFromOptions[0].value)
@@ -82,7 +82,6 @@ const Step1 = (props: any) => {
         setLocation(matchedLocation[0])
         setValue('location', matchedLocation[0])
       }
-
       setSpecialization(userDetail.job_preference.job_categories)
       setSalaryTo(Number(userDetail.job_preference.salary_range_to))
     }
@@ -136,12 +135,17 @@ const Step1 = (props: any) => {
 
   const handleUpdateProfile = (data) => {
     const { specialization, salaryFrom, salaryTo, contactNumber, noticePeriod } = data
-    setHasSelectedSpecMore(specialization.length > 3 ? true : false)
+    let _specialization = specialization
+    if (typeof _specialization === 'string'){
+      _specialization = _specialization.split(',')
+    }
 
-    if (specialization.length > 3) return
+    setHasSelectedSpecMore(_specialization?.length > 3 ? true : false)
+    if (_specialization?.length > 3) return
+
     const payload = {
       preferences: {
-        job_category_ids: getJobCategoryIds(config, specialization).join(','),
+        job_category_ids: getJobCategoryIds(config, _specialization).join(','),
         salary_range_from: Number(salaryFrom),
         salary_range_to: Number(salaryTo),
         location_key: location?.key || ''
@@ -350,6 +354,14 @@ const Step1 = (props: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies.accessToken
+  if (!accessToken) {
+    return { 
+      redirect: { 
+        destination: '/login?redirect=/jobseeker-complete-profile/1', 
+        permanent: false, 
+      }
+    }
+  }
 
   store.dispatch(fetchConfigRequest())
   store.dispatch(fetchUserOwnDetailRequest({accessToken}))

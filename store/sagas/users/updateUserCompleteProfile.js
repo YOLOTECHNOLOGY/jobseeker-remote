@@ -41,8 +41,6 @@ function* updateUserCompleteProfileReq({ payload }) {
     currentStep 
   } = payload
 
-  console.log(payload)
-
   try {
     if (currentStep === 1) {
       const profilePayload = {
@@ -65,8 +63,6 @@ function* updateUserCompleteProfileReq({ payload }) {
     }
 
     if (currentStep === 3) {
-      console.log('currentStep is 3')
-
       if (isDelete) {
         const deletePayload = {
           accessToken,

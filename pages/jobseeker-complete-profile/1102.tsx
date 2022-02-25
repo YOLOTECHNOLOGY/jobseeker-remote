@@ -75,6 +75,7 @@ const Step4 = (props: any) => {
   const [isDisabled, setIsDisabled] = useState(true)
 
   const userEducations = useSelector((store: any) => store.users.fetchUserEducation.response)
+  const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserCompleteProfile.fetching)
 
   const requiredLabel = (text: string) => {
     return (
@@ -240,8 +241,8 @@ const Step4 = (props: any) => {
       currentStep={4}
       totalStep={4}
       backFnBtn={() => router.push('/jobseeker-complete-profile/1101')}
-      // nextFnBtn={() => console.log('next')}
-      isDisabled={isDisabled}
+      nextFnBtn={() => router.push('/')}
+      isDisabled={showForm && isDisabled}
     >
       {educations.length > 0 && (
         <div className={styles.stepDataList}>
@@ -427,7 +428,7 @@ const Step4 = (props: any) => {
 
       {showFormActions && showForm && (
         <div className={styles.stepFormActions}>
-          <MaterialButton variant='contained' capitalize onClick={handleSaveForm}>
+          <MaterialButton variant='contained' capitalize onClick={handleSaveForm} isLoading={isUpdatingUserProfile}>
             <Text textColor='white'>Save</Text>
           </MaterialButton>
 
@@ -444,6 +445,14 @@ const Step4 = (props: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies.accessToken
+  if (!accessToken) {
+    return { 
+      redirect: { 
+        destination: '/login?redirect=/jobseeker-complete-profile/1102', 
+        permanent: false, 
+      }
+    }
+  }
 
   store.dispatch(fetchConfigRequest())
   store.dispatch(fetchUserOwnDetailRequest({accessToken}))
