@@ -28,11 +28,15 @@ const ChangePassword = () => {
   const { email, otp } = router.query
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isPasswordMatch, setIsPasswordMatch] = useState(false)
 
-  const { register, handleSubmit, formState: { errors }} = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
 
   const isResettingPassword = useSelector((store: any) => store.auth.resetPassword.fetching)
 
@@ -46,7 +50,7 @@ const ChangePassword = () => {
   }
 
   const handleResetPassword = (data) => {
-    dispatch(resetPasswordRequest({ email, otp, password: data.password}))
+    dispatch(resetPasswordRequest({ email, otp, password: data.password }))
   }
 
   return (
@@ -61,31 +65,35 @@ const ChangePassword = () => {
         canonical='/chage-password'
       />
       <div className={styles.ChangePasswordSubHeading}>
-        <Text textStyle='xsm' tagName='p'>Please enter your registered email</Text>
-        <Text textStyle='xsm' tagName='p'>A verification code will be sent to you shortly.</Text>
+        <Text textStyle='xsm' tagName='p'>
+          Thank you for verifying.
+        </Text>
+        <Text textStyle='xsm' tagName='p'>
+          Please enter your new password
+        </Text>
       </div>
 
       <form className={styles.ChangePasswordForm} onSubmit={handleSubmit(handleResetPassword)}>
         <TextField
-          {...register('password', { 
+          {...register('password', {
             required: {
               value: true,
-              message: 'This field is required.'
-            }, 
+              message: 'This field is required.',
+            },
             minLength: {
               value: 8,
-              message: 'Must be 8 characters or more.'
-            }, 
+              message: 'Must be 8 characters or more.',
+            },
             maxLength: {
               value: 16,
-              message: 'Must be 16 characters or less.'
-            }
-          })} 
+              message: 'Must be 16 characters or less.',
+            },
+          })}
           className={styles.ChangePasswordFormInput}
-          id='password' 
+          id='password'
           name='password'
-          type={showPassword ? "text" : "password"}
-          label='New Password (8 - 16 characters)' 
+          type={showPassword ? 'text' : 'password'}
+          label='New Password (8 - 16 characters)'
           variant='outlined'
           size='small'
           value={password}
@@ -93,9 +101,9 @@ const ChangePassword = () => {
           onChange={(e) => setPassword(e.target.value)}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end">
+              <InputAdornment position='end'>
                 <IconButton
-                  aria-label="toggle password visibility"
+                  aria-label='toggle password visibility'
                   onClick={() => handleTogglePasswordVisibility('password')}
                   onMouseDown={() => handleTogglePasswordVisibility('password')}
                 >
@@ -106,29 +114,35 @@ const ChangePassword = () => {
           }}
         />
         <div className={styles.ChangePasswordFieldError}>
-          {errors.password && <Text textStyle='sm' textColor='red'>{errors.password.message}</Text>}
+          {errors.password && (
+            <Text textStyle='sm' textColor='red'>
+              {errors.password.message}
+            </Text>
+          )}
         </div>
 
-        <MaterialTextField 
-          refs={{...register('confirmPassword', {
-            required: {
-              value: true,
-              message: 'This field is required.'
-            }, 
-            minLength: {
-              value: 8,
-              message: 'Must be 8 characters or more.'
-            }, 
-            maxLength: {
-              value: 16,
-              message: 'Must be 16 characters or less.'
-            }
-          })}}
+        <MaterialTextField
+          refs={{
+            ...register('confirmPassword', {
+              required: {
+                value: true,
+                message: 'This field is required.',
+              },
+              minLength: {
+                value: 8,
+                message: 'Must be 8 characters or more.',
+              },
+              maxLength: {
+                value: 16,
+                message: 'Must be 16 characters or less.',
+              },
+            }),
+          }}
           className={styles.ChangePasswordFormInput}
-          id='confirmPassword' 
+          id='confirmPassword'
           name='confirmPassword'
-          label='Confirm Password' 
-          type={showConfirmPassword ? "text" : "password"}
+          label='Confirm Password'
+          type={showConfirmPassword ? 'text' : 'password'}
           variant='outlined'
           size='small'
           value={confirmPassword}
@@ -136,11 +150,11 @@ const ChangePassword = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end">
+              <InputAdornment position='end'>
                 <IconButton
-                  aria-label="toggle password visibility"
-                    onClick={() => handleTogglePasswordVisibility('confirm-password')}
-                    onMouseDown={() => handleTogglePasswordVisibility('confirm-password')}
+                  aria-label='toggle password visibility'
+                  onClick={() => handleTogglePasswordVisibility('confirm-password')}
+                  onMouseDown={() => handleTogglePasswordVisibility('confirm-password')}
                 >
                   {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
@@ -149,26 +163,34 @@ const ChangePassword = () => {
           }}
         />
         <div className={styles.ChangePasswordFieldErrorConfirm}>
-          {errors.confirmPassword && <Text textStyle='sm' textColor='red'>{errors.confirmPassword.message}</Text>}
+          {errors.confirmPassword && (
+            <Text textStyle='sm' textColor='red'>
+              {errors.confirmPassword.message}
+            </Text>
+          )}
         </div>
 
         {confirmPassword && !isPasswordMatch && (
           <div className={styles.ChangePasswordFieldError}>
-            <Text textStyle='sm' textColor='red'>This field must match with your password field.</Text>
+            <Text textStyle='sm' textColor='red'>
+              This field must match with your password field.
+            </Text>
           </div>
         )}
 
-        <MaterialButton 
-          capitalize 
-          size='large' 
+        <MaterialButton
+          capitalize
+          size='large'
           variant='contained'
           className={styles.ChangePasswordFormButton}
           type='submit'
           isLoading={isResettingPassword}
         >
-          <Text textStyle='xl' textColor='white' bold>Reset Password</Text>
+          <Text textStyle='xl' textColor='white' bold>
+            Reset Password
+          </Text>
         </MaterialButton>
-        </form>
+      </form>
     </AuthLayout>
   )
 }
