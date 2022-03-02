@@ -7,7 +7,8 @@ import { fetchSavedJobDetailService } from 'store/services/jobs/fetchSavedJobDet
 function* fetchSavedJobDetailReq(action) {
   try {
     const payload = {
-      savedJobId: action.payload,
+      accessToken: action.payload.accessToken,
+      savedJobId: action.payload.savedJobId,
     }
 
     const response = yield call(fetchSavedJobDetailService, payload)

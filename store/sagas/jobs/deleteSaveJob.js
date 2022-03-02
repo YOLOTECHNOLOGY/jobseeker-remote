@@ -7,6 +7,7 @@ import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 function* deleteSaveJobReq(action) {
   try {
     const payload = {
+      accessToken: action.payload.accessToken,
       saveJobId: action.payload.saveJobId
     }
 

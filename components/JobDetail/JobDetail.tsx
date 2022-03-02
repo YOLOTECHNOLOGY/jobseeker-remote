@@ -170,7 +170,7 @@ const JobDetail = ({
                   </Text>
                 )}
 
-                <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob({job_id: selectedJob?.id})}>
+                <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob({jobId: selectedJob?.id})}>
                   { isCategorySaved ? 'Saved' : 'Save Job' }
                 </MaterialButton>
               </div>

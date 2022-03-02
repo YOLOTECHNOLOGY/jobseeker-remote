@@ -72,6 +72,7 @@ interface JobSearchPageProps {
   predefinedQuery: any
   predefinedLocation: any
   predefinedCategory: any
+  accessToken: string
 }
 
 type configObject = {
@@ -163,7 +164,7 @@ const renderPopularSearch = () => {
 }
 
 const JobSearchPage = (props: JobSearchPageProps) => {
-  const { seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage, defaultValues, 
+  const { accessToken, seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage, defaultValues, 
     // predefinedQuery, predefinedLocation, predefinedCategory
    } = props
   const router = useRouter()
@@ -393,7 +394,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   
   const handleCreateJobAlert = (payload) => dispatch(createJobAlertRequest(payload))
 
-  const handlePostSaveJob = (payload) => dispatch(postSaveJobRequest(payload))
+  const handlePostSaveJob = ({ jobId }) => {
+    const postSaveJobPayload = {
+      jobId,
+      accessToken
+    }
+    dispatch(postSaveJobRequest(postSaveJobPayload))
+  }
 
   const updateScrollPosition = () => {
     if (width > 798) {
@@ -536,7 +543,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             Reset Filters
           </MaterialButton>
           </div>
-          
         )}
 
         <div className={styles.moreFiltersSection} onClick={() => handleShowFilter()}>
@@ -575,7 +581,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
+  const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
+  
   const { keyword, page } = query
   // store actions
   store.dispatch(fetchConfigRequest())
@@ -630,6 +638,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       key: keyword,
       defaultPage:page ? Number(page) : 1,
       defaultValues,
+      accessToken,
       // predefinedQuery,
       // predefinedLocation,
       // predefinedCategory,

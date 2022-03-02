@@ -7,11 +7,13 @@ import { fetchSavedJobsListService } from 'store/services/jobs/fetchSavedJobsLis
 function* fetchSavedJobsListReq(action) {
   try {
     const {
+      accessToken,
       page,
       sort,
     } = action.payload
 
     const payload = {
+      accessToken,
       sort,
       page,
     }

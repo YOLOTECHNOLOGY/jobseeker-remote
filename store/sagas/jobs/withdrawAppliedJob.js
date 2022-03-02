@@ -7,6 +7,7 @@ import { withdrawAppliedJobService } from 'store/services/jobs/withdrawAppliedJo
 function* withdrawAppliedJobReq(action) {
   try {
     const payload = {
+      accessToken: action.payload.accessToken,
       appliedJobId: action.payload.appliedJobId
     }
 

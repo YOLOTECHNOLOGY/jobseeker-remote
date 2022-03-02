@@ -7,7 +7,8 @@ import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 function* postSaveJobReq(action) {
   try {
     const payload = {
-      job_id: action.payload.job_id
+      accessToken: action.payload.accessToken,
+      job_id: action.payload.jobId
     }
 
     const response = yield call(postSaveJobService, payload)
