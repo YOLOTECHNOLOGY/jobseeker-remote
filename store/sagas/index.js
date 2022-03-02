@@ -35,6 +35,7 @@ import WatchRegisterUser from 'store/sagas/users/registerUser'
 import WatchUpdateUserCompleteProfile from 'store/sagas/users/updateUserCompleteProfile'
 import watchFetchUserOwnDetail from 'store/sagas/users/fetchUserOwnDetail'
 import watchUploadUserResume from 'store/sagas/users/uploadUserResume'
+import watchGenerateUserResume from 'store/sagas/users/generateUserResume'
 import watchFetchUserWorkExperience from 'store/sagas/users/fetchUserWorkExperience'
 import watchFetchUserEducation from 'store/sagas/users/fetchUserEducation'
 
@@ -84,6 +85,7 @@ function* rootSaga() {
     WatchUpdateUserCompleteProfile(),
     watchFetchUserOwnDetail(),
     watchUploadUserResume(),
+    watchGenerateUserResume(),
     watchFetchUserWorkExperience(),
     watchFetchUserEducation(),
 

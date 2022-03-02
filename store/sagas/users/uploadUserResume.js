@@ -8,7 +8,7 @@ import {
 import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 
 function* uploadUserResumeReq({ payload }) {
-  const { accessToken, resume } = payload
+  const { accessToken, resume, redirect } = payload
   try {
     const resumePayload = {
       accessToken,
@@ -16,7 +16,14 @@ function* uploadUserResumeReq({ payload }) {
     }
     const { data } = yield call(uploadUserResumeService, resumePayload)
     yield put(uploadUserResumeSuccess(data.data))
-    yield put(push('/jobseeker-complete-profile/1101'))
+
+    let url = '/jobseeker-complete-profile/1101'
+    if (redirect) {
+      url = redirect
+    }
+
+    yield put(push(url))
+
   } catch (error) {
     yield put(uploadUserResumeFailed(error.response.data))
   }

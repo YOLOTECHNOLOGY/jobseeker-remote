@@ -1,6 +1,7 @@
 import registerUser from './registerUser'
 import updateUserCompleteProfile from './updateUserCompleteProfile'
 import uploadUserResume from './uploadUserResume'
+import generateUserResume from './generateUserResume'
 import fetchUserOwnDetail from './fetchUserOwnDetail'
 import addUserPreferences from './addUserPreferences'
 import fetchUserWorkExperience from './fetchUserWorkExperience'
@@ -16,6 +17,7 @@ export default {
   registerUser,
   updateUserCompleteProfile,
   uploadUserResume,
+  generateUserResume,
   fetchUserOwnDetail,
   addUserPreferences,
   fetchUserWorkExperience,

@@ -14,8 +14,14 @@ import {
   fetchUserEducationFailed,
 } from 'store/actions/users/fetchUserEducation'
 
+import {
+  completeUserProfileSuccess,
+  completeUserProfileFailed,
+} from 'store/actions/users/completeUserProfile'
+
 import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
 import { addUserPreferencesService } from 'store/services/users/addUserPreferences'
+import { completeUserProfileService } from 'store/services/users/completeUserProfile'
 
 import { fetchUserWorkExperienceService } from 'store/services/users/fetchUserWorkExperience'
 import { addUserWorkExperienceService } from 'store/services/users/addUserWorkExperience'
@@ -38,7 +44,8 @@ function* updateUserCompleteProfileReq({ payload }) {
     workExperienceData,
     educationId,
     educationData,
-    currentStep 
+    currentStep,
+    redirect
   } = payload
 
   try {
@@ -59,7 +66,12 @@ function* updateUserCompleteProfileReq({ payload }) {
       ])
 
       yield put(updateUserCompleteProfileSuccess(userCompleteProfileResponse.data.data))
-      yield put(push('/jobseeker-complete-profile/10'))
+      let url = '/jobseeker-complete-profile/10'
+      if (redirect) {
+        url = `/jobseeker-complete-profile/10?redirect=${redirect}`
+      }
+
+      yield put(push(url))
     }
 
     if (currentStep === 3) {
@@ -113,6 +125,10 @@ function* updateUserCompleteProfileReq({ payload }) {
 
       yield fetchUserEducationServiceSaga(accessToken)
     }
+
+    if (currentStep === 5) {
+      yield completeUserProfileSaga(redirect, accessToken)
+    }
   } catch (error) {
     yield put(updateUserCompleteProfileFailed(error))
   }
@@ -133,6 +149,22 @@ function* fetchUserEducationServiceSaga(accessToken) {
     yield put(fetchUserEducationSuccess(data.data))
   } catch (error) {
     yield put(fetchUserEducationFailed(error))
+  }
+}
+
+function* completeUserProfileSaga(redirect, accessToken) {
+  try {
+    const { data } = yield call(completeUserProfileService, { accessToken })
+    yield put(completeUserProfileSuccess(data.data))
+
+    let url = '/jobs-hiring/job-search'
+    if (redirect) {
+      url = redirect
+    }
+
+    yield put(push(url))
+  } catch (error) {
+    yield put(completeUserProfileFailed(error))
   }
 }
 

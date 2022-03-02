@@ -10,7 +10,8 @@ interface MaterialDatePickerProps {
   label?: string,
   inputFormat?: string,
   format?: string,
-  views?:any
+  views?: any,
+  isYear?: boolean
 }
 
 const MaterialDatePicker = ({
@@ -20,6 +21,7 @@ const MaterialDatePicker = ({
   inputFormat,
   format,
   views,
+  isYear,
   ...rest
 }: MaterialDatePickerProps) => {
   const theme = createTheme({
@@ -66,10 +68,11 @@ const MaterialDatePicker = ({
           views={views}
           label={label}
           inputFormat={inputFormat || ''}
+          minDate={new Date('1942-01-01')}
           value={value}
           onChange={(date) => onDateChange(date)}
-          renderInput={(params) => <TextField aria-readonly {...params} helperText={null} />}
-          maxDate={new Date()}
+          renderInput={(params) => <TextField error={true} aria-readonly {...params} helperText={null} />}
+          maxDate={ isYear ? new Date() : null}
         />
       </LocalizationProvider>
     </ThemeProvider>

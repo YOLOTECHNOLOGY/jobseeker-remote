@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
 // @ts-ignore
 import { END } from 'redux-saga'
@@ -37,6 +38,7 @@ import styles from './Onboard.module.scss'
 
 const Step1 = (props: any) => {
   const currentStep = 1
+  const router = useRouter()
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props
 
@@ -142,8 +144,9 @@ const Step1 = (props: any) => {
 
     setHasSelectedSpecMore(_specialization?.length > 3 ? true : false)
     if (_specialization?.length > 3) return
-
+    
     const payload = {
+      redirect: router.query?.redirect ? router.query.redirect : null,
       preferences: {
         job_category_ids: getJobCategoryIds(config, _specialization).join(','),
         salary_range_from: Number(salaryFrom),

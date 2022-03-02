@@ -12,6 +12,7 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { fetchUserEducationRequest } from 'store/actions/users/fetchUserEducation'
 import { updateUserCompleteProfileRequest } from 'store/actions/users/updateUserCompleteProfile'
+import { generateUserResumeRequest } from 'store/actions/users/generateUserResume'
 
 // Components
 import Switch from '@mui/material/Switch';
@@ -31,6 +32,7 @@ import {
   getLocationList,
   getDegreeList
 } from 'helpers/jobPayloadFormatter'
+import { removeEmptyOrNullValues } from 'helpers/formatter'
 
 // Images
 import { 
@@ -49,6 +51,7 @@ const Step4 = (props: any) => {
   const currentStep = 4
   const router = useRouter()
   const dispatch = useDispatch()
+  const backBtnUrl = router.query?.redirect ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}` : '/jobseeker-complete-profile/1101'
 
   const degreeList = getDegreeList(config)
   const countryList = getCountryList(config)
@@ -62,10 +65,10 @@ const Step4 = (props: any) => {
   const [location, setLocation] = useState(null)
   const [country, setCountry] = useState('')
   const [isShowCountry, setIsShowCountry] = useState(false)
-  const [studyPeriodFromMonth, setStudyPeriodFromMonth] = useState(null)
-  const [studyPeriodFromYear, setStudyPeriodFromYear] = useState(null)
-  const [studyPeriodToMonth, setStudyPeriodToMonth] = useState(null)
-  const [studyPeriodToYear, setStudyPeriodToYear] = useState(null)
+  const [studyPeriodFromMonth, setStudyPeriodFromMonth] = useState(new Date())
+  const [studyPeriodFromYear, setStudyPeriodFromYear] = useState(new Date())
+  const [studyPeriodToMonth, setStudyPeriodToMonth] = useState(new Date())
+  const [studyPeriodToYear, setStudyPeriodToYear] = useState(new Date())
   const [fieldStudy, setFieldStudy] = useState('')
   const [isCurrentStudying, setIsCurrentStudying] = useState(false)
   const [hasNoEducation, setHasNoEducation] = useState(false)
@@ -76,6 +79,8 @@ const Step4 = (props: any) => {
 
   const userEducations = useSelector((store: any) => store.users.fetchUserEducation.response)
   const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserCompleteProfile.fetching)
+  const isGeneratingUserResume = useSelector((store: any) => store.users.generateUserResume.fetching)
+  const isCompletingUserProfile = useSelector((store: any) => store.users.completeUserProfile.fetching)
 
   const requiredLabel = (text: string) => {
     return (
@@ -187,10 +192,10 @@ const Step4 = (props: any) => {
     setLocation(null)
     setCountry('')
     setIsShowCountry(false)
-    setStudyPeriodFromMonth(null)
-    setStudyPeriodFromYear(null)
-    setStudyPeriodToMonth(null)
-    setStudyPeriodToYear(null)
+    setStudyPeriodFromMonth(new Date())
+    setStudyPeriodFromYear(new Date())
+    setStudyPeriodToMonth(new Date())
+    setStudyPeriodToYear(new Date())
     setFieldStudy('')
     setIsCurrentStudying(false)
   }
@@ -219,7 +224,7 @@ const Step4 = (props: any) => {
       currentStep,
       isUpdate: isEditing,
       educationId,
-      educationData
+      educationData: removeEmptyOrNullValues(educationData)
     }
     dispatch(updateUserCompleteProfileRequest(educationPayload))
   }
@@ -235,14 +240,26 @@ const Step4 = (props: any) => {
     dispatch(updateUserCompleteProfileRequest(deletePayload))
   }
 
+  const handleLastStep = () => {
+    const isCreateFreeResume = localStorage.getItem('isCreateFreeResume') ?? false
+    const redirect = router.query?.redirect ? router.query?.redirect : null
+
+    if (isCreateFreeResume) {
+      dispatch(generateUserResumeRequest({ redirect, accessToken }))
+    }
+    
+    dispatch(updateUserCompleteProfileRequest({ currentStep: 5, redirect, accessToken }))
+  }
+
   return (
     <OnBoardLayout
       headingText={<Text bold textStyle='xxxl' tagName='h2'>All about your education 🎓</Text>}
       currentStep={4}
       totalStep={4}
-      backFnBtn={() => router.push('/jobseeker-complete-profile/1101')}
-      nextFnBtn={() => router.push('/')}
+      backFnBtn={() => router.push(backBtnUrl)}
+      nextFnBtn={handleLastStep}
       isDisabled={showForm && isDisabled}
+      isUpdating={isGeneratingUserResume || isCompletingUserProfile}
     >
       {educations.length > 0 && (
         <div className={styles.stepDataList}>

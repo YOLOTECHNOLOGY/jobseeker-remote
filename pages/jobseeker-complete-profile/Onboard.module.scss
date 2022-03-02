@@ -228,11 +228,13 @@
     }
   }
   &Form {
-    margin-top: 5px;
+    padding-top: 10px;
+    margin-top: 0;
   }
 
   &Editor {
     margin-top: 15px;
+
     div[class*='TextEditor_textEditor'] {
       padding: 0;
     }
@@ -249,4 +251,8 @@
       font-size: 14px;
     }
   }
+}
+
+.stepFormDatePicker {
+  border: 1px solid red;
 }

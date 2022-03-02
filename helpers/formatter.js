@@ -128,3 +128,12 @@ export const formatSalary = (salary) => {
     return `₱${parseInt(salary).toLocaleString()}`
   }
 }
+
+export const removeEmptyOrNullValues = (object) => {
+  let newObject = {}
+  Object.entries(object).forEach(
+    ([key, value]) => { if (value) Object.assign(newObject, {[key]: value}) }
+  )
+
+  return newObject
+}

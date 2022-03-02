@@ -22,10 +22,13 @@ const Step2 = (props: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { userDetail, accessToken } = props
+  const redirect = router.query?.redirect ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}` : '/jobseeker-complete-profile/1101'
 
   const [resumeName, setResumeName] = useState(null)
   const [resume, setResume] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [isCreatingResume, setIsCreatingResume] = useState(false)
+  const [isDoneUpdating, setIsDoneUpdating] = useState(false)
 
   const isUploading = useSelector((store: any) => store.users.uploadUserResume.fetching)
   const uploadUserResumeState = useSelector((store: any) => store.users.uploadUserResume)
@@ -45,7 +48,11 @@ const Step2 = (props: any) => {
 
   useEffect(() => {
     if (resume) {
+      if (localStorage.getItem('isCreateFreeResume')) localStorage.removeItem('isCreateFreeResume')
+      setIsDoneUpdating(true)
+
       const payload = {
+        redirect,
         resume,
         accessToken
       }
@@ -69,9 +76,8 @@ const Step2 = (props: any) => {
             <Text textColor='red' textStyle='xsm' className={styles.step2UploadError}>{errorMessage}</Text>
           )}
 
-          <MaterialButton capitalize variant="contained" component="label" >
-            {isUploading && <Text textColor='white' bold>Uploading...</Text>}
-            {!isUploading && <Text textColor='white' bold>Upload your Resume</Text>}
+          <MaterialButton isLoading={isUploading || isDoneUpdating} capitalize variant="contained" component="label" >
+            <Text textColor='white' bold>Upload your Resume</Text>
             <input type="file" hidden accept=".pdf, .doc, .docx" onChange={(e) => setResume(e.target.files[0])}/>
           </MaterialButton>
           <Text textColor='darkgrey' textStyle='xsm' className={styles.step2UploadAllowed}>PDF, DOC, DOCX. file, max 5MB</Text>
@@ -85,7 +91,12 @@ const Step2 = (props: any) => {
             variant='outlined'
             size='large'
             capitalize
-            onClick={() => router.push('/jobseeker-complete-profile/1101')}
+            isLoading={isCreatingResume}
+            onClick={() => {
+              localStorage.setItem('isCreateFreeResume', 'true')
+              setIsCreatingResume(true)
+              router.push(redirect)
+            }}
           >
             <Text textColor='primary' bold>Create Free Resume</Text>
           </MaterialButton>
