@@ -57,7 +57,7 @@ const Step1 = (props: any) => {
   const [specialization, setSpecialization] = useState(userDetail?.job_preference?.job_categories || '')
   const [headhuntMe, setHeadhuntMe] = useState(true)
 
-  const [salaryFrom, setSalaryFrom] = useState(Number(userDetail.job_preference.salary_range_from) || salaryFromOptions[0].value)
+  const [salaryFrom, setSalaryFrom] = useState(Number(userDetail?.job_preference?.salary_range_from) || salaryFromOptions[0].value)
   const [salaryTo, setSalaryTo] = useState(null)
   const [salaryToOptions, setSalaryToOptions] = useState([])
   const [hasSelectedSpecMore, setHasSelectedSpecMore] = useState(false)
@@ -84,8 +84,8 @@ const Step1 = (props: any) => {
         setLocation(matchedLocation[0])
         setValue('location', matchedLocation[0])
       }
-      setSpecialization(userDetail.job_preference.job_categories)
-      setSalaryTo(Number(userDetail.job_preference.salary_range_to))
+      setSpecialization(userDetail.job_preference?.job_categories)
+      if (userDetail.job_preference?.salary_range_to) setSalaryTo(Number(userDetail.job_preference?.salary_range_to))
     }
   }, [userDetail])
 
@@ -316,7 +316,7 @@ const Step1 = (props: any) => {
               />
               {errors.salaryFrom && errorText(errors.salaryFrom.message)}
             </div>
-            
+
             {salaryTo && (
               <div className={styles.step1SalaryRange}>
                 <MaterialBasicSelect

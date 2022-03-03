@@ -184,6 +184,9 @@ const Step3 = (props: any) => {
       setShowFormActions(false)
       setIsDisabled(true)
     }
+
+    // eslint-disable-next-line no-console
+    console.log(isDisabled)
   }, [
     jobTitle, 
     companyName, 
@@ -352,7 +355,7 @@ const Step3 = (props: any) => {
       totalStep={4}
       nextFnBtn={() => router.push(nextBtnUrl)}
       backFnBtn={() => router.push(backBtnUrl)}
-      isDisabled={isDisabled}
+      isDisabled={showForm}
     >
       <div className={styles.stepNotice}>
         <Image src={InfoIcon} alt='' width='30' height='30' />
@@ -611,11 +614,10 @@ const Step3 = (props: any) => {
           <MaterialButton variant='contained' capitalize onClick={handleSaveForm} isLoading={isUpdating}>
             <Text textColor='white'>Save</Text>
           </MaterialButton>
-          {isEditing && (
-            <MaterialButton variant='outlined' capitalize onClick={handleCancelForm}>
-              <Text textColor='primaryBlue'>Cancel</Text>
-            </MaterialButton>
-          )}
+          
+          <MaterialButton variant='outlined' capitalize onClick={handleCancelForm}>
+            <Text textColor='primaryBlue'>Cancel</Text>
+          </MaterialButton>
         </div>
       )}
     </OnBoardLayout>
