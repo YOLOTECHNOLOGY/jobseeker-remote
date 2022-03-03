@@ -1,0 +1,6 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+
+.companies {
+  @extend .GlobalContainer;
+}
