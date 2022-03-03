@@ -1,7 +1,7 @@
 import configuredAxios from 'helpers/configuredAxios'
 
-const fetchJobAlertsListService = (userId) => {
-  const axios = configuredAxios('job', 'protected')
+const fetchJobAlertsListService = (payload) => {
+  const axios = configuredAxios('job', 'protected', '', payload.accessToken)
   return axios.get(`/job-alerts`)
 }
 

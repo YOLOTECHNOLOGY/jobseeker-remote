@@ -384,15 +384,39 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     handleFetchJobDetail(jobId)
   }
 
-  const handleUpdateJobAlert = (payload) => dispatch(updateJobAlertRequest(payload))
+  const handleUpdateJobAlert = (updateJobAlertData) => {
+    const updateJobAlertPayload = {
+      updateJobAlertData,
+      accessToken
+    }
+    dispatch(updateJobAlertRequest(updateJobAlertPayload))
+  }
 
-  const handleDeleteJobAlert = (alertId) => dispatch(deleteJobAlertRequest(alertId))
+  const handleDeleteJobAlert = (jobAlertId) => {
+    const deleteJobAlertPayload = {
+      jobAlertId,
+      accessToken
+    }
+    dispatch(deleteJobAlertRequest(deleteJobAlertPayload))
+  }
 
-  const handlePostReportJob = (payload) => dispatch(postReportRequest(payload))
+  const handlePostReportJob = (reportJobData) => {
+    const postReportJobPayload = {
+      reportJobData,
+      accessToken
+    }
+    dispatch(postReportRequest(postReportJobPayload))
+  }
 
-  const handleFetchJobAlertsList = () => dispatch(fetchJobAlertsListRequest())
+  const handleFetchJobAlertsList = () => dispatch(fetchJobAlertsListRequest({accessToken}))
   
-  const handleCreateJobAlert = (payload) => dispatch(createJobAlertRequest(payload))
+  const handleCreateJobAlert = (jobAlertData) => {
+    const createJobAlertPayload = {
+      jobAlertData,
+      accessToken
+    }
+    dispatch(createJobAlertRequest(createJobAlertPayload))
+  }
 
   const handlePostSaveJob = ({ jobId }) => {
     const postSaveJobPayload = {
@@ -573,8 +597,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           isCreatingJobAlert={isCreatingJobAlert}
           reportJobReasonList={reportJobReasonList}
           handlePostReportJob={handlePostReportJob}
-
           handlePostSaveJob={handlePostSaveJob}
+          accessToken={accessToken}
         />
       </div>
     </Layout>

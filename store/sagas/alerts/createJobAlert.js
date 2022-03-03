@@ -39,17 +39,20 @@ function* createJobAlertReq(action) {
 
     // if (registerUserResponse?.status === 201 || payload.user_id) {
     const jobAlertPayload = {
-      user_id: 1820, //ToDo: Fetch UserID
-      keyword: payload.keyword,
-      location: payload.location,
-      job_category_key: payload.job_category_key,
-      industry_key: payload.industry_key,
-      xp_lvl_key: payload.xp_lvl_key,
-      degree_key: payload.degree_key,
-      job_type_key: payload.job_type_key,
-      salary_range_key: payload.salary_range_key,
-      is_company_verified: payload.is_company_verified,
-      frequency_id: payload.frequency_id,
+      jobAlertData: {
+        user_id: 1820, //ToDo: Fetch UserID
+        keyword: payload.keyword,
+        location: payload.location,
+        job_category_key: payload.job_category_key,
+        industry_key: payload.industry_key,
+        xp_lvl_key: payload.xp_lvl_key,
+        degree_key: payload.degree_key,
+        job_type_key: payload.job_type_key,
+        salary_range_key: payload.salary_range_key,
+        is_company_verified: payload.is_company_verified,
+        frequency_id: payload.frequency_id,
+      },
+      accessToken: payload.accessToken
     }
     
     const { data } = yield call(createJobAlertService, jobAlertPayload)

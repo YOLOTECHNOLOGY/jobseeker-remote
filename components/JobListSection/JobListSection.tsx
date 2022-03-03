@@ -57,6 +57,7 @@ interface JobListSectionProps {
   reportJobReasonList?: any
   handlePostReportJob?: Function
   handlePostSaveJob?: Function
+  accessToken: string
 }
 
 const JobListSection = ({ 
@@ -81,7 +82,8 @@ const JobListSection = ({
   isJobDetailFetching,
   reportJobReasonList,
   handlePostReportJob,
-  handlePostSaveJob
+  handlePostSaveJob,
+  accessToken
 }: JobListSectionProps) => {  
   const { width } = useWindowDimensions()
   const router = useRouter()
@@ -99,8 +101,9 @@ const JobListSection = ({
   const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
-    setIsUserAuthenticated(false)
+    setIsUserAuthenticated(accessToken ? true : false)
     window.addEventListener('scroll', updateScrollPosition)
+
     return () => window.removeEventListener('scroll', updateScrollPosition)
   }, [])
 
