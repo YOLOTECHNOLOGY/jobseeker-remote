@@ -91,7 +91,7 @@ const Job = ({
 
   const [jobDetailUrl, setJobDetailUrl] = useState('/')
   const [companyUrl, setCompanyUrl] = useState('/')
-  const [recommendedCourses, setRecommendedCourses] = useState(null)
+  const [recommendedCourses, setRecommendedCourses] = useState([])
   const [similarJobs, setSimilarJobs] = useState(null)
 
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
@@ -112,9 +112,9 @@ const Job = ({
   }, [jobDetail])
 
   useEffect(() => {
-    if (recommendedCoursesResponse) setRecommendedCourses(recommendedCoursesResponse)
+    if (recommendedCoursesResponse?.data?.length > 0) setRecommendedCourses( recommendedCoursesResponse.data)
   }, [recommendedCoursesResponse])
-
+  
   useEffect(() => {
     if (similarJobsResponse) setSimilarJobs(similarJobsResponse)
   }, [similarJobsResponse])
