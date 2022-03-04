@@ -3,12 +3,19 @@ import CompanyCard from '../CompanyCard'
 
 // Styles
 import styles from './CompanyCardList.module.scss'
-const CompanyCardList = () => {
+
+interface ICompanyCardList {
+  companiesList: any
+}
+
+const CompanyCardList = ({
+  companiesList
+}: ICompanyCardList) => {
   return (
     <div className={styles.companyList}>
-      {[...Array(10)].map((_,i) => (
-        <div className={styles.companyItem} key={i}>
-          <CompanyCard />
+      {companiesList?.length > 0 && companiesList.map((item) => (
+        <div className={styles.companyItem} key={item.id}>
+          <CompanyCard company={item.company}/>
         </div>
       ))}
     </div>

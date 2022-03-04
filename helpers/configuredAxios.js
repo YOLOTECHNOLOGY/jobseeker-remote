@@ -50,6 +50,9 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     case 'academy':
       url = process.env.ACADEMY_URL
       break
+    case 'company':
+      url = process.env.COMPANY_URL
+      break
     default:
       break
   }
