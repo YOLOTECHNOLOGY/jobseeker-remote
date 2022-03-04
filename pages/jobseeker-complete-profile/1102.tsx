@@ -79,6 +79,7 @@ const Step4 = (props: any) => {
   const [hasErrorOnFromPeriod, setHasErrorOnFromPeriod] = useState(false)
   const [hasErrorOnToPeriod, setHasErrorOnToPeriod] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
+  const [showErrorToComplete, setShowErrorToComplete] = useState(false)
 
   const userEducations = useSelector((store: any) => store.users.fetchUserEducation.response)
   const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserCompleteProfile.fetching)
@@ -102,32 +103,21 @@ const Step4 = (props: any) => {
     if (userEducations) {
       setEducations(userEducations || [])
       setShowForm(userEducations.length > 0 ? false : true)
+      setIsDisabled(userEducations.length > 0 ? false : true)
     }
   }, [userEducations])
 
   useEffect(() => {
     const requireFields = school && degree && location
-    const periodFrom = studyPeriodFromMonth && studyPeriodFromYear
-    const periodTo = studyPeriodToMonth && studyPeriodToYear
+    const emptyRequiredFields = !school && !degree && !location
+    const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
     if (isCurrentStudying) {
-      if (requireFields && periodFrom) {
-        setShowFormActions(true)
-        setIsDisabled(false)
-      } else {
-        setShowFormActions(false)
-        setIsDisabled(true)
-      }
+      if (emptyRequiredFields) setDisabledButton(emptyRequiredFields && !hasErrorOnFromPeriod ? true : false)
+      setDisabledButton(requireFields && !hasErrorOnFromPeriod ? true : false)
     } else {
-      if (requireFields && periodFrom && periodTo) {
-        setShowFormActions(true)
-        setIsDisabled(false)
-      }
-
-      if (!requireFields && !periodFrom && !periodTo) {
-        setShowFormActions(false)
-        setIsDisabled(true)
-      }
+      if (emptyRequiredFields) setDisabledButton(emptyRequiredFields && isValidDate ? true : false)
+      setDisabledButton(requireFields && isValidDate ? true : false)
     }
 
 
@@ -136,8 +126,9 @@ const Step4 = (props: any) => {
       setIsDisabled(true)
     }
 
-    // eslint-disable-next-line no-console
-    console.log(isDisabled)
+    if (emptyRequiredFields) setIsDisabled(false)
+    if (requireFields) setShowErrorToComplete(false)
+
   }, [
     school, 
     degree, 
@@ -166,6 +157,20 @@ const Step4 = (props: any) => {
       handleShowForm()
     }
   }, [hasNoEducation])
+
+  const setDisabledButton = (value) => {
+    setShowFormActions(value)
+    setIsDisabled(!value)
+  }
+
+  const scrollToForm = () => {
+    const stepForm = document.getElementById('step4Form')
+    stepForm?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest'
+    })
+  }
 
   const getLocation = (location) => {
     if (!location) return
@@ -217,12 +222,18 @@ const Step4 = (props: any) => {
     setHasErrorOnFromPeriod(false)
     setHasErrorOnToPeriod(false)
     setShowFormActions(false)
+    setShowErrorToComplete(false)
   }
 
   const handleCancelForm = () => {
     handleResetForm()
-    setShowForm(false)
-    setIsEditing(false)
+
+    if (educations?.length > 0) {
+      setShowForm(false)
+      setIsEditing(false)
+    } else {
+      scrollToForm()
+    }
   }
 
   const handleSaveForm = () => {
@@ -257,6 +268,7 @@ const Step4 = (props: any) => {
     }
 
     dispatch(updateUserCompleteProfileRequest(deletePayload))
+    handleResetForm()
   }
 
   const handleLastStep = () => {
@@ -270,14 +282,27 @@ const Step4 = (props: any) => {
     dispatch(updateUserCompleteProfileRequest({ currentStep: 5, redirect, accessToken }))
   }
 
+  const handleNextBtn = () => {
+    if (!isDisabled && showForm && (school && degree && location)) {
+      handleLastStep()
+      return
+    }
+    if (!isDisabled && !showForm) {
+      handleLastStep()
+      return
+    }
+
+    setShowErrorToComplete(true)
+  }
+
   return (
     <OnBoardLayout
       headingText={<Text bold textStyle='xxxl' tagName='h2'>All about your education 🎓</Text>}
       currentStep={4}
       totalStep={4}
       backFnBtn={() => router.push(backBtnUrl)}
-      nextFnBtn={handleLastStep}
-      isDisabled={showForm}
+      nextFnBtn={() => handleNextBtn()}
+      isDisabled={isDisabled}
       isUpdating={isGeneratingUserResume || isCompletingUserProfile}
     >
       {educations.length > 0 && (
@@ -311,7 +336,7 @@ const Step4 = (props: any) => {
       )}
 
       {showForm && (
-        <div className={classNames(styles.stepForm, styles.step4Form)}>
+        <div id="step4Form" className={classNames(styles.stepForm, styles.step4Form)}>
           <div className={styles.stepField}>
             <MaterialTextField
               className={styles.stepFullwidth}
@@ -456,6 +481,10 @@ const Step4 = (props: any) => {
             />
           </div>
         </div>
+      )}
+
+      {showErrorToComplete && (
+        <Text textStyle='base' textColor='red' tagName='p'>Fill up the fields with (*) to proceed.</Text>
       )}
 
       {educations.length === 0 && (

@@ -93,6 +93,7 @@ const Step3 = (props: any) => {
   const [isUpdating, setIsUpdating] = useState(false)
   const [isOpenNewForm, setIsOpenNewForm] = useState(false)
   const [selectedExperience, setSelectedExperience] = useState(null)
+  const [showErrorToComplete, setShowErrorToComplete] = useState(false)
   
   const { formState: { errors }} = useForm()
   const userWorkExperiences = useSelector((store: any) => store.users.fetchUserWorkExperience.response)
@@ -101,6 +102,7 @@ const Step3 = (props: any) => {
   useEffect(() => {
     removeItem(STORAGE_NAME)
     dispatch(fetchUserWorkExperienceRequest({accessToken}))
+    setShowErrorToComplete(false)
   }, [])
 
   useEffect(() => {
@@ -157,36 +159,19 @@ const Step3 = (props: any) => {
 
   useEffect(() => {
     const requireFields = jobTitle && companyName && location
-    const periodFrom = workPeriodFromMonth && workPeriodFromYear
-    const periodTo = workPeriodToMonth && workPeriodToYear
+    const emptyRequiredFields = !jobTitle && !companyName && !location
+    const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
     if (isCurrentJob) {
-      if (requireFields && periodFrom) {
-        setShowFormActions(true)
-        setIsDisabled(false)
-      } else {
-        setShowFormActions(false)
-        setIsDisabled(true)
-      }
+      if (emptyRequiredFields) setDisabledButton(emptyRequiredFields && !hasErrorOnFromPeriod ? true : false)
+      setDisabledButton(requireFields && !hasErrorOnFromPeriod ? true : false)
     } else {
-      if (requireFields && periodFrom && periodTo) {
-        setShowFormActions(true)
-        setIsDisabled(false)
-      }
-
-      if (!requireFields && !periodFrom && !periodTo) {
-        setShowFormActions(false)
-        setIsDisabled(true)
-      }
+      if (emptyRequiredFields) setDisabledButton(emptyRequiredFields && isValidDate ? true : false)
+      setDisabledButton(requireFields && isValidDate ? true : false)
     }
 
-    if (hasErrorOnFromPeriod || hasErrorOnToPeriod) {
-      setShowFormActions(false)
-      setIsDisabled(true)
-    }
-
-    // eslint-disable-next-line no-console
-    console.log(isDisabled)
+    if (emptyRequiredFields) setIsDisabled(false)
+    if (requireFields) setShowErrorToComplete(false)
   }, [
     jobTitle, 
     companyName, 
@@ -211,6 +196,11 @@ const Step3 = (props: any) => {
       handleShowForm()
     }
   }, [hasNoWorkExperience])
+
+  const setDisabledButton = (value) => {
+    setShowFormActions(value)
+    setIsDisabled(!value)
+  }
   
   const requiredLabel = (text: string) => {
     return (
@@ -286,6 +276,7 @@ const Step3 = (props: any) => {
     setIsUpdating(false)
     setShowFormActions(false)
     removeItem(STORAGE_NAME)
+    setShowErrorToComplete(false)
   }
 
   const handleShowForm = () => {
@@ -303,12 +294,12 @@ const Step3 = (props: any) => {
     }
 
     dispatch(updateUserCompleteProfileRequest(deletePayload))
+    handleResetForm()
     setIsOpenNewForm(false)
   }
 
-  const handleSaveForm = () => {
+  const handleSaveForm = (proceedingPath='') => {
     // eslint-disable-next-line no-console
-    console.log('descriptION: ', description)
     const workExperienceData = {
       job_title: jobTitle,
       company: companyName,
@@ -328,15 +319,34 @@ const Step3 = (props: any) => {
       currentStep,
       isUpdate: isEditing,
       workExperienceId,
-      workExperienceData: removeEmptyOrNullValues(workExperienceData)
+      workExperienceData: removeEmptyOrNullValues(workExperienceData),
+      proceedingPath
     }
     dispatch(updateUserCompleteProfileRequest(workExperiencesPayload))
   }
 
   const handleCancelForm = () => {
     handleResetForm()
-    setShowForm(false)
-    setIsEditing(false)
+    if (workExperience?.length > 0) {
+      setShowForm(false)
+      setIsEditing(false)
+    } else {
+      scrollToForm()
+    }
+  }
+
+  const handleNextBtn = () => {
+    if (!isDisabled && showForm && (jobTitle && companyName && location)) {
+      handleSaveForm(nextBtnUrl)
+      return
+    }
+
+    if (isDisabled && showForm) {
+      setShowErrorToComplete(true)
+      return
+    }
+
+    router.push(nextBtnUrl)
   }
 
   const scrollToForm = () => {
@@ -353,9 +363,10 @@ const Step3 = (props: any) => {
       headingText={<Text bold textStyle='xxxl' tagName='h2'> Add your work experience 💼</Text>}
       currentStep={currentStep}
       totalStep={4}
-      nextFnBtn={() => router.push(nextBtnUrl)}
+      nextFnBtn={() => handleNextBtn()}
       backFnBtn={() => router.push(backBtnUrl)}
-      isDisabled={showForm}
+      isUpdating={isUpdating}
+      isDisabled={isDisabled}
     >
       <div className={styles.stepNotice}>
         <Image src={InfoIcon} alt='' width='30' height='30' />
@@ -594,6 +605,10 @@ const Step3 = (props: any) => {
         </div>
       )}
 
+      {showErrorToComplete && (
+        <Text textStyle='base' textColor='red' tagName='p'>Fill up the required field to proceed.</Text>
+      )}
+
       {workExperience.length === 0 && (
         <div className={styles.stepField}>
           <FormControlLabel
@@ -611,7 +626,7 @@ const Step3 = (props: any) => {
 
       {showFormActions && showForm && (
         <div className={styles.stepFormActions}>
-          <MaterialButton variant='contained' capitalize onClick={handleSaveForm} isLoading={isUpdating}>
+          <MaterialButton variant='contained' capitalize onClick={() => handleSaveForm()} isLoading={isUpdating}>
             <Text textColor='white'>Save</Text>
           </MaterialButton>
           

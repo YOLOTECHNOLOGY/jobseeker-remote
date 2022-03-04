@@ -45,7 +45,8 @@ function* updateUserCompleteProfileReq({ payload }) {
     educationId,
     educationData,
     currentStep,
-    redirect
+    redirect,
+    proceedingPath,
   } = payload
 
   try {
@@ -95,6 +96,10 @@ function* updateUserCompleteProfileReq({ payload }) {
       if (!isDelete && !isUpdate) {
         const payload = { accessToken, workExperience: workExperienceData}
         yield call(addUserWorkExperienceService, payload)
+        if (proceedingPath) {
+
+          yield put(push(proceedingPath))
+        }
       }
       
       yield fetchUserWorkExperienceSaga(accessToken)

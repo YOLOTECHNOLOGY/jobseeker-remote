@@ -1,3 +1,6 @@
+// Vendors
+import classNames from 'classnames/bind'
+
 // Components
 import Link from 'components/Link'
 import Text from 'components/Text'
@@ -30,6 +33,13 @@ const OnBoardLayout = ({
   isUpdating,
   isDisabled
 }: IOnBoardLayout) => {
+  const componentClass = {
+    ['is-disabled']: isDisabled,
+  }
+
+  const cx = classNames.bind(styles)
+  const buttonClass = cx([componentClass])
+  
   return (
     <div className={styles.OnBoardLayout}>
       <div className={styles.OnBoardLayoutHeader}>
@@ -65,7 +75,14 @@ const OnBoardLayout = ({
             </div>
             <div>
               {nextFnBtn && (
-                <MaterialButton isLoading={isUpdating} variant='contained' capitalize onClick={() => nextFnBtn()} disabled={isDisabled}>
+                <MaterialButton 
+                  isLoading={isUpdating} 
+                  variant='contained' 
+                  capitalize 
+                  onClick={() => nextFnBtn()} 
+                  // disabled={isDisabled}
+                  className={classNames([buttonClass])}
+                >
                   <Text textColor='white' bold>Next</Text>
                 </MaterialButton>
               )}
