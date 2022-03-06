@@ -33,6 +33,18 @@
   }
 }
 
+.hideOnMobileAndDesktop {
+  @include md {
+    display: none;
+  }
+  @include msd {
+    display: block;
+  }
+  @include sm {
+    display: none;
+  }
+}
+
 .hideOnDesktop {
   @include sm {
     display: block;
