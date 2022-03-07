@@ -58,6 +58,7 @@ import {
 import { flat } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { getCookie } from 'helpers/cookies'
 
 /* Images */
 import { FilterIcon } from 'images'
@@ -172,6 +173,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const firstRender = useFirstRender()
   const { width } = useWindowDimensions()
   const prevScrollY = useRef(0)
+  const userCookie = getCookie('user') || null
 
   // const [isSticky, setIsSticky] = useState(false)
   const [isShowFilter, setIsShowFilter] = useState(false)
@@ -413,7 +415,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleCreateJobAlert = (jobAlertData) => {
     const createJobAlertPayload = {
       jobAlertData,
-      accessToken
+      accessToken,
+      user_id: userCookie.id
     }
     dispatch(createJobAlertRequest(createJobAlertPayload))
   }
