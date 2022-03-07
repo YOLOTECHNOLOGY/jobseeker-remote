@@ -35,7 +35,7 @@ const Step2 = (props: any) => {
 
   useEffect(() => {
     if (userDetail) {
-      setResumeName(userDetail.resume.filename)
+      setResumeName(userDetail.resume?.filename || null)
     }
     setErrorMessage(null)
   }, [])
@@ -81,7 +81,7 @@ const Step2 = (props: any) => {
             <input type="file" hidden accept=".pdf, .doc, .docx" onChange={(e) => setResume(e.target.files[0])}/>
           </MaterialButton>
           <Text textColor='darkgrey' textStyle='xsm' className={styles.step2UploadAllowed}>PDF, DOC, DOCX. file, max 5MB</Text>
-          <Text textColor='darkgrey' textStyle='xsm' bold tagName='p'>(Resume: { resumeName })</Text>
+          {resumeName && <Text textColor='darkgrey' textStyle='xsm' bold tagName='p'>(Resume: { resumeName })</Text>}
         </div>
 
         <Text textStyle='lg' className={styles.step2UploadDivider}>OR</Text>

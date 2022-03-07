@@ -238,7 +238,7 @@ const Step3 = (props: any) => {
         textEditorValue = bulletedLists.join('')
         break
       default:
-        textEditorValue = `<p>${value[0].children[0].text}</p>`
+        textEditorValue = value[0].children[0].text ? `<p>${value[0].children[0].text}</p>` : ''
         break
     }
     return textEditorValue
@@ -384,7 +384,7 @@ const Step3 = (props: any) => {
                 {experience?.job_categories.length > 0 && <Text textStyle='base' tagName='p'>{experience.job_categories.join(', ')}</Text>}
                 {experience.company_industry && <Text textStyle='base' tagName='p'>{experience.company_industry}</Text>}
                 {experience.salary && <Text textStyle='base' tagName='p'>{formatSalary(experience.salary)} per month</Text>}
-                {experience.description && (
+                {experience.description && displayDescription(experience.description) && (
                   <>
                     <Text textStyle='base' tagName='p'>Description: </Text>
                     <div className={styles.stepDataDescription} dangerouslySetInnerHTML={{__html: displayDescription(experience.description)}} />
