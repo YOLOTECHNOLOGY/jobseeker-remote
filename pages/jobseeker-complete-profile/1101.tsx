@@ -216,32 +216,36 @@ const Step3 = (props: any) => {
   }
 
   const displayDescription = (value) => {
-    value = JSON.parse(value)
-    if (!value) return ''
-    
-    let textEditorValue = ''
-    switch(value[0].type) {
-      case 'numbered-list':
-        const numberedLists = ['<ol>']
-        value[0].children.map((item) => {
-          numberedLists.push(`<li>${item.children[0].text}</li>`)
-        })
-        numberedLists.push('</ol>')
-        textEditorValue = numberedLists.join('')
-        break
-      case 'bulleted-list':
-        const bulletedLists = ['<ul>']
-        value[0].children.map((item) => {
-          bulletedLists.push(`<li>${item.children[0].text}</li>`)
-        })
-        bulletedLists.push('</ul>')
-        textEditorValue = bulletedLists.join('')
-        break
-      default:
-        textEditorValue = value[0].children[0].text ? `<p>${value[0].children[0].text}</p>` : ''
-        break
+    try {
+      value = JSON.parse(value)
+      if (!value) return ''
+      
+      let textEditorValue = ''
+      switch(value[0].type) {
+        case 'numbered-list':
+          const numberedLists = ['<ol>']
+          value[0].children.map((item) => {
+            numberedLists.push(`<li>${item.children[0].text}</li>`)
+          })
+          numberedLists.push('</ol>')
+          textEditorValue = numberedLists.join('')
+          break
+        case 'bulleted-list':
+          const bulletedLists = ['<ul>']
+          value[0].children.map((item) => {
+            bulletedLists.push(`<li>${item.children[0].text}</li>`)
+          })
+          bulletedLists.push('</ul>')
+          textEditorValue = bulletedLists.join('')
+          break
+        default:
+          textEditorValue = value[0].children[0].text ? `<p>${value[0].children[0].text}</p>` : ''
+          break
+      }
+      return textEditorValue
+    } catch(e) {
+      return value
     }
-    return textEditorValue
   }
 
   const onLocationSearch = (_, value) => {
