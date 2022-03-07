@@ -7,12 +7,9 @@ import {
 import { updateJobAlertService } from 'store/services/alerts/updateJobAlert'
 
 function* updateJobAlertReq(action) {
+  const { accessToken, updateJobAlertData } = action.payload
   try {
-    const payload = {
-      accessToken: action.payload.accessToken,
-      updateJobAlertData: action.payload.updateJobAlertData
-    }
-    const { data } = yield call(updateJobAlertService, payload)
+    const { data } = yield call(updateJobAlertService, { accessToken, updateJobAlertData })
     yield put(updateJobAlertSuccess(data.data))
   } catch (error) {
     yield put(updateJobAlertFailed(error))
