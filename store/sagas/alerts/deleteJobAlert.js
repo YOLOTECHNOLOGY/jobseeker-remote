@@ -7,12 +7,9 @@ import {
 import { deleteJobAlertService } from 'store/services/alerts/deleteJobAlert'
 
 function* deleteJobAlertReq(action) {
-  const payload = {
-    accessToken: action.payload.accessToken,
-    jobAlertId: action.payload.jobAlertId,
-  }
+  const { jobAlertId, accessToken } = action.payload
   try {
-    const { data } = yield call(deleteJobAlertService, payload)
+    const { data } = yield call(deleteJobAlertService, { jobAlertId, accessToken })
     yield put(deleteJobAlertSuccess(data.data))
   } catch (error) {
     yield put(deleteJobAlertFailed(error))
