@@ -14,6 +14,8 @@ const MaterialBasicSelect = ({
   onOpen,
   greyBg,
   defaultValue,
+  fieldRef,
+  disabled,
   ...rest
 }: any) => {
   const [value, setValue] = useState(defaultValue || '')
@@ -30,6 +32,28 @@ const MaterialBasicSelect = ({
   }
   const theme = createTheme({
     components: {
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            fontSize: '14px',
+            transform: 'translate(14px, 10px) scale(1)',
+            letterSpacing: '1px',
+            '&.Mui-focused': {
+              fontSize: '10px',
+              transform: 'translate(14px, -10px) scale(1)',
+            },
+          },
+          shrink: {
+            fontSize: '10px',
+            transform: 'translate(14px, -10px) scale(1)',
+          },
+          outlined: {
+            '&.MuiInputLabel-shrink': {
+              fontSize: '10px',
+            },
+          },
+        },
+      },
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
@@ -61,12 +85,14 @@ const MaterialBasicSelect = ({
       <FormControl className={className} size='small'>
         <InputLabel id={`${id}-select-label`}>{label}</InputLabel>
         <Select
+          {...fieldRef}
           labelId={`${id}-select-label`}
           id={id}
           value={value}
           label={label}
           onChange={handleChange}
           onOpen={onOpen}
+          disabled={disabled}
           {...rest}
         >
           {options &&

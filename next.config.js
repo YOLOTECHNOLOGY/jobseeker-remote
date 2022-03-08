@@ -17,6 +17,7 @@ module.exports = {
     JOB_BOSSJOB_URL: process.env.JOB_BOSSJOB_URL,
     SEARCH_BOSSJOB_URL: process.env.SEARCH_BOSSJOB_URL,
     CHAT_BOSSJOB_URL: process.env.CHAT_BOSSJOB_URL,
+    JOBSEEKER_URL: process.env.JOBSEEKER_URL,
     DOCUMENT_GENERATOR_URL: process.env.DOCUMENT_GENERATOR_URL,
     RECO_URL: process.env.RECO_URL,
     PAYMENT_URL: process.env.PAYMENT_URL,

@@ -32,7 +32,15 @@ type CustomElement = {
   children: CustomText[]
 }
 
-const TextEditorField = () => {
+interface ITextEditorField {
+  autoFocus?: boolean
+  fieldOnChange?: Function
+}
+
+const TextEditorField = ({
+  autoFocus,
+  fieldOnChange,
+}: ITextEditorField) => {
   const [value, setValue] = useState<Descendant[]>(initialEditorValue)
   // renderLeaf activates bold, italic, underline
   // const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
@@ -61,6 +69,7 @@ const TextEditorField = () => {
       // }
       // const htmlValue = console.log('serialize abc', serialize(contentObj))
       setItem(STORAGE_NAME, content)
+      fieldOnChange(content)
       // setItem(STORAGE_NAME, serialize(content))
     }
   }
@@ -106,7 +115,7 @@ const TextEditorField = () => {
             // renderLeaf={renderLeaf}
             placeholder='Type here...'
             spellCheck
-            autoFocus
+            autoFocus={autoFocus}
             onKeyDown={onKeyDown}
             className={styles.editable}
           />

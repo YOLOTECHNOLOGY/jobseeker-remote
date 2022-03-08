@@ -23,7 +23,7 @@ import { loginRequest } from 'store/actions/auth/login'
 /* Styles */
 import styles from './Login.module.scss'
 
-const Login = () => {  
+const Login = () => { 
   const router = useRouter()
   const dispatch = useDispatch()
 
@@ -56,7 +56,11 @@ const Login = () => {
   }
 
   return (
-    <AuthLayout headingText='Log in to Bossjob' ctaSignup isLogin>
+    <AuthLayout 
+      headingText={<Text bold textStyle='xxxl' tagName='h2'>Log in to Bossjob</Text>}
+      ctaSignup 
+      isLogin
+    >
       <SEO
         title='Login - Bossjob'
         description='Bossjob - Career Platform for Professionals in Philippines'
@@ -124,6 +128,7 @@ const Login = () => {
             className={styles.LoginButton}
             isLoading={isLoginFetching}
             onClick={() => handleLogin()}
+            type="submit"
           >
             <Text textStyle='xl' textColor='white' bold>
               Log In
@@ -137,6 +142,16 @@ const Login = () => {
       </div>
     </AuthLayout>
   )
+}
+
+Login.getInitialProps = async ({ req, res }) => {
+  const accessToken = req?.cookies.accessToken
+  if (accessToken) {
+    res.setHeader('location', `/jobs-hiring/job-search`)
+    res.statusCode = 301
+    res.end()
+  }
+  return {}
 }
 
 export default Login

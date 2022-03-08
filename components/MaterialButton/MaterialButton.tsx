@@ -5,6 +5,7 @@ import LoadingButton from '@mui/lab/LoadingButton'
 
 interface MaterialButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
+  component?: React.ReactNode
   style?: React.CSSProperties
   className?: string
   variant?: 'text' | 'contained' | 'outlined'
@@ -22,6 +23,7 @@ const MaterialButton = ({
   disabled,
   isLoading,
   capitalize,
+  component,
   ...rest
 }: MaterialButtonProps) => {
   const theme = createTheme({
@@ -48,11 +50,12 @@ const MaterialButton = ({
   return (
     <ThemeProvider theme={theme}>
       {isLoading ? (
-        <LoadingButton variant={variant} size={size} className={className} loading={isLoading}>
+        <LoadingButton variant={variant} size={size} className={className} loading={isLoading} style={{textTransform: !capitalize ? 'uppercase' : 'capitalize'}}>
           {children}
         </LoadingButton>
       ) : (
         <Button
+          component={component}
           variant={variant}
           size={size}
           className={className}

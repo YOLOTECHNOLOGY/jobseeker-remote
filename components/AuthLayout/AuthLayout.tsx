@@ -16,7 +16,7 @@ import { BossjobLogo } from 'images'
 interface AuthLayoutProps {
   children: React.ReactNode
   className?: string
-  headingText?: string
+  headingText?: string | React.ReactNode
   isBackToLogin?: boolean
   ctaSignup?: boolean,
   isLogin?: boolean,
@@ -92,15 +92,7 @@ const AuthLayout = ({
       </div>
       <div className={styles.AuthLayoutBody}>
         <div className={styles.AuthWrapper}>
-          <Text 
-            bold
-            textStyle='xxxl' 
-            tagName='h2' 
-            className={styles.AuthHeading}
-          >
-            {headingText}
-          </Text>
-
+          <div className={styles.AuthHeading}>{headingText}</div>
           {children}
         </div>
         <div className={styles.AuthCTA}>
