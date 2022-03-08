@@ -64,4 +64,10 @@ export const KrAsia = `${S3BucketJobseeker}/KrAsia.svg`
 export const MoneyMax = `${S3BucketJobseeker}/MoneyMax.svg`
 export const TechInAsia = `${S3BucketJobseeker}/TechInAsia.svg`
 
+/* Company Detail Social Link */
+export const FacebookOutline = `${S3BucketJobseeker}/facebook_1.png`
+export const YoutubeOutline = `${S3BucketJobseeker}/youtube_1.png`
+export const InstagramOutline = `${S3BucketJobseeker}/instagram_1.png`
+export const LinkedinOutline = `${S3BucketJobseeker}/linkedin_1.png`
+
 
