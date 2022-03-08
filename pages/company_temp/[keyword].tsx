@@ -17,9 +17,6 @@ import SEO from 'components/SEO'
 import Text from 'components/Text'
 import Link from 'components/Link'
 
-// Helpers
-import useWindowDimensions from 'helpers/useWindowDimensions'
-
 // Images
 import {
   FacebookOutline,
@@ -38,6 +35,13 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           minHeight: '50px'
+        },
+        centered: {
+          justifyContent: 'flex-start',
+          ['@media (max-width: 780px)']: { 
+            // eslint-disable-line no-useless-computed-key
+            justifyContent: 'center'
+          }
         }
       }
     },
@@ -54,11 +58,11 @@ const theme = createTheme({
 
 const CompanyDetail = (props: any) => {
   const router = useRouter()
-  const { width } = useWindowDimensions()
   const { companyDetail } = props
   const company = companyDetail?.response.data
+  const imgPlaceholder = 'https://assets.bossjob.com/companies/1668/cover-pictures/0817984dff0d7d63fcb8193fef08bbf2.jpeg'
 
-  const [tabValue, setTabValue] = useState('life')
+  const [tabValue, setTabValue] = useState('overview')
   
   // console.log(company)
   // console.log(router)
@@ -70,7 +74,7 @@ const CompanyDetail = (props: any) => {
         <div className={styles.companyContent}>
           <div className={styles.companyHeader}>
             <img 
-              src={'https://assets.bossjob.com/companies/1668/cover-pictures/0817984dff0d7d63fcb8193fef08bbf2.jpeg'} 
+              src={company.cover_pic_url || imgPlaceholder} 
               alt={company.name} 
               className={styles.companyBanner}
             />
@@ -82,7 +86,7 @@ const CompanyDetail = (props: any) => {
               <ThemeProvider theme={theme}>
                 <Tabs 
                   value={tabValue} 
-                  centered={width < 768 ? true : false} 
+                  centered
                   onChange={(e: any) => setTabValue(e.target.childNodes[0].textContent.toLowerCase() || 'jobs')}
                 >
                   <Tab 
@@ -168,7 +172,11 @@ const CompanyDetail = (props: any) => {
                     </div>
                   </div>
                   <div className={styles.companyCultureContent}>
-                    <img src={company.cover_pic_url} alt={company.name} className={styles.companyCultureCover}/>
+                    <div className={styles.companyCultureTopImage}>
+                      {company.pictures?.length > 0 && (
+                        <img src={company.pictures[0].url} alt={company.name}/>
+                      )}
+                    </div>
                     <div className={styles.companyCultureWrapper}>
                       <div className={styles.companyCultureSection}>
                         <Text className={styles.companyCultureSectionTitle} textStyle='lg' bold>Company Culture</Text>
