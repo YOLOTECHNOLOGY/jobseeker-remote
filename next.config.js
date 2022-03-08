@@ -23,6 +23,7 @@ module.exports = {
     PAYMENT_URL: process.env.PAYMENT_URL,
     ACADEMY_URL: process.env.ACADEMY_URL,
     ACADEMY_CLIENT_URL: process.env.ACADEMY_CLIENT_URL,
+    COMPANY_URL: process.env.COMPANY_URL,
     GA_TRACKING_ID: process.env.GA_TRACKING_ID,
     OLD_PROJECT_URL: process.env.OLD_PROJECT_URL,
     NEW_PROJECT_URL: process.env.NEW_PROJECT_URL,
