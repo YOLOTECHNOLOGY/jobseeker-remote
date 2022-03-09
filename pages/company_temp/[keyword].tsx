@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
 import { Tabs, Tab } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import slugify from 'slugify'
 
 // @ts-ignore
 import { END } from 'redux-saga'
@@ -10,6 +12,7 @@ import { END } from 'redux-saga'
 // Redux Actions
 import { wrapper } from 'store'
 import { fetchCompanyDetailRequest } from 'store/actions/companies/fetchCompanyDetail'
+import { fetchSimilarCompanyRequest } from 'store/actions/companies/fetchSimilarCompany'
 
 // Components
 import Layout from 'components/Layout'
@@ -67,14 +70,26 @@ const theme = createTheme({
 
 const CompanyDetail = (props: any) => {
   const router = useRouter()
+  const dispatch = useDispatch()
   const { companyDetail } = props
   const company = companyDetail?.response.data
   const imgPlaceholder = 'https://assets.bossjob.com/companies/1668/cover-pictures/0817984dff0d7d63fcb8193fef08bbf2.jpeg'
 
   const [tabValue, setTabValue] = useState('overview')
+  const [similarCompanies, setSimilarCompanies] = useState(null)
   
   // console.log(company)
   // console.log(router)
+
+  const similarCompaniesResponse = useSelector((store: any) => store.companies.fetchSimilarCompany.response)
+
+  useEffect(() => {
+    dispatch(fetchSimilarCompanyRequest({companyId: company.id}))
+  }, [])
+
+  useEffect(() => {
+    if (similarCompaniesResponse) setSimilarCompanies(similarCompaniesResponse)
+  }, [similarCompaniesResponse])
 
   const getCategoryIcon = (category) => {
     switch(category) {
@@ -282,7 +297,25 @@ const CompanyDetail = (props: any) => {
 
           </div>
         </div>
-        <div className={styles.relatedCompany}></div>
+        <div className={styles.relatedCompany}>
+          <div className={styles.relatedCompanyContent}>
+            <Text textStyle='xxl' bold>People also viewed...</Text>
+            {similarCompanies?.length > 0 && (
+              <div className={styles.relatedCompanyList}>
+                {similarCompanies.map((company) => (
+                  <Link to={`/company/${slugify(company.name)}-${company.id}`} key={company.id} className={styles.relatedCompanyItem}>
+                    <img src={company.logo_url} className={styles.relatedCompanyImage} />
+                    <Text textStyle='sm' bold className={styles.relatedCompanyName}>{company.name}</Text>
+                    <Text textStyle='sm'>{company.industry_key}</Text>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+          <Link to='/companies' className={styles.relatedCompanyLink}>
+            <Text textColor='primaryBlue' textStyle='base'>View all companies</Text>
+          </Link>
+        </div>
       </div>
     </Layout>
   )
