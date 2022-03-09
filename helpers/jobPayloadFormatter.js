@@ -336,6 +336,8 @@ const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFil
 }
 
 const getLocationList = (config) => {
+  if (!config) return []
+  
   const locList =
     config &&
     config.inputs &&
@@ -353,14 +355,20 @@ const getLocationList = (config) => {
 }
 
 const getSmsCountryList = (config) => {
+  if (!config) return []
+
   return config?.inputs?.sms_country_lists.map((sms) => ({ ...sms, label: sms.code }))
 }
 
 const getJobCategoryList = (config) => {
+  if (!config) return []
+
   return flat(config?.inputs?.job_category_lists.map((jobCategory) => Object.values(jobCategory)[2]))
 }
 
 const getJobCategoryIds = (config, categories) => {
+  if (!config) return []
+
   const categoryLists = config?.inputs?.job_category_lists
   let categoryIds = []
   categoryLists.forEach((category) => {
@@ -379,6 +387,8 @@ const getNoticePeriodList = (config) => {
 }
 
 const getSalaryOptions = (config, salaryFrom, hasComparedTo) => {
+  if (!config) return []
+
   const salaryConfig = config?.inputs?.salary_ranges
   if (salaryConfig && salaryConfig.length === 0) return salaryConfig
 
@@ -391,6 +401,8 @@ const getSalaryOptions = (config, salaryFrom, hasComparedTo) => {
 }
 
 const getCountryList = (config) => {
+  if (!config) return []
+
   const countryLists = config?.inputs?.country_lists
   if (countryLists && countryLists.length === 0) return countryLists
 
@@ -408,6 +420,8 @@ const getCountryList = (config) => {
 }
 
 const getIndustryList = (config) => {
+  if (!config) return []
+
   const industryList = config?.inputs?.industry_lists
   if (industryList && industryList.length === 0) return industryList
 
@@ -421,6 +435,8 @@ const getIndustryList = (config) => {
 }
 
 const getDegreeList = (config) => {
+  if (!config) return []
+
   const degreeList = config?.inputs?.degrees
   if (degreeList && degreeList.length === 0) return degreeList
 
