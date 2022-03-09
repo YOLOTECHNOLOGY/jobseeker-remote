@@ -387,8 +387,7 @@ const getNoticePeriodList = (config) => {
 }
 
 const getSalaryOptions = (config, salaryFrom, hasComparedTo) => {
-  if (!config) return []
-
+  if (!config) return null
   const salaryConfig = config?.inputs?.salary_ranges
   if (salaryConfig && salaryConfig.length === 0) return salaryConfig
 

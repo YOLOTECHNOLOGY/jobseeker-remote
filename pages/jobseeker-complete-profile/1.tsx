@@ -53,11 +53,11 @@ const Step1 = (props: any) => {
   const [location, setLocation] = useState(null)
   const [country, setCountry] = useState('')
   const [isShowCountry, setIsShowCountry] = useState(false)
-  const [noticePeriod, setNoticePeriod] = useState(userDetail.notice_period_id)
+  const [noticePeriod, setNoticePeriod] = useState(userDetail?.notice_period_id)
   const [specialization, setSpecialization] = useState(userDetail?.job_preference?.job_categories || '')
   const [headhuntMe, setHeadhuntMe] = useState(true)
 
-  const [salaryFrom, setSalaryFrom] = useState(Number(userDetail?.job_preference?.salary_range_from) || salaryFromOptions[0].value)
+  const [salaryFrom, setSalaryFrom] = useState(Number(userDetail?.job_preference?.salary_range_from))
   const [salaryTo, setSalaryTo] = useState(null)
   const [salaryToOptions, setSalaryToOptions] = useState([])
   const [hasSelectedSpecMore, setHasSelectedSpecMore] = useState(false)
