@@ -16,6 +16,7 @@ import Layout from 'components/Layout'
 import SEO from 'components/SEO'
 import Text from 'components/Text'
 import Link from 'components/Link'
+import Image from 'next/image'
 
 // Images
 import {
@@ -23,6 +24,14 @@ import {
   LinkedinOutline,
   InstagramOutline,
   YoutubeOutline,
+  CareerGrowth,
+  DailyRoutine,
+  PersonalHealth,
+  TeamCollaboration,
+  Strategy,
+  Insurance,
+  PerksAndBenefits,
+  Leaves
 } from 'images'
 
 // Styles
@@ -66,6 +75,28 @@ const CompanyDetail = (props: any) => {
   
   // console.log(company)
   // console.log(router)
+
+  const getCategoryIcon = (category) => {
+    switch(category) {
+      case 'Team Collaboration':
+        return <Image src={TeamCollaboration} width="25" height="25"/>
+      case 'Daily Routines':
+        return <Image src={DailyRoutine} width="25" height="25"/>
+      case 'Career Growth':
+        return <Image src={CareerGrowth} width="25" height="25"/>
+      case 'Personal Health':
+        return <Image src={PersonalHealth} width="25" height="25"/>
+      case 'Strategy':
+        return <Image src={Strategy} width="25" height="25"/>
+      case 'Insurance, Health & Wellness':
+        return <Image src={Insurance} width="25" height="25"/>
+      case 'Perks & Benefits':
+        return <Image src={PerksAndBenefits} width="25" height="25"/>
+      default:
+        return <Image src={Leaves} width="25" height="25"/>
+    }
+    
+  }
 
   return (
     <Layout>
@@ -200,6 +231,52 @@ const CompanyDetail = (props: any) => {
                     <Text textColor='primaryBlue' textStyle='base'>View all culture & benefits</Text>
                   </div>
                 </div>
+              </div>
+            )}
+
+            {tabValue === 'life' && (
+              <div className={styles.companyTabsContent}>
+                {company.pictures?.length > 0 && (
+                  <div className={styles.companyLifePictures}>
+                    {company.pictures.map((picture) => (
+                      <img key={picture.id} src={picture.url} alt={company.name} className={styles.companyLifePicture}/>
+                    ))}
+                  </div>
+                )}
+                
+                {company.cultures?.length > 0 && (
+                  <div className={styles.companyLifeCultures}>
+                    <Text textStyle='xxl' bold className={styles.companySectionTitle}>Company Culture</Text>
+                    <div className={styles.companyLifeCategoryList}>
+                      {company.cultures.map((culture) => (
+                        <div className={styles.companyLifeCategoryGroup} key={culture.id}>
+                          <div className={styles.companyLifeCategory}>
+                            {getCategoryIcon(culture.category)}
+                            <Text textStyle='base' bold>{culture.category}</Text>
+                          </div>
+                          <Text textStyle='base' className={styles.companyLifeCategoryValue}>{culture.value}</Text>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {company.benefits?.length > 0 && (
+                  <div className={styles.companyLifeCultures}>
+                    <Text textStyle='xxl' bold className={styles.companySectionTitle}>Employee Benefits</Text>
+                    <div className={styles.companyLifeCategoryList}>
+                      {company.benefits.map((benefit) => (
+                        <div className={styles.companyLifeCategoryGroup} key={benefit.id}>
+                          <div className={styles.companyLifeCategory}>
+                            {getCategoryIcon(benefit.category)}
+                            <Text textStyle='base' bold>{benefit.category}</Text>
+                          </div>
+                          <Text textStyle='base' className={styles.companyLifeCategoryValue}>{benefit.value}</Text>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 

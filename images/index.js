@@ -70,4 +70,12 @@ export const YoutubeOutline = `${S3BucketJobseeker}/youtube_1.png`
 export const InstagramOutline = `${S3BucketJobseeker}/instagram_1.png`
 export const LinkedinOutline = `${S3BucketJobseeker}/linkedin_1.png`
 
-
+/* Company Life Icons */
+export const CareerGrowth = `${S3BucketJobseeker}/CareerGrowth.svg`
+export const DailyRoutine = `${S3BucketJobseeker}/DailyRoutine.svg`
+export const PersonalHealth = `${S3BucketJobseeker}/PersonalHealth.svg`
+export const TeamCollaboration = `${S3BucketJobseeker}/TeamCollaboration.svg`
+export const Strategy = `${S3BucketJobseeker}/Strategy.svg`
+export const Insurance = `${S3BucketJobseeker}/Insurance.svg`
+export const PerksAndBenefits = `${S3BucketJobseeker}/PerksAndBenefits.svg`
+export const Leaves = `${S3BucketJobseeker}/Leaves.svg`
