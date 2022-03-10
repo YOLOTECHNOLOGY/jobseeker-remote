@@ -20,6 +20,11 @@ import SEO from 'components/SEO'
 import Text from 'components/Text'
 import Link from 'components/Link'
 import Image from 'next/image'
+import MaterialButton from 'components/MaterialButton'
+import MaterialTextField from 'components/MaterialTextField'
+import MaterialLocationField from 'components/MaterialLocationField'
+import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
+import CompanyJobsCard from 'components/Company/CompanyJobsCard'
 
 // Images
 import {
@@ -77,6 +82,8 @@ const CompanyDetail = (props: any) => {
 
   const [tabValue, setTabValue] = useState('overview')
   const [similarCompanies, setSimilarCompanies] = useState(null)
+  const [totalPages, setTotalPages] = useState(null)
+  setTotalPages(null)
   
   // console.log(company)
   // console.log(router)
@@ -110,7 +117,11 @@ const CompanyDetail = (props: any) => {
       default:
         return <Image src={Leaves} width="25" height="25"/>
     }
-    
+  }
+
+  const handlePaginationClick = (event, val) => {
+    router.query.page = val
+    router.push(router, undefined, { shallow: true })
   }
 
   return (
@@ -133,7 +144,10 @@ const CompanyDetail = (props: any) => {
                 <Tabs 
                   value={tabValue} 
                   centered
-                  onChange={(e: any) => setTabValue(e.target.childNodes[0].textContent.toLowerCase() || 'jobs')}
+                  onChange={(e: any) => {
+                    const tab = e.target.childNodes[0].textContent.toLowerCase()
+                    setTabValue(tab === 'overview' || tab === 'life' ? tab : 'jobs')
+                  }}
                 >
                   <Tab 
                     className={styles.companyTabsItem}
@@ -246,6 +260,27 @@ const CompanyDetail = (props: any) => {
                     <Text textColor='primaryBlue' textStyle='base'>View all culture & benefits</Text>
                   </div>
                 </div>
+
+                <div className={styles.companyCultureJobs}>
+                  <div className={styles.companyCultureHeading}>
+                    <Text textStyle='lg' bold>Jobs</Text>
+                    <div onClick={() => setTabValue('jobs')} className={styles.companyCultureHeadingLink}>
+                      <Text textColor='primaryBlue' textStyle='base'>See all Jobs</Text>
+                    </div>
+                  </div>
+                  <div className={styles.companyCultureJobsList}>
+                    {[...Array(7)].map((_,i) => {
+                      const dummy = {
+                        title: 'Operation Manager Lorem Ipsum',
+                        location: 'Manila',
+                        salary: '₱75k - ₱80k',
+                        availability: 'Full-time'
+                      }
+
+                      return <CompanyJobsCard {...dummy} key={i}/>
+                    })}
+                  </div>
+                </div>
               </div>
             )}
 
@@ -295,6 +330,47 @@ const CompanyDetail = (props: any) => {
               </div>
             )}
 
+            {tabValue === 'jobs' && (
+              <div className={styles.companyTabsContent}>
+                <div className={styles.companyJobs}>
+                  <div className={styles.companyJobsSearch}>
+                    <div className={styles.companyJobsSearchLeft}>
+                      <MaterialTextField 
+                        className={styles.companyJobsSearchTitle}
+                        size='small'
+                        label='Search for job title'
+                      />
+                    </div>
+                    <div className={styles.companyJobsSearchRight}>
+                      <MaterialLocationField
+                        className={styles.companyJobsSearchLocation}
+                        label='Location'
+                      />
+                      <MaterialButton variant='contained' capitalize className={styles.companyJobsSearchButton}>
+                        <Text textColor='white' bold>Search</Text>
+                      </MaterialButton>
+                    </div>
+                  </div>
+                  <Text textStyle='sm' className={styles.companyJobsFound}>1,023 jobs at {company.name}</Text>
+                  <div className={styles.companyJobsList}>
+                    {[...Array(7)].map((_,i) => {
+                      const dummy = {
+                        title: 'Operation Manager Lorem Ipsum',
+                        location: 'Manila',
+                        salary: '₱75k - ₱80k',
+                        availability: 'Full-time'
+                      }
+
+                      return <CompanyJobsCard {...dummy} key={i}/>
+                    })}
+                  </div>
+                  <Text textStyle='sm' className={styles.companyJobsResults}>Showing 1 - 30 of 1,024 jobs</Text>
+                  <div className={styles.companyJobsPagination}>
+                    <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} totalPages={totalPages || 1} />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className={styles.relatedCompany}>

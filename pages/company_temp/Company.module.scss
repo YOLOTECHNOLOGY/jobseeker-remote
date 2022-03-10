@@ -192,12 +192,16 @@
 }
 
 .companySectionTitle {
-  margin-top: 30px;
+  margin: 30px 0 20px;
   display: block;
 }
 
 .companyDescription {
   margin-bottom: 10px;
+
+  ol, ul {
+    padding-inline: inherit;
+  }
 }
 
 .companyCulture {
@@ -206,6 +210,7 @@
   &Heading {
     display: flex;
     justify-content: space-between;
+    margin: 40px 0;
   }
 
   &HeadingLink {
@@ -317,6 +322,14 @@
     margin-right: 10px;
     margin-bottom: 10px;
   }
+
+  &Jobs {
+    margin-top: 50px;
+
+    .companyCultureHeading {
+      margin-bottom: 40px;
+    }
+  }
 }
 
 .companyLife {
@@ -354,6 +367,45 @@
     border-radius: 15px;
     background-color: $white-2;
     margin: 40px;
+  }
+}
+
+.companyJobs {
+  &Found {
+    display: block;
+    margin: 20px 0 30px;
+  }
+
+  &Pagination {
+    margin-top: 30px;
+  }
+}
+
+.companyJobsSearch {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 40px;
+
+  &Left,
+  &Right {
+    width: 49.5%;
+  }
+
+  &Right {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &Title {
+    width: 100%;
+  }
+
+  &Location {
+    width: 78%;
+  }
+
+  &Button {
+    width: 20%;
   }
 }
 
