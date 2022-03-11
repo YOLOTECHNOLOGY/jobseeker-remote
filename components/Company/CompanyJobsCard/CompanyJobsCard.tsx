@@ -1,11 +1,15 @@
+import slugify from 'slugify'
+
 // Components
 import Text from 'components/Text'
 import MaterialButton from 'components/MaterialButton'
+import Link from 'components/Link'
 
 // Styles
 import styles from './CompanyJobsCard.module.scss'
 
 interface ICompanyJobsCard {
+  id: number
   title: string
   location: string
   salary: string
@@ -16,7 +20,8 @@ const CompanyJobsCard = ({
   title,
   location,
   salary,
-  availability
+  availability,
+  id
 }: ICompanyJobsCard) => {
   return (
     <div className={styles.companyJobsCard}>
@@ -29,9 +34,11 @@ const CompanyJobsCard = ({
         </div>
       </div>
       <div className={styles.companyJobsCardRight}>
-        <MaterialButton variant='outlined' capitalize className={styles.companyJobsCardApply}>
-          <Text textStyle='base' textColor='primaryBlue' bold>Apply Now</Text>
-        </MaterialButton>
+        <Link to={`/job/${slugify(title)}-${id}`}>
+          <MaterialButton variant='outlined' capitalize className={styles.companyJobsCardApply}>
+            <Text textStyle='base' textColor='primaryBlue' bold>Apply Now</Text>
+          </MaterialButton>
+        </Link>
       </div>
     </div>
   )
