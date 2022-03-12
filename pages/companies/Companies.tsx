@@ -105,7 +105,7 @@ const Companies = () => {
                 className={styles.featuredEmployerImage}
               />
               <div className={styles.featuredEmployerDetails}>
-                <Link to={`/companies/${slugify(featuredCompany?.name.toLowerCase() || '')}-${featuredCompany?.id}`} className={styles.featuredEmployerName}>
+                <Link to={`/company/${slugify(featuredCompany?.name.toLowerCase() || '')}-${featuredCompany?.id}`} className={styles.featuredEmployerName}>
                   <Text textStyle='xl' bold tagName='p'>{featuredCompany?.name}</Text>
                 </Link>
                 <div className={styles.featuredEmployerAbout}>
@@ -121,7 +121,7 @@ const Companies = () => {
                 <Text textStyle='base' tagName='p' className={styles.featuredEmployerDescription}>
                   {featuredCompany?.short_description}
                 </Text>
-                <Link to={`/companies/${slugify(featuredCompany?.name.toLowerCase() || '')}-${featuredCompany?.id}`} className={styles.featuredEmployerOpenings}>
+                <Link to={`/company/${slugify(featuredCompany?.name.toLowerCase() || '')}-${featuredCompany?.id}`} className={styles.featuredEmployerOpenings}>
                   <Text textStyle='lg' bold>View {featuredCompany?.num_of_active_jobs} job openings</Text>
                 </Link>
               </div>

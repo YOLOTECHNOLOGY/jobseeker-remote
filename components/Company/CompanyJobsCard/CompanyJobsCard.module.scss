@@ -1,0 +1,41 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.companyJobsCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba($lightgrey, 0.5);
+  padding: 0 0 20px;
+  margin-bottom: 20px;
+
+  &Info {
+    margin-top: 10px;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &Apply {
+    border: 1px solid;
+  }
+
+  @include msd {
+    flex-direction: column;
+
+    &Info {
+      width: 200px;
+    }
+
+    &Left {
+      width: 100%;
+      text-align: left;
+    }
+
+    &Right {
+      margin-top: 6px;
+      width: 100%;
+      text-align: right;
+    }
+  }
+}

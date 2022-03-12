@@ -25,6 +25,7 @@ function* fetchJobsListReq(action) {
       applicationStatus,
       jobCategories,
       size,
+      companyIds,
     } = action.payload
 
     const [salaryFrom, salaryTo ]= handleSalary(salary?.split(','))
@@ -38,9 +39,10 @@ function* fetchJobsListReq(action) {
       degrees: education,
       xp_lvls: workExperience,
       job_types: jobType,
+      company_ids: companyIds,
       sort,
       page,
-      size: 30,
+      size: size || 30,
       source: 'web',
     }
 

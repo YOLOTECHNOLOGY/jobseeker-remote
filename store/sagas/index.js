@@ -21,6 +21,7 @@ import watchDeleteSaveJob from 'store/sagas/jobs/deleteSaveJob'
 import watchFetchFeaturedCompanies from 'store/sagas/companies/fetchFeaturedCompanies'
 import watchFetchCompanyDetail from 'store/sagas/companies/fetchCompanyDetail'
 import watchFetchFeaturedCompaniesList from 'store/sagas/companies/fetchFeaturedCompaniesList'
+import watchFetchSimilarCompany from 'store/sagas/companies/fetchSimilarCompany'
 import watchFetchCompanySuggestions from 'store/sagas/companies/fetchCompanySuggestions'
 import watchFetchCompanyFilter from 'store/sagas/companies/fetchCompanyFilter'
 
@@ -68,6 +69,7 @@ function* rootSaga() {
     watchFetchFeaturedCompanies(),
     watchFetchCompanyDetail(),
     watchFetchFeaturedCompaniesList(),
+    watchFetchSimilarCompany(),
     watchFetchCompanySuggestions(),
     watchFetchCompanyFilter(),
 

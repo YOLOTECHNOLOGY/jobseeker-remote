@@ -123,6 +123,24 @@ export const numberWithCommas = (number) => {
   return `₱${number?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
 }
 
+export const formatSalaryRange = (salaryRange) => {
+  if (salaryRange) {
+    const salArr = salaryRange.split('-')
+    salArr.map(
+      (val, i) =>
+        (salArr[i] = `₱${Math.floor(val.trim() / 1000)}${formatDecimalSalary(val.trim())}`)
+    )
+    return salArr.join(' - ')
+  }
+
+  return '-'
+}
+
+export const formatDecimalSalary = (salary) => {
+  const value = Math.floor(salary.slice(-3) / 100)
+  return Number(value) > 0 ? `.${value}K` : 'K'
+}
+
 export const formatSalary = (salary) => {
   if (salary) {
     return `₱${parseInt(salary).toLocaleString()}`
