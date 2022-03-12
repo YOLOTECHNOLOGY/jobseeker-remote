@@ -39,7 +39,7 @@ const ResetPassword = () => {
 
   return (
     <AuthLayout 
-      headingText='Reset Password'
+      headingText={<Text bold textStyle='xxxl' tagName='h2'> Reset Password</Text>}
       ctaSignup
       isBackToLogin
     >

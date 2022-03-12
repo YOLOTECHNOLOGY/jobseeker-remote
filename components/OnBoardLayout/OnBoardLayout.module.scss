@@ -4,7 +4,9 @@
 .OnBoardLayout {
   height: 100vh;
   width: 100%;
+  overflow-y: scroll;
   background-color: $lightgrey-3;
+  padding-bottom: 200px;
 
   &Header {
     @extend .GlobalContainer;
@@ -30,6 +32,10 @@
   &Content {
     width: 617px;
     margin: 0 auto;
+
+    @include msd {
+      width: 100%;
+    }
   }
 
   &Footer {
@@ -53,17 +59,33 @@
   }
 
   &Heading {
-    height: 73px;
-    text-align: center;
+    // height: 73px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
 
     h2 {
       line-height: 1.2;
+      margin: 0;
     }
   }
 
   &Multistep {
-    margin: 15px auto 10px;
+    margin-bottom: 15px;
     text-align: center;
   }
 }
 
+.is-disabled {
+  color: rgba(0, 0, 0, 0.26);
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0.12);
+  cursor: default;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.26);
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+}

@@ -1,0 +1,33 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.CompanyCardLoader {
+  display: flex;
+  width: 100%;
+  padding: 11px 16px;
+  height: 110px;
+  border: 1px solid $white-2;
+  border-radius: 5px;
+
+  @include msd {
+    flex-direction: column;
+    height: 185px;
+  }
+}
+
+.CompanyCardLoaderImage {
+  &Wrapper {
+    display: flex;
+    justify-content: center;
+    margin-right: 21px;
+    
+    @include msd {
+      margin-bottom: 10px;
+      justify-content: flex-start;
+    }
+  }
+}
+
+.CompanyCardDetailWrapper {
+  height: 100%;
+}

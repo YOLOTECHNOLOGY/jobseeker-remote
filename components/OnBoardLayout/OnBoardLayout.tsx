@@ -1,7 +1,10 @@
+// Vendors
+import classNames from 'classnames/bind'
+
 // Components
 import Link from 'components/Link'
 import Text from 'components/Text'
-import Button from 'components/Button'
+import MaterialButton from 'components/MaterialButton'
 
 // Images
 import { BossjobLogo } from 'images'
@@ -15,7 +18,9 @@ interface IOnBoardLayout {
   totalStep: number | 4
   children:  React.ReactNode
   backFnBtn?: Function
-  nextFnBtn?: Function
+  nextFnBtn?: Function,
+  isUpdating?: boolean,
+  isDisabled?: boolean
 }
 
 const OnBoardLayout = ({
@@ -25,11 +30,20 @@ const OnBoardLayout = ({
   children,
   backFnBtn,
   nextFnBtn,
+  isUpdating,
+  isDisabled
 }: IOnBoardLayout) => {
+  const componentClass = {
+    ['is-disabled']: isDisabled,
+  }
+
+  const cx = classNames.bind(styles)
+  const buttonClass = cx([componentClass])
+  
   return (
     <div className={styles.OnBoardLayout}>
       <div className={styles.OnBoardLayoutHeader}>
-        <Link title='Home' to={'/'}>
+        <Link title='Home' to='/jobs-hiring/job-search'>
           <img id={styles.logo} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
         </Link>
       </div>
@@ -54,16 +68,23 @@ const OnBoardLayout = ({
           <div className={styles.OnBoardLayoutFooter}>
             <div>
               {backFnBtn && (
-                <Button secondary onClick={() => backFnBtn()}>
+                <MaterialButton variant='outlined' capitalize onClick={() => backFnBtn()}>
                   <Text textColor='primary' bold>Back</Text>
-                </Button>
+                </MaterialButton>
               )}
             </div>
             <div>
               {nextFnBtn && (
-                <Button primary onClick={() => nextFnBtn()}>
+                <MaterialButton 
+                  isLoading={isUpdating} 
+                  variant='contained' 
+                  capitalize 
+                  onClick={() => nextFnBtn()} 
+                  // disabled={isDisabled}
+                  className={classNames([buttonClass])}
+                >
                   <Text textColor='white' bold>Next</Text>
-                </Button>
+                </MaterialButton>
               )}
             </div>
           </div>

@@ -140,3 +140,18 @@ export const formatDecimalSalary = (salary) => {
   const value = Math.floor(salary.slice(-3) / 100)
   return Number(value) > 0 ? `.${value}K` : 'K'
 }
+
+export const formatSalary = (salary) => {
+  if (salary) {
+    return `₱${parseInt(salary).toLocaleString()}`
+  }
+}
+
+export const removeEmptyOrNullValues = (object) => {
+  let newObject = {}
+  Object.entries(object).forEach(
+    ([key, value]) => { if (value) Object.assign(newObject, {[key]: value}) }
+  )
+
+  return newObject
+}

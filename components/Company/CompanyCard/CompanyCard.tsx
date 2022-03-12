@@ -17,7 +17,7 @@ const CompanyCard = ({
   return (
     <div className={styles.companyCard}>
       <div className={styles.companyCardLeft}>
-        <img src={company.logo_url} alt={company.name} className={styles.companyCardImage}/>
+        <img src={company.logo_url || company.logo} alt={company.name} className={styles.companyCardImage}/>
       </div>
       <div className={styles.companyCardRight}>
         <Link to={`/companies/${slugify(company?.name.toLowerCase() || '')}-${company?.id}`} className={styles.companyCardName}>
