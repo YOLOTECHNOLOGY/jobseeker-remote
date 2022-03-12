@@ -47,12 +47,14 @@ interface ICompanyProfileLayout {
   children: React.ReactNode
   company: any
   currentTab: string
+  totalJobs: number
 }
 
 const CompanyProfileLayout = ({
   children,
   company,
-  currentTab
+  currentTab,
+  totalJobs
 }: ICompanyProfileLayout) => {
   const dispatch = useDispatch()
   const imgPlaceholder = 'https://assets.bossjob.com/companies/1668/cover-pictures/0817984dff0d7d63fcb8193fef08bbf2.jpeg'
@@ -121,7 +123,7 @@ const CompanyProfileLayout = ({
                       <Link to={`/company/${slugify(company.name)}-${company.id}/jobs`}>
                         <Text bold textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}>
                           Jobs
-                          <span className={styles.companyJobsBadge}>999+</span>
+                          {totalJobs && totalJobs > 0 && <span className={styles.companyJobsBadge}>{totalJobs}</span>}
                         </Text>
                       </Link>
                     }

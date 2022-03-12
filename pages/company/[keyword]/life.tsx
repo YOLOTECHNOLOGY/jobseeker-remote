@@ -1,9 +1,13 @@
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
 // @ts-ignore
 import { END } from 'redux-saga'
 
 // Redux Actions
 import { wrapper } from 'store'
 import { fetchCompanyDetailRequest } from 'store/actions/companies/fetchCompanyDetail'
+import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
 
 // Components
 import Text from 'components/Text'
@@ -26,8 +30,25 @@ import {
 import styles from '../Company.module.scss'
 
 const CompanyLifeProfile = (props: any) => {
+  const dispatch = useDispatch()
   const { companyDetail } = props
   const company = companyDetail?.response.data
+  const [totalJobs, setTotalJobs] = useState(null)
+
+  const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
+
+  useEffect(() => {
+    const payload = {
+      companyIds: company.id,
+      size: 30
+    }
+
+    dispatch(fetchJobsListRequest({...payload}))
+  }, [])
+
+  useEffect(() => {
+    if (fetchJobsListResponse) setTotalJobs(fetchJobsListResponse.data?.total_num)
+  }, [fetchJobsListResponse])
   
   const getCategoryIcon = (category) => {
     switch(category) {
@@ -54,6 +75,7 @@ const CompanyLifeProfile = (props: any) => {
     <CompanyProfileLayout
       company={company}
       currentTab='life'
+      totalJobs={totalJobs}
     >
       <div className={styles.companyTabsContent}>
         {company.pictures?.length > 0 && (

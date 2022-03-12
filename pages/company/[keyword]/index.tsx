@@ -40,26 +40,31 @@ const CompanyDetail = (props: any) => {
   const { companyDetail } = props
   const company = companyDetail?.response.data
   const [companyJobs, setCompanyJobs] = useState(null)
+  const [totalJobs, setTotalJobs] = useState(null)
 
   const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
 
   useEffect(() => {
     const payload = {
       companyIds: company.id,
-      size: 10
+      size: 30
     }
 
     dispatch(fetchJobsListRequest({...payload}))
   }, [])
 
   useEffect(() => {
-    if (fetchJobsListResponse) setCompanyJobs(fetchJobsListResponse.data?.jobs)
+    if (fetchJobsListResponse) {
+      setCompanyJobs(fetchJobsListResponse.data?.jobs)
+      setTotalJobs(fetchJobsListResponse.data?.total_num)
+    }
   }, [fetchJobsListResponse])
 
   return (
     <CompanyProfileLayout
       company={company}
       currentTab='overview'
+      totalJobs={totalJobs}
     >
       <div className={styles.companyTabsContent}>
         <div className={styles.companyOverview}>
@@ -153,7 +158,7 @@ const CompanyDetail = (props: any) => {
           </div>
           <div className={styles.companyCultureJobsList}>
             {companyJobs?.length > 0 && companyJobs.map((companyJob) => {
-              const dummy = {
+              const company = {
                 id: companyJob.id,
                 title: companyJob.job_title,
                 location: companyJob.job_location,
@@ -161,7 +166,7 @@ const CompanyDetail = (props: any) => {
                 availability: companyJob.job_type
               }
 
-              return <CompanyJobsCard {...dummy} key={companyJob.id}/>
+              return <CompanyJobsCard {...company} key={companyJob.id}/>
             })}
           </div>
         </div>
