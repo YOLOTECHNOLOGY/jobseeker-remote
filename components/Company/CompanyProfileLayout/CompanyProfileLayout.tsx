@@ -100,7 +100,7 @@ const CompanyProfileLayout = ({
                     className={styles.companyTabsItem}
                     value="overview" 
                     label={
-                      <Link to={`/company_temp/${slugify(company.name)}-${company.id}`}>
+                      <Link to={`/company/${slugify(company.name)}-${company.id}`}>
                         <Text bold textColor={tabValue === 'overview' ? 'primaryBlue' : 'black'}>Overview</Text>
                       </Link>
                     }
@@ -109,7 +109,7 @@ const CompanyProfileLayout = ({
                     className={styles.companyTabsItem}
                     value="life" 
                     label={
-                      <Link to={`/company_temp/${slugify(company.name)}-${company.id}/life`}>
+                      <Link to={`/company/${slugify(company.name)}-${company.id}/life`}>
                         <Text bold textColor={tabValue === 'life' ? 'primaryBlue' : 'black'}>Life</Text>
                       </Link>
                     }
@@ -118,7 +118,7 @@ const CompanyProfileLayout = ({
                     className={styles.companyTabsItem}
                     value="jobs" 
                     label={
-                      <Link to={`/company_temp/${slugify(company.name)}-${company.id}/jobs`}>
+                      <Link to={`/company/${slugify(company.name)}-${company.id}/jobs`}>
                         <Text bold textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}>
                           Jobs
                           <span className={styles.companyJobsBadge}>999+</span>

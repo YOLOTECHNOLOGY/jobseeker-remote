@@ -89,7 +89,7 @@ const CompanyJobsProfile = (props: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const companyPageUrl = req.url.split('/')
-  const companyPath = companyPageUrl[companyPageUrl.length - 1].split('-')
+  const companyPath = companyPageUrl.length === 4 ? companyPageUrl[2].split('-') : companyPageUrl[companyPageUrl.length - 1].split('-')
   const companyId = Number(companyPath[companyPath.length - 1])
 
   store.dispatch(fetchCompanyDetailRequest(companyId))
@@ -97,7 +97,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const companyDetail = storeState.companies.companyDetail
+  const companyDetail = storeState.companies.companyDetail || null
 
   return {
     props: {

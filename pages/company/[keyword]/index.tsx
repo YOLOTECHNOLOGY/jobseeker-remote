@@ -110,7 +110,7 @@ const CompanyDetail = (props: any) => {
         <div className={styles.companyCulture}>
           <div className={styles.companyCultureHeading}>
             <Text textStyle='lg' bold>Culture & Benefits</Text>
-            <Link to={`/company_temp/${slugify(company.name)}-${company.id}/life`} className={classNames(styles.companyCultureHeadingLink, breakpointStyles.hideOnMobile)}>
+            <Link to={`/company/${slugify(company.name)}-${company.id}/life`} className={classNames(styles.companyCultureHeadingLink, breakpointStyles.hideOnMobile)}>
               <Text textColor='primaryBlue' textStyle='base'>View all culture & benefits</Text>
             </Link>
           </div>
@@ -139,7 +139,7 @@ const CompanyDetail = (props: any) => {
               </div>
             </div>
           </div>
-          <Link to={`/company_temp/${slugify(company.name)}-${company.id}/life`} className={classNames(styles.companyCultureHeadingLink, breakpointStyles.hideOnDesktop)}>
+          <Link to={`/company/${slugify(company.name)}-${company.id}/life`} className={classNames(styles.companyCultureHeadingLink, breakpointStyles.hideOnDesktop)}>
             <Text textColor='primaryBlue' textStyle='base'>View all culture & benefits</Text>
           </Link>
         </div>
@@ -147,7 +147,7 @@ const CompanyDetail = (props: any) => {
         <div className={styles.companyCultureJobs}>
           <div className={styles.companyCultureHeading}>
             <Text textStyle='lg' bold>Jobs</Text>
-            <Link to={`/company_temp/${slugify(company.name)}-${company.id}/jobs`} className={styles.companyCultureHeadingLink}>
+            <Link to={`/company/${slugify(company.name)}-${company.id}/jobs`} className={styles.companyCultureHeadingLink}>
               <Text textColor='primaryBlue' textStyle='base'>See all Jobs</Text>
             </Link>
           </div>
