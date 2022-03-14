@@ -1,0 +1,19 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.CompanyJobsCardLoader {
+  display: flex;
+  width: 100%;
+  padding: 11px 0;
+  height: 92px;
+  border-bottom: 1px solid $white-2;
+
+  @include msd {
+    flex-direction: column;
+    height: 185px;
+  }
+}
+
+.CompanyJobsCardDetailWrapper {
+  height: 100%;
+}
