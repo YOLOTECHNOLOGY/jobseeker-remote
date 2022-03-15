@@ -38,7 +38,7 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [isSubscribe, setIsSubscribe] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
-  const { register, handleSubmit, formState: { errors }} = useForm()
+  const { register, formState: { errors }} = useForm()
 
   const isRegisteringJobseeker = useSelector((store: any) => store.auth.registerJobseeker.fetching)
   const isRegisteringRecruiter = useSelector((store: any) => store.auth.registerRecruiter.fetching)
@@ -89,7 +89,7 @@ const Register = () => {
           </Text>
         </div>
 
-        <form className={styles.RegisterForm} onSubmit={handleSubmit(handleRegister)}>
+        <form className={styles.RegisterForm}>
           <div className={styles.RegisterFormName}>
             <div>
               <MaterialTextField
@@ -221,6 +221,7 @@ const Register = () => {
             variant='contained'
             className={styles.RegisterButton}
             isLoading={isRegisteringJobseeker || isRegisteringRecruiter}
+            onClick={() => handleRegister()}
             type='submit'
           >
             <Text textStyle='xl' textColor='white' bold>
