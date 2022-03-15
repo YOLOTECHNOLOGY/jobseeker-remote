@@ -10,12 +10,13 @@ type MaterialTextFieldProps = {
   style?: React.CSSProperties
   defaultValue?: string
   className?: string
-  label?: string
+  label?: string |  React.ReactNode
   size?: 'small' | 'medium'
   variant?: 'outlined' | 'filled' | 'standard'
   isLoading?: boolean
   disabled?: boolean
   color?: string
+  error?: any
   InputProps?: any
   refs?: any
 } & Omit<Input, 'size'>
@@ -47,13 +48,14 @@ const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
+          fontSize: '14px',
           backgroundColor: "white"
         }
       }
     }
   },
 })
-const MaterialTextField = ({ id, label, variant, size, color, className, defaultValue, refs, ...rest} : MaterialTextFieldProps) => {
+const MaterialTextField = ({ id, label, variant, error, refs, size, color, className, defaultValue, ...rest} : MaterialTextFieldProps) => {
   const [value, setValue] = useState(defaultValue)
 
   useEffect(()=>{
@@ -75,6 +77,7 @@ const MaterialTextField = ({ id, label, variant, size, color, className, default
         variant={variant as any} 
         size={size} 
         className={className} 
+        error={error}
         {...rest}
       />
     </ThemeProvider>

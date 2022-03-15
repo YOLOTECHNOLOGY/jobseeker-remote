@@ -1,0 +1,20 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+
+.companyList {
+  display: flex;
+  flex-wrap: wrap;
+
+  @include msd {
+    flex-direction: column;
+  }
+}
+
+.companyItem {
+  width: calc((100% / 3) - 10px);
+  margin: 10px 3px;
+
+  @include msd {
+    width: 100%;
+  }
+}

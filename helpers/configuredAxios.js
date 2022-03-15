@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getCookie } from 'helpers/cookies'
+import accessToken from 'pages/api/handlers/linkedinHandlers/accessToken'
 // import { configureStore } from 'store'
 // import { logout } from 'shared/helpers/authentication'
 
@@ -50,6 +51,12 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     case 'academy':
       url = process.env.ACADEMY_URL
       break
+    case 'jobseeker':
+      url = process.env.JOBSEEKER_URL
+      break
+    case 'company':
+      url = process.env.COMPANY_URL
+      break
     default:
       break
   }
@@ -67,6 +74,13 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     headers = {
       ...headers,
       'Bossjob-Token': `Bearer ${jobToken}`,
+      'Authorization': `Bearer ${getCookie('accessToken')}`,
+    }
+  }
+  else if (baseURL === 'jobseeker' && type === 'protected' && serverAccessToken) {
+    headers = {
+      ...headers,
+      'Authorization': `Bearer ${serverAccessToken}`,
     }
   }
   else {

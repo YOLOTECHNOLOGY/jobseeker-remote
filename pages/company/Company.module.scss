@@ -1,0 +1,337 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.companyOverview {
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 0.5px solid rgba($lightgrey, 0.5);
+  padding: 20px;
+  height: 158px;
+
+  @include msd {
+    height: 100%;
+  }
+
+
+  &Contents {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+
+    @include msd {
+      flex-direction: column;
+    }
+  }
+
+  &Left,
+  &Right {
+    width: 49%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+
+    @include msd {
+      width: 100%;
+    }
+  }
+
+  &Item {
+    display: flex;
+
+    @include msd {
+      flex-direction: column;
+    }
+
+    span {
+      display: inline-block;
+
+      &:first-child {
+        width: 28%;
+      }
+
+      &:last-child {
+        width: 72%;
+      }
+
+      @include msd {
+        &:first-child,
+        &:last-child {
+          width: 100%;
+        }
+
+        &:last-child {
+          margin: 10px 0 15px;
+        }
+      }
+    }
+
+    img {
+      width: 31px;
+      height: 31px;
+      object-fit: contain;
+    }
+
+    &:last-child {
+      align-items: center;
+
+      @include msd {
+        align-items: flex-start;
+      }
+        
+
+    }
+  }
+
+  &SocialLink {
+    margin-right: 10px;
+  }
+
+  &Social {
+    margin-top: 10px;
+  }
+
+  &Location {
+    line-height: 1.3;
+  }
+}
+
+.companyTabs {
+  &Content {
+    padding: 15px 30px;
+  }
+
+  @include msd {
+    &Content {
+      padding: 15px 0;
+    }
+  }
+}
+
+.companyJobsBadge {
+  color: $white-3;
+  border-radius: 12px;
+  background-color: $pink-1;
+  font-weight: 300;
+  font-size: 12px;
+  padding: 2px 6px;
+  margin-left: 4px;
+}
+
+.companySectionTitle {
+  margin: 30px 0 20px;
+  display: block;
+}
+
+.companyDescription {
+  margin-bottom: 10px;
+
+  ol, ul {
+    padding-inline: inherit;
+  }
+}
+
+.companyCulture {
+  margin-top: 30px;
+
+  &Heading {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 0;
+  }
+
+  &HeadingLink {
+    padding-right: 25px;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      height: 6px;
+      width: 6px;
+      border-top: 1px solid $primaryBlue;
+      border-right: 1px solid $primaryBlue;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 1px;
+      background-color: $primaryBlue;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+
+    &:hover {
+      cursor: pointer;
+      span {
+        text-decoration: underline;
+      }
+    }
+
+    @include msd {
+      text-align: right;
+      margin: 10px 0 20px;
+      padding-right: 20px;
+
+      &:before {
+        height: 4px;
+        width: 4px;
+      }
+
+      &:after {
+        width: 15px;
+      }
+    }
+  }
+
+  &Content {
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    @include msd {
+      flex-direction: column;
+    }
+  }
+
+  &TopImage {
+    img {
+      height: 300px;
+      width: 300px;
+      object-fit: contain;
+
+      @include msd {
+        width: 100%;
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  &Wrapper {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid rgba($lightgrey, 0.5);
+    margin-left: 20px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include msd {
+      margin-left: 0;
+    }
+  }
+
+  &Section {
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+
+  &List {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  &Item {
+    padding: 4px 12px;
+    border-radius: 15px;
+    background-color: $white-2;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  &Jobs {
+    margin-top: 50px;
+
+    .companyCultureHeading {
+      margin-bottom: 40px;
+    }
+  }
+}
+
+.companyLife {
+  &Pictures {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  &Picture {
+    width: calc((100% / 3) - 10px);
+    height: 300px;
+    object-fit: contain;
+    margin: 5px 5px;
+  }
+
+  &CategoryGroup {
+    margin-top: 30px;
+    margin-bottom: 40px;
+    padding: 0 40px;
+  }
+
+  &Category {
+    display: flex;
+    align-items: center;
+    margin: 20px 0 30px;
+
+    span {
+      margin-left: 20px;
+    }
+  }
+
+  &CategoryValue {
+    padding: 4px 12px;
+    border-radius: 15px;
+    background-color: $white-2;
+    margin: 40px;
+  }
+}
+
+.companyJobs {
+  &Found {
+    display: block;
+    margin: 20px 0 30px;
+  }
+
+  &Pagination {
+    margin-top: 30px;
+  }
+}
+
+.companyJobsSearch {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 40px;
+
+  &Left,
+  &Right {
+    width: 49.5%;
+  }
+
+  &Right {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &Title {
+    width: 100%;
+  }
+
+  &Location {
+    width: 78%;
+  }
+
+  &Button {
+    width: 20%;
+  }
+}

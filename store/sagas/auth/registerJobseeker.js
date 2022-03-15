@@ -87,7 +87,7 @@ function* registerJobSeekerReq(actions) {
       yield fork(fetchRecruiterSubscriptionFeature)
       yield take(FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS)
 
-      yield put(push(jobId ? `/dashboard/job/${jobId}` : '/dashboard/jobs-hiring/'))
+      yield put(push(jobId ? `/dashboard/job/${jobId}` : '/jobseeker-complete-profile/1'))
     }
   } catch (err) {
     console.log(err)

@@ -1,0 +1,73 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+
+.companyCard {
+  display: flex;
+  border: 1px solid $white-2;
+  padding: 11px 16px;
+  border-radius: 5px;
+  
+  @include msd {
+    flex-direction: column;
+  }
+
+  &Image {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  &Left {
+    margin-right: 21px;
+  }
+
+  &Right {
+    p {
+      margin: 0;
+    }
+  
+    @include msd {
+      margin-top: 10px;
+    }
+  }
+
+  &Name {
+    p {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &Category {
+    margin: 10px 0 !important;
+  
+    @include msd {
+      margin: 6px 0 !important;
+    }
+  }
+
+  &Openings {
+    position: relative;
+
+    &::after {
+      content: '➝';
+      position: absolute;
+      top: 50%;
+      right: -24px;
+      transform: translateY(-50%);
+      font-size: 20px;
+      font-weight: 700;
+      color: $pink-1;
+    }
+
+    span {
+      color: $pink-1;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

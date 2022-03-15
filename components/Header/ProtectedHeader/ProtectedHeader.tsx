@@ -61,7 +61,7 @@ const ProtectedHeader = () => {
         <ul className={styles.headerLinksList}>
           <React.Fragment>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
-              <Link title='Manage Me' to='/'>
+              <Link title='Manage Resume' to='/jobseeker-complete-profile/1'>
                 <Button primary>Manage Resume</Button>
               </Link>
             </li>

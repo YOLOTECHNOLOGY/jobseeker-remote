@@ -8,6 +8,7 @@ interface MaterialRoundedPaginationProps {
   defaultPage: number
   spacing?: number | undefined
   totalPages: number
+  page?: number
 }
 
 const MaterialRoundedPagination = ({
@@ -15,6 +16,7 @@ const MaterialRoundedPagination = ({
   totalPages,
   onChange,
   defaultPage = 1,
+  page
 }: MaterialRoundedPaginationProps) => {
   const theme = createTheme({
     components: {
@@ -50,6 +52,7 @@ const MaterialRoundedPagination = ({
           boundaryCount={0}
           shape='rounded'
           size='large'
+          page={page}
         />
       </Stack>
     </ThemeProvider>

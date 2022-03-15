@@ -71,7 +71,7 @@ const Register = () => {
 
   return (
     <AuthLayout
-      headingText='Join Bossjob, kick-start your career'
+      headingText={<Text bold textStyle='xxxl' tagName='h2'> Join Bossjob, <br/>kick-start your career</Text>}
       ctaSignup
       isEmployer={isEmployer}
     >

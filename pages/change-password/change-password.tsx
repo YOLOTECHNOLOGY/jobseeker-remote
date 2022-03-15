@@ -54,8 +54,8 @@ const ChangePassword = () => {
   }
 
   return (
-    <AuthLayout
-      headingText='Update Password'
+    <AuthLayout 
+      headingText={<Text bold textStyle='xxxl' tagName='h2'>Update Password</Text>}
       ctaSignup
       isBackToLogin
     >

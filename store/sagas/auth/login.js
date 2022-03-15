@@ -69,8 +69,8 @@ function* loginReq(actions) {
       let url =
         loginData.active_key === 1 &&
         (loginData.is_profile_update_required || !loginData.is_profile_completed)
-          ? '/jobseeker-complete-profile'
-          : `${process.env.OLD_PROJECT_URL}/dashboard/jobseeker`
+          ? '/jobseeker-complete-profile/1'
+          : `/jobs-hiring/job-search`
 
       if (redirect && applyJobExternalRedirect) {
         yield put(

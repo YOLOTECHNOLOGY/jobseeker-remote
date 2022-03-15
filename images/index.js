@@ -41,6 +41,10 @@ export const FilterIcon = `${S3BucketJobseeker}/FilterIcon.svg`
 export const ExpireIcon = `${S3BucketJobseeker}/ExpireIcon.svg`
 export const VectorBulletedListIcon = `${S3BucketJobseeker}/VectorBulletedListIcon.svg`
 export const VectorNumberedListIcon = `${S3BucketJobseeker}/VectorNumberedListIcon.svg`
+export const InfoIcon = `${S3BucketJobseeker}/InfoIcon.svg`
+export const CreateFilledIcon = `${S3BucketJobseeker}/CreateFilledIcon.svg`
+export const DeleteFilledIcon = `${S3BucketJobseeker}/DeleteFilledIcon.svg`
+export const AddOutlineIcon = `${S3BucketJobseeker}/AddOutlineIcon.svg`
 
 
 /* Footer Social Links Logo */
@@ -64,4 +68,18 @@ export const KrAsia = `${S3BucketJobseeker}/KrAsia.svg`
 export const MoneyMax = `${S3BucketJobseeker}/MoneyMax.svg`
 export const TechInAsia = `${S3BucketJobseeker}/TechInAsia.svg`
 
+/* Company Detail Social Link */
+export const FacebookOutline = `${S3BucketJobseeker}/facebook_1.png`
+export const YoutubeOutline = `${S3BucketJobseeker}/youtube_1.png`
+export const InstagramOutline = `${S3BucketJobseeker}/instagram_1.png`
+export const LinkedinOutline = `${S3BucketJobseeker}/linkedin_1.png`
 
+/* Company Life Icons */
+export const CareerGrowth = `${S3BucketJobseeker}/CareerGrowth.svg`
+export const DailyRoutine = `${S3BucketJobseeker}/DailyRoutine.svg`
+export const PersonalHealth = `${S3BucketJobseeker}/PersonalHealth.svg`
+export const TeamCollaboration = `${S3BucketJobseeker}/TeamCollaboration.svg`
+export const Strategy = `${S3BucketJobseeker}/Strategy.svg`
+export const Insurance = `${S3BucketJobseeker}/Insurance.svg`
+export const PerksAndBenefits = `${S3BucketJobseeker}/PerksAndBenefits.svg`
+export const Leaves = `${S3BucketJobseeker}/Leaves.svg`
