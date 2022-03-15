@@ -123,7 +123,7 @@ const CompanyProfileLayout = ({
                       <Link to={`/company/${slugify(company.name)}-${company.id}/jobs`}>
                         <Text bold textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}>
                           Jobs
-                          {totalJobs && totalJobs > 0 && <span className={styles.companyJobsBadge}>{totalJobs}</span>}
+                          {totalJobs > 0 && <span className={styles.companyJobsBadge}>{totalJobs}</span>}
                         </Text>
                       </Link>
                     }

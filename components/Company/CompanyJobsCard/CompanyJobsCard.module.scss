@@ -11,9 +11,22 @@
 
   &Info {
     margin-top: 10px;
-    width: 300px;
     display: flex;
     justify-content: space-between;
+
+    span {
+      &:first-child {
+        width: 150px;
+      }
+
+      &:nth-child(2) {
+        width: 130px;
+      }
+
+      &:nth-child(3) {
+        width: 120px;
+      }
+    }
   }
 
   &Apply {
@@ -22,10 +35,6 @@
 
   @include msd {
     flex-direction: column;
-
-    &Info {
-      width: 200px;
-    }
 
     &Left {
       width: 100%;
