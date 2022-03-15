@@ -8,12 +8,13 @@ import { createJobAlertService } from 'store/services/alerts/createJobAlert'
 import { registerUserService } from 'store/services/users/registerUser'
 
 function* createJobAlertReq(action) {
-  const { payload } = action
+  const { jobAlertData, accessToken, user_id } = action.payload
+
   try {
     let registerUserResponse
 
-    if (payload.email) {
-      const first_name = payload.email.split('@')[0]
+    if (jobAlertData.email) {
+      const first_name = jobAlertData.email.split('@')[0]
       const randomPassword =
         Math.random()
           .toString(36)
@@ -23,7 +24,7 @@ function* createJobAlertReq(action) {
           .substring(2, 15)
           
       const userPayload = {
-        email: payload.email,
+        email: jobAlertData.email,
         first_name: first_name,
         last_name: '',
         password: randomPassword,
@@ -37,24 +38,27 @@ function* createJobAlertReq(action) {
       registerUserResponse = yield call(registerUserService, userPayload)
     }
 
-    // if (registerUserResponse?.status === 201 || payload.user_id) {
-    const jobAlertPayload = {
-      user_id: 1820, //ToDo: Fetch UserID
-      keyword: payload.keyword,
-      location: payload.location,
-      job_category_key: payload.job_category_key,
-      industry_key: payload.industry_key,
-      xp_lvl_key: payload.xp_lvl_key,
-      degree_key: payload.degree_key,
-      job_type_key: payload.job_type_key,
-      salary_range_key: payload.salary_range_key,
-      is_company_verified: payload.is_company_verified,
-      frequency_id: payload.frequency_id,
+    if (registerUserResponse?.status === 201 || user_id) {
+      const jobAlertPayload = {
+        jobAlertData: {
+          user_id: user_id ? user_id : registerUserResponse.data.data.id,
+          keyword: jobAlertData.keyword,
+          location_key: jobAlertData.location_key,
+          job_category_key: jobAlertData.job_category_key,
+          industry_key: jobAlertData.industry_key,
+          xp_lvl_key: jobAlertData.xp_lvl_key,
+          degree_key: jobAlertData.degree_key,
+          job_type_key: jobAlertData.job_type_key,
+          salary_range_key: jobAlertData.salary_range_key,
+          is_company_verified: jobAlertData.is_company_verified,
+          frequency_id: jobAlertData.frequency_id,
+        },
+        accessToken: accessToken
+      }
+      
+      const { data } = yield call(createJobAlertService, jobAlertPayload)
+      yield put(createJobAlertSuccess(data.data))
     }
-    
-    const { data } = yield call(createJobAlertService, jobAlertPayload)
-    yield put(createJobAlertSuccess(data.data))
-    // }
   } catch (error) {
     console.log('error-saga', error)
     yield put(createJobAlertFailed(error))

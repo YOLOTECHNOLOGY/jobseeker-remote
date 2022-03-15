@@ -381,7 +381,7 @@ const ModalJobAlerts = ({
           <Text textStyle='base'>
             {jobAlertResponse && (
               <React.Fragment>
-                <span>Job alert for ‘<Text textStyle='base' bold>{query}</Text>’ enabled.</span>
+                <span>Job alert for ‘<Text textStyle='base' bold>{query ? query : 'all'}</Text>’ enabled.</span>
                 <Text
                   className={styles.ModalEnableJobAlertText}
                   textColor='primaryBlue'

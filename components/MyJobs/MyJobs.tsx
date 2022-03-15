@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import slugify from 'slugify'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { Tabs, Tab } from '@mui/material'
 
 /* Redux Actions */
@@ -40,12 +41,28 @@ import { titleCase } from 'helpers/formatter'
 /* Styles */
 import styles from './MyJobs.module.scss'
 
+
+
+const theme = createTheme({
+  components: {
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          minHeight: '40px'
+        }
+      }
+    }
+  },
+})
+
 interface IMyJobs {
   category?: string
+  accessToken: string
 }
 
 const MyJobs = ({
-  category
+  category,
+  accessToken
 }: IMyJobs) => {
   const prevScrollY = useRef(0)
   const router = useRouter()
@@ -93,6 +110,7 @@ const MyJobs = ({
 
   useEffect(() => {
     const payload = {
+      accessToken,
       size: router.query?.size,
       page: router.query?.page ? Number(router.query.page) : 1,
     }
@@ -156,14 +174,27 @@ const MyJobs = ({
 
   const handleFetchJobDetail = (id, source) => {
     if (source === 'applied') {
-      dispatch(fetchAppliedJobDetailRequest(id))
+      const appliedJobPayload = {
+        accessToken,
+        appliedJobId: id
+      }
+      dispatch(fetchAppliedJobDetailRequest(appliedJobPayload))
       return
     }
+
+    const savedJobPayload = {
+      accessToken,
+      savedJobId: id
+    }
     
-    dispatch(fetchSavedJobDetailRequest(id))
+    dispatch(fetchSavedJobDetailRequest(savedJobPayload))
   }
 
-  const handleWithdrawApplication = (payload) => {
+  const handleWithdrawApplication = ({appliedJobId}) => {
+    const payload = {
+      appliedJobId,
+      accessToken
+    }
     dispatch(withdrawAppliedJobRequest(payload))
   }
 
@@ -190,40 +221,42 @@ const MyJobs = ({
         <div className={classNamesCombined([styles.MyJobsMenu, isStickyClass])}>
           <div className={styles.container}>
             <div className={styles.MyJobsMenuContent}>
-              <Tabs
-                value={category}
-              >
-                <Tab 
-                  className={styles.MyJobsMenuTab}
-                  value="saved" 
-                  label={
-                    <Link 
-                      aTag
-                      to={'/my-jobs/saved?page=1&size=10'}
-                      className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}
-                    >
-                      <Text bold>
-                        Saved Jobs
-                      </Text>
-                    </Link>
-                  }
-                />
-                <Tab 
-                  className={styles.MyJobsMenuTab}
-                  value="applied" 
-                  label={
-                    <Link 
-                      aTag
-                      to={'/my-jobs/applied?page=1&size=10'}
-                      className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}
-                    >
-                      <Text bold>
-                        Applied Jobs
-                      </Text>
-                    </Link>
-                  }
-                />
-              </Tabs>
+              <ThemeProvider theme={theme}>
+                <Tabs
+                  value={category}
+                >
+                  <Tab 
+                    className={styles.MyJobsMenuTab}
+                    value="saved" 
+                    label={
+                      <Link 
+                        aTag
+                        to={'/my-jobs/saved?page=1&size=10'}
+                        className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}
+                      >
+                        <Text bold>
+                          Saved Jobs
+                        </Text>
+                      </Link>
+                    }
+                  />
+                  <Tab 
+                    className={styles.MyJobsMenuTab}
+                    value="applied" 
+                    label={
+                      <Link 
+                        aTag
+                        to={'/my-jobs/applied?page=1&size=10'}
+                        className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}
+                      >
+                        <Text bold>
+                          Applied Jobs
+                        </Text>
+                      </Link>
+                    }
+                  />
+                </Tabs>
+              </ThemeProvider>
             </div>
             <div className={styles.MyJobsMenuOtherContent}/>
           </div>

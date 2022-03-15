@@ -5,16 +5,10 @@ import { withdrawAppliedJobSuccess, withdrawAppliedJobFailed } from 'store/actio
 import { withdrawAppliedJobService } from 'store/services/jobs/withdrawAppliedJob'
 
 function* withdrawAppliedJobReq(action) {
+  const { appliedJobId, accessToken } = action.payload
   try {
-    const payload = {
-      appliedJobId: action.payload.appliedJobId
-    }
-
-    const response = yield call(withdrawAppliedJobService, payload)
-
-    if (response.status === 200 || response.status === 201) {
-      yield put(withdrawAppliedJobSuccess(response.data.data))
-    }
+    const { data } = yield call(withdrawAppliedJobService, { appliedJobId, accessToken })
+    yield put(withdrawAppliedJobSuccess(data.data))
   } catch (error) {
     console.log('error', error)
     yield put(withdrawAppliedJobFailed(error))

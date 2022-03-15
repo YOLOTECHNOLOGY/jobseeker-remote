@@ -5,16 +5,10 @@ import { fetchAppliedJobDetailSuccess, fetchAppliedJobDetailFailed } from 'store
 import { fetchAppliedJobDetailService } from 'store/services/jobs/fetchAppliedJobDetail'
 
 function* fetchAppliedJobDetailReq(action) {
+  const { appliedJobId, accessToken } = action.payload
   try {
-    const payload = {
-      appliedJobId: action.payload,
-    }
-
-    const response = yield call(fetchAppliedJobDetailService, payload)
-
-    if (response.status === 200 || response.status === 201) {
-      yield put(fetchAppliedJobDetailSuccess(response.data.data))
-    }
+    const { data } = yield call(fetchAppliedJobDetailService, { appliedJobId, accessToken })
+    yield put(fetchAppliedJobDetailSuccess(data.data))
   } catch (error) {
     console.log('error', error)
     yield put(fetchAppliedJobDetailFailed(error))

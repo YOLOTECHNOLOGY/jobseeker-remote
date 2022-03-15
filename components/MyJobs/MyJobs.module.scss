@@ -79,7 +79,7 @@
     border-right: 1px solid rgba($lightgrey, 0.6);
 
     & .MuiTabs-root {
-      min-height: 40px;
+      min-height: 40px !important
     }
 
     @include msd {

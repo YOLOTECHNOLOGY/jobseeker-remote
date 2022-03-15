@@ -58,6 +58,7 @@ import {
 import { flat } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { getCookie } from 'helpers/cookies'
 
 /* Images */
 import { FilterIcon } from 'images'
@@ -72,6 +73,7 @@ interface JobSearchPageProps {
   predefinedQuery: any
   predefinedLocation: any
   predefinedCategory: any
+  accessToken: string
 }
 
 type configObject = {
@@ -163,7 +165,7 @@ const renderPopularSearch = () => {
 }
 
 const JobSearchPage = (props: JobSearchPageProps) => {
-  const { seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage, defaultValues, 
+  const { accessToken, seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage, defaultValues, 
     // predefinedQuery, predefinedLocation, predefinedCategory
    } = props
   const router = useRouter()
@@ -171,6 +173,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const firstRender = useFirstRender()
   const { width } = useWindowDimensions()
   const prevScrollY = useRef(0)
+  const userCookie = getCookie('user') || null
 
   // const [isSticky, setIsSticky] = useState(false)
   const [isShowFilter, setIsShowFilter] = useState(false)
@@ -383,17 +386,48 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     handleFetchJobDetail(jobId)
   }
 
-  const handleUpdateJobAlert = (payload) => dispatch(updateJobAlertRequest(payload))
+  const handleUpdateJobAlert = (updateJobAlertData) => {
+    const updateJobAlertPayload = {
+      updateJobAlertData,
+      accessToken
+    }
+    dispatch(updateJobAlertRequest(updateJobAlertPayload))
+  }
 
-  const handleDeleteJobAlert = (alertId) => dispatch(deleteJobAlertRequest(alertId))
+  const handleDeleteJobAlert = (jobAlertId) => {
+    const deleteJobAlertPayload = {
+      jobAlertId,
+      accessToken
+    }
+    dispatch(deleteJobAlertRequest(deleteJobAlertPayload))
+  }
 
-  const handlePostReportJob = (payload) => dispatch(postReportRequest(payload))
+  const handlePostReportJob = (reportJobData) => {
+    const postReportJobPayload = {
+      reportJobData,
+      accessToken
+    }
+    dispatch(postReportRequest(postReportJobPayload))
+  }
 
-  const handleFetchJobAlertsList = () => dispatch(fetchJobAlertsListRequest())
+  const handleFetchJobAlertsList = () => dispatch(fetchJobAlertsListRequest({accessToken}))
   
-  const handleCreateJobAlert = (payload) => dispatch(createJobAlertRequest(payload))
+  const handleCreateJobAlert = (jobAlertData) => {
+    const createJobAlertPayload = {
+      jobAlertData,
+      accessToken,
+      user_id: userCookie.id
+    }
+    dispatch(createJobAlertRequest(createJobAlertPayload))
+  }
 
-  const handlePostSaveJob = (payload) => dispatch(postSaveJobRequest(payload))
+  const handlePostSaveJob = ({ jobId }) => {
+    const postSaveJobPayload = {
+      jobId,
+      accessToken
+    }
+    dispatch(postSaveJobRequest(postSaveJobPayload))
+  }
 
   const updateScrollPosition = () => {
     if (width > 798) {
@@ -536,7 +570,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             Reset Filters
           </MaterialButton>
           </div>
-          
         )}
 
         <div className={styles.moreFiltersSection} onClick={() => handleShowFilter()}>
@@ -567,15 +600,17 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           isCreatingJobAlert={isCreatingJobAlert}
           reportJobReasonList={reportJobReasonList}
           handlePostReportJob={handlePostReportJob}
-
           handlePostSaveJob={handlePostSaveJob}
+          accessToken={accessToken}
         />
       </div>
     </Layout>
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
+  const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
+  
   const { keyword, page } = query
   // store actions
   store.dispatch(fetchConfigRequest())
@@ -630,6 +665,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       key: keyword,
       defaultPage:page ? Number(page) : 1,
       defaultValues,
+      accessToken,
       // predefinedQuery,
       // predefinedLocation,
       // predefinedCategory,

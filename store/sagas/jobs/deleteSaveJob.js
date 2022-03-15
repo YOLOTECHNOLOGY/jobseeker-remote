@@ -5,16 +5,10 @@ import { deleteSaveJobSuccess, deleteSaveJobFailed } from 'store/actions/jobs/de
 import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 
 function* deleteSaveJobReq(action) {
+  const { saveJobId, accessToken } = action.payload
   try {
-    const payload = {
-      saveJobId: action.payload.saveJobId
-    }
-
-    const response = yield call(deleteSaveJobService, payload)
-
-    if (response.status === 200 || response.status === 201) {
-      yield put(deleteSaveJobSuccess(response.data.data))
-    }
+    const { data } = yield call(deleteSaveJobService, { saveJobId, accessToken })
+    yield put(deleteSaveJobSuccess(data.data))
   } catch (error) {
     console.log('error', error)
     yield put(deleteSaveJobFailed(error))

@@ -1,8 +1,8 @@
 import configuredAxios from 'helpers/configuredAxios'
 
-const deleteJobAlertService = (jobAlertId) => {
-  const axios = configuredAxios('job', 'protected')
-  return axios.delete(`/job-alerts/${jobAlertId}/delete`)
+const deleteJobAlertService = (payload) => {
+  const axios = configuredAxios('job', 'protected', '', payload.accessToken)
+  return axios.delete(`/job-alerts/${payload.jobAlertId}/delete`)
 }
 
 export { deleteJobAlertService }

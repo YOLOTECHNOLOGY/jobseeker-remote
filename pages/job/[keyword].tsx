@@ -46,6 +46,7 @@ import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 import { postReportRequest } from 'store/actions/reports/postReport'
+import { postSaveJobRequest} from 'store/actions/jobs/postSaveJob'
 
 /* Styles */
 import styles from './Job.module.scss'
@@ -71,13 +72,15 @@ import {
 interface IJobDetail {
   jobDetail: any,
   applicationHistory: any,
-  config: any
+  config: any,
+  accessToken: any
 }
 
 const Job = ({
   jobDetail,
   applicationHistory,
-  config
+  config,
+  accessToken
 }: IJobDetail) => {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -88,7 +91,7 @@ const Job = ({
 
   const [jobDetailUrl, setJobDetailUrl] = useState('/')
   const [companyUrl, setCompanyUrl] = useState('/')
-  const [recommendedCourses, setRecommendedCourses] = useState(null)
+  const [recommendedCourses, setRecommendedCourses] = useState([])
   const [similarJobs, setSimilarJobs] = useState(null)
 
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
@@ -109,9 +112,9 @@ const Job = ({
   }, [jobDetail])
 
   useEffect(() => {
-    if (recommendedCoursesResponse) setRecommendedCourses(recommendedCoursesResponse)
+    if (recommendedCoursesResponse?.data?.length > 0) setRecommendedCourses( recommendedCoursesResponse.data)
   }, [recommendedCoursesResponse])
-
+  
   useEffect(() => {
     if (similarJobsResponse) setSimilarJobs(similarJobsResponse)
   }, [similarJobsResponse])
@@ -122,8 +125,6 @@ const Job = ({
     }
     return ''
   }
-
-  const handlePostReportJob = (payload) => dispatch(postReportRequest(payload))
 
   const handleBenefitIcon = (benefit) => {
     const Icon = `${benefit.replace(/ /g,'')}Icon`
@@ -154,6 +155,28 @@ const Job = ({
   const handleApplyJob = (jobId) => {
     // eslint-disable-next-line no-console
     console.log(jobId)
+  }
+
+  const handlePostSaveJob = ({ jobId, isSaved }) => {
+    if (isSaved) return 
+    
+    if (accessToken) {
+      const postSaveJobPayload = {
+        jobId,
+        accessToken
+      }
+      dispatch(postSaveJobRequest(postSaveJobPayload))
+    }
+  }
+
+  const handlePostReportJob = (reportJobData) => {
+    if (accessToken) {
+      const postReportJobPayload = {
+        reportJobData,
+        accessToken
+      }
+      dispatch(postReportRequest(postReportJobPayload))
+    }
   }
 
   const handleRedirectToJob = (jobTitle, jobId) => {
@@ -241,7 +264,7 @@ const Job = ({
                     <span>This job is no longer hiring</span>
                   </Text>
                 )}
-                <MaterialButton variant='outlined'>
+                <MaterialButton variant='outlined' onClick={() => handlePostSaveJob({jobId: jobDetail?.id, isSaved: jobDetail?.is_saved})}>
                   {jobDetail?.is_saved ? 'Saved' : 'Save'} Job
                 </MaterialButton>
               </div>
@@ -529,7 +552,9 @@ const Job = ({
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
+  const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
+
   const { keyword, isApplied } = query
   const keywordQuery:any = keyword
   const jobId = keywordQuery?.split('-').pop()
@@ -564,6 +589,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         config,
         jobDetail: jobDetail?.response?.id ? jobDetail?.response : appliedJobDetail?.response?.job,
         applicationHistory: appliedJobDetail?.response?.application_histories || null,
+        accessToken
       }
     }
   }

@@ -7,8 +7,9 @@ import {
 import { postReportService } from 'store/services/reports/postReport'
 
 function* postReportReq(action) {
+  const { reportJobData, accessToken } = action.payload
   try {
-    const { data } = yield call(postReportService, action.payload)
+    const { data } = yield call(postReportService, { reportJobData, accessToken })
     yield put(postReportSuccess(data.data))
   } catch (error) {
     yield put(postReportFailed(error))

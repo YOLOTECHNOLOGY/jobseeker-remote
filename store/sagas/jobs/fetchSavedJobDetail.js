@@ -5,16 +5,10 @@ import { fetchSavedJobDetailSuccess, fetchSavedJobDetailFailed } from 'store/act
 import { fetchSavedJobDetailService } from 'store/services/jobs/fetchSavedJobDetail'
 
 function* fetchSavedJobDetailReq(action) {
+  const { savedJobId, accessToken } = action.payload
   try {
-    const payload = {
-      savedJobId: action.payload,
-    }
-
-    const response = yield call(fetchSavedJobDetailService, payload)
-
-    if (response.status === 200 || response.status === 201) {
-      yield put(fetchSavedJobDetailSuccess(response.data.data))
-    }
+    const { data } = yield call(fetchSavedJobDetailService, { savedJobId, accessToken })
+    yield put(fetchSavedJobDetailSuccess(data.data))
   } catch (error) {
     console.log('error', error)
     yield put(fetchSavedJobDetailFailed(error))

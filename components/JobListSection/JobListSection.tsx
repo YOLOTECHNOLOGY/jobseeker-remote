@@ -57,6 +57,7 @@ interface JobListSectionProps {
   reportJobReasonList?: any
   handlePostReportJob?: Function
   handlePostSaveJob?: Function
+  accessToken: string
 }
 
 const JobListSection = ({ 
@@ -81,7 +82,8 @@ const JobListSection = ({
   isJobDetailFetching,
   reportJobReasonList,
   handlePostReportJob,
-  handlePostSaveJob
+  handlePostSaveJob,
+  accessToken
 }: JobListSectionProps) => {  
   const { width } = useWindowDimensions()
   const router = useRouter()
@@ -99,8 +101,9 @@ const JobListSection = ({
   const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
-    setIsUserAuthenticated(false)
+    setIsUserAuthenticated(accessToken ? true : false)
     window.addEventListener('scroll', updateScrollPosition)
+
     return () => window.removeEventListener('scroll', updateScrollPosition)
   }, [])
 
@@ -111,10 +114,11 @@ const JobListSection = ({
 
   const handleCreateJobAlertData = (email) => {
     const { query } = router
+
     createJobAlert({
       email: email,
       keyword: formatKeywordAndLocation(query?.keyword, 'keyword'),
-      location: formatKeywordAndLocation(query?.keyword, 'location'),
+      location_key: formatKeywordAndLocation(query?.keyword, 'location'),
       job_category_key: query?.category ? query?.category : 'all',
       industry_key: query?.industry ? formatToUnderscore(query?.industry) : 'all',
       xp_lvl_key: query?.workExperience ? formatToReplace(query?.workExperience, 'to') : 'all',
@@ -190,7 +194,7 @@ const JobListSection = ({
                   className={styles.jobListOptionAlertsItem}
                   onClick={() => {
                     if (isUserAuthenticated) handleCreateJobAlert()
-                    if (!isUserAuthenticated) setIsShowModalEnableJobAlerts(true)
+                    if (!isUserAuthenticated) handleCreateJobAlert(null)
                   }}
                 >
                   <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
@@ -289,7 +293,7 @@ const JobListSection = ({
         isUpdatingJobAlert={isUpdatingJobAlert}
         isDeletingJobAlert={isDeletingJobAlert}
         isCreatingJobAlert={isCreatingJobAlert}
-        isPublicPostReportJob={isUserAuthenticated === false}
+        isPublicPostReportJob={!isUserAuthenticated}
       />
       <ModalReportJob 
         isShowReportJob={isShowReportJob} 
