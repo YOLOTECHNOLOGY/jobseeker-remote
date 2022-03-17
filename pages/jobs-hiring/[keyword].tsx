@@ -381,7 +381,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   // TODO: Check if User is LoggedIn then change status: 'protected'
   const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
 
-  const handleSelectedJobId = (jobId) => {
+  const handleSelectedJobId = (jobId, jobTitle) => {
+    if (width < 799) {
+      router.push(`/job/${slugify(jobTitle.toLowerCase())}-${jobId}`)
+      return
+    }
     setSelectedJobId(jobId)
     handleFetchJobDetail(jobId)
   }
@@ -424,7 +428,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handlePostSaveJob = ({ jobId }) => {
     const postSaveJobPayload = {
       jobId,
-      accessToken
+      accessToken,
+      user_id: userCookie.id
     }
     dispatch(postSaveJobRequest(postSaveJobPayload))
   }

@@ -42,7 +42,7 @@ const JobCard = ({
   return (
     <div 
       className={classNamesCombined([styles.JobCard, isSelectedClass])} 
-      onClick={() => handleSelectedId(id)}
+      onClick={() => handleSelectedId(id, title)}
     >
       <div className={styles.JobCardImageWrapper}>
         <div className={styles.JobCardImageContent} style={{ backgroundImage: `url(${image})`}} />

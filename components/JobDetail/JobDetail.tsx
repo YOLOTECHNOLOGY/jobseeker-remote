@@ -100,6 +100,13 @@ const JobDetail = ({
   const isCategorySaved = category === 'saved'
   const publicJobUrl = isCategoryApplied ? `${jobDetailUrl}?isApplied=true` : jobDetailUrl
 
+  const checkHasApplicationWithdrawn = () => {
+    if (isCategoryApplied && applicationHistory?.length > 0 ) {
+      return applicationHistory[0].value.includes("withdrawn")
+    }
+    return false
+  }
+  
   return (
     <div className={styles.JobDetail}>
       <div className={classNamesCombined([styles.JobDetailOption, isStickyClass])}>
@@ -126,7 +133,7 @@ const JobDetail = ({
                 </div>
               </>
             )}
-            {isCategoryApplied && (
+            {isCategoryApplied && !checkHasApplicationWithdrawn() && (
               <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalWithdrawApplication(true)}>
                 <Text textStyle='lg'>Withdraw Application</Text>
               </div>
@@ -170,7 +177,15 @@ const JobDetail = ({
                   </Text>
                 )}
 
-                <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob({jobId: selectedJob?.id})}>
+                <MaterialButton 
+                  variant='outlined' 
+                  capitalize 
+                  onClick={() => {
+                    if (!isCategorySaved) {
+                      handlePostSaveJob({jobId: selectedJob?.id})
+                    }
+                  }}
+                >
                   { isCategorySaved ? 'Saved' : 'Save Job' }
                 </MaterialButton>
               </div>

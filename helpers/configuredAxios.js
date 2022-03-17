@@ -73,8 +73,7 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     const jobToken = (getCookie('accessToken') || serverAccessToken)
     headers = {
       ...headers,
-      'Bossjob-Token': `Bearer ${jobToken}`,
-      'Authorization': `Bearer ${getCookie('accessToken')}`,
+      'Authorization': `Bearer ${jobToken}`,
     }
   }
   else if (baseURL === 'jobseeker' && type === 'protected' && serverAccessToken) {

@@ -18,6 +18,8 @@ import { fetchAppliedJobDetailRequest } from 'store/actions/jobs/fetchAppliedJob
 
 import { withdrawAppliedJobRequest } from 'store/actions/jobs/withdrawAppliedJob'
 
+import { postReportRequest } from 'store/actions/reports/postReport'
+
 /* Components */
 import Layout from 'components/Layout'
 import SEO from 'components/SEO'
@@ -30,6 +32,7 @@ import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 
 import ModalShare from 'components/ModalShare'
 import ModalWithdrawApplication from 'components/ModalWithdrawApplication'
+import ModalReportJob from 'components/ModalReportJob'
 
 import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
@@ -40,8 +43,6 @@ import { titleCase } from 'helpers/formatter'
 
 /* Styles */
 import styles from './MyJobs.module.scss'
-
-
 
 const theme = createTheme({
   components: {
@@ -58,19 +59,23 @@ const theme = createTheme({
 interface IMyJobs {
   category?: string
   accessToken: string
+  config: any
 }
 
 const MyJobs = ({
   category,
-  accessToken
+  accessToken,
+  config
 }: IMyJobs) => {
   const prevScrollY = useRef(0)
   const router = useRouter()
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
   const isAppliedCategory = category === 'applied'
+  const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
   
   const [isSticky, setIsSticky] = useState(false)
+  const [isShowReportJob, setIsShowReportJob] = useState(false)
 
   const cx = classNames.bind(styles)
   const isAppliedCategoryActive = cx({ MyJobsMenuLinkIsActive: isAppliedCategory})
@@ -210,6 +215,16 @@ const MyJobs = ({
     return ''
   }
 
+  const handlePostReportJob = (reportJobData) => {
+    if (accessToken) {
+      const postReportJobPayload = {
+        reportJobData,
+        accessToken
+      }
+      dispatch(postReportRequest(postReportJobPayload))
+    }
+  }
+
   const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], isAppliedCategory ? appliedJobId : selectedJob?.['id'])
   const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
@@ -305,6 +320,7 @@ const MyJobs = ({
                 applicationHistory={applicationHistories}
                 setIsShowModalShare={setIsShowModalShare}
                 setIsShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
+                setIsShowReportJob={setIsShowReportJob}
               />
             )}
             {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && !selectedJob && (
@@ -332,6 +348,15 @@ const MyJobs = ({
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}
       />
+
+      <ModalReportJob 
+        isShowReportJob={isShowReportJob} 
+        handleShowReportJob={setIsShowReportJob} 
+        reportJobReasonList={reportJobReasonList}
+        selectedJobId={selectedJob?.['id']}
+        handlePostReportJob={handlePostReportJob}
+      />
+
       <ModalWithdrawApplication
         appliedJobId={appliedJobId}
         isShowModalWithdrawApplication={isShowModalWithdrawApplication}
