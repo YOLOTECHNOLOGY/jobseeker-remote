@@ -479,12 +479,12 @@ const Job = ({
                     tagName='p' 
                     bold
                   >
-                    {job.truncated_job_title}
+                    {job.truncated_job_title || job.job_title}
                   </Text>
                   <Text textStyle='base' tagName='p'>{job.company_name}</Text>
                   <Text textStyle='base' tagName='p' textColor='darkgrey'>{job.location_value}</Text>
                   <Text textStyle='base' tagName='p' textColor='darkgrey'>{job.salary_range_value}</Text>
-                  <Text textStyle='xsm' tagName='p'>Posted on {job.published_at}</Text>
+                  {job.published_at && <Text textStyle='xsm' tagName='p'>Posted on {job.published_at}</Text> }
                   <div className={styles.JobDetailSidebarCardApply} onClick={() => handleApplyJob(job.id)}>
                     <Text 
                       textStyle='base' 

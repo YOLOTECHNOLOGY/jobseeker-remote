@@ -1,16 +1,36 @@
+import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+
+// @ts-ignore
+import { END } from 'redux-saga'
+
+/* Action Creators */
+import { wrapper } from 'store'
+
 /* Components */
 import MyJobs from 'components/MyJobs'
 
 const Saved = (props: any) => {
-  const { accessToken } = props
+  const { accessToken, config } = props
   
   return (
-    <MyJobs category='saved' accessToken={accessToken}/>
+    <MyJobs 
+      category='saved' 
+      config={config}
+      accessToken={accessToken}
+    />
   )
 }
 
-export async function getServerSideProps({ req }) {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies.accessToken
+
+  store.dispatch(fetchConfigRequest())
+  store.dispatch(END)
+
+  await (store as any).sagaTask.toPromise()
+  const storeState = store.getState()
+  const config = storeState.config.config.response
+
   if (!accessToken) {
     return { 
       redirect: { 
@@ -21,9 +41,10 @@ export async function getServerSideProps({ req }) {
   }
   return {
     props: {
-      accessToken
+      accessToken,
+      config
     },
   }
-}
+})
 
 export default Saved

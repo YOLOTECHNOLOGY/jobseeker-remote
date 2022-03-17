@@ -238,7 +238,7 @@ const JobListSection = ({
                   postedAt={`${moment(new Date(job.updated_at)).format('DD MMMM YYYY')}`}
                   selectedId={selectedJobId}
                   handleSelectedId={() => {
-                    handleSelectedJobId(job.id)
+                    handleSelectedJobId(job.id, job.job_title)
                   }}
                 />
               ))}
