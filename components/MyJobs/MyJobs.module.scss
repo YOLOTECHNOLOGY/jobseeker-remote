@@ -3,6 +3,10 @@
 
 .container {
   @extend .GlobalContainer;
+
+  @include msd {
+    padding: 0 !important;
+  }
 }
 
 .MyJobsContent {
@@ -58,10 +62,6 @@
         color: $primaryBlue;
       }
     }
-
-    @include msd {
-      height: 58px;
-    }
   }
 
   button {
@@ -109,10 +109,6 @@
 
   &Content {
     margin-top: 40px;
-
-    @include msd {
-      margin-top: 58px;
-    }
   }
 
   @include msd {
