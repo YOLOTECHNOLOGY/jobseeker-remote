@@ -56,6 +56,8 @@ import watchResetPassword from 'store/sagas/auth/resetPassword'
 import watchRegisterJobseeker from 'store/sagas/auth/registerJobseeker'
 import watchRegisterRecruiter from 'store/sagas/auth/registerRecruiter'
 
+import watchLogout from 'store/sagas/auth/logout'
+
 // Recruiters
 import watchFetchRecruiterSubscriptionFeature from 'store/sagas/recruiters/fetchRecruiterSubscriptionFeature'
 
@@ -102,6 +104,7 @@ function* rootSaga() {
     watchCheckResetPasswordCode(),
     watchSendResetPasswordCode(),
     watchResetPassword(),
+    watchLogout(),
 
     watchFetchRecruiterSubscriptionFeature(),
 

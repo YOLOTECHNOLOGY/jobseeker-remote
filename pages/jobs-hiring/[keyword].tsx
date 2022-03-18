@@ -473,7 +473,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           <MaterialLocationField
             className={styles.locationField}
             // defValue={defaultLocation}
-            defValue={urlLocation}
+            defaultValue={urlLocation}
             onChange={onLocationSearch}
           />
           <MaterialButton variant='contained' capitalize>
