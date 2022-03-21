@@ -8,6 +8,8 @@ import resetPassword from './resetPassword'
 import registerJobseeker from './registerJobseeker'
 import registerRecruiter from './registerRecruiter'
 
+import logout from './logout'
+
 export default {
   socialLogin,
   login,
@@ -17,5 +19,7 @@ export default {
   resetPassword,
   
   registerJobseeker,
-  registerRecruiter
+  registerRecruiter,
+
+  logout
 }

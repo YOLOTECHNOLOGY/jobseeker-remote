@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 // import { useRouter } from 'next/router'
 
 /* Redux */
@@ -11,6 +11,8 @@ import Text from 'components/Text'
 
 import styles from './HamburgerMenu.module.scss'
 
+import { getCookie } from 'helpers/cookies'
+
 interface HamburgerMenuProps {
   openState: boolean
   toggleMenu: Function
@@ -18,6 +20,11 @@ interface HamburgerMenuProps {
 
 const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
   // const router = useRouter()
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  useEffect(() => {
+    setIsAuthenticated(getCookie('accessToken') ? true : false)
+  }, [])
 
   useEffect(() => {
     //  disable body from scrolling when hamburger menu is open
@@ -47,6 +54,16 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
             </Link>
             <Link
               className={styles.defaultLink}
+              to='/companies'
+              title='Companies'
+              aTag
+            >
+              <li className={styles.menuList} onClick={() => toggleMenu()}>
+                <Text textStyle='xl'>Companies</Text>
+              </li>
+            </Link>
+            <Link
+              className={styles.defaultLink}
               to='https://academy.bossjob.ph/courses/search-courses'
               aTag
               title='Courses'
@@ -55,36 +72,89 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 <Text textStyle='xl'>Courses</Text>
               </li>
             </Link>
-            <Link
-              className={styles.defaultLink}
-              to='https://blog.bossjob.ph/'
-              aTag
-              title='Career Guide'
-            >
-              <li className={styles.menuList} onClick={() => toggleMenu()}>
-                <Text textStyle='xl'>Career Guide</Text>
-              </li>
-            </Link>
-            <Link
-              className={styles.defaultLink}
-              to={`${process.env.OLD_PROJECT_URL}/employer`}
-              aTag
-              title='Employers'
-            >
-              <li className={styles.menuList} onClick={() => toggleMenu()}>
-                <Text textStyle='xl'>Employers</Text>
-              </li>
-            </Link>
-            <Link className={styles.defaultLink} to='/' title='Log In'>
-              <li className={styles.menuList} onClick={() => toggleMenu()}>
-                <Text textStyle='xl'>Log In</Text>
-              </li>
-            </Link>
-            <Link className={styles.defaultLink} to='/' title='Sign Up'>
-              <li className={styles.menuList} onClick={() => toggleMenu()}>
-                <Text textStyle='xl'>Sign Up</Text>
-              </li>
-            </Link>
+            {!isAuthenticated && (
+              <>
+                <Link
+                  className={styles.defaultLink}
+                  to='https://blog.bossjob.ph/'
+                  aTag
+                  title='Career Guide'
+                >
+                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                    <Text textStyle='xl'>Career Guide</Text>
+                  </li>
+                </Link>
+                <Link
+                  className={styles.defaultLink}
+                  to={`${process.env.OLD_PROJECT_URL}/employer`}
+                  aTag
+                  title='Employers'
+                >
+                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                    <Text textStyle='xl'>Employers</Text>
+                  </li>
+                </Link>
+                <Link className={styles.defaultLink} to='/login' title='Log In'>
+                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                    <Text textStyle='xl'>Log In</Text>
+                  </li>
+                </Link>
+                <Link className={styles.defaultLink} to='/register' title='Sign Up'>
+                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                    <Text textStyle='xl' className={styles.activeLink}>Sign Up</Text>
+                  </li>
+                </Link>
+              </>
+            )}
+            {isAuthenticated && (
+              <>
+                <Link
+                  className={styles.defaultLink}
+                  to='/'
+                  aTag
+                  title='Chats'
+                >
+                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                    <Text textStyle='xl'>Chats</Text>
+                  </li>
+                </Link>
+                <Link
+                  className={styles.defaultLink}
+                  to='/jobseeker-complete-profile/1'
+                  aTag
+                  title='Manage Resume'
+                >
+                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                    <Text textStyle='xl' className={styles.activeLink}>Manage Resume</Text>
+                  </li>
+                </Link>
+                <Link className={styles.defaultLink} to='/my-jobs/saved?page=1' title='My Jobs'>
+                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                    <Text textStyle='xl'>My Jobs</Text>
+                  </li>
+                </Link>
+                <Link className={styles.defaultLink} to='/' title='Account Settings'>
+                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                    <Text textStyle='xl'>Account Settings</Text>
+                  </li>
+                </Link>
+                <Link className={styles.defaultLink} to='/' title='BossPoints'>
+                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                    <Text textStyle='xl'>BossPoints</Text>
+                  </li>
+                </Link>
+                <Link className={styles.defaultLink} to='/' title='Career Guide'>
+                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                    <Text textStyle='xl'>Career Guide</Text>
+                  </li>
+                </Link>
+                <Link className={styles.defaultLink} to='https://blog.bossjob.ph/' aTag external title='Log Out'>
+                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                    <Text textStyle='xl'>Log Out</Text>
+                  </li>
+                </Link>
+              </>
+            )}
           </React.Fragment>
         </ul>
       </div>

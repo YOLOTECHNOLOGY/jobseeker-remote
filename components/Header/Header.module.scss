@@ -22,6 +22,7 @@
   height: 70px;
   margin-top: 0;
   border-bottom: 1px solid rgba($lightgrey, 0.5);
+  position: relative;
 
   @include msd {
     position: sticky;
@@ -36,6 +37,7 @@
 
 .headerContainer {
   @include containers();
+  position: relative;
 }
 
 .headerLogo {
@@ -154,6 +156,10 @@
     justify-content: center;
     align-items: center;
     position: relative;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &PlaceHolder {
@@ -213,5 +219,39 @@
     justify-content: center;
     align-items: center;
     margin-left: auto;
+  }
+}
+
+
+.headerMenu {
+  position: absolute;
+  width: 320px;
+  top: 85px;
+  right: 30px;
+  background-color: $white-3;
+  z-index: 9999;
+  box-shadow: $box-shadow-1;
+
+  @include msd {
+    display: none;
+  }
+
+  &List {
+    list-style-type: none;
+  }
+
+  &Link {
+    padding: 15px 20px;
+    display: block;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &Item {
+    &:not(:last-child) {
+      border-bottom: 1px solid rgba($lightgrey, 0.5);
+    }
   }
 }
