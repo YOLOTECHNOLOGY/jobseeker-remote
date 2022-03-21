@@ -2,19 +2,16 @@ import { call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
 import { LOGOUT_REQUEST } from 'store/types/auth/logout'
 import {
+  logoutFailed,
   logoutSuccess,
 } from 'store/actions/auth/logout'
 import { logoutService } from 'store/services/auth/logout'
 import { getCookie, removeCookie } from 'helpers/cookies'
 
 function* logoutReq() {
-  console.log(getCookie('accessToken'))
-
   const payload = {
     accessToken: getCookie('accessToken')
   }
-
-  console.log(payload)
 
   try {
     const response = yield call(logoutService, payload)
@@ -25,7 +22,13 @@ function* logoutReq() {
       removeCookie('splan')
       yield put(push('/login'))
     }
-  } catch (err) {}
+  } catch (err) {
+    yield put(logoutFailed(err))
+    removeCookie('user')
+    removeCookie('accessToken')
+    removeCookie('splan')
+    yield put(push('/login'))
+  }
 }
 
 export default function* logout() {

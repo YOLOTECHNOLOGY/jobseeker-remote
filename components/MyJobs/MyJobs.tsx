@@ -12,6 +12,8 @@ import { Tabs, Tab } from '@mui/material'
 /* Redux Actions */
 import { fetchSavedJobsListRequest } from 'store/actions/jobs/fetchSavedJobsList'
 import { fetchSavedJobDetailRequest } from 'store/actions/jobs/fetchSavedJobDetail'
+import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
+import { postSaveJobRequest } from 'store/actions/jobs/postSaveJob'
 
 import { fetchAppliedJobsListRequest } from 'store/actions/jobs/fetchAppliedJobsList'
 import { fetchAppliedJobDetailRequest } from 'store/actions/jobs/fetchAppliedJobDetail'
@@ -40,6 +42,7 @@ import JobDetailLoader from 'components/Loader/JobDetail'
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { titleCase } from 'helpers/formatter'
+import { getCookie } from 'helpers/cookies'
 
 /* Styles */
 import styles from './MyJobs.module.scss'
@@ -67,6 +70,7 @@ const MyJobs = ({
   accessToken,
   config
 }: IMyJobs) => {
+  const userCookie = getCookie('user') || null
   const prevScrollY = useRef(0)
   const router = useRouter()
   const dispatch = useDispatch()
@@ -114,17 +118,7 @@ const MyJobs = ({
   }, [])
 
   useEffect(() => {
-    const payload = {
-      accessToken,
-      size: router.query?.size,
-      page: router.query?.page ? Number(router.query.page) : 1,
-    }
-    if (isAppliedCategory) {
-      dispatch(fetchAppliedJobsListRequest(payload))
-      return
-    }
-
-    dispatch(fetchSavedJobsListRequest(payload))
+    handleFetchMyJobsList()
   }, [router.query])
 
   useEffect(() => {
@@ -165,6 +159,20 @@ const MyJobs = ({
       prevScrollY.current = window.pageYOffset
       setIsSticky(prevScrollY.current >= 69 ? true : false)
     }
+  }
+
+  const handleFetchMyJobsList = () => {
+    const payload = {
+      accessToken,
+      size: router.query?.size,
+      page: router.query?.page ? Number(router.query.page) : 1,
+    }
+    if (isAppliedCategory) {
+      dispatch(fetchAppliedJobsListRequest(payload))
+      return
+    }
+
+    dispatch(fetchSavedJobsListRequest(payload))
   }
 
   const handleSelectedJobId = (jobId) => {
@@ -225,9 +233,27 @@ const MyJobs = ({
     }
   }
 
+  const handlePostSaveJob = ({ jobId }) => {
+    const postSaveJobPayload = {
+      jobId,
+      accessToken,
+      user_id: userCookie.id
+    }
+    dispatch(postSaveJobRequest(postSaveJobPayload))
+    // handleFetchMyJobsList()
+  }
+
+  const handleDeleteSavedJob = ({savedJobId}) => {
+    const deleteJobPayload = {
+      accessToken,
+      savedJobId
+    }
+    dispatch(deleteSaveJobRequest(deleteJobPayload))
+    handleFetchMyJobsList()
+  }
+
   const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], isAppliedCategory ? appliedJobId : selectedJob?.['id'])
   const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
-
 
   return (
     <Layout>
@@ -302,9 +328,11 @@ const MyJobs = ({
                 />
               ))}
             </div>
-            <div className={styles.paginationWrapper}>
-              <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} totalPages={totalPages || 1} />
-            </div>
+            {!isSavedJobsListFetching || !isAppliedJobsListFetching && (
+              <div className={styles.paginationWrapper}>
+                <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} totalPages={totalPages || 1} />
+              </div>
+            )}
           </div>
           <div className={styles.MyJobsDetailInfoSection}>
             {(isAppliedJobDetailFetching || isSavedJobDetailFetching) && (
@@ -321,11 +349,14 @@ const MyJobs = ({
                 setIsShowModalShare={setIsShowModalShare}
                 setIsShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
                 setIsShowReportJob={setIsShowReportJob}
+                handleDeleteSavedJob={handleDeleteSavedJob}
+                handlePostSaveJob={handlePostSaveJob}
+                savedJobsList={savedJobsListResponse?.data?.saved_jobs || []}
               />
             )}
             {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && !selectedJob && (
               <div className={styles.MyJobsDetailInfoEmpty}>
-                <Text textStyle='xl' bold>No {category} jobs found </Text>
+                {/* <Text textStyle='xl' bold>No {category} jobs found </Text> */}
               </div>
             )}
           </div>
