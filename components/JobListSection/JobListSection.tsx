@@ -57,6 +57,9 @@ interface JobListSectionProps {
   reportJobReasonList?: any
   handlePostReportJob?: Function
   handlePostSaveJob?: Function
+  handleDeleteSavedJob?: Function
+  isPostingSaveJob?: boolean
+  savedJobsList?: any 
   accessToken: string
 }
 
@@ -83,6 +86,9 @@ const JobListSection = ({
   reportJobReasonList,
   handlePostReportJob,
   handlePostSaveJob,
+  handleDeleteSavedJob,
+  isPostingSaveJob,
+  savedJobsList,
   accessToken
 }: JobListSectionProps) => {  
   const { width } = useWindowDimensions()
@@ -260,6 +266,9 @@ const JobListSection = ({
                 jobDetailUrl={jobDetailUrl}
                 companyUrl={companyUrl}
                 handlePostSaveJob={handlePostSaveJob}
+                handleDeleteSavedJob={handleDeleteSavedJob}
+                isPostingSaveJob={isPostingSaveJob}
+                savedJobsList={savedJobsList}
               />
             )}
           </div>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 /* Vendors */
 import classNames from 'classnames/bind'
@@ -21,6 +22,9 @@ import ReadMore from 'components/ReadMore'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
+
+/* Helpers */
+import { getCookie } from 'helpers/cookies'
 
 /* Styles */
 import styles from './JobDetail.module.scss'
@@ -53,7 +57,10 @@ interface IJobDetailProps {
   jobDetailUrl?: string
   category?: string
   handlePostSaveJob?: Function
+  handleDeleteSavedJob?: Function
   applicationHistory?: any
+  isPostingSaveJob?: boolean
+  savedJobsList?: any
 }
 
 const JobDetail = ({
@@ -66,12 +73,28 @@ const JobDetail = ({
   companyUrl,
   category,
   handlePostSaveJob,
-  applicationHistory
+  handleDeleteSavedJob,
+  applicationHistory,
+  isPostingSaveJob,
+  savedJobsList
 }: IJobDetailProps) => {
+  const router = useRouter()
+  const userCookie = getCookie('user') || null
   const [jobDetailOption, setJobDetailOption] = useState(false)
+  const [isSaveClicked, setIsSaveClicked] = useState(false)
+  const [isSavedJob, setIsSavedJob] = useState(false)
+  const [currentSavedJob, setCurrentSavedJob] = useState(null)
   
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
+
+  useEffect(() => {
+    if (!!savedJobsList?.length) {
+      const savedJob = savedJobsList.filter((job) => job.job.id === selectedJob.id)[0]
+      setIsSavedJob(savedJob ? true : false)
+      setCurrentSavedJob(savedJob)
+    }
+  }, [savedJobsList, selectedJob])
 
   const handleBenefitIcon = (benefit) => {
     const Icon = `${benefit.replace(/ /g,'')}Icon`
@@ -165,10 +188,36 @@ const JobDetail = ({
             <JobTag tag={selectedJob?.job_type_value} />
             <div className={styles.JobDetailButtonsWrapper}>
               <div className={styles.JobDetailButtons}>
-                {selectedJob?.status_key === 'active'  && (
-                  <MaterialButton variant='contained' capitalize>
-                    <Link to={selectedJob?.external_apply_url} external>Apply Now</Link>
-                  </MaterialButton>
+                {selectedJob?.status_key === 'active' && !isCategoryApplied && (
+                  <>
+                    <MaterialButton variant='contained' capitalize>
+                      <Link to={selectedJob?.external_apply_url} external>Apply Now</Link>
+                    </MaterialButton>
+
+                    <MaterialButton 
+                      variant='outlined' 
+                      capitalize 
+                      isLoading={isSaveClicked || isPostingSaveJob}
+                      onClick={() => {
+                        if (userCookie) {
+                          if (!isCategorySaved && !isSavedJob) {
+                            handlePostSaveJob({jobId: selectedJob?.id})
+                          }
+
+                          if (isSavedJob) {
+                            handleDeleteSavedJob({savedJobId: currentSavedJob.id})
+                          }
+                        }
+
+                        if (!userCookie) {
+                          setIsSaveClicked(true)
+                          router.push('/login?redirect=jobs-hiring/job-search')
+                        }
+                      }}
+                    >
+                      { isSavedJob || isCategorySaved ? 'Saved' : 'Save Job' }
+                    </MaterialButton>
+                  </>
                 )}
                 {selectedJob?.status_key !== 'active' && (
                   <Text textStyle='base' className={styles.JobDetailStatus}>
@@ -176,18 +225,6 @@ const JobDetail = ({
                     <span>This job is no longer hiring</span>
                   </Text>
                 )}
-
-                <MaterialButton 
-                  variant='outlined' 
-                  capitalize 
-                  onClick={() => {
-                    if (!isCategorySaved) {
-                      handlePostSaveJob({jobId: selectedJob?.id})
-                    }
-                  }}
-                >
-                  { isCategorySaved ? 'Saved' : 'Save Job' }
-                </MaterialButton>
               </div>
               {(!isCategoryApplied || !isCategorySaved) && (
                 <Text textStyle='xsm' className={styles.JobDetailPostedAt}>

@@ -27,6 +27,8 @@ import { createJobAlertRequest } from 'store/actions/alerts/createJobAlert'
 import { postReportRequest } from 'store/actions/reports/postReport'
 
 import { postSaveJobRequest} from 'store/actions/jobs/postSaveJob'
+import { fetchSavedJobsListRequest } from 'store/actions/jobs/fetchSavedJobsList'
+import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
@@ -202,6 +204,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const jobAlertListResponse = useSelector((store: any) => store.alerts.fetchJobAlertsList.response)
   const isDeletingJobAlert = useSelector((store: any) => store.alerts.deleteJobAlert.fetching)
   const isUpdatingJobAlert = useSelector((store: any) => store.alerts.updateJobAlert.fetching)
+
+  const isPostingSaveJob = useSelector((store: any) => store.job.postSaveJob.fetching)
+  const savedJobsListResponse = useSelector((store: any) => store.job.savedJobsList.response)
 
   const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
     router.query,
@@ -388,6 +393,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     }
     setSelectedJobId(jobId)
     handleFetchJobDetail(jobId)
+    handleFetchSavedJobsList()
   }
 
   const handleUpdateJobAlert = (updateJobAlertData) => {
@@ -432,6 +438,23 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       user_id: userCookie.id
     }
     dispatch(postSaveJobRequest(postSaveJobPayload))
+    handleFetchSavedJobsList()
+  }
+
+  const handleFetchSavedJobsList = () => {
+    const savedJobsPayload = {
+      accessToken
+    }
+    dispatch(fetchSavedJobsListRequest(savedJobsPayload))
+  }
+
+  const handleDeleteSavedJob = ({savedJobId}) => {
+    const deleteJobPayload = {
+      accessToken,
+      savedJobId
+    }
+    dispatch(deleteSaveJobRequest(deleteJobPayload))
+    handleFetchSavedJobsList()
   }
 
   const updateScrollPosition = () => {
@@ -606,6 +629,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           reportJobReasonList={reportJobReasonList}
           handlePostReportJob={handlePostReportJob}
           handlePostSaveJob={handlePostSaveJob}
+          handleDeleteSavedJob={handleDeleteSavedJob}
+          isPostingSaveJob={isPostingSaveJob}
+          savedJobsList={savedJobsListResponse?.data?.saved_jobs || []}
           accessToken={accessToken}
         />
       </div>
