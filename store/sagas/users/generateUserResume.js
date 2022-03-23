@@ -13,6 +13,8 @@ import {
 import { generateUserResumeService } from 'store/services/users/generateUserResume'
 import { completeUserProfileService } from 'store/services/users/completeUserProfile'
 
+import { getItem, removeItem } from 'helpers/localStorage'
+
 function* generateUserResumeReq({ payload }) {
   const { accessToken, redirect } = payload
   try {
@@ -28,6 +30,8 @@ function* generateUserResumeReq({ payload }) {
 }
 
 function* completeUserProfileSaga(redirect, accessToken) {
+  const isFromCreateResume = getItem('isFromCreateResume')
+
   try {
     const { data } = yield call(completeUserProfileService, { accessToken })
     yield put(completeUserProfileSuccess(data.data))
@@ -37,6 +41,12 @@ function* completeUserProfileSaga(redirect, accessToken) {
       url = redirect
     }
 
+    if (isFromCreateResume && isFromCreateResume === '1') {
+      url = `${process.env.OLD_PROJECT_URL}/dashboard/profile/jobseeker`
+    }
+
+    removeItem('isFromCreateResume')
+    removeItem('isCreateFreeResume')
     yield put(push(url))
   } catch (error) {
     yield put(completeUserProfileFailed(error))

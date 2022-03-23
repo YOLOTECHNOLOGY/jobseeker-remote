@@ -41,6 +41,13 @@ const PublicHeader = () => {
                 </Link>
               </li>
               <li className={styles.headerLink}>
+                <Link title='Companies' to='/companies' aTag>
+                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
+                    Companies
+                  </Text>
+                </Link>
+              </li>
+              <li className={styles.headerLink}>
                 <Link title='Courses' to='https://academy.bossjob.ph/courses/search-courses' aTag>
                   <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
                     Courses

@@ -46,7 +46,7 @@ import {
   getJobCategoryIds,
 } from 'helpers/jobPayloadFormatter'
 import { formatSalary, removeEmptyOrNullValues } from 'helpers/formatter'
-import { removeItem, setItem } from 'helpers/localStorage'
+import { removeItem, setItem, getItem } from 'helpers/localStorage'
 import { STORAGE_NAME } from 'helpers/richTextEditor'
 
 // Styles
@@ -58,8 +58,10 @@ const Step3 = (props: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props
+  const isFromCreateResume = getItem('isFromCreateResume') === '1'
+  
   const nextBtnUrl = router.query?.redirect ? `/jobseeker-complete-profile/1102?redirect=${router.query.redirect}` : '/jobseeker-complete-profile/1102'
-  const backBtnUrl = router.query?.redirect ? `/jobseeker-complete-profile/10?redirect=${router.query.redirect}` : '/jobseeker-complete-profile/10'
+  const backBtnUrl = router.query?.redirect ? `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}?redirect=${router.query.redirect}` : `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}`
 
   const locList = getLocationList(config)
   const jobCategoryList = getJobCategoryList(config)
