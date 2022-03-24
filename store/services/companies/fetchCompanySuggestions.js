@@ -3,7 +3,7 @@ import queryString from 'query-string'
 
 const fetchCompanySuggestionsService = (payload) => {
   const axios = configuredAxios('company', 'public')
-  return axios.get(`/companies/suggested-search?${queryString.stringify(payload)}`)
+  return axios.get(`/suggested-search?${queryString.stringify(payload)}`)
 }
 
 export { fetchCompanySuggestionsService }
