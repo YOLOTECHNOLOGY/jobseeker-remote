@@ -4,7 +4,7 @@ import configuredAxios from 'helpers/configuredAxios'
 
 const fetchJobDetailService =(payload) => {
   const axios = configuredAxios('job', payload.status)
-  return axios.get(`/jobs/${payload.jobId}`)
+  return axios.get(`/${payload.jobId}`)
 }
 
 export { fetchJobDetailService }
