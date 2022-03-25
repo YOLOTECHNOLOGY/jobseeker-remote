@@ -32,7 +32,7 @@ import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
-import MaterialTextField from 'components/MaterialTextField'
+import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
@@ -190,6 +190,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const { keyword, ...rest } = router.query
   const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
   const [hasMoreFilters, setHasMoreFilters] = useState(false)
+  const [suggestionList, setSuggestionList] = useState([])
 
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
@@ -314,6 +315,17 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     queryObject = Object.assign({}, { ...rest, sort: val.length > 0 ? 2 : 1 })
     const queryParam = conditionChecker(val, predefinedLocation, predefinedCategory)
     updateUrl(queryParam, queryObject)
+  }
+
+  const handleSuggestionSearch = (val) => {
+      if (val !== '') {
+        fetch(
+          `${
+            process.env.JOB_BOSSJOB_URL
+          }/suggested-search?size=5&query=${val}`
+        ).then((resp)=>resp.json())
+        .then((data)=>setSuggestionList(data.data.items))
+    }
   }
 
   const onLocationSearch = (event, value) => {
@@ -479,19 +491,24 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         ])}
       >
         <div className={styles.searchAndLocationContainer}>
-          <MaterialTextField
+          <MaterialTextFieldWithSuggestionList
             id='search'
             label='Search for job title, keyword or company'
             variant='outlined'
             size='small'
             className={styles.searchField}
             defaultValue={urlQuery}
+            searchFn={handleSuggestionSearch}
+            onSelect={(val) => {
+                onKeywordSearch(val)
+              }}
             onKeyPress={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()
                 onKeywordSearch((e.target as HTMLInputElement).value)
               }
             }}
+            options={suggestionList}
           />
           <MaterialLocationField
             className={styles.locationField}

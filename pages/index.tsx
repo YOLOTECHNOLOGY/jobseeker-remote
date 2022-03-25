@@ -22,8 +22,8 @@ import LazyLoad from 'components/LazyLoad'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
-import MaterialTextField from 'components/MaterialTextField'
 import MaterialLocationField from 'components/MaterialLocationField'
+import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 
 /* Helpers*/
 import { categoryParser, conditionChecker } from 'helpers/jobPayloadFormatter'
@@ -69,6 +69,7 @@ const Home = (props: HomeProps) => {
   const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
   const [locationValue, setLocationValue] = useState(null)
+  const [suggestionList, setSuggestionList] = useState([])
 
   const [activeFeature, updateActiveFeature] = useState(1)
   const [activeFeatureImg, updateActiveFeatureImg] = useState(1)
@@ -130,15 +131,23 @@ const Home = (props: HomeProps) => {
     setLocationValue(value)
   }
 
-  const onSearch = () => {
+  const onSearch = (value = searchValue) => {
     let queryParam = null
     if (locationValue) {
       const sanitisedLocValue = categoryParser(locationValue.value)
-      queryParam = conditionChecker(searchValue, sanitisedLocValue)
-    } else if (searchValue) {
-      queryParam = conditionChecker(searchValue)
+      queryParam = conditionChecker(value, sanitisedLocValue)
+    } else if (value) {
+      queryParam = conditionChecker(value)
     }
     updateUrl(queryParam, null)
+  }
+
+  const handleSuggestionSearch = (val) => {
+    if (val !== '') {
+      fetch(`${process.env.JOB_BOSSJOB_URL}/suggested-search?size=5&query=${val}`)
+        .then((resp) => resp.json())
+        .then((data) => setSuggestionList(data.data.items))
+    }
   }
 
   const renderQuickLinks = () => {
@@ -259,15 +268,16 @@ const Home = (props: HomeProps) => {
             </Text>
             <div className={styles.searchSection}>
               <div className={styles.searchAndLocationContainer}>
-                <MaterialTextField
+                <MaterialTextFieldWithSuggestionList
                   id='search'
                   label='Search for job title, keyword or company'
                   variant='outlined'
                   size='small'
                   className={styles.searchField}
-                  onChange={(e) => {
-                    e.preventDefault()
-                    setSearchValue(e.target.value)
+                  searchFn={handleSuggestionSearch}
+                  onSelect={(val)=>{
+                    setSearchValue(val)
+                    onSearch(val)
                   }}
                   onKeyPress={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
@@ -275,6 +285,7 @@ const Home = (props: HomeProps) => {
                       onSearch()
                     }
                   }}
+                  options={suggestionList}
                 />
                 <MaterialLocationField
                   className={styles.locationField}
