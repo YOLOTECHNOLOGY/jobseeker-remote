@@ -1,7 +1,7 @@
 import configuredAxios from 'helpers/configuredAxios'
 
 const fetchCompanyDetailService = (companyId) => {
-  const axios = configuredAxios('data', 'protected')
+  const axios = configuredAxios('company', 'protected')
   return axios.get(`/${companyId}`)
 }
 
