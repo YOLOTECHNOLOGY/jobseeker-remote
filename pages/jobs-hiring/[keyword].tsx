@@ -667,7 +667,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
-  // const topCompanies = storeState.companies.featuredCompanies.response
+  const topCompanies = storeState.companies.featuredCompanies.response
   const catList = config && config.inputs && config.inputs.job_category_lists
   const locList = getLocationList(config) 
   const { predefinedQuery, predefinedLocation

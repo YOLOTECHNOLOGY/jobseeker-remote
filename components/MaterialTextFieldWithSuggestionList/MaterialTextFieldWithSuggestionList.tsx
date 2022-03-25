@@ -75,7 +75,7 @@ const MaterialTextFieldWithSuggestionList = ({
   return (
     <ThemeProvider theme={theme}>
       <Autocomplete
-        id='free-solo-demo'
+        id='autocomplete-suggestion-list'
         freeSolo
         options={options?.map((option) => option)}
         className={className}
