@@ -80,7 +80,7 @@ const MaterialTextFieldWithSuggestionList = ({
         options={options?.map((option) => option)}
         className={className}
         size={size}
-        onChange={(_, val, reason)=>{
+        onChange={(_, val:any, reason)=>{
           if (reason === 'selectOption' && onSelect) {
             onSelect(val)
           } 
