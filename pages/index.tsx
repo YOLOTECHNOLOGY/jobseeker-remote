@@ -275,7 +275,7 @@ const Home = (props: HomeProps) => {
                   size='small'
                   className={styles.searchField}
                   searchFn={handleSuggestionSearch}
-                  onSelect={(val)=>{
+                  onSelect={(val:any)=>{
                     setSearchValue(val)
                     onSearch(val)
                   }}
@@ -293,7 +293,7 @@ const Home = (props: HomeProps) => {
                   // defValue={urlLocation}
                   onChange={onLocationSearch}
                 />
-                <MaterialButton variant='contained' onClick={onSearch}>
+                <MaterialButton variant='contained' onClick={() => onSearch()}>
                   Search
                 </MaterialButton>
               </div>
