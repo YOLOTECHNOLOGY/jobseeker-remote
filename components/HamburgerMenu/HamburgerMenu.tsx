@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 // import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+
+import { logoutRequest } from 'store/actions/auth/logout'
 
 /* Redux */
 import { connect } from 'react-redux'
@@ -20,6 +23,7 @@ interface HamburgerMenuProps {
 
 const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
   // const router = useRouter()
+  const dispatch = useDispatch()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
@@ -31,6 +35,10 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
     const body = document.querySelector('body')
     body.style.overflow = openState ? 'hidden' : 'auto'
   }, [openState])
+
+  const handleLogOut = () => {
+    dispatch(logoutRequest())
+  }
 
   return (
     <div className={openState ? [styles.mobileFullPageMenu, styles.open].join(' ') : styles.close}>
@@ -148,11 +156,12 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>Career Guide</Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} to='https://blog.bossjob.ph/' aTag external title='Log Out'>
-                  <li className={styles.menuList} onClick={() => toggleMenu()}>
-                    <Text textStyle='xl'>Log Out</Text>
+
+                <div className={styles.defaultLink}>
+                  <li className={styles.menuList} onClick={() => handleLogOut()}>
+                    <Text textStyle='xl'>Log Out</Text>  
                   </li>
-                </Link>
+                </div>
               </>
             )}
           </React.Fragment>
