@@ -84,7 +84,7 @@ const CompanyProfileLayout = ({
               className={styles.companyBanner}
             />
             <div className={styles.companyProfile}>
-              <img src={company.logo} alt={company.name} />
+              <img src={company.logo_url} alt={company.name} />
               <Text textStyle='xxl' bold>{company.name}</Text>
             </div>
 
