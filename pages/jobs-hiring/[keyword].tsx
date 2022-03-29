@@ -16,7 +16,7 @@ import { wrapper } from 'store'
 /* Redux Actions */
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
-import { fetchFeaturedCompaniesRequest } from 'store/actions/companies/fetchFeaturedCompanies'
+import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 
 import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
@@ -85,7 +85,7 @@ type configObject = {
 
 type companyObject = {
   id: number
-  logo: string
+  logoUrl: string
   name: string
 }
 
@@ -588,7 +588,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                     to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                     external
                   >
-                    <Image src={company.logo} alt={company.name} width='30' height='30' />
+                    <Image src={company.logoUrl} alt={company.name} width='30' height='30' />
                   </Link>
                 ))}
             </div>
@@ -662,12 +662,17 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const { keyword, page } = query
   // store actions
   store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchFeaturedCompaniesRequest())
+  store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1}))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
-  const topCompanies = storeState.companies.featuredCompanies.response
+  const featuredCompanies = storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map((featuredCompany) => featuredCompany.company)
+  const topCompanies = featuredCompanies?.map((featuredCompany) => {
+    const logoUrl = featuredCompany.logo_url
+    delete featuredCompany.logo_url
+    return {...featuredCompany, logoUrl}
+  })
   const catList = config && config.inputs && config.inputs.job_category_lists
   const locList = getLocationList(config) 
   const { predefinedQuery, predefinedLocation

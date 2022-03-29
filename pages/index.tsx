@@ -11,7 +11,7 @@ import { wrapper } from 'store'
 
 /* Redux Actions */
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
-import { fetchFeaturedCompaniesRequest } from 'store/actions/companies/fetchFeaturedCompanies'
+import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
 
 /* Components */
 import Image from 'next/image'
@@ -54,7 +54,7 @@ type configObject = {
 
 type companyObject = {
   id: number
-  logo: string
+  logoUrl: string
   name: string
 }
 
@@ -318,7 +318,7 @@ const Home = (props: HomeProps) => {
                           to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                           external
                         >
-                          <Image src={company.logo} alt={company.name} width='60' height='60' />
+                          <Image src={company.logoUrl} alt={company.name} width='60' height='60' />
                         </Link>
                       )
                     }
@@ -335,7 +335,7 @@ const Home = (props: HomeProps) => {
                           to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                           external
                         >
-                          <Image src={company.logo} alt={company.name} width='60' height='60' />
+                          <Image src={company.logoUrl} alt={company.name} width='60' height='60' />
                         </Link>
                       )
                     }
@@ -761,12 +761,17 @@ const Home = (props: HomeProps) => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
   // store actions
   store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchFeaturedCompaniesRequest())
+  store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1}))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
-  const topCompanies = storeState.companies.featuredCompanies.response
+  const featuredCompanies = storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map((featuredCompany) => featuredCompany.company)
+  const topCompanies = featuredCompanies?.map((featuredCompany) => {
+    const logoUrl = featuredCompany.logo_url
+    delete featuredCompany.logo_url
+    return {...featuredCompany, logoUrl}
+  })
   return {
     props: {
       config,
