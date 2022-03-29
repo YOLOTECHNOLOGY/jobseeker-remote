@@ -39,7 +39,7 @@ const Companies = () => {
   const fetchCompanySuggestionsResponse = useSelector((store: any) => store.companies.fetchCompanySuggestions.response)
 
   useEffect(() => {
-    dispatch(fetchFeaturedCompaniesListRequest())
+    dispatch(fetchFeaturedCompaniesListRequest({}))
   }, [])
 
   useEffect(() => {
