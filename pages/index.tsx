@@ -19,6 +19,7 @@ import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
 import LazyLoad from 'components/LazyLoad'
+import AdSlot from 'components/AdSlot'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
@@ -352,8 +353,12 @@ const Home = (props: HomeProps) => {
               </div>
             </div>
             <div className={styles.companyBanners}>
-              <div className={styles.companyBanner} />
-              <div className={styles.companyBanner} />
+              <div className={styles.companyBanner}>
+                <AdSlot adSlot={'homepage/rectangle-banner-1'}/>
+              </div>
+              <div className={styles.companyBanner}>
+                <AdSlot adSlot={'homepage/rectangle-banner-2'}/>
+              </div>
             </div>
           </div>
           <div className={styles.statsSection}>
