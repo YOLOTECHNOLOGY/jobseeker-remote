@@ -1,0 +1,50 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.companyJobsCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba($lightgrey, 0.5);
+  padding: 0 0 20px;
+  margin-bottom: 20px;
+
+  &Info {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      &:first-child {
+        width: 150px;
+      }
+
+      &:nth-child(2) {
+        width: 130px;
+      }
+
+      &:nth-child(3) {
+        width: 120px;
+      }
+    }
+  }
+
+  &Apply {
+    border: 1px solid;
+  }
+
+  @include msd {
+    flex-direction: column;
+
+    &Left {
+      width: 100%;
+      text-align: left;
+    }
+
+    &Right {
+      margin-top: 6px;
+      width: 100%;
+      text-align: right;
+    }
+  }
+}

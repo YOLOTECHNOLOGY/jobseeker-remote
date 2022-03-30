@@ -3,7 +3,7 @@
 
 .text {
   font-weight: 300;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 
   @include sm {
     letter-spacing: 0.5px;
@@ -28,6 +28,13 @@
 
   &H5 {
     margin: 1.5rem 0;
+  }
+
+  &XSM {
+    font-size: $mobile-font-size-xsm;
+    @include md {
+      font-size: $desktop-font-size-xsm;
+    }
   }
 
   &SM {
@@ -82,6 +89,10 @@
     font-style: italic;
   }
 
+  &Underline {
+    text-decoration: underline;
+  }
+
   &Block {
     display: block;
   }
@@ -98,7 +109,15 @@
     color: $lightgrey;
   }
 
+  &Darkgrey {
+    color: $darkgrey;
+  }
+
   &Black {
     color: $black;
+  }
+
+  &Red {
+    color: $red;
   }
 }

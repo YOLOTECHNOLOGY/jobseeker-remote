@@ -1,0 +1,178 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.container {
+  @extend .GlobalContainer;
+
+  @include msd {
+    padding: 0 !important;
+  }
+}
+
+.MyJobsContent {
+  display: flex;
+}
+
+.MyJobs {
+  display: flex;
+
+  @include msd {
+    padding: 0 20px;
+  }
+}
+
+.MyJobsMenu {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  left: 0;
+
+  &.isSticky {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+
+    @include sm{
+      position:unset;
+    }
+  }
+
+  @include msd {
+    width: 100%;
+  }
+
+  &Tab {
+    margin-right: 20px;
+
+    @include msd {
+      margin-right: 0;
+      width: 50%;
+    }
+  }
+
+  &Link {
+    display: flex;
+    align-items: center;
+    display: block;
+    padding: 11px 16px; 
+    text-align: center;
+
+    &IsActive {
+      span {
+        color: $primaryBlue;
+      }
+    }
+  }
+
+  button {
+    min-height: auto;
+    padding: 0;
+    opacity: 1;
+  }
+
+  &Content {
+    width: 29.9%;
+    height: 40px;
+    background-color: $white-3;
+    border-left: 1px solid rgba($lightgrey, 0.6);
+    border-bottom: 1px solid rgba($lightgrey, 0.6);
+    border-right: 1px solid rgba($lightgrey, 0.6);
+
+    & .MuiTabs-root {
+      min-height: 40px !important
+    }
+
+    @include msd {
+      width: 100%
+    }
+  }
+}
+
+.MyJobsList {
+  width: 30%;
+
+  &OptionAlerts {
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-right: 15px;
+      color: $darkgrey;
+    }
+
+    &Item {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &Content {
+    margin-top: 40px;
+  }
+
+  @include msd {
+    width: 100%;
+  }
+}
+
+.MyJobsDetailInfoSection {
+  width: 56.5%;
+  border-left: 1px solid rgba($lightgrey, 0.6);
+  border-right: 1px solid rgba($lightgrey, 0.6);
+  border-bottom: 1px solid rgba($lightgrey, 0.6);
+
+  @include msd {
+    display: none;
+  }
+}
+
+.MyJobsModal {
+  &EnableAlert {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.MyJobsAds {
+  width: 14%;
+  margin: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .skyscraperBanner {
+    display:flex;
+    width:160px;
+    height:600px;
+    margin-bottom:30px;
+    box-sizing: border-box;
+    overflow:hidden;
+    cursor:pointer;
+    background-color: $white-1;
+  }
+
+  @include msd {
+    display: none;
+  }
+}
+
+.paginationWrapper{
+  margin: 20px 0;
+
+  @include msd {
+    button {
+      height: 30px;
+      min-width: 30px;
+    }
+  }
+}
+
+.MyJobsDetailInfoEmpty {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

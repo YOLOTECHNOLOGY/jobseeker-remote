@@ -1,0 +1,145 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.container {
+  @extend .GlobalContainer;
+}
+
+.jobContent {
+  display: flex;
+}
+
+.jobList {
+  width: 30%;
+
+  &Option {
+    height: 40px;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    display: flex;
+
+    &.isSticky {
+      top: 0;
+      position: fixed;
+
+      @include sm{
+        position: unset;
+      }
+    }
+
+    @include msd {
+      width: 100%;
+    }
+  }
+
+  &OptionAlerts {
+    display: flex;
+    align-items: center;
+
+    span {
+      color: $darkgrey;
+    }
+
+    &Item {
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:last-child {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  &OptionContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    background-color: $white-3;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba($lightgrey, 0.6);
+    border-left: 1px solid rgba($lightgrey, 0.6);
+
+    @include msd{
+      width: 100%;
+      border: none;
+      padding: 0;
+    }
+  }
+
+  &OptionOtherContent {
+    width: 70%;
+  }
+
+  &Content {
+    margin-top: 40px;
+
+    @include msd {
+      padding: 0;
+    }
+  }
+
+  @include msd {
+    width: 100%;
+  }
+}
+
+.jobDetailInfoSection {
+  width: 56%;
+  border-left: 1px solid rgba($lightgrey, 0.6);
+  border-bottom: 1px solid rgba($lightgrey, 0.6);
+  border-right: 1px solid rgba($lightgrey, 0.6);
+
+  @include msd {
+    display: none;
+  }
+}
+
+.jobModal {
+  &EnableAlert {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.jobAds {
+  width: 14%;
+  margin: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .skyscraperBanner {
+    display:flex;
+    width:160px;
+    height:600px;
+    margin-bottom:20px;
+    box-sizing: border-box;
+    overflow:hidden;
+    cursor:pointer;
+    background-color: $white-1;
+
+    @include msd{
+      width: 100%;
+    }
+  }
+
+  @include msd {
+    display: none;
+  }
+}
+
+.paginationWrapper{
+  margin: 20px 0;
+
+  @include msd {
+    button {
+      height: 30px;
+      min-width: 30px;
+    }
+  }
+}

@@ -18,6 +18,8 @@ interface TextProps {
   textColor?: string
   textStyle?: string
   block?: boolean
+  onClick?: () => void
+  underline?: boolean
   // enableUnescape?: boolean
 }
 
@@ -31,6 +33,7 @@ const Text = ({
   textStyle,
   textColor = 'black',
   block,
+  underline,
   // enableUnescape,
   ...rest
 }: TextProps) => {
@@ -38,6 +41,8 @@ const Text = ({
     text: true,
     textBold: bold,
     textItalic: italic,
+    textUnderline: underline,
+    textXSM: textStyle === 'xsm',
     textSM: textStyle === 'sm',
     textBase: textStyle === 'base',
     textLG: textStyle === 'lg',
@@ -55,7 +60,9 @@ const Text = ({
     textWhite: textColor === 'white',
     textPrimaryBlue: textColor === 'primaryBlue',
     textLightgrey: textColor === 'lightgrey',
+    textDarkgrey: textColor === 'darkgrey',
     textBlack: textColor === 'black',
+    textRed: textColor === 'red'
   }
   const cx = classNames.bind(styles)
   const textClass = cx([componentClass, className])

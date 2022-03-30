@@ -1,0 +1,28 @@
+@import 'styles/variable.scss';
+
+.JobTag {
+  display: inline;
+  padding: 1px 8px 3px;
+  border-radius: 6px;
+  background-color: rgba($pink, 0.15);
+
+  span {
+    color: $pink;
+  }
+
+  &.urgent {
+    background-color: rgba($red, 0.15);
+
+    span {
+      color: $red;
+    }
+  }
+
+  &.featured {
+    background-color: rgba($cyan, 0.15);
+
+    span {
+      color: $cyan;
+    }
+  }
+}

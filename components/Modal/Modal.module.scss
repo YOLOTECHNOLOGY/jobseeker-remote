@@ -1,0 +1,80 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.modal {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  z-index: 999;
+  flex-direction: column;
+  justify-content: center;
+
+  &Content {
+    background: white;
+    position: relative;
+    margin: 0 5%;
+
+    &.isFullWidth {
+      @include md {
+        margin: 0 20%;
+      }
+    }
+
+    @include md {
+      margin: 0 30%;
+    }
+  }
+
+  &Header {
+    display: flex;
+    padding: 24px 40px;
+    background-color: $white-1;
+    border-bottom: 1px solid rgba($lightgrey, 0.5);
+  }
+
+  &Footer {
+    border-top: 1px solid rgba($lightgrey, 0.5);
+    margin: 0 40px;
+    padding: 20px 0;
+    display: flex;
+    justify-content: flex-end;
+    
+    button {
+      &:first-child {
+        border: none;
+        box-shadow: none;
+      }
+
+      &:last-child {
+        margin-left: 10px;
+        background-color: $primaryBlue;
+        color: $white-3;
+        
+        &:hover {
+          box-shadow: $box-shadow-1;
+        }
+      }
+    }
+  }
+
+  &Visible {
+    display: flex;
+  }
+
+  &Hidden {
+    display: none;
+  }
+
+  &CloseButton {
+    position: absolute;
+    top: 28px;
+    right: 45px;
+    cursor: pointer;
+    z-index: 9999;
+  }
+}

@@ -1,0 +1,489 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.JobDetail {
+  @extend .GlobalContainer;
+  padding: 20px 0 100px;
+  display: flex;
+  justify-content: space-between;
+
+  @include msd {
+    flex-direction: column;
+    padding: 10px 5% 100px;
+  }
+
+  &Company {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &Content {
+    width: 75%;
+
+    @include msd {
+      width: 100%;
+    }
+  }
+
+  &OptionList {
+    position: absolute;
+    top: 45px;
+    right: 40px;
+    background-color: $white-3;
+    box-shadow: $box-shadow-1;
+    z-index: 1;
+  }
+
+  &OptionItem {
+    padding: 12px 20px;
+    display: block;
+    
+    &:hover {
+      cursor: pointer;
+      background-color: $white-1;
+    }
+  }
+
+  &Status {
+    color: #F30000;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+
+    div {
+      margin-right: 10px;
+    }
+  }
+
+  &Primary {
+    border: 1px solid $lightgrey;
+    border-radius: 4px;
+    padding: 35px 30px;
+    position: relative;
+
+    @include msd {
+      border: none;
+      padding: 0;
+    }
+  }
+
+  &PrimaryOptions {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    @include msd {
+      display: none;
+    }
+  }
+
+  &PrimaryInfo {
+    display: flex;
+    align-items: center;
+
+    @include msd {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  &PrimaryInfoImage {
+    width: 78px;
+    height: 78px;
+    border-radius: 4px;
+    object-fit: cover;
+    margin-right: 20px;
+
+    @include msd {
+      margin-bottom: 20px;
+    }
+  }
+
+  &PrimarySub {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+
+    div {
+      margin-right: 20px;
+    }
+
+    @include msd {
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+  }
+
+  &PrimaryActions {
+    display: flex;
+    margin-top: 20px;
+
+    button {
+      margin-right: 20px;
+    }
+
+    @include msd {
+      justify-content: space-between;
+    }
+  }
+
+  &PrimaryActionsCategory {
+    display: flex;
+    margin-top: 20px;
+
+    button {
+      margin-right: 20px;
+    }
+
+    @include msd {
+      flex-direction: column;
+      align-items: center;
+
+      button {
+        margin-top: 10px;
+        margin-right: 0;
+      }
+    }
+  }
+
+  &Pref {
+    background-color: $white-1;
+    padding: 20px 30px;
+    margin: 20px 0 30px;
+
+    &List {
+      list-style-type: none;
+      display: flex;
+
+      @include msd {
+        flex-direction: column;
+      } 
+    }
+
+    &Item {
+      width: 25%;
+      display: flex;
+      align-items: flex-start;
+
+      @include msd {
+        width: 100%;
+        margin-bottom: 14px;
+      } 
+    }
+
+    &Text {
+      margin-left: 10px;
+      span {
+        display: block
+      }
+    }
+
+    &Value {
+      margin-top: 2px;
+    }
+
+    &Field {
+      @include msd {
+        line-height: 1;
+        color: $black;
+      }
+    }
+
+    @include msd {
+      padding: 20px 0 0;
+      margin-bottom: 0;
+      border-top: 1px solid $lightgrey;
+      background-color: transparent;
+    }   
+  }
+
+  &Section {
+    margin-top: 26px;
+    margin-bottom: 50px;
+  
+    &Title {
+      display: block;
+    }
+  
+    &Body {
+      margin-top: 16px;
+      display: block;
+      padding: 0 20px;
+    }
+  
+    &SubTitle {
+      margin-top: 18px;
+      display: block;
+    }
+  
+    &SubBodyLink {
+      color: $primaryBlue;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    @include msd {
+      margin-top: 12px;
+      margin-bottom: 30px;
+    }
+  }
+
+  &Benefits {
+    &List {
+      list-style-type: none;
+      display: flex;
+      flex-wrap: wrap;
+
+      @include msd {
+        flex-direction: column;
+      }
+    }
+  
+    &Item {
+      display: flex;
+      align-items: center;
+      width: 50%;
+      margin: 18px 0 10px;
+
+      @include msd {
+        margin-top: 12px;
+        width: 100%;
+      }
+    }
+  
+    &Text {
+      margin-left: 28px;
+    }
+  }
+
+  &Skills {
+    &List {
+      list-style-type: none;
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+  
+    &Item {
+      background-color: rgba($lightgrey, 0.2);
+      border-radius: 16px;
+      padding: 2px 16px;
+      margin-right: 28px;
+      margin-bottom: 16px;
+    }
+  
+    &Text {
+      color: $darkgrey;
+    }
+  }
+
+  &RecruiterInfo {
+    display: flex;
+    margin-top: 18px;
+  }
+
+  &RecruiterInfoImage {
+    height: 44px;
+    width: 44px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 15px;
+  }
+
+  &RecruiterInfoText {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @include msd {
+      width: 80%;
+    }
+  }
+
+  &HoverItem {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.LeaderBoard {
+  height: 90px;
+  width: 970px;
+  background-color: $white-2;
+  margin: 0 auto 40px;
+
+  @include msd {
+    width: 300px;
+    max-width: 100%;
+    height: 200px;
+    margin-bottom: 20px;
+  }
+}
+
+.aboutCompany {
+  border: 1px solid $lightgrey;
+  border-radius: 4px;
+  padding: 21px 42px 15px;
+  margin-top: 34px;
+
+  span {
+    display: block;
+  }
+
+  &Header {
+    margin-bottom: 16px;
+  }
+
+  &Title {
+
+    margin-bottom: 12px;
+    display: inline-block;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &Detail {
+    display: flex;
+    margin-bottom: 16px;
+
+    span {
+      padding-right: 20px;
+      position: relative;
+      
+      &:not(:last-child) {
+        border-right: 1px solid $lightgrey;
+      }
+
+      &:last-child {
+        margin-left: 20px;
+      }
+    }
+
+    @include msd {
+      flex-direction: column;
+      
+      span {
+        &:not(:last-child) {
+          border-right: none;
+        }
+
+        &:last-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  &More {
+    text-align: right;
+    margin-top: 5px;
+
+    span {
+      display: inline;
+      padding: 4px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  @include msd {
+    padding: 15px 15px 6px;
+  }
+}
+
+.JobDetailSidebar {
+  width: 22%;
+  padding-top: 126px;
+
+  @include msd {
+    width: 100%;
+    padding-top: 40px;
+  }
+}
+
+.JobDetailSidebarSection {
+  margin-bottom: 60px;
+
+  @include msd {
+    margin-bottom: 30px;
+  }
+}
+
+.JobDetailSidebarCard {
+  margin-top: 24px;
+  display: block;
+    
+  &:hover {
+    cursor: pointer;
+  }
+
+  p {
+    margin: 8px auto;
+  }
+
+  &CTA {
+    color: $primaryBlue;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  &Title {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &Apply {
+    background-color: transparent;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.JobDetailApplication {
+  &Wrapper {
+    border: 1px solid $primaryBlue;
+    border-radius: 4px;
+    margin: 20px 0;
+    padding: 20px;
+  }
+
+  &Timeline {
+    padding: 0;
+    margin-top: 12px;
+
+    li {
+      &::before {
+        flex: none;
+        padding: 0;
+      }
+
+      &:last-child {
+        min-height: 0;
+      }
+    }
+  }
+
+  &TimelineFirst {
+    background-color: $primaryBlue;
+    box-shadow: $primaryBlue;
+  }
+}

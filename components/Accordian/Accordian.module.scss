@@ -1,0 +1,48 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.accordian {
+  max-height: auto;
+  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+  overflow: hidden;
+
+  &Title {
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  &PaddedLine {
+    padding: 20px 0;
+    border-bottom: 1px solid $lightgrey;
+  }
+
+  &Visible {
+    display: block;
+    max-height: auto;
+    transition: max-height 0.8s ease-in-out;
+    overflow: hidden;
+  }
+
+  &Hidden {
+    display: none;
+    max-height: 0;
+    transition: max-height 0.8s ease-in-out;
+  }
+
+  &ToggleIcon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &Content {
+    margin-top: 5px;
+
+    &Scroll {
+      max-height: 300px;
+      overflow-y: scroll;
+    }
+  }
+}

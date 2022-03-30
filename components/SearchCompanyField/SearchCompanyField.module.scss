@@ -1,0 +1,50 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.searchField {
+  display: flex;
+  margin-bottom: 30px;
+
+  &InputContainer {
+    width: 40%;
+    position: relative;
+  }
+
+  &Input {
+    width: 100%;
+  }
+
+  &Suggestions {
+    position: absolute;
+    width: 100%;
+    border: 1px solid $lightgrey;
+    z-index: 2;
+  }
+
+  &SuggestionItem {
+    background-color: $white-3;
+    padding: 10px 20px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $white-2;
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      span {
+        color: $primaryBlue;
+      }
+    }
+  }
+
+  &SuggestionEmpty {
+    background-color: $white-3;
+    padding: 10px 20px;
+  }
+
+  &Button {
+    padding: 6px 25px !important;
+    margin-left: 10px;
+  }
+}

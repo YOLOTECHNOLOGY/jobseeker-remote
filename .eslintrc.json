@@ -18,8 +18,8 @@
       "jsx": true
     },
     "ecmaVersion": 11,
-    "project": "./tsconfig.json",
-    "sourceType": "module"
+    "project": "./tsconfig.json"
+    // "sourceType": "module"
   },
   "plugins": [
     "react",
@@ -31,6 +31,17 @@
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/camelcase": ["off"],
+    "no-console": [
+      "error",
+      { "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
     "@typescript-eslint/ban-types": [
       "error",
       {
@@ -54,7 +65,8 @@
     "import/extensions": "off"
   },
   "ignorePatterns": [
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "lib/redirection.js"
   ],
   "settings": {
     "import/extensions": [

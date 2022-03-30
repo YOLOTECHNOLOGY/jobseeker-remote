@@ -1,0 +1,202 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.searchSectionContainer {
+  @extend .GlobalContainer;
+}
+
+.searchSection {
+  position: relative;
+  height: 139px;
+  background-color: $white-1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  z-index:10;
+
+  @include sm{
+    height:180px;
+  }
+
+  .searchAndLocationContainer {
+    @extend .GlobalContainer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    @include sm{
+      flex-direction: column;
+    }
+  }
+
+  .filtersContainer {
+    @extend .GlobalContainer;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 10px;
+
+    & > * {
+      margin-right: 15px;
+    }
+
+    @include sm{
+      display:none;
+    }
+  }
+
+  &.isSticky {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: $white-1;
+    z-index: 1;
+  }
+}
+
+.searchSectionExpanded {
+  @extend .searchSection;
+  height: 230px;
+  z-index:10;
+
+  @include sm{
+    height:180px;
+  }
+}
+
+.searchField {
+  height: 40px;
+  width: 60%;
+
+  @include sm{
+    width:100%;
+    margin-bottom:3% !important;
+  }
+}
+.locationField {
+  height: 40px;
+  width: 30%;
+
+  @include sm{
+    width:100%;
+    margin-bottom:3%;
+  }
+}
+.sortField {
+  width: 150px;
+}
+
+.quickLinkSection {
+  display: none;
+}
+
+.quickLinkSectionExpanded {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+
+  @include sm{
+    display:none;
+  }
+}
+
+.quickLinkTitle {
+  display: flex;
+  letter-spacing: 1px;
+}
+
+.popularSearchContainer {
+  @extend .GlobalContainer;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+
+  @include msd {
+    flex-direction: column;
+  }
+
+  .popularSearch {
+    display: flex;
+    flex-wrap: wrap;
+
+    .link {
+      margin:0 10px; 
+
+      & > span {
+        letter-spacing: 1px;
+      }
+
+      &:hover {
+        cursor: pointer;
+        color: $primaryBlue;
+        text-decoration: underline;
+
+        & > * {
+          color: $primaryBlue;
+          font-weight: bold;
+          transition: 100ms all ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+.moreFiltersSection{
+  height:50px;
+  width:100%;
+  border-bottom: 1px solid $white-2;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  .moreFiltersText{
+    margin:0 10px;
+  }
+
+  &:hover{
+    cursor:pointer;
+  }
+}
+
+.topCompaniesContainer {
+  @extend .GlobalContainer;
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+
+  @include msd {
+    flex-direction: column;
+  }
+
+  .topCompanies {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .topCompaniesLogo {
+    display: flex;
+    margin: 5px 15px;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+      transition: 100ms all ease-in-out;
+    }
+  }
+}
+
+.moreFiltersBtn {
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+
+.resetFilterBtnMobile {
+  text-align: center;
+  background-color: $white-1;
+}

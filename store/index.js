@@ -1,6 +1,8 @@
 import { applyMiddleware, createStore } from 'redux'
 import { createWrapper } from 'next-redux-wrapper'
 import createSagaMiddleware from 'redux-saga'
+import { initialRouterState, createRouterMiddleware } from 'connected-next-router'
+import Router from 'next/router'
 
 import rootReducer from 'store/reducers'
 import rootSaga from 'store/sagas'
@@ -13,12 +15,21 @@ const bindMiddleware = (middleware) => {
   return applyMiddleware(...middleware)
 }
 
-const configureStore = () => {
+export const configureStore = (context) => {
+  const routerMiddleware = createRouterMiddleware()
   const sagaMiddleware = createSagaMiddleware()
-  const store = createStore(rootReducer, bindMiddleware([sagaMiddleware]))
+
+  const { asPath } = context.ctx || Router.router || {}
+  let initialState
+  if (asPath) {
+    initialState = {
+      router: initialRouterState(asPath)
+    }
+  }
+
+  const store = createStore(rootReducer, initialState, bindMiddleware([sagaMiddleware, routerMiddleware]))
 
   store.sagaTask = sagaMiddleware.run(rootSaga)
-
   return store
 }
 

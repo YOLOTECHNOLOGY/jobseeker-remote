@@ -2,8 +2,7 @@
 @import 'styles/variable.scss';
 
 @mixin containers {
-  margin-left: 7%;
-  margin-right: 7%;
+  @extend .GlobalContainer;
   height: 100%;
   display: flex;
 }
@@ -22,11 +21,13 @@
   width: 100%;
   height: 70px;
   margin-top: 0;
+  border-bottom: 1px solid rgba($lightgrey, 0.5);
+  position: relative;
 
   @include msd {
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 10;
   }
 
   @include sm {
@@ -36,6 +37,7 @@
 
 .headerContainer {
   @include containers();
+  position: relative;
 }
 
 .headerLogo {
@@ -48,7 +50,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 100px;
+  margin-left: 20px;
 
   @include msd {
     display: none;
@@ -98,6 +100,30 @@
   &:last-child {
     padding-right: 0;
   }
+
+  &Text {
+    &.isActive {
+      color: $primaryBlue;
+      font-weight: 500;
+    }
+
+    &:hover {
+      color: $primaryBlue;
+    }
+  }
+
+  &Login {
+    padding-right: 0;
+  }
+
+  &Icon {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.headerButton {
+  padding: 20px;
 }
 
 .headerLinkWrapper {
@@ -119,6 +145,113 @@
       &:hover {
         border-bottom: 1px solid $darkgrey;
       }
+    }
+  }
+}
+
+.profile {
+  &Wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &PlaceHolder {
+    width: 35px;
+    height: 35px;
+    background-color: $lightgrey;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 30px;
+  }
+
+  &Caret {
+    position: absolute;
+    top: 40%;
+    right: 10px;
+    transform: translateY(-50%);
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: '';
+      height: 8px;
+      width: 2px;
+      top: 50%;
+      background-color: $darkgrey;
+    }
+
+    &::before {
+      left: -2px;
+      transform: rotate(-45deg);
+    }
+
+    &::after {
+      right: -5px;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+
+.mobileIconWrapper {
+  display: none;
+
+  .icon {
+    margin: 0 15px;
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  @include msd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+  }
+}
+
+
+.headerMenu {
+  position: absolute;
+  width: 320px;
+  top: 85px;
+  right: 30px;
+  background-color: $white-3;
+  z-index: 9999;
+  box-shadow: $box-shadow-1;
+
+  @include msd {
+    display: none;
+  }
+
+  &List {
+    list-style-type: none;
+  }
+
+  &Link {
+    padding: 15px 20px;
+    display: block;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &Item {
+    &:not(:last-child) {
+      border-bottom: 1px solid rgba($lightgrey, 0.5);
     }
   }
 }
