@@ -57,6 +57,9 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     case 'company':
       url = process.env.COMPANY_URL
       break
+    case 'config':
+      url = process.env.CONFIG_URL
+      break
     default:
       break
   }

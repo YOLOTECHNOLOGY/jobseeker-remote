@@ -357,7 +357,16 @@ const getLocationList = (config) => {
 const getSmsCountryList = (config) => {
   if (!config) return []
 
-  return config?.inputs?.sms_country_lists.map((sms) => ({ ...sms, label: sms.code }))
+  let smsCountryList = []
+  const countryList = config?.inputs?.country_lists
+  countryList.forEach((country) => {
+    if (country.is_sms_allowed) {
+      country["label"] = country["code"]
+      smsCountryList.push(country)
+    }
+  })
+
+  return smsCountryList
 }
 
 const getJobCategoryList = (config) => {
@@ -405,11 +414,11 @@ const getCountryList = (config) => {
   const countryLists = config?.inputs?.country_lists
   if (countryLists && countryLists.length === 0) return countryLists
 
-  let countryOptions = Object.values(countryLists).map(country => {
+  let countryOptions = countryLists.map(country => {
     return {
-      label: Object.values(country)[0],
-      value: Object.keys(country)[0],
-      key: Object.keys(country)[0]
+      label: country.value,
+      value: country.value,
+      key: country.key,
     }
   })
 
@@ -426,9 +435,9 @@ const getIndustryList = (config) => {
 
   return industryList.map((industry) => {
     return {
-      label: Object.values(industry)[0],
-      value: Object.keys(industry)[0],
-      keys: Object.keys(industry)[0],
+      label: industry.value,
+      value: industry.value,
+      key: industry.key,
     }
   })
 }
@@ -441,9 +450,9 @@ const getDegreeList = (config) => {
 
   return degreeList.map((degree) => {
     return {
-      label: Object.values(degree)[0],
-      value: Object.keys(degree)[0],
-      keys: Object.keys(degree)[0],
+      label: degree.value,
+      value: degree.value,
+      key: degree.key,
     }
   })
 }

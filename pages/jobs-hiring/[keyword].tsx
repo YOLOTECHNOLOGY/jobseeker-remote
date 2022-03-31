@@ -283,11 +283,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleShowFilter = () => {
     setIsShowFilter(!isShowFilter)
   }
-  const jobTypeOption = flat(config.inputs.job_types.map((jobType) => Object.values(jobType)))
+
+  const jobTypeOption = flat(config.inputs.job_types.map((jobType) => jobType.value))
 
   const salaryRangeOption = flat(
     config.filters.salary_range_filters.map((range) => {
-      return Object.values(range)[0] === '10K - 30K' ? 'Below 30K' : Object.values(range)
+      return range.value === '10K - 30K' ? 'Below 30K': range.value 
     })
   )
 
