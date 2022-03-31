@@ -76,7 +76,7 @@ const MaterialLocationField = ({ className, label, defaultValue, fieldRef, error
       <Autocomplete
         id='location-autocomplete'
         options={formattedLocationList}
-        groupBy={(option: any) => option.region}
+        groupBy={(option: any) => option.region_display_name}
         getOptionLabel={(option: any) => option.value || ''}
         size='small'
         className={className}

@@ -1,8 +1,9 @@
 import configuredAxios from 'helpers/configuredAxios'
 
 const fetchConfigService = () => {
-  const axios = configuredAxios('data', 'public')
-  return axios.get(`/config?country_code=ph`)
+  const axios = configuredAxios('config', 'public')
+  
+  return axios.get(`/list`)
 }
 
 export { fetchConfigService }
