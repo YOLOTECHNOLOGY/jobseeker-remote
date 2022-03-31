@@ -33,7 +33,11 @@ import { addUserEducationService } from 'store/services/users/addUserEducation'
 import { deleteUserEducationService } from 'store/services/users/deleteUserEducation'
 import { updateUserEducationService } from 'store/services/users/updateUserEducation'
 
+import { getItem, removeItem } from 'helpers/localStorage'
+
 function* updateUserCompleteProfileReq({ payload }) {
+  const isFromCreateResume = getItem('isFromCreateResume')
+
   const { 
     preferences, 
     profile, 
@@ -68,8 +72,13 @@ function* updateUserCompleteProfileReq({ payload }) {
 
       yield put(updateUserCompleteProfileSuccess(userCompleteProfileResponse.data.data))
       let url = '/jobseeker-complete-profile/10'
+
       if (redirect) {
         url = `/jobseeker-complete-profile/10?redirect=${redirect}`
+      }
+
+      if (isFromCreateResume && isFromCreateResume === '1') {
+        url = '/jobseeker-complete-profile/1101'
       }
 
       yield put(push(url))
@@ -167,6 +176,8 @@ function* completeUserProfileSaga(redirect, accessToken) {
       url = redirect
     }
 
+    removeItem('isFromCreateResume')
+    removeItem('isCreateFreeResume')
     yield put(push(url))
   } catch (error) {
     yield put(completeUserProfileFailed(error))

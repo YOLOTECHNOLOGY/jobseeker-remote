@@ -45,6 +45,9 @@ export const InfoIcon = `${S3BucketJobseeker}/InfoIcon.svg`
 export const CreateFilledIcon = `${S3BucketJobseeker}/CreateFilledIcon.svg`
 export const DeleteFilledIcon = `${S3BucketJobseeker}/DeleteFilledIcon.svg`
 export const AddOutlineIcon = `${S3BucketJobseeker}/AddOutlineIcon.svg`
+export const ResumeTemplatePreview = `${S3BucketJobseeker}/ResumeTemplatePreview.png`
+export const ResumeTemplate1 = `${S3BucketJobseeker}/ResumeTemplate1.png`
+export const ResumeTemplate2 = `${S3BucketJobseeker}/ResumeTemplate2.png`
 
 
 /* Footer Social Links Logo */

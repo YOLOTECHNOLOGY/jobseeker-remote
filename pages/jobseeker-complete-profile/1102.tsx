@@ -33,6 +33,7 @@ import {
   getDegreeList
 } from 'helpers/jobPayloadFormatter'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
+import { getItem } from 'helpers/localStorage'
 
 // Images
 import { 
@@ -272,14 +273,16 @@ const Step4 = (props: any) => {
   }
 
   const handleLastStep = () => {
-    const isCreateFreeResume = localStorage.getItem('isCreateFreeResume') ?? false
+    const isCreateFreeResume = (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
     const redirect = router.query?.redirect ? router.query?.redirect : null
 
     if (isCreateFreeResume) {
       dispatch(generateUserResumeRequest({ redirect, accessToken }))
     }
     
-    dispatch(updateUserCompleteProfileRequest({ currentStep: 5, redirect, accessToken }))
+    if (!isCreateFreeResume) {
+      dispatch(updateUserCompleteProfileRequest({ currentStep: 5, redirect, accessToken }))
+    }
   }
 
   const handleNextBtn = () => {

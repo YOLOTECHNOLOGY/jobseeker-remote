@@ -35,9 +35,13 @@ const Register = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState(null)
+
   const [password, setPassword] = useState('')
   const [isSubscribe, setIsSubscribe] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
+  const [passwordError, setPasswordError] = useState(null)
+
   const { register, formState: { errors }} = useForm()
 
   const isRegisteringJobseeker = useSelector((store: any) => store.auth.registerJobseeker.fetching)
@@ -46,24 +50,38 @@ const Register = () => {
   const handleOnShowPassword = () => setShowPassword(!showPassword)
 
   const handleRegister = () => {
-    let redirect: string | string[] = ''
-    if (router.query && (router.query.redirectFullPath || router.query.redirect)) {
-      redirect = router.query?.redirectFullPath ? router.query.redirectFullPath : router.query.redirect
-    }
+    if (!email) setEmailError('Email Address is required.')
+    else if (!/\S+@\S+\.\S+/.test(email)) setEmailError('Email Address is invalid.')
+    else setEmailError(null)
 
-    const payload = {
-      email,
-      password,
-      first_name: firstName,
-      last_name: lastName,
-      terms_and_condition: false,
-      is_subscribe: isSubscribe
-    }
+    if (!password) setPasswordError('Password is required.')
+    else if (password?.length < 8) setPasswordError('Must be 8 characters or more.')
+    else if (password?.length > 16) setPasswordError('Must be 16 characters or less.')
+    else setPasswordError(null)
 
-    if (!isEmployer) dispatch(registerJobseekerRequest({ ...payload, jobId: router.query?.jobId || '' }))
-    if (isEmployer) dispatch(registerRecruiterRequest({ ...payload, redirect }))
+    if (!emailError && !passwordError) {
+      let redirect: string | string[] = ''
+      if (router.query && (router.query.redirectFullPath || router.query.redirect)) {
+        redirect = router.query?.redirectFullPath ? router.query.redirectFullPath : router.query.redirect
+      }
+
+      const payload = {
+        email,
+        password,
+        first_name: firstName,
+        last_name: lastName,
+        terms_and_condition: false,
+        is_subscribe: isSubscribe
+      }
+
+      if (!isEmployer) dispatch(registerJobseekerRequest({ ...payload, jobId: router.query?.jobId || '' }))
+      if (isEmployer) dispatch(registerRecruiterRequest({ ...payload, redirect }))
+    }
   }
 
+  const errorText = (errorMessage: string) => {
+    return <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>{errorMessage}</Text>
+  }
 
   const callbackRequest = (payload) => {
     dispatch(socialLoginRequest(payload))
@@ -125,18 +143,6 @@ const Register = () => {
           </div>
 
           <MaterialTextField
-            refs={{
-              ...register('email', {
-                required: {
-                  value: true,
-                  message: 'This field is required.',
-                },
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: 'Enter a valid e-mail address.',
-                },
-              }),
-            }}
             className={styles.RegisterFormInput}
             id='email'
             label='Email Address'
@@ -145,29 +151,12 @@ const Register = () => {
             size='small'
             defaultValue={email}
             autoComplete='off'
+            error={emailError ? true : false}
             onChange={(e) => setEmail(e.target.value)}
           />
-          {errors.email && (
-            <Text textColor='red' textStyle='sm'>
-              {errors.email.message}
-            </Text>
-          )}
+          {emailError && errorText(emailError)}
 
           <TextField
-            {...register('password', {
-              required: {
-                value: true,
-                message: 'This field is required.',
-              },
-              minLength: {
-                value: 8,
-                message: 'Must be 8 characters or more.',
-              },
-              maxLength: {
-                value: 16,
-                message: 'Must be 16 characters or less.',
-              },
-            })}
             className={styles.RegisterFormInput}
             id='password'
             name='password'
@@ -177,6 +166,7 @@ const Register = () => {
             size='small'
             value={password}
             autoComplete='off'
+            error={passwordError ? true : false}
             onChange={(e) => setPassword(e.target.value)}
             InputProps={{
               endAdornment: (
@@ -192,11 +182,7 @@ const Register = () => {
               ),
             }}
           />
-          {errors.password && (
-            <Text textColor='red' textStyle='sm'>
-              {errors.password.message}
-            </Text>
-          )}
+          {passwordError && errorText(passwordError)}
 
           <div className={styles.RegisterEmailNewsletter}>
             <FormControlLabel
@@ -222,7 +208,6 @@ const Register = () => {
             className={styles.RegisterButton}
             isLoading={isRegisteringJobseeker || isRegisteringRecruiter}
             onClick={() => handleRegister()}
-            type='submit'
           >
             <Text textStyle='xl' textColor='white' bold>
               Sign up
@@ -236,6 +221,16 @@ const Register = () => {
       </div>
     </AuthLayout>
   )
+}
+
+Register.getInitialProps = async ({ req, res }) => {
+  const accessToken = req?.cookies.accessToken
+  if (accessToken) {
+    res.setHeader('location', `/jobs-hiring/job-search`)
+    res.statusCode = 301
+    res.end()
+  }
+  return {}
 }
 
 export default Register

@@ -1,0 +1,396 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+
+.resumeTemplateHero {
+  height: 535px;
+  background-color: rgba($white-2, 0.4);
+  position: relative;
+
+  &Content {
+    @extend .GlobalContainer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateX(-50%);
+    bottom: -5px;
+    left: 50%;
+    position: absolute;
+  }
+
+  .resumeTemplatePreview {
+    height: 451px;
+    width: 575px;
+    object-fit: cover;
+  }
+
+  @include msd {
+    height: 100%;
+
+    &Content {
+      flex-direction: column;
+      position: static;
+      width: 100%;
+      transform: inherit;
+    }
+
+    .resumeTemplatePreview {
+      width: 100%;
+      margin-bottom: -5px;
+    }
+  }
+}
+
+.resumeTemplateForm {
+  height: 100%;
+  width: 456px;
+
+  .formHeader, .formSubHeader {
+    display: block;
+    text-align: center;
+  }
+
+  .formHeader {
+    margin-bottom: 28px;
+  }
+
+  .formSubHeader {
+    margin-bottom: 12px;
+  }
+
+  .fullWidth {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &:not(:first-of-type) {
+      margin-top: 24px;
+    }
+
+    &Button {
+      width: 100%;
+      display: block;
+      margin-top: 20px;
+    }
+  }
+
+  .halfWidth {
+    width: 48%;
+    margin-top: 20px;
+
+    & > div {
+      display: block;
+      width: 100%;
+    }
+
+    input {
+      width: 87%;
+    }
+  }
+
+  .fieldError {
+    margin: 10px 0 0;
+  }
+
+  @include msd {
+    width: 100%;
+    padding: 32px 0 20px;
+
+    .formHeader {
+      margin-bottom: 18px;
+    }
+
+    .halfWidth {
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .fullWidth {
+      flex-direction: column;
+      
+      &:not(:first-of-type) {
+        margin-top: 12px;
+      }
+    }
+  }
+}
+
+.sectionContentDivider {
+  height: 160px;
+
+  @include msd {
+    height: 64px;
+  }
+}
+
+.sectionContentHalfDivider {
+  height: 80px;
+
+  @include msd {
+    height: 32px;
+  }
+}
+
+.sectionContentRegDivider {
+  height: 40px;
+}
+
+.sectionContentSmallDivider {
+  height: 24px;
+}
+
+.sectionHeader {
+  text-align: center;
+  display: block;
+}
+
+.sectionSubHeader {
+  display: block;
+  line-height: 27px;
+}
+
+.resumeTemplateSection {
+  @extend .GlobalContainer;
+
+  .sectionSubContent {
+    line-height: 24px;
+  }
+  
+  .resumeStepsList {
+    display: flex;
+    width: 100%;
+    list-style-type: none;
+  }
+
+  .resumeStepsItem {
+    width: calc((100% / 4) - 20px);
+    margin: 0 10px;
+    height: 207px;
+    background-color: $white-1;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    line-height: 24px;
+    position: relative;
+
+    &::before {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 60px;
+      color: $darkBlue-1;
+      font-weight: 700;
+    }
+
+    &:nth-of-type(1) {
+      &::before {
+        content: '1';
+      }
+    }
+
+    &:nth-of-type(2) {
+      &::before {
+        content: '2';
+      }
+    }
+
+    &:nth-of-type(3) {
+      &::before {
+        content: '3';
+      }
+    }
+
+    &:nth-of-type(4) {
+      &::before {
+        content: '4';
+      }
+    }
+  }
+
+  @include msd {
+    .sectionHeader {
+      text-align: left;
+      line-height: 31px;
+    }
+    
+    .resumeStepsList {
+      flex-direction: column;
+    }
+
+    .resumeStepsItem {
+      width: 100%;
+      height: 100%;
+      padding: 38px 24px;
+      
+      &:not(:last-child) {
+        margin-bottom: 62px;
+      }
+    }
+  }
+}
+
+.resumeTemplateContainer {
+  background-color: rgba($white-2, 0.4);
+}
+
+.resumeTemplateContent {
+  @extend .GlobalContainer;
+}
+
+.resumeTemplateList {
+  display: flex;
+  padding-bottom: 143px;
+  justify-content: center;
+
+  .resumeTemplateItem {
+    height: 647px;
+    width: 456px;
+    margin: 0 10px;
+    object-fit: contain;
+
+    @include msd {
+      width: 100%;
+      min-width: 100%;
+      height: 396px;
+    }
+  }
+}
+
+// Embla
+.embla {
+  position: relative;
+  padding: 20px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include sm {
+    padding: 10px;
+  }
+}
+
+.emblaViewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.emblaContainer {
+  display: flex;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+
+  &Double {
+    @extend .emblaContainer;
+    margin: 0 25%;
+  }
+}
+
+.emblaSlide {
+  position: relative;
+  padding-left: 10px;
+  flex: 0 0 50%;
+
+  @include msd {
+    flex: 0 0 100%;
+  }
+}
+
+.emblaSlideInner {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+
+  img {
+    @include msd {
+      height: 396px;
+    }
+  }
+}
+
+.emblaDots {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.emblaDot {
+  background-color: $lightgrey;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 7.5px;
+  display: flex;
+  align-items: center;
+  display: none;
+
+  &:hover {
+    background-color: $primaryBlue;
+    @include transition(0.3s, ease-in-out);
+  }
+
+  &Active {
+    @extend .emblaDot;
+    background-color: $primaryBlue;
+  }
+
+  @include msd {
+    margin: 0 5px; 
+    display: block;
+  }
+}
+
+.emblaExplore {
+  color: $primaryBlue;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  img {
+    margin-top: 3px;
+    margin-left: 6px;
+  }
+}
+
+.slidesControl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+
+  &Item {
+    height: 26px;
+    width: 26px;
+    border-top: 4px solid $darkBlue-1;
+    border-right: 4px solid $darkBlue-1;
+    position: absolute;
+    top: 50%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &Right {
+    right: 0;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  &Left {
+    left: 10px;
+    transform: translateY(-50%) rotate(-140deg);
+  }
+
+  @include msd {
+    display: block;
+  }
+}
