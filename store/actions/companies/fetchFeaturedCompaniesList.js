@@ -4,8 +4,9 @@ import {
   FETCH_FEATURED_COMPANIES_LIST_FAILED,
 } from 'store/types/companies/fetchFeaturedCompaniesList'
 
-const fetchFeaturedCompaniesListRequest = () => ({
+const fetchFeaturedCompaniesListRequest = (payload) => ({
   type: FETCH_FEATURED_COMPANIES_LIST_REQUEST,
+  payload
 })
 
 const fetchFeaturedCompaniesListSuccess = (payload) => ({

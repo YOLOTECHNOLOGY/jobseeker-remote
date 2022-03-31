@@ -1,0 +1,3 @@
+import MaterialTextFieldWithSuggestionList from './MaterialTextFieldWithSuggestionList'
+
+export default MaterialTextFieldWithSuggestionList

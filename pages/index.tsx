@@ -11,7 +11,7 @@ import { wrapper } from 'store'
 
 /* Redux Actions */
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
-import { fetchFeaturedCompaniesRequest } from 'store/actions/companies/fetchFeaturedCompanies'
+import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
 
 /* Components */
 import Image from 'next/image'
@@ -22,8 +22,8 @@ import LazyLoad from 'components/LazyLoad'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
-import MaterialTextField from 'components/MaterialTextField'
 import MaterialLocationField from 'components/MaterialLocationField'
+import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 
 /* Helpers*/
 import { categoryParser, conditionChecker } from 'helpers/jobPayloadFormatter'
@@ -54,7 +54,7 @@ type configObject = {
 
 type companyObject = {
   id: number
-  logo: string
+  logoUrl: string
   name: string
 }
 
@@ -69,6 +69,7 @@ const Home = (props: HomeProps) => {
   const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
   const [locationValue, setLocationValue] = useState(null)
+  const [suggestionList, setSuggestionList] = useState([])
 
   const [activeFeature, updateActiveFeature] = useState(1)
   const [activeFeatureImg, updateActiveFeatureImg] = useState(1)
@@ -130,15 +131,23 @@ const Home = (props: HomeProps) => {
     setLocationValue(value)
   }
 
-  const onSearch = () => {
+  const onSearch = (value = searchValue) => {
     let queryParam = null
     if (locationValue) {
       const sanitisedLocValue = categoryParser(locationValue.value)
-      queryParam = conditionChecker(searchValue, sanitisedLocValue)
-    } else if (searchValue) {
-      queryParam = conditionChecker(searchValue)
+      queryParam = conditionChecker(value, sanitisedLocValue)
+    } else if (value) {
+      queryParam = conditionChecker(value)
     }
     updateUrl(queryParam, null)
+  }
+
+  const handleSuggestionSearch = (val) => {
+    if (val !== '') {
+      fetch(`${process.env.JOB_BOSSJOB_URL}/suggested-search?size=5&query=${val}`)
+        .then((resp) => resp.json())
+        .then((data) => setSuggestionList(data.data.items))
+    }
   }
 
   const renderQuickLinks = () => {
@@ -259,15 +268,16 @@ const Home = (props: HomeProps) => {
             </Text>
             <div className={styles.searchSection}>
               <div className={styles.searchAndLocationContainer}>
-                <MaterialTextField
+                <MaterialTextFieldWithSuggestionList
                   id='search'
                   label='Search for job title, keyword or company'
                   variant='outlined'
                   size='small'
                   className={styles.searchField}
-                  onChange={(e) => {
-                    e.preventDefault()
-                    setSearchValue(e.target.value)
+                  searchFn={handleSuggestionSearch}
+                  onSelect={(val:any)=>{
+                    setSearchValue(val)
+                    onSearch(val)
                   }}
                   onKeyPress={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
@@ -275,6 +285,7 @@ const Home = (props: HomeProps) => {
                       onSearch()
                     }
                   }}
+                  options={suggestionList}
                 />
                 <MaterialLocationField
                   className={styles.locationField}
@@ -282,7 +293,7 @@ const Home = (props: HomeProps) => {
                   // defValue={urlLocation}
                   onChange={onLocationSearch}
                 />
-                <MaterialButton variant='contained' onClick={onSearch}>
+                <MaterialButton variant='contained' onClick={() => onSearch()}>
                   Search
                 </MaterialButton>
               </div>
@@ -307,7 +318,7 @@ const Home = (props: HomeProps) => {
                           to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                           external
                         >
-                          <Image src={company.logo} alt={company.name} width='60' height='60' />
+                          <Image src={company.logoUrl} alt={company.name} width='60' height='60' />
                         </Link>
                       )
                     }
@@ -324,7 +335,7 @@ const Home = (props: HomeProps) => {
                           to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                           external
                         >
-                          <Image src={company.logo} alt={company.name} width='60' height='60' />
+                          <Image src={company.logoUrl} alt={company.name} width='60' height='60' />
                         </Link>
                       )
                     }
@@ -750,12 +761,17 @@ const Home = (props: HomeProps) => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
   // store actions
   store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchFeaturedCompaniesRequest())
+  store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1}))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
-  const topCompanies = storeState.companies.featuredCompanies.response
+  const featuredCompanies = storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map((featuredCompany) => featuredCompany.company)
+  const topCompanies = featuredCompanies?.map((featuredCompany) => {
+    const logoUrl = featuredCompany.logo_url
+    delete featuredCompany.logo_url
+    return {...featuredCompany, logoUrl}
+  })
   return {
     props: {
       config,

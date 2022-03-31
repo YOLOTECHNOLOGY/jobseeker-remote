@@ -6,11 +6,12 @@ import {
 } from 'store/actions/companies/fetchFeaturedCompaniesList'
 import { fetchFeaturedCompaniesListService } from 'store/services/companies/fetchFeaturedCompaniesList'
 
-function* fetchFeaturedCompaniesListReq() {
+function* fetchFeaturedCompaniesListReq(actions) {
+  const { size, page } = actions.payload
   try {
     const payload = {
-      size: 10,
-      page: 1
+      size: size || 10,
+      page: page || 1
     }
     const { data } = yield call(fetchFeaturedCompaniesListService, payload)
     yield put(fetchFeaturedCompaniesListSuccess(data.data))

@@ -16,7 +16,7 @@ import { wrapper } from 'store'
 /* Redux Actions */
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
-import { fetchFeaturedCompaniesRequest } from 'store/actions/companies/fetchFeaturedCompanies'
+import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 
 import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
@@ -32,7 +32,7 @@ import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
-import MaterialTextField from 'components/MaterialTextField'
+import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
@@ -85,7 +85,7 @@ type configObject = {
 
 type companyObject = {
   id: number
-  logo: string
+  logoUrl: string
   name: string
 }
 
@@ -190,6 +190,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const { keyword, ...rest } = router.query
   const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
   const [hasMoreFilters, setHasMoreFilters] = useState(false)
+  const [suggestionList, setSuggestionList] = useState([])
 
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
@@ -314,6 +315,17 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     queryObject = Object.assign({}, { ...rest, sort: val.length > 0 ? 2 : 1 })
     const queryParam = conditionChecker(val, predefinedLocation, predefinedCategory)
     updateUrl(queryParam, queryObject)
+  }
+
+  const handleSuggestionSearch = (val) => {
+      if (val !== '') {
+        fetch(
+          `${
+            process.env.JOB_BOSSJOB_URL
+          }/suggested-search?size=5&query=${val}`
+        ).then((resp)=>resp.json())
+        .then((data)=>setSuggestionList(data.data.items))
+    }
   }
 
   const onLocationSearch = (event, value) => {
@@ -479,19 +491,24 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         ])}
       >
         <div className={styles.searchAndLocationContainer}>
-          <MaterialTextField
+          <MaterialTextFieldWithSuggestionList
             id='search'
             label='Search for job title, keyword or company'
             variant='outlined'
             size='small'
             className={styles.searchField}
             defaultValue={urlQuery}
+            searchFn={handleSuggestionSearch}
+            onSelect={(val) => {
+                onKeywordSearch(val)
+              }}
             onKeyPress={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()
                 onKeywordSearch((e.target as HTMLInputElement).value)
               }
             }}
+            options={suggestionList}
           />
           <MaterialLocationField
             className={styles.locationField}
@@ -571,7 +588,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                     to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                     external
                   >
-                    <Image src={company.logo} alt={company.name} width='30' height='30' />
+                    <Image src={company.logoUrl} alt={company.name} width='30' height='30' />
                   </Link>
                 ))}
             </div>
@@ -645,12 +662,17 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const { keyword, page } = query
   // store actions
   store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchFeaturedCompaniesRequest())
+  store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1}))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
-  const topCompanies = storeState.companies.featuredCompanies.response
+  const featuredCompanies = storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map((featuredCompany) => featuredCompany.company)
+  const topCompanies = featuredCompanies?.map((featuredCompany) => {
+    const logoUrl = featuredCompany.logo_url
+    delete featuredCompany.logo_url
+    return {...featuredCompany, logoUrl}
+  })
   const catList = config && config.inputs && config.inputs.job_category_lists
   const locList = getLocationList(config) 
   const { predefinedQuery, predefinedLocation
