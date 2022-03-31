@@ -30,18 +30,30 @@ function* registerJobSeekerReq(actions) {
       first_name,
       last_name,
       terms_and_condition,
-      is_subscribe
+      is_subscribe,
+      source
     } = actions.payload
+
+    let randomPassword
+    if (source === 'free_resume') {
+      randomPassword =
+        Math.random()
+          .toString(36)
+          .substring(2, 15) +
+        Math.random()
+          .toString(36)
+          .substring(2, 15)
+    }
 
     const registerJobseekerPayload = {
       email,
       first_name,
       last_name,
-      password,
-      is_subscribe,
-      source: 'web',
+      password: password || '12345678',
+      is_subscribe: is_subscribe || 0,
+      source: source || 'web',
       country_key: process.env.COUNTRY_KEY,
-      terms_and_condition: terms_and_condition,
+      terms_and_condition: terms_and_condition || 0,
     }
 
     const response = yield call(registerJobseekerService, registerJobseekerPayload)
@@ -75,7 +87,7 @@ function* registerJobSeekerReq(actions) {
           }) ||
           null
       }
-      setItem(isFromCreateResume, '0')
+      setItem(isFromCreateResume, source === 'free_resume' ? '1' : '0')
 
       yield call(setCookie, 'user', userCookie)
       yield call(
@@ -90,8 +102,7 @@ function* registerJobSeekerReq(actions) {
       yield put(push(jobId ? `/dashboard/job/${jobId}` : '/jobseeker-complete-profile/1'))
     }
   } catch (err) {
-    console.log(err)
-    yield put(registerJobseekerFailed(err))
+    yield put(registerJobseekerFailed(err.response.data.errors.message))
   }
 }
 

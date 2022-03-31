@@ -145,7 +145,7 @@ const Footer = ({ showButton }: FooterProps) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/resumetemplate`}
+                    to='/resumetemplate'
                     title='Create Free Resume'
                   >
                     <Text textStyle='sm'>Create free resume</Text>
@@ -507,8 +507,9 @@ const Footer = ({ showButton }: FooterProps) => {
                   </li>
                   <li>
                     <Link
+                      aTag
                       className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/resumetemplate`}
+                      to='/resumetemplate'
                       title='Create resume'
                     >
                       <Text textStyle='sm'>Create resume</Text>

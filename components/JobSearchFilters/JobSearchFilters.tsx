@@ -66,25 +66,18 @@ const NavSearchFilter = ({
   const config = useSelector((state: any) => state.config.config.response)
   const jobCategoryList = config.inputs.job_category_lists
   const locationList = getLocationList(config)
-  const industryList = config.inputs.industry_lists.map((industry) => ({
-    key: Object.values(industry)[0],
-    value: Object.values(industry)[0],
-  }))
-  const expLvlList = config.filters.work_xps.map((expLvl) => ({
-    key: Object.values(expLvl)[0],
-    value: Object.values(expLvl)[0],
-  }))
-  const eduLevelList = config.filters.educations.map((edu) => ({
-    key: Object.values(edu)[0],
-    value: Object.values(edu)[0],
-  }))
-  const jobTypeList = config.inputs.job_types.map((jobType) => ({
-    key: Object.values(jobType)[0],
-    value: Object.values(jobType)[0],
-  }))
+  
+  const industryList = config.inputs.industry_lists
+
+  const expLvlList = config.inputs.work_xps
+
+  const eduLevelList = config.filters.educations
+
+  const jobTypeList = config.inputs.job_types
+
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
-    key: Object.values(range)[0] === '10K - 30K' ? 'Below 30K' : Object.values(range)[0],
-    value: Object.values(range)[0] === '10K - 30K' ? 'Below 30K' : Object.values(range)[0],
+    key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
+    value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
   }))
 
   const { width } = useWindowDimensions()
@@ -234,7 +227,7 @@ const NavSearchFilter = ({
               options.map((option, i) => {
                 return (
                   <label key={i} className={styles.searchFilterOption}>
-                    <input type='checkbox' value={option['key']} {...register(fieldName)} />
+                    <input type='checkbox' value={option['value']} {...register(fieldName)} />
                     <Text textStyle='sm'>{option.value}</Text>
                   </label>
                 )

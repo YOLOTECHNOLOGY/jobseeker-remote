@@ -120,8 +120,7 @@
     margin-bottom:20px;
     box-sizing: border-box;
     overflow:hidden;
-    cursor:pointer;
-    background-color: $white-1;
+    cursor: pointer;
 
     @include msd{
       width: 100%;

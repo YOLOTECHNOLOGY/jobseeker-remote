@@ -43,6 +43,7 @@
     "connected-next-router": "^4.1.0",
     "cookie-universal": "^2.1.5",
     "date-fns": "^2.23.0",
+    "embla-carousel-react": "^6.2.0",
     "env-cmd": "^10.1.0",
     "escape-html": "^1.0.3",
     "gapi-script": "^1.2.0",
@@ -70,7 +71,8 @@
     "slate": "^0.72.3",
     "slate-history": "^0.66.0",
     "slate-react": "^0.72.6",
-    "slugify": "^1.6.2"
+    "slugify": "^1.6.2",
+    "ua-parser-js": "^1.0.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.35",
