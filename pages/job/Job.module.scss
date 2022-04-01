@@ -319,8 +319,8 @@
 .LeaderBoard {
   height: 90px;
   width: 970px;
+  background-color: $white-2;
   margin: 0 auto 40px;
-  cursor: pointer;
 
   @include msd {
     width: 300px;
