@@ -60,7 +60,6 @@ interface IJobDetailProps {
   handleDeleteSavedJob?: Function
   applicationHistory?: any
   isPostingSaveJob?: boolean
-  savedJobsList?: any
 }
 
 const JobDetail = ({
@@ -75,26 +74,19 @@ const JobDetail = ({
   handlePostSaveJob,
   handleDeleteSavedJob,
   applicationHistory,
-  isPostingSaveJob,
-  savedJobsList
 }: IJobDetailProps) => {
   const router = useRouter()
   const userCookie = getCookie('user') || null
   const [jobDetailOption, setJobDetailOption] = useState(false)
   const [isSaveClicked, setIsSaveClicked] = useState(false)
   const [isSavedJob, setIsSavedJob] = useState(false)
-  const [currentSavedJob, setCurrentSavedJob] = useState(null)
   
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
-    if (!!savedJobsList?.length) {
-      const savedJob = savedJobsList.filter((job) => job.job.id === selectedJob.id)[0]
-      setIsSavedJob(savedJob ? true : false)
-      setCurrentSavedJob(savedJob)
-    }
-  }, [savedJobsList, selectedJob])
+    setIsSavedJob(selectedJob?.is_saved)
+  }, [selectedJob])
 
   const handleBenefitIcon = (benefit) => {
     const Icon = `${benefit.replace(/ /g,'')}Icon`
@@ -197,15 +189,17 @@ const JobDetail = ({
                     <MaterialButton 
                       variant='outlined' 
                       capitalize 
-                      isLoading={isSaveClicked || isPostingSaveJob}
+                      isLoading={!userCookie && isSaveClicked}
                       onClick={() => {
                         if (userCookie) {
                           if (!isCategorySaved && !isSavedJob) {
                             handlePostSaveJob({jobId: selectedJob?.id})
+                            setIsSavedJob(true)
                           }
 
                           if (isSavedJob) {
-                            handleDeleteSavedJob({savedJobId: currentSavedJob.id})
+                            handleDeleteSavedJob({jobId: selectedJob?.id})
+                            setIsSavedJob(false)
                           }
                         }
 

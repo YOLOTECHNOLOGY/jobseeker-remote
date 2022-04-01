@@ -14,7 +14,7 @@ interface IModalWithdrawApplication {
   isShowModalWithdrawApplication?: boolean
   handleShowModalWithdrawApplication?: Function
   handleWithdrawApplication?: Function
-  appliedJobId?: number
+  jobId?: number
   isWithdrawAppliedJobFetching?: boolean
   withdrawAppliedJobResponse?: any
 }
@@ -23,7 +23,7 @@ const ModalWithdrawApplication = ({
   isShowModalWithdrawApplication,
   handleShowModalWithdrawApplication,
   handleWithdrawApplication,
-  appliedJobId,
+  jobId,
   isWithdrawAppliedJobFetching,
   withdrawAppliedJobResponse
 }: IModalWithdrawApplication) => {
@@ -52,7 +52,7 @@ const ModalWithdrawApplication = ({
       secondButtonText={handleText()}
       handleSecondButton={() => {
         if (!hasWithdrawed) {
-          handleWithdrawApplication({appliedJobId})
+          handleWithdrawApplication({jobId})
         }
       }}
     >

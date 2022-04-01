@@ -206,9 +206,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const isDeletingJobAlert = useSelector((store: any) => store.alerts.deleteJobAlert.fetching)
   const isUpdatingJobAlert = useSelector((store: any) => store.alerts.updateJobAlert.fetching)
 
-  const isPostingSaveJob = useSelector((store: any) => store.job.postSaveJob.fetching)
-  const savedJobsListResponse = useSelector((store: any) => store.job.savedJobsList.response)
-
   const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
     router.query,
     catList,
@@ -396,8 +393,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     updateUrl(queryParam, queryObject)
   }
 
-  // TODO: Check if User is LoggedIn then change status: 'protected'
-  const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
+  const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest({jobId, status: userCookie ? 'protected' : 'public'}))
 
   const handleSelectedJobId = (jobId, jobTitle) => {
     if (width < 799) {
@@ -406,7 +402,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     }
     setSelectedJobId(jobId)
     handleFetchJobDetail(jobId)
-    handleFetchSavedJobsList()
   }
 
   const handleUpdateJobAlert = (updateJobAlertData) => {
@@ -447,27 +442,16 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handlePostSaveJob = ({ jobId }) => {
     const postSaveJobPayload = {
       jobId,
-      accessToken,
       user_id: userCookie.id
     }
     dispatch(postSaveJobRequest(postSaveJobPayload))
-    handleFetchSavedJobsList()
   }
 
-  const handleFetchSavedJobsList = () => {
-    const savedJobsPayload = {
-      accessToken
-    }
-    dispatch(fetchSavedJobsListRequest(savedJobsPayload))
-  }
-
-  const handleDeleteSavedJob = ({savedJobId}) => {
+  const handleDeleteSavedJob = ({jobId}) => {
     const deleteJobPayload = {
-      accessToken,
-      savedJobId
+      jobId
     }
     dispatch(deleteSaveJobRequest(deleteJobPayload))
-    handleFetchSavedJobsList()
   }
 
   const updateScrollPosition = () => {
@@ -648,8 +632,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           handlePostReportJob={handlePostReportJob}
           handlePostSaveJob={handlePostSaveJob}
           handleDeleteSavedJob={handleDeleteSavedJob}
-          isPostingSaveJob={isPostingSaveJob}
-          savedJobsList={savedJobsListResponse?.data?.saved_jobs || []}
           accessToken={accessToken}
         />
       </div>
