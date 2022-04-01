@@ -27,7 +27,6 @@ import { createJobAlertRequest } from 'store/actions/alerts/createJobAlert'
 import { postReportRequest } from 'store/actions/reports/postReport'
 
 import { postSaveJobRequest} from 'store/actions/jobs/postSaveJob'
-import { fetchSavedJobsListRequest } from 'store/actions/jobs/fetchSavedJobsList'
 import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
 
 /* Material Components */
