@@ -27,7 +27,6 @@ import JobTag from 'components/JobTag'
 import Image from 'next/image'
 import ReadMore from 'components/ReadMore'
 import JobDetailSidebarCard from 'components/Loader/JobDetailSidebarCard'
-import AdSlot from 'components/AdSlot'
 
 import ModalShare from 'components/ModalShare'
 import ModalReportJob from 'components/ModalReportJob'
@@ -216,9 +215,7 @@ const Job = ({
       <SEO title={jobDetail.job_title} description={jobDetail.job_description} />
       <div className={styles.JobDetail}>
         <div className={styles.JobDetailContent}>
-          <div className={styles.LeaderBoard}>
-              <AdSlot adSlot={'job-detail/top-leaderboard'} />
-          </div>
+          <div className={styles.LeaderBoard}/>
           <div className={styles.JobDetailPrimary}>
             <div 
               className={styles.JobDetailPrimaryOptions}
@@ -422,21 +419,19 @@ const Job = ({
           </div>
           <div className={styles.JobDetailRecruiter}>
             <Text textStyle='base' bold>Connect directly to job poster after applying</Text>
-            {jobDetail?.recruiter && (
-              <div className={styles.JobDetailRecruiterInfo}>
-                <div 
-                  className={styles.JobDetailRecruiterInfoImage}
-                  style={{ backgroundImage: `url(${jobDetail?.recruiter.avatar})` }}
-                />
-                <div className={styles.JobDetailRecruiterInfoText}>
-                  <Text textStyle='base' bold>{jobDetail?.recruiter.full_name}</Text>
-                  <span>
-                    <Text textStyle='base'>{jobDetail?.recruiter.job_title} {' '}</Text>
-                    <Text textStyle='base'>{' '}- {jobDetail?.recruiter.application_response_rate}% response rate, responds {jobDetail?.recruiter.application_response_time} | Last active on {moment(jobDetail?.recruiter.last_active_at).format('MM/DD/YYYY')}</Text>
-                  </span>
-                </div>
+            <div className={styles.JobDetailRecruiterInfo}>
+              <div 
+                className={styles.JobDetailRecruiterInfoImage}
+                style={{ backgroundImage: `url(${jobDetail?.recruiter.avatar})` }}
+              />
+              <div className={styles.JobDetailRecruiterInfoText}>
+                <Text textStyle='base' bold>{jobDetail?.recruiter.full_name}</Text>
+                <span>
+                  <Text textStyle='base'>{jobDetail?.recruiter.job_title} {' '}</Text>
+                  <Text textStyle='base'>{' '}- {jobDetail?.recruiter.application_response_rate}% response rate, responds {jobDetail?.recruiter.application_response_time} | Last active on {moment(jobDetail?.recruiter.last_active_at).format('MM/DD/YYYY')}</Text>
+                </span>
               </div>
-            )}
+            </div>
           </div>
           <div className={styles.aboutCompany}>
             <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
