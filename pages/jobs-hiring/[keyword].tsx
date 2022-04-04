@@ -232,11 +232,24 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       })
       setUrlLocation(matchedLocation[0])
     }
+
+    let jobCategories = []
+
+    const routerCategories: any = router.query?.category
+
+    if (routerCategories) {
+      catList.forEach(cat => {
+        if (routerCategories.split(',').includes(cat.key)) {
+          jobCategories.push(cat.value)
+        }
+      });
+    }
+
     const payload = {
       query: predefinedQuery ? predefinedQuery[0] : null,
       jobLocation: predefinedLocation ? predefinedLocation[0] : null,
       jobCategories:
-        firstRender && predefinedCategory ? predefinedCategory[0] : router.query?.category,
+        firstRender && predefinedCategory ? predefinedCategory[0] : jobCategories.join(','),
       salary: router.query?.salary,
       jobType: router.query?.jobtype,
       industry: router.query?.industry,
