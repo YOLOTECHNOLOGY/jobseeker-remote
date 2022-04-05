@@ -205,7 +205,7 @@ const JobDetail = ({
 
                         if (!userCookie) {
                           setIsSaveClicked(true)
-                          router.push('/login?redirect=jobs-hiring/job-search')
+                          router.push('/login/jobseeker?redirect=jobs-hiring/job-search')
                         }
                       }}
                     >

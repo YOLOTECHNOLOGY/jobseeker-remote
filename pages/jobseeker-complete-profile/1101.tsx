@@ -650,7 +650,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   if (!accessToken) {
     return { 
       redirect: { 
-        destination: '/login?redirect=/jobseeker-complete-profile/1101', 
+        destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/1101', 
         permanent: false, 
       }
     }

@@ -20,14 +20,14 @@ function* logoutReq() {
       removeCookie('user')
       removeCookie('accessToken')
       removeCookie('splan')
-      yield put(push('/login'))
+      yield put(push('/login/jobseeker'))
     }
   } catch (err) {
     yield put(logoutFailed(err))
     removeCookie('user')
     removeCookie('accessToken')
     removeCookie('splan')
-    yield put(push('/login'))
+    yield put(push('/login/jobseeker'))
   }
 }
 

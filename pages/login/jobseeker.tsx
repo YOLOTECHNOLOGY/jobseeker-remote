@@ -23,7 +23,7 @@ import { loginRequest } from 'store/actions/auth/login'
 /* Styles */
 import styles from './Login.module.scss'
 
-const Login = () => { 
+const LoginJobseeker = () => { 
   const router = useRouter()
   const dispatch = useDispatch()
 
@@ -62,9 +62,9 @@ const Login = () => {
       isLogin
     >
       <SEO
-        title='Login - Bossjob'
+        title='Jobseeker Login - Bossjob'
         description='Bossjob - Career Platform for Professionals in Philippines'
-        canonical='/login'
+        canonical='/login/jobseeker'
       />
       <div className={styles.Login}>
         <SocialMediaAuth callbackRequest={callbackRequest} />
@@ -144,7 +144,7 @@ const Login = () => {
   )
 }
 
-Login.getInitialProps = async ({ req, res }) => {
+LoginJobseeker.getInitialProps = async ({ req, res }) => {
   const accessToken = req?.cookies.accessToken
   if (accessToken) {
     res.setHeader('location', `/jobs-hiring/job-search`)
@@ -154,4 +154,4 @@ Login.getInitialProps = async ({ req, res }) => {
   return {}
 }
 
-export default Login
+export default LoginJobseeker

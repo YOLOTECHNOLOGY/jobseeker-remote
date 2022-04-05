@@ -89,14 +89,14 @@ function* login(payload, redirect, fromRegister = false) {
       // let url = '/dashboard'
       let redirectUrl = `${process.env.OLD_PROJECT_URL}/dashboard/jobseeker`
       
-      if (getItem(applyPendingJobId)) {
-        // url = `/dashboard/job/${getItem(applyPendingJobId)}/apply`
-        redirectUrl = `${process.env.OLD_PROJECT_URL}/dashboard/job/${getItem(applyPendingJobId)}/apply`
-        yield call(removeItem, applyPendingJobId)
-      } else if (redirect) {
-        // url = redirect
-        redirectUrl = redirect
-      }
+      // if (getItem(applyPendingJobId)) {
+      //   // url = `/dashboard/job/${getItem(applyPendingJobId)}/apply`
+      //   redirectUrl = `${process.env.OLD_PROJECT_URL}/dashboard/job/${getItem(applyPendingJobId)}/apply`
+      //   yield call(removeItem, applyPendingJobId)
+      // } else if (redirect) {
+      //   // url = redirect
+      //   redirectUrl = redirect
+      // }
 
       removeUtmCampaign()
       if (window !== 'undefined' && window.gtag && fromRegister) {
@@ -119,9 +119,14 @@ function* login(payload, redirect, fromRegister = false) {
       )
 
       const path = authPathToOldProject(loginData.authentication.access_token, redirectUrl)
-      // console.log('path to be redirected to', path)
-      yield put(push(path))
-      // yield put(push(url))
+      console.log('path: ', path)
+      let url =
+        loginData.active_key === 1 &&
+        (loginData.is_profile_update_required || !loginData.is_profile_completed)
+          ? '/jobseeker-complete-profile/1'
+          : `/jobs-hiring/job-search`
+
+      yield put(push(url))
       // yield put(destroy('companyJobForm')) // Reset Jobs Form
     }
   } catch (err) {

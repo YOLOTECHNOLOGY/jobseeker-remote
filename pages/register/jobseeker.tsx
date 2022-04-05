@@ -94,9 +94,9 @@ const Register = () => {
       isEmployer={isEmployer}
     >
       <SEO
-        title='Register - Bossjob'
+        title='Jobseeker Register - Bossjob'
         description='Bossjob - Career Platform for Professionals in Philippines'
-        canonical='/register'
+        canonical='/register/jobseeker'
       />
 
       <div className={styles.Register}>
