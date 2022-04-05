@@ -1,8 +1,8 @@
 import configuredAxios from 'helpers/configuredAxios'
 
-const fetchSavedJobDetailService = (payload) => {
-  const axios = configuredAxios('job', 'protected', '', payload.accessToken)
-  return axios.get(`/saved-jobs/${payload.savedJobId}`)
+const fetchSavedJobDetailService = (jobId) => {
+  const axios = configuredAxios('job', 'protected')
+  return axios.get(`/saved-jobs/${jobId}`)
 }
 
 export { fetchSavedJobDetailService }

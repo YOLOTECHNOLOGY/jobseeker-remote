@@ -92,7 +92,6 @@ const MyJobs = ({
   const [jobsList, setJobsList] = useState([])
   const [totalPages, setTotalPages] = useState(null)
   const [applicationHistories, setApplicationHistories] = useState([])
-  const [appliedJobId, setAppliedJobId] = useState(null)
 
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowModalWithdrawApplication, setIsShowModalWithdrawApplication] = useState(false)
@@ -131,7 +130,6 @@ const MyJobs = ({
   useEffect(() => {
     if (appliedJobDetailResponse) {
       setSelectedJob(appliedJobDetailResponse?.job)
-      setAppliedJobId(appliedJobDetailResponse?.id)
       setApplicationHistories(appliedJobDetailResponse?.application_histories)
     }
   }, [appliedJobDetailResponse])
@@ -149,8 +147,8 @@ const MyJobs = ({
 
   useEffect(() => {
     if (jobsList?.length > 0) {
-      handleFetchJobDetail(jobsList?.[0].id, category) 
-      setSelectedJobId(jobsList?.[0].id)
+      handleFetchJobDetail(jobsList?.[0].job.id, category) 
+      setSelectedJobId(jobsList?.[0].job.id)
     }
   }, [jobsList])
 
@@ -163,7 +161,6 @@ const MyJobs = ({
 
   const handleFetchMyJobsList = () => {
     const payload = {
-      accessToken,
       size: router.query?.size,
       page: router.query?.page ? Number(router.query.page) : 1,
     }
@@ -185,28 +182,25 @@ const MyJobs = ({
     handleFetchJobDetail(jobId, category) 
   }
 
-  const handleFetchJobDetail = (id, source) => {
+  const handleFetchJobDetail = (jobId, source) => {
     if (source === 'applied') {
       const appliedJobPayload = {
-        accessToken,
-        appliedJobId: id
+        jobId
       }
       dispatch(fetchAppliedJobDetailRequest(appliedJobPayload))
       return
     }
 
     const savedJobPayload = {
-      accessToken,
-      savedJobId: id
+      jobId
     }
     
     dispatch(fetchSavedJobDetailRequest(savedJobPayload))
   }
 
-  const handleWithdrawApplication = ({appliedJobId}) => {
+  const handleWithdrawApplication = ({ jobId }) => {
     const payload = {
-      appliedJobId,
-      accessToken
+      jobId
     }
     dispatch(withdrawAppliedJobRequest(payload))
   }
@@ -236,23 +230,20 @@ const MyJobs = ({
   const handlePostSaveJob = ({ jobId }) => {
     const postSaveJobPayload = {
       jobId,
-      accessToken,
       user_id: userCookie.id
     }
     dispatch(postSaveJobRequest(postSaveJobPayload))
-    // handleFetchMyJobsList()
   }
 
-  const handleDeleteSavedJob = ({savedJobId}) => {
+  const handleDeleteSavedJob = ({ jobId }) => {
     const deleteJobPayload = {
-      accessToken,
-      savedJobId
+      jobId
     }
     dispatch(deleteSaveJobRequest(deleteJobPayload))
     handleFetchMyJobsList()
   }
 
-  const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], isAppliedCategory ? appliedJobId : selectedJob?.['id'])
+  const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
   const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
   return (
@@ -316,7 +307,7 @@ const MyJobs = ({
               {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && jobsList?.map((jobs, i) => (
                 <JobCard
                   key={i}
-                  id={jobs.id}
+                  id={jobs.job.id}
                   image={jobs.job.company_logo}
                   title={jobs.job.job_title}
                   company={jobs.job.company_name}
@@ -324,7 +315,7 @@ const MyJobs = ({
                   salary={jobs.job.salary_range_value}
                   postedAt={jobs.job.published_at}
                   selectedId={selectedJobId}
-                  handleSelectedId={() => handleSelectedJobId(jobs.id)}
+                  handleSelectedId={() => handleSelectedJobId(jobs.job.id)}
                 />
               ))}
             </div>
@@ -351,7 +342,6 @@ const MyJobs = ({
                 setIsShowReportJob={setIsShowReportJob}
                 handleDeleteSavedJob={handleDeleteSavedJob}
                 handlePostSaveJob={handlePostSaveJob}
-                savedJobsList={savedJobsListResponse?.data?.saved_jobs || []}
               />
             )}
             {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && !selectedJob && (
@@ -389,7 +379,7 @@ const MyJobs = ({
       />
 
       <ModalWithdrawApplication
-        appliedJobId={appliedJobId}
+        jobId={selectedJob?.['id']}
         isShowModalWithdrawApplication={isShowModalWithdrawApplication}
         handleShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
         handleWithdrawApplication={handleWithdrawApplication}
