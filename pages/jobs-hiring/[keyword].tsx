@@ -205,6 +205,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const isDeletingJobAlert = useSelector((store: any) => store.alerts.deleteJobAlert.fetching)
   const isUpdatingJobAlert = useSelector((store: any) => store.alerts.updateJobAlert.fetching)
 
+  const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
+  const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
+
   const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
     router.query,
     catList,
@@ -632,6 +635,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           handlePostSaveJob={handlePostSaveJob}
           handleDeleteSavedJob={handleDeleteSavedJob}
           accessToken={accessToken}
+          postReportResponse={postReportResponse}
+          isPostingReport={isPostingReport}
         />
       </div>
     </Layout>
