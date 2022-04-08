@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
 import Image from 'next/image'
 
@@ -16,11 +17,13 @@ import { BossjobLogo, DefaultJobseekerAvatar, ChatIcon } from 'images'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Style */
 import styles from '../Header.module.scss'
 
 const ProtectedHeader = () => {
+  const router = useRouter()
   const currentUser = getCookie('user')
   const dispatch = useDispatch()
   const ref = useRef(null)
@@ -43,6 +46,13 @@ const ProtectedHeader = () => {
     dispatch(logoutRequest())
   }
 
+  const handleRedirectAuthentication = (e, path) => {
+    e.preventDefault()
+
+    const authPath = authPathToOldProject(null, path)
+    router.push(authPath)
+  }
+
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
@@ -62,11 +72,11 @@ const ProtectedHeader = () => {
                 </Link>
               </li>
               <li className={styles.headerLink}>
-                <Link title='Headhunt Me' to={`${process.env.OLD_PROJECT_URL}/headhunt-me`}>
+                <a title='Headhunt Me' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/headhunt-me')} href='/dashboard/headhunt-me'>
                   <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
                     Headhunt Me
                   </Text>
-                </Link>
+                </a>
               </li>
               <li className={styles.headerLink}>
                 <Link title='Companies' to='/companies'>
@@ -83,12 +93,12 @@ const ProtectedHeader = () => {
                 </Link>
               </li>
               <li className={styles.headerLink}>
-                <Link className={styles.headerLinkIcon} title='Chats' to='/'>
+                <a className={styles.headerLinkIcon} title='Chats' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/chat')} href='/dashboard/chat'>
                   <Image src={ChatIcon} width='20' height='20' />
                   <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
                     Chats
                   </Text>
-                </Link>
+                </a>
               </li>
             </React.Fragment>
           </ul>
@@ -96,9 +106,9 @@ const ProtectedHeader = () => {
         <ul className={styles.headerLinksList}>
           <React.Fragment>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
-              <Link title='Manage Resume' to={`${process.env.OLD_PROJECT_URL}/dashboard/profile/jobseeker`}>
+              <a title='Manage Resume' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/profile/jobseeker')} href='/dashboard/profile/jobseeker'>
                 <Button primary>Manage Resume</Button>
-              </Link>
+              </a>
             </li>
             <li className={styles.headerLink}>
               <div className={styles.profileWrapper} onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}>
@@ -127,14 +137,14 @@ const ProtectedHeader = () => {
                 </Link>
               </li>
               <li className={styles.headerMenuItem}>
-                <Link to='/' className={styles.headerMenuLink}>
+                <a onClick={(e) => handleRedirectAuthentication(e, '/dashboard/profile/settings')} href='/dashboard/profile/settings' className={styles.headerMenuLink}>
                   <Text textStyle='base'>Account Settings</Text>  
-                </Link>
+                </a>
               </li>
               <li className={styles.headerMenuItem}>
-                <Link to='/' className={styles.headerMenuLink}>
+                <a onClick={(e) => handleRedirectAuthentication(e, '/dashboard/bosspoint')} href='/dashboard/bosspoint' className={styles.headerMenuLink}>
                   <Text textStyle='base'>BossPoints</Text>  
-                </Link>
+                </a>
               </li>
               <li className={styles.headerMenuItem}>
                 <Link to='https://blog.bossjob.ph/' aTag external className={styles.headerMenuLink}>

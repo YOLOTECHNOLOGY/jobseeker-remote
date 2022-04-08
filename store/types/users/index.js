@@ -6,6 +6,7 @@ import generateUserResume from './generateUserResume'
 import fetchUserWorkExperience from './fetchUserWorkExperience'
 import fetchUserEducation from './fetchUserEducation'
 import completeUserProfile from './completeUserProfile'
+import redirectToNewJobseeker from './redirectToNewJobseeker'
 
 export default {
   registerUser,
@@ -15,5 +16,6 @@ export default {
   generateUserResume,
   fetchUserWorkExperience,
   fetchUserEducation,
-  completeUserProfile
+  completeUserProfile,
+  redirectToNewJobseeker
 }

@@ -99,7 +99,7 @@ function* registerJobSeekerReq(actions) {
       yield fork(fetchRecruiterSubscriptionFeature)
       yield take(FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS)
 
-      yield put(push(jobId ? `/dashboard/job/${jobId}` : '/jobseeker-complete-profile/1'))
+      yield put(push(jobId ? `/job/${jobId}` : '/jobseeker-complete-profile/1'))
     }
   } catch (err) {
     yield put(registerJobseekerFailed(err.response.data.errors.message))

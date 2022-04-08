@@ -1,3 +1,3 @@
-import Register from './register'
+import RegisterJobseeker from './jobseeker'
 
-export default Register
+export default RegisterJobseeker
