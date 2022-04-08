@@ -18,8 +18,6 @@ function* fetchRecommendedCoursesReq(action) {
       xp_lvl_key,
     }
 
-    console.log({payload})
-
     const response = yield call(fetchRecommendedCoursesService, payload)
 
     if (response.status === 200 || response.status === 201) {

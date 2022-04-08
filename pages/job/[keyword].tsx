@@ -103,6 +103,9 @@ const Job = ({
   const similarJobsResponse = useSelector((store: any) => store.job.similarJobs.response)
   const isSimilarJobsFetching = useSelector((store: any) => store.job.similarJobs.fetching)
 
+  const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
+  const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
+
   useEffect(() => {
     setJobDetailUrl(handleFormatWindowUrl('job', jobDetail?.['job_title'], jobDetail?.['id']))
     setCompanyUrl(handleFormatWindowUrl('company', jobDetail?.['company']?.['name'], jobDetail?.['company']?.['id']))
@@ -180,7 +183,9 @@ const Job = ({
   }
 
   const handleRedirectToJob = (jobTitle, jobId) => {
-    router.push(handleFormatWindowUrl('job', jobTitle, jobId))
+    if (typeof window !== 'undefined') {
+      window.open(handleFormatWindowUrl('job', jobTitle, jobId), '_blank');
+    }
   }
 
   const getJobDetailCategoryIds = () => {
@@ -417,22 +422,24 @@ const Job = ({
               </span>
             ))}
           </div>
-          <div className={styles.JobDetailRecruiter}>
-            <Text textStyle='base' bold>Connect directly to job poster after applying</Text>
-            <div className={styles.JobDetailRecruiterInfo}>
-              <div 
-                className={styles.JobDetailRecruiterInfoImage}
-                style={{ backgroundImage: `url(${jobDetail?.recruiter.avatar})` }}
-              />
-              <div className={styles.JobDetailRecruiterInfoText}>
-                <Text textStyle='base' bold>{jobDetail?.recruiter.full_name}</Text>
-                <span>
-                  <Text textStyle='base'>{jobDetail?.recruiter.job_title} {' '}</Text>
-                  <Text textStyle='base'>{' '}- {jobDetail?.recruiter.application_response_rate}% response rate, responds {jobDetail?.recruiter.application_response_time} | Last active on {moment(jobDetail?.recruiter.last_active_at).format('MM/DD/YYYY')}</Text>
-                </span>
+          {jobDetail?.recruiter && (
+            <div className={styles.JobDetailRecruiter}>
+              <Text textStyle='base' bold>Connect directly to job poster after applying</Text>
+              <div className={styles.JobDetailRecruiterInfo}>
+                <div 
+                  className={styles.JobDetailRecruiterInfoImage}
+                  style={{ backgroundImage: `url(${jobDetail?.recruiter.avatar})` }}
+                />
+                <div className={styles.JobDetailRecruiterInfoText}>
+                  <Text textStyle='base' bold>{jobDetail?.recruiter.full_name}</Text>
+                  <span>
+                    <Text textStyle='base'>{jobDetail?.recruiter.job_title} {' '}</Text>
+                    <Text textStyle='base'>{' '}- {jobDetail?.recruiter.application_response_rate}% response rate, responds {jobDetail?.recruiter.application_response_time} | Last active on {moment(jobDetail?.recruiter.last_active_at).format('MM/DD/YYYY')}</Text>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
           <div className={styles.aboutCompany}>
             <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
               About the company
@@ -473,14 +480,16 @@ const Job = ({
                   onClick={() => handleRedirectToJob(job.truncated_job_title, job.id)} 
                   className={styles.JobDetailSidebarCard}
                 >
-                  <Text 
-                    className={styles.JobDetailSidebarCardTitle} 
-                    textStyle='xl' 
-                    tagName='p' 
-                    bold
-                  >
-                    {job.truncated_job_title || job.job_title}
-                  </Text>
+                  <Link to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`} aTag external>
+                    <Text 
+                      className={styles.JobDetailSidebarCardTitle} 
+                      textStyle='xl' 
+                      tagName='p' 
+                      bold
+                    >
+                      {job.truncated_job_title || job.job_title}
+                    </Text>
+                  </Link>
                   <Text textStyle='base' tagName='p'>{job.company_name}</Text>
                   <Text textStyle='base' tagName='p' textColor='darkgrey'>{job.location_value}</Text>
                   <Text textStyle='base' tagName='p' textColor='darkgrey'>{job.salary_range_value}</Text>
@@ -541,6 +550,8 @@ const Job = ({
         reportJobReasonList={reportJobReasonList}
         selectedJobId={jobDetail.id}
         handlePostReportJob={handlePostReportJob}
+        isPostingReport={isPostingReport}
+        postReportResponse={postReportResponse}
       />
 
       <ModalShare
