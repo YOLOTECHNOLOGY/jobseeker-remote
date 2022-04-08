@@ -98,7 +98,7 @@ const renderPopularSearch = () => {
     <div className={styles.popularSearch}>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/job-search/?jobCategory=audit-taxation,banking-financial,corporate-finance-investment,sales-financial-services,general-cost-accounting`}
+        to={`${jobsPageLink}/job-search/?category=audit-taxation,banking-financial,corporate-finance-investment,sales-financial-services,general-cost-accounting`}
         title='Finance jobs'
         aTag
       >
@@ -106,7 +106,7 @@ const renderPopularSearch = () => {
       </Link>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/job-search/?jobCategory=sales-corporate,sales-eng-tech-it,sales-financial-services,marketing-business-dev`}
+        to={`${jobsPageLink}/job-search/?category=sales-corporate,sales-eng-tech-it,sales-financial-services,marketing-business-dev`}
         title='Sales jobs'
         aTag
       >
@@ -114,7 +114,7 @@ const renderPopularSearch = () => {
       </Link>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/job-search/?jobCategory=digital-marketing,marketing-business-dev,telesales-telemarketing`}
+        to={`${jobsPageLink}/job-search/?category=digital-marketing,marketing-business-dev,telesales-telemarketing`}
         title='Marketing jobs'
         aTag
       >
@@ -125,7 +125,7 @@ const renderPopularSearch = () => {
       </Link>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/job-search/?jobCategory=it-hardware,it-network-sys-db-admin,it-software-engineering,sales-eng-tech-it,tech-helpdesk-support`}
+        to={`${jobsPageLink}/job-search/?category=it-hardware,it-network-sys-db-admin,it-software-engineering,sales-eng-tech-it,tech-helpdesk-support`}
         title='IT jobs'
         aTag
       >
@@ -136,7 +136,7 @@ const renderPopularSearch = () => {
       </Link>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/job-search/?jobCategory=customer-service,tech-helpdesk-support`}
+        to={`${jobsPageLink}/job-search/?category=customer-service,tech-helpdesk-support`}
         title='Customer Service jobs'
         aTag
       >
@@ -235,11 +235,24 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       })
       setUrlLocation(matchedLocation[0])
     }
+
+    let jobCategories = []
+
+    const routerCategories: any = router.query?.category
+
+    if (routerCategories) {
+      catList.forEach(cat => {
+        if (routerCategories.split(',').includes(cat.key)) {
+          jobCategories.push(cat.value)
+        }
+      });
+    }
+
     const payload = {
       query: predefinedQuery ? predefinedQuery[0] : null,
       jobLocation: predefinedLocation ? predefinedLocation[0] : null,
       jobCategories:
-        firstRender && predefinedCategory ? predefinedCategory[0] : router.query?.category,
+        firstRender && predefinedCategory ? predefinedCategory[0] : jobCategories.join(','),
       salary: router.query?.salary,
       jobType: router.query?.jobtype,
       industry: router.query?.industry,

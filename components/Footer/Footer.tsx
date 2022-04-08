@@ -248,7 +248,7 @@ const Footer = ({ showButton }: FooterProps) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/jobs-hiring/makati-jobs`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/makati-jobs`}
                     title='Jobs in Makati'
                     external
                   >
@@ -258,7 +258,7 @@ const Footer = ({ showButton }: FooterProps) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/jobs-hiring/cebu-city-jobs`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/cebu-city-jobs`}
                     title='Jobs in Cebu'
                     external
                   >
@@ -268,9 +268,7 @@ const Footer = ({ showButton }: FooterProps) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={
-                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=it-hardware,it-network-sys-db-admin,it-software-engineering,sales-eng-tech-it,tech-helpdesk-support'
-                    }
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=it-hardware,it-network-sys-db-admin,it-software-engineering,sales-eng-tech-it,tech-helpdesk-support`}
                     title='IT Jobs'
                     external
                   >
@@ -280,9 +278,7 @@ const Footer = ({ showButton }: FooterProps) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={
-                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=audit-taxation,banking-financial,corporate-finance-investment,sales-financial-services,general-cost-accounting'
-                    }
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=audit-taxation,banking-financial,corporate-finance-investment,sales-financial-services,general-cost-accounting`}
                     title='Finance Jobs'
                     external
                   >
@@ -292,9 +288,7 @@ const Footer = ({ showButton }: FooterProps) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={
-                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=customer-service,tech-helpdesk-support'
-                    }
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service,tech-helpdesk-support`}
                     title='Customer Service Jobs'
                     external
                   >
@@ -304,7 +298,7 @@ const Footer = ({ showButton }: FooterProps) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={'https://bossjob.ph/jobs-hiring/job-search/?industry=BPO'}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?industry=BPO`}
                     title='BPO Jobs'
                     external
                   >
@@ -314,9 +308,7 @@ const Footer = ({ showButton }: FooterProps) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={
-                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=sales-corporate,sales-eng-tech-it,sales-financial-services,marketing-business-dev'
-                    }
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=sales-corporate,sales-eng-tech-it,sales-financial-services,marketing-business-dev`}
                     title='Sales Jobs'
                     external
                   >
@@ -326,9 +318,7 @@ const Footer = ({ showButton }: FooterProps) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={
-                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=civil-government-services,doctor-diagnosis,nurse-medical-support,pharmacy'
-                    }
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=civil-government-services,doctor-diagnosis,nurse-medical-support,pharmacy`}
                     title='Healthcare Jobs'
                     external
                   >
@@ -619,8 +609,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={
-                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=it-hardware,it-network-sys-db-admin,it-software-engineering,sales-eng-tech-it,tech-helpdesk-support'
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=it-hardware,it-network-sys-db-admin,it-software-engineering,sales-eng-tech-it,tech-helpdesk-support`
                       }
                       title='IT Jobs'
                       external
@@ -631,8 +620,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={
-                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=audit-taxation,banking-financial,corporate-finance-investment,sales-financial-services,general-cost-accounting'
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=audit-taxation,banking-financial,corporate-finance-investment,sales-financial-services,general-cost-accounting`
                       }
                       title='Finance Jobs'
                       external
@@ -643,8 +631,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={
-                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=customer-service,tech-helpdesk-support'
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service,tech-helpdesk-support`
                       }
                       title='Customer Service Jobs'
                       external
@@ -655,7 +642,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={'https://bossjob.ph/jobs-hiring/job-search/?industry=BPO'}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?industry=BPO`}
                       title='BPO Jobs'
                       external
                     >
@@ -665,9 +652,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={
-                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=sales-corporate,sales-eng-tech-it,sales-financial-services,marketing-business-dev'
-                      }
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=sales-corporate,sales-eng-tech-it,sales-financial-services,marketing-business-dev`}
                       title='Sales Jobs'
                       external
                     >
@@ -677,9 +662,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={
-                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=civil-government-services,doctor-diagnosis,nurse-medical-support,pharmacy'
-                      }
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=civil-government-services,doctor-diagnosis,nurse-medical-support,pharmacy`}
                       title='Healthcare Jobs'
                       external
                     >
