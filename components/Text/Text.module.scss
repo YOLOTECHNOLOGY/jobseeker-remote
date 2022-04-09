@@ -46,7 +46,10 @@
 
   &Base {
     font-size: $mobile-font-size-base;
-    line-height: 20px;
+    line-height: 21px;
+    @include msd {
+      font-size: $desktop-font-size-base;
+    }
     @include md {
       font-size: $desktop-font-size-base;
     }
@@ -54,6 +57,10 @@
 
   &LG {
     font-size: $mobile-font-size-lg;
+    line-height: 24px;
+    @include msd {
+      font-size: $desktop-font-size-lg;
+    }
     @include md {
       font-size: $desktop-font-size-lg;
     }
@@ -61,6 +68,10 @@
 
   &XL {
     font-size: $mobile-font-size-xl;
+    line-height: 27px;
+    @include msd {
+      font-size: $desktop-font-size-xl;
+    }
     @include md {
       font-size: $desktop-font-size-xl;
     }

@@ -16,22 +16,24 @@ const textFieldTheme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          fontSize: '15px',
+          fontSize: '16px',
           letterSpacing: '1px',
-          backgroundColor: 'white'
+          backgroundColor: 'white',
+          height: '48px'
         },
       },
     },
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          fontSize: '14px',
+          fontSize: '16px',
           letterSpacing: '1px',
           transform: 'translate(14px, 10px) scale(1)',
           '&.Mui-focused': {
             fontSize: '10px',
             transform: 'translate(14px, -10px) scale(1)',
           },
+          top: '4px'
         },
         shrink: {
           fontSize: '10px',
@@ -54,6 +56,7 @@ const autocompleteTheme = createTheme({
           '&.MuiInputLabel-shrink': {
             fontSize: '13px',
           },
+          height: '48px'
         },
       },
     },

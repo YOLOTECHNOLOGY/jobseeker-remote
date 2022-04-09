@@ -35,7 +35,7 @@ const MaterialBasicSelect = ({
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            fontSize: '14px',
+            fontSize: '16px',
             transform: 'translate(14px, 10px) scale(1)',
             letterSpacing: '1px',
             '&.Mui-focused': {
@@ -57,6 +57,8 @@ const MaterialBasicSelect = ({
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
+            fontSize: '16px',
+            height: '48px',
             backgroundColor: greyBg ? '#E2E2E2' : 'white',
           },
         },
@@ -72,7 +74,7 @@ const MaterialBasicSelect = ({
       MuiMenuItem: {
         styleOverrides: {
           root: {
-            fontSize: '13px',
+            fontSize: '16px',
             letterSpacing: '1px',
             padding:'10px 16px'
           },

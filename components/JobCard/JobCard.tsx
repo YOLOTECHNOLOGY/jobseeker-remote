@@ -57,18 +57,18 @@ const JobCard = ({
         <div className={styles.JobCardDetailList}>
           <div className={styles.JobCardDetailItem}>
             <Image src={CompanyIcon} width='20' height='20' />
-            <Text className={styles.JobCardDetailItemText} textStyle='base'>{company}</Text>
+            <Text className={styles.JobCardDetailItemText} textStyle='xl'>{company}</Text>
           </div>
           <div className={styles.JobCardDetailItem}>
             <Image src={LocationIcon} width='20' height='20' />
-            <Text className={styles.JobCardDetailItemText} textStyle='base'>{location}</Text>
+            <Text className={styles.JobCardDetailItemText} textStyle='xl'>{location}</Text>
           </div>
           <div className={styles.JobCardDetailItem}>
             <Image src={SalaryIcon} width='20' height='20' />
-            <Text className={styles.JobCardDetailItemText} textStyle='base'>{salary}</Text>
+            <Text className={styles.JobCardDetailItemText} textStyle='xl'>{salary}</Text>
           </div>
         </div>
-        <Text textStyle='xsm'>Posted on {postedAt}</Text>
+        <Text textStyle='base'>Posted on {postedAt}</Text>
       </div>
     </div>
   )

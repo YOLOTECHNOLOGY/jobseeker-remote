@@ -60,7 +60,7 @@ const MaterialButton = ({
           size={size}
           className={className}
           disabled={disabled}
-          style={{textTransform: !capitalize ? 'uppercase' : 'capitalize'}}
+          style={{textTransform: !capitalize ? 'uppercase' : 'capitalize', height: '48px'}}
           {...(rest as any)}
         >
           {children}

@@ -7,15 +7,19 @@
 
 .searchSection {
   position: relative;
-  height: 139px;
+  height: 209px;
   background-color: $white-1;
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
+  padding: 45px 0;
   z-index:10;
 
+  @include msd{
+    height:360px;
+  }
+
   @include sm{
-    height:180px;
+    height: 360px;
   }
 
   .searchAndLocationContainer {
@@ -24,7 +28,7 @@
     flex-direction: row;
     justify-content: space-between;
 
-    @include sm{
+    @include msd{
       flex-direction: column;
     }
   }
@@ -34,14 +38,14 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    margin-top: 10px;
+    margin-top: 24px;
 
     & > * {
-      margin-right: 15px;
+      margin-right: 16px;
     }
 
-    @include sm{
-      display:none;
+    @include msd{
+      display: none;
     }
   }
 
@@ -56,31 +60,46 @@
 
 .searchSectionExpanded {
   @extend .searchSection;
-  height: 230px;
+  height: 310px;
   z-index:10;
 
-  @include sm{
-    height:180px;
+  @include msd{
+    height: 100%;
   }
 }
 
 .searchField {
-  height: 40px;
-  width: 60%;
+  // height: 40px;
+  width: 750px;
 
-  @include sm{
+  @include msd{
     width:100%;
-    margin-bottom:3% !important;
+    margin-bottom: 24px !important;
   }
 }
 .locationField {
-  height: 40px;
-  width: 30%;
+  // height: 40px;
+  width: 230px;
+  margin-left: 16px;
 
-  @include sm{
+  @include msd{
     width:100%;
-    margin-bottom:3%;
+    margin-bottom: 24px;
+    margin-left: 0;
   }
+}
+.searchButton {
+  margin-left: 16px;
+  width: 115px;
+
+  @include msd{
+    width:100%;
+    margin-left: 0;
+  }
+}
+.filtersButton {
+  width: 100%;
+  margin-top: 24px;
 }
 .sortField {
   width: 150px;
@@ -93,16 +112,21 @@
 .quickLinkSectionExpanded {
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
+  margin: 24px 0 0;
 
   @include sm{
-    display:none;
+    display: none;
   }
 }
 
 .quickLinkTitle {
   display: flex;
   letter-spacing: 1px;
+  margin-right: 34px;
+
+  @include msd {
+    white-space: pre;
+  }
 }
 
 .popularSearchContainer {
@@ -111,10 +135,10 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 24px;
 
   @include msd {
-    flex-direction: column;
+    align-items: flex-start;
   }
 
   .popularSearch {
@@ -122,7 +146,7 @@
     flex-wrap: wrap;
 
     .link {
-      margin:0 10px; 
+      margin-right: 24px;
 
       & > span {
         letter-spacing: 1px;
@@ -135,9 +159,13 @@
 
         & > * {
           color: $primaryBlue;
-          font-weight: bold;
+          // font-weight: bold;
           transition: 100ms all ease-in-out;
         }
+      }
+
+      @include msd {
+        margin-bottom: 10px;
       }
     }
   }
@@ -171,7 +199,7 @@
   flex-wrap: wrap;
 
   @include msd {
-    flex-direction: column;
+    align-items: flex-start;
   }
 
   .topCompanies {
@@ -181,7 +209,8 @@
 
   .topCompaniesLogo {
     display: flex;
-    margin: 5px 15px;
+    margin-right: 32px;
+    box-shadow: $box-shadow-1;
 
     &:hover {
       cursor: pointer;
@@ -199,4 +228,12 @@
 .resetFilterBtnMobile {
   text-align: center;
   background-color: $white-1;
+}
+
+.jobListSection {
+  margin-top: 48px;
+
+  @include sm {
+    margin-top: 21px;
+  }
 }

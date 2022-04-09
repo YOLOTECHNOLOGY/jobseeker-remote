@@ -1,20 +1,21 @@
 const S3BucketJobseeker = process.env.S3_BUCKET_URL
 
 export const BossjobLogo = `${S3BucketJobseeker}/Bossjob.svg`
+export const BossjobFittedLogo = `${S3BucketJobseeker}/BossjobFittedLogo.svg`
 export const BriefcaseIcon = `${S3BucketJobseeker}/BriefcaseIcon.svg`
 export const CommissionIcon = `${S3BucketJobseeker}/CommissionIcon.svg`
 export const DropdownArrowIcon = `${S3BucketJobseeker}/DropdownArrowIcon.svg`
 export const EducationIcon = `${S3BucketJobseeker}/EducationIcon.svg`
-export const EmployeeStockPurchaseIcon = `${S3BucketJobseeker}/EmployeeStockIcon.svg`
-export const EquityIncentiveIcon = `${S3BucketJobseeker}/EquityIcon.svg`
+export const EmployeeStockPurchaseIcon = `${S3BucketJobseeker}/EmployeeStockPurchaseIcon.svg`
+export const EquityIncentiveIcon = `${S3BucketJobseeker}/EquityIncentiveIcon.svg`
 export const HousingAllowanceIcon = `${S3BucketJobseeker}/HousingAllowanceIcon.svg`
 export const LocationIcon = `${S3BucketJobseeker}/LocationIcon.svg`
 export const MealAllowanceIcon = `${S3BucketJobseeker}/MealAllowanceIcon.svg`
 export const NotificationIcon = `${S3BucketJobseeker}/NotificationIcon.svg`
-export const OtherAllowancesIcon = `${S3BucketJobseeker}/OtherAllowanceIcon.svg`
+export const OtherAllowancesIcon = `${S3BucketJobseeker}/OtherAllowancesIcon.svg`
 export const PerformanceBonusIcon = `${S3BucketJobseeker}/PerformanceBonusIcon.svg`
 export const SalaryIcon = `${S3BucketJobseeker}/SalaryIcon.svg`
-export const TelecommunicationAllowanceIcon = `${S3BucketJobseeker}/TelcomAllowanceIcon.svg`
+export const TelecommunicationAllowanceIcon = `${S3BucketJobseeker}/TelecommunicationAllowanceIcon.svg`
 export const TransportAllowanceIcon = `${S3BucketJobseeker}/TransportAllowanceIcon.svg`
 export const CompanyIcon = `${S3BucketJobseeker}/CompanyIcon.svg`
 export const MoreIcon = `${S3BucketJobseeker}/MoreIcon.svg`
