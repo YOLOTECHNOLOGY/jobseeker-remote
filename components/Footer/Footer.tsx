@@ -22,11 +22,8 @@ import styles from './Footer.module.scss'
 import classNames from 'classnames/bind'
 
 const scrollToBottom = () => document.body.scrollIntoView({ behavior: 'smooth', block: 'start' })
-interface FooterProps {
-  showButton?: boolean
-}
 
-const Footer = ({ showButton }: FooterProps) => {
+const Footer = () => {
   return (
     <footer className={styles.footer}>
       <button

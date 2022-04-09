@@ -33,8 +33,7 @@ const JobCard = ({
   salary,
   postedAt,
   handleSelectedId,
-  selectedId,
-  ...rest
+  selectedId
 }: JobCardProps) => {
   const cx = classNames.bind(styles)
   const isSelectedClass = cx({ isSelected: selectedId == id })

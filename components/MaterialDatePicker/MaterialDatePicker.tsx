@@ -9,7 +9,6 @@ interface MaterialDatePickerProps {
   onDateChange: Function,
   label?: string,
   inputFormat?: string,
-  format?: string,
   views?: any,
   isYear?: boolean
 }
@@ -19,10 +18,8 @@ const MaterialDatePicker = ({
   onDateChange,
   label,
   inputFormat,
-  format,
   views,
-  isYear,
-  ...rest
+  isYear
 }: MaterialDatePickerProps) => {
   const theme = createTheme({
     components: {
