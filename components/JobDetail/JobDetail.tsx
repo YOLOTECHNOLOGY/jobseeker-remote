@@ -42,6 +42,7 @@ import {
   CommissionIcon,
   PerformanceBonusIcon,
   TelecommunicationAllowanceIcon,
+  TransportAllowanceIcon,
   OtherAllowancesIcon,  
   MoreIcon,
   ExpireIcon,
@@ -93,21 +94,23 @@ const JobDetail = ({
 
     switch(Icon) {
       case 'EquityIncentiveIcon':
-        return <Image src={EquityIncentiveIcon} alt='logo' width='22' height='22' />
+        return <Image src={EquityIncentiveIcon} alt='logo' width='20' height='20' />
       case 'MealAllowanceIcon':
-        return <Image src={MealAllowanceIcon} alt='logo' width='22' height='22' />
+        return <Image src={MealAllowanceIcon} alt='logo' width='20' height='20' />
       case 'EmployeeStockPurchaseIcon':
-        return <Image src={EmployeeStockPurchaseIcon} alt='logo' width='22' height='22' />
+        return <Image src={EmployeeStockPurchaseIcon} alt='logo' width='20' height='20' />
       case 'HousingAllowanceIcon':
-        return <Image src={HousingAllowanceIcon} alt='logo' width='22' height='22' />
+        return <Image src={HousingAllowanceIcon} alt='logo' width='20' height='20' />
       case 'CommissionIcon':
-        return <Image src={CommissionIcon} alt='logo' width='22' height='22' />
+        return <Image src={CommissionIcon} alt='logo' width='20' height='20' />
       case 'PerformanceBonusIcon':
-        return <Image src={PerformanceBonusIcon} alt='logo' width='22' height='22' />
+        return <Image src={PerformanceBonusIcon} alt='logo' width='20' height='20' />
       case 'TelecommunicationAllowanceIcon':
-        return <Image src={TelecommunicationAllowanceIcon} alt='logo' width='22' height='22' />
+        return <Image src={TelecommunicationAllowanceIcon} alt='logo' width='20' height='20' />
+      case 'TransportAllowanceIcon':
+        return <Image src={TransportAllowanceIcon} alt='logo' width='20' height='20' />
       default:
-        return <Image src={OtherAllowancesIcon} alt='logo' width='22' height='22' />
+        return <Image src={OtherAllowancesIcon} alt='logo' width='20' height='20' />
     }
   }
 
@@ -124,54 +127,54 @@ const JobDetail = ({
   
   return (
     <div className={styles.JobDetail}>
-      <div className={classNamesCombined([styles.JobDetailOption, isStickyClass])}>
-        <div 
-          className={styles.JobDetailOptionImage}
-          onClick={() => setJobDetailOption(!jobDetailOption)}
-        >
-          <Image src={MoreIcon} width='20' height='20'></Image>
-        </div>
-        
-        {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
-        {jobDetailOption && (
-          <div className={styles.JobDetailOptionList}>
-            {!isCategoryApplied && (
-              <>
-                <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
-                  <Text textStyle='lg'>View in new tab</Text>
-                </Link>
-                <div className={styles.JobDetailOptionItem} onClick={() => {
-                  setIsShowReportJob(true)
-                  setJobDetailOption(false)
-                }}>
-                  <Text textStyle='lg'>Report job</Text>
+      <div className={classNamesCombined([styles.JobDetailContent])}>
+        <div className={classNamesCombined([isStickyClass, styles.JobDetailHeader])}>
+          <div>
+            <div 
+              className={styles.JobDetailOptionImage}
+              onClick={() => setJobDetailOption(!jobDetailOption)}
+            >
+              <Image src={MoreIcon} width='30' height='30'></Image>
+            </div>
+            
+            {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
+            {jobDetailOption && (
+              <div className={styles.JobDetailOptionList}>
+                {!isCategoryApplied && (
+                  <>
+                    <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
+                      <Text textStyle='lg'>View in new tab</Text>
+                    </Link>
+                    <div className={styles.JobDetailOptionItem} onClick={() => {
+                      setIsShowReportJob(true)
+                      setJobDetailOption(false)
+                    }}>
+                      <Text textStyle='lg'>Report job</Text>
+                    </div>
+                  </>
+                )}
+                {isCategoryApplied && !checkHasApplicationWithdrawn() && (
+                  <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalWithdrawApplication(true)}>
+                    <Text textStyle='lg'>Withdraw Application</Text>
+                  </div>
+                )}
+                    
+                <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
+                  <Text textStyle='lg'>Share this job</Text>
                 </div>
-              </>
-            )}
-            {isCategoryApplied && !checkHasApplicationWithdrawn() && (
-              <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalWithdrawApplication(true)}>
-                <Text textStyle='lg'>Withdraw Application</Text>
+
+                {/* <div className={styles.JobDetailOptionItem} onClick={() => console.log('View Resume')}>
+                  <Text textStyle='lg'>View Resume</Text>
+                </div> */}
               </div>
             )}
-                
-            <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
-              <Text textStyle='lg'>Share this job</Text>
-            </div>
-
-            {/* <div className={styles.JobDetailOptionItem} onClick={() => console.log('View Resume')}>
-              <Text textStyle='lg'>View Resume</Text>
-            </div> */}
           </div>
-        )}
-      </div>
-      <div className={classNamesCombined([styles.JobDetailContent, isStickyClass])}>
-        <div className={styles.JobDetailHeader}>
           <div
             className={styles.JobDetailImage}
             style={{ backgroundImage: `url(${selectedJob?.company?.logo})` }}
           />
           <div className={styles.JobDetailInfo}>
-            <Text textStyle='xxl' bold className={styles.JobDetailTitle}>
+            <Text textStyle='xl' bold className={styles.JobDetailTitle}>
               {selectedJob?.job_title}
             </Text>
             <Text textStyle='lg' className={styles.JobDetailCompany}>
@@ -183,7 +186,9 @@ const JobDetail = ({
                 {selectedJob?.status_key === 'active' && !isCategoryApplied && (
                   <>
                     <MaterialButton variant='contained' capitalize>
-                      <Link to={selectedJob?.external_apply_url} external>Apply Now</Link>
+                      <Link to={selectedJob?.external_apply_url} external>
+                        <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
+                      </Link>
                     </MaterialButton>
 
                     <MaterialButton 
@@ -209,7 +214,9 @@ const JobDetail = ({
                         }
                       }}
                     >
-                      { isSavedJob || isCategorySaved ? 'Saved' : 'Save Job' }
+                      <Text textStyle='lg' textColor='primaryBlue' bold>
+                        { isSavedJob || isCategorySaved ? 'Saved' : 'Save Job' }  
+                      </Text>  
                     </MaterialButton>
                   </>
                 )}
@@ -221,175 +228,176 @@ const JobDetail = ({
                 )}
               </div>
               {(!isCategoryApplied || !isCategorySaved) && (
-                <Text textStyle='xsm' className={styles.JobDetailPostedAt}>
+                <Text textStyle='lg' textColor='darkgrey' className={styles.JobDetailPostedAt}>
                   Posted on {selectedJob?.published_at}
                 </Text>
               )}
             </div>
           </div>
         </div>
-        <div className={styles.JobDetailPref}>
-          <ul className={styles.JobDetailPrefList}>
-            <li className={styles.JobDetailPrefItem}>
-              <Image src={LocationIcon} alt='logo' width='18' height='18' />
-              <span className={styles.JobDetailPrefText}>
-                <Text
-                  textStyle='base'
-                  textColor='lightgrey'
-                  className={styles.JobDetailPrefField}
-                >
-                  Location
-                </Text>
-                <Text textStyle='base' bold className={styles.JobDetailPrefValue}>
-                  {selectedJob?.location?.value}
-                </Text>
-              </span>
-            </li>
-            <li className={styles.JobDetailPrefItem}>
-              <Image src={BriefcaseIcon} alt='logo' width='20' height='20' />
-              <span className={styles.JobDetailPrefText}>
-                <Text
-                  textStyle='base'
-                  textColor='lightgrey'
-                  className={styles.JobDetailPrefField}
-                >
-                  Experience
-                </Text>
-                <Text textStyle='base' bold className={styles.JobDetailPrefValue}>
-                  {selectedJob?.xp_lvl?.value}
-                </Text>
-              </span>
-            </li>
-            <li className={styles.JobDetailPrefItem}>
-              <Image src={EducationIcon} alt='logo' width='20' height='20' />
-              <span className={styles.JobDetailPrefText}>
-                <Text
-                  textStyle='base'
-                  textColor='lightgrey'
-                  className={styles.JobDetailPrefField}
-                >
-                  Education
-                </Text>
-                <Text textStyle='base' bold className={styles.JobDetailPrefValue}>
-                  {selectedJob?.degree?.value}
-                </Text>
-              </span>
-            </li>
-            <li className={styles.JobDetailPrefItem}>
-              <Image src={SalaryIcon} alt='logo' width='20' height='20' />
-              <span className={styles.JobDetailPrefText}>
-                <Text
-                  textStyle='base'
-                  textColor='lightgrey'
-                  className={styles.JobDetailPrefField}
-                >
-                  Salary
-                </Text>
-                <Text textStyle='base' bold className={styles.JobDetailPrefValue}>
-                  {selectedJob?.salary_range_value}
-                </Text>
-              </span>
-            </li>
-          </ul>
-        </div>
-        {isCategoryApplied && applicationHistory?.length > 0 && (
-          <div className={styles.JobDetailApplicationWrapper}>
-            <Text textStyle='lg' bold>Application History</Text>
-            <Timeline className={styles.JobDetailApplicationTimeline}>
-              {applicationHistory.map((history, i) => (
-                <TimelineItem key={i}>
-                  <TimelineSeparator>
-                    <TimelineDot className={i === 0 ? styles.JobDetailApplicationTimelineFirst : ''}/>
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <TimelineContent><Text textStyle='base'>{history.value} -  {history.elapsed_time}</Text></TimelineContent>
-                </TimelineItem>
-              ))}
-            </Timeline>
+        <div className={classNamesCombined([styles.JobDetailBody, isStickyClass])}>
+          <div className={styles.JobDetailPref}>
+            <ul className={styles.JobDetailPrefList}>
+              <li className={styles.JobDetailPrefItem}>
+                <Image src={LocationIcon} width='20' height='20' />
+                <span className={styles.JobDetailPrefText}>
+                  <Text
+                    textStyle='lg'
+                    textColor='darkgrey'
+                    className={styles.JobDetailPrefField}
+                  >
+                    Location
+                  </Text>
+                  <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
+                    {selectedJob?.location?.value}
+                  </Text>
+                </span>
+              </li>
+              <li className={styles.JobDetailPrefItem}>
+                <Image src={BriefcaseIcon} width='22' height='22' />
+                <span className={styles.JobDetailPrefText}>
+                  <Text
+                    textStyle='lg'
+                    textColor='darkgrey'
+                    className={styles.JobDetailPrefField}
+                  >
+                    Experience
+                  </Text>
+                  <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
+                    {selectedJob?.xp_lvl?.value}
+                  </Text>
+                </span>
+              </li>
+              <li className={styles.JobDetailPrefItem}>
+                <Image src={EducationIcon} width='22' height='22' />
+                <span className={styles.JobDetailPrefText}>
+                  <Text
+                    textStyle='lg'
+                    textColor='darkgrey'
+                    className={styles.JobDetailPrefField}
+                  >
+                    Education
+                  </Text>
+                  <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
+                    {selectedJob?.degree?.value}
+                  </Text>
+                </span>
+              </li>
+              <li className={styles.JobDetailPrefItem}>
+                <Image src={SalaryIcon} width='22' height='22' />
+                <span className={styles.JobDetailPrefText}>
+                  <Text
+                    textStyle='lg'
+                    textColor='darkgrey'
+                    className={styles.JobDetailPrefField}
+                  >
+                    Salary
+                  </Text>
+                  <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
+                    {selectedJob?.salary_range_value}
+                  </Text>
+                </span>
+              </li>
+            </ul>
           </div>
-        )}
-        <div className={styles.JobDetailSection}>
-          <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
-            Job Description
-          </Text>
-          <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.job_description_html }} />
-        </div>
-        <div className={styles.JobDetailSection}>
-          <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
-            Requirements
-          </Text>
-          <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.job_requirements_html }} />
-        </div>
-        <div className={styles.JobDetailSection}>
-          <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
-            Benefits
-          </Text>
-          <ul className={styles.JobDetailBenefitsList}>
-            {selectedJob?.benefits?.map((benefit, i) => (
-              <li className={styles.JobDetailBenefitsItem} key={i}>
-                {handleBenefitIcon(benefit.name)}
-                <Text textStyle='base' className={styles.JobDetailBenefitsText}>
-                  {benefit.name}
-                </Text>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className={styles.JobDetailSection}>
-          <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
-            Skills/Software
-          </Text>
-          <ul className={styles.JobDetailSkillsList}>
-            {selectedJob?.skills?.map((skill, i) => (
-              <li className={styles.JobDetailSkillsItem} key={i}>
-                <Text bold textStyle='base' className={styles.JobDetailSkillsText}>
-                  {skill.value}
-                </Text>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className={styles.JobDetailSection}>
-          <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
-            Additional Information
-          </Text>
-          <Text textStyle='base' bold className={styles.JobDetailSectionSubTitle}>
-            Working Location
-          </Text>
-          <Text textStyle='base' className={styles.JobDetailSectionSubBody}>
-            {`${selectedJob?.location?.value}`}
-          </Text>
-          <Text textStyle='base' bold className={styles.JobDetailSectionSubTitle}>
-            Specialization
-          </Text>
-          {selectedJob?.categories?.map((category, i) => (
-            <span key={i}>
-              <Link to='/' className={styles.JobDetailSectionSubBody}>
-                <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
-                  {' '}{category.value}
-                </Text>
-              </Link>
-              {', '}
-            </span>
-          ))}
-        </div>
-        <div className={styles.aboutCompany}>
-          <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
-            About the company
-          </Text>
-          <Link to={companyUrl} className={styles.aboutCompanyTitle}>
-            <Text bold textStyle='xl' textColor='primaryBlue'>
-              {selectedJob?.company?.name}
+          {isCategoryApplied && applicationHistory?.length > 0 && (
+            <div className={styles.JobDetailApplicationWrapper}>
+              <Text textStyle='lg' bold>Application History</Text>
+              <Timeline className={styles.JobDetailApplicationTimeline}>
+                {applicationHistory.map((history, i) => (
+                  <TimelineItem key={i}>
+                    <TimelineSeparator>
+                      <TimelineDot className={i === 0 ? styles.JobDetailApplicationTimelineFirst : ''}/>
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent><Text textStyle='base'>{history.value} -  {history.elapsed_time}</Text></TimelineContent>
+                  </TimelineItem>
+                ))}
+              </Timeline>
+            </div>
+          )}
+          <div className={styles.JobDetailSection}>
+            <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
+              Job Description
             </Text>
-          </Link>
-          <div className={styles.aboutCompanyDetail}>
-            <Text textStyle='base'>{selectedJob?.company?.industry_value}</Text>
-            <Text textStyle='base'>{selectedJob?.company?.company_size_value} employees</Text>
+            <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.job_description_html }} />
           </div>
-          <ReadMore
-            size={352}
-            text={selectedJob?.company?.description_html}
-          />
+          <div className={styles.JobDetailSection}>
+            <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
+              Requirements
+            </Text>
+            <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.job_requirements_html }} />
+          </div>
+          <div className={styles.JobDetailSection}>
+            <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
+              Benefits
+            </Text>
+            <ul className={styles.JobDetailBenefitsList}>
+              {selectedJob?.benefits?.map((benefit, i) => (
+                <li className={styles.JobDetailBenefitsItem} key={i}>
+                  {handleBenefitIcon(benefit.name)}
+                  <Text textStyle='lg' className={styles.JobDetailBenefitsText}>
+                    {benefit.name}
+                  </Text>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className={styles.JobDetailSection}>
+            <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
+              Skills/Software
+            </Text>
+            <ul className={styles.JobDetailSkillsList}>
+              {selectedJob?.skills?.map((skill, i) => (
+                <li className={styles.JobDetailSkillsItem} key={i}>
+                  <Text textStyle='sm' className={styles.JobDetailSkillsText} textColor='white'>
+                    {skill.value}
+                  </Text>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className={styles.JobDetailSection}>
+            <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
+              Additional Information
+            </Text>
+            <Text textStyle='lg' bold className={styles.JobDetailSectionSubTitle}>
+              Working Location
+            </Text>
+            <Text textStyle='lg' className={styles.JobDetailSectionSubBody}>
+              {`${selectedJob?.location?.value}`}
+            </Text>
+            <Text textStyle='lg' bold className={styles.JobDetailSectionSubTitle}>
+              Specialization
+            </Text>
+            {selectedJob?.categories?.map((category, i) => (
+              <span key={i}>
+                <Link to='/' className={styles.JobDetailSectionSubBody}>
+                  <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
+                    {' '}{category.value},
+                  </Text>
+                </Link>
+              </span>
+            ))}
+          </div>
+          <div className={styles.aboutCompany}>
+            <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
+              About the company
+            </Text>
+            <Link to={companyUrl} className={styles.aboutCompanyTitle}>
+              <Text bold textStyle='xl' textColor='primaryBlue'>
+                {selectedJob?.company?.name}
+              </Text>
+            </Link>
+            <div className={styles.aboutCompanyDetail}>
+              <Text textStyle='base'>{selectedJob?.company?.industry}</Text>
+              <Text textStyle='base'>{selectedJob?.company?.company_size} employees</Text>
+            </div>
+            <ReadMore
+              size={352}
+              text={selectedJob?.company?.description_html}
+            />
+          </div>
         </div>
       </div>
     </div>

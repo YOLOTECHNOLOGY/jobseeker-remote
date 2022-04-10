@@ -293,8 +293,8 @@ const Home = (props: HomeProps) => {
                   // defValue={urlLocation}
                   onChange={onLocationSearch}
                 />
-                <MaterialButton variant='contained' onClick={() => onSearch()}>
-                  Search
+                <MaterialButton variant='contained' capitalize onClick={() => onSearch()}>
+                  <Text textStyle='lg' bold textColor='white'>Search</Text>
                 </MaterialButton>
               </div>
               <div className={styles.quickLinksContainer}>{renderQuickLinks()}</div>

@@ -9,11 +9,12 @@ import { logoutRequest } from 'store/actions/auth/logout'
 /* components */
 import Link from 'components/Link'
 import Text from 'components/Text'
-import Button from 'components/Button'
+// import Button from 'components/Button'
 import Hamburger from 'components/Hamburger'
+import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogo, DefaultJobseekerAvatar, ChatIcon } from 'images'
+import { BossjobLogo, DefaultJobseekerAvatar, ChatIcon, BossjobFittedLogo } from 'images'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
@@ -58,7 +59,8 @@ const ProtectedHeader = () => {
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/'}>
-            <img id={styles.logo} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+            <img className={styles.headerLogoImage} src={BossjobFittedLogo} title='Bossjob logo' alt='Bossjob logo' />
+            <img className={styles.headerLogoImageDesktop} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
           </Link>
         </div>
         <div className={styles.headerLinksWrapper}>
@@ -66,7 +68,7 @@ const ProtectedHeader = () => {
             <React.Fragment>
               <li className={styles.headerLink}>
                 <Link title='Jobs' to='/jobs-hiring/job-search'>
-                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
+                  <Text textStyle='lg' textColor='darkGrey' className={styles.headerLinkText}>
                     Jobs
                   </Text>
                 </Link>
@@ -80,14 +82,14 @@ const ProtectedHeader = () => {
               </li>
               <li className={styles.headerLink}>
                 <Link title='Companies' to='/companies'>
-                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
+                  <Text textStyle='lg' textColor='darkGrey' className={styles.headerLinkText}>
                     Companies
                   </Text>
                 </Link>
               </li>
               <li className={styles.headerLink}>
                 <Link title='Courses' to='https://academy.bossjob.ph/courses/search-courses' aTag external>
-                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
+                  <Text textStyle='lg' textColor='darkGrey' className={styles.headerLinkText}>
                     Courses
                   </Text>
                 </Link>
@@ -95,7 +97,7 @@ const ProtectedHeader = () => {
               <li className={styles.headerLink}>
                 <a className={styles.headerLinkIcon} title='Chats' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/chat')} href='/dashboard/chat'>
                   <Image src={ChatIcon} width='20' height='20' />
-                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
+                  <Text textStyle='lg' textColor='darkGrey' className={styles.headerLinkText}>
                     Chats
                   </Text>
                 </a>
@@ -107,7 +109,9 @@ const ProtectedHeader = () => {
           <React.Fragment>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
               <a title='Manage Resume' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/profile/jobseeker')} href='/dashboard/profile/jobseeker'>
-                <Button primary>Manage Resume</Button>
+                <MaterialButton variant='contained' capitalize>
+                  <Text textColor='white' textStyle='lg' bold>Manage Resume</Text>
+                </MaterialButton>
               </a>
             </li>
             <li className={styles.headerLink}>

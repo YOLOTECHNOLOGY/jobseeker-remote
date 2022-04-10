@@ -3,10 +3,10 @@
 
 .searchFilter {
   display: none;
-  position: absolute;
-  top: 139px;
+  position: fixed;
+  top: 0;
   right: 0;
-  width: 600px;
+  width: 100%;
   height: auto;
   z-index: 3;
   background-color: $white-3;
@@ -16,19 +16,19 @@
     display: block;
   }
 
-  &.isShow.displayQuickLinks{
-    display: block;
-    @extend .searchFilter;
-    top:230px;
+  // &.isShow.displayQuickLinks{
+  //   display: block;
+  //   @extend .searchFilter;
+  //   top:313px;
 
-    .searchFilterBody {
-      height: calc(100vh - 362px);
+  //   .searchFilterBody {
+  //     height: calc(100vh - 445px);
 
-      @include msd {
-        height: calc(100vh - 100px);
-      }
-    }
-  }
+  //     @include msd {
+  //       height: calc(100vh - 183px);
+  //     }
+  //   }
+  // }
 
   &Header {
     display: flex;
@@ -45,7 +45,7 @@
 
   &Body {
     padding: 10px 25px 77px 25px;
-    height: calc(100vh - 270px);
+    height: calc(100vh - 65px);
     overflow-y: scroll;
 
 
@@ -124,7 +124,7 @@
 
         span {
           margin-left: 10px;
-          line-height: 1.5;
+          line-height: 1.2;
         }
 
         input {
@@ -132,12 +132,17 @@
         }
       }
 
-      @include sm {
+      @include msd {
+        width: 100%;
+        
         span {
-          padding-top: 2px;
           padding-right: 4px;
         }
       }
+    }
+
+    @include msd {
+      flex-direction: column;
     }
   }
 

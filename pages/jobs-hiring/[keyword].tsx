@@ -62,7 +62,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 
 /* Images */
-import { FilterIcon } from 'images'
+// import { FilterIcon } from 'images'
 
 interface JobSearchPageProps {
   seoMetaTitle: string
@@ -102,7 +102,7 @@ const renderPopularSearch = () => {
         title='Finance jobs'
         aTag
       >
-        <Text textStyle='sm'>Finance jobs</Text>
+        <Text textStyle='lg' textColor='darkgrey'>Finance</Text>
       </Link>
       <Link
         className={styles.link}
@@ -110,7 +110,7 @@ const renderPopularSearch = () => {
         title='Sales jobs'
         aTag
       >
-        <Text textStyle='sm'>Sales jobs</Text>
+        <Text textStyle='lg' textColor='darkgrey'>Sales</Text>
       </Link>
       <Link
         className={styles.link}
@@ -118,10 +118,10 @@ const renderPopularSearch = () => {
         title='Marketing jobs'
         aTag
       >
-        <Text textStyle='sm'>Marketing jobs</Text>
+        <Text textStyle='lg' textColor='darkgrey'>Marketing</Text>
       </Link>
       <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs' aTag>
-        <Text textStyle='sm'>Makati jobs</Text>
+        <Text textStyle='lg' textColor='darkgrey'>Makati</Text>
       </Link>
       <Link
         className={styles.link}
@@ -129,10 +129,10 @@ const renderPopularSearch = () => {
         title='IT jobs'
         aTag
       >
-        <Text textStyle='sm'>IT jobs</Text>
+        <Text textStyle='lg' textColor='darkgrey'>IT</Text>
       </Link>
       <Link className={styles.link} to={`${jobsPageLink}/overseas-jobs`} title='Overseas jobs' aTag>
-        <Text textStyle='sm'>Overseas jobs</Text>
+        <Text textStyle='lg' textColor='darkgrey'>Overseas jobs</Text>
       </Link>
       <Link
         className={styles.link}
@@ -140,7 +140,7 @@ const renderPopularSearch = () => {
         title='Customer Service jobs'
         aTag
       >
-        <Text textStyle='sm'>Customer Service jobs</Text>
+        <Text textStyle='lg' textColor='darkgrey'>Customer Service</Text>
       </Link>
       <Link
         className={styles.link}
@@ -148,18 +148,18 @@ const renderPopularSearch = () => {
         title='₱30K + jobs'
         aTag
       >
-        <Text textStyle='sm'>₱30K + jobs</Text>
+        <Text textStyle='lg' textColor='darkgrey'>₱30K + jobs</Text>
       </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs' aTag>
-        <Text textStyle='sm'>Manila jobs</Text>
-      </Link>
+      {/* <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs' aTag>
+        <Text textStyle='lg' textColor='darkgrey'>Manila jobs</Text>
+      </Link> */}
       <Link
         className={styles.link}
         to={`${jobsPageLink}/job-search/?jobtype=full_time`}
         title='Full Time jobs'
         aTag
       >
-        <Text textStyle='sm'>Full Time jobs</Text>
+        <Text textStyle='lg' textColor='darkgrey'>Full Time jobs</Text>
       </Link>
     </div>
   )
@@ -475,7 +475,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       prevScrollY.current = window.pageYOffset
       // setIsSticky(prevScrollY.current > 70 ? true : false)
       setDisplayQuickLinks(
-        prevScrollY.current > 70
+        prevScrollY.current > 77
           ? false
           : keyword === 'job-search' && Object.entries(rest).length === 0
       )
@@ -517,10 +517,15 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             defaultValue={urlLocation}
             onChange={onLocationSearch}
           />
-          <MaterialButton variant='contained' capitalize>
+          <MaterialButton variant='contained' capitalize className={styles.searchButton}>
             {/* <MaterialButton variant='contained' onClick={onSearchSubmit}> */}
-            Search
+            <Text textStyle='lg' textColor='white' bold>Search</Text>
           </MaterialButton>
+          <div className={breakpointStyles.hideOnDesktop}>
+            <MaterialButton variant='outlined' capitalize className={styles.filtersButton} onClick={() => handleShowFilter()}>
+              <Text textStyle='lg' textColor='primaryBlue' bold>Filters</Text>
+            </MaterialButton>
+          </div>
         </div>
         <div className={styles.filtersContainer}>
           <MaterialBasicSelect
@@ -548,12 +553,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             defaultValue={defaultValues?.salary}
           />
           <MaterialButton
-            variant='contained'
+            variant='outlined'
             className={styles.moreFiltersBtn}
             onClick={handleShowFilter}
             capitalize
           >
-            More Filters
+            <Text textColor='primaryBlue' textStyle='lg' bold>More Filters</Text>
           </MaterialButton>
 
           {hasMoreFilters && (
@@ -563,7 +568,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
               onClick={handleResetFilter}
               capitalize
             >
-              Reset Filters
+              <Text textColor='primaryBlue' textStyle='lg' bold>Reset Filters</Text>
             </MaterialButton>
           )}
         </div>
@@ -571,27 +576,31 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           className={displayQuickLinks ? styles.quickLinkSectionExpanded : styles.quickLinkSection}
         >
           <div className={styles.popularSearchContainer}>
-            <Text textStyle='sm' bold textColor='lightgrey' className={styles.quickLinkTitle}>
+            <Text textStyle='lg' bold className={styles.quickLinkTitle}>
               Popular Search:
             </Text>
             {renderPopularSearch()}
           </div>
           <div className={styles.topCompaniesContainer}>
-            <Text textStyle='sm' bold textColor='lightgrey' className={styles.quickLinkTitle}>
+            <Text textStyle='lg' bold className={styles.quickLinkTitle}>
               Top Companies:
             </Text>
             <div className={styles.topCompanies}>
               {topCompanies &&
-                topCompanies.map((company) => (
-                  <Link
-                    key={company.id}
-                    className={styles.topCompaniesLogo}
-                    to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
-                    external
-                  >
-                    <Image src={company.logoUrl} alt={company.name} width='30' height='30' />
-                  </Link>
-                ))}
+                topCompanies.map((company, i) => {
+                  if (i < 8) {
+                    return (
+                      <Link
+                        key={company.id}
+                        className={styles.topCompaniesLogo}
+                        to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
+                        external
+                      >
+                        <Image src={company.logoUrl} alt={company.name} width='30' height='30' />
+                      </Link>
+                    )
+                  }
+                })}
             </div>
           </div>
         </div>
@@ -604,7 +613,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           sortOptions={sortOptions}
         />
       </div>
-      <div className={breakpointStyles.hideOnTabletAndDesktop}>
+      {/* <div className={breakpointStyles.hideOnTabletAndDesktop}>
         {hasMoreFilters && (
           <div className={styles.resetFilterBtnMobile}>
             <MaterialButton
@@ -622,8 +631,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           <Image src={FilterIcon} alt='filter' width='15' height='15' />
           <Text className={styles.moreFiltersText}>More Filters</Text>
         </div>
-      </div>
-      <div style={{ display: 'block' }}>
+      </div> */}
+      <div style={{ display: 'block' }} className={styles.jobListSection}>
         <JobListSection
           defaultPage={defaultPage}
           jobList={jobListResponse?.data || null}

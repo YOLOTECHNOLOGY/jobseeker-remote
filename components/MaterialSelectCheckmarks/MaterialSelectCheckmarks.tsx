@@ -67,6 +67,7 @@ const MaterialSelectCheckmarks = ({
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
+            height: '48px',
             backgroundColor: greyBg ? '#E2E2E2' : 'white',
           },
         },
@@ -96,7 +97,8 @@ const MaterialSelectCheckmarks = ({
               fontSize: '10px',
               transform: 'translate(14px, -10px) scale(1)',
             },
-            backgroundColor: '#fff'
+            backgroundColor: '#fff',
+            top: '4px'
           },
           shrink: {
             transform: 'translate(14px, -9px) scale(0.75)',

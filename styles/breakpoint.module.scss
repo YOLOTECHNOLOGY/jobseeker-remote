@@ -49,6 +49,9 @@
   @include sm {
     display: block;
   }
+  @include msd {
+    display: block;
+  }
   @include md {
     display: none;
   }

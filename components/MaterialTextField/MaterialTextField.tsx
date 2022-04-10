@@ -26,13 +26,14 @@ const theme = createTheme({
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          fontSize: '14px',
+          fontSize: '16px',
           transform: 'translate(14px, 10px) scale(1)',
           letterSpacing: '1px',
           '&.Mui-focused': {
             fontSize: '10px',
             transform: 'translate(14px, -10px) scale(1)',
           },
+          top: '4px'
         },
         shrink: {
           fontSize: '10px',
@@ -48,7 +49,8 @@ const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          fontSize: '14px',
+          height: '48px',
+          fontSize: '16px',
           backgroundColor: "white"
         }
       }

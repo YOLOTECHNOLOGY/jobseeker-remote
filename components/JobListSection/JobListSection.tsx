@@ -32,7 +32,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import styles from './JobListSection.module.scss'
 
 /* Images */
-import { NotificationIcon } from 'images'
+import { BellIcon } from 'images'
 
 interface JobListSectionProps {
   defaultPage: number
@@ -165,7 +165,7 @@ const JobListSection = ({
   const updateScrollPosition = () => {
     if (width > 798) {
       prevScrollY.current = window.pageYOffset
-      setIsSticky(prevScrollY.current >= 209 ? true : false)
+      setIsSticky(prevScrollY.current >= 330 ? true : false)
     }
   }
 
@@ -191,32 +191,35 @@ const JobListSection = ({
       <div className={styles.job}>
         <div className={classNamesCombined([styles.jobListOption, isStickyClass])}>
           <div className={styles.container}>
-            <div className={styles.jobListOptionContent}>
-              <Text textStyle='xl' bold>
-                {jobList?.total_num} jobs found
-              </Text>
-              <div className={styles.jobListOptionAlerts}>
-                <div
-                  className={styles.jobListOptionAlertsItem}
-                  onClick={() => {
-                    if (isUserAuthenticated) handleCreateJobAlert()
-                    if (!isUserAuthenticated) handleCreateJobAlert(null)
-                  }}
-                >
-                  <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
-                </div>
-                {isUserAuthenticated && (
+            {!isJobListFetching && (
+              <div className={styles.jobListOptionContent}>
+                <Text textStyle='lg' bold>
+                  {jobList?.total_num} jobs found
+                </Text>
+                <div className={styles.jobListOptionAlerts}>
                   <div
                     className={styles.jobListOptionAlertsItem}
                     onClick={() => {
-                      setIsShowModalManageJobAlerts(true)
+                      if (isUserAuthenticated) handleCreateJobAlert()
+                      if (!isUserAuthenticated) handleCreateJobAlert(null)
                     }}
                   >
-                    <Image src={NotificationIcon} width='20' height='20' />
+                    <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
                   </div>
-                )}
+                  {isUserAuthenticated && (
+                    <div
+                      className={styles.jobListOptionAlertsItem}
+                      onClick={() => {
+                        setIsShowModalManageJobAlerts(true)
+                      }}
+                    >
+                      <Image src={BellIcon} width='20' height='20' />
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
+              
             <div className={styles.jobListOptionOtherContent}/>
           </div>
         </div>

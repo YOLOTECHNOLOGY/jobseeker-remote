@@ -415,10 +415,9 @@ const Job = ({
               <span key={i}>
                 <Link to='/' className={styles.JobDetailSectionSubBody}>
                   <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
-                    {' '}{category.value}
+                    {' '}{category.value},
                   </Text>
                 </Link>
-                {', '}
               </span>
             ))}
           </div>
@@ -450,8 +449,8 @@ const Job = ({
               </Text>
             </Link>
             <div className={styles.aboutCompanyDetail}>
-              <Text textStyle='base'>{jobDetail?.company?.industry_value}</Text>
-              <Text textStyle='base'>{jobDetail?.company?.company_size_value} employees</Text>
+              <Text textStyle='base'>{jobDetail?.company?.industry}</Text>
+              <Text textStyle='base'>{jobDetail?.company?.company_size} employees</Text>
             </div>
             <ReadMore
               size={352}
