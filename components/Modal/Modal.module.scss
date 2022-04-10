@@ -17,16 +17,13 @@
   &Content {
     background: white;
     position: relative;
-    margin: 0 5%;
+    margin: 0 auto;
+    width: 581px;
 
     &.isFullWidth {
       @include md {
         margin: 0 20%;
       }
-    }
-
-    @include md {
-      margin: 0 30%;
     }
   }
 

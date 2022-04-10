@@ -54,6 +54,20 @@
     height: 29px;
     object-fit: contain;
   }
+
+  &Image {
+    display: none;
+    @include msd {
+      display: block;
+    }
+  }
+
+  &ImageDesktop {
+    display: block;
+    @include msd {
+      display: none;
+    }
+  }
 }
 
 .headerLinksWrapper {

@@ -410,29 +410,30 @@ const Job = ({
               <span key={i}>
                 <Link to='/' className={styles.JobDetailSectionSubBody}>
                   <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
-                    {' '}{category.value}
+                    {' '}{category.value},
                   </Text>
                 </Link>
-                {', '}
               </span>
             ))}
           </div>
-          <div className={styles.JobDetailRecruiter}>
-            <Text textStyle='base' bold>Connect directly to job poster after applying</Text>
-            <div className={styles.JobDetailRecruiterInfo}>
-              <div 
-                className={styles.JobDetailRecruiterInfoImage}
-                style={{ backgroundImage: `url(${jobDetail?.recruiter.avatar})` }}
-              />
-              <div className={styles.JobDetailRecruiterInfoText}>
-                <Text textStyle='base' bold>{jobDetail?.recruiter.full_name}</Text>
-                <span>
-                  <Text textStyle='base'>{jobDetail?.recruiter.job_title} {' '}</Text>
-                  <Text textStyle='base'>{' '}- {jobDetail?.recruiter.application_response_rate}% response rate, responds {jobDetail?.recruiter.application_response_time} | Last active on {moment(jobDetail?.recruiter.last_active_at).format('MM/DD/YYYY')}</Text>
-                </span>
+          {jobDetail?.recruiter && (
+            <div className={styles.JobDetailRecruiter}>
+              <Text textStyle='base' bold>Connect directly to job poster after applying</Text>
+              <div className={styles.JobDetailRecruiterInfo}>
+                <div 
+                  className={styles.JobDetailRecruiterInfoImage}
+                  style={{ backgroundImage: `url(${jobDetail?.recruiter.avatar})` }}
+                />
+                <div className={styles.JobDetailRecruiterInfoText}>
+                  <Text textStyle='base' bold>{jobDetail?.recruiter.full_name}</Text>
+                  <span>
+                    <Text textStyle='base'>{jobDetail?.recruiter.job_title} {' '}</Text>
+                    <Text textStyle='base'>{' '}- {jobDetail?.recruiter.application_response_rate}% response rate, responds {jobDetail?.recruiter.application_response_time} | Last active on {moment(jobDetail?.recruiter.last_active_at).format('MM/DD/YYYY')}</Text>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
           <div className={styles.aboutCompany}>
             <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
               About the company
@@ -443,8 +444,8 @@ const Job = ({
               </Text>
             </Link>
             <div className={styles.aboutCompanyDetail}>
-              <Text textStyle='base'>{jobDetail?.company?.industry_value}</Text>
-              <Text textStyle='base'>{jobDetail?.company?.company_size_value} employees</Text>
+              <Text textStyle='base'>{jobDetail?.company?.industry}</Text>
+              <Text textStyle='base'>{jobDetail?.company?.company_size} employees</Text>
             </div>
             <ReadMore
               size={352}

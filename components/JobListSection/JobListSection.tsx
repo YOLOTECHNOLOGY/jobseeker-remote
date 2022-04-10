@@ -32,7 +32,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import styles from './JobListSection.module.scss'
 
 /* Images */
-import { NotificationIcon } from 'images'
+import { BellIcon } from 'images'
 
 interface JobListSectionProps {
   defaultPage: number
@@ -209,7 +209,7 @@ const JobListSection = ({
                         setIsShowModalManageJobAlerts(true)
                       }}
                     >
-                      <Image src={NotificationIcon} width='20' height='20' />
+                      <Image src={BellIcon} width='20' height='20' />
                     </div>
                   )}
                 </div>

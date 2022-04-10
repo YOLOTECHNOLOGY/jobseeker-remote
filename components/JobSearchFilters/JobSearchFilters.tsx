@@ -13,7 +13,6 @@ import Text from 'components/Text'
 import Button from 'components/Button'
 import Accordian from 'components/Accordian'
 import MaterialAutocompleteLimitTags from 'components/MaterialAutocompleteLimitTags'
-import MaterialBasicSelect from 'components/MaterialBasicSelect'
 
 /* Helpers */
 import {
@@ -44,7 +43,8 @@ interface SearchFilters {
   options: Array<optionsType>
   defaultOpenState?: boolean
   isNotCollapsible?: boolean
-  isColumn?: boolean
+  isColumn?: boolean,
+  isRadioButton?: boolean
 }
 
 type optionsType = {
@@ -69,7 +69,7 @@ const NavSearchFilter = ({
   
   const industryList = config.inputs.industry_lists
 
-  const expLvlList = config.inputs.work_xps
+  const expLvlList = config.inputs.xp_lvls
 
   const eduLevelList = config.filters.educations
 
@@ -83,7 +83,7 @@ const NavSearchFilter = ({
   const { width } = useWindowDimensions()
   const filterRef = useRef(null)
   const sortRef = useRef(null)
-  const { register, handleSubmit, reset, setValue } = useForm()
+  const { register, handleSubmit, reset } = useForm()
   const cx = classNames.bind(styles)
   const isShowFilterClass = cx({ isShow: isShowFilter, displayQuickLinks: displayQuickLinks })
   const [selectedCategories, setSelectedCategories] = useState([])
@@ -110,7 +110,7 @@ const NavSearchFilter = ({
     if (Object.keys(defaultValues).length !== 0) {
       reset(defaultValues)
     }
-    setDisplayMobileSort(width < 576 ? true : false)
+    setDisplayMobileSort(width < 769 ? true : false)
   }, [config, keyword])
 
   const handleApplyFilter = (data) => {
@@ -204,7 +204,8 @@ const NavSearchFilter = ({
     options,
     defaultOpenState,
     isNotCollapsible,
-    isColumn
+    isColumn,
+    isRadioButton
   }: SearchFilters) => {
     const isFilterColumnClass = cx({ searchFilterOptionsColumn: isColumn })
 
@@ -225,10 +226,19 @@ const NavSearchFilter = ({
           <div className={classNamesCombined([styles.searchFilterOptions, isFilterColumnClass])}>
             {options &&
               options.map((option, i) => {
+                if (isRadioButton) {
+                  return (
+                    <label key={i} className={styles.searchFilterOption}>
+                      <input type='radio' value={option['value']} {...register(fieldName)} />
+                      <Text textStyle='lg'>{option.label}</Text>
+                    </label>
+                  )
+                }
+
                 return (
                   <label key={i} className={styles.searchFilterOption}>
                     <input type='checkbox' value={option['value']} {...register(fieldName)} />
-                    <Text textStyle='sm'>{option.value}</Text>
+                    <Text textStyle='lg'>{option.value}</Text>
                   </label>
                 )
               })}
@@ -272,28 +282,19 @@ const NavSearchFilter = ({
         <div className={styles.searchFilterBody}>
           {displayMobileSort && (
             <div className={styles.searchFilterSection}>
-              <Accordian
-                chevronIcon
-                paddedContent
-                isNotCollapsible={true}
+              <SearchFilters
+                title='Sort By'
+                fieldName='sort'
+                options={[
+                  {value: '1', label: 'Newest'}, 
+                  {value: '2', label: 'Relevance'}, 
+                  {value: '3', label: 'Highest Salary'}
+                ]}
                 defaultOpenState={true}
-                className={styles.searchFilterAccordion}
-              >
-                <MaterialBasicSelect
-                  sortRef={sortRef}
-                  id='sort'
-                  label='Sort by'
-                  options={sortOptions}
-                  className={styles.sortField}
-                  onSelect={(e) => setValue('sort', e)}
-                  onOpen={(e) => {
-                    if (e.target.id === 'sort') {
-                      sortRef.current = 'sort'
-                    }
-                  }}
-                  defaultValue={urlDefaultValues?.sort}
-                />
-              </Accordian>
+                isNotCollapsible={true}
+                isColumn
+                isRadioButton
+              />
               <SearchFilters
                 title='Job Type'
                 fieldName='jobtype'

@@ -17,7 +17,6 @@ import { BossjobLogo, DefaultJobseekerAvatar, ChatIcon, BossjobFittedLogo } from
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
-import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -25,7 +24,6 @@ import styles from '../Header.module.scss'
 const ProtectedHeader = () => {
   const currentUser = getCookie('user')
   const dispatch = useDispatch()
-  const { width } = useWindowDimensions()
   const ref = useRef(null)
   const [isShowHeaderMenu, setIsShowHeaderMenu] = useState(false)
 
@@ -46,18 +44,13 @@ const ProtectedHeader = () => {
     dispatch(logoutRequest())
   }
 
-  const DisplayBossjobLogo = () => {
-    if (width < 769) return <img id={styles.logo} src={BossjobFittedLogo} title='Bossjob logo' alt='Bossjob logo' />
-    
-    return <img id={styles.logo} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
-  }
-
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/'}>
-            <DisplayBossjobLogo />
+            <img className={styles.headerLogoImage} src={BossjobFittedLogo} title='Bossjob logo' alt='Bossjob logo' />
+            <img className={styles.headerLogoImageDesktop} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
           </Link>
         </div>
         <div className={styles.headerLinksWrapper}>
