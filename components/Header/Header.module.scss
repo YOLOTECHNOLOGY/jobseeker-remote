@@ -102,6 +102,13 @@
   position: relative;
   letter-spacing: 0.05em;
 
+  &Item,
+  &Icon {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   @include md {
     padding: 0 15px;
   }

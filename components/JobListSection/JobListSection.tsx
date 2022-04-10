@@ -59,6 +59,8 @@ interface JobListSectionProps {
   handlePostSaveJob?: Function
   handleDeleteSavedJob?: Function
   accessToken: string
+  postReportResponse?: any
+  isPostingReport?: boolean
 }
 
 const JobListSection = ({ 
@@ -85,7 +87,9 @@ const JobListSection = ({
   handlePostReportJob,
   handlePostSaveJob,
   handleDeleteSavedJob,
-  accessToken
+  accessToken,
+  postReportResponse,
+  isPostingReport
 }: JobListSectionProps) => {  
   const { width } = useWindowDimensions()
   const router = useRouter()
@@ -307,6 +311,8 @@ const JobListSection = ({
         reportJobReasonList={reportJobReasonList}
         selectedJobId={selectedJob?.['id']}
         handlePostReportJob={handlePostReportJob}
+        isPostingReport={isPostingReport}
+        postReportResponse={postReportResponse}
       />
       <ModalShare
         jobDetailUrl={jobDetailUrl}

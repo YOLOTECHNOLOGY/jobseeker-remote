@@ -39,7 +39,7 @@ const AuthLayout = ({
         <>
           {isBackToLogin && (
             <Text tagName='p' textStyle='base'>
-              <Link to={'/login'} className={styles.AuthCTALink}>
+              <Link to={'/login/jobseeker'} className={styles.AuthCTALink}>
                 <Text textColor='primaryBlue' underline>
                   {' '}
                   Back to Login
@@ -50,7 +50,7 @@ const AuthLayout = ({
           {isLogin && (
             <Text tagName='p' textStyle='base'>
               New to Bossjob?
-              <Link to='/register' className={styles.AuthCTALink}>
+              <Link to='/register/jobseeker' className={styles.AuthCTALink}>
                 <Text textColor='primaryBlue' underline>
                   {' '}
                   Sign up now
@@ -61,7 +61,7 @@ const AuthLayout = ({
           {!isLogin && (
             <Text tagName='p' textStyle='base'>
               Already on Bossjob?
-              <Link to='/login' className={styles.AuthCTALink}>
+              <Link to='/login/jobseeker' className={styles.AuthCTALink}>
                 <Text textColor='primaryBlue' underline>
                   {' '}
                   Log in

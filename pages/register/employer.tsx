@@ -1,5 +1,5 @@
 /* Components */
-import Register from './register'
+import Register from './jobseeker'
 
 const Employer = () => {
   return (
