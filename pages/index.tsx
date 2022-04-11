@@ -215,7 +215,7 @@ const Home = (props: HomeProps) => {
         </Link>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search/?jobCategory=customer-service,tech-helpdesk-support`}
+          to={`${jobsPageLink}/job-search/?jobCategory=customer-service-relations,tech-helpdesk-support`}
           title='Customer Service jobs'
           aTag
         >
