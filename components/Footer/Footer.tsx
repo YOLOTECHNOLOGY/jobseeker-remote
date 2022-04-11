@@ -285,7 +285,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service,tech-helpdesk-support`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service-relations,tech-helpdesk-support`}
                     title='Customer Service Jobs'
                     external
                   >
@@ -628,7 +628,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service,tech-helpdesk-support`
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service-relations,tech-helpdesk-support`
                       }
                       title='Customer Service Jobs'
                       external
