@@ -13,17 +13,17 @@
   }
 
   &Company {
+    margin-top: 8px;
+    display: block;
+
     &:hover {
       text-decoration: underline;
     }
   }
 
   &Content {
-    width: 75%;
-
-    @include msd {
-      width: 100%;
-    }
+    width: 100%;
+    margin-right: 24px;
   }
 
   &OptionList {
@@ -57,9 +57,7 @@
   }
 
   &Primary {
-    border: 1px solid $lightgrey;
     border-radius: 4px;
-    padding: 35px 30px;
     position: relative;
 
     @include msd {
@@ -84,7 +82,8 @@
 
   &PrimaryInfo {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
 
     @include msd {
       align-items: flex-start;
@@ -92,12 +91,17 @@
     }
   }
 
+  &PrimaryInfoTitle {
+    margin: 16px 0 0;
+    line-height: 27px;
+
+  }
+
   &PrimaryInfoImage {
-    width: 78px;
-    height: 78px;
+    width: 88px;
+    height: 88px;
     border-radius: 4px;
     object-fit: cover;
-    margin-right: 20px;
 
     @include msd {
       margin-bottom: 20px;
@@ -107,7 +111,7 @@
   &PrimarySub {
     display: flex;
     align-items: center;
-    margin: 20px 0;
+    margin: 16px 0 0;
 
     div {
       margin-right: 20px;
@@ -127,7 +131,7 @@
       margin-right: 20px;
     }
 
-    @include msd {
+    @include sm {
       justify-content: space-between;
     }
   }
@@ -154,13 +158,13 @@
   &Pref {
     background-color: $white-1;
     padding: 20px 30px;
-    margin: 20px 0 30px;
+    margin: 48px 0;
 
     &List {
       list-style-type: none;
       display: flex;
 
-      @include msd {
+      @include sm {
         flex-direction: column;
       } 
     }
@@ -170,7 +174,7 @@
       display: flex;
       align-items: flex-start;
 
-      @include msd {
+      @include sm {
         width: 100%;
         margin-bottom: 14px;
       } 
@@ -194,7 +198,7 @@
       }
     }
 
-    @include msd {
+    @include sm {
       padding: 20px 0 0;
       margin-bottom: 0;
       border-top: 1px solid $lightgrey;
@@ -204,10 +208,11 @@
 
   &Section {
     margin-top: 26px;
-    margin-bottom: 50px;
+    margin-bottom: 48px;
   
     &Title {
       display: block;
+      margin-bottom: 16px;
     }
   
     &Body {
@@ -250,7 +255,7 @@
       display: flex;
       align-items: center;
       width: 50%;
-      margin: 18px 0 10px;
+      margin: 0 0 16px;
 
       @include msd {
         margin-top: 12px;
@@ -272,31 +277,46 @@
     }
   
     &Item {
-      background-color: rgba($lightgrey, 0.2);
+      background-color: $primaryBlue;
       border-radius: 16px;
-      padding: 2px 16px;
-      margin-right: 28px;
+      padding: 2px 16px 4px;
+      margin-right: 16px;
       margin-bottom: 16px;
     }
   
     &Text {
-      color: $darkgrey;
+      color: $white-3;
     }
   }
 
   &RecruiterInfo {
     display: flex;
-    margin-top: 18px;
+    margin-top: 16px;
+  }
+
+  &RecruiterName {
+    display: flex;
+  }
+
+  &RecruiterContent {
+    img {
+      margin-right: 4px !important;
+    }
+    
+    span {
+      display: block;
+      margin-top: 8px;
+    }
   }
 
   &RecruiterInfoImage {
-    height: 44px;
-    width: 44px;
+    height: 60px;
+    width: 60px;
     border-radius: 50%;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    margin-right: 15px;
+    margin-right: 20px;
   }
 
   &RecruiterInfoText {
@@ -314,13 +334,53 @@
       text-decoration: underline;
     }
   }
+
+  &PostedAt {
+    display: block;
+    margin-top: 24px;
+  }
+}
+
+.searchAndLocationContainer {
+  @extend .GlobalContainer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 48px auto;
+
+  .searchField {
+    width: 60%;
+    background-color: white;
+    border-radius: 5px;
+
+    @include msd {
+      width: 100%;
+      margin-bottom: 24px;
+    }
+  }
+  .locationField {
+    height: 40px;
+    width: 30%;
+    background-color: white;
+    border-radius: 5px;
+
+    @include msd {
+      width: 100%;
+      margin-bottom: 24px;
+      height: 48px;
+    }
+  }
+
+  @include msd {
+    flex-direction: column;
+  }
 }
 
 .LeaderBoard {
   height: 90px;
   width: 970px;
   background-color: $white-2;
-  margin: 0 auto 40px;
+  margin: 24px auto;
 
   @include msd {
     width: 300px;
@@ -334,7 +394,7 @@
   border: 1px solid $lightgrey;
   border-radius: 4px;
   padding: 21px 42px 15px;
-  margin-top: 34px;
+  margin-top: 48px;
 
   span {
     display: block;
@@ -345,7 +405,6 @@
   }
 
   &Title {
-
     margin-bottom: 12px;
     display: inline-block;
 
@@ -406,26 +465,37 @@
 }
 
 .JobDetailSidebar {
-  width: 22%;
-  padding-top: 126px;
+  width: 167px;
+
+  &Content {
+    border: 1px solid rgba($lightgrey, 0.5);
+    padding: 24px 24px 16px;
+    border-radius: 5px;
+
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
+  }
 
   @include msd {
     width: 100%;
-    padding-top: 40px;
-  }
-}
 
-.JobDetailSidebarSection {
-  margin-bottom: 60px;
-
-  @include msd {
-    margin-bottom: 30px;
+    &Content {
+      margin-top: 48px;
+      padding: 0;
+      border: none;
+    }
   }
 }
 
 .JobDetailSidebarCard {
   margin-top: 24px;
   display: block;
+
+  &:not(:last-child) {
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba($lightgrey, 0.5);
+  }
     
   &:hover {
     cursor: pointer;
@@ -448,6 +518,10 @@
     }
   }
 
+  &Salary {
+    margin-top: 0 !important;
+  }
+
   &Apply {
     background-color: transparent;
     border: none;
@@ -455,6 +529,18 @@
     &:hover {
       cursor: pointer;
     }
+  }
+
+  &CourseDetail {
+    span {
+      display: block;
+    }
+  }
+
+  @include msd {
+    padding: 24px;
+    border: 1px solid rgba($lightgrey, 0.5);
+    border-radius: 5px;
   }
 }
 

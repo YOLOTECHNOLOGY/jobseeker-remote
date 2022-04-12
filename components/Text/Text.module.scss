@@ -32,6 +32,10 @@
 
   &XSM {
     font-size: $mobile-font-size-xsm;
+    line-height: 21px;
+    @include msd {
+      font-size: $desktop-font-size-xsm;
+    }
     @include md {
       font-size: $desktop-font-size-xsm;
     }
@@ -39,6 +43,10 @@
 
   &SM {
     font-size: $mobile-font-size-sm;
+    line-height: 19px;
+    @include msd {
+      font-size: $desktop-font-size-sm;
+    }
     @include md {
       font-size: $desktop-font-size-sm;
     }
