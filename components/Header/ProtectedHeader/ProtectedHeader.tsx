@@ -75,7 +75,7 @@ const ProtectedHeader = () => {
               </li>
               <li className={styles.headerLink}>
                 <a title='Headhunt Me' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/headhunt-me')} href='/dashboard/headhunt-me'>
-                  <Text textStyle='sm' textColor='darkGrey' className={styles.headerLinkText}>
+                  <Text textStyle='lg' textColor='darkGrey' className={styles.headerLinkText}>
                     Headhunt Me
                   </Text>
                 </a>

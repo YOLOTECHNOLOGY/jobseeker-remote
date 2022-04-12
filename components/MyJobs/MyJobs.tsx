@@ -52,7 +52,11 @@ const theme = createTheme({
     MuiTabs: {
       styleOverrides: {
         root: {
-          minHeight: '40px'
+          minHeight: '79px',
+          '&.MultiTab-root': {
+            minHeight: '79px',
+            textTransform: 'capitalize'
+          }
         }
       }
     }
@@ -91,6 +95,7 @@ const MyJobs = ({
 
   const [jobsList, setJobsList] = useState([])
   const [totalPages, setTotalPages] = useState(null)
+  const [totalNum, setTotalNum] = useState(null)
   const [applicationHistories, setApplicationHistories] = useState([])
 
   const [isShowModalShare, setIsShowModalShare] = useState(false)
@@ -124,6 +129,7 @@ const MyJobs = ({
     if (appliedJobsListResponse?.data?.applied_jobs.length > 0) {
       setJobsList(appliedJobsListResponse.data?.applied_jobs)
       setTotalPages(appliedJobsListResponse.data?.total_pages)
+      setTotalNum(appliedJobsListResponse.data?.total_num)
     } 
   }, [appliedJobsListResponse])
 
@@ -138,6 +144,7 @@ const MyJobs = ({
     if (savedJobsListResponse?.data?.saved_jobs.length > 0) {
       setJobsList(savedJobsListResponse.data?.saved_jobs)
       setTotalPages(savedJobDetailResponse.data?.total_pages)
+      setTotalNum(appliedJobsListResponse.data?.total_num)
     }
   }, [savedJobsListResponse])
 
@@ -155,7 +162,7 @@ const MyJobs = ({
   const updateScrollPosition = () => {
     if (width > 798) {
       prevScrollY.current = window.pageYOffset
-      setIsSticky(prevScrollY.current >= 69 ? true : false)
+      setIsSticky(prevScrollY.current >= 201 ? true : false)
     }
   }
 
@@ -249,48 +256,56 @@ const MyJobs = ({
   return (
     <Layout>
       <SEO title={`${titleCase(category)} Jobs - Career Platform for Professionals in Philippines`} description={"Bossjob - Career Platform for Professionals in Philippines"} />
+      <div className={styles.MyJobsMenuContent}>
+        <div className={styles.container}>
+          <ThemeProvider theme={theme}>
+            <Tabs
+              value={category}
+            >
+              <Tab 
+                className={styles.MyJobsMenuTab}
+                value="saved" 
+                label={
+                  <Link 
+                    aTag
+                    to={'/my-jobs/saved?page=1&size=10'}
+                    className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}
+                  >
+                    <Text bold textStyle='lg'>
+                      Saved Jobs
+                    </Text>
+                  </Link>
+                }
+              />
+              <Tab 
+                className={styles.MyJobsMenuTab}
+                value="applied" 
+                label={
+                  <Link 
+                    aTag
+                    to={'/my-jobs/applied?page=1&size=10'}
+                    className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}
+                  >
+                    <Text bold textStyle='lg'>
+                      Applied Jobs
+                    </Text>
+                  </Link>
+                }
+              />
+            </Tabs>
+          </ThemeProvider>
+        </div>
+      </div>
       <div className={styles.MyJobs}>
         <div className={classNamesCombined([styles.MyJobsMenu, isStickyClass])}>
           <div className={styles.container}>
-            <div className={styles.MyJobsMenuContent}>
-              <ThemeProvider theme={theme}>
-                <Tabs
-                  value={category}
-                >
-                  <Tab 
-                    className={styles.MyJobsMenuTab}
-                    value="saved" 
-                    label={
-                      <Link 
-                        aTag
-                        to={'/my-jobs/saved?page=1&size=10'}
-                        className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}
-                      >
-                        <Text bold>
-                          Saved Jobs
-                        </Text>
-                      </Link>
-                    }
-                  />
-                  <Tab 
-                    className={styles.MyJobsMenuTab}
-                    value="applied" 
-                    label={
-                      <Link 
-                        aTag
-                        to={'/my-jobs/applied?page=1&size=10'}
-                        className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}
-                      >
-                        <Text bold>
-                          Applied Jobs
-                        </Text>
-                      </Link>
-                    }
-                  />
-                </Tabs>
-              </ThemeProvider>
-            </div>
-            <div className={styles.MyJobsMenuOtherContent}/>
+              {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && (
+                <div className={styles.MyJobsListOptionContent}>
+                  <Text textStyle='lg' bold>
+                    {totalNum} jobs found
+                  </Text>
+                </div>
+              )}
           </div>
         </div>
         <div className={classNamesCombined([styles.container, styles.MyJobsContent])}>
