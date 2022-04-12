@@ -69,6 +69,7 @@ import {
   TelecommunicationAllowanceIcon,
   OtherAllowancesIcon,  
   ExpireIcon,
+  MoreIcon,
   RateIcon,
   LocationPinIcon
 } from 'images'
@@ -91,7 +92,7 @@ const Job = ({
 
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
-  // const [jobDetailOption, setJobDetailOption] = useState(false)
+  const [jobDetailOption, setJobDetailOption] = useState(false)
   const [suggestionList, setSuggestionList] = useState([])
   const [searchValue, setSearchValue] = useState('')
   const [locationValue, setLocationValue] = useState(null)
@@ -255,7 +256,6 @@ const Job = ({
   return (
     <Layout>
       <SEO title={jobDetail.job_title} description={jobDetail.job_description} />
-      <div className={styles.LeaderBoard}/>
       <div className={styles.searchAndLocationContainer}>
         <MaterialTextFieldWithSuggestionList
           id='search'
@@ -288,15 +288,17 @@ const Job = ({
       </div>
       <div className={styles.JobDetail}>
         <div className={styles.JobDetailContent}>
+          <div className={styles.LeaderBoard}/>
+
           <div className={styles.JobDetailPrimary}>
-            {/* <div 
+            <div 
               className={styles.JobDetailPrimaryOptions}
               onClick={() => setJobDetailOption(!jobDetailOption)}
             >
-              <Image src={MoreIcon} width='20' height='20'></Image>
-            </div> */}
+              <Image src={MoreIcon} width='30' height='30'></Image>
+            </div>
             {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
-            {/* {jobDetailOption && (
+            {jobDetailOption && (
               <div className={styles.JobDetailOptionList}>
                 <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
                   <Text textStyle='lg'>Share this job</Text>
@@ -305,7 +307,7 @@ const Job = ({
                   <Text textStyle='lg'>Report job</Text>
                 </div>
               </div>
-            )} */}
+            )}
             <div className={styles.JobDetailPrimaryInfo}>
               <img src={jobDetail?.company?.logo} className={styles.JobDetailPrimaryInfoImage} alt={`${jobDetail?.company?.name} logo`}/>
               <Text textStyle='xl' tagName='h1' bold className={styles.JobDetailPrimaryInfoTitle}>
