@@ -103,7 +103,7 @@ const CompanyProfileLayout = ({
                     value="overview" 
                     label={
                       <Link to={`/company/${slugify(company.name)}-${company.id}`}>
-                        <Text bold textColor={tabValue === 'overview' ? 'primaryBlue' : 'black'}>Overview</Text>
+                        <Text bold textStyle='xl' textColor={tabValue === 'overview' ? 'primaryBlue' : 'black'}>Overview</Text>
                       </Link>
                     }
                   />
@@ -112,7 +112,7 @@ const CompanyProfileLayout = ({
                     value="life" 
                     label={
                       <Link to={`/company/${slugify(company.name)}-${company.id}/life`}>
-                        <Text bold textColor={tabValue === 'life' ? 'primaryBlue' : 'black'}>Life</Text>
+                        <Text bold textStyle='xl' textColor={tabValue === 'life' ? 'primaryBlue' : 'black'}>Life</Text>
                       </Link>
                     }
                   />
@@ -121,7 +121,7 @@ const CompanyProfileLayout = ({
                     value="jobs" 
                     label={
                       <Link to={`/company/${slugify(company.name)}-${company.id}/jobs`}>
-                        <Text bold textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}>
+                        <Text bold textStyle='xl' textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}>
                           Jobs
                           {totalJobs > 0 && <span className={styles.companyJobsBadge}>{totalJobs}</span>}
                         </Text>
@@ -146,15 +146,15 @@ const CompanyProfileLayout = ({
                   <Link to={`/company/${slugify(company.name)}-${company.id}`} key={company.id} className={styles.relatedCompanyItem}>
                     <img src={company.logo_url} className={styles.relatedCompanyImage} />
                     <Text textStyle='sm' bold className={styles.relatedCompanyName}>{company.name}</Text>
-                    <Text textStyle='sm'>{company.industry_value}</Text>
+                    <Text textStyle='sm'>{company.industry}</Text>
                   </Link>
                 ))}
               </div>
             )}
+            <Link to='/companies' className={styles.relatedCompanyLink}>
+              <Text textColor='primaryBlue' textStyle='base'>View all</Text>
+            </Link>
           </div>
-          <Link to='/companies' className={styles.relatedCompanyLink}>
-            <Text textColor='primaryBlue' textStyle='base'>View all companies</Text>
-          </Link>
         </div>
       </div>
     </Layout>

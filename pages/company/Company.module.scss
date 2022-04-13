@@ -2,30 +2,14 @@
 @import 'styles/mixins.scss';
 
 .companyOverview {
-  margin-top: 10px;
-  border-radius: 5px;
-  border: 0.5px solid rgba($lightgrey, 0.5);
-  padding: 20px;
-  height: 158px;
+  margin-top: 24px;
 
   @include msd {
     height: 100%;
   }
 
-
-  &Contents {
-    display: flex;
-    justify-content: space-between;
-    height: 100%;
-
-    @include msd {
-      flex-direction: column;
-    }
-  }
-
   &Left,
   &Right {
-    width: 49%;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -38,6 +22,7 @@
 
   &Item {
     display: flex;
+    margin-bottom: 24px;
 
     @include msd {
       flex-direction: column;
@@ -47,11 +32,7 @@
       display: inline-block;
 
       &:first-child {
-        width: 28%;
-      }
-
-      &:last-child {
-        width: 72%;
+        width: 180px;
       }
 
       @include msd {
@@ -83,6 +64,10 @@
     }
   }
 
+  &ItemSocial {
+    margin-bottom: 0;
+  }
+
   &SocialLink {
     margin-right: 10px;
   }
@@ -96,15 +81,15 @@
   }
 }
 
-.companyTabs {
-  &Content {
-    padding: 15px 30px;
-  }
+.companySection {
+  margin-top: 24px;
+  padding: 32px;
+  border-radius: 5px;
+  border: 1px solid rgba($lightgrey, 0.5);
 
   @include msd {
-    &Content {
-      padding: 15px 0;
-    }
+    border: none;
+    padding: 0;
   }
 }
 
@@ -119,7 +104,7 @@
 }
 
 .companySectionTitle {
-  margin: 30px 0 20px;
+  margin: 0 0 24px;
   display: block;
 }
 
@@ -132,16 +117,14 @@
 }
 
 .companyCulture {
-  margin-top: 30px;
-
   &Heading {
     display: flex;
     justify-content: space-between;
-    margin: 40px 0;
+    margin-bottom: 24px;
   }
 
   &HeadingLink {
-    padding-right: 25px;
+    padding-right: 18px;
     position: relative;
 
     &::before {
@@ -151,20 +134,9 @@
       width: 6px;
       border-top: 1px solid $primaryBlue;
       border-right: 1px solid $primaryBlue;
-      top: 50%;
+      top: 40%;
       right: 0;
       transform: translateY(-50%) rotate(45deg);
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 1px;
-      background-color: $primaryBlue;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
     }
 
     &:hover {
@@ -174,24 +146,40 @@
       }
     }
 
+    // @include msd {
+    //   text-align: right;
+    //   margin: 10px 0 20px;
+    //   padding-right: 20px;
+
+    //   &:before {
+    //     height: 4px;
+    //     width: 4px;
+    //   }
+
+    //   &:after {
+    //     width: 15px;
+    //   }
+    // }
+  }
+
+  &HeadingLinkTop {
     @include msd {
-      text-align: right;
-      margin: 10px 0 20px;
-      padding-right: 20px;
+      display: none;
+    }
+  }
 
-      &:before {
-        height: 4px;
-        width: 4px;
-      }
+  &HeadingLinkBottom {
+    display: none;
+    @include msd {
+      display: inline-block;
 
-      &:after {
-        width: 15px;
+      &::before {
+        top: 46%
       }
     }
   }
 
   &Content {
-    margin-top: 15px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -217,9 +205,6 @@
   &Wrapper {
     width: 100%;
     border-radius: 5px;
-    border: 1px solid rgba($lightgrey, 0.5);
-    margin-left: 20px;
-    padding: 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -231,7 +216,7 @@
 
   &Section {
     &:not(:last-child) {
-      margin-bottom: 20px;
+      margin-bottom: 48px;
     }
   }
 
@@ -251,8 +236,6 @@
   }
 
   &Jobs {
-    margin-top: 50px;
-
     .companyCultureHeading {
       margin-bottom: 40px;
     }
@@ -276,7 +259,6 @@
   &CategoryGroup {
     margin-top: 30px;
     margin-bottom: 40px;
-    padding: 0 40px;
   }
 
   &Category {
@@ -289,11 +271,17 @@
     }
   }
 
+  &CategoryList {
+    margin-bottom: 4px;
+  }
+
   &CategoryValue {
     padding: 4px 12px;
     border-radius: 15px;
     background-color: $white-2;
-    margin: 40px;
+    margin-right: 18px;
+    margin-bottom: 16px;
+    display: inline-block;
   }
 }
 
@@ -305,6 +293,10 @@
 
   &Pagination {
     margin-top: 30px;
+
+    ul {
+      justify-content: flex-start;
+    }
   }
 }
 
@@ -333,5 +325,134 @@
 
   &Button {
     width: 20%;
+  }
+
+  @include msd {
+    flex-direction: column;
+    margin-bottom: 24px;
+
+    &Left,
+    &Right {
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    &Right {
+      flex-direction: column;
+      margin-bottom: 0;
+    }
+
+    &Location, 
+    &Button {
+      width: 100%;
+      margin-bottom: 24px;
+    }
+  }
+}
+
+// Embla
+.embla {
+  position: relative;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include sm {
+    padding: 10px;
+  }
+}
+
+.emblaViewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.emblaContainer {
+  display: flex;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+
+  &Double {
+    @extend .emblaContainer;
+    margin: 0 25%;
+  }
+}
+
+.emblaSlide {
+  position: relative;
+  padding-left: 16px;
+  flex: 0 0 33.33%;
+}
+
+.emblaSlideInner {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 279px;
+    height: 279px;
+  }
+}
+
+.slidesControl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  &Item {
+    height: 50px;
+    width: 50px;
+    background-color: $white-3;
+    position: absolute;
+    border-radius: 50%;
+    top: 50%;
+    box-shadow: $box-shadow-1;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &Right {
+    right: -15px;
+    transform: translateY(-50%);
+
+    &::after {
+      position: absolute;
+      content: '';
+      height: 12px;
+      width: 12px;
+      top: 50%;
+      right: 15px;
+      border-top: 2px solid $darkgrey;
+      border-right: 2px solid $darkgrey;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+  }
+
+  &Left {
+    left: -10px;
+    transform: translateY(-50%);
+
+    &::after {
+      position: absolute;
+      content: '';
+      height: 12px;
+      width: 12px;
+      top: 50%;
+      left: 55%;
+      border-top: 2px solid $darkgrey;
+      border-right: 2px solid $darkgrey;
+      transform: translate(-50%, -50%) rotate(-135deg);
+    }
+  }
+
+  @include msd {
+    display: none;
   }
 }
