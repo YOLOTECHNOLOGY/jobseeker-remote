@@ -11,6 +11,7 @@ import Link from 'components/Link'
 import SEO from 'components/SEO'
 import CompanyCardList from 'components/Company/CompanyCardList'
 import SearchCompanyField from 'components/SearchCompanyField'
+import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 
 import { ImageList, ImageListItem } from '@mui/material'
 
@@ -33,6 +34,8 @@ const Companies = () => {
   const [featuredCompany, setFeaturedCompany] = useState(null)
   const [companySuggestions, setCompanySuggestions] = useState(null)
   const [searchText, setSearchText] = useState('')
+  const [totalPage, setTotalPage] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
 
   const featuredCompaniesResponse = useSelector((store: any) => store.companies.fetchFeaturedCompaniesList.response)
   const isFeaturedCompaniesFetching = useSelector((store: any) => store.companies.fetchFeaturedCompaniesList.fetching)
@@ -43,10 +46,18 @@ const Companies = () => {
   }, [])
 
   useEffect(() => {
+    setCurrentPage(Number(router.query.page))
+    dispatch(fetchFeaturedCompaniesListRequest({page: Number(router.query.page)}))
+  }, [router.query])
+
+  useEffect(() => {
     if (featuredCompaniesResponse?.featured_companies) {
+      setTotalPage(featuredCompaniesResponse.total_pages)
       const companies = featuredCompaniesResponse.featured_companies
-      setFeaturedCompany(companies[0].company)
-      companies.shift()
+      if (!featuredCompany) {
+        setFeaturedCompany(companies[0].company)
+        companies.shift()
+      }
       setFeaturedCompanies(companies)
     }
   }, [featuredCompaniesResponse])
@@ -75,6 +86,11 @@ const Companies = () => {
     router.push(`/companies/search?query=${keyword}&size=9&page=1`)
   }
 
+  const handlePaginationClick = (event, val) => {
+    router.query.page = val
+    router.push(router, undefined, { shallow: true })
+  }
+
   return (
     <Layout>
       <SEO title='Company Directories' />
@@ -95,7 +111,7 @@ const Companies = () => {
           <img src="https://dummyimage.com/788x638/000/fff" alt="" className={classNames([breakpointStyles.hideOnTabletAndDesktop, styles.bannerImage])} />
         </div>
 
-        <Text textStyle='xxxl' tagName='p' bold className={styles.featuredEmployerSectionTitle}>Featured Employer</Text>
+        <Text textStyle='xxl' tagName='p' bold className={styles.featuredEmployerSectionTitle}>Featured Employer</Text>
         <div className={styles.featuredEmployer}>
           <div className={styles.featuredEmployerLeft}>
             <div className={styles.featuredEmployerInfo}>
@@ -128,7 +144,7 @@ const Companies = () => {
             </div>
           </div>
           <div className={styles.featuredEmployerRight}>
-            <div className={breakpointStyles.hideOnMobileAndTablet}>
+            <div className={styles.featuredEmployerImages}>
               <ImageList sx={{ width: 500, height: 335 }} gap={10} cols={3}>
                 {featuredCompany?.pictures?.length > 0 && featuredCompany.pictures.map((item) => (
                   <ImageListItem key={item.id}>
@@ -143,7 +159,7 @@ const Companies = () => {
                 ))}
               </ImageList>
             </div>
-            <div className={breakpointStyles.hideOnDesktop}>
+            <div className={styles.featuredEmployerImagesMobile}>
               {featuredCompany?.pictures?.length > 0 && (
                 <img 
                   src={featuredCompany.pictures[0].url} 
@@ -155,11 +171,14 @@ const Companies = () => {
           </div>
         </div>
 
-        <Text textStyle='xxxl' tagName='p' bold className={styles.featuredEmployerSectionTitle}>Popular Companies</Text>
+        <Text textStyle='xxl' tagName='p' bold className={styles.featuredEmployerSectionTitle}>Popular Companies</Text>
         <CompanyCardList 
           companiesList={featuredCompanies} 
           isLoading={isFeaturedCompaniesFetching}
         />
+        <div className={styles.companiesPagination}>
+          <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={Number(currentPage) || 1} totalPages={totalPage || 1} />
+        </div>
       </div>
     </Layout>
   )

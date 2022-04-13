@@ -299,13 +299,13 @@ const MyJobs = ({
       <div className={styles.MyJobs}>
         <div className={classNamesCombined([styles.MyJobsMenu, isStickyClass])}>
           <div className={styles.container}>
-              {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && (
-                <div className={styles.MyJobsListOptionContent}>
-                  <Text textStyle='lg' bold>
-                    {totalNum} jobs found
-                  </Text>
-                </div>
+            <div className={styles.MyJobsListOptionContent}>
+              {totalNum && (
+                <Text textStyle='lg' bold>
+                  {totalNum} jobs found
+                </Text>
               )}
+            </div>
           </div>
         </div>
         <div className={classNamesCombined([styles.container, styles.MyJobsContent])}>

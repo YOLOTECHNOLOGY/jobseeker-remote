@@ -3,10 +3,10 @@
 
 .searchFilter {
   display: none;
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: 210px;
   right: 0;
-  width: 100%;
+  width: 600px;
   height: auto;
   z-index: 3;
   background-color: $white-3;
@@ -16,19 +16,19 @@
     display: block;
   }
 
-  // &.isShow.displayQuickLinks{
-  //   display: block;
-  //   @extend .searchFilter;
-  //   top:313px;
+  &.isShow.displayQuickLinks{
+    display: block;
+    @extend .searchFilter;
+    top:311px;
 
-  //   .searchFilterBody {
-  //     height: calc(100vh - 445px);
+    .searchFilterBody {
+      height: calc(100vh - 445px);
 
-  //     @include msd {
-  //       height: calc(100vh - 183px);
-  //     }
-  //   }
-  // }
+      @include msd {
+        height: calc(100vh - 183px);
+      }
+    }
+  }
 
   &Header {
     display: flex;
