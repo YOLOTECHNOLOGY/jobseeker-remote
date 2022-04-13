@@ -293,7 +293,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <Link
                     className={styles.footerLink}
                     to={
-                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=customer-service,tech-helpdesk-support'
+                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=customer-service-relations,tech-helpdesk-support'
                     }
                     title='Customer Service Jobs'
                     external
@@ -644,7 +644,7 @@ const Footer = ({ showButton }: FooterProps) => {
                     <Link
                       className={styles.footerLink}
                       to={
-                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=customer-service,tech-helpdesk-support'
+                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=customer-service-relations,tech-helpdesk-support'
                       }
                       title='Customer Service Jobs'
                       external
