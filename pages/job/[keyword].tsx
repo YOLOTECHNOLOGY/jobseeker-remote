@@ -264,6 +264,7 @@ const Job = ({
           size='small'
           className={styles.searchField}
           searchFn={handleSuggestionSearch}
+          updateSearchValue={setSearchValue}
           onSelect={(val:any)=>{
             setSearchValue(val)
             onSearch(val)

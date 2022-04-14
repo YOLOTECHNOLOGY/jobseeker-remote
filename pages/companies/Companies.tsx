@@ -32,14 +32,11 @@ const Companies = () => {
 
   const [featuredCompanies, setFeaturedCompanies] = useState(null)
   const [featuredCompany, setFeaturedCompany] = useState(null)
-  const [companySuggestions, setCompanySuggestions] = useState(null)
-  const [searchText, setSearchText] = useState('')
   const [totalPage, setTotalPage] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
 
   const featuredCompaniesResponse = useSelector((store: any) => store.companies.fetchFeaturedCompaniesList.response)
   const isFeaturedCompaniesFetching = useSelector((store: any) => store.companies.fetchFeaturedCompaniesList.fetching)
-  const fetchCompanySuggestionsResponse = useSelector((store: any) => store.companies.fetchCompanySuggestions.response)
 
   useEffect(() => {
     dispatch(fetchFeaturedCompaniesListRequest({}))
@@ -62,27 +59,7 @@ const Companies = () => {
     }
   }, [featuredCompaniesResponse])
 
-  useEffect(() => {
-    if (fetchCompanySuggestionsResponse) {
-      setCompanySuggestions(fetchCompanySuggestionsResponse.items)
-    }
-  }, [fetchCompanySuggestionsResponse])
-
-  useDebounce(() => {
-      if (!searchText) setCompanySuggestions(null)
-      if (searchText) {
-        const payload = {
-          query: searchText,
-          size: 5,
-          page: 1
-        }
-
-        dispatch(fetchCompanySuggestionsRequest(payload))
-      }
-    }, 300, [searchText])
-
   const handleKeywordSearch = (keyword) => {
-    setCompanySuggestions(null)
     router.push(`/companies/search?query=${keyword}&size=9&page=1`)
   }
 
@@ -99,8 +76,6 @@ const Companies = () => {
         <div className={styles.searchCompany}>
           <Text textStyle='xxxl' tagName='p' bold className={styles.searchCompanyTitle} textColor='primaryBlue'>Find great companies in Phillipines</Text>
           <SearchCompanyField
-            suggestions={companySuggestions}
-            onSearch={setSearchText}
             onKeywordSearch={handleKeywordSearch}
           />
         </div>

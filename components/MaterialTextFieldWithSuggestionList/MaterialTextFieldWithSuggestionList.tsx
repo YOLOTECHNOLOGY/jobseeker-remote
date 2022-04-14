@@ -19,6 +19,7 @@ type MaterialTextFieldWithSuggestionListProps = {
   refs?: any
   onSelect?: Function
   searchFn?: Function
+  updateSearchValue?: Function
 } & Omit<Input, 'size'>
 
 const theme = createTheme({
@@ -58,17 +59,13 @@ const MaterialTextFieldWithSuggestionList = ({
   options,
   onSelect,
   searchFn,
+  updateSearchValue,
   refs,
   ...rest
 }: MaterialTextFieldWithSuggestionListProps) => {
-  const [value, setValue] = useState(defaultValue)
-
-  useEffect(() => {
-    setValue(defaultValue)
-  }, [defaultValue])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value)
+    updateSearchValue(event.target.value)
     searchFn(event.target.value)
   }
 
@@ -85,7 +82,7 @@ const MaterialTextFieldWithSuggestionList = ({
             onSelect(val)
           } 
         }}
-        defaultValue={value}
+        defaultValue={defaultValue}
         renderInput={(params) => (
           <MaterialTextField
             {...refs}

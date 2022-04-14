@@ -186,6 +186,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [createdJobAlert, setCreatedJobAlert] = useState(null)
   const [selectedJob, setSelectedJob] = useState(null)
   const [selectedJobId, setSelectedJobId] = useState(null)
+  const [searchValue, setSearchValue] = useState("")
   const { keyword, ...rest } = router.query
   const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
   const [hasMoreFilters, setHasMoreFilters] = useState(false)
@@ -500,9 +501,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             className={styles.searchField}
             defaultValue={urlQuery}
             searchFn={handleSuggestionSearch}
+            updateSearchValue={setSearchValue}
             onSelect={(val) => {
-                onKeywordSearch(val)
-              }}
+              onKeywordSearch(val)
+            }}
             onKeyPress={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()
@@ -517,8 +519,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             defaultValue={urlLocation}
             onChange={onLocationSearch}
           />
-          <MaterialButton variant='contained' capitalize className={styles.searchButton}>
-            {/* <MaterialButton variant='contained' onClick={onSearchSubmit}> */}
+          <MaterialButton variant='contained' capitalize className={styles.searchButton} onClick={() => onKeywordSearch(searchValue)}>
             <Text textStyle='lg' textColor='white' bold>Search</Text>
           </MaterialButton>
           <div className={breakpointStyles.hideOnDesktop}>

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import slugify from 'slugify'
 
 // Redux Actions
-import { fetchCompanySuggestionsRequest } from 'store/actions/companies/fetchCompanySuggestions'
 import { fetchCompanyFilterRequest } from 'store/actions/companies/fetchCompanyFilter'
 
 // Components
@@ -17,7 +16,6 @@ import SearchCompanyField from 'components/SearchCompanyField/SearchCompanyField
 
 // Helpers
 import { unslugify } from 'helpers/formatter'
-import useDebounce from 'helpers/useDebounce'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Styles
@@ -29,20 +27,14 @@ const Search = () => {
   const { query, page, size } = router.query
   const { width } = useWindowDimensions()
 
-  const [isInitialLoad, setIsInitialLoad] = useState(true)
-  const [searchText, setSearchText] = useState('')
-  const [companySuggestions, setCompanySuggestions] = useState(null)
   const [companies, setCompanies] = useState([])
   const [totalPages, setTotalPages] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
 
-  const fetchCompanySuggestionsResponse = useSelector((store: any) => store.companies.fetchCompanySuggestions.response)
   const fetchCompanyFilterResponse = useSelector((store: any) => store.companies.fetchCompanyFilter.response)
   const isCompanyFilterFetching = useSelector((store: any) => store.companies.fetchCompanyFilter.fetching)
 
   useEffect(() => {
-    setSearchText(unslugify(query))
-
     const searchFilterPayload = {
       query: unslugify(query),
       size: size,
@@ -55,29 +47,11 @@ const Search = () => {
   }, [router.query])
 
   useEffect(() => {
-    if (fetchCompanySuggestionsResponse) setCompanySuggestions(fetchCompanySuggestionsResponse.items)
-  }, [fetchCompanySuggestionsResponse])
-
-  useEffect(() => {
     if (fetchCompanyFilterResponse) {
       setCompanies(fetchCompanyFilterResponse.companies)
       setTotalPages(fetchCompanyFilterResponse.total_pages)
     }
-    setCompanySuggestions(null)
   }, [fetchCompanyFilterResponse])
-
-  useDebounce(() => {
-    if (!searchText) setCompanySuggestions(null)
-    if (searchText && !isInitialLoad) {
-      const payload = {
-        query: searchText,
-        size: 5,
-        page: 1
-      }
-
-      dispatch(fetchCompanySuggestionsRequest(payload))
-    }
-  }, 300, [searchText])
 
   const scrollToTop = () => {
     if (typeof window !== 'undefined') {
@@ -91,12 +65,6 @@ const Search = () => {
 
   const handleKeywordSearch = (keyword) => {
     router.push(`/companies/search?query=${slugify(keyword)}&size=30&page=1`)
-    setCompanySuggestions(null)
-  }
-
-  const handleOnSearch = (value) => {
-    setIsInitialLoad(false)
-    setSearchText(value)
   }
 
   const handlePaginationClick = (_, newPage) => {
@@ -113,9 +81,6 @@ const Search = () => {
         <div className={styles.searchCompany}>
           <Text textStyle='xxl' tagName='p' bold className={styles.searchCompanyTitle}>Search Companies</Text>
           <SearchCompanyField
-            searchValue={searchText}
-            suggestions={companySuggestions}
-            onSearch={handleOnSearch}
             onKeywordSearch={handleKeywordSearch}
           />
           <Text textStyle='xl' tagName='p' bold className={styles.searchCompanyTitle}>
