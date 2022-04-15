@@ -78,9 +78,9 @@ const MaterialTextFieldWithSuggestionList = ({
         className={className}
         size={size}
         onChange={(_, val:any, reason)=>{
-          if (reason === 'selectOption' && onSelect) {
-            onSelect(val)
-          } 
+          if ((reason === 'selectOption' || reason === 'clear') && onSelect) {
+            onSelect(val ?? '')
+          }
         }}
         defaultValue={defaultValue}
         renderInput={(params) => (
