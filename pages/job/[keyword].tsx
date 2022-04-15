@@ -34,8 +34,10 @@ import ModalShare from 'components/ModalShare'
 import ModalReportJob from 'components/ModalReportJob'
 
 /* Helpers */
+import { getCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
 import { categoryParser, conditionChecker } from 'helpers/jobPayloadFormatter'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -89,6 +91,7 @@ const Job = ({
 }: IJobDetail) => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const userCookie = getCookie('user') || null
 
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
@@ -162,11 +165,6 @@ const Job = ({
 
   const isAppliedQueryParam = router.query.isApplied
   const hasApplied = isAppliedQueryParam === 'true' ? true : false
-
-  const handleApplyJob = (jobId) => {
-    // eslint-disable-next-line no-console
-    console.log(jobId)
-  }
 
   const handlePostSaveJob = ({ jobId, isSaved }) => {
     if (isSaved) return 
@@ -253,6 +251,18 @@ const Job = ({
     updateUrl(queryParam, null)
   }
 
+  const handleApplyJob = (e, userCookie, selectedJob) => {
+    e.preventDefault()
+
+    if (!userCookie) {
+      router.push('/login/jobseeker?redirect=jobs-hiring/job-search')
+    } else {
+      const applyJobUrl = `/dashboard/job/${slugify(selectedJob?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.id}/apply`
+
+      router.push(authPathToOldProject(null, applyJobUrl))
+    }
+  }
+
   return (
     <Layout>
       <SEO title={jobDetail.job_title} description={jobDetail.job_description} />
@@ -326,7 +336,7 @@ const Job = ({
               <div className={styles.JobDetailPrimaryActions}>
                 {jobDetail?.status_key === 'active' && (
                   <MaterialButton variant='contained' capitalize>
-                    <Link to={jobDetail?.external_apply_url || '/'} external>Apply Now</Link>
+                    <div onClick={(e) => handleApplyJob(e, userCookie, jobDetail)}>Apply Now</div>
                   </MaterialButton>
                 )}
                 {jobDetail?.status_key !== 'active' && (
@@ -566,7 +576,7 @@ const Job = ({
                     <Text textStyle='base' textColor='darkgrey'>{job.location_value}</Text>
                     <Text textStyle='base' tagName='p' textColor='darkgrey' className={styles.JobDetailSidebarCardSalary}>{job.salary_range_value}</Text>
                     {job.published_at && <Text textStyle='xsm' tagName='p'>Posted on {job.published_at}</Text> }
-                    <div className={styles.JobDetailSidebarCardApply} onClick={() => handleApplyJob(job.id)}>
+                    <Link to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`} className={styles.JobDetailSidebarCardApply}>
                       <Text 
                         textStyle='base' 
                         tagName='p' 
@@ -575,7 +585,7 @@ const Job = ({
                       >
                         Apply Now
                       </Text>
-                    </div>
+                    </Link>
                   </div>
                 ))}
               </div>

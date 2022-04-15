@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 /* Vendors */
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
+import slugify from 'slugify'
 import {
   Timeline,
   TimelineItem,
@@ -25,6 +26,7 @@ import MaterialButton from 'components/MaterialButton'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Styles */
 import styles from './JobDetail.module.scss'
@@ -124,6 +126,18 @@ const JobDetail = ({
     }
     return false
   }
+
+  const handleApplyJob = (e, userCookie, selectedJob) => {
+    e.preventDefault()
+
+    if (!userCookie) {
+      router.push('/login/jobseeker?redirect=jobs-hiring/job-search')
+    } else {
+      const applyJobUrl = `/dashboard/job/${slugify(selectedJob?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.id}/apply`
+
+      router.push(authPathToOldProject(null, applyJobUrl))
+    }
+  }
   
   return (
     <div className={styles.JobDetail}>
@@ -186,9 +200,9 @@ const JobDetail = ({
                 {selectedJob?.status_key === 'active' && !isCategoryApplied && (
                   <>
                     <MaterialButton variant='contained' capitalize>
-                      <Link to={selectedJob?.external_apply_url} external>
+                      <div onClick={(e) => handleApplyJob(e, userCookie, selectedJob)}>
                         <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
-                      </Link>
+                      </div>
                     </MaterialButton>
 
                     <MaterialButton 
