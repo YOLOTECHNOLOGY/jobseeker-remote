@@ -335,11 +335,18 @@ const Job = ({
             {!isAppliedQueryParam && (
               <div className={styles.JobDetailPrimaryActions}>
                 {jobDetail?.status_key === 'active' && (
-                  <MaterialButton variant='contained' capitalize>
-                    <div onClick={(e) => handleApplyJob(e, userCookie, jobDetail)}>Apply Now</div>
-                  </MaterialButton>
+                  <>
+                    {jobDetail?.is_applied ? 
+                      <MaterialButton variant='contained' capitalize disabled>
+                        <Text>Applied</Text>
+                      </MaterialButton> : 
+                      <MaterialButton variant='contained' capitalize>
+                        <div onClick={(e) => handleApplyJob(e, userCookie, jobDetail)}>Apply Now</div>
+                      </MaterialButton>
+                    }
+                  </>
                 )}
-                {jobDetail?.status_key !== 'active' && (
+                {jobDetail?.status_key !== 'active' && ( 
                   <Text textStyle='base' className={styles.JobDetailStatus}>
                     <Image src={ExpireIcon} height="16" width="16"/>
                     <span>This job is no longer hiring</span>
@@ -653,18 +660,16 @@ const Job = ({
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-
   const { keyword, isApplied } = query
   const keywordQuery:any = keyword
   const jobId = keywordQuery?.split('-').pop()
-
+  
   if (jobId) {
     // store actions
     if (isApplied === 'true') {
       store.dispatch(fetchAppliedJobDetailRequest(jobId))
     } else {
-      // TODO: Check if User is LoggedIn then change status: 'protected'
-      store.dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
+      store.dispatch(fetchJobDetailRequest({jobId, status: accessToken ? 'protected': 'public', serverAccessToken: accessToken}))
     }
   }
 

@@ -197,14 +197,18 @@ const JobDetail = ({
             <JobTag tag={selectedJob?.job_type_value} />
             <div className={styles.JobDetailButtonsWrapper}>
               <div className={styles.JobDetailButtons}>
-                {selectedJob?.status_key === 'active' && !isCategoryApplied && (
+                {selectedJob?.status_key === 'active'  && !isCategoryApplied && (
                   <>
-                    <MaterialButton variant='contained' capitalize>
-                      <div onClick={(e) => handleApplyJob(e, userCookie, selectedJob)}>
-                        <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
-                      </div>
-                    </MaterialButton>
-
+                    {!selectedJob?.is_applied ? 
+                        <MaterialButton variant='contained' capitalize>
+                          <div onClick={(e) => handleApplyJob(e, userCookie, selectedJob)}>
+                            <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
+                          </div>
+                        </MaterialButton>
+                      : <MaterialButton variant='contained' capitalize disabled>
+                          <Text textStyle='lg' textColor='white' bold>Applied</Text> 
+                        </MaterialButton>
+                    }
                     <MaterialButton 
                       variant='outlined' 
                       capitalize 
