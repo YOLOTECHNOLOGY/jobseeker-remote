@@ -133,13 +133,9 @@ const JobDetail = ({
     if (!userCookie) {
       router.push('/login/jobseeker?redirect=jobs-hiring/job-search')
     } else {
-      if (selectedJob.external_apply_url) {
-        router.push(selectedJob.external_apply_url)
-      } else {
-        const applyJobUrl = `/dashboard/job/${slugify(selectedJob?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.id}/apply`
+      const applyJobUrl = selectedJob.external_apply_url ? selectedJob.external_apply_url : authPathToOldProject(null, `/dashboard/job/${slugify(selectedJob?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.id}/apply`)
 
-        router.push(authPathToOldProject(null, applyJobUrl))
-      }
+      router.push(applyJobUrl)
     }
   }
   

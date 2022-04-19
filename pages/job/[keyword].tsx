@@ -257,8 +257,8 @@ const Job = ({
     if (!userCookie) {
       router.push('/login/jobseeker?redirect=jobs-hiring/job-search')
     } else {
-      const applyJobUrl = `/dashboard/job/${slugify(selectedJob?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.id}/apply`
-
+      const applyJobUrl = selectedJob.external_apply_url ? selectedJob.external_apply_url : `/dashboard/job/${slugify(selectedJob?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.id}/apply`
+      
       router.push(authPathToOldProject(null, applyJobUrl))
     }
   }
