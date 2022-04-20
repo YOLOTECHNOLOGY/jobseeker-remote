@@ -269,7 +269,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <Link
                     className={styles.footerLink}
                     to={
-                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=it-hardware,it-network-sys-db-admin,it-software-engineering,sales-eng-tech-it,tech-helpdesk-support'
+                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=it-hardware,it-network-system-database-admin,it-software-engineering,sales-engineering-technical-it,technical-helpdesk-support,it-product-management'
                     }
                     title='IT Jobs'
                     external
@@ -281,7 +281,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <Link
                     className={styles.footerLink}
                     to={
-                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=audit-taxation,banking-financial,corporate-finance-investment,sales-financial-services,general-cost-accounting'
+                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=audit-taxation,banking-financial,corporate-finance-investment,sales-insurance-financial-services,general-cost-accounting'
                     }
                     title='Finance Jobs'
                     external
@@ -293,7 +293,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <Link
                     className={styles.footerLink}
                     to={
-                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=customer-service-relations,tech-helpdesk-support'
+                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=customer-service-relations,technical-helpdesk-support'
                     }
                     title='Customer Service Jobs'
                     external
@@ -315,7 +315,7 @@ const Footer = ({ showButton }: FooterProps) => {
                   <Link
                     className={styles.footerLink}
                     to={
-                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=sales-corporate,sales-eng-tech-it,sales-financial-services,marketing-business-dev'
+                      'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=sales-corporate,sales-engineering-technical-it,sales-insurance-financial-services,marketing-business-development'
                     }
                     title='Sales Jobs'
                     external
@@ -620,7 +620,7 @@ const Footer = ({ showButton }: FooterProps) => {
                     <Link
                       className={styles.footerLink}
                       to={
-                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=it-hardware,it-network-sys-db-admin,it-software-engineering,sales-eng-tech-it,tech-helpdesk-support'
+                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=it-hardware,it-network-system-database-admin,it-software-engineering,sales-engineering-technical-it,technical-helpdesk-support,it-product-management'
                       }
                       title='IT Jobs'
                       external
@@ -632,7 +632,7 @@ const Footer = ({ showButton }: FooterProps) => {
                     <Link
                       className={styles.footerLink}
                       to={
-                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=audit-taxation,banking-financial,corporate-finance-investment,sales-financial-services,general-cost-accounting'
+                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=audit-taxation,banking-financial,corporate-finance-investment,sales-insurance-financial-services,general-cost-accounting'
                       }
                       title='Finance Jobs'
                       external
@@ -644,7 +644,7 @@ const Footer = ({ showButton }: FooterProps) => {
                     <Link
                       className={styles.footerLink}
                       to={
-                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=customer-service-relations,tech-helpdesk-support'
+                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=customer-service-relations,technical-helpdesk-support'
                       }
                       title='Customer Service Jobs'
                       external
@@ -666,7 +666,7 @@ const Footer = ({ showButton }: FooterProps) => {
                     <Link
                       className={styles.footerLink}
                       to={
-                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=sales-corporate,sales-eng-tech-it,sales-financial-services,marketing-business-dev'
+                        'https://bossjob.ph/jobs-hiring/job-search/?jobCategory=sales-corporate,sales-engineering-technical-it,sales-insurance-financial-services,marketing-business-development'
                       }
                       title='Sales Jobs'
                       external
