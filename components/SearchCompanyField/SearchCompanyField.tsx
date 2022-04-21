@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 
 // Components
-import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 
@@ -12,16 +11,19 @@ import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWit
 import styles from './SearchCompanyField.module.scss'
 
 interface ISearchCompanyField {
+  defaultQuery?: string,
   onKeywordSearch: Function
 }
 
 const SearchCompanyField = ({
+  defaultQuery = '',
   onKeywordSearch,
 }: ISearchCompanyField) => {
   const ref = useRef(null)
-  
+
   const [suggestionList, setSuggestionList] = useState([])
   const [searchValue, setSearchValue] = useState('')
+
 
   useEffect(() => {
     if (searchValue) setSearchValue(searchValue)
@@ -44,6 +46,7 @@ const SearchCompanyField = ({
           className={styles.searchField}
           searchFn={handleSuggestionSearch}
           updateSearchValue={setSearchValue}
+          defaultValue={defaultQuery}
           onSelect={(val:any)=>{
             setSearchValue(val)
             onKeywordSearch(val)

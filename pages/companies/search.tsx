@@ -3,6 +3,9 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import slugify from 'slugify'
 
+/* Action Creators */
+import { wrapper } from 'store'
+
 // Redux Actions
 import { fetchCompanyFilterRequest } from 'store/actions/companies/fetchCompanyFilter'
 
@@ -21,7 +24,8 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 // Styles
 import styles from './Companies.module.scss' 
 
-const Search = () => {
+const Search = (props) => {
+  const { defaultQuery } = props
   const router = useRouter()
   const dispatch = useDispatch()
   const { query, page, size } = router.query
@@ -81,6 +85,7 @@ const Search = () => {
         <div className={styles.searchCompany}>
           <Text textStyle='xxl' tagName='p' bold className={styles.searchCompanyTitle}>Search Companies</Text>
           <SearchCompanyField
+            defaultQuery={defaultQuery}
             onKeywordSearch={handleKeywordSearch}
           />
           <Text textStyle='xl' tagName='p' bold className={styles.searchCompanyTitle}>
@@ -113,5 +118,13 @@ const Search = () => {
     </Layout>
   )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
+  return {
+    props: {
+      defaultQuery: query.query,
+    },
+  }
+})
 
 export default Search
