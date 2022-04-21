@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getCookie } from 'helpers/cookies'
+import { getCookie, removeCookie } from 'helpers/cookies'
 import accessToken from 'pages/api/handlers/linkedinHandlers/accessToken'
 // import { configureStore } from 'store'
 // import { logout } from 'shared/helpers/authentication'
@@ -121,8 +121,10 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
         return response
       },
       (error) => {
-        if (error.message === 'Request failed with status code 401') {
-          // logout()
+        // Remove the accessToken cookie to log the user out 
+        // when Unauthorized 401 status code is returned from API requests
+        if (error.response.status === 401) {
+          removeCookie('accessToken')
           window.location.href = '/'
         } else {
           return Promise.reject(error)

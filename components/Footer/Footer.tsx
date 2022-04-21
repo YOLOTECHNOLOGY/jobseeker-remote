@@ -265,7 +265,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=it-hardware,it-network-sys-db-admin,it-software-engineering,sales-eng-tech-it,tech-helpdesk-support`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=it-hardware,it-network-system-database-admin,it-software-engineering,sales-engineering-technical-it,technical-helpdesk-support,it-product-management`}
                     title='IT Jobs'
                     external
                   >
@@ -275,7 +275,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=audit-taxation,banking-financial,corporate-finance-investment,sales-financial-services,general-cost-accounting`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=audit-taxation,banking-financial,corporate-finance-investment,sales-insurance-financial-services,general-cost-accounting`}
                     title='Finance Jobs'
                     external
                   >
@@ -285,7 +285,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service-relations,tech-helpdesk-support`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service-relations,technical-helpdesk-support`}
                     title='Customer Service Jobs'
                     external
                   >
@@ -305,7 +305,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=sales-corporate,sales-eng-tech-it,sales-financial-services,marketing-business-dev`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=sales-corporate,sales-engineering-technical-it,sales-insurance-financial-services,marketing-business-development`}
                     title='Sales Jobs'
                     external
                   >
@@ -606,7 +606,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=it-hardware,it-network-sys-db-admin,it-software-engineering,sales-eng-tech-it,tech-helpdesk-support`
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=it-hardware,it-network-system-database-admin,it-software-engineering,sales-engineering-technical-it,technical-helpdesk-support,it-product-management`
                       }
                       title='IT Jobs'
                       external
@@ -617,7 +617,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=audit-taxation,banking-financial,corporate-finance-investment,sales-financial-services,general-cost-accounting`
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=audit-taxation,banking-financial,corporate-finance-investment,sales-insurance-financial-services,general-cost-accounting`
                       }
                       title='Finance Jobs'
                       external
@@ -628,7 +628,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service-relations,tech-helpdesk-support`
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service-relations,technical-helpdesk-support`
                       }
                       title='Customer Service Jobs'
                       external
@@ -649,7 +649,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=sales-corporate,sales-eng-tech-it,sales-financial-services,marketing-business-dev`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=sales-corporate,sales-engineering-technical-it,sales-insurance-financial-services,marketing-business-development`}
                       title='Sales Jobs'
                       external
                     >
