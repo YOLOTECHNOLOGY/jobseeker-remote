@@ -251,7 +251,7 @@ const Job = ({
     updateUrl(queryParam, null)
   }
 
-  const handleApplyJob = (e, userCookie, selectedJob) => {
+  const handleApplyJob = (e, selectedJob) => {
     e.preventDefault()
 
     if (!userCookie) {
@@ -340,8 +340,11 @@ const Job = ({
                       <MaterialButton variant='contained' capitalize disabled>
                         <Text>Applied</Text>
                       </MaterialButton> : 
-                      <MaterialButton variant='contained' capitalize>
-                        <div onClick={(e) => handleApplyJob(e, userCookie, jobDetail)}>Apply Now</div>
+                      <MaterialButton 
+                        variant='contained' 
+                        capitalize
+                        onClick={(e) => handleApplyJob(e, jobDetail)}> 
+                        <Text>Apply Now</Text>
                       </MaterialButton>
                     }
                   </>

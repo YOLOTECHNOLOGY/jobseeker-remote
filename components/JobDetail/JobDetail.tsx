@@ -127,7 +127,7 @@ const JobDetail = ({
     return false
   }
 
-  const handleApplyJob = (e, userCookie, selectedJob) => {
+  const handleApplyJob = (e, selectedJob) => {
     e.preventDefault()
 
     if (!userCookie) {
@@ -200,10 +200,11 @@ const JobDetail = ({
                 {selectedJob?.status_key === 'active'  && !isCategoryApplied && (
                   <>
                     {!selectedJob?.is_applied ? 
-                        <MaterialButton variant='contained' capitalize>
-                          <div onClick={(e) => handleApplyJob(e, userCookie, selectedJob)}>
+                        <MaterialButton 
+                          variant='contained' 
+                          capitalize 
+                          onClick={(e) => handleApplyJob(e, selectedJob)}>
                             <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
-                          </div>
                         </MaterialButton>
                       : <MaterialButton variant='contained' capitalize disabled>
                           <Text textStyle='lg' textColor='white' bold>Applied</Text> 
