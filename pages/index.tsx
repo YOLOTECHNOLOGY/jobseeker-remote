@@ -160,7 +160,7 @@ const Home = (props: HomeProps) => {
       <div className={styles.quickLinks}>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search/?jobCategory=audit-taxation,banking-financial,corporate-finance-investment,sales-financial-services,general-cost-accounting`}
+          to={`${jobsPageLink}/job-search/?jobCategory=audit-taxation,banking-financial,corporate-finance-investment,sales-insurance-financial-services,general-cost-accounting`}
           title='Finance jobs'
           aTag
         >
@@ -170,7 +170,7 @@ const Home = (props: HomeProps) => {
         </Link>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search/?jobCategory=sales-corporate,sales-eng-tech-it,sales-financial-services,marketing-business-dev`}
+          to={`${jobsPageLink}/job-search/?jobCategory=sales-corporate,sales-engineering-technical-it,sales-insurance-financial-services,marketing-business-development`}
           title='Sales jobs'
           aTag
         >
@@ -180,7 +180,7 @@ const Home = (props: HomeProps) => {
         </Link>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search/?jobCategory=digital-marketing,marketing-business-dev,telesales-telemarketing`}
+          to={`${jobsPageLink}/job-search/?jobCategory=digital-marketing,marketing-business-development,telesales-telemarketing`}
           title='Marketing jobs'
           aTag
         >
@@ -195,7 +195,7 @@ const Home = (props: HomeProps) => {
         </Link>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search/?jobCategory=it-hardware,it-network-sys-db-admin,it-software-engineering,sales-eng-tech-it,tech-helpdesk-support`}
+          to={`${jobsPageLink}/job-search/?jobCategory=it-hardware,it-network-system-database-admin,it-software-engineering,sales-engineering-technical-it,technical-helpdesk-support,it-product-management`}
           title='IT jobs'
           aTag
         >
@@ -215,7 +215,7 @@ const Home = (props: HomeProps) => {
         </Link>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search/?jobCategory=customer-service-relations,tech-helpdesk-support`}
+          to={`${jobsPageLink}/job-search/?jobCategory=customer-service-relations,technical-helpdesk-support`}
           title='Customer Service jobs'
           aTag
         >

@@ -505,7 +505,7 @@ const Job = ({
                     <Text textStyle='lg'>&nbsp;{jobDetail?.recruiter.work_experience.job_title}</Text>
                   </div>
                   <div className={styles.JobDetailRecruiterContent}>
-                    <Text textStyle='lg' textColor='darkgrey'><Image src={RateIcon} height="14" width="15"/>{jobDetail?.recruiter.application_response_rate}% response rate, responds {jobDetail?.recruiter.application_response_time}</Text>
+                    <Text textStyle='lg' textColor='darkgrey'><Image src={RateIcon} height="14" width="15"/>{jobDetail?.recruiter.response_rate}% response rate, responds {jobDetail?.recruiter.response_time}</Text>
                     <Text textStyle='lg' textColor='darkgrey'><Image src={LocationPinIcon} height="14" width="15"/>Last active on {moment(jobDetail?.recruiter.last_active_at).format('MM/DD/YYYY')}</Text>
                   </div>
                 </div>
