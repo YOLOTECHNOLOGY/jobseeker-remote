@@ -611,7 +611,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           isShowFilter={isShowFilter}
           onResetFilter={handleResetFilter}
           onShowFilter={handleShowFilter}
-          sortOptions={sortOptions}
         />
       </div>
       {/* <div className={breakpointStyles.hideOnTabletAndDesktop}>
