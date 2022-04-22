@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 /* Vendors */
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
+import slugify from 'slugify'
 import {
   Timeline,
   TimelineItem,
@@ -25,6 +26,7 @@ import MaterialButton from 'components/MaterialButton'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Styles */
 import styles from './JobDetail.module.scss'
@@ -124,6 +126,18 @@ const JobDetail = ({
     }
     return false
   }
+
+  const handleApplyJob = (e) => {
+    e.preventDefault()
+
+    if (!userCookie) {
+      router.push('/login/jobseeker?redirect=jobs-hiring/job-search')
+    } else {
+      const applyJobUrl = selectedJob.external_apply_url ? selectedJob.external_apply_url : authPathToOldProject(null, `/dashboard/job/${slugify(selectedJob?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.id}/apply`)
+
+      router.push(applyJobUrl)
+    }
+  }
   
   return (
     <div className={styles.JobDetail}>
@@ -183,14 +197,19 @@ const JobDetail = ({
             <JobTag tag={selectedJob?.job_type_value} />
             <div className={styles.JobDetailButtonsWrapper}>
               <div className={styles.JobDetailButtons}>
-                {selectedJob?.status_key === 'active' && !isCategoryApplied && (
+                {selectedJob?.status_key === 'active'  && !isCategoryApplied && (
                   <>
-                    <MaterialButton variant='contained' capitalize>
-                      <Link to={selectedJob?.external_apply_url} external>
-                        <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
-                      </Link>
-                    </MaterialButton>
-
+                    {!selectedJob?.is_applied ? 
+                        <MaterialButton 
+                          variant='contained' 
+                          capitalize 
+                          onClick={(e) => handleApplyJob(e)}>
+                            <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
+                        </MaterialButton>
+                      : <MaterialButton variant='contained' capitalize disabled>
+                          <Text textStyle='lg' textColor='white' bold>Applied</Text> 
+                        </MaterialButton>
+                    }
                     <MaterialButton 
                       variant='outlined' 
                       capitalize 

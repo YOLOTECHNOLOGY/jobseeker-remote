@@ -8,7 +8,8 @@ function* fetchJobDetailReq(actions) {
   try {
     const payload = {
       jobId: actions.payload.jobId,
-      status: actions.payload.status || ''
+      status: actions.payload.status || '',
+      serverAccessToken: actions.payload.serverAccessToken || null,
     }
 
     const jobDetailResponse = yield call(fetchJobDetailService, {...payload})

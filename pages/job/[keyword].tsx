@@ -34,8 +34,10 @@ import ModalShare from 'components/ModalShare'
 import ModalReportJob from 'components/ModalReportJob'
 
 /* Helpers */
+import { getCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
 import { categoryParser, conditionChecker } from 'helpers/jobPayloadFormatter'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -89,6 +91,7 @@ const Job = ({
 }: IJobDetail) => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const userCookie = getCookie('user') || null
 
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
@@ -162,11 +165,6 @@ const Job = ({
 
   const isAppliedQueryParam = router.query.isApplied
   const hasApplied = isAppliedQueryParam === 'true' ? true : false
-
-  const handleApplyJob = (jobId) => {
-    // eslint-disable-next-line no-console
-    console.log(jobId)
-  }
 
   const handlePostSaveJob = ({ jobId, isSaved }) => {
     if (isSaved) return 
@@ -253,6 +251,18 @@ const Job = ({
     updateUrl(queryParam, null)
   }
 
+  const handleApplyJob = (e) => {
+    e.preventDefault()
+
+    if (!userCookie) {
+      router.push(`/login/jobseeker?redirect=/job/${slugify(jobDetail.job_title || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobDetail.id}`)
+    } else {
+      const applyJobUrl = jobDetail.external_apply_url ? jobDetail.external_apply_url : authPathToOldProject(null, `/dashboard/job/${slugify(jobDetail?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobDetail?.id}/apply`)
+
+      router.push(applyJobUrl)
+    }
+  }
+
   return (
     <Layout>
       <SEO title={jobDetail.job_title} description={jobDetail.job_description} />
@@ -326,11 +336,21 @@ const Job = ({
             {!isAppliedQueryParam && (
               <div className={styles.JobDetailPrimaryActions}>
                 {jobDetail?.status_key === 'active' && (
-                  <MaterialButton variant='contained' capitalize>
-                    <Link to={jobDetail?.external_apply_url || '/'} external>Apply Now</Link>
-                  </MaterialButton>
+                  <>
+                    {jobDetail?.is_applied ? 
+                      <MaterialButton variant='contained' capitalize disabled>
+                        <Text textColor='white' bold>Applied</Text>
+                      </MaterialButton> : 
+                      <MaterialButton 
+                        variant='contained' 
+                        capitalize
+                        onClick={(e) => handleApplyJob(e)}> 
+                        <Text textColor='white' bold>Apply Now</Text>  
+                      </MaterialButton>
+                    }
+                  </>
                 )}
-                {jobDetail?.status_key !== 'active' && (
+                {jobDetail?.status_key !== 'active' && ( 
                   <Text textStyle='base' className={styles.JobDetailStatus}>
                     <Image src={ExpireIcon} height="16" width="16"/>
                     <span>This job is no longer hiring</span>
@@ -567,7 +587,7 @@ const Job = ({
                     <Text textStyle='base' textColor='darkgrey'>{job.location_value}</Text>
                     <Text textStyle='base' tagName='p' textColor='darkgrey' className={styles.JobDetailSidebarCardSalary}>{job.salary_range_value}</Text>
                     {job.published_at && <Text textStyle='xsm' tagName='p'>Posted on {job.published_at}</Text> }
-                    <div className={styles.JobDetailSidebarCardApply} onClick={() => handleApplyJob(job.id)}>
+                    <Link to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`} className={styles.JobDetailSidebarCardApply}>
                       <Text 
                         textStyle='base' 
                         tagName='p' 
@@ -576,7 +596,7 @@ const Job = ({
                       >
                         Apply Now
                       </Text>
-                    </div>
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -644,18 +664,16 @@ const Job = ({
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-
   const { keyword, isApplied } = query
   const keywordQuery:any = keyword
   const jobId = keywordQuery?.split('-').pop()
-
+  
   if (jobId) {
     // store actions
     if (isApplied === 'true') {
       store.dispatch(fetchAppliedJobDetailRequest(jobId))
     } else {
-      // TODO: Check if User is LoggedIn then change status: 'protected'
-      store.dispatch(fetchJobDetailRequest({jobId, status: 'public'}))
+      store.dispatch(fetchJobDetailRequest({jobId, status: accessToken ? 'protected': 'public', serverAccessToken: accessToken}))
     }
   }
 
