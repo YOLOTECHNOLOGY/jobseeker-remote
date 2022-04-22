@@ -251,15 +251,15 @@ const Job = ({
     updateUrl(queryParam, null)
   }
 
-  const handleApplyJob = (e, selectedJob) => {
+  const handleApplyJob = (e) => {
     e.preventDefault()
 
     if (!userCookie) {
-      router.push('/login/jobseeker?redirect=jobs-hiring/job-search')
+      router.push(`/login/jobseeker?redirect=/job/${slugify(jobDetail.job_title || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobDetail.id}`)
     } else {
-      const applyJobUrl = selectedJob.external_apply_url ? selectedJob.external_apply_url : `/dashboard/job/${slugify(selectedJob?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.id}/apply`
-      
-      router.push(authPathToOldProject(null, applyJobUrl))
+      const applyJobUrl = jobDetail.external_apply_url ? jobDetail.external_apply_url : authPathToOldProject(null, `/dashboard/job/${slugify(jobDetail?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobDetail?.id}/apply`)
+
+      router.push(applyJobUrl)
     }
   }
 
@@ -339,13 +339,13 @@ const Job = ({
                   <>
                     {jobDetail?.is_applied ? 
                       <MaterialButton variant='contained' capitalize disabled>
-                        <Text>Applied</Text>
+                        <Text textColor='white' bold>Applied</Text>
                       </MaterialButton> : 
                       <MaterialButton 
                         variant='contained' 
                         capitalize
-                        onClick={(e) => handleApplyJob(e, jobDetail)}> 
-                        <Text>Apply Now</Text>
+                        onClick={(e) => handleApplyJob(e)}> 
+                        <Text textColor='white' bold>Apply Now</Text>  
                       </MaterialButton>
                     }
                   </>

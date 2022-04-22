@@ -127,7 +127,7 @@ const JobDetail = ({
     return false
   }
 
-  const handleApplyJob = (e, selectedJob) => {
+  const handleApplyJob = (e) => {
     e.preventDefault()
 
     if (!userCookie) {
@@ -203,7 +203,7 @@ const JobDetail = ({
                         <MaterialButton 
                           variant='contained' 
                           capitalize 
-                          onClick={(e) => handleApplyJob(e, selectedJob)}>
+                          onClick={(e) => handleApplyJob(e)}>
                             <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
                         </MaterialButton>
                       : <MaterialButton variant='contained' capitalize disabled>
