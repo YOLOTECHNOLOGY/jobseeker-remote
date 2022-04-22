@@ -759,7 +759,7 @@ const Home = (props: HomeProps) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   // store actions
   store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1}))

@@ -34,7 +34,6 @@ interface NavSearchFilterProps {
   onShowFilter: Function
   onResetFilter: Function
   displayQuickLinks: Boolean
-  sortOptions: object
 }
 
 interface SearchFilters {
@@ -58,7 +57,6 @@ const NavSearchFilter = ({
   onShowFilter,
   displayQuickLinks,
   onResetFilter,
-  sortOptions
 }: NavSearchFilterProps) => {
   const router = useRouter()
   const { keyword } = router.query
