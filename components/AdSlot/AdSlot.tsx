@@ -14,7 +14,7 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
 
   const ad = ads[adSlot]
 
-  if (process.env.ENV === 'production') {
+  if (process.env.ENV === 'development') {
     useAdSlot({
       mapping: ad.mapping ? ad.mapping : null,
       id: ad.id,
