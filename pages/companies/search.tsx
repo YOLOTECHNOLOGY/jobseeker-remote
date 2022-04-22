@@ -24,8 +24,11 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 // Styles
 import styles from './Companies.module.scss' 
 
-const Search = (props) => {
-  const { defaultQuery } = props
+interface SearchProps {
+  defaultQuery: string
+}
+
+const Search = ({ defaultQuery } : SearchProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { query, page, size } = router.query
@@ -119,7 +122,7 @@ const Search = (props) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
+export const getServerSideProps = wrapper.getServerSideProps(() => async ({ query }) => {
   return {
     props: {
       defaultQuery: query.query,

@@ -17,10 +17,6 @@ import { ImageList, ImageListItem } from '@mui/material'
 
 // Redux Actions
 import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
-import { fetchCompanySuggestionsRequest } from 'store/actions/companies/fetchCompanySuggestions'
-
-// Helpers
-import useDebounce from 'helpers/useDebounce' 
 
 // Styles
 import styles from './Companies.module.scss'
