@@ -19,7 +19,6 @@ function useAdSlot({ mapping, sizes, id, adUnit, isTransitioning }) {
       })
 
       googletag.pubads().collapseEmptyDivs()
-      googletag.enableServices()
 
       googletag.cmd.push(function () {
         googletag.display(`div-gpt-ad-${id}`)
