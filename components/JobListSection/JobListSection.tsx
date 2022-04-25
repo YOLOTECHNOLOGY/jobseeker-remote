@@ -169,13 +169,6 @@ const JobListSection = ({
     }
   }
 
-  const handleSalaryDisplay = (from: string, to: string) => {
-    if (from === 'Login to view salary' || to === 'Login to view salary') {
-      return from
-    }
-    return `${numberToThousands(from)}K - ${numberToThousands(to)}K`
-  }
-
   const handleFormatWindowUrl = (pathname, name, id) => {
     if (typeof window !== 'undefined') {
       return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${id}`
@@ -243,7 +236,7 @@ const JobListSection = ({
                   tag={job.job_type}
                   company={job.company_name}
                   location={job.job_location}
-                  salary={handleSalaryDisplay(job.salary_range_from, job.salary_range_to)}
+                  salary={job.salary_range_value}
                   postedAt={`${moment(new Date(job.updated_at)).format('DD MMMM YYYY')}`}
                   selectedId={selectedJobId}
                   handleSelectedId={() => {

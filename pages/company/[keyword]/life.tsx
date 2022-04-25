@@ -18,7 +18,7 @@ import styles from '../Company.module.scss'
 
 const CompanyLifeProfile = (props: any) => {
   const dispatch = useDispatch()
-  const { companyDetail } = props
+  const { companyDetail, accessToken } = props
   const company = companyDetail?.response.data
   const [totalJobs, setTotalJobs] = useState(null)
 
@@ -30,7 +30,7 @@ const CompanyLifeProfile = (props: any) => {
       size: 30
     }
 
-    dispatch(fetchJobsListRequest({...payload}))
+    dispatch(fetchJobsListRequest({...payload}, accessToken))
   }, [])
 
   useEffect(() => {
@@ -85,6 +85,8 @@ const CompanyLifeProfile = (props: any) => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+  const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
+
   const companyPageUrl = req.url.split('/')
   const companyPath = companyPageUrl.length === 4 ? companyPageUrl[2].split('-') : companyPageUrl[companyPageUrl.length - 1].split('-')
   const companyId = Number(companyPath[companyPath.length - 1])
@@ -98,7 +100,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   return {
     props: {
-      companyDetail
+      companyDetail,
+      accessToken
     }
   }
 })

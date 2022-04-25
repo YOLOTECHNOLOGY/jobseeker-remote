@@ -44,7 +44,7 @@ const CompanyDetail = (props: any) => {
   const { page } = router.query
   const [jobQuery, setJobQuery] = useState('')
 
-  const { companyDetail } = props
+  const { companyDetail, accessToken } = props
   const company = companyDetail?.response.data
   const [companyJobs, setCompanyJobs] = useState(null)
   const [totalJobs, setTotalJobs] = useState(null)
@@ -68,7 +68,7 @@ const CompanyDetail = (props: any) => {
       page: page ? Number(page) : 1
     }
 
-    dispatch(fetchJobsListRequest({...payload}))
+    dispatch(fetchJobsListRequest({...payload}, accessToken))
   }, [])
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const CompanyDetail = (props: any) => {
       page: page ? Number(page) : 1
     }
 
-    dispatch(fetchJobsListRequest({...payload}))
+    dispatch(fetchJobsListRequest({...payload}, accessToken))
   }, [router.query])
 
   const handlePaginationClick = (event, val) => {
@@ -103,7 +103,7 @@ const CompanyDetail = (props: any) => {
       jobLocation: jobLocation?.value || ''
     }
 
-    dispatch(fetchJobsListRequest({...payload}))
+    dispatch(fetchJobsListRequest({...payload}, accessToken))
   }
 
   const onLocationSearch = (_, value) => {
@@ -304,6 +304,8 @@ const CompanyDetail = (props: any) => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+  const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
+
   const companyPageUrl = req.url.split('/')
   const companyPath = companyPageUrl[companyPageUrl.length - 1].split('-')
   let companyId
@@ -322,7 +324,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   return {
     props: {
-      companyDetail
+      companyDetail,
+      accessToken
     }
   }
 })

@@ -46,7 +46,7 @@ function* fetchJobsListReq(action) {
       source: 'web',
     }
 
-    const response = yield call(fetchJobsListService, payload)
+    const response = yield call(fetchJobsListService, payload, action.accessToken)
 
     if (response.status === 200 || response.status === 201) {
       yield put(fetchJobsListSuccess(response.data))

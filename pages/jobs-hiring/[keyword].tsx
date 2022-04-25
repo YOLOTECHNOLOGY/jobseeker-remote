@@ -263,7 +263,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       sort: router.query?.sort,
       page: router.query?.page ? Number(router.query.page) : 1,
     }
-    dispatch(fetchJobsListRequest(payload))
+    dispatch(fetchJobsListRequest(payload, accessToken))
   }, [router.query])
 
   useEffect(() => {

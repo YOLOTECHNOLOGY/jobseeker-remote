@@ -32,7 +32,7 @@ const CompanyJobsProfile = (props: any) => {
   const router = useRouter()
   const { page } = router.query
   const dispatch = useDispatch()
-  const { companyDetail } = props
+  const { companyDetail, accessToken } = props
   const company = companyDetail?.response.data
   
   const [jobQuery, setJobQuery] = useState('')
@@ -54,7 +54,7 @@ const CompanyJobsProfile = (props: any) => {
       jobLocation: jobLocation?.value || ''
     }
 
-    dispatch(fetchJobsListRequest({...payload}))
+    dispatch(fetchJobsListRequest({...payload}, accessToken))
     scrollToTop()
   }, [router.query])
 
@@ -64,7 +64,7 @@ const CompanyJobsProfile = (props: any) => {
       size: 30,
     }
 
-    dispatch(fetchJobsListRequest({...payload}))
+    dispatch(fetchJobsListRequest({...payload}, accessToken))
   }, [])
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const CompanyJobsProfile = (props: any) => {
       jobLocation: jobLocation?.value || ''
     }
 
-    dispatch(fetchJobsListRequest({...payload}))
+    dispatch(fetchJobsListRequest({...payload}, accessToken))
   }
 
   const handlePaginationClick = (event, val) => {
@@ -150,7 +150,7 @@ const CompanyJobsProfile = (props: any) => {
                       id: companyJob.id,
                       title: companyJob.job_title,
                       location: companyJob.job_location,
-                      salary: `${companyJob.salary_range_from === "Login to view salary" ? companyJob.salary_range_from : formatSalaryRange(`${companyJob.salary_range_from}-${companyJob.salary_range_to}`)}`,
+                      salary: companyJob.salary_range_value,
                       availability: companyJob.job_type
                     }
 
@@ -171,6 +171,8 @@ const CompanyJobsProfile = (props: any) => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+  const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
+
   const companyPageUrl = req.url.split('/')
   const companyPath = companyPageUrl.length === 4 ? companyPageUrl[2].split('-') : companyPageUrl[companyPageUrl.length - 1].split('-')
   const companyId = Number(companyPath[companyPath.length - 1])
@@ -187,7 +189,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   return {
     props: {
       config,
-      companyDetail
+      companyDetail,
+      accessToken
     }
   }
 })

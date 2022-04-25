@@ -5,9 +5,10 @@ import {
   CLEAR_FETCH_JOBS_LIST,
 } from 'store/types/jobs/fetchJobsList'
 
-const fetchJobsListRequest = (payload) => ({
+const fetchJobsListRequest = (payload, accessToken=null) => ({
   type: FETCH_JOBS_LIST_REQUEST,
   payload,
+  accessToken
 })
 
 const fetchJobsListSuccess = (payload) => ({
