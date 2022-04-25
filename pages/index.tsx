@@ -309,7 +309,6 @@ const Home = (props: HomeProps) => {
               <Text tagName='h1' textStyle='xxxl' bold>
                 Top Companies
               </Text>
-              {width >= 799 ? (
                 <div className={styles.topCompaniesList}>
                   {topCompanies?.map((company, index) => {
                     if (index < 24) {
@@ -326,7 +325,6 @@ const Home = (props: HomeProps) => {
                     }
                   })}
                 </div>
-              ) : (
                 <div className={styles.topCompaniesListMobile}>
                   {topCompanies?.map((company, index) => {
                     if (index < 10) {
@@ -343,8 +341,6 @@ const Home = (props: HomeProps) => {
                     }
                   })}
                 </div>
-              )}
-
               <div className={styles.viewAllCompanies}>
                 <Link to='/' className={styles.viewAllCompaniesLink}>
                   <Text textStyle='lg' textColor='primaryBlue'>
