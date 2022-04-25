@@ -128,9 +128,17 @@
       height: 400px;
       overflow:hidden;
 
+      @include msd{
+        display:none;
+      }
+
       &Mobile {
         display: flex;
         flex-wrap: wrap;
+
+        @include md{
+          display:none;
+        }
       }
     }
 
