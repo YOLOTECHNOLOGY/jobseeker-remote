@@ -161,6 +161,19 @@
       }
     }
 
+    &LogoLoader {
+      width: 150px;
+      height: 60px;
+      box-sizing: content-box;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+    
+      @include msd {
+        width: 50%;
+      }
+    }
+
     .viewAllCompanies {
       display: flex;
       flex-direction: row;

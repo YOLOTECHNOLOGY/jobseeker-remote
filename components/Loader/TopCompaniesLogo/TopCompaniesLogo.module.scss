@@ -1,0 +1,12 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.topCompaniesLogo{
+    display:flex;
+    width:100%;
+    height:100%;
+
+    & * > {
+        display:flex !important;
+    }
+}

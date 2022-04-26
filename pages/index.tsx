@@ -20,6 +20,7 @@ import Text from 'components/Text'
 import Link from 'components/Link'
 import LazyLoad from 'components/LazyLoad'
 import AdSlot from 'components/AdSlot'
+import TopCompaniesLogoLoader from 'components/Loader/TopCompaniesLogo'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
@@ -71,6 +72,7 @@ const Home = (props: HomeProps) => {
   const [searchValue, setSearchValue] = useState('')
   const [locationValue, setLocationValue] = useState(null)
   const [suggestionList, setSuggestionList] = useState([])
+  const [showLogo, setShowLogo] = useState(false)
 
   const [activeFeature, updateActiveFeature] = useState(1)
   const [activeFeatureImg, updateActiveFeatureImg] = useState(1)
@@ -78,6 +80,12 @@ const Home = (props: HomeProps) => {
   const secondFeatureImgNode = useRef(null)
   const thirdFeatureImgNode = useRef(null)
   const fourthFeatureImgNode = useRef(null)
+
+  useEffect(()=>{
+    const timer = setTimeout(() => setShowLogo(true), 1500)
+    return () => clearTimeout(timer)
+  }, [])
+
   useEffect(() => {
     if (activeFeature !== activeFeatureImg) {
       updateActiveFeatureImg(activeFeature)
@@ -312,6 +320,13 @@ const Home = (props: HomeProps) => {
                 <div className={styles.topCompaniesList}>
                   {topCompanies?.map((company, index) => {
                     if (index < 24) {
+                      if (!showLogo){
+                        return (
+                          <div className={styles.topCompaniesLogoLoader}>
+                            <TopCompaniesLogoLoader />
+                          </div> 
+                        )
+                      }
                       return (
                         <Link
                           key={company.id}
@@ -328,6 +343,13 @@ const Home = (props: HomeProps) => {
                 <div className={styles.topCompaniesListMobile}>
                   {topCompanies?.map((company, index) => {
                     if (index < 10) {
+                      if (!showLogo) {
+                        return (
+                          <div className={styles.topCompaniesLogoLoader}>
+                            <TopCompaniesLogoLoader />
+                          </div>
+                        )
+                      }
                       return (
                         <Link
                           key={company.id}
