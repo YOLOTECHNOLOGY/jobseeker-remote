@@ -25,7 +25,6 @@ import ModalReportJob from 'components/ModalReportJob'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 
 /* Helpers */
-import { numberToThousands } from 'helpers/formatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Styles */

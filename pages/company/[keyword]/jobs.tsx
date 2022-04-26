@@ -21,9 +21,6 @@ import CompanyJobsCard from 'components/Company/CompanyJobsCard'
 import CompanyProfileLayout from 'components/Company/CompanyProfileLayout'
 import CompanyJobsCardLoader from 'components/Loader/CompanyJobsCard'
 
-// Helpers
-import { formatSalaryRange } from 'helpers/formatter'
-
 // Styles
 import styles from '../Company.module.scss'
 
