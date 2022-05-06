@@ -166,9 +166,10 @@ const renderPopularSearch = () => {
 }
 
 const JobSearchPage = (props: JobSearchPageProps) => {
-  const { accessToken, seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage, defaultValues, 
-    // predefinedQuery, predefinedLocation, predefinedCategory
-   } = props
+  const { accessToken, seoMetaTitle, seoMetaDescription, config, topCompanies, defaultValues, defaultPage
+  // predefinedQuery, predefinedLocation, predefinedCategory
+  } = props
+
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
@@ -214,6 +215,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     catList,
     locList
   )
+
+  const [selectedPage, setSelectedPage] = useState(defaultPage)
 
   // const cx = classNames.bind(styles)
   // const isStickyClass = cx({ isSticky: isSticky })
@@ -307,6 +310,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   )
 
   const updateUrl = (queryParam, queryObject) => {
+    queryObject['page'] = '1'
+    setSelectedPage(Number(queryObject['page']))
+
     router.push(
       {
         pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
@@ -482,7 +488,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       )
     }
   }
-
+  
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} />
@@ -634,7 +640,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       </div> */}
       <div style={{ display: 'block' }} className={styles.jobListSection}>
         <JobListSection
-          defaultPage={defaultPage}
+          page={selectedPage}
           jobList={jobListResponse?.data || null}
           isJobListFetching={isJobListFetching}
           isJobDetailFetching={isJobDetailFetching}
