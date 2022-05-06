@@ -240,6 +240,12 @@
     }
   }
 
+  &DescriptionSectionBody * ,
+  &RequirementSectionBody *{
+    font-size: 16px !important;
+    font-family: 'Product Sans' !important;
+  }
+
   &Benefits {
     &List {
       list-style-type: none;

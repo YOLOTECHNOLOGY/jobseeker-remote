@@ -16,6 +16,7 @@ import {
   TimelineContent,
   TimelineDot
 } from '@mui/lab'
+import classNamesCombined from 'classnames'
 
 /* Components */
 import Layout from 'components/Layout'
@@ -453,13 +454,13 @@ const Job = ({
             <Text textStyle='lg' tagName='h2' bold className={styles.JobDetailSectionTitle}>
               Job Description
             </Text>
-            <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: jobDetail?.job_description_html }} />
+            <div className={classNamesCombined([styles.JobDetailSectionBody, styles.JobDetailDescriptionSectionBody])} dangerouslySetInnerHTML={{ __html: jobDetail?.job_description_html }} />
           </div>
           <div className={styles.JobDetailSection}>
             <Text textStyle='lg' tagName='h2' bold className={styles.JobDetailSectionTitle}>
               Requirements
             </Text>
-            <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: jobDetail?.job_requirements_html }} />
+            <div className={classNamesCombined([styles.JobDetailSectionBody, styles.JobDetailRequirementSectionBody])} dangerouslySetInnerHTML={{ __html: jobDetail?.job_requirements_html }} />
           </div>
           <div className={styles.JobDetailSection}>
             <Text textStyle='lg' tagName='h2' bold className={styles.JobDetailSectionTitle}>

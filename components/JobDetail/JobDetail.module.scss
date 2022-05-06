@@ -329,3 +329,9 @@
     box-shadow: $primaryBlue;
   }
 }
+
+.JobDetailDescriptionSectionBody *,
+.JobDetailRequirementSectionBody * {
+  font-size: 16px !important;
+  font-family: 'Product Sans' !important;
+}
