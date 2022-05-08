@@ -86,7 +86,7 @@ const NavSearchFilter = ({
   const { register, handleSubmit, reset } = useForm()
   const cx = classNames.bind(styles)
   const isShowFilterClass = cx({ isShow: isShowFilter, displayQuickLinks: displayQuickLinks })
-  const [selectedCategories, setSelectedCategories] = useState([])
+  const [selectedCategories, setSelectedCategories] = useState(urlDefaultValues?.category)
   const [displayMobileSort, setDisplayMobileSort] = useState(false)
 
   useEffect(() => {
@@ -94,7 +94,6 @@ const NavSearchFilter = ({
       handleResetFilter()
     }
   }, [isOptionsReset])
-
   let defaultValues = {}
   const appendDefaultKeyValue = (fieldName, value) => {
     const data = {
