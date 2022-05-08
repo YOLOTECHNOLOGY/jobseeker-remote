@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
+
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
+
 // @ts-ignore
 import { END } from 'redux-saga'
+
 // import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 
@@ -23,9 +26,7 @@ import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsLi
 import { deleteJobAlertRequest } from 'store/actions/alerts/deleteJobAlert'
 import { updateJobAlertRequest } from 'store/actions/alerts/updateJobAlert'
 import { createJobAlertRequest } from 'store/actions/alerts/createJobAlert'
-
 import { postReportRequest } from 'store/actions/reports/postReport'
-
 import { postSaveJobRequest} from 'store/actions/jobs/postSaveJob'
 import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
 
@@ -89,11 +90,8 @@ type companyObject = {
 }
 
 const renderPopularSearch = () => {
-  // To refactor when authentication is handled
-  // const jobsPageLink = cookies.get('user')
-  //   ? '/dashboard/jobs-hiring'
-  //   : '/jobs-hiring'
   const jobsPageLink = '/jobs-hiring'
+
   return (
     <div className={styles.popularSearch}>
       <Link
@@ -175,7 +173,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const { width } = useWindowDimensions()
   const prevScrollY = useRef(0)
   const userCookie = getCookie('user') || null
-
   // const [isSticky, setIsSticky] = useState(false)
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlQuery, setUrlQuery] = useState(defaultValues?.urlQuery)
@@ -188,7 +185,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [createdJobAlert, setCreatedJobAlert] = useState(null)
   const [selectedJob, setSelectedJob] = useState(null)
   const [selectedJobId, setSelectedJobId] = useState(null)
-  const [searchValue, setSearchValue] = useState("")
+  const [searchValue, setSearchValue] = useState('')
   const { keyword, ...rest } = router.query
   const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
   const [hasMoreFilters, setHasMoreFilters] = useState(false)
@@ -234,8 +231,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       })
       setUrlLocation(matchedLocation[0])
     }
-
-    const routerCategories: any = router.query?.category
+    
+    const routerCategories: any = predefinedCategory ? predefinedCategory[0] : category
     let jobCategories: any = []
     
     if (routerCategories) {
@@ -327,12 +324,18 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
     const sortOption = val.length > 0 ? 2 : 1
-    let queryObject = {}
+    let queryObject = null
+    
+    queryObject = Object.assign({}, { ...rest, sort: sortOption})
+
+    if (predefinedCategory) {
+      queryObject['category'] = predefinedCategory.join(',')
+    }
+
+    const queryParam = conditionChecker(val, predefinedLocation, predefinedCategory)
 
     setSort(sortOption)
-
-    queryObject = Object.assign({}, { ...rest, sort:  sortOption})
-    const queryParam = conditionChecker(val, predefinedLocation, predefinedCategory)
+    setSearchValue(val)
 
     updateUrl(queryParam, queryObject)
   }
@@ -397,10 +400,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const handleResetFilter = () => {
-    const queryParam = ''
+    const queryParam = conditionChecker(predefinedQuery, null, null)
     const queryObject = null
 
     setUrlLocation([])
+    setSearchValue('')
     setIsOptionsReset(true)
 
     updateUrl(queryParam, queryObject)  
@@ -610,6 +614,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           isShowFilter={isShowFilter}
           onResetFilter={handleResetFilter}
           onShowFilter={handleShowFilter}
+          isOptionsReset={isOptionsReset}
         />
       </div>
       {/* <div className={breakpointStyles.hideOnTabletAndDesktop}>
@@ -684,9 +689,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   })
   const catList = config && config.inputs && config.inputs.job_category_lists
   const locList = getLocationList(config) 
-  const { predefinedQuery, predefinedLocation
-    // , predefinedCategory
-   } = getPredefinedParamsFromUrl(
+
+  const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
     query,
     catList,
     locList
@@ -706,20 +710,30 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   if (predefinedQuery) {
     defaultValues.urlQuery = predefinedQuery.toString()
   }
+
   if (predefinedLocation) {
     const matchedLocation = locList.filter((loc) => {
       return loc.value === predefinedLocation.toString()
     })
     defaultValues.urlLocation = matchedLocation[0]
   }
-  if (query && query.category){
+
+  if (predefinedCategory) {
+    defaultValues.category = predefinedCategory
+  }
+
+  if (query && (query.category || predefinedCategory)) {
     let urlCategory:any = query?.category
-    urlCategory = urlCategory.split(',')
+
+    urlCategory = predefinedCategory ? predefinedCategory : urlCategory.split(',')
+    
     const matchedCategory = catList.filter((cat) => {
       return urlCategory.includes(cat.key)
     })
+
     defaultValues.category = matchedCategory
   }
+
   return {
     props: {
       config,
