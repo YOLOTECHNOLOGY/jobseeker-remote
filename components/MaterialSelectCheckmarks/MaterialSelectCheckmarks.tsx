@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -28,7 +28,8 @@ interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLB
   onSelect?: any
   greyBg?: boolean
   fieldRef?: any,
-  error?: any
+  error?: any,
+  isOptionsReset?: boolean
 }
 
 interface OptionType {
@@ -46,9 +47,17 @@ const MaterialSelectCheckmarks = ({
   greyBg,
   defaultValue,
   fieldRef,
-  error
+  error,
+  isOptionsReset = false
 }: MaterialSelectCheckMarksProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(defaultValue || [])
+
+  useEffect(() => {
+    if (isOptionsReset) {
+      setSelectedOptions([])
+    }
+  }, [isOptionsReset])
+
   const handleChange = (event: SelectChangeEvent) => {
     const {
       target: { value },

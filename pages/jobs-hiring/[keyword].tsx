@@ -180,6 +180,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlQuery, setUrlQuery] = useState(defaultValues?.urlQuery)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.urlLocation)
+  const [isOptionsReset, setIsOptionsReset] = useState(false)
   const catList = config && config.inputs && config.inputs.job_category_lists
   const locList = getLocationList(config)
   const [jobAlertList, setJobAlertList] = useState(null)
@@ -222,11 +223,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     // eslint-disable-next-line no-console
     console.log('router query changed', router.query)
     const {industry, education, workExperience, category, jobtype, salary} = router.query
-    let isWithJobTypeAndSalary
-    if (width < 799) {
-      isWithJobTypeAndSalary = jobtype || salary
-    }
-    setHasMoreFilters(industry || education || workExperience || category || isWithJobTypeAndSalary ? true : false)
+    const isWithJobTypeAndSalary = jobtype || salary
 
     if (!firstRender) setDisplayQuickLinks(false)
     if (predefinedQuery) setUrlQuery(predefinedQuery.toString())
@@ -236,7 +233,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       })
       setUrlLocation(matchedLocation[0])
     }
-
 
     const routerCategories: any = router.query?.category
     let jobCategories: any = []
@@ -251,6 +247,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
     jobCategories = jobCategories.join(',')
 
+    setHasMoreFilters(industry || education || workExperience || category || predefinedLocation || isWithJobTypeAndSalary ? true : false)
+    
     const payload = {
       query: predefinedQuery ? predefinedQuery[0] : null,
       jobLocation: predefinedLocation ? predefinedLocation[0] : null,
@@ -264,6 +262,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       page: router.query?.page ? Number(router.query.page) : 1,
     }
     dispatch(fetchJobsListRequest(payload, accessToken))
+    setIsOptionsReset(false)
   }, [router.query])
 
   useEffect(() => {
@@ -389,25 +388,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const handleResetFilter = () => {
-    const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
-      router.query,
-      catList,
-      locList
-    )
-    const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
-    // exclude all filters in jobSearchFilters
-    let queryObject
-    if (width < 799) {
-    // eslint-disable-next-line
-      const { keyword, category, industry, qualification, education, workExperience, salary, jobtype, ...rest } = router.query
-      queryObject = Object.assign({}, { ...rest, sort: 1 })
-      updateUrl(queryParam, queryObject)
-      return
-    }
-    // eslint-disable-next-line
-    const { keyword, category, industry, qualification, education, workExperience, salary, jobtype, ...rest } = router.query
-    queryObject = Object.assign({}, { ...rest, sort: 1 })
-    updateUrl(queryParam, queryObject)
+    const queryParam = ''
+    const queryObject = null
+
+    setUrlLocation([])
+    setIsOptionsReset(true)
+
+    updateUrl(queryParam, queryObject)  
   }
 
   const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest({jobId, status: userCookie ? 'protected' : 'public'}))
@@ -515,8 +502,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           />
           <MaterialLocationField
             className={styles.locationField}
-            // defValue={defaultLocation}
-            defaultValue={urlLocation}
+            defaultValue={defaultValues?.urlLocation}
+            value={urlLocation}
             onChange={onLocationSearch}
           />
           <MaterialButton variant='contained' capitalize className={styles.searchButton} onClick={() => onKeywordSearch(searchValue)}>
@@ -544,6 +531,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             className={styles.sortField}
             onSelect={onJobTypeSelection}
             defaultValue={defaultValues?.jobType}
+            isOptionsReset={isOptionsReset}
           />
           <MaterialSelectCheckmarks
             id='salary'
@@ -552,6 +540,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             className={styles.sortField}
             onSelect={onSalarySelection}
             defaultValue={defaultValues?.salary}
+            isOptionsReset={isOptionsReset}
           />
           <MaterialButton
             variant='outlined'
