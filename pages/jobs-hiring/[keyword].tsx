@@ -180,6 +180,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlQuery, setUrlQuery] = useState(defaultValues?.urlQuery)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.urlLocation)
+  const [sort, setSort] = useState(defaultValues?.sort)
   const [isOptionsReset, setIsOptionsReset] = useState(false)
   const catList = config && config.inputs && config.inputs.job_category_lists
   const locList = getLocationList(config)
@@ -325,9 +326,14 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const onKeywordSearch = (val) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
+    const sortOption = val.length > 0 ? 2 : 1
     let queryObject = {}
-    queryObject = Object.assign({}, { ...rest, sort: val.length > 0 ? 2 : 1 })
+
+    setSort(sortOption)
+
+    queryObject = Object.assign({}, { ...rest, sort:  sortOption})
     const queryParam = conditionChecker(val, predefinedLocation, predefinedCategory)
+
     updateUrl(queryParam, queryObject)
   }
 
@@ -362,6 +368,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const { keyword, ...rest } = router.query
     const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
     const queryObject = Object.assign({}, { ...rest, sort: selectedOption })
+
+    setSort(selectedOption)
+
     updateUrl(queryParam, queryObject)
   }
 
@@ -522,6 +531,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             options={sortOptions}
             className={styles.sortField}
             onSelect={onSortSelection}
+            value={sort}
             defaultValue={defaultValues?.sort}
           />
           <MaterialSelectCheckmarks
