@@ -35,7 +35,7 @@ interface NavSearchFilterProps {
   onShowFilter: Function
   onResetFilter: Function
   displayQuickLinks: Boolean
-  isOptionsReset?: boolean
+  moreFilterReset?: boolean
 }
 
 interface SearchFilters {
@@ -60,7 +60,7 @@ const NavSearchFilter = ({
   onShowFilter,
   displayQuickLinks,
   onResetFilter,
-  isOptionsReset = false
+  moreFilterReset = false
 }: NavSearchFilterProps) => {
   const router = useRouter()
   const { keyword } = router.query
@@ -92,10 +92,10 @@ const NavSearchFilter = ({
   const [displayMobileSort, setDisplayMobileSort] = useState(false)
 
   useEffect(() => {
-    if (isOptionsReset) {
+    if (moreFilterReset) {
       handleResetFilter()
     }
-  }, [isOptionsReset])
+  }, [moreFilterReset])
 
   useEffect(() => {
     setSelectedCategories(categories)

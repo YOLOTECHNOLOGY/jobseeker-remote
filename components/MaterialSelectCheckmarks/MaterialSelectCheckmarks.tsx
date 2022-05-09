@@ -24,19 +24,18 @@ interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLB
   style?: React.CSSProperties
   className?: string
   label?: string | React.ReactNode
-  options?: Array<OptionType>
+  options: Array<OptionType>
+  value: any
   onSelect?: any
   greyBg?: boolean
-  fieldRef?: any,
-  error?: any,
-  isOptionsReset?: boolean
+  fieldRef?: any
+  error?: any
 }
 
 interface OptionType {
   value: any
   label: string | boolean
 }
-
 
 const MaterialSelectCheckmarks = ({
   id,
@@ -45,18 +44,15 @@ const MaterialSelectCheckmarks = ({
   className,
   onSelect,
   greyBg,
-  defaultValue,
+  value,
   fieldRef,
   error,
-  isOptionsReset = false
 }: MaterialSelectCheckMarksProps) => {
-  const [selectedOptions, setSelectedOptions] = useState<any>(defaultValue || [])
+  const [selectedOptions, setSelectedOptions] = useState<any>(value || [])
 
   useEffect(() => {
-    if (isOptionsReset) {
-      setSelectedOptions([])
-    }
-  }, [isOptionsReset])
+    setSelectedOptions(value)
+  }, [value])
 
   const handleChange = (event: SelectChangeEvent) => {
     const {
@@ -71,6 +67,7 @@ const MaterialSelectCheckmarks = ({
       onSelect(formattedValue)
     }
   }
+  
   const theme = createTheme({
     components: {
       MuiOutlinedInput: {
@@ -127,6 +124,7 @@ const MaterialSelectCheckmarks = ({
       },
     },
   })
+
   return (
     <ThemeProvider theme={theme}>
       <FormControl className={className} size='small'>
@@ -156,4 +154,5 @@ const MaterialSelectCheckmarks = ({
     </ThemeProvider>
   )
 }
+
 export default MaterialSelectCheckmarks
