@@ -164,9 +164,7 @@ const renderPopularSearch = () => {
 }
 
 const JobSearchPage = (props: JobSearchPageProps) => {
-  const { accessToken, seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage, defaultValues, 
-    // predefinedQuery, predefinedLocation, predefinedCategory
-   } = props
+  const { accessToken, seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage, defaultValues} = props
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
@@ -175,7 +173,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const userCookie = getCookie('user') || null
   // const [isSticky, setIsSticky] = useState(false)
   const [isShowFilter, setIsShowFilter] = useState(false)
-  const [urlQuery, setUrlQuery] = useState(defaultValues?.urlQuery)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.urlLocation)
   const [sort, setSort] = useState(defaultValues?.sort)
   const [isOptionsReset, setIsOptionsReset] = useState(false)
@@ -185,7 +182,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [createdJobAlert, setCreatedJobAlert] = useState(null)
   const [selectedJob, setSelectedJob] = useState(null)
   const [selectedJobId, setSelectedJobId] = useState(null)
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState(defaultValues?.urlQuery || '')
+  const [categories, setCategories] = useState(defaultValues?.category || [])
   const { keyword, ...rest } = router.query
   const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
   const [hasMoreFilters, setHasMoreFilters] = useState(false)
@@ -224,13 +222,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const isWithJobTypeAndSalary = jobtype || salary
 
     if (!firstRender) setDisplayQuickLinks(false)
-    if (predefinedQuery) setUrlQuery(predefinedQuery.toString())
-    if (predefinedLocation) {
-      const matchedLocation = locList.filter((loc) => {
-        return loc.value === predefinedLocation.toString()
-      })
-      setUrlLocation(matchedLocation[0])
-    }
     
     const routerCategories: any = predefinedCategory ? predefinedCategory[0] : category
     let jobCategories: any = []
@@ -248,8 +239,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setHasMoreFilters(industry || education || workExperience || category || predefinedLocation || isWithJobTypeAndSalary ? true : false)
     
     const payload = {
-      query: predefinedQuery ? predefinedQuery[0] : null,
-      jobLocation: predefinedLocation ? predefinedLocation[0] : null,
+      query: searchValue,
+      jobLocation: urlLocation?.value,
       jobCategories: jobCategories,
       salary: router.query?.salary,
       jobType: router.query?.jobtype,
@@ -259,7 +250,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       sort: router.query?.sort,
       page: router.query?.page ? Number(router.query.page) : 1,
     }
+
     dispatch(fetchJobsListRequest(payload, accessToken))
+
     setIsOptionsReset(false)
   }, [router.query])
 
@@ -324,18 +317,41 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
     const sortOption = val.length > 0 ? 2 : 1
-    let queryObject = null
     
+    const matchedLocation = locList.filter((loc) => {
+      return loc.value.toLowerCase() === searchValue.toLowerCase()
+    })
+    
+    let location = urlLocation
+    if (matchedLocation.length === 1) {
+      location = matchedLocation[0]
+      setUrlLocation(location)
+
+      val = ""
+      setSearchValue(val)
+    }
+
+    const matchedCategory = catList.filter((cat) => {
+      return cat.value.toLowerCase() === searchValue.toLowerCase()
+    })
+    
+    let category = categories
+    if (matchedCategory.length === 1) {
+      category = matchedCategory[0]
+      setCategories([category])
+
+      val = "" 
+      setSearchValue(val)
+    }
+
+    const queryParam = conditionChecker(val, location ? location?.key : null, category ? category?.key: null)
+
+    let queryObject = null
     queryObject = Object.assign({}, { ...rest, sort: sortOption})
 
     if (predefinedCategory) {
       queryObject['category'] = predefinedCategory.join(',')
-    }
-
-    const queryParam = conditionChecker(val, predefinedLocation, predefinedCategory)
-
-    setSort(sortOption)
-    setSearchValue(val)
+    } 
 
     updateUrl(queryParam, queryObject)
   }
@@ -356,12 +372,16 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const { keyword, ...rest } = router.query
     const queryObject = Object.assign({}, { ...rest })
     let queryParam = 'job-search'
+
     if (value) {
       const sanitisedLocValue = categoryParser(value.value)
       queryParam = conditionChecker(predefinedQuery, sanitisedLocValue, predefinedCategory)
     } else {
       queryParam = conditionChecker(predefinedQuery, null, predefinedCategory)
     }
+
+    setUrlLocation(value)
+
     updateUrl(queryParam, queryObject)
   }
 
@@ -499,7 +519,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             variant='outlined'
             size='small'
             className={styles.searchField}
-            defaultValue={urlQuery}
+            defaultValue={defaultValues?.urlQuery}
+            value={searchValue}
             searchFn={handleSuggestionSearch}
             updateSearchValue={setSearchValue}
             onSelect={(val) => {
@@ -610,6 +631,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         </div>
         <JobSearchFilters
           urlDefaultValues={defaultValues}
+          categories={categories}
           displayQuickLinks={displayQuickLinks}
           isShowFilter={isShowFilter}
           onResetFilter={handleResetFilter}
@@ -741,10 +763,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       key: keyword,
       defaultPage:page ? Number(page) : 1,
       defaultValues,
-      accessToken,
-      // predefinedQuery,
-      // predefinedLocation,
-      // predefinedCategory,
+      accessToken
     },
   }
 })

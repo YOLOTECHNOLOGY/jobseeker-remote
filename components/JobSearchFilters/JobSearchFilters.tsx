@@ -30,6 +30,7 @@ import { CloseIcon } from 'images'
 
 interface NavSearchFilterProps {
   urlDefaultValues: any
+  categories: any
   isShowFilter: boolean
   onShowFilter: Function
   onResetFilter: Function
@@ -54,6 +55,7 @@ type optionsType = {
 
 const NavSearchFilter = ({
   urlDefaultValues,
+  categories,
   isShowFilter,
   onShowFilter,
   displayQuickLinks,
@@ -86,7 +88,7 @@ const NavSearchFilter = ({
   const { register, handleSubmit, reset } = useForm()
   const cx = classNames.bind(styles)
   const isShowFilterClass = cx({ isShow: isShowFilter, displayQuickLinks: displayQuickLinks })
-  const [selectedCategories, setSelectedCategories] = useState(urlDefaultValues?.category)
+  const [selectedCategories, setSelectedCategories] = useState([])
   const [displayMobileSort, setDisplayMobileSort] = useState(false)
 
   useEffect(() => {
@@ -94,6 +96,11 @@ const NavSearchFilter = ({
       handleResetFilter()
     }
   }, [isOptionsReset])
+
+  useEffect(() => {
+    setSelectedCategories(categories)
+  }, [categories])
+
   let defaultValues = {}
   const appendDefaultKeyValue = (fieldName, value) => {
     const data = {
@@ -173,15 +180,15 @@ const NavSearchFilter = ({
     let queryParam = ''
     let queryObject = null
 
-    const categories = selectedCategories && selectedCategories.map((val) => val.key)
+    const categoryKeys = selectedCategories && selectedCategories.map((val) => val.key)
 
     // for mui specialization filter
     // When only one category is selected
     if (selectedCategories && selectedCategories.length === 1) {
-      queryParam = conditionChecker(predefinedQuery, predefinedLocation, selectedCategories[0].key)
+      queryParam = conditionChecker(predefinedQuery, predefinedLocation, selectedCategories[0]?.key)
       // When search keyword found, append cateogry in query object,
       // else use category as search keyword and remove category filter if found
-      queryObject = Object.assign({}, !predefinedQuery ? { ...onRemoveProperty('category', {...filterData}) } : {...filterData, ...{'category': categories.join()} })
+      queryObject = Object.assign({}, !predefinedQuery ? { ...onRemoveProperty('category', {...filterData}) } : {...filterData, ...{'category': categoryKeys.join()} })
     // When no category is selected
     } else if (selectedCategories && selectedCategories.length === 0) {
       queryParam = conditionChecker(predefinedQuery, predefinedLocation, null)
@@ -189,7 +196,7 @@ const NavSearchFilter = ({
     // When more than one category is selected
     } else {
       queryParam = conditionChecker(predefinedQuery, predefinedLocation, null)
-      categoryObject = Object.assign({}, { category: categories.join() })
+      categoryObject = Object.assign({}, { category: categoryKeys.join() })
       queryObject = Object.assign({}, { ...rest, ...filterData, ...categoryObject })
 
     }
