@@ -339,13 +339,13 @@ const JobDetail = ({
             <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
               Job Description
             </Text>
-            <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.job_description_html }} />
+            <div className={classNamesCombined([styles.JobDetailSectionBody, styles.JobDetailDescriptionSectionBody])} dangerouslySetInnerHTML={{ __html: selectedJob?.job_description_html }} />
           </div>
           <div className={styles.JobDetailSection}>
             <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
               Requirements
             </Text>
-            <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: selectedJob?.job_requirements_html }} />
+            <div className={classNamesCombined([styles.JobDetailSectionBody, styles.JobDetailRequirementSectionBody])} dangerouslySetInnerHTML={{ __html: selectedJob?.job_requirements_html }} />
           </div>
           <div className={styles.JobDetailSection}>
             <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
