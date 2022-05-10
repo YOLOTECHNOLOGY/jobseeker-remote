@@ -84,7 +84,8 @@ const Step1 = (props: any) => {
         setLocation(matchedLocation[0])
         setValue('location', matchedLocation[0])
       }
-      if (userDetail.job_preference?.salary_range_to) setSalaryTo(Number(userDetail.job_preference?.salary_range_to))
+      setSpecialization(userDetail?.job_preference?.job_categories)
+      if (userDetail?.job_preference?.salary_range_to) setSalaryTo(Number(userDetail?.job_preference?.salary_range_to))
     }
   }, [userDetail])
 
