@@ -190,12 +190,19 @@ const Step3 = (props: any) => {
   useEffect(() => {
     if (hasNoWorkExperience) {
       setIsDisabled(false)
-      handleCancelForm()
+
+      if (workExperience?.length === 0) {
+        setShowForm(false)
+        setIsEditing(false)
+      } else {
+        scrollToForm()
+      }
     } 
 
     if (!hasNoWorkExperience) {
       setIsDisabled(true)
-      handleShowForm()
+      setShowForm(true)
+      setIsEditing(false)
     }
   }, [hasNoWorkExperience])
 
@@ -441,7 +448,7 @@ const Step3 = (props: any) => {
                 label={requiredLabel('Company Name')}
                 size='small'
                 value={companyName}
-                defaultValue={companyName}
+                // defaultValue={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
               />
             </div>
@@ -584,8 +591,9 @@ const Step3 = (props: any) => {
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
-                label='Monthly Salary'
+                label='Monthly Salary (PHP)'
                 size='small'
+                type='number'
                 value={salary}
                 defaultValue={salary}
                 onChange={(e) => setSalary(e.target.value)}

@@ -150,12 +150,19 @@ const Step4 = (props: any) => {
   useEffect(() => {
     if (hasNoEducation) {
       setIsDisabled(false)
-      handleCancelForm()
+
+      if (educations?.length === 0) {
+        setShowForm(false)
+        setIsEditing(false)
+      } else {
+        scrollToForm()
+      }
     } 
 
     if (!hasNoEducation) {
       setIsDisabled(true)
-      handleShowForm()
+      setShowForm(!showForm)
+      setIsEditing(false)
     }
   }, [hasNoEducation])
 
