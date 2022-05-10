@@ -74,10 +74,10 @@ const Step3 = (props: any) => {
   const [country, setCountry] = useState('')
   const [isShowCountry, setIsShowCountry] = useState(false)
   const [isCurrentJob, setIsCurrentJob] = useState(false)
-  const [workPeriodFromMonth, setWorkPeriodFromMonth] = useState(new Date())
-  const [workPeriodFromYear, setWorkPeriodFromYear] = useState(new Date())
-  const [workPeriodToMonth, setWorkPeriodToMonth] = useState(new Date())
-  const [workPeriodToYear, setWorkPeriodToYear] = useState(new Date())
+  const [workPeriodFromMonth, setWorkPeriodFromMonth] = useState(null)
+  const [workPeriodFromYear, setWorkPeriodFromYear] = useState(null)
+  const [workPeriodToMonth, setWorkPeriodToMonth] = useState(null)
+  const [workPeriodToYear, setWorkPeriodToYear] = useState(null)
   const [jobFunction, setJobFunction] = useState([])
   const [industry, setIndustry] = useState('')
   const [salary, setSalary] = useState('')
@@ -160,8 +160,20 @@ const Step3 = (props: any) => {
   }, [showForm])
 
   useEffect(() => {
+    const periodFrom = `${moment(new Date(workPeriodFromYear)).format('yyyy')}-${moment(new Date(workPeriodFromMonth)).format('MM-DD')}`
+    const periodTo = `${moment(new Date(workPeriodToYear)).format('yyyy')}-${moment(new Date(workPeriodToMonth)).format('MM-DD')}`
+    
+    setHasErrorOnToPeriod(moment(periodFrom).isAfter(periodTo) ? true : false)
+  }, [
+    workPeriodFromMonth,
+    workPeriodFromYear,
+    workPeriodToMonth,
+    workPeriodToYear
+  ])
+
+  useEffect(() => {
     const requireFields = jobTitle && companyName && location
-    const emptyRequiredFields = !jobTitle && !companyName && !location
+    const emptyRequiredFields = !jobTitle && !companyName && !location && !workPeriodFromMonth && !workPeriodFromYear
     const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
     if (isCurrentJob) {
@@ -448,7 +460,7 @@ const Step3 = (props: any) => {
                 label={requiredLabel('Company Name')}
                 size='small'
                 value={companyName}
-                // defaultValue={companyName}
+                defaultValue={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
               />
             </div>
@@ -507,7 +519,6 @@ const Step3 = (props: any) => {
                     inputFormat="MMM"
                     value={workPeriodFromMonth}
                     onDateChange={(month) => {
-                      setHasErrorOnFromPeriod(moment(month).isAfter(new Date(), 'month') ? true : false)
                       setWorkPeriodFromMonth(month)
                     }}
                   />
@@ -520,9 +531,7 @@ const Step3 = (props: any) => {
                     inputFormat="yyyy"
                     value={workPeriodFromYear}
                     onDateChange={(year) => {
-                      setWorkPeriodFromMonth(year)
                       setWorkPeriodFromYear(year)
-                      setHasErrorOnFromPeriod(moment(year).isAfter(new Date(), 'month') ? true : false)
                     }}
                   />
                 </div>
@@ -543,21 +552,19 @@ const Step3 = (props: any) => {
                       inputFormat="MMM"
                       value={workPeriodToMonth}
                       onDateChange={(month) => {
-                        setHasErrorOnToPeriod(moment(month).isAfter(new Date(), 'month') ? true : false)
                         setWorkPeriodToMonth(month)
                       }}
                     />
                   </div>
                   <div className={styles.stepFieldDateItem}>
                     <MaterialDatePicker
+                      isYear
                       label="Year"
                       views={['year']}
                       inputFormat="yyyy"
                       value={workPeriodToYear}
                       onDateChange={(year) => {
-                        setWorkPeriodToMonth(year)
                         setWorkPeriodToYear(year)
-                        setHasErrorOnToPeriod(moment(year).isAfter(new Date(), 'month') ? true : false)
                       }}
                     />
                   </div>

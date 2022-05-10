@@ -66,10 +66,10 @@ const Step4 = (props: any) => {
   const [location, setLocation] = useState(null)
   const [country, setCountry] = useState('')
   const [isShowCountry, setIsShowCountry] = useState(false)
-  const [studyPeriodFromMonth, setStudyPeriodFromMonth] = useState(new Date())
-  const [studyPeriodFromYear, setStudyPeriodFromYear] = useState(new Date())
-  const [studyPeriodToMonth, setStudyPeriodToMonth] = useState(new Date())
-  const [studyPeriodToYear, setStudyPeriodToYear] = useState(new Date())
+  const [studyPeriodFromMonth, setStudyPeriodFromMonth] = useState(null)
+  const [studyPeriodFromYear, setStudyPeriodFromYear] = useState(null)
+  const [studyPeriodToMonth, setStudyPeriodToMonth] = useState(null)
+  const [studyPeriodToYear, setStudyPeriodToYear] = useState(null)
   const [fieldStudy, setFieldStudy] = useState('')
   const [isCurrentStudying, setIsCurrentStudying] = useState(false)
   const [hasNoEducation, setHasNoEducation] = useState(false)
@@ -107,6 +107,18 @@ const Step4 = (props: any) => {
       setIsDisabled(userEducations.length > 0 ? false : true)
     }
   }, [userEducations])
+
+  useEffect(() => {
+    const periodFrom = `${moment(new Date(studyPeriodFromMonth)).format('yyyy')}-${moment(new Date(studyPeriodFromYear)).format('MM-DD')}`
+    const periodTo = `${moment(new Date(studyPeriodToMonth)).format('yyyy')}-${moment(new Date(studyPeriodToYear)).format('MM-DD')}`
+    
+    setHasErrorOnToPeriod(moment(periodFrom).isAfter(periodTo) ? true : false)
+  }, [
+    studyPeriodFromMonth,
+    studyPeriodFromYear,
+    studyPeriodToMonth,
+    studyPeriodToYear
+  ])
 
   useEffect(() => {
     const requireFields = school && degree && location
@@ -398,21 +410,19 @@ const Step4 = (props: any) => {
                   inputFormat="MMM"
                   value={studyPeriodFromMonth}
                   onDateChange={(month) => {
-                    setHasErrorOnFromPeriod(moment(month).isAfter(new Date(), 'month') ? true : false)
                     setStudyPeriodFromMonth(month)
                   }}
                 />
               </div>
               <div className={styles.stepFieldDateItem}>
                 <MaterialDatePicker
+                  isYear
                   label="Year"
                   views={['year']}
                   inputFormat="yyyy"
                   value={studyPeriodFromYear}
                   onDateChange={(year) => {
-                    setStudyPeriodFromMonth(year)
                     setStudyPeriodFromYear(year)
-                    setHasErrorOnFromPeriod(moment(year).isAfter(new Date(), 'month') ? true : false)
                   }}
                 />
               </div>
@@ -434,21 +444,19 @@ const Step4 = (props: any) => {
                     inputFormat="MMM"
                     value={studyPeriodToMonth}
                     onDateChange={(month) => {
-                      setHasErrorOnToPeriod(moment(month).isAfter(new Date(), 'month') ? true : false)
                       setStudyPeriodToMonth(month)
                     }}
                   />
                 </div>
                 <div className={styles.stepFieldDateItem}>
                   <MaterialDatePicker
+                    isYear
                     label="Year"
                     views={['year']}
                     inputFormat="yyyy"
                     value={studyPeriodToYear}
                     onDateChange={(year) => {
                       setStudyPeriodToYear(year)
-                      setStudyPeriodToMonth(year)
-                      setHasErrorOnToPeriod(moment(year).isAfter(new Date(), 'month') ? true : false)
                     }}
                   />
                 </div>
