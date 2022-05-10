@@ -8,6 +8,7 @@ type MaterialTextFieldWithSuggestionListProps = {
   children?: React.ReactNode
   style?: React.CSSProperties
   defaultValue?: string
+  value?: string
   className?: string
   label?: string
   size?: 'small' | 'medium'
@@ -56,6 +57,7 @@ const MaterialTextFieldWithSuggestionList = ({
   color,
   className,
   defaultValue,
+  value,
   options,
   onSelect,
   searchFn,
@@ -63,7 +65,6 @@ const MaterialTextFieldWithSuggestionList = ({
   refs,
   ...rest
 }: MaterialTextFieldWithSuggestionListProps) => {
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     updateSearchValue(event.target.value)
     searchFn(event.target.value)
@@ -83,6 +84,7 @@ const MaterialTextFieldWithSuggestionList = ({
           }
         }}
         defaultValue={defaultValue}
+        value={value}
         renderInput={(params) => (
           <MaterialTextField
             {...refs}

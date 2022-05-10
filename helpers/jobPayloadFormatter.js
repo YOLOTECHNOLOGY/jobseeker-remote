@@ -211,9 +211,8 @@ const appendGeneralQueryPattern = () => {
   return 'job-search'
 }
 
-const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFilters) => {
+const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFilters=false) => {
   let queryParam = ''
-  const filteredData = []
   // eslint-disable-next-line
   // query && !location && !category
   if (
@@ -248,7 +247,6 @@ const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFil
     queryType && !sanitisedLocValue &&jobCategory 
   ) {
     queryParam = appendSingleQueryPattern(queryType)
-    // filteredData.push({ key: 'jobCategory', data: category })
   }
 
   // !query && 1 location && 1 category
@@ -267,41 +265,6 @@ const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFil
     jobCategory 
   ) {
     queryParam = appendDoubleQueryPattern(queryType, sanitisedLocValue)
-    filteredData.push({ key: 'jobCategory', data: jobCategory })
-  }
-
-  // query && (multiple location || multiple category || other filters)
-  if (
-    queryType && sanitisedLocValue && 
-    ((jobCategory && jobCategory.length > 1))
-  ) {
-    if (sanitisedLocValue) {
-      // E.g: dev-jobs-in-makati
-      queryParam = appendDoubleQueryPattern(queryType, sanitisedLocValue)
-    }
-    if (jobCategory && jobCategory.length > 1) {
-      // E.g: dev-jobs?jobLocation=1,2,3&jobCategory=1
-      filteredData.push({ key: 'jobCategory', data: jobCategory })
-    } else if (jobCategory && jobCategory.length === 1) {
-      filteredData.push({ key: 'jobCategory', data: jobCategory })
-      queryParam = appendSingleQueryPattern(queryType)
-    }
-  }
-
-  // !query && (multiple location || multiple category || other filters)
-  if (
-    !queryType &&
-    (jobCategory && jobCategory.length > 1)
-  ) {
-    if (sanitisedLocValue) {
-      queryParam = appendSingleQueryPattern(sanitisedLocValue)
-    }
-    if (jobCategory && jobCategory.length > 1 && sanitisedLocValue) {
-      filteredData.push({ key: 'jobCategory', data: jobCategory })
-      queryParam = appendGeneralQueryPattern()
-    } else if (jobCategory && jobCategory.length === 1 && !sanitisedLocValue) {
-      queryParam = appendSingleQueryPattern(jobCategory)
-    }
   }
 
   // If clearAllFilters is true, only extract searchQuery
@@ -331,7 +294,7 @@ const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFil
   if (!queryType && !sanitisedLocValue && !jobCategory) {
     queryParam = ''
   }
-
+  
   return slugify(queryParam).toLowerCase()
 }
 

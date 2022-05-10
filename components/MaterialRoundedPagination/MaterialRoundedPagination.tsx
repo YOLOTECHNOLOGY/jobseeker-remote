@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack'
 
 interface MaterialRoundedPaginationProps {
   onChange: (event: React.ChangeEvent<HTMLSelectElement>, val?: any) => void
-  defaultPage: number
+  defaultPage?: number
   spacing?: number | undefined
   totalPages: number
   page?: number

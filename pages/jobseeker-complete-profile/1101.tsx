@@ -572,7 +572,6 @@ const Step3 = (props: any) => {
                 label={'Job Functions'}
                 name='jobCategory'
                 value={jobFunction}
-                defaultValue={jobFunction}
                 onSelect={(e) => setJobFunction(e)}
                 options={jobCategoryList}
               />
