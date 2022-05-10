@@ -281,7 +281,6 @@ const Step1 = (props: any) => {
             })}}
             label={requiredLabel('I’m looking for jobs in these specializations')}
             value={specialization}
-            defaultValue={specialization}
             onSelect={(e) => {
               setSpecialization(e)
               setHasSelectedSpecMore(e.length > 3 ? true : false)

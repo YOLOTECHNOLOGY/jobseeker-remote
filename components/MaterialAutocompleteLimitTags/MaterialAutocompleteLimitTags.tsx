@@ -13,6 +13,7 @@ interface MaterialAutoCompleteLimitTagsProps {
   className?: string
   defaultValue?: any
   onChange: Function
+  value?: any
 }
 
 type OptionType = {
