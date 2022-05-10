@@ -208,6 +208,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     locList
   )
 
+  const [selectedPage, setSelectedPage] = useState(defaultPage)
+
   // const cx = classNames.bind(styles)
   // const isStickyClass = cx({ isSticky: isSticky })
 
@@ -292,6 +294,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   )
 
   const updateUrl = (queryParam, queryObject) => {
+    queryObject['page'] = '1'
+    setSelectedPage(Number(queryObject['page']))
+
     router.push(
       {
         pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
@@ -516,7 +521,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       )
     }
   }
-
+  
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} />
@@ -672,7 +677,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       </div> */}
       <div style={{ display: 'block' }} className={styles.jobListSection}>
         <JobListSection
-          defaultPage={defaultPage}
+          page={selectedPage}
           jobList={jobListResponse?.data || null}
           isJobListFetching={isJobListFetching}
           isJobDetailFetching={isJobDetailFetching}

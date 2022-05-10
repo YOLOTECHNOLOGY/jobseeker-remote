@@ -34,7 +34,7 @@ import styles from './JobListSection.module.scss'
 import { BellIcon } from 'images'
 
 interface JobListSectionProps {
-  defaultPage: number
+  page: number
   jobList?: any
   query?: string
   jobAlertsList?: any
@@ -63,7 +63,7 @@ interface JobListSectionProps {
 }
 
 const JobListSection = ({ 
-  defaultPage,
+  page,
   jobList,
   query,
   fetchJobAlertsList,
@@ -101,6 +101,7 @@ const JobListSection = ({
   const [isShowModalManageJobAlerts, setIsShowModalManageJobAlerts] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
+  const [selectedPage, setSelectedPage] = useState(page)
 
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
@@ -111,6 +112,10 @@ const JobListSection = ({
 
     return () => window.removeEventListener('scroll', updateScrollPosition)
   }, [])
+
+  useEffect(() => {
+    setSelectedPage(Number(router.query.page))
+  }, [router.query.page])
 
   const handlePaginationClick = (event, val) => {
     router.query.page = val
@@ -245,7 +250,7 @@ const JobListSection = ({
               ))}
             </div>
             <div className={styles.paginationWrapper}>
-              <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={defaultPage} totalPages={totalPages} />
+              <MaterialRoundedPagination onChange={handlePaginationClick} page={selectedPage} totalPages={totalPages} />
             </div>
           </div>
           <div className={styles.jobDetailInfoSection}>
