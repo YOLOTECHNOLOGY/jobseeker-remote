@@ -26,6 +26,7 @@ const Step2 = (props: any) => {
 
   const [resumeName, setResumeName] = useState(null)
   const [resume, setResume] = useState(null)
+  const [isDisabled, setIsDisabled] = useState(userDetail.resume ? false : true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [isCreatingResume, setIsCreatingResume] = useState(false)
   const [isDoneUpdating, setIsDoneUpdating] = useState(false)
@@ -57,14 +58,19 @@ const Step2 = (props: any) => {
         accessToken
       }
       dispatch(uploadUserResumeRequest(payload))
+
+      setIsDisabled(false)
     }
   }, [resume])
-
+  
   return (
     <OnBoardLayout
       headingText={<Text bold textStyle='xxxl' tagName='h2'>Add your resume 📄</Text>}
       currentStep={currentStep}
       totalStep={4}
+      nextFnBtn={() => router.push(redirect)}
+      backFnBtn={() => router.push('/jobseeker-complete-profile/1')}
+      isDisabled={isDisabled}
     >
       <div className={styles.stepForm}>
         <Text className={styles.step2Caption} textStyle='xl'>
