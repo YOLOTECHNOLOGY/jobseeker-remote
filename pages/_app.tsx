@@ -24,11 +24,11 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       {/* Google AdSense */}
-      <Script
+      {/* <Script
         data-ad-client='ca-pub-4245733463545444'
         async
         src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
-      ></Script>
+      ></Script> */}
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script
         strategy='afterInteractive'
