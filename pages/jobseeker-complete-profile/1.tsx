@@ -50,11 +50,11 @@ const Step1 = (props: any) => {
   const salaryFromOptions = getSalaryOptions(config)
   
   const [contactNumber, setContactNumber] = useState(userDetail?.phone_num)
-  const [location, setLocation] = useState(null)
+  const [location, setLocation] = useState([])
   const [country, setCountry] = useState('')
   const [isShowCountry, setIsShowCountry] = useState(false)
   const [noticePeriod, setNoticePeriod] = useState(userDetail?.notice_period_id)
-  const [specialization, setSpecialization] = useState(userDetail?.job_preference?.job_categories || '')
+  const [specialization, setSpecialization] = useState(userDetail.job_preference?.job_categories || [])
   const [headhuntMe, setHeadhuntMe] = useState(true)
 
   const [salaryFrom, setSalaryFrom] = useState(Number(userDetail?.job_preference?.salary_range_from) || salaryFromOptions?.[0].value)
@@ -151,12 +151,12 @@ const Step1 = (props: any) => {
         job_category_ids: getJobCategoryIds(config, _specialization).join(','),
         salary_range_from: Number(salaryFrom),
         salary_range_to: Number(salaryTo),
-        location_key: location?.key || ''
+        location_key: (location as any)?.key || ''
       },
       profile: {
         phone_num: contactNumber,
         country_key: country || '',
-        location_key: location?.key || '',
+        location_key: (location as any)?.key || '',
         notice_period_id: noticePeriod,
       },
       accessToken,
