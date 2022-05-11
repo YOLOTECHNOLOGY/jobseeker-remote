@@ -318,6 +318,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const { keyword, ...rest } = router.query
     const sortOption = val.length > 0 ? 2 : 1
     
+    setSort(sortOption)
+
     // Check if the search value matched with the reserved location keyword
     const matchedLocation = locList.filter((loc) => {
       return loc.value.toLowerCase() === searchValue.toLowerCase()
@@ -543,11 +545,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             searchFn={handleSuggestionSearch}
             updateSearchValue={setSearchValue}
             onSelect={(val) => {
+              setSearchValue(val)
               onKeywordSearch(val)
             }}
             onKeyPress={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()
+                setSearchValue((e.target as HTMLInputElement).value)
                 onKeywordSearch((e.target as HTMLInputElement).value)
               }
             }}
