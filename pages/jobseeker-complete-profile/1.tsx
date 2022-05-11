@@ -54,7 +54,7 @@ const Step1 = (props: any) => {
   const [country, setCountry] = useState('')
   const [isShowCountry, setIsShowCountry] = useState(false)
   const [noticePeriod, setNoticePeriod] = useState(userDetail?.notice_period_id)
-  const [specialization, setSpecialization] = useState(userDetail.job_preference?.job_categories || [])
+  const [specialization, setSpecialization] = useState(userDetail?.job_preference?.job_categories || [])
   const [headhuntMe, setHeadhuntMe] = useState(true)
 
   const [salaryFrom, setSalaryFrom] = useState(Number(userDetail?.job_preference?.salary_range_from) || salaryFromOptions?.[0].value)
@@ -84,7 +84,8 @@ const Step1 = (props: any) => {
         setLocation(matchedLocation[0])
         setValue('location', matchedLocation[0])
       }
-      if (userDetail.job_preference?.salary_range_to) setSalaryTo(Number(userDetail.job_preference?.salary_range_to))
+      setSpecialization(userDetail?.job_preference?.job_categories)
+      if (userDetail?.job_preference?.salary_range_to) setSalaryTo(Number(userDetail?.job_preference?.salary_range_to))
     }
   }, [userDetail])
 
