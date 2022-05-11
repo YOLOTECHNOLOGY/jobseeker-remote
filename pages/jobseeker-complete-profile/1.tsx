@@ -62,7 +62,7 @@ const Step1 = (props: any) => {
   const [specialization, setSpecialization] = useState(userDetail?.job_preference?.job_categories || [])
   const [headhuntMe, setHeadhuntMe] = useState(true)
 
-  const [salaryFrom, setSalaryFrom] = useState(Number(userDetail?.job_preference?.salary_range_from) || salaryFromOptions?.[0].value)
+  const [salaryFrom, setSalaryFrom] = useState(Number(userDetail?.job_preference?.salary_range_from) || null)
   const [salaryTo, setSalaryTo] = useState(null)
   const [salaryToOptions, setSalaryToOptions] = useState([])
   const [hasSelectedSpecMore, setHasSelectedSpecMore] = useState(false)
@@ -118,7 +118,7 @@ const Step1 = (props: any) => {
 
   const getSalaryToOptions = (salaryFrom) => {
     const salaryOptions = getSalaryOptions(config, salaryFrom, true)
-    setSalaryTo(salaryOptions[0].value)
+    setSalaryTo(salaryOptions.length > 0 ? salaryOptions[0].value : null)
     setSalaryToOptions(salaryOptions)
   }
 
