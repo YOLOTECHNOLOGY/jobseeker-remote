@@ -27,10 +27,10 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
     })
   }
 
-  useEffect(() => {
-    // @ts-ignore
-    ;(window.adsbygoogle = window.adsbygoogle || []).push({})
-  }, [])
+  // useEffect(() => {
+  //   // @ts-ignore
+  //   ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+  // }, [])
   
 
   return <div id={`div-gpt-ad-${ad.id}`} />
