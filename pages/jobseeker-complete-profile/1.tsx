@@ -84,7 +84,7 @@ const Step1 = (props: any) => {
         setLocation(matchedLocation[0])
         setValue('location', matchedLocation[0])
       }
-      
+
       if (userDetail?.job_preference?.salary_range_to) setSalaryTo(Number(userDetail?.job_preference?.salary_range_to))
     }
   }, [userDetail])
@@ -173,7 +173,7 @@ const Step1 = (props: any) => {
       totalStep={4}
       nextFnBtn={handleSubmit(handleUpdateProfile)}
       isUpdating={isUpdatingUserProfile}
-      isDisabled={isDisabled}
+      isNextDisabled={isDisabled}
     >
       <div className={styles.stepForm}>
         <div className={styles.step1Contact}>

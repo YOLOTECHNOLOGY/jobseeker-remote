@@ -70,7 +70,7 @@ const Step2 = (props: any) => {
       totalStep={4}
       nextFnBtn={() => router.push(redirect)}
       backFnBtn={() => router.push('/jobseeker-complete-profile/1')}
-      isDisabled={isDisabled}
+      isNextDisabled={isDisabled}
     >
       <div className={styles.stepForm}>
         <Text className={styles.step2Caption} textStyle='xl'>

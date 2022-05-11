@@ -5,11 +5,30 @@
   margin-top: 20px;
 
   &Actions {
+    @media (max-width: 768px) {
+      display: flex;
+    }
+
     margin-top: 30px;
+
+    &leftBtn {
+      margin-right: 15px;
+    }
 
     button {
       width: 100px;
-      margin-right: 15px;
+    }
+    
+    @media (max-width: 768px) {
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &Actions {
+      display: flex;
     }
   }
 
