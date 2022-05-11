@@ -1,3 +1,5 @@
+Node version: 14.17.0
+
 ## Tech
 - Nextjs (v11), React (v17)
 - Typescript

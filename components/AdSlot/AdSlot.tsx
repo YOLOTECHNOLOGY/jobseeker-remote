@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // import React, { memo } from 'react'
 
 import useAdSlot from 'helpers/useAdSlot'
@@ -26,6 +26,12 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
       isTransitioning,
     })
   }
+
+  useEffect(() => {
+    // @ts-ignore
+    ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+  }, [])
+  
 
   // return <div id={`div-gpt-ad-${ad.id}`} />
   return (
