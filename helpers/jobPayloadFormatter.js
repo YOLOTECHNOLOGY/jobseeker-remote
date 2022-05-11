@@ -324,7 +324,7 @@ const getSmsCountryList = (config) => {
   const countryList = config?.inputs?.country_lists
   countryList.forEach((country) => {
     if (country.is_sms_allowed) {
-      country["label"] = country["code"]
+      country["label"] = country["code"] + ' (' + country["value"] + ')' 
       smsCountryList.push(country)
     }
   })
