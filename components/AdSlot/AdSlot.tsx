@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-// import React, { memo } from 'react'
+import React from 'react'
+// import React, { memo, useEffect } from 'react'
 
 import useAdSlot from 'helpers/useAdSlot'
 import useTransitionState from 'helpers/useTransitionState'
@@ -27,23 +27,23 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
     })
   }
 
-  useEffect(() => {
-    // @ts-ignore
-    ;(window.adsbygoogle = window.adsbygoogle || []).push({})
-  }, [])
+  // useEffect(() => {
+  //   // @ts-ignore
+  //   ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+  // }, [])
   
 
-  // return <div id={`div-gpt-ad-${ad.id}`} />
-  return (
-    <ins
-      className='adsbygoogle'
-      style={{ display: 'block' }}
-      data-ad-client='ca-pub-4245733463545444'
-      data-ad-slot={ad.id}
-      data-ad-format='auto'
-      data-full-width-responsive='true'
-    />
-  )
+  return <div id={`div-gpt-ad-${ad.id}`} />
+  // return (
+  //   <ins
+  //     className='adsbygoogle'
+  //     style={{ display: 'block' }}
+  //     data-ad-client='ca-pub-4245733463545444'
+  //     data-ad-slot={ad.id}
+  //     data-ad-format='auto'
+  //     data-full-width-responsive='true'
+  //   />
+  // )
 }
 
 export default AdSlot
