@@ -431,7 +431,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   const handleResetFilter = () => {
     const queryParam = conditionChecker(predefinedQuery, null, null)
-    const queryObject = null
+    const queryObject = []
 
     setUrlLocation([])
     setJobTypes([])
