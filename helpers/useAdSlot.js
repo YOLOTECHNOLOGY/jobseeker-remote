@@ -3,9 +3,6 @@ import { useEffect } from 'react'
 function useAdSlot({ mapping, sizes, id, adUnit, isTransitioning }) {
   useEffect(() => {
     try {
-      // @ts-ignore
-      ;(window.adsbygoogle = window.adsbygoogle || []).push({})
-      
       if (!isTransitioning && typeof window !== undefined) {
         const { googletag } = window
         googletag.cmd.push(function () {
