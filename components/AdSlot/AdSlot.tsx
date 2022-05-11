@@ -33,17 +33,17 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
   }, [])
   
 
-  // return <div id={`div-gpt-ad-${ad.id}`} />
-  return (
-    <ins
-      className='adsbygoogle'
-      style={{ display: 'block' }}
-      data-ad-client='ca-pub-4245733463545444'
-      data-ad-slot={ad.id}
-      data-ad-format='auto'
-      data-full-width-responsive='true'
-    />
-  )
+  return <div id={`div-gpt-ad-${ad.id}`} />
+  // return (
+  //   <ins
+  //     className='adsbygoogle'
+  //     style={{ display: 'block' }}
+  //     data-ad-client='ca-pub-4245733463545444'
+  //     data-ad-slot={ad.id}
+  //     data-ad-format='auto'
+  //     data-full-width-responsive='true'
+  //   />
+  // )
 }
 
 export default AdSlot
