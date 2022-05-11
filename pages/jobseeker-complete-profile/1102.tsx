@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
@@ -18,6 +18,7 @@ import { generateUserResumeRequest } from 'store/actions/users/generateUserResum
 import Switch from '@mui/material/Switch';
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Divider from '@mui/material/Divider';
 
 import Text from 'components/Text'
 import OnBoardLayout from 'components/OnBoardLayout'
@@ -529,27 +530,33 @@ const Step4 = (props: any) => {
       )}
 
       {showForm && (
-        <div className={styles.stepFormActions}>
-          <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={handleCancelForm}>
-            <Text textColor='primaryBlue'>Cancel</Text>
-          </MaterialButton>
+        <React.Fragment>
+          <Divider style={{ marginTop: '20px', marginBottom: '20px'}}/>
+          <div className={styles.stepFormActions}>
+            <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={handleCancelForm}>
+              <Text textColor='primaryBlue'>Cancel</Text>
+            </MaterialButton>
 
-          <MaterialButton disabled={isSaveDisabled} variant='contained' capitalize onClick={() => handleSaveForm()} isLoading={isUpdating}>
-            <Text textColor='white'>Save</Text>
-          </MaterialButton>
-        </div>
+            <MaterialButton disabled={isSaveDisabled} variant='contained' capitalize onClick={() => handleSaveForm()} isLoading={isUpdating}>
+              <Text textColor='white'>Save</Text>
+            </MaterialButton>
+          </div>
+        </React.Fragment>
       )}
 
       {!showForm && isMobile &&  (
-        <div className={styles.stepFormActions}>
-          <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={() => router.push(backBtnUrl)}>
-            <Text textColor='primaryBlue'>Back</Text>
-          </MaterialButton>
+        <React.Fragment>
+          <Divider style={{ marginTop: '20px', marginBottom: '20px'}}/>
+          <div className={styles.stepFormActions}>
+            <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={() => router.push(backBtnUrl)}>
+              <Text textColor='primaryBlue'>Back</Text>
+            </MaterialButton>
 
-          <MaterialButton variant='contained' disabled={isNextDisabled} capitalize onClick={() => handleNextBtn()} isLoading={isUpdating}>
-            <Text textColor='white'>Next</Text>
-          </MaterialButton>
-        </div>
+            <MaterialButton variant='contained' disabled={isNextDisabled} capitalize onClick={() => handleNextBtn()} isLoading={isUpdating}>
+              <Text textColor='white'>Next</Text>
+            </MaterialButton>
+          </div>
+        </React.Fragment>
       )}
     </OnBoardLayout>
   )

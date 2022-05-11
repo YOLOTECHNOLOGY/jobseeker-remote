@@ -2,14 +2,10 @@
 @import 'styles/mixins.scss';
 
 .stepForm {
-  margin-top: 20px;
-
   &Actions {
     @media (max-width: 768px) {
       display: flex;
     }
-
-    margin-top: 30px;
 
     &leftBtn {
       margin-right: 15px;
@@ -207,6 +203,12 @@
   }
 
   &Upload {
+    @media (max-width: 768px) {
+      label {
+        width: 100%;
+      }
+    }
+
     margin-top: 20px;
     text-align: center;
 
@@ -231,6 +233,12 @@
 
   &Create {
     text-align: center;
+
+    @media (max-width: 768px) {
+      button {
+        width: 100%;
+      }
+    }
   }
 
   &UploadInput {

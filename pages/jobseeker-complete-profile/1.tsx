@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -21,6 +21,8 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
+import MaterialButton from 'components/MaterialButton'
+import Divider from '@mui/material/Divider';
 
 /* Helpers*/
 import {
@@ -32,6 +34,7 @@ import {
   getCountryList,
   getLocationList
 } from 'helpers/jobPayloadFormatter'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Styles
 import styles from './Onboard.module.scss'
@@ -41,6 +44,8 @@ const Step1 = (props: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
 
   const locList = getLocationList(config)
   const countryList = getCountryList(config)
@@ -171,6 +176,7 @@ const Step1 = (props: any) => {
       headingText={<Text bold textStyle='xxxl' tagName='h2'>Let’s get you a job! 🎉👏 <br/> Tell us about yourself.</Text>}
       currentStep={currentStep}
       totalStep={4}
+      isMobile={isMobile}
       nextFnBtn={handleSubmit(handleUpdateProfile)}
       isUpdating={isUpdatingUserProfile}
       isNextDisabled={isDisabled}
@@ -350,6 +356,21 @@ const Step1 = (props: any) => {
           />
         </div>
       </div>
+      {isMobile &&  (
+        <React.Fragment>
+        <Divider style={{ marginTop: '20px', marginBottom: '20px'}}/>
+          <div className={styles.stepFormActions}>
+            <MaterialButton variant='contained' 
+              isLoading={isUpdatingUserProfile} 
+              disabled={isDisabled} 
+              capitalize 
+              onClick={handleSubmit(handleUpdateProfile)}
+            >
+              <Text textColor='white'>Next</Text>
+            </MaterialButton>
+          </div>
+        </React.Fragment>
+      )}
     </OnBoardLayout>
   )
 }

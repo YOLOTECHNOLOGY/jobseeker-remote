@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 // @ts-ignore
@@ -13,6 +13,10 @@ import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
 import Text from 'components/Text'
 import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialButton from 'components/MaterialButton'
+import Divider from '@mui/material/Divider';
+
+/* Helpers */
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Styles
 import styles from './Onboard.module.scss'
@@ -23,6 +27,8 @@ const Step2 = (props: any) => {
   const dispatch = useDispatch()
   const { userDetail, accessToken } = props
   const redirect = router.query?.redirect ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}` : '/jobseeker-complete-profile/1101'
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
 
   const [resumeName, setResumeName] = useState(null)
   const [resume, setResume] = useState(null)
@@ -68,6 +74,7 @@ const Step2 = (props: any) => {
       headingText={<Text bold textStyle='xxxl' tagName='h2'>Add your resume 📄</Text>}
       currentStep={currentStep}
       totalStep={4}
+      isMobile={isMobile}
       nextFnBtn={() => router.push(redirect)}
       backFnBtn={() => router.push('/jobseeker-complete-profile/1')}
       isNextDisabled={isDisabled}
@@ -108,6 +115,20 @@ const Step2 = (props: any) => {
           </MaterialButton>
         </div>
       </div>
+      {isMobile &&  (
+        <React.Fragment>
+          <Divider style={{ marginTop: '20px', marginBottom: '20px'}}/>
+          <div className={styles.stepFormActions}>
+            <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={() => router.push('/jobseeker-complete-profile/1')}>
+              <Text textColor='primaryBlue'>Back</Text>
+            </MaterialButton>
+
+            <MaterialButton variant='contained' disabled={isDisabled} capitalize onClick={() => router.push(redirect)}>
+              <Text textColor='white'>Next</Text>
+            </MaterialButton>
+          </div>
+        </React.Fragment>
+      )}
     </OnBoardLayout>
   )
 }
