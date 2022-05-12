@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
@@ -163,7 +163,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
   const { width } = useWindowDimensions()
-  const prevScrollY = useRef(0)
   const userCookie = getCookie('user') || null
   // const [isSticky, setIsSticky] = useState(false)
   const [isShowFilter, setIsShowFilter] = useState(false)
@@ -252,11 +251,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
     setMoreFilterReset(false)
   }, [router.query])
-
-  useEffect(() => {
-    window.addEventListener('scroll', updateScrollPosition)
-    return () => window.removeEventListener('scroll', updateScrollPosition)
-  }, [])
 
   useEffect(() => {
     if (jobAlertListResponse) setJobAlertList(jobAlertListResponse)
@@ -512,18 +506,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     dispatch(deleteSaveJobRequest(deleteJobPayload))
   }
 
-  const updateScrollPosition = () => {
-    if (width > 798) {
-      prevScrollY.current = window.pageYOffset
-      // setIsSticky(prevScrollY.current > 70 ? true : false)
-      setDisplayQuickLinks(
-        prevScrollY.current > 77
-          ? false
-          : keyword === 'job-search' && Object.entries(rest).length === 0
-      )
-    }
-  }
-  
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} />
