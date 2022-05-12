@@ -212,8 +212,8 @@ const Step4 = (props: any) => {
     setEducationId(education.id)
     setSchool(education.school)
     setDegree(degreeList.filter((degree) => degree.label === education.degree)[0].value)
-    setLocation(getLocation(education.location)[0])
-    if (education.location.toLowerCase() === 'overseas') {
+    setLocation(education.location ? getLocation(education.location)[0] : null)
+    if (education.location && education.location.toLowerCase() === 'overseas') {
       setCountry(countryList.filter((country) => country.key === education.country_key)[0].value)
       setIsShowCountry(true)
     }
@@ -334,11 +334,11 @@ const Step4 = (props: any) => {
           {educations.map((education) => (
             <div className={styles.stepDataItem} key={education.id}>
               <div className={styles.stepDataInfo}>
-                <Text bold textStyle='base' tagName='p'>{education.school}</Text>
-                <Text textStyle='base' tagName='p'>{education.degree}</Text>
-                <Text textStyle='base' tagName='p'>{moment(education.working_period_from).format("MMMM yyyy")} to {education.is_currently_studying ? 'Present' : education.working_period_to}</Text>
-                <Text textStyle='base' tagName='p'>{education.location} - {getLocation(education?.location)?.[0].region}</Text>
-                <Text textStyle='base' tagName='p'>{education.field_of_study}</Text>
+                <Text bold textStyle='base' tagName='p'>{education?.school}</Text>
+                <Text textStyle='base' tagName='p'>{education?.degree}</Text>
+                <Text textStyle='base' tagName='p'>{moment(education?.working_period_from).format("MMMM yyyy")} to {education?.is_currently_studying ? 'Present' : education.working_period_to}</Text>
+                <Text textStyle='base' tagName='p'>{education?.location} - {getLocation(education?.location)?.[0].region_display_name}</Text>
+                <Text textStyle='base' tagName='p'>{education?.field_of_study}</Text>
               </div>
               <div className={styles.stepDataActions}>
                 <div 
@@ -531,7 +531,8 @@ const Step4 = (props: any) => {
 
       {showForm && (
         <React.Fragment>
-          <Divider style={{ marginTop: '20px', marginBottom: '20px'}}/>
+          <Divider className={styles.divider} />
+
           <div className={styles.stepFormActions}>
             <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={handleCancelForm}>
               <Text textColor='primaryBlue'>Cancel</Text>

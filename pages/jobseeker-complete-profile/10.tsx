@@ -117,7 +117,8 @@ const Step2 = (props: any) => {
       </div>
       {isMobile &&  (
         <React.Fragment>
-          <Divider style={{ marginTop: '20px', marginBottom: '20px'}}/>
+          <Divider className={styles.divider} />
+          
           <div className={styles.stepFormActions}>
             <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={() => router.push('/jobseeker-complete-profile/1')}>
               <Text textColor='primaryBlue'>Back</Text>

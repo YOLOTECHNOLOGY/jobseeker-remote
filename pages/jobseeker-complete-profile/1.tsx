@@ -358,7 +358,8 @@ const Step1 = (props: any) => {
       </div>
       {isMobile &&  (
         <React.Fragment>
-        <Divider style={{ marginTop: '20px', marginBottom: '20px'}}/>
+        <Divider className={styles.divider} />
+        
           <div className={styles.stepFormActions}>
             <MaterialButton variant='contained' 
               isLoading={isUpdatingUserProfile} 

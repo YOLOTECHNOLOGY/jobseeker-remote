@@ -126,7 +126,7 @@ const Step3 = (props: any) => {
       setWorkExperienceId(selectedExperience.id)
       setJobTitle(selectedExperience.job_title)
       setCompanyName(selectedExperience.company)
-      setLocation(getLocation(selectedExperience.location)[0])
+      setLocation(selectedExperience.location ? getLocation(selectedExperience.location)[0] : null)
       setIsCurrentJob(selectedExperience.is_currently_work_here)
       setWorkPeriodFromMonth(selectedExperience.working_period_from)
       setWorkPeriodFromYear(selectedExperience.working_period_from)
@@ -134,7 +134,7 @@ const Step3 = (props: any) => {
       setWorkPeriodToYear(selectedExperience.working_period_to)
       setSalary(selectedExperience.salary)
       if (selectedExperience.company_industry) setIndustry(industryList.filter((industry) => industry.label === selectedExperience.company_industry)[0].value)
-      if (selectedExperience.location.toLowerCase() === 'overseas') {
+      if (selectedExperience.location && selectedExperience.location.toLowerCase() === 'overseas') {
         setCountry(countryList.filter((country) => country.key === selectedExperience.country_key)[0].value)
         setIsShowCountry(true)
       }
@@ -398,14 +398,14 @@ const Step3 = (props: any) => {
           {workExperience.map((experience) => (
             <div className={styles.stepDataItem} key={experience.id}>
               <div className={styles.stepDataInfo}>
-                <Text bold textStyle='base' tagName='p'>{experience.job_title}</Text>
-                <Text textStyle='base' tagName='p'>{experience.company}</Text>
-                <Text textStyle='base' tagName='p'>{experience.location} - {getLocation(experience.location)[0].region}</Text>
-                <Text textStyle='base' tagName='p'>{moment(experience.working_period_from).format("MMMM yyyy")} to {experience.is_currently_work_here ? 'Present' : moment(experience.working_period_to).format("MMMM yyyy")}</Text>
-                {experience?.job_categories.length > 0 && <Text textStyle='base' tagName='p'>{experience.job_categories.join(', ')}</Text>}
-                {experience.company_industry && <Text textStyle='base' tagName='p'>{experience.company_industry}</Text>}
-                {experience.salary && <Text textStyle='base' tagName='p'>{formatSalary(experience.salary)} per month</Text>}
-                {experience.description && displayDescription(experience.description) && (
+                <Text bold textStyle='base' tagName='p'>{experience?.job_title}</Text>
+                <Text textStyle='base' tagName='p'>{experience?.company}</Text>
+                <Text textStyle='base' tagName='p'>{experience?.location} - {getLocation(experience?.location)?.[0].region_display_name}</Text>
+                <Text textStyle='base' tagName='p'>{moment(experience?.working_period_from).format("MMMM yyyy")} to {experience?.is_currently_work_here ? 'Present' : moment(experience.working_period_to).format("MMMM yyyy")}</Text>
+                {experience?.job_categories.length > 0 && <Text textStyle='base' tagName='p'>{experience?.job_categories.join(', ')}</Text>}
+                {experience?.company_industry && <Text textStyle='base' tagName='p'>{experience?.company_industry}</Text>}
+                {experience?.salary && <Text textStyle='base' tagName='p'>{formatSalary(experience?.salary)} per month</Text>}
+                {experience?.description && displayDescription(experience?.description) && (
                   <>
                     <Text textStyle='base' tagName='p'>Description: </Text>
                     <div className={styles.stepDataDescription} dangerouslySetInnerHTML={{__html: displayDescription(experience.description)}} />
@@ -657,7 +657,8 @@ const Step3 = (props: any) => {
 
       {!showForm && isMobile &&  (
         <React.Fragment>
-          <Divider style={{ marginTop: '20px', marginBottom: '20px'}}/>
+          <Divider className={styles.divider} />
+          
           <div className={styles.stepFormActions}>
             <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={() => router.push(backBtnUrl)}>
               <Text textColor='primaryBlue'>Back</Text>
