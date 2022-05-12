@@ -32,7 +32,10 @@ const ResumeTemplate = () => {
   const [scrollSnaps, setScrollSnaps] = useState([])
 
   const [firstName, setFirstName] = useState('')
+  const [firstNameError, setFirstNameError] = useState(null)
   const [lastName, setLastName] = useState('')
+  const [lastNameError, setLastNameError] = useState(null)
+
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState(null)
 
@@ -75,7 +78,11 @@ const ResumeTemplate = () => {
   useEffect(() => {
     if (registerJobseekerState.error) {
       if (registerJobseekerState.error['email']) {
-        setEmailError(registerJobseekerState.error['email'][0])
+        if (registerJobseekerState.error['email'] == 'The email has already been taken.') {
+          setEmailError(<p>A user with this email address already exists. Please enter a different email address or <a href='/login/jobseeker' style={{ color: '#2379ea', textDecoration: 'underline' }}>log in</a>.</p>)
+        } else {
+          setEmailError(registerJobseekerState.error['email'])
+        }
       }
     }
   }, [registerJobseekerState])
@@ -89,7 +96,19 @@ const ResumeTemplate = () => {
     else if (!/\S+@\S+\.\S+/.test(email)) setEmailError('Email address is invalid.')
     else setEmailError(null)
 
-    if (!emailError) {
+    if (!firstName) {
+      setFirstNameError('First name is required.')
+    } else {
+      setFirstNameError(null)
+    }
+
+    if (!lastName) {
+      setLastNameError('Last name is required.')
+    } else {
+      setLastNameError(null)
+    }
+
+    if (email && firstName && lastName) {
       const payload = {
         email,
         first_name: firstName,
@@ -115,23 +134,31 @@ const ResumeTemplate = () => {
               <Text textStyle='xxxl' bold className={styles.formHeader}>Free resume template</Text>
               <Text textStyle='xl' className={styles.formSubHeader}>Create and download resume in a minute.</Text>
               <div className={styles.fullWidth}>
-                <MaterialTextField
-                  value={firstName}
-                  defaultValue={firstName}
-                  label='First name'
-                  size='small'
-                  className={styles.halfWidth}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-                <MaterialTextField
-                  value={lastName}
-                  defaultValue={lastName}
-                  label='Last name'
-                  size='small'
-                  className={styles.halfWidth}
-                  onChange={(e) => setLastName(e.target.value)}
-                />  
+                <div style={{ marginRight: '15px'}}>
+                  <MaterialTextField
+                    value={firstName}
+                    defaultValue={firstName}
+                    label='First name'
+                    size='small'
+                    className={styles.halfWidth}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                  {firstNameError && errorText(firstNameError)}
+                </div>
+
+                <div>
+                  <MaterialTextField
+                    value={lastName}
+                    defaultValue={lastName}
+                    label='Last name'
+                    size='small'
+                    className={styles.halfWidth}
+                    onChange={(e) => setLastName(e.target.value)}
+                  /> 
+                  {lastNameError && errorText(lastNameError)}
+                </div>
               </div>
+              
               <MaterialTextField
                 id='email'
                 label='Email address'
