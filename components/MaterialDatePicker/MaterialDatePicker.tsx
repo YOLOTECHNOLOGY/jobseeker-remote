@@ -69,7 +69,7 @@ const MaterialDatePicker = ({
           value={value}
           onChange={(date) => onDateChange(date)}
           renderInput={(params) => <TextField error={true} aria-readonly {...params} helperText={null} />}
-          maxDate={ isYear ? new Date() : null}
+          maxDate={ new Date() }
         />
       </LocalizationProvider>
     </ThemeProvider>
