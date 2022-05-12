@@ -78,10 +78,8 @@ const Step3 = (props: any) => {
   const [country, setCountry] = useState('')
   const [isShowCountry, setIsShowCountry] = useState(false)
   const [isCurrentJob, setIsCurrentJob] = useState(false)
-  const [workPeriodFromMonth, setWorkPeriodFromMonth] = useState(null)
-  const [workPeriodFromYear, setWorkPeriodFromYear] = useState(null)
-  const [workPeriodToMonth, setWorkPeriodToMonth] = useState(null)
-  const [workPeriodToYear, setWorkPeriodToYear] = useState(null)
+  const [workPeriodFrom, setWorkPeriodFrom] = useState(null)
+  const [workPeriodTo, setWorkPeriodTo] = useState(null)
   const [jobFunction, setJobFunction] = useState([])
   const [industry, setIndustry] = useState('')
   const [salary, setSalary] = useState('')
@@ -128,10 +126,8 @@ const Step3 = (props: any) => {
       setCompanyName(selectedExperience.company)
       setLocation(selectedExperience.location ? getLocation(selectedExperience.location)[0] : null)
       setIsCurrentJob(selectedExperience.is_currently_work_here)
-      setWorkPeriodFromMonth(selectedExperience.working_period_from)
-      setWorkPeriodFromYear(selectedExperience.working_period_from)
-      setWorkPeriodToMonth(selectedExperience.working_period_to)
-      setWorkPeriodToYear(selectedExperience.working_period_to)
+      setWorkPeriodFrom(selectedExperience.working_period_from)
+      setWorkPeriodTo(selectedExperience.working_period_to)
       setSalary(selectedExperience.salary)
       if (selectedExperience.company_industry) setIndustry(industryList.filter((industry) => industry.label === selectedExperience.company_industry)[0].value)
       if (selectedExperience.location && selectedExperience.location.toLowerCase() === 'overseas') {
@@ -154,20 +150,18 @@ const Step3 = (props: any) => {
   }, [showForm])
 
   useEffect(() => {
-    const periodFrom = `${moment(new Date(workPeriodFromYear)).format('yyyy')}-${moment(new Date(workPeriodFromMonth)).format('MM-DD')}`
-    const periodTo = `${moment(new Date(workPeriodToYear)).format('yyyy')}-${moment(new Date(workPeriodToMonth)).format('MM-DD')}`
-    
+    const periodFrom = moment(new Date(workPeriodFrom))
+    const periodTo = moment(new Date(workPeriodTo))
+
     setHasErrorOnToPeriod(moment(periodFrom).isAfter(periodTo) ? true : false)
   }, [
-    workPeriodFromMonth,
-    workPeriodFromYear,
-    workPeriodToMonth,
-    workPeriodToYear
+    workPeriodFrom,
+    workPeriodTo
   ])
 
   useEffect(() => {
-    const requireFields = jobTitle && companyName && location && workPeriodFromMonth && workPeriodFromYear
-    const emptyRequiredFields = !jobTitle && !companyName && !location && !workPeriodFromMonth && !workPeriodFromYear
+    const requireFields = jobTitle && companyName && location && workPeriodFrom
+    const emptyRequiredFields = !jobTitle && !companyName && !location && !workPeriodFrom
     const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
     if (isCurrentJob) {
@@ -184,10 +178,8 @@ const Step3 = (props: any) => {
     companyName, 
     location, 
     isCurrentJob, 
-    workPeriodFromMonth,
-    workPeriodFromYear,
-    workPeriodToMonth,
-    workPeriodToYear,
+    workPeriodFrom,
+    workPeriodTo,
     hasErrorOnFromPeriod,
     hasErrorOnToPeriod
   ])
@@ -278,10 +270,8 @@ const Step3 = (props: any) => {
     setCompanyName('')
     setLocation('')
     setIsCurrentJob(false)
-    setWorkPeriodFromMonth(null)
-    setWorkPeriodFromYear(null)
-    setWorkPeriodToMonth(null)
-    setWorkPeriodToYear(null)
+    setWorkPeriodFrom(null)
+    setWorkPeriodTo(null)
     setSalary('')
     setIndustry('')
     setCountry('')
@@ -325,9 +315,9 @@ const Step3 = (props: any) => {
       is_currently_work_here: isCurrentJob,
       job_category_ids: jobFunction?.length > 0 ? getJobCategoryIds(config, jobFunction).join(',') : '',
       salary: Number(salary),
-      working_period_from: `${moment(new Date(workPeriodFromYear)).format('yyyy')}-${moment(new Date(workPeriodFromMonth)).format('MM-DD')}`,
-      working_period_to: isCurrentJob ? null : `${moment(new Date(workPeriodToYear)).format('yyyy')}-${moment(new Date(workPeriodToMonth)).format('MM-DD')}`,
-      description: `${description ? description : ''}`,
+      working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
+      working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
+      description: description ? description : '',
       location_key: location?.key || ''
     }
 
@@ -341,6 +331,7 @@ const Step3 = (props: any) => {
     }
     dispatch(updateUserCompleteProfileRequest(workExperiencesPayload))
 
+    handleResetForm()
     setShowForm(false)
   }
 
@@ -510,24 +501,12 @@ const Step3 = (props: any) => {
               <div className={classNames(styles.stepFieldBody, styles.stepFieldDate)}>
                 <div className={styles.stepFieldDateItem}>
                   <MaterialDatePicker
-                    label="Month"
-                    views={['month']}
-                    inputFormat="MMM"
-                    value={workPeriodFromMonth}
-                    onDateChange={(month) => {
-                      setWorkPeriodFromMonth(month)
-                    }}
-                  />
-                </div>
-                <div className={styles.stepFieldDateItem}>
-                  <MaterialDatePicker
-                    isYear
-                    label="Year"
-                    views={['year']}
-                    inputFormat="yyyy"
-                    value={workPeriodFromYear}
-                    onDateChange={(year) => {
-                      setWorkPeriodFromYear(year)
+                    label="Month Year"
+                    views={['year', 'month']}
+                    inputFormat="MMM yyyy"
+                    value={workPeriodFrom}
+                    onDateChange={(value) => {
+                      setWorkPeriodFrom(value)
                     }}
                   />
                 </div>
@@ -543,24 +522,12 @@ const Step3 = (props: any) => {
                 <div className={classNames(styles.stepFieldBody, styles.stepFieldDate)}>
                   <div className={styles.stepFieldDateItem}>
                     <MaterialDatePicker
-                      label="Month"
-                      views={['month']}
-                      inputFormat="MMM"
-                      value={workPeriodToMonth}
-                      onDateChange={(month) => {
-                        setWorkPeriodToMonth(month)
-                      }}
-                    />
-                  </div>
-                  <div className={styles.stepFieldDateItem}>
-                    <MaterialDatePicker
-                      isYear
-                      label="Year"
-                      views={['year']}
-                      inputFormat="yyyy"
-                      value={workPeriodToYear}
-                      onDateChange={(year) => {
-                        setWorkPeriodToYear(year)
+                      label="Month Year"
+                      views={['year', 'month']}
+                      inputFormat="MMM yyyy"
+                      value={workPeriodTo}
+                      onDateChange={(value) => {
+                        setWorkPeriodTo(value)
                       }}
                     />
                   </div>
