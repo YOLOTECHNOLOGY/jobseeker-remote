@@ -115,6 +115,8 @@ const JobListSection = ({
 
   useEffect(() => {
     setSelectedPage(Number(router.query.page))
+    
+    document.getElementById('job-search').scrollIntoView()
   }, [router.query.page])
 
   const handlePaginationClick = (event, val) => {
