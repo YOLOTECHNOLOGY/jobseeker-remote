@@ -108,7 +108,9 @@ const ProtectedHeader = () => {
         <ul className={styles.headerLinksList}>
           <React.Fragment>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
-              <a title='Manage Resume' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/profile/jobseeker')} href='/dashboard/profile/jobseeker'>
+              <a title='Manage Resume' onClick={(e) => {
+                currentUser.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
+              }}>
                 <MaterialButton variant='contained' capitalize>
                   <Text textColor='white' textStyle='lg' bold>Manage Resume</Text>
                 </MaterialButton>
