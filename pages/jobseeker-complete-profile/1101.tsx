@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -19,6 +19,7 @@ import Switch from '@mui/material/Switch';
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Image from 'next/image'
+import Divider from '@mui/material/Divider';
 
 import Text from 'components/Text'
 import OnBoardLayout from 'components/OnBoardLayout'
@@ -37,7 +38,7 @@ import {
   AddOutlineIcon 
 } from 'images'
 
-/* Helpers*/
+/* Helpers */
 import {
   getJobCategoryList,
   getLocationList,
@@ -48,6 +49,7 @@ import {
 import { formatSalary, removeEmptyOrNullValues } from 'helpers/formatter'
 import { removeItem, setItem, getItem } from 'helpers/localStorage'
 import { STORAGE_NAME } from 'helpers/richTextEditor'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Styles
 import styles from './Onboard.module.scss'
@@ -59,6 +61,8 @@ const Step3 = (props: any) => {
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props
   const isFromCreateResume = getItem('isFromCreateResume') === '1'
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
   
   const nextBtnUrl = router.query?.redirect ? `/jobseeker-complete-profile/1102?redirect=${router.query.redirect}` : '/jobseeker-complete-profile/1102'
   const backBtnUrl = router.query?.redirect ? `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}?redirect=${router.query.redirect}` : `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}`
@@ -74,10 +78,10 @@ const Step3 = (props: any) => {
   const [country, setCountry] = useState('')
   const [isShowCountry, setIsShowCountry] = useState(false)
   const [isCurrentJob, setIsCurrentJob] = useState(false)
-  const [workPeriodFromMonth, setWorkPeriodFromMonth] = useState(new Date())
-  const [workPeriodFromYear, setWorkPeriodFromYear] = useState(new Date())
-  const [workPeriodToMonth, setWorkPeriodToMonth] = useState(new Date())
-  const [workPeriodToYear, setWorkPeriodToYear] = useState(new Date())
+  const [workPeriodFromMonth, setWorkPeriodFromMonth] = useState(null)
+  const [workPeriodFromYear, setWorkPeriodFromYear] = useState(null)
+  const [workPeriodToMonth, setWorkPeriodToMonth] = useState(null)
+  const [workPeriodToYear, setWorkPeriodToYear] = useState(null)
   const [jobFunction, setJobFunction] = useState([])
   const [industry, setIndustry] = useState('')
   const [salary, setSalary] = useState('')
@@ -87,13 +91,12 @@ const Step3 = (props: any) => {
 
   const [workExperienceId, setWorkExperienceId] = useState(null)
   const [workExperience, setWorkExperience] = useState(userDetail?.work_experiences)
-  const [showForm, setShowForm] = useState(workExperience?.length > 0 ? false : true)
-  const [showFormActions, setShowFormActions] = useState(false)
+  const [showForm, setShowForm] = useState(workExperience?.length === 0 ? true : false)
+  const [isSaveDisabled, setIsSaveDisabled] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [isNextDisabled, setIsNextDisabled] = useState(true)
   const [hasNoWorkExperience, setHasNoWorkExperience] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
-  const [isOpenNewForm, setIsOpenNewForm] = useState(false)
   const [selectedExperience, setSelectedExperience] = useState(null)
   const [showErrorToComplete, setShowErrorToComplete] = useState(false)
   
@@ -110,16 +113,8 @@ const Step3 = (props: any) => {
   useEffect(() => {
     if (userWorkExperiences) {
       setWorkExperience(userWorkExperiences || [])
-      setShowForm(userWorkExperiences.length > 0 ? false : true)
-      setIsDisabled(userWorkExperiences.length > 0 ? false : true)
-      setIsOpenNewForm(false)
-
-      if (isOpenNewForm) {
-        setTimeout(() => {
-          handleResetForm()
-          setShowForm(true)
-        }, 100)
-      }
+      setIsNextDisabled(userWorkExperiences.length > 0 ? false : true)
+      setIsUpdating(false)
     }
   }, [userWorkExperiences])
 
@@ -131,7 +126,7 @@ const Step3 = (props: any) => {
       setWorkExperienceId(selectedExperience.id)
       setJobTitle(selectedExperience.job_title)
       setCompanyName(selectedExperience.company)
-      setLocation(getLocation(selectedExperience.location)[0])
+      setLocation(selectedExperience.location ? getLocation(selectedExperience.location)[0] : null)
       setIsCurrentJob(selectedExperience.is_currently_work_here)
       setWorkPeriodFromMonth(selectedExperience.working_period_from)
       setWorkPeriodFromYear(selectedExperience.working_period_from)
@@ -139,7 +134,7 @@ const Step3 = (props: any) => {
       setWorkPeriodToYear(selectedExperience.working_period_to)
       setSalary(selectedExperience.salary)
       if (selectedExperience.company_industry) setIndustry(industryList.filter((industry) => industry.label === selectedExperience.company_industry)[0].value)
-      if (selectedExperience.location.toLowerCase() === 'overseas') {
+      if (selectedExperience.location && selectedExperience.location.toLowerCase() === 'overseas') {
         setCountry(countryList.filter((country) => country.key === selectedExperience.country_key)[0].value)
         setIsShowCountry(true)
       }
@@ -152,7 +147,6 @@ const Step3 = (props: any) => {
 
   useEffect(() => {
     setIsUpdating(isUpdatingUserProfile)
-    if (isUpdatingUserProfile) setIsOpenNewForm(true)
   }, [isUpdatingUserProfile])
 
   useEffect(() => {
@@ -160,8 +154,20 @@ const Step3 = (props: any) => {
   }, [showForm])
 
   useEffect(() => {
-    const requireFields = jobTitle && companyName && location
-    const emptyRequiredFields = !jobTitle && !companyName && !location
+    const periodFrom = `${moment(new Date(workPeriodFromYear)).format('yyyy')}-${moment(new Date(workPeriodFromMonth)).format('MM-DD')}`
+    const periodTo = `${moment(new Date(workPeriodToYear)).format('yyyy')}-${moment(new Date(workPeriodToMonth)).format('MM-DD')}`
+    
+    setHasErrorOnToPeriod(moment(periodFrom).isAfter(periodTo) ? true : false)
+  }, [
+    workPeriodFromMonth,
+    workPeriodFromYear,
+    workPeriodToMonth,
+    workPeriodToYear
+  ])
+
+  useEffect(() => {
+    const requireFields = jobTitle && companyName && location && workPeriodFromMonth && workPeriodFromYear
+    const emptyRequiredFields = !jobTitle && !companyName && !location && !workPeriodFromMonth && !workPeriodFromYear
     const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
     if (isCurrentJob) {
@@ -172,7 +178,6 @@ const Step3 = (props: any) => {
       setDisabledButton(requireFields && isValidDate ? true : false)
     }
 
-    if (emptyRequiredFields) setIsDisabled(false)
     if (requireFields) setShowErrorToComplete(false)
   }, [
     jobTitle, 
@@ -189,19 +194,26 @@ const Step3 = (props: any) => {
 
   useEffect(() => {
     if (hasNoWorkExperience) {
-      setIsDisabled(false)
-      handleCancelForm()
+      setIsNextDisabled(false)
+
+      if (workExperience?.length === 0) {
+        setShowForm(false)
+        setIsEditing(false)
+      } else {
+        scrollToForm()
+      }
     } 
 
     if (!hasNoWorkExperience) {
-      setIsDisabled(true)
-      handleShowForm()
+      setIsNextDisabled(true)
+      setShowForm(workExperience?.length === 0 ? true : false)
+      setIsEditing(false)
     }
   }, [hasNoWorkExperience])
 
   const setDisabledButton = (value) => {
-    setShowFormActions(value)
-    setIsDisabled(!value)
+    setIsSaveDisabled(!value)
+    setIsNextDisabled(!value)
   }
   
   const requiredLabel = (text: string) => {
@@ -266,10 +278,10 @@ const Step3 = (props: any) => {
     setCompanyName('')
     setLocation('')
     setIsCurrentJob(false)
-    setWorkPeriodFromMonth(new Date())
-    setWorkPeriodFromYear(new Date())
-    setWorkPeriodToMonth(new Date())
-    setWorkPeriodToYear(new Date())
+    setWorkPeriodFromMonth(null)
+    setWorkPeriodFromYear(null)
+    setWorkPeriodToMonth(null)
+    setWorkPeriodToYear(null)
     setSalary('')
     setIndustry('')
     setCountry('')
@@ -280,15 +292,15 @@ const Step3 = (props: any) => {
     setHasErrorOnFromPeriod(false)
     setHasErrorOnToPeriod(false)
     setIsUpdating(false)
-    setShowFormActions(false)
+    setIsSaveDisabled(true)
     removeItem(STORAGE_NAME)
     setShowErrorToComplete(false)
   }
 
-  const handleShowForm = () => {
+  const newExperienceForm = () => {
     setShowForm(!showForm)
     setIsEditing(false)
-    handleResetForm()
+    setIsNextDisabled(true)
   }
 
   const handleDeleteExperience = (id) => {
@@ -301,7 +313,6 @@ const Step3 = (props: any) => {
 
     dispatch(updateUserCompleteProfileRequest(deletePayload))
     handleResetForm()
-    setIsOpenNewForm(false)
   }
 
   const handleSaveForm = (proceedingPath='') => {
@@ -329,25 +340,28 @@ const Step3 = (props: any) => {
       proceedingPath
     }
     dispatch(updateUserCompleteProfileRequest(workExperiencesPayload))
+
+    setShowForm(false)
   }
 
   const handleCancelForm = () => {
-    handleResetForm()
-    if (workExperience?.length > 0) {
-      setShowForm(false)
-      setIsEditing(false)
-    } else {
-      scrollToForm()
+    setShowForm(false)
+    setIsNextDisabled(userWorkExperiences.length > 0 ? false : true)
+
+    if (selectedExperience) {
+      handleResetForm()
     }
+
+    setSelectedExperience(null)
   }
 
   const handleNextBtn = () => {
-    if (!isDisabled && showForm && (jobTitle && companyName && location)) {
+    if (!isNextDisabled && showForm && (jobTitle && companyName && location)) {
       handleSaveForm(nextBtnUrl)
       return
     }
 
-    if (isDisabled && showForm) {
+    if (isNextDisabled && showForm) {
       setShowErrorToComplete(true)
       return
     }
@@ -369,10 +383,11 @@ const Step3 = (props: any) => {
       headingText={<Text bold textStyle='xxxl' tagName='h2'> Add your work experience 💼</Text>}
       currentStep={currentStep}
       totalStep={4}
+      isMobile={isMobile}
       nextFnBtn={() => handleNextBtn()}
+      isNextDisabled={isNextDisabled}
       backFnBtn={() => router.push(backBtnUrl)}
       isUpdating={isUpdating}
-      isDisabled={isDisabled}
     >
       <div className={styles.stepNotice}>
         <Image src={InfoIcon} alt='' width='30' height='30' />
@@ -383,14 +398,14 @@ const Step3 = (props: any) => {
           {workExperience.map((experience) => (
             <div className={styles.stepDataItem} key={experience.id}>
               <div className={styles.stepDataInfo}>
-                <Text bold textStyle='base' tagName='p'>{experience.job_title}</Text>
-                <Text textStyle='base' tagName='p'>{experience.company}</Text>
-                <Text textStyle='base' tagName='p'>{experience.location} - {getLocation(experience.location)[0].region}</Text>
-                <Text textStyle='base' tagName='p'>{moment(experience.working_period_from).format("MMMM yyyy")} to {experience.is_currently_work_here ? 'Present' : moment(experience.working_period_to).format("MMMM yyyy")}</Text>
-                {experience?.job_categories.length > 0 && <Text textStyle='base' tagName='p'>{experience.job_categories.join(', ')}</Text>}
-                {experience.company_industry && <Text textStyle='base' tagName='p'>{experience.company_industry}</Text>}
-                {experience.salary && <Text textStyle='base' tagName='p'>{formatSalary(experience.salary)} per month</Text>}
-                {experience.description && displayDescription(experience.description) && (
+                <Text bold textStyle='base' tagName='p'>{experience?.job_title}</Text>
+                <Text textStyle='base' tagName='p'>{experience?.company}</Text>
+                <Text textStyle='base' tagName='p'>{experience?.location} - {getLocation(experience?.location)?.[0].region_display_name}</Text>
+                <Text textStyle='base' tagName='p'>{moment(experience?.working_period_from).format("MMMM yyyy")} to {experience?.is_currently_work_here ? 'Present' : moment(experience.working_period_to).format("MMMM yyyy")}</Text>
+                {experience?.job_categories.length > 0 && <Text textStyle='base' tagName='p'>{experience?.job_categories.join(', ')}</Text>}
+                {experience?.company_industry && <Text textStyle='base' tagName='p'>{experience?.company_industry}</Text>}
+                {experience?.salary && <Text textStyle='base' tagName='p'>{formatSalary(experience?.salary)} per month</Text>}
+                {experience?.description && displayDescription(experience?.description) && (
                   <>
                     <Text textStyle='base' tagName='p'>Description: </Text>
                     <div className={styles.stepDataDescription} dangerouslySetInnerHTML={{__html: displayDescription(experience.description)}} />
@@ -401,7 +416,7 @@ const Step3 = (props: any) => {
                 <div 
                   className={styles.stepDataActionItem} 
                   onClick={() => {
-                    setShowForm(false)
+                    setShowForm(!showForm)
 
                     setIsEditing(true)
                     setSelectedExperience(experience)
@@ -500,7 +515,6 @@ const Step3 = (props: any) => {
                     inputFormat="MMM"
                     value={workPeriodFromMonth}
                     onDateChange={(month) => {
-                      setHasErrorOnFromPeriod(moment(month).isAfter(new Date(), 'month') ? true : false)
                       setWorkPeriodFromMonth(month)
                     }}
                   />
@@ -513,14 +527,12 @@ const Step3 = (props: any) => {
                     inputFormat="yyyy"
                     value={workPeriodFromYear}
                     onDateChange={(year) => {
-                      setWorkPeriodFromMonth(year)
                       setWorkPeriodFromYear(year)
-                      setHasErrorOnFromPeriod(moment(year).isAfter(new Date(), 'month') ? true : false)
                     }}
                   />
                 </div>
               </div>
-              {hasErrorOnFromPeriod && <Text textColor='red' textStyle='sm'>Invalid Date</Text>}
+              {hasErrorOnFromPeriod && <Text textColor='red' textStyle='sm'>Start date must be earlier than completion date.</Text>}
             </div>
 
             {!isCurrentJob && (
@@ -536,26 +548,24 @@ const Step3 = (props: any) => {
                       inputFormat="MMM"
                       value={workPeriodToMonth}
                       onDateChange={(month) => {
-                        setHasErrorOnToPeriod(moment(month).isAfter(new Date(), 'month') ? true : false)
                         setWorkPeriodToMonth(month)
                       }}
                     />
                   </div>
                   <div className={styles.stepFieldDateItem}>
                     <MaterialDatePicker
+                      isYear
                       label="Year"
                       views={['year']}
                       inputFormat="yyyy"
                       value={workPeriodToYear}
                       onDateChange={(year) => {
-                        setWorkPeriodToMonth(year)
                         setWorkPeriodToYear(year)
-                        setHasErrorOnToPeriod(moment(year).isAfter(new Date(), 'month') ? true : false)
                       }}
                     />
                   </div>
                 </div>
-                {hasErrorOnToPeriod && <Text textColor='red' textStyle='sm'>Invalid Date</Text>}
+                {hasErrorOnToPeriod && <Text textColor='red' textStyle='sm'>Start date must be earlier than completion date.</Text>}
               </div>
             )}
 
@@ -583,8 +593,9 @@ const Step3 = (props: any) => {
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
-                label='Monthly Salary'
+                label='Monthly Salary (PHP)'
                 size='small'
+                type='number'
                 value={salary}
                 defaultValue={salary}
                 onChange={(e) => setSalary(e.target.value)}
@@ -600,10 +611,10 @@ const Step3 = (props: any) => {
         </div>
       )}
 
-      {!showForm && !hasNoWorkExperience && (
+      {!showForm && (
         <div 
           className={styles.stepFormToggle} 
-          onClick={() => handleShowForm() }
+          onClick={() => newExperienceForm() }
         >
           <img src={AddOutlineIcon} width='18' height='18' />
           <Text textColor='primaryBlue' textStyle='sm'>Add a work experience</Text>
@@ -629,16 +640,35 @@ const Step3 = (props: any) => {
         </div>
       )}
 
-      {showFormActions && showForm && (
-        <div className={styles.stepFormActions}>
-          <MaterialButton variant='contained' capitalize onClick={() => handleSaveForm()} isLoading={isUpdating}>
-            <Text textColor='white'>Save</Text>
-          </MaterialButton>
+      {showForm && (
+        <React.Fragment>
+          <Divider style={{ marginTop: '20px', marginBottom: '20px'}}/>
+          <div className={styles.stepFormActions}>
+            <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={handleCancelForm}>
+              <Text textColor='primaryBlue'>Cancel</Text>
+            </MaterialButton>
+
+            <MaterialButton disabled={isSaveDisabled} variant='contained' capitalize onClick={() => handleSaveForm()} isLoading={isUpdating}>
+              <Text textColor='white'>Save</Text>
+            </MaterialButton>
+          </div>
+        </React.Fragment>
+      )}
+
+      {!showForm && isMobile &&  (
+        <React.Fragment>
+          <Divider className={styles.divider} />
           
-          <MaterialButton variant='outlined' capitalize onClick={handleCancelForm}>
-            <Text textColor='primaryBlue'>Cancel</Text>
-          </MaterialButton>
-        </div>
+          <div className={styles.stepFormActions}>
+            <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={() => router.push(backBtnUrl)}>
+              <Text textColor='primaryBlue'>Back</Text>
+            </MaterialButton>
+
+            <MaterialButton variant='contained' disabled={isNextDisabled} capitalize onClick={() => handleNextBtn()} isLoading={isUpdating}>
+              <Text textColor='white'>Next</Text>
+            </MaterialButton>
+          </div>
+        </React.Fragment>
       )}
     </OnBoardLayout>
   )

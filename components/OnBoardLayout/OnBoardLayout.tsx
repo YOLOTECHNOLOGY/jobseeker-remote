@@ -20,7 +20,8 @@ interface IOnBoardLayout {
   backFnBtn?: Function
   nextFnBtn?: Function,
   isUpdating?: boolean,
-  isDisabled?: boolean
+  isNextDisabled?: boolean,
+  isMobile?: boolean
 }
 
 const OnBoardLayout = ({
@@ -31,10 +32,11 @@ const OnBoardLayout = ({
   backFnBtn,
   nextFnBtn,
   isUpdating,
-  isDisabled
+  isNextDisabled,
+  isMobile = false
 }: IOnBoardLayout) => {
   const componentClass = {
-    ['is-disabled']: isDisabled,
+    ['is-disabled']: isNextDisabled,
   }
 
   const cx = classNames.bind(styles)
@@ -67,20 +69,20 @@ const OnBoardLayout = ({
           </div>
           <div className={styles.OnBoardLayoutFooter}>
             <div>
-              {backFnBtn && (
+              {backFnBtn && !isMobile && (
                 <MaterialButton variant='outlined' capitalize onClick={() => backFnBtn()}>
                   <Text textColor='primary' bold>Back</Text>
                 </MaterialButton>
               )}
             </div>
             <div>
-              {nextFnBtn && (
+              {nextFnBtn && !isMobile && (
                 <MaterialButton 
                   isLoading={isUpdating} 
                   variant='contained' 
                   capitalize 
                   onClick={() => nextFnBtn()} 
-                  // disabled={isDisabled}
+                  disabled={isNextDisabled}
                   className={classNames([buttonClass])}
                 >
                   <Text textColor='white' bold>Next</Text>

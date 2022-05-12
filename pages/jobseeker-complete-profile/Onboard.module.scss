@@ -2,14 +2,29 @@
 @import 'styles/mixins.scss';
 
 .stepForm {
-  margin-top: 20px;
-
   &Actions {
-    margin-top: 30px;
+    @media (max-width: 768px) {
+      display: flex;
+    }
+
+    &leftBtn {
+      margin-right: 15px;
+    }
 
     button {
       width: 100px;
-      margin-right: 15px;
+    }
+    
+    @media (max-width: 768px) {
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &Actions {
+      display: flex;
     }
   }
 
@@ -188,6 +203,12 @@
   }
 
   &Upload {
+    @media (max-width: 768px) {
+      label {
+        width: 100%;
+      }
+    }
+
     margin-top: 20px;
     text-align: center;
 
@@ -212,6 +233,12 @@
 
   &Create {
     text-align: center;
+
+    @media (max-width: 768px) {
+      button {
+        width: 100%;
+      }
+    }
   }
 
   &UploadInput {
@@ -255,4 +282,9 @@
 
 .stepFormDatePicker {
   border: 1px solid red;
+}
+
+.divider {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

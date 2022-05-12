@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
@@ -18,6 +18,7 @@ import { generateUserResumeRequest } from 'store/actions/users/generateUserResum
 import Switch from '@mui/material/Switch';
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Divider from '@mui/material/Divider';
 
 import Text from 'components/Text'
 import OnBoardLayout from 'components/OnBoardLayout'
@@ -34,6 +35,7 @@ import {
 } from 'helpers/jobPayloadFormatter'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { getItem } from 'helpers/localStorage'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Images
 import { 
@@ -53,12 +55,13 @@ const Step4 = (props: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const backBtnUrl = router.query?.redirect ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}` : '/jobseeker-complete-profile/1101'
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
 
   const degreeList = getDegreeList(config)
   const countryList = getCountryList(config)
   const locList = getLocationList(config)
 
-  const [showFormActions, setShowFormActions] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
 
   const [school, setSchool] = useState('')
@@ -66,21 +69,23 @@ const Step4 = (props: any) => {
   const [location, setLocation] = useState(null)
   const [country, setCountry] = useState('')
   const [isShowCountry, setIsShowCountry] = useState(false)
-  const [studyPeriodFromMonth, setStudyPeriodFromMonth] = useState(new Date())
-  const [studyPeriodFromYear, setStudyPeriodFromYear] = useState(new Date())
-  const [studyPeriodToMonth, setStudyPeriodToMonth] = useState(new Date())
-  const [studyPeriodToYear, setStudyPeriodToYear] = useState(new Date())
+  const [studyPeriodFromMonth, setStudyPeriodFromMonth] = useState(null)
+  const [studyPeriodFromYear, setStudyPeriodFromYear] = useState(null)
+  const [studyPeriodToMonth, setStudyPeriodToMonth] = useState(null)
+  const [studyPeriodToYear, setStudyPeriodToYear] = useState(null)
   const [fieldStudy, setFieldStudy] = useState('')
   const [isCurrentStudying, setIsCurrentStudying] = useState(false)
   const [hasNoEducation, setHasNoEducation] = useState(false)
   const [educationId, setEducationId] = useState(null)
   const [educations, setEducations] = useState(userDetail?.educations)
-  const [showForm, setShowForm] = useState(educations?.length > 0 ? false : true)
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [showForm, setShowForm] = useState(educations?.length === 0 ? true : false)
+  const [isNextDisabled, setIsNextDisabled] = useState(true)
+  const [isSaveDisabled, setIsSaveDisabled] = useState(true)
   const [hasErrorOnFromPeriod, setHasErrorOnFromPeriod] = useState(false)
   const [hasErrorOnToPeriod, setHasErrorOnToPeriod] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
   const [showErrorToComplete, setShowErrorToComplete] = useState(false)
+  const [selectedEducation, setSelectedEducation] = useState(null)
 
   const userEducations = useSelector((store: any) => store.users.fetchUserEducation.response)
   const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserCompleteProfile.fetching)
@@ -103,14 +108,26 @@ const Step4 = (props: any) => {
   useEffect(() => {
     if (userEducations) {
       setEducations(userEducations || [])
-      setShowForm(userEducations.length > 0 ? false : true)
-      setIsDisabled(userEducations.length > 0 ? false : true)
+      setIsNextDisabled(userEducations.length > 0 ? false : true)
+      setIsUpdating(false)
     }
   }, [userEducations])
 
   useEffect(() => {
-    const requireFields = school && degree && location
-    const emptyRequiredFields = !school && !degree && !location
+    const periodFrom = `${moment(new Date(studyPeriodFromYear)).format('yyyy')}-${moment(new Date(studyPeriodFromMonth)).format('MM-DD')}`
+    const periodTo = `${moment(new Date(studyPeriodToYear)).format('yyyy')}-${moment(new Date(studyPeriodToMonth)).format('MM-DD')}`
+    
+    setHasErrorOnToPeriod(moment(periodFrom).isAfter(periodTo) ? true : false)
+  }, [
+    studyPeriodFromMonth,
+    studyPeriodFromYear,
+    studyPeriodToMonth,
+    studyPeriodToYear
+  ])
+
+  useEffect(() => {
+    const requireFields = school && degree && location && studyPeriodFromMonth && studyPeriodFromYear
+    const emptyRequiredFields = !school && !degree && !location && !studyPeriodFromMonth && !studyPeriodFromYear
     const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
     if (isCurrentStudying) {
@@ -121,15 +138,7 @@ const Step4 = (props: any) => {
       setDisabledButton(requireFields && isValidDate ? true : false)
     }
 
-
-    if (hasErrorOnFromPeriod || hasErrorOnToPeriod) {
-      setShowFormActions(false)
-      setIsDisabled(true)
-    }
-
-    if (emptyRequiredFields) setIsDisabled(false)
     if (requireFields) setShowErrorToComplete(false)
-
   }, [
     school, 
     degree, 
@@ -149,19 +158,26 @@ const Step4 = (props: any) => {
 
   useEffect(() => {
     if (hasNoEducation) {
-      setIsDisabled(false)
-      handleCancelForm()
+      setIsNextDisabled(false)
+
+      if (educations?.length === 0) {
+        setShowForm(false)
+        setIsEditing(false)
+      } else {
+        scrollToForm()
+      }
     } 
 
     if (!hasNoEducation) {
-      setIsDisabled(true)
-      handleShowForm()
+      setIsNextDisabled(true)
+      setShowForm(educations?.length === 0 ? true : false)
+      setIsEditing(false)
     }
   }, [hasNoEducation])
 
   const setDisabledButton = (value) => {
-    setShowFormActions(value)
-    setIsDisabled(!value)
+    setIsSaveDisabled(!value)
+    setIsNextDisabled(!value)
   }
 
   const scrollToForm = () => {
@@ -183,20 +199,21 @@ const Step4 = (props: any) => {
     setLocation(value)
   }
 
-  const handleShowForm = () => {
+  const newEducationForm = () => {
     setShowForm(!showForm)
     setIsEditing(false)
-    handleResetForm()
+    setIsNextDisabled(true)
   }
 
   const handleSelectEducation = (education) => {
-    setIsEditing(true)
-    setShowForm(true)
+    setSelectedEducation(education)
+    setIsEditing(false)
+    setShowForm(!showForm)
     setEducationId(education.id)
     setSchool(education.school)
     setDegree(degreeList.filter((degree) => degree.label === education.degree)[0].value)
-    setLocation(getLocation(education.location)[0])
-    if (education.location.toLowerCase() === 'overseas') {
+    setLocation(education.location ? getLocation(education.location)[0] : null)
+    if (education.location && education.location.toLowerCase() === 'overseas') {
       setCountry(countryList.filter((country) => country.key === education.country_key)[0].value)
       setIsShowCountry(true)
     }
@@ -214,27 +231,27 @@ const Step4 = (props: any) => {
     setLocation(null)
     setCountry('')
     setIsShowCountry(false)
-    setStudyPeriodFromMonth(new Date())
-    setStudyPeriodFromYear(new Date())
-    setStudyPeriodToMonth(new Date())
-    setStudyPeriodToYear(new Date())
+    setStudyPeriodFromMonth(null)
+    setStudyPeriodFromYear(null)
+    setStudyPeriodToMonth(null)
+    setStudyPeriodToYear(null)
     setFieldStudy('')
     setIsCurrentStudying(false)
     setHasErrorOnFromPeriod(false)
     setHasErrorOnToPeriod(false)
-    setShowFormActions(false)
     setShowErrorToComplete(false)
+    setIsSaveDisabled(true)
   }
 
   const handleCancelForm = () => {
-    handleResetForm()
+    setShowForm(false)
+    setIsNextDisabled(userEducations.length > 0 ? false : true)
 
-    if (educations?.length > 0) {
-      setShowForm(false)
-      setIsEditing(false)
-    } else {
-      scrollToForm()
+    if (selectedEducation) {
+      handleResetForm()
     }
+
+    setSelectedEducation(null)
   }
 
   const handleSaveForm = () => {
@@ -258,6 +275,9 @@ const Step4 = (props: any) => {
       educationData: removeEmptyOrNullValues(educationData)
     }
     dispatch(updateUserCompleteProfileRequest(educationPayload))
+
+    setShowForm(false)
+    handleResetForm()
   }
 
   const handleDeleteEducation = (id) => {
@@ -286,11 +306,11 @@ const Step4 = (props: any) => {
   }
 
   const handleNextBtn = () => {
-    if (!isDisabled && showForm && (school && degree && location)) {
+    if (!isNextDisabled && showForm && (school && degree && location)) {
       handleLastStep()
       return
     }
-    if (!isDisabled && !showForm) {
+    if (!isNextDisabled && !showForm) {
       handleLastStep()
       return
     }
@@ -303,9 +323,10 @@ const Step4 = (props: any) => {
       headingText={<Text bold textStyle='xxxl' tagName='h2'>All about your education 🎓</Text>}
       currentStep={4}
       totalStep={4}
+      isMobile={isMobile}
       backFnBtn={() => router.push(backBtnUrl)}
       nextFnBtn={() => handleNextBtn()}
-      isDisabled={isDisabled}
+      isNextDisabled={isNextDisabled}
       isUpdating={isGeneratingUserResume || isCompletingUserProfile}
     >
       {educations.length > 0 && (
@@ -313,11 +334,11 @@ const Step4 = (props: any) => {
           {educations.map((education) => (
             <div className={styles.stepDataItem} key={education.id}>
               <div className={styles.stepDataInfo}>
-                <Text bold textStyle='base' tagName='p'>{education.school}</Text>
-                <Text textStyle='base' tagName='p'>{education.degree}</Text>
-                <Text textStyle='base' tagName='p'>{moment(education.working_period_from).format("MMMM yyyy")} to {education.is_currently_studying ? 'Present' : education.working_period_to}</Text>
-                <Text textStyle='base' tagName='p'>{education.location} - {getLocation(education?.location)?.[0].region}</Text>
-                <Text textStyle='base' tagName='p'>{education.field_of_study}</Text>
+                <Text bold textStyle='base' tagName='p'>{education?.school}</Text>
+                <Text textStyle='base' tagName='p'>{education?.degree}</Text>
+                <Text textStyle='base' tagName='p'>{moment(education?.working_period_from).format("MMMM yyyy")} to {education?.is_currently_studying ? 'Present' : education.working_period_to}</Text>
+                <Text textStyle='base' tagName='p'>{education?.location} - {getLocation(education?.location)?.[0].region_display_name}</Text>
+                <Text textStyle='base' tagName='p'>{education?.field_of_study}</Text>
               </div>
               <div className={styles.stepDataActions}>
                 <div 
@@ -391,27 +412,25 @@ const Step4 = (props: any) => {
                   inputFormat="MMM"
                   value={studyPeriodFromMonth}
                   onDateChange={(month) => {
-                    setHasErrorOnFromPeriod(moment(month).isAfter(new Date(), 'month') ? true : false)
                     setStudyPeriodFromMonth(month)
                   }}
                 />
               </div>
               <div className={styles.stepFieldDateItem}>
                 <MaterialDatePicker
+                  isYear
                   label="Year"
                   views={['year']}
                   inputFormat="yyyy"
                   value={studyPeriodFromYear}
                   onDateChange={(year) => {
-                    setStudyPeriodFromMonth(year)
                     setStudyPeriodFromYear(year)
-                    setHasErrorOnFromPeriod(moment(year).isAfter(new Date(), 'month') ? true : false)
                   }}
                 />
               </div>
             </div>
             
-            {hasErrorOnFromPeriod && <Text textColor='red' textStyle='sm'>Invalid Date</Text>}
+            {hasErrorOnFromPeriod && <Text textColor='red' textStyle='sm'>Start date must be earlier than completion date.</Text>}
           </div>
 
           {!isCurrentStudying && (
@@ -427,27 +446,25 @@ const Step4 = (props: any) => {
                     inputFormat="MMM"
                     value={studyPeriodToMonth}
                     onDateChange={(month) => {
-                      setHasErrorOnToPeriod(moment(month).isAfter(new Date(), 'month') ? true : false)
                       setStudyPeriodToMonth(month)
                     }}
                   />
                 </div>
                 <div className={styles.stepFieldDateItem}>
                   <MaterialDatePicker
+                    isYear
                     label="Year"
                     views={['year']}
                     inputFormat="yyyy"
                     value={studyPeriodToYear}
                     onDateChange={(year) => {
                       setStudyPeriodToYear(year)
-                      setStudyPeriodToMonth(year)
-                      setHasErrorOnToPeriod(moment(year).isAfter(new Date(), 'month') ? true : false)
                     }}
                   />
                 </div>
               </div>
               
-              {hasErrorOnToPeriod && <Text textColor='red' textStyle='sm'>Invalid Date</Text>}
+              {hasErrorOnToPeriod && <Text textColor='red' textStyle='sm'>Start date must be earlier than completion date.</Text>}
             </div>
           )}
 
@@ -490,6 +507,13 @@ const Step4 = (props: any) => {
         <Text textStyle='base' textColor='red' tagName='p'>Fill up the fields with (*) to proceed.</Text>
       )}
 
+      {!showForm && (
+        <div className={styles.stepFormToggle} onClick={() => newEducationForm()}>
+          <img src={AddOutlineIcon} width='18' height='18' />
+          <Text textColor='primaryBlue' textStyle='sm'>Add a education</Text>
+        </div>
+      )}
+
       {educations.length === 0 && (
         <div className={styles.stepField}>
           <FormControlLabel
@@ -505,23 +529,35 @@ const Step4 = (props: any) => {
         </div>
       )}
 
-      {!showForm && !hasNoEducation && (
-        <div className={styles.stepFormToggle} onClick={() => handleShowForm()}>
-          <img src={AddOutlineIcon} width='18' height='18' />
-          <Text textColor='primaryBlue' textStyle='sm'>Add a education</Text>
-        </div>
+      {showForm && (
+        <React.Fragment>
+          <Divider className={styles.divider} />
+
+          <div className={styles.stepFormActions}>
+            <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={handleCancelForm}>
+              <Text textColor='primaryBlue'>Cancel</Text>
+            </MaterialButton>
+
+            <MaterialButton disabled={isSaveDisabled} variant='contained' capitalize onClick={() => handleSaveForm()} isLoading={isUpdating}>
+              <Text textColor='white'>Save</Text>
+            </MaterialButton>
+          </div>
+        </React.Fragment>
       )}
 
-      {showFormActions && showForm && (
-        <div className={styles.stepFormActions}>
-          <MaterialButton variant='contained' capitalize onClick={handleSaveForm} isLoading={isUpdating}>
-            <Text textColor='white'>Save</Text>
-          </MaterialButton>
+      {!showForm && isMobile &&  (
+        <React.Fragment>
+          <Divider style={{ marginTop: '20px', marginBottom: '20px'}}/>
+          <div className={styles.stepFormActions}>
+            <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={() => router.push(backBtnUrl)}>
+              <Text textColor='primaryBlue'>Back</Text>
+            </MaterialButton>
 
-          <MaterialButton variant='outlined' capitalize onClick={handleCancelForm}>
-            <Text textColor='primaryBlue'>Cancel</Text>
-          </MaterialButton>
-        </div>
+            <MaterialButton variant='contained' disabled={isNextDisabled} capitalize onClick={() => handleNextBtn()} isLoading={isUpdating}>
+              <Text textColor='white'>Next</Text>
+            </MaterialButton>
+          </div>
+        </React.Fragment>
       )}
     </OnBoardLayout>
   )

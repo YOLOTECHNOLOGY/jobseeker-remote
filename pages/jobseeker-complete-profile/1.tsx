@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -21,6 +21,8 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
+import MaterialButton from 'components/MaterialButton'
+import Divider from '@mui/material/Divider';
 
 /* Helpers*/
 import {
@@ -32,6 +34,7 @@ import {
   getCountryList,
   getLocationList
 } from 'helpers/jobPayloadFormatter'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Styles
 import styles from './Onboard.module.scss'
@@ -41,6 +44,8 @@ const Step1 = (props: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
 
   const locList = getLocationList(config)
   const countryList = getCountryList(config)
@@ -57,7 +62,7 @@ const Step1 = (props: any) => {
   const [specialization, setSpecialization] = useState(userDetail?.job_preference?.job_categories || [])
   const [headhuntMe, setHeadhuntMe] = useState(true)
 
-  const [salaryFrom, setSalaryFrom] = useState(Number(userDetail?.job_preference?.salary_range_from) || salaryFromOptions?.[0].value)
+  const [salaryFrom, setSalaryFrom] = useState(Number(userDetail?.job_preference?.salary_range_from) || null)
   const [salaryTo, setSalaryTo] = useState(null)
   const [salaryToOptions, setSalaryToOptions] = useState([])
   const [hasSelectedSpecMore, setHasSelectedSpecMore] = useState(false)
@@ -84,7 +89,7 @@ const Step1 = (props: any) => {
         setLocation(matchedLocation[0])
         setValue('location', matchedLocation[0])
       }
-      setSpecialization(userDetail?.job_preference?.job_categories)
+
       if (userDetail?.job_preference?.salary_range_to) setSalaryTo(Number(userDetail?.job_preference?.salary_range_to))
     }
   }, [userDetail])
@@ -113,7 +118,7 @@ const Step1 = (props: any) => {
 
   const getSalaryToOptions = (salaryFrom) => {
     const salaryOptions = getSalaryOptions(config, salaryFrom, true)
-    setSalaryTo(salaryOptions[0].value)
+    setSalaryTo(salaryOptions.length > 0 ? salaryOptions[0].value : null)
     setSalaryToOptions(salaryOptions)
   }
 
@@ -171,9 +176,10 @@ const Step1 = (props: any) => {
       headingText={<Text bold textStyle='xxxl' tagName='h2'>Let’s get you a job! 🎉👏 <br/> Tell us about yourself.</Text>}
       currentStep={currentStep}
       totalStep={4}
+      isMobile={isMobile}
       nextFnBtn={handleSubmit(handleUpdateProfile)}
       isUpdating={isUpdatingUserProfile}
-      isDisabled={isDisabled}
+      isNextDisabled={isDisabled}
     >
       <div className={styles.stepForm}>
         <div className={styles.step1Contact}>
@@ -350,6 +356,22 @@ const Step1 = (props: any) => {
           />
         </div>
       </div>
+      {isMobile &&  (
+        <React.Fragment>
+        <Divider className={styles.divider} />
+        
+          <div className={styles.stepFormActions}>
+            <MaterialButton variant='contained' 
+              isLoading={isUpdatingUserProfile} 
+              disabled={isDisabled} 
+              capitalize 
+              onClick={handleSubmit(handleUpdateProfile)}
+            >
+              <Text textColor='white'>Next</Text>
+            </MaterialButton>
+          </div>
+        </React.Fragment>
+      )}
     </OnBoardLayout>
   )
 }
