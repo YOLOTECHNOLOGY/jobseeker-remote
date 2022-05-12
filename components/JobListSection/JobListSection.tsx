@@ -95,6 +95,8 @@ const JobListSection = ({
   const prevScrollY = useRef(0)
 
   const [isSticky, setIsSticky] = useState(false)
+  const [jobNumStart, setJobNumStart] = useState(page)
+  const [jobNumEnd, setJobNumEnd] = useState(30)
   
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowModalEnableJobAlerts, setIsShowModalEnableJobAlerts] = useState(false)
@@ -115,9 +117,13 @@ const JobListSection = ({
 
   useEffect(() => {
     setSelectedPage(router.query.page ? Number(router.query.page) : 1)
-    
     document.getElementById('job-search').scrollIntoView()
   }, [router.query.page])
+
+  useEffect(() => {
+    setJobNumStart(((jobList?.page - 1) * jobList?.size) + 1)
+    setJobNumEnd(((jobList?.page - 1) * jobList?.size) + jobList?.jobs.length)
+  }, [jobList])
 
   const handlePaginationClick = (event, val) => {
     router.query.page = val
@@ -192,8 +198,8 @@ const JobListSection = ({
           <div className={styles.container}>
             {!isJobListFetching && (
               <div className={styles.jobListOptionContent}>
-                <Text textStyle='lg' bold>
-                  {jobList?.total_num} jobs found
+                <Text textStyle='lg'>
+                  <Text textStyle='lg' bold>{jobNumStart.toLocaleString()}-{jobNumEnd.toLocaleString()}</Text> of {jobList?.total_num.toLocaleString()} jobs
                 </Text>
                 <div className={styles.jobListOptionAlerts}>
                   <div
