@@ -90,3 +90,6 @@ export const Strategy = `${S3BucketJobseeker}/Strategy.svg`
 export const Insurance = `${S3BucketJobseeker}/Insurance.svg`
 export const PerksAndBenefits = `${S3BucketJobseeker}/PerksAndBenefits.svg`
 export const Leaves = `${S3BucketJobseeker}/Leaves.svg`
+
+/* 404 page */
+export const NotFound404 = `${S3BucketJobseeker}/404.png`
