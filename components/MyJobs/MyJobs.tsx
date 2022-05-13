@@ -328,7 +328,7 @@ const MyJobs = ({
                   company={jobs.job.company_name}
                   location={jobs.job.location_value}
                   salary={jobs.job.salary_range_value}
-                  postedAt={jobs.job.published_at}
+                  postedAt={jobs.job.refreshed_at}
                   selectedId={selectedJobId}
                   handleSelectedId={() => handleSelectedJobId(jobs.job.id)}
                 />

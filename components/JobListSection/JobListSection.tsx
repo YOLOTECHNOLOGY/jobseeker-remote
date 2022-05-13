@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 
 /* Vendors */
 import { useRouter } from 'next/router'
-import moment from 'moment'
 import slugify from 'slugify'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
@@ -249,7 +248,7 @@ const JobListSection = ({
                   company={job.company_name}
                   location={job.job_location}
                   salary={job.salary_range_value}
-                  postedAt={`${moment(new Date(job.updated_at)).format('DD MMMM YYYY')}`}
+                  postedAt={job.refreshed_at}
                   selectedId={selectedJobId}
                   handleSelectedId={() => {
                     handleSelectedJobId(job.id, job.job_title)
