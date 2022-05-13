@@ -99,18 +99,18 @@ const ResumeTemplate = () => {
     else {
       const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-      if (!emailPattern.test(email)) setEmailError('Email address is invalid.')
+      if (!emailPattern.test(email)) setEmailError('Please enter a valid email address.')
       else setEmailError(null)
     }
 
     if (!firstName) {
-      setFirstNameError('First name is required.')
+      setFirstNameError('Please enter your first name.')
     } else {
       setFirstNameError(null)
     }
 
     if (!lastName) {
-      setLastNameError('Last name is required.')
+      setLastNameError('Please enter your last name.')
     } else {
       setLastNameError(null)
     }
