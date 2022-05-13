@@ -148,7 +148,8 @@ const Home = (props: HomeProps) => {
     } else if (value) {
       queryParam = conditionChecker(value)
     }
-    updateUrl(queryParam, null)
+    
+    updateUrl(queryParam, {'sort': 2})
   }
 
   const handleSuggestionSearch = (val) => {

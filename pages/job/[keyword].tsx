@@ -251,7 +251,7 @@ const Job = ({
     } else if (value) {
       queryParam = conditionChecker(value)
     }
-    updateUrl(queryParam, null)
+    updateUrl(queryParam, {'sort': 2})
   }
 
   return (
