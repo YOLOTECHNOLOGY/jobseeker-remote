@@ -54,9 +54,21 @@ const Step1 = (props: any) => {
   const jobCategoryList = getJobCategoryList(config)
   const salaryFromOptions = getSalaryOptions(config)
   
-  const [contactNumber, setContactNumber] = useState(userDetail?.phone_num)
   const [location, setLocation] = useState([])
   const [country, setCountry] = useState('')
+
+  const getSmsCountryCode = (phoneNumber, smsCountryList) => {
+    if (!phoneNumber || !smsCountryList) return null
+
+    const matchedCountryCode = smsCountryList.filter((country) => {
+      return phoneNumber.includes(country.value)
+    })
+    
+    return matchedCountryCode ? matchedCountryCode[0].value : null
+  }
+  const [smsCode, setSmsCode] = useState(getSmsCountryCode(userDetail?.phone_num, smsCountryList) || '+63')
+  const [contactNumber, setContactNumber] = useState(userDetail?.phone_num?.replace(smsCode, "") || null)
+
   const [isShowCountry, setIsShowCountry] = useState(false)
   const [noticePeriod, setNoticePeriod] = useState(userDetail?.notice_period_id)
   const [specialization, setSpecialization] = useState(userDetail?.job_preference?.job_categories || [])
@@ -159,7 +171,7 @@ const Step1 = (props: any) => {
         location_key: (location as any)?.key || ''
       },
       profile: {
-        phone_num: contactNumber,
+        phone_num: smsCode + contactNumber,
         country_key: country || '',
         location_key: (location as any)?.key || '',
         notice_period_id: noticePeriod,
@@ -186,9 +198,11 @@ const Step1 = (props: any) => {
           <MaterialBasicSelect
             className={styles.step1ContactCountry}
             label='Country'
-            value='Philippines'
-            defaultValue='Philippines'
+            value={smsCode}
             options={smsCountryList}
+            onChange={(e) => {
+              setSmsCode(e.target.value)
+            }}
           />
           <div className={styles.step1ContactNumber}>
             <MaterialTextField

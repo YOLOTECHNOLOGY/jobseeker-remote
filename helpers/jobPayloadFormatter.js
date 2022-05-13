@@ -324,12 +324,22 @@ const getSmsCountryList = (config) => {
   const countryList = config?.inputs?.country_lists
   countryList.forEach((country) => {
     if (country.is_sms_allowed) {
-      country["label"] = country["code"] + ' (' + country["value"] + ')' 
-      smsCountryList.push(country)
+      const smsCountry = {
+        'value': country["code"],
+        'label': country["code"] + ' (' + country["value"] + ')'
+      }
+      
+      smsCountryList.push(smsCountry)
     }
   })
 
   return smsCountryList
+}
+
+const getSmsCountryCode = (phoneNumber, sms_country_list) => {
+  return sms_country_list.filter((country) => {
+    return country.value.includes(phoneNumber)
+  })
 }
 
 const getJobCategoryList = (config) => {
