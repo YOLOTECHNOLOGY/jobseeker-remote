@@ -14,8 +14,9 @@ COPY . .
 
 # Define Argument variables
 ARG ENV="development"
+ARG MAINTENANCE="false"
 
-RUN yarn build:$ENV
+RUN MAINTENANCE=$MAINTENANCE yarn build:$ENV
 
 # Expose the port of the app thats running in the container.
 EXPOSE 3000
