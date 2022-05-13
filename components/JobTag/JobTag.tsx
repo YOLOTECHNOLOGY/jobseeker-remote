@@ -10,12 +10,13 @@ import Text from 'components/Text'
 
 type JobTagProps = {
   tag: string
+  tagType?: string
 }
 
-const JobTag = ({ tag }: JobTagProps) => {
+const JobTag = ({ tag, tagType=null }: JobTagProps) => {
 
   const cx = classNames.bind(styles)
-  const tagClass = cx(tag)
+  const tagClass = cx(tagType)
 
   return (
     <div className={classNamesCombined([styles.JobTag, tagClass])}>

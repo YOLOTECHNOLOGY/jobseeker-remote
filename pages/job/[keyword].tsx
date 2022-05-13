@@ -323,6 +323,12 @@ const Job = ({
               </Text>
             </Link>
             <div className={styles.JobDetailPrimarySub}>
+              {jobDetail?.is_featured && (
+                <JobTag tag='Feature' tagType='featured' />
+              )}
+              {jobDetail?.is_urgent && (
+                <JobTag tag='Urgent' tagType='urgent' />
+              )}
               <JobTag tag={jobDetail?.job_type_value}/>
             </div>
             {!isAppliedQueryParam && (

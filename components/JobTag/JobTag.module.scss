@@ -2,6 +2,7 @@
 
 .JobTag {
   display: inline;
+  margin-right: 10px;
   padding: 3px 8px 4px;
   border-radius: 10px;
   background-color: rgba($pink, 0.15);
@@ -11,18 +12,18 @@
   }
 
   &.urgent {
-    background-color: rgba($red, 0.15);
+    background-color: rgba(#FF4747, 0.15);
 
     span {
-      color: $red;
+      color: #FF4747;
     }
   }
 
   &.featured {
-    background-color: rgba($cyan, 0.15);
+    background-color: rgba(#C7DFFF, 1);
 
     span {
-      color: $cyan;
+      color: #136FD3;
     }
   }
 }
