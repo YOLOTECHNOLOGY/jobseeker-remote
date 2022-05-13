@@ -11,9 +11,11 @@ import SEO from 'components/SEO'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
+import Link from 'components/Link'
 
 // Helpers
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { getCookie } from 'helpers/cookies'
 
 // Images
 import {
@@ -30,6 +32,7 @@ const ResumeTemplate = () => {
   const { width } = useWindowDimensions()
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState([])
+  const userCookie = getCookie('user') || null
 
   const [firstName, setFirstName] = useState('')
   const [firstNameError, setFirstNameError] = useState(null)
@@ -79,7 +82,7 @@ const ResumeTemplate = () => {
     if (registerJobseekerState.error) {
       if (registerJobseekerState.error['email']) {
         if (registerJobseekerState.error['email'] == 'The email has already been taken.') {
-          setEmailError(<p>A user with this email address already exists. Please enter a different email address or <a href='/login/jobseeker' style={{ color: '#2379ea', textDecoration: 'underline' }}>log in</a>.</p>)
+          setEmailError(<p>A user with this email address already exists. Please enter a different email address or <a href='/login/jobseeker?redirect=/resumetemplate' style={{ color: '#2379ea', textDecoration: 'underline' }}>log in</a>.</p>)
         } else {
           setEmailError(registerJobseekerState.error['email'])
         }
@@ -137,55 +140,74 @@ const ResumeTemplate = () => {
             <form className={styles.resumeTemplateForm}>
               <Text textStyle='xxxl' bold className={styles.formHeader}>Free resume template</Text>
               <Text textStyle='xl' className={styles.formSubHeader}>Create and download resume in a minute.</Text>
-              <div className={styles.fullWidth}>
-                <div style={{ marginRight: '15px'}}>
-                  <MaterialTextField
-                    value={firstName}
-                    defaultValue={firstName}
-                    label='First name'
-                    size='small'
-                    className={styles.halfWidth}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
-                  {firstNameError && errorText(firstNameError)}
-                </div>
-
+                {!userCookie && 
                 <div>
+                  <div className={styles.fullWidth}>
+                    <div style={{ marginRight: '15px'}}>
+                      <MaterialTextField
+                        value={firstName}
+                        defaultValue={firstName}
+                        label='First name'
+                        size='small'
+                        className={styles.halfWidth}
+                        onChange={(e) => setFirstName(e.target.value)}
+                      />
+                      {firstNameError && errorText(firstNameError)}
+                    </div>
+
+                    <div>
+                      <MaterialTextField
+                        value={lastName}
+                        defaultValue={lastName}
+                        label='Last name'
+                        size='small'
+                        className={styles.halfWidth}
+                        onChange={(e) => setLastName(e.target.value)}
+                      /> 
+                      {lastNameError && errorText(lastNameError)}
+                    </div>
+                  </div>
+
                   <MaterialTextField
-                    value={lastName}
-                    defaultValue={lastName}
-                    label='Last name'
+                    id='email'
+                    label='Email address'
+                    variant='outlined'
+                    value={email}
                     size='small'
-                    className={styles.halfWidth}
-                    onChange={(e) => setLastName(e.target.value)}
-                  /> 
-                  {lastNameError && errorText(lastNameError)}
-                </div>
-              </div>
-              
-              <MaterialTextField
-                id='email'
-                label='Email address'
-                variant='outlined'
-                value={email}
-                size='small'
-                defaultValue={email}
-                autoComplete='off'
-                error={emailError ? true : false}
-                onChange={(e) => setEmail(e.target.value)}
-                className={styles.fullWidth}
-              />
-              {emailError && errorText(emailError)}
-            
+                    defaultValue={email}
+                    autoComplete='off'
+                    error={emailError ? true : false}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={styles.fullWidth}
+                  />
+                  {emailError && errorText(emailError)}
+                </div>}
+
               <MaterialButton 
                 variant='contained' 
                 capitalize 
                 className={styles.fullWidthButton} 
-                onClick={() => onRegister()}
+                onClick={() => {
+                  if (!userCookie) {
+                    onRegister()
+                  } else {
+                    window.open(`${process.env.DOCUMENT_GENERATOR_URL}/resume/pro/bossjob.pdf?token=${getCookie('accessToken')}`)
+                  }
+                }}
                 isLoading={isRegisteringJobseeker}
               >
                 <Text textColor='white'>Create Resume</Text>
               </MaterialButton>
+
+              {!userCookie && <Text tagName='p' textStyle='base' style={{ textAlign: 'center' }}>
+                Already on Bossjob?
+                <Link to='/login/jobseeker?redirect=/resumetemplate'>
+                  <Text textColor='primaryBlue' underline>
+                    {' '}
+                    Log in
+                  </Text>
+                </Link>
+              </Text>}
             </form>  
             <img src={ResumeTemplatePreview} alt="Resume Template" className={styles.resumeTemplatePreview} />
           </div>
