@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 /* Vendors */
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
-import slugify from 'slugify'
 import {
   Timeline,
   TimelineItem,
@@ -26,7 +25,6 @@ import MaterialButton from 'components/MaterialButton'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
-import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Styles */
 import styles from './JobDetail.module.scss'
@@ -49,6 +47,11 @@ import {
   MoreIcon,
   ExpireIcon,
 } from 'images'
+
+/* Helpers */
+import {
+  getApplyJobLink,
+} from 'helpers/jobPayloadFormatter'
 
 interface IJobDetailProps {
   selectedJob: any
@@ -83,6 +86,7 @@ const JobDetail = ({
   const [jobDetailOption, setJobDetailOption] = useState(false)
   const [isSaveClicked, setIsSaveClicked] = useState(false)
   const [isSavedJob, setIsSavedJob] = useState(false)
+  const applyJobLink = getApplyJobLink(selectedJob, userCookie ? true : false)
   
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
@@ -127,18 +131,6 @@ const JobDetail = ({
     return false
   }
 
-  const handleApplyJob = (e) => {
-    e.preventDefault()
-
-    if (!userCookie) {
-      router.push('/login/jobseeker?redirect=jobs-hiring/job-search')
-    } else {
-      const applyJobUrl = selectedJob.external_apply_url ? selectedJob.external_apply_url : authPathToOldProject(null, `/dashboard/job/${slugify(selectedJob?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.id}/apply`)
-
-      router.push(applyJobUrl)
-    }
-  }
-  
   return (
     <div className={styles.JobDetail}>
       <div className={classNamesCombined([styles.JobDetailContent])}>
@@ -200,12 +192,14 @@ const JobDetail = ({
                 {selectedJob?.status_key === 'active'  && !isCategoryApplied && (
                   <>
                     {!selectedJob?.is_applied ? 
+                      <Link to={applyJobLink} external={userCookie ? true : false}>
                         <MaterialButton 
                           variant='contained' 
                           capitalize 
-                          onClick={(e) => handleApplyJob(e)}>
-                            <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
+                        >
+                          <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
                         </MaterialButton>
+                      </Link>
                       : <MaterialButton variant='contained' capitalize disabled>
                           <Text textStyle='lg' textColor='white' bold>Applied</Text> 
                         </MaterialButton>

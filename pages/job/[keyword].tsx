@@ -38,8 +38,7 @@ import ModalReportJob from 'components/ModalReportJob'
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
-import { categoryParser, conditionChecker } from 'helpers/jobPayloadFormatter'
-import { authPathToOldProject } from 'helpers/authenticationTransition'
+import { categoryParser, conditionChecker, getApplyJobLink} from 'helpers/jobPayloadFormatter'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -94,6 +93,7 @@ const Job = ({
   const dispatch = useDispatch()
   const router = useRouter()
   const userCookie = getCookie('user') || null
+  const applyJobLink = getApplyJobLink(jobDetail, userCookie ? true : false)
 
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
@@ -118,6 +118,7 @@ const Job = ({
 
   const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
+
 
   useEffect(() => {
     setJobDetailUrl(handleFormatWindowUrl('job', jobDetail?.['job_title'], jobDetail?.['id']))
@@ -253,18 +254,6 @@ const Job = ({
     updateUrl(queryParam, null)
   }
 
-  const handleApplyJob = (e) => {
-    e.preventDefault()
-
-    if (!userCookie) {
-      router.push(`/login/jobseeker?redirect=/job/${slugify(jobDetail.job_title || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobDetail.id}`)
-    } else {
-      const applyJobUrl = jobDetail.external_apply_url ? jobDetail.external_apply_url : authPathToOldProject(null, `/dashboard/job/${slugify(jobDetail?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobDetail?.id}/apply`)
-
-      router.push(applyJobUrl)
-    }
-  }
-
   return (
     <Layout>
       <SEO title={jobDetail.job_title} description={jobDetail.job_description} />
@@ -344,12 +333,14 @@ const Job = ({
                       <MaterialButton variant='contained' capitalize disabled>
                         <Text textColor='white' bold>Applied</Text>
                       </MaterialButton> : 
-                      <MaterialButton 
-                        variant='contained' 
-                        capitalize
-                        onClick={(e) => handleApplyJob(e)}> 
-                        <Text textColor='white' bold>Apply Now</Text>  
-                      </MaterialButton>
+                      <Link to={applyJobLink}>
+                        <MaterialButton 
+                          variant='contained' 
+                          capitalize 
+                        >
+                          <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
+                        </MaterialButton>
+                      </Link>
                     }
                   </>
                 )}

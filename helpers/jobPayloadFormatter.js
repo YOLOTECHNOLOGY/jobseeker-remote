@@ -1,5 +1,9 @@
 // import { stringify } from 'query-string'
 import { flat, thousandsToNumber, unslugify } from 'helpers/formatter'
+
+/* Helpers */
+import { authPathToOldProject } from 'helpers/authenticationTransition'
+
 /* Vendors */
 import moment from 'moment'
 import slugify from 'slugify'
@@ -430,6 +434,14 @@ const getDegreeList = (config) => {
   })
 }
 
+const getApplyJobLink = (job, isAuthUser) => {
+  if (!isAuthUser) {
+    return '/login/jobseeker?redirect=/jobs-hiring/job-search'
+  } else {
+    return job.external_apply_url ? job?.external_apply_url : authPathToOldProject(null, `/dashboard/job/${slugify(job?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${job?.id}/apply`)
+  }
+}
+
 export {
   handleSalary,
   urlQueryParser,
@@ -447,5 +459,6 @@ export {
   getSalaryOptions,
   getCountryList,
   getIndustryList,
-  getDegreeList
+  getDegreeList,
+  getApplyJobLink
 }
