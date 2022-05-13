@@ -1,4 +1,7 @@
 import { useCallback, useState, useEffect } from 'react'
+
+/* Vendors */
+import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,8 +18,9 @@ import Link from 'components/Link'
 
 // Helpers
 import useWindowDimensions from 'helpers/useWindowDimensions'
-import { getCookie } from 'helpers/cookies'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
+import { getCookie } from 'helpers/cookies'
 // Images
 import {
   ResumeTemplatePreview,
@@ -30,6 +34,7 @@ import styles from './ResumeTemplate.module.scss'
 const ResumeTemplate = () => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
+  const router = useRouter()
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState([])
   const userCookie = getCookie('user') || null
@@ -188,10 +193,10 @@ const ResumeTemplate = () => {
                 capitalize 
                 className={styles.fullWidthButton} 
                 onClick={() => {
-                  if (!userCookie) {
-                    onRegister()
+                  if (userCookie) {
+                    userCookie.is_profile_completed ? router.push(authPathToOldProject(null, '/dashboard/profile/jobseeker')) : router.push('/jobseeker-complete-profile/1') 
                   } else {
-                    window.open(`${process.env.DOCUMENT_GENERATOR_URL}/resume/pro/bossjob.pdf?token=${getCookie('accessToken')}`)
+                    onRegister()
                   }
                 }}
                 isLoading={isRegisteringJobseeker}
