@@ -580,7 +580,7 @@ const Job = ({
                     <Text textStyle='base' tagName='p'>{job.company_name}</Text>
                     <Text textStyle='base' textColor='darkgrey'>{job.location_value}</Text>
                     <Text textStyle='base' tagName='p' textColor='darkgrey' className={styles.JobDetailSidebarCardSalary}>{job.salary_range_value}</Text>
-                    {job.published_at && <Text textStyle='xsm' tagName='p'>Posted on {job.published_at}</Text> }
+                    {job.refreshed_at && <Text textStyle='xsm' tagName='p'>Posted on {job.refreshed_at}</Text> }
                     <Link to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`} className={styles.JobDetailSidebarCardApply}>
                       <Text 
                         textStyle='base' 
