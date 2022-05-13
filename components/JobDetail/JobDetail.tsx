@@ -186,6 +186,12 @@ const JobDetail = ({
             <Text textStyle='lg' className={styles.JobDetailCompany}>
               {selectedJob?.company?.name}
             </Text>
+            {selectedJob?.is_featured && (
+              <JobTag tag='Feature' tagType='featured' />
+            )}
+            {selectedJob?.is_urgent && (
+              <JobTag tag='Urgent' tagType='urgent' />
+            )}
             <JobTag tag={selectedJob?.job_type_value} />
             <div className={styles.JobDetailButtonsWrapper}>
               <div className={styles.JobDetailButtons}>

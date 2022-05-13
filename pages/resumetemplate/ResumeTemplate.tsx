@@ -95,7 +95,7 @@ const ResumeTemplate = () => {
   }
 
   const onRegister = () => {
-    if (!email) setEmailError('Email address is required.') 
+    if (!email) setEmailError('Please enter your email address.') 
     else {
       const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 

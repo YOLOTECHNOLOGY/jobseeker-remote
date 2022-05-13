@@ -26,7 +26,7 @@ import { postReportRequest } from 'store/actions/reports/postReport'
 import Layout from 'components/Layout'
 import SEO from 'components/SEO'
 import Text from 'components/Text'
-import AdSlot from 'components/AdSlot'
+// import AdSlot from 'components/AdSlot'
 import Link from 'components/Link'
 import JobCard from 'components/JobCard'
 import JobDetail from 'components/JobDetail'
@@ -365,7 +365,7 @@ const MyJobs = ({
               </div>
             )}
           </div>
-          <div className={styles.MyJobsAds}>
+          {/* <div className={styles.MyJobsAds}>
             <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'job-page-skyscraper-1'} />
             </div>
@@ -375,7 +375,7 @@ const MyJobs = ({
             <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'job-page-skyscraper-3'} />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
