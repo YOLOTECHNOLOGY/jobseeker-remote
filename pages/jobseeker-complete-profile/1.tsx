@@ -64,7 +64,7 @@ const Step1 = (props: any) => {
       return phoneNumber.includes(country.value)
     })
     
-    return matchedCountryCode ? matchedCountryCode[0].value : null
+    return matchedCountryCode ? matchedCountryCode[0]?.value : null
   }
   const [smsCode, setSmsCode] = useState(getSmsCountryCode(userDetail?.phone_num, smsCountryList) || '+63')
   const [contactNumber, setContactNumber] = useState(userDetail?.phone_num?.replace(smsCode, "") || null)
