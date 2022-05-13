@@ -8,6 +8,7 @@ import { ConnectedRouter } from 'connected-next-router'
 import 'styles/globals.scss'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
+import MaintenancePage from './maintenance'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
@@ -138,7 +139,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
       <ConnectedRouter>
         <CookiesProvider>
-          <Component {...pageProps} />
+          {process.env.MAINTENANCE === 'true' ? <MaintenancePage {...pageProps} /> : <Component {...pageProps} />}
         </CookiesProvider>
       </ConnectedRouter>
     </>
