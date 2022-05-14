@@ -7,7 +7,7 @@ module.exports = {
       return [{
         source: '/((?!maintenance).*)',
         destination: '/maintenance',
-        permanent: true,
+        permanent: false,
       }]
     } 
 
