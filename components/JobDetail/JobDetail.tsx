@@ -86,7 +86,7 @@ const JobDetail = ({
   const [jobDetailOption, setJobDetailOption] = useState(false)
   const [isSaveClicked, setIsSaveClicked] = useState(false)
   const [isSavedJob, setIsSavedJob] = useState(false)
-  const applyJobLink = getApplyJobLink(selectedJob, userCookie ? true : false)
+  const applyJobLink = getApplyJobLink(selectedJob, userCookie)
   
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
@@ -198,7 +198,7 @@ const JobDetail = ({
                 {selectedJob?.status_key === 'active'  && !isCategoryApplied && (
                   <>
                     {!selectedJob?.is_applied ? 
-                      <Link to={applyJobLink} external={userCookie ? true : false}>
+                      <Link to={applyJobLink} external={userCookie ? userCookie?.is_profile_completed : false}>
                         <MaterialButton 
                           variant='contained' 
                           capitalize 
