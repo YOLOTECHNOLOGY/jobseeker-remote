@@ -21,7 +21,7 @@ const CompanyCard = ({
       </div>
       <div className={styles.companyCardRight}>
         <Link to={`/company/${slugify(company?.name.toLowerCase() || '')}-${company?.id}`} className={styles.companyCardName}>
-          <Text textStyle='xl' bold tagName='p'>{company.name}</Text>
+          <Text textStyle='xl' bold tagName='h3'>{company.name}</Text>
         </Link>
         <Text textStyle='lg' tagName='p' className={styles.companyCardCategory}>{company.industry_value}</Text>
         <Link to={`/company/${slugify(company?.name.toLowerCase() || '')}-${company?.id}/jobs`} className={styles.companyCardOpenings}>
