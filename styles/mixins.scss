@@ -49,3 +49,8 @@
     @content;
   }
 }
+
+@mixin metaTag{
+  color:transparent;
+  height:1px;
+}

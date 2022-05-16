@@ -82,37 +82,38 @@ const Search = ({ defaultQuery } : SearchProps) => {
   
   return (
     <Layout>
-      <SEO title='Company Directories' />
-
+      <SEO
+        title='Find Companies Hiring in Philippines | Bossjob'
+        description='Discover great companies to work for in Philippines! Learn more about the company and apply to job openings on Bossjob!'
+        canonical='/companies/search'
+      />
       <div className={styles.companies}>
         <div className={styles.searchCompany}>
-          <Text textStyle='xxl' tagName='p' bold className={styles.searchCompanyTitle}>Search Companies</Text>
-          <SearchCompanyField
-            defaultQuery={defaultQuery}
-            onKeywordSearch={handleKeywordSearch}
-          />
+          <Text textStyle='xxl' tagName='p' bold className={styles.searchCompanyTitle}>
+            Search Companies
+          </Text>
+          <h1 className={styles.metaTag}>Find great companies in Phillipines</h1>
+          <SearchCompanyField defaultQuery={defaultQuery} onKeywordSearch={handleKeywordSearch} />
           <Text textStyle='xl' tagName='p' bold className={styles.searchCompanyTitle}>
-            Companies for “{query ? unslugify(query) : 'all'}” 
-            {companies?.length === 0 && (
-              <span> - No Results Found.</span>
-            )}
+            Companies for “{query ? unslugify(query) : 'all'}”
+            {companies?.length === 0 && <span> - No Results Found.</span>}
           </Text>
         </div>
 
         <div className={styles.companiesList}>
-          <CompanyCardList 
-            companiesList={companies} 
+          <CompanyCardList
+            companiesList={companies}
             isLoading={isCompanyFilterFetching}
             isSearchPage
           />
         </div>
-        
+
         {companies?.length > 0 && (
           <div className={styles.companiesPagination}>
-            <MaterialRoundedPagination 
-              onChange={handlePaginationClick} 
-              defaultPage={1} 
-              totalPages={totalPages} 
+            <MaterialRoundedPagination
+              onChange={handlePaginationClick}
+              defaultPage={1}
+              totalPages={totalPages}
               page={currentPage}
             />
           </div>
@@ -125,7 +126,7 @@ const Search = ({ defaultQuery } : SearchProps) => {
 export const getServerSideProps = wrapper.getServerSideProps(() => async ({ query }) => {
   return {
     props: {
-      defaultQuery: query.query,
+      defaultQuery: query.query || null,
     },
   }
 })
