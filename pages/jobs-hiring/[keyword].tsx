@@ -36,6 +36,7 @@ import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWit
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
+import Tooltip from '@mui/material/Tooltip';
 
 /* Components */
 import Image from 'next/image'
@@ -625,7 +626,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                         to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                         external
                       >
-                        <Image src={company.logoUrl} alt={company.name} width='30' height='30' />
+                        <Tooltip title={company.name} placement="top" arrow style={{ display: 'flex'}}>
+                          <span>
+                            <Image src={company.logoUrl} alt={company.name} width='30' height='30'/>
+                          </span>
+                        </Tooltip>
                       </Link>
                     )
                   }
