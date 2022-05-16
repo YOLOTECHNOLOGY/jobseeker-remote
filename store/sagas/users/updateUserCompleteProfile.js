@@ -1,6 +1,7 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
 import { UPDATE_USER_COMPLETE_PROFILE_REQUEST } from 'store/types/users/updateUserCompleteProfile'
+import { getCookie, setCookie } from 'helpers/cookies'
 import {
   updateUserCompleteProfileSuccess,
   updateUserCompleteProfileFailed,
@@ -170,6 +171,12 @@ function* completeUserProfileSaga(redirect, accessToken) {
   try {
     const { data } = yield call(completeUserProfileService, { accessToken })
     yield put(completeUserProfileSuccess(data.data))
+
+    let userCookie = getCookie('user')
+
+    userCookie.is_profile_completed = true
+    
+    yield call(setCookie, 'user', userCookie)
 
     let url = '/jobs-hiring/job-search'
     if (redirect) {
