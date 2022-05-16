@@ -14,6 +14,7 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
 
 /* Components */
+import SEO from 'components/SEO'
 import Image from 'next/image'
 import Layout from 'components/Layout'
 import Text from 'components/Text'
@@ -264,10 +265,15 @@ const Home = (props: HomeProps) => {
   return (
     <div className={styles.container}>
       <Layout>
+        <SEO
+          title='Career Platform for Professionals in Philippines | Bossjob'
+          description='Discover job opportunities in Philippines on Bossjob! Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers'
+          canonical='/'
+        />
         <section className={styles.searchAndQuickLinkSection}>
           <div className={styles.commonContainer}>
             <Text
-              tagName='h1'
+              // tagName='h1'
               textStyle='xxxl'
               textColor='primaryBlue'
               bold
@@ -275,6 +281,7 @@ const Home = (props: HomeProps) => {
             >
               Find Jobs for Professionals in Phillipines
             </Text>
+            <h1 className={styles.metaTag}>Career Platform for Professionals in Philippines</h1>
             <div className={styles.searchSection}>
               <div className={styles.searchAndLocationContainer}>
                 <MaterialTextFieldWithSuggestionList
@@ -285,7 +292,7 @@ const Home = (props: HomeProps) => {
                   className={styles.searchField}
                   searchFn={handleSuggestionSearch}
                   updateSearchValue={setSearchValue}
-                  onSelect={(val:any)=>{
+                  onSelect={(val: any) => {
                     setSearchValue(val)
                     onSearch(val)
                   }}
@@ -304,7 +311,9 @@ const Home = (props: HomeProps) => {
                   onChange={onLocationSearch}
                 />
                 <MaterialButton variant='contained' capitalize onClick={() => onSearch()}>
-                  <Text textStyle='lg' bold textColor='white'>Search</Text>
+                  <Text textStyle='lg' bold textColor='white'>
+                    Search
+                  </Text>
                 </MaterialButton>
               </div>
               <div className={styles.quickLinksContainer}>{renderQuickLinks()}</div>
@@ -317,52 +326,52 @@ const Home = (props: HomeProps) => {
               <Text tagName='h1' textStyle='xxxl' bold>
                 Top Companies
               </Text>
-                <div className={styles.topCompaniesList}>
-                  {topCompanies?.map((company, index) => {
-                    if (index < 24) {
-                      if (!showLogo){
-                        return (
-                          <div className={styles.topCompaniesLogoLoader}>
-                            <TopCompaniesLogoLoader />
-                          </div> 
-                        )
-                      }
+              <div className={styles.topCompaniesList}>
+                {topCompanies?.map((company, index) => {
+                  if (index < 24) {
+                    if (!showLogo) {
                       return (
-                        <Link
-                          key={company.id}
-                          className={styles.topCompaniesLogo}
-                          to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
-                          external
-                        >
-                          <Image src={company.logoUrl} alt={company.name} width='60' height='60' />
-                        </Link>
+                        <div className={styles.topCompaniesLogoLoader}>
+                          <TopCompaniesLogoLoader />
+                        </div>
                       )
                     }
-                  })}
-                </div>
-                <div className={styles.topCompaniesListMobile}>
-                  {topCompanies?.map((company, index) => {
-                    if (index < 10) {
-                      if (!showLogo) {
-                        return (
-                          <div className={styles.topCompaniesLogoLoader}>
-                            <TopCompaniesLogoLoader />
-                          </div>
-                        )
-                      }
+                    return (
+                      <Link
+                        key={company.id}
+                        className={styles.topCompaniesLogo}
+                        to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
+                        external
+                      >
+                        <Image src={company.logoUrl} title={company.name} alt={company.name} width='60' height='60' />
+                      </Link>
+                    )
+                  }
+                })}
+              </div>
+              <div className={styles.topCompaniesListMobile}>
+                {topCompanies?.map((company, index) => {
+                  if (index < 10) {
+                    if (!showLogo) {
                       return (
-                        <Link
-                          key={company.id}
-                          className={styles.topCompaniesLogo}
-                          to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
-                          external
-                        >
-                          <Image src={company.logoUrl} alt={company.name} width='60' height='60' />
-                        </Link>
+                        <div className={styles.topCompaniesLogoLoader}>
+                          <TopCompaniesLogoLoader />
+                        </div>
                       )
                     }
-                  })}
-                </div>
+                    return (
+                      <Link
+                        key={company.id}
+                        className={styles.topCompaniesLogo}
+                        to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
+                        external
+                      >
+                        <Image src={company.logoUrl} alt={company.name} width='60' height='60' />
+                      </Link>
+                    )
+                  }
+                })}
+              </div>
               <div className={styles.viewAllCompanies}>
                 <Link to='/' className={styles.viewAllCompaniesLink}>
                   <Text textStyle='lg' textColor='primaryBlue'>
@@ -373,15 +382,15 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.companyBanners}>
               <div className={styles.companyBanner}>
-                <AdSlot adSlot={'homepage/rectangle-banner-1'}/>
+                <AdSlot adSlot={'homepage/rectangle-banner-1'} />
               </div>
               <div className={styles.companyBanner}>
-                <AdSlot adSlot={'homepage/rectangle-banner-2'}/>
+                <AdSlot adSlot={'homepage/rectangle-banner-2'} />
               </div>
             </div>
           </div>
           <div className={styles.statsSection}>
-            <Text tagName='h1' textStyle='xxxl' bold>
+            <Text textStyle='xxxl' bold>
               Find your next job here
             </Text>
             <div className={styles.statsSectionContentWrapper}>
@@ -390,18 +399,23 @@ const Home = (props: HomeProps) => {
                 <Text className={styles.statsDescription} textStyle='xxl' bold>
                   Companies are hiring on Bossjob
                 </Text>
+                <span className={styles.metaTag}>30K+ Companies are hiring on Bossjob</span>
               </div>
               <div className={styles.statsSectionContent}>
                 <Text className={styles.stats}>₱33K+</Text>
                 <Text className={styles.statsDescription} textStyle='xxl' bold>
                   Average monthly salary offered by our employers
                 </Text>
+                <span className={styles.metaTag}>
+                  ₱33K+ Average monthly salary offered by our employers
+                </span>
               </div>
               <div className={styles.statsSectionContent}>
                 <Text className={styles.stats}>2.5M+</Text>
                 <Text className={styles.statsDescription} textStyle='xxl' bold>
                   Job Seekers using Bossjob to find jobs
                 </Text>
+                <span className={styles.metaTag}>2.5M+ Job Seekers using Bossjob to find jobs</span>
               </div>
             </div>
           </div>
@@ -419,7 +433,9 @@ const Home = (props: HomeProps) => {
                     onClick={() => updateActiveFeature(1)}
                     className={activeFeature === 1 ? styles.active : ''}
                   >
-                    Build Professional Resume
+                    <Text tagName='h2' className={styles.featureTitle}>
+                      Build Professional Resume
+                    </Text>
                     <p>
                       Choose from Bossjob's ready-to-use resume templates to win interviews
                       effortlessly
@@ -430,7 +446,9 @@ const Home = (props: HomeProps) => {
                     onClick={() => updateActiveFeature(2)}
                     className={activeFeature === 2 ? styles.active : ''}
                   >
-                    Chat directly with Boss
+                    <Text tagName='h2' className={styles.featureTitle}>
+                      Chat directly with Boss
+                    </Text>
                     <p>Get instant feedback and all your queries answered by the hiring manager</p>
                   </span>
                   <span
@@ -438,7 +456,9 @@ const Home = (props: HomeProps) => {
                     onClick={() => updateActiveFeature(3)}
                     className={activeFeature === 3 ? styles.active : ''}
                   >
-                    Get Headhunted
+                    <Text tagName='h2' className={styles.featureTitle}>
+                      Get Headhunted
+                    </Text>
                     <p>
                       Opt in to be headhunted by Bossjob's Robo-headhunter, an A.I.-powered
                       headhunterbot matching you with suitable jobs round the clock
@@ -449,7 +469,9 @@ const Home = (props: HomeProps) => {
                     onClick={() => updateActiveFeature(4)}
                     className={activeFeature === 4 ? styles.active : ''}
                   >
-                    Level Up Your Career
+                    <Text tagName='h2' className={styles.featureTitle}>
+                      Level Up Your Career
+                    </Text>
                     <p>
                       100,00+ cheap courses & certifications readily available to equip you with
                       skills for your next career jump
