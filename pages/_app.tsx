@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import { wrapper } from 'store'
+import { getCookie, removeCookie } from 'helpers/cookies'
 import { CookiesProvider } from 'react-cookie'
 import { ConnectedRouter } from 'connected-next-router'
 
@@ -21,6 +22,29 @@ const App = ({ Component, pageProps }: AppProps) => {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [router.events])
+
+  // Validate token on every page navigation
+  useEffect(() => {
+    const accessToken = getCookie('accessToken')
+
+    if (accessToken) {
+      fetch(`${process.env.AUTH_BOSSJOB_URL}/token/validate`, {
+        method: 'POST',
+        headers: new Headers({
+          'Authorization': 'Bearer ' + getCookie('accessToken'), 
+        }), 
+      })
+        .then((resp) => {
+          if (resp.status !== 200) {
+            removeCookie('user')
+            removeCookie('accessToken')
+            removeCookie('splan')
+
+            router.push('/login/jobseeker')
+          }
+        })
+    }
+  }, [router])
 
   return (
     <>

@@ -93,7 +93,7 @@ const Job = ({
   const dispatch = useDispatch()
   const router = useRouter()
   const userCookie = getCookie('user') || null
-  const applyJobLink = getApplyJobLink(jobDetail, userCookie ? true : false)
+  const applyJobLink = getApplyJobLink(jobDetail, userCookie)
 
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
@@ -339,7 +339,7 @@ const Job = ({
                       <MaterialButton variant='contained' capitalize disabled>
                         <Text textColor='white' bold>Applied</Text>
                       </MaterialButton> : 
-                      <Link to={applyJobLink}>
+                      <Link to={applyJobLink} external={userCookie ? userCookie?.is_profile_completed : false}>
                         <MaterialButton 
                           variant='contained' 
                           capitalize 
