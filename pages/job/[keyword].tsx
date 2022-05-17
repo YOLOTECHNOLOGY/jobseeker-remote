@@ -324,7 +324,7 @@ const Job = ({
             </Link>
             <div className={styles.JobDetailPrimarySub}>
               {jobDetail?.is_featured && (
-                <JobTag tag='Feature' tagType='featured' />
+                <JobTag tag='Featured' tagType='featured' />
               )}
               {jobDetail?.is_urgent && (
                 <JobTag tag='Urgent' tagType='urgent' />

@@ -32,7 +32,7 @@
 
   &XSM {
     font-size: $mobile-font-size-xsm;
-    line-height: 21px;
+    line-height: 12px;
     @include msd {
       font-size: $desktop-font-size-xsm;
     }
@@ -43,7 +43,7 @@
 
   &SM {
     font-size: $mobile-font-size-sm;
-    line-height: 19px;
+    line-height: 18px;
     @include msd {
       font-size: $desktop-font-size-sm;
     }
@@ -76,7 +76,7 @@
 
   &XL {
     font-size: $mobile-font-size-xl;
-    line-height: 27px;
+    line-height: 23px;
     @include msd {
       font-size: $desktop-font-size-xl;
     }
@@ -87,6 +87,7 @@
 
   &XXL {
     font-size: $mobile-font-size-xxl;
+    line-height: 27px;
     @include md {
       font-size: $desktop-font-size-xxl;
     }
@@ -94,7 +95,7 @@
 
   &XXXL {
     font-size: $mobile-font-size-xxxl;
-    line-height: 45px;
+    line-height: 40px;
     @include md {
       font-size: $desktop-font-size-xxxl;
     }

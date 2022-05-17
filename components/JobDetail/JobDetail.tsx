@@ -187,7 +187,7 @@ const JobDetail = ({
               {selectedJob?.company?.name}
             </Text>
             {selectedJob?.is_featured && (
-              <JobTag tag='Feature' tagType='featured' />
+              <JobTag tag='Featured' tagType='featured' />
             )}
             {selectedJob?.is_urgent && (
               <JobTag tag='Urgent' tagType='urgent' />
