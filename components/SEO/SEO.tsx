@@ -9,6 +9,7 @@ interface SEOProps {
 }
 
 const SEO = ({ title, description, imageUrl, canonical }: SEOProps) => {
+  const canonicalPath = 'https://www.' + process.env.HOST_PATH + canonical
   return (
     <Head>
       <title>{title}</title>
@@ -24,7 +25,7 @@ const SEO = ({ title, description, imageUrl, canonical }: SEOProps) => {
 
       {/* <meta itemProp="name" content={seoTitle} /> */}
       <meta itemProp='image' content={imageUrl} />
-      <link rel='canonical' href={canonical} />
+      <link rel='canonical' href={canonicalPath} />
     </Head>
   )
 }
