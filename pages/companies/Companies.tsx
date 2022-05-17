@@ -111,7 +111,7 @@ const Companies = () => {
             <div className={styles.featuredEmployerInfo}>
               <img
                 src={featuredCompany?.logo_url}
-                alt={`${featuredCompany.name} logo`}
+                alt={`${featuredCompany?.name} logo`}
                 className={styles.featuredEmployerImage}
               />
               <div className={styles.featuredEmployerDetails}>
@@ -164,7 +164,7 @@ const Companies = () => {
                       <img
                         src={item.url}
                         srcSet={item.url}
-                        alt={`${featuredCompany.name} photo`}
+                        alt={`${featuredCompany?.name} photo`}
                         loading='lazy'
                         className={styles.featuredEmployerPhoto}
                       />
@@ -176,7 +176,7 @@ const Companies = () => {
               {featuredCompany?.pictures?.length > 0 && (
                 <img
                   src={featuredCompany.pictures[0].url}
-                  alt={featuredCompany.name}
+                  alt={featuredCompany?.name}
                   className={styles.featuredEmployerSinglePhoto}
                 />
               )}
