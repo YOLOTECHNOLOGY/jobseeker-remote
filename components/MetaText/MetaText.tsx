@@ -1,9 +1,9 @@
 import Text from '../Text'
 
 // Styles
-import styles from './SeoText.module.scss'
+import styles from './MetaText.module.scss'
 
-type SeoTextProps = {
+type MetaTextProps = {
   children: React.ReactNode
   // children:  string | React.ReactElement |React.ReactElement []
   // children:  string | JSX.Element | JSX.Element[];
@@ -19,7 +19,7 @@ type SeoTextProps = {
   underline?: boolean
 }
 
-const SeoText = ({ children, ...others }: SeoTextProps) => {
+const MetaText = ({ children, ...others }: MetaTextProps) => {
   return (
     <Text className={styles.metaTag} {...others}>
       {children}
@@ -27,4 +27,4 @@ const SeoText = ({ children, ...others }: SeoTextProps) => {
   )
 }
 
-export default SeoText
+export default MetaText
