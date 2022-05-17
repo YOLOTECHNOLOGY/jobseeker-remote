@@ -54,15 +54,19 @@ const ChangePassword = () => {
   }
 
   return (
-    <AuthLayout 
-      headingText={<Text bold textStyle='xxxl' tagName='h2'>Update Password</Text>}
+    <AuthLayout
+      headingText={
+        <Text bold textStyle='xxxl' tagName='h2'>
+          Update Password
+        </Text>
+      }
       ctaSignup
       isBackToLogin
     >
       <SEO
         title='Change Password - Bossjob'
         description='Bossjob - Career Platform for Professionals in Philippines'
-        canonical='/chage-password'
+        canonical='/change-password'
       />
       <div className={styles.ChangePasswordSubHeading}>
         <Text textStyle='xsm' tagName='p'>
