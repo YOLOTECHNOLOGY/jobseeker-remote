@@ -73,14 +73,14 @@ const App = ({ Component, pageProps }: AppProps) => {
         }}
       />
       {/* Google Ad Manager */}
-      <Script async src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'></Script>
+      {/* <Script async src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'></Script>
       <Script
         dangerouslySetInnerHTML={{
           __html: `
             window.googletag = window.googletag || {cmd: []}
           `,
         }}
-      ></Script>
+      ></Script> */}
 
       {/* Google One Tap Sign in */}
       <Script src="https://apis.google.com/js/platform.js"/>
