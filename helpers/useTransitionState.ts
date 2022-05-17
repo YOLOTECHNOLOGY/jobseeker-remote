@@ -11,7 +11,6 @@ declare global {
 
 function useTransitionState() {
   const router = useRouter()
-
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   const setTransitionStarted = () => {
@@ -19,12 +18,10 @@ function useTransitionState() {
 
     // destroy all ad slots
     const { googletag } = window
-    console.log('googletag', googletag)
     if (googletag){
       googletag.cmd.push(function () {
         googletag.destroySlots()
       })
-      console.log('triggered destroySlots')
     }
   }
 
