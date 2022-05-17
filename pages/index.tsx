@@ -82,7 +82,7 @@ const Home = (props: HomeProps) => {
   const thirdFeatureImgNode = useRef(null)
   const fourthFeatureImgNode = useRef(null)
 
-  useEffect(()=>{
+  useEffect(() => {
     const timer = setTimeout(() => setShowLogo(true), 1500)
     return () => clearTimeout(timer)
   }, [])
@@ -343,7 +343,13 @@ const Home = (props: HomeProps) => {
                         to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                         external
                       >
-                        <Image src={company.logoUrl} title={company.name} alt={company.name} width='60' height='60' />
+                        <Image
+                          src={company.logoUrl}
+                          title={company.name}
+                          alt={company.name}
+                          width='60'
+                          height='60'
+                        />
                       </Link>
                     )
                   }
@@ -399,23 +405,23 @@ const Home = (props: HomeProps) => {
                 <Text className={styles.statsDescription} textStyle='xxl' bold>
                   Companies are hiring on Bossjob
                 </Text>
-                <span className={styles.metaTag}>30K+ Companies are hiring on Bossjob</span>
+                <h2 className={styles.metaTag}>30K+ Companies are hiring on Bossjob</h2>
               </div>
               <div className={styles.statsSectionContent}>
                 <Text className={styles.stats}>₱33K+</Text>
                 <Text className={styles.statsDescription} textStyle='xxl' bold>
                   Average monthly salary offered by our employers
                 </Text>
-                <span className={styles.metaTag}>
+                <h2 className={styles.metaTag}>
                   ₱33K+ Average monthly salary offered by our employers
-                </span>
+                </h2>
               </div>
               <div className={styles.statsSectionContent}>
                 <Text className={styles.stats}>2.5M+</Text>
                 <Text className={styles.statsDescription} textStyle='xxl' bold>
                   Job Seekers using Bossjob to find jobs
                 </Text>
-                <span className={styles.metaTag}>2.5M+ Job Seekers using Bossjob to find jobs</span>
+                <h2 className={styles.metaTag}>2.5M+ Job Seekers using Bossjob to find jobs</h2>
               </div>
             </div>
           </div>
@@ -807,16 +813,19 @@ const Home = (props: HomeProps) => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   // store actions
   store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1}))
+  store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
-  const featuredCompanies = storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map((featuredCompany) => featuredCompany.company)
+  const featuredCompanies =
+    storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(
+      (featuredCompany) => featuredCompany.company
+    )
   const topCompanies = featuredCompanies?.map((featuredCompany) => {
     const logoUrl = featuredCompany.logo_url
     delete featuredCompany.logo_url
-    return {...featuredCompany, logoUrl}
+    return { ...featuredCompany, logoUrl }
   })
   return {
     props: {
