@@ -23,7 +23,7 @@ import CompanyJobsCardLoader from 'components/Loader/CompanyJobsCard'
 
 // Styles
 import styles from '../Company.module.scss'
-import SeoText from '../../../components/SeoText'
+import MetaText from '../../../components/MetaText'
 
 const CompanyJobsProfile = (props: any) => {
   const size = 30
@@ -119,7 +119,7 @@ const CompanyJobsProfile = (props: any) => {
             <Text textStyle='xxl' bold className={styles.companySectionTitle}>
               Jobs
             </Text>
-            <SeoText tagName='h1'>{`Jobs at ${company.name} ${company.id}`}</SeoText>
+            <MetaText tagName='h1'>{`Jobs at ${company.name} ${company.id}`}</MetaText>
             <div className={styles.companyJobsSearch}>
               <div className={styles.companyJobsSearchLeft}>
                 <MaterialTextField

@@ -23,7 +23,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Styles
 import styles from './Companies.module.scss'
-import SeoText from '../../components/SeoText'
+import MetaText from '../../components/MetaText'
 
 interface SearchProps {
   defaultQuery: string
@@ -97,7 +97,7 @@ const Search = ({ defaultQuery }: SearchProps) => {
           <Text textStyle='xxl' tagName='p' bold className={styles.searchCompanyTitle}>
             Search Companies
           </Text>
-          <SeoText tagName='h1'>Find great companies in Phillipines</SeoText>
+          <MetaText tagName='h1'>Find great companies in Phillipines</MetaText>
           <SearchCompanyField defaultQuery={defaultQuery} onKeywordSearch={handleKeywordSearch} />
           <Text textStyle='xl' tagName='p' bold className={styles.searchCompanyTitle}>
             Companies for “{query ? unslugify(query) : 'all'}”
