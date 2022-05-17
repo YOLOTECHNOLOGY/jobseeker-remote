@@ -339,7 +339,7 @@ const Job = ({
                       <MaterialButton variant='contained' capitalize disabled>
                         <Text textColor='white' bold>Applied</Text>
                       </MaterialButton> : 
-                      <Link to={applyJobLink} external={userCookie ? userCookie?.is_profile_completed : false}>
+                      <Link to={applyJobLink} external>
                         <MaterialButton 
                           variant='contained' 
                           capitalize 
