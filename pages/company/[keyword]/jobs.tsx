@@ -23,6 +23,7 @@ import CompanyJobsCardLoader from 'components/Loader/CompanyJobsCard'
 
 // Styles
 import styles from '../Company.module.scss'
+import SeoText from '../../../components/SeoText'
 
 const CompanyJobsProfile = (props: any) => {
   const size = 30
@@ -31,7 +32,7 @@ const CompanyJobsProfile = (props: any) => {
   const dispatch = useDispatch()
   const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription } = props
   const company = companyDetail?.response.data
-  
+
   const [jobQuery, setJobQuery] = useState('')
   const [jobLocation, setJobLocation] = useState(null)
 
@@ -48,10 +49,10 @@ const CompanyJobsProfile = (props: any) => {
       size,
       page,
       query: jobQuery,
-      jobLocation: jobLocation?.value || ''
+      jobLocation: jobLocation?.value || '',
     }
 
-    dispatch(fetchJobsListRequest({...payload}, accessToken))
+    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
     scrollToTop()
   }, [router.query])
 
@@ -61,7 +62,7 @@ const CompanyJobsProfile = (props: any) => {
       size: 30,
     }
 
-    dispatch(fetchJobsListRequest({...payload}, accessToken))
+    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
   }, [])
 
   useEffect(() => {
@@ -78,10 +79,10 @@ const CompanyJobsProfile = (props: any) => {
       size,
       page,
       query: jobQuery,
-      jobLocation: jobLocation?.value || ''
+      jobLocation: jobLocation?.value || '',
     }
 
-    dispatch(fetchJobsListRequest({...payload}, accessToken))
+    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
   }
 
   const handlePaginationClick = (event, val) => {
@@ -90,7 +91,9 @@ const CompanyJobsProfile = (props: any) => {
   }
 
   const handleJobsDisplayCount = () => {
-    return `${(size * (page as any || 1) - size) + 1} - ${totalJobs < size ? totalJobs : size * (page as any || 1)}`
+    return `${size * ((page as any) || 1) - size + 1} - ${
+      totalJobs < size ? totalJobs : size * ((page as any) || 1)
+    }`
   }
 
   const onLocationSearch = (_, value) => {
@@ -116,7 +119,7 @@ const CompanyJobsProfile = (props: any) => {
             <Text textStyle='xxl' bold className={styles.companySectionTitle}>
               Jobs
             </Text>
-            <h1 className={styles.metaTag}>{`Jobs at ${company.name} ${company.id}`}</h1>
+            <SeoText tagName='h1'>{`Jobs at ${company.name} ${company.id}`}</SeoText>
             <div className={styles.companyJobsSearch}>
               <div className={styles.companyJobsSearchLeft}>
                 <MaterialTextField
@@ -187,7 +190,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
 
   const companyPageUrl = req.url.split('/')
-  const companyPath = companyPageUrl.length === 4 ? companyPageUrl[2].split('-') : companyPageUrl[companyPageUrl.length - 1].split('-')
+  const companyPath =
+    companyPageUrl.length === 4
+      ? companyPageUrl[2].split('-')
+      : companyPageUrl[companyPageUrl.length - 1].split('-')
   const companyId = Number(companyPath[companyPath.length - 1])
 
   store.dispatch(fetchConfigRequest())

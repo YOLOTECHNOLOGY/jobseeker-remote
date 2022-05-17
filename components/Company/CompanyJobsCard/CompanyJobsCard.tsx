@@ -7,6 +7,7 @@ import Link from 'components/Link'
 
 // Styles
 import styles from './CompanyJobsCard.module.scss'
+import SeoText from '../../SeoText'
 
 interface ICompanyJobsCard {
   id: number
@@ -23,7 +24,7 @@ const CompanyJobsCard = ({ title, location, salary, availability, id }: ICompany
         <Text textStyle='base' bold>
           {title}
         </Text>
-        <h2 className={styles.metaTag}>{title}</h2>
+        <SeoText tagName='h2'>{title}</SeoText>
         <div className={styles.companyJobsCardInfo}>
           <Text textStyle='base' className={styles.companyJobsCardLocation}>
             {location}
