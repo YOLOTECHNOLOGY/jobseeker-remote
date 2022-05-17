@@ -210,14 +210,6 @@ const Step1 = (props: any) => {
                 required: {
                   value: true,
                   message: 'This field is required.'
-                },
-                minLength: {
-                  value: 9,
-                  message: 'Must be 9 characters or more.'
-                }, 
-                maxLength: {
-                  value: 10,
-                  message: 'Must be 10 characters or less.'
                 }
               })}}
               className={styles.step1ContactNumberField}
@@ -229,7 +221,6 @@ const Step1 = (props: any) => {
               defaultValue={contactNumber}
               onChange={(e) => setContactNumber(e.target.value)}
             />
-            <Text className={styles.step1ContactDigits} textStyle='sm' textColor='darkgrey'>9 - 10 digits</Text>
             {errors.contactNumber && errorText(errors.contactNumber.message)}
           </div>
         </div>

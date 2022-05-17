@@ -374,7 +374,7 @@ const Home = (props: HomeProps) => {
                 })}
               </div>
               <div className={styles.viewAllCompanies}>
-                <Link to='/' className={styles.viewAllCompaniesLink}>
+                <Link to='/companies' className={styles.viewAllCompaniesLink}>
                   <Text textStyle='lg' textColor='primaryBlue'>
                     View all companies
                   </Text>
