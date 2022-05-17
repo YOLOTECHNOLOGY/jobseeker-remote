@@ -16,11 +16,7 @@ import Text from 'components/Text'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Images
-import {
-  ResumeTemplatePreview,
-  ResumeTemplate1,
-  ResumeTemplate2
-} from 'images'
+import { ResumeTemplatePreview, ResumeTemplate1, ResumeTemplate2 } from 'images'
 
 // Styles
 import styles from './ResumeTemplate.module.scss'
@@ -42,12 +38,12 @@ const ResumeTemplate = () => {
   const isRegisteringJobseeker = useSelector((store: any) => store.auth.registerJobseeker.fetching)
   const registerJobseekerState = useSelector((store: any) => store.auth.registerJobseeker)
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ 
-    align: "start",
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
     loop: true,
     skipSnaps: false,
     inViewThreshold: 0.7,
-    slidesToScroll: width < 768 ? 1 : 2
+    slidesToScroll: width < 768 ? 1 : 2,
   })
   const scrollPrev = useCallback(() => {
     if (emblaApi) {
@@ -72,14 +68,23 @@ const ResumeTemplate = () => {
     if (!emblaApi) return
     onSelect()
     setScrollSnaps(emblaApi.scrollSnapList())
-    emblaApi.on("select", onSelect)
+    emblaApi.on('select', onSelect)
   }, [emblaApi, setScrollSnaps, onSelect])
 
   useEffect(() => {
     if (registerJobseekerState.error) {
       if (registerJobseekerState.error['email']) {
         if (registerJobseekerState.error['email'] == 'The email has already been taken.') {
-          setEmailError(<p>A user with this email address already exists. Please enter a different email address or <a href='/login/jobseeker' style={{ color: '#2379ea', textDecoration: 'underline' }}>log in</a>.</p>)
+          setEmailError(
+            <p>
+              A user with this email address already exists. Please enter a different email address
+              or{' '}
+              <a href='/login/jobseeker' style={{ color: '#2379ea', textDecoration: 'underline' }}>
+                log in
+              </a>
+              .
+            </p>
+          )
         } else {
           setEmailError(registerJobseekerState.error['email'])
         }
@@ -88,13 +93,18 @@ const ResumeTemplate = () => {
   }, [registerJobseekerState])
 
   const errorText = (errorMessage: string) => {
-    return <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>{errorMessage}</Text>
+    return (
+      <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
+        {errorMessage}
+      </Text>
+    )
   }
 
   const onRegister = () => {
-    if (!email) setEmailError('Email address is required.') 
+    if (!email) setEmailError('Email address is required.')
     else {
-      const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const emailPattern =
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
       if (!emailPattern.test(email)) setEmailError('Email address is invalid.')
       else setEmailError(null)
@@ -112,33 +122,37 @@ const ResumeTemplate = () => {
       setLastNameError(null)
     }
 
-    if (email && !emailError  && firstName && lastName) {
+    if (email && !emailError && firstName && lastName) {
       const payload = {
         email,
         first_name: firstName,
         last_name: lastName,
-        source: 'free_resume'
+        source: 'free_resume',
       }
 
-      dispatch(registerJobseekerRequest({...payload}))
+      dispatch(registerJobseekerRequest({ ...payload }))
     }
   }
 
   return (
     <Layout>
-      <SEO 
-        title="Free Resume Template to Edit & Download | Bossjob.ph"
-        description="Free resume template & sample for you to edit and download on Bossjob. Customize your resume and add career objectives, work experiences and job skills!"
-        canonical="/resumetemplate"
+      <SEO
+        title='Free Resume Template to Edit & Download | Bossjob.ph'
+        description='Free resume template & sample for you to edit and download on Bossjob. Customize your resume and add career objectives, work experiences and job skills!'
+        canonical='/resumetemplate'
       />
       <div className={styles.resumeTemplate}>
         <div className={styles.resumeTemplateHero}>
           <div className={styles.resumeTemplateHeroContent}>
             <form className={styles.resumeTemplateForm}>
-              <Text textStyle='xxxl' bold className={styles.formHeader}>Free resume template</Text>
-              <Text textStyle='xl' className={styles.formSubHeader}>Create and download resume in a minute.</Text>
+              <Text tagName='h1' textStyle='xxxl' bold className={styles.formHeader}>
+                Free resume template
+              </Text>
+              <Text textStyle='xl' className={styles.formSubHeader}>
+                Create and download resume in a minute.
+              </Text>
               <div className={styles.fullWidth}>
-                <div style={{ marginRight: '15px'}}>
+                <div style={{ marginRight: '15px' }}>
                   <MaterialTextField
                     value={firstName}
                     defaultValue={firstName}
@@ -158,11 +172,11 @@ const ResumeTemplate = () => {
                     size='small'
                     className={styles.halfWidth}
                     onChange={(e) => setLastName(e.target.value)}
-                  /> 
+                  />
                   {lastNameError && errorText(lastNameError)}
                 </div>
               </div>
-              
+
               <MaterialTextField
                 id='email'
                 label='Email address'
@@ -176,55 +190,83 @@ const ResumeTemplate = () => {
                 className={styles.fullWidth}
               />
               {emailError && errorText(emailError)}
-            
-              <MaterialButton 
-                variant='contained' 
-                capitalize 
-                className={styles.fullWidthButton} 
+
+              <MaterialButton
+                variant='contained'
+                capitalize
+                className={styles.fullWidthButton}
                 onClick={() => onRegister()}
                 isLoading={isRegisteringJobseeker}
               >
                 <Text textColor='white'>Create Resume</Text>
               </MaterialButton>
-            </form>  
-            <img src={ResumeTemplatePreview} alt="Resume Template" className={styles.resumeTemplatePreview} />
+            </form>
+            <img
+              src={ResumeTemplatePreview}
+              alt='Resume Template'
+              className={styles.resumeTemplatePreview}
+            />
           </div>
         </div>
         <div className={styles.sectionContentDivider}></div>
         <div className={styles.resumeTemplateSection}>
-          <Text textStyle='xxxl' bold className={styles.sectionHeader}>How to create resume template</Text>
+          <Text tagName='h2' textStyle='xxxl' bold className={styles.sectionHeader}>
+            How to create resume template
+          </Text>
           <div className={styles.sectionContentHalfDivider}></div>
           <ul className={styles.resumeStepsList}>
             <li className={styles.resumeStepsItem}>
-              <Text textStyle='lg'>Fill in your name as well as a valid email (important that you enter a valid email which will be used in your resume template)</Text>
+              <Text textStyle='lg'>
+                Fill in your name as well as a valid email (important that you enter a valid email
+                which will be used in your resume template)
+              </Text>
             </li>
             <li className={styles.resumeStepsItem}>
-              <Text textStyle='lg'>Click on “Create Resume” and proceed to fill in more information such as personal summary and career objectives, education, experience, skills, and more.</Text>
+              <Text textStyle='lg'>
+                Click on “Create Resume” and proceed to fill in more information such as personal
+                summary and career objectives, education, experience, skills, and more.
+              </Text>
             </li>
             <li className={styles.resumeStepsItem}>
               <Text textStyle='lg'>Download, print and save your new resume</Text>
             </li>
             <li className={styles.resumeStepsItem}>
-              <Text textStyle='lg'>Update your online resume any time and create new resume template whenever you wish to</Text>
+              <Text textStyle='lg'>
+                Update your online resume any time and create new resume template whenever you wish
+                to
+              </Text>
             </li>
           </ul>
         </div>
         <div className={styles.sectionContentDivider}></div>
         <div className={styles.resumeTemplateSection}>
-          <Text textStyle='xxxl' bold className={styles.sectionHeader}>Have a question?</Text>
+          <Text tagName='h2' textStyle='xxxl' bold className={styles.sectionHeader}>
+            Have a question?
+          </Text>
           <div className={styles.sectionContentHalfDivider}></div>
-          <Text textStyle='xxxl' bold className={styles.sectionSubHeader}>Is it free?</Text>
+          <Text tagName='h2' textStyle='xxxl' bold className={styles.sectionSubHeader}>
+            Is it free?
+          </Text>
           <div className={styles.sectionContentRegDivider}></div>
-          <Text textStyle='lg' className={styles.sectionSubContent}>Yes, Bossjob resume generation service is free. You can create as many resume as you want. You can choose from different themes of resume samples and use different resume sample for different job applications</Text>
+          <Text textStyle='lg' className={styles.sectionSubContent}>
+            Yes, Bossjob resume generation service is free. You can create as many resume as you
+            want. You can choose from different themes of resume samples and use different resume
+            sample for different job applications
+          </Text>
           <div className={styles.sectionContentHalfDivider}></div>
         </div>
         <div className={styles.resumeTemplateContainer}>
           <div className={styles.resumeTemplateContent}>
             <div className={styles.sectionContentHalfDivider}></div>
             <div className={styles.resumeTemplateOtherSection}>
-              <Text textStyle='xxxl' bold className={styles.sectionSubHeader}>How many templates can I choose from?</Text>
+              <Text tagName='h2' textStyle='xxxl' bold className={styles.sectionSubHeader}>
+                How many templates can I choose from?
+              </Text>
               <div className={styles.sectionContentRegDivider}></div>
-              <Text textStyle='lg' className={styles.sectionSubContent}>You can choose from 2 templates, professional or creative resume samples. You can immediately use your newly improved resume to apply for job openings on Bossjob.</Text>
+              <Text textStyle='lg' className={styles.sectionSubContent}>
+                You can choose from 2 templates, professional or creative resume samples. You can
+                immediately use your newly improved resume to apply for job openings on Bossjob.
+              </Text>
             </div>
             <div className={styles.sectionContentRegDivider}></div>
 
@@ -233,30 +275,43 @@ const ResumeTemplate = () => {
                 <div className={styles.emblaContainer}>
                   <div className={styles.emblaSlide}>
                     <div className={styles.emblaSlideInner}>
-                      <img src={ResumeTemplate1} alt="Resume Template" className={`${styles.resumeTemplateItem}`} />
+                      <img
+                        src={ResumeTemplate1}
+                        alt='Resume Template'
+                        className={`${styles.resumeTemplateItem}`}
+                      />
                     </div>
                   </div>
                   <div className={styles.emblaSlide}>
                     <div className={styles.emblaSlideInner}>
-                      <img src={ResumeTemplate2} alt="Resume Template" className={`${styles.resumeTemplateItem}`} />
+                      <img
+                        src={ResumeTemplate2}
+                        alt='Resume Template'
+                        className={`${styles.resumeTemplateItem}`}
+                      />
                     </div>
                   </div>
                 </div>
               </div>
               <div className={styles.slidesControl}>
-                <div className={classNames([styles.slidesControlItem, styles.slidesControlLeft])} onClick={scrollPrev}/>
-                <div className={classNames([styles.slidesControlItem, styles.slidesControlRight])} onClick={scrollNext}/>
+                <div
+                  className={classNames([styles.slidesControlItem, styles.slidesControlLeft])}
+                  onClick={scrollPrev}
+                />
+                <div
+                  className={classNames([styles.slidesControlItem, styles.slidesControlRight])}
+                  onClick={scrollNext}
+                />
               </div>
               <div className={styles.sectionContentSmallDivider}></div>
               <div className={styles.emblaDots}>
-                {
-                  scrollSnaps.map((_, index) => (
-                    <div
-                      key={index}
-                      className={index === selectedIndex ? styles.emblaDotActive : styles.emblaDot}
-                      onClick={() => scrollTo(index) }
-                    />
-                  ))}
+                {scrollSnaps.map((_, index) => (
+                  <div
+                    key={index}
+                    className={index === selectedIndex ? styles.emblaDotActive : styles.emblaDot}
+                    onClick={() => scrollTo(index)}
+                  />
+                ))}
               </div>
             </div>
             <div className={styles.sectionContentRegDivider}></div>
@@ -264,9 +319,15 @@ const ResumeTemplate = () => {
         </div>
         <div className={styles.sectionContentRegDivider}></div>
         <div className={styles.resumeTemplateSection}>
-          <Text textStyle='xxxl' bold className={styles.sectionSubHeader}>Would I be able to edit the resume template later?</Text>
+          <Text tagName='h2' textStyle='xxxl' bold className={styles.sectionSubHeader}>
+            Would I be able to edit the resume template later?
+          </Text>
           <div className={styles.sectionContentRegDivider}></div>
-          <Text textStyle='lg' className={styles.sectionSubContent}>Absolutely yes. Login to your Bossjob account anytime to update your resume. You can use your Bossjob account as a resume bank. Keep your most updated career details in Bossjob and use them as your professional identity!</Text>
+          <Text textStyle='lg' className={styles.sectionSubContent}>
+            Absolutely yes. Login to your Bossjob account anytime to update your resume. You can use
+            your Bossjob account as a resume bank. Keep your most updated career details in Bossjob
+            and use them as your professional identity!
+          </Text>
           <div className={styles.sectionContentDivider}></div>
         </div>
       </div>
@@ -277,11 +338,11 @@ const ResumeTemplate = () => {
 export async function getServerSideProps({ req }) {
   const accessToken = req.cookies.accessToken
   if (accessToken) {
-    return { 
-      redirect: { 
-        destination: `${process.env.OLD_PROJECT_URL}/dashboard/profile/jobseeker`, 
-        permanent: false, 
-      }
+    return {
+      redirect: {
+        destination: `${process.env.OLD_PROJECT_URL}/dashboard/profile/jobseeker`,
+        permanent: false,
+      },
     }
   }
   return { props: {} }
