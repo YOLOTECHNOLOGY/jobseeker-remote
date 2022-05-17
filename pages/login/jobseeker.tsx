@@ -22,14 +22,15 @@ import { loginRequest } from 'store/actions/auth/login'
 
 /* Styles */
 import styles from './Login.module.scss'
+import MetaText from '../../components/MetaText'
 
-const LoginJobseeker = () => { 
+const LoginJobseeker = () => {
   const router = useRouter()
   const dispatch = useDispatch()
 
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
 
   const isLoginFetching = useSelector((store: any) => store.auth.login.fetching)
 
@@ -38,14 +39,16 @@ const LoginJobseeker = () => {
   const handleLogin = () => {
     let redirect: string | string[] = ''
     if (router.query && (router.query.redirectFullPath || router.query.redirect)) {
-      redirect = router.query?.redirectFullPath ? router.query.redirectFullPath : router.query.redirect
+      redirect = router.query?.redirectFullPath
+        ? router.query.redirectFullPath
+        : router.query.redirect
     }
 
     const loginPayload = {
       login,
       password,
       redirect,
-      applyJobExternalRedirect: ''
+      applyJobExternalRedirect: '',
     }
 
     dispatch(loginRequest(loginPayload))
@@ -56,14 +59,21 @@ const LoginJobseeker = () => {
   }
 
   return (
-    <AuthLayout 
-      headingText={<Text bold textStyle='xxxl' tagName='h2'>Log in to Bossjob</Text>}
-      ctaSignup 
+    <AuthLayout
+      headingText={
+        <>
+          <MetaText tagName='h1'>Log in to Bossjob</MetaText>
+          <Text bold textStyle='xxxl' tagName='h2'>
+            Log in to Bossjob
+          </Text>
+        </>
+      }
+      ctaSignup
       isLogin
     >
       <SEO
-        title='Jobseeker Login - Bossjob'
-        description='Bossjob - Career Platform for Professionals in Philippines'
+        title='Log In or Sign Up | Bossjob'
+        description='Log in to Bossjob to get connected with professional job opportunities and quality talents. If you are not a member yet, Register for free now to Apply for Jobs, Create Professional Resume and Get Headhunted on Bossjob!'
         canonical='/login/jobseeker'
       />
       <div className={styles.Login}>
@@ -128,7 +138,7 @@ const LoginJobseeker = () => {
             className={styles.LoginButton}
             isLoading={isLoginFetching}
             onClick={() => handleLogin()}
-            type="submit"
+            type='submit'
           >
             <Text textStyle='xl' textColor='white' bold>
               Log In
