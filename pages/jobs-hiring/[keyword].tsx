@@ -514,7 +514,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection,
           // isStickyClass,
         ])}
-        id='job-search'
       >
         <div className={styles.searchAndLocationContainer}>
           <MaterialTextFieldWithSuggestionList
