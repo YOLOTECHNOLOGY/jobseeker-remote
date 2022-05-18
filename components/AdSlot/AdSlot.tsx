@@ -19,7 +19,7 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
   // if (process.env.ENV === 'production') {
     
     useAdSlot({
-      mapping: ad.mapping ? ad.mapping : null,
+      mapping: ad.mapping ? ad.mapping : {},
       id: ad.id,
       adUnit: ad.adUnit,
       sizes: ad.sizes,
