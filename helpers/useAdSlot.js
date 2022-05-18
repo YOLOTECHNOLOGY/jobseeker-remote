@@ -5,25 +5,32 @@ function useAdSlot({ mapping, sizes, id, adUnit, isTransitioning }) {
     try {
       if (!isTransitioning && typeof window !== undefined) {
         const { googletag } = window
-        googletag.cmd.push(function () {
-          const adMapping = googletag.sizeMapping()
-          Object.keys(mapping).forEach((breakpoint) => {
-            adMapping.addSize([Number(breakpoint), 0], [mapping[breakpoint]])
-          })
-          const builtMapping = adMapping.build()
+        if (googletag.apiReady) {
+          googletag.cmd.push(function () {
+            // debugger
+            const adMapping = googletag.sizeMapping()
+            Object.keys(mapping).forEach((breakpoint) => {
+              // debugger
+              adMapping.addSize([Number(breakpoint), 0], [mapping[breakpoint]])
+            })
+            const builtMapping = adMapping.build()
 
-          googletag
+            console.log('useAdSlot 2', adUnit, id, sizes)
+
+            googletag
             .defineSlot(`/21858999436/${adUnit}`, sizes, `div-gpt-ad-${id}`)
             .defineSizeMapping(builtMapping)
             .addService(googletag.pubads())
-          googletag.enableServices()
-        })
+            
+            googletag.enableServices()
+          })
+          // console.log('useAdSlot ad id', id)
+          googletag.pubads().collapseEmptyDivs()
 
-        googletag.pubads().collapseEmptyDivs()
-
-        googletag.cmd.push(function () {
-          googletag.display(`div-gpt-ad-${id}`)
-        })
+          googletag.cmd.push(function () {
+            googletag.display(`div-gpt-ad-${id}`)
+          })
+        }
       }
     } catch (err) {
       console.error(err)
