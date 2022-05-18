@@ -6,22 +6,26 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 3%;
   background-color: $white-2;
 
-  & > * {
-    margin-top: 10px;
-    margin-bottom: 30px;
-	  text-align: center;
-  }
-
   img {
+    margin-top: 80px;
+    margin-bottom: 24px;
+
     @include sm {
-      max-width: 300px
+      max-width: 330px
     }
   }
+
+  .title {
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .subTitle {
+    margin-bottom: 120px;
+    text-align: center;
+  }
 }
 
-.title {
-  margin-bottom: 5px;
-}
+

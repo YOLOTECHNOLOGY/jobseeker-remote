@@ -21,7 +21,7 @@ const MaintenancePage: NextPage = () => {
         <Text textStyle='xxxl' bold className={styles.title}>
           We are under maintenance.
         </Text>
-        <Text textStyle='lg'>The page that you are looking for is currently under maintenance and will be back soon!</Text>
+        <Text textStyle='lg' className={styles.subTitle}>The page that you are looking for is currently under maintenance and will be back soon!</Text>
       </div>
     </Layout>
   )
