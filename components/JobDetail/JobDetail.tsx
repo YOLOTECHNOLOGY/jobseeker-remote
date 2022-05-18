@@ -187,7 +187,7 @@ const JobDetail = ({
               {selectedJob?.company?.name}
             </Text>
             {selectedJob?.is_featured && (
-              <JobTag tag='Feature' tagType='featured' />
+              <JobTag tag='Featured' tagType='featured' />
             )}
             {selectedJob?.is_urgent && (
               <JobTag tag='Urgent' tagType='urgent' />
@@ -198,7 +198,7 @@ const JobDetail = ({
                 {selectedJob?.status_key === 'active'  && !isCategoryApplied && (
                   <>
                     {!selectedJob?.is_applied ? 
-                      <Link to={applyJobLink} external={userCookie ? userCookie?.is_profile_completed : false}>
+                      <Link to={applyJobLink} external>
                         <MaterialButton 
                           variant='contained' 
                           capitalize 

@@ -324,7 +324,7 @@ const Job = ({
             </Link>
             <div className={styles.JobDetailPrimarySub}>
               {jobDetail?.is_featured && (
-                <JobTag tag='Feature' tagType='featured' />
+                <JobTag tag='Featured' tagType='featured' />
               )}
               {jobDetail?.is_urgent && (
                 <JobTag tag='Urgent' tagType='urgent' />
@@ -339,7 +339,7 @@ const Job = ({
                       <MaterialButton variant='contained' capitalize disabled>
                         <Text textColor='white' bold>Applied</Text>
                       </MaterialButton> : 
-                      <Link to={applyJobLink} external={userCookie ? userCookie?.is_profile_completed : false}>
+                      <Link to={applyJobLink} external>
                         <MaterialButton 
                           variant='contained' 
                           capitalize 

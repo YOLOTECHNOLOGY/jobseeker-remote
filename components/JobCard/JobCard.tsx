@@ -54,7 +54,7 @@ const JobCard = ({
         <Text textStyle='xl' bold className={styles.JobCardDetailTitle}>{title}</Text>
         <div className={styles.JobCardDetailTag}>
           {isFeatured && (
-            <JobTag tag='Feature' tagType='featured' />
+            <JobTag tag='Featured' tagType='featured' />
           )}
           {isUrgent && (
             <JobTag tag='Urgent' tagType='urgent' />

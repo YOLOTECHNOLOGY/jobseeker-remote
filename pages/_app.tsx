@@ -9,6 +9,7 @@ import { ConnectedRouter } from 'connected-next-router'
 import 'styles/globals.scss'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
+import MaintenancePage from './maintenance'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
@@ -73,14 +74,14 @@ const App = ({ Component, pageProps }: AppProps) => {
         }}
       />
       {/* Google Ad Manager */}
-      <Script async src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'></Script>
+      {/* <Script async src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'></Script>
       <Script
         dangerouslySetInnerHTML={{
           __html: `
             window.googletag = window.googletag || {cmd: []}
           `,
         }}
-      ></Script>
+      ></Script> */}
 
       {/* Google One Tap Sign in */}
       <Script src="https://apis.google.com/js/platform.js"/>
@@ -162,7 +163,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
       <ConnectedRouter>
         <CookiesProvider>
-          <Component {...pageProps} />
+          {process.env.MAINTENANCE === 'true' ? <MaintenancePage {...pageProps} /> : <Component {...pageProps} />}
         </CookiesProvider>
       </ConnectedRouter>
     </>

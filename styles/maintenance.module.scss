@@ -23,16 +23,8 @@
   }
 
   .subTitle {
-    margin-bottom: 24px;
-    text-align: center;
-  }
-
-  button {
     margin-bottom: 120px;
-
-    @include sm {
-      height: 40px;
-    }
+    text-align: center;
   }
 }
 

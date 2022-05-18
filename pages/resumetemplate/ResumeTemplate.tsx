@@ -100,12 +100,16 @@ const ResumeTemplate = () => {
   }
 
   const onRegister = () => {
+    let invalidEmail = false
+
     if (!email) setEmailError('Please enter your email address.') 
     else {
       const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-      if (!emailPattern.test(email)) setEmailError('Please enter a valid email address.')
-      else setEmailError(null)
+      if (!emailPattern.test(email)) {
+        invalidEmail = true
+        setEmailError('Please enter a valid email address.')
+      } else setEmailError(null)
     }
 
     if (!firstName) {
@@ -120,7 +124,7 @@ const ResumeTemplate = () => {
       setLastNameError(null)
     }
 
-    if (email && !emailError  && firstName && lastName) {
+    if (email && !invalidEmail && firstName && lastName) {
       const payload = {
         email,
         first_name: firstName,
