@@ -82,7 +82,7 @@ const Home = (props: HomeProps) => {
   const thirdFeatureImgNode = useRef(null)
   const fourthFeatureImgNode = useRef(null)
 
-  useEffect(()=>{
+  useEffect(() => {
     const timer = setTimeout(() => setShowLogo(true), 1500)
     return () => clearTimeout(timer)
   }, [])
@@ -149,8 +149,8 @@ const Home = (props: HomeProps) => {
     } else if (value) {
       queryParam = conditionChecker(value)
     }
-    
-    updateUrl(queryParam, {'sort': 2})
+
+    updateUrl(queryParam, { sort: 2 })
   }
 
   const handleSuggestionSearch = (val) => {
@@ -344,7 +344,13 @@ const Home = (props: HomeProps) => {
                         to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                         external
                       >
-                        <Image src={company.logoUrl} title={company.name} alt={company.name} width='60' height='60' />
+                        <Image
+                          src={company.logoUrl}
+                          title={company.name}
+                          alt={company.name}
+                          width='60'
+                          height='60'
+                        />
                       </Link>
                     )
                   }
@@ -808,16 +814,19 @@ const Home = (props: HomeProps) => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   // store actions
   store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1}))
+  store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
-  const featuredCompanies = storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map((featuredCompany) => featuredCompany.company)
+  const featuredCompanies =
+    storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(
+      (featuredCompany) => featuredCompany.company
+    )
   const topCompanies = featuredCompanies?.map((featuredCompany) => {
     const logoUrl = featuredCompany.logo_url
     delete featuredCompany.logo_url
-    return {...featuredCompany, logoUrl}
+    return { ...featuredCompany, logoUrl }
   })
   return {
     props: {
