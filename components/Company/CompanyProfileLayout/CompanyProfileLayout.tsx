@@ -21,25 +21,25 @@ const theme = createTheme({
     MuiTabs: {
       styleOverrides: {
         root: {
-          minHeight: '50px'
+          minHeight: '50px',
         },
         centered: {
           justifyContent: 'flex-start',
-          ['@media (max-width: 780px)']: { 
+          ['@media (max-width: 780px)']: {
             // eslint-disable-line no-useless-computed-key
-            justifyContent: 'center'
-          }
-        }
-      }
+            justifyContent: 'center',
+          },
+        },
+      },
     },
     MuiTab: {
       styleOverrides: {
         root: {
           fontWeight: 700,
-          textTransform: 'capitalize'
-        }
-      }
-    }
+          textTransform: 'capitalize',
+        },
+      },
+    },
   },
 })
 
@@ -58,27 +58,34 @@ const CompanyProfileLayout = ({
   currentTab,
   totalJobs,
   seoMetaTitle,
-  seoMetaDescription
+  seoMetaDescription,
 }: ICompanyProfileLayout) => {
   const dispatch = useDispatch()
-  const imgPlaceholder = 'https://assets.bossjob.com/companies/1668/cover-pictures/0817984dff0d7d63fcb8193fef08bbf2.jpeg'
+  const imgPlaceholder =
+    'https://assets.bossjob.com/companies/1668/cover-pictures/0817984dff0d7d63fcb8193fef08bbf2.jpeg'
 
   const [tabValue, setTabValue] = useState(currentTab)
   const [similarCompanies, setSimilarCompanies] = useState(null)
 
-  const similarCompaniesResponse = useSelector((store: any) => store.companies.fetchSimilarCompany.response)
+  const similarCompaniesResponse = useSelector(
+    (store: any) => store.companies.fetchSimilarCompany.response
+  )
 
   useEffect(() => {
-    dispatch(fetchSimilarCompanyRequest({companyId: company.id}))
+    dispatch(fetchSimilarCompanyRequest({ companyId: company.id }))
   }, [])
 
   useEffect(() => {
     if (similarCompaniesResponse) setSimilarCompanies(similarCompaniesResponse)
   }, [similarCompaniesResponse])
 
+  const initialCanonicalText = `/company/${company.name.split(' ').join('-')}`
+  const additionalCanonicalText =
+    currentTab == 'overview' ? '' : currentTab == 'jobs' ? '/jobs' : '/life'
+  const finalCanonicalText = initialCanonicalText + additionalCanonicalText
   return (
     <Layout>
-      <SEO title={seoMetaTitle} description={seoMetaDescription} />
+      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={finalCanonicalText} />
       <div className={styles.company}>
         <div className={styles.companyContent}>
           <div className={styles.companyHeader}>
