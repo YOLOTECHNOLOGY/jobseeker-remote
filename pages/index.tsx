@@ -150,7 +150,8 @@ const Home = (props: HomeProps) => {
     } else if (value) {
       queryParam = conditionChecker(value)
     }
-    updateUrl(queryParam, null)
+
+    updateUrl(queryParam, { sort: 2 })
   }
 
   const handleSuggestionSearch = (val) => {
@@ -380,7 +381,7 @@ const Home = (props: HomeProps) => {
                 })}
               </div>
               <div className={styles.viewAllCompanies}>
-                <Link to='/' className={styles.viewAllCompaniesLink}>
+                <Link to='/companies' className={styles.viewAllCompaniesLink}>
                   <Text textStyle='lg' textColor='primaryBlue'>
                     View all companies
                   </Text>

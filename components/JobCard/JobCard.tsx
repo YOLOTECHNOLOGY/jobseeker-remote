@@ -14,7 +14,9 @@ type JobCardProps = {
   id: number,
   image: string,
   title: string,
-  tag?: string,
+  jobType?: string,
+  isFeatured?: boolean,
+  isUrgent?: boolean,
   company: string,
   location: string,
   salary: string,
@@ -27,7 +29,9 @@ const JobCard = ({
   id,
   image,
   title,
-  tag,
+  jobType,
+  isFeatured,
+  isUrgent,
   company,
   location,
   salary,
@@ -49,8 +53,14 @@ const JobCard = ({
       <div className={styles.JobCardDetailWrapper}>
         <Text textStyle='xl' bold className={styles.JobCardDetailTitle}>{title}</Text>
         <div className={styles.JobCardDetailTag}>
-          {tag && (
-            <JobTag tag={tag} />
+          {isFeatured && (
+            <JobTag tag='Featured' tagType='featured' />
+          )}
+          {isUrgent && (
+            <JobTag tag='Urgent' tagType='urgent' />
+          )}
+          {jobType && (
+            <JobTag tag={jobType} />
           )}
         </div>
         <div className={styles.JobCardDetailList}>

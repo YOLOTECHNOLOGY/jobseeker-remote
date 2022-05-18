@@ -30,8 +30,8 @@ const Step2 = (props: any) => {
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
 
-  const [resumeName, setResumeName] = useState(null)
   const [resume, setResume] = useState(null)
+  const existingResume = userDetail?.resume || null
   const [isDisabled, setIsDisabled] = useState(userDetail.resume ? false : true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [isCreatingResume, setIsCreatingResume] = useState(false)
@@ -39,13 +39,6 @@ const Step2 = (props: any) => {
 
   const isUploading = useSelector((store: any) => store.users.uploadUserResume.fetching)
   const uploadUserResumeState = useSelector((store: any) => store.users.uploadUserResume)
-
-  useEffect(() => {
-    if (userDetail) {
-      setResumeName(userDetail.resume?.filename || null)
-    }
-    setErrorMessage(null)
-  }, [])
 
   useEffect(() => {
     if (uploadUserResumeState.error?.errors?.file[0]) {
@@ -94,7 +87,9 @@ const Step2 = (props: any) => {
             <input type="file" hidden accept=".pdf, .doc, .docx" onChange={(e) => setResume(e.target.files[0])}/>
           </MaterialButton>
           <Text textColor='darkgrey' textStyle='xsm' className={styles.step2UploadAllowed}>PDF, DOC, DOCX. file, max 5MB</Text>
-          {resumeName && <Text textColor='darkgrey' textStyle='xsm' bold tagName='p'>(Resume: { resumeName })</Text>}
+            {existingResume && <Text textColor='darkgrey' textStyle='xsm' bold tagName='p'>
+              (Resume: <a href={existingResume.url} target='_blank' rel="noreferrer" style={{ textDecoration: 'underline' }}>{ existingResume.filename }</a>)
+          </Text>}
         </div>
 
         <Text textStyle='lg' className={styles.step2UploadDivider}>OR</Text>

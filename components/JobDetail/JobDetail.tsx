@@ -86,7 +86,7 @@ const JobDetail = ({
   const [jobDetailOption, setJobDetailOption] = useState(false)
   const [isSaveClicked, setIsSaveClicked] = useState(false)
   const [isSavedJob, setIsSavedJob] = useState(false)
-  const applyJobLink = getApplyJobLink(selectedJob, userCookie ? true : false)
+  const applyJobLink = getApplyJobLink(selectedJob, userCookie)
   
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
@@ -186,13 +186,19 @@ const JobDetail = ({
             <Text textStyle='lg' className={styles.JobDetailCompany}>
               {selectedJob?.company?.name}
             </Text>
+            {selectedJob?.is_featured && (
+              <JobTag tag='Featured' tagType='featured' />
+            )}
+            {selectedJob?.is_urgent && (
+              <JobTag tag='Urgent' tagType='urgent' />
+            )}
             <JobTag tag={selectedJob?.job_type_value} />
             <div className={styles.JobDetailButtonsWrapper}>
               <div className={styles.JobDetailButtons}>
                 {selectedJob?.status_key === 'active'  && !isCategoryApplied && (
                   <>
                     {!selectedJob?.is_applied ? 
-                      <Link to={applyJobLink} external={userCookie ? true : false}>
+                      <Link to={applyJobLink} external>
                         <MaterialButton 
                           variant='contained' 
                           capitalize 
@@ -242,7 +248,7 @@ const JobDetail = ({
               </div>
               {(!isCategoryApplied || !isCategorySaved) && (
                 <Text textStyle='lg' textColor='darkgrey' className={styles.JobDetailPostedAt}>
-                  Posted on {selectedJob?.published_at}
+                  Posted on {selectedJob?.refreshed_at}
                 </Text>
               )}
             </div>

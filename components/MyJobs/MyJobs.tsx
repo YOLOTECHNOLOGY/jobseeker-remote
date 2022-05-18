@@ -26,7 +26,7 @@ import { postReportRequest } from 'store/actions/reports/postReport'
 import Layout from 'components/Layout'
 import SEO from 'components/SEO'
 import Text from 'components/Text'
-import AdSlot from 'components/AdSlot'
+// import AdSlot from 'components/AdSlot'
 import Link from 'components/Link'
 import JobCard from 'components/JobCard'
 import JobDetail from 'components/JobDetail'
@@ -328,7 +328,7 @@ const MyJobs = ({
                   company={jobs.job.company_name}
                   location={jobs.job.location_value}
                   salary={jobs.job.salary_range_value}
-                  postedAt={jobs.job.published_at}
+                  postedAt={jobs.job.refreshed_at}
                   selectedId={selectedJobId}
                   handleSelectedId={() => handleSelectedJobId(jobs.job.id)}
                 />
@@ -365,7 +365,7 @@ const MyJobs = ({
               </div>
             )}
           </div>
-          <div className={styles.MyJobsAds}>
+          {/* <div className={styles.MyJobsAds}>
             <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'job-page-skyscraper-1'} />
             </div>
@@ -375,7 +375,7 @@ const MyJobs = ({
             <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'job-page-skyscraper-3'} />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

@@ -89,12 +89,12 @@
   }
 }
 .searchButton {
-  margin-left: 16px;
+  margin-left: 16px !important;
   width: 115px;
 
   @include msd{
     width:100%;
-    margin-left: 0;
+    margin-left: 0 !important;
   }
 }
 .filtersButton {
@@ -236,4 +236,8 @@
   @include sm {
     margin-top: 21px;
   }
+}
+
+.toolTip {
+  display: flex;
 }

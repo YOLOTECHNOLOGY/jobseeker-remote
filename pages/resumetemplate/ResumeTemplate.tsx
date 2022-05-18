@@ -1,4 +1,7 @@
 import { useCallback, useState, useEffect } from 'react'
+
+/* Vendors */
+import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,10 +14,13 @@ import SEO from 'components/SEO'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
+import Link from 'components/Link'
 
 // Helpers
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
+import { getCookie } from 'helpers/cookies'
 // Images
 import { ResumeTemplatePreview, ResumeTemplate1, ResumeTemplate2 } from 'images'
 
@@ -24,8 +30,10 @@ import styles from './ResumeTemplate.module.scss'
 const ResumeTemplate = () => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
+  const router = useRouter()
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState([])
+  const userCookie = getCookie('user') || null
 
   const [firstName, setFirstName] = useState('')
   const [firstNameError, setFirstNameError] = useState(null)
@@ -79,7 +87,10 @@ const ResumeTemplate = () => {
             <p>
               A user with this email address already exists. Please enter a different email address
               or{' '}
-              <a href='/login/jobseeker' style={{ color: '#2379ea', textDecoration: 'underline' }}>
+              <a
+                href='/login/jobseeker?redirect=/resumetemplate'
+                style={{ color: '#2379ea', textDecoration: 'underline' }}
+              >
                 log in
               </a>
               .
@@ -101,28 +112,32 @@ const ResumeTemplate = () => {
   }
 
   const onRegister = () => {
-    if (!email) setEmailError('Email address is required.')
+    let invalidEmail = false
+
+    if (!email) setEmailError('Please enter your email address.')
     else {
       const emailPattern =
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-      if (!emailPattern.test(email)) setEmailError('Email address is invalid.')
-      else setEmailError(null)
+      if (!emailPattern.test(email)) {
+        invalidEmail = true
+        setEmailError('Please enter a valid email address.')
+      } else setEmailError(null)
     }
 
     if (!firstName) {
-      setFirstNameError('First name is required.')
+      setFirstNameError('Please enter your first name.')
     } else {
       setFirstNameError(null)
     }
 
     if (!lastName) {
-      setLastNameError('Last name is required.')
+      setLastNameError('Please enter your last name.')
     } else {
       setLastNameError(null)
     }
 
-    if (email && !emailError && firstName && lastName) {
+    if (email && !invalidEmail && firstName && lastName) {
       const payload = {
         email,
         first_name: firstName,
@@ -151,55 +166,79 @@ const ResumeTemplate = () => {
               <Text textStyle='xl' className={styles.formSubHeader}>
                 Create and download resume in a minute.
               </Text>
-              <div className={styles.fullWidth}>
-                <div style={{ marginRight: '15px' }}>
-                  <MaterialTextField
-                    value={firstName}
-                    defaultValue={firstName}
-                    label='First name'
-                    size='small'
-                    className={styles.halfWidth}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
-                  {firstNameError && errorText(firstNameError)}
-                </div>
-
+              {!userCookie && (
                 <div>
-                  <MaterialTextField
-                    value={lastName}
-                    defaultValue={lastName}
-                    label='Last name'
-                    size='small'
-                    className={styles.halfWidth}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                  {lastNameError && errorText(lastNameError)}
-                </div>
-              </div>
+                  <div className={styles.fullWidth}>
+                    <div style={{ marginRight: '15px' }}>
+                      <MaterialTextField
+                        value={firstName}
+                        defaultValue={firstName}
+                        label='First name'
+                        size='small'
+                        className={styles.halfWidth}
+                        onChange={(e) => setFirstName(e.target.value)}
+                      />
+                      {firstNameError && errorText(firstNameError)}
+                    </div>
 
-              <MaterialTextField
-                id='email'
-                label='Email address'
-                variant='outlined'
-                value={email}
-                size='small'
-                defaultValue={email}
-                autoComplete='off'
-                error={emailError ? true : false}
-                onChange={(e) => setEmail(e.target.value)}
-                className={styles.fullWidth}
-              />
-              {emailError && errorText(emailError)}
+                    <div>
+                      <MaterialTextField
+                        value={lastName}
+                        defaultValue={lastName}
+                        label='Last name'
+                        size='small'
+                        className={styles.halfWidth}
+                        onChange={(e) => setLastName(e.target.value)}
+                      />
+                      {lastNameError && errorText(lastNameError)}
+                    </div>
+                  </div>
+
+                  <MaterialTextField
+                    id='email'
+                    label='Email address'
+                    variant='outlined'
+                    value={email}
+                    size='small'
+                    defaultValue={email}
+                    autoComplete='off'
+                    error={emailError ? true : false}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={styles.fullWidth}
+                  />
+                  {emailError && errorText(emailError)}
+                </div>
+              )}
 
               <MaterialButton
                 variant='contained'
                 capitalize
                 className={styles.fullWidthButton}
-                onClick={() => onRegister()}
+                onClick={() => {
+                  if (userCookie) {
+                    userCookie.is_profile_completed
+                      ? router.push(authPathToOldProject(null, '/dashboard/profile/jobseeker'))
+                      : router.push('/jobseeker-complete-profile/1')
+                  } else {
+                    onRegister()
+                  }
+                }}
                 isLoading={isRegisteringJobseeker}
               >
                 <Text textColor='white'>Create Resume</Text>
               </MaterialButton>
+
+              {!userCookie && (
+                <Text tagName='p' textStyle='base' style={{ textAlign: 'center' }}>
+                  Already on Bossjob?
+                  <Link to='/login/jobseeker?redirect=/resumetemplate'>
+                    <Text textColor='primaryBlue' underline>
+                      {' '}
+                      Log in
+                    </Text>
+                  </Link>
+                </Text>
+              )}
             </form>
             <img
               src={ResumeTemplatePreview}

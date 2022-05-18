@@ -99,7 +99,7 @@ const Job = ({
   const dispatch = useDispatch()
   const router = useRouter()
   const userCookie = getCookie('user') || null
-  const applyJobLink = getApplyJobLink(jobDetail, userCookie ? true : false)
+  const applyJobLink = getApplyJobLink(jobDetail, userCookie)
 
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
@@ -273,7 +273,7 @@ const Job = ({
     } else if (value) {
       queryParam = conditionChecker(value)
     }
-    updateUrl(queryParam, null)
+    updateUrl(queryParam, { sort: 2 })
   }
 
   return (
@@ -357,6 +357,8 @@ const Job = ({
               </Text>
             </Link>
             <div className={styles.JobDetailPrimarySub}>
+              {jobDetail?.is_featured && <JobTag tag='Featured' tagType='featured' />}
+              {jobDetail?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
               <JobTag tag={jobDetail?.job_type_value} />
             </div>
             {!isAppliedQueryParam && (
@@ -370,7 +372,7 @@ const Job = ({
                         </Text>
                       </MaterialButton>
                     ) : (
-                      <Link to={applyJobLink}>
+                      <Link to={applyJobLink} external>
                         <MaterialButton variant='contained' capitalize>
                           <Text textStyle='lg' textColor='white' bold>
                             Apply Now
@@ -646,6 +648,9 @@ const Job = ({
                       <Text textStyle='base' tagName='p'>
                         {job.company_name}
                       </Text>
+                      <Text textStyle='base' tagName='p'>
+                        {job.company_name}
+                      </Text>
                       <Text textStyle='base' textColor='darkgrey'>
                         {job.location_value}
                       </Text>
@@ -657,11 +662,29 @@ const Job = ({
                       >
                         {job.salary_range_value}
                       </Text>
-                      {job.published_at && (
+                      {job.refreshed_at && (
                         <Text textStyle='xsm' tagName='p'>
-                          Posted on {job.published_at}
+                          Posted on {job.refreshed_at}
                         </Text>
                       )}
+                      <Link
+                        to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
+                        className={styles.JobDetailSidebarCardApply}
+                      >
+                        <Text
+                          textStyle='base'
+                          tagName='p'
+                          bold
+                          className={styles.JobDetailSidebarCardCTA}
+                        >
+                          {job.salary_range_value}
+                        </Text>
+                        {job.published_at && (
+                          <Text textStyle='xsm' tagName='p'>
+                            Posted on {job.published_at}
+                          </Text>
+                        )}
+                      </Link>
                       <Link
                         to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
                         className={styles.JobDetailSidebarCardApply}
