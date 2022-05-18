@@ -22,7 +22,6 @@ import { loginRequest } from 'store/actions/auth/login'
 
 /* Styles */
 import styles from './Login.module.scss'
-import MetaText from '../../components/MetaText'
 
 const LoginJobseeker = () => {
   const router = useRouter()
@@ -62,8 +61,7 @@ const LoginJobseeker = () => {
     <AuthLayout
       headingText={
         <>
-          <MetaText tagName='h1'>Log in to Bossjob</MetaText>
-          <Text bold textStyle='xxxl' tagName='h2'>
+          <Text bold textStyle='xxxl' tagName='h1'>
             Log in to Bossjob
           </Text>
         </>
