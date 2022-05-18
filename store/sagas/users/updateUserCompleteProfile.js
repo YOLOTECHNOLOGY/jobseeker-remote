@@ -173,14 +173,16 @@ function* completeUserProfileSaga(redirect, accessToken) {
     yield put(completeUserProfileSuccess(data.data))
 
     let userCookie = getCookie('user')
+    const accessToken = getCookie('accessToken')
 
     userCookie.is_profile_completed = true
     
     yield call(setCookie, 'user', userCookie)
-
+    
     let url = '/jobs-hiring/job-search'
+
     if (redirect) {
-      url = redirect
+      url = `${redirect}?token=${accessToken}`
     }
 
     removeItem('isFromCreateResume')
