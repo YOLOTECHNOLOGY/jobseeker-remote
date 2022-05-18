@@ -625,7 +625,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                         to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                         external
                       >
-                        <Tooltip title={company.name} placement="top" arrow style={{ display: 'flex'}}>
+                        <Tooltip title={company.name} placement='top' className={styles.toolTip} arrow >
                           <span>
                             <Image src={company.logoUrl} alt={company.name} width='30' height='30'/>
                           </span>
