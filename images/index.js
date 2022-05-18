@@ -93,3 +93,6 @@ export const Leaves = `${S3BucketJobseeker}/Leaves.svg`
 
 /* 404 page */
 export const NotFound404 = `${S3BucketJobseeker}/404.png`
+
+/* Maintenance page */
+export const Maintenance = `${S3BucketJobseeker}/maintenance.png`

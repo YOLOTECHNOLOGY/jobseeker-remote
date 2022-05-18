@@ -1,0 +1,27 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3%;
+  background-color: $white-2;
+
+  & > * {
+    margin-top: 10px;
+    margin-bottom: 30px;
+	  text-align: center;
+  }
+
+  img {
+    @include sm {
+      max-width: 300px
+    }
+  }
+}
+
+.title {
+  margin-bottom: 5px;
+}

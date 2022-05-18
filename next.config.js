@@ -3,11 +3,20 @@ const redirectionPaths = require('./lib/redirection')
 
 module.exports = {
   async redirects() {
+    if (process.env.MAINTENANCE === 'true') {
+      return [{
+        source: '/((?!maintenance).*)',
+        destination: '/maintenance',
+        permanent: false,
+      }]
+    } 
+
     return redirectionPaths
   },
   reactStrictMode: true,
   env: {
     ENV: process.env.ENV,
+    MAINTENANCE: process.env.MAINTENANCE,
     HOST_PATH: process.env.HOST_PATH,
     API_BASEPATH: process.env.API_BASEPATH,
     S3_BUCKET_URL: process.env.S3_BUCKET_URL,
