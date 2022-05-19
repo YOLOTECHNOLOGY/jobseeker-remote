@@ -15,7 +15,8 @@ function useAdSlot({ mapping, sizes, id, adUnit, isTransitioning }) {
                 [Number(breakpoint), 0],
                 [mapping[breakpoint]]
               )
-              adMapping.addSize([Number(breakpoint), 0], [mapping[breakpoint]])
+              const isSingleSizePerMapping = mapping[breakpoint].length < 1
+              adMapping.addSize([Number(breakpoint), 0], isSingleSizePerMapping ? mapping[breakpoint] : [mapping[breakpoint]])
             })
             const builtMapping = adMapping.build()
 
