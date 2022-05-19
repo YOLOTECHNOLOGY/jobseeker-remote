@@ -10,12 +10,13 @@ function useAdSlot({ mapping, sizes, id, adUnit, isTransitioning }) {
             // debugger
             const adMapping = googletag.sizeMapping()
             Object.keys(mapping).forEach((breakpoint) => {
-              console.log(
-                '[Number(breakpoint), 0], [mapping[breakpoint]]',
-                [Number(breakpoint), 0],
-                [mapping[breakpoint]]
-              )
+              // debugger
               const isSingleSizePerMapping = mapping[breakpoint].length < 1
+              console.log(
+                'addSize',
+                [Number(breakpoint), 0],
+                isSingleSizePerMapping ? mapping[breakpoint] : [mapping[breakpoint]]
+              )
               adMapping.addSize([Number(breakpoint), 0], isSingleSizePerMapping ? mapping[breakpoint] : [mapping[breakpoint]])
             })
             const builtMapping = adMapping.build()
