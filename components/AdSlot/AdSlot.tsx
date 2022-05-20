@@ -1,6 +1,4 @@
-// import React from 'react'
-import React, { memo } from 'react'
-
+import React from 'react'
 import useAdSlot from 'helpers/useAdSlot'
 import useTransitionState from 'helpers/useTransitionState'
 import ads from 'lib/config/adConfig'
@@ -29,5 +27,5 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
   return <div id={`div-gpt-ad-${ad.id}`} />
 }
 
-// export default AdSlot
-export default memo(AdSlot)
+export default AdSlot
+// export default memo(AdSlot)
