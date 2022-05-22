@@ -129,11 +129,8 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                   },
                 }),
               }}
-              id='firstName'
               label='First name'
-              variant='outlined'
               size='small'
-              autoComplete='off'
               onChange={() => {
                 clearErrors('firstName')
               }}
@@ -151,12 +148,8 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                   },
                 }),
               }}
-              id='lastName'
               label='Last name'
-              type='lastName'
-              variant='outlined'
               size='small'
-              autoComplete='off'
               onChange={() => {
                 clearErrors('lastName')
               }}
@@ -175,12 +168,9 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                 },
               }),
             }}
-            id='email'
             label='Email address'
             type='email'
-            variant='outlined'
             size='small'
-            autoComplete='off'
             onChange={() => {
               clearErrors('email')
             }}
@@ -210,12 +200,9 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                   },
                 }),
               }}
-              id='contactNumber'
               label='Contact number'
               type='number'
-              variant='outlined'
               size='small'
-              autoComplete='off'
               onChange={() => {
                 clearErrors('contactNumber')
               }}
@@ -242,12 +229,9 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                 },
               }),
             }}
-            id='password'
             label='Password (minimum 8 characters)'
             type='password'
-            variant='outlined'
             size='small'
-            autoComplete='off'
             onChange={() => {
               clearErrors('password')
             }}
@@ -301,7 +285,6 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                   <Text textStyle='lg'>{i + 1}. {question}</Text>
 
                   <MaterialTextField
-                    id={`screening_answer_${i}`}
                     refs={{
                       ...register(`screening_answer_${i}`, {
                         required: {
@@ -316,7 +299,6 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                     rows={4}
                     variant='outlined'
                     size='small'
-                    autoComplete='off'
                   />
                   {errors[`screening_answer_${i}`] && errorText(errors[`screening_answer_${i}`].message)}
                 </div>
@@ -328,8 +310,6 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                 <Text textStyle='md'>On Bossjob, you can message with the recruiter in real-time. Impress the recruiter by sending a message first. (Tips: the reason why you are the perfect fit for this job)</Text>
 
                 <MaterialTextField
-                  id='firstMessage'
-                  className={styles.answer}
                   refs={{
                     ...register('firstMessage', {
                       required: {
@@ -338,12 +318,12 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                       },
                     })
                   }}
+                  className={styles.answer}
                   label='Answer'
                   multiline
                   rows={4}
                   variant='outlined'
                   size='small'
-                  autoComplete='off'
                   value={firstMessage}
                   onChange={(e) => {
                     setFirstMessage(e.target.value)
