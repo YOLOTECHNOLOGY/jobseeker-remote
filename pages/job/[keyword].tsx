@@ -34,6 +34,7 @@ import AdSlot from 'components/AdSlot'
 
 import ModalShare from 'components/ModalShare'
 import ModalReportJob from 'components/ModalReportJob'
+import QuickApplyModal from 'components/QuickApplyModal'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
@@ -106,6 +107,7 @@ const Job = ({
   const [companyUrl, setCompanyUrl] = useState('/')
   const [recommendedCourses, setRecommendedCourses] = useState([])
   const [similarJobs, setSimilarJobs] = useState(null)
+  const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
 
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
   const categoryLists = config && config.inputs && config.inputs.job_category_lists
@@ -343,6 +345,12 @@ const Job = ({
                         <MaterialButton 
                           variant='contained' 
                           capitalize 
+                          onClick={(e) => {
+                            if (!userCookie) {
+                              e.preventDefault()
+                              setQuickApplyModalShow(true)
+                            }
+                          }}
                         >
                           <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
                         </MaterialButton>
@@ -657,6 +665,14 @@ const Job = ({
         jobDetailUrl={jobDetailUrl}
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}
+      />
+
+      <QuickApplyModal
+        jobDetails={jobDetail}
+        applyJobLink={applyJobLink}
+        modalShow={quickApplyModalShow}
+        handleModalShow={setQuickApplyModalShow}
+        config={config}
       />
     </Layout>
   )

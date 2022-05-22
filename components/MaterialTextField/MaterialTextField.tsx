@@ -19,6 +19,8 @@ type MaterialTextFieldProps = {
   error?: any
   InputProps?: any
   refs?: any
+  multiline?: boolean
+  rows?: Number
 } & Omit<Input, 'size'>
 
 const theme = createTheme({
@@ -57,7 +59,7 @@ const theme = createTheme({
     }
   },
 })
-const MaterialTextField = ({ id, label, variant, error, refs, size, color, className, defaultValue, ...rest} : MaterialTextFieldProps) => {
+const MaterialTextField = ({ id, label, variant, error, refs, size, color, className, defaultValue, multiline=false, rows=1, ...rest} : MaterialTextFieldProps) => {
   const [value, setValue] = useState(defaultValue)
 
   useEffect(()=>{
@@ -80,6 +82,8 @@ const MaterialTextField = ({ id, label, variant, error, refs, size, color, class
         size={size} 
         className={className} 
         error={error}
+        multiline={multiline}
+        rows={rows}
         {...rest}
       />
     </ThemeProvider>

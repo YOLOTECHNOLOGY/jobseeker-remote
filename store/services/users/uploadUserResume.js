@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const uploadUserResumeService = (payload) => {
+  console.log('uploadUserResumeService', payload)
   const { resume, accessToken } = payload
   const URL = `${process.env.JOBSEEKER_URL}/upload-resume`
   const headers = {

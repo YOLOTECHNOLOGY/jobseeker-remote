@@ -357,6 +357,7 @@ const MyJobs = ({
                 setIsShowReportJob={setIsShowReportJob}
                 handleDeleteSavedJob={handleDeleteSavedJob}
                 handlePostSaveJob={handlePostSaveJob}
+                config={config}
               />
             )}
             {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && !selectedJob && (
