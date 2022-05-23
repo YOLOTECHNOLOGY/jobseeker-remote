@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,6 +19,12 @@ import styles from './QuickApplyModal.module.scss'
 
 /* Redux Actions */
 import { quickApplyJobRequest } from 'store/actions/jobs/quickApplyJob'
+
+/* Images */
+import {
+  TrashIcon,
+  DocumentIcon
+} from 'images'
 
 /* Helpers*/
 import {
@@ -242,38 +249,55 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
         </div>
         
         <div className={styles.quickApplyFormField}>
-          <MaterialButton 
-            variant='outlined' 
-            capitalize 
-            component="label"
-          >
-            <Text textStyle='base' textColor='primaryBlue' bold>Upload your resume</Text>
-            <input 
-              {...register('resume', {
-                required: {
-                  value: true,
-                  message: 'This field is required.',
-                },
-              })}
-              type="file" 
-              hidden 
-              accept=".pdf, .doc, .docx" 
-              onChange={(e) => {
-                clearErrors('resume')
-                setResume(e.target.files[0])
-              }}
-            />
-          </MaterialButton>
-            
           {resume ?
-          <Text textColor='darkgrey' textStyle='xsm'>
-              Resume: {resume?.name}
-          </Text> : 
+            <div className={styles.uploadedResume}>
+              <div className={styles.leftResume}>
+                <div className={styles.documentDiv}>
+                  <Image src={DocumentIcon} alt='document' width='21' height='21' />
+                </div>
+                <Text textStyle='sm' bold className={styles.resumeName}> {resume?.name} </Text>
+              </div>
+              <div className={styles.trashDiv}>
+                <Image 
+                  src={TrashIcon} 
+                  alt='trash' 
+                  width='14' 
+                  height='14' 
+                  onClick={() => {
+                    clearErrors('resume')
+                    setResume(null)
+                  }} />
+              </div>
+            </div> : 
+            <div> 
+              <MaterialButton 
+                variant='outlined' 
+                capitalize 
+                component="label"
+              >
+                <Text textStyle='base' textColor='primaryBlue' bold>Upload your resume</Text>
+                <input 
+                  {...register('resume', {
+                    required: {
+                      value: true,
+                      message: 'This field is required.',
+                    },
+                  })}
+                  type="file" 
+                  hidden 
+                  accept=".pdf, .doc, .docx" 
+                  onChange={(e) => {
+                    clearErrors('resume')
+                    setResume(e.target.files[0])
+                  }}
+                />
+              </MaterialButton>
+            </div>
+          }
           <Text textColor='darkgrey' textStyle='xsm'>
             Supported file type: PDF, DOC, DOCX. Max. file size: 5MB
           </Text>
-          }
-
+         
           {errors.resume && errorText(errors.resume.message)}
         </div>
         
@@ -285,7 +309,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
               return (
                 <div key={i} className={styles.question}>
                   <Text textStyle='lg'>{i + 1}. {question}</Text>
-
+                    
                   <MaterialTextField
                     refs={{
                       ...register(`screening_answer_${i}`, {
@@ -351,6 +375,10 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
               </Text>
             }
           />
+
+          <Text textColor='darkgrey' textStyle='xsm'>
+            By signing up, I have read and agreed to Terms of Use and Privacy Policy
+          </Text>
         </div>
 
         <MaterialButton
