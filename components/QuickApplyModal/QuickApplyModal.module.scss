@@ -10,8 +10,14 @@
   overflow: scroll;
   height: 581px;
 
+ 
+
   &Field {
     margin-bottom: 20px;
+
+    div { 
+      width: 100%;
+    }
 
     .error {
       margin: 6px 0 0;
@@ -28,13 +34,32 @@
         }
       }
     }
-
-    div { 
+    
+    label {
       width: 100%;
     }
 
-    label {
-      width: 100%;
+    > .uploadedResume {
+      display: flex;
+      justify-content: space-between;
+
+      > .leftResume {
+        display: flex;
+
+        > .documentDiv {
+          width: auto;
+          margin-right: 10px;
+        }
+
+        > .resumeName {
+          line-height: 22px;
+        }
+      }
+
+      > .trashDiv {
+        width: auto;
+        cursor: pointer;
+      }
     }
   }
 
