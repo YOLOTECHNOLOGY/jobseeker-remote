@@ -42,7 +42,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
   const [resume, setResume] = useState(null)
   const [isSubscribed, setIsSubscribed] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [firstMessage, setFirstMessage] = useState(`Hi there, I am interested to apply for ${jobDetails.job_title} for ${jobDetails.company?.name} position.`)
+  const [firstMessage, setFirstMessage] = useState(`Hi there, I am interested to apply for ${jobDetails.job_title} position.`)
   const screeningQuestions = jobDetails?.screening_questions || []
 
   const registerJobseekerState = useSelector((store: any) => store.auth.registerJobseeker)
