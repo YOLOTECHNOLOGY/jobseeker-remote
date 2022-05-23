@@ -55,22 +55,24 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
       } else {
         setError('email', { type: 'custom', message: registerJobseekerState.error['email'] });
       }
-
-      setIsSubmitting(false)
     }
+
+    setIsSubmitting(registerJobseekerState.fetching)
   }, [registerJobseekerState])
 
   useEffect(() => {
     setIsSubmitting(isQuickApplyJobFetching)
   }, [isQuickApplyJobFetching])
-  
+
   const onSubmit = (data) => {
-    const screeningAnswers = screeningQuestions.filter((question, i) => {
-      return data[`screening_answer_${i}`]
-    })
+    const screeningAnswers = []
+
+    screeningQuestions.forEach((element, index) => {
+      screeningAnswers.push(data[`screening_answer_${index}`])
+    });
 
     const jobCategories = jobDetails.categories.map(function(category){
-        return category .key;
+        return category.key;
     }).join('-')
 
     const payload = {
