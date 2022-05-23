@@ -1,0 +1,62 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.quickApplyModal {
+  overflow-y: auto;
+}
+
+.quickApplyForm {
+  padding: 20px 40px;
+  overflow: scroll;
+  height: 581px;
+
+  &Field {
+    margin-bottom: 20px;
+
+    .error {
+      margin: 6px 0 0;
+    }
+
+    > .question {
+      margin-top: 15px;
+
+      > .answer {
+        margin-top: 15px;
+
+        > div {
+          height: 100%;
+        }
+      }
+    }
+
+    div { 
+      width: 100%;
+    }
+
+    label {
+      width: 100%;
+    }
+  }
+
+  > .halfWidth {
+    display: flex;
+    justify-content: space-between;
+
+    > div {
+      width: 48%;
+    }
+
+    @include msd {
+      display: block;
+      
+      > div {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  button {
+    width: 100%;
+  }
+}

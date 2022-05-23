@@ -694,6 +694,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           accessToken={accessToken}
           postReportResponse={postReportResponse}
           isPostingReport={isPostingReport}
+          config={config}
         />
       </div>
     </Layout>

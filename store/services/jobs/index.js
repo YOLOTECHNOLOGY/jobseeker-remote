@@ -10,6 +10,7 @@ import fetchSavedJobsList from './fetchSavedJobsList'
 import fetchSavedJobDetail from './fetchSavedJobDetail'
 import postSaveJob from './postSaveJob'
 import deleteSaveJob from './deleteSaveJob'
+import applyJob from './applyJobService'
 
 export default {
   fetchJobsList,
@@ -23,5 +24,7 @@ export default {
   fetchSavedJobsList,
   fetchSavedJobDetail,
   postSaveJob,
-  deleteSaveJob
+  deleteSaveJob,
+
+  applyJobService
 }

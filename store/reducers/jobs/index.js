@@ -13,6 +13,8 @@ import fetchSavedJobDetailReducer from './fetchSavedJobDetail'
 import postSaveJobReducer from './postSaveJob'
 import deleteSaveJobReducer from './deleteSaveJob'
 
+import quickApplyJobReducer from './quickApplyJob'
+
 const jobsReducers = combineReducers({
   jobList: fetchJobsListReducer,
   jobDetail: fetchJobDetailReducer,
@@ -26,6 +28,8 @@ const jobsReducers = combineReducers({
   savedJobDetail: fetchSavedJobDetailReducer,
   postSaveJob: postSaveJobReducer,
   deleteSaveJob: deleteSaveJobReducer,
+
+  quickApplyJob: quickApplyJobReducer
 })
 
 export default jobsReducers
