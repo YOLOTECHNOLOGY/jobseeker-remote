@@ -5,7 +5,6 @@ function numberFilter(val) {
   return /^[0-9]*$/.test(val)
 }
 export const handleNumericInput = (val) => {
-  console.log('VALUE: ', val)
   return numberFilter(val) ? val : val.slice(0, -1)
 }
 
