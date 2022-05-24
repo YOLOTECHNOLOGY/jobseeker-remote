@@ -44,8 +44,7 @@ const LoginJobseeker = () => {
     const loginPayload = {
       login,
       password,
-      redirect,
-      applyJobExternalRedirect: ''
+      redirect
     }
 
     dispatch(loginRequest(loginPayload))

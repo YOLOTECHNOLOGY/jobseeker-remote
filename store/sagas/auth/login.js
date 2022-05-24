@@ -17,7 +17,6 @@ function* loginReq(actions) {
       login,
       password,
       redirect,
-      applyJobExternalRedirect
     } = actions.payload
 
     const loginPayload = {
@@ -72,21 +71,15 @@ function* loginReq(actions) {
           ? '/jobseeker-complete-profile/1'
           : `/jobs-hiring/job-search`
 
-      if (redirect && applyJobExternalRedirect) {
-        yield put(
-          push({
-            pathname: redirect,
-            state: {
-              externalLink: applyJobExternalRedirect
-            }
-          })
-        )
-      } else {
-        if (redirect) {
+      if (redirect) {
+        if (redirect.includes(process.env.OLD_PROJECT_URL)) {
+          url = `${redirect}?token=${loginData.authentication.access_token}`
+        } else {
           url = redirect
         }
-        yield put(push(url))
       }
+      
+      yield put(push(url))
     }
   } catch (err) {
     yield put(loginFailed(err))
