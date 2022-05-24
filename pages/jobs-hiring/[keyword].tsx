@@ -534,6 +534,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             onKeyPress={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()
+                setSuggestionList([])
                 setSearchValue((e.target as HTMLInputElement).value)
                 onKeywordSearch((e.target as HTMLInputElement).value)
               }

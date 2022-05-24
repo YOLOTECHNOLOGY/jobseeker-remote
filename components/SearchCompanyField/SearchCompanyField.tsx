@@ -53,6 +53,7 @@ const SearchCompanyField = ({
           }}
           onKeyPress={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
+              setSuggestionList([])
               onKeywordSearch(searchValue)
             }
           }}

@@ -143,7 +143,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>My Jobs</Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} to={authPathToOldProject(null, '/dashboard/profile/setting')} aTag title='Account Settings'>
+                <Link className={styles.defaultLink} to={authPathToOldProject(null, '/dashboard/profile/settings')} aTag title='Account Settings'>
                   <li className={styles.menuList} onClick={() => toggleMenu()}>
                     <Text textStyle='xl'>Account Settings</Text>
                   </li>

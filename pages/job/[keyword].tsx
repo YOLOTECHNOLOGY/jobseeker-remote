@@ -290,6 +290,7 @@ const Job = ({
           onKeyPress={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault()
+              setSuggestionList([])
               onSearch()
             }
           }}
