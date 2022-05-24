@@ -54,6 +54,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 // Styles
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
+import { handleNumericInput } from '../../helpers/handleInput'
 
 const Step3 = (props: any) => {
   const currentStep = 3
@@ -562,10 +563,9 @@ const Step3 = (props: any) => {
                 className={styles.stepFullwidth}
                 label='Monthly Salary (PHP)'
                 size='small'
-                type='number'
                 value={salary}
                 defaultValue={salary}
-                onChange={(e) => setSalary(e.target.value)}
+                onChange={(e) => setSalary(handleNumericInput(e.target.value))}
               />
             </div>
             
