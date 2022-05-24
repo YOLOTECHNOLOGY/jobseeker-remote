@@ -81,7 +81,7 @@ const CompanyProfileLayout = ({
 
   const initialCanonicalText = `/company/${company.name.split(' ').join('-')}`
   const additionalCanonicalText =
-    currentTab == 'overview' ? '' : currentTab == 'jobs' ? '/jobs' : '/life'
+    currentTab == 'jobs' ? '/jobs' : currentTab == 'life' ? '/life' : ''
   const finalCanonicalText = initialCanonicalText + additionalCanonicalText
   return (
     <Layout>
