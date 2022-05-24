@@ -73,7 +73,7 @@ function* loginReq(actions) {
 
       if (redirect) {
         if (redirect.includes(process.env.OLD_PROJECT_URL)) {
-          url = `${redirect}?token=${loginData.authentication.access_token}`
+          url = `${redirect}&token=${loginData.authentication.access_token}`
         } else {
           url = redirect
         }

@@ -221,9 +221,17 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                 }),
               }}
               label='Contact number'
-              type='number'
               size='small'
-              onChange={() => {
+              type='number'
+              onKeyPress={(e) => {
+                // Exclusive number checking during keypress (Safari)
+                const numRegExp = new RegExp(/^[0-9]+$/);
+
+                if (!numRegExp.test(e.key)) {
+                  e.preventDefault()
+                }
+              }}
+              onChange={(e) => {
                 clearErrors('contactNumber')
               }}
             />
