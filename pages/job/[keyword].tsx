@@ -54,6 +54,7 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 import { postReportRequest } from 'store/actions/reports/postReport'
 import { postSaveJobRequest} from 'store/actions/jobs/postSaveJob'
+import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
 
 /* Styles */
 import styles from './Job.module.scss'
@@ -96,6 +97,7 @@ const Job = ({
   const userCookie = getCookie('user') || null
   const applyJobLink = getApplyJobLink(jobDetail, userCookie)
 
+  const [isSavedJob, setIsSavedJob] = useState(jobDetail?.is_saved)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
   const [jobDetailOption, setJobDetailOption] = useState(false)
@@ -171,15 +173,28 @@ const Job = ({
   const isAppliedQueryParam = router.query.isApplied
   const hasApplied = isAppliedQueryParam === 'true' ? true : false
 
-  const handlePostSaveJob = ({ jobId, isSaved }) => {
-    if (isSaved) return 
+  const handlePostSaveJob = () => {
+    if (userCookie) {
+      if (!isSavedJob) {
+        setIsSavedJob(true)
+
+        const postSaveJobPayload = {
+          jobId: jobDetail?.id,
+          user_id: userCookie.id
+        }
     
-    if (accessToken) {
-      const postSaveJobPayload = {
-        jobId,
-        accessToken
+        dispatch(postSaveJobRequest(postSaveJobPayload))
+      } else {
+        setIsSavedJob(false)
+
+        const deleteJobPayload = {
+          jobId: jobDetail?.id
+        }
+  
+        dispatch(deleteSaveJobRequest(deleteJobPayload))
       }
-      dispatch(postSaveJobRequest(postSaveJobPayload))
+    } else {
+      router.push(`/login/jobseeker?redirect=${router.asPath}`)
     }
   }
 
@@ -364,8 +379,8 @@ const Job = ({
                     <span>This job is no longer hiring</span>
                   </Text>
                 )}
-                <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob({jobId: jobDetail?.id, isSaved: jobDetail?.is_saved})}>
-                  {jobDetail?.is_saved ? 'Saved' : 'Save'} Job
+                <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
+                  {isSavedJob ? 'Saved' : 'Save'} Job
                 </MaterialButton>
               </div>
             )}
