@@ -2,15 +2,13 @@
 @import 'styles/mixins.scss';
 
 .quickApplyModal {
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 .quickApplyForm {
-  padding: 20px 40px;
-  overflow: scroll;
+  padding: 15px 24px;
+  overflow-y: scroll;
   height: 581px;
-
- 
 
   &Field {
     margin-bottom: 20px;
@@ -81,7 +79,23 @@
     }
   }
 
-  button {
-    width: 100%;
+  .divider {
+    margin-bottom: 20px !important;
+  }
+  
+  .applyBtn {
+    background-color: white;
+    z-index: 999;
+    text-align: center;
+  
+    > button {
+      width: 80%;
+    }
+  
+    @include sm {
+      position: -webkit-sticky; /* Safari */
+      position: sticky;
+      bottom: 0;
+    }
   }
 }
