@@ -36,7 +36,7 @@ import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWit
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from '@mui/material/Tooltip'
 
 /* Components */
 import Image from 'next/image'
