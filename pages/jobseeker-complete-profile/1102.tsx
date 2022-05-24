@@ -84,11 +84,13 @@ const Step4 = (props: any) => {
   const [isUpdating, setIsUpdating] = useState(false)
   const [showErrorToComplete, setShowErrorToComplete] = useState(false)
   const [selectedEducation, setSelectedEducation] = useState(null)
+  const [missingFields, setMissingFields] = useState<Array<string>>([])
 
   const userEducations = useSelector((store: any) => store.users.fetchUserEducation.response)
   const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserCompleteProfile.fetching)
   const isGeneratingUserResume = useSelector((store: any) => store.users.generateUserResume.fetching)
   const isCompletingUserProfile = useSelector((store: any) => store.users.completeUserProfile.fetching)
+  const completeUserProfileError = useSelector((store: any) => store.users.completeUserProfile.error)
 
   const requiredLabel = (text: string) => {
     return (
@@ -168,6 +170,18 @@ const Step4 = (props: any) => {
       setIsEditing(false)
     }
   }, [hasNoEducation])
+
+  useEffect(() => {
+    if (!completeUserProfileError) {
+      setMissingFields([])
+    }
+    const errorData = completeUserProfileError?.response?.data?.data
+    if (errorData) {
+      if (errorData.missing_profiles) {
+        setMissingFields(errorData.missing_profiles)
+      }
+    }
+  }, [completeUserProfileError])
 
   const setDisabledButton = (value) => {
     setIsSaveDisabled(!value)
@@ -472,6 +486,14 @@ const Step4 = (props: any) => {
       {showErrorToComplete && (
         <Text textStyle='base' textColor='red' tagName='p'>Fill up the fields with (*) to proceed.</Text>
       )}
+      { missingFields.length > 0 && (
+          <Text textStyle='base' textColor='red' tagName='p'>
+            {`Missing following fields: ${missingFields.reduce((a, c, i) => {
+              return i == 0 ? c : a + ', ' + c
+            })}`}
+          </Text>
+        )
+      }
 
       {!showForm && (
         <div className={styles.stepFormToggle} onClick={() => newEducationForm()}>
