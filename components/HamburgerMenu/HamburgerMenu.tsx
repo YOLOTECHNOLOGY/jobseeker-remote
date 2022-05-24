@@ -15,6 +15,7 @@ import styles from './HamburgerMenu.module.scss'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 interface HamburgerMenuProps {
   openState: boolean
@@ -119,7 +120,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
               <>
                 <Link
                   className={styles.defaultLink}
-                  to={`${process.env.OLD_PROJECT_URL}/dashboard/chat`}
+                  to={authPathToOldProject(null, '/dashboard/chat')}
                   aTag
                   title='Chats'
                 >
@@ -129,7 +130,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 </Link>
                 <Link
                   className={styles.defaultLink}
-                  to={userCookie.is_profile_completed ? `${process.env.OLD_PROJECT_URL}/dashboard/profile/jobseeker` : '/jobseeker-complete-profile/1'}
+                  to={userCookie.is_profile_completed ? authPathToOldProject(null, '/dashboard/profile/jobseeker') : '/jobseeker-complete-profile/1'}
                   aTag
                   title='Manage Resume'
                 >
@@ -142,12 +143,12 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>My Jobs</Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} to={`${process.env.OLD_PROJECT_URL}/dashboard/profile/settings`} aTag title='Account Settings'>
+                <Link className={styles.defaultLink} to={authPathToOldProject(null, '/dashboard/profile/setting')} aTag title='Account Settings'>
                   <li className={styles.menuList} onClick={() => toggleMenu()}>
                     <Text textStyle='xl'>Account Settings</Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} to={`${process.env.OLD_PROJECT_URL}/dashboard/bosspoint`} aTag title='BossPoints'>
+                <Link className={styles.defaultLink} to={authPathToOldProject(null, '/dashboard/bosspoint')} aTag title='BossPoints'>
                   <li className={styles.menuList} onClick={() => toggleMenu()}>
                     <Text textStyle='xl'>BossPoints</Text>
                   </li>

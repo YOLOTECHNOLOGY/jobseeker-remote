@@ -317,7 +317,7 @@ const Job = ({
             >
               <Image src={MoreIcon} width='30' height='30'></Image>
             </div>
-            {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
+
             {jobDetailOption && (
               <div className={styles.JobDetailOptionList}>
                 <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
@@ -380,7 +380,7 @@ const Job = ({
                   </Text>
                 )}
                 <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
-                  {isSavedJob ? 'Saved' : 'Save'} Job
+                  {isSavedJob ? 'Saved' : 'Save Job'}
                 </MaterialButton>
               </div>
             )}
