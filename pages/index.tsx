@@ -48,6 +48,7 @@ import {
 /* styles */
 import styles from './Home.module.scss'
 import breakpointStyles from 'styles/breakpoint.module.scss'
+import MetaText from '../components/MetaText'
 // import classNamesCombined from 'classnames'
 
 type configObject = {
@@ -282,7 +283,7 @@ const Home = (props: HomeProps) => {
             >
               Find Jobs for Professionals in Phillipines
             </Text>
-            <h1 className={styles.metaTag}>Career Platform for Professionals in Philippines</h1>
+            <MetaText tagName='h1'>Career Platform for Professionals in Philippines</MetaText>
             <div className={styles.searchSection}>
               <div className={styles.searchAndLocationContainer}>
                 <MaterialTextFieldWithSuggestionList
@@ -407,23 +408,23 @@ const Home = (props: HomeProps) => {
                 <Text className={styles.statsDescription} textStyle='xxl' bold>
                   Companies are hiring on Bossjob
                 </Text>
-                <span className={styles.metaTag}>30K+ Companies are hiring on Bossjob</span>
+                <MetaText tagName='h2'>30K+ Companies are hiring on Bossjob</MetaText>
               </div>
               <div className={styles.statsSectionContent}>
                 <Text className={styles.stats}>₱33K+</Text>
                 <Text className={styles.statsDescription} textStyle='xxl' bold>
                   Average monthly salary offered by our employers
                 </Text>
-                <span className={styles.metaTag}>
+                <MetaText tagName='h2'>
                   ₱33K+ Average monthly salary offered by our employers
-                </span>
+                </MetaText>
               </div>
               <div className={styles.statsSectionContent}>
                 <Text className={styles.stats}>2.5M+</Text>
                 <Text className={styles.statsDescription} textStyle='xxl' bold>
                   Job Seekers using Bossjob to find jobs
                 </Text>
-                <span className={styles.metaTag}>2.5M+ Job Seekers using Bossjob to find jobs</span>
+                <MetaText tagName='h2'>2.5M+ Job Seekers using Bossjob to find jobs</MetaText>
               </div>
             </div>
           </div>
