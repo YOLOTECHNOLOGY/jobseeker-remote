@@ -12,6 +12,9 @@ export const authPathToOldProject = (accessToken, redirectUrl) => {
   //   },
   // }
   // return oldProjectPath
+  if (authToken) {
+    return `${oldProjectUrl}?redirectUrl=${redirectUrl}&token=${authToken}`
+  }
 
-  return `${oldProjectUrl}?redirectUrl=${redirectUrl}&token=${authToken}`
+  return `${oldProjectUrl}?redirectUrl=${redirectUrl}`
 }

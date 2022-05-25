@@ -13,6 +13,7 @@ import MaterialButton from 'components/MaterialButton'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import Link from 'components/Link'
 import FormControlLabel from '@mui/material/FormControlLabel'
+import Divider from '@mui/material/Divider'
 
 /* Styles */
 import styles from './QuickApplyModal.module.scss'
@@ -31,6 +32,7 @@ import {
   getSmsCountryList,
 } from 'helpers/jobPayloadFormatter'
 import Checkbox from '@mui/material/Checkbox'
+import { handleNumericInput } from 'helpers/handleInput'
 
 interface QuickApplyModalProps {
   jobDetails: any
@@ -42,13 +44,14 @@ interface QuickApplyModalProps {
 
 const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow, config  }: QuickApplyModalProps) => {
   const dispatch = useDispatch()
-  const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm()
+  const { register, handleSubmit, setValue, setError, clearErrors, formState: { errors } } = useForm()
 
   const smsCountryList = getSmsCountryList(config)
   const [smsCode, setSmsCode] = useState('+63')
   const [resume, setResume] = useState(null)
   const [isSubscribed, setIsSubscribed] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [emailError, setEmailError] = useState(null)
   const [firstMessage, setFirstMessage] = useState(`Hi there, I am interested to apply for ${jobDetails.job_title} position.`)
   const screeningQuestions = jobDetails?.screening_questions || []
 
@@ -58,9 +61,9 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
   useEffect(() => {
     if (registerJobseekerState.error && registerJobseekerState.error['email']) {
       if (registerJobseekerState.error['email'] == 'The email has already been taken.') {
-        setError('email', { type: 'custom', message: 'A user with this email address already exists.' });
+        setEmailError(<p>A user with this email address already exists. Please enter a different email address or <a href={`/login/jobseeker?redirect=${applyJobLink}`} style={{ color: '#2379ea', textDecoration: 'underline' }}>log in</a>.</p>)
       } else {
-        setError('email', { type: 'custom', message: registerJobseekerState.error['email'] });
+        setError('email', { type: 'custom', message: registerJobseekerState.error['email'] })
       }
     }
 
@@ -115,7 +118,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
       handleModal={() => handleModalShow(false)}
       className={styles.quickApplyModal}
     >
-      <form className={styles.quickApplyForm} onSubmit={handleSubmit(onSubmit)}> 
+      <form className={styles.quickApplyForm}> 
         <div className={styles.quickApplyFormField}>
           <Text> Already on Bossjob?
             <Link aTag to={'/login/jobseeker?redirect=' + applyJobLink}>
@@ -134,7 +137,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                 ...register('firstName', {
                   required: {
                     value: true,
-                    message: 'This field is required.',
+                    message: 'Please enter your first name.',
                   },
                 }),
               }}
@@ -153,7 +156,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                 ...register('lastName', {
                   required: {
                     value: true,
-                    message: 'This field is required.',
+                    message: 'Please enter your last name.',
                   },
                 }),
               }}
@@ -173,18 +176,23 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
               ...register('email', {
                 required: {
                   value: true,
-                  message: 'This field is required.',
-                },
+                  message: 'Please enter your email address.',
+                }, pattern: {
+                  value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: 'Please enter a valid email address.'
+                }
               }),
             }}
             label='Email address'
-            type='email'
             size='small'
             onChange={() => {
               clearErrors('email')
             }}
           />
-          {errors.email && errorText(errors.email.message)}
+
+          {errors.email && errorText(errors.email.message)} 
+        
+          {emailError && errorText(emailError) /* Error message from the API response */}
         </div>
         
         <div className={`${styles.quickApplyFormField} ${styles.halfWidth}`}>
@@ -205,15 +213,16 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                 ...register('contactNumber', {
                   required: {
                     value: true,
-                    message: 'This field is required.',
-                  },
+                    message: 'Please enter your contact number.',
+                  }
                 }),
               }}
               label='Contact number'
-              type='number'
               size='small'
-              onChange={() => {
+              onChange={(e) => {
                 clearErrors('contactNumber')
+
+                setValue('contactNumber', handleNumericInput(e.target.value))
               }}
             />
             {errors.contactNumber && errorText(errors.contactNumber.message)}
@@ -226,15 +235,15 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
               ...register('password', {
                 required: {
                   value: true,
-                  message: 'This field is required.',
+                  message: 'Please enter your password.',
                 },
                 minLength: {
                   value: 8,
-                  message: 'Must be 8 characters or more.',
+                  message: 'Please enter a longer password (minimum of 8 characters)',
                 },
                 maxLength: {
                   value: 16,
-                  message: 'Must be 16 characters or less.',
+                  message: 'Please enter a shorter password (maximum of 16 characters)',
                 },
               }),
             }}
@@ -280,13 +289,21 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                   {...register('resume', {
                     required: {
                       value: true,
-                      message: 'This field is required.',
+                      message: 'Please upload your resume.',
                     },
                   })}
                   type="file" 
                   hidden 
                   accept=".pdf, .doc, .docx" 
                   onChange={(e) => {
+                    const sizeLimit = 5 // 5 MB 
+                    const file = e.target.files[0]
+
+                    if ((file.size / 1024 / 1024) > sizeLimit) {
+                      setError('resume', { type: 'custom', message: 'File size is too huge. Please upload file that is within 5MB.' })
+                      return 
+                    }
+
                     clearErrors('resume')
                     setResume(e.target.files[0])
                   }}
@@ -315,7 +332,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                       ...register(`screening_answer_${i}`, {
                         required: {
                           value: true,
-                          message: 'This field is required.',
+                          message: 'Please enter a valid answer.',
                         },
                       })
                     }}
@@ -340,7 +357,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                     ...register('firstMessage', {
                       required: {
                         value: true,
-                        message: 'This field is required.',
+                        message: 'Please enter a valid answer.',
                       },
                     })
                   }}
@@ -381,18 +398,23 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
           </Text>
         </div>
 
-        <MaterialButton
-          capitalize
-          size='large'
-          variant='contained'
-          type='submit'
-          isLoading={isSubmitting} 
-        >
-          <Text textStyle='xl' textColor='white' bold>
-            Register and apply
-          </Text>
-        </MaterialButton>
+        <div className={styles.applyBtn}>
+        <Divider className={styles.divider} />
+          <MaterialButton
+            capitalize
+            size='large'
+            variant='contained'
+            type='submit'
+            isLoading={isSubmitting} 
+            onClick={handleSubmit(onSubmit)}
+          >
+            <Text textStyle='xl' textColor='white' bold>
+              Register and apply
+            </Text>
+          </MaterialButton>
+        </div>
       </form>
+      
     </Modal>
   )
 }

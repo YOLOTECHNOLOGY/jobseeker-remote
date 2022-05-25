@@ -497,9 +497,9 @@ const Footer = () => {
                       aTag
                       className={styles.footerLink}
                       to='/resumetemplate'
-                      title='Create resume'
+                      title='Create Free Resume'
                     >
-                      <Text textStyle='sm'>Create resume</Text>
+                      <Text textStyle='sm'>Create free resume</Text>
                     </Link>
                   </li>
                   <li>
@@ -606,8 +606,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=it-hardware,it-network-system-database-admin,it-software-engineering,sales-engineering-technical-it,technical-helpdesk-support,it-product-management`
-                      }
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=it-hardware,it-network-system-database-admin,it-software-engineering,sales-engineering-technical-it,technical-helpdesk-support,it-product-management`}
                       title='IT Jobs'
                       external
                     >
@@ -617,8 +616,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=audit-taxation,banking-financial,corporate-finance-investment,sales-insurance-financial-services,general-cost-accounting`
-                      }
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=audit-taxation,banking-financial,corporate-finance-investment,sales-insurance-financial-services,general-cost-accounting`}
                       title='Finance Jobs'
                       external
                     >
@@ -628,8 +626,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service-relations,technical-helpdesk-support`
-                      }
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service-relations,technical-helpdesk-support`}
                       title='Customer Service Jobs'
                       external
                     >

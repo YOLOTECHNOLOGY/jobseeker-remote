@@ -36,7 +36,7 @@ import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWit
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from '@mui/material/Tooltip'
 
 /* Components */
 import Image from 'next/image'
@@ -534,6 +534,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             onKeyPress={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()
+                setSuggestionList([])
                 setSearchValue((e.target as HTMLInputElement).value)
                 onKeywordSearch((e.target as HTMLInputElement).value)
               }

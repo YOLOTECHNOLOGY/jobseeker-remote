@@ -18,7 +18,7 @@ import styles from '../Company.module.scss'
 
 const CompanyLifeProfile = (props: any) => {
   const dispatch = useDispatch()
-  const { companyDetail, accessToken } = props
+  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription } = props
   const company = companyDetail?.response.data
   const [totalJobs, setTotalJobs] = useState(null)
 
@@ -42,39 +42,64 @@ const CompanyLifeProfile = (props: any) => {
       company={company}
       currentTab='life'
       totalJobs={totalJobs}
+      seoMetaTitle={seoMetaTitle}
+      seoMetaDescription={seoMetaDescription}
     >
       <div className={styles.companySection}>
         <div className={styles.companyTabsContent}>
-          
           {company.cultures?.length > 0 && (
             <div className={styles.companyLifeCultures}>
-              <Text textStyle='xxl' bold className={styles.companySectionTitle}>Company Culture</Text>
+              <Text tagName='h1' textStyle='xxl' bold className={styles.companySectionTitle}>
+                Company Culture
+              </Text>
               <div className={styles.companyLifeCategoryList}>
                 {company.cultures.map((culture) => (
-                  <Text textStyle='base' className={styles.companyLifeCategoryValue} key={culture.id}>{culture.value}</Text>
+                  <Text
+                    tagName='h2'
+                    textStyle='base'
+                    className={styles.companyLifeCategoryValue}
+                    key={culture.id}
+                  >
+                    {culture.value}
+                  </Text>
                 ))}
               </div>
             </div>
           )}
-          
+
           {company.benefits?.length > 0 && (
             <div className={styles.companyLifeCultures}>
-              <Text textStyle='xxl' bold className={styles.companySectionTitle}>Employee Benefits</Text>
+              <Text tagName='h1' textStyle='xxl' bold className={styles.companySectionTitle}>
+                Employee Benefits
+              </Text>
               <div className={styles.companyLifeCategoryList}>
                 {company.benefits.map((benefit) => (
-                  <Text textStyle='base' className={styles.companyLifeCategoryValue} key={benefit.id}>{benefit.value}</Text>
+                  <Text
+                    textStyle='base'
+                    className={styles.companyLifeCategoryValue}
+                    key={benefit.id}
+                  >
+                    {benefit.value}
+                  </Text>
                 ))}
               </div>
             </div>
           )}
 
           <div className={styles.companyLifeCultures}>
-            <Text textStyle='xxl' bold className={styles.companySectionTitle}>Photos</Text>
+            <Text tagName='h1' textStyle='xxl' bold className={styles.companySectionTitle}>
+              Photos
+            </Text>
             {company.pictures?.length > 0 && (
               <div className={styles.companyLifePictures}>
-                {company.pictures.map((picture) => (
-                  <img src={picture.url} className={styles.companyLifePicture} key={picture.id} />
-                ))}  
+                {company.pictures.map((picture, index) => (
+                  <img
+                    src={picture.url}
+                    alt={`${company.name} photo ${index}`}
+                    className={styles.companyLifePicture}
+                    key={picture.id}
+                  />
+                ))}
               </div>
             )}
           </div>
@@ -97,12 +122,16 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const companyDetail = storeState.companies.companyDetail
-
+  const companyName = companyDetail.response.data.name
+  const seoMetaTitle = `Culture & Life at ${companyName} | Bossjob`
+  const seoMetaDescription = `Discover company culture & life at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`
   return {
     props: {
       companyDetail,
-      accessToken
-    }
+      accessToken,
+      seoMetaTitle,
+      seoMetaDescription,
+    },
   }
 })
 

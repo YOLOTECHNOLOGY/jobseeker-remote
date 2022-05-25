@@ -25,6 +25,8 @@ import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 
 /* Styles */
 import styles from './Register.module.scss'
+import MetaText from '../../components/MetaText'
+
 const Register = () => {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -39,7 +41,10 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [passwordError, setPasswordError] = useState(null)
 
-  const { register, formState: { errors }} = useForm()
+  const {
+    register,
+    formState: { errors },
+  } = useForm()
 
   const isRegisteringJobseeker = useSelector((store: any) => store.auth.registerJobseeker.fetching)
 
@@ -56,14 +61,13 @@ const Register = () => {
     else setPasswordError(null)
 
     if (!emailError && !passwordError) {
-
       const payload = {
         email,
         password,
         first_name: firstName,
         last_name: lastName,
         terms_and_condition: false,
-        is_subscribe: isSubscribe
+        is_subscribe: isSubscribe,
       }
 
       dispatch(registerJobseekerRequest({ ...payload, jobId: router.query?.jobId || '' }))
@@ -71,7 +75,11 @@ const Register = () => {
   }
 
   const errorText = (errorMessage: string) => {
-    return <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>{errorMessage}</Text>
+    return (
+      <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
+        {errorMessage}
+      </Text>
+    )
   }
 
   const callbackRequest = (payload) => {
@@ -80,12 +88,21 @@ const Register = () => {
 
   return (
     <AuthLayout
-      headingText={<Text bold textStyle='xxxl' tagName='h2'> Join Bossjob, <br/>kick-start your career</Text>}
+      headingText={
+        <>
+          <MetaText tagName='h1'>Sign up as Jobseeker</MetaText>
+          <Text bold textStyle='xxxl' tagName='h2'>
+            {' '}
+            Join Bossjob, <br />
+            kick-start your career
+          </Text>
+        </>
+      }
       ctaSignup
     >
       <SEO
-        title='Jobseeker Register - Bossjob'
-        description='Bossjob - Career Platform for Professionals in Philippines'
+        title='Sign Up | Bossjob'
+        description='Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.'
         canonical='/register/jobseeker'
       />
 

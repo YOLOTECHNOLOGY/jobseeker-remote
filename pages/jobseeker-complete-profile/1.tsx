@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -22,7 +23,8 @@ import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
 import MaterialButton from 'components/MaterialButton'
-import Divider from '@mui/material/Divider';
+import Divider from '@mui/material/Divider'
+import Tooltip from '@mui/material/Tooltip'
 
 /* Helpers*/
 import {
@@ -35,9 +37,15 @@ import {
   getLocationList
 } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { handleNumericInput } from 'helpers/handleInput'
 
 // Styles
 import styles from './Onboard.module.scss'
+
+/* Images */
+import {
+  DisclaimerIcon
+} from 'images'
 
 const Step1 = (props: any) => {
   const currentStep = 1
@@ -215,11 +223,10 @@ const Step1 = (props: any) => {
               className={styles.step1ContactNumberField}
               label={requiredLabel('Contact Number')}
               size='small'
-              type='number'
               error={errors.contactNumber ? true : false}
               value={contactNumber}
               defaultValue={contactNumber}
-              onChange={(e) => setContactNumber(e.target.value)}
+              onChange={(e) => setContactNumber(handleNumericInput(e.target.value))}
             />
             {errors.contactNumber && errorText(errors.contactNumber.message)}
           </div>
@@ -357,7 +364,14 @@ const Step1 = (props: any) => {
                 onChange={(e) => setHeadhuntMe(e.target.checked)}
               />
             }
-            label={<Text textStyle='sm'>I’d like to join Headhunt Me to discover more job opportunities.</Text>}
+            label={<Text textStyle='sm'>
+              I’d like to join Headhunt Me to discover more job opportunities. 
+              <Tooltip title='Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.' placement='top' arrow >
+                <span className={styles.disclaimerIcon}>
+                  <Image src={DisclaimerIcon} alt='disclaimer' width='16' height='16' />
+                </span>
+              </Tooltip>
+            </Text>}
           />
         </div>
       </div>

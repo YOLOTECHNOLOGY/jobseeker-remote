@@ -23,15 +23,16 @@ import CompanyJobsCardLoader from 'components/Loader/CompanyJobsCard'
 
 // Styles
 import styles from '../Company.module.scss'
+import MetaText from '../../../components/MetaText'
 
 const CompanyJobsProfile = (props: any) => {
   const size = 30
   const router = useRouter()
   const { page } = router.query
   const dispatch = useDispatch()
-  const { companyDetail, accessToken } = props
+  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription } = props
   const company = companyDetail?.response.data
-  
+
   const [jobQuery, setJobQuery] = useState('')
   const [jobLocation, setJobLocation] = useState(null)
 
@@ -48,10 +49,10 @@ const CompanyJobsProfile = (props: any) => {
       size,
       page,
       query: jobQuery,
-      jobLocation: jobLocation?.value || ''
+      jobLocation: jobLocation?.value || '',
     }
 
-    dispatch(fetchJobsListRequest({...payload}, accessToken))
+    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
     scrollToTop()
   }, [router.query])
 
@@ -61,7 +62,7 @@ const CompanyJobsProfile = (props: any) => {
       size: 30,
     }
 
-    dispatch(fetchJobsListRequest({...payload}, accessToken))
+    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
   }, [])
 
   useEffect(() => {
@@ -78,10 +79,10 @@ const CompanyJobsProfile = (props: any) => {
       size,
       page,
       query: jobQuery,
-      jobLocation: jobLocation?.value || ''
+      jobLocation: jobLocation?.value || '',
     }
 
-    dispatch(fetchJobsListRequest({...payload}, accessToken))
+    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
   }
 
   const handlePaginationClick = (event, val) => {
@@ -90,7 +91,9 @@ const CompanyJobsProfile = (props: any) => {
   }
 
   const handleJobsDisplayCount = () => {
-    return `${(size * (page as any || 1) - size) + 1} - ${totalJobs < size ? totalJobs : size * (page as any || 1)}`
+    return `${size * ((page as any) || 1) - size + 1} - ${
+      totalJobs < size ? totalJobs : size * ((page as any) || 1)
+    }`
   }
 
   const onLocationSearch = (_, value) => {
@@ -107,14 +110,19 @@ const CompanyJobsProfile = (props: any) => {
       company={company}
       currentTab='jobs'
       totalJobs={totalJobs}
+      seoMetaTitle={seoMetaTitle}
+      seoMetaDescription={seoMetaDescription}
     >
-      <div className={styles.companySection} id="companyJobs">
+      <div className={styles.companySection} id='companyJobs'>
         <div className={styles.companyTabsContent}>
           <div className={styles.companyJobs}>
-            <Text textStyle='xxl' bold className={styles.companySectionTitle}>Jobs</Text>
+            <Text textStyle='xxl' bold className={styles.companySectionTitle}>
+              Jobs
+            </Text>
+            <MetaText tagName='h1'>{`Jobs at ${company.name} ${company.id}`}</MetaText>
             <div className={styles.companyJobsSearch}>
               <div className={styles.companyJobsSearchLeft}>
-                <MaterialTextField 
+                <MaterialTextField
                   value={jobQuery}
                   defaultValue={jobQuery}
                   onChange={(e) => setJobQuery(e.target.value)}
@@ -131,14 +139,19 @@ const CompanyJobsProfile = (props: any) => {
                   defaultValue={jobLocation}
                   onChange={onLocationSearch}
                 />
-                <MaterialButton variant='contained' capitalize className={styles.companyJobsSearchButton} onClick={handleSearchCompanyJobSearch}>
-                  <Text textColor='white' bold>Search</Text>
+                <MaterialButton
+                  variant='contained'
+                  capitalize
+                  className={styles.companyJobsSearchButton}
+                  onClick={handleSearchCompanyJobSearch}
+                >
+                  <Text textColor='white' bold>
+                    Search
+                  </Text>
                 </MaterialButton>
               </div>
             </div>
-            {isJobsListFetching && [...Array(10)].map((_, i) => (
-              <CompanyJobsCardLoader key={i}/>
-            ))}
+            {isJobsListFetching && [...Array(10)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
             {!isJobsListFetching && companyJobs?.length > 0 && (
               <>
                 <div className={styles.companyJobsList}>
@@ -148,15 +161,21 @@ const CompanyJobsProfile = (props: any) => {
                       title: companyJob.job_title,
                       location: companyJob.job_location,
                       salary: companyJob.salary_range_value,
-                      availability: companyJob.job_type
+                      availability: companyJob.job_type,
                     }
 
-                    return <CompanyJobsCard {...company} key={companyJob.id}/>
+                    return <CompanyJobsCard {...company} key={companyJob.id} />
                   })}
                 </div>
-                <Text textStyle='sm' className={styles.companyJobsResults}>Showing {handleJobsDisplayCount()} of {totalJobs} jobs</Text>
+                <Text textStyle='sm' className={styles.companyJobsResults}>
+                  Showing {handleJobsDisplayCount()} of {totalJobs} jobs
+                </Text>
                 <div className={styles.companyJobsPagination}>
-                  <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={Number(page) || 1} totalPages={totalPages || 1} />
+                  <MaterialRoundedPagination
+                    onChange={handlePaginationClick}
+                    defaultPage={Number(page) || 1}
+                    totalPages={totalPages || 1}
+                  />
                 </div>
               </>
             )}
@@ -171,7 +190,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
 
   const companyPageUrl = req.url.split('/')
-  const companyPath = companyPageUrl.length === 4 ? companyPageUrl[2].split('-') : companyPageUrl[companyPageUrl.length - 1].split('-')
+  const companyPath =
+    companyPageUrl.length === 4
+      ? companyPageUrl[2].split('-')
+      : companyPageUrl[companyPageUrl.length - 1].split('-')
   const companyId = Number(companyPath[companyPath.length - 1])
 
   store.dispatch(fetchConfigRequest())
@@ -182,13 +204,17 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const storeState = store.getState()
   const config = storeState.config.config.response
   const companyDetail = storeState.companies.companyDetail || null
-
+  const companyName = companyDetail.response.data.name
+  const seoMetaTitle = `${companyName} Careers in Philippines, Job Opportunities | Bossjob`
+  const seoMetaDescription = `View all current job opportunities at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`
   return {
     props: {
       config,
       companyDetail,
-      accessToken
-    }
+      accessToken,
+      seoMetaTitle,
+      seoMetaDescription,
+    },
   }
 })
 
