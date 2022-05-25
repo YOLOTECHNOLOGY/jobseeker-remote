@@ -32,6 +32,7 @@ import {
   getSmsCountryList,
 } from 'helpers/jobPayloadFormatter'
 import Checkbox from '@mui/material/Checkbox'
+import { handleNumericInput } from 'helpers/handleInput'
 
 interface QuickApplyModalProps {
   jobDetails: any
@@ -43,7 +44,7 @@ interface QuickApplyModalProps {
 
 const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow, config  }: QuickApplyModalProps) => {
   const dispatch = useDispatch()
-  const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm()
+  const { register, handleSubmit, setValue, setError, clearErrors, formState: { errors } } = useForm()
 
   const smsCountryList = getSmsCountryList(config)
   const [smsCode, setSmsCode] = useState('+63')
@@ -213,26 +214,15 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                   required: {
                     value: true,
                     message: 'Please enter your contact number.',
-                  },
-                  pattern: {
-                    value: /^[0-9]+$/,
-                    message: 'Please enter a valid contact number.'
                   }
                 }),
               }}
               label='Contact number'
               size='small'
-              type='number'
-              onKeyPress={(e) => {
-                // Exclusive number checking during keypress (Safari)
-                const numRegExp = new RegExp(/^[0-9]+$/);
-
-                if (!numRegExp.test(e.key)) {
-                  e.preventDefault()
-                }
-              }}
               onChange={(e) => {
                 clearErrors('contactNumber')
+
+                setValue('contactNumber', handleNumericInput(e.target.value))
               }}
             />
             {errors.contactNumber && errorText(errors.contactNumber.message)}
