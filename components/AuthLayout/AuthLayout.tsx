@@ -30,7 +30,6 @@ const AuthLayout = ({
   isBackToLogin,
   ctaSignup,
   isLogin,
-  isEmployer
 }: AuthLayoutProps) => {
 
   const displayCTA = () => {
@@ -69,14 +68,12 @@ const AuthLayout = ({
               </Link>
             </Text>
           )}
-          {!isEmployer && (
             <Text tagName='p' textStyle='base'>
               Looking to hire people? Sign up as
               <Link to={`${process.env.OLD_PROJECT_URL}/login`} className={styles.AuthCTALink} aTag>
                 <Text textColor='primaryBlue'> Employer</Text>
               </Link>
             </Text>
-          )}
         </>
       )
     }
