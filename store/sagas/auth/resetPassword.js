@@ -1,33 +1,14 @@
 import { call, put, takeLatest, fork, take } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
-import { setCookie } from 'helpers/cookies'
 
 import { RESET_PASSWORD_REQUEST } from 'store/types/auth/resetPassword'
-import { FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS } from 'store/types/recruiters/fetchRecruiterSubscriptionFeature'
 
 import {
   resetPasswordSuccess,
   resetPasswordFailed,
 } from 'store/actions/auth/resetPassword'
-import { 
-  fetchRecruiterSubscriptionFeatureSuccess, 
-  fetchRecruiterSubscriptionFeatureFailed 
-} from 'store/actions/recruiters/fetchRecruiterSubscriptionFeature'
 
 import { resetPasswordService } from 'store/services/auth/resetPassword'
-import { fetchRecruiterSubscriptionFeatureService } from 'store/services/recruiters/fetchRecruiterSubscriptionFeature'
-
-function* fetchRecruiterSubscriptionFeature() {
-  try {
-    const subscriptionFeature = yield call(fetchRecruiterSubscriptionFeatureService)
-    if (subscriptionFeature.status >= 200 && subscriptionFeature.status < 300) {
-      yield put(fetchRecruiterSubscriptionFeatureSuccess(subscriptionFeature.data))
-    }
-    yield call(setCookie, 'splan', subscriptionFeature.data.data)
-  } catch (err) {
-    yield put(fetchRecruiterSubscriptionFeatureFailed(err))
-  }
-}
 
 function* resetPasswordReq(actions) {
   try {
@@ -45,12 +26,9 @@ function* resetPasswordReq(actions) {
         resetPasswordSuccess(response.data)
       )
 
-      yield fork(fetchRecruiterSubscriptionFeature)
-      yield take(FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS)
       yield put(push('/change-password/success'))
     }
   } catch (err) {
-    console.log(err)
     yield put(resetPasswordFailed(err))
   }
 }
