@@ -30,6 +30,7 @@ const ResetPassword = () => {
   const [otpError, setOtpError] = useState('');
 
   const isVerifyingCode = useSelector((store: any) => store.auth.checkResetPasswordCode.fetching)
+  const sendOTPError = useSelector((store: any) => store.auth.sendResetPasswordCode.error);
   const checkOTPError = useSelector((store: any) => store.auth.checkResetPasswordCode.error);
 
   useEffect(() => {
@@ -44,9 +45,19 @@ const ResetPassword = () => {
       }
       case 422: { // invalid OTP >6 characters
         setOtpError('Please enter a valid 6 digit OTP')
+        break;
       }
     }
   }, [checkOTPError])
+
+  useEffect(() => {
+    switch(sendOTPError?.response?.status) {
+      case 404: { // no such email
+        setEmailError('Please enter a valid email address')
+        break;
+      }
+    }
+  }, [sendOTPError])
 
   const handleSendResetPasswordCode = () => {
     if (!email) {
