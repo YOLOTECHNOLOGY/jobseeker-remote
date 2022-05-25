@@ -97,6 +97,7 @@ const JobDetail = ({
 
   useEffect(() => {
     setIsSavedJob(selectedJob?.is_saved)
+    setJobDetailOption(false)
   }, [selectedJob])
 
   const handleBenefitIcon = (benefit) => {

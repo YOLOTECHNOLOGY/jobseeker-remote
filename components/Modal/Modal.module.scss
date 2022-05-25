@@ -23,7 +23,7 @@
     position: relative;
     margin: 0 auto;
     width: 581px;
-    height: 663px;
+    max-height: 663px;
 
     &.isFullWidth {
       @include md {

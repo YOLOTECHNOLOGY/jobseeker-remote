@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 /* Vendors */
 // import { useForm } from 'react-hook-form'
@@ -16,7 +16,6 @@ interface IModalWithdrawApplication {
   handleWithdrawApplication?: Function
   jobId?: number
   isWithdrawAppliedJobFetching?: boolean
-  withdrawAppliedJobResponse?: any
 }
 
 const ModalWithdrawApplication = ({
@@ -24,19 +23,10 @@ const ModalWithdrawApplication = ({
   handleShowModalWithdrawApplication,
   handleWithdrawApplication,
   jobId,
-  isWithdrawAppliedJobFetching,
-  withdrawAppliedJobResponse
+  isWithdrawAppliedJobFetching
 }: IModalWithdrawApplication) => {
-  const [hasWithdrawed, setHasWithdrawed] = useState(false)
-
-  useEffect(() => {
-    if (withdrawAppliedJobResponse?.message === 'success') {
-      setHasWithdrawed(true)
-    }
-  }, [withdrawAppliedJobResponse])
 
   const handleText = () => {
-    if (hasWithdrawed) return 'Done'
     return isWithdrawAppliedJobFetching ? 'Updating...' : 'Withdraw'
   }
 
@@ -51,9 +41,7 @@ const ModalWithdrawApplication = ({
       }}
       secondButtonText={handleText()}
       handleSecondButton={() => {
-        if (!hasWithdrawed) {
-          handleWithdrawApplication({jobId})
-        }
+        handleWithdrawApplication({jobId})
       }}
     >
       <div className={styles.ModalWithdrawApplication}>
