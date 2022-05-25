@@ -37,6 +37,7 @@ import {
   getLocationList
 } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { handleNumericInput } from 'helpers/handleInput'
 
 // Styles
 import styles from './Onboard.module.scss'
@@ -222,11 +223,10 @@ const Step1 = (props: any) => {
               className={styles.step1ContactNumberField}
               label={requiredLabel('Contact Number')}
               size='small'
-              type='number'
               error={errors.contactNumber ? true : false}
               value={contactNumber}
               defaultValue={contactNumber}
-              onChange={(e) => setContactNumber(e.target.value)}
+              onChange={(e) => setContactNumber(handleNumericInput(e.target.value))}
             />
             {errors.contactNumber && errorText(errors.contactNumber.message)}
           </div>

@@ -167,6 +167,7 @@ const Home = (props: HomeProps) => {
     // const jobsPageLink = cookies.get('user')
     //   ? '/dashboard/jobs-hiring'
     //   : '/jobs-hiring'
+
     const jobsPageLink = '/jobs-hiring'
     return (
       <div className={styles.quickLinks}>
