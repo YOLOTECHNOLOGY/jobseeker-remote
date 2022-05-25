@@ -33,13 +33,23 @@ const ResetPassword = () => {
   const sendOTPError = useSelector((store: any) => store.auth.sendResetPasswordCode.error);
   const checkOTPError = useSelector((store: any) => store.auth.checkResetPasswordCode.error);
 
-  useEffect(() => {
+  useEffect(() => { // send OTP
+    switch(sendOTPError?.response?.status) {
+      case 404: { // email does not exist on database
+        setEmailError('Please enter a valid email address')
+        setIsOtpSent(false); // should reset Get OTP button so user does not have to refresh
+        break;
+      }
+    }
+  }, [sendOTPError])
+
+  useEffect(() => { // verify OTP
     switch(checkOTPError?.response?.status) {
-      case 404: { // no such email
+      case 404: { // email does not exist on database
         setEmailError('Please enter a valid email address')
         break;
       }
-      case 400: { // wrong otp
+      case 400: { // OTP verification failed for given email
         setOtpError('The OTP you have entered is wrong. Please try again')
         break;
       }
@@ -49,15 +59,6 @@ const ResetPassword = () => {
       }
     }
   }, [checkOTPError])
-
-  useEffect(() => {
-    switch(sendOTPError?.response?.status) {
-      case 404: { // no such email
-        setEmailError('Please enter a valid email address')
-        break;
-      }
-    }
-  }, [sendOTPError])
 
   const handleSendResetPasswordCode = () => {
     if (!email) {
