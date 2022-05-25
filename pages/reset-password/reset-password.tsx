@@ -155,6 +155,7 @@ const ResetPassword = () => {
             className={styles.ResetPasswordFormButton}
             isLoading={isVerifyingCode}
             onClick={() => handleCheckResetPasswordCode()}
+            disabled={!isOtpSent}
           >
             <Text textStyle='xl' textColor='white' bold>Reset Password</Text>
           </MaterialButton>
