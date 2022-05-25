@@ -1,0 +1,103 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.quickApplyModal {
+  overflow-y: scroll;
+}
+
+.quickApplyForm {
+  padding-left: 24px;
+  padding-right: 24px;
+  margin-top: 20px;
+  height: 581px;
+
+  &Field {
+    margin-bottom: 20px;
+
+    div { 
+      width: 100%;
+    }
+
+    .error {
+      margin: 6px 0 0;
+    }
+
+    > .question {
+      margin-top: 15px;
+
+      > .answer {
+        margin-top: 15px;
+
+        > div {
+          height: 100%;
+        }
+      }
+    }
+    
+    label {
+      width: 100%;
+    }
+
+    > .uploadedResume {
+      display: flex;
+      justify-content: space-between;
+
+      > .leftResume {
+        display: flex;
+
+        > .documentDiv {
+          width: auto;
+          margin-right: 10px;
+        }
+
+        > .resumeName {
+          line-height: 22px;
+        }
+      }
+
+      > .trashDiv {
+        width: auto;
+        cursor: pointer;
+      }
+    }
+  }
+
+  > .halfWidth {
+    display: flex;
+    justify-content: space-between;
+
+    > div {
+      width: 48%;
+    }
+
+    @include msd {
+      display: block;
+      
+      > div {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  .divider {
+    margin-bottom: 20px !important;
+  }
+  
+  .applyBtn {
+    background-color: white;
+    z-index: 999;
+    text-align: center;
+    padding-bottom: 20px;
+  
+    > button {
+      width: 80%;
+    }
+  
+    @include sm {
+      position: -webkit-sticky; /* Safari */
+      position: sticky;
+      bottom: 0;
+    }
+  }
+}

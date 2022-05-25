@@ -34,6 +34,7 @@ import AdSlot from 'components/AdSlot'
 
 import ModalShare from 'components/ModalShare'
 import ModalReportJob from 'components/ModalReportJob'
+import QuickApplyModal from 'components/QuickApplyModal'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
@@ -53,6 +54,7 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 import { postReportRequest } from 'store/actions/reports/postReport'
 import { postSaveJobRequest } from 'store/actions/jobs/postSaveJob'
+import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
 
 /* Styles */
 import styles from './Job.module.scss'
@@ -101,6 +103,7 @@ const Job = ({
   const userCookie = getCookie('user') || null
   const applyJobLink = getApplyJobLink(jobDetail, userCookie)
 
+  const [isSavedJob, setIsSavedJob] = useState(jobDetail?.is_saved)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
   const [jobDetailOption, setJobDetailOption] = useState(false)
@@ -112,6 +115,7 @@ const Job = ({
   const [companyUrl, setCompanyUrl] = useState('/')
   const [recommendedCourses, setRecommendedCourses] = useState([])
   const [similarJobs, setSimilarJobs] = useState(null)
+  const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
 
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
   const categoryLists = config && config.inputs && config.inputs.job_category_lists
@@ -188,15 +192,28 @@ const Job = ({
   const isAppliedQueryParam = router.query.isApplied
   const hasApplied = isAppliedQueryParam === 'true' ? true : false
 
-  const handlePostSaveJob = ({ jobId, isSaved }) => {
-    if (isSaved) return
+  const handlePostSaveJob = () => {
+    if (userCookie) {
+      if (!isSavedJob) {
+        setIsSavedJob(true)
 
-    if (accessToken) {
-      const postSaveJobPayload = {
-        jobId,
-        accessToken,
+        const postSaveJobPayload = {
+          jobId: jobDetail?.id,
+          user_id: userCookie.id,
+        }
+
+        dispatch(postSaveJobRequest(postSaveJobPayload))
+      } else {
+        setIsSavedJob(false)
+
+        const deleteJobPayload = {
+          jobId: jobDetail?.id,
+        }
+
+        dispatch(deleteSaveJobRequest(deleteJobPayload))
       }
-      dispatch(postSaveJobRequest(postSaveJobPayload))
+    } else {
+      router.push(`/login/jobseeker?redirect=${router.asPath}`)
     }
   }
 
@@ -295,6 +312,7 @@ const Job = ({
           onKeyPress={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault()
+              setSuggestionList([])
               onSearch()
             }
           }}
@@ -324,7 +342,7 @@ const Job = ({
             >
               <Image src={MoreIcon} width='30' height='30'></Image>
             </div>
-            {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
+
             {jobDetailOption && (
               <div className={styles.JobDetailOptionList}>
                 <div
@@ -373,7 +391,16 @@ const Job = ({
                       </MaterialButton>
                     ) : (
                       <Link to={applyJobLink} external>
-                        <MaterialButton variant='contained' capitalize>
+                        <MaterialButton
+                          variant='contained'
+                          capitalize
+                          onClick={(e) => {
+                            if (!userCookie) {
+                              e.preventDefault()
+                              setQuickApplyModalShow(true)
+                            }
+                          }}
+                        >
                           <Text textStyle='lg' textColor='white' bold>
                             Apply Now
                           </Text>
@@ -388,14 +415,8 @@ const Job = ({
                     <span>This job is no longer hiring</span>
                   </Text>
                 )}
-                <MaterialButton
-                  variant='outlined'
-                  capitalize
-                  onClick={() =>
-                    handlePostSaveJob({ jobId: jobDetail?.id, isSaved: jobDetail?.is_saved })
-                  }
-                >
-                  {jobDetail?.is_saved ? 'Saved' : 'Save'} Job
+                <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
+                  {isSavedJob ? 'Saved' : 'Save Job'}
                 </MaterialButton>
               </div>
             )}
@@ -780,6 +801,14 @@ const Job = ({
         jobDetailUrl={jobDetailUrl}
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}
+      />
+
+      <QuickApplyModal
+        jobDetails={jobDetail}
+        applyJobLink={applyJobLink}
+        modalShow={quickApplyModalShow}
+        handleModalShow={setQuickApplyModalShow}
+        config={config}
       />
     </Layout>
   )

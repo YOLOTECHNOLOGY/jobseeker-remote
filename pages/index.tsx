@@ -301,6 +301,7 @@ const Home = (props: HomeProps) => {
                   onKeyPress={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                       e.preventDefault()
+                      setSuggestionList([])
                       onSearch()
                     }
                   }}

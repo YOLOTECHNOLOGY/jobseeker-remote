@@ -1,15 +1,18 @@
 const path = require('path')
 const redirectionPaths = require('./lib/redirection')
+const generateRobotsTxt = require('./scripts/generateRobotsTxt.js')
 
 module.exports = {
   async redirects() {
     if (process.env.MAINTENANCE === 'true') {
-      return [{
-        source: '/((?!maintenance).*)',
-        destination: '/maintenance',
-        permanent: false,
-      }]
-    } 
+      return [
+        {
+          source: '/((?!maintenance).*)',
+          destination: '/maintenance',
+          permanent: false,
+        },
+      ]
+    }
 
     return redirectionPaths
   },
@@ -41,7 +44,7 @@ module.exports = {
     CLIENT_SECRET: process.env.CLIENT_SECRET,
     COUNTRY_KEY: process.env.COUNTRY_KEY,
     LINKEDIN_CLIENT_ID: process.env.LINKEDIN_CLIENT_ID,
-    LINKEDIN_CLIENT_SECRET: process.env.LINKEDIN_CLIENT_SECRET
+    LINKEDIN_CLIENT_SECRET: process.env.LINKEDIN_CLIENT_SECRET,
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'node_modules')],
@@ -49,5 +52,10 @@ module.exports = {
   images: {
     domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl'],
   },
+  webpack(config, { isServer }) {
+    if (isServer) {
+      generateRobotsTxt()
+    }
+    return config
+  },
 }
-  

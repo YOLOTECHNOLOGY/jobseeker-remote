@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-// import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 
 import { logoutRequest } from 'store/actions/auth/logout'
@@ -14,7 +13,9 @@ import Text from 'components/Text'
 
 import styles from './HamburgerMenu.module.scss'
 
+/* Helpers */
 import { getCookie } from 'helpers/cookies'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 interface HamburgerMenuProps {
   openState: boolean
@@ -25,6 +26,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
   // const router = useRouter()
   const dispatch = useDispatch()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const userCookie = getCookie('user')
 
   useEffect(() => {
     setIsAuthenticated(getCookie('accessToken') ? true : false)
@@ -118,7 +120,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
               <>
                 <Link
                   className={styles.defaultLink}
-                  to='/'
+                  to={authPathToOldProject(null, '/dashboard/chat')}
                   aTag
                   title='Chats'
                 >
@@ -128,7 +130,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 </Link>
                 <Link
                   className={styles.defaultLink}
-                  to='/jobseeker-complete-profile/1'
+                  to={userCookie.is_profile_completed ? authPathToOldProject(null, '/dashboard/profile/jobseeker') : '/jobseeker-complete-profile/1'}
                   aTag
                   title='Manage Resume'
                 >
@@ -141,17 +143,17 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>My Jobs</Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} to='/' title='Account Settings'>
+                <Link className={styles.defaultLink} to={authPathToOldProject(null, '/dashboard/profile/settings')} aTag title='Account Settings'>
                   <li className={styles.menuList} onClick={() => toggleMenu()}>
                     <Text textStyle='xl'>Account Settings</Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} to='/' title='BossPoints'>
+                <Link className={styles.defaultLink} to={authPathToOldProject(null, '/dashboard/bosspoint')} aTag title='BossPoints'>
                   <li className={styles.menuList} onClick={() => toggleMenu()}>
                     <Text textStyle='xl'>BossPoints</Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} to='/' title='Career Guide'>
+                <Link className={styles.defaultLink} to='https://blog.bossjob.ph/' aTag title='Career Guide'>
                   <li className={styles.menuList} onClick={() => toggleMenu()}>
                     <Text textStyle='xl'>Career Guide</Text>
                   </li>
