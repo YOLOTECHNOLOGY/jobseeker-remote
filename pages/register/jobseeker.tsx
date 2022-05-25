@@ -12,7 +12,6 @@ import { useForm } from 'react-hook-form'
 /* Redux Actions */
 import { socialLoginRequest } from 'store/actions/auth/socialLogin'
 import { registerJobseekerRequest } from 'store/actions/auth/registerJobseeker'
-import { registerRecruiterRequest } from 'store/actions/auth/registerRecruiter'
 
 /* Components */
 import MaterialButton from 'components/MaterialButton'
@@ -26,11 +25,9 @@ import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 
 /* Styles */
 import styles from './Register.module.scss'
-
 const Register = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const isEmployer = router.pathname.includes('/employer')
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -45,7 +42,6 @@ const Register = () => {
   const { register, formState: { errors }} = useForm()
 
   const isRegisteringJobseeker = useSelector((store: any) => store.auth.registerJobseeker.fetching)
-  const isRegisteringRecruiter = useSelector((store: any) => store.auth.registerRecruiter.fetching)
 
   const handleOnShowPassword = () => setShowPassword(!showPassword)
 
@@ -60,10 +56,6 @@ const Register = () => {
     else setPasswordError(null)
 
     if (!emailError && !passwordError) {
-      let redirect: string | string[] = ''
-      if (router.query && (router.query.redirectFullPath || router.query.redirect)) {
-        redirect = router.query?.redirectFullPath ? router.query.redirectFullPath : router.query.redirect
-      }
 
       const payload = {
         email,
@@ -74,8 +66,7 @@ const Register = () => {
         is_subscribe: isSubscribe
       }
 
-      if (!isEmployer) dispatch(registerJobseekerRequest({ ...payload, jobId: router.query?.jobId || '' }))
-      if (isEmployer) dispatch(registerRecruiterRequest({ ...payload, redirect }))
+      dispatch(registerJobseekerRequest({ ...payload, jobId: router.query?.jobId || '' }))
     }
   }
 
@@ -91,7 +82,6 @@ const Register = () => {
     <AuthLayout
       headingText={<Text bold textStyle='xxxl' tagName='h2'> Join Bossjob, <br/>kick-start your career</Text>}
       ctaSignup
-      isEmployer={isEmployer}
     >
       <SEO
         title='Jobseeker Register - Bossjob'
@@ -206,7 +196,7 @@ const Register = () => {
             size='large'
             variant='contained'
             className={styles.RegisterButton}
-            isLoading={isRegisteringJobseeker || isRegisteringRecruiter}
+            isLoading={isRegisteringJobseeker}
             onClick={() => handleRegister()}
           >
             <Text textStyle='xl' textColor='white' bold>
