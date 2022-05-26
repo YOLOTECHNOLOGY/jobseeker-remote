@@ -434,8 +434,8 @@ const getDegreeList = (config) => {
   })
 }
 
-const getApplyJobLink = (job, user) => {
-  const oldProjectApplyLink = authPathToOldProject(null, `/dashboard/job/${slugify(job?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${job?.id}/apply`)
+const getApplyJobLink = (job, user, accessToken=null) => {
+  const oldProjectApplyLink = authPathToOldProject(accessToken, `/dashboard/job/${slugify(job?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${job?.id}/apply`)
 
   if (user) {
     if (!user?.is_profile_completed) {

@@ -101,8 +101,8 @@ const Job = ({
   const dispatch = useDispatch()
   const router = useRouter()
   const userCookie = getCookie('user') || null
-  const applyJobLink = getApplyJobLink(jobDetail, userCookie)
-
+  const applyJobLink = getApplyJobLink(jobDetail, userCookie, accessToken)
+  
   const [isSavedJob, setIsSavedJob] = useState(jobDetail?.is_saved)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
