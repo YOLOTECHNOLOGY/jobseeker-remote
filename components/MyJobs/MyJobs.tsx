@@ -46,6 +46,7 @@ import { getCookie } from 'helpers/cookies'
 
 /* Styles */
 import styles from './MyJobs.module.scss'
+import MaterialButton from 'components/MaterialButton'
 
 const theme = createTheme({
   components: {
@@ -89,7 +90,8 @@ const MyJobs = ({
   const isAppliedCategoryActive = cx({ MyJobsMenuLinkIsActive: isAppliedCategory})
   const isSavedCategoryActive = cx({ MyJobsMenuLinkIsActive: !isAppliedCategory})
   const isStickyClass = cx({ isSticky: isSticky })
-
+  const [isLoadingJobDetails, setIsLoadingJobDetails] = useState(false)
+  const [isLoadingJobList, setIsLoadingJobList] = useState(true)
   const [selectedJobId, setSelectedJobId] = useState(null)
   const [selectedJob, setSelectedJob] = useState(null)
 
@@ -119,7 +121,11 @@ const MyJobs = ({
   
   useEffect(() => {
     window.addEventListener('scroll', updateScrollPosition)
+
+    handleFetchMyJobsList()
+    
     return () => window.removeEventListener('scroll', updateScrollPosition)
+
   }, [])
 
   useEffect(() => {
@@ -127,11 +133,17 @@ const MyJobs = ({
   }, [router.query])
 
   useEffect(() => {
-    if (appliedJobsListResponse?.data?.applied_jobs.length > 0) {
-      setJobsList(appliedJobsListResponse.data?.applied_jobs)
-      setTotalPages(appliedJobsListResponse.data?.total_pages)
-      setTotalNum(appliedJobsListResponse.data?.total_num)
-    } 
+    setIsLoadingJobDetails(isAppliedCategory ? isAppliedJobDetailFetching : isSavedJobDetailFetching)
+  }, [isAppliedJobDetailFetching, isSavedJobDetailFetching])
+
+  useEffect(() => {
+    setIsLoadingJobList(isAppliedCategory ? isAppliedJobsListFetching : isSavedJobsListFetching)
+  }, [isAppliedJobsListFetching, isSavedJobsListFetching])
+
+  useEffect(() => {
+    setJobsList(appliedJobsListResponse.data?.applied_jobs)
+    setTotalPages(appliedJobsListResponse.data?.total_pages)
+    setTotalNum(appliedJobsListResponse.data?.total_num)
   }, [appliedJobsListResponse])
 
   useEffect(() => {
@@ -318,6 +330,7 @@ const MyJobs = ({
           </ThemeProvider>
         </div>
       </div>
+
       <div className={styles.MyJobs}>
         <div className={classNamesCombined([styles.MyJobsMenu, isStickyClass])}>
           <div className={styles.container}>
@@ -330,10 +343,11 @@ const MyJobs = ({
             </div>
           </div>
         </div>
+
         <div className={classNamesCombined([styles.container, styles.MyJobsContent])}>
           <div className={styles.MyJobsList}>
             <div className={styles.MyJobsListContent}>
-              {isAppliedJobsListFetching || isSavedJobsListFetching && (
+              {isLoadingJobList && (
                 <React.Fragment>
                   <JobCardLoader />
                   <JobCardLoader />
@@ -341,7 +355,7 @@ const MyJobs = ({
                   <JobCardLoader />
                 </React.Fragment>
               )}
-              {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && jobsList?.map((jobs, i) => (
+              {!isLoadingJobList && jobsList?.map((jobs, i) => (
                 <JobCard
                   key={i}
                   id={jobs.job.id}
@@ -356,16 +370,18 @@ const MyJobs = ({
                 />
               ))}
             </div>
-
-            <div className={styles.paginationWrapper}>
-              <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} page={page} totalPages={totalPages || 1} />
-            </div>
+            {selectedJob && (
+              <div className={styles.paginationWrapper}>
+                <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} page={page} totalPages={totalPages || 1} />
+              </div>
+            )}
           </div>
+
           <div className={styles.MyJobsDetailInfoSection}>
-            {(isAppliedJobDetailFetching || isSavedJobDetailFetching) && (
+            {isLoadingJobDetails && (
               <JobDetailLoader />
             )}
-            {(!isAppliedJobDetailFetching || !isSavedJobDetailFetching) && selectedJob?.id && (
+            {selectedJob && (
               <JobDetail 
                 selectedJob={selectedJob}
                 jobDetailUrl={jobDetailUrl}
@@ -381,12 +397,23 @@ const MyJobs = ({
                 config={config}
               />
             )}
-            {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && !selectedJob && (
+            {jobsList?.length === 0 && !isLoadingJobList && (
               <div className={styles.MyJobsDetailInfoEmpty}>
-                {/* <Text textStyle='xl' bold>No {category} jobs found </Text> */}
+                <div>
+                  <Text textStyle='xl' bold>You have not {category} any job yet.</Text>
+
+                  <MaterialButton variant='contained' capitalize>
+                    <Link
+                      to='/jobs-hiring/job-search'
+                    >
+                      <Text textStyle='lg' bold textColor='white'>Back to job search</Text>
+                    </Link>
+                  </MaterialButton>
+                </div>
               </div>
             )}
           </div>
+
           {/* <div className={styles.MyJobsAds}>
             <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'job-page-skyscraper-1'} />

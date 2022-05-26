@@ -201,7 +201,9 @@ const JobDetail = ({
               <JobTag tag={selectedJob?.job_type_value} />
               <div className={styles.JobDetailButtonsWrapper}>
                 <div className={styles.JobDetailButtons}>
-                  {selectedJob?.status_key === 'active'  && !isCategoryApplied && (
+                  {!isCategoryApplied && (
+                    <>
+                    {selectedJob?.status_key === 'active' && 
                     <>
                       {!selectedJob?.is_applied ? 
                         <Link to={applyJobLink} external>
@@ -221,7 +223,9 @@ const JobDetail = ({
                         : <MaterialButton variant='contained' capitalize disabled>
                             <Text textStyle='lg' textColor='white' bold>Applied</Text> 
                           </MaterialButton>
-                      }
+                        }
+                      </>
+                    }
                       <MaterialButton 
                         variant='outlined' 
                         capitalize 
