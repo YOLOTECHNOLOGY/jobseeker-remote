@@ -140,3 +140,13 @@
     }
   }
 }
+
+.emptyResult {
+  margin-top: 48px;
+  text-align: -webkit-center;
+
+  > span {
+    display: block;
+    margin-bottom: 28px;
+  }
+}
