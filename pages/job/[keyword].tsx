@@ -692,14 +692,6 @@ const Job = ({
                         to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
                         className={styles.JobDetailSidebarCardApply}
                       >
-                        <Text
-                          textStyle='base'
-                          tagName='p'
-                          bold
-                          className={styles.JobDetailSidebarCardCTA}
-                        >
-                          {job.salary_range_value}
-                        </Text>
                         {job.published_at && (
                           <Text textStyle='xsm' tagName='p'>
                             Posted on {job.published_at}
