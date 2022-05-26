@@ -11,12 +11,19 @@ function useAdSlot({ mapping, sizes, id, adUnit, isTransitioning }) {
             const adMapping = googletag.sizeMapping()
             Object.keys(mapping).forEach((breakpoint) => {
               // debugger
-              adMapping.addSize([Number(breakpoint), 0], [mapping[breakpoint]])
+              const isSingleSizePerMapping = mapping[breakpoint].length < 1
+              console.log(
+                'addSize',
+                [Number(breakpoint), 0],
+                isSingleSizePerMapping ? mapping[breakpoint] : [mapping[breakpoint]]
+              )
+              adMapping.addSize([Number(breakpoint), 0], isSingleSizePerMapping ? mapping[breakpoint] : [mapping[breakpoint]])
             })
             const builtMapping = adMapping.build()
 
-            console.log('useAdSlot 2', adUnit, id, sizes)
-
+            console.log('adMapping', adMapping)
+            console.log('builtMapping', builtMapping)
+            
             googletag
             .defineSlot(`/21858999436/${adUnit}`, sizes, `div-gpt-ad-${id}`)
             .defineSizeMapping(builtMapping)
@@ -24,7 +31,6 @@ function useAdSlot({ mapping, sizes, id, adUnit, isTransitioning }) {
             
             googletag.enableServices()
           })
-          // console.log('useAdSlot ad id', id)
           googletag.pubads().collapseEmptyDivs()
 
           googletag.cmd.push(function () {

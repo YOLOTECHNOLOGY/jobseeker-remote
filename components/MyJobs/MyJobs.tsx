@@ -94,6 +94,7 @@ const MyJobs = ({
   const [selectedJob, setSelectedJob] = useState(null)
 
   const [jobsList, setJobsList] = useState([])
+  const [page, setPage] = useState(Number(router?.query?.page)|| 1)
   const [totalPages, setTotalPages] = useState(null)
   const [totalNum, setTotalNum] = useState(null)
   const [applicationHistories, setApplicationHistories] = useState([])
@@ -141,23 +142,40 @@ const MyJobs = ({
   }, [appliedJobDetailResponse])
 
   useEffect(() => {
-    if (savedJobsListResponse?.data?.saved_jobs.length > 0) {
-      setJobsList(savedJobsListResponse.data?.saved_jobs)
-      setTotalPages(savedJobDetailResponse.data?.total_pages)
-      setTotalNum(appliedJobsListResponse.data?.total_num)
+    setJobsList(savedJobsListResponse.data?.saved_jobs)
+    setTotalPages(savedJobDetailResponse.data?.total_pages)
+    setTotalNum(appliedJobsListResponse.data?.total_num)
+
+    if (savedJobsListResponse.data?.saved_jobs.length === 0) {
+      setSelectedJob(null)
     }
   }, [savedJobsListResponse])
 
   useEffect(() => {
-    if (savedJobDetailResponse) setSelectedJob(savedJobDetailResponse?.job)
+    savedJobDetailResponse ? setSelectedJob(savedJobDetailResponse?.job) : setSelectedJob(null)
   }, [savedJobDetailResponse])
 
   useEffect(() => {
     if (jobsList?.length > 0) {
       handleFetchJobDetail(jobsList?.[0].job.id, category) 
       setSelectedJobId(jobsList?.[0].job.id)
+    } else {
+      setSelectedJobId(null)
     }
   }, [jobsList])
+
+  useEffect(() => {
+    if (withdrawAppliedJobResponse?.message === 'success') {
+      setIsShowModalWithdrawApplication(false)
+
+      setPage(1)
+
+      router.query.page = '1'
+      router.push(router, undefined, { shallow: true })
+
+      document.documentElement.scrollTop = 0;
+    }
+  }, [withdrawAppliedJobResponse])
 
   const updateScrollPosition = () => {
     if (width > 798) {
@@ -213,8 +231,12 @@ const MyJobs = ({
   }
 
   const handlePaginationClick = (event, val) => {
+    setPage(val)
+
     router.query.page = val
     router.push(router, undefined, { shallow: true })
+
+    document.documentElement.scrollTop = 0;
   }
 
   const handleFormatWindowUrl = (pathname, name, id) => {
@@ -334,11 +356,10 @@ const MyJobs = ({
                 />
               ))}
             </div>
-            {!isSavedJobsListFetching || !isAppliedJobsListFetching && (
-              <div className={styles.paginationWrapper}>
-                <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} totalPages={totalPages || 1} />
-              </div>
-            )}
+
+            <div className={styles.paginationWrapper}>
+              <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} page={page} totalPages={totalPages || 1} />
+            </div>
           </div>
           <div className={styles.MyJobsDetailInfoSection}>
             {(isAppliedJobDetailFetching || isSavedJobDetailFetching) && (
@@ -357,6 +378,7 @@ const MyJobs = ({
                 setIsShowReportJob={setIsShowReportJob}
                 handleDeleteSavedJob={handleDeleteSavedJob}
                 handlePostSaveJob={handlePostSaveJob}
+                config={config}
               />
             )}
             {(!isSavedJobsListFetching || !isAppliedJobsListFetching) && !selectedJob && (
@@ -399,7 +421,6 @@ const MyJobs = ({
         handleShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
         handleWithdrawApplication={handleWithdrawApplication}
         isWithdrawAppliedJobFetching={isWithdrawAppliedJobFetching}
-        withdrawAppliedJobResponse={withdrawAppliedJobResponse}
       />
     </Layout>
   )

@@ -22,13 +22,14 @@ import { unslugify } from 'helpers/formatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Styles
-import styles from './Companies.module.scss' 
+import styles from './Companies.module.scss'
+import MetaText from '../../components/MetaText'
 
 interface SearchProps {
   defaultQuery: string
 }
 
-const Search = ({ defaultQuery } : SearchProps) => {
+const Search = ({ defaultQuery }: SearchProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { query, page, size } = router.query
@@ -38,15 +39,19 @@ const Search = ({ defaultQuery } : SearchProps) => {
   const [totalPages, setTotalPages] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
 
-  const fetchCompanyFilterResponse = useSelector((store: any) => store.companies.fetchCompanyFilter.response)
-  const isCompanyFilterFetching = useSelector((store: any) => store.companies.fetchCompanyFilter.fetching)
+  const fetchCompanyFilterResponse = useSelector(
+    (store: any) => store.companies.fetchCompanyFilter.response
+  )
+  const isCompanyFilterFetching = useSelector(
+    (store: any) => store.companies.fetchCompanyFilter.fetching
+  )
 
   useEffect(() => {
     const searchFilterPayload = {
       query: unslugify(query),
       size: size,
       page: page,
-      source: width < 768 ? 'mobile_web' : 'web'
+      source: width < 768 ? 'mobile_web' : 'web',
     }
 
     setCurrentPage(Number(page))
@@ -65,8 +70,8 @@ const Search = ({ defaultQuery } : SearchProps) => {
       window.scrollTo({
         top: 0,
         left: 0,
-        behavior: "smooth"
-      });
+        behavior: 'smooth',
+      })
     }
   }
 
@@ -79,7 +84,7 @@ const Search = ({ defaultQuery } : SearchProps) => {
     router.query.page = newPage
     router.push(router, undefined, { shallow: true })
   }
-  
+
   return (
     <Layout>
       <SEO
@@ -92,7 +97,7 @@ const Search = ({ defaultQuery } : SearchProps) => {
           <Text textStyle='xxl' tagName='p' bold className={styles.searchCompanyTitle}>
             Search Companies
           </Text>
-          <h1 className={styles.metaTag}>Find great companies in Phillipines</h1>
+          <MetaText tagName='h1'>Find great companies in Phillipines</MetaText>
           <SearchCompanyField defaultQuery={defaultQuery} onKeywordSearch={handleKeywordSearch} />
           <Text textStyle='xl' tagName='p' bold className={styles.searchCompanyTitle}>
             Companies for “{query ? unslugify(query) : 'all'}”

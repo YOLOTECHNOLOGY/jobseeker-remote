@@ -59,6 +59,7 @@ interface JobListSectionProps {
   accessToken: string
   postReportResponse?: any
   isPostingReport?: boolean
+  config: any
 }
 
 const JobListSection = ({ 
@@ -87,7 +88,8 @@ const JobListSection = ({
   handleDeleteSavedJob,
   accessToken,
   postReportResponse,
-  isPostingReport
+  isPostingReport,
+  config
 }: JobListSectionProps) => {  
   const { width } = useWindowDimensions()
   const router = useRouter()
@@ -276,6 +278,7 @@ const JobListSection = ({
                 companyUrl={companyUrl}
                 handlePostSaveJob={handlePostSaveJob}
                 handleDeleteSavedJob={handleDeleteSavedJob}
+                config={config}
               />
             )}
           </div>

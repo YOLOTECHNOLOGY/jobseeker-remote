@@ -36,6 +36,7 @@ import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWit
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
+import Tooltip from '@mui/material/Tooltip'
 
 /* Components */
 import Image from 'next/image'
@@ -164,7 +165,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const firstRender = useFirstRender()
   const { width } = useWindowDimensions()
   const userCookie = getCookie('user') || null
-  // const [isSticky, setIsSticky] = useState(false)
+  const isMobile = width < 768 ? true : false
+
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.urlLocation)
   const [sort, setSort] = useState(defaultValues?.sort)
@@ -441,8 +443,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest({jobId, status: userCookie ? 'protected' : 'public'}))
 
   const handleSelectedJobId = (jobId, jobTitle) => {
-    if (width < 799) {
-      router.push(`/job/${slugify(jobTitle.toLowerCase())}-${jobId}`)
+    // Open new tab in mobile
+    if (isMobile && typeof window !== "undefined") {
+      window.open(`/job/${slugify(jobTitle.toLowerCase())}-${jobId}`)
+
       return
     }
 
@@ -533,6 +537,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             onKeyPress={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()
+                setSuggestionList([])
                 setSearchValue((e.target as HTMLInputElement).value)
                 onKeywordSearch((e.target as HTMLInputElement).value)
               }
@@ -624,7 +629,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                         to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                         external
                       >
-                        <Image src={company.logoUrl} alt={company.name} width='30' height='30' />
+                        <Tooltip title={company.name} placement='top' className={styles.toolTip} arrow >
+                          <span>
+                            <Image src={company.logoUrl} alt={company.name} width='30' height='30'/>
+                          </span>
+                        </Tooltip>
                       </Link>
                     )
                   }
@@ -689,6 +698,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           accessToken={accessToken}
           postReportResponse={postReportResponse}
           isPostingReport={isPostingReport}
+          config={config}
         />
       </div>
     </Layout>

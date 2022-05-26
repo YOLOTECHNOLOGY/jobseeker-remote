@@ -52,7 +52,9 @@ export const ResumeTemplate1 = `${S3BucketJobseeker}/ResumeTemplate1.png`
 export const ResumeTemplate2 = `${S3BucketJobseeker}/ResumeTemplate2.png`
 export const LocationPinIcon = `${S3BucketJobseeker}/LocationPinIcon.svg`
 export const RateIcon = `${S3BucketJobseeker}/RateIcon.svg`
-
+export const TrashIcon = `${S3BucketJobseeker}/trash.svg`
+export const DocumentIcon = `${S3BucketJobseeker}/document.svg`
+export const DisclaimerIcon = `${S3BucketJobseeker}/disclaimer.svg`
 
 /* Footer Social Links Logo */
 export const facebook = `${S3BucketJobseeker}/facebook.svg`

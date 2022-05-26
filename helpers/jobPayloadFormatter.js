@@ -434,12 +434,10 @@ const getDegreeList = (config) => {
   })
 }
 
-const getApplyJobLink = (job, user) => {
-  if (!user) {
-    return '/login/jobseeker?redirect=/jobs-hiring/job-search'
-  } else {
-    const oldProjectApplyLink = authPathToOldProject(null, `/dashboard/job/${slugify(job?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${job?.id}/apply`)
+const getApplyJobLink = (job, user, accessToken=null) => {
+  const oldProjectApplyLink = authPathToOldProject(accessToken, `/dashboard/job/${slugify(job?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${job?.id}/apply`)
 
+  if (user) {
     if (!user?.is_profile_completed) {
       return '/jobseeker-complete-profile/1?redirect=' + oldProjectApplyLink
     }
@@ -447,9 +445,9 @@ const getApplyJobLink = (job, user) => {
     if (job?.external_apply_url) {
       return  job?.external_apply_url
     }
-
-    return oldProjectApplyLink
   }
+  
+  return oldProjectApplyLink
 }
 
 export {

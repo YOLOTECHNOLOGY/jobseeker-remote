@@ -21,25 +21,25 @@ const theme = createTheme({
     MuiTabs: {
       styleOverrides: {
         root: {
-          minHeight: '50px'
+          minHeight: '50px',
         },
         centered: {
           justifyContent: 'flex-start',
-          ['@media (max-width: 780px)']: { 
+          ['@media (max-width: 780px)']: {
             // eslint-disable-line no-useless-computed-key
-            justifyContent: 'center'
-          }
-        }
-      }
+            justifyContent: 'center',
+          },
+        },
+      },
     },
     MuiTab: {
       styleOverrides: {
         root: {
           fontWeight: 700,
-          textTransform: 'capitalize'
-        }
-      }
-    }
+          textTransform: 'capitalize',
+        },
+      },
+    },
   },
 })
 
@@ -48,82 +48,113 @@ interface ICompanyProfileLayout {
   company: any
   currentTab: string
   totalJobs: number
+  seoMetaTitle: string
+  seoMetaDescription: string
 }
 
 const CompanyProfileLayout = ({
   children,
   company,
   currentTab,
-  totalJobs
+  totalJobs,
+  seoMetaTitle,
+  seoMetaDescription,
 }: ICompanyProfileLayout) => {
   const dispatch = useDispatch()
-  const imgPlaceholder = 'https://assets.bossjob.com/companies/1668/cover-pictures/0817984dff0d7d63fcb8193fef08bbf2.jpeg'
+  const imgPlaceholder =
+    'https://assets.bossjob.com/companies/1668/cover-pictures/0817984dff0d7d63fcb8193fef08bbf2.jpeg'
 
   const [tabValue, setTabValue] = useState(currentTab)
   const [similarCompanies, setSimilarCompanies] = useState(null)
 
-  const similarCompaniesResponse = useSelector((store: any) => store.companies.fetchSimilarCompany.response)
+  const similarCompaniesResponse = useSelector(
+    (store: any) => store.companies.fetchSimilarCompany.response
+  )
 
   useEffect(() => {
-    dispatch(fetchSimilarCompanyRequest({companyId: company.id}))
+    dispatch(fetchSimilarCompanyRequest({ companyId: company.id }))
   }, [])
 
   useEffect(() => {
     if (similarCompaniesResponse) setSimilarCompanies(similarCompaniesResponse)
   }, [similarCompaniesResponse])
 
+  const initialCanonicalText = `/company/${company.name.split(' ').join('-')}`
+  const additionalCanonicalText =
+    currentTab == 'jobs' ? '/jobs' : currentTab == 'life' ? '/life' : ''
+  const finalCanonicalText = initialCanonicalText + additionalCanonicalText
   return (
     <Layout>
-      <SEO title={`${company.name} Company`} />
+      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={finalCanonicalText} />
       <div className={styles.company}>
         <div className={styles.companyContent}>
           <div className={styles.companyHeader}>
-            <img 
-              src={company.cover_pic_url || imgPlaceholder} 
-              alt={company.name} 
+            <img
+              src={company.cover_pic_url || imgPlaceholder}
+              alt={`${company.name} banner`}
               className={styles.companyBanner}
             />
             <div className={styles.companyProfile}>
-              <img src={company.logo_url} alt={company.name} />
-              <Text textStyle='xxl' bold>{company.name}</Text>
+              <img src={company.logo_url} alt={`${company.name} logo`} />
+              <Text tagName='h1' textStyle='xxl' bold>
+                {company.name}
+              </Text>
             </div>
 
             <div className={styles.companyTabs}>
               <ThemeProvider theme={theme}>
-                <Tabs 
-                  value={tabValue} 
+                <Tabs
+                  value={tabValue}
                   centered
                   onChange={(e: any) => {
                     const tab = e.target.childNodes[0].textContent.toLowerCase()
                     setTabValue(tab === 'overview' || tab === 'life' ? tab : 'jobs')
                   }}
                 >
-                  <Tab 
+                  <Tab
                     className={styles.companyTabsItem}
-                    value="overview" 
+                    value='overview'
                     label={
                       <Link to={`/company/${slugify(company.name)}-${company.id}`}>
-                        <Text bold textStyle='xl' textColor={tabValue === 'overview' ? 'primaryBlue' : 'black'}>Overview</Text>
+                        <Text
+                          bold
+                          textStyle='xl'
+                          textColor={tabValue === 'overview' ? 'primaryBlue' : 'black'}
+                        >
+                          Overview
+                        </Text>
                       </Link>
                     }
                   />
-                  <Tab 
+                  <Tab
                     className={styles.companyTabsItem}
-                    value="life" 
+                    value='life'
                     label={
                       <Link to={`/company/${slugify(company.name)}-${company.id}/life`}>
-                        <Text bold textStyle='xl' textColor={tabValue === 'life' ? 'primaryBlue' : 'black'}>Life</Text>
+                        <Text
+                          bold
+                          textStyle='xl'
+                          textColor={tabValue === 'life' ? 'primaryBlue' : 'black'}
+                        >
+                          Life
+                        </Text>
                       </Link>
                     }
                   />
-                  <Tab 
+                  <Tab
                     className={styles.companyTabsItem}
-                    value="jobs" 
+                    value='jobs'
                     label={
                       <Link to={`/company/${slugify(company.name)}-${company.id}/jobs`}>
-                        <Text bold textStyle='xl' textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}>
+                        <Text
+                          bold
+                          textStyle='xl'
+                          textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}
+                        >
                           Jobs
-                          {totalJobs > 0 && <span className={styles.companyJobsBadge}>{totalJobs}</span>}
+                          {totalJobs > 0 && (
+                            <span className={styles.companyJobsBadge}>{totalJobs}</span>
+                          )}
                         </Text>
                       </Link>
                     }
@@ -134,25 +165,38 @@ const CompanyProfileLayout = ({
           </div>
 
           {children}
-
         </div>
 
         <div className={styles.relatedCompany}>
           <div className={styles.relatedCompanyContent}>
-            <Text textStyle='xxl' bold>People also viewed...</Text>
+            <Text textStyle='xxl' bold>
+              People also viewed...
+            </Text>
             {similarCompanies?.length > 0 && (
               <div className={styles.relatedCompanyList}>
                 {similarCompanies.map((company) => (
-                  <Link to={`/company/${slugify(company.name)}-${company.id}`} key={company.id} className={styles.relatedCompanyItem}>
-                    <img src={company.logo_url} className={styles.relatedCompanyImage} />
-                    <Text textStyle='sm' bold className={styles.relatedCompanyName}>{company.name}</Text>
+                  <Link
+                    to={`/company/${slugify(company.name)}-${company.id}`}
+                    key={company.id}
+                    className={styles.relatedCompanyItem}
+                  >
+                    <img
+                      src={company.logo_url}
+                      alt={`${company.name} logo`}
+                      className={styles.relatedCompanyImage}
+                    />
+                    <Text textStyle='sm' bold className={styles.relatedCompanyName}>
+                      {company.name}
+                    </Text>
                     <Text textStyle='sm'>{company.industry}</Text>
                   </Link>
                 ))}
               </div>
             )}
             <Link to='/companies' className={styles.relatedCompanyLink}>
-              <Text textColor='primaryBlue' textStyle='base'>View all</Text>
+              <Text textColor='primaryBlue' textStyle='base'>
+                View all
+              </Text>
             </Link>
           </div>
         </div>

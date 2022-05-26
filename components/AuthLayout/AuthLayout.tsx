@@ -12,14 +12,15 @@ import styles from './AuthLayout.module.scss'
 
 /* Images */
 import { BossjobLogo } from 'images'
+import MetaText from '../MetaText'
 
 interface AuthLayoutProps {
   children: React.ReactNode
   className?: string
   headingText?: string | React.ReactNode
   isBackToLogin?: boolean
-  ctaSignup?: boolean,
-  isLogin?: boolean,
+  ctaSignup?: boolean
+  isLogin?: boolean
   isEmployer?: boolean
 }
 
@@ -30,9 +31,8 @@ const AuthLayout = ({
   isBackToLogin,
   ctaSignup,
   isLogin,
-  isEmployer
+  isEmployer,
 }: AuthLayoutProps) => {
-
   const displayCTA = () => {
     if (ctaSignup) {
       return (
@@ -48,26 +48,32 @@ const AuthLayout = ({
             </Text>
           )}
           {isLogin && (
-            <Text tagName='p' textStyle='base'>
-              New to Bossjob?
-              <Link to='/register/jobseeker' className={styles.AuthCTALink}>
-                <Text textColor='primaryBlue' underline>
-                  {' '}
-                  Sign up now
-                </Text>
-              </Link>
-            </Text>
+            <>
+              <Text tagName='p' textStyle='base'>
+                New to Bossjob?
+                <Link to='/register/jobseeker' className={styles.AuthCTALink}>
+                  <Text textColor='primaryBlue' underline>
+                    {' '}
+                    Sign up now
+                  </Text>
+                </Link>
+              </Text>
+              <MetaText tagName='h2'>New to Bossjob? Sign up now!</MetaText>
+            </>
           )}
           {!isLogin && (
-            <Text tagName='p' textStyle='base'>
-              Already on Bossjob?
-              <Link to='/login/jobseeker' className={styles.AuthCTALink}>
-                <Text textColor='primaryBlue' underline>
-                  {' '}
-                  Log in
-                </Text>
-              </Link>
-            </Text>
+            <>
+              <Text tagName='p' textStyle='base'>
+                Already on Bossjob?
+                <Link to='/login/jobseeker' className={styles.AuthCTALink}>
+                  <Text textColor='primaryBlue' underline>
+                    {' '}
+                    Log in
+                  </Text>
+                </Link>
+              </Text>
+              <MetaText>Already on Bossjob? Log in</MetaText>
+            </>
           )}
           {!isEmployer && (
             <Text tagName='p' textStyle='base'>
@@ -95,9 +101,7 @@ const AuthLayout = ({
           <div className={styles.AuthHeading}>{headingText}</div>
           {children}
         </div>
-        <div className={styles.AuthCTA}>
-          {displayCTA()}
-        </div>
+        <div className={styles.AuthCTA}>{displayCTA()}</div>
       </div>
     </div>
   )
