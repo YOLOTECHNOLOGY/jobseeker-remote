@@ -165,7 +165,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const firstRender = useFirstRender()
   const { width } = useWindowDimensions()
   const userCookie = getCookie('user') || null
-  // const [isSticky, setIsSticky] = useState(false)
+  const isMobile = width < 768 ? true : false
+
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.urlLocation)
   const [sort, setSort] = useState(defaultValues?.sort)
@@ -442,8 +443,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest({jobId, status: userCookie ? 'protected' : 'public'}))
 
   const handleSelectedJobId = (jobId, jobTitle) => {
-    if (width < 799) {
-      router.push(`/job/${slugify(jobTitle.toLowerCase())}-${jobId}`)
+    // Open new tab in mobile
+    if (isMobile && typeof window !== "undefined") {
+      window.open(`/job/${slugify(jobTitle.toLowerCase())}-${jobId}`)
+
       return
     }
 

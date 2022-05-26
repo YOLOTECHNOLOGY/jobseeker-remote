@@ -390,7 +390,7 @@ const Job = ({
                         </Text>
                       </MaterialButton>
                     ) : (
-                      <Link to={applyJobLink} external>
+                      <Link to={applyJobLink}>
                         <MaterialButton
                           variant='contained'
                           capitalize
