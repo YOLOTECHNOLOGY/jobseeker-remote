@@ -669,9 +669,6 @@ const Job = ({
                       <Text textStyle='base' tagName='p'>
                         {job.company_name}
                       </Text>
-                      <Text textStyle='base' tagName='p'>
-                        {job.company_name}
-                      </Text>
                       <Text textStyle='base' textColor='darkgrey'>
                         {job.location_value}
                       </Text>
