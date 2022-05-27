@@ -9,6 +9,7 @@ import fetchUserWorkExperienceReducer from './fetchUserWorkExperience'
 import fetchUserEducationReducer from './fetchUserEducation'
 import completeUserProfileReducer from './completeUserProfile'
 import generateVerifyEmailOTPReducer from './generateVerifyEmailOTP'
+import checkVerifyEmailOTPReducer from './checkVerifyEmailOTP'
 
 const usersReducers = combineReducers({
   registerUser: registerUserReducer,
@@ -20,6 +21,7 @@ const usersReducers = combineReducers({
   generateUserResume: generateUserResumeReducer,
   completeUserProfile: completeUserProfileReducer,
   generateVerifyEmailOTP: generateVerifyEmailOTPReducer,
+  checkVerifyEmailOTP: checkVerifyEmailOTPReducer,
 })
 
 export default usersReducers
