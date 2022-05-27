@@ -12,6 +12,7 @@ import fetchUserEducation from './fetchUserEducation'
 import addUserEducation from './addUserEducation'
 import deleteUserEducation from './deleteUserEducation'
 import updateUserEducation from './updateUserEducation'
+import generateVerifyEmailOTP from './generateVerifyEmailOTP'
 
 export default {
   registerUser,
@@ -27,5 +28,6 @@ export default {
   fetchUserEducation,
   addUserEducation,
   deleteUserEducation,
-  updateUserEducation
+  updateUserEducation,
+  generateVerifyEmailOTP,
 }
