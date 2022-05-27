@@ -19,6 +19,6 @@ function* generateVerifyEmailOTP() {
     yield put(generateVerifyEmailOTPFailed(error))
   }
 }
-export default function* generateUserResumeSaga() {
+export default function* generateVerifyEmailOTPSaga() {
   yield takeLatest(GENERATE_VERIFY_EMAIL_OTP_REQUEST, generateVerifyEmailOTP)
 }

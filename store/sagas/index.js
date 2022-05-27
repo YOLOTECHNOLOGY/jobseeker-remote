@@ -44,6 +44,7 @@ import watchFetchUserWorkExperience from 'store/sagas/users/fetchUserWorkExperie
 import watchFetchUserEducation from 'store/sagas/users/fetchUserEducation'
 import watchRedirectToNewJobseeker from 'store/sagas/users/redirectToNewJobseeker'
 import watchGenerateVerifyEmailOTP from 'store/sagas/users/generateVerifyEmailOTP'
+import watchCheckVerifyEmailOTP from 'store/sagas/users/checkVerifyEmailOTP'
 
 // Courses
 import watchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
@@ -102,6 +103,7 @@ function* rootSaga() {
     watchFetchUserEducation(),
     watchRedirectToNewJobseeker(),
     watchGenerateVerifyEmailOTP(),
+    watchCheckVerifyEmailOTP(),
 
     watchSocialLogin(),
     watchLogin(),
