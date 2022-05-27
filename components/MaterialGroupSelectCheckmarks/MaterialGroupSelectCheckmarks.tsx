@@ -19,7 +19,7 @@ interface MaterialGroupSelectCheckmarks extends React.ButtonHTMLAttributes<HTMLB
   style?: React.CSSProperties
   className?: string
   label?: string | React.ReactNode
-  options: Array<OptionType>
+  options?: Array<MainOptionType>
   value: any
   onSelect?: any
   greyBg?: boolean
@@ -44,7 +44,7 @@ interface SubListOptionType {
 const MaterialSelectCheckmarks = ({
   id,
   label,
-  options,
+  // options,
   className,
   onSelect,
   greyBg,

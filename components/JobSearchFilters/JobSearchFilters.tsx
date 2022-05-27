@@ -54,7 +54,7 @@ type optionsType = {
 }
 
 const NavSearchFilter = ({
-  urlDefaultValues,
+  // urlDefaultValues,
   categories,
   isShowFilter,
   onShowFilter,

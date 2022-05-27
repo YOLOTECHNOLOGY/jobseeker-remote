@@ -429,7 +429,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const onSpecializationSelection = (selectedOptions) => {
-    console.log('onSpecializationSelectionselectedOptions', selectedOptions)
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
     const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
@@ -616,7 +615,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           <MaterialGroupSelectCheckmarks
             id='specialization'
             label='Specialization'
-            options={config.inputs.job_category_lists}
+            // options={config.inputs.job_category_lists}
             className={styles.specializationField}
             onSelect={onSpecializationSelection}
             value={categories}
