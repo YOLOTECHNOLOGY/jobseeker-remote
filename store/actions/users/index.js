@@ -8,6 +8,7 @@ import fetchUserEducation from './fetchUserEducation'
 import completeUserProfile from './completeUserProfile'
 import redirectToNewJobseeker from './redirectToNewJobseeker'
 import generateVerifyEmailOTP from './generateVerifyEmailOTP'
+import checkVerifyEmailOTP from './checkVerifyEmailOTP'
 
 export default {
   registerUser,
@@ -20,4 +21,5 @@ export default {
   completeUserProfile,
   redirectToNewJobseeker,
   generateVerifyEmailOTP,
+  checkVerifyEmailOTP,
 }
