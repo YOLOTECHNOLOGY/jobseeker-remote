@@ -189,6 +189,15 @@ const JobListSection = ({
     return ''
   }
 
+  const emptyResult = () => {
+    return (
+      <React.Fragment>
+        <Text textStyle='xl' bold>We couldn't find any jobs matching your search.</Text>
+        <Text textStyle='md'>Check the spelling and adjust the filter criteria.</Text>
+      </React.Fragment>
+    )
+  }
+
   const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
   const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
@@ -240,6 +249,13 @@ const JobListSection = ({
                   <JobCardLoader />
                 </React.Fragment>
               )}
+
+              {jobList?.jobs?.length === 0 && !isJobDetailFetching && (
+                <div className={styles.emptyResultMobile}>
+                  {emptyResult()}
+                </div>
+              )}  
+              
               {!isJobListFetching && jobList?.jobs?.length > 0 && jobList.jobs.map((job) => (
                 <JobCard
                   key={job.id}
@@ -287,11 +303,9 @@ const JobListSection = ({
 
             {jobList?.jobs?.length === 0 && !isJobDetailFetching && (
               <div className={styles.emptyResult}>
-                <Text textStyle='xl' bold>We couldn't find any jobs matching your search.</Text>
-                <Text textStyle='md'>Check the spelling and adjust the filter criteria.</Text>
+                {emptyResult()}
               </div>
-            )}  
-
+            )} 
           </div>
           <div className={styles.jobAds}>
             <div className={styles.skyscraperBanner}>

@@ -81,10 +81,13 @@ const MyJobs = ({
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
   const isAppliedCategory = category === 'applied'
+  const isMobile = width < 768 ? true : false
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
   
   const [isSticky, setIsSticky] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
+  const [jobNumStart, setJobNumStart] = useState(1)
+  const [jobNumEnd, setJobNumEnd] = useState(10)
 
   const cx = classNames.bind(styles)
   const isAppliedCategoryActive = cx({ MyJobsMenuLinkIsActive: isAppliedCategory})
@@ -95,10 +98,10 @@ const MyJobs = ({
   const [selectedJobId, setSelectedJobId] = useState(null)
   const [selectedJob, setSelectedJob] = useState(null)
 
-  const [jobsList, setJobsList] = useState([])
+  const [jobsList, setJobsList] = useState<any>([])
   const [page, setPage] = useState(Number(router?.query?.page)|| 1)
   const [totalPages, setTotalPages] = useState(null)
-  const [totalNum, setTotalNum] = useState(null)
+  const [totalNum, setTotalNum] = useState(0)
   const [applicationHistories, setApplicationHistories] = useState([])
 
   const [isShowModalShare, setIsShowModalShare] = useState(false)
@@ -127,6 +130,13 @@ const MyJobs = ({
     return () => window.removeEventListener('scroll', updateScrollPosition)
 
   }, [])
+
+  useEffect(() => {
+    const jobLength = isAppliedCategory ? jobsList?.applied_jobs?.length : jobsList?.saved_jobs?.length
+
+    setJobNumStart(jobLength > 0 ? ((jobsList?.page - 1) * jobsList?.size) + 1 : 1)
+    setJobNumEnd(jobLength > 0 ? ((jobsList?.page - 1) * jobsList?.size) + jobLength : 10)
+  }, [jobsList])
 
   useEffect(() => {
     handleFetchMyJobsList()
@@ -284,6 +294,22 @@ const MyJobs = ({
     handleFetchMyJobsList()
   }
 
+  const emptyResult = () => {
+    return (
+      <div>
+        <Text textStyle='xl' bold>You have not {category} any job yet.</Text>
+
+        <MaterialButton variant='contained' capitalize>
+          <Link
+            to='/jobs-hiring/job-search'
+          >
+            <Text textStyle='lg' bold textColor='white'>Back to job search</Text>
+          </Link>
+        </MaterialButton>
+      </div>
+    )
+  }
+
   const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
   const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
@@ -335,9 +361,9 @@ const MyJobs = ({
         <div className={classNamesCombined([styles.MyJobsMenu, isStickyClass])}>
           <div className={styles.container}>
             <div className={styles.MyJobsListOptionContent}>
-              {totalNum && (
-                <Text textStyle='lg' bold>
-                  {totalNum} jobs found
+              {!isMobile && (
+                <Text textStyle='lg'>
+                  <Text textStyle='lg' bold>{jobNumStart.toLocaleString()}-{jobNumEnd.toLocaleString()}</Text> of {totalNum ? totalNum : 0} jobs
                 </Text>
               )}
             </div>
@@ -355,6 +381,13 @@ const MyJobs = ({
                   <JobCardLoader />
                 </React.Fragment>
               )}
+
+              {jobsList?.length === 0 && !isLoadingJobList && (
+                <div className={styles.MyJobsDetailInfoEmptyMobile}>
+                  { emptyResult() }
+                </div>
+              )}
+
               {!isLoadingJobList && jobsList?.map((jobs, i) => (
                 <JobCard
                   key={i}
@@ -399,17 +432,7 @@ const MyJobs = ({
             )}
             {jobsList?.length === 0 && !isLoadingJobList && (
               <div className={styles.MyJobsDetailInfoEmpty}>
-                <div>
-                  <Text textStyle='xl' bold>You have not {category} any job yet.</Text>
-
-                  <MaterialButton variant='contained' capitalize>
-                    <Link
-                      to='/jobs-hiring/job-search'
-                    >
-                      <Text textStyle='lg' bold textColor='white'>Back to job search</Text>
-                    </Link>
-                  </MaterialButton>
-                </div>
+                { emptyResult() }
               </div>
             )}
           </div>

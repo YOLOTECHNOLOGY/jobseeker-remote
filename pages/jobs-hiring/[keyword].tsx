@@ -266,7 +266,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     if (jobListResponse?.data?.jobs.length > 0) {
       handleFetchJobDetail(jobListResponse.data?.jobs?.[0].id) 
       setSelectedJobId(jobListResponse.data?.jobs?.[0].id)
-    } 
+    } else {
+      setSelectedJobId(null)
+      setSelectedJob(null)
+    }
   }, [jobListResponse])
 
   useEffect(() => {
