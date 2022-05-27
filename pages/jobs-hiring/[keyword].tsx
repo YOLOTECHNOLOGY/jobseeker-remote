@@ -615,7 +615,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           <MaterialGroupSelectCheckmarks
             id='specialization'
             label='Specialization'
-            // options={config.inputs.job_category_lists}
+            options={config.inputs.job_category_lists}
             className={styles.specializationField}
             onSelect={onSpecializationSelection}
             value={categories}
