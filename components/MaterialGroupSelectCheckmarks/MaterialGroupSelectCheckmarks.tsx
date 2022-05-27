@@ -44,7 +44,7 @@ interface SubListOptionType {
 const MaterialSelectCheckmarks = ({
   id,
   label,
-  // options,
+  options,
   className,
   onSelect,
   greyBg,
@@ -52,9 +52,22 @@ const MaterialSelectCheckmarks = ({
   fieldRef,
   error,
 }: MaterialGroupSelectCheckmarks) => {
-    const firstRender = useFirstRender()
+  const firstRender = useFirstRender()
+  const initialListOptions = options.map((data) => {
+    const newSubList = data.sub_list.map((subData) => ({
+      ...subData,
+      isChecked:false
+    }))
+    const newList = {
+      ...data,
+      isChecked: false,
+      sub_list: newSubList,
+    }
+    return newList
+  })
 
-  const [listOptions, setListOptions] = useState(value)
+
+  const [listOptions, setListOptions] = useState(value.length > 0 ? value : initialListOptions)
   const [displayValue, setDisplayValue] = useState<Array<string>>([''])
 
   useEffect(()=>{
