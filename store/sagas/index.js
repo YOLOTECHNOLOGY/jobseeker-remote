@@ -18,23 +18,23 @@ import watchPostSaveJob from 'store/sagas/jobs/postSaveJob'
 import watchDeleteSaveJob from 'store/sagas/jobs/deleteSaveJob'
 import watchQuickApplyJob from 'store/sagas/jobs/quickApplyJob'
 
-// Companies 
+// Companies
 import watchFetchCompanyDetail from 'store/sagas/companies/fetchCompanyDetail'
 import watchFetchFeaturedCompaniesList from 'store/sagas/companies/fetchFeaturedCompaniesList'
 import watchFetchSimilarCompany from 'store/sagas/companies/fetchSimilarCompany'
 import watchFetchCompanySuggestions from 'store/sagas/companies/fetchCompanySuggestions'
 import watchFetchCompanyFilter from 'store/sagas/companies/fetchCompanyFilter'
 
-// Reports 
+// Reports
 import watchPostReport from 'store/sagas/reports/postReport'
 
-// Alerts 
+// Alerts
 import watchFetchJobAlertsList from 'store/sagas/alerts/fetchJobAlertsList'
 import watchUpdateJobAlert from 'store/sagas/alerts/updateJobAlert'
 import watchDeleteJobAlert from 'store/sagas/alerts/deleteJobAlert'
 import watchCreateJobAlert from 'store/sagas/alerts/createJobAlert'
 
-// Users 
+// Users
 import WatchRegisterUser from 'store/sagas/users/registerUser'
 import WatchUpdateUserCompleteProfile from 'store/sagas/users/updateUserCompleteProfile'
 import watchFetchUserOwnDetail from 'store/sagas/users/fetchUserOwnDetail'
@@ -43,8 +43,9 @@ import watchGenerateUserResume from 'store/sagas/users/generateUserResume'
 import watchFetchUserWorkExperience from 'store/sagas/users/fetchUserWorkExperience'
 import watchFetchUserEducation from 'store/sagas/users/fetchUserEducation'
 import watchRedirectToNewJobseeker from 'store/sagas/users/redirectToNewJobseeker'
+import watchGenerateVerifyEmailOTP from 'store/sagas/users/generateVerifyEmailOTP'
 
-// Courses 
+// Courses
 import watchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
 
 // Auth
@@ -68,7 +69,7 @@ function* rootSaga() {
     watchFetchJobsList(),
     watchFetchJobDetail(),
     watchFetchSimilarJobs(),
-    
+
     watchFetchCompanyDetail(),
     watchFetchFeaturedCompaniesList(),
     watchFetchSimilarCompany(),
@@ -84,7 +85,7 @@ function* rootSaga() {
     watchPostSaveJob(),
     watchDeleteSaveJob(),
     watchQuickApplyJob(),
-    
+
     watchPostReport(),
 
     watchFetchJobAlertsList(),
@@ -100,6 +101,7 @@ function* rootSaga() {
     watchFetchUserWorkExperience(),
     watchFetchUserEducation(),
     watchRedirectToNewJobseeker(),
+    watchGenerateVerifyEmailOTP(),
 
     watchSocialLogin(),
     watchLogin(),
@@ -113,7 +115,7 @@ function* rootSaga() {
     watchRegisterJobseeker(),
     watchRegisterRecruiter(),
 
-    watchFetchRecommendedCourses()
+    watchFetchRecommendedCourses(),
   ])
 }
 
