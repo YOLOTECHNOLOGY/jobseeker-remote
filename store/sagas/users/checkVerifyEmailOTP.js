@@ -11,9 +11,7 @@ import { checkVerifyEmailOTPService } from 'store/services/users/checkVerifyEmai
 
 function* checkVerifyEmailOTP(payload) {
   try {
-    console.log({ payload })
     const response = yield call(checkVerifyEmailOTPService, payload.payload)
-    console.log({ response })
     if (response.status >= 200 && response.status < 300) {
       yield put(checkVerifyEmailOTPSuccess(response))
     }
@@ -22,6 +20,5 @@ function* checkVerifyEmailOTP(payload) {
   }
 }
 export default function* checkVerifyEmailOTPSaga() {
-  console.log('watcher')
   yield takeLatest(CHECK_VERIFY_EMAIL_OTP_REQUEST, checkVerifyEmailOTP)
 }
