@@ -221,25 +221,26 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
     if (!firstRender) setDisplayQuickLinks(false)
     
-    const routerCategories: any = predefinedCategory ? predefinedCategory[0] : category
-    let jobCategories: any = []
+    // const routerCategories: any = predefinedCategory ? predefinedCategory[0] : category
+    // let jobCategories: any = []
     
-    if (routerCategories) {
-      catList.forEach(cat => {
-        if (routerCategories.split(',').includes(cat.key)) {
-          jobCategories.push(cat.value)
-        }
-      });
-    }
+    // if (routerCategories) {
+    //   catList.forEach(cat => {
+    //     if (routerCategories.split(',').includes(cat.key)) {
+    //       jobCategories.push(cat.value)
+    //     }
+    //   });
+    // }
 
-    jobCategories = jobCategories.join(',')
+    // jobCategories = jobCategories.join(',')
 
     setHasMoreFilters(industry || education || workExperience || category || qualification || predefinedLocation || jobType || salary)
     
     const payload = {
       query: searchValue,
       jobLocation: urlLocation?.value,
-      jobCategories: jobCategories,
+      jobCategories: router.query?.category,
+      // jobCategories: jobCategories,
       salary: router.query?.salary,
       jobType: router.query?.jobType,
       industry: router.query?.industry,
@@ -810,11 +811,16 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
     urlCategory = predefinedCategory ? predefinedCategory : urlCategory.split(',')
     
-    const matchedCategory = catList.filter((cat) => {
-      return urlCategory.includes(cat.key)
+    const initialListOptions = catList.map((data) => {
+      const newSubList = data.sub_list.map((subData) => ({
+        ...subData,
+        isChecked:
+          urlCategory.includes(subData.key) || urlCategory.includes(data.key) ? true : false,
+      }))
+      const newList = { ...data, isChecked: urlCategory.includes(data.key) ? true : false, sub_list: newSubList }
+      return newList
     })
-
-    defaultValues.category = matchedCategory
+    defaultValues.category = initialListOptions
   }
 
   return {

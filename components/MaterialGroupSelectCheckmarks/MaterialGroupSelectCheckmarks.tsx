@@ -1,13 +1,18 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react'
+
+/* MUI components */
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
+import Select from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
 import OutlinedInput from '@mui/material/OutlinedInput'
+
+/* Helpers */
+import { useFirstRender } from 'helpers/useFirstRender'
 
 interface MaterialGroupSelectCheckmarks extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode
@@ -47,124 +52,29 @@ const MaterialSelectCheckmarks = ({
   fieldRef,
   error,
 }: MaterialGroupSelectCheckmarks) => {
-  // initialize options with isChecked key value
-  const initialListOptions = options.map((data)=> {
-      const newSubList = data.sub_list.map((data)=> ({...data, isChecked: false}))
-      const newList = {...data, isChecked: false, sub_list: newSubList}
-      return newList
-    })
+    const firstRender = useFirstRender()
 
-  const [listOptions, setListOptions] = useState(initialListOptions)
+  const [listOptions, setListOptions] = useState(value)
   const [displayValue, setDisplayValue] = useState<Array<string>>([''])
-  const [testDisplayValue, setTestDisplayValue] = useState<Array<string>>([''])
-  const [selectedOptions, setSelectedOptions] = useState<any>(value || [])
-  // const [selectedOptionDisplay, setSelectedOptionDisplay] = useState<any>(value || [])
-
-  useEffect(() => {
-    setSelectedOptions(value)
-    // setSelectedOptionDisplay(mapKeyToValueForDisplay)
-  }, [value])
 
   useEffect(()=>{
-    console.log('triggered useEffect')
-    const abc = []
+    const selectedOptions = []
+    const valueToDisplay = []
     listOptions.map((option)=> {
       if (option.isChecked){
-        abc.push(option.value)
+        valueToDisplay.push(option.value)
+        selectedOptions.push(option.key)
       }else{
         option.sub_list.map((subOption)=> {
           if (subOption.isChecked){
-          abc.push(subOption.value)
+          valueToDisplay.push(subOption.value)
+          selectedOptions.push(subOption.key)
         }})
       }
     })
-    setTestDisplayValue(abc)
+    setDisplayValue(valueToDisplay)
+    if (!firstRender) onSelect(selectedOptions)
   },[listOptions])
-
-
-  const handleChange = (event: SelectChangeEvent) => {
-    const {
-      target: { value },
-    } = event
-
-    // On autofill we get a the stringified value.
-    const formattedValue = typeof value === 'string' ? value.split(',') : value
-    setSelectedOptions(formattedValue)
-    // if (onSelect) {
-    //   onSelect(formattedValue)
-    // }
-  }
-
-  const theme = createTheme({
-    components: {
-      MuiOutlinedInput: {
-        styleOverrides: {
-          root: {
-            height: '48px',
-            backgroundColor: greyBg ? '#E2E2E2' : 'white',
-          },
-        },
-      },
-      MuiMenu: {
-        styleOverrides: {
-          root: {
-            maxHeight: '350px',
-          },
-        },
-      },
-      MuiMenuItem: {
-        styleOverrides: {
-          root: {
-            backgroundColor: 'default',
-          },
-        },
-      },
-      MuiTypography: {
-        styleOverrides: {
-          root: {
-            fontSize: '13px',
-            letterSpacing: '1px',
-          },
-        },
-      },
-      MuiInputLabel: {
-        styleOverrides: {
-          root: {
-            fontSize: '14px',
-            letterSpacing: '1px',
-            transform: 'translate(14px, 10px) scale(1)',
-            '&.Mui-focused': {
-              fontSize: '10px',
-              transform: 'translate(14px, -10px) scale(1)',
-            },
-            backgroundColor: '#fff',
-            top: '4px',
-          },
-          shrink: {
-            transform: 'translate(14px, -9px) scale(0.75)',
-          },
-        },
-      },
-      MuiInputBase: {
-        styleOverrides: {
-          root: {
-            fontSize: '14px',
-            letterSpacing: '1px',
-          },
-          input: {
-            padding: '10.5px 14px !important',
-          },
-        },
-      },
-      MuiFormControlLabel:{
-        styleOverrides:{
-          root:{
-            width:'100%'
-          }
-        }
-      }
-    },
-  })
 
   const onMainSelection = (e, optionData) => {
     /* find the corresponding option data based on option.key && 
@@ -241,11 +151,79 @@ const MaterialSelectCheckmarks = ({
     })
     // TODO: update URL/SEO with new selection value
 
-    console.log('data',data)
     setListOptions(data)
   }
 
-  console.log('testDisplayValue', testDisplayValue)
+  const theme = createTheme({
+    components: {
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            height: '48px',
+            backgroundColor: greyBg ? '#E2E2E2' : 'white',
+          },
+        },
+      },
+      MuiMenu: {
+        styleOverrides: {
+          root: {
+            maxHeight: '350px',
+          },
+        },
+      },
+      MuiMenuItem: {
+        styleOverrides: {
+          root: {
+            backgroundColor: 'default',
+          },
+        },
+      },
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            fontSize: '13px',
+            letterSpacing: '1px',
+          },
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            fontSize: '14px',
+            letterSpacing: '1px',
+            transform: 'translate(14px, 10px) scale(1)',
+            '&.Mui-focused': {
+              fontSize: '10px',
+              transform: 'translate(14px, -10px) scale(1)',
+            },
+            backgroundColor: '#fff',
+            top: '4px',
+          },
+          shrink: {
+            transform: 'translate(14px, -9px) scale(0.75)',
+          },
+        },
+      },
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            fontSize: '14px',
+            letterSpacing: '1px',
+          },
+          input: {
+            padding: '10.5px 14px !important',
+          },
+        },
+      },
+      MuiFormControlLabel: {
+        styleOverrides: {
+          root: {
+            width: '100%',
+          },
+        },
+      },
+    },
+  })
 
   return (
     <ThemeProvider theme={theme}>
@@ -257,13 +235,10 @@ const MaterialSelectCheckmarks = ({
           labelId={`${id}-select-label`}
           id={id}
           multiple
-          value={testDisplayValue}
+          value={displayValue}
           label={label}
-          onChange={handleChange}
           input={<OutlinedInput label='Tag' />}
-          renderValue={() => testDisplayValue.join(', ')}
-          // renderValue={()=>displayValue.length > 0 ? displayValue.join(', ') : displayValue}
-          // MenuProps={MenuProps}
+          renderValue={() => displayValue.join(', ')}
         >
           {listOptions &&
             listOptions.map((option) => {
