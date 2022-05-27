@@ -54,29 +54,33 @@ const MaterialSelectCheckmarks = ({
       return newList
     })
 
-  console.log('initialListOptions', initialListOptions)
   const [listOptions, setListOptions] = useState(initialListOptions)
   const [displayValue, setDisplayValue] = useState<Array<string>>([''])
+  const [testDisplayValue, setTestDisplayValue] = useState<Array<string>>([''])
   const [selectedOptions, setSelectedOptions] = useState<any>(value || [])
   // const [selectedOptionDisplay, setSelectedOptionDisplay] = useState<any>(value || [])
-
-  // const mapKeyToValueForDisplay = () => {
-  //   const valueToDisplay = selectedOptions.map((val) =>
-  //     listOptions.map((options) => {
-  //       if (options.key === val) {
-  //         return options.value
-  //       }
-  //     })
-  //   )
-  //   console.log('valueToDisplay', valueToDisplay)
-  //   return valueToDisplay
-  // }
-  console.log('selectedOptions', selectedOptions)
 
   useEffect(() => {
     setSelectedOptions(value)
     // setSelectedOptionDisplay(mapKeyToValueForDisplay)
   }, [value])
+
+  useEffect(()=>{
+    console.log('triggered useEffect')
+    const abc = []
+    listOptions.map((option)=> {
+      if (option.isChecked){
+        abc.push(option.value)
+      }else{
+        option.sub_list.map((subOption)=> {
+          if (subOption.isChecked){
+          abc.push(subOption.value)
+        }})
+      }
+    })
+    setTestDisplayValue(abc)
+  },[listOptions])
+
 
   const handleChange = (event: SelectChangeEvent) => {
     const {
@@ -163,10 +167,8 @@ const MaterialSelectCheckmarks = ({
   })
 
   const onMainSelection = (e, optionData) => {
-    console.log('triggered onMainSelection')
     /* find the corresponding option data based on option.key && 
     update the corresponding option data with new isChecked value */
-    let updatedDisplayValue = [...displayValue]
     const data = listOptions.map((data)=> {
       let newData = {...data}
       if (data.key === optionData.key){
@@ -182,75 +184,53 @@ const MaterialSelectCheckmarks = ({
           sub_list: newSubList
         }
       }
-      // update display value
-      if (newData.isChecked){
-        console.log('newData', newData)
-        const subOptionsValue = newData.sub_list.map((data)=>data.value)
-        // push new value
-        updatedDisplayValue.push(newData.value)
-        // remove all sub options of the main option 
-        updatedDisplayValue = updatedDisplayValue.filter((val)=> !subOptionsValue.includes(newData.value))
-        console.log('123', updatedDisplayValue)
-        // removes duplicates from array and remove empty strings
-        updatedDisplayValue = [...new Set(updatedDisplayValue)].filter((val) => val !== '')
-      }else{
-        // remove unchecked main option and all sub option
-        updatedDisplayValue = updatedDisplayValue
-          ?.filter((val) => val !== optionData.value)
-
-      }
       return newData
     })
     // TODO: update URL/SEO with new selection value
 
     setListOptions(data)
-    setDisplayValue(updatedDisplayValue)
   }
 
   const onSubSelection = (e, optionData) => {
     /* find the corresponding parent option data based on option.key && 
     update the corresponding parent and sub option data with new isChecked value */
-    let updatedDisplayValue = [...displayValue]
     const data = listOptions.map((data) => {
       let newData = { ...data }
       const newSubList = data.sub_list.map((subListData) => {
-        if (subListData.key === optionData.key) {
-          // if (e.target.checked) {
+        // if checked === true, set subOption isChecked = true
+        if (e.target.checked){
+          if (subListData.key === optionData.key){
+            return {
+              ...subListData, 
+              isChecked: true
+            }
+          }else{
+            return {
+              ...subListData
+            }
+          }
+        }else {
+          // if checked === false, set subOption isChecked = false
+          if (subListData.key === optionData.key) {
             return {
               ...subListData,
-              isChecked: e.target.checked
+              isChecked: false,
             }
-            // push new value
-            // updatedDisplayValue.push(subListData.value)
-            // removes duplicates from array and remove empty strings
-            // updatedDisplayValue = [...new Set(updatedDisplayValue)].filter((val) => val !== '')
-            // console.log('isChecked updatedDisplayValue', updatedDisplayValue)
-          
-            // remove unchecked sub option and parent option
-          //   const parentValue = newData.filter((data)=>data.sub_list.map((option)=> option.value === optionData.key ? data.key : ''))
-          //   console.log('parentValue', parentValue)
-          //   updatedDisplayValue = updatedDisplayValue?.filter((val) => val !== subListData.value && val !== data.value)
-          //   console.log('is not checked updatedDisplayValue', updatedDisplayValue)
-          // }
-          // console.log('updatedDisplayValue hahaha', updatedDisplayValue)
-          // return {
-          //   ...subListData,
-          //   isChecked: e.target.checked,
-          // }
-        } else {
-          // if sub option is unchecked, ensure that while parent option is deselected, the rest of the sub options that have yet to be deselected is added into displayValue array
-          // if (!e.target.checked && subListData.isChecked){
-          //   // update display value
-          //   updatedDisplayValue.push(subListData.value)
-          //   // removes duplicates from array and remove empty strings
-          //   updatedDisplayValue = [...new Set(updatedDisplayValue)].filter((val) => val !== '')
-          //   console.log('OTHERS updatedDisplayValue', updatedDisplayValue)
-          // }
-          return {
-            ...subListData,
+          }else{
+            // if main option isChecked is true, set all other option's isChecked = true
+            if (data.isChecked){
+              return {
+                ...subListData,
+                isChecked:true
+              }
+            }else{
+              return {
+                ...subListData
+              }
+            }
           }
-        }}
-      )        
+        }
+      })        
       newData = {
         ...newData,
         // if sub option is deselected, deselect main option as well
@@ -261,12 +241,11 @@ const MaterialSelectCheckmarks = ({
     })
     // TODO: update URL/SEO with new selection value
 
+    console.log('data',data)
     setListOptions(data)
-    setDisplayValue(updatedDisplayValue)
   }
 
-  console.log('listOptions', listOptions)
-  console.log('displayValue', displayValue)
+  console.log('testDisplayValue', testDisplayValue)
 
   return (
     <ThemeProvider theme={theme}>
@@ -278,11 +257,12 @@ const MaterialSelectCheckmarks = ({
           labelId={`${id}-select-label`}
           id={id}
           multiple
-          value={selectedOptions}
+          value={testDisplayValue}
           label={label}
           onChange={handleChange}
           input={<OutlinedInput label='Tag' />}
-          renderValue={()=>displayValue}
+          renderValue={() => testDisplayValue.join(', ')}
+          // renderValue={()=>displayValue.length > 0 ? displayValue.join(', ') : displayValue}
           // MenuProps={MenuProps}
         >
           {listOptions &&
@@ -299,6 +279,7 @@ const MaterialSelectCheckmarks = ({
                     control={
                       <Checkbox
                         indeterminate={option.isChecked}
+                        checked={option.isChecked}
                         size='small'
                         onChange={(e) => onMainSelection(e, option)}
                       />
