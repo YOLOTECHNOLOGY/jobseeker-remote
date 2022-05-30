@@ -297,7 +297,7 @@ const MyJobs = ({
   const emptyResult = () => {
     return (
       <div>
-        <Text textStyle='xl' bold>You have not {category} any job yet.</Text>
+        <Text textStyle='xl' bold>You have not {category} for any job yet.</Text>
 
         <MaterialButton variant='contained' capitalize>
           <Link
