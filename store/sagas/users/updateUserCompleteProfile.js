@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
 import { UPDATE_USER_COMPLETE_PROFILE_REQUEST } from 'store/types/users/updateUserCompleteProfile'
-import { getCookie, setCookie } from 'helpers/cookies'
+import { getCookie, removeCookie, setCookie } from 'helpers/cookies'
 import {
   updateUserCompleteProfileSuccess,
   updateUserCompleteProfileFailed,
@@ -39,10 +39,10 @@ import { getItem, removeItem } from 'helpers/localStorage'
 function* updateUserCompleteProfileReq({ payload }) {
   const isFromCreateResume = getItem('isFromCreateResume')
 
-  const { 
-    preferences, 
-    profile, 
-    accessToken, 
+  const {
+    preferences,
+    profile,
+    accessToken,
     isDelete,
     isUpdate,
     workExperienceId,
@@ -58,17 +58,17 @@ function* updateUserCompleteProfileReq({ payload }) {
     if (currentStep === 1) {
       const profilePayload = {
         accessToken,
-        profile
+        profile,
       }
       const preferencesPayload = {
         accessToken,
-        preferences
+        preferences,
       }
 
       let preferenceResponse, userCompleteProfileResponse
-      [preferenceResponse, userCompleteProfileResponse] = yield all([
+      ;[preferenceResponse, userCompleteProfileResponse] = yield all([
         call(addUserPreferencesService, preferencesPayload),
-        call(updateUserCompleteProfileService, profilePayload)
+        call(updateUserCompleteProfileService, profilePayload),
       ])
 
       yield put(updateUserCompleteProfileSuccess(userCompleteProfileResponse.data.data))
@@ -89,7 +89,7 @@ function* updateUserCompleteProfileReq({ payload }) {
       if (isDelete) {
         const deletePayload = {
           accessToken,
-          workExperienceId
+          workExperienceId,
         }
         yield call(deleteUserWorkExperienceService, deletePayload)
       }
@@ -98,33 +98,32 @@ function* updateUserCompleteProfileReq({ payload }) {
         const updatePayload = {
           accessToken,
           workExperienceId,
-          workExperienceData
+          workExperienceData,
         }
         yield call(updateUserWorkExperienceService, updatePayload)
       }
 
       if (!isDelete && !isUpdate) {
-        const payload = { accessToken, workExperience: workExperienceData}
+        const payload = { accessToken, workExperience: workExperienceData }
         yield call(addUserWorkExperienceService, payload)
         if (proceedingPath) {
-
           yield put(push(proceedingPath))
         }
       }
-      
+
       yield fetchUserWorkExperienceSaga(accessToken)
     }
 
     if (currentStep === 4) {
       if (!isDelete && !isUpdate) {
-        const payload = { accessToken, educationData}
+        const payload = { accessToken, educationData }
         yield call(addUserEducationService, payload)
       }
 
       if (isDelete) {
         const deletePayload = {
           accessToken,
-          educationId
+          educationId,
         }
         yield call(deleteUserEducationService, deletePayload)
       }
@@ -133,7 +132,7 @@ function* updateUserCompleteProfileReq({ payload }) {
         const updatePayload = {
           accessToken,
           educationId,
-          educationData
+          educationData,
         }
         yield call(updateUserEducationService, updatePayload)
       }
@@ -151,7 +150,7 @@ function* updateUserCompleteProfileReq({ payload }) {
 
 function* fetchUserWorkExperienceSaga(accessToken) {
   try {
-    const { data } = yield call(fetchUserWorkExperienceService, {accessToken})
+    const { data } = yield call(fetchUserWorkExperienceService, { accessToken })
     yield put(fetchUserWorkExperienceSuccess(data.data))
   } catch (error) {
     yield put(fetchUserWorkExperienceFailed(error))
@@ -160,7 +159,7 @@ function* fetchUserWorkExperienceSaga(accessToken) {
 
 function* fetchUserEducationServiceSaga(accessToken) {
   try {
-    const { data } = yield call(fetchUserEducationService, {accessToken})
+    const { data } = yield call(fetchUserEducationService, { accessToken })
     yield put(fetchUserEducationSuccess(data.data))
   } catch (error) {
     yield put(fetchUserEducationFailed(error))
@@ -169,6 +168,7 @@ function* fetchUserEducationServiceSaga(accessToken) {
 
 function* completeUserProfileSaga(redirect, accessToken) {
   try {
+    removeCookie('isVerifyEmailModalClosed')
     const { data } = yield call(completeUserProfileService, { accessToken })
     yield put(completeUserProfileSuccess(data.data))
 
@@ -176,9 +176,9 @@ function* completeUserProfileSaga(redirect, accessToken) {
     const accessToken = getCookie('accessToken')
 
     userCookie.is_profile_completed = true
-    
+
     yield call(setCookie, 'user', userCookie)
-    
+
     let url = '/jobs-hiring/job-search'
 
     if (redirect) {
