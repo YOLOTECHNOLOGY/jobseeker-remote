@@ -37,6 +37,7 @@ import {
   getLocationList
 } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { handleNumericInput } from 'helpers/handleInput'
 
 // Styles
 import styles from './Onboard.module.scss'
@@ -222,11 +223,10 @@ const Step1 = (props: any) => {
               className={styles.step1ContactNumberField}
               label={requiredLabel('Contact Number')}
               size='small'
-              type='number'
               error={errors.contactNumber ? true : false}
               value={contactNumber}
               defaultValue={contactNumber}
-              onChange={(e) => setContactNumber(e.target.value)}
+              onChange={(e) => setContactNumber(handleNumericInput(e.target.value))}
             />
             {errors.contactNumber && errorText(errors.contactNumber.message)}
           </div>
@@ -371,7 +371,7 @@ const Step1 = (props: any) => {
           />
           <Tooltip title='Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.' placement='top' arrow >
             <span className={styles.disclaimerIcon}>
-              <Image src={DisclaimerIcon} alt='disclaimer' width={isMobile ? '20px' : '16px'} height={isMobile ? '20px' : '16px'} />
+              <Image src={DisclaimerIcon} alt='disclaimer' width='16px' height='16px' />
             </span>
           </Tooltip>
         </div>

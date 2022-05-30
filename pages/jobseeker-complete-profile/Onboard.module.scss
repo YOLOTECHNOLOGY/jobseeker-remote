@@ -202,6 +202,7 @@
 
   &Subscribe {
     margin-top: 20px;
+    display: flex;
   }
 }
 
@@ -301,6 +302,7 @@
 .disclaimerIcon {
   vertical-align: -webkit-baseline-middle;
   margin-left: 5px; 
+  margin-top: 2px;
   line-height: 25px;
   cursor: pointer;
   display: flex;
