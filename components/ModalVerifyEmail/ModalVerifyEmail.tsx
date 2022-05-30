@@ -21,7 +21,7 @@ import { checkVerifyEmailOTPRequest } from '../../store/actions/users/checkVerif
 import { authPathToOldProject } from '../../helpers/authenticationTransition'
 
 interface ModalVerifyEmailProps {
-  email
+  email: string
   isShowModal?: boolean
   handleModal?: Function
 }
@@ -42,12 +42,6 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
   const isOTPVerifying = useSelector((store: any) => store.users.checkVerifyEmailOTP.fetching)
   const isOTPVerified = useSelector((store: any) => store.users.checkVerifyEmailOTP.response.data)
   const OTPVerifyingError = useSelector((store: any) => store.users.checkVerifyEmailOTP.error)
-
-  if (isShowModal) {
-    document.body.style.position = 'fixed'
-    document.body.style.width = '100%'
-    document.body.style.top = `-${window.scrollY}px`
-  }
 
   useEffect(() => {
     if (isOTPVerified) {
@@ -190,10 +184,6 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
         isLoading={isOTPVerifying}
         onClick={() => {
           handleModal(false)
-          const scrollY = document.body.style.top
-          document.body.style.position = ''
-          document.body.style.top = ''
-          window.scrollTo(0, parseInt(scrollY || '0') * -1)
         }}
       >
         <Text textStyle='xl' textColor='white' bold>
@@ -209,10 +199,6 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
       showModal={isShowModal}
       handleModal={() => {
         handleModal(false)
-        const scrollY = document.body.style.top
-        document.body.style.position = ''
-        document.body.style.top = ''
-        window.scrollTo(0, parseInt(scrollY || '0') * -1)
       }}
     >
       {modalContent}
