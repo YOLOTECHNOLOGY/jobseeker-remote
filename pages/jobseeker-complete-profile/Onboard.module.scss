@@ -299,7 +299,9 @@
 }
 
 .disclaimerIcon {
-  vertical-align: middle;
+  vertical-align: -webkit-baseline-middle;
   margin-left: 5px; 
-  line-height: 15px;
+  line-height: 25px;
+  cursor: pointer;
+  display: flex;
 }

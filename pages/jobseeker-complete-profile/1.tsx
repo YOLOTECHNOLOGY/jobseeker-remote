@@ -37,7 +37,6 @@ import {
   getLocationList
 } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
-import { handleNumericInput } from 'helpers/handleInput'
 
 // Styles
 import styles from './Onboard.module.scss'
@@ -223,10 +222,11 @@ const Step1 = (props: any) => {
               className={styles.step1ContactNumberField}
               label={requiredLabel('Contact Number')}
               size='small'
+              type='number'
               error={errors.contactNumber ? true : false}
               value={contactNumber}
               defaultValue={contactNumber}
-              onChange={(e) => setContactNumber(handleNumericInput(e.target.value))}
+              onChange={(e) => setContactNumber(e.target.value)}
             />
             {errors.contactNumber && errorText(errors.contactNumber.message)}
           </div>
@@ -358,6 +358,7 @@ const Step1 = (props: any) => {
         
         <div className={styles.step1Subscribe}>
           <FormControlLabel
+            style={{ marginRight: '0px' }}
             control={
               <Switch 
                 checked={headhuntMe}
@@ -366,13 +367,13 @@ const Step1 = (props: any) => {
             }
             label={<Text textStyle='sm'>
               I’d like to join Headhunt Me to discover more job opportunities. 
-              <Tooltip title='Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.' placement='top' arrow >
-                <span className={styles.disclaimerIcon}>
-                  <Image src={DisclaimerIcon} alt='disclaimer' width='16' height='16' />
-                </span>
-              </Tooltip>
             </Text>}
           />
+          <Tooltip title='Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.' placement='top' arrow >
+            <span className={styles.disclaimerIcon}>
+              <Image src={DisclaimerIcon} alt='disclaimer' width={isMobile ? '20px' : '16px'} height={isMobile ? '20px' : '16px'} />
+            </span>
+          </Tooltip>
         </div>
       </div>
       {isMobile &&  (
