@@ -8,7 +8,7 @@ import HamburgerMenu from 'components/HamburgerMenu'
 /* Styles */
 import styles from './Layout.module.scss'
 import classNamesCombined from 'classnames'
-import { setCookie, getCookie } from '../../helpers/cookies'
+import { getCookie, setCookieWithExpiry } from '../../helpers/cookies'
 import { Link } from '@mui/material'
 import MaterialAlert from '../MaterialAlert/MaterialAlert'
 import ModalVerifyEmail from '../ModalVerifyEmail'
@@ -62,7 +62,7 @@ const Layout = ({ children, className }: LayoutProps) => {
         handleModal={(isShow: boolean) => {
           setIsShowModal(isShow)
           setIsEmailVerified(getCookie('user').is_email_verify)
-          setCookie('isVerifyEmailModalClosed', true)
+          setCookieWithExpiry('isVerifyEmailModalClosed', true, 3600) // cookie expires to renable auto show modal after 1 hour
           // once modal is closed, body should not be fixed to enable scrolling
           const scrollY = document.body.style.top
           document.body.style.position = ''
