@@ -12,7 +12,7 @@ import Image from 'next/image'
 import Text from 'components/Text'
 import Button from 'components/Button'
 import Accordian from 'components/Accordian'
-import MaterialAutocompleteLimitTags from 'components/MaterialAutocompleteLimitTags'
+// import MaterialAutocompleteLimitTags from 'components/MaterialAutocompleteLimitTags'
 
 /* Helpers */
 import {
@@ -54,7 +54,7 @@ type optionsType = {
 }
 
 const NavSearchFilter = ({
-  urlDefaultValues,
+  // urlDefaultValues,
   categories,
   isShowFilter,
   onShowFilter,
@@ -211,9 +211,9 @@ const NavSearchFilter = ({
     )
   }
 
-  const handleSpecializationChange = (event, value) => {
-    setSelectedCategories(value)
-  }
+  // const handleSpecializationChange = (event, value) => {
+  //   setSelectedCategories(value)
+  // }
 
   const SearchFilters = ({
     title,
@@ -330,7 +330,7 @@ const NavSearchFilter = ({
               />
             </div>
           )}
-          <div className={styles.searchFilterSection}>
+          {/* <div className={styles.searchFilterSection}>
             <Accordian
               chevronIcon
               paddedContent
@@ -353,7 +353,7 @@ const NavSearchFilter = ({
                 value={selectedCategories}
               />
             </Accordian>
-          </div>
+          </div> */}
           <SearchFilters
             title='Industry'
             fieldName='industry'

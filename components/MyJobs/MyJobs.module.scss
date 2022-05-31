@@ -197,7 +197,33 @@
 .MyJobsDetailInfoEmpty {
   height: 100vh;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: -webkit-center;
+  
+  > div {
+    margin-top: 48px;
+
+    > button {
+      display: block;
+      margin-top: 23px;
+    }
+  }
+
+  &Mobile {
+    height: 50vh;
+    width: 100%;
+    text-align: -webkit-center;
+    
+    > div {
+      margin-top: 18px;
+
+      > button {
+        display: block;
+        margin-top: 23px;
+      }
+    }
+
+    @include md {
+      display: none;
+    }
+  }
 }

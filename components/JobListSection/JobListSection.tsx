@@ -96,7 +96,7 @@ const JobListSection = ({
   const prevScrollY = useRef(0)
 
   const [isSticky, setIsSticky] = useState(false)
-  const [jobNumStart, setJobNumStart] = useState(page)
+  const [jobNumStart, setJobNumStart] = useState(0)
   const [jobNumEnd, setJobNumEnd] = useState(30)
   
   const [isShowModalShare, setIsShowModalShare] = useState(false)
@@ -123,7 +123,7 @@ const JobListSection = ({
 
   useEffect(() => {
     setJobNumStart(((jobList?.page - 1) * jobList?.size) + 1)
-    setJobNumEnd(((jobList?.page - 1) * jobList?.size) + jobList?.jobs.length)
+    setJobNumEnd(jobList?.jobs.length > 0 ? ((jobList?.page - 1) * jobList?.size) + jobList?.jobs.length : 30)
   }, [jobList])
 
   const handlePaginationClick = (event, val) => {
@@ -189,6 +189,15 @@ const JobListSection = ({
     return ''
   }
 
+  const emptyResult = () => {
+    return (
+      <React.Fragment>
+        <Text textStyle='xl' bold>We couldn't find any jobs matching your search.</Text>
+        <Text textStyle='md'>Check the spelling and adjust the filter criteria.</Text>
+      </React.Fragment>
+    )
+  }
+
   const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
   const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
@@ -240,6 +249,13 @@ const JobListSection = ({
                   <JobCardLoader />
                 </React.Fragment>
               )}
+
+              {jobList?.jobs?.length === 0 && !isJobDetailFetching && (
+                <div className={styles.emptyResultMobile}>
+                  {emptyResult()}
+                </div>
+              )}  
+              
               {!isJobListFetching && jobList?.jobs?.length > 0 && jobList.jobs.map((job) => (
                 <JobCard
                   key={job.id}
@@ -260,14 +276,17 @@ const JobListSection = ({
                 />
               ))}
             </div>
-            <div className={styles.paginationWrapper}>
-              <MaterialRoundedPagination onChange={handlePaginationClick} page={selectedPage} totalPages={totalPages} />
-            </div>
+            {jobList?.jobs?.length > 0 &&
+              <div className={styles.paginationWrapper}>
+                <MaterialRoundedPagination onChange={handlePaginationClick} page={selectedPage} totalPages={totalPages} />
+              </div>
+            }
           </div>
           <div className={styles.jobDetailInfoSection}>
             {(isJobDetailFetching || isJobListFetching) && (
               <JobDetailLoader />
             )}
+
             {!isJobDetailFetching && selectedJob?.['id'] && (
               <JobDetail 
                 selectedJob={selectedJob}
@@ -281,6 +300,12 @@ const JobListSection = ({
                 config={config}
               />
             )}
+
+            {jobList?.jobs?.length === 0 && !isJobDetailFetching && (
+              <div className={styles.emptyResult}>
+                {emptyResult()}
+              </div>
+            )} 
           </div>
           <div className={styles.jobAds}>
             <div className={styles.skyscraperBanner}>

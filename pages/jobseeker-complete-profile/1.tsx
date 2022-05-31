@@ -76,6 +76,7 @@ const Step1 = (props: any) => {
   }
   const [smsCode, setSmsCode] = useState(getSmsCountryCode(userDetail?.phone_num, smsCountryList) || '+63')
   const [contactNumber, setContactNumber] = useState(userDetail?.phone_num?.replace(smsCode, "") || null)
+  const [openTooltip, setOpenTooltip] = useState(false)
 
   const [isShowCountry, setIsShowCountry] = useState(false)
   const [noticePeriod, setNoticePeriod] = useState(userDetail?.notice_period_id)
@@ -358,6 +359,7 @@ const Step1 = (props: any) => {
         
         <div className={styles.step1Subscribe}>
           <FormControlLabel
+            style={{ marginRight: '0px' }}
             control={
               <Switch 
                 checked={headhuntMe}
@@ -366,13 +368,28 @@ const Step1 = (props: any) => {
             }
             label={<Text textStyle='sm'>
               I’d like to join Headhunt Me to discover more job opportunities. 
-              <Tooltip title='Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.' placement='top' arrow >
-                <span className={styles.disclaimerIcon}>
-                  <Image src={DisclaimerIcon} alt='disclaimer' width='16' height='16' />
-                </span>
-              </Tooltip>
             </Text>}
           />
+          <Tooltip 
+            title='Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.' 
+            placement='top' 
+            arrow
+            disableFocusListener
+            disableTouchListener
+            open={openTooltip}
+          >
+            <span className={styles.disclaimerIcon}>
+              <Image 
+                src={DisclaimerIcon} 
+                alt='disclaimer' 
+                width={isMobile ? '20px' : '14px'}
+                height={isMobile ? '20px' : '14px'}
+                onClick={() => {
+                  setOpenTooltip(!openTooltip)
+                }}
+              />
+            </span>
+          </Tooltip>
         </div>
       </div>
       {isMobile &&  (
