@@ -19,10 +19,10 @@
   &.isShow.displayQuickLinks{
     display: block;
     @extend .searchFilter;
-    top:311px;
+    top: 200px;
 
     .searchFilterBody {
-      height: calc(100vh - 445px);
+      height: calc(100vh - 264px);
 
       @include msd {
         height: calc(100vh - 183px);
