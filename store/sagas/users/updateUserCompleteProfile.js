@@ -55,6 +55,7 @@ function* updateUserCompleteProfileReq({ payload }) {
   } = payload
 
   try {
+    removeCookie('isVerifyEmailModalClosed')
     if (currentStep === 1) {
       const profilePayload = {
         accessToken,
