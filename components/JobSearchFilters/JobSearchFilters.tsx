@@ -279,6 +279,10 @@ const NavSearchFilter = ({
   }
 
   useEffect(() => {
+    if (isShowFilter) {
+      document.body.style.position = 'fixed';
+      document.body.style.width = "100%";
+    }
     document.addEventListener('click', handleClickedOutside, true)
     return () => {
       document.removeEventListener('click', handleClickedOutside, true)
