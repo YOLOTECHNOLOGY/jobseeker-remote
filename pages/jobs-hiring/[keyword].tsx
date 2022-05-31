@@ -283,6 +283,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   ]
 
   const handleShowFilter = () => {
+    if (isShowFilter) {
+      const scrollY = document.body.style.top
+      document.body.style.position = ''
+      document.body.style.top = ''
+      // retrieve previous scroll position
+      window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    }
     setIsShowFilter(!isShowFilter)
   }
 
@@ -533,6 +540,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} />
+      <div className={isShowFilter ? styles.jobSearchFilterBackdrop : ''}></div>
       <div
         className={classNamesCombined([
           displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection,
@@ -697,7 +705,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             </div>
           </div>
         </div>
-        <JobSearchFilters
+      </div>
+      <JobSearchFilters
           urlDefaultValues={defaultValues}
           categories={categories}
           displayQuickLinks={displayQuickLinks}
@@ -706,7 +715,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           onShowFilter={handleShowFilter}
           moreFilterReset={moreFilterReset}
         />
-      </div>
       {/* <div className={breakpointStyles.hideOnTabletAndDesktop}>
         {hasMoreFilters && (
           <div className={styles.resetFilterBtnMobile}>
