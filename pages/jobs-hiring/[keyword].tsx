@@ -168,6 +168,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const userCookie = getCookie('user') || null
   const isMobile = width < 768 ? true : false
 
+  const [filterCount, setFilterCount] = useState(0)
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.urlLocation)
   const [sort, setSort] = useState(defaultValues?.sort)
@@ -254,6 +255,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     dispatch(fetchJobsListRequest(payload, accessToken))
 
     setMoreFilterReset(false)
+
+    setFilterCount(getFilterCount())
   }, [router.query])
 
   useEffect(() => {
@@ -293,6 +296,43 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       return range.value === '10K - 30K' ? 'Below 30K': range.value 
     })
   )
+
+  const getFilterCount = () => {
+    const nonFilterKeys = [
+      'keyword',
+      'search',
+      'page',
+      'id',
+      'sort',
+      'utm_source',
+      'utm_campaign',
+      'utm_medium',
+    ]
+
+    let count = 0
+
+    if (predefinedLocation && predefinedLocation.length > 0) {
+      count+=predefinedLocation.length
+    }
+
+    if (predefinedCategory && predefinedCategory.length > 0) {
+      count+=predefinedCategory.length
+    }
+
+    Object.entries<any>(router.query).forEach(([key, value]) => {
+      const val = value.split(',')
+      if (!nonFilterKeys.includes(key)) {
+        // ensure value exist and is not an empty array
+        if (val && val.length !== 0) {
+          val.forEach(() => {
+            count++
+          })
+        }
+      }
+    })
+
+    return count
+  }
 
   const updateUrl = (queryParam, queryObject) => {
     queryObject['page'] = '1'
@@ -633,9 +673,19 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             onClick={handleShowFilter}
             capitalize
           >
-            <Text textColor='primaryBlue' textStyle='lg' bold>
+            <Text className={styles.moreFilters} textColor='primaryBlue' textStyle='lg' bold>
               More Filters
             </Text>
+            {filterCount > 0 && (
+              <Text
+                tagName='p'
+                textStyle='base'
+                textColor='white'
+                className={styles.searchFilterCount}
+              >
+                {filterCount}
+              </Text>
+            )}
           </MaterialButton>
 
           {hasMoreFilters && (
