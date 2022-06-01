@@ -812,7 +812,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   if (jobId) {
     // store actions
     if (isApplied === 'true') {
-      store.dispatch(fetchAppliedJobDetailRequest(jobId))
+      store.dispatch(fetchAppliedJobDetailRequest({jobId, accessToken}))
     } else {
       store.dispatch(
         fetchJobDetailRequest({
