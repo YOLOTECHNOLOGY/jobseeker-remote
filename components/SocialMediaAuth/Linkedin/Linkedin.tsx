@@ -94,9 +94,11 @@ const Linkedin = ({
   const receiveMessage = (event) => {
     if (event.origin === window.location.origin) {
       if (event.data.errorMessage && event.data.from === 'Linked In') {
+        console.log('Linkedin handleFailure')
         handleFailure(event.data)
         popup && popup.close()
       } else if (event.data.code && event.data.from === 'Linked In') {
+        console.log('Linkedin handleSuccess')
         handleSuccess({ code: event.data.code })
         popup && popup.close()
       }
