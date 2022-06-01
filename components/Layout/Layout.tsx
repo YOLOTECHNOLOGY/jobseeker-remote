@@ -24,10 +24,11 @@ const Layout = ({ children, className }: LayoutProps) => {
   const [isEmailVerified, setIsEmailVerified] = useState(false)
   const [isShowModal, setIsShowModal] = useState(false)
 
+  const authCookie = getCookie('accessToken')
+  const userCookie = getCookie('user')
+
   useEffect(() => {
-    const authCookie = getCookie('accessToken')
-    setIsAuthenticated(getCookie('accessToken') ? true : false)
-    const userCookie = getCookie('user')
+    setIsAuthenticated(authCookie ? true : false)
     setIsEmailVerified(userCookie?.is_email_verify)
     const isVerifyEmailModalClosed = getCookie('isVerifyEmailModalClosed')
     setIsShowModal(!isVerifyEmailModalClosed && !!authCookie && !!!userCookie.is_email_verify)
@@ -38,6 +39,18 @@ const Layout = ({ children, className }: LayoutProps) => {
     document.body.style.position = 'fixed'
     document.body.style.width = '100%'
     document.body.style.top = `-${window.scrollY}px`
+  }
+
+  const handleVerifyEmailModal = (isShow: boolean) => {
+    setIsShowModal(isShow)
+    setIsEmailVerified(getCookie('user').is_email_verify)
+    setCookieWithExpiry('isVerifyEmailModalClosed', true, 3600) // cookie expires to renable auto show modal after 1 hour
+    // once modal is closed, body should not be fixed to enable scrolling
+    const scrollY = document.body.style.top
+    document.body.style.position = ''
+    document.body.style.top = ''
+    // retrieve previous scroll position
+    window.scrollTo(0, parseInt(scrollY || '0') * -1)
   }
 
   return (
@@ -57,22 +70,12 @@ const Layout = ({ children, className }: LayoutProps) => {
       {children}
       <Footer />
       <ModalVerifyEmail
-        email={isAuthenticated && getCookie('user') ? getCookie('user').email : ''}
+        email={isAuthenticated && userCookie ? userCookie.email : ''}
         isShowModal={isShowModal}
-        handleModal={(isShow: boolean) => {
-          setIsShowModal(isShow)
-          setIsEmailVerified(getCookie('user').is_email_verify)
-          setCookieWithExpiry('isVerifyEmailModalClosed', true, 3600) // cookie expires to renable auto show modal after 1 hour
-          // once modal is closed, body should not be fixed to enable scrolling
-          const scrollY = document.body.style.top
-          document.body.style.position = ''
-          document.body.style.top = ''
-          // retrieve previous scroll position
-          window.scrollTo(0, parseInt(scrollY || '0') * -1)
-        }}
+        handleModal={handleVerifyEmailModal}
       />
     </div>
   )
 }
 
-export default Layout
+export default React.memo(Layout)
