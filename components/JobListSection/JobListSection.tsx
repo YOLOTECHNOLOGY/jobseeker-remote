@@ -216,10 +216,10 @@ const JobListSection = ({
                     className={styles.jobListOptionAlertsItem}
                     onClick={() => {
                       if (isUserAuthenticated) handleCreateJobAlert()
-                      if (!isUserAuthenticated) handleCreateJobAlert(null)
+                      else router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
                     }}
                   >
-                    <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
+                      <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
                   </div>
                   {isUserAuthenticated && (
                     <div
