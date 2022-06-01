@@ -11,3 +11,7 @@ export const handleNumericInput = (val) => {
 export const handleNumberWithDecimalInput = (val) => {
   return numberWithDecimalFilter(val) ? val : val.slice(0, -1)
 }
+
+export const maxFileSize = (file, maxSize) => {
+  return (file.size / 1024 / 1024) < maxSize
+}

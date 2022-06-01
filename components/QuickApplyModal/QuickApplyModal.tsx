@@ -32,7 +32,7 @@ import {
   getSmsCountryList,
 } from 'helpers/jobPayloadFormatter'
 import Checkbox from '@mui/material/Checkbox'
-import { handleNumericInput } from 'helpers/handleInput'
+import { maxFileSize, handleNumericInput } from 'helpers/handleInput'
 
 interface QuickApplyModalProps {
   jobDetails: any
@@ -296,16 +296,14 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                   hidden 
                   accept=".pdf, .doc, .docx" 
                   onChange={(e) => {
-                    const sizeLimit = 5 // 5 MB 
                     const file = e.target.files[0]
-
-                    if ((file.size / 1024 / 1024) > sizeLimit) {
+                    if (!maxFileSize(file, 5)) {
                       setError('resume', { type: 'custom', message: 'File size is too huge. Please upload file that is within 5MB.' })
                       return 
                     }
 
                     clearErrors('resume')
-                    setResume(e.target.files[0])
+                    setResume(file)
                   }}
                 />
               </MaterialButton>
