@@ -12,7 +12,6 @@ import { useForm } from 'react-hook-form'
 /* Redux Actions */
 import { socialLoginRequest } from 'store/actions/auth/socialLogin'
 import { registerJobseekerRequest } from 'store/actions/auth/registerJobseeker'
-import { registerRecruiterRequest } from 'store/actions/auth/registerRecruiter'
 
 /* Components */
 import MaterialButton from 'components/MaterialButton'
@@ -31,7 +30,6 @@ import MetaText from '../../components/MetaText'
 const Register = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const isEmployer = router.pathname.includes('/employer')
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -49,7 +47,6 @@ const Register = () => {
   } = useForm()
 
   const isRegisteringJobseeker = useSelector((store: any) => store.auth.registerJobseeker.fetching)
-  const isRegisteringRecruiter = useSelector((store: any) => store.auth.registerRecruiter.fetching)
 
   const handleOnShowPassword = () => setShowPassword(!showPassword)
 
@@ -64,13 +61,6 @@ const Register = () => {
     else setPasswordError(null)
 
     if (!emailError && !passwordError) {
-      let redirect: string | string[] = ''
-      if (router.query && (router.query.redirectFullPath || router.query.redirect)) {
-        redirect = router.query?.redirectFullPath
-          ? router.query.redirectFullPath
-          : router.query.redirect
-      }
-
       const payload = {
         email,
         password,
@@ -80,9 +70,7 @@ const Register = () => {
         is_subscribe: isSubscribe,
       }
 
-      if (!isEmployer)
-        dispatch(registerJobseekerRequest({ ...payload, jobId: router.query?.jobId || '' }))
-      if (isEmployer) dispatch(registerRecruiterRequest({ ...payload, redirect }))
+      dispatch(registerJobseekerRequest({ ...payload, jobId: router.query?.jobId || '' }))
     }
   }
 
@@ -111,7 +99,6 @@ const Register = () => {
         </>
       }
       ctaSignup
-      isEmployer={isEmployer}
     >
       <SEO
         title='Sign Up | Bossjob'
@@ -226,7 +213,7 @@ const Register = () => {
             size='large'
             variant='contained'
             className={styles.RegisterButton}
-            isLoading={isRegisteringJobseeker || isRegisteringRecruiter}
+            isLoading={isRegisteringJobseeker}
             onClick={() => handleRegister()}
           >
             <Text textStyle='xl' textColor='white' bold>

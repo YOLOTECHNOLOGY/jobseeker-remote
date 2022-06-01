@@ -6,7 +6,6 @@ import sendResetPasswordCode from './sendResetPasswordCode'
 import resetPassword from './resetPassword'
 
 import registerJobseeker from './registerJobseeker'
-import registerRecruiter from './registerRecruiter'
 
 import logout from './logout'
 

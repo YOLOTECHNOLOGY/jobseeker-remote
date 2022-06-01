@@ -13,12 +13,7 @@ import {
   registerJobseekerSuccess,
   registerJobseekerFailed,
 } from 'store/actions/auth/registerJobseeker'
-import { 
-  fetchRecruiterSubscriptionFeatureSuccess, 
-  fetchRecruiterSubscriptionFeatureFailed 
-} from 'store/actions/recruiters/fetchRecruiterSubscriptionFeature'
 
-import { fetchRecruiterSubscriptionFeatureService } from 'store/services/recruiters/fetchRecruiterSubscriptionFeature'
 import { registerJobseekerService } from 'store/services/auth/registerJobseeker'
 
 function* registerJobSeekerReq(actions) {
@@ -96,9 +91,6 @@ function* registerJobSeekerReq(actions) {
         registeredData.authentication.access_token
       )
 
-      yield fork(fetchRecruiterSubscriptionFeature)
-      yield take(FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS)
-
       yield put(push(jobId ? `/job/${jobId}` : '/jobseeker-complete-profile/1'))
     }
   } catch (err) {
@@ -106,18 +98,6 @@ function* registerJobSeekerReq(actions) {
   }
 }
 
-function* fetchRecruiterSubscriptionFeature(user, password) {
-  try {
-    const subscriptionFeature = yield call(fetchRecruiterSubscriptionFeatureService)
-
-    if (subscriptionFeature.status >= 200 && subscriptionFeature.status < 300) {
-      yield put(fetchRecruiterSubscriptionFeatureSuccess(subscriptionFeature.data))
-    }
-    yield call(setCookie, 'splan', subscriptionFeature.data.data)
-  } catch (err) {
-    yield put(fetchRecruiterSubscriptionFeatureFailed(err))
-  }
-}
 
 export default function* registerJobseekerSaga() {
   yield takeLatest(REGISTER_JOBSEEKER_REQUEST, registerJobSeekerReq)
