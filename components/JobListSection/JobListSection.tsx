@@ -269,6 +269,7 @@ const JobListSection = ({
                   location={job.job_location}
                   salary={job.salary_range_value}
                   postedAt={job.refreshed_at}
+                  status={job.status_key}
                   selectedId={selectedJobId}
                   handleSelectedId={() => {
                     handleSelectedJobId(job.id, job.job_title)

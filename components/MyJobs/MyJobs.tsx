@@ -219,14 +219,14 @@ const MyJobs = ({
     dispatch(fetchSavedJobsListRequest(payload))
   }
 
-  const handleSelectedJobId = (jobId) => {
-    if (width < 768) {
-      router.push(`/job/${slugify(selectedJob?.['job_title'] || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${selectedJob?.['id']}?isApplied=${isAppliedCategory}`)
-      return
-    }
-
+  const handleSelectedJobId = (jobId, jobTitle, status) => {
     setSelectedJobId(jobId)
     handleFetchJobDetail(jobId, category) 
+    
+    if (width < 768 && status === 'active') {
+      router.push(`/job/${slugify(jobTitle || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobId}?isApplied=${isAppliedCategory}`)
+      return
+    }
   }
 
   const handleFetchJobDetail = (jobId, source) => {
@@ -399,7 +399,8 @@ const MyJobs = ({
                   salary={jobs.job.salary_range_value}
                   postedAt={jobs.job.refreshed_at}
                   selectedId={selectedJobId}
-                  handleSelectedId={() => handleSelectedJobId(jobs.job.id)}
+                  status={jobs.job.status_key}
+                  handleSelectedId={() => handleSelectedJobId(jobs.job.id, jobs.job.job_title, jobs.job.status_key)}
                 />
               ))}
             </div>
