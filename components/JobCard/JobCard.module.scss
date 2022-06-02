@@ -80,8 +80,20 @@
       z-index: -1;
     }
   }
+
+  &Status {
+    color: #F30000;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+
+    div {
+      margin-right: 10px;
+    }
+  }
 }
 
 .JobCardDetailList {
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
