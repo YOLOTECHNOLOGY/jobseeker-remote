@@ -7,35 +7,34 @@ import { authPathToOldProject } from 'helpers/authenticationTransition'
 /* Vendors */
 import moment from 'moment'
 import slugify from 'slugify'
-
+import router from 'next/router'
 
 const handleSalary = (salaryRanges) => {
-  let salaryFrom = '' 
+  let salaryFrom = ''
   let salaryTo = ''
-  if (salaryRanges){
-    const sanitiseSalaryRange = salaryRanges.map(range => range === 'Below 30K' ? '10K - 30K' : range)
-  
+  if (salaryRanges) {
+    const sanitiseSalaryRange = salaryRanges.map((range) =>
+      range === 'Below 30K' ? '10K - 30K' : range
+    )
+
     salaryFrom = sanitiseSalaryRange
       .filter((salary) => salary !== 'Above_200K')
       .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split(' - ')[0]))
-  
+
     salaryTo = sanitiseSalaryRange
       .filter((salary) => salary !== 'Above_200K')
-      .map((salaryTo) => 
-        thousandsToNumber('' + salaryTo.split(' - ')[1]))
-  
+      .map((salaryTo) => thousandsToNumber('' + salaryTo.split(' - ')[1]))
+
     if (sanitiseSalaryRange.includes('Above_200K')) {
       salaryFrom.push('200001')
       salaryTo.push('400000')
     }
-  
+
     salaryFrom = salaryFrom.join(',')
     salaryTo = salaryTo.join(',')
-  
   }
   return [salaryFrom, salaryTo]
 }
-
 
 const formatLocationConfig = (locationList) => {
   const locationConfig = locationList.map((region) => {
@@ -55,7 +54,7 @@ const urlQueryParser = (string) => {
   const doubleQueryPattern = /(\b-jobs-in-\b)/g
   const singleQueryPattern = /(\b-jobs\b)/g
 
-  let array = null
+  let array = []
   if (string) {
     const hasDoubleQueryPattern = string.match(doubleQueryPattern)
     const hasSingleQueryPattern = string.match(singleQueryPattern)
@@ -138,12 +137,147 @@ const SEOJobSearchMetaBuilder = (query, location, category, path) => {
   return data
 }
 
-const getPredefinedParamsFromUrl = (
-  routerQuery,
-  catList,
-  locList,
-  clearAllFilters
-) => {
+const nonFilterKeys = [
+  'keyword',
+  'search',
+  'page',
+  'id',
+  'sort',
+  'utm_source',
+  'utm_campaign',
+  'utm_medium',
+]
+
+const buildQueryParams = (data) => {
+  let queryString = ''
+  queryString = Object.keys(data)
+    .map((key) => {
+      const string = data[key].map((filter)=> filter['seo-value']).join()
+      return key + '=' + string
+    })
+    .join('&')
+  queryString = '?' + queryString
+  return queryString
+}
+
+const getDataFromUrl = (newValue, routerQuery, config, clearAllFilters) => {
+  const { keyword } = routerQuery
+  const queryParser = urlQueryParser(keyword)
+  const locationList = getLocationList(config)
+  const industryList = config.inputs.industry_lists
+  const expLvlList = config.inputs.xp_lvls
+  const eduLevelList = config.filters.educations
+  const jobTypeList = config.inputs.job_types
+  const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
+    key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
+    value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
+  }))
+
+  const sanitisedConfig = {
+    industry: industryList,
+    jobType: jobTypeList,
+    salary: salaryRangeList,
+    workExperience: expLvlList,
+    qualification: eduLevelList,
+    location: locationList,
+  }
+
+  let isSingleFilter = false
+  let matchedConfig = {}
+  let predefinedQuery = ''
+  let filterData = {}
+
+  // for case: XXXX-jobs -> queryParser length will always be 1
+  Object.keys(sanitisedConfig).forEach((key) => {
+    // handle predefined filters from url
+    // iterate based on number of results from queryParser
+    queryParser.forEach((parsedData, index) => {
+      const hasMatch = sanitisedConfig[key].filter((data) => {
+        return data['seo-value'] === parsedData
+      })
+
+      if (hasMatch.length > 0) {
+        matchedConfig = {
+          ...matchedConfig,
+          [key]: hasMatch,
+        }
+      }
+
+      // if parsedData has index of 0, and it has no matches, it is a predefinedQuery
+      if (index === 0 && hasMatch.length === 0) predefinedQuery = parsedData
+      // console.log('sanitisedConfig value', value)
+    })
+    // handle filters from user actions
+    for (const [key, value] of Object.entries(newValue)) {
+      if (!nonFilterKeys.includes(key)) {
+        if (value && value.length !== 0) {
+          if (key !== 'page' && key !== 'sort') {
+            filterData = {
+              ...filterData,
+              // ensure to only push unduplicated results
+              [key]: Array.from(new Set(value)).join(','),
+            }
+            const hasMatch = []
+            value.forEach((val) => {
+              const matchedFilter = sanitisedConfig[key]?.filter((data) => {
+                return data['seo-value'] === val
+              })
+              hasMatch.push(matchedFilter[0])
+            })
+            matchedConfig = {
+              ...matchedConfig,
+              [key]: hasMatch,
+            }
+          }
+        }
+      }
+    }
+  })
+  // check if only single filter is applied
+  if (Object.keys(matchedConfig).length === 1) {
+    if (Object.values(matchedConfig).length === 1) {
+      const stringValue = Object.values(matchedConfig)[0] || ''
+      if (stringValue.length === 1) {
+        isSingleFilter = true
+      }
+    }
+  }
+
+  // sanitise filter data to be passed as query params
+  const filterParams = buildQueryParams(matchedConfig)
+
+  let filterParamsObject = {}
+  Object.keys(matchedConfig).map((key) => {
+    const matchy = matchedConfig[key]
+      .map((filter) => {
+        return filter['seo-value']
+      })
+      .join()
+    filterParamsObject = {
+      ...filterParamsObject,
+      [key]: matchy,
+    }
+  })
+
+  let filterQuery = ''
+  // if only single filter is applied && no predefinedQuery, that single filter will be the search query
+  // remove searchQuery filter from matchedConfig
+  if (!predefinedQuery && isSingleFilter) {
+    filterQuery = Object.values(matchedConfig)[0][0]['seo-value']
+    filterParamsObject = {}
+  }
+
+  const data = {
+    searchQuery: predefinedQuery ? predefinedQuery : filterQuery,
+    filters: matchedConfig,
+    filterParamsString: filterParams,
+    filterParamsObject,
+  }
+
+  return data
+}
+
+const getPredefinedParamsFromUrl = (routerQuery, catList, locList, clearAllFilters) => {
   const { keyword } = routerQuery
   let predefinedQuery = null
   let predefinedLocation = null
@@ -215,13 +349,11 @@ const appendGeneralQueryPattern = () => {
   return 'job-search'
 }
 
-const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFilters=false) => {
+const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFilters = false) => {
   let queryParam = ''
   // eslint-disable-next-line
   // query && !location && !category
-  if (
-    queryType && !sanitisedLocValue && !jobCategory 
-  ) {
+  if (queryType && !sanitisedLocValue && !jobCategory) {
     queryParam = appendSingleQueryPattern(queryType)
   } else if (
     // !query && 1 location && !category
@@ -234,40 +366,28 @@ const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFil
     // !query && !location && 1 category
     !queryType &&
     !sanitisedLocValue &&
-    jobCategory 
+    jobCategory
   ) {
     queryParam = appendSingleQueryPattern(jobCategory)
   }
 
   // query && 1 location && !category
-  if (
-    queryType && sanitisedLocValue && !jobCategory
-  ) {
+  if (queryType && sanitisedLocValue && !jobCategory) {
     queryParam = appendDoubleQueryPattern(queryType, sanitisedLocValue)
   }
 
   // query && !location && 1 category
-  if (
-    queryType && !sanitisedLocValue &&jobCategory 
-  ) {
+  if (queryType && !sanitisedLocValue && jobCategory) {
     queryParam = appendSingleQueryPattern(queryType)
   }
 
   // !query && 1 location && 1 category
-  if (
-    !queryType &&
-    sanitisedLocValue
-    && jobCategory
-  ) {
+  if (!queryType && sanitisedLocValue && jobCategory) {
     queryParam = appendDoubleQueryPattern(jobCategory, sanitisedLocValue)
   }
 
   // query && 1 location && 1 category
-  if (
-    queryType &&
-    sanitisedLocValue &&
-    jobCategory 
-  ) {
+  if (queryType && sanitisedLocValue && jobCategory) {
     queryParam = appendDoubleQueryPattern(queryType, sanitisedLocValue)
   }
 
@@ -298,13 +418,13 @@ const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFil
   if (!queryType && !sanitisedLocValue && !jobCategory) {
     queryParam = ''
   }
-  
+
   return slugify(queryParam).toLowerCase()
 }
 
 const getLocationList = (config) => {
   if (!config) return []
-  
+
   const locList =
     config &&
     config.inputs &&
@@ -329,10 +449,10 @@ const getSmsCountryList = (config) => {
   countryList.forEach((country) => {
     if (country.is_sms_allowed) {
       const smsCountry = {
-        'value': country["code"],
-        'label': country["code"] + ' (' + country["value"] + ')'
+        value: country['code'],
+        label: country['code'] + ' (' + country['value'] + ')',
       }
-      
+
       smsCountryList.push(smsCountry)
     }
   })
@@ -378,7 +498,11 @@ const getJobCategoryIds = (config, categories) => {
 }
 
 const getNoticePeriodList = (config) => {
-  return config?.inputs?.notice_period_lists.map((notice) => ({ ...notice, label: notice.value, value: notice.id }))
+  return config?.inputs?.notice_period_lists.map((notice) => ({
+    ...notice,
+    label: notice.value,
+    value: notice.id,
+  }))
 }
 
 const getSalaryOptions = (config, salaryFrom, hasComparedTo) => {
@@ -388,9 +512,10 @@ const getSalaryOptions = (config, salaryFrom, hasComparedTo) => {
 
   const _salaryTo = hasComparedTo ? salaryFrom * salaryConfig.upper_bound_scale : salaryConfig.to
   const _salaryFrom = salaryFrom ? salaryFrom + salaryConfig.interval : salaryConfig.from
-  
+
   let salaryOptions = []
-  for (let salary = _salaryFrom; salary <= _salaryTo; salary += salaryConfig.interval) salaryOptions.push({label: salary, value: salary})
+  for (let salary = _salaryFrom; salary <= _salaryTo; salary += salaryConfig.interval)
+    salaryOptions.push({ label: salary, value: salary })
   return salaryOptions
 }
 
@@ -400,7 +525,7 @@ const getCountryList = (config) => {
   const countryLists = config?.inputs?.country_lists
   if (countryLists && countryLists.length === 0) return countryLists
 
-  let countryOptions = countryLists.map(country => {
+  let countryOptions = countryLists.map((country) => {
     return {
       label: country.value,
       value: country.value,
@@ -408,7 +533,7 @@ const getCountryList = (config) => {
     }
   })
 
-  countryOptions = countryOptions.filter(country => country.key !== 'ph')
+  countryOptions = countryOptions.filter((country) => country.key !== 'ph')
 
   return countryOptions
 }
@@ -443,8 +568,13 @@ const getDegreeList = (config) => {
   })
 }
 
-const getApplyJobLink = (job, user, accessToken=null) => {
-  const oldProjectApplyLink = authPathToOldProject(accessToken, `/dashboard/job/${slugify(job?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${job?.id}/apply`)
+const getApplyJobLink = (job, user, accessToken = null) => {
+  const oldProjectApplyLink = authPathToOldProject(
+    accessToken,
+    `/dashboard/job/${slugify(job?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${
+      job?.id
+    }/apply`
+  )
 
   if (user) {
     if (!user?.is_profile_completed) {
@@ -452,10 +582,10 @@ const getApplyJobLink = (job, user, accessToken=null) => {
     }
 
     if (job?.external_apply_url) {
-      return  job?.external_apply_url
+      return job?.external_apply_url
     }
   }
-  
+
   return oldProjectApplyLink
 }
 
@@ -477,5 +607,6 @@ export {
   getCountryList,
   getIndustryList,
   getDegreeList,
-  getApplyJobLink
+  getApplyJobLink,
+  getDataFromUrl,
 }

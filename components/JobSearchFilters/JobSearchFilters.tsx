@@ -19,6 +19,7 @@ import {
   conditionChecker,
   getPredefinedParamsFromUrl,
   getLocationList,
+  getDataFromUrl,
 } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
@@ -44,7 +45,7 @@ interface SearchFilters {
   options: Array<optionsType>
   defaultOpenState?: boolean
   isNotCollapsible?: boolean
-  isColumn?: boolean,
+  isColumn?: boolean
   isRadioButton?: boolean
 }
 
@@ -60,21 +61,19 @@ const NavSearchFilter = ({
   onShowFilter,
   displayQuickLinks,
   onResetFilter,
-  moreFilterReset = false
+  moreFilterReset = false,
 }: NavSearchFilterProps) => {
   const router = useRouter()
   const { keyword } = router.query
   const queryParams = router.query
   const config = useSelector((state: any) => state.config.config.response)
-  const jobCategoryList = config.inputs.job_category_lists
-  const locationList = getLocationList(config)
-  
+  // TODO: mobile job filters for salary, job type, categories
+  // const jobCategoryList = config.inputs.job_category_lists
+  // const locationList = getLocationList(config)
+
   const industryList = config.inputs.industry_lists
-
   const expLvlList = config.inputs.xp_lvls
-
   const eduLevelList = config.filters.educations
-
   const jobTypeList = config.inputs.job_types
 
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
@@ -130,7 +129,7 @@ const NavSearchFilter = ({
     const allFalsyValues = values.filter((val) => !!val)
     const updatedData = {
       ...data,
-      sort: [data.sort || router.query.sort]
+      sort: [data.sort || router.query.sort],
     }
     if (allFalsyValues.length !== 0 || selectedCategories) {
       urlFilterParameterBuilder(updatedData)
@@ -152,59 +151,13 @@ const NavSearchFilter = ({
   }
 
   const urlFilterParameterBuilder = (data) => {
-    const { predefinedQuery, predefinedLocation } = getPredefinedParamsFromUrl(
-      router.query,
-      jobCategoryList,
-      locationList
-    )
-    // eslint-disable-next-line
-    const { keyword, ...rest } = router.query
-    // include truthy value into array
-    // if array length is only 1 => router.push seo value
-    // if array length > 1 => build filter parameter ?fieldName=seo-value
-    let filterData = {}
-    // for checkbox filters
-    for (const [key, value] of Object.entries<any>(data)) {
-      if (value && value.length !== 0) {
-        if (key !== 'page') {
-          filterData = {
-            ...filterData,
-            // ensure to only push unduplicated results
-            [key]: Array.from(new Set(value)).join(','),
-          }
-        }
-      }
-    }
-
-    let categoryObject = null
-    let queryParam = ''
-    let queryObject = null
-
-    const categoryKeys = selectedCategories && selectedCategories.map((val) => val.key)
-
-    // for mui specialization filter
-    // When only one category is selected
-    if (selectedCategories && selectedCategories.length === 1) {
-      queryParam = conditionChecker(predefinedQuery, predefinedLocation, selectedCategories[0]?.key)
-      // When search keyword found, append cateogry in query object,
-      // else use category as search keyword and remove category filter if found
-      queryObject = Object.assign({}, !predefinedQuery ? { ...onRemoveProperty('category', {...filterData}) } : {...filterData, ...{'category': categoryKeys.join()} })
-    // When no category is selected
-    } else if (selectedCategories && selectedCategories.length === 0) {
-      queryParam = conditionChecker(predefinedQuery, predefinedLocation, null)
-      queryObject = Object.assign({}, { ...onRemoveProperty('category', {...filterData}) })
-    // When more than one category is selected
-    } else {
-      queryParam = conditionChecker(predefinedQuery, predefinedLocation, null)
-      categoryObject = Object.assign({}, { category: categoryKeys.join() })
-      queryObject = Object.assign({}, { ...rest, ...filterData, ...categoryObject })
-
-    }
+    // eslint-disable-next-line new-cap
+    const { searchQuery, filterParamsObject } = getDataFromUrl(data, router.query, config)
 
     router.push(
       {
-        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
-        query: queryObject,
+        pathname: `${process.env.HOST_PATH}/jobs-hiring/${searchQuery ? searchQuery : 'job-search'}`,
+        query: filterParamsObject,
       },
       undefined,
       { shallow: true }
@@ -222,7 +175,7 @@ const NavSearchFilter = ({
     defaultOpenState,
     isNotCollapsible,
     isColumn,
-    isRadioButton
+    isRadioButton,
   }: SearchFilters) => {
     const isFilterColumnClass = cx({ searchFilterOptionsColumn: isColumn })
 
@@ -246,7 +199,7 @@ const NavSearchFilter = ({
                 if (isRadioButton) {
                   return (
                     <label key={i} className={styles.searchFilterOption}>
-                      <input type='radio' value={option['value']} {...register(fieldName)} />
+                      <input type='radio' value={option['seo-value']} {...register(fieldName)} />
                       <Text textStyle='lg'>{option.label}</Text>
                     </label>
                   )
@@ -254,7 +207,7 @@ const NavSearchFilter = ({
 
                 return (
                   <label key={i} className={styles.searchFilterOption}>
-                    <input type='checkbox' value={option['value']} {...register(fieldName)} />
+                    <input type='checkbox' value={option['seo-value']} {...register(fieldName)} />
                     <Text textStyle='lg'>{option.value}</Text>
                   </label>
                 )
@@ -275,7 +228,7 @@ const NavSearchFilter = ({
       !isClickingOnSpecializationMUI &&
       !isClickingOnSort
     )
-    onShowFilter()
+      onShowFilter()
   }
 
   useEffect(() => {
@@ -303,9 +256,9 @@ const NavSearchFilter = ({
                 title='Sort By'
                 fieldName='sort'
                 options={[
-                  {value: '1', label: 'Newest'}, 
-                  {value: '2', label: 'Relevance'}, 
-                  {value: '3', label: 'Highest Salary'}
+                  { value: '1', label: 'Newest' },
+                  { value: '2', label: 'Relevance' },
+                  { value: '3', label: 'Highest Salary' },
                 ]}
                 defaultOpenState={true}
                 isNotCollapsible={true}
@@ -314,7 +267,7 @@ const NavSearchFilter = ({
               />
               <SearchFilters
                 title='Job Type'
-                fieldName='jobtype'
+                fieldName='jobType'
                 options={jobTypeList}
                 defaultOpenState={true}
                 isNotCollapsible={true}

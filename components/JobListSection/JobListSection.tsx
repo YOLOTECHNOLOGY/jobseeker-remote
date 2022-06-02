@@ -11,7 +11,7 @@ import Image from 'next/image'
 import Text from 'components/Text'
 import JobCard from 'components/JobCard'
 import JobDetail from 'components/JobDetail'
-import AdSlot from 'components/AdSlot'
+// import AdSlot from 'components/AdSlot'
 
 import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
@@ -142,7 +142,7 @@ const JobListSection = ({
       industry_key: query?.industry ? formatToUnderscore(query?.industry) : 'all',
       xp_lvl_key: query?.workExperience ? formatToReplace(query?.workExperience, 'to') : 'all',
       degree_key: query?.qualification ? formatToUnderscore(query?.qualification) : 'all',
-      job_type_key: query?.jobtype ? formatToReplace(query?.jobtype, '_'): 'all',
+      job_type_key: query?.jobType ? formatToReplace(query?.jobType, '_'): 'all',
       salary_range_key: query?.salary ? formatToReplace(query?.salary, 'to') : 'all',
       is_company_verified: 1,
       frequency_id: 1
@@ -309,13 +309,13 @@ const JobListSection = ({
           </div>
           <div className={styles.jobAds}>
             <div className={styles.skyscraperBanner}>
-              <AdSlot adSlot={'jobs-search/skyscraper-1'} />
+              {/* <AdSlot adSlot={'jobs-search/skyscraper-1'} /> */}
             </div>
             <div className={styles.skyscraperBanner}>
-              <AdSlot adSlot={'jobs-search/skyscraper-2'} />
+              {/* <AdSlot adSlot={'jobs-search/skyscraper-2'} /> */}
             </div>
             <div className={styles.skyscraperBanner}>
-              <AdSlot adSlot={'jobs-search/skyscraper-3'} />
+              {/* <AdSlot adSlot={'jobs-search/skyscraper-3'} /> */}
             </div>
           </div>
         </div>
