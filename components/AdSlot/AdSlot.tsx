@@ -1,6 +1,4 @@
-
 import React, { useEffect } from 'react'
-// import useAdSlot from 'helpers/useAdSlot'
 import useTransitionState from 'helpers/useTransitionState'
 import ads from 'lib/config/adConfig'
 
@@ -72,4 +70,4 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
 }
 
 export default AdSlot
-// export default memo(AdSlot) 
+// export default memo(AdSlot)
