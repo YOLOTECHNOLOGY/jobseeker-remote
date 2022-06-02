@@ -23,10 +23,13 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
     //   isTransitioning,
     // })
     useEffect(() => {
+      console.log("isTransitioning: ", isTransitioning)
       try {
         if (!isTransitioning && typeof window !== undefined) {
+          window.googletag = window.googletag || {}
           const { googletag } = window
-          if (googletag.apiReady) {
+          googletag.cmd = googletag.cmd || [];
+          if (window.googletag && googletag.apiReady) {
             googletag.cmd.push(function () {
               // debugger
               const adMapping = googletag.sizeMapping()
@@ -49,13 +52,13 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
               .defineSlot(`/21858999436/${ad.adUnit}`, ad.sizes, `div-gpt-ad-${ad.id}`)
               .defineSizeMapping(builtMapping)
               .addService(googletag.pubads())
-
+              console.log(`adUnit: ${"/21858999436/"+ad.adUnit}, adsizes: ${ad.sizes}, display: ${"div-gpt-ad-"+ad.id}`)
               googletag.enableServices()
-            })
-            googletag.pubads().collapseEmptyDivs()
+              googletag.pubads().collapseEmptyDivs()
 
-            googletag.cmd.push(function () {
-              googletag.display(`div-gpt-ad-${ad.id}`)
+              googletag.cmd.push(function () {
+                googletag.display(`div-gpt-ad-${ad.id}`)
+              })
             })
           }
         }
