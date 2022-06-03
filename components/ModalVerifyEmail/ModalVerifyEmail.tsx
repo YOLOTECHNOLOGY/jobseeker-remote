@@ -110,6 +110,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
   const handleRequestOtp = () => {
     dispatch(generateVerifyEmailOTPRequest())
     setCanRequestOTP(false)
+    setOTPErrorMessage('')
     setTimerCount(61)
   }
 

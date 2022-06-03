@@ -184,7 +184,7 @@ const JobListSection = ({
 
   const handleFormatWindowUrl = (pathname, name, id) => {
     if (typeof window !== 'undefined') {
-      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${id}`
+      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:/@]/g })}-${id}`
     }
     return ''
   }
@@ -216,10 +216,10 @@ const JobListSection = ({
                     className={styles.jobListOptionAlertsItem}
                     onClick={() => {
                       if (isUserAuthenticated) handleCreateJobAlert()
-                      if (!isUserAuthenticated) handleCreateJobAlert(null)
+                      else router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
                     }}
                   >
-                    <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
+                      <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
                   </div>
                   {isUserAuthenticated && (
                     <div
@@ -269,6 +269,7 @@ const JobListSection = ({
                   location={job.job_location}
                   salary={job.salary_range_value}
                   postedAt={job.refreshed_at}
+                  status={job.status_key}
                   selectedId={selectedJobId}
                   handleSelectedId={() => {
                     handleSelectedJobId(job.id, job.job_title)

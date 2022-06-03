@@ -152,7 +152,7 @@ const JobDetail = ({
               {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
               {jobDetailOption && (
                 <div className={styles.JobDetailOptionList}>
-                  {!isCategoryApplied && (
+                  {selectedJob?.status_key === 'active' &&  (
                     <>
                       <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
                         <Text textStyle='lg'>View in new tab</Text>
