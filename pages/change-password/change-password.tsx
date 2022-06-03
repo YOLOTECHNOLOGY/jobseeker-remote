@@ -84,7 +84,7 @@ const ChangePassword = () => {
           {...register('password', {
             required: {
               value: true,
-              message: 'This field is required.',
+              message: 'Please enter your password.',
             },
             minLength: {
               value: 8,
@@ -132,7 +132,7 @@ const ChangePassword = () => {
             ...register('confirmPassword', {
               required: {
                 value: true,
-                message: 'This field is required.',
+                message: 'Please enter your password.',
               },
             }),
           }}
