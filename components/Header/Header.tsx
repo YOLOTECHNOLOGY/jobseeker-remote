@@ -5,6 +5,8 @@ import PublicHeader from './PublicHeader'
 import ProtectedHeader from './ProtectedHeader'
 
 import { getCookie } from 'helpers/cookies'
+
+
 const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 

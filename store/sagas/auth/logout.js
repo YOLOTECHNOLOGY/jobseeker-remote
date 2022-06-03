@@ -1,16 +1,13 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
 import { LOGOUT_REQUEST } from 'store/types/auth/logout'
-import {
-  logoutFailed,
-  logoutSuccess,
-} from 'store/actions/auth/logout'
+import { logoutFailed, logoutSuccess } from 'store/actions/auth/logout'
 import { logoutService } from 'store/services/auth/logout'
 import { getCookie, removeCookie } from 'helpers/cookies'
 
 function* logoutReq() {
   const payload = {
-    accessToken: getCookie('accessToken')
+    accessToken: getCookie('accessToken'),
   }
 
   try {
@@ -20,6 +17,7 @@ function* logoutReq() {
       removeCookie('user')
       removeCookie('accessToken')
       removeCookie('splan')
+      removeCookie('isVerifyEmailModalClosed')
       yield put(push('/login/jobseeker'))
     }
   } catch (err) {
