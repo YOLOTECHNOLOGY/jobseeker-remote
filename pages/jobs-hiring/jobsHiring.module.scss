@@ -5,6 +5,16 @@
   @extend .GlobalContainer;
 }
 
+.jobSearchFilterBackdrop {
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  position: absolute;
+  top: 0;
+  background: black;
+  opacity: 0.4;
+}
+
 .searchSection {
   position: relative;
   height: 209px;
