@@ -35,10 +35,12 @@ const CompanyJobsProfile = (props: any) => {
 
   const [jobQuery, setJobQuery] = useState('')
   const [jobLocation, setJobLocation] = useState(null)
+  const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
 
   const [companyJobs, setCompanyJobs] = useState(null)
   const [totalPages, setTotalPages] = useState(null)
   const [totalJobs, setTotalJobs] = useState(null)
+  const [totalActiveJobs, setTotalActiveJobs] = useState(0)
 
   const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
   const isJobsListFetching = useSelector((store: any) => store.job.jobList.fetching)
@@ -57,35 +59,28 @@ const CompanyJobsProfile = (props: any) => {
   }, [router.query])
 
   useEffect(() => {
-    const payload = {
-      companyIds: company.id,
-      size: 30,
-    }
-
-    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
-  }, [])
-
-  useEffect(() => {
     if (fetchJobsListResponse) {
       setCompanyJobs(fetchJobsListResponse.data?.jobs)
       setTotalPages(fetchJobsListResponse.data?.total_pages)
       setTotalJobs(fetchJobsListResponse.data?.total_num)
+
+      if (totalActiveJobs === 0 && fetchJobsListResponse.data?.total_num > 0) {
+        setTotalActiveJobs(fetchJobsListResponse.data?.total_num)
+      }
     }
   }, [fetchJobsListResponse])
 
   const handleSearchCompanyJobSearch = () => {
-    const payload = {
-      companyIds: company.id,
-      size,
-      page,
-      query: jobQuery,
-      jobLocation: jobLocation?.value || '',
-    }
+    setSelectedpage(1)
+    setJobLocation(jobLocation)
 
-    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
+    router.query.page = '1'
+    router.push(router, undefined, { shallow: true })
   }
 
   const handlePaginationClick = (event, val) => {
+    setSelectedpage(Number(val))
+
     router.query.page = val
     router.push(router, undefined, { shallow: true })
   }
@@ -109,7 +104,7 @@ const CompanyJobsProfile = (props: any) => {
     <CompanyProfileLayout
       company={company}
       currentTab='jobs'
-      totalJobs={totalJobs}
+      totalJobs={totalActiveJobs}
       seoMetaTitle={seoMetaTitle}
       seoMetaDescription={seoMetaDescription}
     >
@@ -120,40 +115,44 @@ const CompanyJobsProfile = (props: any) => {
               Jobs
             </Text>
             <MetaText tagName='h1'>{`Jobs at ${company.name} ${company.id}`}</MetaText>
+
+            {totalActiveJobs > 0 && (
+              <div className={styles.companyJobsSearch}>
+                <div className={styles.companyJobsSearchLeft}>
+                  <MaterialTextField
+                    value={jobQuery}
+                    defaultValue={jobQuery}
+                    onChange={(e) => setJobQuery(e.target.value)}
+                    className={styles.companyJobsSearchTitle}
+                    size='small'
+                    label='Search for job title'
+                  />
+                </div>
+                <div className={styles.companyJobsSearchRight}>
+                  <MaterialLocationField
+                    className={styles.companyJobsSearchLocation}
+                    label='Location'
+                    value={jobLocation}
+                    defaultValue={jobLocation}
+                    onChange={onLocationSearch}
+                  />
+                  <MaterialButton
+                    variant='contained'
+                    capitalize
+                    className={styles.companyJobsSearchButton}
+                    onClick={handleSearchCompanyJobSearch}
+                  >
+                    <Text textColor='white' bold>
+                      Search
+                    </Text>
+                  </MaterialButton>
+                </div>
+              </div>
+            )}
+
             {companyJobs?.length > 0 ? (
               <React.Fragment>
-                <div className={styles.companyJobsSearch}>
-                  <div className={styles.companyJobsSearchLeft}>
-                    <MaterialTextField
-                      value={jobQuery}
-                      defaultValue={jobQuery}
-                      onChange={(e) => setJobQuery(e.target.value)}
-                      className={styles.companyJobsSearchTitle}
-                      size='small'
-                      label='Search for job title'
-                    />
-                  </div>
-                  <div className={styles.companyJobsSearchRight}>
-                    <MaterialLocationField
-                      className={styles.companyJobsSearchLocation}
-                      label='Location'
-                      value={jobLocation}
-                      defaultValue={jobLocation}
-                      onChange={onLocationSearch}
-                    />
-                    <MaterialButton
-                      variant='contained'
-                      capitalize
-                      className={styles.companyJobsSearchButton}
-                      onClick={handleSearchCompanyJobSearch}
-                    >
-                      <Text textColor='white' bold>
-                        Search
-                      </Text>
-                    </MaterialButton>
-                  </div>
-                </div>
-                {isJobsListFetching && [...Array(10)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
+                {isJobsListFetching && [...Array(size)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
                 {!isJobsListFetching && (
                   <>
                     <div className={styles.companyJobsList}>
@@ -176,6 +175,7 @@ const CompanyJobsProfile = (props: any) => {
                       <MaterialRoundedPagination
                         onChange={handlePaginationClick}
                         defaultPage={Number(page) || 1}
+                        page={selectedPage}
                         totalPages={totalPages || 1}
                       />
                     </div>
@@ -184,11 +184,25 @@ const CompanyJobsProfile = (props: any) => {
               </React.Fragment>
             ) : (
               <div className={styles.emptyResult}>
+                {totalActiveJobs === 0 ? (
+                  <Text>
+                    The company does not have any active jobs.
+                  </Text>
+                ) : (
+                  <Text>
+                    We couldn't find any jobs matching your search.
+                  </Text>
+                )}
+              </div>
+            )}
+
+            {/* {totalActiveJobs && (
+              <div className={styles.emptyResult}>
                 <Text>
                   The company does not have any active jobs.
                 </Text>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>

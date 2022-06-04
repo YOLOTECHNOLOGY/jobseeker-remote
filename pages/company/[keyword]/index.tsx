@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import slugify from 'slugify'
 import classNames from 'classnames/bind'
 import { useRouter } from 'next/router'
@@ -12,6 +12,7 @@ import { END } from 'redux-saga'
 import { wrapper } from 'store'
 import { fetchCompanyDetailRequest } from 'store/actions/companies/fetchCompanyDetail'
 import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
+import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 // Components
 import Text from 'components/Text'
@@ -22,6 +23,7 @@ import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialButton from 'components/MaterialButton'
+import CompanyJobsCardLoader from 'components/Loader/CompanyJobsCard'
 
 // Images
 import {
@@ -30,9 +32,6 @@ import {
   InstagramOutline,
   YoutubeOutline
 } from 'images'
-
-// Helpers
-import { formatSalaryRange } from 'helpers/formatter'
 
 // Styles
 import styles from '../Company.module.scss'
@@ -47,7 +46,9 @@ const CompanyDetail = (props: any) => {
   const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription } = props
   const company = companyDetail?.response.data
   const [companyJobs, setCompanyJobs] = useState(null)
+  const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
   const [totalJobs, setTotalJobs] = useState(null)
+  const [totalActiveJobs, setTotalActiveJobs] = useState(0)
   const [totalPages, setTotalPages] = useState(null)
   const [jobLocation, setJobLocation] = useState(null)
   
@@ -60,50 +61,45 @@ const CompanyDetail = (props: any) => {
   })
 
   const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
-
-  useEffect(() => {
-    const payload = {
-      companyIds: company.id,
-      size: 30,
-      page: page ? Number(page) : 1
-    }
-
-    dispatch(fetchJobsListRequest({...payload}, accessToken))
-  }, [])
+  const isJobsListFetching = useSelector((store: any) => store.job.jobList.fetching)
 
   useEffect(() => {
     if (fetchJobsListResponse) {
       setCompanyJobs(fetchJobsListResponse.data?.jobs)
       setTotalJobs(fetchJobsListResponse.data?.total_num)
       setTotalPages(fetchJobsListResponse.data?.total_pages)
+
+      if (totalActiveJobs === 0 && fetchJobsListResponse.data?.total_num > 0) {
+        setTotalActiveJobs(fetchJobsListResponse.data?.total_num)
+      }
     }
   }, [fetchJobsListResponse])
 
   useEffect(() => {
     const payload = {
       companyIds: company.id,
-      size: 30,
-      page: page ? Number(page) : 1
+      size,
+      page,
+      query: jobQuery,
+      jobLocation: jobLocation?.value || '',
     }
 
     dispatch(fetchJobsListRequest({...payload}, accessToken))
   }, [router.query])
 
   const handlePaginationClick = (event, val) => {
+    setSelectedpage(Number(val))
+
     router.query.page = val
     router.push(router, undefined, { shallow: true })
   }
 
   const handleSearchCompanyJobSearch = () => {
-    const payload = {
-      companyIds: company.id,
-      size,
-      page,
-      query: jobQuery,
-      jobLocation: jobLocation?.value || ''
-    }
+    setSelectedpage(1)
+    setJobLocation(jobLocation)
 
-    dispatch(fetchJobsListRequest({...payload}, accessToken))
+    router.query.page = '1'
+    router.push(router, undefined, { shallow: true })
   }
 
   const onLocationSearch = (_, value) => {
@@ -373,67 +369,82 @@ const CompanyDetail = (props: any) => {
                 </Link>
               )}
             </div>
-            {companyJobs?.length > 0 ? (
-              <div>
-                <div className={styles.companyJobsSearch}>
-                  <div className={styles.companyJobsSearchLeft}>
-                    <MaterialTextField
-                      value={jobQuery}
-                      defaultValue={jobQuery}
-                      onChange={(e) => setJobQuery(e.target.value)}
-                      className={styles.companyJobsSearchTitle}
-                      size='small'
-                      label='Search for job title'
-                    />
-                  </div>
-                  <div className={styles.companyJobsSearchRight}>
-                    <MaterialLocationField
-                      className={styles.companyJobsSearchLocation}
-                      label='Location'
-                      value={jobLocation}
-                      defaultValue={jobLocation}
-                      onChange={onLocationSearch}
-                    />
-                    <MaterialButton
-                      variant='contained'
-                      capitalize
-                      className={styles.companyJobsSearchButton}
-                      onClick={handleSearchCompanyJobSearch}
-                    >
-                      <Text textColor='white' bold>
-                        Search
-                      </Text>
-                    </MaterialButton>
-                  </div>
-                </div>
-                <div className={styles.companyCultureJobsList}>
-                  {companyJobs.map((companyJob) => {
-                    const company = {
-                      id: companyJob.id,
-                      title: companyJob.job_title,
-                      location: companyJob.job_location,
-                      salary: `${formatSalaryRange(
-                        `${companyJob.salary_range_from}-${companyJob.salary_range_to}`
-                      )}`,
-                      availability: companyJob.job_type,
-                    }
 
-                    return <CompanyJobsCard {...company} key={companyJob.id} />
-                  })}
-                </div>
-                <div className={styles.companyJobsPagination}>
-                  <MaterialRoundedPagination
-                    onChange={handlePaginationClick}
-                    defaultPage={Number(page) || 1}
-                    totalPages={totalPages || 1}
+            {totalActiveJobs > 0 && (
+              <div className={styles.companyJobsSearch}>
+                <div className={styles.companyJobsSearchLeft}>
+                  <MaterialTextField
+                    value={jobQuery}
+                    defaultValue={jobQuery}
+                    onChange={(e) => setJobQuery(e.target.value)}
+                    className={styles.companyJobsSearchTitle}
+                    size='small'
+                    label='Search for job title'
                   />
                 </div>
+                <div className={styles.companyJobsSearchRight}>
+                  <MaterialLocationField
+                    className={styles.companyJobsSearchLocation}
+                    label='Location'
+                    value={jobLocation}
+                    defaultValue={jobLocation}
+                    onChange={onLocationSearch}
+                  />
+                  <MaterialButton
+                    variant='contained'
+                    capitalize
+                    className={styles.companyJobsSearchButton}
+                    onClick={handleSearchCompanyJobSearch}
+                  >
+                    <Text textColor='white' bold>
+                      Search
+                    </Text>
+                  </MaterialButton>
+                </div>
               </div>
+            )}
+
+            {companyJobs?.length > 0 ? (
+              <React.Fragment>
+                {isJobsListFetching && [...Array(size)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
+
+                {!isJobsListFetching && (
+                  <>
+                    <div className={styles.companyCultureJobsList}>
+                    {companyJobs.map((companyJob) => {
+                      const company = {
+                        id: companyJob.id,
+                        title: companyJob.job_title,
+                        location: companyJob.job_location,
+                        salary: companyJob.salary_range_value,
+                        availability: companyJob.job_type,
+                      }
+
+                      return <CompanyJobsCard {...company} key={companyJob.id} />
+                    })}
+                  </div>
+                  <div className={styles.companyJobsPagination}>
+                    <MaterialRoundedPagination
+                      onChange={handlePaginationClick}
+                      defaultPage={Number(page) || 1}
+                      totalPages={totalPages || 1}
+                      page={selectedPage}
+                    />
+                  </div>
+                  </>
+                )}
+              </React.Fragment>
             ) : (
               <div className={styles.emptyResult}>
-                <Text>
-                  The company does not have any active jobs.
-                </Text>
+                {totalActiveJobs === 0 ? (
+                  <Text>
+                    The company does not have any active jobs.
+                  </Text>
+                ) : (
+                  <Text>
+                    We couldn't find any jobs matching your search.
+                  </Text>
+                )}
               </div>
             )}
           </div>
@@ -456,6 +467,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   }
   
   store.dispatch(fetchCompanyDetailRequest(companyId))
+  store.dispatch(fetchConfigRequest())
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
