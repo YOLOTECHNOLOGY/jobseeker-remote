@@ -40,7 +40,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             removeCookie('accessToken')
             removeCookie('splan')
 
-            router.push('/login/jobseeker')
+            router.push('/')
           }
         })
     }
