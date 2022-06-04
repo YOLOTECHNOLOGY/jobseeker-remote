@@ -72,7 +72,7 @@ const Linkedin = ({
     const params = {
       grant_type: 'authorization_code',
       code: data.code,
-      redirect_uri: `https://${window.location.host}/auth/linkedin`,
+      redirect_uri: `https://${window.location.host}`,
       client_id: process.env.LINKEDIN_CLIENT_ID,
       client_secret: process.env.LINKEDIN_CLIENT_SECRET
     }
@@ -109,7 +109,7 @@ const Linkedin = ({
     const params = {
       response_type: 'code',
       client_id: process.env.LINKEDIN_CLIENT_ID,
-      redirect_uri: `https://${window.location.host}/auth/linkedin`,
+      redirect_uri: `https://${window.location.host}`,
       state: '423Qka4ISA8t74',
       scope: 'r_liteprofile r_emailaddress w_member_social'
     }
