@@ -90,7 +90,7 @@ const CompanyLifeProfile = (props: any) => {
             <Text tagName='h1' textStyle='xxl' bold className={styles.companySectionTitle}>
               Photos
             </Text>
-            {company.pictures?.length > 0 && (
+            {company.pictures?.length > 0 ? (
               <div className={styles.companyLifePictures}>
                 {company.pictures.map((picture, index) => (
                   <img
@@ -100,6 +100,12 @@ const CompanyLifeProfile = (props: any) => {
                     key={picture.id}
                   />
                 ))}
+              </div>
+            ) : (
+              <div className={styles.emptyResult}>
+                <Text>
+                  The company has not provided any photos.
+                </Text>
               </div>
             )}
           </div>

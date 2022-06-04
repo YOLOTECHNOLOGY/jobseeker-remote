@@ -113,6 +113,7 @@
 
   ol, ul {
     padding-inline: inherit;
+    margin-left: 19px;
   }
 }
 
@@ -455,4 +456,8 @@
   @include msd {
     display: none;
   }
+}
+
+.emptyResult {
+  text-align: center;
 }

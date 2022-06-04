@@ -13,24 +13,19 @@
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
+    width: 100%;
 
     span {
-      &:first-child {
-        width: 150px;
-      }
-
-      &:nth-child(2) {
-        width: 130px;
-      }
-
-      &:nth-child(3) {
-        width: 120px;
-      }
+      width: 33%;
     }
   }
 
   &Apply {
     border: 1px solid;
+  }
+
+  &Left {
+    width: 60%;
   }
 
   @include msd {

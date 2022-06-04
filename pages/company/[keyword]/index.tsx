@@ -144,34 +144,42 @@ const CompanyDetail = (props: any) => {
           <div className={styles.companyOverview}>
             <div className={styles.companyOverviewContents}>
               <div className={styles.companyOverviewLeft}>
-                <div className={styles.companyOverviewItem}>
-                  <Text textStyle='lg' bold>
-                    Company Size:{' '}
-                  </Text>
-                  <Text textStyle='lg'>{company.company_size} Employees</Text>
-                </div>
-                <div className={styles.companyOverviewItem}>
-                  <Text textStyle='lg' bold>
-                    Industry:{' '}
-                  </Text>
-                  <Text textStyle='lg'>{company.industry}</Text>
-                </div>
-                <div className={styles.companyOverviewItem}>
-                  <Text textStyle='lg' bold>
-                    Website:{' '}
-                  </Text>
-                  <Text textStyle='lg'>{company.website}</Text>
-                </div>
+                {company.company_size && (
+                  <div className={styles.companyOverviewItem}>
+                    <Text textStyle='lg' bold>
+                      Company Size:{' '}
+                    </Text>
+                    <Text textStyle='lg'>{company.company_size} Employees</Text>
+                  </div>
+                )}
+                {company.industry && (
+                  <div className={styles.companyOverviewItem}>
+                    <Text textStyle='lg' bold>
+                      Industry:{' '}
+                    </Text>
+                    <Text textStyle='lg'>{company.industry}</Text>
+                  </div>
+                )}
+                {company.website && (
+                  <div className={styles.companyOverviewItem}>
+                    <Text textStyle='lg' bold>
+                      Website:{' '}
+                    </Text>
+                    <Text textStyle='lg'>{company.website}</Text>
+                  </div>
+                )}
               </div>
               <div className={styles.companyOverviewRight}>
-                <div className={styles.companyOverviewItem}>
-                  <Text textStyle='lg' bold>
-                    Location:{' '}
-                  </Text>
-                  <Text textStyle='lg' className={styles.companyOverviewLocation}>
-                    {company.full_address}
-                  </Text>
-                </div>
+                {company.full_address && (
+                  <div className={styles.companyOverviewItem}>
+                    <Text textStyle='lg' bold>
+                      Location:{' '}
+                    </Text>
+                    <Text textStyle='lg' className={styles.companyOverviewLocation}>
+                      {company.full_address}
+                    </Text>
+                  </div>
+                )}
                 <div
                   className={classNames(
                     styles.companyOverviewItem,
@@ -216,22 +224,42 @@ const CompanyDetail = (props: any) => {
             </div>
           </div>
         </div>
-
-        <div className={styles.companySection}>
-          <div className={styles.companyCulture}>
-            <div className={styles.companyCultureContent}>
-              <div className={styles.companyCultureWrapper}>
-                {company.cultures?.length > 0 && (
-                  <div className={styles.companyCultureSection}>
-                    <div className={styles.companyCultureHeading}>
-                      <Text textStyle='lg' bold>
-                        Company Culture
-                      </Text>
+        
+        {(company.cultures?.length > 0 || company.benefits?.length > 0) && (
+          <div className={styles.companySection}>
+            <div className={styles.companyCulture}>
+              <div className={styles.companyCultureContent}>
+                <div className={styles.companyCultureWrapper}>
+                  {company.cultures?.length > 0 && (
+                    <div className={styles.companyCultureSection}>
+                      <div className={styles.companyCultureHeading}>
+                        <Text textStyle='lg' bold>
+                          Company Culture
+                        </Text>
+                        <Link
+                          to={`/company/${slugify(company.name)}-${company.id}/life`}
+                          className={classNames(
+                            styles.companyCultureHeadingLink,
+                            styles.companyCultureHeadingLinkTop
+                          )}
+                        >
+                          <Text textColor='primaryBlue' textStyle='base'>
+                            View all
+                          </Text>
+                        </Link>
+                      </div>
+                      <div className={styles.companyCultureList}>
+                        {company.cultures.map((item) => (
+                          <Text className={styles.companyCultureItem} textStyle='base' key={item.id}>
+                            {item.value}
+                          </Text>
+                        ))}
+                      </div>
                       <Link
                         to={`/company/${slugify(company.name)}-${company.id}/life`}
                         className={classNames(
                           styles.companyCultureHeadingLink,
-                          styles.companyCultureHeadingLinkTop
+                          styles.companyCultureHeadingLinkBottom
                         )}
                       >
                         <Text textColor='primaryBlue' textStyle='base'>
@@ -239,37 +267,37 @@ const CompanyDetail = (props: any) => {
                         </Text>
                       </Link>
                     </div>
-                    <div className={styles.companyCultureList}>
-                      {company.cultures.map((item) => (
-                        <Text className={styles.companyCultureItem} textStyle='base' key={item.id}>
-                          {item.value}
+                  )}
+                  {company.benefits?.length > 0 && (
+                    <div className={styles.companyCultureSection}>
+                      <div className={styles.companyCultureHeading}>
+                        <Text textStyle='lg' bold>
+                          Employee Benefits
                         </Text>
-                      ))}
-                    </div>
-                    <Link
-                      to={`/company/${slugify(company.name)}-${company.id}/life`}
-                      className={classNames(
-                        styles.companyCultureHeadingLink,
-                        styles.companyCultureHeadingLinkBottom
-                      )}
-                    >
-                      <Text textColor='primaryBlue' textStyle='base'>
-                        View all
-                      </Text>
-                    </Link>
-                  </div>
-                )}
-                {company.benefits?.length > 0 && (
-                  <div className={styles.companyCultureSection}>
-                    <div className={styles.companyCultureHeading}>
-                      <Text textStyle='lg' bold>
-                        Employee Benefits
-                      </Text>
+                        <Link
+                          to={`/company/${slugify(company.name)}-${company.id}/life`}
+                          className={classNames(
+                            styles.companyCultureHeadingLink,
+                            styles.companyCultureHeadingLinkTop
+                          )}
+                        >
+                          <Text textColor='primaryBlue' textStyle='base'>
+                            View all
+                          </Text>
+                        </Link>
+                      </div>
+                      <div className={styles.companyCultureList}>
+                        {company.benefits.map((item) => (
+                          <Text className={styles.companyCultureItem} textStyle='base' key={item.id}>
+                            {item.value}
+                          </Text>
+                        ))}
+                      </div>
                       <Link
                         to={`/company/${slugify(company.name)}-${company.id}/life`}
                         className={classNames(
                           styles.companyCultureHeadingLink,
-                          styles.companyCultureHeadingLinkTop
+                          styles.companyCultureHeadingLinkBottom
                         )}
                       >
                         <Text textColor='primaryBlue' textStyle='base'>
@@ -277,74 +305,56 @@ const CompanyDetail = (props: any) => {
                         </Text>
                       </Link>
                     </div>
-                    <div className={styles.companyCultureList}>
-                      {company.benefits.map((item) => (
-                        <Text className={styles.companyCultureItem} textStyle='base' key={item.id}>
-                          {item.value}
+                  )}
+                  {company.pictures?.length > 0 && (
+                    <div className={styles.companyCultureSection}>
+                      <div className={styles.companyCultureHeading}>
+                        <Text textStyle='lg' bold>
+                          Photos
                         </Text>
-                      ))}
-                    </div>
-                    <Link
-                      to={`/company/${slugify(company.name)}-${company.id}/life`}
-                      className={classNames(
-                        styles.companyCultureHeadingLink,
-                        styles.companyCultureHeadingLinkBottom
-                      )}
-                    >
-                      <Text textColor='primaryBlue' textStyle='base'>
-                        View all
-                      </Text>
-                    </Link>
-                  </div>
-                )}
-                {company.pictures?.length > 0 && (
-                  <div className={styles.companyCultureSection}>
-                    <div className={styles.companyCultureHeading}>
-                      <Text textStyle='lg' bold>
-                        Photos
-                      </Text>
-                    </div>
-                    <div className={styles.companyCultureTopImage}>
-                      <div className={styles.embla}>
-                        <div className={styles.emblaViewport} ref={emblaRef}>
-                          <div className={styles.emblaContainer}>
-                            {company.pictures.map((picture, index) => (
-                              <div className={styles.emblaSlide} key={picture.id}>
-                                <div className={styles.emblaSlideInner}>
-                                  <img
-                                    src={picture.url}
-                                    alt={`${company.name} photo ${index}`}
-                                    className={`${styles.emblaSlideImage}`}
-                                  />
+                      </div>
+                      <div className={styles.companyCultureTopImage}>
+                        <div className={styles.embla}>
+                          <div className={styles.emblaViewport} ref={emblaRef}>
+                            <div className={styles.emblaContainer}>
+                              {company.pictures.map((picture, index) => (
+                                <div className={styles.emblaSlide} key={picture.id}>
+                                  <div className={styles.emblaSlideInner}>
+                                    <img
+                                      src={picture.url}
+                                      alt={`${company.name} photo ${index}`}
+                                      className={`${styles.emblaSlideImage}`}
+                                    />
+                                  </div>
                                 </div>
-                              </div>
-                            ))}
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                        <div className={styles.slidesControl}>
-                          <div
-                            className={classNames([
-                              styles.slidesControlItem,
-                              styles.slidesControlLeft,
-                            ])}
-                            onClick={scrollPrev}
-                          />
-                          <div
-                            className={classNames([
-                              styles.slidesControlItem,
-                              styles.slidesControlRight,
-                            ])}
-                            onClick={scrollNext}
-                          />
+                          <div className={styles.slidesControl}>
+                            <div
+                              className={classNames([
+                                styles.slidesControlItem,
+                                styles.slidesControlLeft,
+                              ])}
+                              onClick={scrollPrev}
+                            />
+                            <div
+                              className={classNames([
+                                styles.slidesControlItem,
+                                styles.slidesControlRight,
+                              ])}
+                              onClick={scrollNext}
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className={styles.companySection}>
           <div className={styles.companyCultureJobs}>
@@ -352,69 +362,80 @@ const CompanyDetail = (props: any) => {
               <Text textStyle='lg' bold>
                 Jobs
               </Text>
-              <Link
-                to={`/company/${slugify(company.name)}-${company.id}/jobs`}
-                className={styles.companyCultureHeadingLink}
-              >
-                <Text textColor='primaryBlue' textStyle='base'>
-                  See all Jobs
-                </Text>
-              </Link>
-            </div>
-            <div className={styles.companyJobsSearch}>
-              <div className={styles.companyJobsSearchLeft}>
-                <MaterialTextField
-                  value={jobQuery}
-                  defaultValue={jobQuery}
-                  onChange={(e) => setJobQuery(e.target.value)}
-                  className={styles.companyJobsSearchTitle}
-                  size='small'
-                  label='Search for job title'
-                />
-              </div>
-              <div className={styles.companyJobsSearchRight}>
-                <MaterialLocationField
-                  className={styles.companyJobsSearchLocation}
-                  label='Location'
-                  value={jobLocation}
-                  defaultValue={jobLocation}
-                  onChange={onLocationSearch}
-                />
-                <MaterialButton
-                  variant='contained'
-                  capitalize
-                  className={styles.companyJobsSearchButton}
-                  onClick={handleSearchCompanyJobSearch}
+              {companyJobs?.length > 0 && (
+                <Link
+                  to={`/company/${slugify(company.name)}-${company.id}/jobs`}
+                  className={styles.companyCultureHeadingLink}
                 >
-                  <Text textColor='white' bold>
-                    Search
+                  <Text textColor='primaryBlue' textStyle='base'>
+                    See all Jobs
                   </Text>
-                </MaterialButton>
-              </div>
+                </Link>
+              )}
             </div>
-            <div className={styles.companyCultureJobsList}>
-              {companyJobs?.length > 0 &&
-                companyJobs.map((companyJob) => {
-                  const company = {
-                    id: companyJob.id,
-                    title: companyJob.job_title,
-                    location: companyJob.job_location,
-                    salary: `${formatSalaryRange(
-                      `${companyJob.salary_range_from}-${companyJob.salary_range_to}`
-                    )}`,
-                    availability: companyJob.job_type,
-                  }
+            {companyJobs?.length > 0 ? (
+              <div>
+                <div className={styles.companyJobsSearch}>
+                  <div className={styles.companyJobsSearchLeft}>
+                    <MaterialTextField
+                      value={jobQuery}
+                      defaultValue={jobQuery}
+                      onChange={(e) => setJobQuery(e.target.value)}
+                      className={styles.companyJobsSearchTitle}
+                      size='small'
+                      label='Search for job title'
+                    />
+                  </div>
+                  <div className={styles.companyJobsSearchRight}>
+                    <MaterialLocationField
+                      className={styles.companyJobsSearchLocation}
+                      label='Location'
+                      value={jobLocation}
+                      defaultValue={jobLocation}
+                      onChange={onLocationSearch}
+                    />
+                    <MaterialButton
+                      variant='contained'
+                      capitalize
+                      className={styles.companyJobsSearchButton}
+                      onClick={handleSearchCompanyJobSearch}
+                    >
+                      <Text textColor='white' bold>
+                        Search
+                      </Text>
+                    </MaterialButton>
+                  </div>
+                </div>
+                <div className={styles.companyCultureJobsList}>
+                  {companyJobs.map((companyJob) => {
+                    const company = {
+                      id: companyJob.id,
+                      title: companyJob.job_title,
+                      location: companyJob.job_location,
+                      salary: `${formatSalaryRange(
+                        `${companyJob.salary_range_from}-${companyJob.salary_range_to}`
+                      )}`,
+                      availability: companyJob.job_type,
+                    }
 
-                  return <CompanyJobsCard {...company} key={companyJob.id} />
-                })}
-            </div>
-            <div className={styles.companyJobsPagination}>
-              <MaterialRoundedPagination
-                onChange={handlePaginationClick}
-                defaultPage={Number(page) || 1}
-                totalPages={totalPages || 1}
-              />
-            </div>
+                    return <CompanyJobsCard {...company} key={companyJob.id} />
+                  })}
+                </div>
+                <div className={styles.companyJobsPagination}>
+                  <MaterialRoundedPagination
+                    onChange={handlePaginationClick}
+                    defaultPage={Number(page) || 1}
+                    totalPages={totalPages || 1}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className={styles.emptyResult}>
+                <Text>
+                  The company does not have any active jobs.
+                </Text>
+              </div>
+            )}
           </div>
         </div>
       </div>
