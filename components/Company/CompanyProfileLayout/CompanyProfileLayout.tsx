@@ -115,7 +115,7 @@ const CompanyProfileLayout = ({
                     className={styles.companyTabsItem}
                     value='overview'
                     label={
-                      <Link to={`/company/${slugify(company.name)}-${company.id}`}>
+                      <Link to={`/company/${slugify(company.name)}-${company.id}`} aTag>
                         <Text
                           bold
                           textStyle='xl'
@@ -130,7 +130,7 @@ const CompanyProfileLayout = ({
                     className={styles.companyTabsItem}
                     value='life'
                     label={
-                      <Link to={`/company/${slugify(company.name)}-${company.id}/life`}>
+                      <Link to={`/company/${slugify(company.name)}-${company.id}/life`} aTag>
                         <Text
                           bold
                           textStyle='xl'
@@ -145,7 +145,7 @@ const CompanyProfileLayout = ({
                     className={styles.companyTabsItem}
                     value='jobs'
                     label={
-                      <Link to={`/company/${slugify(company.name)}-${company.id}/jobs`}>
+                      <Link to={`/company/${slugify(company.name)}-${company.id}/jobs`} aTag>
                         <Text
                           bold
                           textStyle='xl'
@@ -179,6 +179,7 @@ const CompanyProfileLayout = ({
                     to={`/company/${slugify(company.name)}-${company.id}`}
                     key={company.id}
                     className={styles.relatedCompanyItem}
+                    aTag
                   >
                     <img
                       src={company.logo_url}
