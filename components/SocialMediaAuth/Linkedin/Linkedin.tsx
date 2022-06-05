@@ -35,16 +35,12 @@ const Linkedin = ({
   const getUserInfo = async (accessToken) => {
     try {
       const fetchUserDetail = () =>
-        axios.get('/api/handlers/linkedinHandlers/userDetails', {
-          params: {
-            'accessToken': accessToken.access_token
-          } 
+        axios.post('/api/handlers/linkedinHandlers/userDetails', {
+          accessToken: accessToken.access_token
         })
       const fetchUserEmail = () =>
-        axios.get('/api/handlers/linkedinHandlers/userEmail', {
-          params: {
-            'accessToken': accessToken.access_token
-          } 
+        axios.post('/api/handlers/linkedinHandlers/userEmail', {
+          accessToken: accessToken.access_token
         })
 
       const [userDetails, email] = await Promise.all([
@@ -98,28 +94,20 @@ const Linkedin = ({
   }
 
   const receiveMessage = (event) => {
-    console.log('receiveMessage', event)
-    console.log('popup', popup)
-    console.log('event.origin', event.origin)
-    console.log('window.location.origin', window.location.origin)
-    console.log('event.data', event.data)
     if (event.origin === window.location.origin) {
       if (event.data.from === 'LinkedIn') {
         if (event.data.code) {
-          console.log('Linkedin handleSuccess')
           handleSuccess({ code: event.data.code })
         } else {
-          console.log('Linkedin handleFailure')
           handleFailure(event.data)
         }
       }
+
+      popup && popup.close()
     }
-    
-    popup && popup.close()
   }
 
   const handleAuthClick = () => {
-    console.log('handleAuthClick')
     const params = {
       response_type: 'code',
       client_id: process.env.LINKEDIN_CLIENT_ID,
