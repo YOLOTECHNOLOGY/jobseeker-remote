@@ -87,6 +87,7 @@ const CompanyDetail = (props: any) => {
 
   const handlePaginationClick = (event, val) => {
     setSelectedpage(Number(val))
+    scrollToTop()
 
     router.query.page = val
     router.push(router, undefined, { shallow: true })
@@ -117,6 +118,11 @@ const CompanyDetail = (props: any) => {
     }
   }, [emblaApi])
   // Embla Carousel
+
+  const scrollToTop = () => {
+    const companyJobsElement = document.getElementById('companyJobs')
+    companyJobsElement.scrollIntoView()
+  }
 
   return (
     <CompanyProfileLayout
@@ -350,7 +356,7 @@ const CompanyDetail = (props: any) => {
           </div>
         )}
 
-        <div className={styles.companySection}>
+        <div className={styles.companySection} id='companyJobs'>
           <div className={styles.companyCultureJobs}>
             <div className={styles.companyCultureHeading}>
               <Text textStyle='lg' bold>
@@ -402,10 +408,10 @@ const CompanyDetail = (props: any) => {
               </div>
             )}
 
+            {isJobsListFetching && [...Array(size)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
+
             {companyJobs?.length > 0 ? (
               <React.Fragment>
-                {isJobsListFetching && [...Array(size)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
-
                 {!isJobsListFetching && (
                   <>
                     <div className={styles.companyCultureJobsList}>

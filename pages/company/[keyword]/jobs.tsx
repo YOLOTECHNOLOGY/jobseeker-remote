@@ -55,7 +55,6 @@ const CompanyJobsProfile = (props: any) => {
     }
 
     dispatch(fetchJobsListRequest({ ...payload }, accessToken))
-    scrollToTop()
   }, [router.query])
 
   useEffect(() => {
@@ -80,6 +79,7 @@ const CompanyJobsProfile = (props: any) => {
 
   const handlePaginationClick = (event, val) => {
     setSelectedpage(Number(val))
+    scrollToTop()
 
     router.query.page = val
     router.push(router, undefined, { shallow: true })
@@ -97,7 +97,7 @@ const CompanyJobsProfile = (props: any) => {
 
   const scrollToTop = () => {
     const companyJobsElement = document.getElementById('companyJobs')
-    companyJobsElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    companyJobsElement.scrollIntoView()
   }
 
   return (
@@ -150,9 +150,10 @@ const CompanyJobsProfile = (props: any) => {
               </div>
             )}
 
+            {isJobsListFetching && [...Array(size)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
+            
             {companyJobs?.length > 0 ? (
               <React.Fragment>
-                {isJobsListFetching && [...Array(size)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
                 {!isJobsListFetching && (
                   <>
                     <div className={styles.companyJobsList}>

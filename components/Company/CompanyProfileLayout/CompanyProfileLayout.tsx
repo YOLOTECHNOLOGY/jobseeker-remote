@@ -15,6 +15,7 @@ import Link from 'components/Link'
 
 // Styles
 import styles from './CompanyProfileLayout.module.scss'
+import JobDetailSidebarCard from 'components/Loader/JobDetailSidebarCard'
 
 const theme = createTheme({
   components: {
@@ -70,6 +71,7 @@ const CompanyProfileLayout = ({
   const similarCompaniesResponse = useSelector(
     (store: any) => store.companies.fetchSimilarCompany.response
   )
+  const isSimilarCompanyFetching = useSelector((store: any) => store.companies.fetchSimilarCompany.fetching)
 
   useEffect(() => {
     dispatch(fetchSimilarCompanyRequest({ companyId: company.id }))
@@ -150,9 +152,7 @@ const CompanyProfileLayout = ({
                         textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}
                       >
                         Jobs
-                        {totalJobs > 0 && (
-                          <span className={styles.companyJobsBadge}>{totalJobs}</span>
-                        )}
+                        <span className={styles.companyJobsBadge}>{totalJobs}</span>
                       </Text>
                     }
                   />
@@ -169,6 +169,9 @@ const CompanyProfileLayout = ({
             <Text textStyle='xxl' bold>
               People also viewed...
             </Text>
+
+            {isSimilarCompanyFetching && [...Array(10)].map((_, i) => <JobDetailSidebarCard key={i} />)}
+
             {similarCompanies?.length > 0 && (
               <div className={styles.relatedCompanyList}>
                 {similarCompanies.map((company) => (
