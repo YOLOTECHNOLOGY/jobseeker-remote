@@ -114,49 +114,46 @@ const CompanyProfileLayout = ({
                   <Tab
                     className={styles.companyTabsItem}
                     value='overview'
+                    href={`/company/${slugify(company.name)}-${company.id}`}
                     label={
-                      <Link to={`/company/${slugify(company.name)}-${company.id}`} aTag>
-                        <Text
-                          bold
-                          textStyle='xl'
-                          textColor={tabValue === 'overview' ? 'primaryBlue' : 'black'}
-                        >
-                          Overview
-                        </Text>
-                      </Link>
+                      <Text
+                        bold
+                        textStyle='xl'
+                        textColor={tabValue === 'overview' ? 'primaryBlue' : 'black'}
+                      >
+                        Overview
+                      </Text>
                     }
                   />
                   <Tab
                     className={styles.companyTabsItem}
                     value='life'
+                    href={`/company/${slugify(company.name)}-${company.id}/life`}
                     label={
-                      <Link to={`/company/${slugify(company.name)}-${company.id}/life`} aTag>
-                        <Text
-                          bold
-                          textStyle='xl'
-                          textColor={tabValue === 'life' ? 'primaryBlue' : 'black'}
-                        >
-                          Life
-                        </Text>
-                      </Link>
+                      <Text
+                        bold
+                        textStyle='xl'
+                        textColor={tabValue === 'life' ? 'primaryBlue' : 'black'}
+                      >
+                        Life
+                      </Text>
                     }
                   />
                   <Tab
                     className={styles.companyTabsItem}
                     value='jobs'
+                    href={`/company/${slugify(company.name)}-${company.id}/jobs`}
                     label={
-                      <Link to={`/company/${slugify(company.name)}-${company.id}/jobs`} aTag>
-                        <Text
-                          bold
-                          textStyle='xl'
-                          textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}
-                        >
-                          Jobs
-                          {totalJobs > 0 && (
-                            <span className={styles.companyJobsBadge}>{totalJobs}</span>
-                          )}
-                        </Text>
-                      </Link>
+                      <Text
+                        bold
+                        textStyle='xl'
+                        textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}
+                      >
+                        Jobs
+                        {totalJobs > 0 && (
+                          <span className={styles.companyJobsBadge}>{totalJobs}</span>
+                        )}
+                      </Text>
                     }
                   />
                 </Tabs>
