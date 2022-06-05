@@ -32,7 +32,7 @@
       display: inline-block;
 
       &:first-child {
-        width: 180px;
+        min-width: 180px;
       }
 
       @include msd {

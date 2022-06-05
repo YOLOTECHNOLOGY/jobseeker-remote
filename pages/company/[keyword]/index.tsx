@@ -47,7 +47,6 @@ const CompanyDetail = (props: any) => {
   const company = companyDetail?.response.data
   const [companyJobs, setCompanyJobs] = useState(null)
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
-  const [totalJobs, setTotalJobs] = useState(null)
   const [totalActiveJobs, setTotalActiveJobs] = useState(0)
   const [totalPages, setTotalPages] = useState(null)
   const [jobLocation, setJobLocation] = useState(null)
@@ -66,7 +65,6 @@ const CompanyDetail = (props: any) => {
   useEffect(() => {
     if (fetchJobsListResponse) {
       setCompanyJobs(fetchJobsListResponse.data?.jobs)
-      setTotalJobs(fetchJobsListResponse.data?.total_num)
       setTotalPages(fetchJobsListResponse.data?.total_pages)
 
       if (totalActiveJobs === 0 && fetchJobsListResponse.data?.total_num > 0) {
@@ -124,7 +122,7 @@ const CompanyDetail = (props: any) => {
     <CompanyProfileLayout
       company={company}
       currentTab='overview'
-      totalJobs={totalJobs}
+      totalJobs={totalActiveJobs}
       seoMetaTitle={seoMetaTitle}
       seoMetaDescription={seoMetaDescription}
     >

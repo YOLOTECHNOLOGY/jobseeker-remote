@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React from 'react'
 import classNames from 'classnames'
 import queryString from 'query-string'
 import axios from 'axios'
@@ -28,7 +28,9 @@ const Linkedin = ({
   redirect,
   loading
 }: ILinkedin) => {
-  const [popup, setPopup] = useState(null)
+  // const [popup, setPopup] = useState(null)
+
+  let popup = null
 
   const getUserInfo = async (accessToken) => {
     try {
@@ -92,20 +94,26 @@ const Linkedin = ({
   }
 
   const receiveMessage = (event) => {
+    console.log('receiveMessage', event)
+    console.log('popup', popup)
+    console.log('event.origin', event.origin)
+    console.log('window.location.origin', window.location.origin)
     if (event.origin === window.location.origin) {
       if (event.data.errorMessage && event.data.from === 'Linked In') {
         console.log('Linkedin handleFailure')
         handleFailure(event.data)
-        popup && popup.close()
       } else if (event.data.code && event.data.from === 'Linked In') {
         console.log('Linkedin handleSuccess')
         handleSuccess({ code: event.data.code })
-        popup && popup.close()
       }
     }
+    
+    popup && popup.close()
+    // setPopup(null)
   }
 
   const handleAuthClick = () => {
+    console.log('handleAuthClick')
     const params = {
       response_type: 'code',
       client_id: process.env.LINKEDIN_CLIENT_ID,
@@ -119,7 +127,7 @@ const Linkedin = ({
     const left = window.screen.width / 2 - width / 2
     const top = window.screen.height / 2 - height / 2
 
-    setPopup(window.open(
+    popup = window.open(
       oauthUrl,
       'Linkedin',
       'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' +
@@ -131,10 +139,11 @@ const Linkedin = ({
         ', left=' +
         left
       )
-    )
+    // setPopup(
+    // )
 
     window.removeEventListener('message', receiveMessage, false)
-    window.addEventListener('message', receiveMessage, false)
+    window.addEventListener('message', receiveMessage, true)
   }
 
   return (
