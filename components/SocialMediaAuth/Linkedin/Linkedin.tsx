@@ -74,7 +74,7 @@ const Linkedin = ({
     const params = {
       grant_type: 'authorization_code',
       code: data.code,
-      redirect_uri: `https://${window.location.host}`,
+      redirect_uri: `https://${window.location.host}/auth/linkedin`,
       client_id: process.env.LINKEDIN_CLIENT_ID,
       client_secret: process.env.LINKEDIN_CLIENT_SECRET
     }
@@ -103,15 +103,13 @@ const Linkedin = ({
       if (event.data.errorMessage && event.data.from === 'Linked In') {
         console.log('Linkedin handleFailure')
         handleFailure(event.data)
-        popup && popup.close()
       } else if (event.data.code && event.data.from === 'Linked In') {
         console.log('Linkedin handleSuccess')
         handleSuccess({ code: event.data.code })
-        popup && popup.close()
       }
     }
     
-    // setPopup(null)
+    popup && popup.close()
   }
 
   const handleAuthClick = () => {
@@ -119,7 +117,7 @@ const Linkedin = ({
     const params = {
       response_type: 'code',
       client_id: process.env.LINKEDIN_CLIENT_ID,
-      redirect_uri: `https://${window.location.host}`,
+      redirect_uri: `https://${window.location.host}/auth/linkedin`,
       state: '423Qka4ISA8t74',
       scope: 'r_liteprofile r_emailaddress w_member_social'
     }
@@ -141,8 +139,6 @@ const Linkedin = ({
         ', left=' +
         left
       )
-    // setPopup(
-    // )
 
     window.removeEventListener('message', receiveMessage, false)
     window.addEventListener('message', receiveMessage, false)
