@@ -35,12 +35,16 @@ const Linkedin = ({
   const getUserInfo = async (accessToken) => {
     try {
       const fetchUserDetail = () =>
-        axios.post('/api/handlers/linkedinHandlers/userDetails', {
-          accessToken: accessToken.access_token
+        axios.get('/api/handlers/linkedinHandlers/userDetails', {
+          params: {
+            'accessToken': accessToken.access_token
+          } 
         })
       const fetchUserEmail = () =>
-        axios.post('/api/handlers/linkedinHandlers/userEmail', {
-          accessToken: accessToken.access_token
+        axios.get('/api/handlers/linkedinHandlers/userEmail', {
+          params: {
+            'accessToken': accessToken.access_token
+          } 
         })
 
       const [userDetails, email] = await Promise.all([
