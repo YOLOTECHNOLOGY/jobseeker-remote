@@ -1,8 +1,5 @@
 import { useEffect } from 'react'
 
-// Vendor
-import { useRouter } from 'next/router'
-
 // Components
 import Text from 'components/Text'
 
@@ -10,15 +7,11 @@ import Text from 'components/Text'
 import { wrapper } from 'store'
 
 const Linkedin = (code) => {
-  const router = useRouter()
-  const linkedinCode = router?.query?.code || code
-
   useEffect(() => {
-    console.log(linkedinCode)
-    if (linkedinCode) {
+    if (code) {
       window.opener &&
       window.opener.postMessage(
-        { code: linkedinCode, from: 'LinkedIn' },
+        { code: code, from: 'LinkedIn' },
         window.location.origin
       )
     }

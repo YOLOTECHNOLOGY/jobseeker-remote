@@ -87,10 +87,14 @@ const Linkedin = ({
       .catch(error => {
         console.error(error)
       })
+
+      window.removeEventListener('message', receiveMessage, false)
   }
 
   const handleFailure = (error) => {
     console.error(error)
+
+    window.removeEventListener('message', receiveMessage, false)
   }
 
   const receiveMessage = (event) => {
@@ -134,7 +138,7 @@ const Linkedin = ({
         left
       )
 
-    window.removeEventListener('message', receiveMessage, false)
+    // window.removeEventListener('message', receiveMessage, false)
     window.addEventListener('message', receiveMessage, false)
   }
 
