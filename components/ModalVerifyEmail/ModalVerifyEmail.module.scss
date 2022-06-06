@@ -11,7 +11,7 @@
 .VerifyingEmail {  
   &Form {
     display: flex;
-    margin: 16px 0px 48px 0px;
+    margin: 16px 0px 0px 0px;
     width: 100%;
     justify-content: space-between;
     align-items: center;
@@ -28,6 +28,10 @@
     @include msd {
       width: 36%;
     }
+  }
+
+  &ErrorMessage {
+    margin-bottom: 48px;
   }
 }
 

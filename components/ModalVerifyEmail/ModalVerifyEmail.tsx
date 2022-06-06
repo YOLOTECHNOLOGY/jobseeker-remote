@@ -135,16 +135,6 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
           onChange={(e) => setOtp(e.target.value)}
           fullWidth={true}
         />
-        {OTPErrorMessage && (
-          <Text textStyle='sm' textColor='red' tagName='p' className={styles.inputMessage}>
-            {OTPErrorMessage}
-          </Text>
-        )}
-        {OTPSuccessMessage && (
-          <Text textStyle='sm' textColor='primaryBlue' tagName='p' className={styles.inputMessage}>
-            {OTPSuccessMessage}
-          </Text>
-        )}
       </div>
       <MaterialButton
         className={
@@ -161,6 +151,18 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
           Get OTP {timerCount > 1 ? '(' + (timerCount - 1) + ')' : ''}
         </Text>
       </MaterialButton>
+      </div>
+      <div className={styles.VerifyingEmailErrorMessage}>
+      {OTPErrorMessage && (
+          <Text textStyle='sm' textColor='red' tagName='p' className={styles.inputMessage}>
+            {OTPErrorMessage}
+          </Text>
+        )}
+        {OTPSuccessMessage && (
+          <Text textStyle='sm' textColor='primaryBlue' tagName='p' className={styles.inputMessage}>
+            {OTPSuccessMessage}
+          </Text>
+        )}
       </div>
       <Text style={{ display: 'block' }}>
         Want to get the code on another email?{' '}
