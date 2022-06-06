@@ -17,6 +17,7 @@
 
   @include sm{
     justify-content: flex-end;
+    margin-bottom: calc(100vh - var(--vh, 1vh)* 100);
   }
 
   &Content {
