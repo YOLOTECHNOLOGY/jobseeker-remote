@@ -9,29 +9,21 @@
 }
 
 .VerifyingEmail {  
-  &Form {
-    display: flex;
-    margin: 16px 0px 0px 0px;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-  }
   &FormInput {
-    width: 72%;
+    width: 100%;
+    margin-top: 16px;
+    margin-bottom: 16px;
     @include msd {
-      width: 60%
+      width: 100%
     }
   }
 
   &FormButton {
-    width: 24%;
-    @include msd {
-      width: 36%;
-    }
-  }
-
-  &ErrorMessage {
     margin-bottom: 48px;
+    @include msd {
+      margin-bottom: 32px;
+      width: 100%;
+    }
   }
 }
 
