@@ -8,11 +8,12 @@ import HamburgerMenu from 'components/HamburgerMenu'
 /* Styles */
 import styles from './Layout.module.scss'
 import classNamesCombined from 'classnames'
-import { getCookie, setCookieWithExpiry } from '../../helpers/cookies'
+import { getCookie, setCookie, setCookieWithExpiry } from '../../helpers/cookies'
 import { Link } from '@mui/material'
 import MaterialAlert from '../MaterialAlert/MaterialAlert'
 import ModalVerifyEmail from '../ModalVerifyEmail'
 import Text from '../Text'
+import configuredAxios from '../../helpers/configuredAxios'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -52,6 +53,39 @@ const Layout = ({ children, className }: LayoutProps) => {
     document.body.style.top = `-${window.scrollY}px`
   }
 
+  const handleVerifyEmailClick = async () => {
+    const axios = configuredAxios('jobseeker', 'protected', '', authCookie)
+    const response =  await axios.get('/me')
+    const isVerifiedEmail = response?.data?.data?.is_email_verify;
+    if (!isVerifiedEmail) {
+      setIsShowModal(true);
+    } else { // user cookie is outdated
+      const user = getCookie('user')
+      const userCookie = {
+        active_key: user.active_key,
+        id: user.id,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
+        phone_num: user.phone_num,
+        is_mobile_verified: user.is_mobile_verified,
+        avatar: user.avatar,
+        additional_info: user.additional_info,
+        is_email_verify: true,
+        notice_period_id: user.notice_period_id,
+        is_profile_completed: user.is_profile_completed,
+        recruiter_latest_work_xp:
+          (user.recruiter_latest_work_xp && {
+            company_id: user.recruiter_latest_work_xp.company_id,
+            job_title: user.recruiter_latest_work_xp.job_title,
+            is_currently_work_here: user.recruiter_latest_work_xp.is_currently_work_here,
+          }) ||
+          null,
+      }
+      setCookie('user', userCookie)
+    }
+  }
+
   const handleVerifyEmailModal = (isShow: boolean) => {
     setIsShowModal(isShow)
     setIsEmailVerified(getCookie('user').is_email_verify)
@@ -70,7 +104,7 @@ const Layout = ({ children, className }: LayoutProps) => {
         <MaterialAlert open={true} severity='info'>
           <Text>
             Please verify your email address.{' '}
-            <Link onClick={() => setIsShowModal(true)} sx={{ cursor: 'pointer' }}>
+            <Link onClick={handleVerifyEmailClick} sx={{ cursor: 'pointer' }}>
               Verify now.
             </Link>
           </Text>
