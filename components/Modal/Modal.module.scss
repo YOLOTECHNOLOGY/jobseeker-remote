@@ -3,7 +3,6 @@
 
 .modal {
   height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
   overflow: hidden;
   position: fixed;
@@ -17,7 +16,11 @@
 
   @include sm{
     justify-content: flex-end;
-    margin-bottom: calc(100vh - var(--vh, 1vh)* 100);
+  }
+
+  @include msd {
+    height: 100%;
+    height: --webkit-fill-available;
   }
 
   &Content {
