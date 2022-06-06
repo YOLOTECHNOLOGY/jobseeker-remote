@@ -21,6 +21,7 @@ type MaterialTextFieldProps = {
   refs?: any
   multiline?: boolean
   rows?: Number
+  fullWidth?: boolean
 } & Omit<Input, 'size'>
 
 const theme = createTheme({
