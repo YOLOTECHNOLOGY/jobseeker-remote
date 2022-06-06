@@ -10,7 +10,7 @@ import {
   TimelineSeparator,
   TimelineConnector,
   TimelineContent,
-  TimelineDot
+  TimelineDot,
 } from '@mui/lab'
 
 /* Components */
@@ -44,15 +44,14 @@ import {
   PerformanceBonusIcon,
   TelecommunicationAllowanceIcon,
   TransportAllowanceIcon,
-  OtherAllowancesIcon,  
+  OtherAllowancesIcon,
   MoreIcon,
   ExpireIcon,
 } from 'images'
 
 /* Helpers */
-import {
-  getApplyJobLink,
-} from 'helpers/jobPayloadFormatter'
+import { getApplyJobLink } from 'helpers/jobPayloadFormatter'
+import ModalVerifyEmail from '../ModalVerifyEmail'
 
 interface IJobDetailProps {
   selectedJob: any
@@ -82,7 +81,7 @@ const JobDetail = ({
   handlePostSaveJob,
   handleDeleteSavedJob,
   applicationHistory,
-  config
+  config,
 }: IJobDetailProps) => {
   const router = useRouter()
   const userCookie = getCookie('user') || null
@@ -90,8 +89,9 @@ const JobDetail = ({
   const [isSaveClicked, setIsSaveClicked] = useState(false)
   const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
   const [isSavedJob, setIsSavedJob] = useState(false)
+  const [isShowModal, setIsShowModal] = useState(false)
   const applyJobLink = getApplyJobLink(selectedJob, userCookie)
-  
+
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
 
@@ -101,9 +101,9 @@ const JobDetail = ({
   }, [selectedJob])
 
   const handleBenefitIcon = (benefit) => {
-    const Icon = `${benefit.replace(/ /g,'')}Icon`
+    const Icon = `${benefit.replace(/ /g, '')}Icon`
 
-    switch(Icon) {
+    switch (Icon) {
       case 'EquityIncentiveIcon':
         return <Image src={EquityIncentiveIcon} alt='logo' width='20' height='20' />
       case 'MealAllowanceIcon':
@@ -125,13 +125,28 @@ const JobDetail = ({
     }
   }
 
+  const handleQuickApplyClick = (e) => {
+    if (!userCookie) {
+      e.preventDefault()
+      setQuickApplyModalShow(true)
+    } else if (userCookie && !userCookie.is_email_verify) {
+      e.preventDefault()
+      setIsShowModal(true);
+    }
+  }
+
+  const handleCloseModal = () => {
+    setIsShowModal(false)
+    router.reload()
+  }
+
   const isCategoryApplied = category === 'applied'
   const isCategorySaved = category === 'saved'
   const publicJobUrl = isCategoryApplied ? `${jobDetailUrl}?isApplied=true` : jobDetailUrl
 
   const checkHasApplicationWithdrawn = () => {
-    if (isCategoryApplied && applicationHistory?.length > 0 ) {
-      return applicationHistory[0].value.includes("withdrawn")
+    if (isCategoryApplied && applicationHistory?.length > 0) {
+      return applicationHistory[0].value.includes('withdrawn')
     }
     return false
   }
@@ -142,36 +157,45 @@ const JobDetail = ({
         <div className={classNamesCombined([styles.JobDetailContent])}>
           <div className={classNamesCombined([isStickyClass, styles.JobDetailHeader])}>
             <div>
-              <div 
+              <div
                 className={styles.JobDetailOptionImage}
                 onClick={() => setJobDetailOption(!jobDetailOption)}
               >
                 <Image src={MoreIcon} width='30' height='30'></Image>
               </div>
-              
+
               {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
               {jobDetailOption && (
                 <div className={styles.JobDetailOptionList}>
-                  {!isCategoryApplied && (
+                  {selectedJob?.status_key === 'active' && (
                     <>
                       <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
                         <Text textStyle='lg'>View in new tab</Text>
                       </Link>
-                      <div className={styles.JobDetailOptionItem} onClick={() => {
-                        setIsShowReportJob(true)
-                        setJobDetailOption(false)
-                      }}>
+                      <div
+                        className={styles.JobDetailOptionItem}
+                        onClick={() => {
+                          setIsShowReportJob(true)
+                          setJobDetailOption(false)
+                        }}
+                      >
                         <Text textStyle='lg'>Report job</Text>
                       </div>
                     </>
                   )}
                   {isCategoryApplied && !checkHasApplicationWithdrawn() && (
-                    <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalWithdrawApplication(true)}>
+                    <div
+                      className={styles.JobDetailOptionItem}
+                      onClick={() => setIsShowModalWithdrawApplication(true)}
+                    >
                       <Text textStyle='lg'>Withdraw Application</Text>
                     </div>
                   )}
-                      
-                  <div className={styles.JobDetailOptionItem} onClick={() => setIsShowModalShare(true)}>
+
+                  <div
+                    className={styles.JobDetailOptionItem}
+                    onClick={() => setIsShowModalShare(true)}
+                  >
                     <Text textStyle='lg'>Share this job</Text>
                   </div>
 
@@ -192,49 +216,49 @@ const JobDetail = ({
               <Text textStyle='lg' className={styles.JobDetailCompany}>
                 {selectedJob?.company?.name}
               </Text>
-              {selectedJob?.is_featured && (
-                <JobTag tag='Featured' tagType='featured' />
-              )}
-              {selectedJob?.is_urgent && (
-                <JobTag tag='Urgent' tagType='urgent' />
-              )}
+              {selectedJob?.is_featured && <JobTag tag='Featured' tagType='featured' />}
+              {selectedJob?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
               <JobTag tag={selectedJob?.job_type_value} />
               <div className={styles.JobDetailButtonsWrapper}>
                 <div className={styles.JobDetailButtons}>
-                  {selectedJob?.status_key === 'active'  && !isCategoryApplied && (
+                  {!isCategoryApplied && (
                     <>
-                      {!selectedJob?.is_applied ? 
-                        <Link to={applyJobLink} external>
-                          <MaterialButton 
-                            variant='contained' 
-                            capitalize
-                            onClick={(e) => {
-                              if (!userCookie) {
-                                e.preventDefault()
-                                setQuickApplyModalShow(true)
-                              }
-                            }}
-                          >
-                            <Text textStyle='lg' textColor='white' bold>Apply Now</Text>  
-                          </MaterialButton>
-                        </Link>
-                        : <MaterialButton variant='contained' capitalize disabled>
-                            <Text textStyle='lg' textColor='white' bold>Applied</Text> 
-                          </MaterialButton>
-                      }
-                      <MaterialButton 
-                        variant='outlined' 
-                        capitalize 
+                      {selectedJob?.status_key === 'active' && (
+                        <>
+                          {!selectedJob?.is_applied ? (
+                            <Link to={applyJobLink} external>
+                              <MaterialButton
+                                variant='contained'
+                                capitalize
+                                onClick={handleQuickApplyClick}
+                              >
+                                <Text textStyle='lg' textColor='white' bold>
+                                  Apply Now
+                                </Text>
+                              </MaterialButton>
+                            </Link>
+                          ) : (
+                            <MaterialButton variant='contained' capitalize disabled>
+                              <Text textStyle='lg' textColor='white' bold>
+                                Applied
+                              </Text>
+                            </MaterialButton>
+                          )}
+                        </>
+                      )}
+                      <MaterialButton
+                        variant='outlined'
+                        capitalize
                         isLoading={!userCookie && isSaveClicked}
                         onClick={() => {
                           if (userCookie) {
                             if (!isCategorySaved && !isSavedJob) {
-                              handlePostSaveJob({jobId: selectedJob?.id})
+                              handlePostSaveJob({ jobId: selectedJob?.id })
                               setIsSavedJob(true)
                             }
 
                             if (isSavedJob) {
-                              handleDeleteSavedJob({jobId: selectedJob?.id})
+                              handleDeleteSavedJob({ jobId: selectedJob?.id })
                               setIsSavedJob(false)
                             }
                           }
@@ -246,14 +270,14 @@ const JobDetail = ({
                         }}
                       >
                         <Text textStyle='lg' textColor='primaryBlue' bold>
-                          { isSavedJob || isCategorySaved ? 'Saved' : 'Save Job' }  
-                        </Text>  
+                          {isSavedJob || isCategorySaved ? 'Saved' : 'Save Job'}
+                        </Text>
                       </MaterialButton>
                     </>
                   )}
                   {selectedJob?.status_key !== 'active' && (
                     <Text textStyle='base' className={styles.JobDetailStatus}>
-                      <Image src={ExpireIcon} height="16" width="16"/>
+                      <Image src={ExpireIcon} height='16' width='16' />
                       <span>This job is no longer hiring</span>
                     </Text>
                   )}
@@ -272,11 +296,7 @@ const JobDetail = ({
                 <li className={styles.JobDetailPrefItem}>
                   <Image src={LocationIcon} width='20' height='20' />
                   <span className={styles.JobDetailPrefText}>
-                    <Text
-                      textStyle='lg'
-                      textColor='darkgrey'
-                      className={styles.JobDetailPrefField}
-                    >
+                    <Text textStyle='lg' textColor='darkgrey' className={styles.JobDetailPrefField}>
                       Location
                     </Text>
                     <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
@@ -287,11 +307,7 @@ const JobDetail = ({
                 <li className={styles.JobDetailPrefItem}>
                   <Image src={BriefcaseIcon} width='22' height='22' />
                   <span className={styles.JobDetailPrefText}>
-                    <Text
-                      textStyle='lg'
-                      textColor='darkgrey'
-                      className={styles.JobDetailPrefField}
-                    >
+                    <Text textStyle='lg' textColor='darkgrey' className={styles.JobDetailPrefField}>
                       Experience
                     </Text>
                     <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
@@ -302,11 +318,7 @@ const JobDetail = ({
                 <li className={styles.JobDetailPrefItem}>
                   <Image src={EducationIcon} width='22' height='22' />
                   <span className={styles.JobDetailPrefText}>
-                    <Text
-                      textStyle='lg'
-                      textColor='darkgrey'
-                      className={styles.JobDetailPrefField}
-                    >
+                    <Text textStyle='lg' textColor='darkgrey' className={styles.JobDetailPrefField}>
                       Education
                     </Text>
                     <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
@@ -317,11 +329,7 @@ const JobDetail = ({
                 <li className={styles.JobDetailPrefItem}>
                   <Image src={SalaryIcon} width='22' height='22' />
                   <span className={styles.JobDetailPrefText}>
-                    <Text
-                      textStyle='lg'
-                      textColor='darkgrey'
-                      className={styles.JobDetailPrefField}
-                    >
+                    <Text textStyle='lg' textColor='darkgrey' className={styles.JobDetailPrefField}>
                       Salary
                     </Text>
                     <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
@@ -333,15 +341,23 @@ const JobDetail = ({
             </div>
             {isCategoryApplied && applicationHistory?.length > 0 && (
               <div className={styles.JobDetailApplicationWrapper}>
-                <Text textStyle='lg' bold>Application History</Text>
+                <Text textStyle='lg' bold>
+                  Application History
+                </Text>
                 <Timeline className={styles.JobDetailApplicationTimeline}>
                   {applicationHistory.map((history, i) => (
                     <TimelineItem key={i}>
                       <TimelineSeparator>
-                        <TimelineDot className={i === 0 ? styles.JobDetailApplicationTimelineFirst : ''}/>
+                        <TimelineDot
+                          className={i === 0 ? styles.JobDetailApplicationTimelineFirst : ''}
+                        />
                         <TimelineConnector />
                       </TimelineSeparator>
-                      <TimelineContent><Text textStyle='base'>{history.value} -  {history.elapsed_time}</Text></TimelineContent>
+                      <TimelineContent>
+                        <Text textStyle='base'>
+                          {history.value} - {history.elapsed_time}
+                        </Text>
+                      </TimelineContent>
                     </TimelineItem>
                   ))}
                 </Timeline>
@@ -351,13 +367,25 @@ const JobDetail = ({
               <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
                 Job Description
               </Text>
-              <div className={classNamesCombined([styles.JobDetailSectionBody, styles.JobDetailDescriptionSectionBody])} dangerouslySetInnerHTML={{ __html: selectedJob?.job_description_html }} />
+              <div
+                className={classNamesCombined([
+                  styles.JobDetailSectionBody,
+                  styles.JobDetailDescriptionSectionBody,
+                ])}
+                dangerouslySetInnerHTML={{ __html: selectedJob?.job_description_html }}
+              />
             </div>
             <div className={styles.JobDetailSection}>
               <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
                 Requirements
               </Text>
-              <div className={classNamesCombined([styles.JobDetailSectionBody, styles.JobDetailRequirementSectionBody])} dangerouslySetInnerHTML={{ __html: selectedJob?.job_requirements_html }} />
+              <div
+                className={classNamesCombined([
+                  styles.JobDetailSectionBody,
+                  styles.JobDetailRequirementSectionBody,
+                ])}
+                dangerouslySetInnerHTML={{ __html: selectedJob?.job_requirements_html }}
+              />
             </div>
             <div className={styles.JobDetailSection}>
               <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
@@ -405,7 +433,8 @@ const JobDetail = ({
                 <span key={i}>
                   <Link to='/' className={styles.JobDetailSectionSubBody}>
                     <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
-                      {' '}{category.value},
+                      {' '}
+                      {category.value},
                     </Text>
                   </Link>
                 </span>
@@ -424,10 +453,7 @@ const JobDetail = ({
                 <Text textStyle='base'>{selectedJob?.company?.industry}</Text>
                 <Text textStyle='base'>{selectedJob?.company?.company_size} employees</Text>
               </div>
-              <ReadMore
-                size={352}
-                text={selectedJob?.company?.description_html}
-              />
+              <ReadMore size={352} text={selectedJob?.company?.description_html} />
             </div>
           </div>
         </div>
@@ -439,6 +465,11 @@ const JobDetail = ({
         modalShow={quickApplyModalShow}
         handleModalShow={setQuickApplyModalShow}
         config={config}
+      />
+      <ModalVerifyEmail
+        email={userCookie ? userCookie.email : ''}
+        isShowModal={isShowModal}
+        handleModal={handleCloseModal}
       />
     </React.Fragment>
   )
