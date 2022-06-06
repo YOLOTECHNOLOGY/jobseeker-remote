@@ -81,8 +81,3 @@ $mobile-font-size-xxxl: 21px;
     max-width: 320px;
   }
 }
-
-.container {
-  height: 100vh; // for browsers that do not support custom properties
-  height: calc(var(--vh, 1vh) * 100);
-}

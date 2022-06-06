@@ -27,22 +27,11 @@ const Layout = ({ children, className }: LayoutProps) => {
   const authCookie = getCookie('accessToken')
   const userCookie = getCookie('user')
 
-  const handleDynamicViewheight = () => {
-    // creates an updates a CSS variable, --vh, with view height that considers mobile interface
-    // this solves the issue where containers with z-index set is blocked by search bars in mobile view
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
-
   useEffect(() => {
     setIsAuthenticated(authCookie ? true : false)
     setIsEmailVerified(userCookie?.is_email_verify)
     const isVerifyEmailModalClosed = getCookie('isVerifyEmailModalClosed')
     setIsShowModal(!isVerifyEmailModalClosed && !!authCookie && !!!userCookie.is_email_verify)
-    window.addEventListener('resize', handleDynamicViewheight);
-    return () => {
-      window.removeEventListener('resize', handleDynamicViewheight);
-    }
   }, [])
 
   if (isShowModal) {
