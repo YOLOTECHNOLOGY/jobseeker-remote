@@ -21,7 +21,9 @@ const notificationReducer = (state = initialState, action) => {
         open: false
       }
     default:
-      return state
+      return {
+        ...state
+      }
   }
 }
 

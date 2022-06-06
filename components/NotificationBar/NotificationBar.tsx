@@ -1,17 +1,11 @@
-import { useSelector, connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import { closeNotification } from 'store/actions/notificationBar/notificationBar'
 
 
-interface NotificationBarProps {
-  closeNotification: Function
-}
-
-const NotificationBar = (
-  { closeNotification } : NotificationBarProps
-) => {
-
+const NotificationBar = () => {
+  const dispatch = useDispatch()
   const open = useSelector((store: any) => store.notificationbar.notification.open)
   const severity = useSelector((store: any) => store.notificationbar.notification.severity)
   const message = useSelector((store: any) => store.notificationbar.notification.message)
@@ -20,7 +14,7 @@ const NotificationBar = (
     if (reason === 'clickaway') {
       return
     }
-    closeNotification()
+    dispatch(closeNotification())
 
   }
 
@@ -42,8 +36,4 @@ const NotificationBar = (
   )
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  closeNotification: () => dispatch(closeNotification())
-})
-
-export default connect(null, mapDispatchToProps)(NotificationBar)
+export default NotificationBar
