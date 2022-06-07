@@ -54,7 +54,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
             </Link>
             <Link
               className={styles.defaultLink}
-              to={`${process.env.OLD_PROJECT_URL}/headhunt-me`}
+              to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`}
               title='Headhunt Me'
               aTag
             >

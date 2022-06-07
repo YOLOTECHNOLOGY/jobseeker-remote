@@ -53,10 +53,10 @@ const CompanyDetail = (props: any) => {
   
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     align: "start",
-    loop: true,
+    loop: false,
     skipSnaps: false,
     slidesToScroll: 1,
-    inViewThreshold: 0.7
+    inViewThreshold: 1
   })
 
   const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
