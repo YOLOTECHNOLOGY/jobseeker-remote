@@ -32,12 +32,6 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
     setIsAuthenticated(getCookie('accessToken') ? true : false)
   }, [])
 
-  useEffect(() => {
-    //  disable body from scrolling when hamburger menu is open
-    const body = document.querySelector('body')
-    body.style.overflow = openState ? 'hidden' : 'auto'
-  }, [openState])
-
   const handleLogOut = () => {
     dispatch(logoutRequest())
   }
