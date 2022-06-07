@@ -206,6 +206,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
       handleModal={() => {
         handleModal(false)
       }}
+      isFullHeight={true}
     >
       {modalContent}
     </Modal>
