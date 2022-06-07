@@ -152,15 +152,342 @@ const buildQueryParams = (data) => {
   let queryString = ''
   queryString = Object.keys(data)
     .map((key) => {
-      const string = data[key].map((filter)=> filter['seo-value']).join()
+      const string = data[key].map((filter) => {
+        if (filter) return filter['seo-value']
+      }).join()
       return key + '=' + string
     })
     .join('&')
   queryString = '?' + queryString
   return queryString
 }
+// handle MUI filters not under "More Filters"
+const userFilterSelectionDataParser = (field, optionValue, routerQuery, config) => {
+  console.log('optionValue', optionValue)
+  const { keyword, ...rest } = routerQuery
+  const queryParser = urlQueryParser(keyword)
+  const locationList = config.inputs.location_lists
+  const industryList = config.inputs.industry_lists
+  const expLvlList = config.inputs.xp_lvls
+  const eduLevelList = config.filters.educations
+  const jobTypeList = config.inputs.job_types
+  const categoryList = config.inputs.job_category_lists
+  const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
+    key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
+    value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
+    ['seo-value']: range['seo-value'],
+  }))
+  const formatLocationConfig = (locationList) => {
+    const locationConfig = locationList?.map((region) => region.locations)
+    return locationConfig
+  }
+  const formattedLocationList = flat(formatLocationConfig(locationList))
+  const sanitisedConfig = {
+    industry: industryList,
+    jobType: jobTypeList,
+    salary: salaryRangeList,
+    workExperience: expLvlList,
+    qualification: eduLevelList,
+    location: formattedLocationList,
+    category: categoryList,
+  }
 
-const getDataFromUrl = (newValue, routerQuery, config, clearAllFilters) => {
+  let matchedConfigFromUrl = {}
+  let matchedConfigFromUserSelection = {}
+  let matchedLocation = {}
+  let predefinedQuery = ''
+  let predefinedLocation = ''
+  let filterData = {}
+
+  // handle predefined filters from url (keyword)
+  Object.keys(sanitisedConfig).forEach((key) => {
+    // iterate based on number of results from queryParser
+    queryParser.forEach((parsedData, index) => {
+      if (key === 'category'){
+        const mainOptionMatched = []
+        const subOptionMatched = []
+
+        sanitisedConfig[key].forEach((data) => {
+          if (data['seo-value'] === parsedData){
+                predefinedQuery = parsedData
+                mainOptionMatched.push(data)
+                // return data['seo-value'] === parsedData
+          }
+        })
+        console.log('mainOptionMatched', mainOptionMatched)
+        sanitisedConfig[key].map((data) => { 
+            data.sub_list.forEach((subOption)=>{
+            if (subOption['seo-value'] === parsedData){
+              predefinedQuery = parsedData
+              subOptionMatched.push(subOption)
+            }
+          })
+        })
+        console.log('subOptionMatched', subOptionMatched)
+
+         if (mainOptionMatched.length > 0) {
+           matchedConfigFromUrl = {
+             ...matchedConfigFromUrl,
+             [key]: mainOptionMatched,
+           }
+         } 
+         if (subOptionMatched.length > 0){
+            matchedConfigFromUrl = {
+              ...matchedConfigFromUrl,
+              [key]: subOptionMatched,
+            }
+         } 
+      }else{
+        const hasMatch = sanitisedConfig[key].filter((data) => {
+          if (key === 'location' && index == 1){
+            if (data['seo_value'] === parsedData){
+              predefinedLocation = parsedData
+              return data['seo_value'] === parsedData
+            }
+          }else if (key === 'location' && index === 0){
+            if (data['seo_value'] === parsedData) {
+              predefinedLocation = parsedData
+              return data['seo_value'] === parsedData
+            }
+          }else{
+            if (data['seo-value'] === parsedData){
+              predefinedQuery = parsedData
+              return data['seo-value'] === parsedData
+            }
+          }
+        })
+        if (hasMatch.length > 0 && key !== 'location') {
+          matchedConfigFromUrl = {
+            ...matchedConfigFromUrl,
+            [key]: hasMatch,
+          }
+        }else if (hasMatch.length > 0 && key === 'location'){
+          matchedLocation = {
+            [key]:hasMatch
+          }
+        }
+      }
+    })
+
+  })
+
+
+  // handle filters from user selection
+  let updatedFilters = {...rest}
+  // if optionValue !== [], include current filter with the rest of the filters
+  if (field === 'location' && optionValue?.length !== 0){
+    updatedFilters = { ...rest, [field]: optionValue.seo_value}
+  }else if (field === 'category'){
+    updatedFilters = { ...rest, [field]: optionValue.join() }
+  }else{
+    if (optionValue.length !== 0) {
+      updatedFilters = { ...rest, [field]: optionValue.join(',') }
+    }else{
+      delete updatedFilters[field]
+    }
+  }
+  console.log('updatedFilters', updatedFilters)
+  // handle the rest of the filters. remove nonfilter keys, and convert strings of value to array of strings
+  for (const [key, value] of Object.entries(updatedFilters)) {
+    // only proceed if it is not a non filter key
+    if (!nonFilterKeys.includes(key)) {
+      const arrayVal = value.split(',')
+      // only proceed if value is not null && not empty
+      if (arrayVal && arrayVal.length !== 0) {
+        // handle filters not under 'More filters' section
+        filterData = {
+          ...filterData,
+          // ensure to only push unduplicated results
+          [key]: Array.from(new Set(arrayVal)).join(','),
+        }
+        const hasMatch = []
+        let isLocationMatch = false
+        arrayVal.forEach((val) => {
+          if (key === 'category'){
+             const mainOptionMatched = []
+             const subOptionMatched = []
+
+             sanitisedConfig[key].forEach((data) => {
+               if (data['seo-value'] === val) {
+                 predefinedQuery = val
+                 mainOptionMatched.push(data)
+                 // return data['seo-value'] === parsedData
+               }
+             })
+             sanitisedConfig[key].map((data) => {
+               data.sub_list.forEach((subOption) => {
+                 if (subOption['seo-value'] === val) {
+                   predefinedQuery = val
+                   subOptionMatched.push(subOption)
+                 }
+               })
+             })
+
+             if (mainOptionMatched.length > 0) {
+               matchedConfigFromUserSelection = {
+                 ...matchedConfigFromUserSelection,
+                 [key]: mainOptionMatched,
+               }
+             }
+             if (subOptionMatched.length > 0) {
+               matchedConfigFromUserSelection = {
+                 ...matchedConfigFromUserSelection,
+                 [key]: subOptionMatched,
+               }
+             } 
+          }else{
+            const matchedFilter = sanitisedConfig[key]?.filter((data) => {
+              if (key === 'location') {
+                if (data['seo_value'] === val){
+                  isLocationMatch = true
+                  return data['seo_value'] === val
+                }
+              }else{
+                return data['seo-value'] === val
+              }
+            })
+            if (matchedFilter.length !== 0) hasMatch.push(matchedFilter[0])
+          }
+        })
+        if (hasMatch.length > 0) {
+          if (isLocationMatch){
+            matchedLocation = {
+              ...matchedLocation,
+              [key]: hasMatch
+            }
+          }else{
+            matchedConfigFromUserSelection = {
+              ...matchedConfigFromUserSelection,
+              [key]: hasMatch,
+            }
+          }
+        }
+      }
+    }
+  }
+
+  console.log('matchedLocation', matchedLocation)
+  console.log('matchedConfigFromUrl', matchedConfigFromUrl)
+  console.log('matchedConfigFromUserSelection', matchedConfigFromUserSelection)
+  let filterCount = 0
+  let filterParamsObject = {}
+  Object.values(matchedLocation).forEach((val) => val.forEach(() => filterCount += 1))
+  Object.values(matchedConfigFromUrl).forEach(() => filterCount += 1 )
+  Object.values(matchedConfigFromUserSelection).forEach((val) => {
+    val.forEach((s) => {
+      filterCount += 1
+    })
+  })
+
+  let query = '' 
+  let filterQuery = '' 
+  let locationQuery = ''
+  Object.values(matchedLocation).forEach((val)=> {
+     val.forEach((data) => {
+       locationQuery = data['seo_value']
+     })
+  })
+  Object.values(matchedConfigFromUserSelection).forEach((val) => {
+    val.forEach((data) => {
+      filterQuery = data['seo-value']
+    })
+  })
+
+  console.log('query', query)
+  console.log('filterQuery', filterQuery)
+  console.log('locationQuery', locationQuery)
+
+  if (filterCount === 0){
+    // it means there is no predefinedQuery && predefinedLocation 
+    query = appendSingleQueryPattern(queryParser[0])
+  } else if (filterCount === 1){
+    // if there is no predefinedQuery && there is predefinedLocation
+    if (!predefinedQuery && predefinedLocation) query = appendSingleQueryPattern(predefinedLocation)
+    // if there is predefinedQuery && !predefinedLocation
+    if (predefinedQuery && !predefinedLocation) query = appendSingleQueryPattern(predefinedQuery)
+    // if there is no predefinedQuery && there is no predefinedLocation but there is locationMatch
+    if (!predefinedQuery && !predefinedLocation && locationQuery) {
+      query = appendSingleQueryPattern(locationQuery)
+      // if there is no predefinedQuery && there is no predefinedLocation
+    }else if (!predefinedQuery && !predefinedLocation){
+      query = appendSingleQueryPattern(filterQuery)
+    }
+  } else if (filterCount === 2){
+    // if there is predefinedQuery && predefinedLocation
+    if (predefinedQuery && predefinedLocation) query = appendDoubleQueryPattern(predefinedQuery, predefinedLocation)
+    // if filter is 2 but there is no predefinedQuery or predefinedLocation
+    if (!predefinedQuery && !predefinedLocation) {
+      query = appendGeneralQueryPattern()
+       Object.keys(matchedConfigFromUserSelection).forEach((key) => {
+          const match = matchedConfigFromUserSelection[key]
+            .map((filter) => filter['seo-value'])
+            .join()
+          filterParamsObject = {
+            ...filterParamsObject,
+            [key]: match,
+          }
+        })
+    }
+    // if there is predefinedQuery but no predefinedLocation but there is location match
+    if (predefinedQuery && !predefinedLocation && locationQuery){
+      query = appendDoubleQueryPattern(predefinedQuery, locationQuery)
+    }
+    // if filter is 2, there is no predefinedQuery, but there is predefinedLocation, it means it hit reserved keyword
+    if (!predefinedQuery && predefinedLocation) {
+       query = appendDoubleQueryPattern(filterQuery,predefinedLocation)
+        Object.keys(matchedConfigFromUserSelection).forEach((key) => {
+          const match = matchedConfigFromUserSelection[key]
+            .map((filter) => filter['seo-value'])
+            .join()
+          filterParamsObject = {
+            ...filterParamsObject,
+            [key]: match,
+          }
+        })
+    }
+  }else {
+    query = appendGeneralQueryPattern()
+    // if filter/location is already in querym remove it from filterParamsObject
+    Object.keys(matchedLocation).forEach((key) => {
+      const match = matchedLocation[key].map((filter) => filter['seo_value']).join()
+      filterParamsObject = {
+        ...filterParamsObject,
+        [key]: match,
+      }
+    })
+    Object.keys(matchedConfigFromUrl).forEach((key) => {
+      // if (key === 'category'){
+
+      // }else {
+      const match = matchedConfigFromUrl[key].map((filter) => filter['seo-value']).join()
+      filterParamsObject = {
+        ...filterParamsObject,
+        [key]: match,
+      }
+      // }
+    })
+    Object.keys(matchedConfigFromUserSelection).forEach((key) => {
+      const match = matchedConfigFromUserSelection[key].map((filter) => filter['seo-value']).join()
+      filterParamsObject = {
+        ...filterParamsObject,
+        [key]: match,
+      }
+    })
+  }
+ 
+  const data = {
+    searchQuery: query,
+    // searchQuery: predefinedQuery && optionValue.length > 0 ? predefinedQuery : filterQuery,
+    // filters: combinedMatchedConfig,
+    // filterParamsString: filterParams,
+    filterParamsObject,
+  }
+
+  return data
+}
+
+const moreFilterDataParser = (newValue, routerQuery, config, clearAllFilters) => {
+  console.log('newValue', newValue)
   const { keyword } = routerQuery
   const queryParser = urlQueryParser(keyword)
   const locationList = getLocationList(config)
@@ -171,6 +498,7 @@ const getDataFromUrl = (newValue, routerQuery, config, clearAllFilters) => {
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
+    ['seo-value']: range['seo-value'],
   }))
 
   const sanitisedConfig = {
@@ -193,6 +521,7 @@ const getDataFromUrl = (newValue, routerQuery, config, clearAllFilters) => {
     // iterate based on number of results from queryParser
     queryParser.forEach((parsedData, index) => {
       const hasMatch = sanitisedConfig[key].filter((data) => {
+        console.log('data', data)
         return data['seo-value'] === parsedData
       })
 
@@ -205,30 +534,43 @@ const getDataFromUrl = (newValue, routerQuery, config, clearAllFilters) => {
 
       // if parsedData has index of 0, and it has no matches, it is a predefinedQuery
       if (index === 0 && hasMatch.length === 0) predefinedQuery = parsedData
+      // if parsedData has index of 1, it means it has a predefined location
+      console.log('queryParser', queryParser)
+      console.log('hasMatch', hasMatch)
       // console.log('sanitisedConfig value', value)
     })
     // handle filters from user actions
     for (const [key, value] of Object.entries(newValue)) {
+      // only proceed if it is not a non filter key
       if (!nonFilterKeys.includes(key)) {
+        // only proceed if value is not null && not empty
         if (value && value.length !== 0) {
-          if (key !== 'page' && key !== 'sort') {
-            filterData = {
-              ...filterData,
-              // ensure to only push unduplicated results
-              [key]: Array.from(new Set(value)).join(','),
-            }
-            const hasMatch = []
-            value.forEach((val) => {
-              const matchedFilter = sanitisedConfig[key]?.filter((data) => {
-                return data['seo-value'] === val
+          // handle filters not under 'More filters' section
+          switch (key) {
+            // case 'salary':
+            // console.log('value',value)
+            // break
+            default:
+              filterData = {
+                ...filterData,
+                // ensure to only push unduplicated results
+                [key]: Array.from(new Set(value)).join(','),
+              }
+              const hasMatch = []
+              value.forEach((val) => {
+                console.log('keyeeeee', key)
+                const matchedFilter = sanitisedConfig[key]?.filter((data) => {
+                  return data['seo-value'] === val
+                })
+                hasMatch.push(matchedFilter[0])
               })
-              hasMatch.push(matchedFilter[0])
-            })
-            matchedConfig = {
-              ...matchedConfig,
-              [key]: hasMatch,
-            }
+              matchedConfig = {
+                ...matchedConfig,
+                [key]: hasMatch,
+              }
+              break
           }
+          console.log('matchedConfig', matchedConfig)
         }
       }
     }
@@ -264,6 +606,7 @@ const getDataFromUrl = (newValue, routerQuery, config, clearAllFilters) => {
   // remove searchQuery filter from matchedConfig
   if (!predefinedQuery && isSingleFilter) {
     filterQuery = Object.values(matchedConfig)[0][0]['seo-value']
+    filterQuery = `${filterQuery}-jobs`
     filterParamsObject = {}
   }
 
@@ -608,5 +951,6 @@ export {
   getIndustryList,
   getDegreeList,
   getApplyJobLink,
-  getDataFromUrl,
+  moreFilterDataParser,
+  userFilterSelectionDataParser,
 }

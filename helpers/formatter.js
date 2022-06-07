@@ -155,3 +155,11 @@ export const removeEmptyOrNullValues = (object) => {
 
   return newObject
 }
+
+export const buildQueryParams = (arrayObj) => {
+  let queryString = arrayObj
+    .map((obj) => Object.keys(obj).map((key) => key + '=' + obj[key]))
+    .join('&')
+  queryString = '?' + queryString
+  return queryString
+}

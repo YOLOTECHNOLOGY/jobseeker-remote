@@ -57,6 +57,7 @@ import {
   conditionChecker,
   getPredefinedParamsFromUrl,
   getLocationList,
+  userFilterSelectionDataParser
 } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
@@ -165,6 +166,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
   const { width } = useWindowDimensions()
+
   const userCookie = getCookie('user') || null
   const isMobile = width < 768 ? true : false
 
@@ -286,11 +288,18 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setIsShowFilter(!isShowFilter)
   }
 
-  const jobTypeOption = flat(config.inputs.job_types.map((jobType) => jobType.value))
+  const jobTypeOption = config.inputs.job_types
 
   const salaryRangeOption = flat(
     config.filters.salary_range_filters.map((range) => {
-      return range.value === '10K - 30K' ? 'Below 30K': range.value 
+      const rangeObj = {
+        ...range,
+        value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
+      }
+      return rangeObj
+      // return {
+      //   value: range.value === '10K - 30K' ? 'Below 30K': range.value 
+      // }
     })
   )
 
@@ -380,16 +389,29 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const queryObject = Object.assign({}, { ...rest })
     let queryParam = 'job-search'
 
-    if (value) {
-      const sanitisedLocValue = categoryParser(value.value)
-      queryParam = conditionChecker(predefinedQuery, sanitisedLocValue, predefinedCategory)
-    } else {
-      queryParam = conditionChecker(predefinedQuery, null, predefinedCategory)
-    }
+    // console.log('onLocationSearch value', value)
+    // if (value) {
+    //   const sanitisedLocValue = categoryParser(value.value)
+    //   console.log('sanitisedLocValue', sanitisedLocValue)
+    //   queryParam = conditionChecker(predefinedQuery, sanitisedLocValue, predefinedCategory)
+    // } else {
+    //   queryParam = conditionChecker(predefinedQuery, null, predefinedCategory)
+    // }
+    // console.log('queryParam', queryParam)
+
+    console.log('location Value', value)
+    const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
+      'location',
+      value,
+      router.query,
+      config
+    )
 
     setUrlLocation(value)
 
-    updateUrl(queryParam, queryObject)
+    console.log('searchQuery', searchQuery)
+    console.log('filterParamsObject', filterParamsObject)
+    updateUrl(searchQuery, filterParamsObject)
   }
 
   const onSortSelection = (selectedOption ) => {
@@ -405,46 +427,73 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const onSalarySelection = (selectedOptions) => {
-    // eslint-disable-next-line
     const { keyword, ...rest } = router.query
-    const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
-    const removedProperty = onRemoveProperty('salary', {...rest})
-    const queryObject = selectedOptions?.length > 0 
-                        ? Object.assign({}, { ...rest, salary: selectedOptions.join(',') }) 
-                        : Object.assign({}, { ...removedProperty })
+    // eslint-disable-next-line
+    console.log('onSalarySelection selectedOptions', selectedOptions)
+    console.log('onSalarySelection router.query', router.query)
 
+    const { searchQuery, filterParamsObject } = userFilterSelectionDataParser('salary', selectedOptions, router.query, config)
+
+    console.log('searchQuery', searchQuery)
+    console.log('filterParamsObject', filterParamsObject)
+    // detect changes for salary
+    // check if predefined query exist
+    // if predefined query exist OR if there is more than 1 filter, append to query param
+    // if predefined query does not exist, set salary selected to salary-jobs
+    // const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
+    // const removedProperty = onRemoveProperty('salary', {...rest})
+    // const queryObject = selectedOptions?.length > 0 
+    //                     ? Object.assign({}, { ...rest, salary: selectedOptions.join(',') }) 
+    //                     : Object.assign({}, { ...removedProperty })
+
+    // console.log('onSalarySelection queryParam', queryParam)
+    // console.log('onSalarySelection queryObject', queryObject)
     setSalaries(selectedOptions)
     
-    updateUrl(queryParam, queryObject)
+    updateUrl(searchQuery, filterParamsObject)
   }
 
   const onJobTypeSelection = (selectedOptions) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
-    const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
-    const removedProperty = onRemoveProperty('jobType', {...rest})
-    const queryObject = selectedOptions?.length > 0 
-                        ? Object.assign({}, { ...rest, jobType: selectedOptions.join(',') }) 
-                        : Object.assign({}, { ...removedProperty })
+    const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
+          'jobType',
+          selectedOptions,
+          router.query,
+          config
+        )
+
+    // const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
+    // const removedProperty = onRemoveProperty('jobType', {...rest})
+    // const queryObject = selectedOptions?.length > 0 
+    //                     ? Object.assign({}, { ...rest, jobType: selectedOptions.join(',') }) 
+    //                     : Object.assign({}, { ...removedProperty })
 
     setJobTypes(selectedOptions)
 
-    updateUrl(queryParam, queryObject)
+    updateUrl(searchQuery, filterParamsObject)
+    // updateUrl(queryParam, queryObject)
   }
 
   const onSpecializationSelection = (selectedOptions) => {
-    // eslint-disable-next-line
-    const { keyword, ...rest } = router.query
-    const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
-    const removedProperty = onRemoveProperty('category', { ...rest })
-    const queryObject =
-      selectedOptions?.length > 0
-        ? Object.assign({}, { ...rest, category: selectedOptions.join(',') })
-        : Object.assign({}, { ...removedProperty })
+     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
+       'category',
+       selectedOptions,
+       router.query,
+       config
+     )
+    // console.log('onSpecializationSelection selectedOptions', selectedOptions)
+    // // eslint-disable-next-line
+    // const { keyword, ...rest } = router.query
+    // const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
+    // const removedProperty = onRemoveProperty('category', { ...rest })
+    // const queryObject =
+    //   selectedOptions?.length > 0
+    //     ? Object.assign({}, { ...rest, category: selectedOptions.join(',') })
+    //     : Object.assign({}, { ...removedProperty })
 
     setCategories(selectedOptions)
-
-    updateUrl(queryParam, queryObject)
+    updateUrl(searchQuery, filterParamsObject)
   }
 
   const handleResetFilter = () => {
