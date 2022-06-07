@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import slugify from 'slugify'
-import classNames from 'classnames/bind'
+
+/* Action Creators */
+import { wrapper } from 'store'
+
+// @ts-ignore
+import { END } from 'redux-saga'
 
 // Components
 import Layout from 'components/Layout'
@@ -12,31 +17,29 @@ import SEO from 'components/SEO'
 import CompanyCardList from 'components/Company/CompanyCardList'
 import SearchCompanyField from 'components/SearchCompanyField'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
-
 import { ImageList, ImageListItem } from '@mui/material'
 
 // Redux Actions
 import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
+import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 // Styles
 import styles from './Companies.module.scss'
-import breakpointStyles from 'styles/breakpoint.module.scss'
+import BannerCarousel from 'components/BannerCarousel'
 
 const Companies = () => {
   const dispatch = useDispatch()
   const router = useRouter()
-
+  
   const [featuredCompanies, setFeaturedCompanies] = useState(null)
   const [featuredCompany, setFeaturedCompany] = useState(null)
   const [totalPage, setTotalPage] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
 
   const featuredCompaniesResponse = useSelector((store: any) => store.companies.fetchFeaturedCompaniesList.response)
-  const isFeaturedCompaniesFetching = useSelector((store: any) => store.companies.fetchFeaturedCompaniesList.fetching)
+  const featureBanners = useSelector((store: any) => store.config.config.response.feature_banners)
 
-  useEffect(() => {
-    dispatch(fetchFeaturedCompaniesListRequest({}))
-  }, [])
+  const isFeaturedCompaniesFetching = useSelector((store: any) => store.companies.fetchFeaturedCompaniesList.fetching)
 
   useEffect(() => {
     setCurrentPage(Number(router.query.page))
@@ -85,23 +88,9 @@ const Companies = () => {
           <SearchCompanyField onKeywordSearch={handleKeywordSearch} />
         </div>
 
-        <div className={styles.banner}>
-          <img
-            src='https://dummyimage.com/1920x450/000/fff'
-            alt=''
-            className={classNames([breakpointStyles.hideOnMobileAndTablet, styles.bannerImage])}
-          />
-          <img
-            src='https://dummyimage.com/788x401/000/fff'
-            alt=''
-            className={classNames([breakpointStyles.hideOnMobileAndDesktop, styles.bannerImage])}
-          />
-          <img
-            src='https://dummyimage.com/788x638/000/fff'
-            alt=''
-            className={classNames([breakpointStyles.hideOnTabletAndDesktop, styles.bannerImage])}
-          />
-        </div>
+        <BannerCarousel 
+          slides={featureBanners} 
+        />
 
         <Text textStyle='xxl' tagName='h2' bold className={styles.featuredEmployerSectionTitle}>
           Featured Employer
@@ -202,5 +191,19 @@ const Companies = () => {
     </Layout>
   )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
+  const { page } = query
+
+  store.dispatch(fetchConfigRequest())
+  store.dispatch(fetchFeaturedCompaniesListRequest({page: Number(page) || 1}))
+  store.dispatch(END)
+
+  await (store as any).sagaTask.toPromise()
+
+  return {
+    props: {}
+  }
+})
 
 export default Companies
