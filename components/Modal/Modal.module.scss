@@ -18,9 +18,11 @@
     justify-content: flex-end;
   }
 
-  @include msd {
-    height: 100%;
-    height: --webkit-fill-available;
+  &.FullHeight {
+    @include msd {
+      height: 100%;
+      height: --webkit-fill-available;
+    }
   }
 
   &Content {
