@@ -32,7 +32,7 @@
       display: inline-block;
 
       &:first-child {
-        width: 180px;
+        min-width: 180px;
       }
 
       @include msd {
@@ -113,6 +113,7 @@
 
   ol, ul {
     padding-inline: inherit;
+    margin-left: 40px;
   }
 }
 
@@ -455,4 +456,8 @@
   @include msd {
     display: none;
   }
+}
+
+.emptyResult {
+  text-align: center;
 }

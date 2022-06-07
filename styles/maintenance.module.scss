@@ -13,9 +13,10 @@
   img {
     margin-top: 80px;
     margin-bottom: 24px;
+    max-width: 457px;
 
     @include sm {
-      max-width: 330px
+      max-width: 314px
     }
   }
 

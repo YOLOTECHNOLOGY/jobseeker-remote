@@ -5,8 +5,11 @@ export default function userEmail(req, res) {
 
   axios.get(url, { headers: { 'Authorization': `Bearer ${req.body.accessToken}`}})
     .then((response) => {
-      const dataFormat = response.data
-      const linkedinData = JSON.parse(dataFormat)
-      res.send(linkedinData)
+      res.send(response.data)
+    })
+    .catch(error => {
+      console.error(error)
+
+      res.status(401).json({ message: 'Invalid token' })
     })
 }

@@ -18,14 +18,14 @@ function* logoutReq() {
       removeCookie('accessToken')
       removeCookie('splan')
       removeCookie('isVerifyEmailModalClosed')
-      yield put(push('/login/jobseeker'))
+      yield put(push('/'))
     }
   } catch (err) {
     yield put(logoutFailed(err))
     removeCookie('user')
     removeCookie('accessToken')
     removeCookie('splan')
-    yield put(push('/login/jobseeker'))
+    yield put(push('/'))
   }
 }
 

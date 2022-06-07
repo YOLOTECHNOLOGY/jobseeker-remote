@@ -96,7 +96,7 @@ const JobListSection = ({
   const prevScrollY = useRef(0)
 
   const [isSticky, setIsSticky] = useState(false)
-  const [jobNumStart, setJobNumStart] = useState(page)
+  const [jobNumStart, setJobNumStart] = useState(0)
   const [jobNumEnd, setJobNumEnd] = useState(30)
   
   const [isShowModalShare, setIsShowModalShare] = useState(false)
@@ -123,7 +123,7 @@ const JobListSection = ({
 
   useEffect(() => {
     setJobNumStart(((jobList?.page - 1) * jobList?.size) + 1)
-    setJobNumEnd(((jobList?.page - 1) * jobList?.size) + jobList?.jobs.length)
+    setJobNumEnd(jobList?.jobs.length > 0 ? ((jobList?.page - 1) * jobList?.size) + jobList?.jobs.length : 30)
   }, [jobList])
 
   const handlePaginationClick = (event, val) => {
@@ -184,9 +184,18 @@ const JobListSection = ({
 
   const handleFormatWindowUrl = (pathname, name, id) => {
     if (typeof window !== 'undefined') {
-      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${id}`
+      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:/@]/g })}-${id}`
     }
     return ''
+  }
+
+  const emptyResult = () => {
+    return (
+      <React.Fragment>
+        <Text textStyle='xl' bold>We couldn't find any jobs matching your search.</Text>
+        <Text textStyle='md'>Check the spelling and adjust the filter criteria.</Text>
+      </React.Fragment>
+    )
   }
 
   const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
@@ -207,10 +216,10 @@ const JobListSection = ({
                     className={styles.jobListOptionAlertsItem}
                     onClick={() => {
                       if (isUserAuthenticated) handleCreateJobAlert()
-                      if (!isUserAuthenticated) handleCreateJobAlert(null)
+                      else router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
                     }}
                   >
-                    <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
+                      <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
                   </div>
                   {isUserAuthenticated && (
                     <div
@@ -240,6 +249,13 @@ const JobListSection = ({
                   <JobCardLoader />
                 </React.Fragment>
               )}
+
+              {jobList?.jobs?.length === 0 && !isJobDetailFetching && (
+                <div className={styles.emptyResultMobile}>
+                  {emptyResult()}
+                </div>
+              )}  
+              
               {!isJobListFetching && jobList?.jobs?.length > 0 && jobList.jobs.map((job) => (
                 <JobCard
                   key={job.id}
@@ -253,6 +269,7 @@ const JobListSection = ({
                   location={job.job_location}
                   salary={job.salary_range_value}
                   postedAt={job.refreshed_at}
+                  status={job.status_key}
                   selectedId={selectedJobId}
                   handleSelectedId={() => {
                     handleSelectedJobId(job.id, job.job_title)
@@ -260,14 +277,17 @@ const JobListSection = ({
                 />
               ))}
             </div>
-            <div className={styles.paginationWrapper}>
-              <MaterialRoundedPagination onChange={handlePaginationClick} page={selectedPage} totalPages={totalPages} />
-            </div>
+            {jobList?.jobs?.length > 0 &&
+              <div className={styles.paginationWrapper}>
+                <MaterialRoundedPagination onChange={handlePaginationClick} page={selectedPage} totalPages={totalPages} />
+              </div>
+            }
           </div>
           <div className={styles.jobDetailInfoSection}>
             {(isJobDetailFetching || isJobListFetching) && (
               <JobDetailLoader />
             )}
+
             {!isJobDetailFetching && selectedJob?.['id'] && (
               <JobDetail 
                 selectedJob={selectedJob}
@@ -281,6 +301,12 @@ const JobListSection = ({
                 config={config}
               />
             )}
+
+            {jobList?.jobs?.length === 0 && !isJobDetailFetching && (
+              <div className={styles.emptyResult}>
+                {emptyResult()}
+              </div>
+            )} 
           </div>
           <div className={styles.jobAds}>
             <div className={styles.skyscraperBanner}>

@@ -669,9 +669,6 @@ const Job = ({
                       <Text textStyle='base' tagName='p'>
                         {job.company_name}
                       </Text>
-                      <Text textStyle='base' tagName='p'>
-                        {job.company_name}
-                      </Text>
                       <Text textStyle='base' textColor='darkgrey'>
                         {job.location_value}
                       </Text>
@@ -815,7 +812,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   if (jobId) {
     // store actions
     if (isApplied === 'true') {
-      store.dispatch(fetchAppliedJobDetailRequest(jobId))
+      store.dispatch(fetchAppliedJobDetailRequest({jobId, accessToken}))
     } else {
       store.dispatch(
         fetchJobDetailRequest({

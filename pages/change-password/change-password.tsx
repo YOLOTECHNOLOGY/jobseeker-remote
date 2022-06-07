@@ -50,7 +50,9 @@ const ChangePassword = () => {
   }
 
   const handleResetPassword = (data) => {
-    dispatch(resetPasswordRequest({ email, otp, password: data.password }))
+    if (!errors.password && !errors.confirmPassword && isPasswordMatch) {
+      dispatch(resetPasswordRequest({ email, otp, password: data.password }))
+    }
   }
 
   return (
@@ -82,15 +84,15 @@ const ChangePassword = () => {
           {...register('password', {
             required: {
               value: true,
-              message: 'This field is required.',
+              message: 'Please enter your password.',
             },
             minLength: {
               value: 8,
-              message: 'Must be 8 characters or more.',
+              message: 'Please enter a longer password(minimum of 8 characters)',
             },
             maxLength: {
               value: 16,
-              message: 'Must be 16 characters or less.',
+              message: 'Please enter a shorter password(maximum of 16 characters)',
             },
           })}
           className={styles.ChangePasswordFormInput}
@@ -130,15 +132,7 @@ const ChangePassword = () => {
             ...register('confirmPassword', {
               required: {
                 value: true,
-                message: 'This field is required.',
-              },
-              minLength: {
-                value: 8,
-                message: 'Must be 8 characters or more.',
-              },
-              maxLength: {
-                value: 16,
-                message: 'Must be 16 characters or less.',
+                message: 'Please enter your password.',
               },
             }),
           }}
@@ -177,7 +171,7 @@ const ChangePassword = () => {
         {confirmPassword && !isPasswordMatch && (
           <div className={styles.ChangePasswordFieldError}>
             <Text textStyle='sm' textColor='red'>
-              This field must match with your password field.
+              Passwords do not match. Please try again.
             </Text>
           </div>
         )}

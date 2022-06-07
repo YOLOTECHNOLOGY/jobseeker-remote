@@ -349,18 +349,27 @@ const getSmsCountryCode = (phoneNumber, sms_country_list) => {
 const getJobCategoryList = (config) => {
   if (!config) return []
 
-  return flat(config?.inputs?.job_category_lists.map((jobCategory) => Object.values(jobCategory)[2]))
+  const categories = []
+
+  config?.inputs?.job_category_lists.forEach((mainCategory) => {
+    mainCategory.sub_list.forEach((subList) => {
+      categories.push(subList.value)
+    })
+  })
+
+  return categories
 }
 
 const getJobCategoryIds = (config, categories) => {
   if (!config) return []
 
   const categoryLists = config?.inputs?.job_category_lists
-  let categoryIds = []
-  categoryLists.forEach((category) => {
-    categories.map((cat) => {
-      if (category.value === cat) {
-        categoryIds.push(category.id)
+  const categoryIds = []
+
+  categoryLists.forEach((mainCategory) => {
+    mainCategory.sub_list.forEach((subList) => {
+      if (categories.includes(subList.value)) {
+        categoryIds.push(subList.id)
       }
     })
   })

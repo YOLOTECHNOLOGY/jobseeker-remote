@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -22,9 +21,10 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
+import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
+import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
 import MaterialButton from 'components/MaterialButton'
 import Divider from '@mui/material/Divider'
-import Tooltip from '@mui/material/Tooltip'
 
 /* Helpers*/
 import {
@@ -54,6 +54,7 @@ const Step1 = (props: any) => {
   const { config, userDetail, accessToken } = props
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
+  const rhTooltipTitle = 'Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.'
 
   const locList = getLocationList(config)
   const countryList = getCountryList(config)
@@ -358,6 +359,7 @@ const Step1 = (props: any) => {
         
         <div className={styles.step1Subscribe}>
           <FormControlLabel
+            style={{ marginRight: '0px' }}
             control={
               <Switch 
                 checked={headhuntMe}
@@ -366,13 +368,22 @@ const Step1 = (props: any) => {
             }
             label={<Text textStyle='sm'>
               I’d like to join Headhunt Me to discover more job opportunities. 
-              <Tooltip title='Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.' placement='top' arrow >
-                <span className={styles.disclaimerIcon}>
-                  <Image src={DisclaimerIcon} alt='disclaimer' width='16' height='16' />
-                </span>
-              </Tooltip>
             </Text>}
           />
+          {isMobile ? (
+            <MaterialMobileTooltip
+              icon={DisclaimerIcon}
+              className={styles.disclaimerIcon}
+              title={rhTooltipTitle}
+            />
+            ) : (
+            <MaterialDesktopTooltip
+              icon={DisclaimerIcon}
+              className={styles.disclaimerIcon}
+              title={rhTooltipTitle}
+            />
+            )
+          }
         </div>
       </div>
       {isMobile &&  (

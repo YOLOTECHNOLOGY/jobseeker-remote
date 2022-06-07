@@ -40,7 +40,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             removeCookie('accessToken')
             removeCookie('splan')
 
-            router.push('/login/jobseeker')
+            router.push('/')
           }
         })
     }
@@ -84,8 +84,8 @@ const App = ({ Component, pageProps }: AppProps) => {
       ></Script> */}
 
       {/* Google One Tap Sign in */}
-      <Script src="https://apis.google.com/js/platform.js"/>
-      <Script src="https://accounts.google.com/gsi/client" async defer/>
+      <Script src='https://apis.google.com/js/platform.js' />
+      <Script src='https://accounts.google.com/gsi/client' async defer />
       <Script
         dangerouslySetInnerHTML={{
           __html: `
@@ -110,7 +110,7 @@ const App = ({ Component, pageProps }: AppProps) => {
               }
               window.location.replace("/handlers/googleLoginHandler?access_token=" + accessToken + "&active_key=" + activeKey);
             }
-          `
+          `,
         }}
       />
 
@@ -120,7 +120,11 @@ const App = ({ Component, pageProps }: AppProps) => {
           __html: `
             function initialize() {	
               FB.init({	
-                appId            : ${ process.env.CUSTOM_NODE_ENV === 'production' ? '2026042927653653' : '2111002932479859'},
+                appId            : ${
+                  process.env.CUSTOM_NODE_ENV === 'production'
+                    ? '2026042927653653'
+                    : '2111002932479859'
+                },
                 autoLogAppEvents : true,	
                 xfbml            : true,	
                 version          : 'v6.0'	
@@ -157,13 +161,47 @@ const App = ({ Component, pageProps }: AppProps) => {
               js.src = "https://connect.facebook.net/en_US/sdk.js";	
               fjs.parentNode.insertBefore(js, fjs);	
             }(document, 'script', 'facebook-jssdk'));	
-            `
+            `,
         }}
+      />
+
+      {/* Favicons */}
+      <link
+        rel='apple-touch-icon'
+        sizes='180x180'
+        href={`${process.env.S3_BUCKET_URL}/apple-touch-icon.png`}
+      />
+      <link
+        rel='icon'
+        type='image/png'
+        sizes='144x144'
+        href={`${process.env.S3_BUCKET_URL}/favicon_144x144.png`}
+      />
+      <link
+        rel='icon'
+        type='image/png'
+        sizes='96x96'
+        href={`${process.env.S3_BUCKET_URL}/favicon_96x96.png`}
+      />
+      <link
+        rel='icon'
+        type='image/png'
+        sizes='48x48'
+        href={`${process.env.S3_BUCKET_URL}/favicon_48x48.png`}
+      />
+      <link
+        rel='shortcut icon'
+        type='image/x-icon'
+        href={`${process.env.S3_BUCKET_URL}/favicon.ico`}
       />
 
       <ConnectedRouter>
         <CookiesProvider>
-          {process.env.MAINTENANCE === 'true' ? <MaintenancePage {...pageProps} /> : <Component {...pageProps} />}
+          {process.env.MAINTENANCE === 'true' ? (
+            <MaintenancePage {...pageProps} />
+          ) : (
+            <Component {...pageProps} />
+          )}
         </CookiesProvider>
       </ConnectedRouter>
     </>

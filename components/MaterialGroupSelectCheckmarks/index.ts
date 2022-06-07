@@ -1,0 +1,3 @@
+import MaterialGroupSelectCheckmarks from './MaterialGroupSelectCheckmarks'
+
+export default MaterialGroupSelectCheckmarks
