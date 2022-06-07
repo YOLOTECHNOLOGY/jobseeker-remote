@@ -43,12 +43,13 @@ const Layout = ({ children, className }: LayoutProps) => {
   }
 
   const handleVerifyEmailClick = async () => {
+    // revalidate verify email status
     const axios = configuredAxios('jobseeker', 'protected', '', authCookie)
     const response =  await axios.get('/me')
     const isVerifiedEmail = response?.data?.data?.is_email_verify;
-    if (!isVerifiedEmail) {
+    if (!isVerifiedEmail) { // email is not verified
       setIsShowModal(true);
-    } else { // user cookie is outdated
+    } else { // email is verified and user cookie is outdated
       const user = getCookie('user')
       const userCookie = {
         active_key: user.active_key,
