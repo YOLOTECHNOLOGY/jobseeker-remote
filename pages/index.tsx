@@ -43,6 +43,9 @@ import {
   GrabVentures,
   MoneyMax,
   TechInAsia,
+  RHBannerDesktop,
+  RHBannerMobile,
+  RHBannerTablet,
 } from 'images'
 
 /* styles */
@@ -806,7 +809,15 @@ const Home = (props: HomeProps) => {
         </div>
         <div className={styles.bannerSection}>
           <div className={styles.commonContainer}>
-            <Text className={styles.bannerSectionText}>Client Banner Here</Text>
+            <div className={breakpointStyles.hideOnMobileAndTablet}>
+              <Image src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
+            </div>
+            <div className={breakpointStyles.hideOnMobileAndDesktop}>
+              <Image src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
+            </div>
+            <div className={breakpointStyles.hideOnTabletAndDesktop}>
+              <Image src={RHBannerMobile} alt='rh-banner-mobile' width='667' height='335' />
+            </div>
           </div>
         </div>
       </Layout>
