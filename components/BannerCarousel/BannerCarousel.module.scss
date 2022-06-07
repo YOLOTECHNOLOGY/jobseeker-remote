@@ -57,10 +57,10 @@
   background-color: rgba($white-1, 0.9);
   margin-bottom: 48px;
   transform: translate(-50%, -50%);
-  object-fit: cover;
+  object-fit: fill;
 
-  @include sm {
-    object-fit: fill;
+  @include lg {
+    object-fit: cover;
   }
 }
 
