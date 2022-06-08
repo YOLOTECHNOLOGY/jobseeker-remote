@@ -121,6 +121,9 @@ const MyJobs = ({
 
   const withdrawAppliedJobResponse = useSelector((store: any) => store.job.withdrawAppliedJob.response)
   const isWithdrawAppliedJobFetching = useSelector((store: any) => store.job.withdrawAppliedJob.fetching)
+
+  const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
+  const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
   
   useEffect(() => {
     window.addEventListener('scroll', updateScrollPosition)
@@ -464,6 +467,8 @@ const MyJobs = ({
         reportJobReasonList={reportJobReasonList}
         selectedJobId={selectedJob?.['id']}
         handlePostReportJob={handlePostReportJob}
+        isPostingReport={isPostingReport}
+        postReportResponse={postReportResponse}
       />
 
       <ModalWithdrawApplication
