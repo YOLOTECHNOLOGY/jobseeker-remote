@@ -28,13 +28,6 @@ function* checkVerifyEmailOTP(payload) {
         is_email_verify: true,
         notice_period_id: user.notice_period_id,
         is_profile_completed: user.is_profile_completed,
-        recruiter_latest_work_xp:
-          (user.recruiter_latest_work_xp && {
-            company_id: user.recruiter_latest_work_xp.company_id,
-            job_title: user.recruiter_latest_work_xp.job_title,
-            is_currently_work_here: user.recruiter_latest_work_xp.is_currently_work_here,
-          }) ||
-          null,
       }
 
       yield call(setCookie, 'user', userCookie)

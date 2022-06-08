@@ -27,6 +27,7 @@ type ModalProps = {
   firstButtonText?: string
   secondButtonText?: string
   isFullWidth?: boolean
+  isFullHeight?: boolean
 }
 
 const Modal = ({
@@ -44,6 +45,7 @@ const Modal = ({
   firstButtonText,
   secondButtonText,
   isFullWidth,
+  isFullHeight,
   ...rest
 }: ModalProps) => {
   const ref = useRef(null)
@@ -85,9 +87,7 @@ const Modal = ({
   return (
     <div
       id="modal"
-      className={`${styles.modal} ${
-        showModal ? styles.modalVisible : styles.modalHidden
-      } ${className} `}
+      className={classNames([styles.modal, isFullHeight ? styles.FullHeight : '', showModal ? styles.modalVisible : styles.modalHidden,])}
       style={style}
       {...rest}
     >
