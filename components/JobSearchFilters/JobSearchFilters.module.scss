@@ -4,10 +4,10 @@
 .searchFilter {
   display: none;
   position: absolute;
-  top: 210px;
+  top: 77px;
   right: 0;
   width: 600px;
-  height: auto;
+  height: calc(100vh - 77px);
   z-index: 12;
   background-color: $white-3;
   box-shadow: $box-shadow-1;
@@ -45,7 +45,7 @@
 
   &Body {
     padding: 10px 25px 77px 25px;
-    height: calc(100vh - 65px);
+    height: calc(100vh - 274px);
     overflow-y: scroll;
 
 

@@ -23,7 +23,7 @@ const CompanyCard = ({
         <Link to={`/company/${slugify(company?.name.toLowerCase() || '')}-${company?.id}`} className={styles.companyCardName}>
           <Text textStyle='xl' bold tagName='h3'>{company.name}</Text>
         </Link>
-        <Text textStyle='lg' tagName='p' className={styles.companyCardCategory}>{company.industry_value}</Text>
+        <Text textStyle='lg' tagName='p' className={styles.companyCardCategory}>{company?.industry}</Text>
         <Link to={`/company/${slugify(company?.name.toLowerCase() || '')}-${company?.id}/jobs`} className={styles.companyCardOpenings}>
           <Text textStyle='lg' bold>View {company.num_of_active_jobs} job openings</Text>
         </Link>

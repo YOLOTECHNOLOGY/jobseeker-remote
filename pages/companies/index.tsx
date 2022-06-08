@@ -119,13 +119,13 @@ const Companies = () => {
                     <Text textStyle='base' bold>
                       Company Size
                     </Text>
-                    <Text textStyle='base'>{featuredCompany?.company_size_value} Employees</Text>
+                    <Text textStyle='base'>{featuredCompany?.company_size} Employees</Text>
                   </div>
                   <div className={styles.featuredEmployerAboutItem}>
                     <Text textStyle='base' bold>
                       Industry
                     </Text>
-                    <Text textStyle='base'>{featuredCompany?.industry_value}</Text>
+                    <Text textStyle='base'>{featuredCompany?.industry}</Text>
                   </div>
                 </div>
                 <Text textStyle='base' tagName='p' className={styles.featuredEmployerDescription}>
