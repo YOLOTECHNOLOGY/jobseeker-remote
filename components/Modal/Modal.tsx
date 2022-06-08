@@ -52,9 +52,18 @@ const Modal = ({
   const hasFirstButton = handleFirstButton && firstButtonText
   const hasSecondButton = handleSecondButton && secondButtonText
 
+  const handleCloseModal = () => {
+    const scrollY = document.body.style.top
+    document.body.style.position = ''
+    document.body.style.top = ''
+    // retrieve previous scroll position
+    window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    handleModal(false)
+  }
+
   const handleClickOutside = event => {
     if (ref.current && !ref.current.contains(event.target)) {
-      handleModal(false)
+      handleCloseModal();
     }
   }
 
@@ -66,6 +75,14 @@ const Modal = ({
       }
     }
   }, [])
+
+  useEffect(()=>{
+    if (showModal) {
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100vw'
+      document.body.style.top = `-${window.scrollY}px`
+    }
+  }, [showModal]);
 
   return (
     <div
@@ -81,7 +98,7 @@ const Modal = ({
               <Text textStyle='xl' bold className={styles.modalHeaderTitle}>{headerTitle}</Text>
               <Text
                 className={styles.modalCloseButton}
-                onClick={() => handleModal(false) }
+                onClick={handleCloseModal}
               >
                 <img
                   src={CloseIcon}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -13,6 +13,7 @@ import SEO from 'components/SEO'
 import AuthLayout from 'components/AuthLayout'
 import Text from 'components/Text'
 import Link from 'components/Link'
+import NotificationBar from 'components/NotificationBar'
 
 import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 
@@ -28,28 +29,76 @@ const LoginJobseeker = () => {
   const dispatch = useDispatch()
 
   const [login, setLogin] = useState('')
+  const [emailError, setEmailError] = useState(null)
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [passwordError, setPasswordError] = useState(null)
+  const [generalError, setGeneralError] = useState(null)
 
   const isLoginFetching = useSelector((store: any) => store.auth.login.fetching)
+  const loginError = useSelector((store: any) => store.auth.login.error)
 
   const handleOnShowPassword = () => setShowPassword(!showPassword)
 
+  const errorText = (errorMessage: string) => {
+    return (
+      <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
+        {errorMessage}
+      </Text>
+    )
+  }
+
+  useEffect(() => {
+    if (login) {
+      setEmailError(null)
+    }
+  }, [login])
+
+  useEffect(() => {
+    if (password) {
+      setPasswordError(null)
+    }
+  }, [password])
+
+  useEffect(() => {
+    if (isLoginFetching === false) {
+      if (loginError === 'invalid credential') {
+        setGeneralError(<p>Sorry, either the email or password is wrong. Please try again or reset them <a href='/reset-password' style={{ color: '#2379ea', textDecoration: 'underline' }}>here</a>.</p>)
+      } else if (loginError === 'account suspended') {
+        setGeneralError(<p>Your account has been suspended. Please contact support@bossjob.com for clarification.</p>)
+      }
+    }
+  
+  }, [isLoginFetching])
+
   const handleLogin = () => {
-    let redirect: string | string[] = ''
-    if (router.query && (router.query.redirectFullPath || router.query.redirect)) {
-      redirect = router.query?.redirectFullPath
-        ? router.query.redirectFullPath
-        : router.query.redirect
+    setGeneralError(null)
+
+    if (!login) {
+      setEmailError('Please enter your email address.')
     }
 
-    const loginPayload = {
-      login,
-      password,
-      redirect,
+    if (!password) {
+      setPasswordError('Please enter your password.')
     }
 
-    dispatch(loginRequest(loginPayload))
+    if (login && password) {
+      let redirect: string | string[] = ''
+      if (router.query && (router.query.redirectFullPath || router.query.redirect)) {
+        redirect = router.query?.redirectFullPath
+          ? router.query.redirectFullPath
+          : router.query.redirect
+      }
+
+      const loginPayload = {
+        login,
+        password,
+        redirect,
+      }
+  
+      dispatch(loginRequest(loginPayload))
+    }
+
   }
 
   const callbackRequest = (payload) => {
@@ -73,6 +122,9 @@ const LoginJobseeker = () => {
         description='Log in to Bossjob to get connected with professional job opportunities and quality talents. If you are not a member yet, Register for free now to Apply for Jobs, Create Professional Resume and Get Headhunted on Bossjob!'
         canonical='/login/jobseeker'
       />
+
+      <NotificationBar />
+
       <div className={styles.Login}>
         <SocialMediaAuth callbackRequest={callbackRequest} />
         <div className={styles.LoginDivider}>
@@ -82,6 +134,8 @@ const LoginJobseeker = () => {
         </div>
 
         <form className={styles.LoginForm}>
+          {generalError && errorText(generalError)}
+
           <MaterialTextField
             className={styles.LoginFormInput}
             id='email'
@@ -93,6 +147,7 @@ const LoginJobseeker = () => {
             autoComplete='off'
             onChange={(e) => setLogin(e.target.value)}
           />
+          {emailError && errorText(emailError)}
 
           <MaterialTextField
             className={styles.LoginFormInput}
@@ -119,6 +174,7 @@ const LoginJobseeker = () => {
               ),
             }}
           />
+          {passwordError && errorText(passwordError)}
 
           <div className={styles.LoginForgotPasswordLink}>
             <Link to={'/reset-password'}>
@@ -135,7 +191,6 @@ const LoginJobseeker = () => {
             className={styles.LoginButton}
             isLoading={isLoginFetching}
             onClick={() => handleLogin()}
-            type='submit'
           >
             <Text textStyle='xl' textColor='white' bold>
               Log In

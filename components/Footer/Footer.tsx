@@ -670,10 +670,10 @@ const Footer = () => {
                   Download Bossjob App
                 </Text>
                 <div style={{ margin: '25px 10px 10px 0' }}>
-                  <Image src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
+                  <Image src={DownloadOnAppStore} alt='AppStore' width='112' height='35' layout='fixed' />
                 </div>
                 <div>
-                  <Image src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
+                  <Image src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' layout='fixed' unoptimized={true} />
                 </div>
               </div>
               <div className={styles.footerColumn}>

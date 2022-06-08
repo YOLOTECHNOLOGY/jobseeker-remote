@@ -115,7 +115,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
     <Modal
       headerTitle='Apply to this job'
       showModal={modalShow}
-      handleModal={() => handleModalShow(false)}
+      handleModal={handleModalShow}
       className={styles.quickApplyModal}
     >
       <form className={styles.quickApplyForm}> 

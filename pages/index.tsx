@@ -777,7 +777,7 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={KrAsia} alt='KR Asia' width='206' height='40' />
+                <Image src={KrAsia} alt='KR Asia' width='206' height='40' layout='fixed' />
               </div>
               {width > 576 ? (
                 <Link

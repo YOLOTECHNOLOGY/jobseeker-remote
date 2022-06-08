@@ -203,10 +203,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
     <Modal
       headerTitle='Verify your email'
       showModal={isShowModal}
-      handleModal={() => {
-        handleModal(false)
-      }}
-      isFullHeight={true}
+      handleModal={handleModal}
     >
       {modalContent}
     </Modal>
