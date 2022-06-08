@@ -161,6 +161,78 @@ const buildQueryParams = (data) => {
   queryString = '?' + queryString
   return queryString
 }
+
+// check if there is a match 
+const checkFilterMatch = (routerQuery, config, useCase) => {
+  const { keyword } = routerQuery
+  const queryParser = urlQueryParser(keyword)
+  const locationList = config.inputs.location_lists
+  const industryList = config.inputs.industry_lists
+  const expLvlList = config.inputs.xp_lvls
+  const eduLevelList = config.filters.educations
+  const jobTypeList = config.inputs.job_types
+  const categoryList = config.inputs.job_category_lists
+  const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
+    key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
+    value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
+    ['seo-value']: range['seo-value'],
+  }))
+  const formatLocationConfig = (locationList) => {
+    const locationConfig = locationList?.map((region) => region.locations)
+    return locationConfig
+  }
+  const formattedLocationList = flat(formatLocationConfig(locationList))
+  const sanitisedConfig = {
+    industry: industryList,
+    jobType: jobTypeList,
+    salary: salaryRangeList,
+    workExperience: expLvlList,
+    qualification: eduLevelList,
+    location: formattedLocationList,
+    category: categoryList,
+  }
+
+  let matchedFilter = false
+  Object.keys(sanitisedConfig).forEach((key) => {
+    // iterate based on number of results from queryParser
+    queryParser.forEach((parsedData, index) => {
+      if (key === 'category') {
+
+        sanitisedConfig[key].forEach((data) => {
+          if (data['seo-value'] === parsedData) {
+            matchedFilter = true
+          }
+        })
+        sanitisedConfig[key].forEach((data) => {
+          data.sub_list.forEach((subOption) => {
+            if (subOption['seo-value'] === parsedData) {
+                          matchedFilter = true
+
+            }
+          })
+        })
+      } else {
+        sanitisedConfig[key].filter((data) => {
+          if (key === 'location' && index == 1) {
+            if (data['seo_value'] === parsedData) {
+                          matchedFilter = true
+            }
+          } else if (key === 'location' && index === 0) {
+            if (data['seo_value'] === parsedData) {
+                          matchedFilter = true
+            }
+          } else {
+            if (data['seo-value'] === parsedData) {
+                          matchedFilter = true
+            }
+          }
+        })
+      }
+    })
+  })
+  return matchedFilter
+}
+
 // handle MUI filters not under "More Filters"
 const userFilterSelectionDataParser = (field, optionValue, routerQuery, config) => {
   const { keyword, ...rest } = routerQuery
@@ -943,4 +1015,5 @@ export {
   getApplyJobLink,
   moreFilterDataParser,
   userFilterSelectionDataParser,
+  checkFilterMatch,
 }

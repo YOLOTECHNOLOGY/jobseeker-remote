@@ -54,6 +54,7 @@ import breakpointStyles from 'styles/breakpoint.module.scss'
 /* Helpers*/
 import {
   categoryParser,
+  checkFilterMatch,
   conditionChecker,
   getPredefinedParamsFromUrl,
   getLocationList,
@@ -499,7 +500,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const handleResetFilter = () => {
-    const queryParam = conditionChecker(predefinedQuery, null, null)
+    const hasMatch = checkFilterMatch(
+      router.query,
+      config,
+      'reset'
+    )
     const queryObject = []
 
     setUrlLocation([])
@@ -509,7 +514,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setSearchValue('')
     setMoreFilterReset(true)
 
-    updateUrl(queryParam, queryObject)  
+    // if query matches filter, on reset, remove it from query
+    if (hasMatch){
+      updateUrl(null, queryObject)
+    }else{
+      updateUrl(keyword, queryObject)
+    }
   }
 
   const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest({jobId, status: userCookie ? 'protected' : 'public'}))
@@ -691,7 +701,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             </Text>
           </MaterialButton>
 
-          {hasMoreFilters && (
+          {/* {hasMoreFilters && ( */}
             <MaterialButton
               variant='text'
               className={styles.moreFiltersBtn}
@@ -702,7 +712,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                 Reset Filters
               </Text>
             </MaterialButton>
-          )}
+          {/* )} */}
         </div>
         <div
           className={displayQuickLinks ? styles.quickLinkSectionExpanded : styles.quickLinkSection}
