@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -20,6 +20,7 @@ import SEO from 'components/SEO'
 import AuthLayout from 'components/AuthLayout'
 import Text from 'components/Text'
 import { TextField } from '@mui/material'
+import NotificationBar from 'components/NotificationBar'
 
 import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 
@@ -32,7 +33,9 @@ const Register = () => {
   const dispatch = useDispatch()
 
   const [firstName, setFirstName] = useState('')
+  const [firstNameError, setFirstNameError] = useState(null)
   const [lastName, setLastName] = useState('')
+  const [lastNameError, setLastNameError] = useState(null)
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState(null)
 
@@ -48,19 +51,71 @@ const Register = () => {
 
   const isRegisteringJobseeker = useSelector((store: any) => store.auth.registerJobseeker.fetching)
 
+  const registerJobseekerState = useSelector((store: any) => store.auth.registerJobseeker)
+
   const handleOnShowPassword = () => setShowPassword(!showPassword)
 
+  useEffect(() => {
+    if (firstName) {
+      setFirstNameError(null)
+    }
+  }, [firstName])
+
+  useEffect(() => {
+    if (lastName) {
+      setLastNameError(null)
+    }
+  }, [lastName])
+
+  useEffect(() => {
+    let emailErrorMessage = null
+
+    if (email && !/\S+@\S+\.\S+/.test(email)) {
+      emailErrorMessage = 'Please enter a valid email address.'
+    }
+
+    setEmailError(emailErrorMessage)
+
+  }, [email])
+
+  useEffect(() => {
+    let passwordErrorMessage = null
+
+    if (password?.length > 0 && password?.length < 8) {
+      passwordErrorMessage = 'Please enter your password (minimum 8 characters).'
+    } else if (password?.length > 255) {
+      passwordErrorMessage = 'Please enter a shorter password (maximum of 255 characters)'
+    } else {
+      passwordErrorMessage = null
+    }
+    setPasswordError(passwordErrorMessage)
+  }, [password])
+
+  useEffect(() => {
+    if (registerJobseekerState.error === 'The email has already been taken.') {
+      setEmailError(<p>A user with this email address already exists. Please enter a different email address or <a href='/login/jobseeker' style={{ color: '#2379ea', textDecoration: 'underline' }}>log in</a>.</p>)
+    }
+  
+  }, [registerJobseekerState])
+
   const handleRegister = () => {
-    if (!email) setEmailError('Email Address is required.')
-    else if (!/\S+@\S+\.\S+/.test(email)) setEmailError('Email Address is invalid.')
-    else setEmailError(null)
+    if (!firstName) {
+      setFirstNameError('Please enter your first name.')
+    }
 
-    if (!password) setPasswordError('Password is required.')
-    else if (password?.length < 8) setPasswordError('Must be 8 characters or more.')
-    else if (password?.length > 16) setPasswordError('Must be 16 characters or less.')
-    else setPasswordError(null)
+    if (!lastName) {
+      setLastNameError('Please enter your last name.')
+    }
 
-    if (!emailError && !passwordError) {
+    if (!email) {
+      setEmailError('Please enter your email address.')
+    }
+
+    if (!password) {
+      setPasswordError('Please enter your password (minimum 8 characters).')
+    }
+
+    if (firstName && lastName && email && password && !firstNameError && !lastNameError && !emailError && !passwordError) {
       const payload = {
         email,
         password,
@@ -106,6 +161,8 @@ const Register = () => {
         canonical='/register/jobseeker'
       />
 
+      <NotificationBar />
+
       <div className={styles.Register}>
         <SocialMediaAuth callbackRequest={callbackRequest} />
         <div className={styles.RegisterDivider}>
@@ -128,7 +185,9 @@ const Register = () => {
                 defaultValue={firstName}
                 autoComplete='off'
                 onChange={(e) => setFirstName(e.target.value)}
+                error={firstNameError ? true : false}
               />
+              {firstNameError && errorText(firstNameError)}
               {errors.firstName && (
                 <Text textColor='red' textStyle='sm'>
                   This field is required.
@@ -136,17 +195,21 @@ const Register = () => {
               )}
             </div>
 
-            <MaterialTextField
-              className={styles.RegisterFormInput}
-              id='lastName'
-              label='Last Name'
-              variant='outlined'
-              value={lastName}
-              size='small'
-              defaultValue={lastName}
-              autoComplete='off'
-              onChange={(e) => setLastName(e.target.value)}
-            />
+            <div>
+              <MaterialTextField
+                className={styles.RegisterFormInput}
+                id='lastName'
+                label='Last Name'
+                variant='outlined'
+                value={lastName}
+                size='small'
+                defaultValue={lastName}
+                autoComplete='off'
+                onChange={(e) => setLastName(e.target.value)}
+                error={lastNameError ? true : false}
+              />
+              {lastNameError && errorText(lastNameError)}
+            </div>
           </div>
 
           <MaterialTextField
