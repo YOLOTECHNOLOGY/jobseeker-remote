@@ -60,7 +60,6 @@ const ModalReportJob = ({
     setModalReportDetail(false)
     handlePostReportJob({jobId: selectedJobId, jobReasonId: data.reportDetail})
     handleShowReportJob(true)
-    console.log('onsubmit')
   }
 
   const handleChange = (event) => {
