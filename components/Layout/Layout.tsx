@@ -13,7 +13,9 @@ import { Link } from '@mui/material'
 import MaterialAlert from '../MaterialAlert/MaterialAlert'
 import ModalVerifyEmail from '../ModalVerifyEmail'
 import Text from '../Text'
-import configuredAxios from '../../helpers/configuredAxios'
+
+/* Helpers */
+import { fetchUserOwnDetailService } from '../../store/services/users/fetchUserOwnDetail'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -44,35 +46,28 @@ const Layout = ({ children, className }: LayoutProps) => {
 
   const handleVerifyEmailClick = async () => {
     // revalidate verify email status
-    const axios = configuredAxios('jobseeker', 'protected', '', authCookie)
-    const response =  await axios.get('/me')
-    const isVerifiedEmail = response?.data?.data?.is_email_verify;
+    const response = await fetchUserOwnDetailService({accessToken: authCookie})
+    const userDetails = response?.data?.data
+    const isVerifiedEmail = userDetails?.is_email_verify
     if (!isVerifiedEmail) { // email is not verified
       setIsShowModal(true);
-    } else { // email is verified and user cookie is outdated
-      const user = getCookie('user')
+    } else { // email is verified and userDetails cookie is outdated
       const userCookie = {
-        active_key: user.active_key,
-        id: user.id,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-        phone_num: user.phone_num,
-        is_mobile_verified: user.is_mobile_verified,
-        avatar: user.avatar,
-        additional_info: user.additional_info,
+        active_key: userDetails.active_key,
+        id: userDetails.id,
+        first_name: userDetails.first_name,
+        last_name: userDetails.last_name,
+        email: userDetails.email,
+        phone_num: userDetails.phone_num,
+        is_mobile_verified: userDetails.is_mobile_verified,
+        avatar: userDetails.avatar,
+        additional_info: userDetails.additional_info,
         is_email_verify: true,
-        notice_period_id: user.notice_period_id,
-        is_profile_completed: user.is_profile_completed,
-        recruiter_latest_work_xp:
-          (user.recruiter_latest_work_xp && {
-            company_id: user.recruiter_latest_work_xp.company_id,
-            job_title: user.recruiter_latest_work_xp.job_title,
-            is_currently_work_here: user.recruiter_latest_work_xp.is_currently_work_here,
-          }) ||
-          null,
+        notice_period_id: userDetails.notice_period_id,
+        is_profile_completed: userDetails.is_profile_completed,
       }
       setCookie('user', userCookie)
+      setIsEmailVerified(true);
     }
   }
 
@@ -80,12 +75,6 @@ const Layout = ({ children, className }: LayoutProps) => {
     setIsShowModal(isShow)
     setIsEmailVerified(getCookie('user').is_email_verify)
     setCookieWithExpiry('isVerifyEmailModalClosed', true, 3600) // cookie expires to renable auto show modal after 1 hour
-    // once modal is closed, body should not be fixed to enable scrolling
-    const scrollY = document.body.style.top
-    document.body.style.position = ''
-    document.body.style.top = ''
-    // retrieve previous scroll position
-    window.scrollTo(0, parseInt(scrollY || '0') * -1)
   }
 
   return (
