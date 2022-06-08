@@ -40,7 +40,7 @@ const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: Mo
     <Modal
       headerTitle='Share this job'
       showModal={isShowModalShare}
-      handleModal={() => handleShowModalShare(false)}
+      handleModal={handleShowModalShare}
     >
       <div className={styles.ModalShare}>
         <div className={styles.ModalShareList}>

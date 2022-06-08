@@ -198,9 +198,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
     <Modal
       headerTitle='Verify your email'
       showModal={isShowModal}
-      handleModal={() => {
-        handleModal(false)
-      }}
+      handleModal={handleModal}
     >
       {modalContent}
     </Modal>
