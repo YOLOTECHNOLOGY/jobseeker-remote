@@ -7,12 +7,14 @@ import { isFromCreateResume } from 'helpers/constants'
 import { removeUtmCampaign } from 'helpers/utmCampaign'
 
 import { REGISTER_JOBSEEKER_REQUEST } from 'store/types/auth/registerJobseeker'
-import { FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS } from 'store/types/recruiters/fetchRecruiterSubscriptionFeature'
 
 import {
   registerJobseekerSuccess,
   registerJobseekerFailed,
 } from 'store/actions/auth/registerJobseeker'
+import {
+  displayNotification
+} from 'store/actions/notificationBar/notificationBar'
 
 import { registerJobseekerService } from 'store/services/auth/registerJobseeker'
 
@@ -94,7 +96,29 @@ function* registerJobSeekerReq(actions) {
       yield put(push(jobId ? `/job/${jobId}` : '/jobseeker-complete-profile/1'))
     }
   } catch (err) {
-    yield put(registerJobseekerFailed(err.response.data.errors.message))
+    const statusCode = err.response.status
+
+    if (statusCode === 422) {
+      let errorMessage = ''
+
+      const error = err.response.data.errors.message
+      if (error) {
+        if (error['email']) {
+          if (error['email'][0] === 'The email has already been taken.') {
+            errorMessage = 'The email has already been taken.'
+          }
+        }
+      }
+
+      yield put(registerJobseekerFailed(errorMessage))
+    } else {
+      const displayNotificationPayload = {
+        "open": true,
+        "severity": "error",
+        "message": "We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance."
+      }
+      yield put(displayNotification(displayNotificationPayload))
+    }
   }
 }
 

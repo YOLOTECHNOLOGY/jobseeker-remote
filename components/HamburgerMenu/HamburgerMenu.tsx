@@ -32,14 +32,18 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
     setIsAuthenticated(getCookie('accessToken') ? true : false)
   }, [])
 
-  useEffect(() => {
-    //  disable body from scrolling when hamburger menu is open
-    const body = document.querySelector('body')
-    body.style.overflow = openState ? 'hidden' : 'auto'
-  }, [openState])
-
   const handleLogOut = () => {
+    // enable body scroll again
+    document.body.style.position = ''
+    document.body.style.top = ''
     dispatch(logoutRequest())
+  }
+
+  const handleClick = () => {
+    // enable body scroll again
+    document.body.style.position = ''
+    document.body.style.top = ''
+    toggleMenu();
   }
 
   return (
@@ -48,7 +52,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
         <ul className={styles.menuListWrapper}>
           <React.Fragment>
             <Link className={styles.defaultLink} to='/jobs-hiring/job-search' title='Jobs'>
-              <li className={styles.menuList} onClick={() => toggleMenu()}>
+              <li className={styles.menuList} onClick={handleClick}>
                 <Text textStyle='xl'>Jobs</Text>
               </li>
             </Link>
@@ -58,7 +62,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
               title='Headhunt Me'
               aTag
             >
-              <li className={styles.menuList} onClick={() => toggleMenu()}>
+              <li className={styles.menuList} onClick={handleClick}>
                 <Text textStyle='xl'>Headhunt Me</Text>
               </li>
             </Link>
@@ -68,7 +72,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
               title='Companies'
               aTag
             >
-              <li className={styles.menuList} onClick={() => toggleMenu()}>
+              <li className={styles.menuList} onClick={handleClick}>
                 <Text textStyle='xl'>Companies</Text>
               </li>
             </Link>
@@ -78,7 +82,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
               aTag
               title='Courses'
             >
-              <li className={styles.menuList} onClick={() => toggleMenu()}>
+              <li className={styles.menuList} onClick={handleClick}>
                 <Text textStyle='xl'>Courses</Text>
               </li>
             </Link>
@@ -90,7 +94,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   aTag
                   title='Career Guide'
                 >
-                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                  <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Career Guide</Text>
                   </li>
                 </Link>
@@ -100,17 +104,17 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   aTag
                   title='Employers'
                 >
-                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                  <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Employers</Text>
                   </li>
                 </Link>
                 <Link className={styles.defaultLink} to='/login/jobseeker' title='Log In'>
-                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                  <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Log In</Text>
                   </li>
                 </Link>
                 <Link className={styles.defaultLink} to='/register/jobseeker' title='Sign Up'>
-                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                  <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl' className={styles.activeLink}>Sign Up</Text>
                   </li>
                 </Link>
@@ -124,7 +128,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   aTag
                   title='Chats'
                 >
-                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                  <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Chats</Text>
                   </li>
                 </Link>
@@ -134,27 +138,27 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   aTag
                   title='Manage Resume'
                 >
-                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                  <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl' className={styles.activeLink}>Manage Resume</Text>
                   </li>
                 </Link>
                 <Link className={styles.defaultLink} to='/my-jobs/saved?page=1' title='My Jobs'>
-                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                  <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>My Jobs</Text>
                   </li>
                 </Link>
                 <Link className={styles.defaultLink} to={authPathToOldProject(null, '/dashboard/profile/settings')} aTag title='Account Settings'>
-                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                  <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Account Settings</Text>
                   </li>
                 </Link>
                 <Link className={styles.defaultLink} to={authPathToOldProject(null, '/dashboard/bosspoint')} aTag title='BossPoints'>
-                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                  <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>BossPoints</Text>
                   </li>
                 </Link>
                 <Link className={styles.defaultLink} to='https://blog.bossjob.ph/' aTag title='Career Guide'>
-                  <li className={styles.menuList} onClick={() => toggleMenu()}>
+                  <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Career Guide</Text>
                   </li>
                 </Link>
