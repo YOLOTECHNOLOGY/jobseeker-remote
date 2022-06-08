@@ -74,13 +74,6 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
     setIsSubmitting(isQuickApplyJobFetching)
   }, [isQuickApplyJobFetching])
 
-  useEffect(() => {
-    if (modalShow) {
-      document.body.style.position = 'fixed';
-      document.body.style.width = "100%";
-    }
-  }, [modalShow])
-
   const onSubmit = (data) => {
     const screeningAnswers = []
 
@@ -118,18 +111,11 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
     return <Text textStyle='sm' textColor='red' tagName='p' className={styles.error}>{errorMessage}</Text>
   }
 
-  const handleModal = () => {
-    document.body.style.position = ''
-    document.body.style.top = ''
-    // retrieve previous scroll position
-    handleModalShow(false)
-  }
-
   return (
     <Modal
       headerTitle='Apply to this job'
       showModal={modalShow}
-      handleModal={handleModal}
+      handleModal={handleModalShow}
       className={styles.quickApplyModal}
     >
       <form className={styles.quickApplyForm}> 
