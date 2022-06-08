@@ -22,6 +22,7 @@ interface MaterialGroupSelectCheckmarks extends React.ButtonHTMLAttributes<HTMLB
   options?: Array<MainOptionType>
   value: any
   onSelect?: any
+  isReset?:boolean
   greyBg?: boolean
   fieldRef?: any
   error?: any
@@ -41,7 +42,7 @@ interface SubListOptionType {
   value: string
 }
 
-const MaterialSelectCheckmarks = ({
+const MaterialGroupSelectCheckmarks = ({
   id,
   label,
   options,
@@ -49,6 +50,7 @@ const MaterialSelectCheckmarks = ({
   onSelect,
   greyBg,
   value,
+  isReset,
   fieldRef,
   error,
 }: MaterialGroupSelectCheckmarks) => {
@@ -66,13 +68,14 @@ const MaterialSelectCheckmarks = ({
     return newList
   })
 
-
-  const [listOptions, setListOptions] = useState(value.length > 0 ? value : initialListOptions)
+  const [listOptions, setListOptions] = useState(value && value.length > 0 ? value : initialListOptions)
   const [displayValue, setDisplayValue] = useState<Array<string>>([''])
 
   useEffect(()=>{
     const selectedOptions = []
     const valueToDisplay = []
+    if (!isReset){
+    
     listOptions.map((option)=> {
       if (option.isChecked){
         valueToDisplay.push(option.value)
@@ -87,7 +90,13 @@ const MaterialSelectCheckmarks = ({
     })
     setDisplayValue(valueToDisplay)
     if (!firstRender) onSelect(selectedOptions)
+  }
   },[listOptions])
+
+  useEffect(()=>{
+    setDisplayValue([])
+    setListOptions(initialListOptions)
+  },[isReset])
 
   const onMainSelection = (e, optionData) => {
     /* find the corresponding option data based on option.key && 
@@ -302,4 +311,4 @@ const MaterialSelectCheckmarks = ({
   )
 }
 
-export default MaterialSelectCheckmarks
+export default MaterialGroupSelectCheckmarks

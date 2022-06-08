@@ -182,6 +182,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [selectedJobId, setSelectedJobId] = useState(null)
   const [searchValue, setSearchValue] = useState(defaultValues?.urlQuery || '')
   const [categories, setCategories] = useState(defaultValues?.category || [])
+  const [isCategoryReset, setIsCategoryReset] = useState(false)
   const [jobTypes, setJobTypes] = useState(defaultValues?.jobTypes || [])
   const [salaries, setSalaries] = useState(defaultValues?.salaries || [])
   const { keyword, ...rest } = router.query
@@ -255,6 +256,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
     dispatch(fetchJobsListRequest(payload, accessToken))
 
+    setIsCategoryReset(false)
     setMoreFilterReset(false)
   }, [router.query])
 
@@ -503,6 +505,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setUrlLocation([])
     setJobTypes([])
     setSalaries([])
+    setIsCategoryReset(true)
     setSearchValue('')
     setMoreFilterReset(true)
 
@@ -675,6 +678,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             className={styles.specializationField}
             onSelect={onSpecializationSelection}
             value={categories}
+            isReset={isCategoryReset}
           />
           <MaterialButton
             variant='outlined'
