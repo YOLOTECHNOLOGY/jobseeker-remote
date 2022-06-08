@@ -77,6 +77,7 @@ const Modal = ({
   useEffect(()=>{
     if (showModal) {
       document.body.style.position = 'fixed'
+      document.body.style.width = '100vw'
       document.body.style.top = `-${window.scrollY}px`
     }
   }, [showModal]);
