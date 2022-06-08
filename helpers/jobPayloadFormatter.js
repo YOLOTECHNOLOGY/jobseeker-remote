@@ -163,7 +163,6 @@ const buildQueryParams = (data) => {
 }
 // handle MUI filters not under "More Filters"
 const userFilterSelectionDataParser = (field, optionValue, routerQuery, config) => {
-  console.log('optionValue', optionValue)
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
   const locationList = config.inputs.location_lists
@@ -214,7 +213,6 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config) 
                 // return data['seo-value'] === parsedData
           }
         })
-        console.log('mainOptionMatched', mainOptionMatched)
         sanitisedConfig[key].map((data) => { 
             data.sub_list.forEach((subOption)=>{
             if (subOption['seo-value'] === parsedData){
@@ -223,7 +221,6 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config) 
             }
           })
         })
-        console.log('subOptionMatched', subOptionMatched)
 
          if (mainOptionMatched.length > 0) {
            matchedConfigFromUrl = {
@@ -275,18 +272,17 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config) 
   // handle filters from user selection
   let updatedFilters = {...rest}
   // if optionValue !== [], include current filter with the rest of the filters
-  if (field === 'location' && optionValue?.length !== 0){
+  if (field === 'location' && optionValue && optionValue.length !== 0){
     updatedFilters = { ...rest, [field]: optionValue.seo_value}
   }else if (field === 'category'){
     updatedFilters = { ...rest, [field]: optionValue.join() }
   }else{
-    if (optionValue.length !== 0) {
+    if (optionValue && optionValue.length !== 0) {
       updatedFilters = { ...rest, [field]: optionValue.join(',') }
     }else{
       delete updatedFilters[field]
     }
   }
-  console.log('updatedFilters', updatedFilters)
   // handle the rest of the filters. remove nonfilter keys, and convert strings of value to array of strings
   for (const [key, value] of Object.entries(updatedFilters)) {
     // only proceed if it is not a non filter key
@@ -366,19 +362,8 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config) 
     }
   }
 
-  console.log('matchedLocation', matchedLocation)
-  console.log('matchedConfigFromUrl', matchedConfigFromUrl)
-  console.log('matchedConfigFromUserSelection', matchedConfigFromUserSelection)
   let filterCount = 0
   let filterParamsObject = {}
-  Object.values(matchedLocation).forEach((val) => val.forEach(() => filterCount += 1))
-  Object.values(matchedConfigFromUrl).forEach(() => filterCount += 1 )
-  Object.values(matchedConfigFromUserSelection).forEach((val) => {
-    val.forEach((s) => {
-      filterCount += 1
-    })
-  })
-
   let query = '' 
   let filterQuery = '' 
   let locationQuery = ''
@@ -393,9 +378,39 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config) 
     })
   })
 
-  console.log('query', query)
-  console.log('filterQuery', filterQuery)
-  console.log('locationQuery', locationQuery)
+  const array = []
+  if (Object.keys(matchedLocation).length > 0 ) array.push(matchedLocation)
+  if (Object.keys(matchedConfigFromUrl).length > 0) array.push(matchedConfigFromUrl)
+  if (Object.keys(matchedConfigFromUserSelection).length > 0) array.push(matchedConfigFromUserSelection)
+
+  let uniqueList = []
+  array.forEach((matchData)=> {
+    for (const [key] of Object.entries(matchData)){
+      const data =
+        key === 'location'
+          ? matchData[key].map((filter) => filter['seo_value'])
+          : matchData[key].map((filter) => filter['seo-value'])
+
+      uniqueList = [...uniqueList, ...data]
+      uniqueList = [...new Set(uniqueList)]
+      
+      const match = data.join()
+
+      if (filterParamsObject[key]){
+        filterParamsObject = {
+          ...filterParamsObject,
+          [key]: !filterParamsObject[key].includes(match) ? filterParamsObject[key] += `,${match}` : filterParamsObject[key],
+        }
+      }else{
+        filterParamsObject = {
+          ...filterParamsObject,
+          [key]: match,
+        }
+      }
+    }
+  })
+
+  filterCount = uniqueList.length
 
   if (filterCount === 0){
     // it means there is no predefinedQuery && predefinedLocation 
@@ -416,17 +431,8 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config) 
     // if there is predefinedQuery && predefinedLocation
     if (predefinedQuery && predefinedLocation) query = appendDoubleQueryPattern(predefinedQuery, predefinedLocation)
     // if filter is 2 but there is no predefinedQuery or predefinedLocation
-    if (!predefinedQuery && !predefinedLocation) {
+    if (!predefinedQuery && !predefinedLocation && !filterQuery && !locationQuery) {
       query = appendGeneralQueryPattern()
-       Object.keys(matchedConfigFromUserSelection).forEach((key) => {
-          const match = matchedConfigFromUserSelection[key]
-            .map((filter) => filter['seo-value'])
-            .join()
-          filterParamsObject = {
-            ...filterParamsObject,
-            [key]: match,
-          }
-        })
     }
     // if there is predefinedQuery but no predefinedLocation but there is location match
     if (predefinedQuery && !predefinedLocation && locationQuery){
@@ -435,46 +441,30 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config) 
     // if filter is 2, there is no predefinedQuery, but there is predefinedLocation, it means it hit reserved keyword
     if (!predefinedQuery && predefinedLocation) {
        query = appendDoubleQueryPattern(filterQuery,predefinedLocation)
-        Object.keys(matchedConfigFromUserSelection).forEach((key) => {
-          const match = matchedConfigFromUserSelection[key]
-            .map((filter) => filter['seo-value'])
-            .join()
-          filterParamsObject = {
-            ...filterParamsObject,
-            [key]: match,
-          }
-        })
     }
   }else {
     query = appendGeneralQueryPattern()
-    // if filter/location is already in querym remove it from filterParamsObject
-    Object.keys(matchedLocation).forEach((key) => {
-      const match = matchedLocation[key].map((filter) => filter['seo_value']).join()
-      filterParamsObject = {
-        ...filterParamsObject,
-        [key]: match,
-      }
-    })
-    Object.keys(matchedConfigFromUrl).forEach((key) => {
-      // if (key === 'category'){
-
-      // }else {
-      const match = matchedConfigFromUrl[key].map((filter) => filter['seo-value']).join()
-      filterParamsObject = {
-        ...filterParamsObject,
-        [key]: match,
-      }
-      // }
-    })
-    Object.keys(matchedConfigFromUserSelection).forEach((key) => {
-      const match = matchedConfigFromUserSelection[key].map((filter) => filter['seo-value']).join()
-      filterParamsObject = {
-        ...filterParamsObject,
-        [key]: match,
-      }
-    })
   }
  
+  const queryData = urlQueryParser(query)
+
+  //  if query value exist in filterParamsObject, remove it
+  queryData.forEach((q)=> {
+    for (const [key, value] of Object.entries(filterParamsObject)){
+      let valueArray = value.split(',')
+      if (value.includes(q)){
+        valueArray = valueArray.filter((val)=> val !== q)
+      }
+      if (valueArray.length === 0){
+        delete filterParamsObject[key]
+      }else{
+        filterParamsObject = {
+          ...filterParamsObject,
+          [key]: valueArray.join()
+        }
+      }
+    }
+  })
   const data = {
     searchQuery: query,
     // searchQuery: predefinedQuery && optionValue.length > 0 ? predefinedQuery : filterQuery,
