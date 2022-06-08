@@ -3,6 +3,8 @@
 
 .quickApplyModal {
   overflow-y: scroll;
+  height: 100%;
+  height: --webkit-fill-available;
 }
 
 .quickApplyForm {
