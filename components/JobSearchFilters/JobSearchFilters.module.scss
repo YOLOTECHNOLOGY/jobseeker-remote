@@ -19,7 +19,6 @@
   &.isShow.displayQuickLinks{
     display: block;
     @extend .searchFilter;
-    top: 200px;
 
     .searchFilterBody {
       height: calc(100vh - 264px);
@@ -28,6 +27,12 @@
         height: calc(100vh - 183px);
       }
     }
+  }
+
+  &.isShow.displayQuickLinks.emailNotVerified{
+    @extend .searchFilter;
+    top: 127px;
+    height: calc(100vh - 127px);
   }
 
   &Header {
