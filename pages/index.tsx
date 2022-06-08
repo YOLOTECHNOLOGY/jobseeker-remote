@@ -31,6 +31,8 @@ import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWit
 /* Helpers*/
 import { categoryParser, conditionChecker } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { getCookie } from 'helpers/cookies'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Images */
 import {
@@ -74,6 +76,7 @@ const Home = (props: HomeProps) => {
   const { width } = useWindowDimensions()
   const { topCompanies } = props
   const router = useRouter()
+  const isAuthenticated = getCookie('accessToken') ? true : false
   const [searchValue, setSearchValue] = useState('')
   const [locationValue, setLocationValue] = useState(null)
   const [suggestionList, setSuggestionList] = useState([])
@@ -809,15 +812,17 @@ const Home = (props: HomeProps) => {
         </div>
         <div className={styles.bannerSection}>
           <div className={styles.commonContainer}>
-            <div className={breakpointStyles.hideOnMobileAndTablet}>
-              <Image src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
-            </div>
-            <div className={breakpointStyles.hideOnMobileAndDesktop}>
-              <Image src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
-            </div>
-            <div className={breakpointStyles.hideOnTabletAndDesktop}>
-              <Image src={RHBannerMobile} alt='rh-banner-mobile' width='667' height='335' />
-            </div>
+            <Link to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`} external>
+              <div className={breakpointStyles.hideOnMobileAndTablet}>
+                  <Image src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
+              </div>
+              <div className={breakpointStyles.hideOnMobileAndDesktop}>
+                <Image src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
+              </div>
+              <div className={breakpointStyles.hideOnTabletAndDesktop}>
+                <Image src={RHBannerMobile} alt='rh-banner-mobile' width='667' height='335' />
+              </div>
+            </Link>
           </div>
         </div>
       </Layout>
