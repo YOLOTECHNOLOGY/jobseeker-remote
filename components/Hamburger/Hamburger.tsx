@@ -12,13 +12,25 @@ interface HamburgerProps {
   toggleMenu: Function
 }
 const Hamburger = ({ toggleMenu, openState }: HamburgerProps) => {
+  const handleShowMenu = () => {
+    if (!openState) { // opening menu, disable scrolling of body
+      document.body.style.position = 'fixed';
+      document.body.style.width = "100%";
+    }
+    if (openState) { // closing menu, enable scrolling of body
+      const scrollY = document.body.style.top
+      document.body.style.position = ''
+      document.body.style.top = ''
+      // retrieve previous scroll position
+      window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    }
+    toggleMenu(!openState)
+  }
   return (
     <div
       id={styles.hamburgerMenu}
       className={openState ? styles.active : null}
-      onClick={() => {
-          toggleMenu(!openState)}
-      }
+      onClick={handleShowMenu}
     >
       <span />
       <span />

@@ -16,9 +16,13 @@
 }
 
 .searchCompany {
-  margin: 61px 0 48px;
+  margin-top: 60px;
   
-  p {
+  > p {
+    margin-bottom: 24px;
+  }
+
+  &Title {
     margin-bottom: 24px;
   }
 }
@@ -168,7 +172,7 @@
 
       &::after {
         right: auto;
-        left: 160px;
+        margin-left: 5px;
       }
     }
   }

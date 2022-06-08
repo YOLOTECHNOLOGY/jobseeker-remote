@@ -347,7 +347,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
     router.push(
       {
-        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
+        pathname: `/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
         query: queryObject,
       },
       undefined,

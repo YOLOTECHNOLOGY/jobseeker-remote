@@ -1,22 +1,24 @@
 @import 'styles/variable.scss';
 
-.mobileFullPageMenu {
-  background: $white-3;
-  display: table-row;
-  z-index: 999;
-
-  &Container {
-    position: relative;
-  }
-}
-
 .open {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100vh;
+  height: --webkit-fill-available;
   // padding: 7%;
   position: fixed;
+}
+
+.mobileFullPageMenu {
+  background: $white-3;
+  z-index: 999;
+
+  &Container {
+    position: relative;
+    overflow-y: scroll;
+    height: calc(100vh - 120px);
+  }
 }
 
 .close {

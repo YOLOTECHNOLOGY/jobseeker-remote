@@ -72,7 +72,7 @@ interface HomeProps {
   topCompanies: companyObject[]
 }
 
-const Home = (props: HomeProps) => {
+const Homepage = (props: HomeProps) => {
   const { width } = useWindowDimensions()
   const { topCompanies } = props
   const router = useRouter()
@@ -854,4 +854,5 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
     },
   }
 })
-export default Home
+
+export default Homepage

@@ -3,6 +3,7 @@ import { HYDRATE } from 'next-redux-wrapper'
 import { routerReducer } from 'connected-next-router'
 
 import navigationBarReducers from './navigationBar'
+import notificationBarReducers from './notificationBar'
 import configReducers from './config'
 import utilityReducers from './utility'
 import jobsReducers from './jobs'
@@ -18,6 +19,7 @@ import coursesReducers from './courses'
 // TODO: Import and List reducers here
 const combinedReducer = combineReducers({
   navbar: navigationBarReducers,
+  notificationbar: notificationBarReducers,
   config: configReducers,
   utility: utilityReducers,
   job: jobsReducers,
