@@ -169,6 +169,10 @@
     align-items: space-between;
     flex-direction: column;
     text-align: center;
+
+    > img {
+      margin-left: 45px;
+    }
   }
 
   &Text {
@@ -193,7 +197,6 @@
 
   &Body {
     display: block;
-    padding: 0 20px;
   }
 
   &SubTitle {
@@ -329,8 +332,14 @@
   }
 }
 
-.JobDetailDescriptionSectionBody *,
-.JobDetailRequirementSectionBody * {
+.JobDetailDescriptionSectionBody,
+.JobDetailRequirementSectionBody {
   font-size: 16px !important;
+  font-weight: 400;
   font-family: 'Product Sans' !important;
+
+  > ol, ul {
+    padding-inline: inherit;
+    margin-left: 40px;
+  }
 }
