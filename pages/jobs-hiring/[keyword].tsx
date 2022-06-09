@@ -250,7 +250,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   useEffect(() => {
     // eslint-disable-next-line no-console
-    console.log('router query changed', router.query)
     const {
       // keyword,
       industry,
@@ -545,7 +544,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const handleResetFilter = () => {
-    const { searchMatch, locationMatch, searchQuery } = checkFilterMatch(
+    const { searchMatch, locationMatch, searchQuery, predefinedLocation } = checkFilterMatch(
       router.query,
       config,
       'reset'
@@ -564,7 +563,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     if ((searchMatch && locationMatch) || (searchMatch && !locationMatch)) {
       updateUrl(null, queryObject)
     } else if (!searchMatch && locationMatch) {
-      updateUrl(searchQuery ? `${searchQuery}-jobs` : null, queryObject)
+      if (searchQuery === predefinedLocation){
+        updateUrl(null, queryObject)
+      }else{
+        updateUrl(searchQuery ? `${searchQuery}-jobs` : null, queryObject)
+      }
     } else {
       updateUrl(keyword, queryObject)
     }

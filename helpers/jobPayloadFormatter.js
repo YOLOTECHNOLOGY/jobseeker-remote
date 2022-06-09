@@ -196,6 +196,7 @@ const checkFilterMatch = (routerQuery, config, useCase) => {
   let matchedFilter = {
     searchMatch: false,
     locationMatch: false,
+    predefinedLocation: '',
     // searchQuery: queryParser && queryParser.length > 0 ? queryParser[0] : '',
   }
   Object.keys(sanitisedConfig).forEach((key) => {
@@ -229,6 +230,7 @@ const checkFilterMatch = (routerQuery, config, useCase) => {
               matchedFilter = {
                 ...matchedFilter,
                 locationMatch: true,
+                predefinedLocation: parsedData,
               }
             }
           } else if (key === 'location' && index === 0) {
@@ -236,6 +238,7 @@ const checkFilterMatch = (routerQuery, config, useCase) => {
               matchedFilter = {
                 ...matchedFilter,
                 locationMatch: true,
+                predefinedLocation: parsedData,
               }
             }
           } else {
@@ -540,9 +543,11 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       if (searchQuery && predefinedLocation && field === 'location' && isClear) {
         query = appendSingleQueryPattern(searchQuery)
       }
-    }
-     // if there is searchQuery && predefinedLocation
-     else if (searchQuery && predefinedLocation && !locationQuery) {
+      // !predefinedQuery && predefinedLocation && locationQuery exist and field is 'location'
+    }else if (!predefinedQuery && predefinedLocation && locationQuery && field === 'location'){
+      query = appendSingleQueryPattern(locationQuery)
+      // if there is searchQuery && predefinedLocation
+    } else if (searchQuery && predefinedLocation && !locationQuery) {
       query = appendDoubleQueryPattern(searchQuery, predefinedLocation)
       // if there is searchQuery && locationQuery
     } else if (searchQuery && !predefinedLocation && locationQuery) {
@@ -566,7 +571,11 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
   } else if (filterCount === 2) {
     // if there is searchQuery
     if (searchQuery) {
-      query = appendSingleQueryPattern(searchQuery)
+      if (searchQuery === locationQuery && filterQuery){
+        query = appendDoubleQueryPattern(filterQuery, searchQuery)
+      }else{
+        query = appendSingleQueryPattern(searchQuery)
+      }
     } else if (searchQuery && locationQuery) {
       query = appendDoubleQueryPattern(searchQuery, locationQuery)
       // if there is predefinedQuery && predefinedLocation
@@ -583,7 +592,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       query = appendDoubleQueryPattern(filterQuery, predefinedLocation)
     }
   } else {
-    if (searchQuery) {
+    if (searchQuery && searchQuery !== locationQuery) {
       query = appendSingleQueryPattern(searchQuery)
     } else {
       query = appendGeneralQueryPattern()
@@ -609,6 +618,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       }
     }
   })
+
   const data = {
     searchQuery: query,
     // searchQuery: predefinedQuery && optionValue.length > 0 ? predefinedQuery : filterQuery,
