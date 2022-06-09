@@ -831,7 +831,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           onResetFilter={handleResetFilter}
           onShowFilter={handleShowFilter}
           moreFilterReset={moreFilterReset}
-          isEmailVerify={userCookie?.is_email_verify}
+          isShowingEmailAlert={accessToken && !userCookie?.is_email_verify}
         />
       {/* <div className={breakpointStyles.hideOnTabletAndDesktop}>
         {hasMoreFilters && (
