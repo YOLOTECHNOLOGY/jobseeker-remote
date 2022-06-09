@@ -392,6 +392,16 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     updatedFilters = { ...rest, [field]: optionValue.seo_value }
   } else if (field === 'category') {
     updatedFilters = { ...rest, [field]: optionValue.join() }
+  } else if (field === 'moreFilters'){
+    for (const [key, value] of Object.entries(optionValue)) {
+        if (value && value.length !== 0 && value[0]){
+          updatedFilters = {
+            ...rest,
+            // ensure to only push unduplicated results
+            [key]: [...new Set(value)].join(),
+          }
+      }
+    }
   } else {
     if (optionValue && optionValue.length !== 0) {
       updatedFilters = { ...rest, [field]: optionValue.join(',') }
@@ -399,6 +409,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       delete updatedFilters[field]
     }
   }
+
   // handle the rest of the filters. remove nonfilter keys, and convert strings of value to array of strings
   for (const [key, value] of Object.entries(updatedFilters)) {
     // only proceed if it is not a non filter key
@@ -624,129 +635,6 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     // searchQuery: predefinedQuery && optionValue.length > 0 ? predefinedQuery : filterQuery,
     // filters: combinedMatchedConfig,
     // filterParamsString: filterParams,
-    filterParamsObject,
-  }
-
-  return data
-}
-
-const moreFilterDataParser = (newValue, routerQuery, config) => {
-  const { keyword } = routerQuery
-  const queryParser = urlQueryParser(keyword)
-  const locationList = getLocationList(config)
-  const industryList = config.inputs.industry_lists
-  const expLvlList = config.inputs.xp_lvls
-  const eduLevelList = config.filters.educations
-  const jobTypeList = config.inputs.job_types
-  const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
-    key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
-    value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
-    ['seo-value']: range['seo-value'],
-  }))
-
-  const sanitisedConfig = {
-    industry: industryList,
-    jobType: jobTypeList,
-    salary: salaryRangeList,
-    workExperience: expLvlList,
-    qualification: eduLevelList,
-    location: locationList,
-  }
-
-  let isSingleFilter = false
-  let matchedConfig = {}
-  let predefinedQuery = ''
-  let filterData = {}
-
-  // for case: XXXX-jobs -> queryParser length will always be 1
-  Object.keys(sanitisedConfig).forEach((key) => {
-    // handle predefined filters from url
-    // iterate based on number of results from queryParser
-    queryParser.forEach((parsedData, index) => {
-      const hasMatch = sanitisedConfig[key].filter((data) => {
-        return data['seo-value'] === parsedData
-      })
-
-      if (hasMatch.length > 0) {
-        matchedConfig = {
-          ...matchedConfig,
-          [key]: hasMatch,
-        }
-      }
-
-      // if parsedData has index of 0, and it has no matches, it is a predefinedQuery
-      if (index === 0 && hasMatch.length === 0) predefinedQuery = parsedData
-      // if parsedData has index of 1, it means it has a predefined location
-    })
-    // handle filters from user actions
-    for (const [key, value] of Object.entries(newValue)) {
-      // only proceed if it is not a non filter key
-      if (!nonFilterKeys.includes(key)) {
-        // only proceed if value is not null && not empty
-        if (value && value.length !== 0) {
-          // handle filters not under 'More filters' section
-          
-          filterData = {
-            ...filterData,
-            // ensure to only push unduplicated results
-            [key]: Array.from(new Set(value)).join(','),
-          }
-          const hasMatch = []
-          value.forEach((val) => {
-            const matchedFilter = sanitisedConfig[key]?.filter((data) => {
-              return data['seo-value'] === val
-            })
-            hasMatch.push(matchedFilter[0])
-          })
-          matchedConfig = {
-            ...matchedConfig,
-            [key]: hasMatch,
-          }
-        }
-      }
-    }
-  })
-
-  // check if only single filter is applied
-  if (Object.keys(matchedConfig).length === 1) {
-    if (Object.values(matchedConfig).length === 1) {
-      const stringValue = Object.values(matchedConfig)[0] || ''
-      if (stringValue.length === 1) {
-        isSingleFilter = true
-      }
-    }
-  }
-
-  // sanitise filter data to be passed as query params
-  const filterParams = buildQueryParams(matchedConfig)
-
-  let filterParamsObject = {}
-  Object.keys(matchedConfig).map((key) => {
-    const matchy = matchedConfig[key]
-      .map((filter) => {
-        if (filter) return filter['seo-value']
-        // return filter['seo-value']
-      })
-      .join()
-    filterParamsObject = {
-      ...filterParamsObject,
-      [key]: matchy,
-    }
-  })
-
-  let filterQuery = ''
-  // if only single filter is applied && no predefinedQuery, that single filter will be the search query
-  // remove searchQuery filter from matchedConfig
-  if (!predefinedQuery && isSingleFilter) {
-    filterQuery = Object.values(matchedConfig)[0][0]['seo-value']
-    filterQuery = `${filterQuery}-jobs`
-    filterParamsObject = {}
-  }
-
-  const data = {
-    searchQuery: predefinedQuery ? predefinedQuery : filterQuery,
-    filters: matchedConfig,
-    filterParamsString: filterParams,
     filterParamsObject,
   }
 
@@ -1084,7 +972,6 @@ export {
   getIndustryList,
   getDegreeList,
   getApplyJobLink,
-  moreFilterDataParser,
   userFilterSelectionDataParser,
   checkFilterMatch,
 }

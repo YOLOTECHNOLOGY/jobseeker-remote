@@ -19,7 +19,7 @@ import {
   // conditionChecker,
   // getPredefinedParamsFromUrl,
   // getLocationList,
-  moreFilterDataParser,
+  userFilterSelectionDataParser,
 } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
@@ -153,8 +153,8 @@ const NavSearchFilter = ({
   // }
 
   const urlFilterParameterBuilder = (data) => {
-    // eslint-disable-next-line new-cap
-    const { searchQuery, filterParamsObject } = moreFilterDataParser(
+    const { searchQuery, filterParamsObject} = userFilterSelectionDataParser(
+      'moreFilters',
       data,
       router.query,
       config
