@@ -418,6 +418,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
     const sortOption = val.length > 0 ? 2 : 1
+    const isClear = val.length === 0
 
     setSort(sortOption)
     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
@@ -425,6 +426,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       val,
       router.query,
       config,
+      isClear,
     )
     // // Check if the search value matched with the reserved location keyword
     // const matchedLocation = locList.filter((loc) => {

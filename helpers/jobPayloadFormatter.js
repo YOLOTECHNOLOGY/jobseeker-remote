@@ -258,7 +258,7 @@ const checkFilterMatch = (routerQuery, config) => {
     const searchQuery = queryParser[0]
     matchedFilter = {
       ...matchedFilter,
-      searchQuery:searchQuery
+      searchQuery: searchQuery,
     }
   }
   // if (!matchedFilter.searchMatch && !matchedFilter.locationMatch){
@@ -384,7 +384,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     })
 
     // handle query onKeywordSearch
-    if (field === 'query'){
+    if (field === 'query') {
       console.log('inside field query')
       const keywordSearchValue = optionValue?.toLowerCase()
       if (key === 'category') {
@@ -446,15 +446,14 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
             [key]: hasMatch,
           }
         }
+      }
     }
-  }
-
   })
 
   console.log('search searchQuery', searchQuery)
-  if (field === 'query'){
+  if (field === 'query') {
     searchQuery = optionValue
-  }else {
+  } else {
     // if parsedData[0] is not predefined query, it is a search term
     if (queryParser.length > 0 && queryParser[0] !== predefinedQuery) searchQuery = queryParser[0]
   }
@@ -466,9 +465,9 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     updatedFilters = { ...rest, [field]: optionValue.seo_value }
   } else if (field === 'category') {
     updatedFilters = { ...rest, [field]: optionValue.join() }
-  } else if (field === 'moreFilters'){
+  } else if (field === 'moreFilters') {
     for (const [key, value] of Object.entries(optionValue)) {
-      if (value && value.length !== 0 && value[0]){
+      if (value && value.length !== 0 && value[0]) {
         updatedFilters = {
           ...rest,
           // ensure to only push unduplicated results
@@ -477,9 +476,8 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       }
     }
   } else {
-    console.log('optionValue.length', optionValue.length)
     if (optionValue && optionValue.length !== 0 && field !== 'query') {
-    // if (optionValue && optionValue.length !== 0) {
+      // if (optionValue && optionValue.length !== 0) {
       updatedFilters = { ...rest, [field]: optionValue.join(',') }
       // updatedFilters = { ...rest, [field]: field === 'query' ? optionValue : optionValue.join(',') }
     } else {
@@ -508,7 +506,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
           if (key === 'category') {
             const mainOptionMatched = []
             const subOptionMatched = []
-            
+
             sanitisedConfig[key].forEach((data) => {
               if (data['seo-value'] === val) {
                 predefinedQuery = val
@@ -526,7 +524,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
             })
 
             if (mainOptionMatched.length > 0) {
-              const prevValue= matchedConfigFromUserSelection[key]
+              const prevValue = matchedConfigFromUserSelection[key]
               matchedConfigFromUserSelection = {
                 ...matchedConfigFromUserSelection,
                 [key]: prevValue ? [...prevValue, ...mainOptionMatched] : mainOptionMatched,
@@ -626,36 +624,55 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
 
   filterCount = uniqueList.length
 
-    console.log('filterCount', filterCount)
-    console.log('queryParser', queryParser)
-    console.log('searchQuery', searchQuery)
-    console.log('predefinedQuery', predefinedQuery)
-    console.log('predefinedLocation', predefinedLocation)
-    console.log('locationQuery', locationQuery)
-    console.log('filterQuery', filterQuery)
-    console.log('matchedLocation', matchedLocation)
-    console.log('matchedConfigFromUrl', matchedConfigFromUrl)
-    console.log('matchedConfigFromUserSelection', matchedConfigFromUserSelection)
+  console.log('filterCount', filterCount)
+  console.log('queryParser', queryParser)
+  console.log('searchQuery', searchQuery)
+  console.log('predefinedQuery', predefinedQuery)
+  console.log('predefinedLocation', predefinedLocation)
+  console.log('locationQuery', locationQuery)
+  console.log('filterQuery', filterQuery)
+  console.log('matchedLocation', matchedLocation)
+  console.log('matchedConfigFromUrl', matchedConfigFromUrl)
+  console.log('matchedConfigFromUserSelection', matchedConfigFromUserSelection)
 
   if (filterCount === 0) {
-    if (searchQuery){
+    if (searchQuery) {
       query = appendSingleQueryPattern(searchQuery)
-    }else{
+    } else {
       // it means there is no predefinedQuery && predefinedLocation
       query = appendSingleQueryPattern(queryParser[0])
     }
   } else if (filterCount === 1) {
-    if (isClear){
+    if (isClear) {
       // if field is location && isClear is true
-      if (searchQuery && predefinedLocation && field === 'location' && isClear) {
-        query = appendSingleQueryPattern(searchQuery)
+      if (field === 'location'){
+        if (searchQuery && predefinedLocation) {
+          query = appendSingleQueryPattern(searchQuery)
+        }
       }
-      // handle all onKeywordSearch logic when field === 'query', 
+      else if (field === 'category'){
+        if (searchQuery && !predefinedQuery && !predefinedLocation && locationQuery && !filterQuery){
+          query = appendDoubleQueryPattern(searchQuery, locationQuery)
+        }
+      }
+      // handle all onKeywordSearch logic when field === 'query',
       // separate logic on its own because keyword search will always take precendance over filters
+    // } else if (searchQuery) {
     } else if (field === 'query') {
-      if (searchQuery && (predefinedLocation === locationQuery)) {
+      console.log('inside field query')
+      // for case : makati-jobs-in-makati
+      if (searchQuery && searchQuery == locationQuery && Object.keys(matchedLocation).length > 0){
+        query = appendSingleQueryPattern(searchQuery)
+      } else if (searchQuery && locationQuery && searchQuery !== locationQuery && Object.keys(matchedLocation).length > 0){
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
-      }else if (searchQuery && predefinedLocation !== locationQuery) {
+      } else if (
+        searchQuery &&
+        predefinedLocation && locationQuery && predefinedLocation === locationQuery
+      ) {
+        console.log('1')
+        query = appendDoubleQueryPattern(searchQuery, locationQuery)
+      } else if (searchQuery && predefinedLocation !== locationQuery) {
+        console.log('2')
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
       } else if (
         (!predefinedQuery &&
@@ -665,13 +682,23 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
           locationQuery) ||
         (!predefinedQuery && !searchQuery && !filterQuery && predefinedLocation && locationQuery)
       ) {
+        console.log('3')
+
         query = appendSingleQueryPattern(locationQuery)
+      } else if (searchQuery === filterQuery) {
+        console.log('4')
+
+        query = appendSingleQueryPattern(searchQuery)
       } else {
+        console.log('5')
+
         query = appendSingleQueryPattern(searchQuery)
       }
       // !predefinedQuery && predefinedLocation && locationQuery exist and field is 'location'
-    }else if (!predefinedQuery && predefinedLocation && locationQuery && field === 'location'){
+    } else if (!predefinedQuery && predefinedLocation && locationQuery && field === 'location') {
       query = appendSingleQueryPattern(locationQuery)
+    } else if (searchQuery && !predefinedQuery && !predefinedLocation && locationQuery && !filterQuery) {
+      query = appendDoubleQueryPattern(searchQuery, locationQuery)
       // if there is searchQuery && predefinedLocation
     } else if (searchQuery && predefinedLocation && !locationQuery) {
       query = appendDoubleQueryPattern(searchQuery, predefinedLocation)
@@ -695,12 +722,29 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       query = appendSingleQueryPattern(filterQuery)
     }
   } else if (filterCount === 2) {
-    // if there is searchQuery
-    if (searchQuery) {
-      if (searchQuery === locationQuery && filterQuery){
+    if (isClear){
+      if (field === 'query'){
+        if (!searchQuery && predefinedQuery && Object.keys(matchedConfigFromUrl).length > 0 && Object.keys(matchedLocation).length > 0){
+          query = appendDoubleQueryPattern(predefinedQuery, locationQuery)
+        }
+        if (!searchQuery && filterQuery && Object.keys(matchedConfigFromUserSelection).length > 0 && Object.keys(matchedLocation).length > 0){
+          query = appendDoubleQueryPattern(filterQuery, locationQuery)
+        }
+      }
+      // if there is searchQuery
+    } else if (searchQuery) {
+      if (searchQuery === locationQuery && filterQuery) {
         query = appendDoubleQueryPattern(filterQuery, searchQuery)
-        // if there is matchedLocation && matchedConfigFromUser 
-      } else if (Object.keys(matchedLocation).length + Object.keys(matchedConfigFromUserSelection).length >= 2) {
+      } else if (predefinedQuery && searchQuery !== predefinedQuery && predefinedLocation && locationQuery && !filterQuery){
+        query = appendDoubleQueryPattern(searchQuery, locationQuery)
+        // if there is search query that hits reserved keyword and location
+      } else if (!predefinedQuery && predefinedLocation && locationQuery && !filterQuery && Object.keys(matchedLocation).lengt > 0 && Object.keys(matchedConfigFromUrl).length > 0) {
+        query = appendDoubleQueryPattern(searchQuery, locationQuery)
+        // if there is matchedLocation && matchedConfigFromUser
+      } else if (
+        Object.keys(matchedLocation).length + Object.keys(matchedConfigFromUserSelection).length >=
+        2
+      ) {
         query = appendSingleQueryPattern(searchQuery)
       } else if (
         (predefinedQuery &&
@@ -714,28 +758,33 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         (predefinedQuery && !predefinedLocation && locationQuery)
       ) {
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
+      } else if (locationQuery) {
+        query = appendDoubleQueryPattern(searchQuery, locationQuery)
       } else {
         query = appendSingleQueryPattern(searchQuery)
       }
-    } else if (searchQuery && locationQuery) {
-      query = appendDoubleQueryPattern(searchQuery, locationQuery)
       // if there is predefinedQuery && predefinedLocation
-    } else if (predefinedQuery && predefinedLocation) {
+    } else if (!searchQuery && predefinedQuery && predefinedLocation) {
       query = appendDoubleQueryPattern(predefinedQuery, predefinedLocation)
       // if there is no predefinedQuery or predefinedLocation
     } else if (!predefinedQuery && !predefinedLocation && !filterQuery && !locationQuery) {
       query = appendGeneralQueryPattern()
       // if there is predefinedQuery && predefinedLocation && locationQuery && predefinedLocation !== locationQuery
-    } else if (predefinedQuery && predefinedLocation && locationQuery && predefinedLocation !== locationQuery){
+    } else if (
+      predefinedQuery &&
+      predefinedLocation &&
+      locationQuery &&
+      predefinedLocation !== locationQuery
+    ) {
       query = appendDoubleQueryPattern(predefinedQuery, locationQuery)
       // if there is predefinedQuery but no predefinedLocation but there is location match
     } else if (predefinedQuery && !predefinedLocation && locationQuery) {
       query = appendDoubleQueryPattern(predefinedQuery, locationQuery)
       // if filter is 2, there is no predefinedQuery and no predefinedLocation, it means it hit reserved keyword
-    } else if (!predefinedQuery && !predefinedLocation && filterQuery && locationQuery){
+    } else if (!predefinedQuery && !predefinedLocation && filterQuery && locationQuery) {
       query = appendDoubleQueryPattern(filterQuery, locationQuery)
       // if filter is 2, there is no predefinedQuery, but there is predefinedLocation, it means it hit reserved keyword
-    }else if (!predefinedQuery && predefinedLocation) {
+    } else if (!predefinedQuery && predefinedLocation) {
       query = appendDoubleQueryPattern(filterQuery, predefinedLocation)
     }
   } else {
@@ -747,9 +796,6 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
   }
 
   const queryData = urlQueryParser(query)
-
-  console.log('query', query)
-  console.log('queryData', queryData)
 
   //  if query value exist in filterParamsObject, remove it
   queryData.forEach((q) => {
