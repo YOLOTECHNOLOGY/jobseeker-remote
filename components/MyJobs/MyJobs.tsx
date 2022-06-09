@@ -61,7 +61,10 @@ const theme = createTheme({
         },
         scroller: {
           height: '55px'
-        }
+        },
+        flexContainer: {
+          height: '55px',
+        },
       }
     }
   },

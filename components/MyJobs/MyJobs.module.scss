@@ -43,8 +43,9 @@
   }
 
   &Tab {
-    margin-right: 20px;
-    padding: 0;
+    margin-right: 20px !important;
+    padding: 0 !important;
+
     @include msd {
       margin-right: 0;
       width: 50%;

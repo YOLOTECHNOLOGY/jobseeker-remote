@@ -109,6 +109,7 @@
 
 .companyDescription {
   margin-bottom: 10px;
+  margin-top: 10px;
   font-size: 16px !important;
   font-family: 'Product Sans' !important;
   font-weight: 400;
@@ -345,9 +346,10 @@
     }
 
     &Location, 
+
     &Button {
       width: 100%;
-      margin-bottom: 24px;
+      margin-bottom: 24px !important;
     }
   }
 }
