@@ -16,9 +16,9 @@ import Accordian from 'components/Accordian'
 
 /* Helpers */
 import {
-  conditionChecker,
-  getPredefinedParamsFromUrl,
-  getLocationList,
+  // conditionChecker,
+  // getPredefinedParamsFromUrl,
+  // getLocationList,
   moreFilterDataParser,
 } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
@@ -144,20 +144,28 @@ const NavSearchFilter = ({
     onResetFilter({})
   }
 
-  const onRemoveProperty = (propertyName, object) => {
-    // eslint-disable-next-line
-    const { [propertyName]: propertyValue, ...newObject } = { ...object }
-    return { ...newObject }
-  }
+  // const onRemoveProperty = (propertyName, object) => {
+  //   // eslint-disable-next-line
+  //   const { [propertyName]: propertyValue, ...newObject } = { ...object }
+  //   return { ...newObject }
+  // }
 
   const urlFilterParameterBuilder = (data) => {
     // eslint-disable-next-line new-cap
-    const { searchQuery, filterParamsObject } = moreFilterDataParser(data, router.query, config)
+    const { searchQuery, filterParamsObject } = moreFilterDataParser(
+      data,
+      router.query,
+      config
+    )
 
     router.push(
       {
-        pathname: `${process.env.HOST_PATH}/jobs-hiring/${searchQuery ? searchQuery : 'job-search'}`,
-        query: filterParamsObject,
+        pathname: `${process.env.HOST_PATH}/jobs-hiring/${
+          searchQuery ? searchQuery : 'job-search'
+        }`,
+        query: {
+          ...filterParamsObject
+        },
       },
       undefined,
       { shallow: true }

@@ -75,21 +75,20 @@ const MaterialGroupSelectCheckmarks = ({
     const selectedOptions = []
     const valueToDisplay = []
     if (!isReset){
-    
-    listOptions.map((option)=> {
-      if (option.isChecked){
-        valueToDisplay.push(option.value)
-        selectedOptions.push(option.key)
-      }else{
-        option.sub_list.map((subOption)=> {
-          if (subOption.isChecked){
-          valueToDisplay.push(subOption.value)
-          selectedOptions.push(subOption.key)
-        }})
-      }
-    })
-    setDisplayValue(valueToDisplay)
-    if (!firstRender) onSelect(selectedOptions)
+      listOptions.map((option)=> {
+        if (option.isChecked){
+          valueToDisplay.push(option.value)
+          selectedOptions.push(option.key)
+        }else{
+          option.sub_list.map((subOption)=> {
+            if (subOption.isChecked){
+            valueToDisplay.push(subOption.value)
+            selectedOptions.push(subOption.key)
+          }})
+        }
+      })
+      setDisplayValue(valueToDisplay)
+      if (!firstRender && (value && value.length > 0 || selectedOptions && selectedOptions.length > 0)) onSelect(selectedOptions)
   }
   },[listOptions])
 

@@ -27,7 +27,7 @@ import { deleteJobAlertRequest } from 'store/actions/alerts/deleteJobAlert'
 import { updateJobAlertRequest } from 'store/actions/alerts/updateJobAlert'
 import { createJobAlertRequest } from 'store/actions/alerts/createJobAlert'
 import { postReportRequest } from 'store/actions/reports/postReport'
-import { postSaveJobRequest} from 'store/actions/jobs/postSaveJob'
+import { postSaveJobRequest } from 'store/actions/jobs/postSaveJob'
 import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
 
 /* Material Components */
@@ -53,12 +53,12 @@ import breakpointStyles from 'styles/breakpoint.module.scss'
 
 /* Helpers*/
 import {
-  categoryParser,
+  // categoryParser,
   checkFilterMatch,
   conditionChecker,
   getPredefinedParamsFromUrl,
   getLocationList,
-  userFilterSelectionDataParser
+  userFilterSelectionDataParser,
 } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
@@ -101,7 +101,9 @@ const renderPopularSearch = () => {
         title='Finance jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>Finance</Text>
+        <Text textStyle='lg' textColor='darkgrey'>
+          Finance
+        </Text>
       </Link>
       <Link
         className={styles.link}
@@ -109,7 +111,9 @@ const renderPopularSearch = () => {
         title='Sales jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>Sales</Text>
+        <Text textStyle='lg' textColor='darkgrey'>
+          Sales
+        </Text>
       </Link>
       <Link
         className={styles.link}
@@ -117,10 +121,14 @@ const renderPopularSearch = () => {
         title='Marketing jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>Marketing</Text>
+        <Text textStyle='lg' textColor='darkgrey'>
+          Marketing
+        </Text>
       </Link>
       <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs' aTag>
-        <Text textStyle='lg' textColor='darkgrey'>Makati</Text>
+        <Text textStyle='lg' textColor='darkgrey'>
+          Makati
+        </Text>
       </Link>
       <Link
         className={styles.link}
@@ -128,10 +136,14 @@ const renderPopularSearch = () => {
         title='IT jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>IT</Text>
+        <Text textStyle='lg' textColor='darkgrey'>
+          IT
+        </Text>
       </Link>
       <Link className={styles.link} to={`${jobsPageLink}/overseas-jobs`} title='Overseas jobs' aTag>
-        <Text textStyle='lg' textColor='darkgrey'>Overseas jobs</Text>
+        <Text textStyle='lg' textColor='darkgrey'>
+          Overseas jobs
+        </Text>
       </Link>
       <Link
         className={styles.link}
@@ -139,7 +151,9 @@ const renderPopularSearch = () => {
         title='Customer Service jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>Customer Service</Text>
+        <Text textStyle='lg' textColor='darkgrey'>
+          Customer Service
+        </Text>
       </Link>
       <Link
         className={styles.link}
@@ -147,7 +161,9 @@ const renderPopularSearch = () => {
         title='₱30K + jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>₱30K + jobs</Text>
+        <Text textStyle='lg' textColor='darkgrey'>
+          ₱30K + jobs
+        </Text>
       </Link>
       <Link
         className={styles.link}
@@ -155,14 +171,24 @@ const renderPopularSearch = () => {
         title='Full Time jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>Full Time jobs</Text>
+        <Text textStyle='lg' textColor='darkgrey'>
+          Full Time jobs
+        </Text>
       </Link>
     </div>
   )
 }
 
 const JobSearchPage = (props: JobSearchPageProps) => {
-  const { accessToken, seoMetaTitle, seoMetaDescription, config, topCompanies, defaultPage, defaultValues} = props
+  const {
+    accessToken,
+    seoMetaTitle,
+    seoMetaDescription,
+    config,
+    topCompanies,
+    defaultPage,
+    defaultValues,
+  } = props
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
@@ -187,7 +213,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [jobTypes, setJobTypes] = useState(defaultValues?.jobTypes || [])
   const [salaries, setSalaries] = useState(defaultValues?.salaries || [])
   const { keyword, ...rest } = router.query
-  const [displayQuickLinks, setDisplayQuickLinks ]= useState(keyword === 'job-search' && Object.entries(rest).length === 0)
+  const [displayQuickLinks, setDisplayQuickLinks] = useState(
+    keyword === 'job-search' && Object.entries(rest).length === 0
+  )
   const [hasMoreFilters, setHasMoreFilters] = useState(false)
   const [suggestionList, setSuggestionList] = useState([])
 
@@ -195,7 +223,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
   const isJobListFetching = useSelector((store: any) => store.job.jobList.fetching)
-  
+
   const jobDetailResponse = useSelector((store: any) => store.job.jobDetail.response)
   const isJobDetailFetching = useSelector((store: any) => store.job.jobDetail.fetching)
 
@@ -222,13 +250,22 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   useEffect(() => {
     // eslint-disable-next-line no-console
     console.log('router query changed', router.query)
-    const {industry, education, workExperience, category, jobType, salary, qualification} = router.query
+    const {
+      // keyword,
+      industry,
+      education,
+      workExperience,
+      category,
+      jobType,
+      salary,
+      qualification,
+    } = router.query
 
     if (!firstRender) setDisplayQuickLinks(false)
-    
+
     // const routerCategories: any = predefinedCategory ? predefinedCategory[0] : category
     // let jobCategories: any = []
-    
+
     // if (routerCategories) {
     //   catList.forEach(cat => {
     //     if (routerCategories.split(',').includes(cat.key)) {
@@ -239,8 +276,17 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
     // jobCategories = jobCategories.join(',')
 
-    setHasMoreFilters(industry || education || workExperience || category || qualification || predefinedLocation || jobType || salary)
-    
+    setHasMoreFilters(
+      industry ||
+        education ||
+        workExperience ||
+        category ||
+        qualification ||
+        predefinedLocation ||
+        jobType ||
+        salary
+    )
+
     const payload = {
       query: searchValue,
       jobLocation: urlLocation?.value,
@@ -264,12 +310,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   useEffect(() => {
     if (jobAlertListResponse) setJobAlertList(jobAlertListResponse)
     if (createdJobAlertResponse) setCreatedJobAlert(createdJobAlertResponse)
-
   }, [jobAlertListResponse, createdJobAlertResponse])
 
   useEffect(() => {
     if (jobListResponse?.data?.jobs.length > 0) {
-      handleFetchJobDetail(jobListResponse.data?.jobs?.[0].id) 
+      handleFetchJobDetail(jobListResponse.data?.jobs?.[0].id)
       setSelectedJobId(jobListResponse.data?.jobs?.[0].id)
     } else {
       setSelectedJobId(null)
@@ -300,9 +345,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
       }
       return rangeObj
-      // return {
-      //   value: range.value === '10K - 30K' ? 'Below 30K': range.value 
-      // }
     })
   )
 
@@ -320,31 +362,31 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     )
   }
 
-  const onRemoveProperty = (propertyName, object) => {
-    // eslint-disable-next-line
-    const { [propertyName]: propertyValue, ...newObject } = { ...object }
-    return { ...newObject }
-  }
+  // const onRemoveProperty = (propertyName, object) => {
+  //   // eslint-disable-next-line
+  //   const { [propertyName]: propertyValue, ...newObject } = { ...object }
+  //   return { ...newObject }
+  // }
 
   const onKeywordSearch = (val) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
     const sortOption = val.length > 0 ? 2 : 1
-    
+
     setSort(sortOption)
 
     // Check if the search value matched with the reserved location keyword
     const matchedLocation = locList.filter((loc) => {
       return loc.value.toLowerCase() === searchValue.toLowerCase()
     })
-    
+
     let location = urlLocation
     // Set the location and clear the search value if reserved keyword found
     if (matchedLocation.length === 1) {
       location = matchedLocation[0]
       setUrlLocation(location)
 
-      val = ""
+      val = ''
       setSearchValue(val)
     }
 
@@ -352,181 +394,141 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const matchedCategory = catList.filter((cat) => {
       return cat.value.toLowerCase() === searchValue.toLowerCase()
     })
-    
+
     let firstCategory = categories
     // Set the first category and clear the search value if reserved keyword found
     if (matchedCategory.length === 1) {
       firstCategory = matchedCategory[0]
       setCategories([firstCategory])
 
-      val = "" 
+      val = ''
       setSearchValue(val)
     }
 
     const queryParam = conditionChecker(val, location?.value || null, firstCategory?.key || null)
 
     let queryObject = null
-    queryObject = Object.assign({}, { ...rest, sort: sortOption})
+    queryObject = Object.assign({}, { ...rest, sort: sortOption })
 
     if (predefinedCategory) {
       queryObject['category'] = predefinedCategory.join(',')
-    } 
+    }
 
     updateUrl(queryParam, queryObject)
   }
 
   const handleSuggestionSearch = (val) => {
-      if (val !== '') {
-        fetch(
-          `${
-            process.env.JOB_BOSSJOB_URL
-          }/suggested-search?size=5&query=${val}`
-        ).then((resp)=>resp.json())
-        .then((data)=>setSuggestionList(data.data.items))
+    if (val !== '') {
+      fetch(`${process.env.JOB_BOSSJOB_URL}/suggested-search?size=5&query=${val}`)
+        .then((resp) => resp.json())
+        .then((data) => setSuggestionList(data.data.items))
     }
   }
 
   const onLocationSearch = (event, value) => {
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
-    const queryObject = Object.assign({}, { ...rest })
-    let queryParam = 'job-search'
 
-    // console.log('onLocationSearch value', value)
-    // if (value) {
-    //   const sanitisedLocValue = categoryParser(value.value)
-    //   console.log('sanitisedLocValue', sanitisedLocValue)
-    //   queryParam = conditionChecker(predefinedQuery, sanitisedLocValue, predefinedCategory)
-    // } else {
-    //   queryParam = conditionChecker(predefinedQuery, null, predefinedCategory)
-    // }
-    // console.log('queryParam', queryParam)
-
-    console.log('location Value', value)
+    const isClear = !value
     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
       'location',
       value,
       router.query,
-      config
+      config,
+      isClear
     )
 
     setUrlLocation(value)
-
-    console.log('searchQuery', searchQuery)
-    console.log('filterParamsObject', filterParamsObject)
     updateUrl(searchQuery, filterParamsObject)
   }
 
-  const onSortSelection = (selectedOption ) => {
+  const onSortSelection = (selectedOption) => {
     // NOTE: there is a different sort selection logic when selecting sort in Mobile, refer to JobSearchFilters
     // eslint-disable-next-line
-    const { keyword, ...rest } = router.query
-    const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
-    const queryObject = Object.assign({}, { ...rest, sort: selectedOption })
-
-    setSort(selectedOption)
-
-    updateUrl(queryParam, queryObject)
-  }
-
-  const onSalarySelection = (selectedOptions) => {
-    const { keyword, ...rest } = router.query
-    // eslint-disable-next-line
-    console.log('onSalarySelection selectedOptions', selectedOptions)
-    console.log('onSalarySelection router.query', router.query)
-
-    const { searchQuery, filterParamsObject } = userFilterSelectionDataParser('salary', selectedOptions, router.query, config)
-
-    console.log('searchQuery', searchQuery)
-    console.log('filterParamsObject', filterParamsObject)
-    // detect changes for salary
-    // check if predefined query exist
-    // if predefined query exist OR if there is more than 1 filter, append to query param
-    // if predefined query does not exist, set salary selected to salary-jobs
+    // const { keyword, ...rest } = router.query
     // const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
-    // const removedProperty = onRemoveProperty('salary', {...rest})
-    // const queryObject = selectedOptions?.length > 0 
-    //                     ? Object.assign({}, { ...rest, salary: selectedOptions.join(',') }) 
-    //                     : Object.assign({}, { ...removedProperty })
+    // const queryObject = Object.assign({}, { ...rest, sort: selectedOption })
 
-    // console.log('onSalarySelection queryParam', queryParam)
-    // console.log('onSalarySelection queryObject', queryObject)
-    setSalaries(selectedOptions)
-    
-    updateUrl(searchQuery, filterParamsObject)
-  }
-
-  const onJobTypeSelection = (selectedOptions) => {
-    // eslint-disable-next-line
-    const { keyword, ...rest } = router.query
     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
-          'jobType',
-          selectedOptions,
-          router.query,
-          config
-        )
-
-    // const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
-    // const removedProperty = onRemoveProperty('jobType', {...rest})
-    // const queryObject = selectedOptions?.length > 0 
-    //                     ? Object.assign({}, { ...rest, jobType: selectedOptions.join(',') }) 
-    //                     : Object.assign({}, { ...removedProperty })
-
-    setJobTypes(selectedOptions)
+      'sort',
+      selectedOption,
+      router.query,
+      config
+    )
+    setSort(selectedOption)
 
     updateUrl(searchQuery, filterParamsObject)
     // updateUrl(queryParam, queryObject)
   }
 
+  const onSalarySelection = (selectedOptions) => {
+    const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
+      'salary',
+      selectedOptions,
+      router.query,
+      config
+    )
+    setSalaries(selectedOptions)
+    updateUrl(searchQuery, filterParamsObject)
+  }
+
+  const onJobTypeSelection = (selectedOptions) => {
+    const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
+      'jobType',
+      selectedOptions,
+      router.query,
+      config
+    )
+    setJobTypes(selectedOptions)
+    updateUrl(searchQuery, filterParamsObject)
+  }
+
   const onSpecializationSelection = (selectedOptions) => {
-     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
-       'category',
-       selectedOptions,
-       router.query,
-       config
-     )
-    // console.log('onSpecializationSelection selectedOptions', selectedOptions)
-    // // eslint-disable-next-line
-    // const { keyword, ...rest } = router.query
-    // const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
-    // const removedProperty = onRemoveProperty('category', { ...rest })
-    // const queryObject =
-    //   selectedOptions?.length > 0
-    //     ? Object.assign({}, { ...rest, category: selectedOptions.join(',') })
-    //     : Object.assign({}, { ...removedProperty })
+    const isClear = selectedOptions && selectedOptions.length === 0
+    const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
+      'category',
+      selectedOptions,
+      router.query,
+      config,
+      isClear
+    )
 
     setCategories(selectedOptions)
     updateUrl(searchQuery, filterParamsObject)
   }
 
   const handleResetFilter = () => {
-    const hasMatch = checkFilterMatch(
+    const { searchMatch, locationMatch, searchQuery } = checkFilterMatch(
       router.query,
       config,
       'reset'
     )
+
     const queryObject = []
 
     setUrlLocation([])
     setJobTypes([])
     setSalaries([])
     setIsCategoryReset(true)
-    setSearchValue('')
+    if (searchMatch) setSearchValue('')
     setMoreFilterReset(true)
 
     // if query matches filter, on reset, remove it from query
-    if (hasMatch){
+    if ((searchMatch && locationMatch) || (searchMatch && !locationMatch)) {
       updateUrl(null, queryObject)
-    }else{
+    } else if (!searchMatch && locationMatch) {
+      updateUrl(searchQuery ? `${searchQuery}-jobs` : null, queryObject)
+    } else {
       updateUrl(keyword, queryObject)
     }
   }
 
-  const handleFetchJobDetail = (jobId) => dispatch(fetchJobDetailRequest({jobId, status: userCookie ? 'protected' : 'public'}))
+  const handleFetchJobDetail = (jobId) =>
+    dispatch(fetchJobDetailRequest({ jobId, status: userCookie ? 'protected' : 'public' }))
 
   const handleSelectedJobId = (jobId, jobTitle) => {
     // Open new tab in mobile
-    if (isMobile && typeof window !== "undefined") {
+    if (isMobile && typeof window !== 'undefined') {
       window.open(`/job/${slugify(jobTitle.toLowerCase())}-${jobId}`)
 
       return
@@ -539,7 +541,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleUpdateJobAlert = (updateJobAlertData) => {
     const updateJobAlertPayload = {
       updateJobAlertData,
-      accessToken
+      accessToken,
     }
 
     dispatch(updateJobAlertRequest(updateJobAlertPayload))
@@ -548,7 +550,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleDeleteJobAlert = (jobAlertId) => {
     const deleteJobAlertPayload = {
       jobAlertId,
-      accessToken
+      accessToken,
     }
 
     dispatch(deleteJobAlertRequest(deleteJobAlertPayload))
@@ -557,19 +559,19 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handlePostReportJob = (reportJobData) => {
     const postReportJobPayload = {
       reportJobData,
-      accessToken
+      accessToken,
     }
 
     dispatch(postReportRequest(postReportJobPayload))
   }
 
-  const handleFetchJobAlertsList = () => dispatch(fetchJobAlertsListRequest({accessToken}))
-  
+  const handleFetchJobAlertsList = () => dispatch(fetchJobAlertsListRequest({ accessToken }))
+
   const handleCreateJobAlert = (jobAlertData) => {
     const createJobAlertPayload = {
       jobAlertData,
       accessToken,
-      user_id: userCookie.id
+      user_id: userCookie.id,
     }
 
     dispatch(createJobAlertRequest(createJobAlertPayload))
@@ -578,17 +580,17 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handlePostSaveJob = ({ jobId }) => {
     const postSaveJobPayload = {
       jobId,
-      user_id: userCookie.id
+      user_id: userCookie.id,
     }
 
     dispatch(postSaveJobRequest(postSaveJobPayload))
   }
 
-  const handleDeleteSavedJob = ({jobId}) => {
+  const handleDeleteSavedJob = ({ jobId }) => {
     const deleteJobPayload = {
-      jobId
+      jobId,
     }
-    
+
     dispatch(deleteSaveJobRequest(deleteJobPayload))
   }
 
@@ -701,7 +703,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             </Text>
           </MaterialButton>
 
-          {/* {hasMoreFilters && ( */}
+          {hasMoreFilters && (
             <MaterialButton
               variant='text'
               className={styles.moreFiltersBtn}
@@ -712,7 +714,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                 Reset Filters
               </Text>
             </MaterialButton>
-          {/* )} */}
+          )}
         </div>
         <div
           className={displayQuickLinks ? styles.quickLinkSectionExpanded : styles.quickLinkSection}
@@ -826,23 +828,26 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-  
+
   const { keyword, page } = query
   // store actions
   store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1}))
+  store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
-  const featuredCompanies = storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map((featuredCompany) => featuredCompany.company)
+  const featuredCompanies =
+    storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(
+      (featuredCompany) => featuredCompany.company
+    )
   const topCompanies = featuredCompanies?.map((featuredCompany) => {
     const logoUrl = featuredCompany.logo_url
     delete featuredCompany.logo_url
-    return {...featuredCompany, logoUrl}
+    return { ...featuredCompany, logoUrl }
   })
   const catList = config && config.inputs && config.inputs.job_category_lists
-  const locList = getLocationList(config) 
+  const locList = getLocationList(config)
 
   const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
     query,
@@ -877,17 +882,21 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   }
 
   if (query && (query.category || predefinedCategory)) {
-    let urlCategory:any = query?.category
+    let urlCategory: any = query?.category
 
     urlCategory = predefinedCategory ? predefinedCategory : urlCategory.split(',')
-    
+
     const initialListOptions = catList.map((data) => {
       const newSubList = data.sub_list.map((subData) => ({
         ...subData,
         isChecked:
           urlCategory.includes(subData.key) || urlCategory.includes(data.key) ? true : false,
       }))
-      const newList = { ...data, isChecked: urlCategory.includes(data.key) ? true : false, sub_list: newSubList }
+      const newList = {
+        ...data,
+        isChecked: urlCategory.includes(data.key) ? true : false,
+        sub_list: newSubList,
+      }
       return newList
     })
     defaultValues.category = initialListOptions
@@ -898,10 +907,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       config,
       topCompanies,
       key: keyword,
-      defaultPage:page ? Number(page) : 1,
+      defaultPage: page ? Number(page) : 1,
       defaultValues,
-      accessToken
-    }
+      accessToken,
+    },
   }
 })
 export default JobSearchPage

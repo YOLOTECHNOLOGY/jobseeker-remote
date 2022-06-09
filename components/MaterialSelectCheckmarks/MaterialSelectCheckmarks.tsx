@@ -49,7 +49,6 @@ const MaterialSelectCheckmarks = ({
   error,
 }: MaterialSelectCheckMarksProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(value || [])
-  const [displayValue, setDisplayValue] = useState<Array<string>>([''])
 
   useEffect(() => {
     setSelectedOptions(value)
