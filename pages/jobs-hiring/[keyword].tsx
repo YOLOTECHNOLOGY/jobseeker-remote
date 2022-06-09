@@ -546,8 +546,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleResetFilter = () => {
     const { searchMatch, locationMatch, searchQuery, predefinedLocation } = checkFilterMatch(
       router.query,
-      config,
-      'reset'
+      config
     )
 
     const queryObject = []
