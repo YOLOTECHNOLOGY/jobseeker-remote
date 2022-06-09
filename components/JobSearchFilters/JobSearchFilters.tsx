@@ -8,7 +8,6 @@ import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
 /* Components */
-import Image from 'next/image'
 import Text from 'components/Text'
 import Button from 'components/Button'
 import Accordian from 'components/Accordian'
@@ -295,7 +294,7 @@ const NavSearchFilter = ({
           Filters
         </Text>
         <div className={styles.searchFilterClose} onClick={() => onShowFilter()}>
-          <Image src={CloseIcon} alt='logo' width='13' height='13' />
+          <img src={CloseIcon} alt='logo' width='13' height='13' />
         </div>
       </div>
       <form className={styles.searchFilterForm} onSubmit={handleSubmit(handleApplyFilter)}>

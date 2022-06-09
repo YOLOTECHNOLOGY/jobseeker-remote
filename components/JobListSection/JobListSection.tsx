@@ -7,7 +7,6 @@ import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 
 /* Components */
-import Image from 'next/image'
 import Text from 'components/Text'
 import JobCard from 'components/JobCard'
 import JobDetail from 'components/JobDetail'
@@ -228,7 +227,7 @@ const JobListSection = ({
                         setIsShowModalManageJobAlerts(true)
                       }}
                     >
-                      <Image src={BellIcon} width='20' height='20' />
+                      <img src={BellIcon} width='20' height='20' />
                     </div>
                   )}
                 </div>

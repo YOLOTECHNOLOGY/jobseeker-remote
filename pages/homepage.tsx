@@ -15,7 +15,6 @@ import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetch
 
 /* Components */
 import SEO from 'components/SEO'
-import Image from 'next/image'
 import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
@@ -353,7 +352,7 @@ const Homepage = (props: HomeProps) => {
                         to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                         external
                       >
-                        <Image
+                        <img
                           src={company.logoUrl}
                           title={company.name}
                           alt={company.name}
@@ -382,7 +381,7 @@ const Homepage = (props: HomeProps) => {
                         to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                         external
                       >
-                        <Image src={company.logoUrl} alt={company.name} width='60' height='60' />
+                        <img src={company.logoUrl} alt={company.name} width='60' height='60' />
                       </Link>
                     )
                   }
@@ -645,7 +644,7 @@ const Homepage = (props: HomeProps) => {
           <div className={styles.featureList}>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={BusinessInsider} alt='Business Insider' width='206' height='70' />
+                <img src={BusinessInsider} alt='Business Insider' width='206' height='70' />
               </div>
               {width > 576 ? (
                 <Link
@@ -682,7 +681,7 @@ const Homepage = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
+                <img src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
               </div>
               {width > 576 ? (
                 <Link
@@ -715,7 +714,7 @@ const Homepage = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
+                <img src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
               </div>
               {width > 576 ? (
                 <Link
@@ -750,7 +749,7 @@ const Homepage = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={MoneyMax} alt='Moneymax' width='206' height='40' />
+                <img src={MoneyMax} alt='Moneymax' width='206' height='40' />
               </div>
               {width > 576 ? (
                 <Link to='https://www.moneymax.ph/lifestyle/articles/online-job-sites/' external>
@@ -777,7 +776,7 @@ const Homepage = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={KrAsia} alt='KR Asia' width='206' height='40' />
+                <img src={KrAsia} alt='KR Asia' width='206' height='40' />
               </div>
               {width > 576 ? (
                 <Link
@@ -814,13 +813,13 @@ const Homepage = (props: HomeProps) => {
           <div className={styles.commonContainer}>
             <Link to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`} external>
               <div className={breakpointStyles.hideOnMobileAndTablet}>
-                  <Image src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
+                  <img src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
               </div>
               <div className={breakpointStyles.hideOnMobileAndDesktop}>
-                <Image src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
+                <img src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
               </div>
               <div className={breakpointStyles.hideOnTabletAndDesktop}>
-                <Image src={RHBannerMobile} alt='rh-banner-mobile' width='667' height='335' />
+                <img src={RHBannerMobile} alt='rh-banner-mobile' width='667' height='335' />
               </div>
             </Link>
           </div>

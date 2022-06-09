@@ -8,9 +8,6 @@ import { Editable, withReact, useSlate, Slate, ReactEditor } from 'slate-react'
 import { createEditor, Descendant } from 'slate'
 import { withHistory } from 'slate-history'
 
-/* Components */
-import Image from 'next/image'
-
 /* Helpers */
 import { getItem, setItem, removeItem } from 'helpers/localStorage'
 import { HOTKEYS, STORAGE_NAME, LIST_TYPES } from 'helpers/richTextEditor'
@@ -202,7 +199,7 @@ const BulletedListButton = ({ format }: any) => {
         toggleBlock(editor, format)
       }}
     >
-      <Image src={VectorBulletedListIcon} alt='logo' width='22' height='22' />
+      <img src={VectorBulletedListIcon} alt='logo' width='22' height='22' />
     </IconButton>
   )
 }
@@ -218,7 +215,7 @@ const NumberedListButton = ({ format }: any) => {
         toggleBlock(editor, format)
       }}
     >
-      <Image src={VectorNumberedListIcon} alt='logo' width='22' height='22' />
+      <img src={VectorNumberedListIcon} alt='logo' width='22' height='22' />
     </IconButton>
   )
 }

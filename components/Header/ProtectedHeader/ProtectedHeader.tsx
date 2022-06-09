@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
-import Image from 'next/image'
 
 import { logoutRequest } from 'store/actions/auth/logout'
 
@@ -96,7 +95,7 @@ const ProtectedHeader = () => {
               </li>
               <li className={styles.headerLink}>
                 <a className={styles.headerLinkIcon} title='Chats' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/chat')} href='/dashboard/chat'>
-                  <Image src={ChatIcon} width='20' height='20' />
+                  <img src={ChatIcon} width='20' height='20' />
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Chats
                   </Text>

@@ -18,7 +18,6 @@ import { updateUserCompleteProfileRequest } from 'store/actions/users/updateUser
 import Switch from '@mui/material/Switch';
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Image from 'next/image'
 import Divider from '@mui/material/Divider';
 
 import Text from 'components/Text'
@@ -382,7 +381,7 @@ const Step3 = (props: any) => {
       isUpdating={isUpdating}
     >
       <div className={styles.stepNotice}>
-        <Image src={InfoIcon} alt='' width='30' height='30' />
+        <img src={InfoIcon} alt='' width='30' height='30' />
         <Text textStyle='base'>Fill in your complete work experiences will increase your chances of being shortlisted by 83%.</Text>
       </div>
       {workExperience?.length > 0 && (
