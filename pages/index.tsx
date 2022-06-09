@@ -813,13 +813,13 @@ const Home = (props: HomeProps) => {
           <div className={styles.commonContainer}>
             <Link to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`} external>
               <div className={breakpointStyles.hideOnMobileAndTablet}>
-                  <img src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
+                  <img src={RHBannerDesktop} alt='rh-banner-desktop' width='100%' height='254' />
               </div>
               <div className={breakpointStyles.hideOnMobileAndDesktop}>
-                <img src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
+                <img src={RHBannerTablet} alt='rh-banner-tablet' width='100%' height='359' />
               </div>
               <div className={breakpointStyles.hideOnTabletAndDesktop}>
-                <img src={RHBannerMobile} alt='rh-banner-mobile' width='667' height='335' />
+                <img src={RHBannerMobile} alt='rh-banner-mobile' width='100%' height='150' />
               </div>
             </Link>
           </div>
