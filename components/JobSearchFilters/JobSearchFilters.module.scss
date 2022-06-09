@@ -29,7 +29,7 @@
     }
   }
 
-  &.isShow.displayQuickLinks.emailNotVerified{
+  &.isShow.displayQuickLinks.isShowingEmailAlert{
     @extend .searchFilter;
     top: 127px;
     height: calc(100vh - 127px);
