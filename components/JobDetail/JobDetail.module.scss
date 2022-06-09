@@ -188,11 +188,11 @@
 }
 
 .JobDetailSection {
-  margin-top: 48px;
+  margin-top: 24px;
 
   &Title {
     display: block;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
   }
 
   &Body {
@@ -201,6 +201,7 @@
 
   &SubTitle {
     margin-top: 16px;
+    margin-bottom: 8px;
     display: block;
     line-height: 24px;
   }
@@ -222,7 +223,7 @@
     display: flex;
     align-items: center;
     width: 50%;
-    margin: 12px 0 10px;
+    margin: 0 0 10px;
   }
 
   &Text {
@@ -250,7 +251,7 @@
   border: 1px solid $lightgrey;
   border-radius: 4px;
   padding: 21px 24px 15px;
-  margin-top: 34px;
+  margin: 34px 0;
 
   span {
     display: block;

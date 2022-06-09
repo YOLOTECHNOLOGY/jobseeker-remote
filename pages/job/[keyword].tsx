@@ -523,35 +523,42 @@ const Job = ({
               dangerouslySetInnerHTML={{ __html: jobDetail?.job_requirements_html }}
             />
           </div>
-          <div className={styles.JobDetailSection}>
-            <Text textStyle='xl' tagName='h2' bold className={styles.JobDetailSectionTitle}>
-              Benefits
-            </Text>
-            <ul className={styles.JobDetailBenefitsList}>
-              {jobDetail?.benefits?.map((benefit, i) => (
-                <li className={styles.JobDetailBenefitsItem} key={i}>
-                  {handleBenefitIcon(benefit.name)}
-                  <Text textStyle='lg' className={styles.JobDetailBenefitsText}>
-                    {benefit.name}
-                  </Text>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className={styles.JobDetailSection}>
-            <Text textStyle='xl' tagName='h2' bold className={styles.JobDetailSectionTitle}>
-              Skills/Software
-            </Text>
-            <ul className={styles.JobDetailSkillsList}>
-              {jobDetail?.skills?.map((skill, i) => (
-                <li className={styles.JobDetailSkillsItem} key={i}>
-                  <Text textStyle='sm' className={styles.JobDetailSkillsText}>
-                    {skill.value}
-                  </Text>
-                </li>
-              ))}
-            </ul>
-          </div>
+
+          {jobDetail?.benefits.length > 0 && (
+            <div className={styles.JobDetailSection}>
+              <Text textStyle='xl' tagName='h2' bold className={styles.JobDetailSectionTitle}>
+                Benefits
+              </Text>
+              <ul className={styles.JobDetailBenefitsList}>
+                {jobDetail?.benefits?.map((benefit, i) => (
+                  <li className={styles.JobDetailBenefitsItem} key={i}>
+                    {handleBenefitIcon(benefit.name)}
+                    <Text textStyle='lg' className={styles.JobDetailBenefitsText}>
+                      {benefit.name}
+                    </Text>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {jobDetail?.skills.length > 0 && (
+            <div className={styles.JobDetailSection}>
+              <Text textStyle='xl' tagName='h2' bold className={styles.JobDetailSectionTitle}>
+                Skills/Software
+              </Text>
+              <ul className={styles.JobDetailSkillsList}>
+                {jobDetail?.skills?.map((skill, i) => (
+                  <li className={styles.JobDetailSkillsItem} key={i}>
+                    <Text textStyle='sm' className={styles.JobDetailSkillsText}>
+                      {skill.value}
+                    </Text>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+         
           <div className={styles.JobDetailSection}>
             <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
               Additional Information
@@ -570,7 +577,7 @@ const Job = ({
                 <Link to='/' className={styles.JobDetailSectionSubBody}>
                   <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
                     {' '}
-                    {category.value},
+                    {category.value}, 
                   </Text>
                 </Link>
               </span>
