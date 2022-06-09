@@ -189,7 +189,7 @@ const JobDetail = ({
                 className={styles.JobDetailOptionImage}
                 onClick={() => setJobDetailOption(!jobDetailOption)}
               >
-                <Image src={MoreIcon} width='30' height='30'></Image>
+                <Image src={MoreIcon} width='5' height='20'></Image>
               </div>
 
               {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
@@ -238,7 +238,7 @@ const JobDetail = ({
               style={{ backgroundImage: `url(${selectedJob?.company?.logo})` }}
             />
             <div className={styles.JobDetailInfo}>
-              <Text textStyle='xl' bold className={styles.JobDetailTitle}>
+              <Text textStyle='lg' bold className={styles.JobDetailTitle}>
                 {selectedJob?.job_title}
               </Text>
               <Text textStyle='lg' className={styles.JobDetailCompany}>
@@ -311,7 +311,7 @@ const JobDetail = ({
                   )}
                 </div>
                 {(!isCategoryApplied || !isCategorySaved) && (
-                  <Text textStyle='lg' textColor='darkgrey' className={styles.JobDetailPostedAt}>
+                  <Text textStyle='sm' textColor='darkgrey' className={styles.JobDetailPostedAt}>
                     Posted on {selectedJob?.refreshed_at}
                   </Text>
                 )}
@@ -392,7 +392,7 @@ const JobDetail = ({
               </div>
             )}
             <div className={styles.JobDetailSection}>
-              <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
+              <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
                 Job Description
               </Text>
               <div
@@ -404,7 +404,7 @@ const JobDetail = ({
               />
             </div>
             <div className={styles.JobDetailSection}>
-              <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
+              <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
                 Requirements
               </Text>
               <div
@@ -416,7 +416,7 @@ const JobDetail = ({
               />
             </div>
             <div className={styles.JobDetailSection}>
-              <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
+              <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
                 Benefits
               </Text>
               <ul className={styles.JobDetailBenefitsList}>
@@ -445,7 +445,7 @@ const JobDetail = ({
               </ul>
             </div>
             <div className={styles.JobDetailSection}>
-              <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
+              <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
                 Additional Information
               </Text>
               <Text textStyle='lg' bold className={styles.JobDetailSectionSubTitle}>
@@ -469,11 +469,11 @@ const JobDetail = ({
               ))}
             </div>
             <div className={styles.aboutCompany}>
-              <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
+              <Text bold textStyle='lg' className={styles.aboutCompanyHeader}>
                 About the company
               </Text>
               <Link to={companyUrl} className={styles.aboutCompanyTitle}>
-                <Text bold textStyle='xl' textColor='primaryBlue'>
+                <Text bold textStyle='lg' textColor='primaryBlue'>
                   {selectedJob?.company?.name}
                 </Text>
               </Link>

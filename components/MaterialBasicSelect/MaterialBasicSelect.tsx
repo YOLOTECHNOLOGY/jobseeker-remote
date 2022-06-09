@@ -58,8 +58,9 @@ const MaterialBasicSelect = ({
         styleOverrides: {
           root: {
             fontSize: '16px',
-            height: '48px',
+            height: '44px',
             backgroundColor: greyBg ? '#E2E2E2' : 'white',
+            lineHeight: '16px',
           },
         },
       },

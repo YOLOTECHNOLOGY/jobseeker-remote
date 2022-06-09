@@ -283,7 +283,7 @@ const ResumeTemplate = () => {
             Have a question?
           </Text>
           <div className={styles.sectionContentHalfDivider}></div>
-          <Text tagName='h2' textStyle='xxxl' bold className={styles.sectionSubHeader}>
+          <Text tagName='h2' textStyle='xl' bold className={styles.sectionSubHeader}>
             Is it free?
           </Text>
           <div className={styles.sectionContentRegDivider}></div>
@@ -298,7 +298,7 @@ const ResumeTemplate = () => {
           <div className={styles.resumeTemplateContent}>
             <div className={styles.sectionContentHalfDivider}></div>
             <div className={styles.resumeTemplateOtherSection}>
-              <Text tagName='h2' textStyle='xxxl' bold className={styles.sectionSubHeader}>
+              <Text tagName='h2' textStyle='xl' bold className={styles.sectionSubHeader}>
                 How many templates can I choose from?
               </Text>
               <div className={styles.sectionContentRegDivider}></div>
@@ -358,7 +358,7 @@ const ResumeTemplate = () => {
         </div>
         <div className={styles.sectionContentRegDivider}></div>
         <div className={styles.resumeTemplateSection}>
-          <Text tagName='h2' textStyle='xxxl' bold className={styles.sectionSubHeader}>
+          <Text tagName='h2' textStyle='xl' bold className={styles.sectionSubHeader}>
             Would I be able to edit the resume template later?
           </Text>
           <div className={styles.sectionContentRegDivider}></div>

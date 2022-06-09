@@ -134,7 +134,7 @@ const CompanyDetail = (props: any) => {
     >
       <div className={styles.companyTabsContent}>
         <div className={styles.companySection}>
-          <Text textStyle='lg' bold className={styles.companySectionTitle}>
+          <Text textStyle='xl' bold className={styles.companySectionTitle}>
             About the company
           </Text>
           <div
@@ -146,7 +146,7 @@ const CompanyDetail = (props: any) => {
               <div className={styles.companyOverviewLeft}>
                 {company.company_size && (
                   <div className={styles.companyOverviewItem}>
-                    <Text textStyle='lg' bold>
+                    <Text textStyle='xl' bold>
                       Company Size:{' '}
                     </Text>
                     <Text textStyle='lg'>{company.company_size} Employees</Text>
@@ -154,7 +154,7 @@ const CompanyDetail = (props: any) => {
                 )}
                 {company.industry && (
                   <div className={styles.companyOverviewItem}>
-                    <Text textStyle='lg' bold>
+                    <Text textStyle='xl' bold>
                       Industry:{' '}
                     </Text>
                     <Text textStyle='lg'>{company.industry}</Text>
@@ -162,7 +162,7 @@ const CompanyDetail = (props: any) => {
                 )}
                 {company.website && (
                   <div className={styles.companyOverviewItem}>
-                    <Text textStyle='lg' bold>
+                    <Text textStyle='xl' bold>
                       Website:{' '}
                     </Text>
                     <Text textStyle='lg'>{company.website}</Text>
@@ -172,7 +172,7 @@ const CompanyDetail = (props: any) => {
               <div className={styles.companyOverviewRight}>
                 {company.full_address && (
                   <div className={styles.companyOverviewItem}>
-                    <Text textStyle='lg' bold>
+                    <Text textStyle='xl' bold>
                       Location:{' '}
                     </Text>
                     <Text textStyle='lg' className={styles.companyOverviewLocation}>
@@ -186,7 +186,7 @@ const CompanyDetail = (props: any) => {
                     styles.companyOverviewItemSocial
                   )}
                 >
-                  <Text textStyle='lg' bold>
+                  <Text textStyle='xl' bold>
                     Social Media:{' '}
                   </Text>
                   <div className={styles.companyOverviewSocial}>
@@ -233,7 +233,7 @@ const CompanyDetail = (props: any) => {
                   {company.cultures?.length > 0 && (
                     <div className={styles.companyCultureSection}>
                       <div className={styles.companyCultureHeading}>
-                        <Text textStyle='lg' bold>
+                        <Text textStyle='xl' bold>
                           Company Culture
                         </Text>
                         <Link
@@ -271,7 +271,7 @@ const CompanyDetail = (props: any) => {
                   {company.benefits?.length > 0 && (
                     <div className={styles.companyCultureSection}>
                       <div className={styles.companyCultureHeading}>
-                        <Text textStyle='lg' bold>
+                        <Text textStyle='xl' bold>
                           Employee Benefits
                         </Text>
                         <Link
@@ -309,7 +309,7 @@ const CompanyDetail = (props: any) => {
                   {company.pictures?.length > 0 && (
                     <div className={styles.companyCultureSection}>
                       <div className={styles.companyCultureHeading}>
-                        <Text textStyle='lg' bold>
+                        <Text textStyle='xl' bold>
                           Photos
                         </Text>
                       </div>
@@ -359,7 +359,7 @@ const CompanyDetail = (props: any) => {
         <div className={styles.companySection} id='companyJobs'>
           <div className={styles.companyCultureJobs}>
             <div className={styles.companyCultureHeading}>
-              <Text textStyle='lg' bold>
+              <Text textStyle='xl' bold>
                 Jobs
               </Text>
               {companyJobs?.length > 0 && (

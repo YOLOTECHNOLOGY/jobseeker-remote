@@ -218,7 +218,6 @@
     &Body {
       margin-top: 16px;
       display: block;
-      padding: 0 20px;
     }
   
     &SubTitle {
@@ -243,6 +242,7 @@
   &DescriptionSectionBody * ,
   &RequirementSectionBody *{
     font-size: 16px !important;
+    font-weight: 400;
     font-family: 'Product Sans' !important;
   }
 
@@ -270,7 +270,7 @@
     }
   
     &Text {
-      margin-left: 28px;
+      margin-left: 16px;
     }
   }
 
@@ -352,7 +352,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 61px auto 48px;
+  padding: 32px;
+  // margin: 61px auto 48px;
 
   .searchField {
     width: 60%;
@@ -385,14 +386,11 @@
 .LeaderBoard {
   height: 90px;
   width: 970px;
-  margin: 0 auto 40px;
+  margin: 24px;
   cursor: pointer;
 
   @include msd {
     width: 300px;
-    max-width: 100%;
-    height: 200px;
-    margin: 0 auto 48px;
   }
 }
 

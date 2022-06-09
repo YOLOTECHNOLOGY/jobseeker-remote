@@ -110,25 +110,25 @@ const Companies = () => {
                   }`}
                   className={styles.featuredEmployerName}
                 >
-                  <Text textStyle='xl' bold tagName='h3'>
+                  <Text textStyle='xl' bold>
                     {featuredCompany?.name}
                   </Text>
                 </Link>
                 <div className={styles.featuredEmployerAbout}>
                   <div className={styles.featuredEmployerAboutItem}>
-                    <Text textStyle='base' bold>
+                    <Text textStyle='lg' bold>
                       Company Size
                     </Text>
-                    <Text textStyle='base'>{featuredCompany?.company_size} Employees</Text>
+                    <Text textStyle='lg'>{featuredCompany?.company_size} Employees</Text>
                   </div>
                   <div className={styles.featuredEmployerAboutItem}>
-                    <Text textStyle='base' bold>
+                    <Text textStyle='lg' bold>
                       Industry
                     </Text>
-                    <Text textStyle='base'>{featuredCompany?.industry}</Text>
+                    <Text textStyle='lg'>{featuredCompany?.industry}</Text>
                   </div>
                 </div>
-                <Text textStyle='base' tagName='p' className={styles.featuredEmployerDescription}>
+                <Text textStyle='lg' tagName='p' className={styles.featuredEmployerDescription}>
                   {featuredCompany?.short_description}
                 </Text>
                 <Link

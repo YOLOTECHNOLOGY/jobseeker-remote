@@ -337,7 +337,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                     className={styles.answer}
                     label='Answer'
                     multiline
-                    rows={4}
+                    rows={9}
                     variant='outlined'
                     size='small'
                   />

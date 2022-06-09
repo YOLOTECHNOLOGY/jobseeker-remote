@@ -19,7 +19,7 @@ const textFieldTheme = createTheme({
           fontSize: '16px',
           letterSpacing: '1px',
           backgroundColor: 'white',
-          height: '48px'
+          height: '44px'
         },
       },
     },
@@ -33,7 +33,8 @@ const textFieldTheme = createTheme({
             fontSize: '10px',
             transform: 'translate(14px, -10px) scale(1)',
           },
-          top: '4px'
+          top: '4px',
+          lineHeight: '16px'
         },
         shrink: {
           fontSize: '10px',
@@ -56,7 +57,7 @@ const autocompleteTheme = createTheme({
           '&.MuiInputLabel-shrink': {
             fontSize: '13px',
           },
-          height: '48px'
+          height: '44px'
         },
       },
     },

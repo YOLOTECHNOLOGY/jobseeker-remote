@@ -17,19 +17,18 @@
 
 .searchSection {
   position: relative;
-  height: 209px;
   background-color: $white-1;
   display: flex;
   flex-direction: column;
-  padding: 45px 0;
+  padding: 32px 0;
   z-index:10;
 
   @include msd{
-    height:360px;
+    height:300px;
   }
 
   @include sm{
-    height: 360px;
+    height: 300px;
   }
 
   .searchAndLocationContainer {
@@ -48,7 +47,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    margin-top: 24px;
+    margin-top: 20px;
 
     & > * {
       margin-right: 16px;
@@ -70,7 +69,7 @@
 
 .searchSectionExpanded {
   @extend .searchSection;
-  height: 310px;
+  height: 280px;
   z-index:10;
 
   @include msd{
@@ -84,7 +83,7 @@
 
   @include msd{
     width:100%;
-    margin-bottom: 24px !important;
+    margin-bottom: 20px !important;
   }
 }
 .locationField {
@@ -94,7 +93,7 @@
 
   @include msd{
     width:100%;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     margin-left: 0;
   }
 }
@@ -109,10 +108,10 @@
 }
 .filtersButton {
   width: 100%;
-  margin-top: 24px;
+  margin-top: 20px;
 }
 .sortField {
-  width: 150px;
+  width: 160px;
 }
 
 .specializationField{
@@ -126,7 +125,7 @@
 .quickLinkSectionExpanded {
   display: flex;
   flex-direction: column;
-  margin: 24px 0 0;
+  margin: 20px 0 0;
 
   @include sm{
     display: none;
@@ -245,10 +244,10 @@
 }
 
 .jobListSection {
-  margin-top: 48px;
+  margin-top: 24px;
 
   @include sm {
-    margin-top: 21px;
+    margin-top: 24px;
   }
 }
 

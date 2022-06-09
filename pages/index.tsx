@@ -282,11 +282,9 @@ const Home = (props: HomeProps) => {
         <section className={styles.searchAndQuickLinkSection}>
           <div className={styles.commonContainer}>
             <Text
-              // tagName='h1'
               textStyle='xxxl'
               textColor='primaryBlue'
               bold
-              className={breakpointStyles.hideOnMobileAndTablet}
             >
               Find Jobs for Professionals in Phillipines
             </Text>
@@ -525,7 +523,9 @@ const Home = (props: HomeProps) => {
                   />
                 </div>
                 <div className={styles.flatDisplay}>
-                  <h2 className={styles.h2}>What can you do with Bosshunt?</h2>
+                  <Text tagName='h2' textStyle='xxxl' bold>
+                    What can you do with Bossjob?
+                  </Text>
                   <LazyLoad>
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>

@@ -391,7 +391,8 @@ const Step1 = (props: any) => {
         <Divider className={styles.divider} />
         
           <div className={styles.stepFormActions}>
-            <MaterialButton variant='contained' 
+            <MaterialButton 
+              variant='contained' 
               isLoading={isUpdatingUserProfile} 
               disabled={isDisabled} 
               capitalize 

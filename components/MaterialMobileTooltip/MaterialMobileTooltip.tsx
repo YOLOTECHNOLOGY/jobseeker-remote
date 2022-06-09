@@ -30,8 +30,8 @@ const MaterialMobileTooltip = ({
         <Image 
           src={icon} 
           alt='icon' 
-          width='20'
-          height='20'
+          width='24'
+          height='24'
           onClick={() => {
             setOpenTooltip(!openTooltip)
           }}
