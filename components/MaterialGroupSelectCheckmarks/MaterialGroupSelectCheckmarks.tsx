@@ -170,7 +170,6 @@ const MaterialGroupSelectCheckmarks = ({
       }
       return newData
     })
-    // TODO: update URL/SEO with new selection value
 
     setListOptions(data)
   }

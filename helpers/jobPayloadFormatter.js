@@ -164,7 +164,7 @@ const buildQueryParams = (data) => {
 }
 
 // check if there is a match
-const checkFilterMatch = (routerQuery, config, useCase) => {
+const checkFilterMatch = (routerQuery, config) => {
   const { keyword } = routerQuery
   const queryParser = urlQueryParser(keyword)
   const locationList = config.inputs.location_lists
@@ -394,12 +394,12 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     updatedFilters = { ...rest, [field]: optionValue.join() }
   } else if (field === 'moreFilters'){
     for (const [key, value] of Object.entries(optionValue)) {
-        if (value && value.length !== 0 && value[0]){
-          updatedFilters = {
-            ...rest,
-            // ensure to only push unduplicated results
-            [key]: [...new Set(value)].join(),
-          }
+      if (value && value.length !== 0 && value[0]){
+        updatedFilters = {
+          ...rest,
+          // ensure to only push unduplicated results
+          [key]: [...new Set(value)].join(),
+        }
       }
     }
   } else {
@@ -429,7 +429,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
           if (key === 'category') {
             const mainOptionMatched = []
             const subOptionMatched = []
-
+            
             sanitisedConfig[key].forEach((data) => {
               if (data['seo-value'] === val) {
                 predefinedQuery = val
@@ -447,15 +447,17 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
             })
 
             if (mainOptionMatched.length > 0) {
+              const prevValue= matchedConfigFromUserSelection[key]
               matchedConfigFromUserSelection = {
                 ...matchedConfigFromUserSelection,
-                [key]: mainOptionMatched,
+                [key]: prevValue ? [...prevValue, ...mainOptionMatched] : mainOptionMatched,
               }
             }
             if (subOptionMatched.length > 0) {
+              const prevValue = matchedConfigFromUserSelection[key]
               matchedConfigFromUserSelection = {
                 ...matchedConfigFromUserSelection,
-                [key]: subOptionMatched,
+                [key]: prevValue ? [...prevValue, ...subOptionMatched] : subOptionMatched,
               }
             }
           } else {
@@ -469,7 +471,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
                 return data['seo-value'] === val
               }
             })
-            if (matchedFilter.length !== 0) hasMatch.push(matchedFilter[0])
+            if (matchedFilter && matchedFilter.length !== 0) hasMatch.push(matchedFilter[0])
           }
         })
         if (hasMatch.length > 0) {

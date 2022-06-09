@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 /* Vendor */
 import classNames from 'classnames/bind'
@@ -48,11 +48,16 @@ interface SearchFilters {
   isNotCollapsible?: boolean
   isColumn?: boolean
   isRadioButton?: boolean
+  hasMainAndSubOption?: boolean
 }
 
 type optionsType = {
   value: string
   label: string
+  id?: any
+  key?: any
+  // eslint-disable-next-line camelcase
+  sub_list?: any
 }
 
 const NavSearchFilter = ({
@@ -63,7 +68,7 @@ const NavSearchFilter = ({
   displayQuickLinks,
   onResetFilter,
   moreFilterReset = false,
-  isEmailVerify
+  isEmailVerify,
 }: NavSearchFilterProps) => {
   const router = useRouter()
   const { keyword } = router.query
@@ -88,7 +93,11 @@ const NavSearchFilter = ({
   const sortRef = useRef(null)
   const { register, handleSubmit, reset } = useForm()
   const cx = classNames.bind(styles)
-  const isShowFilterClass = cx({ isShow: isShowFilter, displayQuickLinks: displayQuickLinks, emailNotVerified: !isEmailVerify })
+  const isShowFilterClass = cx({
+    isShow: isShowFilter,
+    displayQuickLinks: displayQuickLinks,
+    emailNotVerified: !isEmailVerify,
+  })
   const [selectedCategories, setSelectedCategories] = useState([])
   const [displayMobileSort, setDisplayMobileSort] = useState(false)
 
@@ -153,7 +162,7 @@ const NavSearchFilter = ({
   // }
 
   const urlFilterParameterBuilder = (data) => {
-    const { searchQuery, filterParamsObject} = userFilterSelectionDataParser(
+    const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
       'moreFilters',
       data,
       router.query,
@@ -166,7 +175,7 @@ const NavSearchFilter = ({
           searchQuery ? searchQuery : 'job-search'
         }`,
         query: {
-          ...filterParamsObject
+          ...filterParamsObject,
         },
       },
       undefined,
@@ -186,6 +195,7 @@ const NavSearchFilter = ({
     isNotCollapsible,
     isColumn,
     isRadioButton,
+    hasMainAndSubOption,
   }: SearchFilters) => {
     const isFilterColumnClass = cx({ searchFilterOptionsColumn: isColumn })
 
@@ -204,24 +214,54 @@ const NavSearchFilter = ({
           className={styles.searchFilterAccordion}
         >
           <div className={classNamesCombined([styles.searchFilterOptions, isFilterColumnClass])}>
-            {options &&
-              options.map((option, i) => {
-                if (isRadioButton) {
+            {hasMainAndSubOption
+              ? options.map((option) => {
+                  const subListOptions = option.sub_list
+                  return (
+                    <React.Fragment key={option.id}>
+                      <label className={styles.searchFilterOption}>
+                        <input
+                          type='checkbox'
+                          value={option['seo-value']}
+                          // onClick={(e) => handleMainClick(e, option)}
+                          {...register(fieldName)}
+                        />
+                        <Text textStyle='lg'>{option.value}</Text>
+                      </label>
+                      {subListOptions.map((subOption) => {
+                        return (
+                          <label key={subOption.id} className={styles.searchFilterOptionSub}>
+                            <input
+                              type='checkbox'
+                              value={subOption['seo-value']}
+                              // onClick={(e) => handleSubClick(e, subOption)}
+                              {...register(fieldName)}
+                            />
+                            <Text textStyle='lg'>{subOption.value}</Text>
+                          </label>
+                        )
+                      })}
+                    </React.Fragment>
+                  )
+                })
+              : options &&
+                options.map((option, i) => {
+                  if (isRadioButton) {
+                    return (
+                      <label key={i} className={styles.searchFilterOption}>
+                        <input type='radio' value={option['seo-value']} {...register(fieldName)} />
+                        <Text textStyle='lg'>{option.label}</Text>
+                      </label>
+                    )
+                  }
+
                   return (
                     <label key={i} className={styles.searchFilterOption}>
-                      <input type='radio' value={option['seo-value']} {...register(fieldName)} />
-                      <Text textStyle='lg'>{option.label}</Text>
+                      <input type='checkbox' value={option['seo-value']} {...register(fieldName)} />
+                      <Text textStyle='lg'>{option.value}</Text>
                     </label>
                   )
-                }
-
-                return (
-                  <label key={i} className={styles.searchFilterOption}>
-                    <input type='checkbox' value={option['seo-value']} {...register(fieldName)} />
-                    <Text textStyle='lg'>{option.value}</Text>
-                  </label>
-                )
-              })}
+                })}
           </div>
         </Accordian>
       </div>
@@ -243,8 +283,8 @@ const NavSearchFilter = ({
 
   useEffect(() => {
     if (isShowFilter) {
-      document.body.style.position = 'fixed';
-      document.body.style.width = "100%";
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
     }
     document.addEventListener('click', handleClickedOutside, true)
     return () => {
@@ -342,6 +382,16 @@ const NavSearchFilter = ({
             defaultOpenState={true}
             isNotCollapsible={true}
           />
+          {displayMobileSort && (
+            <SearchFilters
+              title='Specialization'
+              fieldName='category'
+              options={config.inputs.job_category_lists}
+              defaultOpenState={true}
+              isNotCollapsible={true}
+              hasMainAndSubOption
+            />
+          )}
         </div>
         <div className={styles.searchFilterFooter}>
           <div className={styles.searchFilterReset} onClick={handleResetFilter}>
