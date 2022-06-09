@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form'
 /* Components */
 import Modal from 'components/Modal'
 import Text from 'components/Text'
-import Image from 'next/image'
 
 /* Styles */
 import styles from './ModalReportJob.module.scss'
@@ -166,7 +165,7 @@ const ModalReportJob = ({
           >
             <Text>{report.description}</Text>
             <div className={styles.modalReportJobItemIcon}>
-              <Image src={ArrowForwardIcon} width='20' height='20'/>
+              <img src={ArrowForwardIcon} width='20' height='20'/>
             </div>
           </div>
         ))}

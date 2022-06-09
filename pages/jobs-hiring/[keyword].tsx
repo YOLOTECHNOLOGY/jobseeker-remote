@@ -39,7 +39,6 @@ import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
 import Tooltip from '@mui/material/Tooltip'
 
 /* Components */
-import Image from 'next/image'
 import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
@@ -807,7 +806,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                           arrow
                         >
                           <span>
-                            <Image
+                            <img
                               src={company.logoUrl}
                               alt={company.name}
                               width='30'
@@ -848,7 +847,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         )}
 
         <div className={styles.moreFiltersSection} onClick={() => handleShowFilter()}>
-          <Image src={FilterIcon} alt='filter' width='15' height='15' />
+          <img src={FilterIcon} alt='filter' width='15' height='15' />
           <Text className={styles.moreFiltersText}>More Filters</Text>
         </div>
       </div> */}
