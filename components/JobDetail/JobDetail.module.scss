@@ -91,7 +91,7 @@
     }
 
     &.isSticky {
-      top: 256px;
+      top: 275px;
       position: fixed;
       width: 533px;
       height: calc(100vh - 256px);
@@ -99,8 +99,8 @@
   }
 
   &Image {
-    width: 88px;
-    height: 88px;
+    width: 52px;
+    height: 52px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
