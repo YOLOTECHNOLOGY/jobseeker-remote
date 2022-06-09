@@ -197,6 +197,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const userCookie = getCookie('user') || null
   const isMobile = width < 768 ? true : false
 
+  const [filterCount, setFilterCount] = useState(0)
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.urlLocation)
   const [sort, setSort] = useState(defaultValues?.sort)
@@ -305,6 +306,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
     setIsCategoryReset(false)
     setMoreFilterReset(false)
+
+    setFilterCount(getFilterCount())
   }, [router.query])
 
   useEffect(() => {
@@ -333,6 +336,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   ]
 
   const handleShowFilter = () => {
+    if (isShowFilter) {
+      const scrollY = document.body.style.top
+      document.body.style.position = ''
+      document.body.style.top = ''
+      // retrieve previous scroll position
+      window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    }
     setIsShowFilter(!isShowFilter)
   }
 
@@ -348,13 +358,50 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     })
   )
 
+  const getFilterCount = () => {
+    const nonFilterKeys = [
+      'keyword',
+      'search',
+      'page',
+      'id',
+      'sort',
+      'utm_source',
+      'utm_campaign',
+      'utm_medium',
+    ]
+
+    let count = 0
+
+    if (predefinedLocation && predefinedLocation.length > 0) {
+      count+=predefinedLocation.length
+    }
+
+    if (predefinedCategory && predefinedCategory.length > 0) {
+      count+=predefinedCategory.length
+    }
+
+    Object.entries<any>(router.query).forEach(([key, value]) => {
+      const val = value.split(',')
+      if (!nonFilterKeys.includes(key)) {
+        // ensure value exist and is not an empty array
+        if (val && val.length !== 0) {
+          val.forEach(() => {
+            count++
+          })
+        }
+      }
+    })
+
+    return count
+  }
+
   const updateUrl = (queryParam, queryObject) => {
     queryObject['page'] = '1'
     setSelectedPage(Number(queryObject['page']))
 
     router.push(
       {
-        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
+        pathname: `/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
         query: queryObject,
       },
       undefined,
@@ -597,6 +644,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} />
+      <div className={isShowFilter ? styles.jobSearchFilterBackdrop : ''}></div>
       <div
         className={classNamesCombined([
           displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection,
@@ -698,9 +746,19 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             onClick={handleShowFilter}
             capitalize
           >
-            <Text textColor='primaryBlue' textStyle='lg' bold>
+            <Text className={styles.moreFilters} textColor='primaryBlue' textStyle='lg' bold>
               More Filters
             </Text>
+            {filterCount > 0 && (
+              <Text
+                tagName='p'
+                textStyle='base'
+                textColor='white'
+                className={styles.searchFilterCount}
+              >
+                {filterCount}
+              </Text>
+            )}
           </MaterialButton>
 
           {hasMoreFilters && (
@@ -762,7 +820,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             </div>
           </div>
         </div>
-        <JobSearchFilters
+      </div>
+      <JobSearchFilters
           urlDefaultValues={defaultValues}
           categories={categories}
           displayQuickLinks={displayQuickLinks}
@@ -770,8 +829,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           onResetFilter={handleResetFilter}
           onShowFilter={handleShowFilter}
           moreFilterReset={moreFilterReset}
+          isEmailVerify={userCookie?.is_email_verify}
         />
-      </div>
       {/* <div className={breakpointStyles.hideOnTabletAndDesktop}>
         {hasMoreFilters && (
           <div className={styles.resetFilterBtnMobile}>

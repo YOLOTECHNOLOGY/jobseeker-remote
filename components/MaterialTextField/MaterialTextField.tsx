@@ -21,6 +21,7 @@ type MaterialTextFieldProps = {
   refs?: any
   multiline?: boolean
   rows?: Number
+  fullWidth?: boolean
 } & Omit<Input, 'size'>
 
 const theme = createTheme({
@@ -65,7 +66,7 @@ const MaterialTextField = ({ id, label, variant, error, refs, size, color, class
   useEffect(()=>{
     setValue(defaultValue)
   },[defaultValue])
-
+  
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
   }

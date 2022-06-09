@@ -7,12 +7,14 @@ import { isFromCreateResume } from 'helpers/constants'
 import { removeUtmCampaign } from 'helpers/utmCampaign'
 
 import { REGISTER_JOBSEEKER_REQUEST } from 'store/types/auth/registerJobseeker'
-import { FETCH_RECRUITER_SUBSCRIPTION_FEATURE_SUCCESS } from 'store/types/recruiters/fetchRecruiterSubscriptionFeature'
 
 import {
   registerJobseekerSuccess,
   registerJobseekerFailed,
 } from 'store/actions/auth/registerJobseeker'
+import {
+  displayNotification
+} from 'store/actions/notificationBar/notificationBar'
 
 import { registerJobseekerService } from 'store/services/auth/registerJobseeker'
 
@@ -75,12 +77,6 @@ function* registerJobSeekerReq(actions) {
         is_email_verify: registeredData.is_email_verify,
         notice_period_id: registeredData.notice_period_id,
         is_profile_completed: registeredData.is_profile_completed,
-        recruiter_latest_work_xp:
-          (registeredData.recruiter_latest_work_xp && {
-            company_id: registeredData.recruiter_latest_work_xp.company_id,
-            job_title: registeredData.recruiter_latest_work_xp.job_title
-          }) ||
-          null
       }
       setItem(isFromCreateResume, source === 'free_resume' ? '1' : '0')
 
@@ -94,7 +90,29 @@ function* registerJobSeekerReq(actions) {
       yield put(push(jobId ? `/job/${jobId}` : '/jobseeker-complete-profile/1'))
     }
   } catch (err) {
-    yield put(registerJobseekerFailed(err.response.data.errors.message))
+    const statusCode = err.response.status
+
+    if (statusCode === 422) {
+      let errorMessage = ''
+
+      const error = err.response.data.errors.message
+      if (error) {
+        if (error['email']) {
+          if (error['email'][0] === 'The email has already been taken.') {
+            errorMessage = 'The email has already been taken.'
+          }
+        }
+      }
+
+      yield put(registerJobseekerFailed(errorMessage))
+    } else {
+      const displayNotificationPayload = {
+        "open": true,
+        "severity": "error",
+        "message": "We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance."
+      }
+      yield put(displayNotification(displayNotificationPayload))
+    }
   }
 }
 

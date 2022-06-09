@@ -21,8 +21,8 @@ interface ModalReportJobProps {
   reportJobReasonList?: any
   selectedJobId?: number
   handlePostReportJob?: Function
-  postReportResponse?: any
-  isPostingReport?: boolean
+  postReportResponse: any
+  isPostingReport: boolean
 }
 
 const ModalReportJob = ({

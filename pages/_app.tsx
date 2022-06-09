@@ -40,7 +40,9 @@ const App = ({ Component, pageProps }: AppProps) => {
             removeCookie('accessToken')
             removeCookie('splan')
 
-            router.push('/login/jobseeker')
+            if (typeof window !== 'undefined') {
+              window.location.href = '/'
+            }
           }
         })
     }

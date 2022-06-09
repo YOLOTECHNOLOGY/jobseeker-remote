@@ -78,12 +78,6 @@ function* login(payload, redirect, fromRegister = false) {
         is_email_verify: loginData.is_email_verify,
         notice_period_id: loginData.notice_period_id,
         is_profile_completed: loginData.is_profile_completed,
-        recruiter_latest_work_xp:
-          (loginData.recruiter_latest_work_xp && {
-            company_id: loginData.recruiter_latest_work_xp.company_id,
-            job_title: loginData.recruiter_latest_work_xp.job_title
-          }) ||
-          null
       }
 
       // let url = '/dashboard'

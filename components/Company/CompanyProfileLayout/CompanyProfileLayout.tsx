@@ -15,6 +15,7 @@ import Link from 'components/Link'
 
 // Styles
 import styles from './CompanyProfileLayout.module.scss'
+import JobDetailSidebarCard from 'components/Loader/JobDetailSidebarCard'
 
 const theme = createTheme({
   components: {
@@ -70,6 +71,7 @@ const CompanyProfileLayout = ({
   const similarCompaniesResponse = useSelector(
     (store: any) => store.companies.fetchSimilarCompany.response
   )
+  const isSimilarCompanyFetching = useSelector((store: any) => store.companies.fetchSimilarCompany.fetching)
 
   useEffect(() => {
     dispatch(fetchSimilarCompanyRequest({ companyId: company.id }))
@@ -114,49 +116,44 @@ const CompanyProfileLayout = ({
                   <Tab
                     className={styles.companyTabsItem}
                     value='overview'
+                    href={`/company/${slugify(company.name)}-${company.id}`}
                     label={
-                      <Link to={`/company/${slugify(company.name)}-${company.id}`}>
-                        <Text
-                          bold
-                          textStyle='xl'
-                          textColor={tabValue === 'overview' ? 'primaryBlue' : 'black'}
-                        >
-                          Overview
-                        </Text>
-                      </Link>
+                      <Text
+                        bold
+                        textStyle='xl'
+                        textColor={tabValue === 'overview' ? 'primaryBlue' : 'black'}
+                      >
+                        Overview
+                      </Text>
                     }
                   />
                   <Tab
                     className={styles.companyTabsItem}
                     value='life'
+                    href={`/company/${slugify(company.name)}-${company.id}/life`}
                     label={
-                      <Link to={`/company/${slugify(company.name)}-${company.id}/life`}>
-                        <Text
-                          bold
-                          textStyle='xl'
-                          textColor={tabValue === 'life' ? 'primaryBlue' : 'black'}
-                        >
-                          Life
-                        </Text>
-                      </Link>
+                      <Text
+                        bold
+                        textStyle='xl'
+                        textColor={tabValue === 'life' ? 'primaryBlue' : 'black'}
+                      >
+                        Life
+                      </Text>
                     }
                   />
                   <Tab
                     className={styles.companyTabsItem}
                     value='jobs'
+                    href={`/company/${slugify(company.name)}-${company.id}/jobs`}
                     label={
-                      <Link to={`/company/${slugify(company.name)}-${company.id}/jobs`}>
-                        <Text
-                          bold
-                          textStyle='xl'
-                          textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}
-                        >
-                          Jobs
-                          {totalJobs > 0 && (
-                            <span className={styles.companyJobsBadge}>{totalJobs}</span>
-                          )}
-                        </Text>
-                      </Link>
+                      <Text
+                        bold
+                        textStyle='xl'
+                        textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}
+                      >
+                        Jobs
+                        <span className={styles.companyJobsBadge}>{totalJobs}</span>
+                      </Text>
                     }
                   />
                 </Tabs>
@@ -172,6 +169,9 @@ const CompanyProfileLayout = ({
             <Text textStyle='xxl' bold>
               People also viewed...
             </Text>
+
+            {isSimilarCompanyFetching && [...Array(10)].map((_, i) => <JobDetailSidebarCard key={i} />)}
+
             {similarCompanies?.length > 0 && (
               <div className={styles.relatedCompanyList}>
                 {similarCompanies.map((company) => (
@@ -179,6 +179,7 @@ const CompanyProfileLayout = ({
                     to={`/company/${slugify(company.name)}-${company.id}`}
                     key={company.id}
                     className={styles.relatedCompanyItem}
+                    aTag
                   >
                     <img
                       src={company.logo_url}

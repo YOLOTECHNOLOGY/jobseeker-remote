@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import Tooltip from '@mui/material/Tooltip'
 
@@ -15,8 +15,6 @@ const MaterialDesktopTooltip = ({
   title,
   placement='top'
 }: MaterialDesktopTooltipProps) => {
-  const [openTooltip, setOpenTooltip] = useState(false)
-  
   return (
     <Tooltip 
       title={title}
@@ -29,9 +27,6 @@ const MaterialDesktopTooltip = ({
           alt='icon' 
           width='14'
           height='14'
-          onClick={() => {
-            setOpenTooltip(!openTooltip)
-          }}
         />
       </span>
     </Tooltip>

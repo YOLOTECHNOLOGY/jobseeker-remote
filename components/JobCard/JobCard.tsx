@@ -8,7 +8,7 @@ import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import styles from './JobCard.module.scss'
 
-import { CompanyIcon, SalaryIcon, LocationIcon } from 'images'
+import { CompanyIcon, SalaryIcon, LocationIcon, ExpireIcon } from 'images'
 
 type JobCardProps = {
   id: number,
@@ -21,6 +21,7 @@ type JobCardProps = {
   location: string,
   salary: string,
   postedAt: string,
+  status: string,
   selectedId?: number,
   handleSelectedId?: Function
 }
@@ -36,6 +37,7 @@ const JobCard = ({
   location,
   salary,
   postedAt,
+  status,
   handleSelectedId,
   selectedId
 }: JobCardProps) => {
@@ -77,6 +79,12 @@ const JobCard = ({
             <Text className={styles.JobCardDetailItemText} textStyle='xl'>{salary}</Text>
           </div>
         </div>
+        {status !== 'active' && (
+          <Text textStyle='base' className={styles.JobCardDetailStatus}>
+            <Image src={ExpireIcon} height="16" width="16"/>
+            <span>This job is no longer hiring</span>
+          </Text>
+        )}
         <Text textStyle='base'>Posted on {postedAt}</Text>
       </div>
     </div>

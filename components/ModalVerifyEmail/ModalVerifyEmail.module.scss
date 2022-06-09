@@ -1,0 +1,47 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+.ModalVerifyEmail {
+  padding: 20px 40px 40px;
+  @include msd {
+    padding: 20px 20px 20px;
+  }
+}
+
+.VerifyingEmail {  
+  &Form {
+    display: flex;
+    margin: 16px 0px 0px 0px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &FormInput {
+    width: 72%;
+    @include msd {
+      width: 60%
+    }
+  }
+
+  &FormButton {
+    width: 24%;
+    @include msd {
+      width: 36%;
+    }
+  }
+
+  &ErrorMessage {
+    margin-bottom: 48px;
+  }
+}
+
+.VerifiedEmail {
+  &FormButton {
+    width: 40%;
+    @include msd {
+      width: 100%
+    }
+  }
+}
+.inputMessage {
+  margin: 0
+}

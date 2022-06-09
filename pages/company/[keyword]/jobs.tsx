@@ -35,10 +35,12 @@ const CompanyJobsProfile = (props: any) => {
 
   const [jobQuery, setJobQuery] = useState('')
   const [jobLocation, setJobLocation] = useState(null)
+  const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
 
   const [companyJobs, setCompanyJobs] = useState(null)
   const [totalPages, setTotalPages] = useState(null)
   const [totalJobs, setTotalJobs] = useState(null)
+  const [totalActiveJobs, setTotalActiveJobs] = useState(0)
 
   const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
   const isJobsListFetching = useSelector((store: any) => store.job.jobList.fetching)
@@ -53,39 +55,32 @@ const CompanyJobsProfile = (props: any) => {
     }
 
     dispatch(fetchJobsListRequest({ ...payload }, accessToken))
-    scrollToTop()
   }, [router.query])
-
-  useEffect(() => {
-    const payload = {
-      companyIds: company.id,
-      size: 30,
-    }
-
-    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
-  }, [])
 
   useEffect(() => {
     if (fetchJobsListResponse) {
       setCompanyJobs(fetchJobsListResponse.data?.jobs)
       setTotalPages(fetchJobsListResponse.data?.total_pages)
       setTotalJobs(fetchJobsListResponse.data?.total_num)
+
+      if (totalActiveJobs === 0 && fetchJobsListResponse.data?.total_num > 0) {
+        setTotalActiveJobs(fetchJobsListResponse.data?.total_num)
+      }
     }
   }, [fetchJobsListResponse])
 
   const handleSearchCompanyJobSearch = () => {
-    const payload = {
-      companyIds: company.id,
-      size,
-      page,
-      query: jobQuery,
-      jobLocation: jobLocation?.value || '',
-    }
+    setSelectedpage(1)
+    setJobLocation(jobLocation)
 
-    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
+    router.query.page = '1'
+    router.push(router, undefined, { shallow: true })
   }
 
   const handlePaginationClick = (event, val) => {
+    setSelectedpage(Number(val))
+    scrollToTop()
+
     router.query.page = val
     router.push(router, undefined, { shallow: true })
   }
@@ -102,14 +97,14 @@ const CompanyJobsProfile = (props: any) => {
 
   const scrollToTop = () => {
     const companyJobsElement = document.getElementById('companyJobs')
-    companyJobsElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    companyJobsElement.scrollIntoView()
   }
 
   return (
     <CompanyProfileLayout
       company={company}
       currentTab='jobs'
-      totalJobs={totalJobs}
+      totalJobs={totalActiveJobs}
       seoMetaTitle={seoMetaTitle}
       seoMetaDescription={seoMetaDescription}
     >
@@ -120,65 +115,95 @@ const CompanyJobsProfile = (props: any) => {
               Jobs
             </Text>
             <MetaText tagName='h1'>{`Jobs at ${company.name} ${company.id}`}</MetaText>
-            <div className={styles.companyJobsSearch}>
-              <div className={styles.companyJobsSearchLeft}>
-                <MaterialTextField
-                  value={jobQuery}
-                  defaultValue={jobQuery}
-                  onChange={(e) => setJobQuery(e.target.value)}
-                  className={styles.companyJobsSearchTitle}
-                  size='small'
-                  label='Search for job title'
-                />
-              </div>
-              <div className={styles.companyJobsSearchRight}>
-                <MaterialLocationField
-                  className={styles.companyJobsSearchLocation}
-                  label='Location'
-                  value={jobLocation}
-                  defaultValue={jobLocation}
-                  onChange={onLocationSearch}
-                />
-                <MaterialButton
-                  variant='contained'
-                  capitalize
-                  className={styles.companyJobsSearchButton}
-                  onClick={handleSearchCompanyJobSearch}
-                >
-                  <Text textColor='white' bold>
-                    Search
-                  </Text>
-                </MaterialButton>
-              </div>
-            </div>
-            {isJobsListFetching && [...Array(10)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
-            {!isJobsListFetching && companyJobs?.length > 0 && (
-              <>
-                <div className={styles.companyJobsList}>
-                  {companyJobs.map((companyJob) => {
-                    const company = {
-                      id: companyJob.id,
-                      title: companyJob.job_title,
-                      location: companyJob.job_location,
-                      salary: companyJob.salary_range_value,
-                      availability: companyJob.job_type,
-                    }
 
-                    return <CompanyJobsCard {...company} key={companyJob.id} />
-                  })}
-                </div>
-                <Text textStyle='sm' className={styles.companyJobsResults}>
-                  Showing {handleJobsDisplayCount()} of {totalJobs} jobs
-                </Text>
-                <div className={styles.companyJobsPagination}>
-                  <MaterialRoundedPagination
-                    onChange={handlePaginationClick}
-                    defaultPage={Number(page) || 1}
-                    totalPages={totalPages || 1}
+            {totalActiveJobs > 0 && (
+              <div className={styles.companyJobsSearch}>
+                <div className={styles.companyJobsSearchLeft}>
+                  <MaterialTextField
+                    value={jobQuery}
+                    defaultValue={jobQuery}
+                    onChange={(e) => setJobQuery(e.target.value)}
+                    className={styles.companyJobsSearchTitle}
+                    size='small'
+                    label='Search for job title'
                   />
                 </div>
-              </>
+                <div className={styles.companyJobsSearchRight}>
+                  <MaterialLocationField
+                    className={styles.companyJobsSearchLocation}
+                    label='Location'
+                    value={jobLocation}
+                    defaultValue={jobLocation}
+                    onChange={onLocationSearch}
+                  />
+                  <MaterialButton
+                    variant='contained'
+                    capitalize
+                    className={styles.companyJobsSearchButton}
+                    onClick={handleSearchCompanyJobSearch}
+                  >
+                    <Text textColor='white' bold>
+                      Search
+                    </Text>
+                  </MaterialButton>
+                </div>
+              </div>
             )}
+
+            {isJobsListFetching && [...Array(size)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
+            
+            {companyJobs?.length > 0 ? (
+              <React.Fragment>
+                {!isJobsListFetching && (
+                  <>
+                    <div className={styles.companyJobsList}>
+                      {companyJobs.map((companyJob) => {
+                        const company = {
+                          id: companyJob.id,
+                          title: companyJob.job_title,
+                          location: companyJob.job_location,
+                          salary: companyJob.salary_range_value,
+                          availability: companyJob.job_type,
+                        }
+
+                        return <CompanyJobsCard {...company} key={companyJob.id} />
+                      })}
+                    </div>
+                    <Text textStyle='sm' className={styles.companyJobsResults}>
+                      Showing {handleJobsDisplayCount()} of {totalJobs} jobs
+                    </Text>
+                    <div className={styles.companyJobsPagination}>
+                      <MaterialRoundedPagination
+                        onChange={handlePaginationClick}
+                        defaultPage={Number(page) || 1}
+                        page={selectedPage}
+                        totalPages={totalPages || 1}
+                      />
+                    </div>
+                  </>
+                )}
+              </React.Fragment>
+            ) : (
+              <div className={styles.emptyResult}>
+                {totalActiveJobs === 0 ? (
+                  <Text>
+                    The company does not have any active jobs.
+                  </Text>
+                ) : (
+                  <Text>
+                    We couldn't find any jobs matching your search.
+                  </Text>
+                )}
+              </div>
+            )}
+
+            {/* {totalActiveJobs && (
+              <div className={styles.emptyResult}>
+                <Text>
+                  The company does not have any active jobs.
+                </Text>
+              </div>
+            )} */}
           </div>
         </div>
       </div>

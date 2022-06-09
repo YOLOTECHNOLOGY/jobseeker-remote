@@ -20,7 +20,7 @@ const CompanyLifeProfile = (props: any) => {
   const dispatch = useDispatch()
   const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription } = props
   const company = companyDetail?.response.data
-  const [totalJobs, setTotalJobs] = useState(null)
+  const [totalActiveJobs, setTotalActiveJobs] = useState(0)
 
   const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
 
@@ -34,14 +34,17 @@ const CompanyLifeProfile = (props: any) => {
   }, [])
 
   useEffect(() => {
-    if (fetchJobsListResponse) setTotalJobs(fetchJobsListResponse.data?.total_num)
+    if (totalActiveJobs === 0 && fetchJobsListResponse.data?.total_num > 0) {
+      setTotalActiveJobs(fetchJobsListResponse.data?.total_num)
+    }
+
   }, [fetchJobsListResponse])
 
   return (
     <CompanyProfileLayout
       company={company}
       currentTab='life'
-      totalJobs={totalJobs}
+      totalJobs={totalActiveJobs}
       seoMetaTitle={seoMetaTitle}
       seoMetaDescription={seoMetaDescription}
     >
@@ -90,7 +93,7 @@ const CompanyLifeProfile = (props: any) => {
             <Text tagName='h1' textStyle='xxl' bold className={styles.companySectionTitle}>
               Photos
             </Text>
-            {company.pictures?.length > 0 && (
+            {company.pictures?.length > 0 ? (
               <div className={styles.companyLifePictures}>
                 {company.pictures.map((picture, index) => (
                   <img
@@ -100,6 +103,12 @@ const CompanyLifeProfile = (props: any) => {
                     key={picture.id}
                   />
                 ))}
+              </div>
+            ) : (
+              <div className={styles.emptyResult}>
+                <Text>
+                  The company has not provided any photos.
+                </Text>
               </div>
             )}
           </div>

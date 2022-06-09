@@ -37,6 +37,7 @@ interface NavSearchFilterProps {
   onResetFilter: Function
   displayQuickLinks: Boolean
   moreFilterReset?: boolean
+  isEmailVerify: boolean
 }
 
 interface SearchFilters {
@@ -62,6 +63,7 @@ const NavSearchFilter = ({
   displayQuickLinks,
   onResetFilter,
   moreFilterReset = false,
+  isEmailVerify
 }: NavSearchFilterProps) => {
   const router = useRouter()
   const { keyword } = router.query
@@ -86,7 +88,7 @@ const NavSearchFilter = ({
   const sortRef = useRef(null)
   const { register, handleSubmit, reset } = useForm()
   const cx = classNames.bind(styles)
-  const isShowFilterClass = cx({ isShow: isShowFilter, displayQuickLinks: displayQuickLinks })
+  const isShowFilterClass = cx({ isShow: isShowFilter, displayQuickLinks: displayQuickLinks, emailNotVerified: !isEmailVerify })
   const [selectedCategories, setSelectedCategories] = useState([])
   const [displayMobileSort, setDisplayMobileSort] = useState(false)
 
@@ -240,6 +242,10 @@ const NavSearchFilter = ({
   }
 
   useEffect(() => {
+    if (isShowFilter) {
+      document.body.style.position = 'fixed';
+      document.body.style.width = "100%";
+    }
     document.addEventListener('click', handleClickedOutside, true)
     return () => {
       document.removeEventListener('click', handleClickedOutside, true)

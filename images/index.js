@@ -76,6 +76,9 @@ export const GrabVentures = `${S3BucketJobseeker}/GrabVentures.svg`
 export const KrAsia = `${S3BucketJobseeker}/KrAsia.svg`
 export const MoneyMax = `${S3BucketJobseeker}/MoneyMax.svg`
 export const TechInAsia = `${S3BucketJobseeker}/TechInAsia.svg`
+export const RHBannerDesktop = `${S3BucketJobseeker}/rh_banner_desktop.png`
+export const RHBannerMobile = `${S3BucketJobseeker}/rh_banner_mobile.png`
+export const RHBannerTablet = `${S3BucketJobseeker}/rh_banner_tablet.png`
 
 /* Company Detail Social Link */
 export const FacebookOutline = `${S3BucketJobseeker}/facebook_1.png`
