@@ -142,7 +142,7 @@ const JobListSection = ({
       industry_key: query?.industry ? formatToUnderscore(query?.industry) : 'all',
       xp_lvl_key: query?.workExperience ? formatToReplace(query?.workExperience, 'to') : 'all',
       degree_key: query?.qualification ? formatToUnderscore(query?.qualification) : 'all',
-      job_type_key: query?.jobtype ? formatToReplace(query?.jobtype, '_'): 'all',
+      job_type_key: query?.jobType ? formatToReplace(query?.jobType, '_'): 'all',
       salary_range_key: query?.salary ? formatToReplace(query?.salary, 'to') : 'all',
       is_company_verified: 1,
       frequency_id: 1

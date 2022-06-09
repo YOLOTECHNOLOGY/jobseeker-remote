@@ -149,6 +149,10 @@
     @include msd {
       flex-direction: column;
     }
+
+    .searchFilterOptionSub{
+      margin-left:25px;
+    }
   }
 
   &OptionsColumn {

@@ -22,6 +22,7 @@ interface MaterialGroupSelectCheckmarks extends React.ButtonHTMLAttributes<HTMLB
   options?: Array<MainOptionType>
   value: any
   onSelect?: any
+  isReset?:boolean
   greyBg?: boolean
   fieldRef?: any
   error?: any
@@ -41,7 +42,7 @@ interface SubListOptionType {
   value: string
 }
 
-const MaterialSelectCheckmarks = ({
+const MaterialGroupSelectCheckmarks = ({
   id,
   label,
   options,
@@ -49,6 +50,7 @@ const MaterialSelectCheckmarks = ({
   onSelect,
   greyBg,
   value,
+  isReset,
   fieldRef,
   error,
 }: MaterialGroupSelectCheckmarks) => {
@@ -66,28 +68,34 @@ const MaterialSelectCheckmarks = ({
     return newList
   })
 
-
-  const [listOptions, setListOptions] = useState(value.length > 0 ? value : initialListOptions)
+  const [listOptions, setListOptions] = useState(value && value.length > 0 ? value : initialListOptions)
   const [displayValue, setDisplayValue] = useState<Array<string>>([''])
 
   useEffect(()=>{
     const selectedOptions = []
     const valueToDisplay = []
-    listOptions.map((option)=> {
-      if (option.isChecked){
-        valueToDisplay.push(option.value)
-        selectedOptions.push(option.key)
-      }else{
-        option.sub_list.map((subOption)=> {
-          if (subOption.isChecked){
-          valueToDisplay.push(subOption.value)
-          selectedOptions.push(subOption.key)
-        }})
-      }
-    })
-    setDisplayValue(valueToDisplay)
-    if (!firstRender) onSelect(selectedOptions)
+    if (!isReset){
+      listOptions.map((option)=> {
+        if (option.isChecked){
+          valueToDisplay.push(option.value)
+          selectedOptions.push(option.key)
+        }else{
+          option.sub_list.map((subOption)=> {
+            if (subOption.isChecked){
+            valueToDisplay.push(subOption.value)
+            selectedOptions.push(subOption.key)
+          }})
+        }
+      })
+      setDisplayValue(valueToDisplay)
+      if (!firstRender && (value && value.length > 0 || selectedOptions && selectedOptions.length > 0)) onSelect(selectedOptions)
+  }
   },[listOptions])
+
+  useEffect(()=>{
+    setDisplayValue([])
+    setListOptions(initialListOptions)
+  },[isReset])
 
   const onMainSelection = (e, optionData) => {
     /* find the corresponding option data based on option.key && 
@@ -162,7 +170,6 @@ const MaterialSelectCheckmarks = ({
       }
       return newData
     })
-    // TODO: update URL/SEO with new selection value
 
     setListOptions(data)
   }
@@ -302,4 +309,4 @@ const MaterialSelectCheckmarks = ({
   )
 }
 
-export default MaterialSelectCheckmarks
+export default MaterialGroupSelectCheckmarks

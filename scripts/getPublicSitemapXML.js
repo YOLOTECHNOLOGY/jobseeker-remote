@@ -143,7 +143,7 @@ export const getPublicSitemapXML = (response) => {
       }
       ${
         jobTypeList &&
-        jobTypeList.map((jobType) => generateJobFilterPath('jobtype', jobType.value, 0.8)).join('')
+        jobTypeList.map((jobType) => generateJobFilterPath('jobType', jobType.value, 0.8)).join('')
       }
       ${
         salaryList &&

@@ -60,9 +60,18 @@ const MaterialSelectCheckmarks = ({
     } = event
     // On autofill we get a the stringified value.
     const formattedValue = typeof value === 'string' ? value.split(',') : value
+    const valueToDisplay = []
+    formattedValue.map((val) => {
+      options.forEach((option) => {
+        if (option.value === val) {
+          valueToDisplay.push(option['seo-value'])
+        }
+      })
+    })
     setSelectedOptions(
      formattedValue
     )
+    // setDisplayValue()
     if (onSelect){
       onSelect(formattedValue)
     }
@@ -139,14 +148,17 @@ const MaterialSelectCheckmarks = ({
           label={label}
           onChange={handleChange}
           input={<OutlinedInput label='Tag' />}
-          renderValue={(selected:any) => selected.join(', ')}
+          renderValue={(selected: any) => selected.join(', ')}
           // MenuProps={MenuProps}
         >
           {options &&
             options.map((option: any) => (
-              <MenuItem key={option} value={option}>
-                <Checkbox checked={selectedOptions.indexOf(option) > -1} size='small' />
-                <ListItemText primary={option} />
+              <MenuItem key={option.value} value={option['seo-value']}>
+                <Checkbox
+                  checked={selectedOptions.indexOf(option['seo-value']) > -1}
+                  size='small'
+                />
+                <ListItemText primary={option.value} />
               </MenuItem>
             ))}
         </Select>
