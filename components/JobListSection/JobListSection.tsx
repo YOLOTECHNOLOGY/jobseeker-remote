@@ -11,7 +11,7 @@ import Image from 'next/image'
 import Text from 'components/Text'
 import JobCard from 'components/JobCard'
 import JobDetail from 'components/JobDetail'
-// import AdSlot from 'components/AdSlot'
+import AdSlot from 'components/AdSlot'
 
 import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
@@ -310,13 +310,13 @@ const JobListSection = ({
           </div>
           <div className={styles.jobAds}>
             <div className={styles.skyscraperBanner}>
-              {/* <AdSlot adSlot={'jobs-search/skyscraper-1'} /> */}
+              <AdSlot adSlot={'jobs-search/skyscraper-1'} />
             </div>
             <div className={styles.skyscraperBanner}>
-              {/* <AdSlot adSlot={'jobs-search/skyscraper-2'} /> */}
+              <AdSlot adSlot={'jobs-search/skyscraper-2'} />
             </div>
             <div className={styles.skyscraperBanner}>
-              {/* <AdSlot adSlot={'jobs-search/skyscraper-3'} /> */}
+              <AdSlot adSlot={'jobs-search/skyscraper-3'} />
             </div>
           </div>
         </div>
