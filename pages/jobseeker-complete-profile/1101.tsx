@@ -391,12 +391,15 @@ const Step3 = (props: any) => {
             <div className={styles.stepDataItem} key={experience.id}>
               <div className={styles.stepDataInfo}>
                 <Text bold textStyle='base' tagName='p'>{experience?.job_title}</Text>
+                <br/>
                 <Text textStyle='base' tagName='p'>{experience?.company}</Text>
                 <Text textStyle='base' tagName='p'>{experience?.location} - {getLocation(experience?.location)?.[0].region_display_name}</Text>
                 <Text textStyle='base' tagName='p'>{moment(experience?.working_period_from).format("MMMM yyyy")} to {experience?.is_currently_work_here ? 'Present' : moment(experience.working_period_to).format("MMMM yyyy")}</Text>
+                <br/>
                 {experience?.job_categories.length > 0 && <Text textStyle='base' tagName='p'>{experience?.job_categories.join(', ')}</Text>}
                 {experience?.company_industry && <Text textStyle='base' tagName='p'>{experience?.company_industry}</Text>}
                 {experience?.salary && <Text textStyle='base' tagName='p'>{formatSalary(experience?.salary)} per month</Text>}
+                <br/>
                 {experience?.description && displayDescription(experience?.description) && (
                   <>
                     <Text textStyle='base' tagName='p'>Description: </Text>

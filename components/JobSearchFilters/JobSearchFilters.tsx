@@ -391,9 +391,11 @@ const NavSearchFilter = ({
         </div>
         <div className={styles.searchFilterFooter}>
           <div className={styles.searchFilterReset} onClick={handleResetFilter}>
-            <Text textStyle='base' textColor='primaryBlue' bold>
+          <Button>
+            <Text textStyle='base' textColor='primary' bold>
               Reset Filter
             </Text>
+          </Button>
           </div>
           <Button className={styles.searchFilterApply} primary>
             <Text textStyle='base' textColor='white' bold>

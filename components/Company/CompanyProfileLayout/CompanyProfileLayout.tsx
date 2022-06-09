@@ -166,7 +166,7 @@ const CompanyProfileLayout = ({
 
         <div className={styles.relatedCompany}>
           <div className={styles.relatedCompanyContent}>
-            <Text textStyle='xxl' bold>
+            <Text textStyle='xl' bold>
               People also viewed...
             </Text>
 
@@ -186,10 +186,10 @@ const CompanyProfileLayout = ({
                       alt={`${company.name} logo`}
                       className={styles.relatedCompanyImage}
                     />
-                    <Text textStyle='sm' bold className={styles.relatedCompanyName}>
+                    <Text textStyle='lg' bold className={styles.relatedCompanyName}>
                       {company.name}
                     </Text>
-                    <Text textStyle='sm'>{company.industry}</Text>
+                    <Text textStyle='lg'>{company.industry}</Text>
                   </Link>
                 ))}
               </div>

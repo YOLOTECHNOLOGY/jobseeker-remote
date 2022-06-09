@@ -690,7 +690,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             className={styles.searchButton}
             onClick={() => onKeywordSearch(searchValue)}
           >
-            <Text textStyle='lg' textColor='white' bold>
+            <Text textStyle='base' textColor='white' bold>
               Search
             </Text>
           </MaterialButton>
@@ -701,7 +701,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
               className={styles.filtersButton}
               onClick={() => handleShowFilter()}
             >
-              <Text textStyle='lg' textColor='primaryBlue' bold>
+              <Text textStyle='base' textColor='primaryBlue' bold>
                 Filters
               </Text>
             </MaterialButton>
@@ -748,7 +748,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             onClick={handleShowFilter}
             capitalize
           >
-            <Text className={styles.moreFilters} textColor='primaryBlue' textStyle='lg' bold>
+            <Text className={styles.moreFilters} textColor='primaryBlue' textStyle='base' bold>
               More Filters
             </Text>
             {filterCount > 0 && (
@@ -770,7 +770,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
               onClick={handleResetFilter}
               capitalize
             >
-              <Text textColor='primaryBlue' textStyle='lg' bold>
+              <Text textColor='primaryBlue' textStyle='base' bold>
                 Reset Filters
               </Text>
             </MaterialButton>
@@ -780,13 +780,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           className={displayQuickLinks ? styles.quickLinkSectionExpanded : styles.quickLinkSection}
         >
           <div className={styles.popularSearchContainer}>
-            <Text textStyle='lg' bold className={styles.quickLinkTitle}>
+            <Text textStyle='base' bold className={styles.quickLinkTitle}>
               Popular Search:
             </Text>
             {renderPopularSearch()}
           </div>
           <div className={styles.topCompaniesContainer}>
-            <Text textStyle='lg' bold className={styles.quickLinkTitle}>
+            <Text textStyle='base' bold className={styles.quickLinkTitle}>
               Top Companies:
             </Text>
             <div className={styles.topCompanies}>

@@ -58,6 +58,9 @@ const theme = createTheme({
             minHeight: '79px',
             textTransform: 'capitalize'
           }
+        },
+        scroller: {
+          height: '55px'
         }
       }
     }

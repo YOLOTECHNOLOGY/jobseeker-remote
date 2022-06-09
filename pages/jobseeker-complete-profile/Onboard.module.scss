@@ -63,7 +63,7 @@
 }
 
 .stepField {
-  margin-top: 15px;
+  margin-top: 16px;
 
   &Header {
     margin-bottom: 10px;
@@ -153,7 +153,8 @@
     justify-content: space-between;
   }
   &ContactCountry {
-    width: 20%;
+    width: 100%;
+    margin-right: 10px;
 
     @include msd {
       width: 25%;
@@ -161,7 +162,7 @@
   }
 
   &ContactNumber {
-    width: 78%;
+    width: 100%;
 
     @include msd {
       width: 70%;
@@ -178,11 +179,11 @@
   }
 
   &Salary {
-    margin-top: 20px;
+    margin-top: 16px;
   }
 
   &SalaryRanges {
-    margin-top: 20px;
+    margin-top: 16px;
     display: flex;
     justify-content: space-between;
 
@@ -196,12 +197,12 @@
 
     @media (max-width: 768px) {
       width: 100%;
-      margin-top: 15px;
+      margin-top: 16px;
     }
   }
 
   &Subscribe {
-    margin-top: 20px;
+    margin-top: 16px;
     display: flex;
   }
 }
@@ -257,7 +258,8 @@
 }
 
 .step3 {
-  &FormWrapper {
+  &Form
+   {
     .step3Form:not(:last-child) {
       padding-bottom: 20px;
       border-bottom: 1px dotted rgba($lightgrey, 0.5);

@@ -31,6 +31,7 @@ const MaterialRoundedPagination = ({
         styleOverrides: {
           root: {
             fontSize: '13px',
+            height: '30px',
             backgroundColor: 'transparent',
             '&.Mui-selected': {
               backgroundColor: '#2379ea !important',

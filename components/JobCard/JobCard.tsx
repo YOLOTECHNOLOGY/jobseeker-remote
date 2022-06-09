@@ -53,7 +53,7 @@ const JobCard = ({
         <div className={styles.JobCardImageContent} style={{ backgroundImage: `url(${image})`}} />
       </div>
       <div className={styles.JobCardDetailWrapper}>
-        <Text textStyle='xl' bold className={styles.JobCardDetailTitle}>{title}</Text>
+        <Text textStyle='lg' bold className={styles.JobCardDetailTitle}>{title}</Text>
         <div className={styles.JobCardDetailTag}>
           {isFeatured && (
             <JobTag tag='Featured' tagType='featured' />
@@ -68,24 +68,24 @@ const JobCard = ({
         <div className={styles.JobCardDetailList}>
           <div className={styles.JobCardDetailItem}>
             <Image src={CompanyIcon} width='20' height='20' />
-            <Text className={styles.JobCardDetailItemText} textStyle='xl'>{company}</Text>
+            <Text className={styles.JobCardDetailItemText} textStyle='lg'>{company}</Text>
           </div>
           <div className={styles.JobCardDetailItem}>
             <Image src={LocationIcon} width='20' height='20' />
-            <Text className={styles.JobCardDetailItemText} textStyle='xl'>{location}</Text>
+            <Text className={styles.JobCardDetailItemText} textStyle='lg'>{location}</Text>
           </div>
           <div className={styles.JobCardDetailItem}>
             <Image src={SalaryIcon} width='20' height='20' />
-            <Text className={styles.JobCardDetailItemText} textStyle='xl'>{salary}</Text>
+            <Text className={styles.JobCardDetailItemText} textStyle='lg'>{salary}</Text>
           </div>
         </div>
         {status !== 'active' && (
-          <Text textStyle='base' className={styles.JobCardDetailStatus}>
+          <Text textStyle='md' className={styles.JobCardDetailStatus}>
             <Image src={ExpireIcon} height="16" width="16"/>
             <span>This job is no longer hiring</span>
           </Text>
         )}
-        <Text textStyle='base'>Posted on {postedAt}</Text>
+        <Text textStyle='sm'>Posted on {postedAt}</Text>
       </div>
     </div>
   )

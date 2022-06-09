@@ -36,7 +36,8 @@ const theme = createTheme({
             fontSize: '10px',
             transform: 'translate(14px, -10px) scale(1)',
           },
-          top: '4px'
+          top: '4px',
+          lineHeight: '16px'
         },
         shrink: {
           fontSize: '10px',
@@ -52,7 +53,7 @@ const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          height: '48px',
+          height: '44px',
           fontSize: '16px',
           backgroundColor: "white"
         }

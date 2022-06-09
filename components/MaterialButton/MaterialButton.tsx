@@ -42,6 +42,7 @@ const MaterialButton = ({
         styleOverrides: {
           root: {
             fontSize: '13px',
+            lineHeight: '16px'
           },
         },
       },
@@ -60,7 +61,7 @@ const MaterialButton = ({
           size={size}
           className={className}
           disabled={disabled}
-          style={{textTransform: !capitalize ? 'uppercase' : 'capitalize', height: '48px'}}
+          style={{textTransform: !capitalize ? 'uppercase' : 'capitalize', height: '44px'}}
           {...(rest as any)}
         >
           {children}

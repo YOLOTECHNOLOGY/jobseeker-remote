@@ -8,7 +8,7 @@
 .searchAndQuickLinkSection {
   width: 100%;
   height: 229px;
-  padding: 20px 0;
+  padding: 24px 0;
   background-color: $white-1;
 
   @include msd {
@@ -19,6 +19,7 @@
     height: 139px;
     display: flex;
     flex-direction: column;
+    margin: 24px 0;
 
     @include msd {
       height: 180px;
@@ -42,7 +43,7 @@
 
       @include msd {
         width: 100%;
-        margin-bottom: 24px;
+        margin-bottom: 20px;
       }
     }
     .locationField {
@@ -53,7 +54,7 @@
 
       @include msd {
         width: 100%;
-        margin-bottom: 24px;
+        margin-bottom: 20px;
       }
     }
   }
@@ -203,7 +204,6 @@
     .companyBanner {
       display: flex;
       max-width: 300px;
-      max-height: 250px;
       background: $white-1;
 
       &:first-child {
@@ -218,7 +218,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin: 50px 0;
+  margin: 160px 0;
 
   &ContentWrapper {
     display: flex;
@@ -267,10 +267,10 @@
 }
 
 .whatCanYouDoSection {
-  margin: 50px 0;
+  margin: 160px 0;
   width: 100%;
   height: 520px;
-  padding: 20px 0;
+  padding: 64px 0;
   background-color: $white-1;
 
   @include msd {
@@ -510,7 +510,6 @@
   .video {
     display: flex;
     margin: 20px 0 30px;
-    
 
     @include msd {
       width: 100%;
@@ -583,8 +582,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 48px;
-  margin-top: 12px;
+  margin: 40px 0;
 
   &Text {
     display: flex;

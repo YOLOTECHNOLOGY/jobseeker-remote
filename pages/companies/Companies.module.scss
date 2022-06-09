@@ -16,7 +16,8 @@
 }
 
 .searchCompany {
-  margin-top: 60px;
+  margin-top: 32px;
+  margin-bottom: 48px;
   
   > p {
     margin-bottom: 24px;
@@ -50,7 +51,7 @@
   }
 
   &SectionTitle {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
 
     @include msd {
       margin: 20px;
@@ -59,6 +60,7 @@
 
   &Info {
     display: flex;
+    margin-right: 16px;
 
     @include msd {
       flex-direction: column;
@@ -67,6 +69,7 @@
 
   &About {
     display: flex;
+    margin-top: 8px;
 
     @include msd {
       flex-direction: column;
@@ -104,11 +107,12 @@
     object-fit: contain;
     border-radius: 4px;
     margin-right: 24px;
+    margin-bottom: 24px;
   }
 
   &Photo {
-    width: 135px;
-    height: 135px;
+    width: 136px;
+    height: 136px;
     object-fit: cover;
   }
 
@@ -138,6 +142,7 @@
 
   &Description {
     width: 447px;
+    margin-top: 8px;
 
     @include msd {
       width: 100%

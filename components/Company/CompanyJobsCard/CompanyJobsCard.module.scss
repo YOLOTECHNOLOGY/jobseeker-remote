@@ -10,7 +10,7 @@
   margin-bottom: 20px;
 
   &Info {
-    margin-top: 10px;
+    margin-top: 8px;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -37,9 +37,12 @@
     }
 
     &Right {
-      margin-top: 6px;
+      margin-top: 12px;
       width: 100%;
-      text-align: right;
+
+      button {
+        width: 100%;
+      }
     }
   }
 }
