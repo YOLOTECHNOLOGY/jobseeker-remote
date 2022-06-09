@@ -420,47 +420,53 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const sortOption = val.length > 0 ? 2 : 1
 
     setSort(sortOption)
+    const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
+      'query',
+      val,
+      router.query,
+      config,
+    )
+    // // Check if the search value matched with the reserved location keyword
+    // const matchedLocation = locList.filter((loc) => {
+    //   return loc.value.toLowerCase() === searchValue.toLowerCase()
+    // })
 
-    // Check if the search value matched with the reserved location keyword
-    const matchedLocation = locList.filter((loc) => {
-      return loc.value.toLowerCase() === searchValue.toLowerCase()
-    })
+    // let location = urlLocation
+    // // Set the location and clear the search value if reserved keyword found
+    // if (matchedLocation.length === 1) {
+    //   location = matchedLocation[0]
+    //   setUrlLocation(location)
 
-    let location = urlLocation
-    // Set the location and clear the search value if reserved keyword found
-    if (matchedLocation.length === 1) {
-      location = matchedLocation[0]
-      setUrlLocation(location)
+    //   val = ''
+    //   setSearchValue(val)
+    // }
 
-      val = ''
-      setSearchValue(val)
-    }
+    // // Check if the search value matched with the reserved category keyword
+    // const matchedCategory = catList.filter((cat) => {
+    //   return cat.value.toLowerCase() === searchValue.toLowerCase()
+    // })
 
-    // Check if the search value matched with the reserved category keyword
-    const matchedCategory = catList.filter((cat) => {
-      return cat.value.toLowerCase() === searchValue.toLowerCase()
-    })
+    // let firstCategory = categories
+    // // Set the first category and clear the search value if reserved keyword found
+    // if (matchedCategory.length === 1) {
+    //   firstCategory = matchedCategory[0]
+    //   setCategories([firstCategory])
 
-    let firstCategory = categories
-    // Set the first category and clear the search value if reserved keyword found
-    if (matchedCategory.length === 1) {
-      firstCategory = matchedCategory[0]
-      setCategories([firstCategory])
+    //   val = ''
+    //   setSearchValue(val)
+    // }
 
-      val = ''
-      setSearchValue(val)
-    }
+    // const queryParam = conditionChecker(val, location?.value || null, firstCategory?.key || null)
 
-    const queryParam = conditionChecker(val, location?.value || null, firstCategory?.key || null)
+    // let queryObject = null
+    // queryObject = Object.assign({}, { ...rest, sort: sortOption })
 
-    let queryObject = null
-    queryObject = Object.assign({}, { ...rest, sort: sortOption })
-
-    if (predefinedCategory) {
-      queryObject['category'] = predefinedCategory.join(',')
-    }
-
-    updateUrl(queryParam, queryObject)
+    // if (predefinedCategory) {
+    //   queryObject['category'] = predefinedCategory.join(',')
+    // }
+    
+    console.log('onKeywordSearch', searchQuery, filterParamsObject)
+    updateUrl(searchQuery, filterParamsObject)
   }
 
   const handleSuggestionSearch = (val) => {
