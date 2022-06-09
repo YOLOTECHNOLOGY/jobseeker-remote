@@ -151,22 +151,22 @@
   &Contact {
     display: flex;
     justify-content: space-between;
+
+    @include msd {
+      display: block;
+    }
   }
   &ContactCountry {
     width: 100%;
-    margin-right: 10px;
+    margin-right: 10px !important;
 
     @include msd {
-      width: 25%;
+      margin-bottom: 16px;
     }
   }
 
   &ContactNumber {
     width: 100%;
-
-    @include msd {
-      width: 70%;
-    }
   }
 
   &ContactNumberField {

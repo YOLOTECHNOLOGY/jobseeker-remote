@@ -307,11 +307,15 @@ const Step3 = (props: any) => {
 
   const handleSaveForm = (proceedingPath='') => {
     // eslint-disable-next-line no-console
+    const matchedIndustry = industryList.filter((option) => {
+      return option.value === industry
+    })
+
     const workExperienceData = {
       job_title: jobTitle,
       company: companyName,
       country_key: country || 'ph',
-      company_industry_key: industry,
+      company_industry_key: matchedIndustry?.[0].key,
       is_currently_work_here: isCurrentJob,
       job_category_ids: jobFunction?.length > 0 ? getJobCategoryIds(config, jobFunction).join(',') : '',
       salary: Number(salary),
@@ -555,7 +559,9 @@ const Step3 = (props: any) => {
                 className={styles.stepFullwidth}
                 label='Industry'
                 value={industry}
-                onChange={(e) => setIndustry(e.target.value)}
+                onChange={(e) => {
+                  setIndustry(e.target.value)}
+                }
                 options={industryList}
               />
             </div>

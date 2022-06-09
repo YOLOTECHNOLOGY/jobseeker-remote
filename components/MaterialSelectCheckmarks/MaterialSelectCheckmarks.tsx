@@ -76,7 +76,6 @@ const MaterialSelectCheckmarks = ({
       onSelect(formattedValue)
     }
   }
-  
   const theme = createTheme({
     components: {
       MuiOutlinedInput: {
@@ -154,9 +153,9 @@ const MaterialSelectCheckmarks = ({
         >
           {options &&
             options.map((option: any) => (
-              <MenuItem key={option.value} value={option['seo-value']}>
+              <MenuItem key={option.value} value={option.value}>
                 <Checkbox
-                  checked={selectedOptions.indexOf(option['seo-value']) > -1}
+                  checked={selectedOptions.indexOf(option.value) > -1}
                   size='small'
                 />
                 <ListItemText primary={option.value} />
