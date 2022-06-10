@@ -13,7 +13,7 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogo, DefaultJobseekerAvatar, ChatIcon, BossjobFittedLogo } from 'images'
+import { BossjobLogo, DefaultAvatar, ChatIcon, BossjobFittedLogo } from 'images'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
@@ -118,7 +118,7 @@ const ProtectedHeader = () => {
             <li className={styles.headerLink}>
               <div className={styles.profileWrapper} onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}>
                 <img
-                  src={currentUser?.avatar || DefaultJobseekerAvatar}
+                  src={currentUser?.avatar || DefaultAvatar}
                   className={styles.profilePlaceHolder}
                   alt='avatar'
                 />
