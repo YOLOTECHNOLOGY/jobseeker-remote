@@ -9,7 +9,7 @@
 
 .ModalJobAlertBody {
   max-height: 500px;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   &Input {
     width: 100%;
