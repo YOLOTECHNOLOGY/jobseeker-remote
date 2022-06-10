@@ -205,7 +205,12 @@
       background: $white-1;
 
       &:first-child {
-        margin-bottom: 10px;
+        margin-bottom: 20px;
+      }
+
+      iframe {
+        max-width: 300px !important;
+        max-height: 250px !important;
       }
     }
   }
