@@ -711,9 +711,10 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       if (filterParamsObject[key]) {
         filterParamsObject = {
           ...filterParamsObject,
-          [key]: !filterParamsObject[key].includes(match)
-            ? (filterParamsObject[key] += `,${match}`)
-            : filterParamsObject[key],
+          [key]: uniqueList.join(),
+          // [key]: !filterParamsObject[key].includes(match1)
+          //   ? (filterParamsObject[key] += `,${match}`)
+          //   : filterParamsObject[key],
         }
       } else {
         filterParamsObject = {
@@ -729,17 +730,6 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
   })
 
   filterCount = uniqueList.length
-
-  console.log('filterCount', filterCount)
-  console.log('queryParser', queryParser)
-  console.log('searchQuery', searchQuery)
-  console.log('predefinedQuery', predefinedQuery)
-  console.log('predefinedLocation', predefinedLocation)
-  console.log('locationQuery', locationQuery)
-  console.log('filterQuery', filterQuery)
-  console.log('matchedLocation', matchedLocation)
-  console.log('matchedConfigFromUrl', matchedConfigFromUrl)
-  console.log('matchedConfigFromUserSelection', matchedConfigFromUserSelection)
 
   if (filterCount === 0) {
     if (searchQuery) {
@@ -765,13 +755,9 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         ) {
           query = appendDoubleQueryPattern(searchQuery, locationQuery)
         }
-        // else if (!searchQuery && predefinedQuery && Object.values(matchedConfigFromUrl)['seo-value'] === predefinedQuery){
-        //   query = appendGeneralQueryPattern()
-        // }
       }
       // handle all onKeywordSearch logic when field === 'query',
       // separate logic on its own because keyword search will always take precendance over filters
-      // } else if (searchQuery) {
     } else if (field === 'query') {
       // for case : makati-jobs-in-makati
       if (
@@ -909,7 +895,9 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
       } else if (locationQuery) {
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
-      } else {
+      } else if (Object.keys(matchedConfigFromUrl).length >= 2){
+        query = appendGeneralQueryPattern()
+      }else {
         query = appendSingleQueryPattern(searchQuery)
       }
       // if there is predefinedQuery && predefinedLocation
@@ -937,7 +925,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       query = appendDoubleQueryPattern(filterQuery, predefinedLocation)
     }
   } else {
-    if (searchQuery && searchQuery !== locationQuery) {
+    if (searchQuery && locationQuery && searchQuery !== locationQuery) {
       query = appendSingleQueryPattern(searchQuery)
     } else {
       query = appendGeneralQueryPattern()
@@ -970,14 +958,10 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
 
   const data = {
     searchQuery: query,
-    // searchQuery: predefinedQuery && optionValue.length > 0 ? predefinedQuery : filterQuery,
-    // filters: combinedMatchedConfig,
-    // filterParamsString: filterParams,
     filterParamsObject,
     matchedConfig,
-    // matchedConfigFromUrl,
-    // matchedConfigFromUserSelection,
-    // matchedLocation
+    matchedConfigFromUrl,
+    matchedConfigFromUserSelection,
   }
 
   return data

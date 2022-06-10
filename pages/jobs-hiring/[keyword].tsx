@@ -419,14 +419,14 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const isClear = val.length === 0
 
     setSort(sortOption)
-    const { searchQuery, filterParamsObject, matchedConfig } = userFilterSelectionDataParser(
-      'query',
-      val,
-      router.query,
-      config,
-      isClear
-    )
-    console.log('matchedConfig', matchedConfig)
+    const {
+      searchQuery,
+      filterParamsObject,
+      matchedConfig,
+      matchedConfigFromUrl,
+      matchedConfigFromUserSelection,
+    } = userFilterSelectionDataParser('query', val, router.query, config, isClear)
+    console.log('matchedConfig onKeywordSearch', matchedConfig)
 
     for (const [key, value] of Object.entries(matchedConfig)) {
       const newDefaultValue = { ...defaultValues, [key]: [value[0]['seo-value']] }
@@ -452,25 +452,62 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           setSearchValue('')
           break
         case 'category':
-          // const updatedListOption = catList.map((data) => {
-          //   const newSubList = data.sub_list.map((subData) => ({
-          //     ...subData,
-          //     isChecked:
-          //       value[0]['seo-value'] === subData['seo-value'] ||
-          //       value[0]['seo-value'] === data['seo-value'],
-          //   }))
-          //   const newList = {
-          //     ...data,
-          //     isChecked: value[0]['seo-value'] === data['seo-value'],
-          //     sub_list: newSubList,
-          //   }
-          //   return newList
-          // })
-          // console.log('UPDATED LIST ', updatedListOption)
-          // console.log('UPDATED LIST value', value)
-          // setCategories([value[0]['seo-value']])
-          // setCategoriesList(updatedListOption)
-          // setSearchValue('')
+          let categorySelected = []
+          // append current search that matches catergory
+          categorySelected.push(value[0]['seo-value'])
+          // append the other options that was selected previously
+          Object.values(matchedConfigFromUrl).forEach((value)=>{
+             value.forEach((val) => categorySelected.push(val['seo-value']))
+          })
+          Object.values(matchedConfigFromUserSelection).forEach((value) => {
+            value.forEach((val) => categorySelected.push(val['seo-value']))
+          })
+
+          // sanitise categorySelected to only include unique value
+          categorySelected = [...new Set(categorySelected)]
+
+          const updatedCategoryList = catList.map((data) => {
+            let newData = { ...data }
+            let newSubList = data.sub_list.map((subListData) => {
+              // if checked === true, set subOption isChecked = true
+              if (categorySelected.includes(subListData['seo-value'])) {
+                // if (subListData['seo-value'] === value[0]['seo-value']) {
+                return {
+                  ...subListData,
+                  isChecked: true,
+                }
+              } else {
+                return {
+                  ...subListData,
+                  isChecked: false,
+                }
+              }
+            })
+            if (categorySelected.includes(data['seo-value'])) {
+              // if (data['seo-value'] === value[0]['seo-value']){
+              newSubList = data.sub_list.map((data) => {
+                return {
+                  ...data,
+                  isChecked: true,
+                }
+              })
+              newData = {
+                ...newData,
+                isChecked: true,
+                sub_list: newSubList,
+              }
+            } else {
+              newData = {
+                ...newData,
+                isChecked: false,
+                sub_list: newSubList,
+              }
+            }
+            return newData
+          })
+          setCategories(categorySelected)
+          setCategoriesList(updatedCategoryList)
+          setSearchValue('')
           break
         case 'location':
           setUrlLocation(value[0])
@@ -559,7 +596,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       isClear
     )
 
-    setCategoriesList(selectedOptions)
+    // setCategoriesList(selectedOptions)
+    // setCategories(filterParamsObject['category'].split(','))
     setCategories(selectedOptions)
     updateUrl(searchQuery, filterParamsObject)
   }

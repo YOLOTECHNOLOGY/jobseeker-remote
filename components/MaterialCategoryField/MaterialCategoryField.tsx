@@ -13,6 +13,7 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 
 /* Helpers */
 import { useFirstRender } from 'helpers/useFirstRender'
+import { usePrevious } from 'helpers/usePrevious'
 
 interface MaterialCategoryField extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode
@@ -57,6 +58,7 @@ const MaterialCategoryField = ({
   error,
 }: MaterialCategoryField) => {
   const firstRender = useFirstRender()
+  const prevList = usePrevious(list)
   const initialListOptions = options.map((data) => {
     const newSubList = data.sub_list.map((subData) => ({
       ...subData,
@@ -70,10 +72,47 @@ const MaterialCategoryField = ({
     return newList
   })
 
+  const mapValueToGetDisplayValue = (val, listOptions) => {
+    const valueToDisplay = []
+    val.forEach((v)=> {
+      listOptions.forEach((option) => {
+        if (option['seo-value'] === v) {
+          valueToDisplay.push(option.value)
+        } else {
+          option.sub_list.forEach((subOption) => {
+            if (subOption['seo-value'] === v) {
+              valueToDisplay.push(subOption.value)
+            }
+          })
+        }
+      })
+    })
+    return valueToDisplay
+  }
+  
+
   const [listOptions, setListOptions] = useState(
     list && list.length > 0 ? list : initialListOptions
   )
-  const [displayValue, setDisplayValue] = useState<Array<string>>([''])
+  const [refreshList, setRefreshList] = useState(false)
+  const [displayValue, setDisplayValue] = useState<Array<string>>(
+    mapValueToGetDisplayValue(value, listOptions)
+  )
+
+  useEffect(()=>{
+    if (value){
+      setDisplayValue(mapValueToGetDisplayValue(value, listOptions))
+    }
+  },[value])
+
+  useEffect(()=>{
+    console.log('prevList', prevList)
+    console.log('list', list)
+    if (list && list.length > 0 && prevList !== list && !firstRender){
+      setListOptions(list)
+      setRefreshList(true)
+    }
+  },[list])
 
   useEffect(() => {
     const selectedOptions = []
@@ -95,9 +134,12 @@ const MaterialCategoryField = ({
       setDisplayValue(valueToDisplay)
       if (
         !firstRender &&
-        ((value && value.length > 0) || (selectedOptions && selectedOptions.length > 0))
-      )
+        ((value && value.length > 0) || (selectedOptions && selectedOptions.length > 0)) &&
+        !refreshList
+      ){
         onSelect(selectedOptions)
+        setRefreshList(false)
+      }
     }
   }, [listOptions])
 
