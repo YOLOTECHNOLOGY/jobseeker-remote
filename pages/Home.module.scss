@@ -429,6 +429,7 @@
 
     .flatDisplay {
       display: none;
+      text-align: center;
 
       @include msd {
         width: 100%;
