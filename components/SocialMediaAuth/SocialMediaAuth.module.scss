@@ -54,9 +54,9 @@
   &Wrapper {
     @include flex(row, center);
     align-items: center;
-    margin-top: 54px;
+    margin-top: 24px;
     height: 45px;
-    margin-bottom: 25px;
+    margin-bottom: 24px;
   }
 
   & > img {

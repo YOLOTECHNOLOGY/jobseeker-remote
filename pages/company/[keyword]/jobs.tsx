@@ -111,11 +111,11 @@ const CompanyJobsProfile = (props: any) => {
       <div className={styles.companySection} id='companyJobs'>
         <div className={styles.companyTabsContent}>
           <div className={styles.companyJobs}>
-            <Text textStyle='xxl' bold className={styles.companySectionTitle}>
+            <Text textStyle='xl' bold className={styles.companySectionTitle}>
               Jobs
             </Text>
             <MetaText tagName='h1'>{`Jobs at ${company.name} ${company.id}`}</MetaText>
-
+            
             {totalActiveJobs > 0 && (
               <div className={styles.companyJobsSearch}>
                 <div className={styles.companyJobsSearchLeft}>
@@ -196,14 +196,6 @@ const CompanyJobsProfile = (props: any) => {
                 )}
               </div>
             )}
-
-            {/* {totalActiveJobs && (
-              <div className={styles.emptyResult}>
-                <Text>
-                  The company does not have any active jobs.
-                </Text>
-              </div>
-            )} */}
           </div>
         </div>
       </div>

@@ -7,7 +7,6 @@ import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 
 /* Components */
-import Image from 'next/image'
 import Text from 'components/Text'
 import JobCard from 'components/JobCard'
 import JobDetail from 'components/JobDetail'
@@ -142,7 +141,7 @@ const JobListSection = ({
       industry_key: query?.industry ? formatToUnderscore(query?.industry) : 'all',
       xp_lvl_key: query?.workExperience ? formatToReplace(query?.workExperience, 'to') : 'all',
       degree_key: query?.qualification ? formatToUnderscore(query?.qualification) : 'all',
-      job_type_key: query?.jobtype ? formatToReplace(query?.jobtype, '_'): 'all',
+      job_type_key: query?.jobType ? formatToReplace(query?.jobType, '_'): 'all',
       salary_range_key: query?.salary ? formatToReplace(query?.salary, 'to') : 'all',
       is_company_verified: 1,
       frequency_id: 1
@@ -228,7 +227,7 @@ const JobListSection = ({
                         setIsShowModalManageJobAlerts(true)
                       }}
                     >
-                      <Image src={BellIcon} width='20' height='20' />
+                      <img src={BellIcon} width='20' height='20' />
                     </div>
                   )}
                 </div>

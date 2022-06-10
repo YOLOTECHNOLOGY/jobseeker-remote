@@ -120,6 +120,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
         To receive job application status update, please verify your email. Request for an OTP to be
         sent to <b>{email}</b>
       </Text>
+      <div className={styles.VerifyingEmailForm}>
       <div className={styles.VerifyingEmailFormInput}>
         <MaterialTextField
           id='otp'
@@ -132,17 +133,8 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
           autoComplete='off'
           disabled={isVerifyingOTP}
           onChange={(e) => setOtp(e.target.value)}
+          fullWidth={true}
         />
-        {OTPErrorMessage && (
-          <Text textStyle='sm' textColor='red' tagName='p' className={styles.inputMessage}>
-            {OTPErrorMessage}
-          </Text>
-        )}
-        {OTPSuccessMessage && (
-          <Text textStyle='sm' textColor='primaryBlue' tagName='p' className={styles.inputMessage}>
-            {OTPSuccessMessage}
-          </Text>
-        )}
       </div>
       <MaterialButton
         className={
@@ -156,9 +148,22 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
         onClick={handleRequestOtp}
       >
         <Text textStyle='xl' textColor='white' bold>
-          Request OTP {timerCount > 1 ? '(' + (timerCount - 1) + ')' : ''}
+          Get OTP {timerCount > 1 ? '(' + (timerCount - 1) + ')' : ''}
         </Text>
       </MaterialButton>
+      </div>
+      <div className={styles.VerifyingEmailErrorMessage}>
+      {OTPErrorMessage && (
+          <Text textStyle='sm' textColor='red' tagName='p' className={styles.inputMessage}>
+            {OTPErrorMessage}
+          </Text>
+        )}
+        {OTPSuccessMessage && (
+          <Text textStyle='sm' textColor='primaryBlue' tagName='p' className={styles.inputMessage}>
+            {OTPSuccessMessage}
+          </Text>
+        )}
+      </div>
       <Text style={{ display: 'block' }}>
         Want to get the code on another email?{' '}
         <Link to={authPathToOldProject(null, '/dashboard/profile/settings')}>
@@ -198,9 +203,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
     <Modal
       headerTitle='Verify your email'
       showModal={isShowModal}
-      handleModal={() => {
-        handleModal(false)
-      }}
+      handleModal={handleModal}
     >
       {modalContent}
     </Modal>

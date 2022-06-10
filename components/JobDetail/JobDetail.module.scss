@@ -6,7 +6,6 @@
 
   &Content {
     width: 100%;
-    background-color: $white-3;
   }
 
   &Option {
@@ -92,7 +91,7 @@
     }
 
     &.isSticky {
-      top: 256px;
+      top: 275px;
       position: fixed;
       width: 533px;
       height: calc(100vh - 256px);
@@ -100,8 +99,8 @@
   }
 
   &Image {
-    width: 88px;
-    height: 88px;
+    width: 52px;
+    height: 52px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -170,6 +169,10 @@
     align-items: space-between;
     flex-direction: column;
     text-align: center;
+
+    > img {
+      margin-left: 45px;
+    }
   }
 
   &Text {
@@ -185,20 +188,20 @@
 }
 
 .JobDetailSection {
-  margin-top: 48px;
+  margin-top: 24px;
 
   &Title {
     display: block;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
   }
 
   &Body {
     display: block;
-    padding: 0 20px;
   }
 
   &SubTitle {
     margin-top: 16px;
+    margin-bottom: 8px;
     display: block;
     line-height: 24px;
   }
@@ -220,7 +223,7 @@
     display: flex;
     align-items: center;
     width: 50%;
-    margin: 12px 0 10px;
+    margin: 0 0 10px;
   }
 
   &Text {
@@ -247,8 +250,8 @@
 .aboutCompany {
   border: 1px solid $lightgrey;
   border-radius: 4px;
-  padding: 21px 42px 15px;
-  margin-top: 34px;
+  padding: 21px 24px 15px;
+  margin: 34px 0;
 
   span {
     display: block;
@@ -334,4 +337,12 @@
 .JobDetailRequirementSectionBody * {
   font-size: 16px !important;
   font-family: 'Product Sans' !important;
+}
+
+.JobDetailDescriptionSectionBody,
+.JobDetailRequirementSectionBody {
+  > ol, ul {
+    padding-inline: inherit;
+    margin-left: 40px;
+  }
 }

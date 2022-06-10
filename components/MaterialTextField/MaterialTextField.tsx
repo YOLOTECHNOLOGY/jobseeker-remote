@@ -21,6 +21,7 @@ type MaterialTextFieldProps = {
   refs?: any
   multiline?: boolean
   rows?: Number
+  fullWidth?: boolean
 } & Omit<Input, 'size'>
 
 const theme = createTheme({
@@ -35,7 +36,8 @@ const theme = createTheme({
             fontSize: '10px',
             transform: 'translate(14px, -10px) scale(1)',
           },
-          top: '4px'
+          top: '4px',
+          lineHeight: '16px'
         },
         shrink: {
           fontSize: '10px',
@@ -51,7 +53,7 @@ const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          height: '48px',
+          height: '44px',
           fontSize: '16px',
           backgroundColor: "white"
         }
@@ -65,7 +67,7 @@ const MaterialTextField = ({ id, label, variant, error, refs, size, color, class
   useEffect(()=>{
     setValue(defaultValue)
   },[defaultValue])
-
+  
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
   }

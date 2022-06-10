@@ -3,7 +3,6 @@
 
 .modal {
   height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
   overflow: hidden;
   position: fixed;
@@ -17,7 +16,14 @@
 
   @include sm{
     justify-content: flex-end;
-    margin-bottom: calc(100vh - var(--vh, 1vh)* 100);
+  }
+
+  // necessary for taking full height for mobile view
+  &.FullHeight {
+    @include msd {
+      height: 100%;
+      height: --webkit-fill-available;
+    }
   }
 
   &Content {
@@ -25,7 +31,9 @@
     position: relative;
     margin: 0 auto;
     width: 581px;
-    max-height: 663px;
+    max-height: 680px;
+    border-radius: 5px;
+    overflow: auto;
 
     &.isFullWidth {
       @include md {
@@ -41,14 +49,21 @@
 
   &Header {
     display: flex;
-    padding: 24px 40px;
+    padding: 16px 24px;
     background-color: $white-1;
     border-bottom: 1px solid rgba($lightgrey, 0.5);
+
+    &Title {
+      flex: auto;
+    }
   }
 
   &Body{ 
+    padding: 16px 24px;
+
     @include sm{
-      overflow-y: scroll;
+      overflow-y: auto;
+      padding: 16px 20px;
     }
   }
   &Footer {
@@ -59,11 +74,6 @@
     justify-content: flex-end;
     
     button {
-      &:first-child {
-        border: none;
-        box-shadow: none;
-      }
-
       &:last-child {
         margin-left: 10px;
         background-color: $primaryBlue;
@@ -85,9 +95,7 @@
   }
 
   &CloseButton {
-    position: absolute;
-    top: 28px;
-    right: 45px;
+    margin-top: 3px;
     cursor: pointer;
     z-index: 9999;
   }

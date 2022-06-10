@@ -77,12 +77,6 @@ function* registerJobSeekerReq(actions) {
         is_email_verify: registeredData.is_email_verify,
         notice_period_id: registeredData.notice_period_id,
         is_profile_completed: registeredData.is_profile_completed,
-        recruiter_latest_work_xp:
-          (registeredData.recruiter_latest_work_xp && {
-            company_id: registeredData.recruiter_latest_work_xp.company_id,
-            job_title: registeredData.recruiter_latest_work_xp.job_title
-          }) ||
-          null
       }
       setItem(isFromCreateResume, source === 'free_resume' ? '1' : '0')
 

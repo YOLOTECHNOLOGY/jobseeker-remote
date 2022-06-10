@@ -19,7 +19,6 @@
   &.isShow.displayQuickLinks{
     display: block;
     @extend .searchFilter;
-    top: 200px;
 
     .searchFilterBody {
       height: calc(100vh - 264px);
@@ -28,6 +27,12 @@
         height: calc(100vh - 183px);
       }
     }
+  }
+
+  &.isShow.displayQuickLinks.isShowingEmailAlert{
+    @extend .searchFilter;
+    top: 127px;
+    height: calc(100vh - 127px);
   }
 
   &Header {
@@ -44,7 +49,7 @@
   }
 
   &Body {
-    padding: 10px 25px 77px 25px;
+    padding: 0 24px;
     height: calc(100vh - 274px);
     overflow-y: scroll;
 
@@ -73,7 +78,7 @@
   }
 
   &Section {
-    padding: 15px 0 10px;
+    padding: 24px 0;
 
     &:not(:first-child) {
       border-top: 1px solid $lightgrey;
@@ -144,6 +149,10 @@
     @include msd {
       flex-direction: column;
     }
+
+    .searchFilterOptionSub{
+      margin-left:25px;
+    }
   }
 
   &OptionsColumn {
@@ -151,7 +160,7 @@
   }
 
   &Footer {
-    padding: 10px 25px;
+    padding: 16px 25px;
     border-top: 2px solid $lightgrey;
     display: flex;
     justify-content: flex-end;

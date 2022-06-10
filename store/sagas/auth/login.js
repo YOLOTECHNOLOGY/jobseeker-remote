@@ -8,6 +8,9 @@ import {
   loginSuccess,
   loginFailed,
 } from 'store/actions/auth/login'
+import {
+  displayNotification
+} from 'store/actions/notificationBar/notificationBar'
 
 import { loginService } from 'store/services/auth/login'
 
@@ -47,14 +50,6 @@ function* loginReq(actions) {
         is_bosshunt_talent_active: loginData.is_bosshunt_talent_active,
         bosshunt_talent_opt_out_at: loginData.bosshunt_talent_opt_out_at,
         is_profile_completed: loginData.is_profile_completed,
-        recruiter_latest_work_xp:
-          (loginData.recruiter_latest_work_xp && {
-            company_id: loginData.recruiter_latest_work_xp.company_id,
-            job_title: loginData.recruiter_latest_work_xp.job_title,
-            is_currently_work_here:
-              loginData.recruiter_latest_work_xp.is_currently_work_here
-          }) ||
-          null
       }
 
       yield call(setCookie, 'user', userCookie)
@@ -82,7 +77,26 @@ function* loginReq(actions) {
       yield put(push(url))
     }
   } catch (err) {
-    yield put(loginFailed(err))
+    const statusCode = err.response.status
+
+    let errorMessage = ''
+
+    if (statusCode === 401 || statusCode === 422 ) {
+      errorMessage = 'invalid credential'
+    } else if (statusCode === 403) {
+      errorMessage = 'account suspended'
+    }
+
+    if (errorMessage) {
+      yield put(loginFailed(errorMessage))
+    } else {
+      const displayNotificationPayload = {
+        "open": true,
+        "severity": "error",
+        "message": "We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance."
+      }
+      yield put(displayNotification(displayNotificationPayload))
+    }
   }
 }
 

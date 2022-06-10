@@ -87,8 +87,8 @@ const Step2 = (props: any) => {
     >
       <div className={styles.stepForm}>
         <Text className={styles.step2Caption} textStyle='xl'>
-          You can build an online resume to apply for jobs and export it <br /> with different
-          templates. You can also upload your resume, it <br />
+          You can build an online resume to apply for jobs and export it with different
+          templates. <br/><br/> You can also upload your resume, it 
           will be saved to your profile.
         </Text>
 

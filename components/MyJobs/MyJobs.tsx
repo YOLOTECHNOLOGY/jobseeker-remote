@@ -58,7 +58,13 @@ const theme = createTheme({
             minHeight: '79px',
             textTransform: 'capitalize'
           }
-        }
+        },
+        scroller: {
+          height: '55px'
+        },
+        flexContainer: {
+          height: '55px',
+        },
       }
     }
   },
@@ -121,6 +127,9 @@ const MyJobs = ({
 
   const withdrawAppliedJobResponse = useSelector((store: any) => store.job.withdrawAppliedJob.response)
   const isWithdrawAppliedJobFetching = useSelector((store: any) => store.job.withdrawAppliedJob.fetching)
+
+  const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
+  const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
   
   useEffect(() => {
     window.addEventListener('scroll', updateScrollPosition)
@@ -224,7 +233,12 @@ const MyJobs = ({
     handleFetchJobDetail(jobId, category) 
     
     if (width < 768 && status === 'active') {
-      router.push(`/job/${slugify(jobTitle || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobId}?isApplied=${isAppliedCategory}`)
+      if (isAppliedCategory) {
+        router.push(`/job/${slugify(jobTitle || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobId}?isApplied=${isAppliedCategory}`)
+      } else {
+        router.push(`/job/${slugify(jobTitle || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobId}`)
+      }
+
       return
     }
   }
@@ -464,6 +478,8 @@ const MyJobs = ({
         reportJobReasonList={reportJobReasonList}
         selectedJobId={selectedJob?.['id']}
         handlePostReportJob={handlePostReportJob}
+        isPostingReport={isPostingReport}
+        postReportResponse={postReportResponse}
       />
 
       <ModalWithdrawApplication

@@ -35,6 +35,7 @@ const theme = createTheme({
             fontSize: '10px',
             transform: 'translate(14px, -10px) scale(1)',
           },
+          lineHeight: '16px'
         },
         shrink: {
           fontSize: '10px',

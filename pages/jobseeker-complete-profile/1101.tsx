@@ -18,7 +18,6 @@ import { updateUserCompleteProfileRequest } from 'store/actions/users/updateUser
 import Switch from '@mui/material/Switch';
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Image from 'next/image'
 import Divider from '@mui/material/Divider';
 
 import Text from 'components/Text'
@@ -308,11 +307,15 @@ const Step3 = (props: any) => {
 
   const handleSaveForm = (proceedingPath='') => {
     // eslint-disable-next-line no-console
+    const matchedIndustry = industryList.filter((option) => {
+      return option.value === industry
+    })
+
     const workExperienceData = {
       job_title: jobTitle,
       company: companyName,
       country_key: country || 'ph',
-      company_industry_key: industry,
+      company_industry_key: matchedIndustry?.[0]?.key || null,
       is_currently_work_here: isCurrentJob,
       job_category_ids: jobFunction?.length > 0 ? getJobCategoryIds(config, jobFunction).join(',') : '',
       salary: Number(salary),
@@ -382,7 +385,7 @@ const Step3 = (props: any) => {
       isUpdating={isUpdating}
     >
       <div className={styles.stepNotice}>
-        <Image src={InfoIcon} alt='' width='30' height='30' />
+        <img src={InfoIcon} alt='' width='30' height='30' />
         <Text textStyle='base'>Fill in your complete work experiences will increase your chances of being shortlisted by 83%.</Text>
       </div>
       {workExperience?.length > 0 && (
@@ -391,12 +394,15 @@ const Step3 = (props: any) => {
             <div className={styles.stepDataItem} key={experience.id}>
               <div className={styles.stepDataInfo}>
                 <Text bold textStyle='base' tagName='p'>{experience?.job_title}</Text>
+                <br/>
                 <Text textStyle='base' tagName='p'>{experience?.company}</Text>
                 <Text textStyle='base' tagName='p'>{experience?.location} - {getLocation(experience?.location)?.[0].region_display_name}</Text>
                 <Text textStyle='base' tagName='p'>{moment(experience?.working_period_from).format("MMMM yyyy")} to {experience?.is_currently_work_here ? 'Present' : moment(experience.working_period_to).format("MMMM yyyy")}</Text>
+                <br/>
                 {experience?.job_categories.length > 0 && <Text textStyle='base' tagName='p'>{experience?.job_categories.join(', ')}</Text>}
                 {experience?.company_industry && <Text textStyle='base' tagName='p'>{experience?.company_industry}</Text>}
                 {experience?.salary && <Text textStyle='base' tagName='p'>{formatSalary(experience?.salary)} per month</Text>}
+                <br/>
                 {experience?.description && displayDescription(experience?.description) && (
                   <>
                     <Text textStyle='base' tagName='p'>Description: </Text>
@@ -553,7 +559,9 @@ const Step3 = (props: any) => {
                 className={styles.stepFullwidth}
                 label='Industry'
                 value={industry}
-                onChange={(e) => setIndustry(e.target.value)}
+                onChange={(e) => {
+                  setIndustry(e.target.value)}
+                }
                 options={industryList}
               />
             </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Image from 'next/image'
 import Tooltip from '@mui/material/Tooltip'
 
 interface MaterialMobileTooltipProps {
@@ -27,11 +26,11 @@ const MaterialMobileTooltip = ({
       open={openTooltip}
     >
       <span className={className}>
-        <Image 
+        <img 
           src={icon} 
           alt='icon' 
-          width='20'
-          height='20'
+          width='14'
+          height='14'
           onClick={() => {
             setOpenTooltip(!openTooltip)
           }}

@@ -99,14 +99,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
                 is_email_verify: response.data.data.is_email_verify,
                 notice_period_id: response.data.data.notice_period_id,
                 is_profile_completed: response.data.data.is_profile_completed,
-                recruiter_latest_work_xp:
-                  (response.data.data.recruiter_latest_work_xp && {
-                    company_id:
-                      response.data.data.recruiter_latest_work_xp.company_id,
-                    job_title:
-                      response.data.data.recruiter_latest_work_xp.job_title
-                  }) ||
-                  null
               }
 
               const serverAccessToken =

@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
-import Image from 'next/image'
 
 import { logoutRequest } from 'store/actions/auth/logout'
 
@@ -68,36 +67,36 @@ const ProtectedHeader = () => {
             <React.Fragment>
               <li className={styles.headerLink}>
                 <Link title='Jobs' to='/jobs-hiring/job-search'>
-                  <Text textStyle='lg' textColor='darkGrey' className={styles.headerLinkText}>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Jobs
                   </Text>
                 </Link>
               </li>
               <li className={styles.headerLink}>
                 <a title='Headhunt Me' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/headhunt-me')} href='/dashboard/headhunt-me'>
-                  <Text textStyle='lg' textColor='darkGrey' className={styles.headerLinkText}>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Headhunt Me
                   </Text>
                 </a>
               </li>
               <li className={styles.headerLink}>
                 <Link title='Companies' to='/companies'>
-                  <Text textStyle='lg' textColor='darkGrey' className={styles.headerLinkText}>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Companies
                   </Text>
                 </Link>
               </li>
               <li className={styles.headerLink}>
                 <Link title='Courses' to='https://academy.bossjob.ph/courses/search-courses' aTag external>
-                  <Text textStyle='lg' textColor='darkGrey' className={styles.headerLinkText}>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Courses
                   </Text>
                 </Link>
               </li>
               <li className={styles.headerLink}>
                 <a className={styles.headerLinkIcon} title='Chats' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/chat')} href='/dashboard/chat'>
-                  <Image src={ChatIcon} width='20' height='20' />
-                  <Text textStyle='lg' textColor='darkGrey' className={styles.headerLinkText}>
+                  <img src={ChatIcon} width='20' height='20' />
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Chats
                   </Text>
                 </a>
@@ -112,7 +111,7 @@ const ProtectedHeader = () => {
                 currentUser.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
               }}>
                 <MaterialButton variant='contained' capitalize>
-                  <Text textColor='white' textStyle='lg' bold>Manage Resume</Text>
+                  <Text textColor='white' textStyle='base' bold>Manage Resume</Text>
                 </MaterialButton>
               </a>
             </li>

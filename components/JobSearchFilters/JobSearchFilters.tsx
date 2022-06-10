@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 /* Vendor */
 import classNames from 'classnames/bind'
@@ -8,7 +8,6 @@ import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
 /* Components */
-import Image from 'next/image'
 import Text from 'components/Text'
 import Button from 'components/Button'
 import Accordian from 'components/Accordian'
@@ -16,9 +15,10 @@ import Accordian from 'components/Accordian'
 
 /* Helpers */
 import {
-  conditionChecker,
-  getPredefinedParamsFromUrl,
-  getLocationList,
+  // conditionChecker,
+  // getPredefinedParamsFromUrl,
+  // getLocationList,
+  userFilterSelectionDataParser,
 } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
@@ -36,6 +36,7 @@ interface NavSearchFilterProps {
   onResetFilter: Function
   displayQuickLinks: Boolean
   moreFilterReset?: boolean
+  isShowingEmailAlert: boolean
 }
 
 interface SearchFilters {
@@ -44,13 +45,18 @@ interface SearchFilters {
   options: Array<optionsType>
   defaultOpenState?: boolean
   isNotCollapsible?: boolean
-  isColumn?: boolean,
+  isColumn?: boolean
   isRadioButton?: boolean
+  hasMainAndSubOption?: boolean
 }
 
 type optionsType = {
   value: string
   label: string
+  id?: any
+  key?: any
+  // eslint-disable-next-line camelcase
+  sub_list?: any
 }
 
 const NavSearchFilter = ({
@@ -60,21 +66,20 @@ const NavSearchFilter = ({
   onShowFilter,
   displayQuickLinks,
   onResetFilter,
-  moreFilterReset = false
+  moreFilterReset = false,
+  isShowingEmailAlert
 }: NavSearchFilterProps) => {
   const router = useRouter()
   const { keyword } = router.query
   const queryParams = router.query
   const config = useSelector((state: any) => state.config.config.response)
-  const jobCategoryList = config.inputs.job_category_lists
-  const locationList = getLocationList(config)
-  
+  // TODO: mobile job filters for salary, job type, categories
+  // const jobCategoryList = config.inputs.job_category_lists
+  // const locationList = getLocationList(config)
+
   const industryList = config.inputs.industry_lists
-
   const expLvlList = config.inputs.xp_lvls
-
   const eduLevelList = config.filters.educations
-
   const jobTypeList = config.inputs.job_types
 
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
@@ -87,7 +92,7 @@ const NavSearchFilter = ({
   const sortRef = useRef(null)
   const { register, handleSubmit, reset } = useForm()
   const cx = classNames.bind(styles)
-  const isShowFilterClass = cx({ isShow: isShowFilter, displayQuickLinks: displayQuickLinks })
+  const isShowFilterClass = cx({ isShow: isShowFilter, displayQuickLinks: displayQuickLinks, isShowingEmailAlert: isShowingEmailAlert })
   const [selectedCategories, setSelectedCategories] = useState([])
   const [displayMobileSort, setDisplayMobileSort] = useState(false)
 
@@ -130,7 +135,7 @@ const NavSearchFilter = ({
     const allFalsyValues = values.filter((val) => !!val)
     const updatedData = {
       ...data,
-      sort: [data.sort || router.query.sort]
+      sort: [data.sort || router.query.sort],
     }
     if (allFalsyValues.length !== 0 || selectedCategories) {
       urlFilterParameterBuilder(updatedData)
@@ -145,66 +150,28 @@ const NavSearchFilter = ({
     onResetFilter({})
   }
 
-  const onRemoveProperty = (propertyName, object) => {
-    // eslint-disable-next-line
-    const { [propertyName]: propertyValue, ...newObject } = { ...object }
-    return { ...newObject }
-  }
+  // const onRemoveProperty = (propertyName, object) => {
+  //   // eslint-disable-next-line
+  //   const { [propertyName]: propertyValue, ...newObject } = { ...object }
+  //   return { ...newObject }
+  // }
 
   const urlFilterParameterBuilder = (data) => {
-    const { predefinedQuery, predefinedLocation } = getPredefinedParamsFromUrl(
+    const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
+      'moreFilters',
+      data,
       router.query,
-      jobCategoryList,
-      locationList
+      config
     )
-    // eslint-disable-next-line
-    const { keyword, ...rest } = router.query
-    // include truthy value into array
-    // if array length is only 1 => router.push seo value
-    // if array length > 1 => build filter parameter ?fieldName=seo-value
-    let filterData = {}
-    // for checkbox filters
-    for (const [key, value] of Object.entries<any>(data)) {
-      if (value && value.length !== 0) {
-        if (key !== 'page') {
-          filterData = {
-            ...filterData,
-            // ensure to only push unduplicated results
-            [key]: Array.from(new Set(value)).join(','),
-          }
-        }
-      }
-    }
-
-    let categoryObject = null
-    let queryParam = ''
-    let queryObject = null
-
-    const categoryKeys = selectedCategories && selectedCategories.map((val) => val.key)
-
-    // for mui specialization filter
-    // When only one category is selected
-    if (selectedCategories && selectedCategories.length === 1) {
-      queryParam = conditionChecker(predefinedQuery, predefinedLocation, selectedCategories[0]?.key)
-      // When search keyword found, append cateogry in query object,
-      // else use category as search keyword and remove category filter if found
-      queryObject = Object.assign({}, !predefinedQuery ? { ...onRemoveProperty('category', {...filterData}) } : {...filterData, ...{'category': categoryKeys.join()} })
-    // When no category is selected
-    } else if (selectedCategories && selectedCategories.length === 0) {
-      queryParam = conditionChecker(predefinedQuery, predefinedLocation, null)
-      queryObject = Object.assign({}, { ...onRemoveProperty('category', {...filterData}) })
-    // When more than one category is selected
-    } else {
-      queryParam = conditionChecker(predefinedQuery, predefinedLocation, null)
-      categoryObject = Object.assign({}, { category: categoryKeys.join() })
-      queryObject = Object.assign({}, { ...rest, ...filterData, ...categoryObject })
-
-    }
 
     router.push(
       {
-        pathname: `${process.env.HOST_PATH}/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
-        query: queryObject,
+        pathname: `${process.env.HOST_PATH}/jobs-hiring/${
+          searchQuery ? searchQuery : 'job-search'
+        }`,
+        query: {
+          ...filterParamsObject,
+        },
       },
       undefined,
       { shallow: true }
@@ -222,7 +189,8 @@ const NavSearchFilter = ({
     defaultOpenState,
     isNotCollapsible,
     isColumn,
-    isRadioButton
+    isRadioButton,
+    hasMainAndSubOption,
   }: SearchFilters) => {
     const isFilterColumnClass = cx({ searchFilterOptionsColumn: isColumn })
 
@@ -241,24 +209,54 @@ const NavSearchFilter = ({
           className={styles.searchFilterAccordion}
         >
           <div className={classNamesCombined([styles.searchFilterOptions, isFilterColumnClass])}>
-            {options &&
-              options.map((option, i) => {
-                if (isRadioButton) {
+            {hasMainAndSubOption
+              ? options.map((option) => {
+                  const subListOptions = option.sub_list
+                  return (
+                    <React.Fragment key={option.id}>
+                      <label className={styles.searchFilterOption}>
+                        <input
+                          type='checkbox'
+                          value={option['seo-value']}
+                          // onClick={(e) => handleMainClick(e, option)}
+                          {...register(fieldName)}
+                        />
+                        <Text textStyle='lg'>{option.value}</Text>
+                      </label>
+                      {subListOptions.map((subOption) => {
+                        return (
+                          <label key={subOption.id} className={styles.searchFilterOptionSub}>
+                            <input
+                              type='checkbox'
+                              value={subOption['seo-value']}
+                              // onClick={(e) => handleSubClick(e, subOption)}
+                              {...register(fieldName)}
+                            />
+                            <Text textStyle='lg'>{subOption.value}</Text>
+                          </label>
+                        )
+                      })}
+                    </React.Fragment>
+                  )
+                })
+              : options &&
+                options.map((option, i) => {
+                  if (isRadioButton) {
+                    return (
+                      <label key={i} className={styles.searchFilterOption}>
+                        <input type='radio' value={option['seo-value']} {...register(fieldName)} />
+                        <Text textStyle='lg'>{option.label}</Text>
+                      </label>
+                    )
+                  }
+
                   return (
                     <label key={i} className={styles.searchFilterOption}>
-                      <input type='radio' value={option['value']} {...register(fieldName)} />
-                      <Text textStyle='lg'>{option.label}</Text>
+                      <input type='checkbox' value={option['seo-value']} {...register(fieldName)} />
+                      <Text textStyle='lg'>{option.value}</Text>
                     </label>
                   )
-                }
-
-                return (
-                  <label key={i} className={styles.searchFilterOption}>
-                    <input type='checkbox' value={option['value']} {...register(fieldName)} />
-                    <Text textStyle='lg'>{option.value}</Text>
-                  </label>
-                )
-              })}
+                })}
           </div>
         </Accordian>
       </div>
@@ -275,13 +273,13 @@ const NavSearchFilter = ({
       !isClickingOnSpecializationMUI &&
       !isClickingOnSort
     )
-    onShowFilter()
+      onShowFilter()
   }
 
   useEffect(() => {
     if (isShowFilter) {
-      document.body.style.position = 'fixed';
-      document.body.style.width = "100%";
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
     }
     document.addEventListener('click', handleClickedOutside, true)
     return () => {
@@ -296,7 +294,7 @@ const NavSearchFilter = ({
           Filters
         </Text>
         <div className={styles.searchFilterClose} onClick={() => onShowFilter()}>
-          <Image src={CloseIcon} alt='logo' width='13' height='13' />
+          <img src={CloseIcon} alt='logo' width='13' height='13' />
         </div>
       </div>
       <form className={styles.searchFilterForm} onSubmit={handleSubmit(handleApplyFilter)}>
@@ -307,9 +305,9 @@ const NavSearchFilter = ({
                 title='Sort By'
                 fieldName='sort'
                 options={[
-                  {value: '1', label: 'Newest'}, 
-                  {value: '2', label: 'Relevance'}, 
-                  {value: '3', label: 'Highest Salary'}
+                  { value: '1', label: 'Newest' },
+                  { value: '2', label: 'Relevance' },
+                  { value: '3', label: 'Highest Salary' },
                 ]}
                 defaultOpenState={true}
                 isNotCollapsible={true}
@@ -318,7 +316,7 @@ const NavSearchFilter = ({
               />
               <SearchFilters
                 title='Job Type'
-                fieldName='jobtype'
+                fieldName='jobType'
                 options={jobTypeList}
                 defaultOpenState={true}
                 isNotCollapsible={true}
@@ -379,12 +377,24 @@ const NavSearchFilter = ({
             defaultOpenState={true}
             isNotCollapsible={true}
           />
+          {displayMobileSort && (
+            <SearchFilters
+              title='Specialization'
+              fieldName='category'
+              options={config.inputs.job_category_lists}
+              defaultOpenState={true}
+              isNotCollapsible={true}
+              hasMainAndSubOption
+            />
+          )}
         </div>
         <div className={styles.searchFilterFooter}>
           <div className={styles.searchFilterReset} onClick={handleResetFilter}>
-            <Text textStyle='base' textColor='primaryBlue' bold>
+          <Button>
+            <Text textStyle='base' textColor='primary' bold>
               Reset Filter
             </Text>
+          </Button>
           </div>
           <Button className={styles.searchFilterApply} primary>
             <Text textStyle='base' textColor='white' bold>

@@ -30,6 +30,15 @@ const ModalWithdrawApplication = ({
     return isWithdrawAppliedJobFetching ? 'Updating...' : 'Withdraw'
   }
 
+  const handleCloseModal = () => {
+    const scrollY = document.body.style.top
+    document.body.style.position = ''
+    document.body.style.top = ''
+    // retrieve previous scroll position
+    window.scrollTo(0, parseInt(scrollY || '0') * -1)
+  }
+
+
   return (
     <Modal
       headerTitle='Withdraw Application'
@@ -38,10 +47,12 @@ const ModalWithdrawApplication = ({
       firstButtonText='Back'
       handleFirstButton={() => {
         handleShowModalWithdrawApplication(false)
+        handleCloseModal()
       }}
       secondButtonText={handleText()}
       handleSecondButton={() => {
         handleWithdrawApplication({jobId})
+        handleCloseModal()
       }}
     >
       <div className={styles.ModalWithdrawApplication}>
