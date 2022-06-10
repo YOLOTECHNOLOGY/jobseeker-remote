@@ -333,12 +333,14 @@
   }
 }
 
+.JobDetailDescriptionSectionBody *,
+.JobDetailRequirementSectionBody * {
+  font-size: 16px !important;
+  font-family: 'Product Sans' !important;
+}
+
 .JobDetailDescriptionSectionBody,
 .JobDetailRequirementSectionBody {
-  font-size: 16px !important;
-  font-weight: 400;
-  font-family: 'Product Sans' !important;
-
   > ol, ul {
     padding-inline: inherit;
     margin-left: 40px;
