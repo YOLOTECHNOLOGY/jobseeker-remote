@@ -329,10 +329,14 @@ const Footer = () => {
               </Text>
               <div className={styles.footerMobileDownloadApp}>
                 <div style={{ marginRight: '15px' }}>
-                  <img src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
+                  <Link to='https://apps.apple.com/sg/app/bossjob/id1592073585' external>
+                    <img src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
+                  </Link>
                 </div>
                 <div>
-                  <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
+                  <Link to='https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp' external>
+                    <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -669,10 +673,14 @@ const Footer = () => {
                   Download Bossjob App
                 </Text>
                 <div style={{ margin: '25px 10px 10px 0' }}>
-                  <img src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
+                  <Link to='https://apps.apple.com/sg/app/bossjob/id1592073585' external>
+                    <img src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
+                  </Link>
                 </div>
                 <div>
-                  <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
+                  <Link to='https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp' external>
+                    <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
+                  </Link>
                 </div>
               </div>
               <div className={styles.footerColumn}>
