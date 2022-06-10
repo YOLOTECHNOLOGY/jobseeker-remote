@@ -29,7 +29,7 @@ import ReadMore from 'components/ReadMore'
 import JobDetailSidebarCard from 'components/Loader/JobDetailSidebarCard'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 import MaterialLocationField from 'components/MaterialLocationField'
-import AdSlot from 'components/AdSlot'
+// import AdSlot from 'components/AdSlot'
 
 import ModalShare from 'components/ModalShare'
 import ModalReportJob from 'components/ModalReportJob'
@@ -331,9 +331,9 @@ const Job = ({
       </div>
       <div className={styles.JobDetail}>
         <div className={styles.JobDetailContent}>
-          <div className={styles.LeaderBoard}>
+          {/* <div className={styles.LeaderBoard}>
             <AdSlot adSlot={'job-detail/top-leaderboard'} />
-          </div>
+          </div> */}
           <div className={styles.JobDetailPrimary}>
             <div
               className={styles.JobDetailPrimaryOptions}
@@ -389,22 +389,22 @@ const Job = ({
                         </Text>
                       </MaterialButton>
                     ) : (
-                      <Link to={applyJobLink}>
-                        <MaterialButton
-                          variant='contained'
-                          capitalize
-                          onClick={(e) => {
-                            if (!userCookie) {
-                              e.preventDefault()
-                              setQuickApplyModalShow(true)
-                            }
-                          }}
-                        >
-                          <Text textStyle='lg' textColor='white' bold>
-                            Apply Now
-                          </Text>
-                        </MaterialButton>
-                      </Link>
+                      <MaterialButton
+                        variant='contained'
+                        capitalize
+                        onClick={(e) => {
+                          if (!userCookie) {
+                            e.preventDefault()
+                            setQuickApplyModalShow(true)
+                          } else {
+                            router.push(applyJobLink)
+                          }
+                        }}
+                      >
+                        <Text textStyle='lg' textColor='white' bold>
+                          Apply Now
+                        </Text>
+                      </MaterialButton>
                     )}
                   </>
                 )}
