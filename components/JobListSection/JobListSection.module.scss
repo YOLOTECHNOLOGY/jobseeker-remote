@@ -90,6 +90,7 @@
   width: 100%;
   border: 1px solid rgba($lightgrey, 0.5);
   border-radius: 2px;
+  margin-right: 24px;
 
   @include msd {
     display: none;
