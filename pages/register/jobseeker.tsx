@@ -82,7 +82,7 @@ const Register = () => {
     let passwordErrorMessage = null
 
     if (password?.length > 0 && password?.length < 8) {
-      passwordErrorMessage = 'Please enter your password (minimum 8 characters).'
+      passwordErrorMessage = 'Please enter a longer password(minimum of 8 characters)'
     } else if (password?.length > 16) {
       passwordErrorMessage = 'Please enter a shorter password(maximum of 16 characters)'
     } else {
@@ -112,7 +112,7 @@ const Register = () => {
     }
 
     if (!password) {
-      setPasswordError('Please enter your password (minimum 8 characters).')
+      setPasswordError('Please enter a longer password(minimum of 8 characters)')
     }
 
     if (firstName && lastName && email && password && !firstNameError && !lastNameError && !emailError && !passwordError) {
