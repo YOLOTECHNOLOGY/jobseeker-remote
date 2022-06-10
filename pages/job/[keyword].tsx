@@ -76,6 +76,7 @@ import {
   MoreIcon,
   RateIcon,
   LocationPinIcon,
+  DefaultAvatar
 } from 'images'
 
 interface IJobDetail {
@@ -591,7 +592,7 @@ const Job = ({
               <div className={styles.JobDetailRecruiterInfo}>
                 <div
                   className={styles.JobDetailRecruiterInfoImage}
-                  style={{ backgroundImage: `url(${jobDetail?.recruiter.avatar})` }}
+                  style={{ backgroundImage: `url(${jobDetail?.recruiter.avatar || DefaultAvatar})` }}
                 />
                 <div className={styles.JobDetailRecruiterInfoText}>
                   <div className={styles.JobDetailRecruiterName}>
