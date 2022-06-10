@@ -3,15 +3,13 @@ import React, { useState, useEffect } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
+import slugify from 'slugify'
 
 // @ts-ignore
 import { END } from 'redux-saga'
 
 // import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
-
-// import moment from 'moment'
-import slugify from 'slugify'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -195,6 +193,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const userCookie = getCookie('user') || null
   const isMobile = width < 768 ? true : false
 
+  const [clientDefaultValues, setClientDefaultValues] = useState(defaultValues || {})
   const [filterCount, setFilterCount] = useState(0)
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.location)
@@ -399,7 +398,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
     router.push(
       {
-        pathname: `/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
+        pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
         query: queryObject,
       },
       undefined,
@@ -420,53 +419,66 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const isClear = val.length === 0
 
     setSort(sortOption)
-    const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
+    const { searchQuery, filterParamsObject, matchedConfig } = userFilterSelectionDataParser(
       'query',
       val,
       router.query,
       config,
       isClear
     )
-    // // Check if the search value matched with the reserved location keyword
-    // const matchedLocation = locList.filter((loc) => {
-    //   return loc.value.toLowerCase() === searchValue.toLowerCase()
-    // })
+    console.log('matchedConfig', matchedConfig)
 
-    // let location = urlLocation
-    // // Set the location and clear the search value if reserved keyword found
-    // if (matchedLocation.length === 1) {
-    //   location = matchedLocation[0]
-    //   setUrlLocation(location)
-
-    //   val = ''
-    //   setSearchValue(val)
-    // }
-
-    // // Check if the search value matched with the reserved category keyword
-    // const matchedCategory = catList.filter((cat) => {
-    //   return cat.value.toLowerCase() === searchValue.toLowerCase()
-    // })
-
-    // let firstCategory = categories
-    // // Set the first category and clear the search value if reserved keyword found
-    // if (matchedCategory.length === 1) {
-    //   firstCategory = matchedCategory[0]
-    //   setCategories([firstCategory])
-
-    //   val = ''
-    //   setSearchValue(val)
-    // }
-
-    // const queryParam = conditionChecker(val, location?.value || null, firstCategory?.key || null)
-
-    // let queryObject = null
-    // queryObject = Object.assign({}, { ...rest, sort: sortOption })
-
-    // if (predefinedCategory) {
-    //   queryObject['category'] = predefinedCategory.join(',')
-    // }
-
-    console.log('onKeywordSearch', searchQuery, filterParamsObject)
+    for (const [key, value] of Object.entries(matchedConfig)) {
+      const newDefaultValue = { ...defaultValues, [key]: [value[0]['seo-value']] }
+      switch (key) {
+        case 'jobType':
+          setJobTypes([value[0]['seo-value']])
+          setSearchValue('')
+          break
+        case 'salary':
+          setSalaries([value[0]['seo-value']])
+          setSearchValue('')
+          break
+        case 'qualification':
+          setClientDefaultValues(newDefaultValue)
+          setSearchValue('')
+          break
+        case 'industry':
+          setClientDefaultValues(newDefaultValue)
+          setSearchValue('')
+          break
+        case 'workExperience':
+          setClientDefaultValues(newDefaultValue)
+          setSearchValue('')
+          break
+        case 'category':
+          // const updatedListOption = catList.map((data) => {
+          //   const newSubList = data.sub_list.map((subData) => ({
+          //     ...subData,
+          //     isChecked:
+          //       value[0]['seo-value'] === subData['seo-value'] ||
+          //       value[0]['seo-value'] === data['seo-value'],
+          //   }))
+          //   const newList = {
+          //     ...data,
+          //     isChecked: value[0]['seo-value'] === data['seo-value'],
+          //     sub_list: newSubList,
+          //   }
+          //   return newList
+          // })
+          // console.log('UPDATED LIST ', updatedListOption)
+          // console.log('UPDATED LIST value', value)
+          // setCategories([value[0]['seo-value']])
+          // setCategoriesList(updatedListOption)
+          // setSearchValue('')
+          break
+        case 'location':
+          setUrlLocation(value[0])
+          setSearchValue('')
+        default:
+          break
+      }
+    }
     updateUrl(searchQuery, filterParamsObject)
   }
 
@@ -834,7 +846,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         </div>
       </div>
       <JobSearchFilters
-        urlDefaultValues={defaultValues}
+        urlDefaultValues={clientDefaultValues}
         categories={categories}
         displayQuickLinks={displayQuickLinks}
         isShowFilter={isShowFilter}
@@ -919,11 +931,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   })
   const catList = config && config.inputs && config.inputs.job_category_lists
 
-  const {
-    searchQuery,
-    matchedLocation,
-    matchedConfigFromUrl,
-  } = checkFilterMatch(query, config)
+  const { searchQuery, matchedLocation, matchedConfigFromUrl } = checkFilterMatch(query, config)
 
   // query parameters
   const queryJobType: any = query?.jobType
