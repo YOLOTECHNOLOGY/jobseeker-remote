@@ -96,18 +96,19 @@ const Modal = ({
           <div>
             <div className={styles.modalHeader}>
               <Text textStyle='xl' bold className={styles.modalHeaderTitle}>{headerTitle}</Text>
-              <Text
-                className={styles.modalCloseButton}
-                onClick={handleCloseModal}
-              >
-                <img
-                  src={CloseIcon}
-                  title="close modal"
-                  alt="close modal"
-                  width="14"
-                  height="14"
-                />
-              </Text>
+              <div className={styles.modalCloseButton}>
+                <Text
+                  onClick={handleCloseModal}
+                >
+                  <img
+                    src={CloseIcon}
+                    title="close modal"
+                    alt="close modal"
+                    width="14"
+                    height="14"
+                  />
+                </Text>
+              </div>
             </div>
             <div className={styles.modalBody}>
               {children}

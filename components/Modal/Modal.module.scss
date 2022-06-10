@@ -52,11 +52,18 @@
     padding: 16px 24px;
     background-color: $white-1;
     border-bottom: 1px solid rgba($lightgrey, 0.5);
+
+    &Title {
+      flex: auto;
+    }
   }
 
   &Body{ 
+    padding: 16px 24px;
+
     @include sm{
       overflow-y: scroll;
+      padding: 16px 20px;
     }
   }
   &Footer {
@@ -88,9 +95,7 @@
   }
 
   &CloseButton {
-    position: absolute;
-    top: 22px;
-    right: 45px;
+    margin-top: 3px;
     cursor: pointer;
     z-index: 9999;
   }

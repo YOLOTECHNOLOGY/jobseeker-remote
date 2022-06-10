@@ -315,7 +315,7 @@ const Step3 = (props: any) => {
       job_title: jobTitle,
       company: companyName,
       country_key: country || 'ph',
-      company_industry_key: matchedIndustry?.[0].key,
+      company_industry_key: matchedIndustry?.[0]?.key || null,
       is_currently_work_here: isCurrentJob,
       job_category_ids: jobFunction?.length > 0 ? getJobCategoryIds(config, jobFunction).join(',') : '',
       salary: Number(salary),
