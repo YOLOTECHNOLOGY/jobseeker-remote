@@ -13,4 +13,16 @@
       }
     }
   }
+
+  &Description * {
+    font-size: 16px !important;
+    font-family: 'Product Sans' !important;
+  }
+
+  &Description * {
+    > ol, ul {
+      padding-inline: inherit;
+      margin-left: 40px;
+    }
+  }
 }

@@ -1,0 +1,3 @@
+import MaterialSelectCheckmarksCustomSEO from './MaterialSelectCheckmarksCustomSEO'
+
+export default MaterialSelectCheckmarksCustomSEO

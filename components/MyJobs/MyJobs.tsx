@@ -429,7 +429,7 @@ const MyJobs = ({
             {isLoadingJobDetails && (
               <JobDetailLoader />
             )}
-            {selectedJob && (
+            {!isLoadingJobDetails && selectedJob && (
               <JobDetail 
                 selectedJob={selectedJob}
                 jobDetailUrl={jobDetailUrl}

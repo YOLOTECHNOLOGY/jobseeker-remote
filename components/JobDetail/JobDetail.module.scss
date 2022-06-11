@@ -90,7 +90,6 @@
     }
 
     &.isSticky {
-      top: 245px;
       position: fixed;
       width: 533px;
       height: calc(100vh - 256px);
@@ -144,17 +143,21 @@
     div {
       margin-right: 10px;
     }
+
+    > img {
+      margin-right: 5px;
+    }
   }
 
   &PostedAt {
     display: block;
-    margin-top: 24px;
+    margin-top: 16px;
   }
 }
 
 .JobDetailPref {
   background-color: $white-1;
-  padding: 24px 20px 24px 0;
+  padding: 16px;
   border-radius: 5px;
 
   &List {

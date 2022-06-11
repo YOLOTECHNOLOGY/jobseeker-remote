@@ -12,7 +12,8 @@
 
 .companyItem {
   width: calc((100% / 3) - 10px);
-  margin: 10px 5px;
+  margin-right: 10px;
+  margin-bottom: 16px;
 
   @include msd {
     width: 100%;

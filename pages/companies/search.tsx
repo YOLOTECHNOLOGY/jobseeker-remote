@@ -99,12 +99,13 @@ const Search = ({ defaultQuery }: SearchProps) => {
           </Text>
           <MetaText tagName='h1'>Find great companies in Phillipines</MetaText>
           <SearchCompanyField defaultQuery={defaultQuery} onKeywordSearch={handleKeywordSearch} />
-          <Text textStyle='xl' tagName='p' bold className={styles.searchCompanyTitle}>
+        </div>
+        <div className={styles.searchCompanyQuery}>
+          <Text textStyle='xl' tagName='p' bold>
             Companies for “{query ? unslugify(query) : 'all'}”
             {companies?.length === 0 && <span> - No Results Found.</span>}
           </Text>
         </div>
-
         <div className={styles.companiesList}>
           <CompanyCardList
             companiesList={companies}
