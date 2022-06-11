@@ -1,4 +1,3 @@
-// import { stringify } from 'query-string'
 import { flat, thousandsToNumber, unslugify } from 'helpers/formatter'
 
 /* Helpers */
@@ -147,21 +146,21 @@ const nonFilterKeys = [
   'utm_medium',
 ]
 
-const buildQueryParams = (data) => {
-  let queryString = ''
-  queryString = Object.keys(data)
-    .map((key) => {
-      const string = data[key]
-        .map((filter) => {
-          if (filter) return filter['seo-value']
-        })
-        .join()
-      return key + '=' + string
-    })
-    .join('&')
-  queryString = '?' + queryStrings
-  return queryString
-}
+// const buildQueryParams = (data) => {
+//   let queryString = ''
+//   queryString = Object.keys(data)
+//     .map((key) => {
+//       const string = data[key]
+//         .map((filter) => {
+//           if (filter) return filter['seo-value']
+//         })
+//         .join()
+//       return key + '=' + string
+//     })
+//     .join('&')
+//   queryString = '?' + queryStrings
+//   return queryString
+// }
 
 // check if there is a match
 const checkFilterMatch = (routerQuery, config) => {
@@ -200,6 +199,7 @@ const checkFilterMatch = (routerQuery, config) => {
   let matchedConfigFromUrl = {}
   let matchedLocation = {}
   let matchedConfigFromUserSelection = {}
+  let filterCount = 0
 
   Object.keys(sanitisedConfig).forEach((key) => {
     // iterate based on number of results from queryParser
@@ -359,15 +359,40 @@ const checkFilterMatch = (routerQuery, config) => {
     searchQuery = queryParser[0]
   }
 
+  // calculate filter count
+  const array = []
+
+  if (Object.keys(matchedLocation).length > 0) array.push(matchedLocation)
+  if (Object.keys(matchedConfigFromUrl).length > 0) array.push(matchedConfigFromUrl)
+  if (Object.keys(matchedConfigFromUserSelection).length > 0)
+    array.push(matchedConfigFromUserSelection)
+
+  let uniqueList = []
+  array.forEach((matchData) => {
+    for (const [key] of Object.entries(matchData)) {
+      const data =
+        key === 'location'
+          ? matchData[key].map((filter) => filter['seo_value'])
+          : matchData[key].map((filter) => filter['seo-value'])
+
+      uniqueList = [...uniqueList, ...data]
+      uniqueList = [...new Set(uniqueList)]
+    }
+  })
+  filterCount = uniqueList.length
+
   const matchedFilter = {
     searchMatch,
     locationMatch,
     searchQuery,
+    predefinedQuery,
     predefinedLocation,
     matchedLocation,
     matchedConfigFromUrl,
     matchedConfigFromUserSelection,
+    filterCount,
   }
+
   return matchedFilter
 }
 
@@ -755,9 +780,15 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         ) {
           query = appendDoubleQueryPattern(searchQuery, locationQuery)
         }
-      }else if (searchQuery && !predefinedQuery && locationQuery && !filterQuery){
+      } else if (searchQuery && !predefinedQuery && locationQuery && !filterQuery) {
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
-      }else if (!searchQuery && predefinedQuery && !predefinedLocation && !locationQuery && !filterQuery){
+      } else if (
+        !searchQuery &&
+        predefinedQuery &&
+        !predefinedLocation &&
+        !locationQuery &&
+        !filterQuery
+      ) {
         query = appendGeneralQueryPattern()
       }
       // handle all onKeywordSearch logic when field === 'query',
@@ -845,20 +876,32 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
           Object.keys(matchedLocation).length > 0
         ) {
           query = appendDoubleQueryPattern(predefinedQuery, locationQuery)
-        }else if (
+        } else if (
           !searchQuery &&
           filterQuery &&
           Object.keys(matchedConfigFromUserSelection).length > 0 &&
           Object.keys(matchedLocation).length > 0
         ) {
           query = appendDoubleQueryPattern(filterQuery, locationQuery)
-        }
-        else if (searchQuery && !predefinedQuery && !predefinedLocation && !locationQuery && filterQuery && Object.keys(matchedConfigFromUrl).length > 0 && Object.keys(matchedConfigFromUserSelection).length > 0 ){
+        } else if (
+          searchQuery &&
+          !predefinedQuery &&
+          !predefinedLocation &&
+          !locationQuery &&
+          filterQuery &&
+          Object.keys(matchedConfigFromUrl).length > 0 &&
+          Object.keys(matchedConfigFromUserSelection).length > 0
+        ) {
           query = appendGeneralQueryPattern()
         }
-        
-      }else{
-        if (searchQuery && !predefinedQuery && !predefinedLocation && locationQuery && filterQuery){
+      } else {
+        if (
+          searchQuery &&
+          !predefinedQuery &&
+          !predefinedLocation &&
+          locationQuery &&
+          filterQuery
+        ) {
           query = appendSingleQueryPattern(searchQuery)
         }
       }
@@ -866,6 +909,8 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     } else if (searchQuery) {
       if (searchQuery === locationQuery && filterQuery) {
         query = appendDoubleQueryPattern(filterQuery, searchQuery)
+      } else if (searchQuery === locationQuery && predefinedQuery && searchQuery !== predefinedQuery && !filterQuery ) {
+        query = appendDoubleQueryPattern(predefinedQuery, locationQuery)
       } else if (
         predefinedQuery &&
         searchQuery !== predefinedQuery &&
@@ -904,9 +949,9 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
       } else if (locationQuery) {
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
-      } else if (Object.keys(matchedConfigFromUrl).length >= 2){
+      } else if (Object.keys(matchedConfigFromUrl).length >= 2) {
         query = appendGeneralQueryPattern()
-      }else {
+      } else {
         query = appendSingleQueryPattern(searchQuery)
       }
       // if there is predefinedQuery && predefinedLocation
@@ -948,7 +993,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     for (const [key, value] of Object.entries(filterParamsObject)) {
       let valueArray = value.split(',')
       const queryValue = field === 'query' ? slugify(q) : q
-      
+
       if (value.includes(queryValue)) {
         valueArray = valueArray.filter((val) => val !== queryValue)
       }
@@ -962,8 +1007,6 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       }
     }
   })
-
-  console.log('filterParamsObject', filterParamsObject)
 
   const data = {
     searchQuery: query,
@@ -1159,11 +1202,11 @@ const getSmsCountryList = (config) => {
   return smsCountryList
 }
 
-const getSmsCountryCode = (phoneNumber, sms_country_list) => {
-  return sms_country_list.filter((country) => {
-    return country.value.includes(phoneNumber)
-  })
-}
+// const getSmsCountryCode = (phoneNumber, sms_country_list) => {
+//   return sms_country_list.filter((country) => {
+//     return country.value.includes(phoneNumber)
+//   })
+// }
 
 const getJobCategoryList = (config) => {
   if (!config) return []
@@ -1288,6 +1331,46 @@ const getApplyJobLink = (job, user, accessToken = null) => {
   return oldProjectApplyLink
 }
 
+// TODO: remove isLocation param after backend as renamed the field
+const mapSeoValueToGetValue = (value, configArray, hasSubList, isLocation) => {
+  const valueToReturn = []
+  // if config hasSubList e.g: category
+  if (hasSubList){
+    value.forEach((v) => {
+      configArray.forEach((option) => {
+        if (option['seo-value'] === v) {
+          valueToReturn.push(option.value)
+        }else{
+          option.sub_list.forEach((subOption)=>{
+            if (subOption['seo-value'] === v){
+              valueToReturn.push(subOption.value)
+            }
+          })
+        }
+      })
+    })
+  }else{
+    if (isLocation){
+      value.forEach((v) => {
+        configArray.forEach((option) => {
+          if (option['seo_value'] === v) {
+            valueToReturn.push(option.value)
+          }
+        })
+      })
+    }else{
+      value.forEach((v) => {
+        configArray.forEach((option) => {
+          if (option['seo-value'] === v) {
+            valueToReturn.push(option.value)
+          }
+        })
+      })
+    }
+  }
+  return valueToReturn.join()
+}
+
 export {
   handleSalary,
   urlQueryParser,
@@ -1309,4 +1392,5 @@ export {
   getApplyJobLink,
   userFilterSelectionDataParser,
   checkFilterMatch,
+  mapSeoValueToGetValue,
 }
