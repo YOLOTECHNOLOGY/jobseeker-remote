@@ -97,8 +97,8 @@
   }
 
   &Image {
-    width: 52px;
-    height: 52px;
+    width: 78px;
+    height: 78px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -114,6 +114,10 @@
   &Title {
     display: block;
     line-height: 27px;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &Company {

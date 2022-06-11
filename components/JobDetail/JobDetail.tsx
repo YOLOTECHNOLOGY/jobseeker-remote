@@ -245,9 +245,14 @@ const JobDetail = ({
               style={{ backgroundImage: `url(${selectedJob?.company?.logo})` }}
             />
             <div className={styles.JobDetailInfo}>
-              <Text textStyle='lg' bold className={styles.JobDetailTitle}>
-                {selectedJob?.job_title}
-              </Text>
+              <Link
+                to={publicJobUrl}
+                external
+              >
+                <Text textStyle='lg' bold className={styles.JobDetailTitle}>
+                  {selectedJob?.job_title}
+                </Text>
+              </Link>
               <Text textStyle='lg' className={styles.JobDetailCompany}>
                 {selectedJob?.company?.name}
               </Text>
@@ -475,7 +480,6 @@ const JobDetail = ({
                       <Link
                         to={`/jobs-hiring/${category.key}-jobs`}
                         className={styles.JobDetailSectionSubBody}
-                        external
                       >
                         <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
                           {' '}
