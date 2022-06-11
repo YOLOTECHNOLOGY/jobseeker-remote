@@ -17,6 +17,10 @@
 
     span {
       width: 33%;
+
+      @include msd {
+        width: auto;
+      }
     }
   }
 
