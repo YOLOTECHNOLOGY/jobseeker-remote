@@ -79,7 +79,7 @@ const JobCard = ({
           </div>
         </div>
         {status !== 'active' && (
-          <Text textStyle='md' className={styles.JobCardDetailStatus}>
+          <Text textStyle='base' className={styles.JobCardDetailStatus}>
             <img src={ExpireIcon} height="16" width="16"/>
             <span>This job is no longer hiring</span>
           </Text>

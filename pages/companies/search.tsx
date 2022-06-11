@@ -94,7 +94,7 @@ const Search = ({ defaultQuery }: SearchProps) => {
       />
       <div className={styles.companies}>
         <div className={styles.searchCompany}>
-          <Text textStyle='xxl' tagName='p' bold className={styles.searchCompanyTitle}>
+          <Text textStyle='xxxl' tagName='h1' bold className={styles.searchCompanyTitle}>
             Search Companies
           </Text>
           <MetaText tagName='h1'>Find great companies in Phillipines</MetaText>
