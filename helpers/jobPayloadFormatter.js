@@ -363,6 +363,7 @@ const checkFilterMatch = (routerQuery, config) => {
     searchMatch,
     locationMatch,
     searchQuery,
+    predefinedQuery,
     predefinedLocation,
     matchedLocation,
     matchedConfigFromUrl,

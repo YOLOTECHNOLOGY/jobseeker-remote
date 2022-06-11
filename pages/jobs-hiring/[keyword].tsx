@@ -50,13 +50,8 @@ import styles from './jobsHiring.module.scss'
 import breakpointStyles from 'styles/breakpoint.module.scss'
 
 /* Helpers*/
-import {
-  checkFilterMatch,
-  getPredefinedParamsFromUrl,
-  getLocationList,
-  userFilterSelectionDataParser,
-} from 'helpers/jobPayloadFormatter'
-import { flat } from 'helpers/formatter'
+import { checkFilterMatch, userFilterSelectionDataParser } from 'helpers/jobPayloadFormatter'
+import { flat, unslugify } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
@@ -199,7 +194,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [sort, setSort] = useState(defaultValues?.sort)
   const [moreFilterReset, setMoreFilterReset] = useState(false)
   const catList = config && config.inputs && config.inputs.job_category_lists
-  const locList = getLocationList(config)
   const [jobAlertList, setJobAlertList] = useState(null)
   const [createdJobAlert, setCreatedJobAlert] = useState(null)
   const [selectedJob, setSelectedJob] = useState(null)
@@ -234,16 +228,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
 
-  const { predefinedQuery, predefinedLocation, predefinedCategory } = getPredefinedParamsFromUrl(
+  const { searchQuery, predefinedQuery, predefinedLocation } = checkFilterMatch(
     router.query,
-    catList,
-    locList
+    config
   )
-
   const [selectedPage, setSelectedPage] = useState(defaultPage)
-
-  // const cx = classNames.bind(styles)
-  // const isStickyClass = cx({ isSticky: isSticky })
 
   useEffect(() => {
     // eslint-disable-next-line no-console
@@ -272,17 +261,19 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     // }
 
     // jobCategories = jobCategories.join(',')
-
-    setHasMoreFilters(
+    const hasActiveFilters = !!(
       industry ||
-        education ||
-        workExperience ||
-        category ||
-        qualification ||
-        predefinedLocation ||
-        jobType ||
-        salary
+      education ||
+      workExperience ||
+      category ||
+      qualification ||
+      jobType ||
+      salary ||
+      predefinedLocation ||
+      predefinedQuery
     )
+
+    setHasMoreFilters(hasActiveFilters)
 
     const payload = {
       query: searchValue,
@@ -372,10 +363,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       count += predefinedLocation.length
     }
 
-    if (predefinedCategory && predefinedCategory.length > 0) {
-      count += predefinedCategory.length
-    }
-
     Object.entries<any>(router.query).forEach(([key, value]) => {
       const val = value.split(',')
       if (!nonFilterKeys.includes(key)) {
@@ -404,12 +391,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       { shallow: true }
     )
   }
-
-  // const onRemoveProperty = (propertyName, object) => {
-  //   // eslint-disable-next-line
-  //   const { [propertyName]: propertyValue, ...newObject } = { ...object }
-  //   return { ...newObject }
-  // }
 
   const onKeywordSearch = (val) => {
     // eslint-disable-next-line
@@ -454,8 +435,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           // append current search that matches catergory
           categorySelected.push(value[0]['seo-value'])
           // append the other options that was selected previously
-          Object.values(matchedConfigFromUrl).forEach((value)=>{
-             value.forEach((val) => categorySelected.push(val['seo-value']))
+          Object.values(matchedConfigFromUrl).forEach((value) => {
+            value.forEach((val) => categorySelected.push(val['seo-value']))
           })
           Object.values(matchedConfigFromUserSelection).forEach((value) => {
             value.forEach((val) => categorySelected.push(val['seo-value']))
@@ -869,12 +850,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                           arrow
                         >
                           <span>
-                            <img
-                              src={company.logoUrl}
-                              alt={company.name}
-                              width='30'
-                              height='30'
-                            />
+                            <img src={company.logoUrl} alt={company.name} width='30' height='30' />
                           </span>
                         </Tooltip>
                       </Link>
@@ -924,7 +900,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           selectedJobId={selectedJobId}
           handleSelectedJobId={handleSelectedJobId}
           totalPages={jobListResponse?.data?.total_pages}
-          query={predefinedQuery}
+          query={searchQuery ? unslugify(searchQuery) : unslugify(predefinedQuery)}
           location={urlLocation}
           jobAlertsList={jobAlertList}
           createdJobAlert={createdJobAlert}
