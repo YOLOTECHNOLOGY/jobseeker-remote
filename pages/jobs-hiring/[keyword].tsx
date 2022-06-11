@@ -90,7 +90,7 @@ const renderPopularSearch = () => {
     <div className={styles.popularSearch}>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/job-search/?category=audit-taxation,banking-financial,corporate-finance-investment,sales-insurance-financial-services,general-cost-accounting`}
+        to={`${jobsPageLink}/job-search?industry=accounting-finance&category=accounting-finance,sales-insurance-financial-services`}
         title='Finance jobs'
         aTag
       >
@@ -100,7 +100,7 @@ const renderPopularSearch = () => {
       </Link>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/job-search/?category=sales-corporate,sales-engineering-technical-it,sales-insurance-financial-services,marketing-business-development`}
+        to={`${jobsPageLink}/job-search?category=marketing-business-development,sales-corporate,sales-insurance-financial-services,sales-engineering-technical-it`}
         title='Sales jobs'
         aTag
       >
@@ -110,7 +110,7 @@ const renderPopularSearch = () => {
       </Link>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/job-search/?category=digital-marketing,marketing-business-development,telesales-telemarketing`}
+        to={`${jobsPageLink}/job-search?category=marketing-business-development,telesales-telemarketing,digital-marketing`}
         title='Marketing jobs'
         aTag
       >
@@ -125,7 +125,7 @@ const renderPopularSearch = () => {
       </Link>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/job-search/?category=it-hardware,it-network-system-database-admin,it-software-engineering,sales-engineering-technical-it,technical-helpdesk-support,it-product-management`}
+        to={`${jobsPageLink}/job-search?category=computer-information-technology,technical-helpdesk-support,sales-engineering-technical-it`}
         title='IT jobs'
         aTag
       >
@@ -140,7 +140,7 @@ const renderPopularSearch = () => {
       </Link>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/job-search/?category=customer-service-relations,technical-helpdesk-support`}
+        to={`${jobsPageLink}/customer-service-jobs`}
         title='Customer Service jobs'
         aTag
       >
@@ -150,7 +150,7 @@ const renderPopularSearch = () => {
       </Link>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/job-search/?salary=30K_to_60K,60K_to_80K,80K_to_100K,Above_200K`}
+        to={`${jobsPageLink}/job-search?salary=30k-60k,60k-80k,80k-100k,100k-200k,above-200k`}
         title='₱30K + jobs'
         aTag
       >
@@ -160,7 +160,7 @@ const renderPopularSearch = () => {
       </Link>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/job-search/?jobType=full_time`}
+        to={`${jobsPageLink}/full-time-jobs`}
         title='Full Time jobs'
         aTag
       >
