@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 
 /* Vendors */
@@ -84,8 +84,12 @@ const JobDetail = ({
   config,
 }: IJobDetailProps) => {
   const router = useRouter()
+  const detailHeaderRef = useRef(null);
+  const [detailHeaderHeight, setDetailHeaderHeight] = useState(detailHeaderRef?.current?.clientHeight || 0);
+
   const userCookie = getCookie('user') || null
   const authCookie = getCookie('accessToken') || null;
+
   const [jobDetailOption, setJobDetailOption] = useState(false)
   const [isSaveClicked, setIsSaveClicked] = useState(false)
   const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
@@ -100,6 +104,10 @@ const JobDetail = ({
     setIsSavedJob(selectedJob?.is_saved)
     setJobDetailOption(false)
   }, [selectedJob])
+
+  useEffect(() => {
+    setDetailHeaderHeight(detailHeaderRef?.current?.clientHeight);
+  }, [detailHeaderHeight]);
 
   const handleBenefitIcon = (benefit) => {
     const Icon = `${benefit.replace(/ /g, '')}Icon`
@@ -182,7 +190,7 @@ const JobDetail = ({
     <React.Fragment>
       <div className={styles.JobDetail}>
         <div className={classNamesCombined([styles.JobDetailContent])}>
-          <div className={classNamesCombined([isStickyClass, styles.JobDetailHeader])}>
+          <div className={classNamesCombined([isStickyClass, styles.JobDetailHeader])} ref={detailHeaderRef}>
             <div>
               <div
                 className={styles.JobDetailOptionImage}
@@ -247,9 +255,8 @@ const JobDetail = ({
               {selectedJob?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
               <JobTag tag={selectedJob?.job_type_value} />
               <div className={styles.JobDetailButtonsWrapper}>
-                <div className={styles.JobDetailButtons}>
                   {!isCategoryApplied && (
-                    <>
+                    <div className={styles.JobDetailButtons}>
                       {selectedJob?.status_key === 'active' && (
                         <>
                           {!selectedJob?.is_applied ? (
@@ -300,15 +307,16 @@ const JobDetail = ({
                           {isSavedJob || isCategorySaved ? 'Saved' : 'Save Job'}
                         </Text>
                       </MaterialButton>
-                    </>
+                    </div>
                   )}
-                  {selectedJob?.status_key !== 'active' && (
-                    <Text textStyle='base' className={styles.JobDetailStatus}>
-                      <img src={ExpireIcon} height='16' width='16' />
-                      <span>This job is no longer hiring</span>
-                    </Text>
-                  )}
-                </div>
+
+                {selectedJob?.status_key !== 'active' && (
+                  <Text textStyle='base' className={styles.JobDetailStatus}>
+                    <img src={ExpireIcon} height='16' width='16' />
+                    <span>This job is no longer hiring</span>
+                  </Text>
+                )}
+                
                 {(!isCategoryApplied || !isCategorySaved) && (
                   <Text textStyle='sm' textColor='darkgrey' className={styles.JobDetailPostedAt}>
                     Posted on {selectedJob?.refreshed_at}
@@ -317,7 +325,7 @@ const JobDetail = ({
               </div>
             </div>
           </div>
-          <div className={classNamesCombined([styles.JobDetailBody, isStickyClass])}>
+          <div className={classNamesCombined([styles.JobDetailBody, isStickyClass])} style={{ top: detailHeaderHeight }}>
             <div className={styles.JobDetailPref}>
               <ul className={styles.JobDetailPrefList}>
                 <li className={styles.JobDetailPrefItem}>
