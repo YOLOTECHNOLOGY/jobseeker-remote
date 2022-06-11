@@ -264,7 +264,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=it-hardware,it-network-system-database-admin,it-software-engineering,sales-engineering-technical-it,technical-helpdesk-support,it-product-management`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search?category=computer-information-technology,technical-helpdesk-support,sales-engineering-technical-it`}
                     title='IT Jobs'
                     external
                   >
@@ -274,7 +274,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=audit-taxation,banking-financial,corporate-finance-investment,sales-insurance-financial-services,general-cost-accounting`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search?industry=accounting-finance&category=accounting-finance,sales-insurance-financial-services`}
                     title='Finance Jobs'
                     external
                   >
@@ -284,7 +284,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service-relations,technical-helpdesk-support`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/customer-service-jobs`}
                     title='Customer Service Jobs'
                     external
                   >
@@ -294,7 +294,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?industry=BPO`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/bpo-jobs`}
                     title='BPO Jobs'
                     external
                   >
@@ -304,7 +304,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=sales-corporate,sales-engineering-technical-it,sales-insurance-financial-services,marketing-business-development`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search?category=marketing-business-development,sales-corporate,sales-insurance-financial-services,sales-engineering-technical-it`}
                     title='Sales Jobs'
                     external
                   >
@@ -314,7 +314,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=civil-government-services,doctor-diagnosis,nurse-medical-support,pharmacy`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search?category=healthcare,civil-government-services`}
                     title='Healthcare Jobs'
                     external
                   >
@@ -334,7 +334,10 @@ const Footer = () => {
                   </Link>
                 </div>
                 <div>
-                  <Link to='https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp' external>
+                  <Link
+                    to='https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'
+                    external
+                  >
                     <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
                   </Link>
                 </div>
@@ -609,7 +612,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=it-hardware,it-network-system-database-admin,it-software-engineering,sales-engineering-technical-it,technical-helpdesk-support,it-product-management`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search?category=computer-information-technology,technical-helpdesk-support,sales-engineering-technical-it`}
                       title='IT Jobs'
                       external
                     >
@@ -619,7 +622,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=audit-taxation,banking-financial,corporate-finance-investment,sales-insurance-financial-services,general-cost-accounting`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search?industry=accounting-finance&category=accounting-finance,sales-insurance-financial-services`}
                       title='Finance Jobs'
                       external
                     >
@@ -629,7 +632,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=customer-service-relations,technical-helpdesk-support`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/customer-service-jobs`}
                       title='Customer Service Jobs'
                       external
                     >
@@ -639,7 +642,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?industry=BPO`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/bpo-jobs`}
                       title='BPO Jobs'
                       external
                     >
@@ -649,7 +652,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=sales-corporate,sales-engineering-technical-it,sales-insurance-financial-services,marketing-business-development`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search?category=marketing-business-development,sales-corporate,sales-insurance-financial-services,sales-engineering-technical-it`}
                       title='Sales Jobs'
                       external
                     >
@@ -659,7 +662,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/?category=civil-government-services,doctor-diagnosis,nurse-medical-support,pharmacy`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search?category=healthcare,civil-government-services`}
                       title='Healthcare Jobs'
                       external
                     >
@@ -678,7 +681,10 @@ const Footer = () => {
                   </Link>
                 </div>
                 <div>
-                  <Link to='https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp' external>
+                  <Link
+                    to='https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'
+                    external
+                  >
                     <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
                   </Link>
                 </div>
