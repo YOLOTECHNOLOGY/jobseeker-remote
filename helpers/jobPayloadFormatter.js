@@ -1,4 +1,3 @@
-// import { stringify } from 'query-string'
 import { flat, thousandsToNumber, unslugify } from 'helpers/formatter'
 
 /* Helpers */

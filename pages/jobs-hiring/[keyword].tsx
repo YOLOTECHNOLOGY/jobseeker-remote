@@ -8,7 +8,6 @@ import slugify from 'slugify'
 // @ts-ignore
 import { END } from 'redux-saga'
 
-// import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 
 /* Action Creators */
@@ -313,14 +312,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       predefinedQuery
     )
 
+    dispatch(fetchJobsListRequest(payload, accessToken))    
     setHasMoreFilters(hasActiveFilters)
-
-    dispatch(fetchJobsListRequest(payload, accessToken))
-
     setIsCategoryReset(false)
     setMoreFilterReset(false)
-
-    // setFilterCount(getFilterCount())
   }, [router.query])
 
   useEffect(() => {
@@ -500,9 +495,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const onLocationSearch = (event, value) => {
-    // eslint-disable-next-line
-    const { keyword, ...rest } = router.query
-
     const isClear = !value
     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
       'location',
@@ -511,18 +503,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       config,
       isClear
     )
-
     setUrlLocation(value)
     updateUrl(searchQuery, filterParamsObject)
   }
 
   const onSortSelection = (selectedOption) => {
-    // NOTE: there is a different sort selection logic when selecting sort in Mobile, refer to JobSearchFilters
-    // eslint-disable-next-line
-    // const { keyword, ...rest } = router.query
-    // const queryParam = conditionChecker(predefinedQuery, predefinedLocation, predefinedCategory)
-    // const queryObject = Object.assign({}, { ...rest, sort: selectedOption })
-
     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
       'sort',
       selectedOption,
@@ -530,9 +515,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       config
     )
     setSort(selectedOption)
-
     updateUrl(searchQuery, filterParamsObject)
-    // updateUrl(queryParam, queryObject)
   }
 
   const onSalarySelection = (selectedOptions) => {
@@ -571,8 +554,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       isClear
     )
 
-    // setCategoriesList(selectedOptions)
-    // setCategories(filterParamsObject['category'].split(','))
     setCategories(selectedOptions)
     updateUrl(searchQuery, filterParamsObject)
   }
