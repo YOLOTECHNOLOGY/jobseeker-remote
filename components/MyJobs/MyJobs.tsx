@@ -58,7 +58,13 @@ const theme = createTheme({
             minHeight: '79px',
             textTransform: 'capitalize'
           }
-        }
+        },
+        scroller: {
+          height: '55px'
+        },
+        flexContainer: {
+          height: '55px',
+        },
       }
     }
   },
@@ -227,7 +233,12 @@ const MyJobs = ({
     handleFetchJobDetail(jobId, category) 
     
     if (width < 768 && status === 'active') {
-      router.push(`/job/${slugify(jobTitle || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobId}?isApplied=${isAppliedCategory}`)
+      if (isAppliedCategory) {
+        router.push(`/job/${slugify(jobTitle || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobId}?isApplied=${isAppliedCategory}`)
+      } else {
+        router.push(`/job/${slugify(jobTitle || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobId}`)
+      }
+
       return
     }
   }

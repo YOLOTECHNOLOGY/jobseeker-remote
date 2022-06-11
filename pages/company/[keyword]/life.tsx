@@ -52,13 +52,12 @@ const CompanyLifeProfile = (props: any) => {
         <div className={styles.companyTabsContent}>
           {company.cultures?.length > 0 && (
             <div className={styles.companyLifeCultures}>
-              <Text tagName='h1' textStyle='xxl' bold className={styles.companySectionTitle}>
+              <Text tagName='h1' textStyle='xl' bold className={styles.companySectionTitle}>
                 Company Culture
               </Text>
               <div className={styles.companyLifeCategoryList}>
                 {company.cultures.map((culture) => (
                   <Text
-                    tagName='h2'
                     textStyle='base'
                     className={styles.companyLifeCategoryValue}
                     key={culture.id}
@@ -72,7 +71,7 @@ const CompanyLifeProfile = (props: any) => {
 
           {company.benefits?.length > 0 && (
             <div className={styles.companyLifeCultures}>
-              <Text tagName='h1' textStyle='xxl' bold className={styles.companySectionTitle}>
+              <Text tagName='h1' textStyle='xl' bold className={styles.companySectionTitle}>
                 Employee Benefits
               </Text>
               <div className={styles.companyLifeCategoryList}>
@@ -90,7 +89,7 @@ const CompanyLifeProfile = (props: any) => {
           )}
 
           <div className={styles.companyLifeCultures}>
-            <Text tagName='h1' textStyle='xxl' bold className={styles.companySectionTitle}>
+            <Text tagName='h1' textStyle='xl' bold className={styles.companySectionTitle}>
               Photos
             </Text>
             {company.pictures?.length > 0 ? (

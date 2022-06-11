@@ -36,7 +36,7 @@ export const FacebookIconGrey = `${S3BucketJobseeker}/FacebookIconGrey.svg`
 export const TwitterIconGrey = `${S3BucketJobseeker}/TwitterIconGrey.svg`
 export const InstagramIconGrey = `${S3BucketJobseeker}/InstagramIconGrey.svg`
 export const ChatIcon = `${S3BucketJobseeker}/ChatIcon.svg`
-export const DefaultJobseekerAvatar = `${S3BucketJobseeker}/DefaultJobseekerAvatar.png`
+export const DefaultAvatar = `${S3BucketJobseeker}/DefaultJobseekerAvatar.png`
 export const DownloadOnAppStore = `${S3BucketJobseeker}/DownloadOnAppStore.svg`
 export const DownloadOnGooglePlay = `${S3BucketJobseeker}/DownloadOnGooglePlay.svg`
 export const FilterIcon = `${S3BucketJobseeker}/FilterIcon.svg`
@@ -81,10 +81,10 @@ export const RHBannerMobile = `${S3BucketJobseeker}/rh_banner_mobile.png`
 export const RHBannerTablet = `${S3BucketJobseeker}/rh_banner_tablet.png`
 
 /* Company Detail Social Link */
-export const FacebookOutline = `${S3BucketJobseeker}/facebook_1.png`
-export const YoutubeOutline = `${S3BucketJobseeker}/youtube_1.png`
-export const InstagramOutline = `${S3BucketJobseeker}/instagram_1.png`
-export const LinkedinOutline = `${S3BucketJobseeker}/linkedin_1.png`
+export const FacebookOutline = `${S3BucketJobseeker}/facebook_round.svg`
+export const YoutubeOutline = `${S3BucketJobseeker}/youtube_round.svg`
+export const InstagramOutline = `${S3BucketJobseeker}/instagram_round.svg`
+export const LinkedinOutline = `${S3BucketJobseeker}/linkedin_round.svg`
 
 /* Company Life Icons */
 export const CareerGrowth = `${S3BucketJobseeker}/CareerGrowth.svg`

@@ -348,6 +348,7 @@ const Step4 = (props: any) => {
                 <Text bold textStyle='base' tagName='p'>
                   {education?.school}
                 </Text>
+                <br/>
                 <Text textStyle='base' tagName='p'>
                   {education?.degree}
                 </Text>
@@ -357,6 +358,7 @@ const Step4 = (props: any) => {
                     ? 'Present'
                     : moment(education?.study_period_to).format('MMMM yyyy')}
                 </Text>
+                <br/>
                 <Text textStyle='base' tagName='p'>
                   {education?.location} -{' '}
                   {getLocation(education?.location)?.[0].region_display_name}

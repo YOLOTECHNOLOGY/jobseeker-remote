@@ -38,7 +38,6 @@ import MaterialSelectCheckmarksCustomSEO from 'components/MaterialSelectCheckmar
 import Tooltip from '@mui/material/Tooltip'
 
 /* Components */
-import Image from 'next/image'
 import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
@@ -752,7 +751,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             className={styles.searchButton}
             onClick={() => onKeywordSearch(searchValue)}
           >
-            <Text textStyle='lg' textColor='white' bold>
+            <Text textStyle='base' textColor='white' bold>
               Search
             </Text>
           </MaterialButton>
@@ -763,7 +762,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
               className={styles.filtersButton}
               onClick={() => handleShowFilter()}
             >
-              <Text textStyle='lg' textColor='primaryBlue' bold>
+              <Text textStyle='base' textColor='primaryBlue' bold>
                 Filters
               </Text>
             </MaterialButton>
@@ -811,7 +810,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             onClick={handleShowFilter}
             capitalize
           >
-            <Text className={styles.moreFilters} textColor='primaryBlue' textStyle='lg' bold>
+            <Text className={styles.moreFilters} textColor='primaryBlue' textStyle='base' bold>
               More Filters
             </Text>
             {filterCount > 0 && (
@@ -833,7 +832,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
               onClick={handleResetFilter}
               capitalize
             >
-              <Text textColor='primaryBlue' textStyle='lg' bold>
+              <Text textColor='primaryBlue' textStyle='base' bold>
                 Reset Filters
               </Text>
             </MaterialButton>
@@ -843,13 +842,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           className={displayQuickLinks ? styles.quickLinkSectionExpanded : styles.quickLinkSection}
         >
           <div className={styles.popularSearchContainer}>
-            <Text textStyle='lg' bold className={styles.quickLinkTitle}>
+            <Text textStyle='base' bold className={styles.quickLinkTitle}>
               Popular Search:
             </Text>
             {renderPopularSearch()}
           </div>
           <div className={styles.topCompaniesContainer}>
-            <Text textStyle='lg' bold className={styles.quickLinkTitle}>
+            <Text textStyle='base' bold className={styles.quickLinkTitle}>
               Top Companies:
             </Text>
             <div className={styles.topCompanies}>
@@ -870,7 +869,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                           arrow
                         >
                           <span>
-                            <Image
+                            <img
                               src={company.logoUrl}
                               alt={company.name}
                               width='30'
@@ -911,7 +910,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         )}
 
         <div className={styles.moreFiltersSection} onClick={() => handleShowFilter()}>
-          <Image src={FilterIcon} alt='filter' width='15' height='15' />
+          <img src={FilterIcon} alt='filter' width='15' height='15' />
           <Text className={styles.moreFiltersText}>More Filters</Text>
         </div>
       </div> */}

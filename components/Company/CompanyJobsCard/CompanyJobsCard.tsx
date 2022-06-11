@@ -21,10 +21,10 @@ const CompanyJobsCard = ({ title, location, salary, availability, id }: ICompany
   return (
     <div className={styles.companyJobsCard}>
       <div className={styles.companyJobsCardLeft}>
-        <Text textStyle='base' bold>
+        <Text textStyle='lg' bold>
           {title}
         </Text>
-        <MetaText tagName='h2'>{title}</MetaText>
+        <MetaText>{title}</MetaText>
         <div className={styles.companyJobsCardInfo}>
           <Text textStyle='base' className={styles.companyJobsCardLocation}>
             {location}

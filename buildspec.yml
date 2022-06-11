@@ -27,6 +27,12 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
+      - |
+        if [ $ENV = "production" ]; then
+          echo Copying S3 assets into production bucket...
+          aws s3 cp s3://dev-assets.bossjob.com/jobseeker/ s3://assets.bossjob.com/jobseeker/ --recursive
+          echo Assets copied
+        fi
       - echo Pushing the Docker image...
       - docker image ls -a
       - docker push $REPOSITORY_URI:latest

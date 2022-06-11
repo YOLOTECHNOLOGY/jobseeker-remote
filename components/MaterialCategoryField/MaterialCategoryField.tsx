@@ -229,7 +229,7 @@ const MaterialCategoryField = ({
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            height: '48px',
+            height: '44px',
             backgroundColor: greyBg ? '#E2E2E2' : 'white',
           },
         },
@@ -268,6 +268,7 @@ const MaterialCategoryField = ({
             },
             backgroundColor: '#fff',
             top: '4px',
+            lineHeight: '16px'
           },
           shrink: {
             transform: 'translate(14px, -9px) scale(0.75)',

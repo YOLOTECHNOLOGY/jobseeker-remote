@@ -63,7 +63,7 @@
 }
 
 .stepField {
-  margin-top: 15px;
+  margin-top: 16px;
 
   &Header {
     margin-bottom: 10px;
@@ -151,21 +151,22 @@
   &Contact {
     display: flex;
     justify-content: space-between;
-  }
-  &ContactCountry {
-    width: 20%;
 
     @include msd {
-      width: 25%;
+      display: block;
+    }
+  }
+  &ContactCountry {
+    width: 100%;
+    margin-right: 10px !important;
+
+    @include msd {
+      margin-bottom: 16px !important;
     }
   }
 
   &ContactNumber {
-    width: 78%;
-
-    @include msd {
-      width: 70%;
-    }
+    width: 100%;
   }
 
   &ContactNumberField {
@@ -178,11 +179,11 @@
   }
 
   &Salary {
-    margin-top: 20px;
+    margin-top: 16px;
   }
 
   &SalaryRanges {
-    margin-top: 20px;
+    margin-top: 16px;
     display: flex;
     justify-content: space-between;
 
@@ -196,12 +197,12 @@
 
     @media (max-width: 768px) {
       width: 100%;
-      margin-top: 15px;
+      margin-top: 16px;
     }
   }
 
   &Subscribe {
-    margin-top: 20px;
+    margin-top: 16px;
     display: flex;
   }
 }
@@ -257,7 +258,8 @@
 }
 
 .step3 {
-  &FormWrapper {
+  &Form
+   {
     .step3Form:not(:last-child) {
       padding-bottom: 20px;
       border-bottom: 1px dotted rgba($lightgrey, 0.5);
@@ -302,8 +304,7 @@
 .disclaimerIcon {
   vertical-align: -webkit-baseline-middle;
   margin-left: 5px; 
-  margin-top: 2px;
-  line-height: 25px;
+  margin-top: 14px;
   cursor: pointer;
   display: flex;
 }

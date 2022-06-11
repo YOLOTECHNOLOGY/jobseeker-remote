@@ -48,8 +48,8 @@
     }
 
     img {
-      width: 31px;
-      height: 31px;
+      width: 40px;
+      height: 40px;
       object-fit: contain;
     }
 
@@ -104,12 +104,15 @@
 }
 
 .companySectionTitle {
-  margin: 0 0 24px;
   display: block;
 }
 
 .companyDescription {
   margin-bottom: 10px;
+  margin-top: 10px;
+  font-size: 16px !important;
+  font-family: 'Product Sans' !important;
+  font-weight: 400;
 
   ol, ul {
     padding-inline: inherit;
@@ -217,7 +220,7 @@
 
   &Section {
     &:not(:last-child) {
-      margin-bottom: 48px;
+      margin-bottom: 24px;
     }
   }
 
@@ -235,12 +238,6 @@
     margin-right: 10px;
     margin-bottom: 10px;
   }
-
-  &Jobs {
-    .companyCultureHeading {
-      margin-bottom: 40px;
-    }
-  }
 }
 
 .companyLife {
@@ -248,13 +245,17 @@
     display: flex;
     width: 100%;
     flex-wrap: wrap;
+    margin-top: 24px;
   }
 
   &Picture {
     width: calc((100% / 3) - 10px);
-    height: 300px;
     object-fit: contain;
     margin: 5px 5px;
+
+    @include msd {
+      width: calc((100% / 2) - 10px);
+    }
   }
 
   &CategoryGroup {
@@ -273,7 +274,8 @@
   }
 
   &CategoryList {
-    margin-bottom: 4px;
+    margin-bottom: 24px;
+    margin-top: 24px;
   }
 
   &CategoryValue {
@@ -304,7 +306,7 @@
 .companyJobsSearch {
   display: flex;
   justify-content: space-between;
-  margin: 20px 0 40px;
+  margin: 20px 0 24px;
 
   &Left,
   &Right {
@@ -330,7 +332,7 @@
 
   @include msd {
     flex-direction: column;
-    margin-bottom: 24px;
+    margin-bottom: 0;
 
     &Left,
     &Right {
@@ -344,9 +346,10 @@
     }
 
     &Location, 
+
     &Button {
       width: 100%;
-      margin-bottom: 24px;
+      margin-bottom: 24px !important;
     }
   }
 }

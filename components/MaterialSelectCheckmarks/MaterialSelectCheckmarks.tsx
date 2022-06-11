@@ -91,7 +91,7 @@ const MaterialSelectCheckmarks = ({
             },
             backgroundColor: '#fff',
             top: '4px',
-            lineHeight: '16px',
+            lineHeight: '16px'
           },
           shrink: {
             transform: 'translate(14px, -9px) scale(0.75)',
@@ -131,7 +131,10 @@ const MaterialSelectCheckmarks = ({
           {options &&
             options.map((option: any) => (
               <MenuItem key={option.value} value={option.value}>
-                <Checkbox checked={selectedOptions.indexOf(option.value) > -1} size='small' />
+                <Checkbox
+                  checked={selectedOptions.indexOf(option.value) > -1}
+                  size='small'
+                />
                 <ListItemText primary={option.value} />
               </MenuItem>
             ))}

@@ -31,7 +31,9 @@
     position: relative;
     margin: 0 auto;
     width: 581px;
-    max-height: 663px;
+    max-height: 680px;
+    border-radius: 5px;
+    overflow: auto;
 
     &.isFullWidth {
       @include md {
@@ -47,14 +49,21 @@
 
   &Header {
     display: flex;
-    padding: 24px 40px;
+    padding: 16px 24px;
     background-color: $white-1;
     border-bottom: 1px solid rgba($lightgrey, 0.5);
+
+    &Title {
+      flex: auto;
+    }
   }
 
   &Body{ 
+    padding: 16px 24px;
+
     @include sm{
-      overflow-y: scroll;
+      overflow-y: auto;
+      padding: 16px 20px;
     }
   }
   &Footer {
@@ -65,11 +74,6 @@
     justify-content: flex-end;
     
     button {
-      &:first-child {
-        border: none;
-        box-shadow: none;
-      }
-
       &:last-child {
         margin-left: 10px;
         background-color: $primaryBlue;
@@ -91,9 +95,7 @@
   }
 
   &CloseButton {
-    position: absolute;
-    top: 28px;
-    right: 45px;
+    margin-top: 3px;
     cursor: pointer;
     z-index: 9999;
   }

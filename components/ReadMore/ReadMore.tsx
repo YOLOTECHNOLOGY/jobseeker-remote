@@ -45,7 +45,7 @@ const ReadMore = ({
               setIsFullDescription(!isFullDescription)
             }}
           >
-            <Text textStyle='xl' textColor='primaryBlue'>
+            <Text textStyle='lg' textColor='primaryBlue'>
               {isFullDescription ? 'Read Less' : 'Read More'}
             </Text>
           </span>
