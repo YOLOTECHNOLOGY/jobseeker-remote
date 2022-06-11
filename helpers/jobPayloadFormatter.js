@@ -755,6 +755,10 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         ) {
           query = appendDoubleQueryPattern(searchQuery, locationQuery)
         }
+      }else if (searchQuery && !predefinedQuery && locationQuery && !filterQuery){
+        query = appendDoubleQueryPattern(searchQuery, locationQuery)
+      }else if (!searchQuery && predefinedQuery && !predefinedLocation && !locationQuery && !filterQuery){
+        query = appendGeneralQueryPattern()
       }
       // handle all onKeywordSearch logic when field === 'query',
       // separate logic on its own because keyword search will always take precendance over filters
@@ -848,10 +852,15 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
           Object.keys(matchedLocation).length > 0
         ) {
           query = appendDoubleQueryPattern(filterQuery, locationQuery)
-        }else if (searchQuery && !predefinedQuery && !predefinedLocation && !locationQuery && filterQuery && Object.keys(matchedConfigFromUrl).length > 0 && Object.keys(matchedConfigFromUserSelection).length > 0 ){
+        }
+        else if (searchQuery && !predefinedQuery && !predefinedLocation && !locationQuery && filterQuery && Object.keys(matchedConfigFromUrl).length > 0 && Object.keys(matchedConfigFromUserSelection).length > 0 ){
           query = appendGeneralQueryPattern()
         }
         
+      }else{
+        if (searchQuery && !predefinedQuery && !predefinedLocation && locationQuery && filterQuery){
+          query = appendSingleQueryPattern(searchQuery)
+        }
       }
       // if there is searchQuery
     } else if (searchQuery) {

@@ -564,29 +564,32 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const onSalarySelection = (selectedOptions) => {
+    const isClear = selectedOptions && selectedOptions.length === 0
     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
       'salary',
       selectedOptions,
       router.query,
-      config
+      config,
+      isClear
     )
     setSalaries(selectedOptions)
     updateUrl(searchQuery, filterParamsObject)
   }
 
   const onJobTypeSelection = (selectedOptions) => {
+    const isClear = selectedOptions && selectedOptions.length === 0
     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
       'jobType',
       selectedOptions,
       router.query,
-      config
+      config,
+      isClear
     )
     setJobTypes(selectedOptions)
     updateUrl(searchQuery, filterParamsObject)
   }
 
   const onSpecializationSelection = (selectedOptions) => {
-    console.log('onSpecializationSelection', selectedOptions)
     const isClear = selectedOptions && selectedOptions.length === 0
     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
       'category',
@@ -613,6 +616,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setUrlLocation([])
     setJobTypes([])
     setSalaries([])
+    setCategories([])
     setIsCategoryReset(true)
     if (searchMatch) setSearchValue('')
     setMoreFilterReset(true)
