@@ -147,21 +147,21 @@ const nonFilterKeys = [
   'utm_medium',
 ]
 
-const buildQueryParams = (data) => {
-  let queryString = ''
-  queryString = Object.keys(data)
-    .map((key) => {
-      const string = data[key]
-        .map((filter) => {
-          if (filter) return filter['seo-value']
-        })
-        .join()
-      return key + '=' + string
-    })
-    .join('&')
-  queryString = '?' + queryStrings
-  return queryString
-}
+// const buildQueryParams = (data) => {
+//   let queryString = ''
+//   queryString = Object.keys(data)
+//     .map((key) => {
+//       const string = data[key]
+//         .map((filter) => {
+//           if (filter) return filter['seo-value']
+//         })
+//         .join()
+//       return key + '=' + string
+//     })
+//     .join('&')
+//   queryString = '?' + queryStrings
+//   return queryString
+// }
 
 // check if there is a match
 const checkFilterMatch = (routerQuery, config) => {
@@ -910,6 +910,8 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     } else if (searchQuery) {
       if (searchQuery === locationQuery && filterQuery) {
         query = appendDoubleQueryPattern(filterQuery, searchQuery)
+      } else if (searchQuery === locationQuery && predefinedQuery && searchQuery !== predefinedQuery && !filterQuery ) {
+        query = appendDoubleQueryPattern(predefinedQuery, locationQuery)
       } else if (
         predefinedQuery &&
         searchQuery !== predefinedQuery &&
@@ -1006,8 +1008,6 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       }
     }
   })
-
-  console.log('filterParamsObject', filterParamsObject)
 
   const data = {
     searchQuery: query,
@@ -1203,11 +1203,11 @@ const getSmsCountryList = (config) => {
   return smsCountryList
 }
 
-const getSmsCountryCode = (phoneNumber, sms_country_list) => {
-  return sms_country_list.filter((country) => {
-    return country.value.includes(phoneNumber)
-  })
-}
+// const getSmsCountryCode = (phoneNumber, sms_country_list) => {
+//   return sms_country_list.filter((country) => {
+//     return country.value.includes(phoneNumber)
+//   })
+// }
 
 const getJobCategoryList = (config) => {
   if (!config) return []
@@ -1332,6 +1332,46 @@ const getApplyJobLink = (job, user, accessToken = null) => {
   return oldProjectApplyLink
 }
 
+// TODO: remove isLocation param after backend as renamed the field
+const mapSeoValueToGetValue = (value, configArray, hasSubList, isLocation) => {
+  const valueToReturn = []
+  // if config hasSubList e.g: category
+  if (hasSubList){
+    value.forEach((v) => {
+      configArray.forEach((option) => {
+        if (option['seo-value'] === v) {
+          valueToReturn.push(option.value)
+        }else{
+          option.sub_list.forEach((subOption)=>{
+            if (subOption['seo-value'] === v){
+              valueToReturn.push(subOption.value)
+            }
+          })
+        }
+      })
+    })
+  }else{
+    if (isLocation){
+      value.forEach((v) => {
+        configArray.forEach((option) => {
+          if (option['seo_value'] === v) {
+            valueToReturn.push(option.value)
+          }
+        })
+      })
+    }else{
+      value.forEach((v) => {
+        configArray.forEach((option) => {
+          if (option['seo-value'] === v) {
+            valueToReturn.push(option.value)
+          }
+        })
+      })
+    }
+  }
+  return valueToReturn.join()
+}
+
 export {
   handleSalary,
   urlQueryParser,
@@ -1353,4 +1393,5 @@ export {
   getApplyJobLink,
   userFilterSelectionDataParser,
   checkFilterMatch,
+  mapSeoValueToGetValue,
 }
