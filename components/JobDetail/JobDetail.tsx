@@ -438,7 +438,7 @@ const JobDetail = ({
                   ))}
                 </ul>
               </div>
-            )} 
+            )}
             {selectedJob?.skills.length > 0 && (
               <div className={styles.JobDetailSection}>
                 <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
@@ -472,10 +472,15 @@ const JobDetail = ({
                   </Text>
                   {selectedJob?.categories?.map((category, i) => (
                     <span key={i}>
-                      <Link to='/' className={styles.JobDetailSectionSubBody}>
+                      <Link
+                        to={`/jobs-hiring/${category.key}-jobs`}
+                        className={styles.JobDetailSectionSubBody}
+                        external
+                      >
                         <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
                           {' '}
-                          {category.value},
+                          {category.value}
+                          {selectedJob.categories.length === i + 1 ? '' : ','}
                         </Text>
                       </Link>
                     </span>

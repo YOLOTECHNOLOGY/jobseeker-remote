@@ -455,7 +455,7 @@ const Job = ({
               <li className={styles.JobDetailPrefItem}>
                 <img src={EducationIcon} alt='logo' width='20' height='20' />
                 <span className={styles.JobDetailPrefText}>
-                  <Text textStyle='lg'  className={styles.JobDetailPrefField}>
+                  <Text textStyle='lg' className={styles.JobDetailPrefField}>
                     Education
                   </Text>
                   <Text textStyle='lg' bold className={styles.JobDetailPrefValue}>
@@ -559,7 +559,7 @@ const Job = ({
               </ul>
             </div>
           )}
-         
+
           <div className={styles.JobDetailSection}>
             <Text textStyle='xl' bold className={styles.JobDetailSectionTitle}>
               Additional Information
@@ -575,10 +575,14 @@ const Job = ({
             </Text>
             {jobDetail?.categories?.map((category, i) => (
               <span key={i}>
-                <Link to='/' className={styles.JobDetailSectionSubBody}>
+                <Link
+                  to={`/jobs-hiring/${category.key}-jobs`}
+                  className={styles.JobDetailSectionSubBody}
+                  external
+                >
                   <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
                     {' '}
-                    {category.value}, 
+                    {category.value}{jobDetail.categories.length === i+1 ? '' : ','}
                   </Text>
                 </Link>
               </span>
@@ -592,7 +596,9 @@ const Job = ({
               <div className={styles.JobDetailRecruiterInfo}>
                 <div
                   className={styles.JobDetailRecruiterInfoImage}
-                  style={{ backgroundImage: `url(${jobDetail?.recruiter.avatar || DefaultAvatar})` }}
+                  style={{
+                    backgroundImage: `url(${jobDetail?.recruiter.avatar || DefaultAvatar})`,
+                  }}
                 />
                 <div className={styles.JobDetailRecruiterInfoText}>
                   <div className={styles.JobDetailRecruiterName}>
