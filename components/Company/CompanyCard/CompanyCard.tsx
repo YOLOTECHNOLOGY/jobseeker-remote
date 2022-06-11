@@ -14,17 +14,21 @@ interface ICompanyCard {
 const CompanyCard = ({
   company
 }: ICompanyCard) => {
+  const companyUrl = `/company/${slugify(company?.name.toLowerCase() || '')}-${company?.id}`
+
   return (
     <div className={styles.companyCard}>
       <div className={styles.companyCardLeft}>
-        <img src={company.logo_url || company.logo} alt={company.name} className={styles.companyCardImage}/>
+        <Link to={companyUrl}>
+          <img src={company.logo_url || company.logo} alt={company.name} className={styles.companyCardImage}/>
+        </Link>
       </div>
       <div className={styles.companyCardRight}>
-        <Link to={`/company/${slugify(company?.name.toLowerCase() || '')}-${company?.id}`} className={styles.companyCardName}>
+        <Link to={companyUrl} className={styles.companyCardName}>
           <Text textStyle='lg' bold>{company.name}</Text>
         </Link>
         <Text textStyle='lg' tagName='p' className={styles.companyCardCategory}>{company?.industry}</Text>
-        <Link to={`/company/${slugify(company?.name.toLowerCase() || '')}-${company?.id}/jobs`} className={styles.companyCardOpenings}>
+        <Link to={`${companyUrl}/jobs`} className={styles.companyCardOpenings}>
           <Text textStyle='lg' bold>View {company.num_of_active_jobs} job openings</Text>
         </Link>
       </div>
