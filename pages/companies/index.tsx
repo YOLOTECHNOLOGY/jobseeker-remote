@@ -35,7 +35,7 @@ const Companies = () => {
   const [featuredCompany, setFeaturedCompany] = useState(null)
   const [totalPage, setTotalPage] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
-
+  
   const featuredCompaniesResponse = useSelector((store: any) => store.companies.fetchFeaturedCompaniesList.response)
   const featureBanners = useSelector((store: any) => store.config.config.response.feature_banners)
 
@@ -98,11 +98,17 @@ const Companies = () => {
         <div className={styles.featuredEmployer}>
           <div className={styles.featuredEmployerLeft}>
             <div className={styles.featuredEmployerInfo}>
-              <img
-                src={featuredCompany?.logo_url}
-                alt={`${featuredCompany?.name} logo`}
-                className={styles.featuredEmployerImage}
-              />
+              <Link
+                to={`/company/${slugify(featuredCompany?.name.toLowerCase() || '')}-${
+                  featuredCompany?.id
+                }`}
+              >
+                <img
+                  src={featuredCompany?.logo_url}
+                  alt={`${featuredCompany?.name} logo`}
+                  className={styles.featuredEmployerImage}
+                />
+              </Link>
               <div className={styles.featuredEmployerDetails}>
                 <Link
                   to={`/company/${slugify(featuredCompany?.name.toLowerCase() || '')}-${
