@@ -34,7 +34,7 @@ import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWit
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialCategoryField from 'components/MaterialCategoryField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
-import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
+import MaterialSelectCheckmarksCustomSEO from 'components/MaterialSelectCheckmarksCustomSEO'
 import Tooltip from '@mui/material/Tooltip'
 
 /* Components */
@@ -779,7 +779,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             value={sort}
             defaultValue={defaultValues?.sort}
           />
-          <MaterialSelectCheckmarks
+          <MaterialSelectCheckmarksCustomSEO
             id='jobType'
             label='Job Type'
             options={jobTypeOption}
@@ -787,7 +787,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             onSelect={onJobTypeSelection}
             value={jobTypes}
           />
-          <MaterialSelectCheckmarks
+          <MaterialSelectCheckmarksCustomSEO
             id='salary'
             label='Salary'
             options={salaryRangeOption}
