@@ -54,7 +54,7 @@ import {
   userFilterSelectionDataParser,
   mapSeoValueToGetValue,
 } from 'helpers/jobPayloadFormatter'
-import { flat, unslugify } from 'helpers/formatter'
+import { flat, unslugify, getCurrentMonthYear } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
@@ -62,6 +62,7 @@ import { getCookie } from 'helpers/cookies'
 interface JobSearchPageProps {
   seoMetaTitle: string
   seoMetaDescription: string
+  seoCanonical: string
   config: configObject
   topCompanies: companyObject[]
   defaultPage: number
@@ -177,6 +178,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     accessToken,
     seoMetaTitle,
     seoMetaDescription,
+    seoCanonical,
     config,
     topCompanies,
     defaultPage,
@@ -241,16 +243,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [selectedPage, setSelectedPage] = useState(defaultPage)
 
   useEffect(() => {
-    const {
-      page,
-      industry,
-      workExperience,
-      category,
-      jobType,
-      salary,
-      location,
-      qualification,
-    } = router.query
+    const { page, industry, workExperience, category, jobType, salary, location, qualification } =
+      router.query
 
     if (!firstRender) setDisplayQuickLinks(false)
 
@@ -312,7 +306,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       predefinedQuery
     )
 
-    dispatch(fetchJobsListRequest(payload, accessToken))    
+    dispatch(fetchJobsListRequest(payload, accessToken))
     setHasMoreFilters(hasActiveFilters)
     setIsCategoryReset(false)
     setMoreFilterReset(false)
@@ -661,7 +655,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   return (
     <Layout>
-      <SEO title={seoMetaTitle} description={seoMetaDescription} />
+      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonical} />
       <div className={isShowFilter ? styles.jobSearchFilterBackdrop : ''}></div>
       <div
         className={classNamesCombined([
@@ -899,86 +893,151 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
-  const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ query, req, resolvedUrl }) => {
+      const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
 
-  const { keyword, page } = query
-  // store actions
-  store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
-  store.dispatch(END)
-  await (store as any).sagaTask.toPromise()
-  const storeState = store.getState()
-  const config = storeState.config.config.response
-  const featuredCompanies =
-    storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(
-      (featuredCompany) => featuredCompany.company
-    )
-  const topCompanies = featuredCompanies?.map((featuredCompany) => {
-    const logoUrl = featuredCompany.logo_url
-    delete featuredCompany.logo_url
-    return { ...featuredCompany, logoUrl }
-  })
-  const catList = config && config.inputs && config.inputs.job_category_lists
+      const { keyword, page } = query
+      // store actions
+      store.dispatch(fetchConfigRequest())
+      store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
+      store.dispatch(END)
+      await (store as any).sagaTask.toPromise()
+      const storeState = store.getState()
+      const config = storeState.config.config.response
+      const featuredCompanies =
+        storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(
+          (featuredCompany) => featuredCompany.company
+        )
+      const topCompanies = featuredCompanies?.map((featuredCompany) => {
+        const logoUrl = featuredCompany.logo_url
+        delete featuredCompany.logo_url
+        return { ...featuredCompany, logoUrl }
+      })
 
-  const { searchQuery, matchedLocation, matchedConfigFromUrl } = checkFilterMatch(query, config)
+      /* Handle job search logic */
+      const catList = config && config.inputs && config.inputs.job_category_lists
+      const {
+        searchQuery,
+        predefinedQuery,
+        predefinedLocation,
+        matchedLocation,
+        matchedConfigFromUrl,
+        filterCount,
+      } = checkFilterMatch(query, config)
 
-  // query parameters
-  const queryJobType: any = query?.jobType
-  const querySalary: any = query?.salary
-  const queryQualification: any = query?.qualification
-  const queryLocation: any = query?.location
-  const queryIndustry: any = query?.industry
-  const queryWorkExp: any = query?.workExperience
-  const queryCategory: any = query?.category
+      // query parameters
+      const queryJobType: any = query?.jobType
+      const querySalary: any = query?.salary
+      const queryQualification: any = query?.qualification
+      const queryLocation: any = query?.location
+      const queryIndustry: any = query?.industry
+      const queryWorkExp: any = query?.workExperience
+      const queryCategory: any = query?.category
 
-  const defaultValues: any = {
-    urlQuery: searchQuery ? unslugify(searchQuery) : '',
-    sort: query?.sort ? query?.sort : 1,
-    jobType: queryJobType?.split(',') || null,
-    salary: querySalary?.split(',') || null,
-    qualification: queryQualification?.split(',') || null,
-    location: queryLocation?.split(',') || null,
-    industry: queryIndustry?.split(',') || null,
-    workExperience: queryWorkExp?.split(',') || null,
-    category: queryCategory?.split(',') || null,
-  }
-
-  for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
-    defaultValues[key] = [value[0]['seo-value']]
-  }
-  for (const [key, value] of Object.entries(matchedLocation)) {
-    defaultValues[key] = value[0]
-  }
-
-  if (defaultValues.category) {
-    const defaultCategories = defaultValues.category
-    const initialListOptions = catList.map((data) => {
-      const newSubList = data.sub_list.map((subData) => ({
-        ...subData,
-        isChecked:
-          defaultCategories.includes(subData['seo-value']) ||
-          defaultCategories.includes(data['seo-value']),
-      }))
-      const newList = {
-        ...data,
-        isChecked: defaultCategories.includes(data['seo-value']),
-        sub_list: newSubList,
+      const defaultValues: any = {
+        urlQuery: searchQuery ? unslugify(searchQuery) : '',
+        sort: query?.sort ? query?.sort : 1,
+        jobType: queryJobType?.split(',') || null,
+        salary: querySalary?.split(',') || null,
+        qualification: queryQualification?.split(',') || null,
+        location: queryLocation?.split(',') || null,
+        industry: queryIndustry?.split(',') || null,
+        workExperience: queryWorkExp?.split(',') || null,
+        category: queryCategory?.split(',') || null,
       }
-      return newList
-    })
-    defaultValues.categoryList = initialListOptions
-  }
 
-  return {
-    props: {
-      config,
-      topCompanies,
-      key: keyword,
-      defaultPage: page ? Number(page) : 1,
-      defaultValues,
-      accessToken,
-    },
-  }
-})
+      for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
+        defaultValues[key] = [value[0]['seo-value']]
+      }
+      for (const [key, value] of Object.entries(matchedLocation)) {
+        defaultValues[key] = value[0]
+      }
+
+      if (defaultValues.category) {
+        const defaultCategories = defaultValues.category
+        const initialListOptions = catList.map((data) => {
+          const newSubList = data.sub_list.map((subData) => ({
+            ...subData,
+            isChecked:
+              defaultCategories.includes(subData['seo-value']) ||
+              defaultCategories.includes(data['seo-value']),
+          }))
+          const newList = {
+            ...data,
+            isChecked: defaultCategories.includes(data['seo-value']),
+            sub_list: newSubList,
+          }
+          return newList
+        })
+        defaultValues.categoryList = initialListOptions
+      }
+
+      /* Handle SEO Meta Tags*/
+      const { month, year } = getCurrentMonthYear()
+      let seoMetaTitle = `Professional Jobs in Philippines - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
+      let seoMetaDescription =
+        'New Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers'
+      const seoCanonical = resolvedUrl
+
+      if (!searchQuery && !predefinedLocation && filterCount >= 2) {
+        seoMetaTitle = `Professional Jobs in Philippines - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
+        seoMetaDescription = `New Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+      } else if (searchQuery && !predefinedQuery && !predefinedLocation) {
+        seoMetaTitle = `${unslugify(
+          searchQuery,
+          true
+        )} Jobs in Philippines, Job Opportunities - ${month} ${year} | Bossjob`
+        seoMetaDescription = `New ${unslugify(
+          searchQuery,
+          true
+        )} Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+      } else if (!searchQuery && predefinedQuery && !predefinedLocation) {
+        seoMetaTitle = `${unslugify(
+          predefinedQuery,
+          true
+        )} Jobs in Philippines, Job Opportunities - ${month} ${year} | Bossjob`
+        seoMetaDescription = `New ${unslugify(
+          predefinedQuery,
+          true
+        )} Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+      } else if (searchQuery && !predefinedQuery && predefinedLocation) {
+        seoMetaTitle = `${unslugify(searchQuery, true)} Jobs in ${unslugify(
+          predefinedLocation,
+          true
+        )}, Philippines, Job Opportunities - ${month} ${year} | Bossjob`
+        seoMetaDescription = `New ${unslugify(searchQuery, true)} Jobs in ${unslugify(
+          predefinedLocation,
+          true
+        )}, Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+      } else if (!searchQuery && predefinedQuery && predefinedLocation) {
+        seoMetaTitle = `${unslugify(predefinedQuery, true)} Jobs in ${unslugify(
+          predefinedLocation,
+          true
+        )}, Philippines, Job Opportunities - ${month} ${year} | Bossjob`
+        seoMetaDescription = `New ${unslugify(predefinedQuery, true)} Jobs in ${unslugify(
+          predefinedLocation,
+          true
+        )}, Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+      } else {
+        seoMetaTitle = `Professional Jobs in Philippines - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
+        seoMetaDescription = `New Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+      }
+
+      return {
+        props: {
+          config,
+          topCompanies,
+          key: keyword,
+          defaultPage: page ? Number(page) : 1,
+          defaultValues,
+          accessToken,
+          seoMetaTitle,
+          seoMetaDescription,
+          seoCanonical,
+        },
+      }
+    }
+)
 export default JobSearchPage

@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const numberToThousands = (number) => {
   if (number <= 0) {
     return 0
@@ -11,8 +13,8 @@ export const unslugify = (string, capitalize = false) => {
     if (!capitalize) {
       return string.split('-').join(' ')
     }
-    const strings = string.split('-')
-    strings.map((str) => str.charAt(0).toUpperCase() + str.slice(1))
+    let strings = string.split('-')
+    strings = strings.map((str) => str.charAt(0).toUpperCase() + str.slice(1))
     return strings.join(' ')
   }
 }
@@ -149,9 +151,9 @@ export const formatSalary = (salary) => {
 
 export const removeEmptyOrNullValues = (object) => {
   let newObject = {}
-  Object.entries(object).forEach(
-    ([key, value]) => { if (value) Object.assign(newObject, {[key]: value}) }
-  )
+  Object.entries(object).forEach(([key, value]) => {
+    if (value) Object.assign(newObject, { [key]: value })
+  })
 
   return newObject
 }
@@ -162,4 +164,14 @@ export const buildQueryParams = (arrayObj) => {
     .join('&')
   queryString = '?' + queryString
   return queryString
+}
+
+export const getCurrentMonthYear = () => {
+  const today = new Date()
+  const month = moment(today).format('MMM')
+  const year = today.getFullYear()
+  return {
+    month,
+    year,
+  }
 }
