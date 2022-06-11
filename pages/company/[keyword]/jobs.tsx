@@ -30,7 +30,7 @@ const CompanyJobsProfile = (props: any) => {
   const router = useRouter()
   const { page } = router.query
   const dispatch = useDispatch()
-  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription } = props
+  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs } = props
   const company = companyDetail?.response.data
 
   const [jobQuery, setJobQuery] = useState('')
@@ -40,49 +40,40 @@ const CompanyJobsProfile = (props: any) => {
   const [companyJobs, setCompanyJobs] = useState(null)
   const [totalPages, setTotalPages] = useState(null)
   const [totalJobs, setTotalJobs] = useState(null)
-  const [totalActiveJobs, setTotalActiveJobs] = useState(0)
 
   const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
   const isJobsListFetching = useSelector((store: any) => store.job.jobList.fetching)
 
-  useEffect(() => {
+  const filterJobs = () => {
     const payload = {
       companyIds: company.id,
       size,
       page,
       query: jobQuery,
-      jobLocation: jobLocation?.value || '',
+      location: jobLocation?.value || '',
     }
 
-    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
-  }, [router.query])
+    dispatch(fetchJobsListRequest({...payload}, accessToken))
+  }
 
   useEffect(() => {
     if (fetchJobsListResponse) {
       setCompanyJobs(fetchJobsListResponse.data?.jobs)
       setTotalPages(fetchJobsListResponse.data?.total_pages)
       setTotalJobs(fetchJobsListResponse.data?.total_num)
-
-      if (totalActiveJobs === 0 && fetchJobsListResponse.data?.total_num > 0) {
-        setTotalActiveJobs(fetchJobsListResponse.data?.total_num)
-      }
     }
   }, [fetchJobsListResponse])
 
   const handleSearchCompanyJobSearch = () => {
     setSelectedpage(1)
     setJobLocation(jobLocation)
-
-    router.query.page = '1'
-    router.push(router, undefined, { shallow: true })
+    filterJobs()
   }
 
   const handlePaginationClick = (event, val) => {
     setSelectedpage(Number(val))
+    filterJobs()
     scrollToTop()
-
-    router.query.page = val
-    router.push(router, undefined, { shallow: true })
   }
 
   const handleJobsDisplayCount = () => {
@@ -205,23 +196,31 @@ const CompanyJobsProfile = (props: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-
   const companyPageUrl = req.url.split('/')
   const companyPath =
     companyPageUrl.length === 4
       ? companyPageUrl[2].split('-')
       : companyPageUrl[companyPageUrl.length - 1].split('-')
   const companyId = Number(companyPath[companyPath.length - 1])
+  const jobFilterpayload = {
+    companyIds: companyId,
+    size: 10,
+    page: 1
+  }
 
+  store.dispatch(fetchJobsListRequest({...jobFilterpayload}, accessToken))
   store.dispatch(fetchConfigRequest())
   store.dispatch(fetchCompanyDetailRequest(companyId))
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
+  
   const config = storeState.config.config.response
   const companyDetail = storeState.companies.companyDetail || null
   const companyName = companyDetail.response.data.name
+  const jobList = storeState.job.jobList.response.data
+  const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `${companyName} Careers in Philippines, Job Opportunities | Bossjob`
   const seoMetaDescription = `View all current job opportunities at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`
   return {
@@ -231,6 +230,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       accessToken,
       seoMetaTitle,
       seoMetaDescription,
+      totalActiveJobs
     },
   }
 })

@@ -43,11 +43,10 @@ const CompanyDetail = (props: any) => {
   const { page } = router.query
   const [jobQuery, setJobQuery] = useState('')
 
-  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription } = props
+  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs } = props
   const company = companyDetail?.response.data
   const [companyJobs, setCompanyJobs] = useState(null)
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
-  const [totalActiveJobs, setTotalActiveJobs] = useState(0)
   const [totalPages, setTotalPages] = useState(null)
   const [jobLocation, setJobLocation] = useState(null)
   
@@ -66,39 +65,31 @@ const CompanyDetail = (props: any) => {
     if (fetchJobsListResponse) {
       setCompanyJobs(fetchJobsListResponse.data?.jobs)
       setTotalPages(fetchJobsListResponse.data?.total_pages)
-
-      if (totalActiveJobs === 0 && fetchJobsListResponse.data?.total_num > 0) {
-        setTotalActiveJobs(fetchJobsListResponse.data?.total_num)
-      }
     }
   }, [fetchJobsListResponse])
 
-  useEffect(() => {
+  const filterJobs = () => {
     const payload = {
       companyIds: company.id,
       size,
       page,
       query: jobQuery,
-      jobLocation: jobLocation?.value || '',
+      location: jobLocation?.value || '',
     }
 
     dispatch(fetchJobsListRequest({...payload}, accessToken))
-  }, [router.query])
+  }
 
   const handlePaginationClick = (event, val) => {
     setSelectedpage(Number(val))
+    filterJobs()
     scrollToTop()
-
-    router.query.page = val
-    router.push(router, undefined, { shallow: true })
   }
 
   const handleSearchCompanyJobSearch = () => {
     setSelectedpage(1)
     setJobLocation(jobLocation)
-
-    router.query.page = '1'
-    router.push(router, undefined, { shallow: true })
+    filterJobs()
   }
 
   const onLocationSearch = (_, value) => {
@@ -460,32 +451,44 @@ const CompanyDetail = (props: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-
   const companyPageUrl = req.url.split('/')
   const companyPath = companyPageUrl[companyPageUrl.length - 1].split('-')
+
   let companyId
   if (companyPath[companyPath.length - 1].includes('?page=')) {
     companyId = Number(companyPath[companyPath.length - 1].split('?page=')[0])
   } else {
     companyId = Number(companyPath[companyPath.length - 1])
   }
-  
+
+  const jobFilterpayload = {
+    companyIds: companyId,
+    size: 10,
+    page: 1
+  }
+
+  store.dispatch(fetchJobsListRequest({...jobFilterpayload}, accessToken))
   store.dispatch(fetchCompanyDetailRequest(companyId))
   store.dispatch(fetchConfigRequest())
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
+  
   const companyDetail = storeState.companies.companyDetail
   const companyName = companyDetail.response.data.name
+  const jobList = storeState.job.jobList.response.data
+  const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `Working at ${companyName}| Bossjob`
   const seoMetaDescription = `Discover career opportunities at ${companyName}, learn more about ${companyName} by reading employee reviews, benefits and culture on Bossjob!`
+  
   return {
     props: {
       companyDetail,
       accessToken,
       seoMetaTitle,
-      seoMetaDescription
+      seoMetaDescription,
+      totalActiveJobs
     }
   }
 })

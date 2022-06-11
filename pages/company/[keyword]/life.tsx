@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
 // @ts-ignore
 import { END } from 'redux-saga'
 
@@ -17,28 +14,8 @@ import CompanyProfileLayout from 'components/Company/CompanyProfileLayout'
 import styles from '../Company.module.scss'
 
 const CompanyLifeProfile = (props: any) => {
-  const dispatch = useDispatch()
-  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription } = props
+  const { companyDetail, seoMetaTitle, seoMetaDescription, totalActiveJobs } = props
   const company = companyDetail?.response.data
-  const [totalActiveJobs, setTotalActiveJobs] = useState(0)
-
-  const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
-
-  useEffect(() => {
-    const payload = {
-      companyIds: company.id,
-      size: 30
-    }
-
-    dispatch(fetchJobsListRequest({...payload}, accessToken))
-  }, [])
-
-  useEffect(() => {
-    if (totalActiveJobs === 0 && fetchJobsListResponse.data?.total_num > 0) {
-      setTotalActiveJobs(fetchJobsListResponse.data?.total_num)
-    }
-
-  }, [fetchJobsListResponse])
 
   return (
     <CompanyProfileLayout
@@ -119,18 +96,26 @@ const CompanyLifeProfile = (props: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-
   const companyPageUrl = req.url.split('/')
   const companyPath = companyPageUrl.length === 4 ? companyPageUrl[2].split('-') : companyPageUrl[companyPageUrl.length - 1].split('-')
   const companyId = Number(companyPath[companyPath.length - 1])
+  const jobFilterpayload = {
+    companyIds: companyId,
+    size: 10,
+    page: 1
+  }
 
+  store.dispatch(fetchJobsListRequest({...jobFilterpayload}, accessToken))
   store.dispatch(fetchCompanyDetailRequest(companyId))
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
+
   const companyDetail = storeState.companies.companyDetail
   const companyName = companyDetail.response.data.name
+  const jobList = storeState.job.jobList.response.data
+  const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `Culture & Life at ${companyName} | Bossjob`
   const seoMetaDescription = `Discover company culture & life at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`
   return {
@@ -139,6 +124,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       accessToken,
       seoMetaTitle,
       seoMetaDescription,
+      totalActiveJobs
     },
   }
 })
