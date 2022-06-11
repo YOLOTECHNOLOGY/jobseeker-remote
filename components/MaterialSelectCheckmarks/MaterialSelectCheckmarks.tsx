@@ -8,17 +8,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
 import OutlinedInput from '@mui/material/OutlinedInput'
 
-// const ITEM_HEIGHT = 48
-// const ITEM_PADDING_TOP = 8
-// const MenuProps = {
-//   PaperProps: {
-//     style: {
-//       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-//       width: 250,
-//     },
-//   },
-// }
-
 interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode
   style?: React.CSSProperties
@@ -48,10 +37,26 @@ const MaterialSelectCheckmarks = ({
   fieldRef,
   error,
 }: MaterialSelectCheckMarksProps) => {
+  const mapValueToGetDisplayValue = (val) => {
+    const valueToDisplay = []
+    val.forEach((v) => {
+      options.forEach((option) => {
+        if (option['seo-value'] === v) {
+          valueToDisplay.push(option.value)
+        }
+      })
+    })
+    return valueToDisplay
+  }
+  
   const [selectedOptions, setSelectedOptions] = useState<any>(value || [])
+  const [displayValue, setDisplayValue] = useState<Array<string>>(
+    mapValueToGetDisplayValue(value)
+  )
 
   useEffect(() => {
     setSelectedOptions(value)
+    setDisplayValue(mapValueToGetDisplayValue(value))
   }, [value])
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -148,8 +153,7 @@ const MaterialSelectCheckmarks = ({
           label={label}
           onChange={handleChange}
           input={<OutlinedInput label='Tag' />}
-          renderValue={(selected: any) => selected.join(', ')}
-          // MenuProps={MenuProps}
+          renderValue={() => displayValue.join(', ')}
         >
           {options &&
             options.map((option: any) => (

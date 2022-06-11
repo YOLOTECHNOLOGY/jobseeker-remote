@@ -106,8 +106,6 @@ const MaterialCategoryField = ({
   },[value])
 
   useEffect(()=>{
-    console.log('prevList', prevList)
-    console.log('list', list)
     if (list && list.length > 0 && prevList !== list && !firstRender){
       setListOptions(list)
       setRefreshList(true)

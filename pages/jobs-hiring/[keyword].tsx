@@ -426,7 +426,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       matchedConfigFromUrl,
       matchedConfigFromUserSelection,
     } = userFilterSelectionDataParser('query', val, router.query, config, isClear)
-    console.log('matchedConfig onKeywordSearch', matchedConfig)
 
     for (const [key, value] of Object.entries(matchedConfig)) {
       const newDefaultValue = { ...defaultValues, [key]: [value[0]['seo-value']] }
