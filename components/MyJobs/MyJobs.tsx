@@ -141,10 +141,11 @@ const MyJobs = ({
   }, [])
 
   useEffect(() => {
-    const jobLength = isAppliedCategory ? jobsList?.applied_jobs?.length : jobsList?.saved_jobs?.length
+    const jobLength = jobsList?.length
+    const size = Number(router?.query?.size) || 10
 
-    setJobNumStart(jobLength > 0 ? ((jobsList?.page - 1) * jobsList?.size) + 1 : 1)
-    setJobNumEnd(jobLength > 0 ? ((jobsList?.page - 1) * jobsList?.size) + jobLength : 10)
+    setJobNumStart(jobLength > 0 ? ((page - 1) * size) + 1 : 1)
+    setJobNumEnd(jobLength > 0 ? ((page - 1) * size) + jobLength : 10)
   }, [jobsList])
 
   useEffect(() => {
@@ -174,8 +175,8 @@ const MyJobs = ({
 
   useEffect(() => {
     setJobsList(savedJobsListResponse.data?.saved_jobs)
-    setTotalPages(savedJobDetailResponse.data?.total_pages)
-    setTotalNum(appliedJobsListResponse.data?.total_num)
+    setTotalPages(savedJobsListResponse.data?.total_pages)
+    setTotalNum(savedJobsListResponse.data?.total_num)
 
     if (savedJobsListResponse.data?.saved_jobs.length === 0) {
       setSelectedJob(null)
