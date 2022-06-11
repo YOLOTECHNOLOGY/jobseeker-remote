@@ -26,7 +26,7 @@ interface OptionType {
   label: string | boolean
 }
 
-const MaterialSelectCheckmarks = ({
+const MaterialSelectCheckmarksCustomSEO = ({
   id,
   label,
   options,
@@ -37,10 +37,26 @@ const MaterialSelectCheckmarks = ({
   fieldRef,
   error,
 }: MaterialSelectCheckMarksProps) => {
+  const mapValueToGetDisplayValue = (val) => {
+    const valueToDisplay = []
+    val.forEach((v) => {
+      options.forEach((option) => {
+        if (option['seo-value'] === v) {
+          valueToDisplay.push(option.value)
+        }
+      })
+    })
+    return valueToDisplay
+  }
+  
   const [selectedOptions, setSelectedOptions] = useState<any>(value || [])
+  const [displayValue, setDisplayValue] = useState<Array<string>>(
+    mapValueToGetDisplayValue(value)
+  )
 
   useEffect(() => {
     setSelectedOptions(value)
+    setDisplayValue(mapValueToGetDisplayValue(value))
   }, [value])
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -49,17 +65,29 @@ const MaterialSelectCheckmarks = ({
     } = event
     // On autofill we get a the stringified value.
     const formattedValue = typeof value === 'string' ? value.split(',') : value
-    setSelectedOptions(formattedValue)
-    if (onSelect) {
+    const valueToDisplay = []
+    formattedValue.map((val) => {
+      options.forEach((option) => {
+        if (option.value === val) {
+          valueToDisplay.push(option['seo-value'])
+        }
+      })
+    })
+    setSelectedOptions(
+     formattedValue
+    )
+    // setDisplayValue()
+    if (onSelect){
       onSelect(formattedValue)
     }
   }
+  
   const theme = createTheme({
     components: {
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            height: '44px',
+            height: '48px',
             backgroundColor: greyBg ? '#E2E2E2' : 'white',
           },
         },
@@ -90,8 +118,7 @@ const MaterialSelectCheckmarks = ({
               transform: 'translate(14px, -10px) scale(1)',
             },
             backgroundColor: '#fff',
-            top: '4px',
-            lineHeight: '16px'
+            top: '4px'
           },
           shrink: {
             transform: 'translate(14px, -9px) scale(0.75)',
@@ -126,13 +153,13 @@ const MaterialSelectCheckmarks = ({
           label={label}
           onChange={handleChange}
           input={<OutlinedInput label='Tag' />}
-          renderValue={(selected: any) => selected.join(', ')}
+          renderValue={() => displayValue.join(', ')}
         >
           {options &&
             options.map((option: any) => (
-              <MenuItem key={option.value} value={option.value}>
+              <MenuItem key={option.value} value={option['seo-value']}>
                 <Checkbox
-                  checked={selectedOptions.indexOf(option.value) > -1}
+                  checked={selectedOptions.indexOf(option['seo-value']) > -1}
                   size='small'
                 />
                 <ListItemText primary={option.value} />
@@ -144,4 +171,4 @@ const MaterialSelectCheckmarks = ({
   )
 }
 
-export default MaterialSelectCheckmarks
+export default MaterialSelectCheckmarksCustomSEO

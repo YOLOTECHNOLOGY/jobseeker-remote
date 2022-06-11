@@ -60,7 +60,7 @@ type optionsType = {
 }
 
 const NavSearchFilter = ({
-  // urlDefaultValues,
+  urlDefaultValues,
   categories,
   isShowFilter,
   onShowFilter,
@@ -71,12 +71,7 @@ const NavSearchFilter = ({
 }: NavSearchFilterProps) => {
   const router = useRouter()
   const { keyword } = router.query
-  const queryParams = router.query
   const config = useSelector((state: any) => state.config.config.response)
-  // TODO: mobile job filters for salary, job type, categories
-  // const jobCategoryList = config.inputs.job_category_lists
-  // const locationList = getLocationList(config)
-
   const industryList = config.inputs.industry_lists
   const expLvlList = config.inputs.xp_lvls
   const eduLevelList = config.filters.educations
@@ -106,26 +101,10 @@ const NavSearchFilter = ({
     setSelectedCategories(categories)
   }, [categories])
 
-  let defaultValues = {}
-  const appendDefaultKeyValue = (fieldName, value) => {
-    const data = {
-      ...defaultValues,
-      [fieldName]: value.toString().split(','),
-    }
-    return data
-  }
-
-  // append all queryParams EXCEPT keyword and search into defaultValues object
-  Object.entries(queryParams).forEach(([key, value]) => {
-    if (key !== 'keyword' && key !== 'search') {
-      defaultValues = appendDefaultKeyValue(key, value)
-    }
-  })
-
   useEffect(() => {
-    // set defaultValue after config has been initialised
-    if (Object.keys(defaultValues).length !== 0) {
-      reset(defaultValues)
+    // set defaultValues after config has been initialised
+    if (Object.keys(urlDefaultValues).length !== 0) {
+      reset(urlDefaultValues)
     }
     setDisplayMobileSort(width < 769 ? true : false)
   }, [config, keyword])

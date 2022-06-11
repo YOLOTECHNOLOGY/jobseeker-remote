@@ -13,16 +13,18 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 
 /* Helpers */
 import { useFirstRender } from 'helpers/useFirstRender'
+import { usePrevious } from 'helpers/usePrevious'
 
-interface MaterialGroupSelectCheckmarks extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface MaterialCategoryField extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode
   style?: React.CSSProperties
   className?: string
   label?: string | React.ReactNode
   options?: Array<MainOptionType>
   value: any
+  list: any
   onSelect?: any
-  isReset?:boolean
+  isReset?: boolean
   greyBg?: boolean
   fieldRef?: any
   error?: any
@@ -42,7 +44,7 @@ interface SubListOptionType {
   value: string
 }
 
-const MaterialGroupSelectCheckmarks = ({
+const MaterialCategoryField = ({
   id,
   label,
   options,
@@ -50,15 +52,17 @@ const MaterialGroupSelectCheckmarks = ({
   onSelect,
   greyBg,
   value,
+  list,
   isReset,
   fieldRef,
   error,
-}: MaterialGroupSelectCheckmarks) => {
+}: MaterialCategoryField) => {
   const firstRender = useFirstRender()
+  const prevList = usePrevious(list)
   const initialListOptions = options.map((data) => {
     const newSubList = data.sub_list.map((subData) => ({
       ...subData,
-      isChecked:false
+      isChecked: false,
     }))
     const newList = {
       ...data,
@@ -68,100 +72,146 @@ const MaterialGroupSelectCheckmarks = ({
     return newList
   })
 
-  const [listOptions, setListOptions] = useState(value && value.length > 0 ? value : initialListOptions)
-  const [displayValue, setDisplayValue] = useState<Array<string>>([''])
+  const mapValueToGetDisplayValue = (val, listOptions) => {
+    const valueToDisplay = []
+    val.forEach((v)=> {
+      listOptions.forEach((option) => {
+        if (option['seo-value'] === v) {
+          valueToDisplay.push(option.value)
+        } else {
+          option.sub_list.forEach((subOption) => {
+            if (subOption['seo-value'] === v) {
+              valueToDisplay.push(subOption.value)
+            }
+          })
+        }
+      })
+    })
+    return valueToDisplay
+  }
+  
+
+  const [listOptions, setListOptions] = useState(
+    list && list.length > 0 ? list : initialListOptions
+  )
+  const [refreshList, setRefreshList] = useState(false)
+  const [displayValue, setDisplayValue] = useState<Array<string>>(
+    mapValueToGetDisplayValue(value, listOptions)
+  )
 
   useEffect(()=>{
+    if (value){
+      setDisplayValue(mapValueToGetDisplayValue(value, listOptions))
+    }
+  },[value])
+
+  useEffect(()=>{
+    if (list && list.length > 0 && prevList !== list && !firstRender){
+      setListOptions(list)
+      setRefreshList(true)
+    }
+  },[list])
+
+  useEffect(() => {
     const selectedOptions = []
     const valueToDisplay = []
-    if (!isReset){
-      listOptions.map((option)=> {
-        if (option.isChecked){
+    if (!isReset) {
+      listOptions.map((option) => {
+        if (option.isChecked) {
           valueToDisplay.push(option.value)
-          selectedOptions.push(option.key)
-        }else{
-          option.sub_list.map((subOption)=> {
-            if (subOption.isChecked){
-            valueToDisplay.push(subOption.value)
-            selectedOptions.push(subOption.key)
-          }})
+          selectedOptions.push(option['seo-value'])
+        } else {
+          option?.sub_list?.map((subOption) => {
+            if (subOption.isChecked) {
+              valueToDisplay.push(subOption.value)
+              selectedOptions.push(subOption['seo-value'])
+            }
+          })
         }
       })
       setDisplayValue(valueToDisplay)
-      if (!firstRender && (value && value.length > 0 || selectedOptions && selectedOptions.length > 0)) onSelect(selectedOptions)
-  }
-  },[listOptions])
+      if (
+        !firstRender &&
+        ((value && value.length > 0) || (selectedOptions && selectedOptions.length > 0)) &&
+        !refreshList
+      ){
+        onSelect(selectedOptions)
+        setRefreshList(false)
+      }
+    }
+  }, [listOptions])
 
-  useEffect(()=>{
-    setDisplayValue([])
-    setListOptions(initialListOptions)
-  },[isReset])
+  useEffect(() => {
+    if (isReset) {
+      setDisplayValue([])
+      setListOptions(initialListOptions)
+    }
+  }, [isReset])
 
   const onMainSelection = (e, optionData) => {
-    /* find the corresponding option data based on option.key && 
+    /* find the corresponding option data based on option['seo-value'] && 
     update the corresponding option data with new isChecked value */
-    const data = listOptions.map((data)=> {
-      let newData = {...data}
-      if (data.key === optionData.key){
-        const newSubList = data.sub_list.map((data)=> {
+    const data = listOptions.map((data) => {
+      let newData = { ...data }
+      if (data['seo-value'] === optionData['seo-value']) {
+        const newSubList = data.sub_list.map((data) => {
           return {
             ...data,
-            isChecked: e.target.checked
+            isChecked: e.target.checked,
           }
         })
         newData = {
-          ...newData, 
+          ...newData,
           isChecked: e.target.checked,
-          sub_list: newSubList
+          sub_list: newSubList,
         }
       }
       return newData
     })
-    // TODO: update URL/SEO with new selection value
 
     setListOptions(data)
   }
 
   const onSubSelection = (e, optionData) => {
-    /* find the corresponding parent option data based on option.key && 
+    /* find the corresponding parent option data based on option['seo-value'] && 
     update the corresponding parent and sub option data with new isChecked value */
     const data = listOptions.map((data) => {
       let newData = { ...data }
       const newSubList = data.sub_list.map((subListData) => {
         // if checked === true, set subOption isChecked = true
-        if (e.target.checked){
-          if (subListData.key === optionData.key){
+        if (e.target.checked) {
+          if (subListData['seo-value'] === optionData['seo-value']) {
             return {
-              ...subListData, 
-              isChecked: true
+              ...subListData,
+              isChecked: true,
             }
-          }else{
+          } else {
             return {
-              ...subListData
+              ...subListData,
             }
           }
-        }else {
+        } else {
           // if checked === false, set subOption isChecked = false
-          if (subListData.key === optionData.key) {
+          if (subListData['seo-value'] === optionData['seo-value']) {
             return {
               ...subListData,
               isChecked: false,
             }
-          }else{
+          } else {
             // if main option isChecked is true, set all other option's isChecked = true
-            if (data.isChecked){
+            if (data.isChecked) {
               return {
                 ...subListData,
-                isChecked:true
+                isChecked: true,
               }
-            }else{
+            } else {
               return {
-                ...subListData
+                ...subListData,
               }
             }
           }
         }
-      })        
+      })
       newData = {
         ...newData,
         // if sub option is deselected, deselect main option as well
@@ -256,7 +306,7 @@ const MaterialGroupSelectCheckmarks = ({
           labelId={`${id}-select-label`}
           id={id}
           multiple
-          value={displayValue}
+          value={value}
           label={label}
           input={<OutlinedInput label='Tag' />}
           renderValue={() => displayValue.join(', ')}
@@ -267,7 +317,7 @@ const MaterialGroupSelectCheckmarks = ({
               return [
                 <MenuItem
                   key={option.id}
-                  value={option.key}
+                  value={option['seo-value']}
                   sx={{ fontWeight: 'bold', color: 'rgba(0, 0, 0, 0.6)' }}
                 >
                   <FormControlLabel
@@ -282,11 +332,11 @@ const MaterialGroupSelectCheckmarks = ({
                     }
                   />
                 </MenuItem>,
-                subListOptions.map((subOption) => {
+                subListOptions?.map((subOption) => {
                   return (
                     <MenuItem
                       key={subOption.id}
-                      value={subOption.key}
+                      value={subOption['seo-value']}
                       sx={{ fontWeight: 'bold', paddingLeft: '40px' }}
                     >
                       <FormControlLabel
@@ -310,4 +360,4 @@ const MaterialGroupSelectCheckmarks = ({
   )
 }
 
-export default MaterialGroupSelectCheckmarks
+export default MaterialCategoryField
