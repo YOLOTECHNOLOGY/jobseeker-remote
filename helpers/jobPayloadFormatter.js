@@ -200,6 +200,7 @@ const checkFilterMatch = (routerQuery, config) => {
   let matchedConfigFromUrl = {}
   let matchedLocation = {}
   let matchedConfigFromUserSelection = {}
+  let filterCount = 0
 
   Object.keys(sanitisedConfig).forEach((key) => {
     // iterate based on number of results from queryParser
@@ -359,6 +360,28 @@ const checkFilterMatch = (routerQuery, config) => {
     searchQuery = queryParser[0]
   }
 
+  // calculate filter count
+  const array = []
+
+  if (Object.keys(matchedLocation).length > 0) array.push(matchedLocation)
+  if (Object.keys(matchedConfigFromUrl).length > 0) array.push(matchedConfigFromUrl)
+  if (Object.keys(matchedConfigFromUserSelection).length > 0)
+    array.push(matchedConfigFromUserSelection)
+
+  let uniqueList = []
+  array.forEach((matchData) => {
+    for (const [key] of Object.entries(matchData)) {
+      const data =
+        key === 'location'
+          ? matchData[key].map((filter) => filter['seo_value'])
+          : matchData[key].map((filter) => filter['seo-value'])
+
+      uniqueList = [...uniqueList, ...data]
+      uniqueList = [...new Set(uniqueList)]
+    }
+  })
+  filterCount = uniqueList.length
+
   const matchedFilter = {
     searchMatch,
     locationMatch,
@@ -368,7 +391,9 @@ const checkFilterMatch = (routerQuery, config) => {
     matchedLocation,
     matchedConfigFromUrl,
     matchedConfigFromUserSelection,
+    filterCount,
   }
+
   return matchedFilter
 }
 
@@ -756,9 +781,15 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         ) {
           query = appendDoubleQueryPattern(searchQuery, locationQuery)
         }
-      }else if (searchQuery && !predefinedQuery && locationQuery && !filterQuery){
+      } else if (searchQuery && !predefinedQuery && locationQuery && !filterQuery) {
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
-      }else if (!searchQuery && predefinedQuery && !predefinedLocation && !locationQuery && !filterQuery){
+      } else if (
+        !searchQuery &&
+        predefinedQuery &&
+        !predefinedLocation &&
+        !locationQuery &&
+        !filterQuery
+      ) {
         query = appendGeneralQueryPattern()
       }
       // handle all onKeywordSearch logic when field === 'query',
@@ -846,20 +877,32 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
           Object.keys(matchedLocation).length > 0
         ) {
           query = appendDoubleQueryPattern(predefinedQuery, locationQuery)
-        }else if (
+        } else if (
           !searchQuery &&
           filterQuery &&
           Object.keys(matchedConfigFromUserSelection).length > 0 &&
           Object.keys(matchedLocation).length > 0
         ) {
           query = appendDoubleQueryPattern(filterQuery, locationQuery)
-        }
-        else if (searchQuery && !predefinedQuery && !predefinedLocation && !locationQuery && filterQuery && Object.keys(matchedConfigFromUrl).length > 0 && Object.keys(matchedConfigFromUserSelection).length > 0 ){
+        } else if (
+          searchQuery &&
+          !predefinedQuery &&
+          !predefinedLocation &&
+          !locationQuery &&
+          filterQuery &&
+          Object.keys(matchedConfigFromUrl).length > 0 &&
+          Object.keys(matchedConfigFromUserSelection).length > 0
+        ) {
           query = appendGeneralQueryPattern()
         }
-        
-      }else{
-        if (searchQuery && !predefinedQuery && !predefinedLocation && locationQuery && filterQuery){
+      } else {
+        if (
+          searchQuery &&
+          !predefinedQuery &&
+          !predefinedLocation &&
+          locationQuery &&
+          filterQuery
+        ) {
           query = appendSingleQueryPattern(searchQuery)
         }
       }
@@ -905,9 +948,9 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
       } else if (locationQuery) {
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
-      } else if (Object.keys(matchedConfigFromUrl).length >= 2){
+      } else if (Object.keys(matchedConfigFromUrl).length >= 2) {
         query = appendGeneralQueryPattern()
-      }else {
+      } else {
         query = appendSingleQueryPattern(searchQuery)
       }
       // if there is predefinedQuery && predefinedLocation
@@ -949,7 +992,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     for (const [key, value] of Object.entries(filterParamsObject)) {
       let valueArray = value.split(',')
       const queryValue = field === 'query' ? slugify(q) : q
-      
+
       if (value.includes(queryValue)) {
         valueArray = valueArray.filter((val) => val !== queryValue)
       }
