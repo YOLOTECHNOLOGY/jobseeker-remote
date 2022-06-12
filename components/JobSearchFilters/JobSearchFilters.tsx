@@ -145,7 +145,7 @@ const NavSearchFilter = ({
 
     router.push(
       {
-        pathname: `${process.env.HOST_PATH}/jobs-hiring/${
+        pathname: `/jobs-hiring/${
           searchQuery ? searchQuery : 'job-search'
         }`,
         query: {
