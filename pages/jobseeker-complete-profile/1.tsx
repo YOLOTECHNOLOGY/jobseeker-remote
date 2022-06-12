@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
+import { isMobile } from 'react-device-detect';
+
 // @ts-ignore
 import { END } from 'redux-saga'
 
@@ -36,7 +38,6 @@ import {
   getCountryList,
   getLocationList
 } from 'helpers/jobPayloadFormatter'
-import useWindowDimensions from 'helpers/useWindowDimensions'
 import { handleNumericInput } from 'helpers/handleInput'
 
 // Styles
@@ -52,8 +53,6 @@ const Step1 = (props: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props
-  const { width } = useWindowDimensions()
-  const isMobile = width < 768 ? true : false
   const rhTooltipTitle = 'Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.'
 
   const locList = getLocationList(config)

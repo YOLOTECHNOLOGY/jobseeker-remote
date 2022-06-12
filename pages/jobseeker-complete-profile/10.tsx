@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
+import { isMobile } from 'react-device-detect';
+
 // @ts-ignore
 import { END } from 'redux-saga'
 
@@ -15,9 +17,6 @@ import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialButton from 'components/MaterialButton'
 import Divider from '@mui/material/Divider'
 
-/* Helpers */
-import useWindowDimensions from 'helpers/useWindowDimensions'
-
 // Styles
 import styles from './Onboard.module.scss'
 import { maxFileSize } from '../../helpers/handleInput'
@@ -30,8 +29,6 @@ const Step2 = (props: any) => {
   const redirect = router.query?.redirect
     ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1101'
-  const { width } = useWindowDimensions()
-  const isMobile = width < 768 ? true : false
 
   const [resume, setResume] = useState(null)
   const existingResume = userDetail?.resume || null

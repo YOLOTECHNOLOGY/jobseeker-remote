@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames/bind'
 import moment from 'moment'
+import { isMobile } from 'react-device-detect';
+
 // @ts-ignore
 import { END } from 'redux-saga'
 
@@ -48,7 +50,6 @@ import {
 import { formatSalary, removeEmptyOrNullValues } from 'helpers/formatter'
 import { removeItem, setItem, getItem } from 'helpers/localStorage'
 import { STORAGE_NAME } from 'helpers/richTextEditor'
-import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Styles
 import styles from './Onboard.module.scss'
@@ -61,8 +62,6 @@ const Step3 = (props: any) => {
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props
   const isFromCreateResume = getItem('isFromCreateResume') === '1'
-  const { width } = useWindowDimensions()
-  const isMobile = width < 768 ? true : false
   
   const nextBtnUrl = router.query?.redirect ? `/jobseeker-complete-profile/1102?redirect=${router.query.redirect}` : '/jobseeker-complete-profile/1102'
   const backBtnUrl = router.query?.redirect ? `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}?redirect=${router.query.redirect}` : `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}`
