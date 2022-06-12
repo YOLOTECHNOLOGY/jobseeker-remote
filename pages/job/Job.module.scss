@@ -481,11 +481,11 @@
 }
 
 .JobDetailSidebar {
-  width: 167px;
+  width: 260px;
 
   &Content {
     border: 1px solid rgba($lightgrey, 0.5);
-    padding: 24px 24px 16px;
+    padding: 16px;
     border-radius: 5px;
 
     &:not(:last-child) {
@@ -551,6 +551,11 @@
     span {
       display: block;
     }
+  }
+
+  &Image {
+    width: 52px;
+    height: 52px;
   }
 
   @include msd {
