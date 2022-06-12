@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
+import classNamesCombined from 'classnames'
 
 /* Components */
 import Modal from 'components/Modal'
@@ -39,9 +40,10 @@ interface QuickApplyModalProps {
   modalShow?: boolean
   handleModalShow?: Function
   config: any
+  isMobileSafari?: boolean
 }
 
-const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow, config  }: QuickApplyModalProps) => {
+const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow, config, isMobileSafari=false  }: QuickApplyModalProps) => {
   const dispatch = useDispatch()
   const { register, handleSubmit, setValue, setError, clearErrors, formState: { errors } } = useForm()
 
@@ -395,20 +397,22 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
           </Text>
         </div>
 
-        <div className={styles.applyBtn}>
-        <Divider className={styles.divider} />
-          <MaterialButton
-            capitalize
-            size='large'
-            variant='contained'
-            type='submit'
-            isLoading={isSubmitting} 
-            onClick={handleSubmit(onSubmit)}
-          >
-            <Text textStyle='xl' textColor='white' bold>
-              Register and apply
-            </Text>
-          </MaterialButton>
+        <div className={classNamesCombined([styles.applyBtn, isMobileSafari && styles.isMobileSafari])}>
+          <Divider className={styles.divider} />
+          <div>
+            <MaterialButton
+              capitalize
+              size='large'
+              variant='contained'
+              type='submit'
+              isLoading={isSubmitting} 
+              onClick={handleSubmit(onSubmit)}
+            >
+              <Text textStyle='xl' textColor='white' bold>
+                Register and apply
+              </Text>
+            </MaterialButton>
+          </div>
         </div>
       </form>
       

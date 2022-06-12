@@ -98,11 +98,16 @@
     > button {
       width: 80%;
     }
-  
+
     @include sm {
       position: -webkit-sticky; /* Safari */
       position: sticky;
       bottom: 0;
     }
+  }
+
+  // Fix nav bar blocking issue on mobile safari
+  .isMobileSafari {
+    padding-bottom: 85px;
   }
 }

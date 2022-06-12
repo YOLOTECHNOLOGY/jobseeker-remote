@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
 import moment from 'moment'
+import { isMobile } from 'react-device-detect';
+
 // @ts-ignore
 import { END } from 'redux-saga'
 
@@ -31,7 +33,6 @@ import MaterialDatePicker from 'components/MaterialDatePicker'
 import { getCountryList, getLocationList, getDegreeList } from 'helpers/jobPayloadFormatter'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { getItem } from 'helpers/localStorage'
-import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Images
 import { DeleteFilledIcon, CreateFilledIcon, AddOutlineIcon } from 'images'
@@ -49,8 +50,6 @@ const Step4 = (props: any) => {
   const backBtnUrl = router.query?.redirect
     ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1101'
-  const { width } = useWindowDimensions()
-  const isMobile = width < 768 ? true : false
 
   const degreeList = getDegreeList(config)
   const countryList = getCountryList(config)

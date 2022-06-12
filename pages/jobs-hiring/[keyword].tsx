@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import slugify from 'slugify'
+import { isMobile } from 'react-device-detect';
 
 // @ts-ignore
 import { END } from 'redux-saga'
@@ -56,7 +57,6 @@ import {
 } from 'helpers/jobPayloadFormatter'
 import { flat, unslugify, getCurrentMonthYear } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
-import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 
 interface JobSearchPageProps {
@@ -187,10 +187,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
-  const { width } = useWindowDimensions()
-
   const userCookie = getCookie('user') || null
-  const isMobile = width < 768 ? true : false
 
   const [clientDefaultValues, setClientDefaultValues] = useState(defaultValues || {})
   const [isShowFilter, setIsShowFilter] = useState(false)

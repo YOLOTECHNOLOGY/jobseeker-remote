@@ -73,7 +73,8 @@
     "slate-history": "^0.66.0",
     "slate-react": "^0.72.6",
     "slugify": "^1.6.2",
-    "ua-parser-js": "^1.0.2"
+    "ua-parser-js": "^1.0.2",
+    "react-device-detect": "^2.2.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.35",

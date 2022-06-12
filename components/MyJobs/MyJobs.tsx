@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import slugify from 'slugify'
+import { isMobile } from 'react-device-detect';
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
@@ -40,7 +41,6 @@ import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
 
 /* Helpers */
-import useWindowDimensions from 'helpers/useWindowDimensions'
 import { titleCase } from 'helpers/formatter'
 import { getCookie } from 'helpers/cookies'
 
@@ -85,9 +85,7 @@ const MyJobs = ({
   const prevScrollY = useRef(0)
   const router = useRouter()
   const dispatch = useDispatch()
-  const { width } = useWindowDimensions()
   const isAppliedCategory = category === 'applied'
-  const isMobile = width < 768 ? true : false
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
   
   const [isSticky, setIsSticky] = useState(false)
@@ -210,7 +208,7 @@ const MyJobs = ({
   }, [withdrawAppliedJobResponse])
 
   const updateScrollPosition = () => {
-    if (width > 798) {
+    if (!isMobile) {
       prevScrollY.current = window.pageYOffset
       setIsSticky(prevScrollY.current >= 201 ? true : false)
     }
@@ -233,7 +231,7 @@ const MyJobs = ({
     setSelectedJobId(jobId)
     handleFetchJobDetail(jobId, category) 
     
-    if (width < 768 && status === 'active') {
+    if (isMobile && status === 'active') {
       if (isAppliedCategory) {
         router.push(`/job/${slugify(jobTitle || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobId}?isApplied=${isAppliedCategory}`)
       } else {
