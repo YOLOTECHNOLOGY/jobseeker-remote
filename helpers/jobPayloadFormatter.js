@@ -608,7 +608,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       }
     }
   } else {
-    if (optionValue && optionValue.length !== 0 && field !== 'query') {
+    if (optionValue && optionValue.length !== 0 && field !== 'query' && field !== 'sort') {
       // if (optionValue && optionValue.length !== 0) {
       updatedFilters = { ...updatedFilters, [field]: optionValue.join(',') }
       // updatedFilters = { ...rest, [field]: field === 'query' ? optionValue : optionValue.join(',') }
