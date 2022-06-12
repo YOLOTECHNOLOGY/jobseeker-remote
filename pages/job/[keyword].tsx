@@ -675,6 +675,11 @@ const Job = ({
                         aTag
                         external
                       >
+                        <img
+                          src={jobDetail?.company?.logo}
+                          className={styles.JobDetailSidebarCardImage}
+                          alt={`${job?.company_logo} logo`}
+                        />
                         <Text
                           className={styles.JobDetailSidebarCardTitle}
                           textStyle='lg'
@@ -757,6 +762,11 @@ const Job = ({
                       to={`${handleCoursePath(course.truncated_name, course.id)}`}
                       className={styles.JobDetailSidebarCard}
                     >
+                      <img
+                        src={course?.image}
+                        className={styles.JobDetailSidebarCardImage}
+                        alt={`${course?.truncated_name} logo`}
+                        />
                       <Text
                         className={styles.JobDetailSidebarCardTitle}
                         textStyle='lg'
@@ -773,7 +783,7 @@ const Job = ({
                           {course.method_value}
                         </Text>
                         <Text textStyle='lg' tagName='p'>
-                          {numberWithCommas(course.price)}
+                          {course.price != '0.00' ? numberWithCommas(course.price) : 'Free'}
                         </Text>
                       </div>
                       <div>
