@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import slugify from 'slugify'
-import { isMobile } from 'react-device-detect';
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
@@ -43,6 +42,7 @@ import JobDetailLoader from 'components/Loader/JobDetail'
 /* Helpers */
 import { titleCase } from 'helpers/formatter'
 import { getCookie } from 'helpers/cookies'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Styles */
 import styles from './MyJobs.module.scss'
@@ -85,6 +85,8 @@ const MyJobs = ({
   const prevScrollY = useRef(0)
   const router = useRouter()
   const dispatch = useDispatch()
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
   const isAppliedCategory = category === 'applied'
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
   
