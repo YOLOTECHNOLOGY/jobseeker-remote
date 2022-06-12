@@ -783,7 +783,7 @@ const Job = ({
                           {course.method_value}
                         </Text>
                         <Text textStyle='lg' tagName='p'>
-                          {numberWithCommas(course.price)}
+                          {course.price != '0.00' ? numberWithCommas(course.price) : 'Free'}
                         </Text>
                       </div>
                       <div>
