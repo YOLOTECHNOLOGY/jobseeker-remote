@@ -62,6 +62,7 @@ const MaterialBasicSelect = ({
             height: '44px',
             backgroundColor: greyBg ? '#E2E2E2' : 'white',
             lineHeight: '16px',
+            alignItems: 'self-end'
           },
         },
       },

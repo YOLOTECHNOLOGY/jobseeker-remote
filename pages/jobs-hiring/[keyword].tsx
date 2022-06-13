@@ -95,7 +95,7 @@ const renderPopularSearch = () => {
         title='Finance jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>
+        <Text textStyle='base' textColor='darkgrey'>
           Finance
         </Text>
       </Link>
@@ -105,7 +105,7 @@ const renderPopularSearch = () => {
         title='Sales jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>
+        <Text textStyle='base' textColor='darkgrey'>
           Sales
         </Text>
       </Link>
@@ -115,12 +115,12 @@ const renderPopularSearch = () => {
         title='Marketing jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>
+        <Text textStyle='base' textColor='darkgrey'>
           Marketing
         </Text>
       </Link>
       <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs' aTag>
-        <Text textStyle='lg' textColor='darkgrey'>
+        <Text textStyle='base' textColor='darkgrey'>
           Makati
         </Text>
       </Link>
@@ -130,12 +130,12 @@ const renderPopularSearch = () => {
         title='IT jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>
+        <Text textStyle='base' textColor='darkgrey'>
           IT
         </Text>
       </Link>
       <Link className={styles.link} to={`${jobsPageLink}/overseas-jobs`} title='Overseas jobs' aTag>
-        <Text textStyle='lg' textColor='darkgrey'>
+        <Text textStyle='base' textColor='darkgrey'>
           Overseas jobs
         </Text>
       </Link>
@@ -145,7 +145,7 @@ const renderPopularSearch = () => {
         title='Customer Service jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>
+        <Text textStyle='base' textColor='darkgrey'>
           Customer Service
         </Text>
       </Link>
@@ -155,8 +155,8 @@ const renderPopularSearch = () => {
         title='₱30K + jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>
-          ₱30K + jobs
+        <Text textStyle='base' textColor='darkgrey'>
+          ₱30K+ jobs
         </Text>
       </Link>
       <Link
@@ -165,7 +165,7 @@ const renderPopularSearch = () => {
         title='Full Time jobs'
         aTag
       >
-        <Text textStyle='lg' textColor='darkgrey'>
+        <Text textStyle='base' textColor='darkgrey'>
           Full Time jobs
         </Text>
       </Link>
