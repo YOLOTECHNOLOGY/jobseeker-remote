@@ -408,7 +408,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
               isLoading={isSubmitting} 
               onClick={handleSubmit(onSubmit)}
             >
-              <Text textStyle='xl' textColor='white' bold>
+              <Text textColor='white' bold>
                 Register and apply
               </Text>
             </MaterialButton>

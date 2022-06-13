@@ -30,6 +30,7 @@ import ReadMore from 'components/ReadMore'
 import JobDetailSidebarCard from 'components/Loader/JobDetailSidebarCard'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 import MaterialLocationField from 'components/MaterialLocationField'
+import ModalVerifyEmail from 'components/ModalVerifyEmail'
 // import AdSlot from 'components/AdSlot'
 
 import ModalShare from 'components/ModalShare'
@@ -37,7 +38,7 @@ import ModalReportJob from 'components/ModalReportJob'
 import QuickApplyModal from 'components/QuickApplyModal'
 
 /* Helpers */
-import { getCookie } from 'helpers/cookies'
+import { getCookie, setCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
 import { categoryParser, conditionChecker, getApplyJobLink } from 'helpers/jobPayloadFormatter'
 
@@ -55,6 +56,8 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { postReportRequest } from 'store/actions/reports/postReport'
 import { postSaveJobRequest } from 'store/actions/jobs/postSaveJob'
 import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
+
+import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
 
 /* Styles */
 import styles from './Job.module.scss'
@@ -113,6 +116,7 @@ const Job = ({
   const [suggestionList, setSuggestionList] = useState([])
   const [searchValue, setSearchValue] = useState('')
   const [locationValue, setLocationValue] = useState(null)
+  const [isShowModal, setIsShowModal] = useState(false)
 
   const [jobDetailUrl, setJobDetailUrl] = useState('/')
   const [companyUrl, setCompanyUrl] = useState('/')
@@ -296,6 +300,43 @@ const Job = ({
     updateUrl(queryParam, { sort: 2 })
   }
 
+  const handleCloseModal = (isOTPVerified=false) => {
+    setIsShowModal(false)
+
+    if (isOTPVerified) {
+      router.reload()
+    }
+  }
+
+  const handleVerifyEmailClick = async () => {
+    // revalidate verify email status
+    const response = await fetchUserOwnDetailService({accessToken: accessToken})
+    const userDetails = response?.data?.data
+    const isVerifiedEmail = userDetails?.is_email_verify
+
+    if (!isVerifiedEmail) { // email is not verified
+      setIsShowModal(true);
+    } else { // email is verified and user cookie is outdated
+      const userCookie = {
+        active_key: userDetails.active_key,
+        id: userDetails.id,
+        first_name: userDetails.first_name,
+        last_name: userDetails.last_name,
+        email: userDetails.email,
+        phone_num: userDetails.phone_num,
+        is_mobile_verified: userDetails.is_mobile_verified,
+        avatar: userDetails.avatar,
+        additional_info: userDetails.additional_info,
+        is_email_verify: true,
+        notice_period_id: userDetails.notice_period_id,
+        is_profile_completed: userDetails.is_profile_completed,
+      }
+
+      setCookie('user', userCookie)
+      router.reload()
+    }
+  }
+
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonicalUrl} />
@@ -328,7 +369,7 @@ const Job = ({
           onChange={onLocationSearch}
         />
         <MaterialButton variant='contained' capitalize onClick={() => onSearch()}>
-          <Text textStyle='lg' bold textColor='white'>
+          <Text bold textColor='white'>
             Search
           </Text>
         </MaterialButton>
@@ -401,11 +442,15 @@ const Job = ({
                             e.preventDefault()
                             setQuickApplyModalShow(true)
                           } else {
-                            router.push(applyJobLink)
+                            if (!userCookie.is_email_verify) {
+                              handleVerifyEmailClick()
+                            } else {
+                              router.push(applyJobLink)
+                            }
                           }
                         }}
                       >
-                        <Text textStyle='lg' textColor='white' bold>
+                        <Text textColor='white' bold>
                           Apply Now
                         </Text>
                       </MaterialButton>
@@ -419,7 +464,7 @@ const Job = ({
                   </Text>
                 )}
                 <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
-                  <Text textStyle='lg' textColor='primary' bold>
+                  <Text textColor='primary' bold>
                     {isSavedJob ? 'Saved' : 'Save Job'}
                   </Text>
                 </MaterialButton>
@@ -722,7 +767,7 @@ const Job = ({
                         className={styles.JobDetailSidebarCardApply}
                       >
                         <Text
-                          textStyle='lg'
+                          textStyle='base'
                           tagName='p'
                           bold
                           className={styles.JobDetailSidebarCardCTA}
@@ -788,7 +833,7 @@ const Job = ({
                       </div>
                       <div>
                         <Text
-                          textStyle='lg'
+                          textStyle='base'
                           tagName='p'
                           bold
                           className={styles.JobDetailSidebarCardCTA}
@@ -826,6 +871,13 @@ const Job = ({
         handleModalShow={setQuickApplyModalShow}
         config={config}
         isMobileSafari={isMobileSafari}
+      />
+
+      <ModalVerifyEmail
+        email={userCookie ? userCookie.email : ''}
+        isShowModal={isShowModal}
+        handleModal={handleCloseModal}
+        redirectLink={applyJobLink}
       />
     </Layout>
   )

@@ -156,7 +156,9 @@ const JobDetail = ({
         notice_period_id: userDetails.notice_period_id,
         is_profile_completed: userDetails.is_profile_completed,
       }
+
       setCookie('user', userCookie)
+      router.reload()
     }
   }
 
@@ -170,9 +172,12 @@ const JobDetail = ({
     }
   }
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (isOTPVerified) => {
     setIsShowModal(false)
-    router.reload()
+
+    if (isOTPVerified) {
+      router.reload()
+    }
   }
 
   const isCategoryApplied = category === 'applied'
@@ -271,14 +276,14 @@ const JobDetail = ({
                                 capitalize
                                 onClick={handleQuickApplyClick}
                               >
-                                <Text textStyle='lg' textColor='white' bold>
+                                <Text textColor='white' bold>
                                   Apply Now
                                 </Text>
                               </MaterialButton>
                             </Link>
                           ) : (
                             <MaterialButton variant='contained' capitalize disabled>
-                              <Text textStyle='lg' textColor='white' bold>
+                              <Text textColor='white' bold>
                                 Applied
                               </Text>
                             </MaterialButton>
@@ -308,7 +313,7 @@ const JobDetail = ({
                           }
                         }}
                       >
-                        <Text textStyle='lg' textColor='primaryBlue' bold>
+                        <Text textColor='primaryBlue' bold>
                           {isSavedJob || isCategorySaved ? 'Saved' : 'Save Job'}
                         </Text>
                       </MaterialButton>
@@ -522,6 +527,7 @@ const JobDetail = ({
         email={userCookie ? userCookie.email : ''}
         isShowModal={isShowModal}
         handleModal={handleCloseModal}
+        redirectLink={applyJobLink}
       />
     </React.Fragment>
   )

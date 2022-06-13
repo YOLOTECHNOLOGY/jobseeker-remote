@@ -35,7 +35,7 @@ const theme = createTheme({
             fontSize: '10px',
             transform: 'translate(14px, -10px) scale(1)',
           },
-          lineHeight: '16px'
+          lineHeight: '18px'
         },
         shrink: {
           fontSize: '10px',
@@ -45,6 +45,7 @@ const theme = createTheme({
           '&.MuiInputLabel-shrink': {
             fontSize: '10px',
           },
+          fontSize: '14px',
         },
       },
     },

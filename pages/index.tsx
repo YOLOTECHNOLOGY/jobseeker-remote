@@ -182,7 +182,7 @@ const Home = (props: HomeProps) => {
           title='Finance jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='primaryBlue'>
             Finance jobs
           </Text>
         </Link>
@@ -192,7 +192,7 @@ const Home = (props: HomeProps) => {
           title='Sales jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='primaryBlue'>
             Sales jobs
           </Text>
         </Link>
@@ -202,12 +202,12 @@ const Home = (props: HomeProps) => {
           title='Marketing jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='primaryBlue'>
             Marketing jobs
           </Text>
         </Link>
         <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs' aTag>
-          <Text textStyle='sm' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='primaryBlue'>
             Makati jobs
           </Text>
         </Link>
@@ -217,7 +217,7 @@ const Home = (props: HomeProps) => {
           title='IT jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='primaryBlue'>
             IT jobs
           </Text>
         </Link>
@@ -227,7 +227,7 @@ const Home = (props: HomeProps) => {
           title='Overseas jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='primaryBlue'>
             Overseas jobs
           </Text>
         </Link>
@@ -237,7 +237,7 @@ const Home = (props: HomeProps) => {
           title='Customer Service jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='primaryBlue'>
             Customer Service jobs
           </Text>
         </Link>
@@ -247,12 +247,12 @@ const Home = (props: HomeProps) => {
           title='₱30K + jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>
-            ₱30K + jobs
+          <Text textStyle='base' textColor='primaryBlue'>
+            ₱30K+ jobs
           </Text>
         </Link>
         <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs' aTag>
-          <Text textStyle='sm' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='primaryBlue'>
             Manila jobs
           </Text>
         </Link>
@@ -262,7 +262,7 @@ const Home = (props: HomeProps) => {
           title='Full Time jobs'
           aTag
         >
-          <Text textStyle='sm' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='primaryBlue'>
             Full Time jobs
           </Text>
         </Link>
@@ -318,7 +318,7 @@ const Home = (props: HomeProps) => {
                   onChange={onLocationSearch}
                 />
                 <MaterialButton variant='contained' capitalize onClick={() => onSearch()}>
-                  <Text textStyle='lg' bold textColor='white'>
+                  <Text bold textColor='white'>
                     Search
                   </Text>
                 </MaterialButton>

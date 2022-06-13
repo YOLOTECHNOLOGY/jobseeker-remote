@@ -35,13 +35,14 @@ const MaterialBasicSelect = ({
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            fontSize: '16px',
+            fontSize: '14px',
             transform: 'translate(14px, 10px) scale(1)',
             letterSpacing: '1px',
             '&.Mui-focused': {
               fontSize: '10px',
               transform: 'translate(14px, -10px) scale(1)',
             },
+            lineHeight: '26px'
           },
           shrink: {
             fontSize: '10px',
@@ -57,10 +58,11 @@ const MaterialBasicSelect = ({
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            fontSize: '16px',
+            fontSize: '14px',
             height: '44px',
             backgroundColor: greyBg ? '#E2E2E2' : 'white',
             lineHeight: '16px',
+            alignItems: 'self-end'
           },
         },
       },
