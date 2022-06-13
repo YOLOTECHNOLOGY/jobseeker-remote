@@ -328,7 +328,7 @@ const Job = ({
           onChange={onLocationSearch}
         />
         <MaterialButton variant='contained' capitalize onClick={() => onSearch()}>
-          <Text textStyle='lg' bold textColor='white'>
+          <Text bold textColor='white'>
             Search
           </Text>
         </MaterialButton>
@@ -405,7 +405,7 @@ const Job = ({
                           }
                         }}
                       >
-                        <Text textStyle='lg' textColor='white' bold>
+                        <Text textColor='white' bold>
                           Apply Now
                         </Text>
                       </MaterialButton>
@@ -419,7 +419,7 @@ const Job = ({
                   </Text>
                 )}
                 <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
-                  <Text textStyle='lg' textColor='primary' bold>
+                  <Text textColor='primary' bold>
                     {isSavedJob ? 'Saved' : 'Save Job'}
                   </Text>
                 </MaterialButton>
@@ -722,7 +722,7 @@ const Job = ({
                         className={styles.JobDetailSidebarCardApply}
                       >
                         <Text
-                          textStyle='lg'
+                          textStyle='base'
                           tagName='p'
                           bold
                           className={styles.JobDetailSidebarCardCTA}
@@ -788,7 +788,7 @@ const Job = ({
                       </div>
                       <div>
                         <Text
-                          textStyle='lg'
+                          textStyle='base'
                           tagName='p'
                           bold
                           className={styles.JobDetailSidebarCardCTA}

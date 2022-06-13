@@ -184,7 +184,7 @@ const ChangePassword = () => {
           type='submit'
           isLoading={isResettingPassword}
         >
-          <Text textStyle='xl' textColor='white' bold>
+          <Text textColor='white' bold>
             Reset Password
           </Text>
         </MaterialButton>

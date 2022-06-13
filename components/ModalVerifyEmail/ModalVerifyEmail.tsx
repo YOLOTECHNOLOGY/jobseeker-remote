@@ -192,7 +192,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
           handleModal(false)
         }}
       >
-        <Text textStyle='xl' textColor='white' bold>
+        <Text textColor='white' bold>
           Continue {timerCount > 1 ? '(' + (timerCount - 1) + ')' : ''}
         </Text>
       </MaterialButton>

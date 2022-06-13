@@ -271,14 +271,14 @@ const JobDetail = ({
                                 capitalize
                                 onClick={handleQuickApplyClick}
                               >
-                                <Text textStyle='lg' textColor='white' bold>
+                                <Text textColor='white' bold>
                                   Apply Now
                                 </Text>
                               </MaterialButton>
                             </Link>
                           ) : (
                             <MaterialButton variant='contained' capitalize disabled>
-                              <Text textStyle='lg' textColor='white' bold>
+                              <Text textColor='white' bold>
                                 Applied
                               </Text>
                             </MaterialButton>
@@ -308,7 +308,7 @@ const JobDetail = ({
                           }
                         }}
                       >
-                        <Text textStyle='lg' textColor='primaryBlue' bold>
+                        <Text textColor='primaryBlue' bold>
                           {isSavedJob || isCategorySaved ? 'Saved' : 'Save Job'}
                         </Text>
                       </MaterialButton>

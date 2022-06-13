@@ -91,6 +91,7 @@ const MaterialSelectCheckmarks = ({
             },
             backgroundColor: '#fff',
             top: '4px',
+            height: '44px',
             lineHeight: '16px'
           },
           shrink: {

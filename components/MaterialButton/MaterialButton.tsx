@@ -41,7 +41,7 @@ const MaterialButton = ({
       MuiButton: {
         styleOverrides: {
           root: {
-            fontSize: '13px',
+            fontSize: '14px',
             lineHeight: '16px'
           },
         },

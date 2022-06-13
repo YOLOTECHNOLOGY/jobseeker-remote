@@ -87,7 +87,9 @@ const MaterialSelectCheckmarksCustomSEO = ({
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            height: '48px',
+            height: '44px',
+            fontSize: '14px',
+            lineHeight: '16px',
             backgroundColor: greyBg ? '#E2E2E2' : 'white',
           },
         },
@@ -118,7 +120,8 @@ const MaterialSelectCheckmarksCustomSEO = ({
               transform: 'translate(14px, -10px) scale(1)',
             },
             backgroundColor: '#fff',
-            top: '4px'
+            top: '4px',
+            lineHeight: '18px'
           },
           shrink: {
             transform: 'translate(14px, -9px) scale(0.75)',

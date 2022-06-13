@@ -38,10 +38,10 @@ const MaterialAutocompleteLimitTags = ({
             height: '20px',
           },
           input: {
-            fontSize: '13px',
+            fontSize: '14px',
           },
           option:{
-            fontSize:'13px'
+            fontSize:'14px'
           }
         },
       },

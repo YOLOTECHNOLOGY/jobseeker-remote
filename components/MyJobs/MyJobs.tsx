@@ -318,7 +318,7 @@ const MyJobs = ({
           <Link
             to='/jobs-hiring/job-search'
           >
-            <Text textStyle='lg' bold textColor='white'>Back to job search</Text>
+            <Text bold textColor='white'>Back to job search</Text>
           </Link>
         </MaterialButton>
       </div>

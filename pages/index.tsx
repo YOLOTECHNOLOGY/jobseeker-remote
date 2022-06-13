@@ -318,7 +318,7 @@ const Home = (props: HomeProps) => {
                   onChange={onLocationSearch}
                 />
                 <MaterialButton variant='contained' capitalize onClick={() => onSearch()}>
-                  <Text textStyle='lg' bold textColor='white'>
+                  <Text bold textColor='white'>
                     Search
                   </Text>
                 </MaterialButton>

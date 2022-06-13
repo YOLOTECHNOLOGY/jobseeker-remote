@@ -16,7 +16,7 @@ const textFieldTheme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          fontSize: '16px',
+          fontSize: '14px',
           letterSpacing: '1px',
           backgroundColor: 'white',
           height: '44px'
@@ -26,7 +26,7 @@ const textFieldTheme = createTheme({
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          fontSize: '16px',
+          fontSize: '14px',
           letterSpacing: '1px',
           transform: 'translate(14px, 10px) scale(1)',
           '&.Mui-focused': {
@@ -34,7 +34,8 @@ const textFieldTheme = createTheme({
             transform: 'translate(14px, -10px) scale(1)',
           },
           top: '4px',
-          lineHeight: '16px'
+          height: '44px',
+          lineHeight: '18px'
         },
         shrink: {
           fontSize: '10px',

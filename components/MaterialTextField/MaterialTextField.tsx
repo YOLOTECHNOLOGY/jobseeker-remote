@@ -29,7 +29,7 @@ const theme = createTheme({
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          fontSize: '16px',
+          fontSize: '14px',
           transform: 'translate(14px, 10px) scale(1)',
           letterSpacing: '1px',
           '&.Mui-focused': {
