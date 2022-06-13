@@ -178,7 +178,7 @@ const Home = (props: HomeProps) => {
       <div className={styles.quickLinks}>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search?industry=accounting-finance&category=accounting-finance,sales-insurance-financial-services`}
+          to={`${jobsPageLink}/accounting-finance-jobs`}
           title='Finance jobs'
           aTag
         >
@@ -188,7 +188,7 @@ const Home = (props: HomeProps) => {
         </Link>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search?category=marketing-business-development,sales-corporate,sales-insurance-financial-services,sales-engineering-technical-it`}
+          to={`${jobsPageLink}/sales-marketing-jobs`}
           title='Sales jobs'
           aTag
         >
@@ -198,7 +198,7 @@ const Home = (props: HomeProps) => {
         </Link>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search?category=marketing-business-development,telesales-telemarketing,digital-marketing`}
+          to={`${jobsPageLink}/sales-marketing-jobs`}
           title='Marketing jobs'
           aTag
         >
@@ -213,7 +213,7 @@ const Home = (props: HomeProps) => {
         </Link>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search?category=computer-information-technology,technical-helpdesk-support,sales-engineering-technical-it`}
+          to={`${jobsPageLink}/computer-information-technology-jobs`}
           title='IT jobs'
           aTag
         >
@@ -243,7 +243,7 @@ const Home = (props: HomeProps) => {
         </Link>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search?salary=30k-60k,60k-80k,80k-100k,100k-200k,above-200k`}
+          to={`${jobsPageLink}/salary=30k-60k,60k-80k,80k-100k,100k-200k,above-200k`}
           title='₱30K + jobs'
           aTag
         >
