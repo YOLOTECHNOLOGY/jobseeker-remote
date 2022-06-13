@@ -379,7 +379,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const sortOption = val.length > 0 ? 2 : 1
     const isClear = val.length === 0
 
-    setSort(sortOption)
     const {
       searchQuery,
       filterParamsObject,
@@ -430,20 +429,26 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             let newData = { ...data }
             let newSubList = data.sub_list.map((subListData) => {
               // if checked === true, set subOption isChecked = true
-              if (categorySelected.includes(subListData['seo-value'])) {
+              if (
+                categorySelected.includes(
+                  subListData['seo-value']) || predefinedQuery === subListData['seo-value']
+              ) {
                 // if (subListData['seo-value'] === value[0]['seo-value']) {
                 return {
                   ...subListData,
                   isChecked: true,
                 }
-              } else {
+              }
+              else {
                 return {
                   ...subListData,
                   isChecked: false,
                 }
               }
             })
-            if (categorySelected.includes(data['seo-value'])) {
+            if (
+              categorySelected.includes(data['seo-value']) || predefinedQuery === data['seo-value']
+            ) {
               // if (data['seo-value'] === value[0]['seo-value']){
               newSubList = data.sub_list.map((data) => {
                 return {
@@ -456,7 +461,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                 isChecked: true,
                 sub_list: newSubList,
               }
-            } else {
+            }
+            else {
               newData = {
                 ...newData,
                 isChecked: false,
@@ -476,6 +482,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           break
       }
     }
+    setSort(sortOption)
     updateUrl(searchQuery, filterParamsObject)
   }
 
@@ -566,6 +573,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setIsCategoryReset(true)
     if (searchMatch) setSearchValue('')
     setMoreFilterReset(true)
+    setClientDefaultValues({})
 
     // if query matches filter, on reset, remove it from query
     if ((searchMatch && locationMatch) || (searchMatch && !locationMatch)) {
@@ -837,6 +845,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         onShowFilter={handleShowFilter}
         moreFilterReset={moreFilterReset}
         isShowingEmailAlert={accessToken && !userCookie?.is_email_verify}
+        setClientDefaultValues={setClientDefaultValues}
       />
       {/* <div className={breakpointStyles.hideOnTabletAndDesktop}>
         {hasMoreFilters && (

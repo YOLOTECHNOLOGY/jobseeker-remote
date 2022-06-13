@@ -37,6 +37,7 @@ interface NavSearchFilterProps {
   displayQuickLinks: Boolean
   moreFilterReset?: boolean
   isShowingEmailAlert: boolean
+  setClientDefaultValues: Function
 }
 
 interface SearchFilters {
@@ -67,7 +68,8 @@ const NavSearchFilter = ({
   displayQuickLinks,
   onResetFilter,
   moreFilterReset = false,
-  isShowingEmailAlert
+  isShowingEmailAlert,
+  setClientDefaultValues,
 }: NavSearchFilterProps) => {
   const router = useRouter()
   const { keyword } = router.query
@@ -78,7 +80,7 @@ const NavSearchFilter = ({
   const jobTypeList = config.inputs.job_types
 
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
-    key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
+    ...range,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
   }))
 
@@ -87,7 +89,11 @@ const NavSearchFilter = ({
   const sortRef = useRef(null)
   const { register, handleSubmit, reset } = useForm()
   const cx = classNames.bind(styles)
-  const isShowFilterClass = cx({ isShow: isShowFilter, displayQuickLinks: displayQuickLinks, isShowingEmailAlert: isShowingEmailAlert })
+  const isShowFilterClass = cx({
+    isShow: isShowFilter,
+    displayQuickLinks: displayQuickLinks,
+    isShowingEmailAlert: isShowingEmailAlert,
+  })
   const [selectedCategories, setSelectedCategories] = useState([])
   const [displayMobileSort, setDisplayMobileSort] = useState(false)
 
@@ -118,6 +124,7 @@ const NavSearchFilter = ({
     }
     if (allFalsyValues.length !== 0 || selectedCategories) {
       urlFilterParameterBuilder(updatedData)
+      setClientDefaultValues(data)
     }
     onShowFilter()
   }
@@ -145,9 +152,7 @@ const NavSearchFilter = ({
 
     router.push(
       {
-        pathname: `/jobs-hiring/${
-          searchQuery ? searchQuery : 'job-search'
-        }`,
+        pathname: `/jobs-hiring/${searchQuery ? searchQuery : 'job-search'}`,
         query: {
           ...filterParamsObject,
         },
@@ -223,7 +228,7 @@ const NavSearchFilter = ({
                   if (isRadioButton) {
                     return (
                       <label key={i} className={styles.searchFilterOption}>
-                        <input type='radio' value={option['seo-value']} {...register(fieldName)} />
+                        <input type='radio' value={option['value']} {...register(fieldName)} />
                         <Text textStyle='lg'>{option.label}</Text>
                       </label>
                     )
@@ -231,7 +236,16 @@ const NavSearchFilter = ({
 
                   return (
                     <label key={i} className={styles.searchFilterOption}>
-                      <input type='checkbox' value={option['seo-value']} {...register(fieldName)} />
+                      <input
+                        type='checkbox'
+                        value={option['seo-value']}
+                        defaultChecked={
+                          urlDefaultValues[fieldName]
+                            ? urlDefaultValues[fieldName].includes(option['seo-value'])
+                            : false
+                        }
+                        {...register(fieldName)}
+                      />
                       <Text textStyle='lg'>{option.value}</Text>
                     </label>
                   )
@@ -369,11 +383,11 @@ const NavSearchFilter = ({
         </div>
         <div className={styles.searchFilterFooter}>
           <div className={styles.searchFilterReset} onClick={handleResetFilter}>
-          <Button>
-            <Text textStyle='base' textColor='primary' bold>
-              Reset Filter
-            </Text>
-          </Button>
+            <Button>
+              <Text textStyle='base' textColor='primary' bold>
+                Reset Filter
+              </Text>
+            </Button>
           </div>
           <Button className={styles.searchFilterApply} primary>
             <Text textStyle='base' textColor='white' bold>
