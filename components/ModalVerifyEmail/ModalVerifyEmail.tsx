@@ -198,7 +198,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal, redirectLink=null }
         variant='contained'
         isLoading={isOTPVerifying}
         onClick={() => {
-          handleModal(false)
+          handleModal(isOTPVerified)
         }}
       >
         <Text textColor='white' bold>

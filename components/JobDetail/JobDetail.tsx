@@ -156,7 +156,9 @@ const JobDetail = ({
         notice_period_id: userDetails.notice_period_id,
         is_profile_completed: userDetails.is_profile_completed,
       }
+
       setCookie('user', userCookie)
+      router.reload()
     }
   }
 
@@ -170,9 +172,12 @@ const JobDetail = ({
     }
   }
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (isOTPVerified) => {
     setIsShowModal(false)
-    router.reload()
+
+    if (isOTPVerified) {
+      router.reload()
+    }
   }
 
   const isCategoryApplied = category === 'applied'
