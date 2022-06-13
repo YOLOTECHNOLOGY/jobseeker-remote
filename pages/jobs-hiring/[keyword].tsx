@@ -566,6 +566,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setIsCategoryReset(true)
     if (searchMatch) setSearchValue('')
     setMoreFilterReset(true)
+    setClientDefaultValues({})
 
     // if query matches filter, on reset, remove it from query
     if ((searchMatch && locationMatch) || (searchMatch && !locationMatch)) {
@@ -837,6 +838,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         onShowFilter={handleShowFilter}
         moreFilterReset={moreFilterReset}
         isShowingEmailAlert={accessToken && !userCookie?.is_email_verify}
+        setClientDefaultValues={setClientDefaultValues}
       />
       {/* <div className={breakpointStyles.hideOnTabletAndDesktop}>
         {hasMoreFilters && (
