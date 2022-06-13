@@ -790,6 +790,13 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         !filterQuery
       ) {
         query = appendGeneralQueryPattern()
+        if (Object.keys(filterParamsObject).length > 0){
+          for (const [key, value] of Object.entries(filterParamsObject)){
+            if (predefinedQuery  === value){
+              delete filterParamsObject[key]
+            }
+          }
+        }
       }
       // handle all onKeywordSearch logic when field === 'query',
       // separate logic on its own because keyword search will always take precendance over filters
