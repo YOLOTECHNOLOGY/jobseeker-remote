@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 /* Components */
 import Modal from 'components/Modal'
@@ -24,9 +25,11 @@ interface ModalVerifyEmailProps {
   email: string
   isShowModal?: boolean
   handleModal?: Function
+  redirectLink?: string
 }
 
-const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailProps) => {
+const ModalVerifyEmail = ({ email, isShowModal, handleModal, redirectLink=null }: ModalVerifyEmailProps) => {
+  const router = useRouter()
   const [otp, setOtp] = useState<string>('') // Text Input field state
   const [timerCount, setTimerCount] = useState<number>(-1) // timer counter
   const [canRequestOTP, setCanRequestOTP] = useState<boolean>(true) // if an otp is requested or timer countdown starts
@@ -83,10 +86,16 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
   useEffect(() => {
     if (isOTPVerified) {
       setOTPSuccessMessage('Successfully verified email')
+
       setTimeout(() => {
         setOTPSuccessMessage('')
         setIsVerifiedEmail(true)
+
+        if (redirectLink) {
+          router.push(redirectLink)
+        }
       }, 1000)
+
     }
   }, [isOTPVerified])
 
@@ -147,7 +156,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
         disabled={!canRequestOTP || isVerifyingOTP || isOTPVerified}
         onClick={handleRequestOtp}
       >
-        <Text textStyle='xl' textColor='white' bold>
+        <Text textColor='white' bold>
           Get OTP {timerCount > 1 ? '(' + (timerCount - 1) + ')' : ''}
         </Text>
       </MaterialButton>

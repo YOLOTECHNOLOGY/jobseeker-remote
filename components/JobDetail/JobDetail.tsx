@@ -522,6 +522,7 @@ const JobDetail = ({
         email={userCookie ? userCookie.email : ''}
         isShowModal={isShowModal}
         handleModal={handleCloseModal}
+        redirectLink={applyJobLink}
       />
     </React.Fragment>
   )

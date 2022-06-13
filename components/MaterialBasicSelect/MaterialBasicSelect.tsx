@@ -42,6 +42,7 @@ const MaterialBasicSelect = ({
               fontSize: '10px',
               transform: 'translate(14px, -10px) scale(1)',
             },
+            lineHeight: '26px'
           },
           shrink: {
             fontSize: '10px',
@@ -60,7 +61,7 @@ const MaterialBasicSelect = ({
             fontSize: '14px',
             height: '44px',
             backgroundColor: greyBg ? '#E2E2E2' : 'white',
-            // lineHeight: '16px',
+            lineHeight: '16px',
           },
         },
       },
