@@ -961,6 +961,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       for (const [key, value] of Object.entries(matchedLocation)) {
         defaultValues[key] = value[0]
+        // to prevent cases where /jobs-hiring/makati-jobs, the query & location is populated with values
+        if (defaultValues.urlQuery === value[0]['seo_value']){
+          defaultValues.urlQuery = ''
+        }
       }
 
       if (defaultValues.category) {
