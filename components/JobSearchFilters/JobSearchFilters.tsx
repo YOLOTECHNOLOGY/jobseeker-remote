@@ -78,7 +78,7 @@ const NavSearchFilter = ({
   const jobTypeList = config.inputs.job_types
 
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
-    key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
+    ...range,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
   }))
 
