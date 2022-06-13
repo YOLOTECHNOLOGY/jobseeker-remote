@@ -223,7 +223,7 @@ const NavSearchFilter = ({
                   if (isRadioButton) {
                     return (
                       <label key={i} className={styles.searchFilterOption}>
-                        <input type='radio' value={option['seo-value']} {...register(fieldName)} />
+                        <input type='radio' value={option['value']} {...register(fieldName)} />
                         <Text textStyle='lg'>{option.label}</Text>
                       </label>
                     )
