@@ -290,7 +290,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     for (const [key, value] of Object.entries(matchedLocation)) {
       payload = {
         ...payload,
-        [key]: payload[key] ? (payload[key] += value[0].value) : value[0].value,
+        [key]:
+          payload[key] && payload[key] !== value[0].value
+            ? (payload[key] += value[0].value)
+            : value[0].value,
       }
     }
 
@@ -961,7 +964,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       for (const [key, value] of Object.entries(matchedLocation)) {
         defaultValues[key] = value[0]
-        // to prevent cases where /jobs-hiring/makati-jobs, the query & location is populated with values
+        // to prevent cases where /jobs-hiring/makati-jobs, whereby the query & location is populated with values
         if (defaultValues.urlQuery === value[0]['seo_value']){
           defaultValues.urlQuery = ''
         }
