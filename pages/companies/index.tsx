@@ -83,7 +83,7 @@ const Companies = () => {
             className={styles.searchCompanyTitle}
             textColor='primaryBlue'
           >
-            Find great companies in Phillipines
+            Find great companies in Philippines
           </Text>
           <SearchCompanyField onKeywordSearch={handleKeywordSearch} />
         </div>
