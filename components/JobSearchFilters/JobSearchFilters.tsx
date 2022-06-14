@@ -58,7 +58,6 @@ type optionsType = {
 
 const NavSearchFilter = ({
   urlDefaultValues,
-  categories,
   isShowFilter,
   onShowFilter,
   displayQuickLinks,
@@ -225,20 +224,31 @@ const NavSearchFilter = ({
                   }
 
                   return (
-                    <label key={i} className={styles.searchFilterOption}>
-                      <input
-                        type='checkbox'
-                        value={option['seo-value']}
-                        defaultChecked={ urlDefaultValues[fieldName] && urlDefaultValues[fieldName].includes(option['seo-value'])}
-                        // defaultChecked={
-                        //   urlDefaultValues[fieldName]
-                        //     ? urlDefaultValues[fieldName].includes(option['seo-value'])
-                        //     : false
-                        // }
-                        {...register(fieldName)}
-                      />
-                      <Text textStyle='lg'>{option.value}</Text>
-                    </label>
+                    <React.Fragment key={i}>
+                      {i === 0 && (
+                        // injecting an empty checkbox fixes weird bug where selecting the second checkbox will auto select first checkbox
+                        <label key='empty' style={{display:'none'}}>
+                          <input
+                            type='checkbox'
+                            value={option['seo-value']}
+                            {...register(fieldName)}
+                          />
+                          <Text textStyle='lg'>Empty</Text>
+                        </label>
+                      )}
+                      <label key={i} className={styles.searchFilterOption}>
+                        <input
+                          type='checkbox'
+                          value={option['seo-value']}
+                          defaultChecked={
+                            urlDefaultValues[fieldName] &&
+                            urlDefaultValues[fieldName].includes(option['seo-value'])
+                          }
+                          {...register(fieldName)}
+                        />
+                        <Text textStyle='lg'>{option.value}</Text>
+                      </label>
+                    </React.Fragment>
                   )
                 })}
           </div>
