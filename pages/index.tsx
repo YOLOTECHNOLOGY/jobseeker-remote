@@ -285,7 +285,7 @@ const Home = (props: HomeProps) => {
               textColor='primaryBlue'
               bold
             >
-              Find Jobs for Professionals in Phillipines
+              Find Jobs for Professionals in Philippines
             </Text>
             <MetaText tagName='h1'>Career Platform for Professionals in Philippines</MetaText>
             <div className={styles.searchSection}>

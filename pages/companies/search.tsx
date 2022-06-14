@@ -97,7 +97,7 @@ const Search = ({ defaultQuery }: SearchProps) => {
           <Text textStyle='xxxl' tagName='h1' bold className={styles.searchCompanyTitle}>
             Search Companies
           </Text>
-          <MetaText tagName='h1'>Find great companies in Phillipines</MetaText>
+          <MetaText tagName='h1'>Find great companies in Philippines</MetaText>
           <SearchCompanyField defaultQuery={defaultQuery} onKeywordSearch={handleKeywordSearch} />
         </div>
         <div className={styles.searchCompanyQuery}>
