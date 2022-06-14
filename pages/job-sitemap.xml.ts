@@ -6,7 +6,7 @@ const JobSitemap = () => {
 
 export const getServerSideProps = async ({ res }) => {
   const response = await axios.get(
-    process.env.CUSTOM_NODE_ENV === 'production'
+    process.env.ENV === 'production'
       ? 'https://assets.bossjob.com/job-sitemap.xml'
       : 'https://dev-assets.bossjob.com/job-sitemap.xml'
   )
