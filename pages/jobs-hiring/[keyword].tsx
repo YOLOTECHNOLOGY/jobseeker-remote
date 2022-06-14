@@ -151,7 +151,7 @@ const renderPopularSearch = () => {
       </Link>
       <Link
         className={styles.link}
-        to={`${jobsPageLink}/salary=30k-60k,60k-80k,80k-100k,100k-200k,above-200k`}
+        to={`${jobsPageLink}/job-search?salary=30k-60k,60k-80k,80k-100k,100k-200k,above-200k`}
         title='₱30K + jobs'
         aTag
       >
