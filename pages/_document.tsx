@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import Script from 'next/script'
 
 export default class CustomDocument extends Document {
   render() {
@@ -7,20 +6,20 @@ export default class CustomDocument extends Document {
       <Html>
         <Head>
           {/* Google Ad Manager */}
-          <Script defer src='https://securepubads.g.doubleclick.net/tag/js/gpt.js' />
-          <Script
+          <script defer src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'></script>
+          <script
             dangerouslySetInnerHTML={{
               __html: `
             window.googletag = window.googletag || {cmd: []}
           `,
             }}
-          />
+          ></script>
           {/* Google AdSense */}
-          <Script
+          <script
             data-ad-client='ca-pub-4245733463545444'
             defer
             src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
-          />
+          ></script>
           {/* <script
             dangerouslySetInnerHTML={{
               __html: `
