@@ -172,12 +172,8 @@ const JobDetail = ({
     }
   }
 
-  const handleCloseModal = (isOTPVerified) => {
+  const handleCloseModal = () => {
     setIsShowModal(false)
-
-    if (isOTPVerified) {
-      router.reload()
-    }
   }
 
   const isCategoryApplied = category === 'applied'
