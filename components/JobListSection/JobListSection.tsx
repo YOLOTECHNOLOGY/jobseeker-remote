@@ -183,7 +183,7 @@ const JobListSection = ({
 
   const handleFormatWindowUrl = (pathname, name, id) => {
     if (typeof window !== 'undefined') {
-      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!:/@]/g })}-${id}`
+      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!#:/@]/g })}-${id}`
     }
     return ''
   }

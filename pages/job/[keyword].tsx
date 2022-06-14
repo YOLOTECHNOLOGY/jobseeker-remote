@@ -167,7 +167,7 @@ const Job = ({
     if (typeof window !== 'undefined') {
       return `${window.location.origin}/${pathname}/${slugify(name || '', {
         lower: true,
-        remove: /[*+~.()'"!:/@]/g,
+        remove: /[*+~.()'"!#:/@]/g,
       })}-${id}`
     }
     return ''
