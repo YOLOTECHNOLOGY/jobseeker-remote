@@ -757,7 +757,9 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
   filterCount = uniqueList.length
 
   if (filterCount === 0) {
-    if (searchQuery) {
+    if (field === 'query' && isClear) {
+      query = appendGeneralQueryPattern()
+    } else if (searchQuery) {
       query = appendSingleQueryPattern(searchQuery)
     } else {
       // it means there is no predefinedQuery && predefinedLocation
@@ -767,7 +769,14 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     if (isClear) {
       // if field is location && isClear is true
       if (field === 'location') {
-        if (searchQuery && predefinedLocation) {
+        if (
+          searchQuery &&
+          predefinedLocation &&
+          searchQuery === predefinedLocation &&
+          searchQuery === locationQuery
+        ) {
+          query = appendGeneralQueryPattern()
+        } else if (searchQuery && predefinedLocation) {
           query = appendSingleQueryPattern(searchQuery)
         }
       } else if (field === 'category') {
@@ -783,6 +792,25 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       } else if (searchQuery && !predefinedQuery && locationQuery && !filterQuery) {
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
       } else if (
+        (!searchQuery &&
+        !predefinedQuery &&
+        !predefinedLocation &&
+        locationQuery &&
+        !filterQuery
+        ) || (!searchQuery && !predefinedQuery && !filterQuery && predefinedLocation && locationQuery && predefinedLocation === locationQuery)
+      ) {
+        query = appendSingleQueryPattern(locationQuery)
+      } else if (
+        (!searchQuery &&
+          predefinedQuery &&
+          !predefinedLocation &&
+          !locationQuery &&
+          filterQuery &&
+          predefinedQuery === filterQuery) ||
+        (!searchQuery && !predefinedQuery && !predefinedLocation && !locationQuery && filterQuery)
+      ) {
+        query = appendSingleQueryPattern(filterQuery)
+      } else if (
         !searchQuery &&
         predefinedQuery &&
         !predefinedLocation &&
@@ -790,9 +818,9 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         !filterQuery
       ) {
         query = appendGeneralQueryPattern()
-        if (Object.keys(filterParamsObject).length > 0){
-          for (const [key, value] of Object.entries(filterParamsObject)){
-            if (predefinedQuery  === value){
+        if (Object.keys(filterParamsObject).length > 0) {
+          for (const [key, value] of Object.entries(filterParamsObject)) {
+            if (predefinedQuery === value) {
               delete filterParamsObject[key]
             }
           }
@@ -916,7 +944,12 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     } else if (searchQuery) {
       if (searchQuery === locationQuery && filterQuery) {
         query = appendDoubleQueryPattern(filterQuery, searchQuery)
-      } else if (searchQuery === locationQuery && predefinedQuery && searchQuery !== predefinedQuery && !filterQuery ) {
+      } else if (
+        searchQuery === locationQuery &&
+        predefinedQuery &&
+        searchQuery !== predefinedQuery &&
+        !filterQuery
+      ) {
         query = appendDoubleQueryPattern(predefinedQuery, locationQuery)
       } else if (
         predefinedQuery &&
@@ -987,6 +1020,8 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     }
   } else {
     if (searchQuery && locationQuery && searchQuery !== locationQuery) {
+      query = appendSingleQueryPattern(searchQuery)
+    } else if (searchQuery && field === 'query') {
       query = appendSingleQueryPattern(searchQuery)
     } else {
       query = appendGeneralQueryPattern()
@@ -1342,22 +1377,22 @@ const getApplyJobLink = (job, user, accessToken = null) => {
 const mapSeoValueToGetValue = (value, configArray, hasSubList, isLocation) => {
   const valueToReturn = []
   // if config hasSubList e.g: category
-  if (hasSubList){
+  if (hasSubList) {
     value.forEach((v) => {
       configArray.forEach((option) => {
         if (option['seo-value'] === v) {
           valueToReturn.push(option.value)
-        }else{
-          option.sub_list.forEach((subOption)=>{
-            if (subOption['seo-value'] === v){
+        } else {
+          option.sub_list.forEach((subOption) => {
+            if (subOption['seo-value'] === v) {
               valueToReturn.push(subOption.value)
             }
           })
         }
       })
     })
-  }else{
-    if (isLocation){
+  } else {
+    if (isLocation) {
       value.forEach((v) => {
         configArray.forEach((option) => {
           if (option['seo_value'] === v) {
@@ -1365,7 +1400,7 @@ const mapSeoValueToGetValue = (value, configArray, hasSubList, isLocation) => {
           }
         })
       })
-    }else{
+    } else {
       value.forEach((v) => {
         configArray.forEach((option) => {
           if (option['seo-value'] === v) {
