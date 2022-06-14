@@ -752,8 +752,14 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       if (field === 'category' && isClear) delete filterParamsObject['category']
       if (field === 'moreFilters' && isClear) {
         // delete all filters under more filters section, isClear is an array of strings if true for moreFilters
-        isClear.forEach((val)=> 
+        isClear.forEach((val)=> {
+          const removeValueFromUniqueList = uniqueList.filter((uniq)=> uniq !== filterParamsObject[val])
+          uniqueList = removeValueFromUniqueList
+          if (filterQuery === filterParamsObject[val]){
+            filterQuery = ''
+          }
           delete filterParamsObject[val]
+        }
         )
       }
     }
@@ -830,6 +836,8 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
             }
           }
         }
+      }else {
+        appendGeneralQueryPattern()
       }
       // handle all onKeywordSearch logic when field === 'query',
       // separate logic on its own because keyword search will always take precendance over filters
