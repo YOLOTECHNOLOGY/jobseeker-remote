@@ -123,7 +123,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             function initialize() {	
               FB.init({	
                 appId            : ${
-                  process.env.CUSTOM_NODE_ENV === 'production'
+                  process.env.ENV === 'production'
                     ? '2026042927653653'
                     : '2111002932479859'
                 },
