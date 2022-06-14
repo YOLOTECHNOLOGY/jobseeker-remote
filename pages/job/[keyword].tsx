@@ -639,7 +639,7 @@ const Job = ({
           {jobDetail?.recruiter && (
             <div className={styles.JobDetailRecruiter}>
               <Text textStyle='xl' bold>
-                Connect directly to job poster after applying
+                Connect directly to recruiter after applying
               </Text>
               <div className={styles.JobDetailRecruiterInfo}>
                 <div
@@ -721,9 +721,9 @@ const Job = ({
                         external
                       >
                         <img
-                          src={jobDetail?.company?.logo}
+                          src={job?.company_logo}
                           className={styles.JobDetailSidebarCardImage}
-                          alt={`${job?.company_logo} logo`}
+                          alt={`${job?.company_name} logo`}
                         />
                         <Text
                           className={styles.JobDetailSidebarCardTitle}
