@@ -748,9 +748,14 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         }
       }
 
-      // if field is location and isClear is true
       if (field === 'location' && isClear) delete filterParamsObject['location']
       if (field === 'category' && isClear) delete filterParamsObject['category']
+      if (field === 'moreFilters' && isClear) {
+        // delete all filters under more filters section, isClear is an array of strings if true for moreFilters
+        isClear.forEach((val)=> 
+          delete filterParamsObject[val]
+        )
+      }
     }
   })
 

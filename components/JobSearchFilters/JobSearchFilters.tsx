@@ -11,13 +11,9 @@ import { useSelector } from 'react-redux'
 import Text from 'components/Text'
 import Button from 'components/Button'
 import Accordian from 'components/Accordian'
-// import MaterialAutocompleteLimitTags from 'components/MaterialAutocompleteLimitTags'
 
 /* Helpers */
 import {
-  // conditionChecker,
-  // getPredefinedParamsFromUrl,
-  // getLocationList,
   userFilterSelectionDataParser,
 } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
@@ -94,7 +90,6 @@ const NavSearchFilter = ({
     displayQuickLinks: displayQuickLinks,
     isShowingEmailAlert: isShowingEmailAlert,
   })
-  const [selectedCategories, setSelectedCategories] = useState([])
   const [displayMobileSort, setDisplayMobileSort] = useState(false)
 
   useEffect(() => {
@@ -102,10 +97,6 @@ const NavSearchFilter = ({
       handleResetFilter()
     }
   }, [moreFilterReset])
-
-  useEffect(() => {
-    setSelectedCategories(categories)
-  }, [categories])
 
   useEffect(() => {
     // set defaultValues after config has been initialised
@@ -116,21 +107,23 @@ const NavSearchFilter = ({
   }, [config, keyword])
 
   const handleApplyFilter = (data) => {
-    const values = Object.values(data)
-    const allFalsyValues = values.filter((val) => !!val)
     const updatedData = {
       ...data,
       sort: [data.sort || router.query.sort],
     }
-    if (allFalsyValues.length !== 0 || selectedCategories) {
-      urlFilterParameterBuilder(updatedData)
-      setClientDefaultValues(data)
+    const clearFilter = []
+    for (const [key, value] of Object.entries<any>(data)) {
+      if (value && value.length === 0) {
+        clearFilter.push(key)
+      }
     }
+    urlFilterParameterBuilder(updatedData, clearFilter)
+    setClientDefaultValues(data)
     onShowFilter()
   }
 
   const handleResetFilter = () => {
-    setSelectedCategories([])
+    // setSelectedCategories([])
 
     reset({})
     onResetFilter({})
@@ -142,12 +135,13 @@ const NavSearchFilter = ({
   //   return { ...newObject }
   // }
 
-  const urlFilterParameterBuilder = (data) => {
+  const urlFilterParameterBuilder = (data, isClear) => {
     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
       'moreFilters',
       data,
       router.query,
-      config
+      config,
+      isClear = isClear.length > 0 ? isClear : false
     )
 
     router.push(
@@ -161,10 +155,6 @@ const NavSearchFilter = ({
       { shallow: true }
     )
   }
-
-  // const handleSpecializationChange = (event, value) => {
-  //   setSelectedCategories(value)
-  // }
 
   const SearchFilters = ({
     title,
@@ -239,11 +229,12 @@ const NavSearchFilter = ({
                       <input
                         type='checkbox'
                         value={option['seo-value']}
-                        defaultChecked={
-                          urlDefaultValues[fieldName]
-                            ? urlDefaultValues[fieldName].includes(option['seo-value'])
-                            : false
-                        }
+                        defaultChecked={ urlDefaultValues[fieldName] && urlDefaultValues[fieldName].includes(option['seo-value'])}
+                        // defaultChecked={
+                        //   urlDefaultValues[fieldName]
+                        //     ? urlDefaultValues[fieldName].includes(option['seo-value'])
+                        //     : false
+                        // }
                         {...register(fieldName)}
                       />
                       <Text textStyle='lg'>{option.value}</Text>
