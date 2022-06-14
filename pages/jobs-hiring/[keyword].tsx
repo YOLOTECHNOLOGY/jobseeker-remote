@@ -810,7 +810,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             <div className={styles.topCompanies}>
               {topCompanies &&
                 topCompanies.map((company, i) => {
-                  if (i < 8) {
+                  if (i < 15) {
                     return (
                       <Link
                         key={company.id}
