@@ -377,9 +377,7 @@ const MyJobs = ({
           <div className={styles.container}>
             <div className={styles.MyJobsListOptionContent}>
               {!isMobile && (
-                <Text textStyle='lg'>
-                  <Text textStyle='lg' bold>{jobNumStart.toLocaleString()}-{jobNumEnd.toLocaleString()}</Text> of {totalNum ? totalNum : 0} jobs
-                </Text>
+                <Text textStyle='base' bold>{jobNumStart.toLocaleString()}-{jobNumEnd.toLocaleString()} of {totalNum ? totalNum : 0} jobs</Text>
               )}
             </div>
           </div>

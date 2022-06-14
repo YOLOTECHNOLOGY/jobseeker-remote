@@ -49,21 +49,23 @@
     height: 29px;
   }
 
-  img {
-    // width: 99px;
-    height: 29px;
-    object-fit: contain;
-  }
-
   &Image {
+    width: 24px;
+    height: 30px;
+    object-fit: contain;
     display: none;
+    
     @include msd {
       display: block;
     }
   }
 
   &ImageDesktop {
+    width: 100px;
+    height: 29px;
+    object-fit: contain;
     display: block;
+
     @include msd {
       display: none;
     }
