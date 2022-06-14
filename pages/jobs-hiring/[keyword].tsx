@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
@@ -828,7 +829,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                           arrow
                         >
                           <span>
-                            <img src={company.logoUrl} alt={company.name} width='30' height='30' />
+                            <Image src={company.logoUrl} alt={company.name} width='30' height='30' />
                           </span>
                         </Tooltip>
                       </Link>

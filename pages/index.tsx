@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
+
 // @ts-ignore
 import { END } from 'redux-saga'
 
@@ -350,7 +352,7 @@ const Home = (props: HomeProps) => {
                         to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                         external
                       >
-                        <img
+                        <Image
                           src={company.logoUrl}
                           title={company.name}
                           alt={company.name}
