@@ -300,12 +300,8 @@ const Job = ({
     updateUrl(queryParam, { sort: 2 })
   }
 
-  const handleCloseModal = (isOTPVerified=false) => {
+  const handleCloseModal = () => {
     setIsShowModal(false)
-
-    if (isOTPVerified) {
-      router.reload()
-    }
   }
 
   const handleVerifyEmailClick = async () => {
@@ -914,7 +910,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobDetail = storeState.job?.jobDetail
   const appliedJobDetail = storeState.job?.appliedJobDetail
   const config = storeState.config.config.response
-
+  console.log('jobDetail', jobDetail)
   if (jobDetail || appliedJobDetail) {
     if (jobDetail.error || appliedJobDetail.error) {
       return {
