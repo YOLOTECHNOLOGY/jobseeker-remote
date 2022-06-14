@@ -3,8 +3,6 @@ import { push } from 'connected-next-router'
 
 import { setCookie } from 'helpers/cookies'
 import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
-import { getItem, removeItem } from 'helpers/localStorage'
-import { applyPendingJobId } from 'helpers/constants'
 import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import { SOCIAL_LOGIN_REQUEST } from 'store/types/auth/socialLogin'
@@ -14,7 +12,6 @@ import {
   socialLoginFailed,
 } from 'store/actions/auth/socialLogin'
 import { socialLoginService } from 'store/services/auth/socialLogin'
-import { checkEmailExistService } from 'store/services/auth/checkEmailExist'
 
 function* socialLoginReq(actions) {
   const {
@@ -46,13 +43,15 @@ function* socialLoginReq(actions) {
     payload.active_key = activeKey
   }
 
-  if (isLogin) {
-    // if user is trying to login, check account existance first
-    yield fork(checkSocialUserExist, actions.payload, redirect)
-  } else {
-    // if user is registering, can call /social_login api right away -> checking will be done in backend
-    yield fork(login, payload, redirect, true)
-  }
+  // if (isLogin) {
+  //   // if user is trying to login, check account existance first
+  //   yield fork(checkSocialUserExist, actions.payload, redirect)
+  // } else {
+  //   // if user is registering, can call /social_login api right away -> checking will be done in backend
+  //   yield fork(login, payload, redirect, true)
+  // }
+
+  yield fork(login, payload, redirect, true)
 }
 
 function* login(payload, redirect, fromRegister = false) {
@@ -127,39 +126,39 @@ function* login(payload, redirect, fromRegister = false) {
   }
 }
 
-function* checkSocialUserExist(payload, redirect) {
-  try {
-    const emailExistResponse = yield call(
-      checkEmailExistService,
-      payload.email
-    )
+// function* checkSocialUserExist(payload, redirect) {
+//   try {
+//     const emailExistResponse = yield call(
+//       checkEmailExistService,
+//       payload.email
+//     )
 
-    if (
-      emailExistResponse.data.data.email &&
-      response.status >= 200 &&
-      response.status < 300
-    ) {
-      const loginPayload = {
-        social_type: payload.socialType,
-        user_id: payload.userId,
-        token: payload.accessToken,
-        email: payload.email,
-        first_name: payload.firstName,
-        last_name: payload.lastName,
-        avatar: payload.pictureUrl,
-        source: 'web'
-      }
+//     if (
+//       emailExistResponse.data.data.email &&
+//       response.status >= 200 &&
+//       response.status < 300
+//     ) {
+//       const loginPayload = {
+//         social_type: payload.socialType,
+//         user_id: payload.userId,
+//         token: payload.accessToken,
+//         email: payload.email,
+//         first_name: payload.firstName,
+//         last_name: payload.lastName,
+//         avatar: payload.pictureUrl,
+//         source: 'web'
+//       }
 
-      if (payload.activeKey) {
-        loginPayload.active_key = payload.activeKey
-      }
+//       if (payload.activeKey) {
+//         loginPayload.active_key = payload.activeKey
+//       }
 
-      yield fork(login, loginPayload, redirect)
-    }
-  } catch (err) {
-    console.error(err)
-  }
-}
+//       yield fork(login, loginPayload, redirect)
+//     }
+//   } catch (err) {
+//     console.error(err)
+//   }
+// }
 
 export default function* socialLoginSaga() {
   yield takeLatest(SOCIAL_LOGIN_REQUEST, socialLoginReq)
