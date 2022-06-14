@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 /* Components */
 import Modal from 'components/Modal'
@@ -29,7 +29,7 @@ interface ModalVerifyEmailProps {
 }
 
 const ModalVerifyEmail = ({ email, isShowModal, handleModal, redirectLink=null }: ModalVerifyEmailProps) => {
-  const router = useRouter()
+  // const router = useRouter()
   const [otp, setOtp] = useState<string>('') // Text Input field state
   const [timerCount, setTimerCount] = useState<number>(-1) // timer counter
   const [canRequestOTP, setCanRequestOTP] = useState<boolean>(true) // if an otp is requested or timer countdown starts
@@ -91,9 +91,9 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal, redirectLink=null }
         setOTPSuccessMessage('')
         setIsVerifiedEmail(true)
 
-        if (redirectLink) {
-          router.push(redirectLink)
-        }
+        // if (redirectLink) {
+        //   router.push(redirectLink)
+        // }
       }, 1000)
 
     }
