@@ -15,7 +15,6 @@ import {
 } from 'store/actions/auth/socialLogin'
 import { socialLoginService } from 'store/services/auth/socialLogin'
 import { checkEmailExistService } from 'store/services/auth/checkEmailExist'
-import { checkSocialUserExistService } from 'store/services/auth/checkSocialUserExist'
 
 function* socialLoginReq(actions) {
   const {
@@ -130,11 +129,6 @@ function* login(payload, redirect, fromRegister = false) {
 
 function* checkSocialUserExist(payload, redirect) {
   try {
-    const response = yield call(checkSocialUserExistService, {
-      social_type: payload.socialType,
-      user_id: payload.userId
-    })
-
     const emailExistResponse = yield call(
       checkEmailExistService,
       payload.email
