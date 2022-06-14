@@ -207,9 +207,7 @@ const JobListSection = ({
           <div className={styles.container}>
             {!isJobListFetching && (
               <div className={styles.jobListOptionContent}>
-                <Text textStyle='lg'>
-                  <Text textStyle='lg' bold>{jobNumStart.toLocaleString()}-{jobNumEnd.toLocaleString()}</Text> of {jobList?.total_num.toLocaleString()} jobs
-                </Text>
+                <Text textStyle='base' bold>{jobNumStart.toLocaleString()}-{jobNumEnd.toLocaleString()} of {jobList?.total_num.toLocaleString()} jobs </Text>
                 <div className={styles.jobListOptionAlerts}>
                   <div
                     className={styles.jobListOptionAlertsItem}

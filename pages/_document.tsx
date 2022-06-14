@@ -7,9 +7,8 @@ export default class CustomDocument extends Document {
       <Html>
         <Head>
           {/* Google Ad Manager */}
-          <Script defer src='https://securepubads.g.doubleclick.net/tag/js/gpt.js' strategy='lazyOnload' />
+          <Script defer src='https://securepubads.g.doubleclick.net/tag/js/gpt.js' />
           <Script
-            strategy='lazyOnload'
             dangerouslySetInnerHTML={{
               __html: `
             window.googletag = window.googletag || {cmd: []}
@@ -18,7 +17,6 @@ export default class CustomDocument extends Document {
           />
           {/* Google AdSense */}
           <Script
-            strategy='lazyOnload'
             data-ad-client='ca-pub-4245733463545444'
             defer
             src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
