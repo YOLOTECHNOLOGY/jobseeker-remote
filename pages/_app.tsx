@@ -58,10 +58,12 @@ const App = ({ Component, pageProps }: AppProps) => {
       ></Script> */}
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script
+        strategy='lazyOnload'
         src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
       />
       <Script
         id='gtag-init'
+        strategy='lazyOnload'
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
@@ -84,8 +86,8 @@ const App = ({ Component, pageProps }: AppProps) => {
       ></Script> */}
 
       {/* Google One Tap Sign in */}
-      <Script src='https://apis.google.com/js/platform.js' />
-      <Script src='https://accounts.google.com/gsi/client' defer />
+      <Script src='https://apis.google.com/js/platform.js' strategy='lazyOnload'/>
+      <Script src='https://accounts.google.com/gsi/client' strategy='lazyOnload'/>
       <Script
         dangerouslySetInnerHTML={{
           __html: `
@@ -114,7 +116,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         }}
       />
 
-      {/* Facebook */}
+      {/* Facebook 
       <Script
         strategy='lazyOnload'
         dangerouslySetInnerHTML={{
@@ -164,7 +166,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             }(document, 'script', 'facebook-jssdk'));	
             `,
         }}
-      />
+      />*/}
 
       {/* Favicons */}
       <link
