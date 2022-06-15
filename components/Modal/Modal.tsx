@@ -110,10 +110,22 @@ const Modal = ({
             {(hasFirstButton || hasSecondButton) && (
               <div className={styles.modalFooter}>
                 {hasFirstButton && (
-                  <Button onClick={() => handleFirstButton()}>{firstButtonText}</Button>
+                  <Button 
+                    onClick={() => {
+                      document.body.style.overflow = 'auto'
+                      handleFirstButton()
+                    }}>
+                    {firstButtonText}
+                  </Button>
                 )}
                 {hasSecondButton && (
-                  <Button onClick={() => handleSecondButton()}>{secondButtonText}</Button>
+                  <Button 
+                    onClick={() => {
+                      document.body.style.overflow = 'auto'
+                      handleSecondButton()
+                    }}>
+                      {secondButtonText}
+                    </Button>
                 )}
               </div>
             )}
