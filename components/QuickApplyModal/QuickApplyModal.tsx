@@ -53,12 +53,16 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
   const [isSubscribed, setIsSubscribed] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [emailError, setEmailError] = useState(null)
-  const [firstMessage, setFirstMessage] = useState(`Hi there, I am interested to apply for ${jobDetails.job_title} position.`)
+  const [firstMessage, setFirstMessage] = useState('')
   const screeningQuestions = jobDetails?.screening_questions || []
 
   const registerJobseekerState = useSelector((store: any) => store.auth.registerJobseeker)
   const isQuickApplyJobFetching = useSelector((store: any) => store.job.quickApplyJob.fetching)
 
+  useEffect(() => {
+    setFirstMessage(`Hi there, I am interested to apply for ${jobDetails?.job_title} position.`)
+  }, [jobDetails])
+  
   useEffect(() => {
     if (registerJobseekerState.error && registerJobseekerState.error['email']) {
       if (registerJobseekerState.error['email'] == 'The email has already been taken.') {
