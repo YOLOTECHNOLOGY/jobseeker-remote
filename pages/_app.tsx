@@ -88,7 +88,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       {/* Google One Tap Sign in */}
       <Script src='https://apis.google.com/js/platform.js' strategy='lazyOnload'/>
       <Script src='https://accounts.google.com/gsi/client' strategy='lazyOnload'/>
-      <Script
+      {/* <Script
         dangerouslySetInnerHTML={{
           __html: `
             window.onload = function () {
@@ -114,7 +114,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             }
           `,
         }}
-      />
+      /> */}
 
       {/* Facebook 
       <Script
