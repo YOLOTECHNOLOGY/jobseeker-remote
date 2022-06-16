@@ -1,14 +1,14 @@
 import axios from 'axios'
 
-const JobFeedXml = () => {
+const JobSitemap = () => {
   return
 }
 
 export const getServerSideProps = async ({ res }) => {
   const response = await axios.get(
     process.env.ENV === 'production'
-      ? 'https://assets.bossjob.com/jobs.xml'
-      : 'https://dev-assets.bossjob.com/jobs.xml'
+      ? 'https://assets.bossjob.com/job-sitemap.xml'
+      : 'https://dev-assets.bossjob.com/job-sitemap.xml'
   )
 
   res.setHeader('Content-Type', 'text/xml')
@@ -20,4 +20,4 @@ export const getServerSideProps = async ({ res }) => {
   }
 }
 
-export default JobFeedXml
+export default JobSitemap
