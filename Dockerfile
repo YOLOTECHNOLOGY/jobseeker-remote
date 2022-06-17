@@ -19,7 +19,7 @@ ARG MAINTENANCE="false"
 RUN MAINTENANCE=$MAINTENANCE yarn build:$ENV
 
 # Expose the port of the app thats running in the container.
-EXPOSE 3001
+EXPOSE 3004
 
 # Start the app.
 CMD yarn start
