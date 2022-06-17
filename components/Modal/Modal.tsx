@@ -28,6 +28,7 @@ type ModalProps = {
   secondButtonText?: string
   isFullWidth?: boolean
   isFullHeight?: boolean
+  customFooter?: React.ReactNode
 }
 
 const Modal = ({
@@ -46,6 +47,7 @@ const Modal = ({
   secondButtonText,
   isFullWidth,
   isFullHeight,
+  customFooter,
   ...rest
 }: ModalProps) => {
   const ref = useRef(null)
@@ -80,52 +82,68 @@ const Modal = ({
 
   return (
     <div
-      id="modal"
-      className={classNames([styles.modal, isFullHeight ? styles.FullHeight : '', showModal ? styles.modalVisible : styles.modalHidden,])}
+      id='modal'
+      className={classNames([
+        styles.modal,
+        isFullHeight ? styles.FullHeight : '',
+        showModal ? styles.modalVisible : styles.modalHidden,
+      ])}
       style={style}
       {...rest}
     >
       <div>
-        <div ref={ref} className={classNames([styles.modalContent, className, isFullWidth ? styles.isFullWidth : ''])}>
+        <div
+          ref={ref}
+          className={classNames([
+            styles.modalContent,
+            className,
+            isFullWidth ? styles.isFullWidth : '',
+          ])}
+        >
           <div>
             <div className={styles.modalHeader}>
-              <Text textStyle='xl' bold className={styles.modalHeaderTitle}>{headerTitle}</Text>
+              <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
+                {headerTitle}
+              </Text>
               <div className={styles.modalCloseButton}>
-                <Text
-                  onClick={handleCloseModal}
-                >
+                <Text onClick={handleCloseModal}>
                   <img
                     src={CloseIcon}
-                    title="close modal"
-                    alt="close modal"
-                    width="14"
-                    height="14"
+                    title='close modal'
+                    alt='close modal'
+                    width='14'
+                    height='14'
                   />
                 </Text>
               </div>
             </div>
-            <div className={styles.modalBody}>
-              {children}
-            </div>
+            <div className={styles.modalBody}>{children}</div>
+            {customFooter && (
+              <div className={styles.modalFooter}>
+                {customFooter}
+              </div>
+            )}
             {(hasFirstButton || hasSecondButton) && (
               <div className={styles.modalFooter}>
                 {hasFirstButton && (
-                  <Button 
+                  <Button
                     onClick={() => {
                       document.body.style.overflow = 'auto'
                       handleFirstButton()
-                    }}>
+                    }}
+                  >
                     {firstButtonText}
                   </Button>
                 )}
                 {hasSecondButton && (
-                  <Button 
+                  <Button
                     onClick={() => {
                       document.body.style.overflow = 'auto'
                       handleSecondButton()
-                    }}>
-                      {secondButtonText}
-                    </Button>
+                    }}
+                  >
+                    {secondButtonText}
+                  </Button>
                 )}
               </div>
             )}

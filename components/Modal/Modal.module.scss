@@ -55,6 +55,9 @@
     padding: 16px 24px;
     background-color: $white-1;
     border-bottom: 1px solid rgba($lightgrey, 0.5);
+    position:sticky;
+    top:0;
+    z-index:100;
 
     &Title {
       flex: auto;
@@ -71,10 +74,14 @@
   }
   &Footer {
     border-top: 1px solid rgba($lightgrey, 0.5);
-    margin: 0 40px;
-    padding: 20px 0;
+    // margin: 0 40px;
+    padding: 16px 40px;
     display: flex;
     justify-content: flex-end;
+    position:sticky;
+    bottom:0;
+    z-index:100;
+    background-color: white;
     
     button {
       &:last-child {
