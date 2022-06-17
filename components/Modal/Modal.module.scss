@@ -16,6 +16,8 @@
 
   @include sm{
     justify-content: flex-end;
+    touch-action: none;
+    -ms-touch-action: none;
   }
 
   // necessary for taking full height for mobile view
