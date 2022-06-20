@@ -127,6 +127,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
           type='submit'
           isLoading={isSubmitting}
           onClick={handleSubmit(onSubmit)}
+          className={styles.ctaButton}
         >
           <Text textColor='white' bold>
             Register and apply
