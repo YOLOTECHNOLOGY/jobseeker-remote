@@ -7,7 +7,7 @@
   height: --webkit-fill-available;
 
   @include sm{
-    height:100vh;
+    height:95vh !important;
   }
 }
 
