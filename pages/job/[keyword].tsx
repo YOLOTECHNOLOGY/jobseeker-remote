@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useUserAgent } from 'next-useragent'
 
 // @ts-ignore
 import { END } from 'redux-saga'
@@ -91,7 +90,6 @@ interface IJobDetail {
   seoMetaTitle: string
   seoMetaDescription: string
   seoCanonicalUrl: string
-  isMobileSafari: boolean
 }
 
 const Job = ({
@@ -102,7 +100,6 @@ const Job = ({
   seoMetaTitle,
   seoMetaDescription,
   seoCanonicalUrl,
-  isMobileSafari
 }: IJobDetail) => {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -866,7 +863,6 @@ const Job = ({
         modalShow={quickApplyModalShow}
         handleModalShow={setQuickApplyModalShow}
         config={config}
-        isMobileSafari={isMobileSafari}
       />
 
       <ModalVerifyEmail
@@ -883,8 +879,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
   const { keyword, isApplied } = query
   const keywordQuery: any = keyword
-  const userAgent = useUserAgent(req.headers['user-agent'])
-  const isMobileSafari = userAgent.browser === 'Mobile Safari'
   const jobId = keywordQuery?.split('-').pop()
 
   if (jobId) {
@@ -945,7 +939,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         seoMetaTitle,
         seoMetaDescription,
         seoCanonicalUrl: `/job/${keywordQuery}`,
-        isMobileSafari: isMobileSafari
       },
     }
   }
