@@ -92,3 +92,9 @@
     margin-bottom: 16px !important;
   }
 }
+
+.ctaButton{
+  @include sm{
+    width:100%;
+  }
+}
