@@ -48,6 +48,7 @@ const SEO = ({ title, description, imageUrl, canonical }: SEOProps) => {
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={decodeURI(description)} />
       <meta name='twitter:image' content={imageUrl} />
+      <meta name='twitter:image:alt' content={decodeURI(description)} />
       <meta name='twitter:creator' content='BossjobPH' />
     </Head>
   )
