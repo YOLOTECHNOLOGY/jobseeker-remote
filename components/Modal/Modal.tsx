@@ -23,7 +23,9 @@ type ModalProps = {
   closeModalOnOutsideClick?: boolean
   headerTitle: string
   handleFirstButton?: Function
+  isFirstButtonClose?: boolean
   handleSecondButton?: Function
+  isSecondButtonClose?: boolean
   firstButtonText?: string
   secondButtonText?: string
   isFullWidth?: boolean
@@ -42,7 +44,9 @@ const Modal = ({
   headerTitle,
   handleModal,
   handleFirstButton,
+  isFirstButtonClose,
   handleSecondButton,
+  isSecondButtonClose,
   firstButtonText,
   secondButtonText,
   isFullWidth,
@@ -131,8 +135,8 @@ const Modal = ({
                 {hasFirstButton && (
                   <Button
                     onClick={() => {
-                      document.body.style.overflow = 'auto'
                       handleFirstButton()
+                      if (isFirstButtonClose) handleCloseModal()
                     }}
                   >
                     {firstButtonText}
@@ -141,8 +145,8 @@ const Modal = ({
                 {hasSecondButton && (
                   <Button
                     onClick={() => {
-                      document.body.style.overflow = 'auto'
                       handleSecondButton()
+                      if (isSecondButtonClose) handleCloseModal()
                     }}
                   >
                     {secondButtonText}
