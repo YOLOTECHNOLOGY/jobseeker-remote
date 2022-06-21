@@ -13,7 +13,7 @@ const SEO = ({ title, description, imageUrl, canonical }: SEOProps) => {
   return (
     <Head>
       <title>{title}</title>
-      <meta name='description' content={unescape(description)} />
+      <meta name='description' content={decodeURI(description)} />
       <meta
         name='copyright'
         content={`
@@ -29,7 +29,8 @@ const SEO = ({ title, description, imageUrl, canonical }: SEOProps) => {
       <meta property='og:image:secure_url' content={imageUrl} />
       <meta property='og:image:width' content='450' />
       <meta property='og:image:height' content='298' />
-      <meta property='og:description' content={unescape(description)} />
+      <meta property='og:type' content='website' />
+      <meta property='og:description' content={decodeURI(description)} />
       <meta property='og:locale' content='en_PH' />
       <meta
         property='og:site_name'
@@ -42,9 +43,10 @@ const SEO = ({ title, description, imageUrl, canonical }: SEOProps) => {
       <link rel='canonical' href={canonicalPath} />
 
       {/* Twitter Card */}
+      <meta name='twitter:card' content='summary_large_image' />
       <meta name='twitter:site' content='BossjobPH' />
       <meta name='twitter:title' content={title} />
-      <meta name='twitter:description' content={unescape(description)} />
+      <meta name='twitter:description' content={decodeURI(description)} />
       <meta name='twitter:image' content={imageUrl} />
       <meta name='twitter:creator' content='BossjobPH' />
     </Head>
