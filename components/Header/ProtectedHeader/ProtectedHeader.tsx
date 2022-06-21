@@ -44,6 +44,8 @@ const ProtectedHeader = () => {
 
   const handleLogOut = () => {
     dispatch(logoutRequest())
+    
+    router.push('/')
   }
 
   const handleRedirectAuthentication = (e, path) => {

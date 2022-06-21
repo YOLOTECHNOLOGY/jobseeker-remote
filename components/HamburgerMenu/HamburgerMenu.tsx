@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-
-import { logoutRequest } from 'store/actions/auth/logout'
+import { useRouter } from 'next/router'
 
 /* Redux */
 import { connect } from 'react-redux'
+import { logoutRequest } from 'store/actions/auth/logout'
 import { toggleMenu } from 'store/actions/navigationBar/toggleMenu'
 
 /* Components */
@@ -23,7 +23,7 @@ interface HamburgerMenuProps {
 }
 
 const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
-  // const router = useRouter()
+  const router = useRouter()
   const dispatch = useDispatch()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const userCookie = getCookie('user')
@@ -37,6 +37,8 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
     document.body.style.position = ''
     document.body.style.top = ''
     dispatch(logoutRequest())
+
+    router.push('/')
   }
 
   const handleClick = () => {
