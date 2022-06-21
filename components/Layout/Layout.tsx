@@ -37,13 +37,6 @@ const Layout = ({ children, className }: LayoutProps) => {
     setIsShowModal(!isVerifyEmailModalClosed && !!authCookie && !!!userCookie.is_email_verify)
   }, [])
 
-  if (isShowModal) {
-    // if modal is show, body should be fixed to disable scrolling
-    document.body.style.position = 'fixed'
-    document.body.style.width = '100%'
-    document.body.style.top = `-${window.scrollY}px`
-  }
-
   const handleVerifyEmailClick = async () => {
     // revalidate verify email status
     const response = await fetchUserOwnDetailService({accessToken: authCookie})
