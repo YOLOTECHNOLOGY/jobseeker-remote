@@ -180,7 +180,7 @@ const Home = (props: HomeProps) => {
       <div className={styles.quickLinks}>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/accounting-finance-jobs`}
+          to={`${jobsPageLink}/finance-accounting-jobs`}
           title='Finance jobs'
           aTag
         >

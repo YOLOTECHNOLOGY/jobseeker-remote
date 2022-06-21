@@ -274,7 +274,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search?industry=accounting-finance&category=accounting-finance,sales-insurance-financial-services`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/finance-accounting-jobs`}
                     title='Finance Jobs'
                     external
                   >
@@ -314,7 +314,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search?category=healthcare,civil-government-services`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/healthcare-medical-jobs`}
                     title='Healthcare Jobs'
                     external
                   >
@@ -622,7 +622,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/accounting-finance-jobs`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/finance-accounting-jobs`}
                       title='Finance Jobs'
                       external
                     >
