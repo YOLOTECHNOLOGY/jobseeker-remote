@@ -13,6 +13,8 @@ import MaintenancePage from './maintenance'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
+  const accessToken = getCookie('accessToken')
+
   useEffect(() => {
     const handleRouteChange = (url) => {
       gtag.pageview(url)
@@ -25,8 +27,6 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   // Validate token on every page navigation
   useEffect(() => {
-    const accessToken = getCookie('accessToken')
-
     if (accessToken) {
       fetch(`${process.env.AUTH_BOSSJOB_URL}/token/validate`, {
         method: 'POST',
@@ -88,34 +88,36 @@ const App = ({ Component, pageProps }: AppProps) => {
       {/* Google One Tap Sign in */}
       <Script src='https://apis.google.com/js/platform.js' async defer/>
       <Script src='https://accounts.google.com/gsi/client' async defer/>
-      <Script
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.onload = function () {
-              google.accounts.id.initialize({
-                client_id: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
-                callback: handleGoogleOneTapLoginResponse,
-                cancel_on_tap_outside: false
-              });
-              google.accounts.id.prompt((notification) => {
-                if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                  console.log(notification.getNotDisplayedReason())
+      {!accessToken && (
+        <Script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.onload = function () {
+                google.accounts.id.initialize({
+                  client_id: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
+                  callback: handleGoogleOneTapLoginResponse,
+                  cancel_on_tap_outside: false
+                });
+                google.accounts.id.prompt((notification) => {
+                  if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                    console.log(notification.getNotDisplayedReason())
+                  }
+                });
+              };
+
+              function handleGoogleOneTapLoginResponse(CredentialResponse) {
+                var accessToken = CredentialResponse.credential;
+                var activeKey = 1;
+                if (window.location.pathname.includes('/employer')) {
+                  activeKey = 2;
                 }
-              });
-            };
-
-            function handleGoogleOneTapLoginResponse(CredentialResponse) {
-              var accessToken = CredentialResponse.credential;
-              var activeKey = 1;
-              if (window.location.pathname.includes('/employer')) {
-                activeKey = 2;
+                window.location.replace("/handlers/googleLoginHandler?access_token=" + accessToken + "&active_key=" + activeKey);
               }
-              window.location.replace("/handlers/googleLoginHandler?access_token=" + accessToken + "&active_key=" + activeKey);
-            }
-          `,
-        }}
-      />
-
+            `,
+          }}
+        />
+      )}
+      
       {/* Facebook 
       <Script
         strategy='lazyOnload'
