@@ -206,14 +206,27 @@ const LoginJobseeker = () => {
   )
 }
 
-LoginJobseeker.getInitialProps = async ({ req, res }) => {
+export async function getServerSideProps({ req, res, query }) {
   const accessToken = req?.cookies.accessToken
+
   if (accessToken) {
-    res.setHeader('location', `/jobs-hiring/job-search`)
-    res.statusCode = 301
+    let redirectUrl = '/jobs-hiring/job-search'
+    const queryRedirect = query?.redirect
+
+    if (queryRedirect) {
+      let reqUrl = req?.url
+      reqUrl = reqUrl.split('/login/jobseeker?redirect=').pop()
+      if (reqUrl) {
+        redirectUrl = reqUrl
+      }
+    }
+
+    res.statusCode = 302
+    res.setHeader('location', redirectUrl)
     res.end()
   }
-  return {}
+
+  return {props: {}}
 }
 
 export default LoginJobseeker

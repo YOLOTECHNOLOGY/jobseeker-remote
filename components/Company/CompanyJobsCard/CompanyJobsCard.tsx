@@ -38,7 +38,7 @@ const CompanyJobsCard = ({ title, location, salary, availability, id }: ICompany
         </div>
       </div>
       <div className={styles.companyJobsCardRight}>
-        <Link to={`/job/${slugify(title.toLowerCase())}-${id}`}>
+        <Link to={`/job/${slugify(title.toLowerCase())}-${id}`} external>
           <MaterialButton variant='outlined' capitalize className={styles.companyJobsCardApply}>
             <Text textStyle='base' textColor='primaryBlue' bold>
               Apply Now

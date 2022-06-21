@@ -230,7 +230,7 @@ const NavSearchFilter = ({
                         <label key='empty' style={{display:'none'}}>
                           <input
                             type='checkbox'
-                            value={option['seo-value']}
+                            value={null}
                             {...register(fieldName)}
                           />
                           <Text textStyle='lg'>Empty</Text>

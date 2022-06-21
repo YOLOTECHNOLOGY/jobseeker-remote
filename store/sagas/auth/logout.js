@@ -14,19 +14,16 @@ function* logoutReq() {
     const response = yield call(logoutService, payload)
     if (response.status >= 200 && response.status < 300) {
       yield put(logoutSuccess(response.data))
-      removeCookie('user')
-      removeCookie('accessToken')
-      removeCookie('splan')
-      removeCookie('isVerifyEmailModalClosed')
-      yield put(push('/'))
     }
   } catch (err) {
     yield put(logoutFailed(err))
-    removeCookie('user')
-    removeCookie('accessToken')
-    removeCookie('splan')
-    yield put(push('/'))
   }
+
+  removeCookie('user')
+  removeCookie('accessToken')
+  removeCookie('isVerifyEmailModalClosed')
+
+  yield put(push('/'))
 }
 
 export default function* logout() {

@@ -68,7 +68,18 @@ function* loginReq(actions) {
 
       if (redirect) {
         if (redirect.includes(process.env.OLD_PROJECT_URL)) {
-          url = `${redirect}&token=${loginData.authentication.access_token}`
+          let redirectUrl = redirect
+          const delimiter = '/jobseeker-login-redirect?redirectUrl='
+          const redirectArray = redirect.split(delimiter)
+          if (redirectArray.length === 2) {
+            const queryParam = redirectArray[1]
+            const encodedQueryParam = encodeURIComponent(queryParam)
+            let encodedRedirect = ''
+            encodedRedirect.concat(redirectArray[0], delimiter, encodedQueryParam)
+            redirectUrl = redirectArray[0] + delimiter + encodedQueryParam
+          }
+
+          url = `${redirectUrl}&token=${loginData.authentication.access_token}`
         } else {
           url = redirect
         }
