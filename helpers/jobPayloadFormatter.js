@@ -768,7 +768,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
   filterCount = uniqueList.length
 
   if (filterCount === 0) {
-    if (field === 'query' && isClear) {
+    if ((field === 'query' && isClear) || (field === 'moreFilters' && isClear)) {
       query = appendGeneralQueryPattern()
     } else if (searchQuery) {
       query = appendSingleQueryPattern(searchQuery)
