@@ -23,7 +23,21 @@ const SEO = ({ title, description, imageUrl, canonical }: SEOProps) => {
       />
       <meta name='author' content='Academy' />
 
-      {/* <meta itemProp="name" content={seoTitle} /> */}
+      {/* Open Graph */}
+      <meta property='og:title' content={title} />
+      <meta property='og:image' content={imageUrl} />
+      <meta property='og:image:secure_url' content={imageUrl} />
+      <meta property='og:image:width' content='450' />
+      <meta property='og:image:height' content='298' />
+      <meta property='og:description' content={unescape(description)} />
+      <meta property='og:locale' content='en_PH' />
+      <meta
+        property='og:site_name'
+        content='Bossjob - Career Platform for Professionals in Philippines'
+      />
+      
+      {/* Schema.org markup for Google+ */}
+      <meta itemProp='name' content={title} />
       <meta itemProp='image' content={imageUrl} />
       <link rel='canonical' href={canonicalPath} />
     </Head>
