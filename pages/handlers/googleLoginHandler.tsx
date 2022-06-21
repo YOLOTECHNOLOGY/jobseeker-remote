@@ -3,10 +3,10 @@ import { useEffect } from 'react'
 // Vendor
 import { useUserAgent } from 'next-useragent'
 import axios from 'axios'
-import { useRouter } from 'next/router'
 
 // Store
 import { wrapper } from 'store'
+
 // @ts-ignore
 import { END } from 'redux-saga'
 import { socialLoginService } from 'store/services/auth/socialLogin'
@@ -32,14 +32,14 @@ const googleLoginHandler = ({
   accessToken,
   userCookie
 }: IGoogleLoginHandler) => {
-  const router = useRouter()
-
   useEffect(() => {
     if (accessToken && userCookie) {
       setCookie('accessToken', accessToken)
       setCookie('user', userCookie)
 
-      router.reload()
+      if (typeof window !== 'undefined') {
+        window.location.href = '/'
+      }
     }
   }, [])
 
