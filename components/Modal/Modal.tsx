@@ -59,11 +59,7 @@ const Modal = ({
   const hasSecondButton = handleSecondButton && secondButtonText
 
   const handleCloseModal = () => {
-    const scrollY = document.body.style.top
-    document.body.style.position = ''
-    document.body.style.top = ''
-    // retrieve previous scroll position
-    if (scrollY) window.scrollTo(0, parseInt(scrollY) * -1)
+    document.body.style.overflow = 'auto'
     handleModal(false)
   }
 
@@ -84,10 +80,7 @@ const Modal = ({
 
   useEffect(() => {
     if (showModal) {
-      const scrollY = Math.round(window.pageYOffset);
-      document.body.style.position = 'fixed'
-      document.body.style.width = '100vw'
-      document.body.style.top = `-${scrollY}px`
+      document.body.style.overflow = 'hidden'
     }
   }, [showModal])
 
