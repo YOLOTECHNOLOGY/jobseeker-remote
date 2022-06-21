@@ -16,16 +16,16 @@ const handleSalary = (salaryRanges) => {
     )
 
     salaryFrom = sanitiseSalaryRange
-      .filter((salary) => salary !== 'Above_200K')
+      .filter((salary) => salary !== 'Above 200K')
       .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split(' - ')[0]))
 
     salaryTo = sanitiseSalaryRange
-      .filter((salary) => salary !== 'Above_200K')
+      .filter((salary) => salary !== 'Above 200K')
       .map((salaryTo) => thousandsToNumber('' + salaryTo.split(' - ')[1]))
 
-    if (sanitiseSalaryRange.includes('Above_200K')) {
-      salaryFrom.push('200001')
-      salaryTo.push('400000')
+    if (sanitiseSalaryRange.includes('Above 200K')) {
+      salaryFrom.push(200001)
+      salaryTo.push(400000)
     }
 
     salaryFrom = salaryFrom.join(',')
