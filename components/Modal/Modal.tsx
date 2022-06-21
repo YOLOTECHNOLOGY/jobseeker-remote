@@ -38,7 +38,7 @@ const Modal = ({
   showModal,
   // clearError,
   // disableCloseModal,
-  closeModalOnOutsideClick,
+  closeModalOnOutsideClick = true,
   headerTitle,
   handleModal,
   handleFirstButton,
@@ -59,9 +59,9 @@ const Modal = ({
     handleModal(false)
   }
 
-  const handleClickOutside = event => {
+  const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
-      handleCloseModal();
+      handleCloseModal()
     }
   }
 
@@ -74,11 +74,11 @@ const Modal = ({
     }
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     if (showModal) {
       document.body.style.overflow = 'hidden'
     }
-  }, [showModal]);
+  }, [showModal])
 
   return (
     <div
@@ -118,11 +118,7 @@ const Modal = ({
               </div>
             </div>
             <div className={styles.modalBody}>{children}</div>
-            {customFooter && (
-              <div className={styles.modalFooter}>
-                {customFooter}
-              </div>
-            )}
+            {customFooter && <div className={styles.modalFooter}>{customFooter}</div>}
             {(hasFirstButton || hasSecondButton) && (
               <div className={styles.modalFooter}>
                 {hasFirstButton && (
