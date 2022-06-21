@@ -39,7 +39,7 @@ const googleLoginHandler = ({
       setCookie('accessToken', accessToken)
       setCookie('user', userCookie)
 
-      router.push('/')
+      router.reload()
     }
   }, [])
 
