@@ -86,8 +86,8 @@ const App = ({ Component, pageProps }: AppProps) => {
       ></Script> */}
 
       {/* Google One Tap Sign in */}
-      <Script src='https://apis.google.com/js/platform.js' strategy='lazyOnload'/>
-      <Script src='https://accounts.google.com/gsi/client' strategy='lazyOnload'/>
+      <Script src='https://apis.google.com/js/platform.js' async defer/>
+      <Script src='https://accounts.google.com/gsi/client' async defer/>
       <Script
         dangerouslySetInnerHTML={{
           __html: `
