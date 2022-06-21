@@ -35,11 +35,18 @@ const SEO = ({ title, description, imageUrl, canonical }: SEOProps) => {
         property='og:site_name'
         content='Bossjob - Career Platform for Professionals in Philippines'
       />
-      
+
       {/* Schema.org markup for Google+ */}
       <meta itemProp='name' content={title} />
       <meta itemProp='image' content={imageUrl} />
       <link rel='canonical' href={canonicalPath} />
+
+      {/* Twitter Card */}
+      <meta name='twitter:site' content='BossjobPH' />
+      <meta name='twitter:title' content={title} />
+      <meta name='twitter:description' content={unescape(description)} />
+      <meta name='twitter:image' content={imageUrl} />
+      <meta name='twitter:creator' content='BossjobPH' />
     </Head>
   )
 }
