@@ -65,7 +65,7 @@ function* loginReq(actions) {
         (loginData.is_profile_update_required || !loginData.is_profile_completed)
           ? '/jobseeker-complete-profile/1'
           : `/jobs-hiring/job-search`
-      
+
       if (redirect) {
         if (redirect.includes(process.env.OLD_PROJECT_URL)) {
           let redirectUrl = redirect
