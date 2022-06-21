@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import classNamesCombined from 'classnames'
 
 /* Components */
 import Modal from 'components/Modal'
@@ -13,7 +12,6 @@ import MaterialButton from 'components/MaterialButton'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import Link from 'components/Link'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Divider from '@mui/material/Divider'
 
 /* Styles */
 import styles from './QuickApplyModal.module.scss'
@@ -40,10 +38,9 @@ interface QuickApplyModalProps {
   modalShow?: boolean
   handleModalShow?: Function
   config: any
-  isMobileSafari?: boolean
 }
 
-const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow, config, isMobileSafari=false  }: QuickApplyModalProps) => {
+const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow, config }: QuickApplyModalProps) => {
   const dispatch = useDispatch()
   const { register, handleSubmit, setValue, setError, clearErrors, formState: { errors } } = useForm()
 
@@ -122,10 +119,27 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
       showModal={modalShow}
       handleModal={handleModalShow}
       className={styles.quickApplyModal}
+      customFooter={
+        <MaterialButton
+          capitalize
+          size='large'
+          variant='contained'
+          type='submit'
+          isLoading={isSubmitting}
+          onClick={handleSubmit(onSubmit)}
+          className={styles.ctaButton}
+        >
+          <Text textColor='white' bold>
+            Register and apply
+          </Text>
+        </MaterialButton>
+      }
     >
-      <form className={styles.quickApplyForm}> 
+      <form className={styles.quickApplyForm}>
         <div className={styles.quickApplyFormField}>
-          <Text> Already on Bossjob?
+          <Text>
+            {' '}
+            Already on Bossjob?
             <Link aTag to={'/login/jobseeker?redirect=' + applyJobLink}>
               <Text textColor='primaryBlue' underline>
                 {' '}
@@ -154,7 +168,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
             />
             {errors.firstName && errorText(errors.firstName.message)}
           </div>
-          
+
           <div className={styles.lastName}>
             <MaterialTextField
               refs={{
@@ -174,7 +188,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
             {errors.lastName && errorText(errors.lastName.message)}
           </div>
         </div>
-        
+
         <div className={styles.quickApplyFormField}>
           <MaterialTextField
             refs={{
@@ -182,10 +196,12 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                 required: {
                   value: true,
                   message: 'Please enter your email address.',
-                }, pattern: {
-                  value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  message: 'Please enter a valid email address.'
-                }
+                },
+                pattern: {
+                  value:
+                    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: 'Please enter a valid email address.',
+                },
               }),
             }}
             label='Email address'
@@ -195,11 +211,11 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
             }}
           />
 
-          {errors.email && errorText(errors.email.message)} 
-        
+          {errors.email && errorText(errors.email.message)}
+
           {emailError && errorText(emailError) /* Error message from the API response */}
         </div>
-        
+
         <div className={`${styles.quickApplyFormField} ${styles.halfWidth}`}>
           <div>
             <MaterialBasicSelect
@@ -211,7 +227,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
               }}
             />
           </div>
-          
+
           <div>
             <MaterialTextField
               refs={{
@@ -219,7 +235,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                   required: {
                     value: true,
                     message: 'Please enter your contact number.',
-                  }
+                  },
                 }),
               }}
               label='Contact number'
@@ -233,7 +249,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
             {errors.contactNumber && errorText(errors.contactNumber.message)}
           </div>
         </div>
-        
+
         <div className={styles.quickApplyFormField}>
           <MaterialTextField
             refs={{
@@ -261,50 +277,56 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
           />
           {errors.password && errorText(errors.password.message)}
         </div>
-        
+
         <div className={styles.quickApplyFormField}>
-          {resume ?
+          {resume ? (
             <div className={styles.uploadedResume}>
               <div className={styles.leftResume}>
                 <div className={styles.documentDiv}>
                   <img src={DocumentIcon} alt='document' width='21' height='21' />
                 </div>
-                <Text textStyle='sm' bold className={styles.resumeName}> {resume?.name} </Text>
+                <Text textStyle='sm' bold className={styles.resumeName}>
+                  {' '}
+                  {resume?.name}{' '}
+                </Text>
               </div>
               <div className={styles.trashDiv}>
-                <img 
-                  src={TrashIcon} 
-                  alt='trash' 
-                  width='14' 
-                  height='14' 
+                <img
+                  src={TrashIcon}
+                  alt='trash'
+                  width='14'
+                  height='14'
                   onClick={() => {
                     clearErrors('resume')
                     setResume(null)
-                  }} />
+                  }}
+                />
               </div>
-            </div> : 
-            <div> 
-              <MaterialButton 
-                variant='outlined' 
-                capitalize 
-                component="label"
-              >
-                <Text textStyle='base' textColor='primaryBlue' bold>Upload your resume</Text>
-                <input 
+            </div>
+          ) : (
+            <div>
+              <MaterialButton variant='outlined' capitalize component='label'>
+                <Text textStyle='base' textColor='primaryBlue' bold>
+                  Upload your resume
+                </Text>
+                <input
                   {...register('resume', {
                     required: {
                       value: true,
                       message: 'Please upload your resume.',
                     },
                   })}
-                  type="file" 
-                  hidden 
-                  accept=".pdf, .doc, .docx" 
+                  type='file'
+                  hidden
+                  accept='.pdf, .doc, .docx'
                   onChange={(e) => {
                     const file = e.target.files[0]
                     if (!maxFileSize(file, 5)) {
-                      setError('resume', { type: 'custom', message: 'File size is too huge. Please upload file that is within 5MB.' })
-                      return 
+                      setError('resume', {
+                        type: 'custom',
+                        message: 'File size is too huge. Please upload file that is within 5MB.',
+                      })
+                      return
                     }
 
                     clearErrors('resume')
@@ -313,23 +335,29 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                 />
               </MaterialButton>
             </div>
-          }
+          )}
           <Text textColor='darkgrey' textStyle='xsm'>
             Supported file type: PDF, DOC, DOCX. Max. file size: 5MB
           </Text>
-         
+
           {errors.resume && errorText(errors.resume.message)}
         </div>
-        
-        <div className={styles.quickApplyFormField}>
-          {screeningQuestions.length > 0 && <Text textStyle='lg' bold>Questions from recruiter</Text>}
 
-          {screeningQuestions .length > 0 &&
+        <div className={styles.quickApplyFormField}>
+          {screeningQuestions.length > 0 && (
+            <Text textStyle='lg' bold>
+              Questions from recruiter
+            </Text>
+          )}
+
+          {screeningQuestions.length > 0 &&
             screeningQuestions.map((question, i) => {
               return (
                 <div key={i} className={styles.question}>
-                  <Text textStyle='lg'>{i + 1}. {question}</Text>
-                    
+                  <Text textStyle='lg'>
+                    {i + 1}. {question}
+                  </Text>
+
                   <MaterialTextField
                     refs={{
                       ...register(`screening_answer_${i}`, {
@@ -337,7 +365,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                           value: true,
                           message: 'Please enter a valid answer.',
                         },
-                      })
+                      }),
                     }}
                     className={styles.answer}
                     label='Answer'
@@ -346,40 +374,45 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                     variant='outlined'
                     size='small'
                   />
-                  {errors[`screening_answer_${i}`] && errorText(errors[`screening_answer_${i}`].message)}
+                  {errors[`screening_answer_${i}`] &&
+                    errorText(errors[`screening_answer_${i}`].message)}
                 </div>
               )
             })}
 
-            {screeningQuestions.length === 0 && 
-              <div className={styles.question}>
-                <Text textStyle='md'>On Bossjob, you can message with the recruiter in real-time. Impress the recruiter by sending a message first. (Tips: the reason why you are the perfect fit for this job)</Text>
+          {screeningQuestions.length === 0 && (
+            <div className={styles.question}>
+              <Text textStyle='md'>
+                On Bossjob, you can message with the recruiter in real-time. Impress the recruiter
+                by sending a message first. (Tips: the reason why you are the perfect fit for this
+                job)
+              </Text>
 
-                <MaterialTextField
-                  refs={{
-                    ...register('firstMessage', {
-                      required: {
-                        value: true,
-                        message: 'Please enter a valid answer.',
-                      },
-                    })
-                  }}
-                  className={styles.answer}
-                  label='Answer'
-                  multiline
-                  rows={4}
-                  variant='outlined'
-                  size='small'
-                  value={firstMessage}
-                  onChange={(e) => {
-                    setFirstMessage(e.target.value)
-                  }}
-                />
-                {errors.firstMessage && errorText(errors.firstMessage.message)}
-              </div>
-            }
-          </div>
-        
+              <MaterialTextField
+                refs={{
+                  ...register('firstMessage', {
+                    required: {
+                      value: true,
+                      message: 'Please enter a valid answer.',
+                    },
+                  }),
+                }}
+                className={styles.answer}
+                label='Answer'
+                multiline
+                rows={4}
+                variant='outlined'
+                size='small'
+                value={firstMessage}
+                onChange={(e) => {
+                  setFirstMessage(e.target.value)
+                }}
+              />
+              {errors.firstMessage && errorText(errors.firstMessage.message)}
+            </div>
+          )}
+        </div>
+
         <div className={styles.quickApplyFormField}>
           <FormControlLabel
             control={
@@ -390,9 +423,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
               />
             }
             label={
-              <Text textStyle='sm'>
-                Email me exclusive newsletters & job updates from Bossjob.
-              </Text>
+              <Text textStyle='sm'>Email me exclusive newsletters & job updates from Bossjob.</Text>
             }
           />
 
@@ -400,26 +431,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
             By signing up, I have read and agreed to Terms of Use and Privacy Policy
           </Text>
         </div>
-
-        <div className={classNamesCombined([styles.applyBtn, isMobileSafari && styles.isMobileSafari])}>
-          <Divider className={styles.divider} />
-          <div>
-            <MaterialButton
-              capitalize
-              size='large'
-              variant='contained'
-              type='submit'
-              isLoading={isSubmitting} 
-              onClick={handleSubmit(onSubmit)}
-            >
-              <Text textColor='white' bold>
-                Register and apply
-              </Text>
-            </MaterialButton>
-          </div>
-        </div>
       </form>
-      
     </Modal>
   )
 }
