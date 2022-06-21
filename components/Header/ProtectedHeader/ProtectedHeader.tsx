@@ -44,7 +44,7 @@ const ProtectedHeader = () => {
 
   const handleLogOut = () => {
     dispatch(logoutRequest())
-    
+
     router.push('/')
   }
 
@@ -110,7 +110,7 @@ const ProtectedHeader = () => {
           <React.Fragment>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
               <a title='Manage Resume' onClick={(e) => {
-                currentUser.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
+                currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
               }}>
                 <MaterialButton variant='contained' capitalize>
                   <Text textColor='white' textStyle='base' bold>Manage Resume</Text>
