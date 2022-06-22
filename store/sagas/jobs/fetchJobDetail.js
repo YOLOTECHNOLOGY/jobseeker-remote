@@ -3,6 +3,7 @@ import { call, put, takeLatest } from 'redux-saga/effects'
 import { FETCH_JOB_DETAIL_REQUEST } from 'store/types/jobs/fetchJobDetail'
 import { fetchJobDetailSuccess, fetchJobDetailFailed } from 'store/actions/jobs/fetchJobDetail'
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
+import { addJobViewService } from 'store/services/jobs/addJobView'
 
 function* fetchJobDetailReq(actions) {
   try {
@@ -61,6 +62,8 @@ function* fetchJobDetailReq(actions) {
       //   jobDetailResponse.data.data['applicationInfo'] = applicationExistedInfo.data.data
       // }
       yield put(fetchJobDetailSuccess(jobDetailResponse.data.data))
+
+      yield call(addJobViewService, {...payload})
     }
   } catch (err) {
     yield put(fetchJobDetailFailed(err))

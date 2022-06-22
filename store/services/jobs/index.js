@@ -10,11 +10,12 @@ import fetchSavedJobsList from './fetchSavedJobsList'
 import fetchSavedJobDetail from './fetchSavedJobDetail'
 import postSaveJob from './postSaveJob'
 import deleteSaveJob from './deleteSaveJob'
-import applyJob from './applyJobService'
+import addJobView from './addJobView'
 
 export default {
   fetchJobsList,
   fetchJobDetail,
+  addJobView,
   fetchSimilarJobs,
 
   fetchAppliedJobsList,
