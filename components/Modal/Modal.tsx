@@ -53,7 +53,7 @@ const Modal = ({
   const hasSecondButton = handleSecondButton && secondButtonText
 
   const handleCloseModal = () => {
-    document.body.style.overflow = 'auto'
+    document.documentElement.setAttribute("modal-active", "false")
     handleModal(false)
   }
 
@@ -64,7 +64,7 @@ const Modal = ({
   }
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden'
+    document.documentElement.setAttribute("modal-active", "true")
     if (closeModalOnOutsideClick) {
       document.addEventListener('click', handleClickOutside, true)
       return () => {
