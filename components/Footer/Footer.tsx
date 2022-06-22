@@ -420,7 +420,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/company/bossjob-1668`}
+                      to={`${process.env.NEW_PROJECT_URL}/company/bossjob-1668`}
                       title='About Bossjob'
                       external
                     >
