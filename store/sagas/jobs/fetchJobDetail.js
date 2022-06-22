@@ -63,7 +63,7 @@ function* fetchJobDetailReq(actions) {
       // }
       yield put(fetchJobDetailSuccess(jobDetailResponse.data.data))
 
-      yield fork(addJobViewService, {...payload})
+      yield call(addJobViewService, {...payload})
     }
   } catch (err) {
     yield put(fetchJobDetailFailed(err))
