@@ -96,7 +96,9 @@ const App = ({ Component, pageProps }: AppProps) => {
                 google.accounts.id.initialize({
                   client_id: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
                   callback: handleGoogleOneTapLoginResponse,
-                  cancel_on_tap_outside: false
+                  cancel_on_tap_outside: false,
+                  itp_support: true,
+                  skip_prompt_cookie: 'accessToken'
                 });
                 google.accounts.id.prompt((notification) => {
                   if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
