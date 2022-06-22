@@ -78,6 +78,9 @@ const MaterialLocationField = ({ className, label, defaultValue, fieldRef, error
   const formattedLocationList = flat(formatLocationConfig(locationList))
   return (
     <ThemeProvider theme={autocompleteTheme}>
+      <head>
+        <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1' />
+      </head>
       <Autocomplete
         id='location-autocomplete'
         options={formattedLocationList}
