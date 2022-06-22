@@ -2,62 +2,63 @@
 @import 'styles/mixins.scss';
 
 .modal {
-  height: calc(100vh + env(safe-area-inset-bottom));
-  width: 100vw;
-  overflow: hidden;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-  z-index: 999;
-  flex-direction: column;
-  justify-content: center;
-
-  @include sm{
-    justify-content: flex-end;
-    touch-action: none;
-    -ms-touch-action: none;
+  &Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    opacity: .5;
   }
 
-  // necessary for taking full height for mobile view
-  &.FullHeight {
-    @include msd {
-      height: 100%;
-      height: --webkit-fill-available;
+  &Wrapper {
+    // height: calc(100vh + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    height: 100%;
+    width: 100%;
+    padding-bottom: env(safe-area-inset-bottom);
+    overflow-x: hidden;
+    overflow-y: auto;
+    
+    @include sm{
+      justify-content: flex-end;
+      touch-action: none;
+      -ms-touch-action: none;
     }
   }
 
   &Content {
+    z-index: 100;
     background: white;
     position: relative;
     margin: 0 auto;
     width: 581px;
     max-height: 680px;
     border-radius: 5px;
-    overflow: auto;
-
-    &.isFullWidth {
-      @include md {
-        margin: 0 20%;
-      }
-    }
 
     @include sm{
-      width:100%;
-      height:auto;
-      // height:100%;
+      width: 100%;
+      // height:auto;
     }
   }
 
   &Header {
     display: flex;
-    padding: 16px 24px;
-    background-color: $white-1;
-    border-bottom: 1px solid rgba($lightgrey, 0.5);
     position:sticky;
     top:0;
     z-index:100;
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba($lightgrey, 0.5);
+    background-color: $white-1;
 
     &Title {
       flex: auto;
@@ -74,7 +75,6 @@
   }
   &Footer {
     border-top: 1px solid rgba($lightgrey, 0.5);
-    // margin: 0 40px;
     padding: 16px 40px;
     display: flex;
     justify-content: flex-end;
@@ -94,14 +94,6 @@
         }
       }
     }
-  }
-
-  &Visible {
-    display: flex;
-  }
-
-  &Hidden {
-    display: none;
   }
 
   &CloseButton {
