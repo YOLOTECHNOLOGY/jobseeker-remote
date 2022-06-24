@@ -6,8 +6,10 @@ export default class CustomDocument extends Document {
       <Html>
         <Head>
           {/* Google Ad Manager */}
-          <script defer src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'></script>
+          <script defer async src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'></script>
           <script
+            defer
+            async
             dangerouslySetInnerHTML={{
               __html: `
             window.googletag = window.googletag || {cmd: []}
@@ -17,8 +19,9 @@ export default class CustomDocument extends Document {
           {/* Google AdSense */}
           <script
             data-ad-client='ca-pub-4245733463545444'
-            defer
             src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+            defer
+            async
           ></script>
           {/* <script
             dangerouslySetInnerHTML={{
