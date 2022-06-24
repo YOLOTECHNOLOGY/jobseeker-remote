@@ -24,7 +24,9 @@ type ModalProps = {
   closeModalOnOutsideClick?: boolean
   headerTitle: string
   handleFirstButton?: Function
+  firstButtonIsClose?: boolean
   handleSecondButton?: Function
+  secondButtonIsClose?: boolean
   firstButtonText?: string
   secondButtonText?: string
   customFooter?: React.ReactNode
@@ -41,8 +43,10 @@ const Modal = ({
   headerTitle,
   handleModal,
   handleFirstButton,
+  firstButtonIsClose,
   handleSecondButton,
   firstButtonText,
+  secondButtonIsClose,
   secondButtonText,
   customFooter,
   ...rest
@@ -125,6 +129,7 @@ const Modal = ({
                     <Button
                       onClick={() => {
                         handleFirstButton()
+                        if (firstButtonIsClose) handleCloseModal()
                       }}
                     >
                       {firstButtonText}
@@ -134,6 +139,7 @@ const Modal = ({
                     <Button
                       onClick={() => {
                         handleSecondButton()
+                        if (secondButtonIsClose) handleCloseModal()
                       }}
                     >
                       {secondButtonText}
