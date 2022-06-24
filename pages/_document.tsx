@@ -32,6 +32,8 @@ export default class CustomDocument extends Document {
               });`,
             }}
           /> */}
+
+          <link href="https://fonts.googleapis.com/css?family=Product+Sans:300,400,500,700,300i,400i,500i,700i&display=swap" rel="stylesheet" />
         </Head>
         <body>
           <Main />
