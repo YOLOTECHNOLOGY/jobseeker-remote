@@ -64,8 +64,8 @@ const Layout = ({ children, className }: LayoutProps) => {
     }
   }
 
-  const handleVerifyEmailModal = (isShow: boolean) => {
-    setIsShowModal(isShow)
+  const handleVerifyEmailModal = () => {
+    setIsShowModal(false)
     setIsEmailVerified(getCookie('user').is_email_verify)
     setCookieWithExpiry('isVerifyEmailModalClosed', true, 3600) // cookie expires to renable auto show modal after 1 hour
   }
