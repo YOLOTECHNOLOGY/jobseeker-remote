@@ -65,6 +65,7 @@ const Modal = ({
 
   useEffect(() => {
     document.documentElement.setAttribute("modal-active", "true")
+    // document.body.style.overflow = 'hidden'
     if (closeModalOnOutsideClick) {
       document.addEventListener('click', handleClickOutside, true)
       return () => {
@@ -75,7 +76,7 @@ const Modal = ({
 
   useEffect(() => {
     return () => {
-      document.body.style.overflow = 'auto'
+      document.documentElement.setAttribute("modal-active", "false")
     }
   }, [])
 
