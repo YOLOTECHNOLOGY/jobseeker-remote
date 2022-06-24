@@ -39,6 +39,7 @@ const ModalWithdrawApplication = ({
       handleFirstButton={() => {
         handleShowModalWithdrawApplication(false)
       }}
+      firstButtonIsClose={true}
       secondButtonText={handleText()}
       handleSecondButton={() => {
         handleWithdrawApplication({jobId})
