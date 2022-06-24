@@ -58,12 +58,10 @@ const App = ({ Component, pageProps }: AppProps) => {
       ></Script> */}
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script
-        strategy='lazyOnload'
         src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
       />
       <Script
         id='gtag-init'
-        strategy='lazyOnload'
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
@@ -86,8 +84,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       ></Script> */}
 
       {/* Google One Tap Sign in */}
-      <Script src='https://apis.google.com/js/platform.js' async defer/>
-      <Script src='https://accounts.google.com/gsi/client' async defer/>
+      <Script src='https://accounts.google.com/gsi/client' />
       {!accessToken && (
         <Script
           dangerouslySetInnerHTML={{

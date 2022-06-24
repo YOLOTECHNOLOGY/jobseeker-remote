@@ -381,7 +381,7 @@ const Home = (props: HomeProps) => {
                         to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
                         external
                       >
-                        <img src={company.logoUrl} alt={company.name} width='60' height='60' />
+                        <Image src={company.logoUrl} alt={company.name} width='60' height='60' />
                       </Link>
                     )
                   }
@@ -494,28 +494,28 @@ const Home = (props: HomeProps) => {
                   </span>
                 </div>
                 <div className={styles.right}>
-                  <img
+                  <Image
                     className={activeFeatureImg === 1 ? styles.active : ''}
                     src={BuildProfessionalResume}
                     alt='Build Professional Resume'
                     width='535'
                     height='432'
                   />
-                  <img
+                  <Image
                     className={activeFeatureImg === 2 ? styles.active : ''}
                     src={ChatDirectlyWithBoss}
                     alt='Chat Directly'
                     width='554'
                     height='382'
                   />
-                  <img
+                  <Image
                     className={activeFeatureImg === 3 ? styles.active : ''}
                     src={GetHeadhunted}
                     alt='Get Headhunted'
                     width='555'
                     height='427'
                   />
-                  <img
+                  <Image
                     className={activeFeatureImg === 4 ? styles.active : ''}
                     src={LevelUpCareer}
                     alt='Level Up Your Career'
@@ -530,7 +530,7 @@ const Home = (props: HomeProps) => {
                   <LazyLoad>
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
-                        <img
+                        <Image
                           className={styles.flatDisplayImage}
                           src={BuildProfessionalResume}
                           alt='Build Professional Resume'
@@ -555,7 +555,7 @@ const Home = (props: HomeProps) => {
                     </div>
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
-                        <img
+                        <Image
                           className={styles.flatDisplayImage}
                           src={ChatDirectlyWithBoss}
                           alt='Chat Directly'
@@ -578,7 +578,7 @@ const Home = (props: HomeProps) => {
                     </div>
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
-                        <img
+                        <Image
                           className={styles.flatDisplayImage}
                           src={GetHeadhunted}
                           alt='Get Headhunted'
@@ -601,7 +601,7 @@ const Home = (props: HomeProps) => {
                     </div>
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
-                        <img
+                        <Image
                           className={styles.flatDisplayImage}
                           src={LevelUpCareer}
                           alt='Level Up Your Career'
@@ -646,7 +646,7 @@ const Home = (props: HomeProps) => {
           <div className={styles.featureList}>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <img src={BusinessInsider} alt='Business Insider' width='206' height='70' />
+                <Image src={BusinessInsider} alt='Business Insider' width='206' height='70' />
               </div>
               {width > 576 ? (
                 <Link
@@ -683,7 +683,7 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <img src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
+                <Image src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
               </div>
               {width > 576 ? (
                 <Link
@@ -716,7 +716,7 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <img src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
+                <Image src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
               </div>
               {width > 576 ? (
                 <Link
@@ -751,7 +751,7 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <img src={MoneyMax} alt='Moneymax' width='206' height='40' />
+                <Image src={MoneyMax} alt='Moneymax' width='206' height='40' />
               </div>
               {width > 576 ? (
                 <Link to='https://www.moneymax.ph/lifestyle/articles/online-job-sites/' external>
@@ -778,7 +778,7 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <img src={KrAsia} alt='KR Asia' width='206' height='40' />
+                <Image src={KrAsia} alt='KR Asia' width='206' height='40' />
               </div>
               {width > 576 ? (
                 <Link
@@ -815,13 +815,13 @@ const Home = (props: HomeProps) => {
           <div className={styles.commonContainer}>
             <Link to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`} external>
               <div className={breakpointStyles.hideOnMobileAndTablet}>
-                  <img src={RHBannerDesktop} alt='rh-banner-desktop' width='100%' height='254' />
+                <Image src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
               </div>
               <div className={breakpointStyles.hideOnMobileAndDesktop}>
-                <img src={RHBannerTablet} alt='rh-banner-tablet' width='100%' height='359' />
+                <Image src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
               </div>
               <div className={breakpointStyles.hideOnTabletAndDesktop}>
-                <img src={RHBannerMobile} alt='rh-banner-mobile' width='100%' height='150' />
+                <Image src={RHBannerMobile} alt='rh-banner-mobile' width='427' height='214' />
               </div>
             </Link>
           </div>
