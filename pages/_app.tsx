@@ -184,9 +184,6 @@ const App = ({ Component, pageProps }: AppProps) => {
         href={`${process.env.S3_BUCKET_URL}/favicon.ico`}
       />
 
-      {/* Google web fonts */}
-      <link href="https://fonts.googleapis.com/css?family=Product+Sans:300,400,500,700,300i,400i,500i,700i&display=swap" rel="stylesheet" />
-
       <ConnectedRouter>
         <CookiesProvider>
           {process.env.MAINTENANCE === 'true' ? (
