@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 /* Vendors */
@@ -114,23 +115,23 @@ const JobDetail = ({
 
     switch (Icon) {
       case 'EquityIncentiveIcon':
-        return <img src={EquityIncentiveIcon} alt='logo' width='20' height='20' />
+        return <Image src={EquityIncentiveIcon} alt='logo' width='20' height='20' />
       case 'MealAllowanceIcon':
-        return <img src={MealAllowanceIcon} alt='logo' width='20' height='20' />
+        return <Image src={MealAllowanceIcon} alt='logo' width='20' height='20' />
       case 'EmployeeStockPurchaseIcon':
-        return <img src={EmployeeStockPurchaseIcon} alt='logo' width='20' height='20' />
+        return <Image src={EmployeeStockPurchaseIcon} alt='logo' width='20' height='20' />
       case 'HousingAllowanceIcon':
-        return <img src={HousingAllowanceIcon} alt='logo' width='20' height='20' />
+        return <Image src={HousingAllowanceIcon} alt='logo' width='20' height='20' />
       case 'CommissionIcon':
-        return <img src={CommissionIcon} alt='logo' width='20' height='20' />
+        return <Image src={CommissionIcon} alt='logo' width='20' height='20' />
       case 'PerformanceBonusIcon':
-        return <img src={PerformanceBonusIcon} alt='logo' width='20' height='20' />
+        return <Image src={PerformanceBonusIcon} alt='logo' width='20' height='20' />
       case 'TelecommunicationAllowanceIcon':
-        return <img src={TelecommunicationAllowanceIcon} alt='logo' width='20' height='20' />
+        return <Image src={TelecommunicationAllowanceIcon} alt='logo' width='20' height='20' />
       case 'TransportAllowanceIcon':
-        return <img src={TransportAllowanceIcon} alt='logo' width='20' height='20' />
+        return <Image src={TransportAllowanceIcon} alt='logo' width='20' height='20' />
       default:
-        return <img src={OtherAllowancesIcon} alt='logo' width='20' height='20' />
+        return <Image src={OtherAllowancesIcon} alt='logo' width='20' height='20' />
     }
   }
 
@@ -197,7 +198,7 @@ const JobDetail = ({
                 className={styles.JobDetailOptionImage}
                 onClick={() => setJobDetailOption(!jobDetailOption)}
               >
-                <img src={MoreIcon} width='5' height='20' />
+                <Image src={MoreIcon} width='5' height='20' />
               </div>
 
               {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
@@ -318,7 +319,7 @@ const JobDetail = ({
 
                 {selectedJob?.status_key !== 'active' && (
                   <Text textStyle='base' className={styles.JobDetailStatus}>
-                    <img src={ExpireIcon} height='16' width='16' />
+                    <Image src={ExpireIcon} height='16' width='16' />
                     <span>This job is no longer hiring</span>
                   </Text>
                 )}
@@ -335,7 +336,7 @@ const JobDetail = ({
             <div className={styles.JobDetailPref}>
               <ul className={styles.JobDetailPrefList}>
                 <li className={styles.JobDetailPrefItem}>
-                  <img src={LocationIcon} width='20' height='20' />
+                  <Image src={LocationIcon} width='20' height='20' />
                   <span className={styles.JobDetailPrefText}>
                     <Text textStyle='lg' textColor='darkgrey' className={styles.JobDetailPrefField}>
                       Location
@@ -346,7 +347,7 @@ const JobDetail = ({
                   </span>
                 </li>
                 <li className={styles.JobDetailPrefItem}>
-                  <img src={BriefcaseIcon} width='22' height='22' />
+                  <Image src={BriefcaseIcon} width='22' height='22' />
                   <span className={styles.JobDetailPrefText}>
                     <Text textStyle='lg' textColor='darkgrey' className={styles.JobDetailPrefField}>
                       Experience
@@ -357,7 +358,7 @@ const JobDetail = ({
                   </span>
                 </li>
                 <li className={styles.JobDetailPrefItem}>
-                  <img src={EducationIcon} width='22' height='22' />
+                  <Image src={EducationIcon} width='22' height='22' />
                   <span className={styles.JobDetailPrefText}>
                     <Text textStyle='lg' textColor='darkgrey' className={styles.JobDetailPrefField}>
                       Education
@@ -368,7 +369,7 @@ const JobDetail = ({
                   </span>
                 </li>
                 <li className={styles.JobDetailPrefItem}>
-                  <img src={SalaryIcon} width='22' height='22' />
+                  <Image src={SalaryIcon} width='22' height='22' />
                   <span className={styles.JobDetailPrefText}>
                     <Text textStyle='lg' textColor='darkgrey' className={styles.JobDetailPrefField}>
                       Salary
