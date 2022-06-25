@@ -494,28 +494,28 @@ const Home = (props: HomeProps) => {
                   </span>
                 </div>
                 <div className={styles.right}>
-                  <img
+                  <Image
                     className={activeFeatureImg === 1 ? styles.active : ''}
                     src={BuildProfessionalResume}
                     alt='Build Professional Resume'
                     width='535'
                     height='432'
                   />
-                  <img
+                  <Image
                     className={activeFeatureImg === 2 ? styles.active : ''}
                     src={ChatDirectlyWithBoss}
                     alt='Chat Directly'
                     width='554'
                     height='382'
                   />
-                  <img
+                  <Image
                     className={activeFeatureImg === 3 ? styles.active : ''}
                     src={GetHeadhunted}
                     alt='Get Headhunted'
                     width='555'
                     height='427'
                   />
-                  <img
+                  <Image
                     className={activeFeatureImg === 4 ? styles.active : ''}
                     src={LevelUpCareer}
                     alt='Level Up Your Career'
