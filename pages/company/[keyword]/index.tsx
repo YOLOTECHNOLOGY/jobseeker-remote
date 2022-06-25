@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import Image from 'next/image'
 import slugify from 'slugify'
 import classNames from 'classnames/bind'
 import { useRouter } from 'next/router'
@@ -187,28 +186,28 @@ const CompanyDetail = (props: any) => {
                       className={styles.companyOverviewSocialLink}
                       to={company.facebook_url ? company.facebook_url : router.asPath}
                     >
-                      <Image src={FacebookOutline} />
+                      <img src={FacebookOutline} />
                     </Link>
                     <Link
                       external
                       className={styles.companyOverviewSocialLink}
                       to={company.linkedin_url ? company.linkedin_url : router.asPath}
                     >
-                      <Image src={LinkedinOutline} />
+                      <img src={LinkedinOutline} />
                     </Link>
                     <Link
                       external
                       className={styles.companyOverviewSocialLink}
                       to={company.instagram_url ? company.instagram_url : router.asPath}
                     >
-                      <Image src={InstagramOutline} />
+                      <img src={InstagramOutline} />
                     </Link>
                     <Link
                       external
                       className={styles.companyOverviewSocialLink}
                       to={company.youtube_url ? company.youtube_url : router.asPath}
                     >
-                      <Image src={YoutubeOutline} />
+                      <img src={YoutubeOutline} />
                     </Link>
                   </div>
                 </div>
@@ -312,7 +311,7 @@ const CompanyDetail = (props: any) => {
                               {company.pictures.map((picture, index) => (
                                 <div className={styles.emblaSlide} key={picture.id}>
                                   <div className={styles.emblaSlideInner}>
-                                    <Image
+                                    <img
                                       src={picture.url}
                                       alt={`${company.name} photo ${index}`}
                                       className={`${styles.emblaSlideImage}`}

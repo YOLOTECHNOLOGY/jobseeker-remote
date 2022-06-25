@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import classNames from 'classnames'
 import queryString from 'query-string'
 import axios from 'axios'
@@ -152,7 +151,7 @@ const Linkedin = ({
       }
       onClick={handleAuthClick}
     >
-      <Image
+      <img
         src={LinkedinLogo}
         width={16}
         height={16}

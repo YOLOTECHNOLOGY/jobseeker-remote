@@ -1,7 +1,5 @@
 // @ts-ignore
 import { END } from 'redux-saga'
-import Image from 'next/image'
-
 
 // Redux Actions
 import { wrapper } from 'store'
@@ -74,7 +72,7 @@ const CompanyLifeProfile = (props: any) => {
             {company.pictures?.length > 0 ? (
               <div className={styles.companyLifePictures}>
                 {company.pictures.map((picture, index) => (
-                  <Image
+                  <img
                     src={picture.url}
                     alt={`${company.name} photo ${index}`}
                     className={styles.companyLifePicture}

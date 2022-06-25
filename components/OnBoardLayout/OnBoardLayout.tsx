@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 // Vendors
 import classNames from 'classnames/bind'
 
@@ -51,7 +49,7 @@ const OnBoardLayout = ({
       </head>
       <div className={styles.OnBoardLayoutHeader}>
         <Link title='Home' to='/jobs-hiring/job-search'>
-          <Image id={styles.logo} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+          <img id={styles.logo} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
         </Link>
       </div>
       <div className={styles.OnBoardLayoutBody}>

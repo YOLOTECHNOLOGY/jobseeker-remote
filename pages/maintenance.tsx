@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import { NextPage } from 'next'
 
 /* Components */
@@ -18,7 +17,7 @@ const MaintenancePage: NextPage = () => {
   return (
     <Layout>
       <div className={styles.container}>
-        <Image src={Maintenance} />
+        <img src={Maintenance} />
         <Text textStyle='xxxl' bold className={styles.title}>
           We are under maintenance.
         </Text>

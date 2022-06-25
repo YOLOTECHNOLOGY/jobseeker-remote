@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
 
 /* Vendor */
 import { Radio, RadioGroup, FormControlLabel } from '@mui/material'
@@ -105,7 +104,7 @@ const ModalReportJob = ({
             >
               <Text>{report.description}</Text>
               <div className={styles.modalReportJobItemIcon}>
-                <Image src={ArrowForwardIcon} width='20' height='20'/>
+                <img src={ArrowForwardIcon} width='20' height='20'/>
               </div>
             </div>
           ))}

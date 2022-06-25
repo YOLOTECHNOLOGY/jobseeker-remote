@@ -1,5 +1,4 @@
 import { useCallback, useState, useEffect } from 'react'
-import Image from 'next/image'
 
 /* Vendors */
 import { useRouter } from 'next/router'
@@ -241,7 +240,7 @@ const ResumeTemplate = () => {
                 </Text>
               )}
             </form>
-            <Image
+            <img
               src={ResumeTemplatePreview}
               alt='Resume Template'
               className={styles.resumeTemplatePreview}
@@ -315,7 +314,7 @@ const ResumeTemplate = () => {
                 <div className={styles.emblaContainer}>
                   <div className={styles.emblaSlide}>
                     <div className={styles.emblaSlideInner}>
-                      <Image
+                      <img
                         src={ResumeTemplate1}
                         alt='Resume Template'
                         className={`${styles.resumeTemplateItem}`}
@@ -324,7 +323,7 @@ const ResumeTemplate = () => {
                   </div>
                   <div className={styles.emblaSlide}>
                     <div className={styles.emblaSlideInner}>
-                      <Image
+                      <img
                         src={ResumeTemplate2}
                         alt='Resume Template'
                         className={`${styles.resumeTemplateItem}`}

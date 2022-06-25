@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
 import classNames from 'classnames'
 // import { gapi, loadAuth2 } from 'gapi-script'
 // const { gapi } = require('gapi-script')
@@ -111,7 +110,7 @@ const Google = ({
       }
       onClick={handleAuthClick}
     >
-      <Image
+      <img
         src={GoogleLogo}
         width={20}
         height={20}

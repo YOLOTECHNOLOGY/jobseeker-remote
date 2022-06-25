@@ -1,5 +1,4 @@
 import React, { useCallback, useState, useEffect, forwardRef, Ref, PropsWithChildren } from 'react'
-import Image from 'next/image'
 
 /* Vendors */
 import isHotkey from 'is-hotkey'
@@ -200,7 +199,7 @@ const BulletedListButton = ({ format }: any) => {
         toggleBlock(editor, format)
       }}
     >
-      <Image src={VectorBulletedListIcon} alt='logo' width='22' height='22' />
+      <img src={VectorBulletedListIcon} alt='logo' width='22' height='22' />
     </IconButton>
   )
 }
@@ -216,7 +215,7 @@ const NumberedListButton = ({ format }: any) => {
         toggleBlock(editor, format)
       }}
     >
-      <Image src={VectorNumberedListIcon} alt='logo' width='22' height='22' />
+      <img src={VectorNumberedListIcon} alt='logo' width='22' height='22' />
     </IconButton>
   )
 }

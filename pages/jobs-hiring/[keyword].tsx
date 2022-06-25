@@ -866,7 +866,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         )}
 
         <div className={styles.moreFiltersSection} onClick={() => handleShowFilter()}>
-          <Image src={FilterIcon} alt='filter' width='15' height='15' />
+          <img src={FilterIcon} alt='filter' width='15' height='15' />
           <Text className={styles.moreFiltersText}>More Filters</Text>
         </div>
       </div> */}

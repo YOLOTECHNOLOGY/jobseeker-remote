@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 
 /* Components */
 import Link from 'components/Link'
@@ -31,7 +30,7 @@ const Footer = () => {
         className={styles.scrollUpButton}
         onClick={() => scrollToBottom()}
       >
-        <Image src={ChevronUpIcon} alt='chevron-up' width='15' height='15' />
+        <img src={ChevronUpIcon} alt='chevron-up' width='15' height='15' />
       </button>
 
       <div className={styles.footerContainer}>
@@ -331,7 +330,7 @@ const Footer = () => {
               <div className={styles.footerMobileDownloadApp}>
                 <div style={{ marginRight: '15px' }}>
                   <Link to='https://apps.apple.com/sg/app/bossjob/id1592073585' external>
-                    <Image src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
+                    <img src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
                   </Link>
                 </div>
                 <div>
@@ -339,7 +338,7 @@ const Footer = () => {
                     to='https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'
                     external
                   >
-                    <Image src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
+                    <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
                   </Link>
                 </div>
               </div>
@@ -355,7 +354,7 @@ const Footer = () => {
                   external
                   title='Bossjob Facebook'
                 >
-                  <Image src={facebook} alt='facebook' width='32' height='32' />
+                  <img src={facebook} alt='facebook' width='32' height='32' />
                 </Link>
                 <Link
                   className={styles.socialLink}
@@ -363,7 +362,7 @@ const Footer = () => {
                   external
                   title='Bossjob LinkedIn'
                 >
-                  <Image src={linkedin} alt='linkedin' width='32' height='32' />
+                  <img src={linkedin} alt='linkedin' width='32' height='32' />
                 </Link>
                 <Link
                   className={styles.socialLink}
@@ -371,7 +370,7 @@ const Footer = () => {
                   external
                   title='Bossjob Instagram'
                 >
-                  <Image src={instagram} alt='instagram' width='32' height='32' />
+                  <img src={instagram} alt='instagram' width='32' height='32' />
                 </Link>
                 <Link
                   className={styles.socialLink}
@@ -379,7 +378,7 @@ const Footer = () => {
                   external
                   title='Bossjob Youtube'
                 >
-                  <Image src={youtube} alt='youtube' width='32' height='32' />
+                  <img src={youtube} alt='youtube' width='32' height='32' />
                 </Link>
                 <Link
                   className={styles.socialLink}
@@ -387,7 +386,7 @@ const Footer = () => {
                   external
                   title='Bossjob Twitter'
                 >
-                  <Image src={twitter} alt='twitter' width='32' height='32' />
+                  <img src={twitter} alt='twitter' width='32' height='32' />
                 </Link>
               </div>
             </div>
@@ -678,7 +677,7 @@ const Footer = () => {
                 </Text>
                 <div style={{ margin: '25px 10px 10px 0' }}>
                   <Link to='https://apps.apple.com/sg/app/bossjob/id1592073585' external>
-                    <Image src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
+                    <img src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
                   </Link>
                 </div>
                 <div>
@@ -686,7 +685,7 @@ const Footer = () => {
                     to='https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'
                     external
                   >
-                    <Image src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
+                    <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
                   </Link>
                 </div>
               </div>
@@ -703,7 +702,7 @@ const Footer = () => {
                         external
                         title='Bossjob Facebook'
                       >
-                        <Image src={facebook} alt='facebook' width='32' height='32' />
+                        <img src={facebook} alt='facebook' width='32' height='32' />
                       </Link>
                       <Link
                         className={styles.socialLink}
@@ -711,7 +710,7 @@ const Footer = () => {
                         external
                         title='Bossjob LinkedIn'
                       >
-                        <Image src={linkedin} alt='linkedin' width='32' height='32' />
+                        <img src={linkedin} alt='linkedin' width='32' height='32' />
                       </Link>
                       <Link
                         className={styles.socialLink}
@@ -719,7 +718,7 @@ const Footer = () => {
                         external
                         title='Bossjob Instagram'
                       >
-                        <Image src={instagram} alt='instagram' width='32' height='32' />
+                        <img src={instagram} alt='instagram' width='32' height='32' />
                       </Link>
                       <Link
                         className={styles.socialLink}
@@ -727,7 +726,7 @@ const Footer = () => {
                         external
                         title='Bossjob Youtube'
                       >
-                        <Image src={youtube} alt='youtube' width='32' height='32' />
+                        <img src={youtube} alt='youtube' width='32' height='32' />
                       </Link>
                       <Link
                         className={styles.socialLink}
@@ -735,7 +734,7 @@ const Footer = () => {
                         external
                         title='Bossjob Twitter'
                       >
-                        <Image src={twitter} alt='twitter' width='32' height='32' />
+                        <img src={twitter} alt='twitter' width='32' height='32' />
                       </Link>
                     </div>
                   </div>

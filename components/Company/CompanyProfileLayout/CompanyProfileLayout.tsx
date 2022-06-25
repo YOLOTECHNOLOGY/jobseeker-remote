@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
 import { Tabs, Tab } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
@@ -92,13 +91,13 @@ const CompanyProfileLayout = ({
       <div className={styles.company}>
         <div className={styles.companyContent}>
           <div className={styles.companyHeader}>
-            <Image
+            <img
               src={company.cover_pic_url || imgPlaceholder}
               alt={`${company.name} banner`}
               className={styles.companyBanner}
             />
             <div className={styles.companyProfile}>
-              <Image src={company.logo_url} alt={`${company.name} logo`} />
+              <img src={company.logo_url} alt={`${company.name} logo`} />
               <Text tagName='h1' textStyle='xxl' bold>
                 {company.name}
               </Text>
@@ -182,7 +181,7 @@ const CompanyProfileLayout = ({
                     className={styles.relatedCompanyItem}
                     aTag
                   >
-                    <Image
+                    <img
                       src={company.logo_url}
                       alt={`${company.name} logo`}
                       className={styles.relatedCompanyImage}

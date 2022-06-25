@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
@@ -372,13 +371,13 @@ const Step4 = (props: any) => {
                   className={styles.stepDataActionItem}
                   onClick={() => handleSelectEducation(education)}
                 >
-                  <Image src={CreateFilledIcon} width='18' height='18' />
+                  <img src={CreateFilledIcon} width='18' height='18' />
                 </div>
                 <div
                   className={styles.stepDataActionItem}
                   onClick={() => handleDeleteEducation(education.id)}
                 >
-                  <Image src={DeleteFilledIcon} width='18' height='18' />
+                  <img src={DeleteFilledIcon} width='18' height='18' />
                 </div>
               </div>
             </div>
@@ -535,7 +534,7 @@ const Step4 = (props: any) => {
 
       {!showForm && (
         <div className={styles.stepFormToggle} onClick={() => newEducationForm()}>
-          <Image src={AddOutlineIcon} width='18' height='18' />
+          <img src={AddOutlineIcon} width='18' height='18' />
           <Text textColor='primaryBlue' textStyle='sm'>
             Add a education
           </Text>

@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import classNames from 'classnames'
 
 /* Styles */
@@ -73,7 +72,7 @@ const Facebook = ({
       }
       onClick={handleAuthClick}
     >
-      <Image
+      <img
         src={FacebookLogo}
           width={9}
           height={16}

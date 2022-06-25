@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -385,7 +384,7 @@ const Step3 = (props: any) => {
       isUpdating={isUpdating}
     >
       <div className={styles.stepNotice}>
-        <Image src={InfoIcon} alt='' width='30' height='30' />
+        <img src={InfoIcon} alt='' width='30' height='30' />
         <Text textStyle='base'>Fill in your complete work experiences will increase your chances of being shortlisted by 83%.</Text>
       </div>
       {workExperience?.length > 0 && (
@@ -420,13 +419,13 @@ const Step3 = (props: any) => {
                     setSelectedExperience(experience)
                   }}
                 >
-                  <Image src={CreateFilledIcon} width='18' height='18' />
+                  <img src={CreateFilledIcon} width='18' height='18' />
                 </div>
                 <div 
                   className={styles.stepDataActionItem} 
                   onClick={() => handleDeleteExperience(experience.id)}
                 >
-                  <Image src={DeleteFilledIcon} width='18' height='18' />
+                  <img src={DeleteFilledIcon} width='18' height='18' />
                 </div>
               </div>
             </div>
@@ -591,7 +590,7 @@ const Step3 = (props: any) => {
           className={styles.stepFormToggle} 
           onClick={() => newExperienceForm() }
         >
-          <Image src={AddOutlineIcon} width='18' height='18' />
+          <img src={AddOutlineIcon} width='18' height='18' />
           <Text textColor='primaryBlue' textStyle='sm'>Add a work experience</Text>
         </div>
       )}

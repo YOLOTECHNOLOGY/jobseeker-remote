@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react'
-import Image from 'next/image'
 import * as ReactDOM from 'react-dom'
 
 /* Vendor */
@@ -112,7 +111,7 @@ const Modal = ({
                 </Text>
                 <div className={styles.modalCloseButton}>
                   <Text onClick={handleCloseModal}>
-                    <Image
+                    <img
                       src={CloseIcon}
                       title='close modal'
                       alt='close modal'

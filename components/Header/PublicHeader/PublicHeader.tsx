@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import classNames from 'classnames/bind'
 
 /* Style */
@@ -21,8 +20,8 @@ const PublicHeader = () => {
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/'}>
-            <Image className={styles.headerLogoImage} src={BossjobFittedLogo} title='Bossjob logo' alt='Bossjob logo' width='24' height='30' />
-            <Image className={styles.headerLogoImageDesktop} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' width='132' height='35' />
+            <img className={styles.headerLogoImage} src={BossjobFittedLogo} title='Bossjob logo' alt='Bossjob logo' />
+            <img className={styles.headerLogoImageDesktop} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
           </Link>
         </div>
         <div className={styles.headerLinksWrapper}>
