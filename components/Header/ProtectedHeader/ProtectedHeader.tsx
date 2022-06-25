@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
@@ -60,8 +61,8 @@ const ProtectedHeader = () => {
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/'}>
-            <img className={styles.headerLogoImage} src={BossjobFittedLogo} title='Bossjob logo' alt='Bossjob logo' />
-            <img className={styles.headerLogoImageDesktop} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+            <Image className={styles.headerLogoImage} src={BossjobFittedLogo} title='Bossjob logo' alt='Bossjob logo' />
+            <Image className={styles.headerLogoImageDesktop} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
           </Link>
         </div>
         <div className={styles.headerLinksWrapper}>
@@ -97,7 +98,7 @@ const ProtectedHeader = () => {
               </li>
               <li className={styles.headerLink}>
                 <a className={styles.headerLinkIcon} title='Chats' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/chat')} href='/dashboard/chat'>
-                  <img src={ChatIcon} width='20' height='20' />
+                  <Image src={ChatIcon} width='20' height='20' />
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Chats
                   </Text>
@@ -119,7 +120,7 @@ const ProtectedHeader = () => {
             </li>
             <li className={styles.headerLink}>
               <div className={styles.profileWrapper} onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}>
-                <img
+                <Image
                   src={currentUser?.avatar || DefaultAvatar}
                   className={styles.profilePlaceHolder}
                   alt='avatar'

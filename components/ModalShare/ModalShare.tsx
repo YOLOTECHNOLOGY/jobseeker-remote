@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import Image from 'next/image'
 
 /* Vendors */
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share'
@@ -46,7 +47,7 @@ const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: Mo
         <div className={styles.ModalShareList}>
           <div className={styles.ModalShareItem}>
             <FacebookShareButton url={jobDetailUrl} className={styles.ModalShareItemLink}>
-              <img
+              <Image
                 src={FacebookIcon}
                 alt='facebook'
                 height='56px'
@@ -58,7 +59,7 @@ const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: Mo
           </div>
           <div className={styles.ModalShareItem}>
             <TwitterShareButton url={jobDetailUrl} className={styles.ModalShareItemLink}>
-              <img
+              <Image
                 src={TwitterIcon}
                 alt='twitter'
                 height='56px'
@@ -72,7 +73,7 @@ const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: Mo
           </div>
           <div className={styles.ModalShareItem}>
             <LinkedinShareButton url={jobDetailUrl} className={styles.ModalShareItemLink}>
-              <img
+              <Image
                 src={LinkedinIcon}
                 alt='linkedIn'
                 height='56px'
@@ -103,7 +104,7 @@ const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: Mo
               readOnly
             />
             <div onClick={() => handleCopyLink(jobDetailUrl)} className={styles.ModalShareFooterCopy}>
-              <img src={CopyIcon} alt='close' height='18px' width='18px' />
+              <Image src={CopyIcon} alt='close' height='18px' width='18px' />
             </div>
           </div>
         </div>

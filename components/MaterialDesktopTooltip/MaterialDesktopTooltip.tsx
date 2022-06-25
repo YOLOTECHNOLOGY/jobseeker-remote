@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import Tooltip from '@mui/material/Tooltip'
 
 interface MaterialDesktopTooltipProps {
@@ -21,7 +22,7 @@ const MaterialDesktopTooltip = ({
       arrow
     >
       <span className={className}>
-        <img 
+        <Image 
           src={icon} 
           alt='icon' 
           width='14'

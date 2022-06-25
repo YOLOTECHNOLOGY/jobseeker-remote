@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 
 /* Vendor */
 import classNames from 'classnames/bind'
@@ -288,7 +289,7 @@ const NavSearchFilter = ({
           Filters
         </Text>
         <div className={styles.searchFilterClose} onClick={() => onShowFilter()}>
-          <img src={CloseIcon} alt='logo' width='13' height='13' />
+          <Image src={CloseIcon} alt='logo' width='13' height='13' />
         </div>
       </div>
       <form className={styles.searchFilterForm} onSubmit={handleSubmit(handleApplyFilter)}>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Image from 'next/image'
 
 /* Vendors */
 import classNames from 'classnames/bind'
@@ -67,9 +68,9 @@ const Accordian = ({
         <span>{title}</span>
         <div className={styles.accordianToggleIcon}>
           {isVisible ? (
-            <img src={closeIcon} title='minus' alt='minus' height='16' width='16' />
+            <Image src={closeIcon} title='minus' alt='minus' height='16' width='16' />
           ) : (
-            <img src={openIcon} title='Plus' alt='Plus' height='16' width='16' />
+            <Image src={openIcon} title='Plus' alt='Plus' height='16' width='16' />
           )}
         </div>
       </div>

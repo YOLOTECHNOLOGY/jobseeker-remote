@@ -1,4 +1,5 @@
 import slugify from 'slugify'
+import Image from 'next/image'
 
 // Components
 import Text from 'components/Text'
@@ -20,7 +21,7 @@ const CompanyCard = ({
     <div className={styles.companyCard}>
       <div className={styles.companyCardLeft}>
         <Link to={companyUrl}>
-          <img src={company.logo_url || company.logo} alt={company.name} className={styles.companyCardImage}/>
+          <Image src={company.logo_url || company.logo} alt={company.name} className={styles.companyCardImage}/>
         </Link>
       </div>
       <div className={styles.companyCardRight}>

@@ -53,10 +53,10 @@
     width: 24px;
     height: 30px;
     object-fit: contain;
-    display: none;
+    display: none !important;
     
     @include msd {
-      display: block;
+      display: block !important;
     }
   }
 
@@ -64,10 +64,10 @@
     width: 100px;
     height: 29px;
     object-fit: contain;
-    display: block;
+    display: block !important;
 
     @include msd {
-      display: none;
+      display: none !important;
     }
   }
 }

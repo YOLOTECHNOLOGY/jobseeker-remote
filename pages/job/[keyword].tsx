@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 // @ts-ignore
@@ -175,21 +176,21 @@ const Job = ({
 
     switch (Icon) {
       case 'EquityIncentiveIcon':
-        return <img src={EquityIncentiveIcon} alt='logo' width='22' height='22' />
+        return <Image src={EquityIncentiveIcon} alt='logo' width='22' height='22' />
       case 'MealAllowanceIcon':
-        return <img src={MealAllowanceIcon} alt='logo' width='22' height='22' />
+        return <Image src={MealAllowanceIcon} alt='logo' width='22' height='22' />
       case 'EmployeeStockPurchaseIcon':
-        return <img src={EmployeeStockPurchaseIcon} alt='logo' width='22' height='22' />
+        return <Image src={EmployeeStockPurchaseIcon} alt='logo' width='22' height='22' />
       case 'HousingAllowanceIcon':
-        return <img src={HousingAllowanceIcon} alt='logo' width='22' height='22' />
+        return <Image src={HousingAllowanceIcon} alt='logo' width='22' height='22' />
       case 'CommissionIcon':
-        return <img src={CommissionIcon} alt='logo' width='22' height='22' />
+        return <Image src={CommissionIcon} alt='logo' width='22' height='22' />
       case 'PerformanceBonusIcon':
-        return <img src={PerformanceBonusIcon} alt='logo' width='22' height='22' />
+        return <Image src={PerformanceBonusIcon} alt='logo' width='22' height='22' />
       case 'TelecommunicationAllowanceIcon':
-        return <img src={TelecommunicationAllowanceIcon} alt='logo' width='22' height='22' />
+        return <Image src={TelecommunicationAllowanceIcon} alt='logo' width='22' height='22' />
       default:
-        return <img src={OtherAllowancesIcon} alt='logo' width='22' height='22' />
+        return <Image src={OtherAllowancesIcon} alt='logo' width='22' height='22' />
     }
   }
 
@@ -377,7 +378,7 @@ const Job = ({
               className={styles.JobDetailPrimaryOptions}
               onClick={() => setJobDetailOption(!jobDetailOption)}
             >
-              <img src={MoreIcon} width='20' height='20' />
+              <Image src={MoreIcon} width='20' height='20' />
             </div>
 
             {jobDetailOption && (
@@ -397,7 +398,7 @@ const Job = ({
               </div>
             )}
             <div className={styles.JobDetailPrimaryInfo}>
-              <img
+              <Image
                 src={jobDetail?.company?.logo}
                 className={styles.JobDetailPrimaryInfoImage}
                 alt={`${jobDetail?.company?.name} logo`}
@@ -452,7 +453,7 @@ const Job = ({
                 )}
                 {jobDetail?.status_key !== 'active' && (
                   <Text textStyle='base' className={styles.JobDetailStatus}>
-                    <img src={ExpireIcon} height='16' width='16' />
+                    <Image src={ExpireIcon} height='16' width='16' />
                     <span>This job is no longer hiring</span>
                   </Text>
                 )}
@@ -470,7 +471,7 @@ const Job = ({
           <div className={styles.JobDetailPref}>
             <ul className={styles.JobDetailPrefList}>
               <li className={styles.JobDetailPrefItem}>
-                <img src={LocationIcon} alt='logo' width='18' height='18' />
+                <Image src={LocationIcon} alt='logo' width='18' height='18' />
                 <span className={styles.JobDetailPrefText}>
                   <Text textStyle='lg' className={styles.JobDetailPrefField}>
                     Location
@@ -483,7 +484,7 @@ const Job = ({
                 </span>
               </li>
               <li className={styles.JobDetailPrefItem}>
-                <img src={BriefcaseIcon} alt='logo' width='20' height='20' />
+                <Image src={BriefcaseIcon} alt='logo' width='20' height='20' />
                 <span className={styles.JobDetailPrefText}>
                   <Text textStyle='lg' className={styles.JobDetailPrefField}>
                     Experience
@@ -494,7 +495,7 @@ const Job = ({
                 </span>
               </li>
               <li className={styles.JobDetailPrefItem}>
-                <img src={EducationIcon} alt='logo' width='20' height='20' />
+                <Image src={EducationIcon} alt='logo' width='20' height='20' />
                 <span className={styles.JobDetailPrefText}>
                   <Text textStyle='lg' className={styles.JobDetailPrefField}>
                     Education
@@ -505,7 +506,7 @@ const Job = ({
                 </span>
               </li>
               <li className={styles.JobDetailPrefItem}>
-                <img src={SalaryIcon} alt='logo' width='20' height='20' />
+                <Image src={SalaryIcon} alt='logo' width='20' height='20' />
                 <span className={styles.JobDetailPrefText}>
                   <Text textStyle='lg' className={styles.JobDetailPrefField}>
                     Salary
@@ -652,12 +653,12 @@ const Job = ({
                   </div>
                   <div className={styles.JobDetailRecruiterContent}>
                     <Text textStyle='lg' textColor='darkgrey'>
-                      <img src={RateIcon} height='14' width='15' />
+                      <Image src={RateIcon} height='14' width='15' />
                       {jobDetail?.recruiter.response_rate}% response rate, responds{' '}
                       {jobDetail?.recruiter.response_time}
                     </Text>
                     <Text textStyle='lg' textColor='darkgrey'>
-                      <img src={LocationPinIcon} height='14' width='15' />
+                      <Image src={LocationPinIcon} height='14' width='15' />
                       Last active on{' '}
                       {moment(jobDetail?.recruiter.last_active_at).format('MM/DD/YYYY')}
                     </Text>
@@ -713,7 +714,7 @@ const Job = ({
                         aTag
                         external
                       >
-                        <img
+                        <Image
                           src={job?.company_logo}
                           className={styles.JobDetailSidebarCardImage}
                           alt={`${job?.company_name} logo`}
@@ -800,7 +801,7 @@ const Job = ({
                       to={`${handleCoursePath(course.truncated_name, course.id)}`}
                       className={styles.JobDetailSidebarCard}
                     >
-                      <img
+                      <Image
                         src={course?.image}
                         className={styles.JobDetailSidebarCardImage}
                         alt={`${course?.truncated_name} logo`}

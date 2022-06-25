@@ -1,5 +1,6 @@
 /* Components */
 import Text from 'components/Text'
+import Image from 'next/image'
 import JobTag from 'components/JobTag'
 
 /* Styles */
@@ -66,21 +67,21 @@ const JobCard = ({
         </div>
         <div className={styles.JobCardDetailList}>
           <div className={styles.JobCardDetailItem}>
-            <img src={CompanyIcon} width='20' height='20' />
+            <Image src={CompanyIcon} width='20' height='20' />
             <Text className={styles.JobCardDetailItemText} textStyle='lg'>{company}</Text>
           </div>
           <div className={styles.JobCardDetailItem}>
-            <img src={LocationIcon} width='20' height='20' />
+            <Image src={LocationIcon} width='20' height='20' />
             <Text className={styles.JobCardDetailItemText} textStyle='lg'>{location}</Text>
           </div>
           <div className={styles.JobCardDetailItem}>
-            <img src={SalaryIcon} width='20' height='20' />
+            <Image src={SalaryIcon} width='20' height='20' />
             <Text className={styles.JobCardDetailItemText} textStyle='lg'>{salary}</Text>
           </div>
         </div>
         {status !== 'active' && (
           <Text textStyle='base' className={styles.JobCardDetailStatus}>
-            <img src={ExpireIcon} height="16" width="16"/>
+            <Image src={ExpireIcon} height="16" width="16"/>
             <span>This job is no longer hiring</span>
           </Text>
         )}

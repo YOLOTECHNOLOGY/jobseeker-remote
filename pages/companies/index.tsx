@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import slugify from 'slugify'
@@ -103,7 +104,7 @@ const Companies = () => {
                   featuredCompany?.id
                 }`}
               >
-                <img
+                <Image
                   src={featuredCompany?.logo_url}
                   alt={`${featuredCompany?.name} logo`}
                   className={styles.featuredEmployerImage}
@@ -156,9 +157,8 @@ const Companies = () => {
                 {featuredCompany?.pictures?.length > 0 &&
                   featuredCompany.pictures.map((item) => (
                     <ImageListItem key={item.id}>
-                      <img
+                      <Image
                         src={item.url}
-                        srcSet={item.url}
                         alt={`${featuredCompany?.name} photo`}
                         loading='lazy'
                         className={styles.featuredEmployerPhoto}
@@ -169,7 +169,7 @@ const Companies = () => {
             </div>
             <div className={styles.featuredEmployerImagesMobile}>
               {featuredCompany?.pictures?.length > 0 && (
-                <img
+                <Image
                   src={featuredCompany.pictures[0].url}
                   alt={featuredCompany?.name}
                   className={styles.featuredEmployerSinglePhoto}

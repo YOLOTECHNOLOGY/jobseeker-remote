@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 /* Vendors */
 import classNamesCombined from 'classnames/bind'
@@ -90,7 +91,7 @@ const AuthLayout = ({
     <div className={classNamesCombined([className, styles.AuthLayout])}>
       <div className={styles.AuthLayoutHeader}>
         <Link title='Home' to={'/'}>
-          <img id={styles.logo} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+          <Image id={styles.logo} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
         </Link>
       </div>
       <div className={styles.AuthLayoutBody}>

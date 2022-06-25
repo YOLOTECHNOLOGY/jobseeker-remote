@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 
 /* Vendors */
 import { useRouter } from 'next/router'
@@ -225,7 +226,7 @@ const JobListSection = ({
                         setIsShowModalManageJobAlerts(true)
                       }}
                     >
-                      <img src={BellIcon} width='20' height='20' />
+                      <Image src={BellIcon} width='20' height='20' />
                     </div>
                   )}
                 </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 /* Vendor */
 import { Radio, RadioGroup, FormControlLabel } from '@mui/material'
@@ -124,7 +125,7 @@ const ModalJobAlerts = ({
                     {titleCase(alert.keyword_value)}
                   </Text>
                   <div className={styles.ModalJobAlertsItemAction}>
-                    <img
+                    <Image
                       src={CreateIcon}
                       width='18'
                       height='18'
@@ -136,7 +137,7 @@ const ModalJobAlerts = ({
                       }}
                       className={styles.ModalJobAlertsItemButton}
                     />
-                    <img
+                    <Image
                       src={DeleteIcon}
                       width='18'
                       height='18'
@@ -196,7 +197,7 @@ const ModalJobAlerts = ({
           <div className={styles.ModalUpdateJobAlert}>
             <div className={styles.ModalUpdateJobAlertHeader}>
               <Text textStyle='xl' bold>{titleCase(selectedJobAlert?.keyword_value)}</Text>
-              <img
+              <Image
                 src={DeleteIcon}
                 width='18'
                 height='18'

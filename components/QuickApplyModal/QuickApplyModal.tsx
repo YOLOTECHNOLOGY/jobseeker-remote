@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
@@ -283,7 +284,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
             <div className={styles.uploadedResume}>
               <div className={styles.leftResume}>
                 <div className={styles.documentDiv}>
-                  <img src={DocumentIcon} alt='document' width='21' height='21' />
+                  <Image src={DocumentIcon} alt='document' width='21' height='21' />
                 </div>
                 <Text textStyle='sm' bold className={styles.resumeName}>
                   {' '}
@@ -291,7 +292,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
                 </Text>
               </div>
               <div className={styles.trashDiv}>
-                <img
+                <Image
                   src={TrashIcon}
                   alt='trash'
                   width='14'

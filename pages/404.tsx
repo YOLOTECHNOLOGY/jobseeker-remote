@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { NextPage } from 'next'
 
 /* Components */
@@ -19,7 +20,7 @@ const Custom404Page: NextPage = () => {
   return (
     <Layout>
       <div className={styles.container}>
-        <img src={NotFound404} />
+        <Image src={NotFound404} />
         <Text textStyle='xxxl' bold className={styles.title}>
           Page not found.
         </Text>

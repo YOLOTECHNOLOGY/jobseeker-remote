@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import Image from 'next/image'
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import classNames from 'classnames/bind'
@@ -64,17 +65,17 @@ const BannerCarousel = ({
                     to={banner.cta_url}
                     external
                   >
-                    <img
+                    <Image
                       src={banner.cover_pic_url}
                       alt={banner.title}
                       className={classNames([styles.bannerSlideImage, breakpointStyles.hideOnMobileAndTablet])}
                     />
-                    <img
+                    <Image
                       src={banner.tablet_cover_pic_url}
                       alt={banner.title}
                       className={classNames([styles.bannerSlideImage, breakpointStyles.hideOnMobileAndDesktop])}
                     />
-                    <img
+                    <Image
                       src={banner.mobile_cover_pic_url}
                       alt={banner.title}
                       className={classNames([styles.bannerSlideImage, breakpointStyles.hideOnTabletAndDesktop])}
