@@ -169,11 +169,10 @@ const App = ({ Component, pageProps }: AppProps) => {
         }}
       />*/}
 
-      <Script
+      {/* <Script
         strategy="beforeInteractive"
         src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'
       />
-
       <Script
         strategy="beforeInteractive"
         dangerouslySetInnerHTML={{
@@ -182,12 +181,11 @@ const App = ({ Component, pageProps }: AppProps) => {
         `,
           }}
       />
-
       <Script
         data-ad-client='ca-pub-4245733463545444'
         strategy="beforeInteractive"
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-      />
+      /> */}
 
       {/* Favicons */}
       <link

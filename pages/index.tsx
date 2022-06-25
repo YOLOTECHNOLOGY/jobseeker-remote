@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import Script from 'next/script'
 
 // @ts-ignore
 import { END } from 'redux-saga'
@@ -274,6 +275,25 @@ const Home = (props: HomeProps) => {
 
   return (
     <div className={styles.container}>
+      {/* Google Adsense and Ad Manager scripts */}
+      <Script
+        strategy="beforeInteractive"
+        src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'
+      />
+      <Script
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+            __html: `
+          window.googletag = window.googletag || {cmd: []}
+        `,
+          }}
+      />
+      <Script
+        data-ad-client='ca-pub-4245733463545444'
+        strategy="beforeInteractive"
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+      />
+
       <Layout>
         <SEO
           title='Career Platform for Professionals in Philippines | Bossjob'
