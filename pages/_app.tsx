@@ -50,12 +50,6 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
-      {/* Google AdSense */}
-      {/* <Script
-        data-ad-client='ca-pub-4245733463545444'
-        async
-        src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
-      ></Script> */}
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
@@ -73,15 +67,6 @@ const App = ({ Component, pageProps }: AppProps) => {
           `,
         }}
       />
-      {/* Google Ad Manager */}
-      {/* <Script async src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'></Script>
-      <Script
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.googletag = window.googletag || {cmd: []}
-          `,
-        }}
-      ></Script> */}
 
       {/* Google One Tap Sign in */}
       <Script src='https://accounts.google.com/gsi/client' />
@@ -169,24 +154,6 @@ const App = ({ Component, pageProps }: AppProps) => {
         }}
       />*/}
 
-      {/* <Script
-        strategy="beforeInteractive"
-        src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'
-      />
-      <Script
-        strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{
-            __html: `
-          window.googletag = window.googletag || {cmd: []}
-        `,
-          }}
-      />
-      <Script
-        data-ad-client='ca-pub-4245733463545444'
-        strategy="beforeInteractive"
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-      /> */}
-
       {/* Favicons */}
       <link
         rel='apple-touch-icon'
@@ -216,6 +183,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         type='image/x-icon'
         href={`${process.env.S3_BUCKET_URL}/favicon.ico`}
       />
+
+      {/* Google web fonts */}
+      <link href="https://fonts.googleapis.com/css?family=Product+Sans:300,400,500,700,300i,400i,500i,700i&display=swap" rel="stylesheet" />
 
       <ConnectedRouter>
         <CookiesProvider>
