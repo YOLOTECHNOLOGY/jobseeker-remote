@@ -48,7 +48,7 @@ const getGoogleJobJSON = jobDetail => {
     identifier: {
       '@type': 'PropertyValue',
       name: jobDetail.company.name,
-      value: jobDetail.id
+      value: jobDetail.company.id
     },
     jobLocation: {
       '@type': 'Place',
@@ -57,7 +57,7 @@ const getGoogleJobJSON = jobDetail => {
         streetAddress:
           jobDetail.full_address && jobDetail.full_address !== ''
             ? jobDetail.full_address
-            : jobDetail.company_address,
+            : jobDetail.location.value,
         addressLocality: jobDetail.location.value,
         addressRegion: jobDetail?.job_region,
         postalCode: '1000', // TODO: Hardcoded to manila postal/zip code first, need to refactor it later when we start to ask for zip code from recruiters
