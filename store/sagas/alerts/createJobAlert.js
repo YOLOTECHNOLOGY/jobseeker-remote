@@ -6,6 +6,7 @@ import {
 } from 'store/actions/alerts/createJobAlert'
 import { createJobAlertService } from 'store/services/alerts/createJobAlert'
 import { registerUserService } from 'store/services/users/registerUser'
+import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
 
 function* createJobAlertReq(action) {
   const { jobAlertData, accessToken, user_id } = action.payload
@@ -32,7 +33,8 @@ function* createJobAlertReq(action) {
         country_key: process.env.COUNTRY_KEY,
         terms_and_condition: false,
         client_id: process.env.CLIENT_ID,
-        client_secret: process.env.CLIENT_SECRET
+        client_secret: process.env.CLIENT_SECRET,
+        ...(yield* getUtmCampaignData())
       }
 
       registerUserResponse = yield call(registerUserService, userPayload)
@@ -55,6 +57,8 @@ function* createJobAlertReq(action) {
         },
         accessToken: accessToken
       }
+      
+      removeUtmCampaign()
       
       const { data } = yield call(createJobAlertService, jobAlertPayload)
       yield put(createJobAlertSuccess(data.data))

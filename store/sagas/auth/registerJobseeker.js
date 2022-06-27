@@ -4,7 +4,7 @@ import { push } from 'connected-next-router'
 import { setCookie } from 'helpers/cookies'
 import { setItem } from 'helpers/localStorage'
 import { isFromCreateResume } from 'helpers/constants'
-import { removeUtmCampaign } from 'helpers/utmCampaign'
+import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
 
 import { REGISTER_JOBSEEKER_REQUEST } from 'store/types/auth/registerJobseeker'
 
@@ -51,11 +51,13 @@ function* registerJobSeekerReq(actions) {
       source: source || 'web',
       country_key: process.env.COUNTRY_KEY,
       terms_and_condition: terms_and_condition || 0,
+      ...(yield* getUtmCampaignData())
     }
 
     const response = yield call(registerJobseekerService, registerJobseekerPayload)
     if (response.status >= 200 && response.status < 300) {
       removeUtmCampaign()
+      
       if (window !== 'undefined' && window.gtag) {
         yield window.gtag('event', 'conversion', {
           send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
