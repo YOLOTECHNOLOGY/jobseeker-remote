@@ -175,3 +175,16 @@ export const getCurrentMonthYear = () => {
     year,
   }
 }
+
+export const getFromObject = (obj, allowedAttributes) => {
+  const emptyList = [undefined, null, '', {}, []]
+  const response = {}
+
+  for (const key of Object.keys(obj)) {
+    if (allowedAttributes.includes(key) && !emptyList.includes(obj[key])) {
+      response[key] = obj[key]
+    }
+  }
+
+  return response
+}

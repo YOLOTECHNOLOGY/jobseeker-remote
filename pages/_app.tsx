@@ -6,6 +6,8 @@ import { getCookie, removeCookie } from 'helpers/cookies'
 import { CookiesProvider } from 'react-cookie'
 import { ConnectedRouter } from 'connected-next-router'
 
+import { setItem, getItem } from 'helpers/localStorage'
+import { getFromObject } from 'helpers/formatter'
 import 'styles/globals.scss'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
@@ -25,8 +27,8 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
   }, [router.events])
 
-  // Validate token on every page navigation
   useEffect(() => {
+    // Validate token on every protected page navigation
     if (accessToken) {
       fetch(`${process.env.AUTH_BOSSJOB_URL}/token/validate`, {
         method: 'POST',
@@ -47,6 +49,24 @@ const App = ({ Component, pageProps }: AppProps) => {
         })
     }
   }, [router])
+
+  useEffect(() => {
+    if (!getItem('utmCampaign')) {
+      // Save utm keys if found
+      const campaignKeys = [
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'utm_term',
+        'utm_content'
+      ]
+      const utmCampaignObj = getFromObject(router.query, campaignKeys)
+
+      if (Object.keys(utmCampaignObj).length > 0) {
+        setItem('utmCampaign', JSON.stringify(utmCampaignObj))
+      }
+    }
+  }, [])
 
   return (
     <>
