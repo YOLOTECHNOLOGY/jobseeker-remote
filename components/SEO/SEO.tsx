@@ -142,7 +142,7 @@ const SEO = ({ title, description, imageUrl, canonical, jobDetail=null }: SEOPro
 
       {jobDetail && (
         <script type="application/ld+json">
-          {`${getGoogleJobJSON(jobDetail)}`}
+          {getGoogleJobJSON(jobDetail)}
         </script>
       )}
     </Head>
