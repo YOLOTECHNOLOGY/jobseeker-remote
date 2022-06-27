@@ -132,7 +132,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/resumetemplate`}
+                    to='/jobs-hiring'
                     title='Create Job Alert'
                   >
                     <Text textStyle='sm'>Create job alert</Text>
