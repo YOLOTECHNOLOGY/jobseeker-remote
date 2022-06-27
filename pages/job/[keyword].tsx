@@ -332,7 +332,7 @@ const Job = ({
 
   return (
     <Layout>
-      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonicalUrl} />
+      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonicalUrl} jobDetail={jobDetail} />
       <div className={styles.searchAndLocationContainer}>
         <MaterialTextFieldWithSuggestionList
           id='search'
