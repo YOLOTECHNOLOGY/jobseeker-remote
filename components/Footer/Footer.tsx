@@ -132,7 +132,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/resumetemplate`}
+                    to='/jobs-hiring'
                     title='Create Job Alert'
                   >
                     <Text textStyle='sm'>Create job alert</Text>
@@ -264,7 +264,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search?category=computer-information-technology,technical-helpdesk-support,sales-engineering-technical-it`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/computer-information-technology-jobs`}
                     title='IT Jobs'
                     external
                   >
@@ -304,7 +304,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search?category=marketing-business-development,sales-corporate,sales-insurance-financial-services,sales-engineering-technical-it`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/sales-marketing-jobs`}
                     title='Sales Jobs'
                     external
                   >
