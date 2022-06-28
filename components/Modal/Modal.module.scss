@@ -7,61 +7,61 @@
     top: 0;
     left: 0;
     z-index: 999;
-    width: 100vw;
-    height: 100vh;
+    /* Follow body's width and height*/
+    /* NOTE: vw/vh does not work for IOS Safari as it does not account for browser footer/header */
+    /* Instead, we use window.innerHeight. See syncHeight function inside Modal.tsx*/
+    width: 100%;
+    height: 100%;
     background-color: #000;
     background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
     opacity: .5;
   }
 
   &Wrapper {
-    // height: calc(100vh + env(safe-area-inset-bottom));
-    min-height: 100vh;
-    /* mobile viewport bug fix */
-    min-height: -webkit-fill-available;
+    width: 100%;
+    height: 100%;
+    /* Add padding for unsafe areas(curved devices) */
     padding:
       env(safe-area-inset-top)
       env(safe-area-inset-right)
       env(safe-area-inset-bottom)
       env(safe-area-inset-left);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    
-    @include sm{
-      justify-content: flex-end;
-      touch-action: none;
-      -ms-touch-action: none;
-    }
   }
 
   &Content {
     z-index: 100;
     background: white;
-    position: relative;
-    margin: 0 auto;
+    /* Center Modal content relative to viewport*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 581px;
     max-height: 680px;
     border-radius: 5px;
 
     @include sm{
+      /* Limit width for mobile devices*/
       width: 100%;
-      // height:auto;
+      /* Limit height of Modal for smaller devices */
+      max-height: 500px;
+      /* center-bottom Modal content relative to viewport*/
+      top: unset;
+      left: unset;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 0px)
     }
   }
 
   &Header {
     display: flex;
-    position:sticky;
-    top:0;
+    position: sticky;
+    top: 0;
     z-index:100;
     padding: 16px 24px;
     border-bottom: 1px solid rgba($lightgrey, 0.5);

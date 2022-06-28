@@ -53,11 +53,16 @@ const Modal = ({
 }: ModalProps) => {
   if (!showModal) return null
   const ref = useRef(null)
+  const scrollY = useRef(0)
   const hasFirstButton = handleFirstButton && firstButtonText
   const hasSecondButton = handleSecondButton && secondButtonText
 
   const handleCloseModal = () => {
-    document.documentElement.setAttribute("modal-active", "false")
+    /* Enables scrolling again - moved here as it does not work in useEffect cleanup */
+    document.documentElement.classList.remove('modal-active')
+
+    /* For IOS devices, restore scroll position*/
+    window.scrollTo(0, scrollY.current)
     handleModal(false)
   }
 
@@ -67,20 +72,40 @@ const Modal = ({
     }
   }
 
-  useEffect(() => {
-    document.documentElement.setAttribute("modal-active", "true")
-    // document.body.style.overflow = 'hidden'
-    if (closeModalOnOutsideClick) {
-      document.addEventListener('click', handleClickOutside, true)
-      return () => {
-        document.removeEventListener('click', handleClickOutside, true)
-      }
-    }
-  }, [])
+  const syncHeight = () => {
+    document.documentElement.style.setProperty(
+      '--window-inner-height',
+      `${window.innerHeight}px`
+    )
+  }
+
+  // const preventDefault = (e) => {
+  //   e.preventDefault()
+  // }
 
   useEffect(() => {
+    /* To handle IOS Safari footer */
+    // Set initial height to window.innerHeight
+    document.documentElement.style.setProperty(
+      '--window-inner-height',
+      `${window.innerHeight}px`
+    )
+    // When IOS footer/header toggles, it triggers a resize event
+    // We update body height on 'resize'
+    window.addEventListener('resize', syncHeight)
+    
+    // const modal = document.querySelector('.modal-wrapper')
+    // modal.addEventListener('pointermove', preventDefault)
+
+    /* Setting HTML height will disrupt scroll position, so we store scroll position*/
+    scrollY.current = window.pageYOffset
+    document.documentElement.classList.add('modal-active')
+    
+    if (closeModalOnOutsideClick) document.addEventListener('click', handleClickOutside, true)
     return () => {
-      document.documentElement.setAttribute("modal-active", "false")
+      if (closeModalOnOutsideClick) document.removeEventListener('click', handleClickOutside, true)
+      window.removeEventListener('resize', syncHeight)
+      // modal.removeEventListener('pointermove', preventDefault)
     }
   }, [])
 
@@ -104,7 +129,6 @@ const Modal = ({
               className,
             ])}
           >
-            <div>
               <div className={styles.modalHeader}>
                 <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
                   {headerTitle}
@@ -147,7 +171,6 @@ const Modal = ({
                   )}
                 </div>
               )}
-            </div>
           </div>
         </div>
     </>,

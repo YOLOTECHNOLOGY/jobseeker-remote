@@ -15,13 +15,15 @@ body,
   font-family: 'Product Sans' !important;
 }
 
-body {
-  [modal-active="true"] & {
-		touch-action: none;
-		overscroll-behavior: none;
-		-webkit-overflow-scrolling: auto;
-		overflow: hidden;
-	}
+html.modal-active,
+html.modal-active body {
+  /* fix the height to the full window height */
+  /* -1px prevents IOS safari footer from being revealed */
+  height: calc(var(--window-inner-height) - 1px);
+  /* exclude padding from the height */
+  box-sizing: border-box;
+  /* block hidden content to disable scroll */
+	overflow: hidden;
 }
 
 a {
