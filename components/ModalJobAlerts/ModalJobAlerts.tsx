@@ -113,6 +113,7 @@ const ModalJobAlerts = ({
         showModal={isShowModalManageJobAlerts}
         handleModal={() => handleShowModalManageJobAlerts(false)}
         firstButtonText='Done'
+        firstButtonIsClose={true}
         handleFirstButton={() => handleShowModalManageJobAlerts(false)}
       >
         <div className={classNames(styles.ModalJobAlertBody, styles.ModalJobAlertsListBody)}>
@@ -333,6 +334,7 @@ const ModalJobAlerts = ({
           resetModalJobAlertState()
         }}
         firstButtonText='Done'
+        firstButtonIsClose={true}
         handleFirstButton={() => {
           handleShowModalEnableJobAlerts(false)
           resetModalJobAlertState()
