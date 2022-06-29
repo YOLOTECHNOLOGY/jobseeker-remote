@@ -19,7 +19,7 @@ html.modal-active,
 html.modal-active body {
   /* fix the height to the full window height */
   /* -1px prevents IOS safari footer from being revealed */
-  height: calc(var(--window-inner-height) - 1px);
+  height: calc(var(--window-inner-height));
   /* exclude padding from the height */
   box-sizing: border-box;
   /* block hidden content to disable scroll */
