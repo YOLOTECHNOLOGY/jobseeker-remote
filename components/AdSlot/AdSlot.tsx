@@ -27,17 +27,15 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
   return (
     <div>
       {/* Google Adsense and Ad Manager scripts */}
-      <React.Fragment>
-        <Script
-          strategy='beforeInteractive'
-          src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'
-        />
-        <Script
-          data-ad-client='ca-pub-4245733463545444'
-          strategy='beforeInteractive'
-          src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
-        />
-      </React.Fragment>
+      <Script
+        strategy='beforeInteractive'
+        src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'
+      />
+      <Script
+        data-ad-client='ca-pub-4245733463545444'
+        strategy='beforeInteractive'
+        src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+      />
       <div id={`div-gpt-ad-${ad.id}`} />
     </div>
   )
