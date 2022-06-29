@@ -37,7 +37,7 @@ function* completeUserProfileSaga(redirect, accessToken) {
     const { data } = yield call(completeUserProfileService, { accessToken })
     yield put(completeUserProfileSuccess(data.data))
 
-    let userCookie = getCookie('user')
+    const userCookie = getCookie('user')
     const accessToken = getCookie('accessToken')
 
     userCookie.is_profile_completed = true
