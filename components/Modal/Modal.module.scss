@@ -74,9 +74,9 @@
   &Body{ 
     padding: 16px 24px;
     flex-grow: 1;
+    overflow-y: auto;
 
     @include sm{
-      overflow-y: auto;
       padding: 16px 20px;
     }
   }
