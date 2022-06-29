@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import { wrapper } from 'store'
@@ -10,18 +10,28 @@ import 'styles/globals.scss'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
 import MaintenancePage from './maintenance'
+import TransitionLoader from '../components/TransitionLoader'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
   const accessToken = getCookie('accessToken')
+  const [ isPageLoading, setIsPageLoading ] = useState<boolean>(false);
+
 
   useEffect(() => {
-    const handleRouteChange = (url) => {
+    const handleRouteComplete = (url) => {
       gtag.pageview(url)
+      setIsPageLoading(false);
     }
-    router.events.on('routeChangeComplete', handleRouteChange)
+    const handleStart = () => { setIsPageLoading(true) };
+    
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeError', handleRouteComplete);
+    router.events.on('routeChangeComplete', handleRouteComplete)
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeError', handleRouteComplete);
+      router.events.off('routeChangeComplete', handleRouteComplete)
     }
   }, [router.events])
 
@@ -189,7 +199,9 @@ const App = ({ Component, pageProps }: AppProps) => {
           {process.env.MAINTENANCE === 'true' ? (
             <MaintenancePage {...pageProps} />
           ) : (
-            <Component {...pageProps} />
+            isPageLoading ? 
+              <TransitionLoader /> :
+              <Component {...pageProps} />
           )}
         </CookiesProvider>
       </ConnectedRouter>
