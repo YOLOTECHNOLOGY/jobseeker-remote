@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
 // import { call, put, takeLatest, select } from 'redux-saga/effects'
@@ -60,6 +61,11 @@ function* quickApplyJobReq(action) {
       yield put(registerJobseekerSuccess(response.data))
 
       removeUtmCampaign()
+      if (window !== 'undefined' && window.gtag) {
+        yield window.gtag('event', 'conversion', {
+          send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
+        })
+      }
 
       const registeredData = response.data.data
       
