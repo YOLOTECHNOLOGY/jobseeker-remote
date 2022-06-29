@@ -24,7 +24,7 @@ import styles from './JobSearchFilters.module.scss'
 import { CloseIcon } from 'images'
 
 interface NavSearchFilterProps {
-  urlDefaultValues: any[]
+  urlDefaultValues: any
   categories: any
   isShowFilter: boolean
   handleShowFilter: Function
@@ -139,7 +139,6 @@ const NavSearchFilter = ({
   }, [])
 
   const handleApplyFilter = (data) => {
-    console.log('apply')
     onCloseFilter()
     const updatedData = {
       ...data,
