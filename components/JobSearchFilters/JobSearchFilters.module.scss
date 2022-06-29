@@ -1,38 +1,61 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
+.modal {
+  &Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    /* Follow body's width and height*/
+    /* NOTE: vw/vh does not work for IOS Safari as it does not account for browser footer/header */
+    /* Instead, we use window.innerHeight. See syncHeight function inside Modal.tsx*/
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    opacity: .5;
+  }
+  &Wrapper {
+    width: 100%;
+    height: 100%;
+    /* Add padding for unsafe areas(curved devices) */
+    padding:
+      env(safe-area-inset-top)
+      env(safe-area-inset-right)
+      env(safe-area-inset-bottom)
+      env(safe-area-inset-left);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+}
+
 .searchFilter {
-  display: none;
+  display: flex;
+  flex-direction: column;
   position: absolute;
-  top: 77px;
+  top: 64px;
   right: 0;
   width: 600px;
-  height: calc(100vh - 77px);
+  height: calc(100vh - 64px);
   z-index: 12;
   background-color: $white-3;
   box-shadow: $box-shadow-1;
 
-  &.isShow {
-    display: block;
+  &.isShowingEmailAlert{
+    top: 114px;
+    height: calc(100vh - 114px);
   }
-
-  &.isShow.displayQuickLinks{
-    display: block;
-    @extend .searchFilter;
-
-    .searchFilterBody {
-      height: calc(100vh - 264px);
-
-      @include msd {
-        height: calc(100vh - 183px);
-      }
-    }
-  }
-
-  &.isShow.displayQuickLinks.isShowingEmailAlert{
-    @extend .searchFilter;
-    top: 127px;
-    height: calc(100vh - 127px);
+  
+  @include msd {
+    top: 0;
+    right: unset;
+    // max-height: 500px;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
   }
 
   &Header {
@@ -42,17 +65,14 @@
     background-color: $white-1;
   }
 
-  &Close {
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
   &Body {
     padding: 0 24px;
-    height: calc(100vh - 274px);
-    overflow-y: scroll;
+    height: calc(100vh - 261px);
+    flex-grow: 1;
 
+    @include msd {
+      overflow-y: auto;
+    }
 
     &::-webkit-scrollbar {
       width: 5px;
@@ -71,9 +91,24 @@
     &::-webkit-scrollbar-thumb:hover {
       background: $white-2; 
     }
+  }
 
-    @include msd {
-      height: calc(100vh - 100px);
+  &Footer {
+    padding: 16px 25px;
+    border-top: 2px solid $lightgrey;
+    display: flex;
+    justify-content: flex-end;
+    position: sticky;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+    background-color: $white-3;
+    // z-index: 1;
+  }
+
+  &Close {
+    &:hover {
+      cursor: pointer;
     }
   }
 
@@ -159,35 +194,12 @@
     flex-direction: column;
   }
 
-  &Footer {
-    padding: 16px 25px;
-    border-top: 2px solid $lightgrey;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: $white-3;
-    z-index: 1;
-  }
-
   &Reset {
     margin-right: 20px;
 
     &:hover {
       cursor: pointer;
     }
-  }
-
-  @include msd {
-    width: 100%;
-    top: 0;
-    z-index: 9999;
-    position: fixed;
-    height: 100%;
-    height: --webkit-fill-available;
-    background-color: $white-3;
   }
 }
 
