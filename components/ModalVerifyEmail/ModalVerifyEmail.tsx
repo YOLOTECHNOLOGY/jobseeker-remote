@@ -28,7 +28,7 @@ interface ModalVerifyEmailProps {
   redirectLink?: string
 }
 
-const ModalVerifyEmail = ({ email, isShowModal, handleModal, redirectLink=null }: ModalVerifyEmailProps) => {
+const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailProps) => {
   const router = useRouter()
   const [otp, setOtp] = useState<string>('') // Text Input field state
   const [timerCount, setTimerCount] = useState<number>(-1) // timer counter
