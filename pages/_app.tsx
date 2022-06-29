@@ -33,33 +33,26 @@ const App = ({ Component, pageProps }: AppProps) => {
       fetch(`${process.env.AUTH_BOSSJOB_URL}/token/validate`, {
         method: 'POST',
         headers: new Headers({
-          'Authorization': 'Bearer ' + getCookie('accessToken'), 
-        }), 
-      })
-        .then((resp) => {
-          if (resp.status !== 200) {
-            removeCookie('user')
-            removeCookie('accessToken')
-            removeCookie('splan')
+          Authorization: 'Bearer ' + getCookie('accessToken'),
+        }),
+      }).then((resp) => {
+        if (resp.status !== 200) {
+          removeCookie('user')
+          removeCookie('accessToken')
+          removeCookie('splan')
 
-            if (typeof window !== 'undefined') {
-              window.location.href = '/'
-            }
+          if (typeof window !== 'undefined') {
+            window.location.href = '/'
           }
-        })
+        }
+      })
     }
   }, [router])
 
   useEffect(() => {
     if (!getItem('utmCampaign')) {
       // Save utm keys if found
-      const campaignKeys = [
-        'utm_source',
-        'utm_medium',
-        'utm_campaign',
-        'utm_term',
-        'utm_content'
-      ]
+      const campaignKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content']
       const utmCampaignObj = getFromObject(router.query, campaignKeys)
 
       if (Object.keys(utmCampaignObj).length > 0) {
@@ -71,9 +64,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-      />
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
       <Script
         id='gtag-init'
         dangerouslySetInnerHTML={{
@@ -87,7 +78,6 @@ const App = ({ Component, pageProps }: AppProps) => {
           `,
         }}
       />
-
       {/* Google One Tap Sign in */}
       <Script src='https://accounts.google.com/gsi/client' />
       {!accessToken && (
@@ -121,7 +111,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           }}
         />
       )}
-      
+
       {/* Facebook 
       <Script
         strategy='lazyOnload'
