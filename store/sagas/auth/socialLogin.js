@@ -3,7 +3,6 @@ import { push } from 'connected-next-router'
 
 import { setCookie } from 'helpers/cookies'
 import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
-import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import { SOCIAL_LOGIN_REQUEST } from 'store/types/auth/socialLogin'
 
@@ -24,7 +23,6 @@ function* socialLoginReq(actions) {
     lastName,
     pictureUrl,
     activeKey,
-    isLogin
   } = actions.payload
 
   const payload = {
@@ -42,14 +40,6 @@ function* socialLoginReq(actions) {
   if (activeKey) {
     payload.active_key = activeKey
   }
-
-  // if (isLogin) {
-  //   // if user is trying to login, check account existance first
-  //   yield fork(checkSocialUserExist, actions.payload, redirect)
-  // } else {
-  //   // if user is registering, can call /social_login api right away -> checking will be done in backend
-  //   yield fork(login, payload, redirect, true)
-  // }
 
   yield fork(login, payload, redirect, true)
 }
@@ -78,8 +68,7 @@ function* login(payload, redirect, fromRegister = false) {
         is_profile_completed: loginData.is_profile_completed,
       }
 
-      // let url = '/dashboard'
-      let redirectUrl = `${process.env.OLD_PROJECT_URL}/dashboard/jobseeker`
+      // const redirectUrl = `${process.env.OLD_PROJECT_URL}/dashboard/jobseeker`
       
       // if (getItem(applyPendingJobId)) {
       //   // url = `/dashboard/job/${getItem(applyPendingJobId)}/apply`
@@ -91,16 +80,11 @@ function* login(payload, redirect, fromRegister = false) {
       // }
 
       removeUtmCampaign()
+      
       if (window !== 'undefined' && window.gtag && fromRegister) {
-        if (parseInt(userCookie.active_key) === 1) {
-          yield window.gtag('event', 'conversion', {
-            send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
-          })
-        } else {
-          yield window.gtag('event', 'conversion', {
-            send_to: 'AW-844310282/H1MfCNnvqqsBEIrOzJID'
-          })
-        }
+        yield window.gtag('event', 'conversion', {
+          send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
+        })
       }
 
       yield call(setCookie, 'user', userCookie)
@@ -110,55 +94,18 @@ function* login(payload, redirect, fromRegister = false) {
         loginData.authentication.access_token
       )
 
-      const path = authPathToOldProject(loginData.authentication.access_token, redirectUrl)
-      console.log('path: ', path)
-      let url =
+      const url =
         loginData.active_key === 1 &&
         (loginData.is_profile_update_required || !loginData.is_profile_completed)
           ? '/jobseeker-complete-profile/1'
           : `/jobs-hiring/job-search`
 
       yield put(push(url))
-      // yield put(destroy('companyJobForm')) // Reset Jobs Form
     }
   } catch (err) {
     yield put(socialLoginFailed(err))
   }
 }
-
-// function* checkSocialUserExist(payload, redirect) {
-//   try {
-//     const emailExistResponse = yield call(
-//       checkEmailExistService,
-//       payload.email
-//     )
-
-//     if (
-//       emailExistResponse.data.data.email &&
-//       response.status >= 200 &&
-//       response.status < 300
-//     ) {
-//       const loginPayload = {
-//         social_type: payload.socialType,
-//         user_id: payload.userId,
-//         token: payload.accessToken,
-//         email: payload.email,
-//         first_name: payload.firstName,
-//         last_name: payload.lastName,
-//         avatar: payload.pictureUrl,
-//         source: 'web'
-//       }
-
-//       if (payload.activeKey) {
-//         loginPayload.active_key = payload.activeKey
-//       }
-
-//       yield fork(login, loginPayload, redirect)
-//     }
-//   } catch (err) {
-//     console.error(err)
-//   }
-// }
 
 export default function* socialLoginSaga() {
   yield takeLatest(SOCIAL_LOGIN_REQUEST, socialLoginReq)
