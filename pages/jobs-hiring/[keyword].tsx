@@ -717,6 +717,15 @@ const JobSearchPage = (props: JobSearchPageProps) => {
               <Text textStyle='base' textColor='primaryBlue' bold>
                 Filters
               </Text>
+              {filterCount > 0 && (
+              <Text
+                textStyle='base'
+                textColor='white'
+                className={styles.searchFilterCount}
+              >
+                {filterCount}
+              </Text>
+            )}
             </MaterialButton>
           </div>
         </div>
@@ -767,7 +776,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             </Text>
             {filterCount > 0 && (
               <Text
-                tagName='p'
                 textStyle='base'
                 textColor='white'
                 className={styles.searchFilterCount}
