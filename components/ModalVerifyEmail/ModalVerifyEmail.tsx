@@ -26,10 +26,9 @@ interface ModalVerifyEmailProps {
   isShowModal?: boolean
   handleModal?: Function
   redirectLink?: string
-  updateLayout?: () => void;
 }
 
-const ModalVerifyEmail = ({ email, isShowModal, handleModal, redirectLink=null, updateLayout }: ModalVerifyEmailProps) => {
+const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailProps) => {
   const router = useRouter()
   const [otp, setOtp] = useState<string>('') // Text Input field state
   const [timerCount, setTimerCount] = useState<number>(-1) // timer counter
@@ -91,7 +90,6 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal, redirectLink=null, 
       setTimeout(() => {
         setOTPSuccessMessage('')
         setIsVerifiedEmail(true)
-        updateLayout()
 
         // if (redirectLink) {
         //   router.push(redirectLink)
@@ -200,6 +198,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal, redirectLink=null, 
         variant='contained'
         isLoading={isOTPVerifying}
         onClick={() => {
+          handleModal()
           router.reload()
         }}
       >

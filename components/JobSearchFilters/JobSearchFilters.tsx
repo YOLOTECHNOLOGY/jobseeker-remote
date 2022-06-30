@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from 'react'
+import * as ReactDOM from 'react-dom'
 
 /* Vendor */
 import classNames from 'classnames/bind'
@@ -13,9 +15,7 @@ import Button from 'components/Button'
 import Accordian from 'components/Accordian'
 
 /* Helpers */
-import {
-  userFilterSelectionDataParser,
-} from 'helpers/jobPayloadFormatter'
+import { userFilterSelectionDataParser } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Style */
@@ -28,9 +28,8 @@ interface NavSearchFilterProps {
   urlDefaultValues: any
   categories: any
   isShowFilter: boolean
-  onShowFilter: Function
+  handleShowFilter: Function
   onResetFilter: Function
-  displayQuickLinks: Boolean
   moreFilterReset?: boolean
   isShowingEmailAlert: boolean
   setClientDefaultValues: Function
@@ -59,13 +58,13 @@ type optionsType = {
 const NavSearchFilter = ({
   urlDefaultValues,
   isShowFilter,
-  onShowFilter,
-  displayQuickLinks,
+  handleShowFilter,
   onResetFilter,
   moreFilterReset = false,
   isShowingEmailAlert,
   setClientDefaultValues,
 }: NavSearchFilterProps) => {
+  if (!isShowFilter) return null
   const router = useRouter()
   const { keyword } = router.query
   const config = useSelector((state: any) => state.config.config.response)
@@ -73,6 +72,7 @@ const NavSearchFilter = ({
   const expLvlList = config.inputs.xp_lvls
   const eduLevelList = config.filters.educations
   const jobTypeList = config.inputs.job_types
+  const scrollY = useRef(0)
 
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     ...range,
@@ -85,8 +85,6 @@ const NavSearchFilter = ({
   const { register, handleSubmit, reset } = useForm()
   const cx = classNames.bind(styles)
   const isShowFilterClass = cx({
-    isShow: isShowFilter,
-    displayQuickLinks: displayQuickLinks,
     isShowingEmailAlert: isShowingEmailAlert,
   })
   const [displayMobileSort, setDisplayMobileSort] = useState(false)
@@ -105,7 +103,44 @@ const NavSearchFilter = ({
     setDisplayMobileSort(width < 769 ? true : false)
   }, [config, keyword])
 
+  const onCloseFilter = () => {
+    document.documentElement.classList.remove('modal-active')
+
+    /* For IOS devices, restore scroll position*/
+    window.scrollTo(0, scrollY.current)
+    handleShowFilter()
+  }
+
+  const handleClickedOutside = (e) => {
+    // hardcoding to detect clicking on MUI component
+    const isClickingOnSpecializationMUI = e.target.id.includes('specialization-option')
+    const isClickingOnSort = sortRef.current === 'sort'
+    if (
+      filterRef.current &&
+      !filterRef.current.contains(e.target) &&
+      !isClickingOnSpecializationMUI &&
+      !isClickingOnSort
+    )
+      onCloseFilter()
+  }
+
+  const syncHeight = () => {
+    document.documentElement.style.setProperty('--window-inner-height', `${window.innerHeight}px`)
+  }
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--window-inner-height', `${window.innerHeight}px`)
+    window.addEventListener('resize', syncHeight)
+    scrollY.current = window.pageYOffset
+    document.documentElement.classList.add('modal-active')
+    document.addEventListener('click', handleClickedOutside, true)
+    return () => {
+      document.removeEventListener('click', handleClickedOutside, true)
+    }
+  }, [])
+
   const handleApplyFilter = (data) => {
+    onCloseFilter()
     const updatedData = {
       ...data,
       sort: [data.sort || router.query.sort],
@@ -118,12 +153,11 @@ const NavSearchFilter = ({
     }
     urlFilterParameterBuilder(updatedData, clearFilter)
     setClientDefaultValues(data)
-    onShowFilter()
   }
 
   const handleResetFilter = () => {
     // setSelectedCategories([])
-
+    onCloseFilter()
     reset({})
     onResetFilter({})
   }
@@ -140,7 +174,7 @@ const NavSearchFilter = ({
       data,
       router.query,
       config,
-      isClear = isClear.length > 0 ? isClear : false
+      (isClear = isClear.length > 0 ? isClear : false)
     )
 
     router.push(
@@ -227,12 +261,8 @@ const NavSearchFilter = ({
                     <React.Fragment key={i}>
                       {i === 0 && (
                         // injecting an empty checkbox fixes weird bug where selecting the second checkbox will auto select first checkbox
-                        <label key='empty' style={{display:'none'}}>
-                          <input
-                            type='checkbox'
-                            value={null}
-                            {...register(fieldName)}
-                          />
+                        <label key='empty' style={{ display: 'none' }}>
+                          <input type='checkbox' value={null} {...register(fieldName)} />
                           <Text textStyle='lg'>Empty</Text>
                         </label>
                       )}
@@ -257,76 +287,58 @@ const NavSearchFilter = ({
     )
   }
 
-  const handleClickedOutside = (e) => {
-    // hardcoding to detect clicking on MUI component
-    const isClickingOnSpecializationMUI = e.target.id.includes('specialization-option')
-    const isClickingOnSort = sortRef.current === 'sort'
-    if (
-      isShowFilter &&
-      !filterRef.current.contains(e.target) &&
-      !isClickingOnSpecializationMUI &&
-      !isClickingOnSort
-    )
-      onShowFilter()
-  }
-
-  useEffect(() => {
-    if (isShowFilter) {
-      document.body.style.position = 'fixed'
-      document.body.style.width = '100%'
-    }
-    document.addEventListener('click', handleClickedOutside, true)
-    return () => {
-      document.removeEventListener('click', handleClickedOutside, true)
-    }
-  }, [isShowFilter])
-
-  return (
-    <div ref={filterRef} className={classNamesCombined([styles.searchFilter, isShowFilterClass])}>
-      <div className={styles.searchFilterHeader}>
-        <Text textStyle='lg' bold>
-          Filters
-        </Text>
-        <div className={styles.searchFilterClose} onClick={() => onShowFilter()}>
-          <img src={CloseIcon} alt='logo' width='13' height='13' />
-        </div>
-      </div>
-      <form className={styles.searchFilterForm} onSubmit={handleSubmit(handleApplyFilter)}>
-        <div className={styles.searchFilterBody}>
-          {displayMobileSort && (
-            <div className={styles.searchFilterSection}>
-              <SearchFilters
-                title='Sort By'
-                fieldName='sort'
-                options={[
-                  { value: '1', label: 'Newest' },
-                  { value: '2', label: 'Relevance' },
-                  { value: '3', label: 'Highest Salary' },
-                ]}
-                defaultOpenState={true}
-                isNotCollapsible={true}
-                isColumn
-                isRadioButton
-              />
-              <SearchFilters
-                title='Job Type'
-                fieldName='jobType'
-                options={jobTypeList}
-                defaultOpenState={true}
-                isNotCollapsible={true}
-                isColumn
-              />
-              <SearchFilters
-                title='Salary'
-                fieldName='salary'
-                options={salaryRangeList}
-                defaultOpenState={true}
-                isNotCollapsible={true}
-                isColumn
-              />
+  return ReactDOM.createPortal(
+    <>
+      <div className={styles.modalOverlay} />
+      <div className={styles.modalWrapper} aria-modal aria-hidden tabIndex={-1} role='dialog'>
+        <div
+          ref={filterRef}
+          className={classNamesCombined([styles.searchFilter, isShowFilterClass])}
+        >
+          <div className={styles.searchFilterHeader}>
+            <Text textStyle='lg' bold>
+              Filters
+            </Text>
+            <div className={styles.searchFilterClose} onClick={() => onCloseFilter()}>
+              <img src={CloseIcon} alt='logo' width='13' height='13' />
             </div>
-          )}
-          {/* <div className={styles.searchFilterSection}>
+          </div>
+          <div className={styles.searchFilterBody}>
+            <form className={styles.searchFilterForm}>
+              {displayMobileSort && (
+                <div className={styles.searchFilterSection}>
+                  <SearchFilters
+                    title='Sort By'
+                    fieldName='sort'
+                    options={[
+                      { value: '1', label: 'Newest' },
+                      { value: '2', label: 'Relevance' },
+                      { value: '3', label: 'Highest Salary' },
+                    ]}
+                    defaultOpenState={true}
+                    isNotCollapsible={true}
+                    isColumn
+                    isRadioButton
+                  />
+                  <SearchFilters
+                    title='Job Type'
+                    fieldName='jobType'
+                    options={jobTypeList}
+                    defaultOpenState={true}
+                    isNotCollapsible={true}
+                    isColumn
+                  />
+                  <SearchFilters
+                    title='Salary'
+                    fieldName='salary'
+                    options={salaryRangeList}
+                    defaultOpenState={true}
+                    isNotCollapsible={true}
+                    isColumn
+                  />
+                </div>
+              )}
+              {/* <div className={styles.searchFilterSection}>
             <Accordian
               chevronIcon
               paddedContent
@@ -350,54 +362,57 @@ const NavSearchFilter = ({
               />
             </Accordian>
           </div> */}
-          <SearchFilters
-            title='Industry'
-            fieldName='industry'
-            options={industryList}
-            defaultOpenState={true}
-            isNotCollapsible={true}
-          />
-          <SearchFilters
-            title='Work Experience'
-            fieldName='workExperience'
-            options={expLvlList}
-            defaultOpenState={true}
-            isNotCollapsible={true}
-          />
-          <SearchFilters
-            title='Qualification'
-            fieldName='qualification'
-            options={eduLevelList}
-            defaultOpenState={true}
-            isNotCollapsible={true}
-          />
-          {displayMobileSort && (
-            <SearchFilters
-              title='Specialization'
-              fieldName='category'
-              options={config.inputs.job_category_lists}
-              defaultOpenState={true}
-              isNotCollapsible={true}
-              hasMainAndSubOption
-            />
-          )}
-        </div>
-        <div className={styles.searchFilterFooter}>
-          <div className={styles.searchFilterReset} onClick={handleResetFilter}>
-            <Button>
-              <Text textStyle='base' textColor='primary' bold>
-                Reset Filter
+              <SearchFilters
+                title='Industry'
+                fieldName='industry'
+                options={industryList}
+                defaultOpenState={true}
+                isNotCollapsible={true}
+              />
+              <SearchFilters
+                title='Work Experience'
+                fieldName='workExperience'
+                options={expLvlList}
+                defaultOpenState={true}
+                isNotCollapsible={true}
+              />
+              <SearchFilters
+                title='Qualification'
+                fieldName='qualification'
+                options={eduLevelList}
+                defaultOpenState={true}
+                isNotCollapsible={true}
+              />
+              {displayMobileSort && (
+                <SearchFilters
+                  title='Specialization'
+                  fieldName='category'
+                  options={config.inputs.job_category_lists}
+                  defaultOpenState={true}
+                  isNotCollapsible={true}
+                  hasMainAndSubOption
+                />
+              )}
+            </form>
+          </div>
+          <div className={styles.searchFilterFooter}>
+            <div className={styles.searchFilterReset} onClick={handleResetFilter}>
+              <Button>
+                <Text textStyle='base' textColor='primary' bold>
+                  Reset Filter
+                </Text>
+              </Button>
+            </div>
+            <Button className={styles.searchFilterApply} onClick={handleSubmit(handleApplyFilter)} primary>
+              <Text textStyle='base' textColor='white' bold>
+                Apply Filter
               </Text>
             </Button>
           </div>
-          <Button className={styles.searchFilterApply} primary>
-            <Text textStyle='base' textColor='white' bold>
-              Apply Filter
-            </Text>
-          </Button>
         </div>
-      </form>
-    </div>
+      </div>
+    </>,
+    document.body
   )
 }
 

@@ -341,14 +341,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   ]
 
   const handleShowFilter = () => {
-    if (isShowFilter) {
-      const scrollY = document.body.style.top
-      document.body.style.position = ''
-      document.body.style.top = ''
-      // retrieve previous scroll position
-      window.scrollTo(0, parseInt(scrollY || '0') * -1)
-    }
-    setIsShowFilter(!isShowFilter)
+    setIsShowFilter(false)
   }
 
   const jobTypeList = config.inputs.job_types
@@ -667,7 +660,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonical} />
-      <div className={isShowFilter ? styles.jobSearchFilterBackdrop : ''}></div>
       <div
         className={classNamesCombined([
           displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection,
@@ -720,11 +712,20 @@ const JobSearchPage = (props: JobSearchPageProps) => {
               variant='outlined'
               capitalize
               className={styles.filtersButton}
-              onClick={() => handleShowFilter()}
+              onClick={() => setIsShowFilter(true)}
             >
               <Text textStyle='base' textColor='primaryBlue' bold>
                 Filters
               </Text>
+              {filterCount > 0 && (
+              <Text
+                textStyle='base'
+                textColor='white'
+                className={styles.searchFilterCount}
+              >
+                {filterCount}
+              </Text>
+            )}
             </MaterialButton>
           </div>
         </div>
@@ -767,7 +768,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           <MaterialButton
             variant='outlined'
             className={styles.moreFiltersBtn}
-            onClick={handleShowFilter}
+            onClick={() => setIsShowFilter(true)}
             capitalize
           >
             <Text className={styles.moreFilters} textColor='primaryBlue' textStyle='base' bold>
@@ -775,7 +776,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             </Text>
             {filterCount > 0 && (
               <Text
-                tagName='p'
                 textStyle='base'
                 textColor='white'
                 className={styles.searchFilterCount}
@@ -843,10 +843,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       <JobSearchFilters
         urlDefaultValues={clientDefaultValues}
         categories={categories}
-        displayQuickLinks={displayQuickLinks}
         isShowFilter={isShowFilter}
         onResetFilter={handleResetFilter}
-        onShowFilter={handleShowFilter}
+        handleShowFilter={handleShowFilter}
         moreFilterReset={moreFilterReset}
         isShowingEmailAlert={accessToken && !userCookie?.is_email_verify}
         setClientDefaultValues={setClientDefaultValues}

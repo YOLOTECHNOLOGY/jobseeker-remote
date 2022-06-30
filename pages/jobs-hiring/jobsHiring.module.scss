@@ -269,8 +269,4 @@
   font-weight: 500;
   border-radius: 50%;
   margin-left: 5px;
-
-  @include msd {
-    line-height: 1.8;
-  }
 }
