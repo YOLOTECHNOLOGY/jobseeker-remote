@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from 'react'
 import * as ReactDOM from 'react-dom'
 
@@ -271,7 +272,7 @@ const NavSearchFilter = ({
                           value={option['seo-value']}
                           defaultChecked={
                             urlDefaultValues[fieldName] &&
-                            urlDefaultValues[fieldName][option['seo-value']]
+                            urlDefaultValues[fieldName].includes(option['seo-value'])
                           }
                           {...register(fieldName)}
                         />
