@@ -162,7 +162,7 @@ const nonFilterKeys = [
 //   return queryString
 // }
 
-// check if there is a match
+// check if there is a match/a reserved keyword, and return matched data under matchedFilter
 const checkFilterMatch = (routerQuery, config) => {
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
@@ -396,7 +396,7 @@ const checkFilterMatch = (routerQuery, config) => {
   return matchedFilter
 }
 
-// handle MUI filters not under "More Filters"
+// handle filters from user selection in job search page
 const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear) => {
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
@@ -609,9 +609,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     }
   } else {
     if (optionValue && optionValue.length !== 0 && field !== 'query' && field !== 'sort') {
-      // if (optionValue && optionValue.length !== 0) {
       updatedFilters = { ...updatedFilters, [field]: optionValue.join(',') }
-      // updatedFilters = { ...rest, [field]: field === 'query' ? optionValue : optionValue.join(',') }
     } else {
       delete updatedFilters[field]
     }
@@ -737,9 +735,6 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         filterParamsObject = {
           ...filterParamsObject,
           [key]: uniqueList.join(),
-          // [key]: !filterParamsObject[key].includes(match1)
-          //   ? (filterParamsObject[key] += `,${match}`)
-          //   : filterParamsObject[key],
         }
       } else {
         filterParamsObject = {
