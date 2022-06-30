@@ -677,12 +677,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         <div className={styles.searchAndLocationContainer}>
           <MaterialTextFieldWithSuggestionList
             id='search'
-            label='Search for job title, keyword or company'
+            label='Search for job title or company name'
             variant='outlined'
             size='small'
             className={styles.searchField}
             defaultValue={defaultValues?.urlQuery}
             value={searchValue}
+            maxLength={225}
             searchFn={handleSuggestionSearch}
             updateSearchValue={setSearchValue}
             onSelect={(val) => {
