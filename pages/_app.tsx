@@ -200,7 +200,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             <MaintenancePage {...pageProps} />
           ) : (
             isPageLoading ? 
-              <TransitionLoader /> :
+              <TransitionLoader accessToken={accessToken}/> :
               <Component {...pageProps} />
           )}
         </CookiesProvider>
