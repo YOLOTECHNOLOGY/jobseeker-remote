@@ -69,10 +69,7 @@
     padding: 0 24px;
     height: calc(100vh - 261px);
     flex-grow: 1;
-
-    @include msd {
-      overflow-y: auto;
-    }
+    overflow-y: auto;
 
     &::-webkit-scrollbar {
       width: 5px;

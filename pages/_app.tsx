@@ -6,17 +6,18 @@ import { getCookie, removeCookie } from 'helpers/cookies'
 import { CookiesProvider } from 'react-cookie'
 import { ConnectedRouter } from 'connected-next-router'
 
+import { setItem, getItem } from 'helpers/localStorage'
+import { getFromObject } from 'helpers/formatter'
 import 'styles/globals.scss'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
 import MaintenancePage from './maintenance'
-import TransitionLoader from '../components/TransitionLoader'
+import TransitionLoader from '../components/TransitionLoader/TransitionLoader'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [ isPageLoading, setIsPageLoading ] = useState<boolean>(false);
-
 
   useEffect(() => {
     const handleRouteComplete = (url) => {
@@ -35,35 +36,44 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
   }, [router.events])
 
-  // Validate token on every page navigation
   useEffect(() => {
+    // Validate token on every protected page navigation
     if (accessToken) {
       fetch(`${process.env.AUTH_BOSSJOB_URL}/token/validate`, {
         method: 'POST',
         headers: new Headers({
-          'Authorization': 'Bearer ' + getCookie('accessToken'), 
-        }), 
-      })
-        .then((resp) => {
-          if (resp.status !== 200) {
-            removeCookie('user')
-            removeCookie('accessToken')
-            removeCookie('splan')
+          Authorization: 'Bearer ' + getCookie('accessToken'),
+        }),
+      }).then((resp) => {
+        if (resp.status !== 200) {
+          removeCookie('user')
+          removeCookie('accessToken')
+          removeCookie('splan')
 
-            if (typeof window !== 'undefined') {
-              window.location.href = '/'
-            }
+          if (typeof window !== 'undefined') {
+            window.location.href = '/'
           }
-        })
+        }
+      })
     }
   }, [router])
+
+  useEffect(() => {
+    if (!getItem('utmCampaign')) {
+      // Save utm keys if found
+      const campaignKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content']
+      const utmCampaignObj = getFromObject(router.query, campaignKeys)
+
+      if (Object.keys(utmCampaignObj).length > 0) {
+        setItem('utmCampaign', JSON.stringify(utmCampaignObj))
+      }
+    }
+  }, [])
 
   return (
     <>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-      />
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
       <Script
         id='gtag-init'
         dangerouslySetInnerHTML={{
@@ -77,7 +87,6 @@ const App = ({ Component, pageProps }: AppProps) => {
           `,
         }}
       />
-
       {/* Google One Tap Sign in */}
       <Script src='https://accounts.google.com/gsi/client' />
       {!accessToken && (
@@ -111,7 +120,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           }}
         />
       )}
-      
+
       {/* Facebook 
       <Script
         strategy='lazyOnload'

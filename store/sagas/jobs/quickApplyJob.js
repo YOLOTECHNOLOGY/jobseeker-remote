@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
 // import { call, put, takeLatest, select } from 'redux-saga/effects'
@@ -5,6 +6,7 @@ import { QUICK_APPLY_JOB_REQUEST } from 'store/types/jobs/quickApplyJob'
 import { quickApplyJobSuccess, quickApplyJobFailed } from 'store/actions/jobs/quickApplyJob'
 
 import { setCookie } from 'helpers/cookies'
+import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
 import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import { registerJobseekerService } from 'store/services/auth/registerJobseeker'
@@ -49,13 +51,21 @@ function* quickApplyJobReq(action) {
       contact_number,
       is_subscribe,
       source: "web",
-      country_key: process.env.COUNTRY_KEY
+      country_key: process.env.COUNTRY_KEY,
+      ...(yield* getUtmCampaignData())
     } 
 
     const response = yield call(registerJobseekerService, registerPayload)
 
     if (response.status >= 200 && response.status < 300) {
       yield put(registerJobseekerSuccess(response.data))
+
+      removeUtmCampaign()
+      if (window !== 'undefined' && window.gtag) {
+        yield window.gtag('event', 'conversion', {
+          send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
+        })
+      }
 
       const registeredData = response.data.data
       
