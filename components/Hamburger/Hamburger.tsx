@@ -10,8 +10,9 @@ import styles from './Hamburger.module.scss'
 interface HamburgerProps {
   openState: boolean
   toggleMenu: Function
+  disabled?: boolean
 }
-const Hamburger = ({ toggleMenu, openState }: HamburgerProps) => {
+const Hamburger = ({ toggleMenu, openState, disabled }: HamburgerProps) => {
   const handleShowMenu = () => {
     if (!openState) { // opening menu, disable scrolling of body
       document.body.style.position = 'fixed';
@@ -30,7 +31,7 @@ const Hamburger = ({ toggleMenu, openState }: HamburgerProps) => {
     <div
       id={styles.hamburgerMenu}
       className={openState ? styles.active : null}
-      onClick={handleShowMenu}
+      onClick={disabled ? null : handleShowMenu}
     >
       <span />
       <span />
