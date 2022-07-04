@@ -1,39 +1,24 @@
 # Jira Ticket Description
+JIRA ticket link: <jira_ticket_link>
 
-Include either a link to the ticket or just the ticket number
+# Description/Context:
 
-# Description
+## Related PR/Tickets
+<links to PR/tickets>
 
-- Summary of the changes and the related issue
-- Relevant motivation and context
-- List any dependencies that are required for this change
-- Any other relevant information
+- Bug: 
+## Steps to reproduce the bug (if needed)?
+<description_here>
 
-## Type of change
+## What causes this bug ? 
+<description_here>
 
-Please delete options that are not relevant.
+## Solution to bug fixes ? 
+<description_here>
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- Feature: 
+## Approach taken/implementation to build the feature: 
+<description_here> 
 
-# How Has This Been Tested?
-
-Describe the tests that you ran to verify your changes(if any)
-Provide instructions so we can reproduce(if any)
-Please also list any relevant details for your test configuration(if any)
-
-- [ ] Local
-- [ ] Development
-- [ ] Production
-
-# Checklist:
-
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
-- [ ] Any dependent changes have been merged and published in downstream modules
+## Other relevant details(if relevant): 
+<description_here>
