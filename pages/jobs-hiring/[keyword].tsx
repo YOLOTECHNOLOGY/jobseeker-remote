@@ -683,7 +683,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             className={styles.searchField}
             defaultValue={defaultValues?.urlQuery}
             value={searchValue}
-            maxLength={225}
+            maxLength={255}
             searchFn={handleSuggestionSearch}
             updateSearchValue={setSearchValue}
             onSelect={(val) => {
