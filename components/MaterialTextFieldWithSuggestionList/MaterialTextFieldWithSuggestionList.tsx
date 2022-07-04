@@ -21,6 +21,7 @@ type MaterialTextFieldWithSuggestionListProps = {
   onSelect?: Function
   searchFn?: Function
   updateSearchValue?: Function
+  maxLength?: Number
 } & Omit<Input, 'size'>
 
 const theme = createTheme({
@@ -64,6 +65,7 @@ const MaterialTextFieldWithSuggestionList = ({
   onSelect,
   searchFn,
   updateSearchValue,
+  maxLength,
   refs,
   ...rest
 }: MaterialTextFieldWithSuggestionListProps) => {
@@ -92,6 +94,7 @@ const MaterialTextFieldWithSuggestionList = ({
             {...refs}
             id={id}
             label={label}
+            maxLength={maxLength}
             color={color as any}
             variant={variant as any}
             onChange={handleChange}

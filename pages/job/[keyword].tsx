@@ -336,7 +336,7 @@ const Job = ({
       <div className={styles.searchAndLocationContainer}>
         <MaterialTextFieldWithSuggestionList
           id='search'
-          label='Search for job title, keyword or company'
+          label='Search for job title or company name'
           variant='outlined'
           size='small'
           className={styles.searchField}
