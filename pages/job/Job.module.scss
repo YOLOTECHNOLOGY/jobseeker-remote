@@ -76,19 +76,29 @@
     }
   }
 
+  &PrimaryInfoWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   &PrimaryInfo {
+    width:min-content;
+    flex-grow: 1;
+    word-break: break-word;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
 
     @include msd {
+      width:100%;
       align-items: flex-start;
       flex-direction: column;
     }
   }
 
   &PrimaryInfoTitle {
-    margin: 16px 0 0;
+    margin: 16px 24px 0 0;
     line-height: 27px;
 
   }
@@ -119,7 +129,6 @@
   }
 
   &PrimaryActions {
-    display: flex;
     margin-top: 20px;
 
     button {
@@ -129,6 +138,8 @@
     }
 
     @include sm {
+      display:flex;
+      flex-direction: row;
       justify-content: space-between;
 
       button {

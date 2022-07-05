@@ -60,6 +60,7 @@ import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDeta
 
 /* Styles */
 import styles from './Job.module.scss'
+import breakpointStyles from 'styles/breakpoint.module.scss'
 
 /* Images */
 import {
@@ -400,26 +401,93 @@ const Job = ({
                 </div>
               </div>
             )}
-            <div className={styles.JobDetailPrimaryInfo}>
-              <img
-                src={jobDetail?.company?.logo}
-                className={styles.JobDetailPrimaryInfoImage}
-                alt={`${jobDetail?.company?.name} logo`}
-              />
-              <Text textStyle='xl' tagName='h1' bold className={styles.JobDetailPrimaryInfoTitle}>
-                {jobDetail?.job_title}
-              </Text>
+            <img
+              src={jobDetail?.company?.logo}
+              className={styles.JobDetailPrimaryInfoImage}
+              alt={`${jobDetail?.company?.name} logo`}
+            />
+            <div className={styles.JobDetailPrimaryInfoWrapper}>
+              <div className={styles.JobDetailPrimaryInfo}>
+                <Text textStyle='xl' tagName='h1' bold className={styles.JobDetailPrimaryInfoTitle}>
+                  {jobDetail?.job_title}
+                </Text>
+                <Link to={companyUrl}>
+                  <Text textStyle='lg' className={styles.JobDetailCompany}>
+                    {jobDetail?.company?.name}
+                  </Text>
+                </Link>
+              </div>
+              <div
+                className={classNamesCombined([
+                  styles.JobDetailCTA,
+                  breakpointStyles.hideOnMobileAndTablet,
+                ])}
+              >
+                {!isAppliedQueryParam && (
+                  <div className={styles.JobDetailPrimaryActions}>
+                    {jobDetail?.status_key === 'active' && (
+                      <>
+                        {jobDetail?.is_applied ? (
+                          <MaterialButton variant='contained' capitalize disabled>
+                            <Text textColor='white' bold>
+                              Applied
+                            </Text>
+                          </MaterialButton>
+                        ) : (
+                          <MaterialButton
+                            variant='contained'
+                            capitalize
+                            onClick={(e) => {
+                              if (!userCookie) {
+                                e.preventDefault()
+                                setQuickApplyModalShow(true)
+                              } else {
+                                if (!userCookie.is_email_verify) {
+                                  handleVerifyEmailClick()
+                                } else {
+                                  router.push(applyJobLink)
+                                }
+                              }
+                            }}
+                          >
+                            <Text textColor='white' bold>
+                              Apply Now
+                            </Text>
+                          </MaterialButton>
+                        )}
+                      </>
+                    )}
+                    {jobDetail?.status_key !== 'active' && (
+                      <Text textStyle='base' className={styles.JobDetailStatus}>
+                        <img src={ExpireIcon} height='16' width='16' />
+                        <span>This job is no longer hiring</span>
+                      </Text>
+                    )}
+                    <MaterialButton
+                      variant='outlined'
+                      capitalize
+                      onClick={() => handlePostSaveJob()}
+                    >
+                      <Text textColor='primary' bold>
+                        {isSavedJob ? 'Saved' : 'Save Job'}
+                      </Text>
+                    </MaterialButton>
+                  </div>
+                )}
+              </div>
             </div>
-            <Link to={companyUrl}>
-              <Text textStyle='lg' className={styles.JobDetailCompany}>
-                {jobDetail?.company?.name}
-              </Text>
-            </Link>
             <div className={styles.JobDetailPrimarySub}>
               {jobDetail?.is_featured && <JobTag tag='Featured' tagType='featured' />}
               {jobDetail?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
               <JobTag tag={jobDetail?.job_type_value} />
             </div>
+            <Text textStyle='base' textColor='darkgrey' className={classNamesCombined([styles.JobDetailPostedAt, breakpointStyles.hideOnMobileAndTablet])}>
+              Posted on {jobDetail?.published_at}
+            </Text>
+          </div>
+          <div
+            className={classNamesCombined([styles.JobDetailCTA, breakpointStyles.hideOnDesktop])}
+          >
             {!isAppliedQueryParam && (
               <div className={styles.JobDetailPrimaryActions}>
                 {jobDetail?.status_key === 'active' && (
