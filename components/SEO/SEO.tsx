@@ -1,7 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
 import moment from 'moment'
-import Script from 'next/script'
 
  const getEmploymentType = type => {
   switch (type) {
@@ -142,9 +141,14 @@ const SEO = ({ title, description, imageUrl, canonical, jobDetail=null }: SEOPro
       <meta name='twitter:creator' content='BossjobPH' />
 
       {jobDetail && (
-        <Script type="application/ld+json">
-          {getGoogleJobJSON(jobDetail)}
-        </Script>
+        <script
+          defer
+          async
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: `${getGoogleJobJSON(jobDetail)}`,
+          }}
+        ></script>
       )}
     </Head>
   )
