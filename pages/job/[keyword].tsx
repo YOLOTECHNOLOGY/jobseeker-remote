@@ -79,7 +79,7 @@ import {
   MoreIcon,
   RateIcon,
   LocationPinIcon,
-  DefaultAvatar
+  DefaultAvatar,
 } from 'images'
 
 interface IJobDetail {
@@ -105,7 +105,7 @@ const Job = ({
   const router = useRouter()
   const userCookie = getCookie('user') || null
   const applyJobLink = getApplyJobLink(jobDetail, userCookie, accessToken)
-  
+
   const [isSavedJob, setIsSavedJob] = useState(jobDetail?.is_saved)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
@@ -303,13 +303,15 @@ const Job = ({
 
   const handleVerifyEmailClick = async () => {
     // revalidate verify email status
-    const response = await fetchUserOwnDetailService({accessToken: accessToken})
+    const response = await fetchUserOwnDetailService({ accessToken: accessToken })
     const userDetails = response?.data?.data
     const isVerifiedEmail = userDetails?.is_email_verify
 
-    if (!isVerifiedEmail) { // email is not verified
-      setIsShowModal(true);
-    } else { // email is verified and user cookie is outdated
+    if (!isVerifiedEmail) {
+      // email is not verified
+      setIsShowModal(true)
+    } else {
+      // email is verified and user cookie is outdated
       const userCookie = {
         active_key: userDetails.active_key,
         id: userDetails.id,
@@ -332,7 +334,12 @@ const Job = ({
 
   return (
     <Layout>
-      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonicalUrl} jobDetail={jobDetail} />
+      <SEO
+        title={seoMetaTitle}
+        description={seoMetaDescription}
+        canonical={seoCanonicalUrl}
+        jobDetail={jobDetail}
+      />
       <div className={styles.searchAndLocationContainer}>
         <MaterialTextFieldWithSuggestionList
           id='search'
@@ -620,7 +627,8 @@ const Job = ({
                 >
                   <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
                     {' '}
-                    {category.value}{jobDetail.categories.length === i+1 ? '' : ','}
+                    {category.value}
+                    {jobDetail.categories.length === i + 1 ? '' : ','}
                   </Text>
                 </Link>
               </span>
@@ -681,7 +689,7 @@ const Job = ({
         </div>
         <div className={styles.JobDetailSidebar}>
           <div className={styles.sideSquareBanner}>
-            <AdSlot adSlot='job-detail/square-banner-1'/>
+            <AdSlot adSlot='job-detail/square-banner-1' />
           </div>
           <div className={styles.JobDetailSidebarContent}>
             <div className={styles.JobDetailSidebarSection}>
@@ -718,6 +726,12 @@ const Job = ({
                           className={styles.JobDetailSidebarCardImage}
                           alt={`${job?.company_name} logo`}
                         />
+                      </Link>
+                      <Link
+                        to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
+                        aTag
+                        external
+                      >
                         <Text
                           className={styles.JobDetailSidebarCardTitle}
                           textStyle='lg'
@@ -794,25 +808,32 @@ const Job = ({
                 {!isRecommendedCoursesFetching &&
                   recommendedCourses?.length > 0 &&
                   recommendedCourses.map((course) => (
-                    <Link
-                      key={course.id}
-                      external
-                      to={`${handleCoursePath(course.truncated_name, course.id)}`}
-                      className={styles.JobDetailSidebarCard}
-                    >
-                      <img
-                        src={course?.image}
-                        className={styles.JobDetailSidebarCardImage}
-                        alt={`${course?.truncated_name} logo`}
-                        />
-                      <Text
-                        className={styles.JobDetailSidebarCardTitle}
-                        textStyle='lg'
-                        tagName='p'
-                        bold
+                    <div key={course.id} className={styles.JobDetailSidebarCard}>
+                      <Link
+                        key={course.id}
+                        external
+                        to={`${handleCoursePath(course.truncated_name, course.id)}`}
                       >
-                        {course.truncated_name}
-                      </Text>
+                        <img
+                          src={course?.image}
+                          className={styles.JobDetailSidebarCardImage}
+                          alt={`${course?.truncated_name} logo`}
+                        />
+                      </Link>
+                      <Link
+                        key={course.id}
+                        external
+                        to={`${handleCoursePath(course.truncated_name, course.id)}`}
+                      >
+                        <Text
+                          className={styles.JobDetailSidebarCardTitle}
+                          textStyle='lg'
+                          tagName='p'
+                          bold
+                        >
+                          {course.truncated_name}
+                        </Text>
+                      </Link>
                       <div className={styles.JobDetailSidebarCardCourseDetail}>
                         <Text textStyle='lg' tagName='p'>
                           {course.level_value}
@@ -825,16 +846,22 @@ const Job = ({
                         </Text>
                       </div>
                       <div>
-                        <Text
-                          textStyle='base'
-                          tagName='p'
-                          bold
-                          className={styles.JobDetailSidebarCardCTA}
+                        <Link
+                          key={course.id}
+                          external
+                          to={`${handleCoursePath(course.truncated_name, course.id)}`}
                         >
-                          Start now
-                        </Text>
+                          <Text
+                            textStyle='base'
+                            tagName='p'
+                            bold
+                            className={styles.JobDetailSidebarCardCTA}
+                          >
+                            Start now
+                          </Text>
+                        </Link>
                       </div>
-                    </Link>
+                    </div>
                   ))}
               </div>
             </div>
@@ -884,7 +911,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   if (jobId) {
     // store actions
     if (isApplied === 'true') {
-      store.dispatch(fetchAppliedJobDetailRequest({jobId, accessToken}))
+      store.dispatch(fetchAppliedJobDetailRequest({ jobId, accessToken }))
     } else {
       store.dispatch(
         fetchJobDetailRequest({
