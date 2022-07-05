@@ -1,7 +1,7 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
-.JobDetail {
+.jobDetail {
   @extend .GlobalContainer;
   padding: 20px 0 100px;
   display: flex;
@@ -491,7 +491,7 @@
   }
 }
 
-.JobDetailSidebar {
+.jobDetailSidebar {
   width: 250px;
 
   &Content {
@@ -515,7 +515,7 @@
   }
 }
 
-.JobDetailSidebarCard {
+.jobDetailSidebarCard {
   margin-top: 24px;
   display: block;
 
@@ -572,7 +572,7 @@
   }
 }
 
-.JobDetailApplication {
+.jobDetailApplication {
   &Wrapper {
     border: 1px solid $primaryBlue;
     border-radius: 4px;
