@@ -691,26 +691,16 @@ const Job = ({
           <div className={styles.sideSquareBanner}>
             <AdSlot adSlot='job-detail/square-banner-1' />
           </div>
-          <div className={styles.JobDetailSidebarContent}>
-            <div className={styles.JobDetailSidebarSection}>
-              <div className={styles.JobDetailSidebarTitle}>
-                <Text textStyle='xl' bold>
-                  Similar Jobs
-                </Text>
-              </div>
-              <div className={styles.JobDetailSidebarCardList}>
-                {isSimilarJobsFetching && (
-                  <>
-                    <JobDetailSidebarCard />
-                    <JobDetailSidebarCard />
-                    <JobDetailSidebarCard />
-                    <JobDetailSidebarCard />
-                    <JobDetailSidebarCard />
-                  </>
-                )}
-                {!isSimilarJobsFetching &&
-                  similarJobs?.length > 0 &&
-                  similarJobs.map((job) => (
+          {!isSimilarJobsFetching && similarJobs?.length > 0 ? (
+            <div className={styles.JobDetailSidebarContent}>
+              <div className={styles.JobDetailSidebarSection}>
+                <div className={styles.JobDetailSidebarTitle}>
+                  <Text textStyle='xl' bold>
+                    Similar Jobs
+                  </Text>
+                </div>
+                <div className={styles.JobDetailSidebarCardList}>
+                  {similarJobs.map((job) => (
                     <div
                       key={job.id}
                       onClick={() => handleRedirectToJob(job.truncated_job_title, job.id)}
@@ -784,30 +774,29 @@ const Job = ({
                       </Link>
                     </div>
                   ))}
+                </div>
               </div>
             </div>
-          </div>
+          ) : isSimilarJobsFetching ? (
+            <div className={styles.JobDetailSidebarContent}>
+              <JobDetailSidebarCard />
+              <JobDetailSidebarCard />
+              <JobDetailSidebarCard />
+              <JobDetailSidebarCard />
+              <JobDetailSidebarCard />
+            </div>
+          ) : null}
 
-          <div className={styles.JobDetailSidebarContent}>
-            <div className={styles.JobDetailSidebarSection}>
-              <div className={styles.JobDetailSidebarTitle}>
-                <Text textStyle='xl' bold>
-                  Suggested Courses
-                </Text>
-              </div>
-              <div className={styles.JobDetailSidebarCardList}>
-                {isRecommendedCoursesFetching && (
-                  <>
-                    <JobDetailSidebarCard />
-                    <JobDetailSidebarCard />
-                    <JobDetailSidebarCard />
-                    <JobDetailSidebarCard />
-                    <JobDetailSidebarCard />
-                  </>
-                )}
-                {!isRecommendedCoursesFetching &&
-                  recommendedCourses?.length > 0 &&
-                  recommendedCourses.map((course) => (
+          {!isRecommendedCoursesFetching && recommendedCourses?.length > 0 ? (
+            <div className={styles.JobDetailSidebarContent}>
+              <div className={styles.JobDetailSidebarSection}>
+                <div className={styles.JobDetailSidebarTitle}>
+                  <Text textStyle='xl' bold>
+                    Suggested Courses
+                  </Text>
+                </div>
+                <div className={styles.JobDetailSidebarCardList}>
+                  {recommendedCourses.map((course) => (
                     <div key={course.id} className={styles.JobDetailSidebarCard}>
                       <Link
                         key={course.id}
@@ -863,9 +852,18 @@ const Job = ({
                       </div>
                     </div>
                   ))}
+                </div>
               </div>
             </div>
-          </div>
+          ) : isRecommendedCoursesFetching ? (
+            <div className={styles.JobDetailSidebarContent}>
+              <JobDetailSidebarCard />
+              <JobDetailSidebarCard />
+              <JobDetailSidebarCard />
+              <JobDetailSidebarCard />
+              <JobDetailSidebarCard />
+            </div>
+          ) : null}
         </div>
       </div>
       <ModalReportJob
