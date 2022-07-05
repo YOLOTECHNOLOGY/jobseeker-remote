@@ -182,7 +182,6 @@ const Home = (props: HomeProps) => {
           className={styles.link}
           to={`${jobsPageLink}/finance-accounting-jobs`}
           title='Finance jobs'
-          aTag
         >
           <Text textStyle='base' textColor='primaryBlue'>
             Finance jobs
@@ -192,7 +191,6 @@ const Home = (props: HomeProps) => {
           className={styles.link}
           to={`${jobsPageLink}/sales-marketing-jobs`}
           title='Sales jobs'
-          aTag
         >
           <Text textStyle='base' textColor='primaryBlue'>
             Sales jobs
@@ -202,13 +200,12 @@ const Home = (props: HomeProps) => {
           className={styles.link}
           to={`${jobsPageLink}/sales-marketing-jobs`}
           title='Marketing jobs'
-          aTag
         >
           <Text textStyle='base' textColor='primaryBlue'>
             Marketing jobs
           </Text>
         </Link>
-        <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs' aTag>
+        <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs'>
           <Text textStyle='base' textColor='primaryBlue'>
             Makati jobs
           </Text>
@@ -217,7 +214,6 @@ const Home = (props: HomeProps) => {
           className={styles.link}
           to={`${jobsPageLink}/computer-information-technology-jobs`}
           title='IT jobs'
-          aTag
         >
           <Text textStyle='base' textColor='primaryBlue'>
             IT jobs
@@ -227,7 +223,6 @@ const Home = (props: HomeProps) => {
           className={styles.link}
           to={`${jobsPageLink}/overseas-jobs`}
           title='Overseas jobs'
-          aTag
         >
           <Text textStyle='base' textColor='primaryBlue'>
             Overseas jobs
@@ -237,7 +232,6 @@ const Home = (props: HomeProps) => {
           className={styles.link}
           to={`${jobsPageLink}/customer-service-jobs`}
           title='Customer Service jobs'
-          aTag
         >
           <Text textStyle='base' textColor='primaryBlue'>
             Customer Service jobs
@@ -247,13 +241,12 @@ const Home = (props: HomeProps) => {
           className={styles.link}
           to={`${jobsPageLink}/job-search?salary=30k-60k,60k-80k,80k-100k,100k-200k,above-200k`}
           title='₱30K + jobs'
-          aTag
         >
           <Text textStyle='base' textColor='primaryBlue'>
             ₱30K+ jobs
           </Text>
         </Link>
-        <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs' aTag>
+        <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs'>
           <Text textStyle='base' textColor='primaryBlue'>
             Manila jobs
           </Text>
@@ -262,7 +255,6 @@ const Home = (props: HomeProps) => {
           className={styles.link}
           to={`${jobsPageLink}/full-time-jobs`}
           title='Full Time jobs'
-          aTag
         >
           <Text textStyle='base' textColor='primaryBlue'>
             Full Time jobs

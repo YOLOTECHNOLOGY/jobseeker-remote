@@ -42,7 +42,7 @@ const PublicHeader = () => {
                 </Link>
               </li>
               <li className={styles.headerLink}>
-                <Link title='Companies' to='/companies' aTag>
+                <Link title='Companies' to='/companies'>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Companies
                   </Text>
