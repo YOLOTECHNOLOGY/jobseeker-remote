@@ -481,7 +481,7 @@
 }
 
 .JobDetailSidebar {
-  width: 260px;
+  width: 250px;
 
   &Content {
     border: 1px solid rgba($lightgrey, 0.5);
@@ -593,4 +593,11 @@
     background-color: $primaryBlue;
     box-shadow: $primaryBlue;
   }
+}
+
+.sideSquareBanner{
+  width:250px;
+  height:250px;
+  margin-bottom: 24px;
+  overflow:hidden;
 }
