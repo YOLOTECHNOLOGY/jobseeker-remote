@@ -251,7 +251,7 @@ const Job = ({
 
   const handleFetchRecommendedCourses = () => {
     const payload = {
-      size: 5,
+      size: 3,
       job_category_ids: getJobDetailCategoryIds(),
       xp_lvl_key: jobDetail?.xp_lvl.key,
     }
