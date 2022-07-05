@@ -27,6 +27,7 @@ import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 /* Styles */
 import styles from './Register.module.scss'
 import MetaText from '../../components/MetaText'
+import Link from '../../components/Link'
 
 const Register = () => {
   const router = useRouter()
@@ -93,7 +94,7 @@ const Register = () => {
 
   useEffect(() => {
     if (registerJobseekerState.error === 'The email has already been taken.') {
-      setEmailError(<p>A user with this email address already exists. Please enter a different email address or <a href='/login/jobseeker' style={{ color: '#2379ea', textDecoration: 'underline' }}>log in</a>.</p>)
+      setEmailError(<p>A user with this email address already exists. Please enter a different email address or <Link to='/login/jobseeker'><a style={{ color: '#2379ea', textDecoration: 'underline' }}>log in</a></Link>.</p>)
     }
   
   }, [registerJobseekerState])

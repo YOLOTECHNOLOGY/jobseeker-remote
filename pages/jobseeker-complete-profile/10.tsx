@@ -20,6 +20,7 @@ import Divider from '@mui/material/Divider'
 // Styles
 import styles from './Onboard.module.scss'
 import { maxFileSize } from '../../helpers/handleInput'
+import Link from 'components/Link'
 
 const Step2 = (props: any) => {
   const currentStep = 2
@@ -118,14 +119,15 @@ const Step2 = (props: any) => {
           {existingResume && (
             <Text textColor='darkgrey' textStyle='xsm' bold tagName='p'>
               (Resume:{' '}
-              <a
-                href={existingResume.url}
-                target='_blank'
-                rel='noreferrer'
-                style={{ textDecoration: 'underline' }}
-              >
-                {existingResume.filename}
-              </a>
+              <Link to={existingResume.url}>
+                <a
+                  target='_blank'
+                  rel='noreferrer'
+                  style={{ textDecoration: 'underline' }}
+                >
+                  {existingResume.filename}
+                </a>
+              </Link>
               )
             </Text>
           )}
