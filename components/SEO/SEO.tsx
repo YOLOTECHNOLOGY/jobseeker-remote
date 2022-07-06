@@ -141,9 +141,14 @@ const SEO = ({ title, description, imageUrl, canonical, jobDetail=null }: SEOPro
       <meta name='twitter:creator' content='BossjobPH' />
 
       {jobDetail && (
-        <script type="application/ld+json">
-          {getGoogleJobJSON(jobDetail)}
-        </script>
+        <script
+          defer
+          async
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: `${getGoogleJobJSON(jobDetail)}`,
+          }}
+        ></script>
       )}
     </Head>
   )

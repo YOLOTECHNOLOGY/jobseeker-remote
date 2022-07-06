@@ -517,7 +517,6 @@ const Footer = () => {
                   </li>
                   <li>
                     <Link
-                      aTag
                       className={styles.footerLink}
                       to='/resumetemplate'
                       title='Create Free Resume'

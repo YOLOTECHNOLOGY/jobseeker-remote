@@ -179,7 +179,6 @@ const CompanyProfileLayout = ({
                     to={`/company/${slugify(company.name)}-${company.id}`}
                     key={company.id}
                     className={styles.relatedCompanyItem}
-                    aTag
                   >
                     <img
                       src={company.logo_url}

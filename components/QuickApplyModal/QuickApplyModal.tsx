@@ -140,7 +140,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
           <Text>
             {' '}
             Already on Bossjob?
-            <Link aTag to={'/login/jobseeker?redirect=' + applyJobLink}>
+            <Link to={'/login/jobseeker?redirect=' + applyJobLink}>
               <Text textColor='primaryBlue' underline>
                 {' '}
                 Log in

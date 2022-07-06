@@ -94,7 +94,6 @@ const renderPopularSearch = () => {
         className={styles.link}
         to={`${jobsPageLink}/finance-accounting-jobs`}
         title='Finance jobs'
-        aTag
       >
         <Text textStyle='base' textColor='darkgrey'>
           Finance
@@ -104,7 +103,6 @@ const renderPopularSearch = () => {
         className={styles.link}
         to={`${jobsPageLink}/sales-marketing-jobs`}
         title='Sales jobs'
-        aTag
       >
         <Text textStyle='base' textColor='darkgrey'>
           Sales
@@ -114,13 +112,12 @@ const renderPopularSearch = () => {
         className={styles.link}
         to={`${jobsPageLink}/sales-marketing-jobs`}
         title='Marketing jobs'
-        aTag
       >
         <Text textStyle='base' textColor='darkgrey'>
           Marketing
         </Text>
       </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs' aTag>
+      <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs'>
         <Text textStyle='base' textColor='darkgrey'>
           Makati
         </Text>
@@ -129,13 +126,12 @@ const renderPopularSearch = () => {
         className={styles.link}
         to={`${jobsPageLink}/computer-information-technology-jobs`}
         title='IT jobs'
-        aTag
       >
         <Text textStyle='base' textColor='darkgrey'>
           IT
         </Text>
       </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/overseas-jobs`} title='Overseas jobs' aTag>
+      <Link className={styles.link} to={`${jobsPageLink}/overseas-jobs`} title='Overseas jobs'>
         <Text textStyle='base' textColor='darkgrey'>
           Overseas jobs
         </Text>
@@ -144,7 +140,6 @@ const renderPopularSearch = () => {
         className={styles.link}
         to={`${jobsPageLink}/customer-service-jobs`}
         title='Customer Service jobs'
-        aTag
       >
         <Text textStyle='base' textColor='darkgrey'>
           Customer Service
@@ -154,7 +149,6 @@ const renderPopularSearch = () => {
         className={styles.link}
         to={`${jobsPageLink}/job-search?salary=30k-60k,60k-80k,80k-100k,100k-200k,above-200k`}
         title='₱30K + jobs'
-        aTag
       >
         <Text textStyle='base' textColor='darkgrey'>
           ₱30K+ jobs
@@ -164,7 +158,6 @@ const renderPopularSearch = () => {
         className={styles.link}
         to={`${jobsPageLink}/full-time-jobs`}
         title='Full Time jobs'
-        aTag
       >
         <Text textStyle='base' textColor='darkgrey'>
           Full Time jobs
