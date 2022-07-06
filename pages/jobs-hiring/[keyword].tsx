@@ -91,78 +91,91 @@ const renderPopularSearch = () => {
   return (
     <div className={styles.popularSearch}>
       <Link
-        className={styles.link}
-        to={`${jobsPageLink}/finance-accounting-jobs`}
-        title='Finance jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Finance
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/sales-marketing-jobs`}
-        title='Sales jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Sales
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/sales-marketing-jobs`}
-        title='Marketing jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Marketing
-        </Text>
-      </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs'>
-        <Text textStyle='base' textColor='darkgrey'>
-          Makati
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/computer-information-technology-jobs`}
-        title='IT jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          IT
-        </Text>
-      </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/overseas-jobs`} title='Overseas jobs'>
-        <Text textStyle='base' textColor='darkgrey'>
-          Overseas jobs
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/customer-service-jobs`}
-        title='Customer Service jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Customer Service
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/job-search?salary=30k-60k,60k-80k,80k-100k,100k-200k,above-200k`}
-        title='₱30K + jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          ₱30K+ jobs
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/full-time-jobs`}
-        title='Full Time jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Full Time jobs
-        </Text>
-      </Link>
+          className={styles.link}
+          to={`${jobsPageLink}/finance-accounting-jobs`}
+          title='Accounting jobs'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            Accounting jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/sales-marketing-jobs`}
+          title='Sales jobs'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            Sales jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/sales-marketing-jobs`}
+          title='Marketing jobs'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            Marketing jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/computer-information-technology-jobs`}
+          title='IT jobs'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            IT jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/customer-service-jobs`}
+          title='Customer Service jobs'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            Customer Service jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/hr-recruitment-jobs`}
+          title='HR jobs'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            HR jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/bpo-team-lead-jobs`}
+          title='BPO Team Lead'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            BPO Team Lead
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/homebased-jobs`}
+          title='WFH'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            WFH
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/manager-jobs`}
+          title='Manager'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            Manager
+          </Text>
+        </Link>
+        <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs'>
+          <Text textStyle='base' textColor='primaryBlue'>
+            Manila jobs
+          </Text>
+        </Link>
     </div>
   )
 }
