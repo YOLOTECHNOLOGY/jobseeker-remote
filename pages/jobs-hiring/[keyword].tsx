@@ -95,7 +95,7 @@ const renderPopularSearch = () => {
           to={`${jobsPageLink}/finance-accounting-jobs`}
           title='Accounting jobs'
         >
-          <Text textStyle='base' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='darkgrey'>
             Accounting jobs
           </Text>
         </Link>
@@ -104,7 +104,7 @@ const renderPopularSearch = () => {
           to={`${jobsPageLink}/sales-marketing-jobs`}
           title='Sales jobs'
         >
-          <Text textStyle='base' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='darkgrey'>
             Sales jobs
           </Text>
         </Link>
@@ -113,7 +113,7 @@ const renderPopularSearch = () => {
           to={`${jobsPageLink}/sales-marketing-jobs`}
           title='Marketing jobs'
         >
-          <Text textStyle='base' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='darkgrey'>
             Marketing jobs
           </Text>
         </Link>
@@ -122,7 +122,7 @@ const renderPopularSearch = () => {
           to={`${jobsPageLink}/computer-information-technology-jobs`}
           title='IT jobs'
         >
-          <Text textStyle='base' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='darkgrey'>
             IT jobs
           </Text>
         </Link>
@@ -131,7 +131,7 @@ const renderPopularSearch = () => {
           to={`${jobsPageLink}/customer-service-jobs`}
           title='Customer Service jobs'
         >
-          <Text textStyle='base' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='darkgrey'>
             Customer Service jobs
           </Text>
         </Link>
@@ -140,7 +140,7 @@ const renderPopularSearch = () => {
           to={`${jobsPageLink}/hr-recruitment-jobs`}
           title='HR jobs'
         >
-          <Text textStyle='base' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='darkgrey'>
             HR jobs
           </Text>
         </Link>
@@ -149,7 +149,7 @@ const renderPopularSearch = () => {
           to={`${jobsPageLink}/bpo-team-lead-jobs`}
           title='BPO Team Lead'
         >
-          <Text textStyle='base' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='darkgrey'>
             BPO Team Lead
           </Text>
         </Link>
@@ -158,7 +158,7 @@ const renderPopularSearch = () => {
           to={`${jobsPageLink}/homebased-jobs`}
           title='WFH'
         >
-          <Text textStyle='base' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='darkgrey'>
             WFH
           </Text>
         </Link>
@@ -167,12 +167,12 @@ const renderPopularSearch = () => {
           to={`${jobsPageLink}/manager-jobs`}
           title='Manager'
         >
-          <Text textStyle='base' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='darkgrey'>
             Manager
           </Text>
         </Link>
         <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs'>
-          <Text textStyle='base' textColor='primaryBlue'>
+          <Text textStyle='base' textColor='darkgrey'>
             Manila jobs
           </Text>
         </Link>
