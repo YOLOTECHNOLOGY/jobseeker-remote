@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import { wrapper } from 'store'
@@ -11,8 +12,8 @@ import { getFromObject } from 'helpers/formatter'
 import 'styles/globals.scss'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
-import MaintenancePage from './maintenance'
-import TransitionLoader from '../components/TransitionLoader/TransitionLoader'
+const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
+const MaintenancePage = dynamic(() => import('./maintenance'))
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
