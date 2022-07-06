@@ -29,12 +29,12 @@ import ReadMore from 'components/ReadMore'
 import JobDetailSidebarCard from 'components/Loader/JobDetailSidebarCard'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 import MaterialLocationField from 'components/MaterialLocationField'
-import ModalVerifyEmail from 'components/ModalVerifyEmail'
+const ModalVerifyEmail = dynamic(() => import('components/ModalVerifyEmail'))
 // import AdSlot from 'components/AdSlot'
 
-import ModalShare from 'components/ModalShare'
-import ModalReportJob from 'components/ModalReportJob'
-import QuickApplyModal from 'components/QuickApplyModal'
+const ModalShare = dynamic(() => import('components/ModalShare'))
+const ModalReportJob = dynamic(() => import('components/ModalReportJob'))
+const QuickApplyModal = dynamic(() => import('components/QuickApplyModal'))
 
 /* Helpers */
 import { getCookie, setCookie } from 'helpers/cookies'
@@ -81,6 +81,7 @@ import {
   LocationPinIcon,
   DefaultAvatar
 } from 'images'
+import dynamic from 'next/dynamic'
 
 interface IJobDetail {
   jobDetail: any
@@ -841,7 +842,7 @@ const Job = ({
           </div>
         </div>
       </div>
-      <ModalReportJob
+      {isShowReportJob && <ModalReportJob
         isShowReportJob={isShowReportJob}
         handleShowReportJob={setIsShowReportJob}
         reportJobReasonList={reportJobReasonList}
@@ -849,28 +850,28 @@ const Job = ({
         handlePostReportJob={handlePostReportJob}
         isPostingReport={isPostingReport}
         postReportResponse={postReportResponse}
-      />
-
-      <ModalShare
+      />}
+      
+      {isShowModalShare && <ModalShare
         jobDetailUrl={jobDetailUrl}
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}
-      />
+      />}
 
-      <QuickApplyModal
+      {quickApplyModalShow && <QuickApplyModal
         jobDetails={jobDetail}
         applyJobLink={applyJobLink}
         modalShow={quickApplyModalShow}
         handleModalShow={setQuickApplyModalShow}
         config={config}
-      />
+      />}
 
-      <ModalVerifyEmail
+      {isShowModal && <ModalVerifyEmail
         email={userCookie ? userCookie.email : ''}
         isShowModal={isShowModal}
         handleModal={handleCloseModal}
         redirectLink={applyJobLink}
-      />
+      />}
     </Layout>
   )
 }

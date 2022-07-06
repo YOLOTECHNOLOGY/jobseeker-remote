@@ -8,6 +8,7 @@ import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { Tabs, Tab } from '@mui/material'
+import dynamic from 'next/dynamic'
 
 /* Redux Actions */
 import { fetchSavedJobsListRequest } from 'store/actions/jobs/fetchSavedJobsList'
@@ -32,9 +33,9 @@ import JobCard from 'components/JobCard'
 import JobDetail from 'components/JobDetail'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 
-import ModalShare from 'components/ModalShare'
-import ModalWithdrawApplication from 'components/ModalWithdrawApplication'
-import ModalReportJob from 'components/ModalReportJob'
+const ModalShare = dynamic(() => import('components/ModalShare'))
+const ModalWithdrawApplication = dynamic(() => import('components/ModalWithdrawApplication'))
+const ModalReportJob = dynamic(() => import('components/ModalReportJob'))
 
 import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
@@ -465,13 +466,13 @@ const MyJobs = ({
         </div>
       </div>
 
-      <ModalShare
+      {isShowModalShare && <ModalShare
         jobDetailUrl={jobDetailUrl}
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}
-      />
+      />}
 
-      <ModalReportJob 
+      {isShowReportJob && <ModalReportJob 
         isShowReportJob={isShowReportJob} 
         handleShowReportJob={setIsShowReportJob} 
         reportJobReasonList={reportJobReasonList}
@@ -479,15 +480,15 @@ const MyJobs = ({
         handlePostReportJob={handlePostReportJob}
         isPostingReport={isPostingReport}
         postReportResponse={postReportResponse}
-      />
+      />}
 
-      <ModalWithdrawApplication
+      {isShowModalWithdrawApplication && <ModalWithdrawApplication
         jobId={selectedJob?.['id']}
         isShowModalWithdrawApplication={isShowModalWithdrawApplication}
         handleShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
         handleWithdrawApplication={handleWithdrawApplication}
         isWithdrawAppliedJobFetching={isWithdrawAppliedJobFetching}
-      />
+      />}
     </Layout>
   )
 }

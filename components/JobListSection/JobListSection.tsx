@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import slugify from 'slugify'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
+import dynamic from 'next/dynamic'
 
 /* Components */
 import Text from 'components/Text'
@@ -15,9 +16,9 @@ import AdSlot from 'components/AdSlot'
 import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
 
-import ModalShare from 'components/ModalShare'
-import ModalJobAlerts from 'components/ModalJobAlerts'
-import ModalReportJob from 'components/ModalReportJob'
+const ModalShare = dynamic(() => import('components/ModalShare'))
+const ModalJobAlerts = dynamic(() => import('components/ModalJobAlerts'))
+const ModalReportJob = dynamic(() => import('components/ModalReportJob'))
 
 /* Material Components */
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
@@ -319,7 +320,7 @@ const JobListSection = ({
         </div>
       </div>
 
-      <ModalJobAlerts
+      {(isShowModalEnableJobAlerts || isShowModalManageJobAlerts) && <ModalJobAlerts
         query={query}
         location={location}
         isShowModalEnableJobAlerts={isShowModalEnableJobAlerts}
@@ -336,8 +337,9 @@ const JobListSection = ({
         isDeletingJobAlert={isDeletingJobAlert}
         isCreatingJobAlert={isCreatingJobAlert}
         isPublicPostReportJob={!isUserAuthenticated}
-      />
-      <ModalReportJob 
+      />}
+
+      {isShowReportJob && <ModalReportJob 
         isShowReportJob={isShowReportJob} 
         handleShowReportJob={setIsShowReportJob} 
         reportJobReasonList={reportJobReasonList}
@@ -345,12 +347,13 @@ const JobListSection = ({
         handlePostReportJob={handlePostReportJob}
         isPostingReport={isPostingReport}
         postReportResponse={postReportResponse}
-      />
-      <ModalShare
+      />}
+
+      {isShowModalShare && <ModalShare
         jobDetailUrl={jobDetailUrl}
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}
-      />
+      />}
     </React.Fragment>
   )
 }

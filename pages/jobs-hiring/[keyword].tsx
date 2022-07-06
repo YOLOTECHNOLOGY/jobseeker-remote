@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import slugify from 'slugify'
-
+import dynamic from 'next/dynamic'
 // @ts-ignore
 import { END } from 'redux-saga'
 
@@ -42,8 +41,9 @@ import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
 import SEO from 'components/SEO'
-import JobSearchFilters from 'components/JobSearchFilters'
+const JobSearchFilters = dynamic(() => import('components/JobSearchFilters'))
 import JobListSection from 'components/JobListSection'
+import LazyLoad from '../../components/LazyLoad'
 
 /* Styles */
 import styles from './jobsHiring.module.scss'
@@ -830,7 +830,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                           arrow
                         >
                           <span>
-                            <Image src={company.logoUrl} alt={company.name} width='30' height='30' />
+                            <LazyLoad>
+                              <img src={company.logoUrl} alt={company.name} width='30' height='30' />
+                            </LazyLoad>
                           </span>
                         </Tooltip>
                       </Link>
@@ -841,7 +843,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           </div>
         </div>
       </div>
-      <JobSearchFilters
+      {isShowFilter && <JobSearchFilters
         urlDefaultValues={clientDefaultValues}
         categories={categories}
         isShowFilter={isShowFilter}
@@ -850,7 +852,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         moreFilterReset={moreFilterReset}
         isShowingEmailAlert={accessToken && !userCookie?.is_email_verify}
         setClientDefaultValues={setClientDefaultValues}
-      />
+      />}
       {/* <div className={breakpointStyles.hideOnTabletAndDesktop}>
         {hasMoreFilters && (
           <div className={styles.resetFilterBtnMobile}>
