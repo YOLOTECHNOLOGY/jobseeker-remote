@@ -6,19 +6,19 @@ JIRA ticket link: <jira_ticket_link>
 ## Related PR/Tickets
 <links to PR/tickets>
 
-- Bug: 
-## Steps to reproduce the bug (if needed)?
+## Bug: 
+### Steps to reproduce the bug (if needed)?
 <description_here>
 
-## What causes this bug ? 
+### What causes this bug ? 
 <description_here>
 
-## Solution to bug fixes ? 
+### Solution to bug fixes ? 
 <description_here>
 
-- Feature: 
-## Approach taken/implementation to build the feature: 
+## Feature: 
+### Approach taken/implementation to build the feature: 
 <description_here> 
 
-## Other relevant details(if relevant): 
+### Other relevant details(if relevant): 
 <description_here>
