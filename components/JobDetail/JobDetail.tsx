@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
+import moment from 'moment'
 
 /* Vendors */
 import classNames from 'classnames/bind'
@@ -46,6 +47,9 @@ import {
   OtherAllowancesIcon,
   MoreIcon,
   ExpireIcon,
+  LocationPinIcon,
+  RateIcon,
+  DefaultAvatar,
 } from 'images'
 
 /* Helpers */
@@ -461,7 +465,7 @@ const JobDetail = ({
                 </ul>
               </div>
             )}
-            <div className={styles.JobDetailSection}>
+            <div className={styles.JobDetailSectionLast}>
               <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
                 Additional Information
               </Text>
@@ -493,6 +497,43 @@ const JobDetail = ({
                 </>
               )}
             </div>
+            {selectedJob?.recruiter && (
+            <div className={styles.JobDetailRecruiter}>
+              <Text textStyle='xl' bold>
+                Connect directly to recruiter after applying
+              </Text>
+              <div className={styles.JobDetailRecruiterInfo}>
+                <div
+                  className={styles.JobDetailRecruiterInfoImage}
+                  style={{
+                    backgroundImage: `url(${selectedJob?.recruiter.avatar || DefaultAvatar})`,
+                  }}
+                />
+                <div className={styles.JobDetailRecruiterInfoText}>
+                  <div className={styles.JobDetailRecruiterName}>
+                    <Text textStyle='lg' bold>
+                      {selectedJob?.recruiter.full_name},{' '}
+                    </Text>
+                    <Text textStyle='lg'>
+                      &nbsp;{selectedJob?.recruiter.work_experience.job_title}
+                    </Text>
+                  </div>
+                  <div className={styles.JobDetailRecruiterContent}>
+                    <Text textStyle='lg' textColor='darkgrey'>
+                      <img src={RateIcon} height='14' width='15' />
+                      {selectedJob?.recruiter.response_rate}% response rate, responds{' '}
+                      {selectedJob?.recruiter.response_time}
+                    </Text>
+                    <Text textStyle='lg' textColor='darkgrey'>
+                      <img src={LocationPinIcon} height='14' width='15' />
+                      Last active on{' '}
+                      {moment(selectedJob?.recruiter.last_active_at).format('MM/DD/YYYY')}
+                    </Text>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
             <div className={styles.aboutCompany}>
               <Text bold textStyle='lg' className={styles.aboutCompanyHeader}>
                 About the company
