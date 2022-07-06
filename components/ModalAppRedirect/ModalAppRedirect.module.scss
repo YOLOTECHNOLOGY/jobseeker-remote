@@ -1,0 +1,32 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.ModalAppRedirect {
+  &Option {
+    display: flex;
+
+    &:first-child {
+      margin-bottom: 15px;
+    }
+
+    img {
+      padding: 5px;
+      border: 1px solid #BCBCBC;
+      border-radius: 4px;
+    }
+
+    .BossjobLogoText {
+      margin-top: 12px;
+      margin-left: 10px;
+      flex: auto;
+    }
+
+    &Action {
+      float: right;
+
+      button {
+        min-width: 107px;
+      }
+    }
+  }
+}
