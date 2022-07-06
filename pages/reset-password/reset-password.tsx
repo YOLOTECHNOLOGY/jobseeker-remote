@@ -145,7 +145,8 @@ const ResetPassword = () => {
             defaultValue={otp}
             autoComplete='off'
             onChange={(e) => setOtp(e.target.value)}
-            
+            isSubmitOnEnter={true}
+            onSubmit={handleCheckResetPasswordCode}
           />
           {otpError && errorText(otpError)}
           <MaterialButton 
