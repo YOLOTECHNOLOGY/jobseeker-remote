@@ -13,6 +13,7 @@ import MaterialButton from 'components/MaterialButton'
 
 /* Images */
 import { BossjobLogo, BossjobFittedLogo } from 'images'
+import LazyLoad from '../../LazyLoad'
 
 const PublicHeader = () => {
   return (
@@ -20,8 +21,12 @@ const PublicHeader = () => {
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/'}>
+            <LazyLoad>
             <img className={styles.headerLogoImage} src={BossjobFittedLogo} title='Bossjob logo' alt='Bossjob logo' />
-            <img className={styles.headerLogoImageDesktop} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+            </LazyLoad>
+            <LazyLoad>
+              <img className={styles.headerLogoImageDesktop} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+            </LazyLoad>
           </Link>
         </div>
         <div className={styles.headerLinksWrapper}>

@@ -19,6 +19,7 @@ import {
 
 import styles from './Footer.module.scss'
 import classNames from 'classnames/bind'
+import LazyLoad from '../LazyLoad'
 
 const scrollToBottom = () => document.body.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
@@ -30,7 +31,9 @@ const Footer = () => {
         className={styles.scrollUpButton}
         onClick={() => scrollToBottom()}
       >
-        <img src={ChevronUpIcon} alt='chevron-up' width='15' height='15' />
+        <LazyLoad>
+          <img src={ChevronUpIcon} alt='chevron-up' width='15' height='15' />
+        </LazyLoad>
       </button>
 
       <div className={styles.footerContainer}>
@@ -330,7 +333,9 @@ const Footer = () => {
               <div className={styles.footerMobileDownloadApp}>
                 <div style={{ marginRight: '15px' }}>
                   <Link to='https://apps.apple.com/sg/app/bossjob/id1592073585' external>
-                    <img src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
+                    <LazyLoad>
+                      <img src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
+                    </LazyLoad>
                   </Link>
                 </div>
                 <div>
@@ -338,7 +343,9 @@ const Footer = () => {
                     to='https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'
                     external
                   >
-                    <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
+                    <LazyLoad>
+                      <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
+                    </LazyLoad>
                   </Link>
                 </div>
               </div>
@@ -354,7 +361,9 @@ const Footer = () => {
                   external
                   title='Bossjob Facebook'
                 >
-                  <img src={facebook} alt='facebook' width='32' height='32' />
+                  <LazyLoad>
+                    <img src={facebook} alt='facebook' width='32' height='32' />
+                  </LazyLoad>
                 </Link>
                 <Link
                   className={styles.socialLink}
@@ -362,7 +371,9 @@ const Footer = () => {
                   external
                   title='Bossjob LinkedIn'
                 >
-                  <img src={linkedin} alt='linkedin' width='32' height='32' />
+                  <LazyLoad>
+                    <img src={linkedin} alt='linkedin' width='32' height='32' />
+                  </LazyLoad>
                 </Link>
                 <Link
                   className={styles.socialLink}
@@ -370,7 +381,9 @@ const Footer = () => {
                   external
                   title='Bossjob Instagram'
                 >
-                  <img src={instagram} alt='instagram' width='32' height='32' />
+                  <LazyLoad>
+                    <img src={instagram} alt='instagram' width='32' height='32' />
+                  </LazyLoad>
                 </Link>
                 <Link
                   className={styles.socialLink}
@@ -378,7 +391,9 @@ const Footer = () => {
                   external
                   title='Bossjob Youtube'
                 >
-                  <img src={youtube} alt='youtube' width='32' height='32' />
+                  <LazyLoad>
+                    <img src={youtube} alt='youtube' width='32' height='32' />
+                  </LazyLoad>
                 </Link>
                 <Link
                   className={styles.socialLink}
@@ -386,7 +401,9 @@ const Footer = () => {
                   external
                   title='Bossjob Twitter'
                 >
-                  <img src={twitter} alt='twitter' width='32' height='32' />
+                  <LazyLoad>
+                    <img src={twitter} alt='twitter' width='32' height='32' />
+                  </LazyLoad>
                 </Link>
               </div>
             </div>
@@ -677,7 +694,9 @@ const Footer = () => {
                 </Text>
                 <div style={{ margin: '25px 10px 10px 0' }}>
                   <Link to='https://apps.apple.com/sg/app/bossjob/id1592073585' external>
-                    <img src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
+                    <LazyLoad>
+                      <img src={DownloadOnAppStore} alt='AppStore' width='112' height='35' />
+                    </LazyLoad>
                   </Link>
                 </div>
                 <div>
@@ -685,7 +704,9 @@ const Footer = () => {
                     to='https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'
                     external
                   >
-                    <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
+                    <LazyLoad>
+                      <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
+                    </LazyLoad>
                   </Link>
                 </div>
               </div>
@@ -702,7 +723,9 @@ const Footer = () => {
                         external
                         title='Bossjob Facebook'
                       >
-                        <img src={facebook} alt='facebook' width='32' height='32' />
+                        <LazyLoad>
+                          <img src={facebook} alt='facebook' width='32' height='32' />
+                        </LazyLoad>
                       </Link>
                       <Link
                         className={styles.socialLink}
@@ -710,7 +733,9 @@ const Footer = () => {
                         external
                         title='Bossjob LinkedIn'
                       >
-                        <img src={linkedin} alt='linkedin' width='32' height='32' />
+                        <LazyLoad>
+                          <img src={linkedin} alt='linkedin' width='32' height='32' />
+                        </LazyLoad>
                       </Link>
                       <Link
                         className={styles.socialLink}
@@ -718,7 +743,9 @@ const Footer = () => {
                         external
                         title='Bossjob Instagram'
                       >
-                        <img src={instagram} alt='instagram' width='32' height='32' />
+                        <LazyLoad>
+                          <img src={instagram} alt='instagram' width='32' height='32' />
+                        </LazyLoad>
                       </Link>
                       <Link
                         className={styles.socialLink}
@@ -726,7 +753,9 @@ const Footer = () => {
                         external
                         title='Bossjob Youtube'
                       >
-                        <img src={youtube} alt='youtube' width='32' height='32' />
+                        <LazyLoad>
+                          <img src={youtube} alt='youtube' width='32' height='32' />
+                        </LazyLoad>
                       </Link>
                       <Link
                         className={styles.socialLink}
@@ -734,7 +763,9 @@ const Footer = () => {
                         external
                         title='Bossjob Twitter'
                       >
-                        <img src={twitter} alt='twitter' width='32' height='32' />
+                        <LazyLoad>
+                          <img src={twitter} alt='twitter' width='32' height='32' />
+                        </LazyLoad>
                       </Link>
                     </div>
                   </div>

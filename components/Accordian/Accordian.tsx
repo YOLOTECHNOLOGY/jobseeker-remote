@@ -8,6 +8,7 @@ import styles from './Accordian.module.scss'
 
 /* Constant */
 import { Plus, Minus, ChevronUpIcon, ChevronDownIcon } from 'images'
+import LazyLoad from '../LazyLoad'
 
 const cx = classNames.bind(styles)
 
@@ -67,9 +68,13 @@ const Accordian = ({
         <span>{title}</span>
         <div className={styles.accordianToggleIcon}>
           {isVisible ? (
-            <img src={closeIcon} title='minus' alt='minus' height='16' width='16' />
+            <LazyLoad>
+              <img src={closeIcon} title='minus' alt='minus' height='16' width='16' />
+            </LazyLoad>
           ) : (
-            <img src={openIcon} title='Plus' alt='Plus' height='16' width='16' />
+            <LazyLoad>
+              <img src={openIcon} title='Plus' alt='Plus' height='16' width='16' />
+            </LazyLoad>
           )}
         </div>
       </div>

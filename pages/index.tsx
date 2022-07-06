@@ -494,40 +494,48 @@ const Home = (props: HomeProps) => {
                   </span>
                 </div>
                 <div className={styles.right}>
-                  <img
-                    className={activeFeatureImg === 1 ? styles.active : ''}
-                    src={BuildProfessionalResume}
-                    alt='Build Professional Resume'
-                    width='535'
-                    height='432'
-                  />
-                  <img
-                    className={activeFeatureImg === 2 ? styles.active : ''}
-                    src={ChatDirectlyWithBoss}
-                    alt='Chat Directly'
-                    width='554'
-                    height='382'
-                  />
-                  <img
-                    className={activeFeatureImg === 3 ? styles.active : ''}
-                    src={GetHeadhunted}
-                    alt='Get Headhunted'
-                    width='555'
-                    height='427'
-                  />
-                  <img
-                    className={activeFeatureImg === 4 ? styles.active : ''}
-                    src={LevelUpCareer}
-                    alt='Level Up Your Career'
-                    width='520'
-                    height='382'
-                  />
+                  <LazyLoad>
+                    <img
+                      className={activeFeatureImg === 1 ? styles.active : ''}
+                      src={BuildProfessionalResume}
+                      alt='Build Professional Resume'
+                      width='535'
+                      height='432'
+                    />
+                  </LazyLoad>
+                  <LazyLoad>
+                    <img
+                      className={activeFeatureImg === 2 ? styles.active : ''}
+                      src={ChatDirectlyWithBoss}
+                      alt='Chat Directly'
+                      width='554'
+                      height='382'
+                    />
+                  </LazyLoad>
+                  <LazyLoad>
+                    <img
+                      className={activeFeatureImg === 3 ? styles.active : ''}
+                      src={GetHeadhunted}
+                      alt='Get Headhunted'
+                      width='555'
+                      height='427'
+                    />
+                  </LazyLoad>
+                  <LazyLoad>
+                    <img
+                      className={activeFeatureImg === 4 ? styles.active : ''}
+                      src={LevelUpCareer}
+                      alt='Level Up Your Career'
+                      width='520'
+                      height='382'
+                    />
+                  </LazyLoad>
                 </div>
                 <div className={styles.flatDisplay}>
                   <Text tagName='h2' textStyle='xxxl' bold>
                     What can you do with Bossjob?
                   </Text>
-                  <LazyLoad>
+                  <LazyLoad className='test'>
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
@@ -646,7 +654,9 @@ const Home = (props: HomeProps) => {
           <div className={styles.featureList}>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={BusinessInsider} alt='Business Insider' width='206' height='70' />
+                <LazyLoad>
+                  <img src={BusinessInsider} alt='Business Insider' width='206' height='70' />
+                </LazyLoad>
               </div>
               {width > 576 ? (
                 <Link
@@ -683,7 +693,9 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
+                <LazyLoad>
+                  <img src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
+                </LazyLoad>
               </div>
               {width > 576 ? (
                 <Link
@@ -716,7 +728,9 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
+                <LazyLoad>
+                  <img src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
+                </LazyLoad>
               </div>
               {width > 576 ? (
                 <Link
@@ -751,7 +765,9 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={MoneyMax} alt='Moneymax' width='206' height='40' />
+                <LazyLoad>
+                  <img src={MoneyMax} alt='Moneymax' width='206' height='40' />
+                </LazyLoad>
               </div>
               {width > 576 ? (
                 <Link to='https://www.moneymax.ph/lifestyle/articles/online-job-sites/' external>
@@ -778,7 +794,9 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={KrAsia} alt='KR Asia' width='206' height='40' />
+                <LazyLoad>
+                  <img src={KrAsia} alt='KR Asia' width='206' height='40' />
+                </LazyLoad>
               </div>
               {width > 576 ? (
                 <Link
@@ -811,21 +829,23 @@ const Home = (props: HomeProps) => {
             </div>
           </div>
         </div>
-        <div className={styles.bannerSection}>
-          <div className={styles.commonContainer}>
-            <Link to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`} external>
-              <div className={breakpointStyles.hideOnMobileAndTablet}>
-                <Image src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
-              </div>
-              <div className={breakpointStyles.hideOnMobileAndDesktop}>
-                <Image src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
-              </div>
-              <div className={breakpointStyles.hideOnTabletAndDesktop}>
-                <Image src={RHBannerMobile} alt='rh-banner-mobile' width='427' height='214' />
-              </div>
-            </Link>
+        <LazyLoad>
+          <div className={styles.bannerSection}>
+            <div className={styles.commonContainer}>
+              <Link to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`} external>
+                <div className={breakpointStyles.hideOnMobileAndTablet}>
+                  <Image src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
+                </div>
+                <div className={breakpointStyles.hideOnMobileAndDesktop}>
+                  <Image src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
+                </div>
+                <div className={breakpointStyles.hideOnTabletAndDesktop}>
+                  <Image src={RHBannerMobile} alt='rh-banner-mobile' width='427' height='214' />
+                </div>
+              </Link>
+            </div>
           </div>
-        </div>
+        </LazyLoad>
       </Layout>
     </div>
   )
