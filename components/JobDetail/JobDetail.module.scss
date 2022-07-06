@@ -217,10 +217,6 @@
     color: $primaryBlue;
     text-decoration: underline;
   }
-
-  &Last {
-    margin-bottom: 48px;
-  }
 }
 
 .JobDetailBenefits {
@@ -359,6 +355,8 @@
 }
 
 .JobDetailRecruiter {
+  margin-top: 48px;
+
   &Info {
     display: flex;
     margin-top: 16px;

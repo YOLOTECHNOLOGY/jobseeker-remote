@@ -465,7 +465,7 @@ const JobDetail = ({
                 </ul>
               </div>
             )}
-            <div className={styles.JobDetailSectionLast}>
+            <div className={styles.JobDetailSection}>
               <Text textStyle='lg' bold className={styles.JobDetailSectionTitle}>
                 Additional Information
               </Text>
