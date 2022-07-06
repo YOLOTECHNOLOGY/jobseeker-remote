@@ -342,7 +342,6 @@ const MyJobs = ({
                 value="saved" 
                 label={
                   <Link 
-                    aTag
                     to={'/my-jobs/saved?page=1&size=10'}
                     className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}
                   >
@@ -357,7 +356,6 @@ const MyJobs = ({
                 value="applied" 
                 label={
                   <Link 
-                    aTag
                     to={'/my-jobs/applied?page=1&size=10'}
                     className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}
                   >

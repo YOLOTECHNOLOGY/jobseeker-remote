@@ -710,7 +710,6 @@ const Job = ({
                     >
                       <Link
                         to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
-                        aTag
                         external
                       >
                         <img
