@@ -49,8 +49,8 @@ const urlQueryParser = (string) => {
   // Uncommenting : positive and negative regex lookbehinds not supported in mobile browsers
   // const regex = /(.+?(?=(-jobs|-jobs-in))|(?<=(-jobs-in-)).+)/g
 
-  const doubleQueryPattern = /(\b-jobs-in-\b)/g
-  const singleQueryPattern = /(\b-jobs\b)/g
+  const doubleQueryPattern = /((\B|\b)-jobs-in-\b)/g
+  const singleQueryPattern = /((\B|\b)-jobs\b)/g
 
   let array = []
   if (string) {
@@ -66,19 +66,6 @@ const urlQueryParser = (string) => {
   }
 
   return array
-}
-
-const categoryParser = (category) => {
-  const regex = /[^A-Za-z0-9]+/g
-  let value = category.replace(regex, '-')
-
-  // check if last character is '-', if yes remove
-  const lastDash = value.match(/(-?\s*)$/g)
-  if (lastDash.length > 1) {
-    const lastIndex = value.lastIndexOf('-')
-    value = value.substr(0, lastIndex)
-  }
-  return value.toLowerCase().replace('-26', '')
 }
 
 const capitalizeFirstAlphabet = (string) => {
@@ -200,6 +187,7 @@ const checkFilterMatch = (routerQuery, config) => {
   let matchedLocation = {}
   let matchedConfigFromUserSelection = {}
   let filterCount = 0
+
 
   Object.keys(sanitisedConfig).forEach((key) => {
     // iterate based on number of results from queryParser
@@ -1141,79 +1129,6 @@ const appendGeneralQueryPattern = () => {
   return 'job-search'
 }
 
-const conditionChecker = (queryType, sanitisedLocValue, jobCategory, clearAllFilters = false) => {
-  let queryParam = ''
-  // eslint-disable-next-line
-  // query && !location && !category
-  if (queryType && !sanitisedLocValue && !jobCategory) {
-    queryParam = appendSingleQueryPattern(queryType)
-  } else if (
-    // !query && 1 location && !category
-    !queryType &&
-    sanitisedLocValue &&
-    !jobCategory
-  ) {
-    queryParam = appendSingleQueryPattern(sanitisedLocValue)
-  } else if (
-    // !query && !location && 1 category
-    !queryType &&
-    !sanitisedLocValue &&
-    jobCategory
-  ) {
-    queryParam = appendSingleQueryPattern(jobCategory)
-  }
-
-  // query && 1 location && !category
-  if (queryType && sanitisedLocValue && !jobCategory) {
-    queryParam = appendDoubleQueryPattern(queryType, sanitisedLocValue)
-  }
-
-  // query && !location && 1 category
-  if (queryType && !sanitisedLocValue && jobCategory) {
-    queryParam = appendSingleQueryPattern(queryType)
-  }
-
-  // !query && 1 location && 1 category
-  if (!queryType && sanitisedLocValue && jobCategory) {
-    queryParam = appendDoubleQueryPattern(jobCategory, sanitisedLocValue)
-  }
-
-  // query && 1 location && 1 category
-  if (queryType && sanitisedLocValue && jobCategory) {
-    queryParam = appendDoubleQueryPattern(queryType, sanitisedLocValue)
-  }
-
-  // If clearAllFilters is true, only extract searchQuery
-  if (clearAllFilters) {
-    if (queryType && queryParser && queryParser.length > 0) {
-      const matchedLocation = locationList.filter((loc) => {
-        return loc.value === unslugify(queryParser[0])
-      })
-      const matchedCategory = categoryList.filter((cat) => {
-        return cat.value === queryParser[0]
-      })
-      if (
-        (!matchedLocation && !matchedCategory) ||
-        (matchedLocation &&
-          matchedLocation.length === 0 &&
-          matchedCategory &&
-          matchedCategory.length === 0)
-      ) {
-        queryParam = appendSingleQueryPattern(queryParser[0])
-      }
-    } else if (!queryType && queryParser && queryParser.length > 0) {
-      queryParam = ''
-    }
-  }
-
-  // If !query, !jobLocation && !jobCategory
-  if (!queryType && !sanitisedLocValue && !jobCategory) {
-    queryParam = ''
-  }
-
-  return slugify(queryParam).toLowerCase()
-}
-
 const getLocationList = (config) => {
   if (!config) return []
 
@@ -1424,12 +1339,10 @@ const mapSeoValueToGetValue = (value, configArray, hasSubList, isLocation) => {
 export {
   handleSalary,
   urlQueryParser,
-  categoryParser,
   capitalizeFirstAlphabet,
   SEOJobSearchMetaBuilder,
   getPredefinedParamsFromUrl,
   formatLocationConfig,
-  conditionChecker,
   getLocationList,
   getNoticePeriodList,
   getSmsCountryList,
