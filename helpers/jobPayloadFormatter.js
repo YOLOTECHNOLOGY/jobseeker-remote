@@ -189,8 +189,6 @@ const checkFilterMatch = (routerQuery, config) => {
   let filterCount = 0
 
 
-  console.log('queryParser', queryParser)
-
   Object.keys(sanitisedConfig).forEach((key) => {
     // iterate based on number of results from queryParser
     queryParser.forEach((parsedData, index) => {
@@ -348,9 +346,6 @@ const checkFilterMatch = (routerQuery, config) => {
   if (queryParser.length > 0 && queryParser[0] !== predefinedQuery) {
     searchQuery = queryParser[0]
   }
-
-  console.log('searchQuery', searchQuery)
-  console.log('unslugify searchQuery', unslugify(searchQuery))
 
   // calculate filter count
   const array = []

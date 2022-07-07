@@ -945,7 +945,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const queryCategory: any = query?.category
 
       const defaultValues: any = {
-        urlQuery: searchQuery ? unslugify(searchQuery) : '',
+        urlQuery: searchQuery ? unslugify(searchQuery).replace('+', '-') : '',
         sort: query?.sort ? query?.sort : 1,
         jobType: queryJobType?.split(',') || null,
         salary: querySalary?.split(',') || null,
