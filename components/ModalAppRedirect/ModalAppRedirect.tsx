@@ -61,7 +61,7 @@ const ModalAppRedirect = ({ isShowModal, handleModal }: ModalAppRedirectProps) =
       <div className={styles.ModalAppRedirect}>
         <div className={styles.ModalAppRedirectOption}>
           <img className={styles.headerLogoImage} src={BossjobFittedLogoApp} title='Bossjob logo' alt='Bossjob logo' width='40' height='40' />
-          <Text className={styles.BossjobLogoText}>Bossjob App {userAgent?.isIos ? 'ios' : 'other'}</Text>
+          <Text className={styles.BossjobLogoText}>Bossjob App</Text>
           <div className={styles.ModalAppRedirectOptionAction}>
             <Link to={userAgent?.isIos ? 'https://apps.apple.com/sg/app/bossjob/id1592073585' : 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'}>
               <MaterialButton variant='contained' capitalize>
