@@ -364,6 +364,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const onKeywordSearch = (val) => {
+    // convert any value with '-' to '+' so that when it gets parsed from URL, we are able to map it back to '-'
+    const sanitisedVal = val.replace('-', '+')
+
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
     const sortOption = val.length > 0 ? 2 : 1
@@ -375,7 +378,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       matchedConfig,
       matchedConfigFromUrl,
       matchedConfigFromUserSelection,
-    } = userFilterSelectionDataParser('query', val, router.query, config, isClear)
+    } = userFilterSelectionDataParser('query', sanitisedVal, router.query, config, isClear)
 
     for (const [key, value] of Object.entries(matchedConfig)) {
       const newDefaultValue = { ...defaultValues, [key]: [value[0]['seo-value']] }
