@@ -49,8 +49,8 @@ const urlQueryParser = (string) => {
   // Uncommenting : positive and negative regex lookbehinds not supported in mobile browsers
   // const regex = /(.+?(?=(-jobs|-jobs-in))|(?<=(-jobs-in-)).+)/g
 
-  const doubleQueryPattern = /(\b-jobs-in-\b)/g
-  const singleQueryPattern = /(\b-jobs\b)/g
+  const doubleQueryPattern = /((\B|\b)-jobs-in-\b)/g
+  const singleQueryPattern = /((\B|\b)-jobs\b)/g
 
   let array = []
   if (string) {
@@ -200,6 +200,9 @@ const checkFilterMatch = (routerQuery, config) => {
   let matchedLocation = {}
   let matchedConfigFromUserSelection = {}
   let filterCount = 0
+
+
+  console.log('queryParser', queryParser)
 
   Object.keys(sanitisedConfig).forEach((key) => {
     // iterate based on number of results from queryParser
@@ -358,6 +361,9 @@ const checkFilterMatch = (routerQuery, config) => {
   if (queryParser.length > 0 && queryParser[0] !== predefinedQuery) {
     searchQuery = queryParser[0]
   }
+
+  console.log('searchQuery', searchQuery)
+  console.log('unslugify searchQuery', unslugify(searchQuery))
 
   // calculate filter count
   const array = []
