@@ -956,9 +956,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const queryIndustry: any = query?.industry
       const queryWorkExp: any = query?.workExperience
       const queryCategory: any = query?.category
-
+      
       const defaultValues: any = {
-        urlQuery: searchQuery ? unslugify(searchQuery).replace('+', '-') : '',
+        urlQuery: searchQuery,
         sort: query?.sort ? query?.sort : 1,
         jobType: queryJobType?.split(',') || null,
         salary: querySalary?.split(',') || null,
@@ -968,7 +968,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         workExperience: queryWorkExp?.split(',') || null,
         category: queryCategory?.split(',') || null,
       }
-
+      
       for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
         defaultValues[key] = [value[0]['seo-value']]
       }
@@ -979,15 +979,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           defaultValues.urlQuery = ''
         }
       }
-
+      
       if (defaultValues.category) {
         const defaultCategories = defaultValues.category
         const initialListOptions = catList.map((data) => {
           const newSubList = data.sub_list.map((subData) => ({
             ...subData,
             isChecked:
-              defaultCategories.includes(subData['seo-value']) ||
-              defaultCategories.includes(data['seo-value']),
+            defaultCategories.includes(subData['seo-value']) ||
+            defaultCategories.includes(data['seo-value']),
           }))
           const newList = {
             ...data,
@@ -998,6 +998,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         })
         defaultValues.categoryList = initialListOptions
       }
+      
+      // sanitise searchQuery 
+      defaultValues.urlQuery = defaultValues.urlQuery ? unslugify(searchQuery).replace('+', '-') : ''
 
       /* Handle SEO Meta Tags*/
       const { month, year } = getCurrentMonthYear()
