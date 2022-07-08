@@ -197,10 +197,10 @@ const Home = (props: HomeProps) => {
         <Link
           className={styles.link}
           to={`${jobsPageLink}/finance-accounting-jobs`}
-          title='Finance jobs'
+          title='Accounting jobs'
         >
           <Text textStyle='base' textColor='primaryBlue'>
-            Finance jobs
+            Accounting jobs
           </Text>
         </Link>
         <Link
@@ -221,11 +221,6 @@ const Home = (props: HomeProps) => {
             Marketing jobs
           </Text>
         </Link>
-        <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs'>
-          <Text textStyle='base' textColor='primaryBlue'>
-            Makati jobs
-          </Text>
-        </Link>
         <Link
           className={styles.link}
           to={`${jobsPageLink}/computer-information-technology-jobs`}
@@ -233,11 +228,6 @@ const Home = (props: HomeProps) => {
         >
           <Text textStyle='base' textColor='primaryBlue'>
             IT jobs
-          </Text>
-        </Link>
-        <Link className={styles.link} to={`${jobsPageLink}/overseas-jobs`} title='Overseas jobs'>
-          <Text textStyle='base' textColor='primaryBlue'>
-            Overseas jobs
           </Text>
         </Link>
         <Link
@@ -251,21 +241,43 @@ const Home = (props: HomeProps) => {
         </Link>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search?salary=30k-60k,60k-80k,80k-100k,100k-200k,above-200k`}
-          title='₱30K + jobs'
+          to={`${jobsPageLink}/hr-recruitment-jobs`}
+          title='HR jobs'
         >
           <Text textStyle='base' textColor='primaryBlue'>
-            ₱30K+ jobs
+            HR jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/bpo-team-lead-jobs`}
+          title='BPO Team Lead'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            BPO Team Lead
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/homebased-jobs`}
+          title='WFH'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            WFH
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/manager-jobs`}
+          title='Manager'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            Manager
           </Text>
         </Link>
         <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs'>
           <Text textStyle='base' textColor='primaryBlue'>
             Manila jobs
-          </Text>
-        </Link>
-        <Link className={styles.link} to={`${jobsPageLink}/full-time-jobs`} title='Full Time jobs'>
-          <Text textStyle='base' textColor='primaryBlue'>
-            Full Time jobs
           </Text>
         </Link>
       </div>
