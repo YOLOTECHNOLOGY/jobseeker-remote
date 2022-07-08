@@ -356,6 +356,7 @@ const Job = ({
         description={seoMetaDescription}
         canonical={seoCanonicalUrl}
         jobDetail={jobDetail}
+        imageUrl={jobDetail?.company?.logo}
       />
       <div className={styles.searchAndLocationContainer}>
         <MaterialTextFieldWithSuggestionList
