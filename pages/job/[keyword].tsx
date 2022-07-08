@@ -39,7 +39,7 @@ import QuickApplyModal from 'components/QuickApplyModal'
 /* Helpers */
 import { getCookie, setCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
-import { categoryParser, conditionChecker, getApplyJobLink } from 'helpers/jobPayloadFormatter'
+import { userFilterSelectionDataParser, getApplyJobLink } from 'helpers/jobPayloadFormatter'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -112,7 +112,6 @@ const Job = ({
   const [jobDetailOption, setJobDetailOption] = useState(false)
   const [suggestionList, setSuggestionList] = useState([])
   const [searchValue, setSearchValue] = useState('')
-  const [locationValue, setLocationValue] = useState(null)
   const [isShowModal, setIsShowModal] = useState(false)
 
   const [jobDetailUrl, setJobDetailUrl] = useState('/')
@@ -275,26 +274,44 @@ const Job = ({
     }
   }
 
-  const updateUrl = (queryParam, queryObject) => {
-    router.push({
-      pathname: `/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
-      query: queryObject,
-    })
+  const updateUrl = (queryParam) => {
+    const queryObject = {
+      page: 1,
+      sort: 2,
+    }
+
+    router.push(
+      {
+        pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
+        query: queryObject,
+      },
+      undefined,
+      { shallow: true }
+    )
   }
 
   const onLocationSearch = (event, value) => {
-    setLocationValue(value)
+    const isClear = !value
+    const { searchQuery } = userFilterSelectionDataParser(
+      'location',
+      value,
+      router.query,
+      config,
+      isClear
+    )
+    updateUrl(searchQuery)
   }
 
   const onSearch = (value = searchValue) => {
-    let queryParam = null
-    if (locationValue) {
-      const sanitisedLocValue = categoryParser(locationValue.value)
-      queryParam = conditionChecker(value, sanitisedLocValue)
-    } else if (value) {
-      queryParam = conditionChecker(value)
-    }
-    updateUrl(queryParam, { sort: 2 })
+    // convert any value with '-' to '+' so that when it gets parsed from URL, we are able to map it back to '-'
+    const sanitisedVal = value.replace('-', '+')
+    const { searchQuery } = userFilterSelectionDataParser(
+      'query',
+      sanitisedVal,
+      router.query,
+      config
+    )
+    updateUrl(searchQuery)
   }
 
   const handleCloseModal = () => {
