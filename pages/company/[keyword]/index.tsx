@@ -375,6 +375,8 @@ const CompanyDetail = (props: any) => {
                     className={styles.companyJobsSearchTitle}
                     size='small'
                     label='Search for job title'
+                    isSubmitOnEnter={true}
+                    onSubmit={handleSearchCompanyJobSearch}
                   />
                 </div>
                 <div className={styles.companyJobsSearchRight}>
