@@ -488,7 +488,7 @@ const Home = (props: HomeProps) => {
                       Level Up Your Career
                     </Text>
                     <p>
-                      100,00+ cheap courses & certifications readily available to equip you with
+                      100,000+ cheap courses & certifications readily available to equip you with
                       skills for your next career jump
                     </p>
                   </span>
@@ -616,7 +616,7 @@ const Home = (props: HomeProps) => {
                             </Text>
                           </p>
                           <p className={styles.description}>
-                            100,00+ cheap courses & certifications readily available to equip you
+                            100,000+ cheap courses & certifications readily available to equip you
                             with skills for your next career jump
                           </p>
                         </div>
