@@ -83,6 +83,7 @@ type companyObject = {
   id: number
   logoUrl: string
   name: string
+  companyUrl: string
 }
 
 const renderPopularSearch = () => {
@@ -598,10 +599,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleFetchJobDetail = (jobId) =>
     dispatch(fetchJobDetailRequest({ jobId, status: userCookie ? 'protected' : 'public' }))
 
-  const handleSelectedJobId = (jobId, jobTitle) => {
+  const handleSelectedJobId = (jobId, jobUrl='/') => {
     // Open new tab in mobile
     if (isMobile && typeof window !== 'undefined') {
-      window.open(`/job/${slugify(jobTitle.toLowerCase())}-${jobId}`)
+      window.open(jobUrl)
 
       return
     }
@@ -829,7 +830,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                       <Link
                         key={company.id}
                         className={styles.topCompaniesLogo}
-                        to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
+                        to={`${company?.companyUrl}/jobs`}
                         external
                       >
                         <Tooltip
@@ -933,8 +934,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       const topCompanies = featuredCompanies?.map((featuredCompany) => {
         const logoUrl = featuredCompany.logo_url
+        const companyUrl = featuredCompany.company_url
         delete featuredCompany.logo_url
-        return { ...featuredCompany, logoUrl }
+        delete featuredCompany.companyUrl
+        return { ...featuredCompany, logoUrl, companyUrl }
       })
 
       /* Handle job search logic */

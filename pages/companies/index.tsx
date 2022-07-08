@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-import slugify from 'slugify'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -99,9 +98,7 @@ const Companies = () => {
           <div className={styles.featuredEmployerLeft}>
             <div className={styles.featuredEmployerInfo}>
               <Link
-                to={`/company/${slugify(featuredCompany?.name.toLowerCase() || '')}-${
-                  featuredCompany?.id
-                }`}
+                to={featuredCompany?.company_url || '/'}
               >
                 <img
                   src={featuredCompany?.logo_url}
@@ -111,9 +108,7 @@ const Companies = () => {
               </Link>
               <div className={styles.featuredEmployerDetails}>
                 <Link
-                  to={`/company/${slugify(featuredCompany?.name.toLowerCase() || '')}-${
-                    featuredCompany?.id
-                  }`}
+                  to={featuredCompany?.company_url || '/'}
                   className={styles.featuredEmployerName}
                 >
                   <Text textStyle='xl' bold>
@@ -138,9 +133,7 @@ const Companies = () => {
                   {featuredCompany?.short_description}
                 </Text>
                 <Link
-                  to={`/company/${slugify(featuredCompany?.name.toLowerCase() || '')}-${
-                    featuredCompany?.id
-                  }`}
+                  to={`${featuredCompany?.company_url || '/'}/jobs`}
                   className={styles.featuredEmployerOpenings}
                 >
                   <Text textStyle='lg' bold>

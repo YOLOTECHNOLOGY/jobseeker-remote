@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-import slugify from 'slugify'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
@@ -229,15 +228,15 @@ const MyJobs = ({
     dispatch(fetchSavedJobsListRequest(payload))
   }
 
-  const handleSelectedJobId = (jobId, jobTitle, status) => {
+  const handleSelectedJobId = (jobId, jobUrl, status) => {
     setSelectedJobId(jobId)
     handleFetchJobDetail(jobId, category) 
     
     if (isMobile && status === 'active') {
       if (isAppliedCategory) {
-        router.push(`/job/${slugify(jobTitle || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobId}?isApplied=${isAppliedCategory}`)
+        router.push(`${jobUrl}?isApplied=${isAppliedCategory}`)
       } else {
-        router.push(`/job/${slugify(jobTitle || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobId}`)
+        router.push(jobUrl)
       }
 
       return
@@ -274,13 +273,6 @@ const MyJobs = ({
     router.push(router, undefined, { shallow: true })
 
     document.documentElement.scrollTop = 0;
-  }
-
-  const handleFormatWindowUrl = (pathname, name, id) => {
-    if (typeof window !== 'undefined') {
-      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!#:/@]/g })}-${id}`
-    }
-    return ''
   }
 
   const handlePostReportJob = (reportJobData) => {
@@ -324,9 +316,6 @@ const MyJobs = ({
       </div>
     )
   }
-
-  const jobDetailUrl = selectedJob?.['job_url']
-  const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
   return (
     <Layout>
@@ -411,7 +400,7 @@ const MyJobs = ({
                   postedAt={jobs.job.refreshed_at}
                   selectedId={selectedJobId}
                   status={jobs.job.status_key}
-                  handleSelectedId={() => handleSelectedJobId(jobs.job.id, jobs.job.job_title, jobs.job.status_key)}
+                  handleSelectedId={() => handleSelectedJobId(jobs.job.id, jobs.job.job_url, jobs.job.status_key)}
                 />
               ))}
             </div>
@@ -429,8 +418,8 @@ const MyJobs = ({
             {!isLoadingJobDetails && selectedJob && (
               <JobDetail 
                 selectedJob={selectedJob}
-                jobDetailUrl={jobDetailUrl}
-                companyUrl={companyUrl}
+                jobDetailUrl={selectedJob?.['job_url']}
+                companyUrl={selectedJob?.['company']?.['company_url']}
                 isSticky={isSticky}
                 category={category}
                 applicationHistory={applicationHistories}
@@ -464,7 +453,7 @@ const MyJobs = ({
       </div>
 
       <ModalShare
-        jobDetailUrl={jobDetailUrl}
+        jobDetailUrl={selectedJob?.['job_url']}
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}
       />
