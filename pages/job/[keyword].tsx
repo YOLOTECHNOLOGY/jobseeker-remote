@@ -136,7 +136,7 @@ const Job = ({
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
 
   useEffect(() => {
-    setJobDetailUrl(handleFormatWindowUrl('job', jobDetail?.['job_title'], jobDetail?.['id']))
+    setJobDetailUrl(jobDetail?.['job_url'])
     setCompanyUrl(
       handleFormatWindowUrl(
         'company',
@@ -730,7 +730,7 @@ const Job = ({
                       className={styles.JobDetailSidebarCard}
                     >
                       <Link
-                        to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
+                        to={job?.job_url}
                         external
                       >
                         <img
@@ -766,7 +766,7 @@ const Job = ({
                         </Text>
                       )}
                       <Link
-                        to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
+                        to={job?.job_url}
                         className={styles.JobDetailSidebarCardApply}
                       >
                         {job.published_at && (
@@ -776,7 +776,7 @@ const Job = ({
                         )}
                       </Link>
                       <Link
-                        to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
+                        to={job?.job_url}
                         className={styles.JobDetailSidebarCardApply}
                       >
                         <Text
@@ -924,7 +924,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobDetail = storeState.job?.jobDetail
   const appliedJobDetail = storeState.job?.appliedJobDetail
   const config = storeState.config.config.response
-  console.log('jobDetail', jobDetail)
+
   if (jobDetail || appliedJobDetail) {
     if (jobDetail.error || appliedJobDetail.error) {
       return {
@@ -938,6 +938,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       categories,
       full_address: fullAddress,
       location,
+      job_url: jobUrl
     } = jobDetail?.response?.id ? jobDetail?.response : appliedJobDetail?.response?.job
     let categoryMetaText = ''
     categories.forEach((el) => {
@@ -958,7 +959,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         accessToken,
         seoMetaTitle,
         seoMetaDescription,
-        seoCanonicalUrl: `/job/${keywordQuery}`,
+        seoCanonicalUrl: jobUrl
       },
     }
   }

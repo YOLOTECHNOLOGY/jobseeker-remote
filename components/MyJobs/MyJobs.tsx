@@ -325,7 +325,7 @@ const MyJobs = ({
     )
   }
 
-  const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
+  const jobDetailUrl = selectedJob?.['job_url']
   const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
   return (
