@@ -87,7 +87,7 @@ const CompanyProfileLayout = ({
   const finalCanonicalText = initialCanonicalText + additionalCanonicalText
   return (
     <Layout>
-      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={finalCanonicalText} imageUrl={company.logo_url}/>
+      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={finalCanonicalText} />
       <div className={styles.company}>
         <div className={styles.companyContent}>
           <div className={styles.companyHeader}>
