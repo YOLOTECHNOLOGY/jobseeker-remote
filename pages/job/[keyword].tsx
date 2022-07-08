@@ -39,7 +39,7 @@ import QuickApplyModal from 'components/QuickApplyModal'
 /* Helpers */
 import { getCookie, setCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
-import { categoryParser, conditionChecker, getApplyJobLink } from 'helpers/jobPayloadFormatter'
+import { userFilterSelectionDataParser, getApplyJobLink } from 'helpers/jobPayloadFormatter'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -79,7 +79,7 @@ import {
   MoreIcon,
   RateIcon,
   LocationPinIcon,
-  DefaultAvatar
+  DefaultAvatar,
 } from 'images'
 
 interface IJobDetail {
@@ -105,14 +105,13 @@ const Job = ({
   const router = useRouter()
   const userCookie = getCookie('user') || null
   const applyJobLink = getApplyJobLink(jobDetail, userCookie, accessToken)
-  
+
   const [isSavedJob, setIsSavedJob] = useState(jobDetail?.is_saved)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
   const [jobDetailOption, setJobDetailOption] = useState(false)
   const [suggestionList, setSuggestionList] = useState([])
   const [searchValue, setSearchValue] = useState('')
-  const [locationValue, setLocationValue] = useState(null)
   const [isShowModal, setIsShowModal] = useState(false)
 
   const [jobDetailUrl, setJobDetailUrl] = useState('/')
@@ -275,26 +274,44 @@ const Job = ({
     }
   }
 
-  const updateUrl = (queryParam, queryObject) => {
-    router.push({
-      pathname: `/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
-      query: queryObject,
-    })
+  const updateUrl = (queryParam) => {
+    const queryObject = {
+      page: 1,
+      sort: 2,
+    }
+
+    router.push(
+      {
+        pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
+        query: queryObject,
+      },
+      undefined,
+      { shallow: true }
+    )
   }
 
   const onLocationSearch = (event, value) => {
-    setLocationValue(value)
+    const isClear = !value
+    const { searchQuery } = userFilterSelectionDataParser(
+      'location',
+      value,
+      router.query,
+      config,
+      isClear
+    )
+    updateUrl(searchQuery)
   }
 
   const onSearch = (value = searchValue) => {
-    let queryParam = null
-    if (locationValue) {
-      const sanitisedLocValue = categoryParser(locationValue.value)
-      queryParam = conditionChecker(value, sanitisedLocValue)
-    } else if (value) {
-      queryParam = conditionChecker(value)
-    }
-    updateUrl(queryParam, { sort: 2 })
+    // convert any value with '-' to '+' so that when it gets parsed from URL, we are able to map it back to '-'
+    const sanitisedVal = value.replace('-', '+')
+    const { searchQuery } = userFilterSelectionDataParser(
+      'query',
+      sanitisedVal,
+      router.query,
+      config
+    )
+    updateUrl(searchQuery)
   }
 
   const handleCloseModal = () => {
@@ -303,13 +320,15 @@ const Job = ({
 
   const handleVerifyEmailClick = async () => {
     // revalidate verify email status
-    const response = await fetchUserOwnDetailService({accessToken: accessToken})
+    const response = await fetchUserOwnDetailService({ accessToken: accessToken })
     const userDetails = response?.data?.data
     const isVerifiedEmail = userDetails?.is_email_verify
 
-    if (!isVerifiedEmail) { // email is not verified
-      setIsShowModal(true);
-    } else { // email is verified and user cookie is outdated
+    if (!isVerifiedEmail) {
+      // email is not verified
+      setIsShowModal(true)
+    } else {
+      // email is verified and user cookie is outdated
       const userCookie = {
         active_key: userDetails.active_key,
         id: userDetails.id,
@@ -332,7 +351,12 @@ const Job = ({
 
   return (
     <Layout>
-      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonicalUrl} jobDetail={jobDetail} />
+      <SEO
+        title={seoMetaTitle}
+        description={seoMetaDescription}
+        canonical={seoCanonicalUrl}
+        jobDetail={jobDetail}
+      />
       <div className={styles.searchAndLocationContainer}>
         <MaterialTextFieldWithSuggestionList
           id='search'
@@ -623,7 +647,8 @@ const Job = ({
                 >
                   <Text textStyle='base' className={styles.JobDetailSectionSubBodyLink}>
                     {' '}
-                    {category.value}{jobDetail.categories.length === i+1 ? '' : ','}
+                    {category.value}
+                    {jobDetail.categories.length === i + 1 ? '' : ','}
                   </Text>
                 </Link>
               </span>
@@ -803,7 +828,7 @@ const Job = ({
                         src={course?.image}
                         className={styles.JobDetailSidebarCardImage}
                         alt={`${course?.truncated_name} logo`}
-                        />
+                      />
                       <Text
                         className={styles.JobDetailSidebarCardTitle}
                         textStyle='lg'
@@ -883,7 +908,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   if (jobId) {
     // store actions
     if (isApplied === 'true') {
-      store.dispatch(fetchAppliedJobDetailRequest({jobId, accessToken}))
+      store.dispatch(fetchAppliedJobDetailRequest({ jobId, accessToken }))
     } else {
       store.dispatch(
         fetchJobDetailRequest({

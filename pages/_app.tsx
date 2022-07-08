@@ -22,16 +22,9 @@ const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     const handleRouteComplete = (url) => {
       gtag.pageview(url)
-      setIsPageLoading(false);
     }
-    const handleStart = () => { setIsPageLoading(true) };
-    
-    router.events.on('routeChangeStart', handleStart);
-    router.events.on('routeChangeError', handleRouteComplete);
     router.events.on('routeChangeComplete', handleRouteComplete)
     return () => {
-      router.events.off('routeChangeStart', handleStart);
-      router.events.off('routeChangeError', handleRouteComplete);
       router.events.off('routeChangeComplete', handleRouteComplete)
     }
   }, [router.events])
@@ -67,6 +60,21 @@ const App = ({ Component, pageProps }: AppProps) => {
       if (Object.keys(utmCampaignObj).length > 0) {
         setItem('utmCampaign', JSON.stringify(utmCampaignObj))
       }
+    }
+    const handleRouteComplete = (url) => {
+      setIsPageLoading(false);
+    }
+    const handleStart = () => {
+      setIsPageLoading(true) 
+    };
+    
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeError', handleRouteComplete);
+    router.events.on('routeChangeComplete', handleRouteComplete)
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeError', handleRouteComplete);
+      router.events.off('routeChangeComplete', handleRouteComplete)
     }
   }, [])
 
@@ -208,7 +216,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           {process.env.MAINTENANCE === 'true' ? (
             <MaintenancePage {...pageProps} />
           ) : (
-            isPageLoading ? 
+            isPageLoading && !router.pathname.includes('jobs-hiring') ?
               <TransitionLoader accessToken={accessToken}/> :
               <Component {...pageProps} />
           )}

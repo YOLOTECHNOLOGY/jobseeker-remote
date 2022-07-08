@@ -30,7 +30,7 @@ import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 
 /* Helpers*/
-import { categoryParser, conditionChecker } from 'helpers/jobPayloadFormatter'
+import { userFilterSelectionDataParser } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { authPathToOldProject } from 'helpers/authenticationTransition'
@@ -75,11 +75,10 @@ interface HomeProps {
 
 const Home = (props: HomeProps) => {
   const { width } = useWindowDimensions()
-  const { topCompanies } = props
+  const { config, topCompanies } = props
   const router = useRouter()
   const isAuthenticated = getCookie('accessToken') ? true : false
   const [searchValue, setSearchValue] = useState('')
-  const [locationValue, setLocationValue] = useState(null)
   const [suggestionList, setSuggestionList] = useState([])
   const [showLogo, setShowLogo] = useState(false)
 
@@ -138,27 +137,44 @@ const Home = (props: HomeProps) => {
     }
   }, [activeFeature])
 
-  const updateUrl = (queryParam, queryObject) => {
-    router.push({
-      pathname: `/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
-      query: queryObject,
-    })
+  const updateUrl = (queryParam) => {
+    const queryObject = {
+      page: 1,
+      sort: 2,
+    }
+
+    router.push(
+      {
+        pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
+        query: queryObject,
+      },
+      undefined,
+      { shallow: true }
+    )
   }
 
   const onLocationSearch = (event, value) => {
-    setLocationValue(value)
+    const isClear = !value
+    const { searchQuery } = userFilterSelectionDataParser(
+      'location',
+      value,
+      router.query,
+      config,
+      isClear
+    )
+    updateUrl(searchQuery)
   }
 
   const onSearch = (value = searchValue) => {
-    let queryParam = null
-    if (locationValue) {
-      const sanitisedLocValue = categoryParser(locationValue.value)
-      queryParam = conditionChecker(value, sanitisedLocValue)
-    } else if (value) {
-      queryParam = conditionChecker(value)
-    }
-
-    updateUrl(queryParam, { sort: 2 })
+    // convert any value with '-' to '+' so that when it gets parsed from URL, we are able to map it back to '-'
+    const sanitisedVal = value.replace('-', '+')
+    const { searchQuery } = userFilterSelectionDataParser(
+      'query',
+      sanitisedVal,
+      router.query,
+      config
+    )
+    updateUrl(searchQuery)
   }
 
   const handleSuggestionSearch = (val) => {
@@ -278,11 +294,7 @@ const Home = (props: HomeProps) => {
         />
         <section className={styles.searchAndQuickLinkSection}>
           <div className={styles.commonContainer}>
-            <Text
-              textStyle='xxxl'
-              textColor='primaryBlue'
-              bold
-            >
+            <Text textStyle='xxxl' textColor='primaryBlue' bold>
               Find Jobs for Professionals in Philippines
             </Text>
             <MetaText tagName='h1'>Career Platform for Professionals in Philippines</MetaText>
@@ -484,7 +496,7 @@ const Home = (props: HomeProps) => {
                       Level Up Your Career
                     </Text>
                     <p>
-                      100,00+ cheap courses & certifications readily available to equip you with
+                      100,000+ cheap courses & certifications readily available to equip you with
                       skills for your next career jump
                     </p>
                   </span>
@@ -612,7 +624,7 @@ const Home = (props: HomeProps) => {
                             </Text>
                           </p>
                           <p className={styles.description}>
-                            100,00+ cheap courses & certifications readily available to equip you
+                            100,000+ cheap courses & certifications readily available to equip you
                             with skills for your next career jump
                           </p>
                         </div>
@@ -809,7 +821,14 @@ const Home = (props: HomeProps) => {
         </div>
         <div className={styles.bannerSection}>
           <div className={styles.commonContainer}>
-            <Link to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`} external>
+            <Link
+              to={
+                isAuthenticated
+                  ? authPathToOldProject(null, '/dashboard/headhunt-me')
+                  : `${process.env.OLD_PROJECT_URL}/headhunt-me`
+              }
+              external
+            >
               <div className={breakpointStyles.hideOnMobileAndTablet}>
                 <Image src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
               </div>
