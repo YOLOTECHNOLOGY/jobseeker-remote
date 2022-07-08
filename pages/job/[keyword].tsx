@@ -121,7 +121,6 @@ const Job = ({
   const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
 
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
-  const categoryLists = config && config.inputs && config.inputs.job_category_lists
 
   const recommendedCoursesResponse = useSelector(
     (store: any) => store.courses.recommendedCourses.response
@@ -239,11 +238,7 @@ const Job = ({
   const getJobDetailCategoryIds = () => {
     const jobCategoryIds = []
     jobDetail?.categories?.map((cat) => {
-      categoryLists.filter((catList) => {
-        if (catList.value === cat.value) {
-          jobCategoryIds.push(catList.id)
-        }
-      })
+      jobCategoryIds.push(cat.id)
     })
     return jobCategoryIds?.length > 0 ? jobCategoryIds.join(',') : null
   }
@@ -856,7 +851,7 @@ const Job = ({
                           bold
                           className={styles.JobDetailSidebarCardCTA}
                         >
-                          Start now
+                          Get started
                         </Text>
                       </div>
                     </Link>
