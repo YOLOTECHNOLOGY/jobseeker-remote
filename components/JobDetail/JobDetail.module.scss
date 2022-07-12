@@ -391,9 +391,5 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
-    @include msd {
-      width: 80%;
-    }
   }
 }
