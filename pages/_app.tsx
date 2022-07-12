@@ -19,13 +19,19 @@ const App = ({ Component, pageProps }: AppProps) => {
   const accessToken = getCookie('accessToken')
 
   useEffect(() => {
-    const handleRouteChange = (url) => {
+    // Facebook pixel 
+    // This pageview only triggers the first time
+    fbq.pageview()
+
+    const handleRouteComplete = (url) => {
       gtag.pageview(url)
       fbq.pageview()
     }
-    router.events.on('routeChangeComplete', handleRouteChange)
+
+    router.events.on('routeChangeComplete', handleRouteComplete)
+
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
+      router.events.off('routeChangeComplete', handleRouteComplete)
     }
     
   }, [router.events])
