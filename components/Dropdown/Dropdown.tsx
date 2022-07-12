@@ -21,7 +21,20 @@ const Dropdown = ({ children }: DropdownProps) => {
       <div onClick={handleClick}>
         <img src={MoreIcon} width='5' height='20' />
       </div>
-      <Menu anchorEl={anchorEl} open={open} onClick={handleClose} onClose={handleClose}>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClick={handleClose}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+      >
         {children}
       </Menu>
     </div>
