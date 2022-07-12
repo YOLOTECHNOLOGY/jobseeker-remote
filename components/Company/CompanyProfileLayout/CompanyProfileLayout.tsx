@@ -81,13 +81,12 @@ const CompanyProfileLayout = ({
     if (similarCompaniesResponse) setSimilarCompanies(similarCompaniesResponse)
   }, [similarCompaniesResponse])
 
-  const initialCanonicalText = `/company/${company.name.split(' ').join('-')}`
-  const additionalCanonicalText =
-    currentTab == 'jobs' ? '/jobs' : currentTab == 'life' ? '/life' : ''
-  const finalCanonicalText = initialCanonicalText + additionalCanonicalText
+  // TODO: temp fix for cananonical link
+  const currentUrl = (typeof window !== 'undefined') ? window.location.pathname : '/'
+
   return (
     <Layout>
-      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={finalCanonicalText} />
+      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={currentUrl} />
       <div className={styles.company}>
         <div className={styles.companyContent}>
           <div className={styles.companyHeader}>
