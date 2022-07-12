@@ -86,7 +86,7 @@ const CompanyProfileLayout = ({
 
   return (
     <Layout>
-      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={currentUrl} />
+      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={currentUrl} imageUrl={company.logo_url}/>
       <div className={styles.company}>
         <div className={styles.companyContent}>
           <div className={styles.companyHeader}>
