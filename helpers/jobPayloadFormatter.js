@@ -188,7 +188,6 @@ const checkFilterMatch = (routerQuery, config) => {
   let matchedConfigFromUserSelection = {}
   let filterCount = 0
 
-
   Object.keys(sanitisedConfig).forEach((key) => {
     // iterate based on number of results from queryParser
     queryParser.forEach((parsedData, index) => {
@@ -735,15 +734,16 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       if (field === 'category' && isClear) delete filterParamsObject['category']
       if (field === 'moreFilters' && isClear) {
         // delete all filters under more filters section, isClear is an array of strings if true for moreFilters
-        isClear.forEach((val)=> {
-          const removeValueFromUniqueList = uniqueList.filter((uniq)=> uniq !== filterParamsObject[val])
+        isClear.forEach((val) => {
+          const removeValueFromUniqueList = uniqueList.filter(
+            (uniq) => uniq !== filterParamsObject[val]
+          )
           uniqueList = removeValueFromUniqueList
-          if (filterQuery === filterParamsObject[val]){
+          if (filterQuery === filterParamsObject[val]) {
             filterQuery = ''
           }
           delete filterParamsObject[val]
-        }
-        )
+        })
       }
     }
   })
@@ -787,11 +787,16 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
       } else if (
         (!searchQuery &&
-        !predefinedQuery &&
-        !predefinedLocation &&
-        locationQuery &&
-        !filterQuery
-        ) || (!searchQuery && !predefinedQuery && !filterQuery && predefinedLocation && locationQuery && predefinedLocation === locationQuery)
+          !predefinedQuery &&
+          !predefinedLocation &&
+          locationQuery &&
+          !filterQuery) ||
+        (!searchQuery &&
+          !predefinedQuery &&
+          !filterQuery &&
+          predefinedLocation &&
+          locationQuery &&
+          predefinedLocation === locationQuery)
       ) {
         query = appendSingleQueryPattern(locationQuery)
       } else if (
@@ -819,7 +824,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
             }
           }
         }
-      }else {
+      } else {
         appendGeneralQueryPattern()
       }
       // handle all onKeywordSearch logic when field === 'query',
@@ -865,6 +870,16 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         query = appendSingleQueryPattern(searchQuery)
       }
       // !predefinedQuery && predefinedLocation && locationQuery exist and field is 'location'
+    } else if (
+      searchQuery &&
+      !predefinedQuery &&
+      predefinedLocation &&
+      locationQuery &&
+      searchQuery !== predefinedLocation &&
+      predefinedLocation !== locationQuery &&
+      field === 'location'
+    ) {
+      query = appendDoubleQueryPattern(searchQuery, locationQuery)
     } else if (!predefinedQuery && predefinedLocation && locationQuery && field === 'location') {
       query = appendSingleQueryPattern(locationQuery)
     } else if (
