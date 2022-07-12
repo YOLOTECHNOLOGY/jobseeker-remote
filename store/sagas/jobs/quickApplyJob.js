@@ -68,7 +68,7 @@ function* quickApplyJobReq(action) {
       }
       
       if (window !== 'undefined' && window.fbq) {
-        yield call(fbq.event('CompleteRegistration'))
+        yield fbq.event('CompleteRegistration', {'source': 'quick_apply'})
       }
 
       const registeredData = response.data.data
