@@ -16,6 +16,8 @@ import Text from '../Text'
 
 /* Helpers */
 import { fetchUserOwnDetailService } from '../../store/services/users/fetchUserOwnDetail'
+import ModalAppRedirect from 'components/ModalAppRedirect'
+import { useUserAgent } from 'next-useragent'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -26,15 +28,22 @@ const Layout = ({ children, className }: LayoutProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isEmailVerified, setIsEmailVerified] = useState(false)
   const [isShowModal, setIsShowModal] = useState(false)
+  const [isShowAppRedirectModal, setIsShowAppRedirectModal] = useState(false)
 
   const authCookie = getCookie('accessToken')
   const userCookie = getCookie('user')
+
 
   useEffect(() => {
     setIsAuthenticated(authCookie ? true : false)
     setIsEmailVerified(userCookie?.is_email_verify)
     const isVerifyEmailModalClosed = getCookie('isVerifyEmailModalClosed')
     setIsShowModal(!isVerifyEmailModalClosed && !!authCookie && !!!userCookie.is_email_verify)
+   
+    const userAgent = useUserAgent(window.navigator.userAgent)
+    if (userAgent.isMobile && !getCookie('isAppRedirectModalClosed')) {
+      setIsShowAppRedirectModal(true)
+    }
   }, [])
 
   const handleVerifyEmailClick = async () => {
@@ -70,6 +79,11 @@ const Layout = ({ children, className }: LayoutProps) => {
     setCookieWithExpiry('isVerifyEmailModalClosed', true, 3600) // cookie expires to renable auto show modal after 1 hour
   }
 
+  const handleAppRedirectModal = () => {
+    setIsShowAppRedirectModal(false)
+    setCookieWithExpiry('isAppRedirectModalClosed', true, 1800) // cookie expires to renable auto show modal after 30 minutes
+  }
+
   return (
     <div className={classNamesCombined([styles.container, className])}>
       {isAuthenticated && !isEmailVerified && (
@@ -90,6 +104,10 @@ const Layout = ({ children, className }: LayoutProps) => {
         email={isAuthenticated && userCookie ? userCookie.email : ''}
         isShowModal={isShowModal}
         handleModal={handleVerifyEmailModal}
+      />
+      <ModalAppRedirect
+        isShowModal={isShowAppRedirectModal}
+        handleModal={handleAppRedirectModal}
       />
     </div>
   )

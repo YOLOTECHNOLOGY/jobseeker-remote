@@ -247,9 +247,11 @@ const JobDetail = ({
                   {selectedJob?.job_title}
                 </Text>
               </Link>
-              <Text textStyle='lg' className={styles.JobDetailCompany}>
-                {selectedJob?.company?.name}
-              </Text>
+              <Link to={companyUrl}>
+                <Text textStyle='lg' className={styles.JobDetailCompany}>
+                  {selectedJob?.company?.name}
+                </Text>
+              </Link>
               {selectedJob?.is_featured && <JobTag tag='Featured' tagType='featured' />}
               {selectedJob?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
               <JobTag tag={selectedJob?.job_type_value} />

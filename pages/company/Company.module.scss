@@ -79,6 +79,13 @@
   &Location {
     line-height: 1.3;
   }
+
+  &Link {
+    &:hover {
+      color: $primaryBlue;
+      text-decoration: underline;
+    }
+  }
 }
 
 .companySection {
