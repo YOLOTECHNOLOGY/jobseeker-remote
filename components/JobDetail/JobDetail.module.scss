@@ -353,3 +353,43 @@
     margin-left: 40px;
   }
 }
+
+.JobDetailRecruiter {
+  margin-top: 48px;
+
+  &Info {
+    display: flex;
+    margin-top: 16px;
+  }
+
+  &Name {
+    display: flex;
+  }
+
+  &Content {
+    img {
+      margin-right: 4px !important;
+    }
+    
+    span {
+      display: block;
+      margin-top: 8px;
+    }
+  }
+
+  &InfoImage {
+    height: 52px;
+    width: 52px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 20px;
+  }
+
+  &InfoText {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
