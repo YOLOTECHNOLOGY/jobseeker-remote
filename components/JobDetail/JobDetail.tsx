@@ -23,6 +23,7 @@ import QuickApplyModal from 'components/QuickApplyModal'
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
+import Dropdown from '../Dropdown'
 
 /* Helpers */
 import { getCookie, setCookie } from 'helpers/cookies'
@@ -45,7 +46,6 @@ import {
   TelecommunicationAllowanceIcon,
   TransportAllowanceIcon,
   OtherAllowancesIcon,
-  MoreIcon,
   ExpireIcon,
   LocationPinIcon,
   RateIcon,
@@ -94,7 +94,6 @@ const JobDetail = ({
   const userCookie = getCookie('user') || null
   const authCookie = getCookie('accessToken') || null;
 
-  const [jobDetailOption, setJobDetailOption] = useState(false)
   const [isSaveClicked, setIsSaveClicked] = useState(false)
   const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
   const [isSavedJob, setIsSavedJob] = useState(false)
@@ -106,7 +105,6 @@ const JobDetail = ({
 
   useEffect(() => {
     setIsSavedJob(selectedJob?.is_saved)
-    setJobDetailOption(false)
   }, [selectedJob])
 
   useEffect(() => {
@@ -199,51 +197,42 @@ const JobDetail = ({
             <div>
               <div
                 className={styles.JobDetailOptionImage}
-                onClick={() => setJobDetailOption(!jobDetailOption)}
               >
-                <img src={MoreIcon} width='5' height='20' />
+                <Dropdown>
+                    {selectedJob?.status_key === 'active' && (
+                      <>
+                        <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
+                          <Text textStyle='lg'>View in new tab</Text>
+                        </Link>
+                        <div
+                          className={styles.JobDetailOptionItem}
+                          onClick={() => {
+                            setIsShowReportJob(true)
+                          }}
+                        >
+                          <Text textStyle='lg'>Report job</Text>
+                        </div>
+                      </>
+                    )}
+                    {isCategoryApplied && !checkHasApplicationWithdrawn() && (
+                      <div
+                        className={styles.JobDetailOptionItem}
+                        onClick={() => setIsShowModalWithdrawApplication(true)}
+                      >
+                        <Text textStyle='lg'>Withdraw Application</Text>
+                      </div>
+                    )}
+
+                    <div
+                      className={styles.JobDetailOptionItem}
+                      onClick={() => setIsShowModalShare(true)}
+                    >
+                      <Text textStyle='lg'>Share this job</Text>
+                    </div>
+                </Dropdown>
               </div>
 
               {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
-              {jobDetailOption && (
-                <div className={styles.JobDetailOptionList}>
-                  {selectedJob?.status_key === 'active' && (
-                    <>
-                      <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
-                        <Text textStyle='lg'>View in new tab</Text>
-                      </Link>
-                      <div
-                        className={styles.JobDetailOptionItem}
-                        onClick={() => {
-                          setIsShowReportJob(true)
-                          setJobDetailOption(false)
-                        }}
-                      >
-                        <Text textStyle='lg'>Report job</Text>
-                      </div>
-                    </>
-                  )}
-                  {isCategoryApplied && !checkHasApplicationWithdrawn() && (
-                    <div
-                      className={styles.JobDetailOptionItem}
-                      onClick={() => setIsShowModalWithdrawApplication(true)}
-                    >
-                      <Text textStyle='lg'>Withdraw Application</Text>
-                    </div>
-                  )}
-
-                  <div
-                    className={styles.JobDetailOptionItem}
-                    onClick={() => setIsShowModalShare(true)}
-                  >
-                    <Text textStyle='lg'>Share this job</Text>
-                  </div>
-
-                  {/* <div className={styles.JobDetailOptionItem} onClick={() => console.log('View Resume')}>
-                    <Text textStyle='lg'>View Resume</Text>
-                  </div> */}
-                </div>
-              )}
             </div>
             <div
               className={styles.JobDetailImage}

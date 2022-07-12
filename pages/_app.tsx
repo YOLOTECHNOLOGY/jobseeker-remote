@@ -61,7 +61,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         setItem('utmCampaign', JSON.stringify(utmCampaignObj))
       }
     }
-    const handleRouteComplete = (url) => {
+    const handleRouteComplete = () => {
       setIsPageLoading(false);
     }
     const handleStart = () => {
