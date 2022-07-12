@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux'
 
 /* Vendors */
 import { useRouter } from 'next/router'
@@ -107,6 +108,8 @@ const JobListSection = ({
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
 
+  const filterJobPayload = useSelector((store: any) => store.job.jobList.payload)
+
   useEffect(() => {
     setIsUserAuthenticated(accessToken ? true : false)
     window.addEventListener('scroll', updateScrollPosition)
@@ -130,47 +133,27 @@ const JobListSection = ({
   }
 
   const handleCreateJobAlertData = (email) => {
-    const { query } = router
 
-    createJobAlert({
+    const createJobAlertPayload = {
       email: email,
-      keyword: formatKeywordAndLocation(query?.keyword, 'keyword'),
-      location_key: formatKeywordAndLocation(query?.keyword, 'location'),
-      job_category_key: query?.category ? query?.category : 'all',
-      industry_key: query?.industry ? formatToUnderscore(query?.industry) : 'all',
-      xp_lvl_key: query?.workExperience ? formatToReplace(query?.workExperience, 'to') : 'all',
-      degree_key: query?.qualification ? formatToUnderscore(query?.qualification) : 'all',
-      job_type_key: query?.jobType ? formatToReplace(query?.jobType, '_'): 'all',
-      salary_range_key: query?.salary ? formatToReplace(query?.salary, 'to') : 'all',
-      is_company_verified: 1,
-      frequency_id: 1
-    })
-  }
+      frequency_id: 1,
+      is_company_verified: 'all',
+      keyword: filterJobPayload?.query ? filterJobPayload.query : 'all',
+      location_key: filterJobPayload?.location ? filterJobPayload.location : 'all',
+      job_category_key: filterJobPayload?.category ? filterJobPayload.category : 'all',
+      industry_key: filterJobPayload?.industry ? filterJobPayload.industry : 'all',
+      xp_lvl_key: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
+      degree_key: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',
+      job_type_key: filterJobPayload?.jobType ? filterJobPayload.jobType : 'all',
+      salary_range_key: filterJobPayload?.salary ? filterJobPayload.salary : 'all',
+    }
 
-  const formatToUnderscore = (data) => {
-    return data.toLowerCase().replace(/ /g, '_')
-  }
-
-  const formatToReplace = (data, replacedTo) => {
-    return formatToUnderscore(data).replace(/-/g, replacedTo)
+    createJobAlert(createJobAlertPayload)
   }
 
   const handleCreateJobAlert = (email?:any) => {
     handleCreateJobAlertData(email)
     setIsShowModalEnableJobAlerts(true)
-  }
-
-  const formatKeywordAndLocation = (data, keyword) => {
-    let results = []
-    if (data.includes('jobs-in')) {
-      results = data.split('-jobs-in-')
-    }
-
-    if (keyword === 'keyword') {
-      if (results[0]) return results[0]
-      return data.split('-jobs')[0]
-    }
-    if (keyword === 'location') return results[1] ? results[1].replace(/-/g, '_') : 'all'
   }
 
   const updateScrollPosition = () => {
