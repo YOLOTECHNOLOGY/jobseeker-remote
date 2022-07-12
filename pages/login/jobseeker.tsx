@@ -146,6 +146,8 @@ const LoginJobseeker = () => {
             defaultValue={login}
             autoComplete='off'
             onChange={(e) => setLogin(e.target.value)}
+            isSubmitOnEnter={true}
+            onSubmit={handleLogin}
           />
           {emailError && errorText(emailError)}
 
@@ -173,6 +175,8 @@ const LoginJobseeker = () => {
                 </InputAdornment>
               ),
             }}
+            isSubmitOnEnter={true}
+            onSubmit={handleLogin}
           />
           {passwordError && errorText(passwordError)}
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 
 /* Vendors */
 import { useRouter } from 'next/router'
-import slugify from 'slugify'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 
@@ -181,13 +180,6 @@ const JobListSection = ({
     }
   }
 
-  const handleFormatWindowUrl = (pathname, name, id) => {
-    if (typeof window !== 'undefined') {
-      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!#:/@]/g })}-${id}`
-    }
-    return ''
-  }
-
   const emptyResult = () => {
     return (
       <React.Fragment>
@@ -196,9 +188,6 @@ const JobListSection = ({
       </React.Fragment>
     )
   }
-
-  const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
-  const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
   return (
     <React.Fragment>
@@ -269,7 +258,7 @@ const JobListSection = ({
                   status={job.status_key}
                   selectedId={selectedJobId}
                   handleSelectedId={() => {
-                    handleSelectedJobId(job.id, job.job_title)
+                    handleSelectedJobId(job.id, job.job_url)
                   }}
                 />
               ))}
@@ -291,8 +280,8 @@ const JobListSection = ({
                 setIsShowModalShare={setIsShowModalShare}
                 setIsShowReportJob={setIsShowReportJob}
                 isSticky={isSticky}
-                jobDetailUrl={jobDetailUrl}
-                companyUrl={companyUrl}
+                jobDetailUrl={selectedJob?.['job_url']}
+                companyUrl={selectedJob?.['company']?.['company_url']}
                 handlePostSaveJob={handlePostSaveJob}
                 handleDeleteSavedJob={handleDeleteSavedJob}
                 config={config}
@@ -347,7 +336,7 @@ const JobListSection = ({
         postReportResponse={postReportResponse}
       />
       <ModalShare
-        jobDetailUrl={jobDetailUrl}
+        jobDetailUrl={selectedJob?.['job_url']}
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}
       />

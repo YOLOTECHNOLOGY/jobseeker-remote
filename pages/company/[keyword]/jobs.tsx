@@ -117,6 +117,8 @@ const CompanyJobsProfile = (props: any) => {
                     className={styles.companyJobsSearchTitle}
                     size='small'
                     label='Search for job title'
+                    isSubmitOnEnter={true}
+                    onSubmit={handleSearchCompanyJobSearch}
                   />
                 </div>
                 <div className={styles.companyJobsSearchRight}>
@@ -150,11 +152,11 @@ const CompanyJobsProfile = (props: any) => {
                     <div className={styles.companyJobsList}>
                       {companyJobs.map((companyJob) => {
                         const company = {
-                          id: companyJob.id,
                           title: companyJob.job_title,
                           location: companyJob.job_location,
                           salary: companyJob.salary_range_value,
                           availability: companyJob.job_type,
+                          jobUrl: companyJob.job_url
                         }
 
                         return <CompanyJobsCard {...company} key={companyJob.id} />
