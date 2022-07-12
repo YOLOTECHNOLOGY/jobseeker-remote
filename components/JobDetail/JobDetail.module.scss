@@ -123,6 +123,10 @@
   &Company {
     display: block;
     margin: 8px 0 13px;
+    &:hover {
+      color: $primaryBlue;
+      text-decoration: underline;
+    }
   }
 
   &ButtonsWrapper {
