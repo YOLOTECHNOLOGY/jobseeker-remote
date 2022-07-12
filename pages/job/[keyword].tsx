@@ -114,8 +114,8 @@ const Job = ({
   const [searchValue, setSearchValue] = useState('')
   const [isShowModal, setIsShowModal] = useState(false)
 
-  const [jobDetailUrl, setJobDetailUrl] = useState('/')
-  const [companyUrl, setCompanyUrl] = useState('/')
+  const jobDetailUrl = jobDetail?.['job_url'] || '/'
+  const companyUrl = jobDetail?.['company']?.['company_url'] || '/'
   const [recommendedCourses, setRecommendedCourses] = useState([])
   const [similarJobs, setSimilarJobs] = useState(null)
   const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
@@ -136,15 +136,6 @@ const Job = ({
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
 
   useEffect(() => {
-    setJobDetailUrl(handleFormatWindowUrl('job', jobDetail?.['job_title'], jobDetail?.['id']))
-    setCompanyUrl(
-      handleFormatWindowUrl(
-        'company',
-        jobDetail?.['company']?.['name'],
-        jobDetail?.['company']?.['id']
-      )
-    )
-
     handleFetchRecommendedCourses()
     handleFetchSimilarJobs()
   }, [jobDetail])
@@ -157,16 +148,6 @@ const Job = ({
   useEffect(() => {
     if (similarJobsResponse) setSimilarJobs(similarJobsResponse)
   }, [similarJobsResponse])
-
-  const handleFormatWindowUrl = (pathname, name, id) => {
-    if (typeof window !== 'undefined') {
-      return `${window.location.origin}/${pathname}/${slugify(name || '', {
-        lower: true,
-        remove: /[*+~.()'"!#:/@]/g,
-      })}-${id}`
-    }
-    return ''
-  }
 
   const handleBenefitIcon = (benefit) => {
     const Icon = `${benefit.replace(/ /g, '')}Icon`
@@ -229,9 +210,9 @@ const Job = ({
     }
   }
 
-  const handleRedirectToJob = (jobTitle, jobId) => {
+  const handleRedirectToJob = (jobUrl) => {
     if (typeof window !== 'undefined') {
-      window.open(handleFormatWindowUrl('job', jobTitle, jobId), '_blank')
+      window.open(jobUrl, '_blank')
     }
   }
 
@@ -691,7 +672,7 @@ const Job = ({
             <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
               About the company
             </Text>
-            <Link to={companyUrl || '/'} className={styles.aboutCompanyTitle}>
+            <Link to={companyUrl} className={styles.aboutCompanyTitle}>
               <Text bold textStyle='xl' textColor='primaryBlue'>
                 {jobDetail?.company?.name}
               </Text>
@@ -726,11 +707,11 @@ const Job = ({
                   similarJobs.map((job) => (
                     <div
                       key={job.id}
-                      onClick={() => handleRedirectToJob(job.truncated_job_title, job.id)}
+                      onClick={() => handleRedirectToJob(job.job_url)}
                       className={styles.JobDetailSidebarCard}
                     >
                       <Link
-                        to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
+                        to={job?.job_url}
                         external
                       >
                         <img
@@ -766,7 +747,7 @@ const Job = ({
                         </Text>
                       )}
                       <Link
-                        to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
+                        to={job?.job_url}
                         className={styles.JobDetailSidebarCardApply}
                       >
                         {job.published_at && (
@@ -776,7 +757,7 @@ const Job = ({
                         )}
                       </Link>
                       <Link
-                        to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
+                        to={job?.job_url}
                         className={styles.JobDetailSidebarCardApply}
                       >
                         <Text
@@ -924,7 +905,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobDetail = storeState.job?.jobDetail
   const appliedJobDetail = storeState.job?.appliedJobDetail
   const config = storeState.config.config.response
-  console.log('jobDetail', jobDetail)
+
   if (jobDetail || appliedJobDetail) {
     if (jobDetail.error || appliedJobDetail.error) {
       return {
@@ -938,6 +919,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       categories,
       full_address: fullAddress,
       location,
+      job_url: jobUrl
     } = jobDetail?.response?.id ? jobDetail?.response : appliedJobDetail?.response?.job
     let categoryMetaText = ''
     categories.forEach((el) => {
@@ -958,7 +940,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         accessToken,
         seoMetaTitle,
         seoMetaDescription,
-        seoCanonicalUrl: `/job/${keywordQuery}`,
+        seoCanonicalUrl: jobUrl
       },
     }
   }

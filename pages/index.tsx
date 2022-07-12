@@ -65,6 +65,7 @@ type configObject = {
 type companyObject = {
   id: number
   logoUrl: string
+  companyUrl: string
   name: string
 }
 
@@ -357,7 +358,7 @@ const Home = (props: HomeProps) => {
                       <Link
                         key={company.id}
                         className={styles.topCompaniesLogo}
-                        to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
+                        to={`${company.companyUrl}/jobs`}
                         external
                       >
                         <Image
@@ -386,7 +387,7 @@ const Home = (props: HomeProps) => {
                       <Link
                         key={company.id}
                         className={styles.topCompaniesLogo}
-                        to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
+                        to={`${company.companyUrl}/jobs`}
                         external
                       >
                         <Image src={company.logoUrl} alt={company.name} width='60' height='60' />
@@ -860,8 +861,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
     )
   const topCompanies = featuredCompanies?.map((featuredCompany) => {
     const logoUrl = featuredCompany.logo_url
+    const companyUrl = featuredCompany.company_url
     delete featuredCompany.logo_url
-    return { ...featuredCompany, logoUrl }
+    delete featuredCompany.companyUrl
+    return { ...featuredCompany, logoUrl, companyUrl }
   })
   return {
     props: {

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import slugify from 'slugify'
 import classNames from 'classnames/bind'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
@@ -228,7 +227,7 @@ const CompanyDetail = (props: any) => {
                           Company Culture
                         </Text>
                         <Link
-                          to={`/company/${slugify(company.name)}-${company.id}/life`}
+                          to={`${company?.company_url}/life`}
                           className={classNames(
                             styles.companyCultureHeadingLink,
                             styles.companyCultureHeadingLinkTop
@@ -247,7 +246,7 @@ const CompanyDetail = (props: any) => {
                         ))}
                       </div>
                       <Link
-                        to={`/company/${slugify(company.name)}-${company.id}/life`}
+                        to={`${company?.company_url}/life`}
                         className={classNames(
                           styles.companyCultureHeadingLink,
                           styles.companyCultureHeadingLinkBottom
@@ -266,7 +265,7 @@ const CompanyDetail = (props: any) => {
                           Employee Benefits
                         </Text>
                         <Link
-                          to={`/company/${slugify(company.name)}-${company.id}/life`}
+                          to={`${company?.company_url}/life`}
                           className={classNames(
                             styles.companyCultureHeadingLink,
                             styles.companyCultureHeadingLinkTop
@@ -285,7 +284,7 @@ const CompanyDetail = (props: any) => {
                         ))}
                       </div>
                       <Link
-                        to={`/company/${slugify(company.name)}-${company.id}/life`}
+                        to={`${company?.company_url}/life`}
                         className={classNames(
                           styles.companyCultureHeadingLink,
                           styles.companyCultureHeadingLinkBottom
@@ -355,7 +354,7 @@ const CompanyDetail = (props: any) => {
               </Text>
               {companyJobs?.length > 0 && (
                 <Link
-                  to={`/company/${slugify(company.name)}-${company.id}/jobs`}
+                  to={`${company?.company_url}/jobs`}
                   className={styles.companyCultureHeadingLink}
                 >
                   <Text textColor='primaryBlue' textStyle='base'>
@@ -410,11 +409,11 @@ const CompanyDetail = (props: any) => {
                     <div className={styles.companyCultureJobsList}>
                     {companyJobs.map((companyJob) => {
                       const company = {
-                        id: companyJob.id,
                         title: companyJob.job_title,
                         location: companyJob.job_location,
                         salary: companyJob.salary_range_value,
                         availability: companyJob.job_type,
+                        jobUrl: companyJob.job_url
                       }
 
                       return <CompanyJobsCard {...company} key={companyJob.id} />
