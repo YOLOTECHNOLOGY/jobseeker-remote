@@ -34,6 +34,7 @@ const Dropdown = ({ children }: DropdownProps) => {
           vertical: 'top',
           horizontal: 'right',
         }}
+        disableScrollLock={true}
       >
         {children}
       </Menu>
