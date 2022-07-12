@@ -31,10 +31,10 @@ import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWit
 import MaterialLocationField from 'components/MaterialLocationField'
 import ModalVerifyEmail from 'components/ModalVerifyEmail'
 // import AdSlot from 'components/AdSlot'
-
 import ModalShare from 'components/ModalShare'
 import ModalReportJob from 'components/ModalReportJob'
 import QuickApplyModal from 'components/QuickApplyModal'
+import Dropdown from '../../components/Dropdown'
 
 /* Helpers */
 import { getCookie, setCookie } from 'helpers/cookies'
@@ -76,7 +76,6 @@ import {
   TelecommunicationAllowanceIcon,
   OtherAllowancesIcon,
   ExpireIcon,
-  MoreIcon,
   RateIcon,
   LocationPinIcon,
   DefaultAvatar,
@@ -109,7 +108,6 @@ const Job = ({
   const [isSavedJob, setIsSavedJob] = useState(jobDetail?.is_saved)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
-  const [jobDetailOption, setJobDetailOption] = useState(false)
   const [suggestionList, setSuggestionList] = useState([])
   const [searchValue, setSearchValue] = useState('')
   const [isShowModal, setIsShowModal] = useState(false)
@@ -376,27 +374,22 @@ const Job = ({
           <div className={styles.JobDetailPrimary}>
             <div
               className={styles.JobDetailPrimaryOptions}
-              onClick={() => setJobDetailOption(!jobDetailOption)}
             >
-              <img src={MoreIcon} width='20' height='20' />
+              <Dropdown>
+                  <div
+                    className={styles.JobDetailOptionItem}
+                    onClick={() => setIsShowModalShare(true)}
+                  >
+                    <Text textStyle='lg'>Share this job</Text>
+                  </div>
+                  <div
+                    className={styles.JobDetailOptionItem}
+                    onClick={() => setIsShowReportJob(true)}
+                  >
+                    <Text textStyle='lg'>Report job</Text>
+                  </div>
+              </Dropdown>
             </div>
-
-            {jobDetailOption && (
-              <div className={styles.JobDetailOptionList}>
-                <div
-                  className={styles.JobDetailOptionItem}
-                  onClick={() => setIsShowModalShare(true)}
-                >
-                  <Text textStyle='lg'>Share this job</Text>
-                </div>
-                <div
-                  className={styles.JobDetailOptionItem}
-                  onClick={() => setIsShowReportJob(true)}
-                >
-                  <Text textStyle='lg'>Report job</Text>
-                </div>
-              </div>
-            )}
             <div className={styles.JobDetailPrimaryInfo}>
               <img
                 src={jobDetail?.company?.logo}
