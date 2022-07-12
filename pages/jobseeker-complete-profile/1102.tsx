@@ -311,18 +311,6 @@ const Step4 = (props: any) => {
 
   const handleLastStep = () => {
     setIsShowModal(true)
-    const isCreateFreeResume =
-      (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
-    const redirect = router.query?.redirect ? router.query?.redirect : null
-    // setItem('isShowEmailVerification', true)
-
-    if (isCreateFreeResume) {
-      dispatch(generateUserResumeRequest({ redirect, accessToken }))
-    }
-
-    if (!isCreateFreeResume) {
-      dispatch(updateUserCompleteProfileRequest({ currentStep: 5, redirect, accessToken }))
-    }
   }
 
   const handleNextBtn = () => {
@@ -340,6 +328,17 @@ const Step4 = (props: any) => {
 
   const handleCloseModal = () => {
     setIsShowModal(false)
+    const isCreateFreeResume =
+      (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
+    const redirect = router.query?.redirect ? router.query?.redirect : null
+
+    if (isCreateFreeResume) {
+      dispatch(generateUserResumeRequest({ redirect, accessToken }))
+    }
+
+    if (!isCreateFreeResume) {
+      dispatch(updateUserCompleteProfileRequest({ currentStep: 5, redirect, accessToken }))
+    }
   }
 
   return (
