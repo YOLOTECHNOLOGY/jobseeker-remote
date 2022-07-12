@@ -1,5 +1,6 @@
 import { take, fork, call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
+import * as fbq from 'lib/fpixel'
 
 import { setCookie } from 'helpers/cookies'
 import { setItem } from 'helpers/localStorage'
@@ -58,12 +59,17 @@ function* registerJobSeekerReq(actions) {
     if (response.status >= 200 && response.status < 300) {
       removeUtmCampaign()
       
+      yield put(registerJobseekerSuccess(response.data))
+
       if (window !== 'undefined' && window.gtag) {
         yield window.gtag('event', 'conversion', {
           send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
         })
       }
-      yield put(registerJobseekerSuccess(response.data))
+
+      if (window !== 'undefined' && window.fbq) {
+        yield fbq.event('CompleteRegistration', {'source': 'sign_up'})
+      }
 
       const registeredData = response.data.data
       const userCookie = {
