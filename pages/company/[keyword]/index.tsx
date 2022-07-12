@@ -155,7 +155,7 @@ const CompanyDetail = (props: any) => {
                     <Text textStyle='xl' bold>
                       Website:{' '}
                     </Text>
-                    <Text textStyle='lg'>{company.website}</Text>
+                    <Text textStyle='lg'><a className={styles.companyOverviewLink} href={company.website}>{company.website}</a></Text>
                   </div>
                 )}
               </div>
