@@ -139,13 +139,13 @@ const JobListSection = ({
       frequency_id: 1,
       is_company_verified: 'all',
       keyword: filterJobPayload?.query ? filterJobPayload.query : 'all',
-      location_key: filterJobPayload?.location ? filterJobPayload.location : 'all',
-      job_category_key: filterJobPayload?.category ? filterJobPayload.category : 'all',
-      industry_key: filterJobPayload?.industry ? filterJobPayload.industry : 'all',
-      xp_lvl_key: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
-      degree_key: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',
-      job_type_key: filterJobPayload?.jobType ? filterJobPayload.jobType : 'all',
-      salary_range_key: filterJobPayload?.salary ? filterJobPayload.salary : 'all',
+      location_values: filterJobPayload?.location ? filterJobPayload.location : 'all',
+      job_category_values: filterJobPayload?.category ? filterJobPayload.category : 'all',
+      industry_values: filterJobPayload?.industry ? filterJobPayload.industry : 'all',
+      xp_lvl_values: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
+      degree_values: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',
+      job_type_values: filterJobPayload?.jobType ? filterJobPayload.jobType : 'all',
+      salary_range_values: filterJobPayload?.salary ? filterJobPayload.salary : 'all',
     }
 
     createJobAlert(createJobAlertPayload)
