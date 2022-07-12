@@ -66,6 +66,10 @@ function* quickApplyJobReq(action) {
           send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
         })
       }
+      
+      if (window !== 'undefined' && window.fbq) {
+        yield call(fbq.event('CompleteRegistration'))
+      }
 
       const registeredData = response.data.data
       
