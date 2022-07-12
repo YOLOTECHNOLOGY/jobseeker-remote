@@ -28,10 +28,12 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialDatePicker from 'components/MaterialDatePicker'
+import ModalVerifyEmail from 'components/ModalVerifyEmail'
 
 /* Helpers*/
 import { getCountryList, getLocationList, getDegreeList } from 'helpers/jobPayloadFormatter'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
+import { getCookie } from 'helpers/cookies'
 import { getItem } from 'helpers/localStorage'
 
 // Images
@@ -55,7 +57,13 @@ const Step4 = (props: any) => {
   const countryList = getCountryList(config)
   const locList = getLocationList(config)
 
+  const authCookie = getCookie('accessToken') || null
+  const userCookie = getCookie('user') || null
+
   const [isEditing, setIsEditing] = useState(false)
+
+  const [isShowModal, setIsShowModal] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const [school, setSchool] = useState('')
   const [degree, setDegree] = useState('')
@@ -101,6 +109,10 @@ const Step4 = (props: any) => {
       </>
     )
   }
+
+  useEffect(() => {
+    setIsAuthenticated(authCookie ? true : false)
+  })
 
   useEffect(() => {
     dispatch(fetchUserEducationRequest({ accessToken }))
@@ -298,9 +310,11 @@ const Step4 = (props: any) => {
   }
 
   const handleLastStep = () => {
+    setIsShowModal(true)
     const isCreateFreeResume =
       (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
     const redirect = router.query?.redirect ? router.query?.redirect : null
+    // setItem('isShowEmailVerification', true)
 
     if (isCreateFreeResume) {
       dispatch(generateUserResumeRequest({ redirect, accessToken }))
@@ -322,6 +336,10 @@ const Step4 = (props: any) => {
     }
 
     setShowErrorToComplete(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsShowModal(false)
   }
 
   return (
@@ -608,6 +626,12 @@ const Step4 = (props: any) => {
           </div>
         </React.Fragment>
       )}
+
+      <ModalVerifyEmail
+        email={isAuthenticated && userCookie ? userCookie.email : ''}
+        isShowModal={isShowModal}
+        handleModal={handleCloseModal}
+      />
     </OnBoardLayout>
   )
 }

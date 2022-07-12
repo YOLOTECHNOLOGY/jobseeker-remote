@@ -34,7 +34,11 @@ const Layout = ({ children, className }: LayoutProps) => {
     setIsAuthenticated(authCookie ? true : false)
     setIsEmailVerified(userCookie?.is_email_verify)
     const isVerifyEmailModalClosed = getCookie('isVerifyEmailModalClosed')
-    setIsShowModal(!isVerifyEmailModalClosed && !!authCookie && !!!userCookie.is_email_verify)
+    // setIsShowModal(!isVerifyEmailModalClosed && !!authCookie && !!!userCookie.is_email_verify)
+    
+    if (userCookie && authCookie && !isVerifyEmailModalClosed) {
+      setIsShowModal(false)
+    }
   }, [])
 
   const handleVerifyEmailClick = async () => {

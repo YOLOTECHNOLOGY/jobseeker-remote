@@ -191,7 +191,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
         <b>{email}</b> has been successfully verified. You will receive application updates via
         email.
       </Text>
-      <MaterialButton
+      {/* <MaterialButton
         className={styles.VerifiedEmailFormButton}
         capitalize
         size='large'
@@ -205,7 +205,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
         <Text textColor='white' bold>
           Continue {timerCount > 1 ? '(' + (timerCount - 1) + ')' : ''}
         </Text>
-      </MaterialButton>
+      </MaterialButton> */}
     </div>
   )
 
@@ -213,10 +213,8 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
     <Modal
       headerTitle='Verify your email'
       showModal={isShowModal}
-      handleModal={() => {
-        handleModal()
-        if (isOTPVerified) router.reload()
-      }}
+      handleModal={handleModal}
+      isOTPVerified={isOTPVerified}
     >
       {modalContent}
     </Modal>

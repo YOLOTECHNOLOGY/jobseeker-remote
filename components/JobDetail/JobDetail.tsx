@@ -172,8 +172,11 @@ const JobDetail = ({
     }
   }
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (isOTPVerified) => {
     setIsShowModal(false)
+    if (isOTPVerified) {
+      router.push(applyJobLink)
+    }
   }
 
   const isCategoryApplied = category === 'applied'
@@ -523,7 +526,6 @@ const JobDetail = ({
         email={userCookie ? userCookie.email : ''}
         isShowModal={isShowModal}
         handleModal={handleCloseModal}
-        redirectLink={applyJobLink}
       />
     </React.Fragment>
   )
