@@ -921,9 +921,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     categoryMetaText = categoryMetaText.slice(0, categoryMetaText.length - 2)
     categoryMetaText += ' - related job opportunities'
     const seoMetaTitle = `${name} is hiring ${jobTitle} - ${jobId} | Bossjob`
-    const seoMetaDescription = `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${
+    const seoMetaDescription = encodeURI(`Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${
       location.value
-    }, ${fullAddress.split(',').pop()} on Bossjob now!`
+    }, ${fullAddress.split(',').pop()} on Bossjob now!`)
 
     return {
       props: {
