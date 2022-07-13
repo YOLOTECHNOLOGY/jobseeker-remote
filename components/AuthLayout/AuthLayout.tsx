@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 /* Vendors */
 import classNamesCombined from 'classnames/bind'
+import { useUserAgent } from 'next-useragent'
 
 /* Components */
 import Link from 'components/Link'
 import Text from 'components/Text'
+import ModalAppRedirect from 'components/ModalAppRedirect'
+
+/* Helpers */
+import { getCookie, setCookieWithExpiry } from 'helpers/cookies'
 
 /* Styles */
 import styles from './AuthLayout.module.scss'
@@ -32,6 +37,20 @@ const AuthLayout = ({
   ctaSignup,
   isLogin,
 }: AuthLayoutProps) => {
+  const [isShowAppRedirectModal, setIsShowAppRedirectModal] = useState(false)
+
+  useEffect(() => {
+    const userAgent = useUserAgent(window.navigator.userAgent)
+    if (userAgent.isMobile && !getCookie('isAppRedirectModalClosed')) {
+      setIsShowAppRedirectModal(true)
+    }
+  }, [])
+  
+  const handleAppRedirectModal = () => {
+    setIsShowAppRedirectModal(false)
+    setCookieWithExpiry('isAppRedirectModalClosed', true, 1800) // cookie expires to renable auto show modal after 30 minutes
+  }
+
   const displayCTA = () => {
     if (ctaSignup) {
       return (
@@ -100,6 +119,11 @@ const AuthLayout = ({
         </div>
         <div className={styles.AuthCTA}>{displayCTA()}</div>
       </div>
+
+      <ModalAppRedirect
+        isShowModal={isShowAppRedirectModal}
+        handleModal={handleAppRedirectModal}
+      />
     </div>
   )
 }

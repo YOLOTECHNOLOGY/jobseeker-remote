@@ -82,6 +82,9 @@ const Layout = ({ children, className }: LayoutProps) => {
   const handleAppRedirectModal = () => {
     setIsShowAppRedirectModal(false)
     setCookieWithExpiry('isAppRedirectModalClosed', true, 1800) // cookie expires to renable auto show modal after 30 minutes
+    
+    // Enables scrolling again
+    document.documentElement.classList.remove('modal-active')
   }
 
   return (
