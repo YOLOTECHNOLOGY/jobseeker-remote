@@ -765,7 +765,6 @@ const Job = ({
                   {similarJobs.map((job) => (
                     <div
                       key={job.id}
-                      onClick={() => handleRedirectToJob(job.job_url)}
                       className={styles.jobDetailSidebarCard}
                     >
                       <Link to={job?.job_url} external>
