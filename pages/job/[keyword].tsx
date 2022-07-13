@@ -372,39 +372,22 @@ const Job = ({
           <div className={styles.jobDetailPrimary}>
             <div
               className={styles.jobDetailPrimaryOptions}
-              onClick={() => setJobDetailOption(!jobDetailOption)}
             >
               <Dropdown>
                   <div
-                    className={styles.JobDetailOptionItem}
+                    className={styles.jobDetailOptionItem}
                     onClick={() => setIsShowModalShare(true)}
                   >
                     <Text textStyle='lg'>Share this job</Text>
                   </div>
                   <div
-                    className={styles.JobDetailOptionItem}
+                    className={styles.jobDetailOptionItem}
                     onClick={() => setIsShowReportJob(true)}
                   >
                     <Text textStyle='lg'>Report job</Text>
                   </div>
               </Dropdown>
             </div>
-            {jobDetailOption && (
-              <div className={styles.jobDetailOptionList}>
-                <div
-                  className={styles.jobDetailOptionItem}
-                  onClick={() => setIsShowModalShare(true)}
-                >
-                  <Text textStyle='lg'>Share this job</Text>
-                </div>
-                <div
-                  className={styles.jobDetailOptionItem}
-                  onClick={() => setIsShowReportJob(true)}
-                >
-                  <Text textStyle='lg'>Report job</Text>
-                </div>
-              </div>
-            )}
             <img
               src={jobDetail?.company?.logo}
               className={styles.jobDetailPrimaryInfoImage}
@@ -485,7 +468,14 @@ const Job = ({
               {jobDetail?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
               <JobTag tag={jobDetail?.job_type_value} />
             </div>
-            <Text textStyle='base' textColor='darkgrey' className={classNamesCombined([styles.jobDetailPostedAt, breakpointStyles.hideOnMobileAndTablet])}>
+            <Text
+              textStyle='base'
+              textColor='darkgrey'
+              className={classNamesCombined([
+                styles.jobDetailPostedAt,
+                breakpointStyles.hideOnMobileAndTablet,
+              ])}
+            >
               Posted on {jobDetail?.published_at}
             </Text>
           </div>
@@ -775,13 +765,10 @@ const Job = ({
                   {similarJobs.map((job) => (
                     <div
                       key={job.id}
-                      onClick={() => handleRedirectToJob(job.truncated_job_title, job.id)}
+                      onClick={() => handleRedirectToJob(job.job_url)}
                       className={styles.jobDetailSidebarCard}
                     >
-                      <Link
-                        to={job?.job_url}
-                        external
-                      >
+                      <Link to={job?.job_url} external>
                         <img
                           src={job?.company_logo}
                           className={styles.jobDetailSidebarCardImage}
@@ -789,7 +776,7 @@ const Job = ({
                         />
                       </Link>
                       <Link
-                        to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
+                        to={`${handleRedirectToJob(job.job_url)}`}
                         aTag
                         external
                       >
@@ -821,7 +808,7 @@ const Job = ({
                         </Text>
                       )}
                       <Link
-                        to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
+                        to={`${handleRedirectToJob(job.job_url)}`}
                         className={styles.jobDetailSidebarCardApply}
                       >
                         {job.published_at && (
@@ -831,7 +818,7 @@ const Job = ({
                         )}
                       </Link>
                       <Link
-                        to={`${handleFormatWindowUrl('job', job.truncated_job_title, job.id)}`}
+                        to={`${handleRedirectToJob(job.job_url)}`}
                         className={styles.jobDetailSidebarCardApply}
                       >
                         <Text
