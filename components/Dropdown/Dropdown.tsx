@@ -18,7 +18,7 @@ const Dropdown = ({ children }: DropdownProps) => {
   }
   return (
     <div>
-      <div onClick={handleClick}>
+      <div style={{padding: "4px 12px"}} onClick={handleClick}>
         <img src={MoreIcon} width='5' height='20' />
       </div>
       <Menu
