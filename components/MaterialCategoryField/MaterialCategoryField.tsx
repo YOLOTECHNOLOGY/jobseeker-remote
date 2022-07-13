@@ -94,7 +94,6 @@ const MaterialCategoryField = ({
   const [listOptions, setListOptions] = useState(
     list && list.length > 0 ? list : initialListOptions
   )
-  // const [refreshList, setRefreshList] = useState(false)
   const [displayValue, setDisplayValue] = useState<Array<string>>(
     mapValueToGetDisplayValue(value, listOptions)
   )
@@ -108,7 +107,6 @@ const MaterialCategoryField = ({
   useEffect(()=>{
     if (list && list.length > 0 && prevList !== list && !firstRender){
       setListOptions(list)
-      // setRefreshList(true)
     }
   },[list])
 
@@ -133,10 +131,8 @@ const MaterialCategoryField = ({
       if (
         !firstRender &&
         ((value && value.length > 0) || (selectedOptions && selectedOptions.length > 0)) 
-        // && !refreshList
       ){
         onSelect(selectedOptions)
-        // setRefreshList(false)
       }
     }
   }, [listOptions])

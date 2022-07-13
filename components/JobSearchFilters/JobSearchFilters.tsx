@@ -72,6 +72,7 @@ const NavSearchFilter = ({
   const expLvlList = config.inputs.xp_lvls
   const eduLevelList = config.filters.educations
   const jobTypeList = config.inputs.job_types
+  const categoryList = config.inputs.job_category_lists
   const scrollY = useRef(0)
 
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
@@ -87,7 +88,7 @@ const NavSearchFilter = ({
   const isShowFilterClass = cx({
     isShowingEmailAlert: isShowingEmailAlert,
   })
-  const [displayMobileSort, setDisplayMobileSort] = useState(false)
+  const [displayMobileFilters, setDisplayMobileFilters] = useState(false)
 
   useEffect(() => {
     if (moreFilterReset) {
@@ -100,7 +101,7 @@ const NavSearchFilter = ({
     if (Object.keys(urlDefaultValues).length !== 0) {
       reset(urlDefaultValues)
     }
-    setDisplayMobileSort(width < 769 ? true : false)
+    setDisplayMobileFilters(width < 769 ? true : false)
   }, [config, keyword])
 
   const onCloseFilter = () => {
@@ -145,6 +146,26 @@ const NavSearchFilter = ({
       ...data,
       sort: [data.sort || router.query.sort],
     }
+    // sanitize category data -> only pass main options as value to parser if all sub options are selected
+    if (data && data.category) {
+      let category = data.category
+      categoryList.map((mainCategory) => {
+        // if main option is selected, remove all sub option from data
+        category.map((selectedCat) => {
+          if (mainCategory['seo-value'] === selectedCat) {
+            const subOptionToBeRemoved = mainCategory.sub_list.filter((subCat) => {
+              return category.includes(subCat['seo-value'])
+            })
+            category = category.filter(
+              (cat) =>
+                !subOptionToBeRemoved.find((optionToRemove) => optionToRemove['seo-value'] === cat)
+            )
+          }
+        })
+      })
+      updatedData.category = category
+    }
+
     const clearFilter = []
     for (const [key, value] of Object.entries<any>(data)) {
       if (value && value.length === 0) {
@@ -156,17 +177,10 @@ const NavSearchFilter = ({
   }
 
   const handleResetFilter = () => {
-    // setSelectedCategories([])
     onCloseFilter()
     reset({})
     onResetFilter({})
   }
-
-  // const onRemoveProperty = (propertyName, object) => {
-  //   // eslint-disable-next-line
-  //   const { [propertyName]: propertyValue, ...newObject } = { ...object }
-  //   return { ...newObject }
-  // }
 
   const urlFilterParameterBuilder = (data, isClear) => {
     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
@@ -189,6 +203,169 @@ const NavSearchFilter = ({
     )
   }
 
+  // to handle filters that have 2 tier options (main and sub and list)
+  const MainSubFilters = ({
+    title,
+    fieldName,
+    options,
+    defaultOpenState,
+    isNotCollapsible,
+    isColumn,
+  }: SearchFilters) => {
+    const isFilterColumnClass = cx({ searchFilterOptionsColumn: isColumn })
+    const initialListOptions = options.map((data) => {
+      const newSubList = data.sub_list.map((subData) => ({
+        ...subData,
+        isChecked:
+          urlDefaultValues[fieldName]?.includes(subData['seo-value']) ||
+          urlDefaultValues[fieldName]?.includes(data['seo-value']),
+      }))
+      const newList = {
+        ...data,
+        isChecked: urlDefaultValues[fieldName]?.includes(data['seo-value']),
+        sub_list: newSubList,
+      }
+      return newList
+    })
+    const [listOptions, setListOptions] = useState(initialListOptions)
+
+    const onMainSelection = (e, optionData) => {
+      /* find the corresponding option data based on option['seo-value'] && 
+    update the corresponding option data with new isChecked value */
+      const data = listOptions.map((data) => {
+        let newData = { ...data }
+        if (data['seo-value'] === optionData) {
+          const newSubList = data.sub_list.map((subData) => {
+            return {
+              ...subData,
+              isChecked: !data.isChecked,
+            }
+          })
+          newData = {
+            ...newData,
+            isChecked: !data.isChecked,
+            sub_list: newSubList,
+          }
+        }
+        return newData
+      })
+      setListOptions(data)
+    }
+
+    const onSubSelection = (e, optionData) => {
+      /* find the corresponding parent option data based on option['seo-value'] && 
+    update the corresponding parent and sub option data with new isChecked value */
+      const data = listOptions.map((data) => {
+        let newData = { ...data }
+        const newSubList = data.sub_list.map((subListData) => {
+          // if checked === true, set subOption isChecked = true
+          if (e.target.checked) {
+            if (subListData['seo-value'] === optionData) {
+              return {
+                ...subListData,
+                isChecked: true,
+              }
+            } else {
+              return {
+                ...subListData,
+              }
+            }
+          } else {
+            // if checked === false, set subOption isChecked = false
+            if (subListData['seo-value'] === optionData) {
+              return {
+                ...subListData,
+                isChecked: false,
+              }
+            } else {
+              // if main option isChecked is true, set all other option's isChecked = true
+              if (data.isChecked) {
+                return {
+                  ...subListData,
+                  isChecked: true,
+                }
+              } else {
+                return {
+                  ...subListData,
+                }
+              }
+            }
+          }
+        })
+        newData = {
+          ...newData,
+          // if sub option is deselected, deselect main option as well
+          isChecked: !e.target.checked ? e.target.checked : newData.isChecked,
+          sub_list: newSubList,
+        }
+        return newData
+      })
+
+      setListOptions(data)
+    }
+
+    return (
+      <div className={styles.searchFilterSection}>
+        <Accordian
+          chevronIcon
+          paddedContent
+          isNotCollapsible={isNotCollapsible}
+          defaultOpenState={defaultOpenState}
+          title={
+            <Text textStyle='lg' bold>
+              {title}
+            </Text>
+          }
+          className={styles.searchFilterAccordion}
+        >
+          <div className={classNamesCombined([styles.searchFilterOptions, isFilterColumnClass])}>
+            {listOptions.map((option, i) => {
+              const subListOptions = option.sub_list
+              const allSubOptionSelected =
+                subListOptions?.filter((option) => !option.isChecked).length === 0
+              return (
+                <React.Fragment key={option.id}>
+                  {i === 0 && (
+                    // injecting an empty checkbox fixes weird bug where selecting the second checkbox will auto select first checkbox
+                    <label key='empty' style={{ display: 'none' }}>
+                      <input type='checkbox' value={null} {...register(fieldName)} />
+                      <Text textStyle='lg'>Empty</Text>
+                    </label>
+                  )}
+                  <label className={styles.searchFilterOption}>
+                    <input
+                      type='checkbox'
+                      value={option['seo-value']}
+                      checked={option.isChecked || allSubOptionSelected}
+                      onClick={(e) => onMainSelection(e, option['seo-value'])}
+                      {...register(fieldName)}
+                    />
+                    <Text textStyle='lg'>{option.value}</Text>
+                  </label>
+                  {subListOptions.map((subOption) => {
+                    return (
+                      <label key={subOption.id} className={styles.searchFilterOptionSub}>
+                        <input
+                          type='checkbox'
+                          value={subOption['seo-value']}
+                          checked={option.isChecked || subOption.isChecked}
+                          onClick={(e) => onSubSelection(e, subOption['seo-value'])}
+                          {...register(fieldName)}
+                        />
+                        <Text textStyle='lg'>{subOption.value}</Text>
+                      </label>
+                    )
+                  })}
+                </React.Fragment>
+              )
+            })}
+          </div>
+        </Accordian>
+      </div>
+    )
+  }
+
+  // to handle filters that have 1 tier options
   const SearchFilters = ({
     title,
     fieldName,
@@ -197,7 +374,6 @@ const NavSearchFilter = ({
     isNotCollapsible,
     isColumn,
     isRadioButton,
-    hasMainAndSubOption,
   }: SearchFilters) => {
     const isFilterColumnClass = cx({ searchFilterOptionsColumn: isColumn })
 
@@ -216,71 +392,41 @@ const NavSearchFilter = ({
           className={styles.searchFilterAccordion}
         >
           <div className={classNamesCombined([styles.searchFilterOptions, isFilterColumnClass])}>
-            {hasMainAndSubOption
-              ? options.map((option) => {
-                  const subListOptions = option.sub_list
+            {options &&
+              options.map((option, i) => {
+                if (isRadioButton) {
                   return (
-                    <React.Fragment key={option.id}>
-                      <label className={styles.searchFilterOption}>
-                        <input
-                          type='checkbox'
-                          value={option['seo-value']}
-                          // onClick={(e) => handleMainClick(e, option)}
-                          {...register(fieldName)}
-                        />
-                        <Text textStyle='lg'>{option.value}</Text>
-                      </label>
-                      {subListOptions.map((subOption) => {
-                        return (
-                          <label key={subOption.id} className={styles.searchFilterOptionSub}>
-                            <input
-                              type='checkbox'
-                              value={subOption['seo-value']}
-                              // onClick={(e) => handleSubClick(e, subOption)}
-                              {...register(fieldName)}
-                            />
-                            <Text textStyle='lg'>{subOption.value}</Text>
-                          </label>
-                        )
-                      })}
-                    </React.Fragment>
+                    <label key={i} className={styles.searchFilterOption}>
+                      <input type='radio' value={option['value']} {...register(fieldName)} />
+                      <Text textStyle='lg'>{option.label}</Text>
+                    </label>
                   )
-                })
-              : options &&
-                options.map((option, i) => {
-                  if (isRadioButton) {
-                    return (
-                      <label key={i} className={styles.searchFilterOption}>
-                        <input type='radio' value={option['value']} {...register(fieldName)} />
-                        <Text textStyle='lg'>{option.label}</Text>
-                      </label>
-                    )
-                  }
+                }
 
-                  return (
-                    <React.Fragment key={i}>
-                      {i === 0 && (
-                        // injecting an empty checkbox fixes weird bug where selecting the second checkbox will auto select first checkbox
-                        <label key='empty' style={{ display: 'none' }}>
-                          <input type='checkbox' value={null} {...register(fieldName)} />
-                          <Text textStyle='lg'>Empty</Text>
-                        </label>
-                      )}
-                      <label key={i} className={styles.searchFilterOption}>
-                        <input
-                          type='checkbox'
-                          value={option['seo-value']}
-                          defaultChecked={
-                            urlDefaultValues[fieldName] &&
-                            urlDefaultValues[fieldName].includes(option['seo-value'])
-                          }
-                          {...register(fieldName)}
-                        />
-                        <Text textStyle='lg'>{option.value}</Text>
+                return (
+                  <React.Fragment key={i}>
+                    {i === 0 && (
+                      // injecting an empty checkbox fixes weird bug where selecting the second checkbox will auto select first checkbox
+                      <label key='empty' style={{ display: 'none' }}>
+                        <input type='checkbox' value={null} {...register(fieldName)} />
+                        <Text textStyle='lg'>Empty</Text>
                       </label>
-                    </React.Fragment>
-                  )
-                })}
+                    )}
+                    <label key={i} className={styles.searchFilterOption}>
+                      <input
+                        type='checkbox'
+                        value={option['seo-value']}
+                        defaultChecked={
+                          urlDefaultValues[fieldName] &&
+                          urlDefaultValues[fieldName].includes(option['seo-value'])
+                        }
+                        {...register(fieldName)}
+                      />
+                      <Text textStyle='lg'>{option.value}</Text>
+                    </label>
+                  </React.Fragment>
+                )
+              })}
           </div>
         </Accordian>
       </div>
@@ -305,7 +451,7 @@ const NavSearchFilter = ({
           </div>
           <div className={styles.searchFilterBody}>
             <form className={styles.searchFilterForm}>
-              {displayMobileSort && (
+              {displayMobileFilters && (
                 <div className={styles.searchFilterSection}>
                   <SearchFilters
                     title='Sort By'
@@ -338,30 +484,6 @@ const NavSearchFilter = ({
                   />
                 </div>
               )}
-              {/* <div className={styles.searchFilterSection}>
-            <Accordian
-              chevronIcon
-              paddedContent
-              isNotCollapsible={true}
-              defaultOpenState={true}
-              title={
-                <Text textStyle='lg' bold>
-                  Specialization
-                </Text>
-              }
-              className={styles.searchFilterAccordion}
-            >
-              <MaterialAutocompleteLimitTags
-                id='specialization'
-                options={jobCategoryList}
-                limitTagCount={8}
-                onChange={handleSpecializationChange}
-                style={{ margin: 0, paddingTop: '20px' }}
-                defaultValue={urlDefaultValues?.category}
-                value={selectedCategories}
-              />
-            </Accordian>
-          </div> */}
               <SearchFilters
                 title='Industry'
                 fieldName='industry'
@@ -383,14 +505,13 @@ const NavSearchFilter = ({
                 defaultOpenState={true}
                 isNotCollapsible={true}
               />
-              {displayMobileSort && (
-                <SearchFilters
+              {displayMobileFilters && (
+                <MainSubFilters
                   title='Specialization'
                   fieldName='category'
-                  options={config.inputs.job_category_lists}
+                  options={categoryList}
                   defaultOpenState={true}
                   isNotCollapsible={true}
-                  hasMainAndSubOption
                 />
               )}
             </form>
@@ -403,7 +524,11 @@ const NavSearchFilter = ({
                 </Text>
               </Button>
             </div>
-            <Button className={styles.searchFilterApply} onClick={handleSubmit(handleApplyFilter)} primary>
+            <Button
+              className={styles.searchFilterApply}
+              onClick={handleSubmit(handleApplyFilter)}
+              primary
+            >
               <Text textStyle='base' textColor='white' bold>
                 Apply Filter
               </Text>

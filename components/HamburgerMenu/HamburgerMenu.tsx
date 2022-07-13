@@ -72,7 +72,6 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
               className={styles.defaultLink}
               to='/companies'
               title='Companies'
-              aTag
             >
               <li className={styles.menuList} onClick={handleClick}>
                 <Text textStyle='xl'>Companies</Text>

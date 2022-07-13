@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import { wrapper } from 'store'
@@ -11,20 +11,31 @@ import { getFromObject } from 'helpers/formatter'
 import 'styles/globals.scss'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
+import * as fbq from 'lib/fpixel'
 import MaintenancePage from './maintenance'
+import TransitionLoader from '../components/TransitionLoader/TransitionLoader'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
   const accessToken = getCookie('accessToken')
+  const [ isPageLoading, setIsPageLoading ] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleRouteChange = (url) => {
+    // Facebook pixel 
+    // This pageview only triggers the first time
+    fbq.pageview()
+
+    const handleRouteComplete = (url) => {
       gtag.pageview(url)
+      fbq.pageview()
     }
-    router.events.on('routeChangeComplete', handleRouteChange)
+
+    router.events.on('routeChangeComplete', handleRouteComplete)
+
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
+      router.events.off('routeChangeComplete', handleRouteComplete)
     }
+    
   }, [router.events])
 
   useEffect(() => {
@@ -58,6 +69,22 @@ const App = ({ Component, pageProps }: AppProps) => {
       if (Object.keys(utmCampaignObj).length > 0) {
         setItem('utmCampaign', JSON.stringify(utmCampaignObj))
       }
+    }
+    const handleRouteComplete = () => {
+      setIsPageLoading(false);
+    }
+    const handleStart = () => {
+      setIsPageLoading(true) 
+    };
+    
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeError', handleRouteComplete);
+    router.events.on('routeChangeComplete', handleRouteComplete)
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeError', handleRouteComplete);
+      router.events.off('routeChangeComplete', handleRouteComplete)
     }
   }, [])
 
@@ -111,6 +138,25 @@ const App = ({ Component, pageProps }: AppProps) => {
           }}
         />
       )}
+
+      {/* Global Site Code Pixel - Facebook Pixel */}
+      <Script
+        id="fb-pixel"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', ${fbq.FB_PIXEL_ID});
+          `,
+        }}
+      />
 
       {/* Facebook 
       <Script
@@ -199,7 +245,9 @@ const App = ({ Component, pageProps }: AppProps) => {
           {process.env.MAINTENANCE === 'true' ? (
             <MaintenancePage {...pageProps} />
           ) : (
-            <Component {...pageProps} />
+            isPageLoading && !router.pathname.includes('jobs-hiring') ?
+              <TransitionLoader accessToken={accessToken}/> :
+              <Component {...pageProps} />
           )}
         </CookiesProvider>
       </ConnectedRouter>
