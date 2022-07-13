@@ -481,7 +481,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `Working at ${companyName}| Bossjob`
-  const seoMetaDescription = `Discover career opportunities at ${companyName}, learn more about ${companyName} by reading employee reviews, benefits and culture on Bossjob!`
+  const seoMetaDescription = encodeURI(`Discover career opportunities at ${companyName}, learn more about ${companyName} by reading employee reviews, benefits and culture on Bossjob!`)
   
   return {
     props: {
