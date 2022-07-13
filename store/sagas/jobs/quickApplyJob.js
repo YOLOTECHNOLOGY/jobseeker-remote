@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
+import * as fbq from 'lib/fpixel'
+
 // import { call, put, takeLatest, select } from 'redux-saga/effects'
 import { QUICK_APPLY_JOB_REQUEST } from 'store/types/jobs/quickApplyJob'
 import { quickApplyJobSuccess, quickApplyJobFailed } from 'store/actions/jobs/quickApplyJob'
