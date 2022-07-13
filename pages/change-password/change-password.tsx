@@ -13,11 +13,10 @@ import { resetPasswordRequest } from 'store/actions/auth/resetPassword'
 
 /* Components */
 import MaterialButton from 'components/MaterialButton'
-import MaterialTextField from 'components/MaterialTextField'
 import SEO from 'components/SEO'
 import AuthLayout from 'components/AuthLayout'
 import Text from 'components/Text'
-import { TextField } from '@mui/material'
+import MaterialTextField from 'components/MaterialTextField'
 
 /* Styles */
 import styles from './ChangePassword.module.scss'
@@ -80,8 +79,8 @@ const ChangePassword = () => {
       </div>
 
       <form className={styles.ChangePasswordForm} onSubmit={handleSubmit(handleResetPassword)}>
-        <TextField
-          {...register('password', {
+        <MaterialTextField
+          refs={{...register('password', {
             required: {
               value: true,
               message: 'Please enter your password.',
@@ -94,7 +93,7 @@ const ChangePassword = () => {
               value: 16,
               message: 'Please enter a shorter password(maximum of 16 characters)',
             },
-          })}
+          })}}
           className={styles.ChangePasswordFormInput}
           id='password'
           name='password'
@@ -128,14 +127,12 @@ const ChangePassword = () => {
         </div>
 
         <MaterialTextField
-          refs={{
-            ...register('confirmPassword', {
-              required: {
-                value: true,
-                message: 'Please enter your password.',
-              },
-            }),
-          }}
+          refs={{...register('confirmPassword', {
+            required: {
+              value: true,
+              message: 'Please enter your password.',
+            },
+          })}}
           className={styles.ChangePasswordFormInput}
           id='confirmPassword'
           name='confirmPassword'
@@ -159,6 +156,8 @@ const ChangePassword = () => {
               </InputAdornment>
             ),
           }}
+          isSubmitOnEnter={true}
+          onSubmit={handleResetPassword}
         />
         <div className={styles.ChangePasswordFieldErrorConfirm}>
           {errors.confirmPassword && (
