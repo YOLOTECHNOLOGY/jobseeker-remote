@@ -133,7 +133,7 @@ const Companies = () => {
                   {featuredCompany?.short_description}
                 </Text>
                 <Link
-                  to={`${featuredCompany?.company_url || '/'}/jobs`}
+                  to={`${featuredCompany?.company_url ? featuredCompany.company_url + '/jobs' : '/jobs'}`}
                   className={styles.featuredEmployerOpenings}
                 >
                   <Text textStyle='lg' bold>
