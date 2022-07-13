@@ -119,6 +119,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
       showModal={modalShow}
       handleModal={handleModalShow}
       className={styles.quickApplyModal}
+      closeModalOnOutsideClick={false} // TODO: temporary fix the select country code leads to modal close bug
       customFooter={
         <MaterialButton
           capitalize
