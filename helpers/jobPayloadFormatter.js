@@ -150,7 +150,7 @@ const nonFilterKeys = [
 // }
 
 // check if there is a match/a reserved keyword, and return matched data under matchedFilter
-const checkFilterMatch = (routerQuery, config) => {
+const checkFilterMatch = (routerQuery, config, isMobile=false) => {
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
   const locationList = config.inputs.location_lists
@@ -354,19 +354,18 @@ const checkFilterMatch = (routerQuery, config) => {
   if (Object.keys(matchedConfigFromUserSelection).length > 0)
     array.push(matchedConfigFromUserSelection)
 
-  let uniqueList = []
+  // Fields that need to be counted based on mobile or desktop view
+  const filterCountField = isMobile ? ['jobType', 'salary', 'industry', 'workExperience', 'qualification', 'category'] : ['industry', 'workExperience', 'qualification']
+  
   array.forEach((matchData) => {
     for (const [key] of Object.entries(matchData)) {
-      const data =
-        key === 'location'
-          ? matchData[key].map((filter) => filter['seo_value'])
-          : matchData[key].map((filter) => filter['seo-value'])
+      const data = matchData[key].map((filter) => filter['seo-value'])
 
-      uniqueList = [...uniqueList, ...data]
-      uniqueList = [...new Set(uniqueList)]
+      if (filterCountField.includes(key)) {
+        filterCount += data.length
+      }
     }
   })
-  filterCount = uniqueList.length
 
   const matchedFilter = {
     searchMatch,
@@ -377,7 +376,7 @@ const checkFilterMatch = (routerQuery, config) => {
     matchedLocation,
     matchedConfigFromUrl,
     matchedConfigFromUserSelection,
-    filterCount,
+    filterCount
   }
 
   return matchedFilter
