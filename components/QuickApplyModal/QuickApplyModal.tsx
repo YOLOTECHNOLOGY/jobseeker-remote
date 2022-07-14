@@ -63,7 +63,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
   useEffect(() => {
     if (registerJobseekerState.error && registerJobseekerState.error['email']) {
       if (registerJobseekerState.error['email'] == 'The email has already been taken.') {
-        setEmailError(<p>A user with this email address already exists. Please enter a different email address or <Link to={`/login/jobseeker?redirect=${applyJobLink}`}>log in</Link>.</p>)
+        setEmailError(<p>A user with this email address already exists. Please enter a different email address or <Link to={`/login/jobseeker?redirect=${applyJobLink}`} className='default'>log in</Link>.</p>)
       } else {
         setError('email', { type: 'custom', message: registerJobseekerState.error['email'] })
       }
