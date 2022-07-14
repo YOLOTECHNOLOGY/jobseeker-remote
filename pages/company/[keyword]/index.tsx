@@ -452,19 +452,19 @@ const CompanyDetail = (props: any) => {
                 )}
               </React.Fragment>
             ) : (
-              <div className={styles.emptyResult}>
-                {totalActiveJobs === 0 ? (
-                  <Text>
-                    {company.name} does not have any job openings now. Please come back again.
-                  </Text>
-                ) : (
+              totalActiveJobs != 0 && (<div className={styles.emptyResult}>
                   <Text>
                     We couldn't find any jobs matching your search.
                   </Text>
-                )}
-              </div>
+              </div>)
             )}
           </div>
+          {totalActiveJobs === 0 && (
+              <Text>
+                {company.name} does not have any job openings now. Please come back again.
+              </Text>
+            )
+          }
         </div>
       </div>
     </CompanyProfileLayout>
