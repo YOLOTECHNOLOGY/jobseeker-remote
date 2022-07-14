@@ -19,7 +19,6 @@ import MaterialTextField from 'components/MaterialTextField'
 import SEO from 'components/SEO'
 import AuthLayout from 'components/AuthLayout'
 import Text from 'components/Text'
-import { TextField } from '@mui/material'
 import NotificationBar from 'components/NotificationBar'
 
 import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
@@ -227,7 +226,7 @@ const Register = () => {
           />
           {emailError && errorText(emailError)}
 
-          <TextField
+          <MaterialTextField
             className={styles.RegisterFormInput}
             id='password'
             name='password'
@@ -252,6 +251,8 @@ const Register = () => {
                 </InputAdornment>
               ),
             }}
+            isSubmitOnEnter={true}
+            onSubmit={handleRegister}
           />
           {passwordError && errorText(passwordError)}
 

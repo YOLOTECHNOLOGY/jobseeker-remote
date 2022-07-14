@@ -1,5 +1,3 @@
-import slugify from 'slugify'
-
 // Components
 import Text from 'components/Text'
 import Link from 'components/Link'
@@ -14,7 +12,7 @@ interface ICompanyCard {
 const CompanyCard = ({
   company
 }: ICompanyCard) => {
-  const companyUrl = `/company/${slugify(company?.name.toLowerCase() || '')}-${company?.id}`
+  const companyUrl = company?.company_url || '/'
 
   return (
     <div className={styles.companyCard}>

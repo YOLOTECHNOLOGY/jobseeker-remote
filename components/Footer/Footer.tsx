@@ -15,6 +15,7 @@ import {
   twitter,
   linkedin,
   youtube,
+  tiktok,
 } from 'images'
 
 import styles from './Footer.module.scss'
@@ -405,6 +406,14 @@ const Footer = () => {
                     <img src={twitter} alt='twitter' width='32' height='32' />
                   </LazyLoad>
                 </Link>
+                <Link
+                  className={styles.socialLink}
+                  to='//tiktok.com/@bossjobph'
+                  external
+                  title='Bossjob Tiktok'
+                >
+                  <img src={tiktok} alt='tiktok' width='32' height='32' />
+                </Link>
               </div>
             </div>
           </div>
@@ -765,6 +774,14 @@ const Footer = () => {
                         <LazyLoad>
                           <img src={twitter} alt='twitter' width='32' height='32' />
                         </LazyLoad>
+                      </Link>
+                      <Link
+                        className={styles.socialLink}
+                        to='//tiktok.com/@bossjobph'
+                        external
+                        title='Bossjob Tiktok'
+                      >
+                        <img src={tiktok} alt='tiktok' width='32' height='32' />
                       </Link>
                     </div>
                   </div>

@@ -83,6 +83,7 @@ type companyObject = {
   id: number
   logoUrl: string
   name: string
+  companyUrl: string
 }
 
 const renderPopularSearch = () => {
@@ -91,78 +92,91 @@ const renderPopularSearch = () => {
   return (
     <div className={styles.popularSearch}>
       <Link
-        className={styles.link}
-        to={`${jobsPageLink}/finance-accounting-jobs`}
-        title='Finance jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Finance
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/sales-marketing-jobs`}
-        title='Sales jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Sales
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/sales-marketing-jobs`}
-        title='Marketing jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Marketing
-        </Text>
-      </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs'>
-        <Text textStyle='base' textColor='darkgrey'>
-          Makati
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/computer-information-technology-jobs`}
-        title='IT jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          IT
-        </Text>
-      </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/overseas-jobs`} title='Overseas jobs'>
-        <Text textStyle='base' textColor='darkgrey'>
-          Overseas jobs
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/customer-service-jobs`}
-        title='Customer Service jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Customer Service
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/job-search?salary=30k-60k,60k-80k,80k-100k,100k-200k,above-200k`}
-        title='₱30K + jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          ₱30K+ jobs
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/full-time-jobs`}
-        title='Full Time jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Full Time jobs
-        </Text>
-      </Link>
+          className={styles.link}
+          to={`${jobsPageLink}/finance-accounting-jobs`}
+          title='Accounting jobs'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            Accounting jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/sales-marketing-jobs`}
+          title='Sales jobs'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            Sales jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/sales-marketing-jobs`}
+          title='Marketing jobs'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            Marketing jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/computer-information-technology-jobs`}
+          title='IT jobs'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            IT jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/customer-service-jobs`}
+          title='Customer Service jobs'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            Customer Service jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/hr-recruitment-jobs`}
+          title='HR jobs'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            HR jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/bpo-team-lead-jobs`}
+          title='BPO Team Lead'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            BPO Team Lead
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/homebased-jobs`}
+          title='WFH'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            WFH
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/manager-jobs`}
+          title='Manager'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            Manager
+          </Text>
+        </Link>
+        <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs'>
+          <Text textStyle='base' textColor='darkgrey'>
+            Manila jobs
+          </Text>
+        </Link>
     </div>
   )
 }
@@ -364,6 +378,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const onKeywordSearch = (val) => {
+    // convert any value with '-' to '+' so that when it gets parsed from URL, we are able to map it back to '-'
+    const sanitisedVal = val.replace('-', '+')
+
     // eslint-disable-next-line
     const { keyword, ...rest } = router.query
     const sortOption = val.length > 0 ? 2 : 1
@@ -375,7 +392,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       matchedConfig,
       matchedConfigFromUrl,
       matchedConfigFromUserSelection,
-    } = userFilterSelectionDataParser('query', val, router.query, config, isClear)
+    } = userFilterSelectionDataParser('query', sanitisedVal, router.query, config, isClear)
 
     for (const [key, value] of Object.entries(matchedConfig)) {
       const newDefaultValue = { ...defaultValues, [key]: [value[0]['seo-value']] }
@@ -582,10 +599,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleFetchJobDetail = (jobId) =>
     dispatch(fetchJobDetailRequest({ jobId, status: userCookie ? 'protected' : 'public' }))
 
-  const handleSelectedJobId = (jobId, jobTitle) => {
+  const handleSelectedJobId = (jobId, jobUrl='/') => {
     // Open new tab in mobile
     if (isMobile && typeof window !== 'undefined') {
-      window.open(`/job/${slugify(jobTitle.toLowerCase())}-${jobId}`)
+      window.open(jobUrl)
 
       return
     }
@@ -796,9 +813,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           className={displayQuickLinks ? styles.quickLinkSectionExpanded : styles.quickLinkSection}
         >
           <div className={styles.popularSearchContainer}>
-            <Text textStyle='base' bold className={styles.quickLinkTitle}>
-              Popular Search:
-            </Text>
+            <div>
+              <Text textStyle='base' bold className={styles.quickLinkTitle}>
+                Popular Search:
+              </Text>
+            </div>
             {renderPopularSearch()}
           </div>
           <div className={styles.topCompaniesContainer}>
@@ -813,7 +832,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                       <Link
                         key={company.id}
                         className={styles.topCompaniesLogo}
-                        to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
+                        to={`${company?.companyUrl}/jobs`}
                         external
                       >
                         <Tooltip
@@ -919,8 +938,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       const topCompanies = featuredCompanies?.map((featuredCompany) => {
         const logoUrl = featuredCompany.logo_url
+        const companyUrl = featuredCompany.company_url
         delete featuredCompany.logo_url
-        return { ...featuredCompany, logoUrl }
+        delete featuredCompany.companyUrl
+        return { ...featuredCompany, logoUrl, companyUrl }
       })
 
       /* Handle job search logic */
@@ -942,9 +963,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const queryIndustry: any = query?.industry
       const queryWorkExp: any = query?.workExperience
       const queryCategory: any = query?.category
-
+      
       const defaultValues: any = {
-        urlQuery: searchQuery ? unslugify(searchQuery) : '',
+        urlQuery: searchQuery,
         sort: query?.sort ? query?.sort : 1,
         jobType: queryJobType?.split(',') || null,
         salary: querySalary?.split(',') || null,
@@ -954,7 +975,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         workExperience: queryWorkExp?.split(',') || null,
         category: queryCategory?.split(',') || null,
       }
-
+      
       for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
         defaultValues[key] = [value[0]['seo-value']]
       }
@@ -965,15 +986,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           defaultValues.urlQuery = ''
         }
       }
-
+      
       if (defaultValues.category) {
         const defaultCategories = defaultValues.category
         const initialListOptions = catList.map((data) => {
           const newSubList = data.sub_list.map((subData) => ({
             ...subData,
             isChecked:
-              defaultCategories.includes(subData['seo-value']) ||
-              defaultCategories.includes(data['seo-value']),
+            defaultCategories.includes(subData['seo-value']) ||
+            defaultCategories.includes(data['seo-value']),
           }))
           const newList = {
             ...data,
@@ -984,6 +1005,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         })
         defaultValues.categoryList = initialListOptions
       }
+      
+      // sanitise searchQuery 
+      defaultValues.urlQuery = defaultValues.urlQuery ? unslugify(searchQuery).replace('+', '-') : ''
 
       /* Handle SEO Meta Tags*/
       const { month, year } = getCurrentMonthYear()
@@ -1045,7 +1069,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           defaultValues,
           accessToken,
           seoMetaTitle,
-          seoMetaDescription,
+          seoMetaDescription: encodeURI(seoMetaDescription),
           seoCanonical,
         },
       }

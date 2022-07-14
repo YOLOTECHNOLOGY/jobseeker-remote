@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
+import moment from 'moment'
 
 /* Vendors */
 import classNames from 'classnames/bind'
@@ -24,6 +25,7 @@ const ModalVerifyEmail = dynamic(() => import('../ModalVerifyEmail'))
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
+import Dropdown from '../Dropdown'
 
 /* Helpers */
 import { getCookie, setCookie } from 'helpers/cookies'
@@ -46,8 +48,10 @@ import {
   TelecommunicationAllowanceIcon,
   TransportAllowanceIcon,
   OtherAllowancesIcon,
-  MoreIcon,
   ExpireIcon,
+  LocationPinIcon,
+  RateIcon,
+  DefaultAvatar,
 } from 'images'
 
 /* Helpers */
@@ -91,7 +95,6 @@ const JobDetail = ({
   const userCookie = getCookie('user') || null
   const authCookie = getCookie('accessToken') || null;
 
-  const [jobDetailOption, setJobDetailOption] = useState(false)
   const [isSaveClicked, setIsSaveClicked] = useState(false)
   const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
   const [isSavedJob, setIsSavedJob] = useState(false)
@@ -103,7 +106,6 @@ const JobDetail = ({
 
   useEffect(() => {
     setIsSavedJob(selectedJob?.is_saved)
-    setJobDetailOption(false)
   }, [selectedJob])
 
   useEffect(() => {
@@ -196,51 +198,42 @@ const JobDetail = ({
             <div>
               <div
                 className={styles.JobDetailOptionImage}
-                onClick={() => setJobDetailOption(!jobDetailOption)}
               >
-                <img src={MoreIcon} width='5' height='20' />
+                <Dropdown>
+                    {selectedJob?.status_key === 'active' && (
+                      <>
+                        <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
+                          <Text textStyle='lg'>View in new tab</Text>
+                        </Link>
+                        <div
+                          className={styles.JobDetailOptionItem}
+                          onClick={() => {
+                            setIsShowReportJob(true)
+                          }}
+                        >
+                          <Text textStyle='lg'>Report job</Text>
+                        </div>
+                      </>
+                    )}
+                    {isCategoryApplied && !checkHasApplicationWithdrawn() && (
+                      <div
+                        className={styles.JobDetailOptionItem}
+                        onClick={() => setIsShowModalWithdrawApplication(true)}
+                      >
+                        <Text textStyle='lg'>Withdraw Application</Text>
+                      </div>
+                    )}
+
+                    <div
+                      className={styles.JobDetailOptionItem}
+                      onClick={() => setIsShowModalShare(true)}
+                    >
+                      <Text textStyle='lg'>Share this job</Text>
+                    </div>
+                </Dropdown>
               </div>
 
               {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
-              {jobDetailOption && (
-                <div className={styles.JobDetailOptionList}>
-                  {selectedJob?.status_key === 'active' && (
-                    <>
-                      <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
-                        <Text textStyle='lg'>View in new tab</Text>
-                      </Link>
-                      <div
-                        className={styles.JobDetailOptionItem}
-                        onClick={() => {
-                          setIsShowReportJob(true)
-                          setJobDetailOption(false)
-                        }}
-                      >
-                        <Text textStyle='lg'>Report job</Text>
-                      </div>
-                    </>
-                  )}
-                  {isCategoryApplied && !checkHasApplicationWithdrawn() && (
-                    <div
-                      className={styles.JobDetailOptionItem}
-                      onClick={() => setIsShowModalWithdrawApplication(true)}
-                    >
-                      <Text textStyle='lg'>Withdraw Application</Text>
-                    </div>
-                  )}
-
-                  <div
-                    className={styles.JobDetailOptionItem}
-                    onClick={() => setIsShowModalShare(true)}
-                  >
-                    <Text textStyle='lg'>Share this job</Text>
-                  </div>
-
-                  {/* <div className={styles.JobDetailOptionItem} onClick={() => console.log('View Resume')}>
-                    <Text textStyle='lg'>View Resume</Text>
-                  </div> */}
-                </div>
-              )}
             </div>
             <div
               className={styles.JobDetailImage}
@@ -255,9 +248,11 @@ const JobDetail = ({
                   {selectedJob?.job_title}
                 </Text>
               </Link>
-              <Text textStyle='lg' className={styles.JobDetailCompany}>
-                {selectedJob?.company?.name}
-              </Text>
+              <Link to={companyUrl}>
+                <Text textStyle='lg' className={styles.JobDetailCompany}>
+                  {selectedJob?.company?.name}
+                </Text>
+              </Link>
               {selectedJob?.is_featured && <JobTag tag='Featured' tagType='featured' />}
               {selectedJob?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
               <JobTag tag={selectedJob?.job_type_value} />
@@ -494,6 +489,43 @@ const JobDetail = ({
                 </>
               )}
             </div>
+            {selectedJob?.recruiter && (
+            <div className={styles.JobDetailRecruiter}>
+              <Text textStyle='xl' bold>
+                Connect directly to recruiter after applying
+              </Text>
+              <div className={styles.JobDetailRecruiterInfo}>
+                <div
+                  className={styles.JobDetailRecruiterInfoImage}
+                  style={{
+                    backgroundImage: `url(${selectedJob?.recruiter.avatar || DefaultAvatar})`,
+                  }}
+                />
+                <div className={styles.JobDetailRecruiterInfoText}>
+                  <div className={styles.JobDetailRecruiterName}>
+                    <Text textStyle='lg' bold>
+                      {selectedJob?.recruiter.full_name},{' '}
+                    </Text>
+                    <Text textStyle='lg'>
+                      &nbsp;{selectedJob?.recruiter.work_experience.job_title}
+                    </Text>
+                  </div>
+                  <div className={styles.JobDetailRecruiterContent}>
+                    <Text textStyle='lg' textColor='darkgrey'>
+                      <img src={RateIcon} height='14' width='15' />
+                      {selectedJob?.recruiter.response_rate}% response rate, responds{' '}
+                      {selectedJob?.recruiter.response_time}
+                    </Text>
+                    <Text textStyle='lg' textColor='darkgrey'>
+                      <img src={LocationPinIcon} height='14' width='15' />
+                      Last active on{' '}
+                      {moment(selectedJob?.recruiter.last_active_at).format('MM/DD/YYYY')}
+                    </Text>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
             <div className={styles.aboutCompany}>
               <Text bold textStyle='lg' className={styles.aboutCompanyHeader}>
                 About the company

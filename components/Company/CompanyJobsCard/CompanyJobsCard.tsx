@@ -1,5 +1,3 @@
-import slugify from 'slugify'
-
 // Components
 import Text from 'components/Text'
 import MaterialButton from 'components/MaterialButton'
@@ -10,14 +8,14 @@ import styles from './CompanyJobsCard.module.scss'
 import MetaText from '../../MetaText'
 
 interface ICompanyJobsCard {
-  id: number
   title: string
   location: string
   salary: string
   availability: string
+  jobUrl: string
 }
 
-const CompanyJobsCard = ({ title, location, salary, availability, id }: ICompanyJobsCard) => {
+const CompanyJobsCard = ({ title, location, salary, availability, jobUrl }: ICompanyJobsCard) => {
   return (
     <div className={styles.companyJobsCard}>
       <div className={styles.companyJobsCardLeft}>
@@ -38,7 +36,7 @@ const CompanyJobsCard = ({ title, location, salary, availability, id }: ICompany
         </div>
       </div>
       <div className={styles.companyJobsCardRight}>
-        <Link to={`/job/${slugify(title.toLowerCase())}-${id}`} external>
+        <Link to={jobUrl} external>
           <MaterialButton variant='outlined' capitalize className={styles.companyJobsCardApply}>
             <Text textStyle='base' textColor='primaryBlue' bold>
               Apply Now
