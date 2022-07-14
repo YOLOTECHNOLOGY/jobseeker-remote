@@ -18,6 +18,7 @@ export const MealAllowanceIcon = `${S3BucketJobseeker}/MealAllowanceIcon.svg`
 export const NotificationIcon = `${S3BucketJobseeker}/NotificationIcon.svg`
 export const BellIcon = `${S3BucketJobseeker}/BellIcon.svg`
 export const OtherAllowancesIcon = `${S3BucketJobseeker}/OtherAllowancesIcon.svg`
+export const CarIcon = `${S3BucketJobseeker}/Car.svg`
 export const PerformanceBonusIcon = `${S3BucketJobseeker}/PerformanceBonusIcon.svg`
 export const SalaryIcon = `${S3BucketJobseeker}/SalaryIcon.svg`
 export const TelecommunicationAllowanceIcon = `${S3BucketJobseeker}/TelecommunicationAllowanceIcon.svg`
