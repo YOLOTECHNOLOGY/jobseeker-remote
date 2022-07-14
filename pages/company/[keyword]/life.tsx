@@ -65,29 +65,26 @@ const CompanyLifeProfile = (props: any) => {
             </div>
           )}
 
-          <div className={styles.companyLifeCultures}>
+          {company.pictures?.length > 0 && (<div className={styles.companyLifeCultures}>
             <Text tagName='h1' textStyle='xl' bold className={styles.companySectionTitle}>
               Photos
             </Text>
-            {company.pictures?.length > 0 ? (
-              <div className={styles.companyLifePictures}>
-                {company.pictures.map((picture, index) => (
-                  <img
-                    src={picture.url}
-                    alt={`${company.name} photo ${index}`}
-                    className={styles.companyLifePicture}
-                    key={picture.id}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className={styles.emptyResult}>
-                <Text>
-                  The company has not provided any photos.
-                </Text>
-              </div>
-            )}
-          </div>
+            <div className={styles.companyLifePictures}>
+              {company.pictures.map((picture, index) => (
+                <img
+                  src={picture.url}
+                  alt={`${company.name} photo ${index}`}
+                  className={styles.companyLifePicture}
+                  key={picture.id}
+                />
+              ))}
+            </div>
+          </div>)}
+          {company.cultures?.length == 0 && company.benefits?.length == 0 && company.pictures?.length == 0 && (
+            <div>
+              {company.name} has not uploaded any information about their company life. Please come back again.
+            </div>
+          )}
         </div>
       </div>
     </CompanyProfileLayout>

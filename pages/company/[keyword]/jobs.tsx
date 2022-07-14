@@ -101,7 +101,7 @@ const CompanyJobsProfile = (props: any) => {
     >
       <div className={styles.companySection} id='companyJobs'>
         <div className={styles.companyTabsContent}>
-          <div className={styles.companyJobs}>
+          {totalActiveJobs > 0 && (<div className={styles.companyJobs}>
             <Text textStyle='xl' bold className={styles.companySectionTitle}>
               Jobs
             </Text>
@@ -178,18 +178,19 @@ const CompanyJobsProfile = (props: any) => {
               </React.Fragment>
             ) : (
               <div className={styles.emptyResult}>
-                {totalActiveJobs === 0 ? (
-                  <Text>
-                    The company does not have any active jobs.
-                  </Text>
-                ) : (
+                {totalActiveJobs > 0 && (
                   <Text>
                     We couldn't find any jobs matching your search.
                   </Text>
                 )}
               </div>
             )}
-          </div>
+          </div>)}
+          {totalActiveJobs == 0 && (<div>
+            <Text>
+              {company.name} does not have any job openings now. Please come back again.
+            </Text>    
+          </div>)}
         </div>
       </div>
     </CompanyProfileLayout>

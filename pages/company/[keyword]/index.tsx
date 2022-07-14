@@ -215,7 +215,7 @@ const CompanyDetail = (props: any) => {
           </div>
         </div>
         
-        {(company.cultures?.length > 0 || company.benefits?.length > 0) && (
+        {(company.cultures?.length > 0 || company.benefits?.length > 0) ? (
           <div className={styles.companySection}>
             <div className={styles.companyCulture}>
               <div className={styles.companyCultureContent}>
@@ -344,6 +344,27 @@ const CompanyDetail = (props: any) => {
               </div>
             </div>
           </div>
+        ): (
+          <div className={styles.companySection}>
+            <div className={styles.companyCulture}>
+              <div className={styles.companyCultureContent}>
+                <div className={styles.companyCultureWrapper}>
+                  {company.cultures?.length > 0 && (
+                    <div className={styles.companyCultureSection}>
+                      <div className={styles.companyCultureHeading}>
+                        <Text textStyle='xl' bold>
+                          Company Culture
+                        </Text>
+                      </div>
+                    </div>
+                  )}
+                  <div className={styles.companyCultureSection}>
+                    {company.name} has not uploaded any information about their company life. Please come back again.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
 
         <div className={styles.companySection} id='companyJobs'>
@@ -431,19 +452,19 @@ const CompanyDetail = (props: any) => {
                 )}
               </React.Fragment>
             ) : (
-              <div className={styles.emptyResult}>
-                {totalActiveJobs === 0 ? (
-                  <Text>
-                    The company does not have any active jobs.
-                  </Text>
-                ) : (
+              totalActiveJobs != 0 && (<div className={styles.emptyResult}>
                   <Text>
                     We couldn't find any jobs matching your search.
                   </Text>
-                )}
-              </div>
+              </div>)
             )}
           </div>
+          {totalActiveJobs === 0 && (
+              <Text>
+                {company.name} does not have any job openings now. Please come back again.
+              </Text>
+            )
+          }
         </div>
       </div>
     </CompanyProfileLayout>
