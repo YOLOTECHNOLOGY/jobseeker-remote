@@ -4,6 +4,8 @@ import { setCookie } from 'helpers/cookies'
 
 import { LOGIN_REQUEST } from 'store/types/auth/login'
 
+import { authPathToOldProject } from 'helpers/authenticationTransition'
+
 import {
   loginSuccess,
   loginFailed,
@@ -68,18 +70,9 @@ function* loginReq(actions) {
 
       if (redirect) {
         if (redirect.includes(process.env.OLD_PROJECT_URL)) {
-          let redirectUrl = redirect
-          const delimiter = '/jobseeker-login-redirect?redirectUrl='
-          const redirectArray = redirect.split(delimiter)
-          if (redirectArray.length === 2) {
-            const queryParam = redirectArray[1]
-            const encodedQueryParam = encodeURIComponent(queryParam)
-            let encodedRedirect = ''
-            encodedRedirect.concat(redirectArray[0], delimiter, encodedQueryParam)
-            redirectUrl = redirectArray[0] + delimiter + encodedQueryParam
-          }
-
-          url = `${redirectUrl}&token=${loginData.authentication.access_token}`
+          const newUrl = new URL(redirect)
+          
+          url = authPathToOldProject(loginData.authentication.access_token, newUrl.pathname + newUrl.search)
         } else {
           url = redirect
         }
