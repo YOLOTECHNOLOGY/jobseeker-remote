@@ -349,18 +349,14 @@ const CompanyDetail = (props: any) => {
             <div className={styles.companyCulture}>
               <div className={styles.companyCultureContent}>
                 <div className={styles.companyCultureWrapper}>
-                  {company.cultures?.length > 0 && (
-                    <div className={styles.companyCultureSection}>
-                      <div className={styles.companyCultureHeading}>
-                        <Text textStyle='xl' bold>
-                          Company Culture
-                        </Text>
-                      </div>
-                    </div>
-                  )}
-                  <div className={styles.companyCultureSection}>
-                    {company.name} has not uploaded any information about their company life. Please come back again.
+                  <div className={styles.companyCultureHeading}>
+                    <Text textStyle='xl' bold>
+                      Company Culture
+                    </Text>
                   </div>
+                  <Text>
+                    {company.name} has not uploaded any information about their company life. Please come back again.
+                  </Text>
                 </div>
               </div>
             </div>

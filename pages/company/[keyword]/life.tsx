@@ -82,7 +82,9 @@ const CompanyLifeProfile = (props: any) => {
           </div>)}
           {company.cultures?.length == 0 && company.benefits?.length == 0 && company.pictures?.length == 0 && (
             <div>
-              {company.name} has not uploaded any information about their company life. Please come back again.
+              <Text>
+                {company.name} has not uploaded any information about their company life. Please come back again.
+              </Text>
             </div>
           )}
         </div>
