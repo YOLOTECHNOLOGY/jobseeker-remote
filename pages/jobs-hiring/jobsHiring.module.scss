@@ -135,7 +135,8 @@
 .quickLinkTitle {
   display: flex;
   letter-spacing: 1px;
-  margin-right: 34px;
+  margin-right: 20px;
+  width: max-content;
 
   @include msd {
     white-space: pre;
@@ -157,9 +158,10 @@
   .popularSearch {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
 
     .link {
-      margin-right: 10px;
 
       & > span {
         letter-spacing: 1px;
