@@ -67,9 +67,8 @@ const Modal = ({
   }
 
   const handleClickOutside = (event) => {
-    if (ref.current && !ref.current.contains(event.target)) {
-      handleCloseModal()
-    }
+    // Invariant: any click outside modal will be caught in modalWrapper
+    if (event.target.className.includes('modalWrapper')) handleCloseModal()
   }
 
   const syncHeight = () => {
@@ -111,7 +110,7 @@ const Modal = ({
 
   return ReactDOM.createPortal(
     <>
-      <div className={styles.modalOverlay} />
+      <div className={styles.modalOverlay} ref={ref}/>
       <div
         id='modal'
         className={styles.modalWrapper}
@@ -123,7 +122,6 @@ const Modal = ({
         {...rest}
       >
           <div
-            ref={ref}
             className={classNames([
               styles.modalContent,
               className,
