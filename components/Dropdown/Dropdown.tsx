@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { Menu } from '@mui/material'
 import { MoreIcon } from '../../images'
 
+import styles from './Dropdown.module.scss'
+
 type DropdownProps = {
   children?: any
 }
@@ -18,7 +20,7 @@ const Dropdown = ({ children }: DropdownProps) => {
   }
   return (
     <div>
-      <div style={{padding: "4px 12px"}} onClick={handleClick}>
+      <div className={styles.clickArea} onClick={handleClick}>
         <img src={MoreIcon} width='5' height='20' />
       </div>
       <Menu
