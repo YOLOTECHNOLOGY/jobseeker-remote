@@ -813,9 +813,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           className={displayQuickLinks ? styles.quickLinkSectionExpanded : styles.quickLinkSection}
         >
           <div className={styles.popularSearchContainer}>
-            <Text textStyle='base' bold className={styles.quickLinkTitle}>
-              Popular Search:
-            </Text>
+            <div>
+              <Text textStyle='base' bold className={styles.quickLinkTitle}>
+                Popular Search:
+              </Text>
+            </div>
             {renderPopularSearch()}
           </div>
           <div className={styles.topCompaniesContainer}>
