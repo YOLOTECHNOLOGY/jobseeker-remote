@@ -122,9 +122,10 @@ const Register = () => {
         last_name: lastName,
         terms_and_condition: false,
         is_subscribe: isSubscribe,
+        redirect: router.query?.redirect || null
       }
 
-      dispatch(registerJobseekerRequest({ ...payload, jobId: router.query?.jobId || '' }))
+      dispatch(registerJobseekerRequest({ ...payload }))
     }
   }
 
