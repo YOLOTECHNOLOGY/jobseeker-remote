@@ -1065,7 +1065,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           defaultValues,
           accessToken,
           seoMetaTitle,
-          seoMetaDescription,
+          seoMetaDescription: encodeURI(seoMetaDescription),
           seoCanonical,
         },
       }

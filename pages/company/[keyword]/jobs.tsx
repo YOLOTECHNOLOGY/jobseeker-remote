@@ -224,7 +224,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `${companyName} Careers in Philippines, Job Opportunities | Bossjob`
-  const seoMetaDescription = `View all current job opportunities at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`
+  const seoMetaDescription = encodeURI(`View all current job opportunities at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`)
   return {
     props: {
       config,
