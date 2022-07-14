@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
 
 /* Components */
 import Header from 'components/Header'
@@ -9,9 +10,9 @@ import HamburgerMenu from 'components/HamburgerMenu'
 import styles from './Layout.module.scss'
 import classNamesCombined from 'classnames'
 import { getCookie, setCookie, setCookieWithExpiry } from '../../helpers/cookies'
-import { Link } from '@mui/material'
-import MaterialAlert from '../MaterialAlert/MaterialAlert'
-import ModalVerifyEmail from '../ModalVerifyEmail'
+const Link = dynamic(() => import('@mui/material/Link'))
+const MaterialAlert = dynamic(() => import('../MaterialAlert/MaterialAlert'))
+const ModalVerifyEmail = dynamic(() => import('../ModalVerifyEmail'))
 import Text from '../Text'
 
 /* Helpers */
@@ -48,12 +49,14 @@ const Layout = ({ children, className }: LayoutProps) => {
 
   const handleVerifyEmailClick = async () => {
     // revalidate verify email status
-    const response = await fetchUserOwnDetailService({accessToken: authCookie})
+    const response = await fetchUserOwnDetailService({ accessToken: authCookie })
     const userDetails = response?.data?.data
     const isVerifiedEmail = userDetails?.is_email_verify
-    if (!isVerifiedEmail) { // email is not verified
-      setIsShowModal(true);
-    } else { // email is verified and userDetails cookie is outdated
+    if (!isVerifiedEmail) {
+      // email is not verified
+      setIsShowModal(true)
+    } else {
+      // email is verified and userDetails cookie is outdated
       const userCookie = {
         active_key: userDetails.active_key,
         id: userDetails.id,
@@ -69,7 +72,7 @@ const Layout = ({ children, className }: LayoutProps) => {
         is_profile_completed: userDetails.is_profile_completed,
       }
       setCookie('user', userCookie)
-      setIsEmailVerified(true);
+      setIsEmailVerified(true)
     }
   }
 
