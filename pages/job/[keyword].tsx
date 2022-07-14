@@ -209,12 +209,6 @@ const Job = ({
     }
   }
 
-  const handleRedirectToJob = (jobUrl) => {
-    if (typeof window !== 'undefined') {
-      window.open(jobUrl, '_blank')
-    }
-  }
-
   const getJobDetailCategoryIds = () => {
     const jobCategoryIds = []
     jobDetail?.categories?.map((cat) => {
@@ -767,7 +761,7 @@ const Job = ({
                       key={job.id}
                       className={styles.jobDetailSidebarCard}
                     >
-                      <Link to={job?.job_url} external>
+                      <Link to={job.job_url} external>
                         <img
                           src={job?.company_logo}
                           className={styles.jobDetailSidebarCardImage}
@@ -775,7 +769,7 @@ const Job = ({
                         />
                       </Link>
                       <Link
-                        to={`${handleRedirectToJob(job.job_url)}`}
+                        to={job.job_url}
                         aTag
                         external
                       >
@@ -801,23 +795,13 @@ const Job = ({
                       >
                         {job.salary_range_value}
                       </Text>
-                      {job.refreshed_at && (
+                      {job.published_at && (
                         <Text textStyle='sm' tagName='p'>
-                          Posted on {job.refreshed_at}
+                          Posted on {job.published_at}
                         </Text>
                       )}
                       <Link
-                        to={`${handleRedirectToJob(job.job_url)}`}
-                        className={styles.jobDetailSidebarCardApply}
-                      >
-                        {job.published_at && (
-                          <Text textStyle='sm' tagName='p'>
-                            Posted on {job.published_at}
-                          </Text>
-                        )}
-                      </Link>
-                      <Link
-                        to={`${handleRedirectToJob(job.job_url)}`}
+                        to={job.job_url}
                         className={styles.jobDetailSidebarCardApply}
                       >
                         <Text
