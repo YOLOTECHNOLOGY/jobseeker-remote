@@ -93,7 +93,7 @@ const Register = () => {
 
   useEffect(() => {
     if (registerJobseekerState.error === 'The email has already been taken.') {
-      setEmailError(<p>A user with this email address already exists. Please enter a different email address or <Link to='/login/jobseeker'><a style={{ color: '#2379ea', textDecoration: 'underline' }}>log in</a></Link>.</p>)
+      setEmailError(<p>A user with this email address already exists. Please enter a different email address or <Link to='/login/jobseeker'>log in</Link>.</p>)
     }
   
   }, [registerJobseekerState])

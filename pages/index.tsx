@@ -544,7 +544,7 @@ const Home = (props: HomeProps) => {
                   <Text tagName='h2' textStyle='xxxl' bold>
                     What can you do with Bossjob?
                   </Text>
-                  <LazyLoad className='test'>
+                  <LazyLoad>
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
