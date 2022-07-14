@@ -13,13 +13,15 @@ import {
   TimelineContent,
   TimelineDot,
 } from '@mui/lab'
+import dynamic from 'next/dynamic'
 
 /* Components */
 import Link from 'components/Link'
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
 import ReadMore from 'components/ReadMore'
-import QuickApplyModal from 'components/QuickApplyModal'
+const QuickApplyModal = dynamic(() => import('components/QuickApplyModal'))
+const ModalVerifyEmail = dynamic(() => import('../ModalVerifyEmail'))
 
 /* Material Components */
 import MaterialButton from 'components/MaterialButton'
@@ -54,7 +56,6 @@ import {
 
 /* Helpers */
 import { getApplyJobLink } from 'helpers/jobPayloadFormatter'
-import ModalVerifyEmail from '../ModalVerifyEmail'
 import { fetchUserOwnDetailService } from '../../store/services/users/fetchUserOwnDetail'
 
 interface IJobDetailProps {
@@ -544,19 +545,20 @@ const JobDetail = ({
         </div>
       </div>
 
-      <QuickApplyModal
+      {quickApplyModalShow && <QuickApplyModal
         jobDetails={selectedJob}
         applyJobLink={applyJobLink}
         modalShow={quickApplyModalShow}
         handleModalShow={setQuickApplyModalShow}
         config={config}
-      />
-      <ModalVerifyEmail
+      />}
+
+      {isShowModal && <ModalVerifyEmail
         email={userCookie ? userCookie.email : ''}
         isShowModal={isShowModal}
         handleModal={handleCloseModal}
         redirectLink={applyJobLink}
-      />
+      />}
     </React.Fragment>
   )
 }

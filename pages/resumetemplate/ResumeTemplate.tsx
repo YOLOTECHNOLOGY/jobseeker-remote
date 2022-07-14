@@ -87,12 +87,9 @@ const ResumeTemplate = () => {
             <p>
               A user with this email address already exists. Please enter a different email address
               or{' '}
-              <a
-                href='/login/jobseeker?redirect=/resumetemplate'
-                style={{ color: '#2379ea', textDecoration: 'underline' }}
-              >
-                log in
-              </a>
+              <Link to='/login/jobseeker?redirect=/resumetemplate'>
+                  log in
+              </Link>
               .
             </p>
           )
