@@ -359,7 +359,7 @@ const CompanyDetail = (props: any) => {
                     </div>
                   )}
                   <div className={styles.companyCultureSection}>
-                    {company.name + ' '}has not uploaded any information about their company life. Please come back again.
+                    {company.name} has not uploaded any information about their company life. Please come back again.
                   </div>
                 </div>
               </div>
@@ -455,7 +455,7 @@ const CompanyDetail = (props: any) => {
               <div className={styles.emptyResult}>
                 {totalActiveJobs === 0 ? (
                   <Text>
-                    {company.name + ' '}does not have any job openings now. Please come back again.
+                    {company.name} does not have any job openings now. Please come back again.
                   </Text>
                 ) : (
                   <Text>

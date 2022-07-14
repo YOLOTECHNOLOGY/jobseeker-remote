@@ -101,7 +101,7 @@ const CompanyJobsProfile = (props: any) => {
     >
       <div className={styles.companySection} id='companyJobs'>
         <div className={styles.companyTabsContent}>
-          {totalActiveJobs != 0 && (<div className={styles.companyJobs}>
+          {totalActiveJobs > 0 && (<div className={styles.companyJobs}>
             <Text textStyle='xl' bold className={styles.companySectionTitle}>
               Jobs
             </Text>
@@ -178,7 +178,7 @@ const CompanyJobsProfile = (props: any) => {
               </React.Fragment>
             ) : (
               <div className={styles.emptyResult}>
-                {totalActiveJobs != 0 && (
+                {totalActiveJobs > 0 && (
                   <Text>
                     We couldn't find any jobs matching your search.
                   </Text>
