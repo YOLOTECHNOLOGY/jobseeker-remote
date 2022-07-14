@@ -111,7 +111,7 @@
     margin: 16px 0 0;
 
     div {
-      margin-right: 20px;
+      margin-right: 16px;
     }
 
     @include msd {
@@ -124,7 +124,7 @@
 
     button {
       &:first-child {
-        margin-right: 20px;
+        margin-right: 16px;
       }
     }
 
@@ -230,6 +230,7 @@
     &Body {
       margin-top: 16px;
       display: block;
+      line-height: 24px;
     }
   
     &SubTitle {
@@ -304,7 +305,7 @@
     &Item {
       background-color: $primaryBlue;
       border-radius: 16px;
-      padding: 2px 16px 4px;
+      padding: 6px 14px 6px;
       margin-right: 16px;
       margin-bottom: 16px;
     }
@@ -598,4 +599,9 @@
   height:250px;
   margin-bottom: 24px;
   overflow:hidden;
+
+  @include msd {
+    width: auto;
+    margin-top: 48px;
+  }
 }

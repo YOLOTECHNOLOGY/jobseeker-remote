@@ -83,6 +83,7 @@ import {
   RateIcon,
   LocationPinIcon,
   DefaultAvatar,
+  CarIcon
 } from 'images'
 
 interface IJobDetail {
@@ -169,6 +170,8 @@ const Job = ({
         return <img src={PerformanceBonusIcon} alt='logo' width='22' height='22' />
       case 'TelecommunicationAllowanceIcon':
         return <img src={TelecommunicationAllowanceIcon} alt='logo' width='22' height='22' />
+      case 'TransportAllowanceIcon':
+          return <img src={CarIcon} alt='logo' width='22' height='22' />
       default:
         return <img src={OtherAllowancesIcon} alt='logo' width='22' height='22' />
     }
@@ -655,7 +658,7 @@ const Job = ({
               <ul className={styles.jobDetailSkillsList}>
                 {jobDetail?.skills?.map((skill, i) => (
                   <li className={styles.jobDetailSkillsItem} key={i}>
-                    <Text textStyle='sm' className={styles.jobDetailSkillsText}>
+                    <Text textStyle='lg' className={styles.jobDetailSkillsText}>
                       {skill.value}
                     </Text>
                   </li>
@@ -684,7 +687,7 @@ const Job = ({
                   className={styles.jobDetailSectionSubBody}
                   external
                 >
-                  <Text textStyle='base' className={styles.jobDetailSectionSubBodyLink}>
+                  <Text textStyle='lg' className={styles.jobDetailSectionSubBodyLink}>
                     {' '}
                     {category.value}
                     {jobDetail.categories.length === i + 1 ? '' : ','}
@@ -735,7 +738,7 @@ const Job = ({
               About the company
             </Text>
             <Link to={companyUrl} className={styles.aboutCompanyTitle}>
-              <Text bold textStyle='xl' textColor='primaryBlue'>
+              <Text bold textStyle='lg' textColor='primaryBlue'>
                 {jobDetail?.company?.name}
               </Text>
             </Link>
