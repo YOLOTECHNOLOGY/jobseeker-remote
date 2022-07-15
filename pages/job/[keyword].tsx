@@ -658,7 +658,7 @@ const Job = ({
               <ul className={styles.jobDetailSkillsList}>
                 {jobDetail?.skills?.map((skill, i) => (
                   <li className={styles.jobDetailSkillsItem} key={i}>
-                    <Text textStyle='lg' className={styles.jobDetailSkillsText}>
+                    <Text textStyle='base' textColor='white'>
                       {skill.value}
                     </Text>
                   </li>
