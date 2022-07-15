@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
-import slugify from 'slugify'
+// import slugify from 'slugify'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -48,7 +48,7 @@ const Search = ({ defaultQuery }: SearchProps) => {
 
   useEffect(() => {
     const searchFilterPayload = {
-      query: unslugify(query),
+      query,
       size: size,
       page: page,
       source: width < 768 ? 'mobile_web' : 'web',
@@ -76,7 +76,7 @@ const Search = ({ defaultQuery }: SearchProps) => {
   }
 
   const handleKeywordSearch = (keyword) => {
-    router.push(`/companies/search?query=${slugify(keyword)}&size=30&page=1`)
+    router.push(`/companies/search?query=${keyword}&size=30&page=1`)
   }
 
   const handlePaginationClick = (_, newPage) => {
