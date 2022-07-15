@@ -19,7 +19,6 @@ import MaterialTextField from 'components/MaterialTextField'
 import SEO from 'components/SEO'
 import AuthLayout from 'components/AuthLayout'
 import Text from 'components/Text'
-import NotificationBar from 'components/NotificationBar'
 
 import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 
@@ -161,8 +160,6 @@ const Register = () => {
         description='Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.'
         canonical='/register/jobseeker'
       />
-
-      <NotificationBar />
 
       <div className={styles.Register}>
         <SocialMediaAuth callbackRequest={callbackRequest} />

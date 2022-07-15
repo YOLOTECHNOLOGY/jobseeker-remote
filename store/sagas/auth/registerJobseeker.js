@@ -14,11 +14,11 @@ import {
   registerJobseekerSuccess,
   registerJobseekerFailed,
 } from 'store/actions/auth/registerJobseeker'
-import {
-  displayNotification
-} from 'store/actions/notificationBar/notificationBar'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 import { registerJobseekerService } from 'store/services/auth/registerJobseeker'
+import { checkErrorCode } from 'helpers/errorHandlers'
+import { setGlobalError } from 'store/actions/error/globalError'
 
 function* registerJobSeekerReq(actions) {
   try {
@@ -30,18 +30,13 @@ function* registerJobSeekerReq(actions) {
       terms_and_condition,
       is_subscribe,
       source,
-      redirect
+      redirect,
     } = actions.payload
 
     let randomPassword
     if (source === 'free_resume') {
       randomPassword =
-        Math.random()
-          .toString(36)
-          .substring(2, 15) +
-        Math.random()
-          .toString(36)
-          .substring(2, 15)
+        Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
     }
 
     const registerJobseekerPayload = {
@@ -53,23 +48,23 @@ function* registerJobSeekerReq(actions) {
       source: source || 'web',
       country_key: process.env.COUNTRY_KEY,
       terms_and_condition: terms_and_condition || 0,
-      ...(yield* getUtmCampaignData())
+      ...(yield* getUtmCampaignData()),
     }
 
     const response = yield call(registerJobseekerService, registerJobseekerPayload)
     if (response.status >= 200 && response.status < 300) {
       removeUtmCampaign()
-      
+
       yield put(registerJobseekerSuccess(response.data))
 
       if (window !== 'undefined' && window.gtag) {
         yield window.gtag('event', 'conversion', {
-          send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
+          send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID',
         })
       }
 
       if (window !== 'undefined' && window.fbq) {
-        yield fbq.event('CompleteRegistration', {'source': 'sign_up'})
+        yield fbq.event('CompleteRegistration', { source: 'sign_up' })
       }
 
       const registeredData = response.data.data
@@ -90,19 +85,18 @@ function* registerJobSeekerReq(actions) {
       setItem(isFromCreateResume, source === 'free_resume' ? '1' : '0')
 
       yield call(setCookie, 'user', userCookie)
-      yield call(
-        setCookie,
-        'accessToken',
-        registeredData.authentication.access_token
-      )
-      
+      yield call(setCookie, 'accessToken', registeredData.authentication.access_token)
+
       let url = '/jobseeker-complete-profile/1'
 
       if (redirect) {
         if (redirect.includes(process.env.OLD_PROJECT_URL)) {
           const newUrl = new URL(redirect)
-          
-          url = authPathToOldProject(registeredData.authentication.access_token, newUrl.pathname + newUrl.search)
+
+          url = authPathToOldProject(
+            registeredData.authentication.access_token,
+            newUrl.pathname + newUrl.search
+          )
         } else {
           url = redirect
         }
@@ -111,32 +105,26 @@ function* registerJobSeekerReq(actions) {
       yield put(push(url))
     }
   } catch (err) {
-    const statusCode = err.response.status
-
-    if (statusCode === 422) {
-      let errorMessage = ''
-
-      const error = err.response.data.errors.message
-      if (error) {
-        if (error['email']) {
-          if (error['email'][0] === 'The email has already been taken.') {
-            errorMessage = 'The email has already been taken.'
+    const isServerError = checkErrorCode(err)
+    if (isServerError) {
+      yield put(setGlobalError(true))
+    } else {
+      const statusCode = err.response.status
+      if (statusCode === 422) {
+        let errorMessage = ''
+        const error = err.response.data.errors.message
+        if (error) {
+          if (error['email']) {
+            if (error['email'][0] === 'The email has already been taken.') {
+              errorMessage = 'The email has already been taken.'
+            }
           }
         }
+        yield put(registerJobseekerFailed(errorMessage))
       }
-
-      yield put(registerJobseekerFailed(errorMessage))
-    } else {
-      const displayNotificationPayload = {
-        "open": true,
-        "severity": "error",
-        "message": "We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance."
-      }
-      yield put(displayNotification(displayNotificationPayload))
     }
   }
 }
-
 
 export default function* registerJobseekerSaga() {
   yield takeLatest(REGISTER_JOBSEEKER_REQUEST, registerJobSeekerReq)
