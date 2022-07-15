@@ -15,6 +15,7 @@ import * as gtag from 'lib/gtag'
 const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
 const MaintenancePage = dynamic(() => import('./maintenance'))
 import * as fbq from 'lib/fpixel'
+import GlobalErrorProvider from '../components/GlobalErrorProvider'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
@@ -247,8 +248,10 @@ const App = ({ Component, pageProps }: AppProps) => {
             <MaintenancePage {...pageProps} />
           ) : (
             isPageLoading && !router.pathname.includes('jobs-hiring') ?
-              <TransitionLoader accessToken={accessToken}/> :
-              <Component {...pageProps} />
+              <TransitionLoader accessToken={accessToken}/> :    
+              (<GlobalErrorProvider>
+                  <Component {...pageProps} />
+              </GlobalErrorProvider>)
           )}
         </CookiesProvider>
       </ConnectedRouter>
