@@ -22,8 +22,8 @@ import {
   uploadUserResumeSuccess,
   uploadUserResumeFailed,
 } from 'store/actions/users/uploadUserResume'
-
 import { applyJobService } from 'store/services/jobs/applyJob'
+import { setGlobalError } from 'store/actions/error/globalError'
 
 function* quickApplyJobReq(action) {
   try {
@@ -116,11 +116,21 @@ function* quickApplyJobReq(action) {
 
         yield put(push(applySuccessUrl))
       } catch (error) {
-        yield put(quickApplyJobFailed(error.response.data.errors.message))
+        const isServerError = checkErrorCode(error)
+        if (!isServerError) {
+          yield put(setGlobalError(true))
+        } else {
+          yield put(quickApplyJobFailed(error.response.data.errors.message))
+        }
       }
     }
   } catch (error) {
-    yield put(registerJobseekerFailed(error.response.data.errors.message))
+    const isServerError = checkErrorCode(error)
+    if (isServerError) {
+      yield put(setGlobalError(true))
+    } else {
+      yield put(registerJobseekerFailed(error.response.data.errors.message))
+    }
   }
 }
 
@@ -130,7 +140,12 @@ function* uploadResumeSaga(resume, accessToken) {
 
     yield put(uploadUserResumeSuccess(data.data))
   } catch (error) {
-    yield put(uploadUserResumeFailed(error.response.data))
+    const isServerError = checkErrorCode(error)
+    if (isServerError) {
+      yield put(setGlobalError(true))
+    } else {
+      yield put(uploadUserResumeFailed(error.response.data))
+    }
   }
 }
 

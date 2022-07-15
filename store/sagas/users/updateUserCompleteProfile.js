@@ -36,6 +36,9 @@ import { updateUserEducationService } from 'store/services/users/updateUserEduca
 
 import { getItem, removeItem } from 'helpers/localStorage'
 
+import { checkErrorCode } from 'helpers/errorHandlers'
+import { setGlobalError } from 'store/actions/error/globalError'
+
 function* updateUserCompleteProfileReq({ payload }) {
   const isFromCreateResume = getItem('isFromCreateResume')
 
@@ -145,7 +148,12 @@ function* updateUserCompleteProfileReq({ payload }) {
       yield completeUserProfileSaga(redirect, accessToken)
     }
   } catch (error) {
-    yield put(updateUserCompleteProfileFailed(error))
+    const isServerError = checkErrorCode(error)
+    if (isServerError) {
+      yield put(setGlobalError(true))
+    } else {
+      yield put(updateUserCompleteProfileFailed(error))
+    }    
   }
 }
 
@@ -154,7 +162,12 @@ function* fetchUserWorkExperienceSaga(accessToken) {
     const { data } = yield call(fetchUserWorkExperienceService, { accessToken })
     yield put(fetchUserWorkExperienceSuccess(data.data))
   } catch (error) {
-    yield put(fetchUserWorkExperienceFailed(error))
+    const isServerError = checkErrorCode(error)
+    if (isServerError) {
+      yield put(setGlobalError(true))
+    } else {
+      yield put(fetchUserWorkExperienceFailed(error))
+    }
   }
 }
 
@@ -163,7 +176,12 @@ function* fetchUserEducationServiceSaga(accessToken) {
     const { data } = yield call(fetchUserEducationService, { accessToken })
     yield put(fetchUserEducationSuccess(data.data))
   } catch (error) {
-    yield put(fetchUserEducationFailed(error))
+    const isServerError = checkErrorCode(error)
+    if (isServerError) {
+      yield put(setGlobalError(true))
+    } else {
+      yield put(fetchUserEducationFailed(error))
+    }
   }
 }
 
@@ -190,7 +208,12 @@ function* completeUserProfileSaga(redirect, accessToken) {
     removeItem('isCreateFreeResume')
     yield put(push(url))
   } catch (error) {
-    yield put(completeUserProfileFailed(error))
+    const isServerError = checkErrorCode(error)
+    if (isServerError) {
+      yield put(setGlobalError(true))
+    } else {
+      yield put(completeUserProfileFailed(error))
+    }
   }
 }
 
