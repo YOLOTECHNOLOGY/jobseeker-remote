@@ -860,7 +860,7 @@ const Home = (props: HomeProps) => {
   )
 }
 
-export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   // store actions
   store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
@@ -884,7 +884,8 @@ export const getStaticProps = wrapper.getStaticProps((store) => async () => {
       config,
       topCompanies,
     },
-    revalidate: 300 // 5mins
+    revalidate: 300, // 5mins
   }
 })
+
 export default Home
