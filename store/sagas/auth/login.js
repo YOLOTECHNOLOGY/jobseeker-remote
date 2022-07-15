@@ -69,7 +69,7 @@ function* loginReq(actions) {
           : `/jobs-hiring/job-search`
 
       if (redirect) {
-        if (redirect.includes(process.env.OLD_PROJECT_URL)) {
+        if (redirect.includes(process.env.OLD_PROJECT_URL) && !redirect.includes('/jobseeker-login-redirect')) {
           const newUrl = new URL(redirect)
           
           url = authPathToOldProject(loginData.authentication.access_token, newUrl.pathname + newUrl.search)
