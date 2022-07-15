@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux'
 
 /* Vendors */
 import { useRouter } from 'next/router'
-import slugify from 'slugify'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
+import dynamic from 'next/dynamic'
 
 /* Components */
 import Text from 'components/Text'
@@ -15,9 +16,9 @@ import AdSlot from 'components/AdSlot'
 import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
 
-import ModalShare from 'components/ModalShare'
-import ModalJobAlerts from 'components/ModalJobAlerts'
-import ModalReportJob from 'components/ModalReportJob'
+const ModalShare = dynamic(() => import('components/ModalShare'))
+const ModalJobAlerts = dynamic(() => import('components/ModalJobAlerts'))
+const ModalReportJob = dynamic(() => import('components/ModalReportJob'))
 
 /* Material Components */
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
@@ -108,6 +109,8 @@ const JobListSection = ({
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
 
+  const filterJobPayload = useSelector((store: any) => store.job.jobList.payload)
+
   useEffect(() => {
     setIsUserAuthenticated(accessToken ? true : false)
     window.addEventListener('scroll', updateScrollPosition)
@@ -131,29 +134,22 @@ const JobListSection = ({
   }
 
   const handleCreateJobAlertData = (email) => {
-    const { query } = router
 
-    createJobAlert({
+    const createJobAlertPayload = {
       email: email,
-      keyword: formatKeywordAndLocation(query?.keyword, 'keyword'),
-      location_key: formatKeywordAndLocation(query?.keyword, 'location'),
-      job_category_key: query?.category ? query?.category : 'all',
-      industry_key: query?.industry ? formatToUnderscore(query?.industry) : 'all',
-      xp_lvl_key: query?.workExperience ? formatToReplace(query?.workExperience, 'to') : 'all',
-      degree_key: query?.qualification ? formatToUnderscore(query?.qualification) : 'all',
-      job_type_key: query?.jobType ? formatToReplace(query?.jobType, '_'): 'all',
-      salary_range_key: query?.salary ? formatToReplace(query?.salary, 'to') : 'all',
-      is_company_verified: 1,
-      frequency_id: 1
-    })
-  }
+      frequency_id: 1,
+      is_company_verified: 'all',
+      keyword: filterJobPayload?.query ? filterJobPayload.query : 'all',
+      location_values: filterJobPayload?.location ? filterJobPayload.location : 'all',
+      job_category_values: filterJobPayload?.category ? filterJobPayload.category : 'all',
+      industry_values: filterJobPayload?.industry ? filterJobPayload.industry : 'all',
+      xp_lvl_values: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
+      degree_values: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',
+      job_type_values: filterJobPayload?.jobType ? filterJobPayload.jobType : 'all',
+      salary_range_values: filterJobPayload?.salary ? filterJobPayload.salary : 'all',
+    }
 
-  const formatToUnderscore = (data) => {
-    return data.toLowerCase().replace(/ /g, '_')
-  }
-
-  const formatToReplace = (data, replacedTo) => {
-    return formatToUnderscore(data).replace(/-/g, replacedTo)
+    createJobAlert(createJobAlertPayload)
   }
 
   const handleCreateJobAlert = (email?:any) => {
@@ -161,31 +157,11 @@ const JobListSection = ({
     setIsShowModalEnableJobAlerts(true)
   }
 
-  const formatKeywordAndLocation = (data, keyword) => {
-    let results = []
-    if (data.includes('jobs-in')) {
-      results = data.split('-jobs-in-')
-    }
-
-    if (keyword === 'keyword') {
-      if (results[0]) return results[0]
-      return data.split('-jobs')[0]
-    }
-    if (keyword === 'location') return results[1] ? results[1].replace(/-/g, '_') : 'all'
-  }
-
   const updateScrollPosition = () => {
     if (width > 798) {
       prevScrollY.current = window.pageYOffset
       setIsSticky(prevScrollY.current >= 330 ? true : false)
     }
-  }
-
-  const handleFormatWindowUrl = (pathname, name, id) => {
-    if (typeof window !== 'undefined') {
-      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!#:/@]/g })}-${id}`
-    }
-    return ''
   }
 
   const emptyResult = () => {
@@ -196,9 +172,6 @@ const JobListSection = ({
       </React.Fragment>
     )
   }
-
-  const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
-  const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
   return (
     <React.Fragment>
@@ -269,7 +242,7 @@ const JobListSection = ({
                   status={job.status_key}
                   selectedId={selectedJobId}
                   handleSelectedId={() => {
-                    handleSelectedJobId(job.id, job.job_title)
+                    handleSelectedJobId(job.id, job.job_url)
                   }}
                 />
               ))}
@@ -291,8 +264,8 @@ const JobListSection = ({
                 setIsShowModalShare={setIsShowModalShare}
                 setIsShowReportJob={setIsShowReportJob}
                 isSticky={isSticky}
-                jobDetailUrl={jobDetailUrl}
-                companyUrl={companyUrl}
+                jobDetailUrl={selectedJob?.['job_url']}
+                companyUrl={selectedJob?.['company']?.['company_url']}
                 handlePostSaveJob={handlePostSaveJob}
                 handleDeleteSavedJob={handleDeleteSavedJob}
                 config={config}
@@ -319,7 +292,7 @@ const JobListSection = ({
         </div>
       </div>
 
-      <ModalJobAlerts
+      {(isShowModalEnableJobAlerts || isShowModalManageJobAlerts) && <ModalJobAlerts
         query={query}
         location={location}
         isShowModalEnableJobAlerts={isShowModalEnableJobAlerts}
@@ -336,8 +309,9 @@ const JobListSection = ({
         isDeletingJobAlert={isDeletingJobAlert}
         isCreatingJobAlert={isCreatingJobAlert}
         isPublicPostReportJob={!isUserAuthenticated}
-      />
-      <ModalReportJob 
+      />}
+
+      {isShowReportJob && <ModalReportJob 
         isShowReportJob={isShowReportJob} 
         handleShowReportJob={setIsShowReportJob} 
         reportJobReasonList={reportJobReasonList}
@@ -345,12 +319,13 @@ const JobListSection = ({
         handlePostReportJob={handlePostReportJob}
         isPostingReport={isPostingReport}
         postReportResponse={postReportResponse}
-      />
-      <ModalShare
-        jobDetailUrl={jobDetailUrl}
+      />}
+
+      {isShowModalShare && <ModalShare
+        jobDetailUrl={selectedJob?.['job_url']}
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}
-      />
+      />}
     </React.Fragment>
   )
 }

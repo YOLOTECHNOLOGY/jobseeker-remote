@@ -21,6 +21,7 @@ import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Style */
 import styles from '../Header.module.scss'
+import LazyLoad from '../../LazyLoad'
 
 const ProtectedHeader = () => {
   const router = useRouter()
@@ -60,8 +61,12 @@ const ProtectedHeader = () => {
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/'}>
-            <img className={styles.headerLogoImage} src={BossjobFittedLogo} title='Bossjob logo' alt='Bossjob logo' />
-            <img className={styles.headerLogoImageDesktop} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+            <LazyLoad>
+              <img className={styles.headerLogoImage} src={BossjobFittedLogo} title='Bossjob logo' alt='Bossjob logo' />
+            </LazyLoad>
+            <LazyLoad>
+              <img className={styles.headerLogoImageDesktop} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+            </LazyLoad>
           </Link>
         </div>
         <div className={styles.headerLinksWrapper}>

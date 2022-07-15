@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import slugify from 'slugify'
-
+import dynamic from 'next/dynamic'
 // @ts-ignore
 import { END } from 'redux-saga'
 
@@ -42,8 +41,9 @@ import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
 import SEO from 'components/SEO'
-import JobSearchFilters from 'components/JobSearchFilters'
+const JobSearchFilters = dynamic(() => import('components/JobSearchFilters'))
 import JobListSection from 'components/JobListSection'
+import LazyLoad from '../../components/LazyLoad'
 
 /* Styles */
 import styles from './jobsHiring.module.scss'
@@ -83,6 +83,7 @@ type companyObject = {
   id: number
   logoUrl: string
   name: string
+  companyUrl: string
 }
 
 const renderPopularSearch = () => {
@@ -91,78 +92,91 @@ const renderPopularSearch = () => {
   return (
     <div className={styles.popularSearch}>
       <Link
-        className={styles.link}
-        to={`${jobsPageLink}/finance-accounting-jobs`}
-        title='Finance jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Finance
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/sales-marketing-jobs`}
-        title='Sales jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Sales
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/sales-marketing-jobs`}
-        title='Marketing jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Marketing
-        </Text>
-      </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs'>
-        <Text textStyle='base' textColor='darkgrey'>
-          Makati
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/computer-information-technology-jobs`}
-        title='IT jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          IT
-        </Text>
-      </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/overseas-jobs`} title='Overseas jobs'>
-        <Text textStyle='base' textColor='darkgrey'>
-          Overseas jobs
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/customer-service-jobs`}
-        title='Customer Service jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Customer Service
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/job-search?salary=30k-60k,60k-80k,80k-100k,100k-200k,above-200k`}
-        title='₱30K + jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          ₱30K+ jobs
-        </Text>
-      </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/full-time-jobs`}
-        title='Full Time jobs'
-      >
-        <Text textStyle='base' textColor='darkgrey'>
-          Full Time jobs
-        </Text>
-      </Link>
+          className={styles.link}
+          to={`${jobsPageLink}/finance-accounting-jobs`}
+          title='Accounting jobs'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            Accounting jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/sales-marketing-jobs`}
+          title='Sales jobs'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            Sales jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/sales-marketing-jobs`}
+          title='Marketing jobs'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            Marketing jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/computer-information-technology-jobs`}
+          title='IT jobs'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            IT jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/customer-service-jobs`}
+          title='Customer Service jobs'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            Customer Service jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/hr-recruitment-jobs`}
+          title='HR jobs'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            HR jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/bpo-team-lead-jobs`}
+          title='BPO Team Lead'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            BPO Team Lead
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/homebased-jobs`}
+          title='WFH'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            WFH
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/manager-jobs`}
+          title='Manager'
+        >
+          <Text textStyle='base' textColor='darkgrey'>
+            Manager
+          </Text>
+        </Link>
+        <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs'>
+          <Text textStyle='base' textColor='darkgrey'>
+            Manila jobs
+          </Text>
+        </Link>
     </div>
   )
 }
@@ -176,7 +190,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     config,
     topCompanies,
     defaultPage,
-    defaultValues,
+    defaultValues
   } = props
   const router = useRouter()
   const dispatch = useDispatch()
@@ -232,7 +246,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     matchedLocation,
     matchedConfigFromUrl,
     filterCount,
-  } = checkFilterMatch(router.query, config)
+  } = checkFilterMatch(router.query, config, isMobile)
   const [selectedPage, setSelectedPage] = useState(defaultPage)
 
   useEffect(() => {
@@ -554,7 +568,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleResetFilter = () => {
     const { searchMatch, locationMatch, searchQuery, predefinedLocation } = checkFilterMatch(
       router.query,
-      config
+      config,
+      isMobile
     )
 
     const queryObject = []
@@ -585,10 +600,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleFetchJobDetail = (jobId) =>
     dispatch(fetchJobDetailRequest({ jobId, status: userCookie ? 'protected' : 'public' }))
 
-  const handleSelectedJobId = (jobId, jobTitle) => {
+  const handleSelectedJobId = (jobId, jobUrl='/') => {
     // Open new tab in mobile
     if (isMobile && typeof window !== 'undefined') {
-      window.open(`/job/${slugify(jobTitle.toLowerCase())}-${jobId}`)
+      window.open(jobUrl)
 
       return
     }
@@ -799,9 +814,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           className={displayQuickLinks ? styles.quickLinkSectionExpanded : styles.quickLinkSection}
         >
           <div className={styles.popularSearchContainer}>
-            <Text textStyle='base' bold className={styles.quickLinkTitle}>
-              Popular Search:
-            </Text>
+            <div>
+              <Text textStyle='base' bold className={styles.quickLinkTitle}>
+                Popular Search:
+              </Text>
+            </div>
             {renderPopularSearch()}
           </div>
           <div className={styles.topCompaniesContainer}>
@@ -816,7 +833,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                       <Link
                         key={company.id}
                         className={styles.topCompaniesLogo}
-                        to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
+                        to={`${company?.companyUrl}/jobs`}
                         external
                       >
                         <Tooltip
@@ -826,7 +843,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                           arrow
                         >
                           <span>
-                            <Image src={company.logoUrl} alt={company.name} width='30' height='30' />
+                            <LazyLoad>
+                              <img src={company.logoUrl} alt={company.name} width='30' height='30' />
+                            </LazyLoad>
                           </span>
                         </Tooltip>
                       </Link>
@@ -837,7 +856,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           </div>
         </div>
       </div>
-      <JobSearchFilters
+      {isShowFilter && <JobSearchFilters
         urlDefaultValues={clientDefaultValues}
         categories={categories}
         isShowFilter={isShowFilter}
@@ -846,7 +865,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         moreFilterReset={moreFilterReset}
         isShowingEmailAlert={accessToken && !userCookie?.is_email_verify}
         setClientDefaultValues={setClientDefaultValues}
-      />
+      />}
       {/* <div className={breakpointStyles.hideOnTabletAndDesktop}>
         {hasMoreFilters && (
           <div className={styles.resetFilterBtnMobile}>
@@ -905,6 +924,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req, resolvedUrl }) => {
       const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
+      
 
       const { keyword, page } = query
       // store actions
@@ -920,8 +940,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       const topCompanies = featuredCompanies?.map((featuredCompany) => {
         const logoUrl = featuredCompany.logo_url
+        const companyUrl = featuredCompany.company_url
         delete featuredCompany.logo_url
-        return { ...featuredCompany, logoUrl }
+        delete featuredCompany.companyUrl
+        return { ...featuredCompany, logoUrl, companyUrl }
       })
 
       /* Handle job search logic */
@@ -932,7 +954,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         predefinedLocation,
         matchedLocation,
         matchedConfigFromUrl,
-        filterCount,
       } = checkFilterMatch(query, config)
 
       // query parameters
@@ -943,7 +964,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const queryIndustry: any = query?.industry
       const queryWorkExp: any = query?.workExperience
       const queryCategory: any = query?.category
-
+      
       const defaultValues: any = {
         urlQuery: searchQuery ? unslugify(searchQuery).replace('+', '-') : '',
         // if sort param exist, follow sort defined in param, otherwise if search exist, sort default to 2 'Relevance'
@@ -956,7 +977,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         workExperience: queryWorkExp?.split(',') || null,
         category: queryCategory?.split(',') || null,
       }
-
+      
       for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
         defaultValues[key] = [value[0]['seo-value']]
       }
@@ -967,15 +988,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           defaultValues.urlQuery = ''
         }
       }
-
+      
       if (defaultValues.category) {
         const defaultCategories = defaultValues.category
         const initialListOptions = catList.map((data) => {
           const newSubList = data.sub_list.map((subData) => ({
             ...subData,
             isChecked:
-              defaultCategories.includes(subData['seo-value']) ||
-              defaultCategories.includes(data['seo-value']),
+            defaultCategories.includes(subData['seo-value']) ||
+            defaultCategories.includes(data['seo-value']),
           }))
           const newList = {
             ...data,
@@ -986,6 +1007,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         })
         defaultValues.categoryList = initialListOptions
       }
+      
+      // sanitise searchQuery 
+      defaultValues.urlQuery = defaultValues.urlQuery ? unslugify(searchQuery).replace('+', '-') : ''
 
       /* Handle SEO Meta Tags*/
       const { month, year } = getCurrentMonthYear()
@@ -994,10 +1018,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         'New Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers'
       const seoCanonical = resolvedUrl
 
-      if (!searchQuery && !predefinedLocation && filterCount >= 2) {
-        seoMetaTitle = `Professional Jobs in Philippines - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
-        seoMetaDescription = `New Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
-      } else if (searchQuery && !predefinedQuery && !predefinedLocation) {
+      if (searchQuery && !predefinedQuery && !predefinedLocation) {
         seoMetaTitle = `${unslugify(
           searchQuery,
           true
@@ -1047,8 +1068,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           defaultValues,
           accessToken,
           seoMetaTitle,
-          seoMetaDescription,
-          seoCanonical,
+          seoMetaDescription: encodeURI(seoMetaDescription),
+          seoCanonical
         },
       }
     }

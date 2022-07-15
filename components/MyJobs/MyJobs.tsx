@@ -3,11 +3,11 @@ import React, { useState, useEffect, useRef } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-import slugify from 'slugify'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { Tabs, Tab } from '@mui/material'
+import dynamic from 'next/dynamic'
 
 /* Redux Actions */
 import { fetchSavedJobsListRequest } from 'store/actions/jobs/fetchSavedJobsList'
@@ -32,9 +32,9 @@ import JobCard from 'components/JobCard'
 import JobDetail from 'components/JobDetail'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 
-import ModalShare from 'components/ModalShare'
-import ModalWithdrawApplication from 'components/ModalWithdrawApplication'
-import ModalReportJob from 'components/ModalReportJob'
+const ModalShare = dynamic(() => import('components/ModalShare'))
+const ModalWithdrawApplication = dynamic(() => import('components/ModalWithdrawApplication'))
+const ModalReportJob = dynamic(() => import('components/ModalReportJob'))
 
 import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
@@ -229,15 +229,15 @@ const MyJobs = ({
     dispatch(fetchSavedJobsListRequest(payload))
   }
 
-  const handleSelectedJobId = (jobId, jobTitle, status) => {
+  const handleSelectedJobId = (jobId, jobUrl, status) => {
     setSelectedJobId(jobId)
     handleFetchJobDetail(jobId, category) 
     
     if (isMobile && status === 'active') {
       if (isAppliedCategory) {
-        router.push(`/job/${slugify(jobTitle || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobId}?isApplied=${isAppliedCategory}`)
+        router.push(`${jobUrl}?isApplied=${isAppliedCategory}`)
       } else {
-        router.push(`/job/${slugify(jobTitle || '', { lower: true, remove: /[*+~.()'"!:@]/g })}-${jobId}`)
+        router.push(jobUrl)
       }
 
       return
@@ -274,13 +274,6 @@ const MyJobs = ({
     router.push(router, undefined, { shallow: true })
 
     document.documentElement.scrollTop = 0;
-  }
-
-  const handleFormatWindowUrl = (pathname, name, id) => {
-    if (typeof window !== 'undefined') {
-      return `${window.location.origin}/${pathname}/${slugify(name || '', { lower: true, remove: /[*+~.()'"!#:/@]/g })}-${id}`
-    }
-    return ''
   }
 
   const handlePostReportJob = (reportJobData) => {
@@ -324,9 +317,6 @@ const MyJobs = ({
       </div>
     )
   }
-
-  const jobDetailUrl = handleFormatWindowUrl('job', selectedJob?.['job_title'], selectedJob?.['id'])
-  const companyUrl = handleFormatWindowUrl('company', selectedJob?.['company']?.['name'], selectedJob?.['company']?.['id'])
 
   return (
     <Layout>
@@ -411,7 +401,7 @@ const MyJobs = ({
                   postedAt={jobs.job.refreshed_at}
                   selectedId={selectedJobId}
                   status={jobs.job.status_key}
-                  handleSelectedId={() => handleSelectedJobId(jobs.job.id, jobs.job.job_title, jobs.job.status_key)}
+                  handleSelectedId={() => handleSelectedJobId(jobs.job.id, jobs.job.job_url, jobs.job.status_key)}
                 />
               ))}
             </div>
@@ -429,8 +419,8 @@ const MyJobs = ({
             {!isLoadingJobDetails && selectedJob && (
               <JobDetail 
                 selectedJob={selectedJob}
-                jobDetailUrl={jobDetailUrl}
-                companyUrl={companyUrl}
+                jobDetailUrl={selectedJob?.['job_url']}
+                companyUrl={selectedJob?.['company']?.['company_url']}
                 isSticky={isSticky}
                 category={category}
                 applicationHistory={applicationHistories}
@@ -463,13 +453,13 @@ const MyJobs = ({
         </div>
       </div>
 
-      <ModalShare
-        jobDetailUrl={jobDetailUrl}
+      {isShowModalShare && <ModalShare
+        jobDetailUrl={selectedJob?.['job_url']}
         isShowModalShare={isShowModalShare}
         handleShowModalShare={setIsShowModalShare}
-      />
+      />}
 
-      <ModalReportJob 
+      {isShowReportJob && <ModalReportJob 
         isShowReportJob={isShowReportJob} 
         handleShowReportJob={setIsShowReportJob} 
         reportJobReasonList={reportJobReasonList}
@@ -477,15 +467,15 @@ const MyJobs = ({
         handlePostReportJob={handlePostReportJob}
         isPostingReport={isPostingReport}
         postReportResponse={postReportResponse}
-      />
+      />}
 
-      <ModalWithdrawApplication
+      {isShowModalWithdrawApplication && <ModalWithdrawApplication
         jobId={selectedJob?.['id']}
         isShowModalWithdrawApplication={isShowModalWithdrawApplication}
         handleShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
         handleWithdrawApplication={handleWithdrawApplication}
         isWithdrawAppliedJobFetching={isWithdrawAppliedJobFetching}
-      />
+      />}
     </Layout>
   )
 }
