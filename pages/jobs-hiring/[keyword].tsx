@@ -946,7 +946,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       const defaultValues: any = {
         urlQuery: searchQuery ? unslugify(searchQuery).replace('+', '-') : '',
-        sort: query?.sort ? query?.sort : 1,
+        // if sort param exist, follow sort defined in param, otherwise if search exist, sort default to 2 'Relevance'
+        sort: query?.sort ? query?.sort : searchQuery ? 2 : 1,
         jobType: queryJobType?.split(',') || null,
         salary: querySalary?.split(',') || null,
         qualification: queryQualification?.split(',') || null,
