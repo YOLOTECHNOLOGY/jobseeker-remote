@@ -29,7 +29,6 @@ interface ModalVerifyEmailProps {
 }
 
 const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailProps) => {
-  const router = useRouter()
   const [otp, setOtp] = useState<string>('') // Text Input field state
   const [timerCount, setTimerCount] = useState<number>(-1) // timer counter
   const [canRequestOTP, setCanRequestOTP] = useState<boolean>(true) // if an otp is requested or timer countdown starts
@@ -123,6 +122,14 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
     setTimerCount(61)
   }
 
+  const handleContinueBtn = () => {
+    handleModal(isOTPVerified)
+  }
+
+  const handleCloseModal = () => {
+    handleModal(isOTPVerified)
+  }
+
   const modalContent = !isVerifiedEmail ? (
     <div className={styles.ModalVerifyEmail}>
       <Text>
@@ -191,21 +198,20 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
         <b>{email}</b> has been successfully verified. You will receive application updates via
         email.
       </Text>
-      {/* <MaterialButton
+      <MaterialButton
         className={styles.VerifiedEmailFormButton}
         capitalize
         size='large'
         variant='contained'
         isLoading={isOTPVerifying}
         onClick={() => {
-          handleModal()
-          router.reload()
+          handleContinueBtn()
         }}
       >
         <Text textColor='white' bold>
           Continue {timerCount > 1 ? '(' + (timerCount - 1) + ')' : ''}
         </Text>
-      </MaterialButton> */}
+      </MaterialButton>
     </div>
   )
 
@@ -213,8 +219,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
     <Modal
       headerTitle='Verify your email'
       showModal={isShowModal}
-      handleModal={handleModal}
-      isOTPVerified={isOTPVerified}
+      handleModal={handleCloseModal}
     >
       {modalContent}
     </Modal>

@@ -29,8 +29,7 @@ type ModalProps = {
   secondButtonIsClose?: boolean
   firstButtonText?: string
   secondButtonText?: string
-  customFooter?: React.ReactNode,
-  isOTPVerified?: boolean
+  customFooter?: React.ReactNode
 }
 
 const Modal = ({
@@ -50,7 +49,6 @@ const Modal = ({
   secondButtonIsClose,
   secondButtonText,
   customFooter,
-  isOTPVerified,
   ...rest
 }: ModalProps) => {
   if (!showModal) return null
@@ -65,10 +63,8 @@ const Modal = ({
 
     /* For IOS devices, restore scroll position*/
     window.scrollTo(0, scrollY.current)
-    handleModal(false)
-    if (isOTPVerified) {
-      handleModal(isOTPVerified)
-    }
+
+    handleModal()
   }
 
   const handleClickOutside = (event) => {
