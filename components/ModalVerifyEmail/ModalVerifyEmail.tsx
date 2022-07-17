@@ -25,7 +25,6 @@ interface ModalVerifyEmailProps {
   email: string
   isShowModal?: boolean
   handleModal?: Function
-  redirectLink?: string
 }
 
 const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailProps) => {
