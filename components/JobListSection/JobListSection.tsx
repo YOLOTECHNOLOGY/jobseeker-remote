@@ -113,9 +113,6 @@ const JobListSection = ({
 
   const filterJobPayload = useSelector((store: any) => store.job.jobList.payload)
 
-  const showManageJobAlertsModal = useSelector((store: any) => store.modal.manageJobAlertsModal.show)
-  const showCreateJobAlertModal = useSelector((store: any) => store.modal.createJobAlertModal.show)
-
   useEffect(() => {
     setIsUserAuthenticated(accessToken ? true : false)
     window.addEventListener('scroll', updateScrollPosition)
@@ -296,7 +293,7 @@ const JobListSection = ({
         </div>
       </div>
 
-      {(showCreateJobAlertModal || showManageJobAlertsModal) && <ModalJobAlerts
+      <ModalJobAlerts
         query={query}
         location={location}
         jobAlertsList={jobAlertsList}
@@ -309,7 +306,7 @@ const JobListSection = ({
         isDeletingJobAlert={isDeletingJobAlert}
         isCreatingJobAlert={isCreatingJobAlert}
         isPublicPostReportJob={!isUserAuthenticated}
-      />}
+      />
 
       {isShowReportJob && <ModalReportJob 
         isShowReportJob={isShowReportJob} 

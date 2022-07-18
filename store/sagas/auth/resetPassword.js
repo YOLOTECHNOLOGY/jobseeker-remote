@@ -25,8 +25,6 @@ function* resetPasswordReq(actions) {
       yield put(
         resetPasswordSuccess(response.data)
       )
-
-      yield put(push('/change-password/success'))
     }
   } catch (err) {
     yield put(resetPasswordFailed(err))
