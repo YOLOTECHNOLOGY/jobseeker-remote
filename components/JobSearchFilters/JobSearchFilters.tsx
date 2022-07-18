@@ -214,15 +214,17 @@ const NavSearchFilter = ({
   }: SearchFilters) => {
     const isFilterColumnClass = cx({ searchFilterOptionsColumn: isColumn })
     const initialListOptions = options.map((data) => {
+      const isArrayOrString =
+        Array.isArray(urlDefaultValues[fieldName]) || typeof urlDefaultValues[fieldName] === 'string'
       const newSubList = data.sub_list.map((subData) => ({
         ...subData,
-        isChecked:
+        isChecked: isArrayOrString ? 
           urlDefaultValues[fieldName]?.includes(subData['seo-value']) ||
-          urlDefaultValues[fieldName]?.includes(data['seo-value']),
+          urlDefaultValues[fieldName]?.includes(data['seo-value']) : false,
       }))
       const newList = {
         ...data,
-        isChecked: urlDefaultValues[fieldName]?.includes(data['seo-value']),
+        isChecked: isArrayOrString ? urlDefaultValues[fieldName]?.includes(data['seo-value']) : false,
         sub_list: newSubList,
       }
       return newList
