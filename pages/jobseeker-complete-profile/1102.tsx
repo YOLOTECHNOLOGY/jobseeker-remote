@@ -112,7 +112,7 @@ const Step4 = (props: any) => {
 
   useEffect(() => {
     setIsAuthenticated(authCookie ? true : false)
-  })
+  }, [])
 
   useEffect(() => {
     dispatch(fetchUserEducationRequest({ accessToken }))

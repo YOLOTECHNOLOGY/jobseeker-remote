@@ -121,10 +121,6 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
     setTimerCount(61)
   }
 
-  const handleContinueBtn = () => {
-    handleModal(isOTPVerified)
-  }
-
   const handleCloseModal = () => {
     handleModal(isOTPVerified)
   }
@@ -204,7 +200,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
         variant='contained'
         isLoading={isOTPVerifying}
         onClick={() => {
-          handleContinueBtn()
+          handleCloseModal()
         }}
       >
         <Text textColor='white' bold>
