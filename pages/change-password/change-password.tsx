@@ -50,9 +50,6 @@ const ChangePassword = () => {
         open: true,
         severity: 'success',
         message: 'Your password has been changed successfully',
-        config: {
-          color: 'info',
-        }
       }))
       setTimeout(() => {
         dispatch(closeNotification())
