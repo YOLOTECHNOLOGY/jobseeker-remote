@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
-// import slugify from 'slugify'
 
 /* Action Creators */
 import { wrapper } from 'store'
