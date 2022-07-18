@@ -40,11 +40,11 @@ const ModalAppRedirect = ({ isShowModal, handleModal }: ModalAppRedirectProps) =
   } else if (path.includes('/job/')) {
     const jobId = path?.split('-').pop()
     schema = schema + 'job-detail'
-    jobId && (schema = `${schema}/${jobId}`)
+    if (jobId) schema = `${schema}/${jobId}`
   } else if (path.includes('/company/')) {
     const companyId = path?.split('-').pop()
     schema = schema + 'company'
-    companyId && (schema = `${schema}/${companyId}`)
+    if (companyId) schema = `${schema}/${companyId}`
   }
 
   useEffect(() => {
@@ -71,14 +71,16 @@ const ModalAppRedirect = ({ isShowModal, handleModal }: ModalAppRedirectProps) =
   }, [userAgent])
 
   const handleOpenApp = () => {
-    const appStoreLink = userAgent?.isIos ? 'https://apps.apple.com/sg/app/bossjob/id1592073585' : 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'
+    const appStoreLink = userAgent?.isIos ? process.env.APP_STORE_LINK : process.env.GOOGLE_PLAY_STORE_LINK
     
-    window.location.replace(schema)
+    if (typeof window !== undefined) {
+      window.location.replace(schema)
     
-    // Wait 2s and redirect to App Store/Google Play Store if app was not opened
-    setTimeout(() => {
-      window.location.replace(appStoreLink); 
-    }, 2000);
+      // Wait 2s and redirect to App Store/Google Play Store if app was not opened
+      setTimeout(() => {
+        window.location.replace(appStoreLink); 
+      }, 2000);
+    }
   }
 
   return (
