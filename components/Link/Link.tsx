@@ -41,7 +41,7 @@ LinkProps) => {
   }
   return (
     <NextLink href={to} passHref={passHref}>
-      <a className={className}>{children}</a>
+      <a className={className} style={className == 'default' ? { color: '#2379ea', textDecoration: 'underline' } : undefined}>{children}</a>
     </NextLink>
   )
 }

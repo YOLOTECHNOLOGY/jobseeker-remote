@@ -1,10 +1,12 @@
 import { take, fork, call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
+import * as fbq from 'lib/fpixel'
 
 import { setCookie } from 'helpers/cookies'
 import { setItem } from 'helpers/localStorage'
 import { isFromCreateResume } from 'helpers/constants'
 import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import { REGISTER_JOBSEEKER_REQUEST } from 'store/types/auth/registerJobseeker'
 
@@ -21,14 +23,14 @@ import { registerJobseekerService } from 'store/services/auth/registerJobseeker'
 function* registerJobSeekerReq(actions) {
   try {
     const {
-      jobId,
       email,
       password,
       first_name,
       last_name,
       terms_and_condition,
       is_subscribe,
-      source
+      source,
+      redirect
     } = actions.payload
 
     let randomPassword
@@ -58,12 +60,17 @@ function* registerJobSeekerReq(actions) {
     if (response.status >= 200 && response.status < 300) {
       removeUtmCampaign()
       
+      yield put(registerJobseekerSuccess(response.data))
+
       if (window !== 'undefined' && window.gtag) {
         yield window.gtag('event', 'conversion', {
           send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
         })
       }
-      yield put(registerJobseekerSuccess(response.data))
+
+      if (window !== 'undefined' && window.fbq) {
+        yield fbq.event('CompleteRegistration', {'source': 'sign_up'})
+      }
 
       const registeredData = response.data.data
       const userCookie = {
@@ -88,8 +95,20 @@ function* registerJobSeekerReq(actions) {
         'accessToken',
         registeredData.authentication.access_token
       )
+      
+      let url = '/jobseeker-complete-profile/1'
 
-      yield put(push(jobId ? `/job/${jobId}` : '/jobseeker-complete-profile/1'))
+      if (redirect) {
+        if (redirect.includes(process.env.OLD_PROJECT_URL) && !redirect.includes('/jobseeker-login-redirect')) {
+          const newUrl = new URL(redirect)
+          
+          url = authPathToOldProject(registeredData.authentication.access_token, newUrl.pathname + newUrl.search)
+        } else {
+          url = redirect
+        }
+      }
+
+      yield put(push(url))
     }
   } catch (err) {
     const statusCode = err.response.status

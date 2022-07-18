@@ -150,7 +150,7 @@ const nonFilterKeys = [
 // }
 
 // check if there is a match/a reserved keyword, and return matched data under matchedFilter
-const checkFilterMatch = (routerQuery, config) => {
+const checkFilterMatch = (routerQuery, config, isMobile=false) => {
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
   const locationList = config.inputs.location_lists
@@ -187,7 +187,6 @@ const checkFilterMatch = (routerQuery, config) => {
   let matchedLocation = {}
   let matchedConfigFromUserSelection = {}
   let filterCount = 0
-
 
   Object.keys(sanitisedConfig).forEach((key) => {
     // iterate based on number of results from queryParser
@@ -355,19 +354,18 @@ const checkFilterMatch = (routerQuery, config) => {
   if (Object.keys(matchedConfigFromUserSelection).length > 0)
     array.push(matchedConfigFromUserSelection)
 
-  let uniqueList = []
+  // Fields that need to be counted based on mobile or desktop view
+  const filterCountField = isMobile ? ['jobType', 'salary', 'industry', 'workExperience', 'qualification', 'category'] : ['industry', 'workExperience', 'qualification']
+  
   array.forEach((matchData) => {
     for (const [key] of Object.entries(matchData)) {
-      const data =
-        key === 'location'
-          ? matchData[key].map((filter) => filter['seo_value'])
-          : matchData[key].map((filter) => filter['seo-value'])
+      const data = matchData[key].map((filter) => filter['seo-value'])
 
-      uniqueList = [...uniqueList, ...data]
-      uniqueList = [...new Set(uniqueList)]
+      if (filterCountField.includes(key)) {
+        filterCount += data.length
+      }
     }
   })
-  filterCount = uniqueList.length
 
   const matchedFilter = {
     searchMatch,
@@ -378,7 +376,7 @@ const checkFilterMatch = (routerQuery, config) => {
     matchedLocation,
     matchedConfigFromUrl,
     matchedConfigFromUserSelection,
-    filterCount,
+    filterCount
   }
 
   return matchedFilter
@@ -735,15 +733,16 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       if (field === 'category' && isClear) delete filterParamsObject['category']
       if (field === 'moreFilters' && isClear) {
         // delete all filters under more filters section, isClear is an array of strings if true for moreFilters
-        isClear.forEach((val)=> {
-          const removeValueFromUniqueList = uniqueList.filter((uniq)=> uniq !== filterParamsObject[val])
+        isClear.forEach((val) => {
+          const removeValueFromUniqueList = uniqueList.filter(
+            (uniq) => uniq !== filterParamsObject[val]
+          )
           uniqueList = removeValueFromUniqueList
-          if (filterQuery === filterParamsObject[val]){
+          if (filterQuery === filterParamsObject[val]) {
             filterQuery = ''
           }
           delete filterParamsObject[val]
-        }
-        )
+        })
       }
     }
   })
@@ -787,11 +786,16 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         query = appendDoubleQueryPattern(searchQuery, locationQuery)
       } else if (
         (!searchQuery &&
-        !predefinedQuery &&
-        !predefinedLocation &&
-        locationQuery &&
-        !filterQuery
-        ) || (!searchQuery && !predefinedQuery && !filterQuery && predefinedLocation && locationQuery && predefinedLocation === locationQuery)
+          !predefinedQuery &&
+          !predefinedLocation &&
+          locationQuery &&
+          !filterQuery) ||
+        (!searchQuery &&
+          !predefinedQuery &&
+          !filterQuery &&
+          predefinedLocation &&
+          locationQuery &&
+          predefinedLocation === locationQuery)
       ) {
         query = appendSingleQueryPattern(locationQuery)
       } else if (
@@ -819,7 +823,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
             }
           }
         }
-      }else {
+      } else {
         appendGeneralQueryPattern()
       }
       // handle all onKeywordSearch logic when field === 'query',
@@ -865,6 +869,16 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         query = appendSingleQueryPattern(searchQuery)
       }
       // !predefinedQuery && predefinedLocation && locationQuery exist and field is 'location'
+    } else if (
+      searchQuery &&
+      !predefinedQuery &&
+      predefinedLocation &&
+      locationQuery &&
+      searchQuery !== predefinedLocation &&
+      predefinedLocation !== locationQuery &&
+      field === 'location'
+    ) {
+      query = appendDoubleQueryPattern(searchQuery, locationQuery)
     } else if (!predefinedQuery && predefinedLocation && locationQuery && field === 'location') {
       query = appendSingleQueryPattern(locationQuery)
     } else if (
@@ -1278,9 +1292,7 @@ const getDegreeList = (config) => {
 const getApplyJobLink = (job, user, accessToken = null) => {
   const oldProjectApplyLink = authPathToOldProject(
     accessToken,
-    `/dashboard/job/${slugify(job?.job_title, { lower: true, remove: /[*+~.()'"!:@]/g })}-${
-      job?.id
-    }/apply`
+    `/dashboard${job?.job_url}/apply`
   )
 
   if (user) {

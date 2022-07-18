@@ -28,6 +28,8 @@ const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: Mo
   const [isDoneCopy, setIsDoneCopy] = useState(false)
   const jobLinkRef = useRef(null)
 
+  jobDetailUrl = `${process.env.NEW_PROJECT_URL}${jobDetailUrl}`
+
   const handleCopyLink = (link) => {
     navigator.clipboard.writeText(link)
     setIsDoneCopy(true)

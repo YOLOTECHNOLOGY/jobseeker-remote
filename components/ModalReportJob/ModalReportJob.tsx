@@ -149,13 +149,13 @@ const ModalReportJob = ({
         </div>
       </Modal>
       <Modal
-        headerTitle='Report Job'
+        headerTitle='Job Reported Successfully'
         showModal={isShowConfirmationModal}
         handleModal={() => { onCloseModal() }}
       >
         <div className={styles.modalReportJob}>
           <div className={styles.modalReportJobConfirmation}>
-            <Text textStyle='xxl'>We have received your report about this job.</Text>
+            <Text>We have received your report about this job. Thanks for letting us know. Your feedback is important in helping us to keep the Bossjob community safe.</Text>
           </div>
         </div>
       </Modal>
