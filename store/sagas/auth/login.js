@@ -10,7 +10,7 @@ import { loginSuccess, loginFailed } from 'store/actions/auth/login'
 
 import { loginService } from 'store/services/auth/login'
 import { checkErrorCode } from 'helpers/errorHandlers'
-import { setGlobalError } from 'store/actions/error/globalError'
+import { displayNotification }  from 'store/actions/notificationBar/notificationBar'
 
 function* loginReq(actions) {
   try {
@@ -74,7 +74,11 @@ function* loginReq(actions) {
   } catch (err) {
     const isServerError = checkErrorCode(err)
     if (isServerError) {
-      yield put(setGlobalError(true))
+      yield put(displayNotification({
+        open: true,
+        severity: 'error',
+        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+      }))
     } else {
       const statusCode = err.response.status
       let errorMessage = ''

@@ -37,7 +37,7 @@ import { updateUserEducationService } from 'store/services/users/updateUserEduca
 import { getItem, removeItem } from 'helpers/localStorage'
 
 import { checkErrorCode } from 'helpers/errorHandlers'
-import { setGlobalError } from 'store/actions/error/globalError'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 function* updateUserCompleteProfileReq({ payload }) {
   const isFromCreateResume = getItem('isFromCreateResume')
@@ -150,7 +150,11 @@ function* updateUserCompleteProfileReq({ payload }) {
   } catch (error) {
     const isServerError = checkErrorCode(error)
     if (isServerError) {
-      yield put(setGlobalError(true))
+      yield put(displayNotification({
+        open: true,
+        severity: 'error',
+        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+      }))
     } else {
       yield put(updateUserCompleteProfileFailed(error))
     }    
@@ -164,7 +168,11 @@ function* fetchUserWorkExperienceSaga(accessToken) {
   } catch (error) {
     const isServerError = checkErrorCode(error)
     if (isServerError) {
-      yield put(setGlobalError(true))
+      yield put(displayNotification({
+        open: true,
+        severity: 'error',
+        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+      }))
     } else {
       yield put(fetchUserWorkExperienceFailed(error))
     }
@@ -178,7 +186,11 @@ function* fetchUserEducationServiceSaga(accessToken) {
   } catch (error) {
     const isServerError = checkErrorCode(error)
     if (isServerError) {
-      yield put(setGlobalError(true))
+      yield put(displayNotification({
+        open: true,
+        severity: 'error',
+        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+      }))
     } else {
       yield put(fetchUserEducationFailed(error))
     }
@@ -210,7 +222,11 @@ function* completeUserProfileSaga(redirect, accessToken) {
   } catch (error) {
     const isServerError = checkErrorCode(error)
     if (isServerError) {
-      yield put(setGlobalError(true))
+      yield put(displayNotification({
+        open: true,
+        severity: 'error',
+        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+      }))
     } else {
       yield put(completeUserProfileFailed(error))
     }

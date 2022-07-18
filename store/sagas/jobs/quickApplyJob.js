@@ -23,7 +23,8 @@ import {
   uploadUserResumeFailed,
 } from 'store/actions/users/uploadUserResume'
 import { applyJobService } from 'store/services/jobs/applyJob'
-import { setGlobalError } from 'store/actions/error/globalError'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { checkErrorCode } from 'helpers/errorHandlers'
 
 function* quickApplyJobReq(action) {
   try {
@@ -117,8 +118,12 @@ function* quickApplyJobReq(action) {
         yield put(push(applySuccessUrl))
       } catch (error) {
         const isServerError = checkErrorCode(error)
-        if (!isServerError) {
-          yield put(setGlobalError(true))
+        if (isServerError) {
+          yield put(displayNotification({
+            open: true,
+            severity: 'error',
+            message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+          }))
         } else {
           yield put(quickApplyJobFailed(error.response.data.errors.message))
         }
@@ -127,7 +132,11 @@ function* quickApplyJobReq(action) {
   } catch (error) {
     const isServerError = checkErrorCode(error)
     if (isServerError) {
-      yield put(setGlobalError(true))
+      yield put(displayNotification({
+        open: true,
+        severity: 'error',
+        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+      }))
     } else {
       yield put(registerJobseekerFailed(error.response.data.errors.message))
     }
@@ -142,7 +151,11 @@ function* uploadResumeSaga(resume, accessToken) {
   } catch (error) {
     const isServerError = checkErrorCode(error)
     if (isServerError) {
-      yield put(setGlobalError(true))
+      yield put(displayNotification({
+        open: true,
+        severity: 'error',
+        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+      }))
     } else {
       yield put(uploadUserResumeFailed(error.response.data))
     }

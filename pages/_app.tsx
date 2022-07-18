@@ -15,7 +15,7 @@ import * as gtag from 'lib/gtag'
 const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
 const MaintenancePage = dynamic(() => import('./maintenance'))
 import * as fbq from 'lib/fpixel'
-import GlobalErrorProvider from '../components/GlobalErrorProvider'
+import GlobalNotificationProvider from '../components/GlobalNotificationProvider'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
@@ -23,7 +23,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const [ isPageLoading, setIsPageLoading ] = useState<boolean>(false);
 
   useEffect(() => {
-    // Facebook pixel 
+    // Facebook pixel
     // This pageview only triggers the first time
     fbq.pageview()
 
@@ -37,7 +37,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     return () => {
       router.events.off('routeChangeComplete', handleRouteComplete)
     }
-    
   }, [router.events])
 
   useEffect(() => {
@@ -76,9 +75,9 @@ const App = ({ Component, pageProps }: AppProps) => {
       setIsPageLoading(false);
     }
     const handleStart = () => {
-      setIsPageLoading(true) 
+      setIsPageLoading(true)
     };
-    
+
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeError', handleRouteComplete);
     router.events.on('routeChangeComplete', handleRouteComplete)
@@ -246,12 +245,12 @@ const App = ({ Component, pageProps }: AppProps) => {
         <CookiesProvider>
           {process.env.MAINTENANCE === 'true' ? (
             <MaintenancePage {...pageProps} />
+          ) : isPageLoading && !router.pathname.includes('jobs-hiring') ? (
+            <TransitionLoader accessToken={accessToken} />
           ) : (
-            isPageLoading && !router.pathname.includes('jobs-hiring') ?
-              <TransitionLoader accessToken={accessToken}/> :    
-              (<GlobalErrorProvider>
-                  <Component {...pageProps} />
-              </GlobalErrorProvider>)
+            <GlobalNotificationProvider>
+              <Component {...pageProps} />
+            </GlobalNotificationProvider>
           )}
         </CookiesProvider>
       </ConnectedRouter>
