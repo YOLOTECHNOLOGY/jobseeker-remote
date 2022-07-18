@@ -5,9 +5,10 @@ import { closeNotification } from '../../store/actions/notificationBar/notificat
 type NotificationBarProps = {
   message: string
   severity: any
+  config: any
 }
 
-const NotificationBar = ({ message, severity }: NotificationBarProps) => {
+const NotificationBar = ({ message, severity, config }: NotificationBarProps) => {
   const dispatch = useDispatch()
   const handleClose = (_?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
@@ -18,7 +19,7 @@ const NotificationBar = ({ message, severity }: NotificationBarProps) => {
   return (
     <div>
       <Snackbar open={true} onClose={handleClose}>
-        <Alert sx={{ width: '100%' }} severity={severity} onClose={handleClose}>
+        <Alert sx={{ width: '100%' }} severity={severity} onClose={handleClose} {...config}>
           {message}
         </Alert>
       </Snackbar>

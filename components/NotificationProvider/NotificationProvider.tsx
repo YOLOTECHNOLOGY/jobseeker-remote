@@ -11,7 +11,7 @@ const NotificationProvider = ({ children }: NotificationProviderProps) => {
   return (
         <>
             {children}
-            {notification?.open && <NotificationBar message={notification.message} severity={notification.severity}/>}
+            {notification?.open && <NotificationBar config={notification.config} message={notification.message} severity={notification.severity}/>}
         </>
   )
 }
