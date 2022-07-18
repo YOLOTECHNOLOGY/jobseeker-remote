@@ -40,7 +40,7 @@ interface QuickApplyModalProps {
   config: any
 }
 
-const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow, config }: QuickApplyModalProps) => {
+const QuickApplyModal = ({ jobDetails, modalShow, handleModalShow, config }: QuickApplyModalProps) => {
   const dispatch = useDispatch()
   const { register, handleSubmit, setValue, setError, clearErrors, formState: { errors } } = useForm()
 

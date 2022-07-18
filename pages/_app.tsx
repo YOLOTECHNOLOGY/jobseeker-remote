@@ -15,7 +15,7 @@ import * as gtag from 'lib/gtag'
 const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
 const MaintenancePage = dynamic(() => import('./maintenance'))
 import * as fbq from 'lib/fpixel'
-import GlobalNotificationProvider from '../components/GlobalNotificationProvider'
+import NotificationProvider from '../components/NotificationProvider'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
@@ -248,9 +248,9 @@ const App = ({ Component, pageProps }: AppProps) => {
           ) : isPageLoading && !router.pathname.includes('jobs-hiring') ? (
             <TransitionLoader accessToken={accessToken} />
           ) : (
-            <GlobalNotificationProvider>
+            <NotificationProvider>
               <Component {...pageProps} />
-            </GlobalNotificationProvider>
+            </NotificationProvider>
           )}
         </CookiesProvider>
       </ConnectedRouter>
