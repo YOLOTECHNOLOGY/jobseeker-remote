@@ -884,7 +884,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
       config,
       topCompanies,
     },
-    revalidate: 300, // 5mins
   }
 })
 
