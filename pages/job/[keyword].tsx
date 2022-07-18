@@ -941,7 +941,6 @@ const Job = ({
         email={userCookie ? userCookie.email : ''}
         isShowModal={isShowModal}
         handleModal={handleCloseModal}
-        redirectLink={applyJobLink}
       />}
     </Layout>
   )
