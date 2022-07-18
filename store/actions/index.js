@@ -10,7 +10,6 @@ import users from './users'
 import auth from './auth'
 import recruiters from './recruiters'
 import courses from './courses'
-import error from './error'
 
 const actions = {
   config,
@@ -25,7 +24,6 @@ const actions = {
   auth,
   recruiters,
   courses,
-  error
 }
 
 export default actions

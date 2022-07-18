@@ -7,7 +7,6 @@ import users from './users'
 import auth from './auth'
 import recruiters from './recruiters'
 import courses from './courses'
-import error from './error'
 
 export default {
   config,
@@ -19,5 +18,4 @@ export default {
   auth,
   recruiters,
   courses,
-  error
 }
