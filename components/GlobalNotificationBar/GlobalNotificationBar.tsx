@@ -1,21 +1,19 @@
 import { Snackbar, Alert } from '@mui/material'
 import { useDispatch } from 'react-redux'
-import { unsetGlobalError } from '../../store/actions/error/globalError'
+import { closeNotification } from '../../store/actions/notificationBar/notificationBar'
 
 type GlobalNotificationBarProps = {
-  message?: string
-  severity?: any
+  message: string
+  severity: any
 }
 
-const defaultErrorMessage = 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
-
-const GlobalNotificationBar = ({ message = defaultErrorMessage, severity = 'error' }: GlobalNotificationBarProps) => {
+const GlobalNotificationBar = ({ message, severity }: GlobalNotificationBarProps) => {
   const dispatch = useDispatch()
   const handleClose = (_?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return
     }
-    dispatch(unsetGlobalError())
+    dispatch(closeNotification())
   }
   return (
     <div>
