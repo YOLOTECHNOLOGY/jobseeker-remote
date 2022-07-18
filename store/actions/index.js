@@ -25,7 +25,7 @@ const actions = {
   auth,
   recruiters,
   courses,
-  modals
+  modals,
 }
 
 export default actions

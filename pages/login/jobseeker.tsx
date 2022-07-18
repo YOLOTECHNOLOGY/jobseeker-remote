@@ -13,7 +13,6 @@ import SEO from 'components/SEO'
 import AuthLayout from 'components/AuthLayout'
 import Text from 'components/Text'
 import Link from 'components/Link'
-import NotificationBar from 'components/NotificationBar'
 
 import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 
@@ -122,8 +121,6 @@ const LoginJobseeker = () => {
         description='Log in to Bossjob to get connected with professional job opportunities and quality talents. If you are not a member yet, Register for free now to Apply for Jobs, Create Professional Resume and Get Headhunted on Bossjob!'
         canonical='/login/jobseeker'
       />
-
-      <NotificationBar />
 
       <div className={styles.Login}>
         <SocialMediaAuth callbackRequest={callbackRequest} />

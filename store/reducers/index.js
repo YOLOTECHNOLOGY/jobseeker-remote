@@ -16,7 +16,6 @@ import recruitersReducers from './recruiters'
 import coursesReducers from './courses'
 import modalReducers from './modals'
 
-
 // TODO: Import and List reducers here
 const combinedReducer = combineReducers({
   navbar: navigationBarReducers,
@@ -32,7 +31,7 @@ const combinedReducer = combineReducers({
   recruiters: recruitersReducers,
   router: routerReducer,
   courses: coursesReducers,
-  modal: modalReducers
+  modal: modalReducers,
 })
 
 /* 

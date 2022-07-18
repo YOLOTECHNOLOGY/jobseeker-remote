@@ -19,5 +19,5 @@ export default {
   auth,
   recruiters,
   courses,
-  modals
+  modals,
 }
