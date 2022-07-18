@@ -94,7 +94,7 @@ const ModalAppRedirect = ({ isShowModal, handleModal }: ModalAppRedirectProps) =
           <img className={styles.headerLogoImage} src={BossjobFittedLogoApp} title='Bossjob logo' alt='Bossjob logo' width='40' height='40' />
           <Text className={styles.BossjobLogoText}>Bossjob App</Text>
           <div className={styles.ModalAppRedirectOptionAction}>
-            <MaterialButton variant='contained' capitalize onClick={handleOpenApp}>
+            <MaterialButton variant='contained' capitalize onClick={() => handleOpenApp()}>
               <Text textStyle='base' bold textColor='white'>Open</Text>
             </MaterialButton>
           </div>
