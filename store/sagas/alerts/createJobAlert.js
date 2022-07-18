@@ -4,6 +4,12 @@ import {
   createJobAlertSuccess,
   createJobAlertFailed,
 } from 'store/actions/alerts/createJobAlert'
+import {
+  displayNotification
+} from 'store/actions/notificationBar/notificationBar'
+import {
+  openCreateJobAlertModal
+} from 'store/actions/modals/createJobAlertModal'
 import { createJobAlertService } from 'store/services/alerts/createJobAlert'
 import { registerUserService } from 'store/services/users/registerUser'
 import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
@@ -45,13 +51,13 @@ function* createJobAlertReq(action) {
         jobAlertData: {
           user_id: user_id ? user_id : registerUserResponse.data.data.id,
           keyword: jobAlertData.keyword,
-          location_key: jobAlertData.location_key,
-          job_category_key: jobAlertData.job_category_key,
-          industry_key: jobAlertData.industry_key,
-          xp_lvl_key: jobAlertData.xp_lvl_key,
-          degree_key: jobAlertData.degree_key,
-          job_type_key: jobAlertData.job_type_key,
-          salary_range_key: jobAlertData.salary_range_key,
+          location_values: jobAlertData.location_values,
+          job_type_values: jobAlertData.job_type_values,
+          salary_range_values: jobAlertData.salary_range_values,
+          job_category_values: jobAlertData.job_category_values,
+          industry_values: jobAlertData.industry_values,
+          xp_lvl_values: jobAlertData.xp_lvl_values,
+          degree_values: jobAlertData.degree_values,
           is_company_verified: jobAlertData.is_company_verified,
           frequency_id: jobAlertData.frequency_id,
         },
@@ -61,11 +67,20 @@ function* createJobAlertReq(action) {
       removeUtmCampaign()
       
       const { data } = yield call(createJobAlertService, jobAlertPayload)
+
       yield put(createJobAlertSuccess(data.data))
+      yield put(openCreateJobAlertModal())
     }
   } catch (error) {
-    console.log('error-saga', error)
     yield put(createJobAlertFailed(error))
+
+    const displayNotificationPayload = {
+      "open": true,
+      "severity": "error",
+      "message": "Failed to enable job alert. Please contact support@bossjob.com for assistance."
+    }
+    yield put(displayNotification(displayNotificationPayload))
+
   }
 }
 

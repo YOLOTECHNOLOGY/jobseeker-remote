@@ -44,6 +44,7 @@ import SEO from 'components/SEO'
 const JobSearchFilters = dynamic(() => import('components/JobSearchFilters'))
 import JobListSection from 'components/JobListSection'
 import LazyLoad from '../../components/LazyLoad'
+import NotificationBar from 'components/NotificationBar'
 
 /* Styles */
 import styles from './jobsHiring.module.scss'
@@ -671,6 +672,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonical} />
+      <NotificationBar />
       <div
         className={classNamesCombined([
           displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection,
