@@ -4,7 +4,6 @@ const initialState = {
   open: false,
   severity: 'info',  /* error, warning, info, success */
   message: '',
-  config: null
 }
 
 const notificationReducer = (state = initialState, action) => {
@@ -15,7 +14,6 @@ const notificationReducer = (state = initialState, action) => {
         open: action.payload.open,
         severity: action.payload.severity,
         message: action.payload.message,
-        config: action.payload.config ? action.payload.config : null,
       }
     case CLOSE_NOTIFICATION:
       return {
