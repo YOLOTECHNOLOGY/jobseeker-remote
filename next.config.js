@@ -45,6 +45,8 @@ module.exports = {
     COUNTRY_KEY: process.env.COUNTRY_KEY,
     LINKEDIN_CLIENT_ID: process.env.LINKEDIN_CLIENT_ID,
     LINKEDIN_CLIENT_SECRET: process.env.LINKEDIN_CLIENT_SECRET,
+    APP_STORE_LINK: 'https://apps.apple.com/sg/app/bossjob/id1592073585',
+    GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'node_modules')],

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 /* Vendors */
 import { useUserAgent } from 'next-useragent'
@@ -6,7 +7,6 @@ import { useUserAgent } from 'next-useragent'
 /* Components */
 import Modal from 'components/Modal'
 import Text from 'components/Text'
-import Link from 'components/Link'
 import MaterialButton from 'components/MaterialButton'
 
 /* Styles */
@@ -26,8 +26,26 @@ interface ModalAppRedirectProps {
 }
 
 const ModalAppRedirect = ({ isShowModal, handleModal }: ModalAppRedirectProps) => {
+  const router = useRouter()
+  const path = router.asPath
   const [userAgent, setUserAgent] = useState(null)
   const [browser, setBrowser] = useState(null)
+ 
+  // Mobile app deep link mapping
+  let schema = "BOSSJOBPH://"
+  if (path.includes('/login/jobseeker')) {
+    schema = schema + 'login'
+  } else if (path.includes('/register/jobseeker')) {
+    schema = schema + 'register'
+  } else if (path.includes('/job/')) {
+    const jobId = path?.split('-').pop()
+    schema = schema + 'job-detail'
+    if (jobId) schema = `${schema}/${jobId}`
+  } else if (path.includes('/company/')) {
+    const companyId = path?.split('-').pop()
+    schema = schema + 'company'
+    if (companyId) schema = `${schema}/${companyId}`
+  }
 
   useEffect(() => {
     setUserAgent(useUserAgent(window.navigator.userAgent))
@@ -52,6 +70,19 @@ const ModalAppRedirect = ({ isShowModal, handleModal }: ModalAppRedirectProps) =
     }
   }, [userAgent])
 
+  const handleOpenApp = () => {
+    const appStoreLink = userAgent?.isIos ? process.env.APP_STORE_LINK : process.env.GOOGLE_PLAY_STORE_LINK
+    
+    if (typeof window !== undefined) {
+      window.location.replace(schema)
+    
+      // Wait 2s and redirect to App Store/Google Play Store if app was not opened
+      setTimeout(() => {
+        window.location.replace(appStoreLink); 
+      }, 2000);
+    }
+  }
+
   return (
     <Modal
       headerTitle='Bossjob is better on the app'
@@ -63,11 +94,9 @@ const ModalAppRedirect = ({ isShowModal, handleModal }: ModalAppRedirectProps) =
           <img className={styles.headerLogoImage} src={BossjobFittedLogoApp} title='Bossjob logo' alt='Bossjob logo' width='40' height='40' />
           <Text className={styles.BossjobLogoText}>Bossjob App</Text>
           <div className={styles.ModalAppRedirectOptionAction}>
-            <Link to={userAgent?.isIos ? 'https://apps.apple.com/sg/app/bossjob/id1592073585' : 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'}>
-              <MaterialButton variant='contained' capitalize>
-                <Text textStyle='base' bold textColor='white'>Open</Text>
-              </MaterialButton>
-            </Link>
+            <MaterialButton variant='contained' capitalize onClick={handleOpenApp}>
+              <Text textStyle='base' bold textColor='white'>Open</Text>
+            </MaterialButton>
           </div>
         </div>
         <div className={styles.ModalAppRedirectOption}>
