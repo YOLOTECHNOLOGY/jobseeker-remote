@@ -10,6 +10,7 @@ import users from './users'
 import auth from './auth'
 import recruiters from './recruiters'
 import courses from './courses'
+import modals from './modals'
 
 const actions = {
   config,
@@ -24,6 +25,7 @@ const actions = {
   auth,
   recruiters,
   courses,
+  modals,
 }
 
 export default actions

@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 /* Vendors */
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import dynamic from 'next/dynamic'
+
+/* Redux Actions */
+import { openManageJobAlertsModal } from 'store/actions/modals/manageJobAlertsModal'
 
 /* Components */
 import Text from 'components/Text'
@@ -94,14 +97,13 @@ const JobListSection = ({
   const { width } = useWindowDimensions()
   const router = useRouter()
   const prevScrollY = useRef(0)
+  const dispatch = useDispatch()
 
   const [isSticky, setIsSticky] = useState(false)
   const [jobNumStart, setJobNumStart] = useState(0)
   const [jobNumEnd, setJobNumEnd] = useState(30)
   
   const [isShowModalShare, setIsShowModalShare] = useState(false)
-  const [isShowModalEnableJobAlerts, setIsShowModalEnableJobAlerts] = useState(false)
-  const [isShowModalManageJobAlerts, setIsShowModalManageJobAlerts] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
   const [selectedPage, setSelectedPage] = useState(page)
@@ -110,6 +112,9 @@ const JobListSection = ({
   const isStickyClass = cx({ isSticky: isSticky })
 
   const filterJobPayload = useSelector((store: any) => store.job.jobList.payload)
+
+  const showManageJobAlertsModal = useSelector((store: any) => store.modal.manageJobAlertsModal.show)
+  const showCreateJobAlertModal = useSelector((store: any) => store.modal.createJobAlertModal.show)
 
   useEffect(() => {
     setIsUserAuthenticated(accessToken ? true : false)
@@ -137,16 +142,16 @@ const JobListSection = ({
 
     const createJobAlertPayload = {
       email: email,
-      frequency_id: 1,
-      is_company_verified: 'all',
-      keyword: filterJobPayload?.query ? filterJobPayload.query : 'all',
+      keyword: filterJobPayload?.query ? filterJobPayload.query : '',
       location_values: filterJobPayload?.location ? filterJobPayload.location : 'all',
+      job_type_values: filterJobPayload?.jobType ? filterJobPayload.jobType : 'all',
+      salary_range_values: filterJobPayload?.salary ? filterJobPayload.salary : 'all',
       job_category_values: filterJobPayload?.category ? filterJobPayload.category : 'all',
       industry_values: filterJobPayload?.industry ? filterJobPayload.industry : 'all',
       xp_lvl_values: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
       degree_values: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',
-      job_type_values: filterJobPayload?.jobType ? filterJobPayload.jobType : 'all',
-      salary_range_values: filterJobPayload?.salary ? filterJobPayload.salary : 'all',
+      is_company_verified: 'all',
+      frequency_id: 1,
     }
 
     createJobAlert(createJobAlertPayload)
@@ -154,7 +159,6 @@ const JobListSection = ({
 
   const handleCreateJobAlert = (email?:any) => {
     handleCreateJobAlertData(email)
-    setIsShowModalEnableJobAlerts(true)
   }
 
   const updateScrollPosition = () => {
@@ -195,7 +199,7 @@ const JobListSection = ({
                     <div
                       className={styles.jobListOptionAlertsItem}
                       onClick={() => {
-                        setIsShowModalManageJobAlerts(true)
+                        dispatch(openManageJobAlertsModal())
                       }}
                     >
                       <img src={BellIcon} width='20' height='20' />
@@ -292,13 +296,9 @@ const JobListSection = ({
         </div>
       </div>
 
-      {(isShowModalEnableJobAlerts || isShowModalManageJobAlerts) && <ModalJobAlerts
+      {(showCreateJobAlertModal || showManageJobAlertsModal) && <ModalJobAlerts
         query={query}
         location={location}
-        isShowModalEnableJobAlerts={isShowModalEnableJobAlerts}
-        handleShowModalEnableJobAlerts={setIsShowModalEnableJobAlerts}
-        isShowModalManageJobAlerts={isShowModalManageJobAlerts}
-        handleShowModalManageJobAlerts={setIsShowModalManageJobAlerts}
         jobAlertsList={jobAlertsList}
         createdJobAlert={createdJobAlert}
         handleFetchJobAlertsList={fetchJobAlertsList}

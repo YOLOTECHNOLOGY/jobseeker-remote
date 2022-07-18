@@ -309,10 +309,6 @@
       margin-right: 16px;
       margin-bottom: 16px;
     }
-  
-    &Text {
-      color: $white-3;
-    }
   }
 
   &RecruiterInfo {
@@ -414,7 +410,7 @@
 }
 
 .aboutCompany {
-  border: 1px solid $lightgrey;
+  border: 1px solid rgba($lightgrey, 0.5);
   border-radius: 4px;
   padding: 24px;
   margin-top: 24px;
@@ -601,7 +597,6 @@
   overflow:hidden;
 
   @include msd {
-    width: auto;
-    margin-top: 48px;
+    margin: 48px auto;
   }
 }

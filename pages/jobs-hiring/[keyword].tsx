@@ -44,6 +44,7 @@ import SEO from 'components/SEO'
 const JobSearchFilters = dynamic(() => import('components/JobSearchFilters'))
 import JobListSection from 'components/JobListSection'
 import LazyLoad from '../../components/LazyLoad'
+import NotificationBar from 'components/NotificationBar'
 
 /* Styles */
 import styles from './jobsHiring.module.scss'
@@ -190,7 +191,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     config,
     topCompanies,
     defaultPage,
-    defaultValues,
+    defaultValues
   } = props
   const router = useRouter()
   const dispatch = useDispatch()
@@ -246,7 +247,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     matchedLocation,
     matchedConfigFromUrl,
     filterCount,
-  } = checkFilterMatch(router.query, config)
+  } = checkFilterMatch(router.query, config, isMobile)
   const [selectedPage, setSelectedPage] = useState(defaultPage)
 
   useEffect(() => {
@@ -568,7 +569,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleResetFilter = () => {
     const { searchMatch, locationMatch, searchQuery, predefinedLocation } = checkFilterMatch(
       router.query,
-      config
+      config,
+      isMobile
     )
 
     const queryObject = []
@@ -670,6 +672,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonical} />
+      <NotificationBar />
       <div
         className={classNamesCombined([
           displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection,
@@ -923,6 +926,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req, resolvedUrl }) => {
       const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
+      
 
       const { keyword, page } = query
       // store actions
@@ -952,7 +956,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         predefinedLocation,
         matchedLocation,
         matchedConfigFromUrl,
-        filterCount,
       } = checkFilterMatch(query, config)
 
       // query parameters
@@ -1016,10 +1019,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         'New Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers'
       const seoCanonical = resolvedUrl
 
-      if (!searchQuery && !predefinedLocation && filterCount >= 2) {
-        seoMetaTitle = `Professional Jobs in Philippines - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
-        seoMetaDescription = `New Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
-      } else if (searchQuery && !predefinedQuery && !predefinedLocation) {
+      if (searchQuery && !predefinedQuery && !predefinedLocation) {
         seoMetaTitle = `${unslugify(
           searchQuery,
           true
@@ -1070,7 +1070,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           accessToken,
           seoMetaTitle,
           seoMetaDescription: encodeURI(seoMetaDescription),
-          seoCanonical,
+          seoCanonical
         },
       }
     }
