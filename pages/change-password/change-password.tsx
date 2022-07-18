@@ -20,6 +20,7 @@ import MaterialTextField from 'components/MaterialTextField'
 
 /* Styles */
 import styles from './ChangePassword.module.scss'
+import { closeNotification, displayNotification } from '../../store/actions/notificationBar/notificationBar'
 
 const ChangePassword = () => {
   const dispatch = useDispatch()
@@ -37,11 +38,28 @@ const ChangePassword = () => {
     formState: { errors },
   } = useForm()
 
-  const isResettingPassword = useSelector((store: any) => store.auth.resetPassword.fetching)
+  const resetPasswordState = useSelector((store: any) => store.auth.resetPassword)
 
   useEffect(() => {
     if (confirmPassword) setIsPasswordMatch(confirmPassword === password)
   }, [confirmPassword])
+
+  useEffect(() => {
+    if (!!resetPasswordState.success) {
+      dispatch(displayNotification({
+        open: true,
+        severity: 'success',
+        message: 'Your password has been changed successfully',
+        config: {
+          color: 'info',
+        }
+      }))
+      setTimeout(() => {
+        dispatch(closeNotification())
+        router.push('/jobs-hiring/job-search')
+      }, 3000)
+    }
+  }, [resetPasswordState.success])
 
   const handleTogglePasswordVisibility = (field) => {
     if (field === 'password') return setShowPassword(!showPassword)
@@ -181,7 +199,7 @@ const ChangePassword = () => {
           variant='contained'
           className={styles.ChangePasswordFormButton}
           type='submit'
-          isLoading={isResettingPassword}
+          isLoading={resetPasswordState.fetching}
         >
           <Text textColor='white' bold>
             Reset Password
