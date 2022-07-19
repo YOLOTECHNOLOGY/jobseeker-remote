@@ -13,7 +13,6 @@ import SEO from 'components/SEO'
 import AuthLayout from 'components/AuthLayout'
 import Text from 'components/Text'
 import Link from 'components/Link'
-import NotificationBar from 'components/NotificationBar'
 
 import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 
@@ -63,7 +62,7 @@ const LoginJobseeker = () => {
   useEffect(() => {
     if (isLoginFetching === false) {
       if (loginError === 'invalid credential') {
-        setGeneralError(<p>Sorry, either the email or password is wrong. Please try again or reset them <a href='/reset-password' style={{ color: '#2379ea', textDecoration: 'underline' }}>here</a>.</p>)
+        setGeneralError(<p>Sorry, either the email or password is wrong. Please try again or reset them <Link to={'/reset-password'} className='default'>here</Link></p>)
       } else if (loginError === 'account suspended') {
         setGeneralError(<p>Your account has been suspended. Please contact support@bossjob.com for clarification.</p>)
       }
@@ -123,8 +122,6 @@ const LoginJobseeker = () => {
         canonical='/login/jobseeker'
       />
 
-      <NotificationBar />
-
       <div className={styles.Login}>
         <SocialMediaAuth callbackRequest={callbackRequest} />
         <div className={styles.LoginDivider}>
@@ -146,6 +143,8 @@ const LoginJobseeker = () => {
             defaultValue={login}
             autoComplete='off'
             onChange={(e) => setLogin(e.target.value)}
+            isSubmitOnEnter={true}
+            onSubmit={handleLogin}
           />
           {emailError && errorText(emailError)}
 
@@ -173,6 +172,8 @@ const LoginJobseeker = () => {
                 </InputAdornment>
               ),
             }}
+            isSubmitOnEnter={true}
+            onSubmit={handleLogin}
           />
           {passwordError && errorText(passwordError)}
 

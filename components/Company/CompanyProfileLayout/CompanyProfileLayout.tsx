@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Tabs, Tab } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import slugify from 'slugify'
 
 // Redux Actions
 import { fetchSimilarCompanyRequest } from 'store/actions/companies/fetchSimilarCompany'
@@ -81,12 +80,14 @@ const CompanyProfileLayout = ({
     if (similarCompaniesResponse) setSimilarCompanies(similarCompaniesResponse)
   }, [similarCompaniesResponse])
 
-  // TODO: temp fix for cananonical link
-  const currentUrl = (typeof window !== 'undefined') ? window.location.pathname : '/'
-
+  const additionalCanonicalText =
+    currentTab == 'jobs' ? '/jobs' : currentTab == 'life' ? '/life' : ''
+  const companyUrl = company.company_url
+  const canonicalUrl = companyUrl + additionalCanonicalText
+  
   return (
     <Layout>
-      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={currentUrl} imageUrl={company.logo_url}/>
+      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={canonicalUrl} imageUrl={company.logo_url}/>
       <div className={styles.company}>
         <div className={styles.companyContent}>
           <div className={styles.companyHeader}>
@@ -115,7 +116,7 @@ const CompanyProfileLayout = ({
                   <Tab
                     className={styles.companyTabsItem}
                     value='overview'
-                    href={`/company/${slugify(company.name)}-${company.id}`}
+                    href={companyUrl}
                     label={
                       <Text
                         bold
@@ -129,7 +130,7 @@ const CompanyProfileLayout = ({
                   <Tab
                     className={styles.companyTabsItem}
                     value='life'
-                    href={`/company/${slugify(company.name)}-${company.id}/life`}
+                    href={`${companyUrl}/life`}
                     label={
                       <Text
                         bold
@@ -143,7 +144,7 @@ const CompanyProfileLayout = ({
                   <Tab
                     className={styles.companyTabsItem}
                     value='jobs'
-                    href={`/company/${slugify(company.name)}-${company.id}/jobs`}
+                    href={`${companyUrl}/jobs`}
                     label={
                       <Text
                         bold
@@ -175,10 +176,9 @@ const CompanyProfileLayout = ({
               <div className={styles.relatedCompanyList}>
                 {similarCompanies.map((company) => (
                   <Link
-                    to={`/company/${slugify(company.name)}-${company.id}`}
+                    to={company?.company_url || '/'}
                     key={company.id}
                     className={styles.relatedCompanyItem}
-                    aTag
                   >
                     <img
                       src={company.logo_url}

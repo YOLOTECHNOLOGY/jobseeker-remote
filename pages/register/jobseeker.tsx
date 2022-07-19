@@ -19,14 +19,13 @@ import MaterialTextField from 'components/MaterialTextField'
 import SEO from 'components/SEO'
 import AuthLayout from 'components/AuthLayout'
 import Text from 'components/Text'
-import { TextField } from '@mui/material'
-import NotificationBar from 'components/NotificationBar'
 
 import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 
 /* Styles */
 import styles from './Register.module.scss'
 import MetaText from '../../components/MetaText'
+import Link from '../../components/Link'
 
 const Register = () => {
   const router = useRouter()
@@ -93,7 +92,7 @@ const Register = () => {
 
   useEffect(() => {
     if (registerJobseekerState.error === 'The email has already been taken.') {
-      setEmailError(<p>A user with this email address already exists. Please enter a different email address or <a href='/login/jobseeker' style={{ color: '#2379ea', textDecoration: 'underline' }}>log in</a>.</p>)
+      setEmailError(<p>A user with this email address already exists. Please enter a different email address or <Link to='/login/jobseeker' className='default'>log in</Link>.</p>)
     }
   
   }, [registerJobseekerState])
@@ -123,9 +122,10 @@ const Register = () => {
         last_name: lastName,
         terms_and_condition: false,
         is_subscribe: isSubscribe,
+        redirect: router.query?.redirect || null
       }
 
-      dispatch(registerJobseekerRequest({ ...payload, jobId: router.query?.jobId || '' }))
+      dispatch(registerJobseekerRequest({ ...payload }))
     }
   }
 
@@ -160,8 +160,6 @@ const Register = () => {
         description='Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.'
         canonical='/register/jobseeker'
       />
-
-      <NotificationBar />
 
       <div className={styles.Register}>
         <SocialMediaAuth callbackRequest={callbackRequest} />
@@ -226,7 +224,7 @@ const Register = () => {
           />
           {emailError && errorText(emailError)}
 
-          <TextField
+          <MaterialTextField
             className={styles.RegisterFormInput}
             id='password'
             name='password'
@@ -251,6 +249,8 @@ const Register = () => {
                 </InputAdornment>
               ),
             }}
+            isSubmitOnEnter={true}
+            onSubmit={handleRegister}
           />
           {passwordError && errorText(passwordError)}
 

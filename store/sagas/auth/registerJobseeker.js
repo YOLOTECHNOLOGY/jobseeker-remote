@@ -6,6 +6,7 @@ import { setCookie } from 'helpers/cookies'
 import { setItem } from 'helpers/localStorage'
 import { isFromCreateResume } from 'helpers/constants'
 import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
+import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import { REGISTER_JOBSEEKER_REQUEST } from 'store/types/auth/registerJobseeker'
 
@@ -13,34 +14,28 @@ import {
   registerJobseekerSuccess,
   registerJobseekerFailed,
 } from 'store/actions/auth/registerJobseeker'
-import {
-  displayNotification
-} from 'store/actions/notificationBar/notificationBar'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 import { registerJobseekerService } from 'store/services/auth/registerJobseeker'
+import { checkErrorCode } from 'helpers/errorHandlers'
 
 function* registerJobSeekerReq(actions) {
   try {
     const {
-      jobId,
       email,
       password,
       first_name,
       last_name,
       terms_and_condition,
       is_subscribe,
-      source
+      source,
+      redirect,
     } = actions.payload
 
     let randomPassword
     if (source === 'free_resume') {
       randomPassword =
-        Math.random()
-          .toString(36)
-          .substring(2, 15) +
-        Math.random()
-          .toString(36)
-          .substring(2, 15)
+        Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
     }
 
     const registerJobseekerPayload = {
@@ -52,18 +47,17 @@ function* registerJobSeekerReq(actions) {
       source: source || 'web',
       country_key: process.env.COUNTRY_KEY,
       terms_and_condition: terms_and_condition || 0,
-      ...(yield* getUtmCampaignData())
+      ...(yield* getUtmCampaignData()),
     }
 
     const response = yield call(registerJobseekerService, registerJobseekerPayload)
     if (response.status >= 200 && response.status < 300) {
       removeUtmCampaign()
-      
       yield put(registerJobseekerSuccess(response.data))
 
       if (window !== 'undefined' && window.gtag) {
         yield window.gtag('event', 'conversion', {
-          send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
+          send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID',
         })
       }
 
@@ -89,41 +83,50 @@ function* registerJobSeekerReq(actions) {
       setItem(isFromCreateResume, source === 'free_resume' ? '1' : '0')
 
       yield call(setCookie, 'user', userCookie)
-      yield call(
-        setCookie,
-        'accessToken',
-        registeredData.authentication.access_token
-      )
+      yield call(setCookie, 'accessToken', registeredData.authentication.access_token)
 
-      yield put(push(jobId ? `/job/${jobId}` : '/jobseeker-complete-profile/1'))
-    }
-  } catch (err) {
-    const statusCode = err.response.status
+      let url = '/jobseeker-complete-profile/1'
 
-    if (statusCode === 422) {
-      let errorMessage = ''
+      if (redirect) {
+        if (redirect.includes(process.env.OLD_PROJECT_URL) && !redirect.includes('/jobseeker-login-redirect')) {
+          const newUrl = new URL(redirect)
 
-      const error = err.response.data.errors.message
-      if (error) {
-        if (error['email']) {
-          if (error['email'][0] === 'The email has already been taken.') {
-            errorMessage = 'The email has already been taken.'
-          }
+          url = authPathToOldProject(
+            registeredData.authentication.access_token,
+            newUrl.pathname + newUrl.search
+          )
+        } else {
+          url = redirect
         }
       }
 
-      yield put(registerJobseekerFailed(errorMessage))
+      yield put(push(url))
+    }
+  } catch (err) {
+    const isServerError = checkErrorCode(err)
+    if (isServerError) {
+      yield put(displayNotification({
+        open: true,
+        severity: 'error',
+        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+      }))
     } else {
-      const displayNotificationPayload = {
-        "open": true,
-        "severity": "error",
-        "message": "We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance."
+      const statusCode = err.response.status
+      if (statusCode === 422) {
+        let errorMessage = ''
+        const error = err.response.data.errors.message
+        if (error) {
+          if (error['email']) {
+            if (error['email'][0] === 'The email has already been taken.') {
+              errorMessage = 'The email has already been taken.'
+            }
+          }
+        }
+        yield put(registerJobseekerFailed(errorMessage))
       }
-      yield put(displayNotification(displayNotificationPayload))
     }
   }
 }
-
 
 export default function* registerJobseekerSaga() {
   yield takeLatest(REGISTER_JOBSEEKER_REQUEST, registerJobSeekerReq)

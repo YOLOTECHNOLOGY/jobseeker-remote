@@ -3,7 +3,7 @@ import { DISPLAY_NOTIFICATION, CLOSE_NOTIFICATION } from 'store/types/notificati
 const initialState = {
   open: false,
   severity: 'info',  /* error, warning, info, success */
-  message: ''
+  message: '',
 }
 
 const notificationReducer = (state = initialState, action) => {
@@ -13,7 +13,7 @@ const notificationReducer = (state = initialState, action) => {
         ...state,
         open: action.payload.open,
         severity: action.payload.severity,
-        message: action.payload.message
+        message: action.payload.message,
       }
     case CLOSE_NOTIFICATION:
       return {

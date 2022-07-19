@@ -7,6 +7,7 @@ import users from './users'
 import auth from './auth'
 import recruiters from './recruiters'
 import courses from './courses'
+import modals from './modals'
 
 export default {
   config,
@@ -17,5 +18,6 @@ export default {
   users,
   auth,
   recruiters,
-  courses
+  courses,
+  modals,
 }

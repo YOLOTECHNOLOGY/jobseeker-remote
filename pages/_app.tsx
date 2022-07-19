@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import { wrapper } from 'store'
@@ -11,12 +12,15 @@ import { getFromObject } from 'helpers/formatter'
 import 'styles/globals.scss'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
+const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
+const MaintenancePage = dynamic(() => import('./maintenance'))
 import * as fbq from 'lib/fpixel'
-import MaintenancePage from './maintenance'
+import NotificationProvider from 'components/NotificationProvider'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
   const accessToken = getCookie('accessToken')
+  const [ isPageLoading, setIsPageLoading ] = useState<boolean>(false);
 
   useEffect(() => {
     // Facebook pixel 
@@ -67,6 +71,22 @@ const App = ({ Component, pageProps }: AppProps) => {
       if (Object.keys(utmCampaignObj).length > 0) {
         setItem('utmCampaign', JSON.stringify(utmCampaignObj))
       }
+    }
+    const handleRouteComplete = () => {
+      setIsPageLoading(false);
+    }
+    const handleStart = () => {
+      setIsPageLoading(true)
+    };
+
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeError', handleRouteComplete);
+    router.events.on('routeChangeComplete', handleRouteComplete)
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeError', handleRouteComplete);
+      router.events.off('routeChangeComplete', handleRouteComplete)
     }
   }, [])
 
@@ -226,8 +246,12 @@ const App = ({ Component, pageProps }: AppProps) => {
         <CookiesProvider>
           {process.env.MAINTENANCE === 'true' ? (
             <MaintenancePage {...pageProps} />
+          ) : isPageLoading && !router.pathname.includes('jobs-hiring') ? (
+            <TransitionLoader accessToken={accessToken} />
           ) : (
-            <Component {...pageProps} />
+            <NotificationProvider>
+              <Component {...pageProps} />
+            </NotificationProvider>
           )}
         </CookiesProvider>
       </ConnectedRouter>

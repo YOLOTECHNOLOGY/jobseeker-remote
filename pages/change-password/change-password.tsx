@@ -13,14 +13,14 @@ import { resetPasswordRequest } from 'store/actions/auth/resetPassword'
 
 /* Components */
 import MaterialButton from 'components/MaterialButton'
-import MaterialTextField from 'components/MaterialTextField'
 import SEO from 'components/SEO'
 import AuthLayout from 'components/AuthLayout'
 import Text from 'components/Text'
-import { TextField } from '@mui/material'
+import MaterialTextField from 'components/MaterialTextField'
 
 /* Styles */
 import styles from './ChangePassword.module.scss'
+import { closeNotification, displayNotification } from '../../store/actions/notificationBar/notificationBar'
 
 const ChangePassword = () => {
   const dispatch = useDispatch()
@@ -38,11 +38,25 @@ const ChangePassword = () => {
     formState: { errors },
   } = useForm()
 
-  const isResettingPassword = useSelector((store: any) => store.auth.resetPassword.fetching)
+  const resetPasswordState = useSelector((store: any) => store.auth.resetPassword)
 
   useEffect(() => {
     if (confirmPassword) setIsPasswordMatch(confirmPassword === password)
   }, [confirmPassword])
+
+  useEffect(() => {
+    if (!!resetPasswordState.success) {
+      dispatch(displayNotification({
+        open: true,
+        severity: 'success',
+        message: 'Your password has been changed successfully',
+      }))
+      setTimeout(() => {
+        dispatch(closeNotification())
+        router.push('/jobs-hiring/job-search')
+      }, 3000)
+    }
+  }, [resetPasswordState.success])
 
   const handleTogglePasswordVisibility = (field) => {
     if (field === 'password') return setShowPassword(!showPassword)
@@ -80,8 +94,8 @@ const ChangePassword = () => {
       </div>
 
       <form className={styles.ChangePasswordForm} onSubmit={handleSubmit(handleResetPassword)}>
-        <TextField
-          {...register('password', {
+        <MaterialTextField
+          refs={{...register('password', {
             required: {
               value: true,
               message: 'Please enter your password.',
@@ -94,7 +108,7 @@ const ChangePassword = () => {
               value: 16,
               message: 'Please enter a shorter password(maximum of 16 characters)',
             },
-          })}
+          })}}
           className={styles.ChangePasswordFormInput}
           id='password'
           name='password'
@@ -128,14 +142,12 @@ const ChangePassword = () => {
         </div>
 
         <MaterialTextField
-          refs={{
-            ...register('confirmPassword', {
-              required: {
-                value: true,
-                message: 'Please enter your password.',
-              },
-            }),
-          }}
+          refs={{...register('confirmPassword', {
+            required: {
+              value: true,
+              message: 'Please enter your password.',
+            },
+          })}}
           className={styles.ChangePasswordFormInput}
           id='confirmPassword'
           name='confirmPassword'
@@ -159,6 +171,8 @@ const ChangePassword = () => {
               </InputAdornment>
             ),
           }}
+          isSubmitOnEnter={true}
+          onSubmit={handleResetPassword}
         />
         <div className={styles.ChangePasswordFieldErrorConfirm}>
           {errors.confirmPassword && (
@@ -182,7 +196,7 @@ const ChangePassword = () => {
           variant='contained'
           className={styles.ChangePasswordFormButton}
           type='submit'
-          isLoading={isResettingPassword}
+          isLoading={resetPasswordState.fetching}
         >
           <Text textColor='white' bold>
             Reset Password

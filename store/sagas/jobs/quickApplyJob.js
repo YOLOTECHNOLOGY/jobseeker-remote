@@ -22,8 +22,9 @@ import {
   uploadUserResumeSuccess,
   uploadUserResumeFailed,
 } from 'store/actions/users/uploadUserResume'
-
 import { applyJobService } from 'store/services/jobs/applyJob'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { checkErrorCode } from 'helpers/errorHandlers'
 
 function* quickApplyJobReq(action) {
   try {
@@ -116,11 +117,29 @@ function* quickApplyJobReq(action) {
 
         yield put(push(applySuccessUrl))
       } catch (error) {
-        yield put(quickApplyJobFailed(error.response.data.errors.message))
+        const isServerError = checkErrorCode(error)
+        if (isServerError) {
+          yield put(displayNotification({
+            open: true,
+            severity: 'error',
+            message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+          }))
+        } else {
+          yield put(quickApplyJobFailed(error.response.data.errors.message))
+        }
       }
     }
   } catch (error) {
-    yield put(registerJobseekerFailed(error.response.data.errors.message))
+    const isServerError = checkErrorCode(error)
+    if (isServerError) {
+      yield put(displayNotification({
+        open: true,
+        severity: 'error',
+        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+      }))
+    } else {
+      yield put(registerJobseekerFailed(error.response.data.errors.message))
+    }
   }
 }
 
@@ -130,7 +149,16 @@ function* uploadResumeSaga(resume, accessToken) {
 
     yield put(uploadUserResumeSuccess(data.data))
   } catch (error) {
-    yield put(uploadUserResumeFailed(error.response.data))
+    const isServerError = checkErrorCode(error)
+    if (isServerError) {
+      yield put(displayNotification({
+        open: true,
+        severity: 'error',
+        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+      }))
+    } else {
+      yield put(uploadUserResumeFailed(error.response.data))
+    }
   }
 }
 

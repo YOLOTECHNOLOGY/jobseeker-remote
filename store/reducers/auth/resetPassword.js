@@ -7,6 +7,7 @@ import {
 const initialState = {
   fetching: false,
   response: {},
+  success: false,
   error: null,
 }
 
@@ -22,6 +23,7 @@ export default function resetPassword(state = initialState, action) {
         ...state,
         fetching: false,
         response: action.payload,
+        success: true,
         error: null,
       }
     case RESET_PASSWORD_FAILED:
