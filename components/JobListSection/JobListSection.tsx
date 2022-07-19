@@ -279,13 +279,13 @@ const JobListSection = ({
             )} 
           </div>
           <div className={styles.jobAds}>
-            <div className={styles.skyscraperBanner}>
+            <div className={styles.skyscraperBannerFirst}>
               <AdSlot adSlot={'jobs-search/skyscraper-1'} />
             </div>
-            <div className={styles.skyscraperBanner}>
+            <div className={styles.skyscraperBannerSecond}>
               <AdSlot adSlot={'jobs-search/skyscraper-2'} />
             </div>
-            <div className={styles.skyscraperBanner}>
+            <div className={styles.skyscraperBannerThird}>
               <AdSlot adSlot={'jobs-search/skyscraper-3'} />
             </div>
           </div>

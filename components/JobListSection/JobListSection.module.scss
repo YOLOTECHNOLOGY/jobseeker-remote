@@ -109,19 +109,52 @@
   width: 166px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
 
   .skyscraperBanner {
-    display:flex;
-    width:160px;
-    height:600px;
-    margin-bottom:20px;
-    box-sizing: border-box;
-    overflow:hidden;
-    cursor: pointer;
 
-    @include msd{
-      width: 100%;
+    &First {
+      display:flex;
+      width:160px;
+      height:600px;
+      margin-bottom:20px;
+      box-sizing: border-box;
+      overflow:hidden;
+      cursor: pointer;
+
+      @include msd {
+        width: 100%;
+      }
+    }
+
+    &Second {
+      display:flex;
+      width:160px;
+      height:600px;
+      margin-bottom:20px;
+      box-sizing: border-box;
+      overflow:hidden;
+      cursor: pointer;
+
+      @include msd {
+        width: 100%;
+      }
+    }
+
+    &Third {
+      display:flex;
+      width:160px;
+      height:600px;
+      margin-bottom:24px;
+      box-sizing: border-box;
+      overflow:hidden;
+      cursor: pointer;
+      position: sticky;
+      top: 1rem;
+
+      @include msd {
+        width: 100%;
+      }
     }
   }
 
