@@ -53,7 +53,6 @@ function* registerJobSeekerReq(actions) {
     const response = yield call(registerJobseekerService, registerJobseekerPayload)
     if (response.status >= 200 && response.status < 300) {
       removeUtmCampaign()
-
       yield put(registerJobseekerSuccess(response.data))
 
       if (window !== 'undefined' && window.gtag) {
@@ -63,7 +62,7 @@ function* registerJobSeekerReq(actions) {
       }
 
       if (window !== 'undefined' && window.fbq) {
-        yield fbq.event('CompleteRegistration', { source: 'sign_up' })
+        yield fbq.event('CompleteRegistration', {'source': 'sign_up'})
       }
 
       const registeredData = response.data.data

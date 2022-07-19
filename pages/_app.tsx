@@ -23,7 +23,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const [ isPageLoading, setIsPageLoading ] = useState<boolean>(false);
 
   useEffect(() => {
-    // Facebook pixel
+    // Facebook pixel 
     // This pageview only triggers the first time
     fbq.pageview()
 
@@ -37,6 +37,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     return () => {
       router.events.off('routeChangeComplete', handleRouteComplete)
     }
+    
   }, [router.events])
 
   useEffect(() => {
