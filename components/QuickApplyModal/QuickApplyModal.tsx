@@ -52,6 +52,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
   const [emailError, setEmailError] = useState(null)
   const [firstMessage, setFirstMessage] = useState('')
   const screeningQuestions = jobDetails?.screening_questions || []
+  const redirectLoginLink = `/login/jobseeker?redirect=${process.env.OLD_PROJECT_URL}/dashboard${jobDetails.job_url}/apply`
 
   const registerJobseekerState = useSelector((store: any) => store.auth.registerJobseeker)
   const isQuickApplyJobFetching = useSelector((store: any) => store.job.quickApplyJob.fetching)
@@ -63,7 +64,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
   useEffect(() => {
     if (registerJobseekerState.error && registerJobseekerState.error['email']) {
       if (registerJobseekerState.error['email'] == 'The email has already been taken.') {
-        setEmailError(<p>A user with this email address already exists. Please enter a different email address or <a href={`/login/jobseeker?redirect=${applyJobLink}`} style={{ color: '#2379ea', textDecoration: 'underline' }}>log in</a>.</p>)
+        setEmailError(<p>A user with this email address already exists. Please enter a different email address or <Link to={redirectLoginLink} className='default'>log in</Link>.</p>)
       } else {
         setError('email', { type: 'custom', message: registerJobseekerState.error['email'] })
       }
@@ -140,7 +141,7 @@ const QuickApplyModal = ({ jobDetails, applyJobLink, modalShow, handleModalShow,
           <Text>
             {' '}
             Already on Bossjob?
-            <Link to={'/login/jobseeker?redirect=' + applyJobLink}>
+            <Link to={redirectLoginLink}>
               <Text textColor='primaryBlue' underline>
                 {' '}
                 Log in

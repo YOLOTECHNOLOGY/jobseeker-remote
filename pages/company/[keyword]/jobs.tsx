@@ -101,7 +101,7 @@ const CompanyJobsProfile = (props: any) => {
     >
       <div className={styles.companySection} id='companyJobs'>
         <div className={styles.companyTabsContent}>
-          <div className={styles.companyJobs}>
+          {totalActiveJobs > 0 && (<div className={styles.companyJobs}>
             <Text textStyle='xl' bold className={styles.companySectionTitle}>
               Jobs
             </Text>
@@ -117,6 +117,8 @@ const CompanyJobsProfile = (props: any) => {
                     className={styles.companyJobsSearchTitle}
                     size='small'
                     label='Search for job title'
+                    isSubmitOnEnter={true}
+                    onSubmit={handleSearchCompanyJobSearch}
                   />
                 </div>
                 <div className={styles.companyJobsSearchRight}>
@@ -150,11 +152,11 @@ const CompanyJobsProfile = (props: any) => {
                     <div className={styles.companyJobsList}>
                       {companyJobs.map((companyJob) => {
                         const company = {
-                          id: companyJob.id,
                           title: companyJob.job_title,
                           location: companyJob.job_location,
                           salary: companyJob.salary_range_value,
                           availability: companyJob.job_type,
+                          jobUrl: companyJob.job_url
                         }
 
                         return <CompanyJobsCard {...company} key={companyJob.id} />
@@ -176,18 +178,19 @@ const CompanyJobsProfile = (props: any) => {
               </React.Fragment>
             ) : (
               <div className={styles.emptyResult}>
-                {totalActiveJobs === 0 ? (
-                  <Text>
-                    The company does not have any active jobs.
-                  </Text>
-                ) : (
+                {totalActiveJobs > 0 && (
                   <Text>
                     We couldn't find any jobs matching your search.
                   </Text>
                 )}
               </div>
             )}
-          </div>
+          </div>)}
+          {totalActiveJobs == 0 && (<div>
+            <Text>
+              {company.name} does not have any job openings now. Please come back again.
+            </Text>    
+          </div>)}
         </div>
       </div>
     </CompanyProfileLayout>
@@ -222,7 +225,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `${companyName} Careers in Philippines, Job Opportunities | Bossjob`
-  const seoMetaDescription = `View all current job opportunities at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`
+  const seoMetaDescription = encodeURI(`View all current job opportunities at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`)
   return {
     props: {
       config,

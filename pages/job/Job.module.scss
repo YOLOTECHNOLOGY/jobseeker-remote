@@ -1,7 +1,7 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
-.JobDetail {
+.jobDetail {
   @extend .GlobalContainer;
   padding: 20px 0 100px;
   display: flex;
@@ -25,16 +25,7 @@
     width: 100%;
     margin-right: 24px;
   }
-
-  &OptionList {
-    position: absolute;
-    top: 28px;
-    right: 30px;
-    background-color: $white-3;
-    box-shadow: $box-shadow-1;
-    z-index: 1;
-  }
-
+  
   &OptionItem {
     padding: 12px 20px;
     display: block;
@@ -76,19 +67,29 @@
     }
   }
 
+  &PrimaryInfoWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   &PrimaryInfo {
+    width:min-content;
+    flex-grow: 1;
+    word-break: break-word;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
 
     @include msd {
+      width:100%;
       align-items: flex-start;
       flex-direction: column;
     }
   }
 
   &PrimaryInfoTitle {
-    margin: 16px 0 0;
+    margin: 16px 24px 0 0;
     line-height: 27px;
 
   }
@@ -110,7 +111,7 @@
     margin: 16px 0 0;
 
     div {
-      margin-right: 20px;
+      margin-right: 16px;
     }
 
     @include msd {
@@ -119,16 +120,17 @@
   }
 
   &PrimaryActions {
-    display: flex;
     margin-top: 20px;
 
     button {
       &:first-child {
-        margin-right: 20px;
+        margin-right: 16px;
       }
     }
 
     @include sm {
+      display:flex;
+      flex-direction: row;
       justify-content: space-between;
 
       button {
@@ -228,6 +230,7 @@
     &Body {
       margin-top: 16px;
       display: block;
+      line-height: 24px;
     }
   
     &SubTitle {
@@ -302,13 +305,9 @@
     &Item {
       background-color: $primaryBlue;
       border-radius: 16px;
-      padding: 2px 16px 4px;
+      padding: 6px 14px 6px;
       margin-right: 16px;
       margin-bottom: 16px;
-    }
-  
-    &Text {
-      color: $white-3;
     }
   }
 
@@ -411,7 +410,7 @@
 }
 
 .aboutCompany {
-  border: 1px solid $lightgrey;
+  border: 1px solid rgba($lightgrey, 0.5);
   border-radius: 4px;
   padding: 24px;
   margin-top: 24px;
@@ -480,8 +479,8 @@
   }
 }
 
-.JobDetailSidebar {
-  width: 260px;
+.jobDetailSidebar {
+  width: 250px;
 
   &Content {
     border: 1px solid rgba($lightgrey, 0.5);
@@ -504,17 +503,13 @@
   }
 }
 
-.JobDetailSidebarCard {
+.jobDetailSidebarCard {
   margin-top: 24px;
   display: block;
 
   &:not(:last-child) {
     padding-bottom: 16px;
     border-bottom: 1px solid rgba($lightgrey, 0.5);
-  }
-    
-  &:hover {
-    cursor: pointer;
   }
 
   p {
@@ -565,7 +560,7 @@
   }
 }
 
-.JobDetailApplication {
+.jobDetailApplication {
   &Wrapper {
     border: 1px solid $primaryBlue;
     border-radius: 4px;
@@ -592,5 +587,16 @@
   &TimelineFirst {
     background-color: $primaryBlue;
     box-shadow: $primaryBlue;
+  }
+}
+
+.sideSquareBanner{
+  width:250px;
+  height:250px;
+  margin-bottom: 24px;
+  overflow:hidden;
+
+  @include msd {
+    margin: 48px auto;
   }
 }

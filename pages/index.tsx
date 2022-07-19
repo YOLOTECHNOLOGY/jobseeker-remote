@@ -30,7 +30,7 @@ import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 
 /* Helpers*/
-import { categoryParser, conditionChecker } from 'helpers/jobPayloadFormatter'
+import { userFilterSelectionDataParser } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { authPathToOldProject } from 'helpers/authenticationTransition'
@@ -65,6 +65,7 @@ type configObject = {
 type companyObject = {
   id: number
   logoUrl: string
+  companyUrl: string
   name: string
 }
 
@@ -75,11 +76,10 @@ interface HomeProps {
 
 const Home = (props: HomeProps) => {
   const { width } = useWindowDimensions()
-  const { topCompanies } = props
+  const { config, topCompanies } = props
   const router = useRouter()
   const isAuthenticated = getCookie('accessToken') ? true : false
   const [searchValue, setSearchValue] = useState('')
-  const [locationValue, setLocationValue] = useState(null)
   const [suggestionList, setSuggestionList] = useState([])
   const [showLogo, setShowLogo] = useState(false)
 
@@ -138,27 +138,44 @@ const Home = (props: HomeProps) => {
     }
   }, [activeFeature])
 
-  const updateUrl = (queryParam, queryObject) => {
-    router.push({
-      pathname: `/jobs-hiring/${queryParam ? queryParam : 'job-search'}`,
-      query: queryObject,
-    })
+  const updateUrl = (queryParam) => {
+    const queryObject = {
+      page: 1,
+      sort: 2,
+    }
+
+    router.push(
+      {
+        pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
+        query: queryObject,
+      },
+      undefined,
+      { shallow: true }
+    )
   }
 
   const onLocationSearch = (event, value) => {
-    setLocationValue(value)
+    const isClear = !value
+    const { searchQuery } = userFilterSelectionDataParser(
+      'location',
+      value,
+      router.query,
+      config,
+      isClear
+    )
+    updateUrl(searchQuery)
   }
 
   const onSearch = (value = searchValue) => {
-    let queryParam = null
-    if (locationValue) {
-      const sanitisedLocValue = categoryParser(locationValue.value)
-      queryParam = conditionChecker(value, sanitisedLocValue)
-    } else if (value) {
-      queryParam = conditionChecker(value)
-    }
-
-    updateUrl(queryParam, { sort: 2 })
+    // convert any value with '-' to '+' so that when it gets parsed from URL, we are able to map it back to '-'
+    const sanitisedVal = value.replace('-', '+')
+    const { searchQuery } = userFilterSelectionDataParser(
+      'query',
+      sanitisedVal,
+      router.query,
+      config
+    )
+    updateUrl(searchQuery)
   }
 
   const handleSuggestionSearch = (val) => {
@@ -181,10 +198,10 @@ const Home = (props: HomeProps) => {
         <Link
           className={styles.link}
           to={`${jobsPageLink}/finance-accounting-jobs`}
-          title='Finance jobs'
+          title='Accounting jobs'
         >
           <Text textStyle='base' textColor='primaryBlue'>
-            Finance jobs
+            Accounting jobs
           </Text>
         </Link>
         <Link
@@ -205,11 +222,6 @@ const Home = (props: HomeProps) => {
             Marketing jobs
           </Text>
         </Link>
-        <Link className={styles.link} to={`${jobsPageLink}/makati-jobs`} title='Makati jobs'>
-          <Text textStyle='base' textColor='primaryBlue'>
-            Makati jobs
-          </Text>
-        </Link>
         <Link
           className={styles.link}
           to={`${jobsPageLink}/computer-information-technology-jobs`}
@@ -217,15 +229,6 @@ const Home = (props: HomeProps) => {
         >
           <Text textStyle='base' textColor='primaryBlue'>
             IT jobs
-          </Text>
-        </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/overseas-jobs`}
-          title='Overseas jobs'
-        >
-          <Text textStyle='base' textColor='primaryBlue'>
-            Overseas jobs
           </Text>
         </Link>
         <Link
@@ -239,25 +242,43 @@ const Home = (props: HomeProps) => {
         </Link>
         <Link
           className={styles.link}
-          to={`${jobsPageLink}/job-search?salary=30k-60k,60k-80k,80k-100k,100k-200k,above-200k`}
-          title='₱30K + jobs'
+          to={`${jobsPageLink}/hr-recruitment-jobs`}
+          title='HR jobs'
         >
           <Text textStyle='base' textColor='primaryBlue'>
-            ₱30K+ jobs
+            HR jobs
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/bpo-team-lead-jobs`}
+          title='BPO Team Lead'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            BPO Team Lead
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/homebased-jobs`}
+          title='WFH'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            WFH
+          </Text>
+        </Link>
+        <Link
+          className={styles.link}
+          to={`${jobsPageLink}/manager-jobs`}
+          title='Manager'
+        >
+          <Text textStyle='base' textColor='primaryBlue'>
+            Manager
           </Text>
         </Link>
         <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs'>
           <Text textStyle='base' textColor='primaryBlue'>
             Manila jobs
-          </Text>
-        </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/full-time-jobs`}
-          title='Full Time jobs'
-        >
-          <Text textStyle='base' textColor='primaryBlue'>
-            Full Time jobs
           </Text>
         </Link>
       </div>
@@ -274,11 +295,7 @@ const Home = (props: HomeProps) => {
         />
         <section className={styles.searchAndQuickLinkSection}>
           <div className={styles.commonContainer}>
-            <Text
-              textStyle='xxxl'
-              textColor='primaryBlue'
-              bold
-            >
+            <Text textStyle='xxxl' textColor='primaryBlue' bold>
               Find Jobs for Professionals in Philippines
             </Text>
             <MetaText tagName='h1'>Career Platform for Professionals in Philippines</MetaText>
@@ -341,7 +358,7 @@ const Home = (props: HomeProps) => {
                       <Link
                         key={company.id}
                         className={styles.topCompaniesLogo}
-                        to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
+                        to={`${company.companyUrl}/jobs`}
                         external
                       >
                         <Image
@@ -370,7 +387,7 @@ const Home = (props: HomeProps) => {
                       <Link
                         key={company.id}
                         className={styles.topCompaniesLogo}
-                        to={`/company/${slugify(company.name.toLowerCase())}-${company.id}/jobs`}
+                        to={`${company.companyUrl}/jobs`}
                         external
                       >
                         <Image src={company.logoUrl} alt={company.name} width='60' height='60' />
@@ -480,40 +497,48 @@ const Home = (props: HomeProps) => {
                       Level Up Your Career
                     </Text>
                     <p>
-                      100,00+ cheap courses & certifications readily available to equip you with
+                      100,000+ cheap courses & certifications readily available to equip you with
                       skills for your next career jump
                     </p>
                   </span>
                 </div>
                 <div className={styles.right}>
-                  <img
-                    className={activeFeatureImg === 1 ? styles.active : ''}
-                    src={BuildProfessionalResume}
-                    alt='Build Professional Resume'
-                    width='535'
-                    height='432'
-                  />
-                  <img
-                    className={activeFeatureImg === 2 ? styles.active : ''}
-                    src={ChatDirectlyWithBoss}
-                    alt='Chat Directly'
-                    width='554'
-                    height='382'
-                  />
-                  <img
-                    className={activeFeatureImg === 3 ? styles.active : ''}
-                    src={GetHeadhunted}
-                    alt='Get Headhunted'
-                    width='555'
-                    height='427'
-                  />
-                  <img
-                    className={activeFeatureImg === 4 ? styles.active : ''}
-                    src={LevelUpCareer}
-                    alt='Level Up Your Career'
-                    width='520'
-                    height='382'
-                  />
+                  <LazyLoad>
+                    <img
+                      className={activeFeatureImg === 1 ? styles.active : ''}
+                      src={BuildProfessionalResume}
+                      alt='Build Professional Resume'
+                      width='535'
+                      height='432'
+                    />
+                  </LazyLoad>
+                  <LazyLoad>
+                    <img
+                      className={activeFeatureImg === 2 ? styles.active : ''}
+                      src={ChatDirectlyWithBoss}
+                      alt='Chat Directly'
+                      width='554'
+                      height='382'
+                    />
+                  </LazyLoad>
+                  <LazyLoad>
+                    <img
+                      className={activeFeatureImg === 3 ? styles.active : ''}
+                      src={GetHeadhunted}
+                      alt='Get Headhunted'
+                      width='555'
+                      height='427'
+                    />
+                  </LazyLoad>
+                  <LazyLoad>
+                    <img
+                      className={activeFeatureImg === 4 ? styles.active : ''}
+                      src={LevelUpCareer}
+                      alt='Level Up Your Career'
+                      width='520'
+                      height='382'
+                    />
+                  </LazyLoad>
                 </div>
                 <div className={styles.flatDisplay}>
                   <Text tagName='h2' textStyle='xxxl' bold>
@@ -608,7 +633,7 @@ const Home = (props: HomeProps) => {
                             </Text>
                           </p>
                           <p className={styles.description}>
-                            100,00+ cheap courses & certifications readily available to equip you
+                            100,000+ cheap courses & certifications readily available to equip you
                             with skills for your next career jump
                           </p>
                         </div>
@@ -638,7 +663,9 @@ const Home = (props: HomeProps) => {
           <div className={styles.featureList}>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={BusinessInsider} alt='Business Insider' width='206' height='70' />
+                <LazyLoad>
+                  <img src={BusinessInsider} alt='Business Insider' width='206' height='70' />
+                </LazyLoad>
               </div>
               {width > 576 ? (
                 <Link
@@ -675,7 +702,9 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
+                <LazyLoad>
+                  <img src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
+                </LazyLoad>
               </div>
               {width > 576 ? (
                 <Link
@@ -708,7 +737,9 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
+                <LazyLoad>
+                  <img src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
+                </LazyLoad>
               </div>
               {width > 576 ? (
                 <Link
@@ -743,7 +774,9 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={MoneyMax} alt='Moneymax' width='206' height='40' />
+                <LazyLoad>
+                  <img src={MoneyMax} alt='Moneymax' width='206' height='40' />
+                </LazyLoad>
               </div>
               {width > 576 ? (
                 <Link to='https://www.moneymax.ph/lifestyle/articles/online-job-sites/' external>
@@ -770,7 +803,9 @@ const Home = (props: HomeProps) => {
             </div>
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
-                <Image src={KrAsia} alt='KR Asia' width='206' height='40' />
+                <LazyLoad>
+                  <img src={KrAsia} alt='KR Asia' width='206' height='40' />
+                </LazyLoad>
               </div>
               {width > 576 ? (
                 <Link
@@ -803,27 +838,29 @@ const Home = (props: HomeProps) => {
             </div>
           </div>
         </div>
-        <div className={styles.bannerSection}>
-          <div className={styles.commonContainer}>
-            <Link to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`} external>
-              <div className={breakpointStyles.hideOnMobileAndTablet}>
-                <Image src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
-              </div>
-              <div className={breakpointStyles.hideOnMobileAndDesktop}>
-                <Image src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
-              </div>
-              <div className={breakpointStyles.hideOnTabletAndDesktop}>
-                <Image src={RHBannerMobile} alt='rh-banner-mobile' width='427' height='214' />
-              </div>
-            </Link>
+        <LazyLoad>
+          <div className={styles.bannerSection}>
+            <div className={styles.commonContainer}>
+              <Link to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`} external>
+                <div className={breakpointStyles.hideOnMobileAndTablet}>
+                  <Image src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
+                </div>
+                <div className={breakpointStyles.hideOnMobileAndDesktop}>
+                  <Image src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
+                </div>
+                <div className={breakpointStyles.hideOnTabletAndDesktop}>
+                  <Image src={RHBannerMobile} alt='rh-banner-mobile' width='427' height='214' />
+                </div>
+              </Link>
+            </div>
           </div>
-        </div>
+        </LazyLoad>
       </Layout>
     </div>
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
   // store actions
   store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
@@ -837,14 +874,17 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
     )
   const topCompanies = featuredCompanies?.map((featuredCompany) => {
     const logoUrl = featuredCompany.logo_url
+    const companyUrl = featuredCompany.company_url
     delete featuredCompany.logo_url
-    return { ...featuredCompany, logoUrl }
+    delete featuredCompany.companyUrl
+    return { ...featuredCompany, logoUrl, companyUrl }
   })
   return {
     props: {
       config,
       topCompanies,
     },
+    revalidate: 300 // 5mins
   }
 })
 export default Home

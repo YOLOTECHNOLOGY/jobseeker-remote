@@ -63,7 +63,7 @@ const LoginJobseeker = () => {
   useEffect(() => {
     if (isLoginFetching === false) {
       if (loginError === 'invalid credential') {
-        setGeneralError(<p>Sorry, either the email or password is wrong. Please try again or reset them <a href='/reset-password' style={{ color: '#2379ea', textDecoration: 'underline' }}>here</a>.</p>)
+        setGeneralError(<p>Sorry, either the email or password is wrong. Please try again or reset them <Link to={'/reset-password'} className='default'>here</Link></p>)
       } else if (loginError === 'account suspended') {
         setGeneralError(<p>Your account has been suspended. Please contact support@bossjob.com for clarification.</p>)
       }
@@ -146,6 +146,8 @@ const LoginJobseeker = () => {
             defaultValue={login}
             autoComplete='off'
             onChange={(e) => setLogin(e.target.value)}
+            isSubmitOnEnter={true}
+            onSubmit={handleLogin}
           />
           {emailError && errorText(emailError)}
 
@@ -173,6 +175,8 @@ const LoginJobseeker = () => {
                 </InputAdornment>
               ),
             }}
+            isSubmitOnEnter={true}
+            onSubmit={handleLogin}
           />
           {passwordError && errorText(passwordError)}
 
