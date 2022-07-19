@@ -13,8 +13,8 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
 
   const ad = ads[adSlot]
 
+  // if (process.env.ENV === 'production') {
   // if (process.env.ENV === 'development') {
-  if (process.env.ENV === 'development') {
     useAdSlot({
       mapping: ad.mapping ? ad.mapping : {},
       id: ad.id,
@@ -22,7 +22,7 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
       sizes: ad.sizes,
       isTransitioning,
     })
-  }
+  // }
 
   return (
     <div>
