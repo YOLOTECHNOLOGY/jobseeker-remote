@@ -25,12 +25,7 @@ import MaterialButton from 'components/MaterialButton'
 import CompanyJobsCardLoader from 'components/Loader/CompanyJobsCard'
 
 // Images
-import {
-  FacebookOutline,
-  LinkedinOutline,
-  InstagramOutline,
-  YoutubeOutline
-} from 'images'
+import { FacebookOutline, LinkedinOutline, InstagramOutline, YoutubeOutline } from 'images'
 
 // Styles
 import styles from '../Company.module.scss'
@@ -48,13 +43,13 @@ const CompanyDetail = (props: any) => {
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
   const [totalPages, setTotalPages] = useState(null)
   const [jobLocation, setJobLocation] = useState(null)
-  
-  const [emblaRef, emblaApi] = useEmblaCarousel({ 
-    align: "start",
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
     loop: false,
     skipSnaps: false,
     slidesToScroll: 1,
-    inViewThreshold: 1
+    inViewThreshold: 1,
   })
 
   const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
@@ -76,7 +71,7 @@ const CompanyDetail = (props: any) => {
       location: jobLocation?.value || '',
     }
 
-    dispatch(fetchJobsListRequest({...payload}, accessToken))
+    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
   }
 
   const handlePaginationClick = (event, val) => {
@@ -155,7 +150,11 @@ const CompanyDetail = (props: any) => {
                     <Text textStyle='xl' bold>
                       Website:{' '}
                     </Text>
-                    <Text textStyle='lg'><a className={styles.companyOverviewLink} href={company.website}>{company.website}</a></Text>
+                    <Link to={company.website} external>
+                      <Text textStyle='lg' className={styles.companyOverviewLink}>
+                        {company.website}
+                      </Text>
+                    </Link>
                   </div>
                 )}
               </div>
@@ -214,8 +213,8 @@ const CompanyDetail = (props: any) => {
             </div>
           </div>
         </div>
-        
-        {(company.cultures?.length > 0 || company.benefits?.length > 0) ? (
+
+        {company.cultures?.length > 0 || company.benefits?.length > 0 ? (
           <div className={styles.companySection}>
             <div className={styles.companyCulture}>
               <div className={styles.companyCultureContent}>
@@ -240,7 +239,11 @@ const CompanyDetail = (props: any) => {
                       </div>
                       <div className={styles.companyCultureList}>
                         {company.cultures.map((item) => (
-                          <Text className={styles.companyCultureItem} textStyle='base' key={item.id}>
+                          <Text
+                            className={styles.companyCultureItem}
+                            textStyle='base'
+                            key={item.id}
+                          >
                             {item.value}
                           </Text>
                         ))}
@@ -278,7 +281,11 @@ const CompanyDetail = (props: any) => {
                       </div>
                       <div className={styles.companyCultureList}>
                         {company.benefits.map((item) => (
-                          <Text className={styles.companyCultureItem} textStyle='base' key={item.id}>
+                          <Text
+                            className={styles.companyCultureItem}
+                            textStyle='base'
+                            key={item.id}
+                          >
                             {item.value}
                           </Text>
                         ))}
@@ -344,7 +351,7 @@ const CompanyDetail = (props: any) => {
               </div>
             </div>
           </div>
-        ): (
+        ) : (
           <div className={styles.companySection}>
             <div className={styles.companyCulture}>
               <div className={styles.companyCultureContent}>
@@ -355,7 +362,8 @@ const CompanyDetail = (props: any) => {
                     </Text>
                   </div>
                   <Text>
-                    {company.name} has not uploaded any information about their company life. Please come back again.
+                    {company.name} has not uploaded any information about their company life. Please
+                    come back again.
                   </Text>
                 </div>
               </div>
@@ -417,50 +425,48 @@ const CompanyDetail = (props: any) => {
               </div>
             )}
 
-            {isJobsListFetching && [...Array(size)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
+            {isJobsListFetching &&
+              [...Array(size)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
 
             {companyJobs?.length > 0 ? (
               <React.Fragment>
                 {!isJobsListFetching && (
                   <>
                     <div className={styles.companyCultureJobsList}>
-                    {companyJobs.map((companyJob) => {
-                      const company = {
-                        title: companyJob.job_title,
-                        location: companyJob.job_location,
-                        salary: companyJob.salary_range_value,
-                        availability: companyJob.job_type,
-                        jobUrl: companyJob.job_url
-                      }
+                      {companyJobs.map((companyJob) => {
+                        const company = {
+                          title: companyJob.job_title,
+                          location: companyJob.job_location,
+                          salary: companyJob.salary_range_value,
+                          availability: companyJob.job_type,
+                          jobUrl: companyJob.job_url,
+                        }
 
-                      return <CompanyJobsCard {...company} key={companyJob.id} />
-                    })}
-                  </div>
-                  <div className={styles.companyJobsPagination}>
-                    <MaterialRoundedPagination
-                      onChange={handlePaginationClick}
-                      defaultPage={Number(page) || 1}
-                      totalPages={totalPages || 1}
-                      page={selectedPage}
-                    />
-                  </div>
+                        return <CompanyJobsCard {...company} key={companyJob.id} />
+                      })}
+                    </div>
+                    <div className={styles.companyJobsPagination}>
+                      <MaterialRoundedPagination
+                        onChange={handlePaginationClick}
+                        defaultPage={Number(page) || 1}
+                        totalPages={totalPages || 1}
+                        page={selectedPage}
+                      />
+                    </div>
                   </>
                 )}
               </React.Fragment>
             ) : (
-              totalActiveJobs != 0 && (<div className={styles.emptyResult}>
-                  <Text>
-                    We couldn't find any jobs matching your search.
-                  </Text>
-              </div>)
+              totalActiveJobs != 0 && (
+                <div className={styles.emptyResult}>
+                  <Text>We couldn't find any jobs matching your search.</Text>
+                </div>
+              )
             )}
           </div>
           {totalActiveJobs === 0 && (
-              <Text>
-                {company.name} does not have any job openings now. Please come back again.
-              </Text>
-            )
-          }
+            <Text>{company.name} does not have any job openings now. Please come back again.</Text>
+          )}
         </div>
       </div>
     </CompanyProfileLayout>
@@ -482,32 +488,34 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobFilterpayload = {
     companyIds: companyId,
     size: 10,
-    page: 1
+    page: 1,
   }
 
-  store.dispatch(fetchJobsListRequest({...jobFilterpayload}, accessToken))
+  store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
   store.dispatch(fetchCompanyDetailRequest(companyId))
   store.dispatch(fetchConfigRequest())
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  
+
   const companyDetail = storeState.companies.companyDetail
   const companyName = companyDetail.response.data.name
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `Working at ${companyName}| Bossjob`
-  const seoMetaDescription = encodeURI(`Discover career opportunities at ${companyName}, learn more about ${companyName} by reading employee reviews, benefits and culture on Bossjob!`)
-  
+  const seoMetaDescription = encodeURI(
+    `Discover career opportunities at ${companyName}, learn more about ${companyName} by reading employee reviews, benefits and culture on Bossjob!`
+  )
+
   return {
     props: {
       companyDetail,
       accessToken,
       seoMetaTitle,
       seoMetaDescription,
-      totalActiveJobs
-    }
+      totalActiveJobs,
+    },
   }
 })
 

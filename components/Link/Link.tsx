@@ -14,6 +14,7 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   // serve link as a regular html link & redirect current tab to the destinated url
   aTag?: boolean
   title?: string
+  rest?: any
 }
 
 const Link = ({
@@ -24,9 +25,14 @@ const Link = ({
   external,
   aTag,
   title,
+  ...rest
 }: // default Style ?
 LinkProps) => {
   if (external || aTag) {
+    // check if https is appended before the url
+    if (to !== '' && to !== null && !/^(f|ht)tps?:\/\//i.test(to)) {
+      to = 'https://' + to
+    }
     return (
       <a
         href={to}
@@ -34,14 +40,22 @@ LinkProps) => {
         target={external ? '_blank' : '_self'}
         rel='noopener noreferrer'
         title={title}
+        {...rest}
       >
         {children}
       </a>
     )
   }
   return (
-    <NextLink href={to} passHref={passHref}>
-      <a className={className} style={className == 'default' ? { color: '#2379ea', textDecoration: 'underline' } : undefined}>{children}</a>
+    <NextLink href={to} passHref={passHref} {...rest}>
+      <a
+        className={className}
+        style={
+          className == 'default' ? { color: '#2379ea', textDecoration: 'underline' } : undefined
+        }
+      >
+        {children}
+      </a>
     </NextLink>
   )
 }
