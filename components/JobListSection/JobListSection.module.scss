@@ -109,7 +109,7 @@
   width: 166px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
 
   .skyscraperBanner {
     display:flex;
@@ -119,6 +119,11 @@
     box-sizing: border-box;
     overflow:hidden;
     cursor: pointer;
+    
+    &:last-child {
+      position: sticky;
+      top: 1rem;
+    }
 
     @include msd{
       width: 100%;
