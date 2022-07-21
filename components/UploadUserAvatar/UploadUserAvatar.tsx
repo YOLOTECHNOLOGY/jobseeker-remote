@@ -17,10 +17,19 @@ const UploadUserAvatar = ({ currentAvatarUrl }: UploadUserAvatarProps) => {
 
   const handleChosenPhoto = async (e) => {
     const file = e.target.files[0]
+    let img
+    let aspectRatio
     if (file) {
-        const compressedFile = await compressImage(file, 100) // 100kb
+      img = new Image()
+      const objectUrl = URL.createObjectURL(file)
+      img.onload = async function () {
+        aspectRatio = this.width / this.height
+        const compressedFile = await compressImage(file, 100, aspectRatio, 400) // 100kb
         const preview = URL.createObjectURL(compressedFile)
         setSelectedFile(preview)
+        URL.revokeObjectURL(objectUrl)
+      }
+      img.src = objectUrl
     }
   }
 
@@ -28,7 +37,10 @@ const UploadUserAvatar = ({ currentAvatarUrl }: UploadUserAvatarProps) => {
     <div>
       <div className={styles.UploadAvatar}>
         <div className={styles.UploadAvatarDisplay}>
-          <Avatar sx={{ width: '80px', height: '80px' }} src={selectedFile || currentAvatarUrl || DefaultAvatar} />
+          <Avatar
+            sx={{ width: '80px', height: '80px' }}
+            src={selectedFile || currentAvatarUrl || DefaultAvatar}
+          />
           <input
             id='uploadUserAvatar'
             type='file'
@@ -41,8 +53,7 @@ const UploadUserAvatar = ({ currentAvatarUrl }: UploadUserAvatarProps) => {
         </div>
         <div className={styles.UploadAvatarText}>Max file size: 1MB</div>
       </div>
-      <div className={styles.UploadAvatarError}>
-      </div>
+      <div className={styles.UploadAvatarError}></div>
     </div>
   )
 }
