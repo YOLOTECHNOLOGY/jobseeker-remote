@@ -17,6 +17,7 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 
 /*
  * If using for external link without external | aTag, it is required to append "http/https" in front of the URL.
+ * If using for internal link with external | aTag, make sure to append hostpath in front 
  */
 const Link = ({
   children,

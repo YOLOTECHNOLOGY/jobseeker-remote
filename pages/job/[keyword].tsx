@@ -398,7 +398,7 @@ const Job = ({
                 <Text textStyle='xl' tagName='h1' bold className={styles.jobDetailPrimaryInfoTitle}>
                   {jobDetail?.job_title}
                 </Text>
-                <Link to={companyUrl}>
+                <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
                   <Text textStyle='lg' className={styles.jobDetailCompany}>
                     {jobDetail?.company?.name}
                   </Text>
@@ -683,7 +683,7 @@ const Job = ({
             {jobDetail?.categories?.map((category, i) => (
               <span key={i}>
                 <Link
-                  to={`/jobs-hiring/${category.key}-jobs`}
+                  to={`${process.env.HOST_PATH}/jobs-hiring/${category.key}-jobs`}
                   className={styles.jobDetailSectionSubBody}
                   external
                 >
@@ -737,7 +737,7 @@ const Job = ({
             <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
               About the company
             </Text>
-            <Link to={companyUrl} className={styles.aboutCompanyTitle}>
+            <Link to={`${process.env.HOST_PATH}${companyUrl}`} external className={styles.aboutCompanyTitle}>
               <Text bold textStyle='lg' textColor='primaryBlue'>
                 {jobDetail?.company?.name}
               </Text>
@@ -767,7 +767,7 @@ const Job = ({
                       key={job.id}
                       className={styles.jobDetailSidebarCard}
                     >
-                      <Link to={job.job_url} external>
+                      <Link to={`${process.env.HOST_PATH}${job.job_url}`} external>
                         <img
                           src={job?.company_logo}
                           className={styles.jobDetailSidebarCardImage}
@@ -775,7 +775,7 @@ const Job = ({
                         />
                       </Link>
                       <Link
-                        to={job.job_url}
+                        to={`${process.env.HOST_PATH}${job.job_url}`}
                         aTag
                         external
                       >

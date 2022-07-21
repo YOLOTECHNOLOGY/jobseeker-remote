@@ -181,7 +181,9 @@ const JobDetail = ({
 
   const isCategoryApplied = category === 'applied'
   const isCategorySaved = category === 'saved'
-  const publicJobUrl = isCategoryApplied ? `${jobDetailUrl}?isApplied=true` : jobDetailUrl
+  const publicJobUrl = isCategoryApplied
+    ? `${process.env.HOST_PATH}${jobDetailUrl}?isApplied=true`
+    : `${process.env.HOST_PATH}${jobDetailUrl}`
 
   const checkHasApplicationWithdrawn = () => {
     if (isCategoryApplied && applicationHistory?.length > 0) {
@@ -248,7 +250,7 @@ const JobDetail = ({
                   {selectedJob?.job_title}
                 </Text>
               </Link>
-              <Link to={companyUrl}>
+              <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
                 <Text textStyle='lg' className={styles.JobDetailCompany}>
                   {selectedJob?.company?.name}
                 </Text>
