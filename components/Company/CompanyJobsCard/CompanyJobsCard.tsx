@@ -36,7 +36,7 @@ const CompanyJobsCard = ({ title, location, salary, availability, jobUrl }: ICom
         </div>
       </div>
       <div className={styles.companyJobsCardRight}>
-        <Link to={jobUrl} external>
+        <Link to={`${process.env.HOST_PATH}${jobUrl}`} external>
           <MaterialButton variant='outlined' capitalize className={styles.companyJobsCardApply}>
             <Text textStyle='base' textColor='primaryBlue' bold>
               Apply Now
