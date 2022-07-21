@@ -1,7 +1,5 @@
-// eslint-disable
 import React from 'react'
 import NextLink from 'next/link'
-// import { UrlObject } from 'url'
 
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   children: React.ReactNode
@@ -17,6 +15,9 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   rest?: any
 }
 
+/*
+ * If using for external link without external | aTag, it is required to append "http/https" in front of the URL.
+ */
 const Link = ({
   children,
   to,
@@ -26,7 +27,7 @@ const Link = ({
   aTag,
   title,
   ...rest
-}: // default Style ?
+}: 
 LinkProps) => {
   if (external || aTag) {
     // check if https is appended before the url
