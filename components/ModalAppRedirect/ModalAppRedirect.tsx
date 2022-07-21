@@ -27,25 +27,11 @@ interface ModalAppRedirectProps {
 
 const ModalAppRedirect = ({ isShowModal, handleModal }: ModalAppRedirectProps) => {
   const router = useRouter()
-  const path = router.asPath
+  
   const [userAgent, setUserAgent] = useState(null)
   const [browser, setBrowser] = useState(null)
  
-  // Mobile app deep link mapping
-  let schema = "BOSSJOBPH://"
-  if (path.includes('/login/jobseeker')) {
-    schema = schema + 'login'
-  } else if (path.includes('/register/jobseeker')) {
-    schema = schema + 'register'
-  } else if (path.includes('/job/')) {
-    const jobId = path?.split('-').pop()
-    schema = schema + 'job-detail'
-    if (jobId) schema = `${schema}/${jobId}`
-  } else if (path.includes('/company/')) {
-    const companyId = path?.split('-').pop()
-    schema = schema + 'company'
-    if (companyId) schema = `${schema}/${companyId}`
-  }
+  
 
   useEffect(() => {
     setUserAgent(useUserAgent(window.navigator.userAgent))
@@ -71,15 +57,39 @@ const ModalAppRedirect = ({ isShowModal, handleModal }: ModalAppRedirectProps) =
   }, [userAgent])
 
   const handleOpenApp = () => {
-    const appStoreLink = userAgent?.isIos ? process.env.APP_STORE_LINK : process.env.GOOGLE_PLAY_STORE_LINK
-    
-    if (typeof window !== undefined) {
+    if (window && typeof window !== undefined) {
+      const windowPath = router.asPath
+      const baseSchema = "BOSSJOBPH"
+      let pathSchema = ''
+
+      // Mobile app deep link mapping
+      if (windowPath.includes('/login/jobseeker')) {
+        pathSchema = 'login'
+      } else if (windowPath.includes('/register/jobseeker')) {
+        pathSchema = 'register'
+      } else if (windowPath.includes('/job/')) {
+        const jobId = windowPath?.split('-').pop()
+        pathSchema = 'job-detail'
+        if (jobId) pathSchema = `${pathSchema}/${jobId}`
+      } else if (windowPath.includes('/company/')) {
+        const companyId = windowPath?.split('-').pop()
+        pathSchema = pathSchema + 'company'
+        if (companyId) pathSchema = `${pathSchema}/${companyId}`
+      }
+
+      /* 
+        IOS schema: BOSSJOBPH://register
+        Android schema: intent://register/#Intent;scheme=BOSSJOBPH;package=com.poseidon.bossjobapp;end
+      */
+      const schema = userAgent?.isIos ? `${baseSchema}://${pathSchema}` : `intent://${pathSchema}/#Intent;scheme=${baseSchema};package=com.poseidon.bossjobapp;end`
+      const appStoreLink = userAgent?.isIos ? process.env.APP_STORE_LINK : process.env.GOOGLE_PLAY_STORE_LINK
+
       window.location.replace(schema)
     
       // Wait 2s and redirect to App Store/Google Play Store if app was not opened
       setTimeout(() => {
-        window.location.replace(appStoreLink); 
-      }, 2000);
+        window.location.replace(appStoreLink)
+      }, 2000)
     }
   }
 
