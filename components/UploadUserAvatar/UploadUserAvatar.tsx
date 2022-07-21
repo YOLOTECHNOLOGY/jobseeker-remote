@@ -43,6 +43,7 @@ const UploadUserAvatar = ({ currentAvatarUrl }: UploadUserAvatarProps) => {
           />
           <input
             id='uploadUserAvatar'
+            accept='image/*'
             type='file'
             style={{ display: 'none' }}
             onChange={handleChosenPhoto}
