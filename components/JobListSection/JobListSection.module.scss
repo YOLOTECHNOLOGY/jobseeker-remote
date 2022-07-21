@@ -122,7 +122,7 @@
     
     &:last-child {
       position: sticky;
-      top: 1rem;
+      top: 24px;
     }
 
     @include msd{
