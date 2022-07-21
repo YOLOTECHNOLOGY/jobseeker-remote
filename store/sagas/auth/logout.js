@@ -21,7 +21,6 @@ function* logoutReq() {
 
   removeCookie('user')
   removeCookie('accessToken')
-  removeCookie('isVerifyEmailModalClosed')
 }
 
 export default function* logout() {

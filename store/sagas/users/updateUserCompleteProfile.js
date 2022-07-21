@@ -58,7 +58,6 @@ function* updateUserCompleteProfileReq({ payload }) {
   } = payload
 
   try {
-    removeCookie('isVerifyEmailModalClosed')
     if (currentStep === 1) {
       const profilePayload = {
         accessToken,
@@ -199,7 +198,6 @@ function* fetchUserEducationServiceSaga(accessToken) {
 
 function* completeUserProfileSaga(redirect, accessToken) {
   try {
-    removeCookie('isVerifyEmailModalClosed')
     const { data } = yield call(completeUserProfileService, { accessToken })
     yield put(completeUserProfileSuccess(data.data))
 

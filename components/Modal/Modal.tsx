@@ -63,6 +63,7 @@ const Modal = ({
 
     /* For IOS devices, restore scroll position*/
     window.scrollTo(0, scrollY.current)
+
     handleModal(false)
   }
 

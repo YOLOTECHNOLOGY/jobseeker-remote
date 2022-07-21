@@ -38,9 +38,11 @@ const Layout = ({ children, className }: LayoutProps) => {
   useEffect(() => {
     setIsAuthenticated(authCookie ? true : false)
     setIsEmailVerified(userCookie?.is_email_verify)
-    const isVerifyEmailModalClosed = getCookie('isVerifyEmailModalClosed')
-    setIsShowModal(!isVerifyEmailModalClosed && !!authCookie && !!!userCookie.is_email_verify)
-   
+    
+    if (userCookie && authCookie) {
+      setIsShowModal(false)
+    }
+    
     const userAgent = useUserAgent(window.navigator.userAgent)
     if (userAgent.isMobile && !getCookie('isAppRedirectModalClosed')) {
       setIsShowAppRedirectModal(true)
@@ -79,7 +81,6 @@ const Layout = ({ children, className }: LayoutProps) => {
   const handleVerifyEmailModal = () => {
     setIsShowModal(false)
     setIsEmailVerified(getCookie('user').is_email_verify)
-    setCookieWithExpiry('isVerifyEmailModalClosed', true, 3600) // cookie expires to renable auto show modal after 1 hour
   }
 
   const handleAppRedirectModal = () => {

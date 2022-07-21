@@ -289,8 +289,11 @@ const Job = ({
     updateUrl(searchQuery)
   }
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (isOTPVerified) => {
     setIsShowModal(false)
+    if (isOTPVerified) {
+      router.push(applyJobLink)
+    }
   }
 
   const handleVerifyEmailClick = async () => {
