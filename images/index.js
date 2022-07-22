@@ -60,6 +60,9 @@ export const RateIcon = `${S3BucketJobseeker}/RateIcon.svg`
 export const TrashIcon = `${S3BucketJobseeker}/trash.svg`
 export const DocumentIcon = `${S3BucketJobseeker}/document.svg`
 export const DisclaimerIcon = `${S3BucketJobseeker}/disclaimer.svg`
+export const MailIcon = `${S3BucketJobseeker}/mailIcon.svg`
+export const PencilIcon = `${S3BucketJobseeker}/pencil.svg`
+export const MobileIcon = `${S3BucketJobseeker}/mobile.svg`
 
 /* Footer Social Links Logo */
 export const facebook = `${S3BucketJobseeker}/facebook.svg`
