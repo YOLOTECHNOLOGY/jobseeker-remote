@@ -10,6 +10,9 @@ interface TextEditorInterface {
   setValue: any
 }
 
+// Refer to link below for React-quill implementation on Nextjs:
+// https://www.simplenextjs.com/posts/react-quill
+
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {	
   ssr: false,
   loading: () => <p>Loading ...</p>,
