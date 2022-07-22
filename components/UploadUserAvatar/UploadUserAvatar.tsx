@@ -52,7 +52,10 @@ const UploadUserAvatar = ({ currentAvatarUrl }: UploadUserAvatarProps) => {
             <img src={CameraIcon} height='14' width='14' />
           </button>
         </div>
-        <div className={styles.UploadAvatarText}>Max file size: 1MB</div>
+        <div className={styles.UploadAvatarText}>
+          For the best visual results, we recommend uploading a square photo and with your face in
+          the center.
+        </div>
       </div>
       <div className={styles.UploadAvatarError}></div>
     </div>
