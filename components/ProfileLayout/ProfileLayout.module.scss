@@ -1,0 +1,53 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.ProfileLayout {
+    @extend .GlobalContainer;
+    margin-top: 48px;
+    margin-bottom: 150px;
+
+    @include msd {
+        display: flex;
+        flex-direction: column;
+    }
+
+    @include md {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        column-gap: 24px;
+        grid-template-areas: "overview detail";
+    }
+
+    &UserOverview {
+        grid-area: overview;
+        width: 100%;
+        height: 100%;
+    }
+
+    &Settings {
+        grid-area: detail;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.SettingTabs {
+    width: 100%;
+    margin-bottom: 24px;
+
+    &Item {
+      margin: 0 12px;
+    }
+  
+    @include msd {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background-color: white;
+        margin-bottom: 0;
+  
+        &Item {
+            margin: 0;
+        }
+    }
+  }
