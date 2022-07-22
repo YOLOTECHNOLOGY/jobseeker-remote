@@ -122,7 +122,8 @@
     
     &:last-child {
       position: sticky;
-      top: 24px;
+      margin-bottom: 24px;
+      top: 170px;
     }
 
     @include msd{
