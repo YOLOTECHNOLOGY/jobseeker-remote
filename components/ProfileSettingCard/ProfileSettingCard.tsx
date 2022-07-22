@@ -1,6 +1,9 @@
-import styles from './ProfileSettingCard.module.scss'
+/* Components */
 import Text from '../Text'
 import MaterialButton from '../MaterialButton'
+
+/* Styles */
+import styles from './ProfileSettingCard.module.scss'
 
 type ProfileSettingCardProps = {
   title: string

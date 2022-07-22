@@ -1,6 +1,11 @@
+/* Components */
 import { Avatar } from '@mui/material'
-import { DefaultAvatar, LocationIcon, MailIcon, MobileIcon, PencilIcon } from '../../images'
 import Text from '../Text'
+
+/* Images */
+import { DefaultAvatar, LocationIcon, MailIcon, MobileIcon, PencilIcon } from '../../images'
+
+/* Styles */
 import styles from './UserProfileOverview.module.scss'
 
 type UserProfileOverviewProps = {
