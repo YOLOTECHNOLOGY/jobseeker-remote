@@ -153,7 +153,6 @@ const App = ({ Component, pageProps }: AppProps) => {
                     ? '2026042927653653'
                     : '2111002932479859'
                 },
-                autoLogAppEvents : true,	
                 xfbml            : true,	
                 version          : 'v6.0'	
               });	
