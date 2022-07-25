@@ -27,7 +27,7 @@ import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
-import TextEditorField from 'components/TextEditor/TextEditor'
+import TextEditor from 'components/TextEditor/TextEditor'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
 
@@ -48,8 +48,7 @@ import {
   getJobCategoryIds,
 } from 'helpers/jobPayloadFormatter'
 import { formatSalary, removeEmptyOrNullValues } from 'helpers/formatter'
-import { removeItem, setItem, getItem } from 'helpers/localStorage'
-import { STORAGE_NAME } from 'helpers/richTextEditor'
+import { getItem } from 'helpers/localStorage'
 
 // Styles
 import styles from './Onboard.module.scss'
@@ -102,7 +101,6 @@ const Step3 = (props: any) => {
   const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserCompleteProfile.fetching)
 
   useEffect(() => {
-    removeItem(STORAGE_NAME)
     dispatch(fetchUserWorkExperienceRequest({accessToken}))
     setShowErrorToComplete(false)
   }, [])
@@ -133,8 +131,7 @@ const Step3 = (props: any) => {
         setCountry(countryList.filter((country) => country.key === selectedExperience.country_key)[0].value)
         setIsShowCountry(true)
       }
-      if (selectedExperience.description) setItem(STORAGE_NAME, selectedExperience.description)
-      
+
       setDescription(selectedExperience.description)
       setJobFunction(selectedExperience.job_categories)
     }
@@ -220,39 +217,6 @@ const Step3 = (props: any) => {
     return <Text textStyle='sm' textColor='red' tagName='p' className={styles.stepFieldError}>{errorMessage}</Text>
   }
 
-  const displayDescription = (value) => {
-    try {
-      value = JSON.parse(value)
-      if (!value) return ''
-      
-      let textEditorValue = ''
-      switch(value[0].type) {
-        case 'numbered-list':
-          const numberedLists = ['<ol>']
-          value[0].children.map((item) => {
-            numberedLists.push(`<li>${item.children[0].text}</li>`)
-          })
-          numberedLists.push('</ol>')
-          textEditorValue = numberedLists.join('')
-          break
-        case 'bulleted-list':
-          const bulletedLists = ['<ul>']
-          value[0].children.map((item) => {
-            bulletedLists.push(`<li>${item.children[0].text}</li>`)
-          })
-          bulletedLists.push('</ul>')
-          textEditorValue = bulletedLists.join('')
-          break
-        default:
-          textEditorValue = value[0].children[0].text ? `<p>${value[0].children[0].text}</p>` : ''
-          break
-      }
-      return textEditorValue
-    } catch(e) {
-      return value
-    }
-  }
-
   const onLocationSearch = (_, value) => {
     setIsShowCountry(value?.key === 'overseas' ? true : false)
     setLocation(value)
@@ -275,14 +239,12 @@ const Step3 = (props: any) => {
     setIndustry('')
     setCountry('')
     setIsShowCountry(false)
-    removeItem(STORAGE_NAME)
     setDescription('')
     setJobFunction([])
     setHasErrorOnFromPeriod(false)
     setHasErrorOnToPeriod(false)
     setIsUpdating(false)
     setIsSaveDisabled(true)
-    removeItem(STORAGE_NAME)
     setShowErrorToComplete(false)
   }
 
@@ -402,10 +364,10 @@ const Step3 = (props: any) => {
                 {experience?.company_industry && <Text textStyle='base' tagName='p'>{experience?.company_industry}</Text>}
                 {experience?.salary && <Text textStyle='base' tagName='p'>{formatSalary(experience?.salary)} per month</Text>}
                 <br/>
-                {experience?.description && displayDescription(experience?.description) && (
+                {experience?.description && (
                   <>
                     <Text textStyle='base' tagName='p'>Description: </Text>
-                    <div className={styles.stepDataDescription} dangerouslySetInnerHTML={{__html: displayDescription(experience.description)}} />
+                    <div className={styles.stepDataDescription} dangerouslySetInnerHTML={{__html: experience.description}} />
                   </>
                 )}
               </div>
@@ -577,8 +539,9 @@ const Step3 = (props: any) => {
             </div>
             
             <div className={styles.step3Editor}>
-              <TextEditorField
-                fieldOnChange={(value) => setDescription(value) }
+              <TextEditor
+                value={description}
+                setValue={setDescription}
               />
             </div>
           </div>
