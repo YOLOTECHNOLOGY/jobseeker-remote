@@ -1,7 +1,5 @@
-// eslint-disable
 import React from 'react'
 import NextLink from 'next/link'
-// import { UrlObject } from 'url'
 
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   children: React.ReactNode
@@ -14,8 +12,13 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   // serve link as a regular html link & redirect current tab to the destinated url
   aTag?: boolean
   title?: string
+  rest?: any
 }
 
+/*
+ * If using for external link without external | aTag, it is required to append "http/https" in front of the URL.
+ * If using for internal link with external | aTag, make sure to append hostpath in front 
+ */
 const Link = ({
   children,
   to,
@@ -24,9 +27,14 @@ const Link = ({
   external,
   aTag,
   title,
-}: // default Style ?
+  ...rest
+}: 
 LinkProps) => {
   if (external || aTag) {
+    // check if https is appended before the url
+    if (to !== '' && to !== null && !/^(f|ht)tps?:\/\//i.test(to)) {
+      to = 'https://' + to
+    }
     return (
       <a
         href={to}
@@ -34,14 +42,22 @@ LinkProps) => {
         target={external ? '_blank' : '_self'}
         rel='noopener noreferrer'
         title={title}
+        {...rest}
       >
         {children}
       </a>
     )
   }
   return (
-    <NextLink href={to} passHref={passHref}>
-      <a className={className} style={className == 'default' ? { color: '#2379ea', textDecoration: 'underline' } : undefined}>{children}</a>
+    <NextLink href={to} passHref={passHref} {...rest}>
+      <a
+        className={className}
+        style={
+          className == 'default' ? { color: '#2379ea', textDecoration: 'underline' } : undefined
+        }
+      >
+        {children}
+      </a>
     </NextLink>
   )
 }
