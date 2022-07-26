@@ -1,0 +1,59 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.uploadResumeField {
+  margin-bottom: 20px;
+
+  span {
+    @include msd {
+      line-height: 15px !important;
+    }
+  }
+
+  div {
+    width: 100%;
+  }
+
+  .error {
+    margin: 6px 0 0;
+  }
+
+  > .question {
+    margin-top: 15px;
+
+    > .answer {
+      margin-top: 15px;
+
+      > div {
+        height: 100%;
+      }
+    }
+  }
+
+  label {
+    width: 100%;
+  }
+
+  > .uploadedResume {
+    display: flex;
+    justify-content: space-between;
+
+    > .leftResume {
+      display: flex;
+
+      > .documentDiv {
+        width: auto;
+        margin-right: 10px;
+      }
+
+      > .resumeName {
+        line-height: 22px;
+      }
+    }
+
+    > .trashDiv {
+      width: auto;
+      cursor: pointer;
+    }
+  }
+}
