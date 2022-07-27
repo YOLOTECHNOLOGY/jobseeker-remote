@@ -15,19 +15,21 @@ import styles from './UploadResume.module.scss'
 
 /* Assets */
 import { TrashIcon, DocumentIcon } from 'images'
+import classNames from 'classnames'
 
-type UploadResume = {
+type UploadResumeProps = {
   title: string
   resume: resumeObject
   handleDelete: Function
   handleUpload: Function
+  buttonClassname?: string
 }
 
 type resumeObject = {
   name: string
 }
 
-const UploadResume = ({ title, resume, handleDelete, handleUpload }: UploadResume) => {
+const UploadResume = ({ title, resume, handleDelete, handleUpload, buttonClassname }: UploadResumeProps) => {
   const {
     register,
     setError,
@@ -78,7 +80,7 @@ const UploadResume = ({ title, resume, handleDelete, handleUpload }: UploadResum
         </div>
       ) : (
         <div>
-          <MaterialButton variant='outlined' capitalize component='label'>
+          <MaterialButton variant='outlined' capitalize component='label' className={classNames([styles.buttonCTA, buttonClassname])}>
             <Text textStyle='base' textColor='primaryBlue' bold>
               Upload your resume
             </Text>
