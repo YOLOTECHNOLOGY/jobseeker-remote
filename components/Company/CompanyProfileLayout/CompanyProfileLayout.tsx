@@ -84,11 +84,6 @@ const CompanyProfileLayout = ({
     currentTab == 'jobs' ? '/jobs' : currentTab == 'life' ? '/life' : ''
   const companyUrl = company.company_url
   const canonicalUrl = companyUrl + additionalCanonicalText
-  
-  const maxBanner = [154] 
-  const handleMaxBanner = () => {
-    return maxBanner.some(item => item == company.id)
-  }
 
   return (
     <Layout>
@@ -99,7 +94,7 @@ const CompanyProfileLayout = ({
             <img
               src={company.cover_pic_url || imgPlaceholder}
               alt={`${company.name} banner`}
-              className={`${styles.companyBanner} ${handleMaxBanner() ? styles.companyMaxBanner : ''} `}
+              className={styles.companyBanner}
             />
             <div className={styles.companyProfile}>
               <img src={company.logo_url} alt={`${company.name} logo`} />
