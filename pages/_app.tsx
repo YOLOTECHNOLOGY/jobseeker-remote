@@ -107,6 +107,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           `,
         }}
       />
+      
       {/* Google One Tap Sign in */}
       <Script src='https://accounts.google.com/gsi/client' />
       {!accessToken && (
@@ -141,28 +142,8 @@ const App = ({ Component, pageProps }: AppProps) => {
         />
       )}
 
-      {/* Global Site Code Pixel - Facebook Pixel */}
+      {/* Facebook  */}
       <Script
-        id="fb-pixel"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', ${fbq.FB_PIXEL_ID});
-          `,
-        }}
-      />
-
-      {/* Facebook 
-      <Script
-        strategy='lazyOnload'
         dangerouslySetInnerHTML={{
           __html: `
             function initialize() {	
@@ -172,32 +153,31 @@ const App = ({ Component, pageProps }: AppProps) => {
                     ? '2026042927653653'
                     : '2111002932479859'
                 },
-                autoLogAppEvents : true,	
                 xfbml            : true,	
                 version          : 'v6.0'	
               });	
 
-              FB.Event.subscribe('messenger_checkbox', function(e) {
-                console.log("messenger_checkbox event");
-                console.log(e);
-                if (e.event == 'rendered') {
-                  console.log("Plugin was rendered");
-                } else if (e.event == 'checkbox') {
-                  var checkboxState = e.state;
-                  console.log("Checkbox state: " + checkboxState);
-                } else if (e.event == 'not_you') {
-                  console.log("User clicked 'not you'");
-                } else if (e.event == 'hidden') {
-                  console.log("Plugin was hidden");
-                }
-              });
+              // FB.Event.subscribe('messenger_checkbox', function(e) {
+              //   console.log("messenger_checkbox event");
+              //   console.log(e);
+              //   if (e.event == 'rendered') {
+              //     console.log("Plugin was rendered");
+              //   } else if (e.event == 'checkbox') {
+              //     var checkboxState = e.state;
+              //     console.log("Checkbox state: " + checkboxState);
+              //   } else if (e.event == 'not_you') {
+              //     console.log("User clicked 'not you'");
+              //   } else if (e.event == 'hidden') {
+              //     console.log("Plugin was hidden");
+              //   }
+              // });
             };	
+
             if(window.FB === undefined) {	
               window.fbAsyncInit = function() {	
                 initialize();	
               };	
-            }	
-            else {	
+            }	else {	
               initialize();	
             }	
 
@@ -208,9 +188,20 @@ const App = ({ Component, pageProps }: AppProps) => {
               js.src = "https://connect.facebook.net/en_US/sdk.js";	
               fjs.parentNode.insertBefore(js, fjs);	
             }(document, 'script', 'facebook-jssdk'));	
+
+            // Fb pixel
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', ${fbq.FB_PIXEL_ID});
             `,
         }}
-      />*/}
+      />
 
       {/* Favicons */}
       <link

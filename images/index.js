@@ -63,6 +63,7 @@ export const DisclaimerIcon = `${S3BucketJobseeker}/disclaimer.svg`
 export const MailIcon = `${S3BucketJobseeker}/mailIcon.svg`
 export const PencilIcon = `${S3BucketJobseeker}/pencil.svg`
 export const MobileIcon = `${S3BucketJobseeker}/mobile.svg`
+export const CameraIcon = `${S3BucketJobseeker}/CameraIcon.svg`
 
 /* Footer Social Links Logo */
 export const facebook = `${S3BucketJobseeker}/facebook.svg`
