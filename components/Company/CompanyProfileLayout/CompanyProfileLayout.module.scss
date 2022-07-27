@@ -31,7 +31,7 @@
   &Banner {
     width: 100%;
     height: 190px;
-    object-fit: cover;
+    object-fit: fill;
 
     @include msd {
       display: none;
