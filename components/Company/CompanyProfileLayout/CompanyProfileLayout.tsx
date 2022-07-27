@@ -85,6 +85,11 @@ const CompanyProfileLayout = ({
   const companyUrl = company.company_url
   const canonicalUrl = companyUrl + additionalCanonicalText
   
+  const maxBanner = [154] 
+  const handleMaxBanner = () => {
+    return maxBanner.some(item => item == company.id)
+  }
+
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={canonicalUrl} imageUrl={company.logo_url}/>
@@ -94,7 +99,7 @@ const CompanyProfileLayout = ({
             <img
               src={company.cover_pic_url || imgPlaceholder}
               alt={`${company.name} banner`}
-              className={styles.companyBanner}
+              className={`${styles.companyBanner} ${handleMaxBanner() ? styles.companyMaxBanner : ''} `}
             />
             <div className={styles.companyProfile}>
               <img src={company.logo_url} alt={`${company.name} logo`} />
