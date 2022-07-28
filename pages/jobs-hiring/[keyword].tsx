@@ -329,8 +329,16 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   useEffect(() => {
     if (jobListResponse?.data?.jobs.length > 0) {
-      handleFetchJobDetail(jobListResponse.data?.jobs?.[0].id)
-      setSelectedJobId(jobListResponse.data?.jobs?.[0].id)
+      // 默认初始化
+      const isReportJob = getCookie('isReportJob') || null
+      const reportJobId = getCookie('reportJobId') || null
+      if (isReportJob && reportJobId) {
+        handleFetchJobDetail(reportJobId)
+        setSelectedJobId(reportJobId)
+      } else {
+        handleFetchJobDetail(jobListResponse.data?.jobs?.[0].id)
+        setSelectedJobId(jobListResponse.data?.jobs?.[0].id)
+      }
     } else {
       setSelectedJobId(null)
       setSelectedJob(null)
