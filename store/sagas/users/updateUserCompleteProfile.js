@@ -148,7 +148,6 @@ function* updateUserCompleteProfileReq({ payload }) {
     }
 
     if (!currentStep) {
-      console.log('no current step')
       const profilePayload = {
         accessToken,
         profile,
@@ -242,6 +241,5 @@ function* completeUserProfileSaga(redirect, accessToken) {
 }
 
 export default function* updateUserCompleteProfileSaga() {
-  console.log('executed saga')
   yield takeLatest(UPDATE_USER_COMPLETE_PROFILE_REQUEST, updateUserCompleteProfileReq)
 }
