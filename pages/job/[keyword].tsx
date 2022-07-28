@@ -332,7 +332,7 @@ const Job = ({
     if ( authCookie && userCookie) {
       setIsShowReportJob(true)
     } else {
-      // 移动端是直接截取url获取数据
+      // mobile get jobDetail is by url id
       setCookie('isMobileReportJob', true)
       router.push('/login/jobseeker?redirect=' + jobDetail.job_url)
     }

@@ -329,7 +329,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   useEffect(() => {
     if (jobListResponse?.data?.jobs.length > 0) {
-      // 默认初始化
+      // default init job detail
       const isReportJob = getCookie('isReportJob') || null
       const reportJobId = getCookie('reportJobId') || null
       if (isReportJob && reportJobId) {

@@ -195,7 +195,6 @@ const JobDetail = ({
     return false
   }
 
-  // 举报的时候需要查看登陆状态
   const handleShowReportJob = () => {
     if ( authCookie && userCookie) {
       setIsShowReportJob(true)
