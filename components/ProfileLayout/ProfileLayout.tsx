@@ -44,6 +44,8 @@ type ProfileLayoutProps = {
   contactNumber?: string
   avatarUrl?: string
   currentTab?: string
+  modalName: string
+  handleModal: Function
   children: React.ReactNode
 }
 
@@ -55,11 +57,17 @@ const ProfileLayout = ({
   contactNumber,
   children,
   currentTab,
+  modalName,
+  handleModal,
 }: ProfileLayoutProps) => {
   const [tabValue, setTabValue] = useState(currentTab)
 
+  const handleShowModal = () => {
+    handleModal(modalName, true)
+  }
+
   // eslint-disable-next-line
-  const handleEditClick = () => {}
+  const handleEditClick = () => {handleShowModal()}
   return (
     <div className={styles.ProfileLayout}>
       <div className={styles.ProfileLayoutUserOverview}>

@@ -44,7 +44,7 @@ const UploadUserAvatar = ({ currentAvatarUrl, setSelectedAvatar }: UploadUserAva
   return (
     <div>
       <div className={styles.UploadAvatar}>
-        <div className={styles.UploadAvatarDisplay}>
+        <div className={styles.UploadAvatarDisplay} onClick={handleChoosePhoto}>
           <Avatar
             sx={{ width: '80px', height: '80px' }}
             src={preview || currentAvatarUrl || DefaultAvatar}

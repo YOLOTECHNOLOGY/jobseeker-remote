@@ -1,6 +1,5 @@
 import { TextField } from '@mui/material'
 import { useEffect, useState } from 'react'
-import MaterialButton from '../MaterialButton'
 import styles from './EditProfileModal.module.scss'
 import Text from '../Text'
 import ModalDialog from '../ModalDialog'
@@ -17,9 +16,12 @@ import moment from 'moment'
 import { updateUserCompleteProfileRequest } from '../../store/actions/users/updateUserCompleteProfile'
 
 type EditProfileModalProps = {
+  modalName: string
+  showModal: boolean
   config: any
   userDetail: any
   accessToken: any
+  handleModal: Function
 }
 
 const dayList = []
@@ -61,14 +63,20 @@ const errorText = (errorMessage: string) => {
   )
 }
 
-const EditProfileModal = ({ config, userDetail, accessToken }: EditProfileModalProps) => {
+const EditProfileModal = ({
+  modalName,
+  showModal,
+  config,
+  userDetail,
+  accessToken,
+  handleModal,
+}: EditProfileModalProps) => {
   // eslint-disable-next-line
   const { avatar, first_name, last_name, location: userLocation } = userDetail
 
   const dispatch = useDispatch()
 
   const [selectedAvatar, setSelectedAvatar] = useState(null)
-  const [open, setOpen] = useState(false)
   // eslint-disable-next-line
   const [firstName, setFirstName] = useState(first_name || '')
   // eslint-disable-next-line
@@ -129,14 +137,6 @@ const EditProfileModal = ({ config, userDetail, accessToken }: EditProfileModalP
     setLocation(value)
   }
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
   const onSubmit = (data) => {
     const { noticePeriod, firstName, lastName, summary } = data
     const avatar = selectedAvatar
@@ -160,14 +160,15 @@ const EditProfileModal = ({ config, userDetail, accessToken }: EditProfileModalP
     dispatch(updateUserCompleteProfileRequest(payload))
   }
 
+  const handleCloseModal = () => {
+    handleModal(modalName, false)
+  }
+
   return (
     <div>
-      <MaterialButton variant='outlined' onClick={handleClickOpen}>
-        Open form dialog
-      </MaterialButton>
       <ModalDialog
-        open={open}
-        onClose={handleClose}
+        open={showModal}
+        onClose={handleCloseModal}
         headerTitle='About me'
         firstButtonText='Cancel'
         secondButtonText='Save'

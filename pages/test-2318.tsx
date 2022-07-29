@@ -1,17 +1,56 @@
+import { useState } from 'react'
+
+/* Vendors */
+import { END } from 'redux-saga'
+import { wrapper } from '../store'
+
+/* Redux actions */
+import { fetchConfigRequest } from '../store/actions/config/fetchConfig'
+import { fetchUserOwnDetailRequest } from '../store/actions/users/fetchUserOwnDetail'
+
+/* Components */
 import Layout from '../components/Layout'
 import ProfileLayout from '../components/ProfileLayout'
 import ProfileSettingCard from '../components/ProfileSettingCard'
+import EditProfileModal from '../components/EditProfileModal'
 
 // TODO: Remove this page after testing
-export default function Page() {
+const ManageProfilePage = ({ config, userDetail, accessToken }: any) => {
+  const [modalState, setModalState] = useState({
+    profile: false,
+    workExperience:false,
+    education:false,
+    skills:false,
+    links:false,
+    license:false,
+    jobPreferences: false
+  })
+
+  const handleModal = (modalName, showModal) => {
+    setModalState({
+      ...modalState,
+      [modalName]:showModal
+    })
+  }
+
   return (
     <Layout>
+      <EditProfileModal
+        modalName='profile'
+        showModal={modalState.profile}
+        config={config}
+        userDetail={userDetail}
+        accessToken={accessToken}
+        handleModal={handleModal}
+      />
       <ProfileLayout
         name='John Doe'
         location='Manila Philippines'
         email='johndoe@test.com'
         contactNumber='+65 91812121'
         currentTab='profile'
+        modalName='profile'
+        handleModal={handleModal}
       >
         <ProfileSettingCard
           title='Work Experience'
@@ -52,3 +91,33 @@ export default function Page() {
     </Layout>
   )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+  const accessToken = req.cookies.accessToken
+  if (!accessToken) {
+    return {
+      redirect: {
+        destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/1',
+        permanent: false,
+      },
+    }
+  }
+
+  store.dispatch(fetchConfigRequest())
+  store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
+  store.dispatch(END)
+  await (store as any).sagaTask.toPromise()
+  const storeState = store.getState()
+  const config = storeState.config.config.response
+  const userDetail = storeState.users.fetchUserOwnDetail.response
+
+  return {
+    props: {
+      config,
+      userDetail,
+      accessToken,
+    },
+  }
+})
+
+export default ManageProfilePage
