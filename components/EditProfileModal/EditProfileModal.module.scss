@@ -1,7 +1,7 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
-.Profile {
+.profile {
   // max-height: 50vh;
 
   &Form {
@@ -34,8 +34,18 @@
   }
 }
 
+.descriptionField{
+  display:flex;
+  flex-direction: column;
+  width:100%;
+}
+
 .footerButton{
   @include sm{
     width:100%;
   }
+}
+
+.fieldError{
+  display:flex;
 }

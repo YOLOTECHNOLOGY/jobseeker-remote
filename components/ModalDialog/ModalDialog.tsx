@@ -1,16 +1,17 @@
 /* Vendor */
 import classNames from 'classnames/bind'
+import { Breakpoint, Dialog, DialogContent } from '@mui/material'
 
 /* Components */
 import Text from 'components/Text'
-import Button from 'components/Button'
+import MaterialButton from 'components/MaterialButton'
+
+/* Helpers */
+import useWindowDimensions from '../../helpers/useWindowDimensions'
 
 /* Styles */
 import styles from './ModalDialog.module.scss'
-
 import { CloseIcon } from 'images'
-import { Breakpoint, Dialog, DialogContent } from '@mui/material'
-import useWindowDimensions from '../../helpers/useWindowDimensions'
 
 type ModalDialogProps = {
   className?: string
@@ -23,6 +24,8 @@ type ModalDialogProps = {
   handleSecondButton?: Function
   firstButtonIsClose?: boolean
   secondButtonIsClose?: boolean
+  isFirstButtonLoading?: boolean
+  isSecondButtonLoading?: boolean
   headerTitle: string
   customFooter?: React.ReactNode
   fullScreen?: boolean
@@ -48,6 +51,8 @@ const ModalDialog = ({
   handleSecondButton,
   firstButtonIsClose,
   secondButtonIsClose,
+  isFirstButtonLoading,
+  isSecondButtonLoading,
   headerTitle,
   customFooter,
   fullScreen = false,
@@ -62,7 +67,7 @@ const ModalDialog = ({
   const hasFirstButton = handleFirstButton && firstButtonText
   const hasSecondButton = handleSecondButton && secondButtonText
 
-  const PaperStyles = {
+  const paperStyles = {
     maxHeight: !isMobile ? maxHeight : 'fit-content', // default 100vh
     height: isMobileFullScreen ? '100vh' : undefined, // default is 100vh
     margin: 0, // default is 32
@@ -78,7 +83,7 @@ const ModalDialog = ({
       maxWidth={maxWidth}
       PaperProps={{
         sx: {
-          ...PaperStyles,
+          ...paperStyles,
         },
       }}
     >
@@ -100,24 +105,36 @@ const ModalDialog = ({
         {(hasFirstButton || hasSecondButton) && (
           <div className={styles.modalFooter}>
             {hasFirstButton && (
-              <Button
+              <MaterialButton
+                variant='outlined'
+                capitalize
                 onClick={() => {
                   handleFirstButton()
                   if (firstButtonIsClose) onClose()
                 }}
+                isLoading={isFirstButtonLoading}
+                sx={{ height: '44px' }}
               >
-                {firstButtonText}
-              </Button>
+                <Text textColor='primaryBlue' bold>
+                  {firstButtonText}
+                </Text>
+              </MaterialButton>
             )}
             {hasSecondButton && (
-              <Button
+              <MaterialButton
+                variant='contained'
+                capitalize
                 onClick={() => {
                   handleSecondButton()
                   if (secondButtonIsClose) onClose()
                 }}
+                isLoading={isSecondButtonLoading}
+                sx={{ height: '44px' }}
               >
-                {secondButtonText}
-              </Button>
+                <Text textColor='white' bold>
+                  {secondButtonText}
+                </Text>
+              </MaterialButton>
             )}
           </div>
         )}

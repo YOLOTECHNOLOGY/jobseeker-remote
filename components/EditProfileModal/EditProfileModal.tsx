@@ -1,19 +1,30 @@
-import { TextField } from '@mui/material'
 import { useEffect, useState } from 'react'
-import styles from './EditProfileModal.module.scss'
-import Text from '../Text'
-import ModalDialog from '../ModalDialog'
-import UploadUserAvatar from '../UploadUserAvatar'
-import MaterialTextField from '../MaterialTextField'
-import MaterialBasicSelect from '../MaterialBasicSelect'
-import { useForm } from 'react-hook-form'
-import { getNoticePeriodList } from '../../helpers/jobPayloadFormatter'
+
+/* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
-import { flat } from '../../helpers/formatter'
-import MaterialLocationField from '../MaterialLocationField'
-import MaterialDatePicker from '../MaterialDatePicker'
+import { useForm } from 'react-hook-form'
 import moment from 'moment'
-import { updateUserCompleteProfileRequest } from '../../store/actions/users/updateUserCompleteProfile'
+
+/* Actions */ 
+
+/* Components */
+import Text from 'components/Text'
+import { TextField } from '@mui/material'
+import ModalDialog from 'components/ModalDialog'
+import UploadUserAvatar from 'components/UploadUserAvatar'
+import MaterialTextField from 'components/MaterialTextField'
+import MaterialBasicSelect from 'components/MaterialBasicSelect'
+import MaterialLocationField from 'components/MaterialLocationField'
+import MaterialDatePicker from 'components/MaterialDatePicker'
+
+/* Helpers */
+import { getNoticePeriodList } from 'helpers/jobPayloadFormatter'
+import { flat } from 'helpers/formatter'
+
+import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
+
+/* Styles */
+import styles from './EditProfileModal.module.scss'
 
 type EditProfileModalProps = {
   modalName: string
@@ -57,7 +68,7 @@ const requiredLabel = (text: string) => {
 
 const errorText = (errorMessage: string) => {
   return (
-    <Text textStyle='sm' textColor='red' tagName='p' className={styles.stepFieldError}>
+    <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
       {errorMessage}
     </Text>
   )
@@ -84,12 +95,12 @@ const EditProfileModal = ({
   const [birthdate, setBirthdate] = useState(null)
   const [summary, setSummary] = useState('')
 
-  // const isUpdatingUserProfile = useSelector(
-  //   (store: any) => store.users.updateUserCompleteProfile.fetching
-  // )
-  // const updateProfileSuccess = useSelector(
-  //   (store: any) => store.users.updateUserCompleteProfile.response
-  // )
+  const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserProfile.fetching)
+
+  const updateProfileSuccess = useSelector(
+    (store: any) => store.users.updateUserProfile.response
+  )
+
   const xpLevelList = useSelector((store: any) => store.config.config.response?.inputs?.xp_lvls)
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
@@ -133,6 +144,10 @@ const EditProfileModal = ({
     }
   }, [userDetail])
 
+  useEffect(() => {
+    handleCloseModal()
+  }, [updateProfileSuccess])
+
   const onLocationSearch = (e, value) => {
     setLocation(value)
   }
@@ -142,22 +157,21 @@ const EditProfileModal = ({
     const avatar = selectedAvatar
     console.log('avatar: ', avatar)
     const avatarFile = avatar && new File([avatar], 'avatar')
+    console.log('avatarFile', avatarFile)
+    console.log('selectedAvatar', selectedAvatar)
     const payload = {
-      profile: {
-        avatar: selectedAvatar && avatarFile,
+        avatar: selectedAvatar,
         first_name: firstName,
         last_name: lastName,
         birthdate: birthdate && moment(new Date(birthdate)).format('yyyy-MM-DD'),
         location_key: (location as any).key || '',
         xp_level_key: yearsOfExperience || '',
         notice_period_id: noticePeriod,
-        description: summary.length > 0 && summary,
-      },
-      accessToken,
+        description: summary.length > 0 ? summary : '',
     }
 
-    console.log(payload)
-    dispatch(updateUserCompleteProfileRequest(payload))
+    console.log('payload', payload)
+    dispatch(updateUserProfileRequest(payload))
   }
 
   const handleCloseModal = () => {
@@ -172,27 +186,28 @@ const EditProfileModal = ({
         headerTitle='About me'
         firstButtonText='Cancel'
         secondButtonText='Save'
+        isSecondButtonLoading={isUpdatingUserProfile}
         firstButtonIsClose
         // eslint-disable-next-line
-        handleFirstButton={() => {}}
+        // handleFirstButton={() => {}}
         handleSecondButton={handleSubmit(onSubmit)}
         fullScreen
       >
-        <div className={styles.Profile}>
-          <div className={styles.ProfileAvatar}>
+        <div className={styles.profile}>
+          <div className={styles.profileAvatar}>
             <UploadUserAvatar
               currentAvatarUrl={avatar}
               selectedAvatar={selectedAvatar}
               setSelectedAvatar={setSelectedAvatar}
             />
           </div>
-          <div className={styles.ProfileForm}>
-            <div className={styles.ProfileFormGroup}>
+          <div className={styles.profileForm}>
+            <div className={styles.profileFormGroup}>
               <MaterialTextField
                 refs={{
                   ...register('firstName'),
                 }}
-                className={styles.ProfileFormInput}
+                className={styles.profileFormInput}
                 name='firstName'
                 label='First Name'
                 variant='outlined'
@@ -206,7 +221,7 @@ const EditProfileModal = ({
                 refs={{
                   ...register('lastName'),
                 }}
-                className={styles.ProfileFormInput}
+                className={styles.profileFormInput}
                 name='lastName'
                 label='Last Name'
                 variant='outlined'
@@ -217,12 +232,12 @@ const EditProfileModal = ({
                 onChange={(e) => setlastName(e.target.value)}
               />
             </div>
-            <div className={styles.ProfileFormTitle}>
+            <div className={styles.profileFormTitle}>
               <Text textStyle='lg' bold>
                 Date of Birth
               </Text>
             </div>
-            <div className={styles.ProfileFormGroup}>
+            <div className={styles.profileFormGroup}>
               <MaterialDatePicker
                 label='Date of birth'
                 views={['year', 'month', 'day']}
@@ -237,7 +252,7 @@ const EditProfileModal = ({
                 fieldRef={{
                   ...register('day'),
                 }}
-                className={styles.ProfileFormInput}
+                className={styles.profileFormInput}
                 label='Day'
                 value={day}
                 options={dayList}
@@ -250,7 +265,7 @@ const EditProfileModal = ({
                 fieldRef={{
                   ...register('month'),
                 }}
-                className={styles.ProfileFormInput}
+                className={styles.profileFormInput}
                 label='Month'
                 value={month}
                 options={monthList}
@@ -263,7 +278,7 @@ const EditProfileModal = ({
                 fieldRef={{
                   ...register('year'),
                 }}
-                className={styles.ProfileFormInput}
+                className={styles.profileFormInput}
                 label='Year'
                 value={year}
                 options={yearList}
@@ -272,7 +287,7 @@ const EditProfileModal = ({
                 }}
               /> */}
             </div>
-            <div className={styles.ProfileFormGroup}>
+            <div className={styles.profileFormGroup}>
               <MaterialLocationField
                 fieldRef={{
                   ...register('location', {
@@ -282,7 +297,7 @@ const EditProfileModal = ({
                     },
                   }),
                 }}
-                className={styles.ProfileFormInput}
+                className={styles.profileFormInput}
                 label={requiredLabel('Current Location')}
                 error={errors.location ? true : false}
                 value={location}
@@ -291,12 +306,12 @@ const EditProfileModal = ({
               />
               {errors.location && errorText(errors.location.message)}
             </div>
-            <div className={styles.ProfileFormGroup}>
+            <div className={styles.profileFormGroup}>
               <MaterialBasicSelect
                 fieldRef={{
                   ...register('yearsOfExperience'),
                 }}
-                className={styles.ProfileFormInput}
+                className={styles.profileFormInput}
                 label='Years of Experience'
                 value={yearsOfExperience}
                 options={formattedXpLevelList}
@@ -305,12 +320,12 @@ const EditProfileModal = ({
                 }}
               />
             </div>
-            <div className={styles.ProfileFormGroup}>
+            <div className={styles.profileFormGroup}>
               <MaterialBasicSelect
                 fieldRef={{
                   ...register('noticePeriod'),
                 }}
-                className={styles.ProfileFormInput}
+                className={styles.profileFormInput}
                 label='Availability'
                 value={availability}
                 options={noticeList}
@@ -320,22 +335,29 @@ const EditProfileModal = ({
                 }}
               />
             </div>
-            <div className={styles.ProfileFormGroup}>
-              <TextField
-                {...register('summary')}
-                className={styles.ProfileFormInput}
-                style={{ paddingBottom: '24px' }}
-                placeholder='Provide a career summary and briefly highlight your relevant experience, achievement and skills.'
-                name='summary'
-                variant='outlined'
-                value={summary}
-                autoComplete='off'
-                onChange={(e) => {
-                  setSummary(e.target.value)
-                }}
-                multiline
-                rows={9}
-              />
+            <div className={styles.profileFormGroup}>
+              <div className={styles.descriptionField}>
+                <TextField
+                  {...register('summary', {
+                    required: {
+                      value: true,
+                      message: 'This field is required.',
+                    },
+                  })}
+                  className={styles.profileFormInput}
+                  placeholder='Provide a career summary and briefly highlight your relevant experience, achievement and skills.'
+                  name='summary'
+                  variant='outlined'
+                  value={summary}
+                  autoComplete='off'
+                  onChange={(e) => {
+                    setSummary(e.target.value)
+                  }}
+                  multiline
+                  rows={9}
+                />
+                {errors.summary && errorText(errors.summary.message)}
+              </div>
             </div>
           </div>
         </div>
