@@ -2,18 +2,18 @@ import { useState } from 'react'
 
 /* Vendors */
 import { END } from 'redux-saga'
-import { wrapper } from '../store'
+import { wrapper } from 'store'
 import { useRouter } from 'next/router'
 
 /* Redux actions */
-import { fetchConfigRequest } from '../store/actions/config/fetchConfig'
-import { fetchUserOwnDetailRequest } from '../store/actions/users/fetchUserOwnDetail'
+import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 /* Components */
-import Layout from '../components/Layout'
-import ProfileLayout from '../components/ProfileLayout'
-import ProfileSettingCard from '../components/ProfileSettingCard'
-import EditProfileModal from '../components/EditProfileModal'
+import Layout from 'components/Layout'
+import ProfileLayout from 'components/ProfileLayout'
+import ProfileSettingCard from 'components/ProfileSettingCard'
+import EditProfileModal from 'components/EditProfileModal'
 
 // TODO: Remove this page after testing
 const ManageProfilePage = ({ config, userDetail, accessToken }: any) => {
