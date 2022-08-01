@@ -25,11 +25,10 @@ const ModalWithdrawApplication = ({
   jobId,
   isWithdrawAppliedJobFetching
 }: IModalWithdrawApplication) => {
-
   const handleText = () => {
     return isWithdrawAppliedJobFetching ? 'Updating...' : 'Withdraw'
   }
-  
+
   return (
     <Modal
       headerTitle='Withdraw Application'
@@ -40,13 +39,16 @@ const ModalWithdrawApplication = ({
         handleShowModalWithdrawApplication(false)
       }}
       firstButtonIsClose={true}
+      secondButtonIsClose={true}
       secondButtonText={handleText()}
       handleSecondButton={() => {
-        handleWithdrawApplication({jobId})
+        handleWithdrawApplication({ jobId })
       }}
     >
       <div className={styles.ModalWithdrawApplication}>
-        <Text textStyle='lg'>You are about to withdraw your application. This cannot be undone.</Text>
+        <Text textStyle='lg'>
+          You are about to withdraw your application. This cannot be undone.
+        </Text>
       </div>
     </Modal>
   )

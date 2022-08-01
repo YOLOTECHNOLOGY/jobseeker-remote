@@ -63,11 +63,11 @@ const theme = createTheme({
           height: '55px'
         },
         flexContainer: {
-          height: '55px',
-        },
+          height: '55px'
+        }
       }
     }
-  },
+  }
 })
 
 interface IMyJobs {
@@ -76,11 +76,7 @@ interface IMyJobs {
   config: any
 }
 
-const MyJobs = ({
-  category,
-  accessToken,
-  config
-}: IMyJobs) => {
+const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
   const userCookie = getCookie('user') || null
   const prevScrollY = useRef(0)
   const router = useRouter()
@@ -89,15 +85,19 @@ const MyJobs = ({
   const isMobile = width < 768 ? true : false
   const isAppliedCategory = category === 'applied'
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
-  
+
   const [isSticky, setIsSticky] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
   const [jobNumStart, setJobNumStart] = useState(1)
   const [jobNumEnd, setJobNumEnd] = useState(10)
 
   const cx = classNames.bind(styles)
-  const isAppliedCategoryActive = cx({ MyJobsMenuLinkIsActive: isAppliedCategory})
-  const isSavedCategoryActive = cx({ MyJobsMenuLinkIsActive: !isAppliedCategory})
+  const isAppliedCategoryActive = cx({
+    MyJobsMenuLinkIsActive: isAppliedCategory
+  })
+  const isSavedCategoryActive = cx({
+    MyJobsMenuLinkIsActive: !isAppliedCategory
+  })
   const isStickyClass = cx({ isSticky: isSticky })
   const [isLoadingJobDetails, setIsLoadingJobDetails] = useState(false)
   const [isLoadingJobList, setIsLoadingJobList] = useState(true)
@@ -105,7 +105,7 @@ const MyJobs = ({
   const [selectedJob, setSelectedJob] = useState(null)
 
   const [jobsList, setJobsList] = useState<any>([])
-  const [page, setPage] = useState(Number(router?.query?.page)|| 1)
+  const [page, setPage] = useState(Number(router?.query?.page) || 1)
   const [totalPages, setTotalPages] = useState(null)
   const [totalNum, setTotalNum] = useState(0)
   const [applicationHistories, setApplicationHistories] = useState([])
@@ -117,7 +117,9 @@ const MyJobs = ({
   const isAppliedJobsListFetching = useSelector((store: any) => store.job.appliedJobsList.fetching)
 
   const appliedJobDetailResponse = useSelector((store: any) => store.job.appliedJobDetail.response)
-  const isAppliedJobDetailFetching = useSelector((store: any) => store.job.appliedJobDetail.fetching)
+  const isAppliedJobDetailFetching = useSelector(
+    (store: any) => store.job.appliedJobDetail.fetching
+  )
 
   const savedJobsListResponse = useSelector((store: any) => store.job.savedJobsList.response)
   const isSavedJobsListFetching = useSelector((store: any) => store.job.savedJobsList.fetching)
@@ -125,27 +127,30 @@ const MyJobs = ({
   const savedJobDetailResponse = useSelector((store: any) => store.job.savedJobDetail.response)
   const isSavedJobDetailFetching = useSelector((store: any) => store.job.savedJobDetail.fetching)
 
-  const withdrawAppliedJobResponse = useSelector((store: any) => store.job.withdrawAppliedJob.response)
-  const isWithdrawAppliedJobFetching = useSelector((store: any) => store.job.withdrawAppliedJob.fetching)
+  const withdrawAppliedJobResponse = useSelector(
+    (store: any) => store.job.withdrawAppliedJob.response
+  )
+  const isWithdrawAppliedJobFetching = useSelector(
+    (store: any) => store.job.withdrawAppliedJob.fetching
+  )
 
   const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
-  
+
   useEffect(() => {
     window.addEventListener('scroll', updateScrollPosition)
 
     handleFetchMyJobsList()
-    
-    return () => window.removeEventListener('scroll', updateScrollPosition)
 
+    return () => window.removeEventListener('scroll', updateScrollPosition)
   }, [])
 
   useEffect(() => {
     const jobLength = jobsList?.length
     const size = Number(router?.query?.size) || 10
 
-    setJobNumStart(jobLength > 0 ? ((page - 1) * size) + 1 : 1)
-    setJobNumEnd(jobLength > 0 ? ((page - 1) * size) + jobLength : 10)
+    setJobNumStart(jobLength > 0 ? (page - 1) * size + 1 : 1)
+    setJobNumEnd(jobLength > 0 ? (page - 1) * size + jobLength : 10)
   }, [jobsList])
 
   useEffect(() => {
@@ -153,7 +158,9 @@ const MyJobs = ({
   }, [router.query])
 
   useEffect(() => {
-    setIsLoadingJobDetails(isAppliedCategory ? isAppliedJobDetailFetching : isSavedJobDetailFetching)
+    setIsLoadingJobDetails(
+      isAppliedCategory ? isAppliedJobDetailFetching : isSavedJobDetailFetching
+    )
   }, [isAppliedJobDetailFetching, isSavedJobDetailFetching])
 
   useEffect(() => {
@@ -189,7 +196,7 @@ const MyJobs = ({
 
   useEffect(() => {
     if (jobsList?.length > 0) {
-      handleFetchJobDetail(jobsList?.[0].job.id, category) 
+      handleFetchJobDetail(jobsList?.[0].job.id, category)
       setSelectedJobId(jobsList?.[0].job.id)
     } else {
       setSelectedJobId(null)
@@ -199,13 +206,7 @@ const MyJobs = ({
   useEffect(() => {
     if (withdrawAppliedJobResponse?.message === 'success') {
       setIsShowModalWithdrawApplication(false)
-
-      setPage(1)
-
-      router.query.page = '1'
-      router.push(router, undefined, { shallow: true })
-
-      document.documentElement.scrollTop = 0;
+      handleFetchJobDetail(selectedJobId, category)
     }
   }, [withdrawAppliedJobResponse])
 
@@ -219,7 +220,7 @@ const MyJobs = ({
   const handleFetchMyJobsList = () => {
     const payload = {
       size: router.query?.size,
-      page: router.query?.page ? Number(router.query.page) : 1,
+      page: router.query?.page ? Number(router.query.page) : 1
     }
     if (isAppliedCategory) {
       dispatch(fetchAppliedJobsListRequest(payload))
@@ -231,8 +232,8 @@ const MyJobs = ({
 
   const handleSelectedJobId = (jobId, jobUrl, status) => {
     setSelectedJobId(jobId)
-    handleFetchJobDetail(jobId, category) 
-    
+    handleFetchJobDetail(jobId, category)
+
     if (isMobile && status === 'active') {
       if (isAppliedCategory) {
         router.push(`${jobUrl}?isApplied=${isAppliedCategory}`)
@@ -256,7 +257,7 @@ const MyJobs = ({
     const savedJobPayload = {
       jobId
     }
-    
+
     dispatch(fetchSavedJobDetailRequest(savedJobPayload))
   }
 
@@ -273,7 +274,7 @@ const MyJobs = ({
     router.query.page = val
     router.push(router, undefined, { shallow: true })
 
-    document.documentElement.scrollTop = 0;
+    document.documentElement.scrollTop = 0
   }
 
   const handlePostReportJob = (reportJobData) => {
@@ -305,13 +306,15 @@ const MyJobs = ({
   const emptyResult = () => {
     return (
       <div>
-        <Text textStyle='xl' bold>You have not {category} for any job yet.</Text>
+        <Text textStyle='xl' bold>
+          You have not {category} for any job yet.
+        </Text>
 
         <MaterialButton variant='contained' capitalize>
-          <Link
-            to='/jobs-hiring/job-search'
-          >
-            <Text bold textColor='white'>Back to job search</Text>
+          <Link to='/jobs-hiring/job-search'>
+            <Text bold textColor='white'>
+              Back to job search
+            </Text>
           </Link>
         </MaterialButton>
       </div>
@@ -320,18 +323,19 @@ const MyJobs = ({
 
   return (
     <Layout>
-      <SEO title={`${titleCase(category)} Jobs - Career Platform for Professionals in Philippines`} description={"Bossjob - Career Platform for Professionals in Philippines"} />
+      <SEO
+        title={`${titleCase(category)} Jobs - Career Platform for Professionals in Philippines`}
+        description={'Bossjob - Career Platform for Professionals in Philippines'}
+      />
       <div className={styles.MyJobsMenuContent}>
         <div className={styles.container}>
           <ThemeProvider theme={theme}>
-            <Tabs
-              value={category}
-            >
-              <Tab 
+            <Tabs value={category}>
+              <Tab
                 className={styles.MyJobsMenuTab}
-                value="saved" 
+                value='saved'
                 label={
-                  <Link 
+                  <Link
                     to={'/my-jobs/saved?page=1&size=10'}
                     className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}
                   >
@@ -341,11 +345,11 @@ const MyJobs = ({
                   </Link>
                 }
               />
-              <Tab 
+              <Tab
                 className={styles.MyJobsMenuTab}
-                value="applied" 
+                value='applied'
                 label={
-                  <Link 
+                  <Link
                     to={'/my-jobs/applied?page=1&size=10'}
                     className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}
                   >
@@ -365,7 +369,10 @@ const MyJobs = ({
           <div className={styles.container}>
             <div className={styles.MyJobsListOptionContent}>
               {!isMobile && (
-                <Text textStyle='base' bold>{jobNumStart.toLocaleString()}-{jobNumEnd.toLocaleString()} of {totalNum ? totalNum : 0} jobs</Text>
+                <Text textStyle='base' bold>
+                  {jobNumStart.toLocaleString()}-{jobNumEnd.toLocaleString()} of{' '}
+                  {totalNum ? totalNum : 0} jobs
+                </Text>
               )}
             </div>
           </div>
@@ -384,40 +391,44 @@ const MyJobs = ({
               )}
 
               {jobsList?.length === 0 && !isLoadingJobList && (
-                <div className={styles.MyJobsDetailInfoEmptyMobile}>
-                  { emptyResult() }
-                </div>
+                <div className={styles.MyJobsDetailInfoEmptyMobile}>{emptyResult()}</div>
               )}
 
-              {!isLoadingJobList && jobsList?.map((jobs, i) => (
-                <JobCard
-                  key={i}
-                  id={jobs.job.id}
-                  image={jobs.job.company_logo}
-                  title={jobs.job.job_title}
-                  company={jobs.job.company_name}
-                  location={jobs.job.location_value}
-                  salary={jobs.job.salary_range_value}
-                  postedAt={jobs.job.refreshed_at}
-                  selectedId={selectedJobId}
-                  status={jobs.job.status_key}
-                  handleSelectedId={() => handleSelectedJobId(jobs.job.id, jobs.job.job_url, jobs.job.status_key)}
-                />
-              ))}
+              {!isLoadingJobList &&
+                jobsList?.map((jobs, i) => (
+                  <JobCard
+                    key={i}
+                    id={jobs.job.id}
+                    image={jobs.job.company_logo}
+                    title={jobs.job.job_title}
+                    company={jobs.job.company_name}
+                    location={jobs.job.location_value}
+                    salary={jobs.job.salary_range_value}
+                    postedAt={jobs.job.refreshed_at}
+                    selectedId={selectedJobId}
+                    status={jobs.job.status_key}
+                    handleSelectedId={() =>
+                      handleSelectedJobId(jobs.job.id, jobs.job.job_url, jobs.job.status_key)
+                    }
+                  />
+                ))}
             </div>
             {selectedJob && (
               <div className={styles.paginationWrapper}>
-                <MaterialRoundedPagination onChange={handlePaginationClick} defaultPage={1} page={page} totalPages={totalPages || 1} />
+                <MaterialRoundedPagination
+                  onChange={handlePaginationClick}
+                  defaultPage={1}
+                  page={page}
+                  totalPages={totalPages || 1}
+                />
               </div>
             )}
           </div>
 
           <div className={styles.MyJobsDetailInfoSection}>
-            {isLoadingJobDetails && (
-              <JobDetailLoader />
-            )}
+            {isLoadingJobDetails && <JobDetailLoader />}
             {!isLoadingJobDetails && selectedJob && (
-              <JobDetail 
+              <JobDetail
                 selectedJob={selectedJob}
                 jobDetailUrl={selectedJob?.['job_url']}
                 companyUrl={selectedJob?.['company']?.['company_url']}
@@ -433,9 +444,7 @@ const MyJobs = ({
               />
             )}
             {jobsList?.length === 0 && !isLoadingJobList && (
-              <div className={styles.MyJobsDetailInfoEmpty}>
-                { emptyResult() }
-              </div>
+              <div className={styles.MyJobsDetailInfoEmpty}>{emptyResult()}</div>
             )}
           </div>
 
@@ -453,29 +462,35 @@ const MyJobs = ({
         </div>
       </div>
 
-      {isShowModalShare && <ModalShare
-        jobDetailUrl={selectedJob?.['job_url']}
-        isShowModalShare={isShowModalShare}
-        handleShowModalShare={setIsShowModalShare}
-      />}
+      {isShowModalShare && (
+        <ModalShare
+          jobDetailUrl={selectedJob?.['job_url']}
+          isShowModalShare={isShowModalShare}
+          handleShowModalShare={setIsShowModalShare}
+        />
+      )}
 
-      {isShowReportJob && <ModalReportJob 
-        isShowReportJob={isShowReportJob} 
-        handleShowReportJob={setIsShowReportJob} 
-        reportJobReasonList={reportJobReasonList}
-        selectedJobId={selectedJob?.['id']}
-        handlePostReportJob={handlePostReportJob}
-        isPostingReport={isPostingReport}
-        postReportResponse={postReportResponse}
-      />}
+      {isShowReportJob && (
+        <ModalReportJob
+          isShowReportJob={isShowReportJob}
+          handleShowReportJob={setIsShowReportJob}
+          reportJobReasonList={reportJobReasonList}
+          selectedJobId={selectedJob?.['id']}
+          handlePostReportJob={handlePostReportJob}
+          isPostingReport={isPostingReport}
+          postReportResponse={postReportResponse}
+        />
+      )}
 
-      {isShowModalWithdrawApplication && <ModalWithdrawApplication
-        jobId={selectedJob?.['id']}
-        isShowModalWithdrawApplication={isShowModalWithdrawApplication}
-        handleShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
-        handleWithdrawApplication={handleWithdrawApplication}
-        isWithdrawAppliedJobFetching={isWithdrawAppliedJobFetching}
-      />}
+      {isShowModalWithdrawApplication && (
+        <ModalWithdrawApplication
+          jobId={selectedJob?.['id']}
+          isShowModalWithdrawApplication={isShowModalWithdrawApplication}
+          handleShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
+          handleWithdrawApplication={handleWithdrawApplication}
+          isWithdrawAppliedJobFetching={isWithdrawAppliedJobFetching}
+        />
+      )}
     </Layout>
   )
 }
