@@ -17,6 +17,7 @@ import watchFetchSavedJobDetail from 'store/sagas/jobs/fetchSavedJobDetail'
 import watchPostSaveJob from 'store/sagas/jobs/postSaveJob'
 import watchDeleteSaveJob from 'store/sagas/jobs/deleteSaveJob'
 import watchQuickApplyJob from 'store/sagas/jobs/quickApplyJob'
+import watchApplyJob from 'store/sagas/jobs/applyJob'
 
 // Companies
 import watchFetchCompanyDetail from 'store/sagas/companies/fetchCompanyDetail'
@@ -85,6 +86,7 @@ function* rootSaga() {
     watchPostSaveJob(),
     watchDeleteSaveJob(),
     watchQuickApplyJob(),
+    watchApplyJob(),
 
     watchPostReport(),
 

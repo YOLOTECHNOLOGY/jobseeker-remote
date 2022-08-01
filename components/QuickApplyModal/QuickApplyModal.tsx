@@ -34,7 +34,6 @@ import { maxFileSize, handleNumericInput } from 'helpers/handleInput'
 
 interface QuickApplyModalProps {
   jobDetails: any
-  applyJobLink: String
   modalShow?: boolean
   handleModalShow?: Function
   config: any
@@ -44,6 +43,7 @@ const QuickApplyModal = ({ jobDetails, modalShow, handleModalShow, config }: Qui
   const dispatch = useDispatch()
   const { register, handleSubmit, setValue, setError, clearErrors, formState: { errors } } = useForm()
 
+  const applyJobURL = jobDetails.job_url.slice(0, 1) + "apply-" + jobDetails.job_url.slice(1)
   const smsCountryList = getSmsCountryList(config)
   const [smsCode, setSmsCode] = useState('+63')
   const [resume, setResume] = useState(null)
@@ -52,7 +52,7 @@ const QuickApplyModal = ({ jobDetails, modalShow, handleModalShow, config }: Qui
   const [emailError, setEmailError] = useState(null)
   const [firstMessage, setFirstMessage] = useState('')
   const screeningQuestions = jobDetails?.screening_questions || []
-  const redirectLoginLink = `/login/jobseeker?redirect=${process.env.OLD_PROJECT_URL}/dashboard${jobDetails.job_url}/apply`
+  const redirectLoginLink = `/login/jobseeker?redirect=${applyJobURL}`
 
   const registerJobseekerState = useSelector((store: any) => store.auth.registerJobseeker)
   const isQuickApplyJobFetching = useSelector((store: any) => store.job.quickApplyJob.fetching)

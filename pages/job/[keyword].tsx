@@ -934,7 +934,6 @@ const Job = ({
 
       {quickApplyModalShow && <QuickApplyModal
         jobDetails={jobDetail}
-        applyJobLink={applyJobLink}
         modalShow={quickApplyModalShow}
         handleModalShow={setQuickApplyModalShow}
         config={config}

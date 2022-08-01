@@ -1290,22 +1290,24 @@ const getDegreeList = (config) => {
 }
 
 const getApplyJobLink = (job, user, accessToken = null) => {
-  const oldProjectApplyLink = authPathToOldProject(
-    accessToken,
-    `/dashboard${job?.job_url}/apply`
-  )
-
+  const jobUrl = job?.job_url
+  // jobUrl => /job/xxxx
+  // Apply job url format: /apply-job/xxx
+  let applyJobUrl = `${process.env.HOST_PATH}${jobUrl.slice(0, 1)}apply-${jobUrl.slice(1)}`;
+  
   if (user) {
     if (!user?.is_profile_completed) {
-      return '/jobseeker-complete-profile/1?redirect=' + oldProjectApplyLink
+      return `/jobseeker-complete-profile/1?redirect=${applyJobUrl}`
     }
 
     if (job?.external_apply_url) {
       return job?.external_apply_url
     }
-  }
 
-  return oldProjectApplyLink
+    return applyJobUrl
+  }
+  
+  return `/login/jobseeker?redirect=${applyJobUrl}`
 }
 
 // TODO: remove isLocation param after backend as renamed the field
