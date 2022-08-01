@@ -1,4 +1,3 @@
-import { useState } from 'react'
 /* Vendor */
 import { ThemeProvider } from '@emotion/react'
 
@@ -43,7 +42,8 @@ type ProfileLayoutProps = {
   email: string
   contactNumber?: string
   avatarUrl?: string
-  currentTab?: string
+  tabValue: string | string[]
+  setTabValue: Function
   modalName: string
   handleModal: Function
   children: React.ReactNode
@@ -56,21 +56,37 @@ const ProfileLayout = ({
   email,
   contactNumber,
   children,
-  currentTab,
+  tabValue,
+  setTabValue,
   modalName,
   handleModal,
 }: ProfileLayoutProps) => {
-  const [tabValue, setTabValue] = useState(currentTab)
 
   const handleShowModal = () => {
     handleModal(modalName, true)
   }
 
-  // eslint-disable-next-line
-  const handleEditClick = () => {handleShowModal()}
+  const handleTabChange = (e) => {
+    let tab = e.target.childNodes[0].textContent.toLowerCase()
+    tab = tab.replace(' ', '-')
+    setTabValue(tab)
+
+    /*
+     * Set the tab with param: e.g: ?tab=profile.
+     * Using window.history.replaceState instead of router event from useRouter as router event causes the page to rerender.
+     * We only want the params to change without rerendering the page
+     */
+    const url = new URL(window.location as any)
+    url.searchParams.set('tab', tab)
+    window.history.replaceState({}, '', url)
+  }
+
+  const handleEditClick = () => {
+    handleShowModal()
+  }
   return (
-    <div className={styles.ProfileLayout}>
-      <div className={styles.ProfileLayoutUserOverview}>
+    <div className={styles.profileLayout}>
+      <div className={styles.profileLayoutUserOverview}>
         <UserProfileOverview
           name={name}
           location={location}
@@ -79,21 +95,13 @@ const ProfileLayout = ({
           handleEditClick={handleEditClick}
         />
       </div>
-      <div className={styles.ProfileLayoutSettings}>
-        <div className={styles.SettingTabs}>
+      <div className={styles.profileLayoutSettings}>
+        <div className={styles.settingTabs}>
           <ThemeProvider theme={theme}>
-            <Tabs
-              value={tabValue}
-              centered
-              onChange={(e: any) => {
-                const tab = e.target.childNodes[0].textContent.toLowerCase()
-                setTabValue(tab)
-              }}
-            >
+            <Tabs value={tabValue} centered onChange={handleTabChange}>
               <Tab
-                className={styles.SettingTabsItem}
+                className={styles.settingTabsItem}
                 value='profile'
-                // href='/profile'
                 label={
                   <Text
                     bold
@@ -105,23 +113,21 @@ const ProfileLayout = ({
                 }
               />
               <Tab
-                className={styles.SettingTabsItem}
-                value='job preferences'
-                // href='job-preferences'
+                className={styles.settingTabsItem}
+                value='job-preferences'
                 label={
                   <Text
                     bold
                     textStyle='xl'
-                    textColor={tabValue === 'job preferences' ? 'primaryBlue' : 'black'}
+                    textColor={tabValue === 'job-preferences' ? 'primaryBlue' : 'black'}
                   >
                     Job Preferences
                   </Text>
                 }
               />
               <Tab
-                className={styles.SettingTabsItem}
+                className={styles.settingTabsItem}
                 value='resume'
-                // href='resume'
                 label={
                   <Text
                     bold

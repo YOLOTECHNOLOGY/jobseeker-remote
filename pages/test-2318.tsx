@@ -3,6 +3,7 @@ import { useState } from 'react'
 /* Vendors */
 import { END } from 'redux-saga'
 import { wrapper } from '../store'
+import { useRouter } from 'next/router'
 
 /* Redux actions */
 import { fetchConfigRequest } from '../store/actions/config/fetchConfig'
@@ -16,6 +17,13 @@ import EditProfileModal from '../components/EditProfileModal'
 
 // TODO: Remove this page after testing
 const ManageProfilePage = ({ config, userDetail, accessToken }: any) => {
+  const router = useRouter()
+  const {
+    query: { tab },
+  } = router
+  
+  const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
+
   const [modalState, setModalState] = useState({
     profile: false,
     workExperience:false,
@@ -25,6 +33,7 @@ const ManageProfilePage = ({ config, userDetail, accessToken }: any) => {
     license:false,
     jobPreferences: false
   })
+
 
   const handleModal = (modalName, showModal) => {
     setModalState({
@@ -48,7 +57,8 @@ const ManageProfilePage = ({ config, userDetail, accessToken }: any) => {
         location='Manila Philippines'
         email='johndoe@test.com'
         contactNumber='+65 91812121'
-        currentTab='profile'
+        tabValue={tabValue}
+        setTabValue={setTabValue}
         modalName='profile'
         handleModal={handleModal}
       >
