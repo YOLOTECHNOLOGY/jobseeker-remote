@@ -6,7 +6,6 @@ import { END } from 'redux-saga'
 
 /* Vendors */
 import { useDispatch } from 'react-redux'
-import { useUserAgent } from 'next-useragent'
 import { useForm } from 'react-hook-form'
 
 /* Components */
@@ -19,6 +18,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import AddIcon from '@mui/icons-material/Add';
 import { Alert } from '@mui/material'
 import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
+import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import Layout from 'components/Layout'
@@ -27,6 +27,7 @@ import Link from 'components/Link'
 
 /* Helpers */
 import { maxFileSize } from 'helpers/handleInput'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -45,7 +46,10 @@ import styles from './ApplyJob.module.scss'
 import {
   DisclaimerIcon,
   TrashIcon,
-  DocumentIcon
+  DocumentIcon,
+  MobileIcon,
+  MailIcon,
+  ProfileIcon
 } from 'images'
 
 interface IApplyJobDetail {
@@ -59,6 +63,8 @@ const Job = ({
 }: IApplyJobDetail) => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
   const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm()
 
   const [resume, setResume] = useState(userDetail?.resume || null)
@@ -79,7 +85,6 @@ const Job = ({
   };
 
   const onSubmit = (data) => {
-    const userAgent = useUserAgent(window && typeof window !== undefined && (window.navigator.userAgent)) || null
     const screeningAnswers = []
 
     screeningQuestions.forEach((element, index) => {
@@ -95,7 +100,7 @@ const Job = ({
       firstMessage: firstMessage,
       jobId: jobDetail.id,
       jobUrl: jobDetail.job_url,
-      source: userAgent?.isMobile ? 'mobile_web' : 'web',
+      source: isMobile ? 'mobile_web' : 'web',
       userSkills
     }
 
@@ -119,31 +124,40 @@ const Job = ({
         <div className={styles.jobDetailSection}>
           <div className={styles.jobDetailSectionTitle}>
             <Text textStyle='xl' bold>
-              Contact Information 
-              <MaterialDesktopTooltip
-                icon={DisclaimerIcon}
-                className={styles.disclaimerIcon}
-                title='Recruiter will contact you if you are shortlisted for an interview.'
-              />
+              Contact Information
+              {isMobile ? (
+                <MaterialMobileTooltip
+                  icon={DisclaimerIcon}
+                  className={styles.disclaimerIcon}
+                  title='Recruiter will contact you if you are shortlisted for an interview.'
+                />
+                ) : (
+                <MaterialDesktopTooltip
+                  icon={DisclaimerIcon}
+                  className={styles.disclaimerIcon}
+                  title='Recruiter will contact you if you are shortlisted for an interview.'
+                />
+                )
+              }
             </Text>
           </div>
 
           <div className={styles.jobDetailSectionBox}>
             <div className={styles.contactInfo}>
               <div>
-                <img src={DisclaimerIcon} height='14' width='14' /> 
+                <img src={ProfileIcon} height='14' width='14' /> 
                 <Text>
                 {userDetail.first_name} {userDetail.last_name}
                 </Text>
               </div>
               <div>
-                <img src={DisclaimerIcon} height='14' width='14' /> 
+                <img src={MailIcon} height='14' width='14' /> 
                 <Text>
                   {userDetail.email}
                 </Text>
               </div>
               <div>
-                <img src={DisclaimerIcon} height='14' width='14' /> 
+                <img src={MobileIcon} height='14' width='14' /> 
                 <Text>
                   {userDetail.phone_num}
                 </Text>
@@ -355,8 +369,10 @@ const Job = ({
             </Alert>
           </div>
         </div>
-        
-        <div className={styles.jobDetailSection}>
+      </div>
+
+      <div className={styles.jobDetailSectionFooter}>
+        <div className={styles.jobDetailSectionFooterContainer}>
           <div className={styles.jobDetailSectionAction}>
             <MaterialButton 
               variant='outlined' 
@@ -378,6 +394,7 @@ const Job = ({
           </div>
         </div>
       </div>
+      
     </Layout>
   )
 }
