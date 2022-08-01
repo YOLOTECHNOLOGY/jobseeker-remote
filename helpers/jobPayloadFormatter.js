@@ -1290,10 +1290,9 @@ const getDegreeList = (config) => {
 }
 
 const getApplyJobLink = (job, user, accessToken = null) => {
-  const jobUrl = job?.job_url
   // jobUrl => /job/xxxx
   // Apply job url format: /apply-job/xxx
-  let applyJobUrl = `${process.env.HOST_PATH}${jobUrl.slice(0, 1)}apply-${jobUrl.slice(1)}`;
+  let applyJobUrl = `${process.env.HOST_PATH}${job?.job_url}/apply`;
   
   if (user) {
     if (!user?.is_profile_completed) {

@@ -35,7 +35,7 @@ function* applyJobReq(action) {
 
 		yield put(applyJobSuccess(response.data.data))
 
-		const applySuccessUrl = `${jobUrl}/apply-success`
+		const applySuccessUrl = `${jobUrl}/apply/success`
 
 		yield put(push(applySuccessUrl))
   } catch (error) {

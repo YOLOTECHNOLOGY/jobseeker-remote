@@ -43,7 +43,7 @@ const QuickApplyModal = ({ jobDetails, modalShow, handleModalShow, config }: Qui
   const dispatch = useDispatch()
   const { register, handleSubmit, setValue, setError, clearErrors, formState: { errors } } = useForm()
 
-  const applyJobURL = jobDetails.job_url.slice(0, 1) + "apply-" + jobDetails.job_url.slice(1)
+  const applyJobURL = `${jobDetails?.job_url}/apply`
   const smsCountryList = getSmsCountryList(config)
   const [smsCode, setSmsCode] = useState('+63')
   const [resume, setResume] = useState(null)
