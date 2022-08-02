@@ -35,8 +35,8 @@ import watchDeleteJobAlert from 'store/sagas/alerts/deleteJobAlert'
 import watchCreateJobAlert from 'store/sagas/alerts/createJobAlert'
 
 // Users
-import WatchRegisterUser from 'store/sagas/users/registerUser'
-import WatchUpdateUserCompleteProfile from 'store/sagas/users/updateUserCompleteProfile'
+import watchRegisterUser from 'store/sagas/users/registerUser'
+import watchUpdateUserOnboardingInfo from 'store/sagas/users/updateUserOnboardingInfo'
 import watchFetchUserOwnDetail from 'store/sagas/users/fetchUserOwnDetail'
 import watchUploadUserResume from 'store/sagas/users/uploadUserResume'
 import watchGenerateUserResume from 'store/sagas/users/generateUserResume'
@@ -45,6 +45,7 @@ import watchFetchUserEducation from 'store/sagas/users/fetchUserEducation'
 import watchRedirectToNewJobseeker from 'store/sagas/users/redirectToNewJobseeker'
 import watchGenerateVerifyEmailOTP from 'store/sagas/users/generateVerifyEmailOTP'
 import watchCheckVerifyEmailOTP from 'store/sagas/users/checkVerifyEmailOTP'
+import watchUpdateUserProfile from 'store/sagas/users/updateUserProfile'
 
 // Courses
 import watchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
@@ -93,8 +94,8 @@ function* rootSaga() {
     watchDeleteJobAlert(),
     watchCreateJobAlert(),
 
-    WatchRegisterUser(),
-    WatchUpdateUserCompleteProfile(),
+    watchRegisterUser(),
+    watchUpdateUserOnboardingInfo(),
     watchFetchUserOwnDetail(),
     watchUploadUserResume(),
     watchGenerateUserResume(),
@@ -103,6 +104,7 @@ function* rootSaga() {
     watchRedirectToNewJobseeker(),
     watchGenerateVerifyEmailOTP(),
     watchCheckVerifyEmailOTP(),
+    watchUpdateUserProfile(),
 
     watchSocialLogin(),
     watchLogin(),
