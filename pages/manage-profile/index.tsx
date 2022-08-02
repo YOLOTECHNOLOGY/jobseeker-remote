@@ -6,19 +6,23 @@ import { wrapper } from 'store'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import useEmblaCarousel from 'embla-carousel-react'
+import moment from 'moment'
 
 /* Redux actions */
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
 
 /* Components */
 import Layout from 'components/Layout'
 import Text from 'components/Text'
 import ProfileLayout from 'components/ProfileLayout'
 import ProfileSettingCard from 'components/ProfileSettingCard'
-import EditProfileModal from 'components/EditProfileModal'
 import UploadResume from 'components/UploadResume'
 import MaterialButton from 'components/MaterialButton'
+
+import EditProfileModal from 'components/EditProfileModal'
+import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
@@ -31,23 +35,64 @@ import {
   ResumeTemplate2,
   DownloadWhiteIcon,
   CarouselRightRoundedBlueButton,
+  AddIcon,
 } from 'images'
 
 /* Styles */
 import classNames from 'classnames'
 import styles from './ManageProfile.module.scss'
-import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
 
-const RenderProfileView = () => {
+const RenderProfileView = ({ userDetail, handleModal }: any) => {
+  console.log('RenderProfileView userDetail', userDetail)
+  const { work_experiences: workExperiences } = userDetail
+
+  const renderWorkExperienceSection = () => {
+    return (
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <Text textStyle='xl' textColor='primaryBlue' bold>
+            Work Experience
+          </Text>
+          <div className={styles.iconWrapper}>
+            <img src={AddIcon} width='14' height='14' />
+          </div>
+        </div>
+        <div className={styles.sectionContent}>
+          {workExperiences.map((workExp) => {
+            console.log('workExp', workExp)
+            return (
+              <div key={workExp.id} className={styles.workExpSection}>
+                <Text textStyle='base' bold>
+                  {workExp.job_title}
+                </Text>
+                <Text textStyle='base'>{workExp.company}</Text> | <Text>{workExp.location}</Text>
+                <Text textStyle='base'>
+                  {moment(workExp?.working_period_from).format('MMMM yyyy')} to{' '}
+                  {workExp?.is_currently_work_here
+                    ? 'Present'
+                    : moment(workExp?.working_period_to).format('MMMM yyyy')}
+                </Text>
+                {workExp?.descriptipon && <Text>{workExp?.description}</Text>}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
   return (
     <React.Fragment>
-      <ProfileSettingCard
-        title='Work Experience'
-        description='Showcase your past contributions and that you can be an asset to potential employer.'
-        buttonText='Add work experience'
-        // eslint-disable-next-line
-        onClick={() => {}}
-      />
+      {/* {workExperiences?.length > 0 ? (
+        renderWorkExperienceSection()
+      ) : ( */}
+        <ProfileSettingCard
+          title='Work Experience'
+          description='Showcase your past contributions and that you can be an asset to potential employer.'
+          buttonText='Add work experience'
+          // eslint-disable-next-line
+          onClick={() => handleModal('workExperience', true)}
+        />
+      {/* )} */}
       <ProfileSettingCard
         title='Education'
         description='Highlight your academic qualifications and achievements.'
@@ -84,14 +129,12 @@ const RenderPreferencesView = () => {
   return <React.Fragment>preferences content</React.Fragment>
 }
 
-const RenderResumeView = ({ userDetail } : any) => {
+const RenderResumeView = ({ userDetail }: any) => {
   const accessToken = getCookie('accessToken')
   const isFirstRender = useFirstRender()
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
-  const isSuccessfulUpload = useSelector(
-    (store: any) => store.users.uploadUserResume.response
-  )
+  const isSuccessfulUpload = useSelector((store: any) => store.users.uploadUserResume.response)
 
   const initialDownloadState = {
     creative: false,
@@ -153,9 +196,11 @@ const RenderResumeView = ({ userDetail } : any) => {
 
   const handleUploadResume = (file) => {
     setResume(file)
-    dispatch(uploadUserResumeRequest({
-      resume:file
-    }))
+    dispatch(
+      uploadUserResumeRequest({
+        resume: file,
+      })
+    )
   }
 
   const handleDownloadResume = (type) => {
@@ -345,7 +390,6 @@ const ManageProfilePage = ({ config }: any) => {
     jobPreferences: false,
   })
 
-
   const handleModal = (modalName, showModal) => {
     setModalState({
       ...modalState,
@@ -362,6 +406,13 @@ const ManageProfilePage = ({ config }: any) => {
         userDetail={userDetail}
         handleModal={handleModal}
       />
+      <EditWorkExperienceModal
+        modalName='workExperience'
+        showModal={modalState.workExperience}
+        config={config}
+        userDetail={userDetail}
+        handleModal={handleModal}
+      />
       <ProfileLayout
         userDetail={userDetail}
         tabValue={tabValue}
@@ -369,7 +420,9 @@ const ManageProfilePage = ({ config }: any) => {
         modalName='profile'
         handleModal={handleModal}
       >
-        {tabValue === 'profile' && <RenderProfileView />}
+        {tabValue === 'profile' && (
+          <RenderProfileView userDetail={userDetail} handleModal={handleModal} />
+        )}
         {tabValue === 'job-preferences' && <RenderPreferencesView />}
         {tabValue === 'resume' && <RenderResumeView userDetail={userDetail} />}
       </ProfileLayout>

@@ -184,7 +184,7 @@ const EditProfileModal = ({
         isSecondButtonLoading={isUpdatingUserProfile}
         firstButtonIsClose
         // eslint-disable-next-line
-        // handleFirstButton={() => {}}
+        handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
         fullScreen
       >
