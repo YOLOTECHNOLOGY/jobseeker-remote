@@ -2,7 +2,7 @@ import React from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import LoadingButton from '@mui/lab/LoadingButton'
-
+import { CircularProgress } from '@mui/material'
 interface MaterialButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
   component?: React.ReactNode
@@ -13,6 +13,7 @@ interface MaterialButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
   capitalize?: boolean
   isLoading?: boolean
   disabled?: boolean
+  sx?: any
 }
 
 const MaterialButton = ({
@@ -24,6 +25,7 @@ const MaterialButton = ({
   isLoading,
   capitalize,
   component,
+  sx,
   ...rest
 }: MaterialButtonProps) => {
   const theme = createTheme({
@@ -42,7 +44,7 @@ const MaterialButton = ({
         styleOverrides: {
           root: {
             fontSize: '14px',
-            lineHeight: '16px'
+            lineHeight: '16px',
           },
         },
       },
@@ -51,8 +53,16 @@ const MaterialButton = ({
   return (
     <ThemeProvider theme={theme}>
       {isLoading ? (
-        <LoadingButton variant={variant} size={size} className={className} loading={isLoading} style={{textTransform: !capitalize ? 'uppercase' : 'capitalize'}}>
-          {children}
+        <LoadingButton
+          variant={variant}
+          size={size}
+          className={className}
+          loading={isLoading}
+          style={{ textTransform: !capitalize ? 'uppercase' : 'capitalize' }}
+          sx={sx}
+          loadingIndicator={<CircularProgress color={variant === 'outlined' ? 'primary' : 'secondary'} size={16} />}
+        >
+          {/* {children} */}
         </LoadingButton>
       ) : (
         <Button
@@ -61,7 +71,7 @@ const MaterialButton = ({
           size={size}
           className={className}
           disabled={disabled}
-          style={{textTransform: !capitalize ? 'uppercase' : 'capitalize', height: '44px'}}
+          style={{ textTransform: !capitalize ? 'uppercase' : 'capitalize', height: '44px' }}
           {...(rest as any)}
         >
           {children}
