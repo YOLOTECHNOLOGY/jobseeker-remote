@@ -45,7 +45,6 @@ type ProfileLayoutProps = {
   children: React.ReactNode
 }
 
-// TODO: For <Tabs> remove href comment
 const ProfileLayout = ({
   userDetail,
   tabValue,

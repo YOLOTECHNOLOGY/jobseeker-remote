@@ -2,7 +2,7 @@
 @import 'styles/mixins.scss';
 
 .uploadResumeField {
-  width:100%;
+  width: 100%;
   margin-bottom: 20px;
 
   span {
@@ -38,9 +38,15 @@
   > .uploadedResume {
     display: flex;
     justify-content: space-between;
+    max-width:787px;
 
     > .leftResume {
       display: flex;
+      width:95%;
+
+      @include msd{
+        width:93%;
+      }
 
       > .documentDiv {
         width: auto;
@@ -48,6 +54,9 @@
       }
 
       > .resumeName {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         line-height: 22px;
       }
     }
@@ -58,7 +67,7 @@
     }
   }
 
-  .buttonCTA{
-    width:100%;
+  .buttonCTA {
+    width: 100%;
   }
 }

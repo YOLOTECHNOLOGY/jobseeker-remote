@@ -45,7 +45,7 @@ const UploadResume = ({ title, resume, handleDelete, handleUpload, buttonClassna
         message: 'File size is too huge. Please upload file that is within 5MB.',
       })
       return
-    }
+  }
 
     if (handleUpload) handleUpload(file)
   }
