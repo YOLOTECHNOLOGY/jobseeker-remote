@@ -1,0 +1,228 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.sectionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  padding: 24px;
+  height: max-content;
+  border: 1px solid $lightgrey-2;
+  border-radius: 5px;
+  margin-bottom: 24px;
+
+  @include msd {
+    padding: 0;
+    border: none;
+    margin: 36px 0px;
+  }
+}
+
+.buttonCTA {
+  width: auto !important;
+
+  @include msd {
+    width: 100% !important;
+  }
+}
+
+.resumePreview {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.resumeTemplateItem {
+  width: 381px;
+  height: auto;
+  box-shadow: $box-shadow-2;
+
+  @include msd {
+    width: 320px;
+    height: auto;
+  }
+
+  @include xsm {
+    width: 100%;
+    height: auto;
+  }
+}
+
+// Embla
+.embla {
+  position: relative;
+  padding: 20px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include sm {
+    padding: 10px;
+  }
+}
+
+.emblaViewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.emblaContainer {
+  display: flex;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+
+  &Double {
+    @extend .emblaContainer;
+    margin: 0 25%;
+  }
+}
+
+.emblaSlide {
+  position: relative;
+  padding-left: 24px;
+  flex: 0 0 50%;
+
+  @include msd {
+    flex: 0 0 100%;
+    padding-left: 1vw;
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+}
+
+.emblaSlideInner {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.emblaDots {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.emblaDot {
+  background-color: $lightgrey;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 7.5px;
+  display: flex;
+  align-items: center;
+  display: none;
+
+  &:hover {
+    background-color: $primaryBlue;
+    @include transition(0.3s, ease-in-out);
+  }
+
+  &Active {
+    @extend .emblaDot;
+    background-color: $primaryBlue;
+  }
+
+  @include msd {
+    margin: 0 5px;
+    display: block;
+  }
+}
+
+.emblaExplore {
+  color: $primaryBlue;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  img {
+    margin-top: 3px;
+    margin-left: 6px;
+  }
+}
+
+.slidesControl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+
+  &Item {
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    top: 50%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &Right {
+    right: 0;
+  }
+
+  &Left {
+    left: 10px;
+    transform: translate(50%, 50%) rotate(180deg);
+  }
+
+  @include msd {
+    display: block;
+  }
+}
+
+.downloadResumeButton {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  &Active {
+    @extend .downloadResumeButton;
+    display: flex;
+    transition: all ease 0.2s;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  @include msd {
+    display: flex;
+    position: absolute;
+    top: unset;
+    bottom: 25px;
+    left: 50%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.downloadIcon {
+  padding-right: 5px;
+}
+
+.downloadText {
+  padding-right: 8px;
+}

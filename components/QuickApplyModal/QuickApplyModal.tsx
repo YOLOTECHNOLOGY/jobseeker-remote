@@ -11,6 +11,7 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import Link from 'components/Link'
+import UploadResume from 'components/UploadResume'
 import FormControlLabel from '@mui/material/FormControlLabel'
 
 /* Styles */
@@ -19,18 +20,11 @@ import styles from './QuickApplyModal.module.scss'
 /* Redux Actions */
 import { quickApplyJobRequest } from 'store/actions/jobs/quickApplyJob'
 
-/* Images */
-import {
-  TrashIcon,
-  DocumentIcon
-} from 'images'
 
 /* Helpers*/
-import {
-  getSmsCountryList,
-} from 'helpers/jobPayloadFormatter'
+import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 import Checkbox from '@mui/material/Checkbox'
-import { maxFileSize, handleNumericInput } from 'helpers/handleInput'
+import { handleNumericInput } from 'helpers/handleInput'
 
 interface QuickApplyModalProps {
   jobDetails: any
@@ -39,9 +33,21 @@ interface QuickApplyModalProps {
   config: any
 }
 
-const QuickApplyModal = ({ jobDetails, modalShow, handleModalShow, config }: QuickApplyModalProps) => {
+const QuickApplyModal = ({
+  jobDetails,
+  modalShow,
+  handleModalShow,
+  config,
+}: QuickApplyModalProps) => {
   const dispatch = useDispatch()
-  const { register, handleSubmit, setValue, setError, clearErrors, formState: { errors } } = useForm()
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = useForm()
 
   const applyJobURL = `${jobDetails?.job_url}/apply`
   const smsCountryList = getSmsCountryList(config)
@@ -60,11 +66,19 @@ const QuickApplyModal = ({ jobDetails, modalShow, handleModalShow, config }: Qui
   useEffect(() => {
     setFirstMessage(`Hi there, I am interested to apply for ${jobDetails?.job_title} position.`)
   }, [jobDetails])
-  
+
   useEffect(() => {
     if (registerJobseekerState.error && registerJobseekerState.error['email']) {
       if (registerJobseekerState.error['email'] == 'The email has already been taken.') {
-        setEmailError(<p>A user with this email address already exists. Please enter a different email address or <Link to={redirectLoginLink} className='default'>log in</Link>.</p>)
+        setEmailError(
+          <p>
+            A user with this email address already exists. Please enter a different email address or{' '}
+            <Link to={redirectLoginLink} className='default'>
+              log in
+            </Link>
+            .
+          </p>
+        )
       } else {
         setError('email', { type: 'custom', message: registerJobseekerState.error['email'] })
       }
@@ -82,11 +96,13 @@ const QuickApplyModal = ({ jobDetails, modalShow, handleModalShow, config }: Qui
 
     screeningQuestions.forEach((element, index) => {
       screeningAnswers.push(data[`screening_answer_${index}`])
-    });
+    })
 
-    const jobCategories = jobDetails.categories.map(function(category){
-        return category.key;
-    }).join('-')
+    const jobCategories = jobDetails.categories
+      .map(function (category) {
+        return category.key
+      })
+      .join('-')
 
     const payload = {
       email: data.email,
@@ -101,8 +117,10 @@ const QuickApplyModal = ({ jobDetails, modalShow, handleModalShow, config }: Qui
       first_message: firstMessage,
       jobId: jobDetails.id,
       jobCategories: jobCategories,
-      companyId: jobDetails.company?.id
+      companyId: jobDetails.company?.id,
     }
+
+    console.log('quick apply payload', payload)
 
     clearErrors()
     setIsSubmitting(true)
@@ -111,7 +129,19 @@ const QuickApplyModal = ({ jobDetails, modalShow, handleModalShow, config }: Qui
   }
 
   const errorText = (errorMessage: string) => {
-    return <Text textStyle='sm' textColor='red' tagName='p' className={styles.error}>{errorMessage}</Text>
+    return (
+      <Text textStyle='sm' textColor='red' tagName='p' className={styles.error}>
+        {errorMessage}
+      </Text>
+    )
+  }
+
+  const handleDeleteResume = () => {
+    setResume(null)
+  }
+
+  const handleUploadResume = (file) => {
+    setResume(file)
   }
 
   return (
@@ -280,70 +310,12 @@ const QuickApplyModal = ({ jobDetails, modalShow, handleModalShow, config }: Qui
           {errors.password && errorText(errors.password.message)}
         </div>
 
-        <div className={styles.quickApplyFormField}>
-          {resume ? (
-            <div className={styles.uploadedResume}>
-              <div className={styles.leftResume}>
-                <div className={styles.documentDiv}>
-                  <img src={DocumentIcon} alt='document' width='21' height='21' />
-                </div>
-                <Text textStyle='sm' bold className={styles.resumeName}>
-                  {' '}
-                  {resume?.name}{' '}
-                </Text>
-              </div>
-              <div className={styles.trashDiv}>
-                <img
-                  src={TrashIcon}
-                  alt='trash'
-                  width='14'
-                  height='14'
-                  onClick={() => {
-                    clearErrors('resume')
-                    setResume(null)
-                  }}
-                />
-              </div>
-            </div>
-          ) : (
-            <div>
-              <MaterialButton variant='outlined' capitalize component='label'>
-                <Text textStyle='base' textColor='primaryBlue' bold>
-                  Upload your resume
-                </Text>
-                <input
-                  {...register('resume', {
-                    required: {
-                      value: true,
-                      message: 'Please upload your resume.',
-                    },
-                  })}
-                  type='file'
-                  hidden
-                  accept='.pdf, .doc, .docx'
-                  onChange={(e) => {
-                    const file = e.target.files[0]
-                    if (!maxFileSize(file, 5)) {
-                      setError('resume', {
-                        type: 'custom',
-                        message: 'File size is too huge. Please upload file that is within 5MB.',
-                      })
-                      return
-                    }
-
-                    clearErrors('resume')
-                    setResume(file)
-                  }}
-                />
-              </MaterialButton>
-            </div>
-          )}
-          <Text textColor='darkgrey' textStyle='xsm'>
-            Supported file type: PDF, DOC, DOCX. Max. file size: 5MB
-          </Text>
-
-          {errors.resume && errorText(errors.resume.message)}
-        </div>
+        <UploadResume
+          title='resume'
+          resume={resume}
+          handleDelete={handleDeleteResume}
+          handleUpload={handleUploadResume}
+        />
 
         <div className={styles.quickApplyFormField}>
           {screeningQuestions.length > 0 && (

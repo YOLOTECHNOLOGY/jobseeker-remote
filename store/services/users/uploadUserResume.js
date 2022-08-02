@@ -4,7 +4,6 @@ const uploadUserResumeService = (resume) => {
   const axios = configuredAxios('jobseeker', 'protected')
   const URL = `${process.env.JOBSEEKER_URL}/upload-resume`
   const headers = {
-    // Authorization: `Bearer ${accessToken}`,
     'Content-Type': 'multipart/form-data'
   }
 
