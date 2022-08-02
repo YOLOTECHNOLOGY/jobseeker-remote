@@ -17,7 +17,7 @@ import ProfileSettingCard from 'components/ProfileSettingCard'
 import EditProfileModal from 'components/EditProfileModal'
 
 // TODO: Remove this page after testing
-const ManageProfilePage = ({ config, accessToken }: any) => {
+const ManageProfilePage = ({ config }: any) => {
   const router = useRouter()
   const { query: { tab }} = router
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')

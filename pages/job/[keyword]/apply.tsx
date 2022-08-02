@@ -35,7 +35,6 @@ import { wrapper } from 'store'
 /* Redux Actions */
 import { applyJobRequest } from 'store/actions/jobs/applyJob'
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
-import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 
@@ -412,7 +411,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     })
   )
   store.dispatch(fetchUserOwnDetailRequest({accessToken}))
-  store.dispatch(fetchConfigRequest())
   store.dispatch(END)
   
   await (store as any).sagaTask.toPromise()

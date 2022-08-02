@@ -113,6 +113,7 @@
       background-color: white;
       position: sticky;
       bottom: 0;
+      z-index: 999;
 
       @include msd {
         margin-bottom: 24px;
@@ -123,6 +124,7 @@
         padding: 16px 24px;
         flex-direction: row;
         display: flex;
+        margin-bottom: 24px;
 
         @include msd {
           display: block;
