@@ -3,8 +3,8 @@ import { ThemeProvider } from '@emotion/react'
 
 /* Components */
 import { Tabs, Tab, createTheme } from '@mui/material'
-import UserProfileOverview from '../UserProfileOverview'
-import Text from '../Text'
+import UserProfileOverview from 'components/UserProfileOverview'
+import Text from 'components/Text'
 
 /* Styles */
 import styles from './ProfileLayout.module.scss'
@@ -37,11 +37,7 @@ const theme = createTheme({
 })
 
 type ProfileLayoutProps = {
-  name: string
-  location?: string
-  email: string
-  contactNumber?: string
-  avatarUrl?: string
+  userDetail: any
   tabValue: string | string[]
   setTabValue: Function
   modalName: string
@@ -51,16 +47,14 @@ type ProfileLayoutProps = {
 
 // TODO: For <Tabs> remove href comment
 const ProfileLayout = ({
-  name,
-  location,
-  email,
-  contactNumber,
-  children,
+  userDetail,
   tabValue,
   setTabValue,
   modalName,
   handleModal,
+  children,
 }: ProfileLayoutProps) => {
+  const { avatar, email, phone_num: contactNum, first_name: firstName, last_name:lastName, location: userLocation } = userDetail
 
   const handleShowModal = () => {
     handleModal(modalName, true)
@@ -88,10 +82,11 @@ const ProfileLayout = ({
     <div className={styles.profileLayout}>
       <div className={styles.profileLayoutUserOverview}>
         <UserProfileOverview
-          name={name}
-          location={location}
+          name={`${firstName} ${lastName}`}
+          location={userLocation}
           email={email}
-          contactNumber={contactNumber}
+          avatarUrl={avatar}
+          contactNumber={contactNum}
           handleEditClick={handleEditClick}
         />
       </div>

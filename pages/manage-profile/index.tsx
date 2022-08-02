@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { END } from 'redux-saga'
 import { wrapper } from 'store'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
 /* Redux actions */
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
@@ -16,13 +17,11 @@ import ProfileSettingCard from 'components/ProfileSettingCard'
 import EditProfileModal from 'components/EditProfileModal'
 
 // TODO: Remove this page after testing
-const ManageProfilePage = ({ config, userDetail, accessToken }: any) => {
+const ManageProfilePage = ({ config, accessToken }: any) => {
   const router = useRouter()
-  const {
-    query: { tab },
-  } = router
-  
+  const { query: { tab }} = router
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
+  const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
 
   const [modalState, setModalState] = useState({
     profile: false,
@@ -49,14 +48,10 @@ const ManageProfilePage = ({ config, userDetail, accessToken }: any) => {
         showModal={modalState.profile}
         config={config}
         userDetail={userDetail}
-        accessToken={accessToken}
         handleModal={handleModal}
       />
       <ProfileLayout
-        name='John Doe'
-        location='Manila Philippines'
-        email='johndoe@test.com'
-        contactNumber='+65 91812121'
+        userDetail={userDetail}
         tabValue={tabValue}
         setTabValue={setTabValue}
         modalName='profile'
@@ -119,12 +114,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
-  const userDetail = storeState.users.fetchUserOwnDetail.response
 
   return {
     props: {
       config,
-      userDetail,
       accessToken,
     },
   }

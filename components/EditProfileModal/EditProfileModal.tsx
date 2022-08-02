@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useEffect, useState } from 'react'
 
 /* Vendors */
@@ -31,7 +32,6 @@ type EditProfileModalProps = {
   showModal: boolean
   config: any
   userDetail: any
-  accessToken: any
   handleModal: Function
 }
 
@@ -79,24 +79,19 @@ const EditProfileModal = ({
   showModal,
   config,
   userDetail,
-  accessToken,
   handleModal,
 }: EditProfileModalProps) => {
-  // eslint-disable-next-line
-  const { avatar, first_name, last_name, location: userLocation } = userDetail
+  const { avatar, first_name, last_name, location: userLocation, description } = userDetail
 
   const dispatch = useDispatch()
 
   const [selectedAvatar, setSelectedAvatar] = useState(null)
-  // eslint-disable-next-line
   const [firstName, setFirstName] = useState(first_name || '')
-  // eslint-disable-next-line
   const [lastName, setlastName] = useState(last_name || '')
   const [birthdate, setBirthdate] = useState(null)
-  const [summary, setSummary] = useState('')
+  const [summary, setSummary] = useState(description || '')
 
   const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserProfile.fetching)
-
   const updateProfileSuccess = useSelector(
     (store: any) => store.users.updateUserProfile.response
   )
