@@ -66,6 +66,7 @@ export const MobileIcon = `${S3BucketJobseeker}/mobile.svg`
 export const ProfileIcon = `${S3BucketJobseeker}/profile.svg`
 export const CameraIcon = `${S3BucketJobseeker}/CameraIcon.svg`
 export const ApplySuccess = `${S3BucketJobseeker}/ApplySuccess.png`
+export const AddIcon = `${S3BucketJobseeker}/add.svg`
 export const DownloadWhiteIcon = `${S3BucketJobseeker}/DownloadWhite.svg`
 export const CarouselRightRoundedBlueButton = `${S3BucketJobseeker}/CarouselRightRoundedBlueButton.svg`
 
