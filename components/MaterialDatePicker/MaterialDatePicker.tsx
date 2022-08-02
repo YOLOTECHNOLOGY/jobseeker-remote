@@ -5,11 +5,12 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import { TextField } from '@mui/material'
 
 interface MaterialDatePickerProps {
-  value?: any,
-  onDateChange: Function,
-  label?: string,
-  inputFormat?: string,
-  views?: any,
+  value?: any
+  onDateChange: Function
+  label?: string
+  inputFormat?: string
+  views?: any
+  fullWidth?: boolean
 }
 
 const MaterialDatePicker = ({
@@ -18,6 +19,7 @@ const MaterialDatePicker = ({
   label,
   inputFormat,
   views,
+  fullWidth,
 }: MaterialDatePickerProps) => {
   const theme = createTheme({
     components: {
@@ -46,13 +48,13 @@ const MaterialDatePicker = ({
         styleOverrides: {
           root: {
             fontSize: '14px',
-            backgroundColor: "white"
+            backgroundColor: 'white',
           },
           input: {
             padding: '10.5px 14px',
-          }
+          },
         },
-      }
+      },
     },
   })
   return (
@@ -66,8 +68,10 @@ const MaterialDatePicker = ({
           minDate={new Date('1942-01-01')}
           value={value}
           onChange={(date) => onDateChange(date)}
-          renderInput={(params) => <TextField error={true} aria-readonly {...params} helperText={null} />}
-          maxDate={ new Date() }
+          renderInput={(params) => (
+            <TextField error={true} aria-readonly {...params} fullWidth={fullWidth} helperText={null} />
+          )}
+          maxDate={new Date()}
         />
       </LocalizationProvider>
     </ThemeProvider>

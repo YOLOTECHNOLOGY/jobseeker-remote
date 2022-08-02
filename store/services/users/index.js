@@ -1,5 +1,5 @@
 import registerUser from './registerUser'
-import updateUserCompleteProfile from './updateUserCompleteProfile'
+import updateUserProfile from './updateUserProfile'
 import uploadUserResume from './uploadUserResume'
 import generateUserResume from './generateUserResume'
 import fetchUserOwnDetail from './fetchUserOwnDetail'
@@ -16,7 +16,7 @@ import generateVerifyEmailOTP from './generateVerifyEmailOTP'
 
 export default {
   registerUser,
-  updateUserCompleteProfile,
+  updateUserProfile,
   uploadUserResume,
   generateUserResume,
   fetchUserOwnDetail,

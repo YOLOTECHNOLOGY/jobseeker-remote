@@ -13,7 +13,7 @@ import { wrapper } from 'store'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { fetchUserEducationRequest } from 'store/actions/users/fetchUserEducation'
-import { updateUserCompleteProfileRequest } from 'store/actions/users/updateUserCompleteProfile'
+import { updateUserOnboardingInfoRequest } from 'store/actions/users/updateUserOnboardingInfo'
 import { generateUserResumeRequest } from 'store/actions/users/generateUserResume'
 
 // Components
@@ -89,7 +89,7 @@ const Step4 = (props: any) => {
 
   const userEducations = useSelector((store: any) => store.users.fetchUserEducation.response)
   const isUpdatingUserProfile = useSelector(
-    (store: any) => store.users.updateUserCompleteProfile.fetching
+    (store: any) => store.users.updateUserOnboardingInfo.fetching
   )
   const isGeneratingUserResume = useSelector(
     (store: any) => store.users.generateUserResume.fetching
@@ -291,7 +291,7 @@ const Step4 = (props: any) => {
       educationId,
       educationData: removeEmptyOrNullValues(educationData),
     }
-    dispatch(updateUserCompleteProfileRequest(educationPayload))
+    dispatch(updateUserOnboardingInfoRequest(educationPayload))
 
     handleResetForm()
     setShowForm(false)
@@ -305,7 +305,7 @@ const Step4 = (props: any) => {
       currentStep,
     }
 
-    dispatch(updateUserCompleteProfileRequest(deletePayload))
+    dispatch(updateUserOnboardingInfoRequest(deletePayload))
     handleResetForm()
   }
 
@@ -337,7 +337,7 @@ const Step4 = (props: any) => {
     }
 
     if (!isCreateFreeResume) {
-      dispatch(updateUserCompleteProfileRequest({ currentStep: 5, redirect, accessToken }))
+      dispatch(updateUserOnboardingInfoRequest({ currentStep: 5, redirect, accessToken }))
     }
   }
 
