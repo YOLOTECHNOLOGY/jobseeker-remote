@@ -16,6 +16,12 @@ interface IModalWithdrawApplication {
   handleWithdrawApplication?: Function
   jobId?: number
   isWithdrawAppliedJobFetching?: boolean
+  isWithdrawApplicationResult?: boolean
+}
+
+const modalText = {
+  defaultText: 'You are about to withdraw your application. This cannot be undone.',
+  successText: 'Your application was successfully withdrawn.'
 }
 
 const ModalWithdrawApplication = ({
@@ -23,10 +29,14 @@ const ModalWithdrawApplication = ({
   handleShowModalWithdrawApplication,
   handleWithdrawApplication,
   jobId,
-  isWithdrawAppliedJobFetching
+  isWithdrawAppliedJobFetching,
+  isWithdrawApplicationResult
 }: IModalWithdrawApplication) => {
   const handleText = () => {
-    return isWithdrawAppliedJobFetching ? 'Updating...' : 'Withdraw'
+    if (!isWithdrawApplicationResult) {
+      return isWithdrawAppliedJobFetching ? 'Updating...' : 'Withdraw'
+    }
+    return ''
   }
 
   return (
@@ -39,7 +49,7 @@ const ModalWithdrawApplication = ({
         handleShowModalWithdrawApplication(false)
       }}
       firstButtonIsClose={true}
-      secondButtonIsClose={true}
+      // secondButtonIsClose={true}
       secondButtonText={handleText()}
       handleSecondButton={() => {
         handleWithdrawApplication({ jobId })
@@ -47,7 +57,7 @@ const ModalWithdrawApplication = ({
     >
       <div className={styles.ModalWithdrawApplication}>
         <Text textStyle='lg'>
-          You are about to withdraw your application. This cannot be undone.
+          {isWithdrawApplicationResult ? modalText.successText : modalText.defaultText}
         </Text>
       </div>
     </Modal>
