@@ -109,6 +109,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
   const [totalPages, setTotalPages] = useState(null)
   const [totalNum, setTotalNum] = useState(0)
   const [applicationHistories, setApplicationHistories] = useState([])
+  const [withdrawApplicationResult, setWithdrawApplicationResult] = useState(false)
 
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowModalWithdrawApplication, setIsShowModalWithdrawApplication] = useState(false)
@@ -205,8 +206,8 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
 
   useEffect(() => {
     if (withdrawAppliedJobResponse?.message === 'success') {
-      setIsShowModalWithdrawApplication(false)
       handleFetchJobDetail(selectedJobId, category)
+      setWithdrawApplicationResult(true)
     }
   }, [withdrawAppliedJobResponse])
 
@@ -489,6 +490,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
           handleShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
           handleWithdrawApplication={handleWithdrawApplication}
           isWithdrawAppliedJobFetching={isWithdrawAppliedJobFetching}
+          isWithdrawApplicationResult={withdrawApplicationResult}
         />
       )}
     </Layout>
