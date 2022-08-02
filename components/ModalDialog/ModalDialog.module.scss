@@ -3,6 +3,7 @@
 
 .modal {
   &Content {
+    position:relative;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
@@ -17,6 +18,9 @@
     border-bottom: 1px solid rgba($lightgrey, 0.5);
     background-color: $white-1;
     border-radius: 5px;
+    position:sticky;
+    top:0;
+    z-index:2;
 
     &Title {
       flex: auto;
