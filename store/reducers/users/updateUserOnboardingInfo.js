@@ -1,8 +1,8 @@
 import {
-  UPDATE_USER_COMPLETE_PROFILE_REQUEST,
-  UPDATE_USER_COMPLETE_PROFILE_SUCCESS,
-  UPDATE_USER_COMPLETE_PROFILE_FAILED,
-} from 'store/types/users/updateUserCompleteProfile'
+  UPDATE_USER_ONBOARDING_INFO_REQUEST,
+  UPDATE_USER_ONBOARDING_INFO_SUCCESS,
+  UPDATE_USER_ONBOARDING_INFO_FAILED,
+} from 'store/types/users/updateUserOnboardingInfo'
 
 const initialState = {
   fetching: false,
@@ -10,21 +10,21 @@ const initialState = {
   error: null,
 }
 
-export default function updateUserCompleteProfile(state = initialState, action) {
+export default function updateUserOnboardingInfo(state = initialState, action) {
   switch (action.type) {
-    case UPDATE_USER_COMPLETE_PROFILE_REQUEST:
+    case UPDATE_USER_ONBOARDING_INFO_REQUEST:
       return {
         ...state,
         fetching: true,
       }
-    case UPDATE_USER_COMPLETE_PROFILE_SUCCESS:
+    case UPDATE_USER_ONBOARDING_INFO_SUCCESS:
       return {
         ...state,
         fetching: false,
         response: action.payload,
         error: null,
       }
-    case UPDATE_USER_COMPLETE_PROFILE_FAILED:
+    case UPDATE_USER_ONBOARDING_INFO_FAILED:
       return {
         ...state,
         fetching: false,

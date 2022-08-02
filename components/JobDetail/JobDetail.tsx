@@ -93,7 +93,7 @@ const JobDetail = ({
   const [detailHeaderHeight, setDetailHeaderHeight] = useState(detailHeaderRef?.current?.clientHeight || 0);
 
   const userCookie = getCookie('user') || null
-  const authCookie = getCookie('accessToken') || null;
+  const authCookie = getCookie('accessToken') || null
 
   const [isSaveClicked, setIsSaveClicked] = useState(false)
   const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
