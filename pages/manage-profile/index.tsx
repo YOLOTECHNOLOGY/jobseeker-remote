@@ -327,7 +327,7 @@ const RenderResumeView = ({ userDetail } : any) => {
   )
 }
 // TODO: Remove this page after testing
-const ManageProfilePage = ({ config, accessToken }: any) => {
+const ManageProfilePage = ({ config }: any) => {
   const router = useRouter()
   const {
     query: { tab },
