@@ -64,6 +64,9 @@ export const MailIcon = `${S3BucketJobseeker}/mailIcon.svg`
 export const PencilIcon = `${S3BucketJobseeker}/pencil.svg`
 export const MobileIcon = `${S3BucketJobseeker}/mobile.svg`
 export const CameraIcon = `${S3BucketJobseeker}/CameraIcon.svg`
+export const DownloadWhiteIcon = `${S3BucketJobseeker}/DownloadWhite.svg`
+export const CarouselRightRoundedBlueButton = `${S3BucketJobseeker}/CarouselRightRoundedBlueButton.svg`
+
 
 /* Footer Social Links Logo */
 export const facebook = `${S3BucketJobseeker}/facebook.svg`
@@ -111,3 +114,7 @@ export const NotFound404 = `${S3BucketJobseeker}/404.png`
 
 /* Maintenance page */
 export const Maintenance = `${S3BucketJobseeker}/maintenance.png`
+
+/* Resume preview */
+export const CreativeResumePreview = `${S3BucketJobseeker}/creative_resume_preview.pdf`
+export const CorporateResumePreview = `${S3BucketJobseeker}/corporate_resume_preview.pdf`

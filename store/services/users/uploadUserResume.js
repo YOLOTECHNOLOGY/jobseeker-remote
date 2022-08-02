@@ -1,7 +1,10 @@
 import axios from 'axios'
+import { getCookie } from 'helpers/cookies'
 
 const uploadUserResumeService = (payload) => {
-  const { resume, accessToken } = payload
+  const accessToken = getCookie('accessToken')
+  const { resume } = payload
+  
   const URL = `${process.env.JOBSEEKER_URL}/upload-resume`
   const headers = {
     Authorization: `Bearer ${accessToken}`,
