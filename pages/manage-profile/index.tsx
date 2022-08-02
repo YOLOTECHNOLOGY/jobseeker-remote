@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { END } from 'redux-saga'
 import { wrapper } from 'store'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useEmblaCarousel from 'embla-carousel-react'
 
 /* Redux actions */
@@ -22,6 +22,8 @@ import MaterialButton from 'components/MaterialButton'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { getCookie } from 'helpers/cookies'
+import { useFirstRender } from 'helpers/useFirstRender'
 
 /* Assets */
 import {
@@ -34,6 +36,7 @@ import {
 /* Styles */
 import classNames from 'classnames'
 import styles from './ManageProfile.module.scss'
+import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
 
 const RenderProfileView = () => {
   return (
@@ -81,15 +84,21 @@ const RenderPreferencesView = () => {
   return <React.Fragment>preferences content</React.Fragment>
 }
 
-const RenderResumeView = () => {
+const RenderResumeView = ({ userDetail } : any) => {
+  const accessToken = getCookie('accessToken')
+  const isFirstRender = useFirstRender()
+  const dispatch = useDispatch()
   const { width } = useWindowDimensions()
+  const isSuccessfulUpload = useSelector(
+    (store: any) => store.users.uploadUserResume.response
+  )
+
   const initialDownloadState = {
     creative: false,
     corporate: false,
   }
-  const [resume, setResume] = useState(null)
+  const [resume, setResume] = useState(userDetail.resume || null)
   const [isTemplateDownloadable, setIsTemplateDownloadable] = useState(initialDownloadState)
-
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState([])
 
@@ -106,6 +115,10 @@ const RenderResumeView = () => {
       setIsTemplateDownloadable({ creative: true, corporate: true })
     }
   }, [])
+
+  useEffect(() => {
+    if (!isFirstRender) dispatch(fetchUserOwnDetailRequest({ accessToken }))
+  }, [isSuccessfulUpload])
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) {
@@ -140,18 +153,22 @@ const RenderResumeView = () => {
 
   const handleUploadResume = (file) => {
     setResume(file)
+    dispatch(uploadUserResumeRequest({
+      resume:file
+    }))
   }
 
   const handleDownloadResume = (type) => {
-    console.log('handleDownloadResume', type)
+    const sourcePath = process.env.DOCUMENT_GENERATOR_URL
+
     switch (type) {
       case 'corporate':
         // TODO: replace this with user's corporate resume
-        window.open(ResumeTemplate1, '_blank')
+        window.open(`${sourcePath}/resume/pro/bossjob.pdf?token=${accessToken}`, '_blank')
         break
       case 'creative':
         // TODO: replace this with user's creative resume
-        window.open(ResumeTemplate2, '_blank')
+        window.open(`${sourcePath}/resume/creative/bossjob.pdf?token=${accessToken}`, '_blank')
         break
       default:
         break
@@ -352,9 +369,9 @@ const ManageProfilePage = ({ config, accessToken }: any) => {
         modalName='profile'
         handleModal={handleModal}
       >
-        {tabValue === 'profile' && (<RenderProfileView/>)}
-        {tabValue === 'job-preferences' && <RenderPreferencesView/>}
-        {tabValue === 'resume' && <RenderResumeView/>}
+        {tabValue === 'profile' && <RenderProfileView />}
+        {tabValue === 'job-preferences' && <RenderPreferencesView />}
+        {tabValue === 'resume' && <RenderResumeView userDetail={userDetail} />}
       </ProfileLayout>
     </Layout>
   )
