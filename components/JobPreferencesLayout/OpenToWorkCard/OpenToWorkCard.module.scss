@@ -1,0 +1,25 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.CardContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    padding: 24px;
+    height: max-content;
+    border: 1px solid $lightgrey-2;
+    border-radius: 4px;
+    margin-bottom: 24px;
+
+    &Title {
+        margin-bottom: 8px;
+    }
+
+    @include msd {
+        padding: 0;
+        border: none;
+        margin: 36px 0px;
+    }
+}
