@@ -312,6 +312,19 @@ const Step4 = (props: any) => {
   const handleLastStep = () => {
     if (!userCookie.is_email_verify) {
       setIsShowModal(true)
+    } else {
+      const isCreateFreeResume =
+      (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
+
+      const redirect = router.query?.redirect ? router.query?.redirect : null
+
+      if (isCreateFreeResume) {
+        dispatch(generateUserResumeRequest({ redirect, accessToken }))
+      }
+
+      if (!isCreateFreeResume) {
+        dispatch(updateUserOnboardingInfoRequest({ currentStep: 5, redirect, accessToken }))
+      }
     }
   }
 
@@ -330,6 +343,7 @@ const Step4 = (props: any) => {
 
   const handleCloseModal = () => {
     setIsShowModal(false)
+    
     const isCreateFreeResume =
       (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
     const redirect = router.query?.redirect ? router.query?.redirect : null

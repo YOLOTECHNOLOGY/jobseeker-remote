@@ -336,10 +336,13 @@
   word-break: break-all;
 }
 
-.skillMatch {
+.skill {
   margin-top: 16px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 
-  .skillChip {
+  &Chip {
     margin-right: 16px;
     margin-bottom: 16px;
     background-color: #1976d2;

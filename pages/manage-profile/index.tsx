@@ -175,7 +175,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           </div>
         </div>
         <div className={styles.sectionContent}>
-          <div className={styles.skillMatch}>
+          <div className={styles.skill}>
             {skills.map((skill, i) => {
               return (
                 <Chip
