@@ -53,6 +53,8 @@ import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
 
 const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const dispatch = useDispatch()
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
   const { work_experiences: workExperiences, skills } = userDetail
 
   const handleAddData = (type) => {
@@ -104,8 +106,6 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         </div>
         <div className={styles.sectionContent}>
           {workExperiences.map((workExp) => {
-            // const countryName = countryList.filter((country) => country.key === workExp.country_key)
-            // console.log('countryName', countryName)
             const workingPeriodFrom = moment(workExp?.working_period_from)
             const workingPeriodTo = moment(workExp?.working_period_to)
             const dateDiff = getYearMonthDiffBetweenDates(
@@ -145,9 +145,16 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                   {workingPeriodFrom.format('MMMM yyyy')} to{' '}
                   {workExp?.is_currently_work_here
                     ? 'Present'
-                    : workingPeriodTo.format('MMMM yyyy')} {' '}{dateDiff ? `(${dateDiff})` : ''}
+                    : workingPeriodTo.format('MMMM yyyy')}{' '}
+                  {dateDiff ? `(${dateDiff})` : ''}
                 </Text>
-                {workExp?.description && <ReadMore size={300} text={workExp?.description} className={styles.readMoreDescriptionWrapper}/>} 
+                {workExp?.description && (
+                  <ReadMore
+                    size={isMobile ? 210 : 300}
+                    text={workExp?.description}
+                    className={styles.readMoreDescriptionWrapper}
+                  />
+                )}
               </div>
             )
           })}
