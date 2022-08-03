@@ -29,6 +29,8 @@ import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
+// import { getCountryList } from 'helpers/jobPayloadFormatter'
+import { getYearMonthDiffBetweenDates } from 'helpers/formatter'
 
 /* Assets */
 import {
@@ -45,8 +47,9 @@ import {
 import classNames from 'classnames'
 import styles from './ManageProfile.module.scss'
 
-const RenderProfileView = ({ userDetail, handleModal }: any) => {
+const RenderProfileView = ({ userDetail, handleModal, config }: any) => {
   const dispatch = useDispatch()
+  // const countryList = getCountryList(config)
   console.log('RenderProfileView userDetail', userDetail)
   const { work_experiences: workExperiences } = userDetail
 
@@ -98,12 +101,21 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           </div>
         </div>
         <div className={styles.sectionContent}>
-          {workExperiences.map((workExp) => {
-            console.log('workExp', workExp)
+          {workExperiences.map((workExp, index) => {
+            // const countryName = countryList.filter((country) => country.key === workExp.country_key)
+            // console.log('countryName', countryName)
+            const workingPeriodFrom = moment(workExp?.working_period_from)
+            const workingPeriodTo = moment(workExp?.working_period_to)
+            const dateDiff = getYearMonthDiffBetweenDates(
+              workingPeriodFrom,
+              workExp.is_currently_work_here
+                ? moment(new Date()).format('YYYY-MM-DD')
+                : workingPeriodTo
+            )
             return (
               <div key={workExp.id} className={styles.workExpSection}>
                 <div className={styles.titleWrapper}>
-                  <Text textStyle='base' bold>
+                  <Text textStyle='lg' bold>
                     {workExp.job_title}
                   </Text>
                   <div className={styles.iconWrapperDouble}>
@@ -121,12 +133,17 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                     </div>
                   </div>
                 </div>
-                <Text textStyle='base'>{workExp.company}</Text> | <Text>{workExp.location}</Text>
-                <Text textStyle='base'>
-                  {moment(workExp?.working_period_from).format('MMMM yyyy')} to{' '}
+                <div className={styles.companyInfoWrapper}>
+                  <Text textStyle='lg'>{workExp.company}</Text>
+                  <Text textStyle='lg'>{`${workExp.location}${
+                    workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
+                  }`}</Text>
+                </div>
+                <Text textStyle='base' textColor='darkgrey'>
+                  {workingPeriodFrom.format('MMMM yyyy')} to{' '}
                   {workExp?.is_currently_work_here
                     ? 'Present'
-                    : moment(workExp?.working_period_to).format('MMMM yyyy')}
+                    : workingPeriodTo.format('MMMM yyyy')} {' '}{dateDiff ? `(${dateDiff})` : ''}
                 </Text>
                 {workExp?.descriptipon && <Text>{workExp?.description}</Text>}
               </div>
@@ -504,7 +521,7 @@ const ManageProfilePage = ({ config }: any) => {
         handleModal={handleModal}
       >
         {tabValue === 'profile' && (
-          <RenderProfileView userDetail={userDetail} handleModal={handleModal} />
+          <RenderProfileView userDetail={userDetail} handleModal={handleModal} config={config}/>
         )}
         {tabValue === 'job-preferences' && <RenderPreferencesView />}
         {tabValue === 'resume' && <RenderResumeView userDetail={userDetail} />}

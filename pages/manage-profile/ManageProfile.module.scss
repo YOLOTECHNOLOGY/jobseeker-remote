@@ -20,42 +20,63 @@
   }
 }
 
-.sectionHeader{
-  width:100%;
-  display:flex;
+.sectionHeader {
+  width: 100%;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 
   & > * {
-    display:flex;
+    display: flex;
   }
 }
 
-.sectionContent{
-  width:100%;
-  display:flex;
+.sectionContent {
+  width: 100%;
+  display: flex;
   flex-direction: column;
-   
+
   & > * {
-    display:flex;
+    display: flex;
   }
 
-  .titleWrapper{
-    display:flex;
+  .titleWrapper {
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
     & > * {
-      display:flex;
+      display: flex;
     }
   }
 }
 
-.workExpSection{
-  display:flex;
+.workExpSection {
+  display: flex;
   flex-direction: column;
+
+  .companyInfoWrapper {
+    display: flex;
+
+    span {
+      margin-right: 16px;
+      position: relative;
+
+      &:not(:last-child) {
+        &::after {
+          position: absolute;
+          content: '';
+          height: 18px;
+          width: 1px;
+          background-color: $lightgrey;
+          top: 0;
+          right:-8px;
+        }
+      }
+    }
+  }
 }
 
 .buttonCTA {
@@ -88,16 +109,16 @@
   }
 }
 
-.iconWrapper{
-  display:flex;
+.iconWrapper {
+  display: flex;
   justify-content: center;
   align-items: center;
-  position:relative;
-  width:45px;
-  height:45px;
+  position: relative;
+  width: 45px;
+  height: 45px;
 
   & > * {
-    display:flex;
+    display: flex;
   }
 
   // &:first-child {
@@ -118,20 +139,18 @@
     transition: 0.2s ease-out;
   }
 
-  &:hover{
-    cursor:pointer;
+  &:hover {
+    cursor: pointer;
     &:after {
-        opacity: 1;
-      }
+      opacity: 1;
+    }
   }
 
-  &Double{
+  &Double {
     display: flex;
     align-items: center;
   }
 }
-
-
 
 // Embla
 .embla {
