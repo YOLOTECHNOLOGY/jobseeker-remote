@@ -1,9 +1,24 @@
+/* Vendors */
+import moment from 'moment'
+
 /* Components */
 import { Avatar } from '@mui/material'
-import Text from '../Text'
+import Text from 'components/Text'
+import ReadMore from 'components/ReadMore'
+
+/* Helpers */
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Images */
-import { DefaultAvatar, LocationIcon, MailIcon, MobileIcon, PencilIcon } from '../../images'
+import {
+  DefaultAvatar,
+  LocationIcon,
+  MailIcon,
+  BriefcaseIcon,
+  MobileIcon,
+  PencilIcon,
+  BodyIcon
+} from '../../images'
 
 /* Styles */
 import styles from './UserProfileOverview.module.scss'
@@ -14,6 +29,9 @@ type UserProfileOverviewProps = {
   email: string
   contactNumber?: string
   avatarUrl?: string
+  description?: string
+  birthdate?: string
+  expLevel?: string
   handleEditClick: () => void
 }
 
@@ -23,36 +41,67 @@ const UserProfileOverview = ({
   email,
   contactNumber,
   avatarUrl,
-  handleEditClick,
+  description,
+  birthdate,
+  expLevel,
+  handleEditClick
 }: UserProfileOverviewProps) => {
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
+  let age 
+  if (birthdate){
+    const now = moment(new Date())
+    const then = moment(birthdate).format('YYYY-MM-DD')
+    age = now.diff(moment(then), 'years')
+  }
   return (
-    <div className={styles.UserOverview}>
-      <div className={styles.UserOverviewEditIcon} onClick={handleEditClick}>
+    <div className={styles.userOverview}>
+      <div className={styles.userOverviewEditIcon} onClick={handleEditClick}>
         <img src={PencilIcon} width='24' height='24' />
       </div>
-      <div className={styles.UserOverviewAvatar}>
+      <div className={styles.userOverviewAvatar}>
         <Avatar sx={{ width: '80px', height: '80px' }} src={avatarUrl || DefaultAvatar} />
       </div>
-      <div className={styles.UserOverviewName}>
+      <div className={styles.userOverviewName}>
         <Text bold={true} textColor='primaryBlue' textStyle='xl'>
           {name}
         </Text>
       </div>
-      <div className={styles.UserOverviewInfo}>
+      <div className={styles.userOverviewInfo}>
+        {birthdate && age > 0 && (
+          <div className={styles.userOverviewInfoDetail}>
+            <img src={BodyIcon} width='14' height='14' style={{ marginRight: '6px' }} />
+            <Text textStyle='lg'> {age} year{age > 0 ? 's' : ''} old</Text>
+          </div>
+        )}
         {location && (
-          <div className={styles.UserOverviewInfoDetail}>
+          <div className={styles.userOverviewInfoDetail}>
             <img src={LocationIcon} width='14' height='14' style={{ marginRight: '6px' }} />
             <Text textStyle='lg'>{location}</Text>
           </div>
         )}
-        <div className={styles.UserOverviewInfoDetail}>
+        <div className={styles.userOverviewInfoDetail}>
           <img src={MailIcon} width='14' height='14' style={{ marginRight: '6px' }} />
           <Text textStyle='lg'>{email}</Text>
         </div>
         {contactNumber && (
-          <div className={styles.UserOverviewInfoDetail}>
+          <div className={styles.userOverviewInfoDetail}>
             <img src={MobileIcon} width='14' height='14' style={{ marginRight: '6px' }} />
             <Text textStyle='lg'>{contactNumber}</Text>
+          </div>
+        )}
+        {expLevel && (
+          <div className={styles.userOverviewInfoDetail}>
+            <img src={BriefcaseIcon} width='14' height='14' style={{ marginRight: '6px' }} />
+            <Text textStyle='lg'>{expLevel}</Text>
+          </div>
+        )}
+        {description && (
+          <div className={styles.userOverviewInfoAbout}>
+            <Text textColor='primaryBlue' textStyle='xl' bold>
+              About
+            </Text>
+            <ReadMore className={styles.readMore} size={isMobile ? 200 : 160} text={description} />
           </div>
         )}
       </div>
