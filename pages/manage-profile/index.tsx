@@ -40,18 +40,16 @@ import {
   DownloadWhiteIcon,
   CarouselRightRoundedBlueButton,
   AddIcon,
-  CreateFilledIcon,
-  DeleteFilledIcon,
+  PencilIcon,
+  TrashIcon,
 } from 'images'
 
 /* Styles */
 import classNames from 'classnames'
 import styles from './ManageProfile.module.scss'
 
-const RenderProfileView = ({ userDetail, handleModal, config }: any) => {
+const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const dispatch = useDispatch()
-  // const countryList = getCountryList(config)
-  console.log('RenderProfileView userDetail', userDetail)
   const { work_experiences: workExperiences } = userDetail
 
   const handleAddData = (type) => {
@@ -124,13 +122,13 @@ const RenderProfileView = ({ userDetail, handleModal, config }: any) => {
                       className={styles.iconWrapper}
                       onClick={() => handleEditData(sectionName, workExp)}
                     >
-                      <img src={CreateFilledIcon} width='14' height='14' />
+                      <img src={PencilIcon} width='22' height='22' />
                     </div>
                     <div
                       className={styles.iconWrapper}
                       onClick={() => handleDeleteData(sectionName, workExp.id)}
                     >
-                      <img src={DeleteFilledIcon} width='14' height='14' />
+                      <img src={TrashIcon} width='14' height='14' />
                     </div>
                   </div>
                 </div>

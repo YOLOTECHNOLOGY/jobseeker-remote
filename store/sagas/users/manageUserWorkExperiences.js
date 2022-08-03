@@ -24,7 +24,8 @@ function* manageUserWorkExperiencesReq({ payload }) {
         accessToken,
         workExperienceId,
       }
-      yield call(deleteUserWorkExperienceService, deletePayload)
+      const { data } = yield call(deleteUserWorkExperienceService, deletePayload)
+      response = data.data
     }
 
     if (isUpdate) {
@@ -33,14 +34,14 @@ function* manageUserWorkExperiencesReq({ payload }) {
         workExperienceId,
         workExperienceData,
       }
-      yield call(updateUserWorkExperienceService, updatePayload)
+      const { data } = yield call(updateUserWorkExperienceService, updatePayload)
+      response = data.data
     }
 
     if (!isDelete && !isUpdate) {
       const addPayload = { accessToken, workExperience: workExperienceData }
       const { data } = yield call(addUserWorkExperienceService, addPayload)
       response = data.data
-      console.log('addPayloadResponse', response)
     }
 
     yield put(manageUserWorkExperiencesSuccess(response))

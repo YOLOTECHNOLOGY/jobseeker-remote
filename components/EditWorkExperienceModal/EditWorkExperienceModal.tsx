@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import moment from 'moment'
 import classNames from 'classnames/bind'
-import { useRouter } from 'next/router'
+
+/* Actions */
+import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
 
 /* Components */
 import Switch from '@mui/material/Switch'
@@ -30,12 +32,10 @@ import {
   getCountryList,
   getJobCategoryIds,
 } from 'helpers/jobPayloadFormatter'
-import { formatSalary, removeEmptyOrNullValues } from 'helpers/formatter'
-
+import { removeEmptyOrNullValues } from 'helpers/formatter'
 
 /* Styles */
 import styles from './EditWorkExperienceModal.module.scss'
-import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
 
 type EditWorkExperienceModalProps = {
   modalName: string
@@ -59,23 +59,6 @@ for (let i = date.getFullYear(); i >= date.getFullYear() - 100; --i) {
   yearList.push({ value: i, label: i })
 }
 
-const formatLocationConfig = (locationList) => {
-  const locationConfig = locationList?.map((region) => region.locations)
-  // const formattedConfig = locationConfig.map((loc) => {
-  //   return { ...loc, label: loc.value, value: loc.key }
-  // })
-  return locationConfig
-}
-
-const requiredLabel = (text: string) => {
-  return (
-    <>
-      <span>{text}</span>
-      <span className={styles.fieldRequired}>*</span>
-    </>
-  )
-}
-
 const errorText = (errorMessage: string) => {
   return (
     <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
@@ -91,8 +74,6 @@ const EditWorkExperienceModal = ({
   config,
   handleModal,
 }: EditWorkExperienceModalProps) => {
-  console.log('EditWorkExperienceModal data', data)
-  const router = useRouter()
   const dispatch = useDispatch()
 
   const locList = getLocationList(config)
@@ -115,9 +96,7 @@ const EditWorkExperienceModal = ({
   const [hasErrorOnFromPeriod, setHasErrorOnFromPeriod] = useState(false)
   const [hasErrorOnToPeriod, setHasErrorOnToPeriod] = useState(false)
 
-  const [isNextDisabled, setIsNextDisabled] = useState(true)
-  // const [isUpdating, setIsUpdating] = useState(false)
-  const [selectedExperience, setSelectedExperience] = useState(null)
+  // const [isNextDisabled, setIsNextDisabled] = useState(true)
   const [showErrorToComplete, setShowErrorToComplete] = useState(false)
 
   const isUpdating = useSelector((store: any) => store.users.manageUserWorkExperiences.fetching)
@@ -130,20 +109,15 @@ const EditWorkExperienceModal = ({
     formState: { errors },
   } = useForm()
 
-  const isUpdatingUserProfile = useSelector(
-    (store: any) => store.users.updateUserOnboardingInfo.fetching
-  )
-
   useEffect(() => {
     setShowErrorToComplete(false)
   }, [])
 
-  useEffect(() => {
-    if (data) {
-      setIsNextDisabled(data.length > 0 ? false : true)
-      // setIsUpdating(false)
-    }
-  }, [data])
+  // useEffect(() => {
+  //   if (data) {
+  //     setIsNextDisabled(data.length > 0 ? false : true)
+  //   }
+  // }, [data])
 
   useEffect(() => {
     if (data) {
@@ -162,7 +136,7 @@ const EditWorkExperienceModal = ({
         )
       if (data.location && data.location.toLowerCase() === 'overseas') {
         setCountry(
-          countryList.filter((country) => country.key === data.country_key)[0].value
+          countryList.filter((country) => country.key === data.country_key)
         )
         setIsShowCountry(true)
       }
@@ -176,10 +150,6 @@ const EditWorkExperienceModal = ({
     handleCloseModal()
   }, [updateWorkExpSuccess])
 
-  // useEffect(() => {
-  //   setIsUpdating(isUpdatingUserProfile)
-  // }, [isUpdatingUserProfile])
-
   useEffect(() => {
     const periodFrom = moment(new Date(workPeriodFrom))
     const periodTo = moment(new Date(workPeriodTo))
@@ -189,17 +159,17 @@ const EditWorkExperienceModal = ({
 
   useEffect(() => {
     const requireFields = jobTitle && companyName && location && workPeriodFrom
-    const emptyRequiredFields = !jobTitle && !companyName && !location && !workPeriodFrom
-    const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
+    // const emptyRequiredFields = !jobTitle && !companyName && !location && !workPeriodFrom
+    // const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
-    if (isCurrentJob) {
-      if (emptyRequiredFields)
-        setDisabledButton(emptyRequiredFields && !hasErrorOnFromPeriod ? true : false)
-      setDisabledButton(requireFields && !hasErrorOnFromPeriod ? true : false)
-    } else {
-      if (emptyRequiredFields) setDisabledButton(emptyRequiredFields && isValidDate ? true : false)
-      setDisabledButton(requireFields && isValidDate ? true : false)
-    }
+    // if (isCurrentJob) {
+    //   if (emptyRequiredFields)
+    //     setDisabledButton(emptyRequiredFields && !hasErrorOnFromPeriod ? true : false)
+    //   setDisabledButton(requireFields && !hasErrorOnFromPeriod ? true : false)
+    // } else {
+    //   if (emptyRequiredFields) setDisabledButton(emptyRequiredFields && isValidDate ? true : false)
+    //   setDisabledButton(requireFields && isValidDate ? true : false)
+    // }
 
     if (requireFields) setShowErrorToComplete(false)
   }, [
@@ -213,9 +183,9 @@ const EditWorkExperienceModal = ({
     hasErrorOnToPeriod,
   ])
 
-  const setDisabledButton = (value) => {
-    setIsNextDisabled(!value)
-  }
+  // const setDisabledButton = (value) => {
+  //   setIsNextDisabled(!value)
+  // }
 
   const requiredLabel = (text: string) => {
     return (
@@ -252,9 +222,7 @@ const EditWorkExperienceModal = ({
        workExperienceId: data ? data.id : null,
        workExperienceData: removeEmptyOrNullValues(workExperienceData),
      }
-     console.log('workExperiencesPayload', workExperiencesPayload)
      dispatch(manageUserWorkExperiencesRequest(workExperiencesPayload))
-    //  handleResetForm()
   }
 
   const handleResetForm = () => {
@@ -290,8 +258,6 @@ const EditWorkExperienceModal = ({
     handleResetForm()
   }
 
-  console.log('isNextDisabled', isNextDisabled)
-
   return (
     <div>
       <ModalDialog
@@ -301,7 +267,7 @@ const EditWorkExperienceModal = ({
         firstButtonText='Cancel'
         secondButtonText='Save'
         isSecondButtonLoading={isUpdating}
-        isSecondButtonDisabled={isNextDisabled}
+        // isSecondButtonDisabled={isNextDisabled}
         firstButtonIsClose
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
