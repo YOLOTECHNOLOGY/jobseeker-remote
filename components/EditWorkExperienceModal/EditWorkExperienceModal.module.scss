@@ -1,0 +1,84 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.container {
+  width: 100%;
+}
+
+.formWrapper {
+  width: 100%;
+
+  .form {
+    width: 100%;
+  }
+}
+
+.fullWidth {
+  width: 100% !important;
+}
+
+.field {
+  width: 100%;
+  margin-top: 16px;
+
+  &Header {
+    margin-bottom: 10px;
+  }
+
+  &Group {
+    margin-top: 20px;
+  }
+
+  &Date {
+    display: flex;
+  }
+
+  &DateItem {
+    width: 50%;
+    margin-right: 20px;
+
+    & > * {
+      width: 100%;
+    }
+  }
+
+  &Required {
+    color: $red;
+  }
+
+  &Error {
+    margin: 6px 0 0;
+  }
+
+  &Country {
+    margin-bottom: 30px;
+  }
+}
+
+
+.formWrapper:not(:last-child) {
+  padding-bottom: 20px;
+  border-bottom: 1px dotted rgba($lightgrey, 0.5);
+  margin-bottom: 20px;
+}
+
+.editor {
+  margin-top: 15px;
+
+  div[class*='TextEditor_textEditor'] {
+    padding: 0;
+  }
+
+  & > * {
+    padding: 0;
+
+    @include msd {
+      width: 100%;
+    }
+  }
+
+  p {
+    font-size: 14px;
+  }
+}
+

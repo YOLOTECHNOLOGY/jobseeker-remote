@@ -26,10 +26,12 @@ type ModalDialogProps = {
   secondButtonIsClose?: boolean
   isFirstButtonLoading?: boolean
   isSecondButtonLoading?: boolean
+  isSecondButtonDisabled?: boolean
   headerTitle: string
   customFooter?: React.ReactNode
   fullScreen?: boolean
   maxWidth?: Breakpoint
+  exactWidth?: string
   maxHeight?: string
 }
 
@@ -53,10 +55,12 @@ const ModalDialog = ({
   secondButtonIsClose,
   isFirstButtonLoading,
   isSecondButtonLoading,
+  isSecondButtonDisabled,
   headerTitle,
   customFooter,
   fullScreen = false,
   maxWidth = 'lg',
+  exactWidth = '739px',
   maxHeight = '684px',
 }: ModalDialogProps) => {
   const { width } = useWindowDimensions()
@@ -68,6 +72,7 @@ const ModalDialog = ({
   const hasSecondButton = handleSecondButton && secondButtonText
 
   const paperStyles = {
+    width: exactWidth,
     maxHeight: !isMobile ? maxHeight : 'fit-content', // default 100vh
     height: isMobileFullScreen ? '100vh' : undefined, // default is 100vh
     margin: 0, // default is 32
@@ -130,6 +135,7 @@ const ModalDialog = ({
                 }}
                 isLoading={isSecondButtonLoading}
                 sx={{ height: '44px' }}
+                disabled={isSecondButtonDisabled}
               >
                 <Text textColor='white' bold>
                   {secondButtonText}

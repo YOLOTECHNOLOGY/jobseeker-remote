@@ -40,6 +40,17 @@
   & > * {
     display:flex;
   }
+
+  .titleWrapper{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    & > * {
+      display:flex;
+    }
+  }
 }
 
 .workExpSection{
@@ -89,6 +100,10 @@
     display:flex;
   }
 
+  // &:first-child {
+  //   margin-right: 18px;
+  // }
+
   &:after {
     content: '';
     position: absolute;
@@ -109,7 +124,14 @@
         opacity: 1;
       }
   }
+
+  &Double{
+    display: flex;
+    align-items: center;
+  }
 }
+
+
 
 // Embla
 .embla {

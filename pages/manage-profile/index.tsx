@@ -12,6 +12,7 @@ import moment from 'moment'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
+import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
 
 /* Components */
 import Layout from 'components/Layout'
@@ -36,6 +37,8 @@ import {
   DownloadWhiteIcon,
   CarouselRightRoundedBlueButton,
   AddIcon,
+  CreateFilledIcon,
+  DeleteFilledIcon,
 } from 'images'
 
 /* Styles */
@@ -43,17 +46,54 @@ import classNames from 'classnames'
 import styles from './ManageProfile.module.scss'
 
 const RenderProfileView = ({ userDetail, handleModal }: any) => {
+  const dispatch = useDispatch()
   console.log('RenderProfileView userDetail', userDetail)
   const { work_experiences: workExperiences } = userDetail
 
-  const renderWorkExperienceSection = () => {
+  const handleAddData = (type) => {
+    switch (type) {
+      case 'workExperience':
+        handleModal(type, true)
+      default:
+        break
+    }
+  }
+
+  const handleEditData = (type, data) => {
+    switch (type) {
+      case 'workExperience':
+        handleModal(type, true, data)
+      default:
+        break
+    }
+  }
+
+  const handleWorkExpModal = (workExp = null) => {
+    handleModal('workExperience', true, workExp)
+  }
+
+  const handleDeleteData = async (type, id) => {
+    switch (type) {
+      case 'workExperience':
+        dispatch(
+          manageUserWorkExperiencesRequest({
+            isDelete: true,
+            workExperienceId: id,
+          })
+        )
+      default:
+        break
+    }
+  }
+
+  const renderWorkExperienceSection = (sectionName) => {
     return (
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
           <Text textStyle='xl' textColor='primaryBlue' bold>
             Work Experience
           </Text>
-          <div className={styles.iconWrapper}>
+          <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
             <img src={AddIcon} width='14' height='14' />
           </div>
         </div>
@@ -62,9 +102,25 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
             console.log('workExp', workExp)
             return (
               <div key={workExp.id} className={styles.workExpSection}>
-                <Text textStyle='base' bold>
-                  {workExp.job_title}
-                </Text>
+                <div className={styles.titleWrapper}>
+                  <Text textStyle='base' bold>
+                    {workExp.job_title}
+                  </Text>
+                  <div className={styles.iconWrapperDouble}>
+                    <div
+                      className={styles.iconWrapper}
+                      onClick={() => handleEditData(sectionName, workExp)}
+                    >
+                      <img src={CreateFilledIcon} width='14' height='14' />
+                    </div>
+                    <div
+                      className={styles.iconWrapper}
+                      onClick={() => handleDeleteData(sectionName, workExp.id)}
+                    >
+                      <img src={DeleteFilledIcon} width='14' height='14' />
+                    </div>
+                  </div>
+                </div>
                 <Text textStyle='base'>{workExp.company}</Text> | <Text>{workExp.location}</Text>
                 <Text textStyle='base'>
                   {moment(workExp?.working_period_from).format('MMMM yyyy')} to{' '}
@@ -82,17 +138,17 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
   }
   return (
     <React.Fragment>
-      {/* {workExperiences?.length > 0 ? (
-        renderWorkExperienceSection()
-      ) : ( */}
+      {workExperiences?.length > 0 ? (
+        renderWorkExperienceSection('workExperience')
+      ) : (
         <ProfileSettingCard
           title='Work Experience'
           description='Showcase your past contributions and that you can be an asset to potential employer.'
           buttonText='Add work experience'
           // eslint-disable-next-line
-          onClick={() => handleModal('workExperience', true)}
+          onClick={() => handleWorkExpModal()}
         />
-      {/* )} */}
+      )}
       <ProfileSettingCard
         title='Education'
         description='Highlight your academic qualifications and achievements.'
@@ -381,36 +437,63 @@ const ManageProfilePage = ({ config }: any) => {
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
 
   const [modalState, setModalState] = useState({
-    profile: false,
-    workExperience: false,
-    education: false,
-    skills: false,
-    links: false,
-    license: false,
-    jobPreferences: false,
+    profile: {
+      showModal: false,
+      data: null,
+    },
+    workExperience: {
+      showModal: false,
+      data: null,
+    },
+    education: {
+      showModal: false,
+      data: null,
+    },
+    skills: {
+      showModal: false,
+      data: null,
+    },
+    links: {
+      showModal: false,
+      data: null,
+    },
+    license: {
+      showModal: false,
+      data: null,
+    },
+    jobPreferences: {
+      showModal: false,
+      data: null,
+    },
   })
 
-  const handleModal = (modalName, showModal) => {
+  const handleModal = (modalName, showModal, data, callbackFunc) => {
     setModalState({
       ...modalState,
-      [modalName]: showModal,
+      [modalName]: {
+        showModal: showModal,
+        data: data,
+      },
     })
+    if (callbackFunc) {
+      callbackFunc()
+    }
   }
 
   return (
     <Layout>
       <EditProfileModal
         modalName='profile'
-        showModal={modalState.profile}
+        showModal={modalState.profile.showModal}
         config={config}
         userDetail={userDetail}
         handleModal={handleModal}
       />
       <EditWorkExperienceModal
         modalName='workExperience'
-        showModal={modalState.workExperience}
+        showModal={modalState.workExperience.showModal}
+        data={modalState.workExperience.data}
         config={config}
-        userDetail={userDetail}
         handleModal={handleModal}
       />
       <ProfileLayout
