@@ -1194,6 +1194,7 @@ const getJobCategoryList = (config) => {
 
   config?.inputs?.job_category_lists.forEach((mainCategory) => {
     mainCategory.sub_list.forEach((subList) => {
+      subList['label'] = subList['value']
       categories.push(subList)
     })
   })
