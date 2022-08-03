@@ -60,7 +60,9 @@ const MaterialButton = ({
           loading={isLoading}
           style={{ textTransform: !capitalize ? 'uppercase' : 'capitalize' }}
           sx={sx ? sx : { height: '44px' }}
-          loadingIndicator={<CircularProgress color={variant === 'outlined' ? 'primary' : 'secondary'} size={16} />}
+          loadingIndicator={
+            <CircularProgress color={variant === 'outlined' ? 'primary' : 'secondary'} size={16} />
+          }
         >
           {/* {children} */}
         </LoadingButton>
@@ -70,8 +72,13 @@ const MaterialButton = ({
           variant={variant}
           size={size}
           className={className}
+          sx={sx}
           disabled={disabled}
-          style={{ textTransform: !capitalize ? 'uppercase' : 'capitalize', height: '44px' }}
+          style={{
+            textTransform: !capitalize ? 'uppercase' : 'capitalize',
+            height: '44px',
+            background: disabled ? '#bcbcbc' : '',
+          }}
           {...(rest as any)}
         >
           {children}

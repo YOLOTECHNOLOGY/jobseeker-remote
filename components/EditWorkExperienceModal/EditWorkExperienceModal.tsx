@@ -96,7 +96,7 @@ const EditWorkExperienceModal = ({
   const [hasErrorOnFromPeriod, setHasErrorOnFromPeriod] = useState(false)
   const [hasErrorOnToPeriod, setHasErrorOnToPeriod] = useState(false)
 
-  // const [isNextDisabled, setIsNextDisabled] = useState(true)
+  const [isNextDisabled, setIsNextDisabled] = useState(true)
   const [showErrorToComplete, setShowErrorToComplete] = useState(false)
 
   const isUpdating = useSelector((store: any) => store.users.manageUserWorkExperiences.fetching)
@@ -113,11 +113,11 @@ const EditWorkExperienceModal = ({
     setShowErrorToComplete(false)
   }, [])
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setIsNextDisabled(data.length > 0 ? false : true)
-  //   }
-  // }, [data])
+  useEffect(() => {
+    if (data) {
+      setIsNextDisabled(data.length > 0 ? false : true)
+    }
+  }, [data])
 
   useEffect(() => {
     if (data) {
@@ -159,17 +159,17 @@ const EditWorkExperienceModal = ({
 
   useEffect(() => {
     const requireFields = jobTitle && companyName && location && workPeriodFrom
-    // const emptyRequiredFields = !jobTitle && !companyName && !location && !workPeriodFrom
-    // const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
+    const emptyRequiredFields = !jobTitle && !companyName && !location && !workPeriodFrom
+    const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
-    // if (isCurrentJob) {
-    //   if (emptyRequiredFields)
-    //     setDisabledButton(emptyRequiredFields && !hasErrorOnFromPeriod ? true : false)
-    //   setDisabledButton(requireFields && !hasErrorOnFromPeriod ? true : false)
-    // } else {
-    //   if (emptyRequiredFields) setDisabledButton(emptyRequiredFields && isValidDate ? true : false)
-    //   setDisabledButton(requireFields && isValidDate ? true : false)
-    // }
+    if (isCurrentJob) {
+      if (emptyRequiredFields)
+        setDisabledButton(emptyRequiredFields && !hasErrorOnFromPeriod ? true : false)
+      setDisabledButton(requireFields && !hasErrorOnFromPeriod ? true : false)
+    } else {
+      if (emptyRequiredFields) setDisabledButton(emptyRequiredFields && isValidDate ? true : false)
+      setDisabledButton(requireFields && isValidDate ? true : false)
+    }
 
     if (requireFields) setShowErrorToComplete(false)
   }, [
@@ -183,9 +183,9 @@ const EditWorkExperienceModal = ({
     hasErrorOnToPeriod,
   ])
 
-  // const setDisabledButton = (value) => {
-  //   setIsNextDisabled(!value)
-  // }
+  const setDisabledButton = (value) => {
+    setIsNextDisabled(!value)
+  }
 
   const requiredLabel = (text: string) => {
     return (
@@ -267,7 +267,7 @@ const EditWorkExperienceModal = ({
         firstButtonText='Cancel'
         secondButtonText='Save'
         isSecondButtonLoading={isUpdating}
-        // isSecondButtonDisabled={isNextDisabled}
+        isSecondButtonDisabled={isNextDisabled}
         firstButtonIsClose
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
