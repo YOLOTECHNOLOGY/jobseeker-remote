@@ -21,6 +21,7 @@ import ProfileLayout from 'components/ProfileLayout'
 import ProfileSettingCard from 'components/ProfileSettingCard'
 import UploadResume from 'components/UploadResume'
 import MaterialButton from 'components/MaterialButton'
+import ReadMore from 'components/ReadMore'
 
 import EditProfileModal from 'components/EditProfileModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
@@ -101,7 +102,7 @@ const RenderProfileView = ({ userDetail, handleModal, config }: any) => {
           </div>
         </div>
         <div className={styles.sectionContent}>
-          {workExperiences.map((workExp, index) => {
+          {workExperiences.map((workExp) => {
             // const countryName = countryList.filter((country) => country.key === workExp.country_key)
             // console.log('countryName', countryName)
             const workingPeriodFrom = moment(workExp?.working_period_from)
@@ -145,7 +146,7 @@ const RenderProfileView = ({ userDetail, handleModal, config }: any) => {
                     ? 'Present'
                     : workingPeriodTo.format('MMMM yyyy')} {' '}{dateDiff ? `(${dateDiff})` : ''}
                 </Text>
-                {workExp?.descriptipon && <Text>{workExp?.description}</Text>}
+                {workExp?.description && <ReadMore size={300} text={workExp?.description} className={styles.readMoreDescriptionWrapper}/>} 
               </div>
             )
           })}
