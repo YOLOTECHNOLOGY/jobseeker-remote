@@ -1,9 +1,9 @@
 import configuredAxios from 'helpers/configuredAxios'
 
 const updateUserCompleteProfileService = (payload) => {
-  const axios = configuredAxios('jobseeker', 'protected', '', payload.accessToken)
+  const axios = configuredAxios('jobseeker', 'protected')
 
-  return axios.patch('/me', {...payload.profile})
+  return axios.patch('/me', {...payload})
 }
 
 export { updateUserCompleteProfileService }

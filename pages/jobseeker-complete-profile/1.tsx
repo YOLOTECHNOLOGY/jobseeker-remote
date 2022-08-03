@@ -12,7 +12,7 @@ import { END } from 'redux-saga'
 import { wrapper } from 'store'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
-import { updateUserCompleteProfileRequest } from 'store/actions/users/updateUserCompleteProfile'
+import { updateUserOnboardingInfoRequest } from 'store/actions/users/updateUserOnboardingInfo'
 
 // Components
 import Switch from '@mui/material/Switch'
@@ -90,7 +90,7 @@ const Step1 = (props: any) => {
 
   const { register, handleSubmit, setValue, formState: { errors }} = useForm()
 
-  const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserCompleteProfile.fetching)
+  const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserOnboardingInfo.fetching)
 
   useEffect(() => {
     getSalaryToOptions(salaryFrom)
@@ -188,7 +188,7 @@ const Step1 = (props: any) => {
       currentStep
     }
 
-    dispatch(updateUserCompleteProfileRequest(payload))
+    dispatch(updateUserOnboardingInfoRequest(payload))
   }
 
   return (

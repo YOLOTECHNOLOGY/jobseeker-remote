@@ -8,8 +8,9 @@
   border-radius: 5px;
   width: 100%;
   padding: 28px 0;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   padding: 24px;
+  min-height: 405px;
   
   &.isSelected {
     border: 2px solid $primaryBlue;

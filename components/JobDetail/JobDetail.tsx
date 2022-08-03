@@ -28,7 +28,7 @@ import MaterialButton from 'components/MaterialButton'
 import Dropdown from '../Dropdown'
 
 /* Helpers */
-import { getCookie, setCookie } from 'helpers/cookies'
+import { getCookie, setCookie, removeCookie } from 'helpers/cookies'
 
 /* Styles */
 import styles from './JobDetail.module.scss'
@@ -93,7 +93,7 @@ const JobDetail = ({
   const [detailHeaderHeight, setDetailHeaderHeight] = useState(detailHeaderRef?.current?.clientHeight || 0);
 
   const userCookie = getCookie('user') || null
-  const authCookie = getCookie('accessToken') || null;
+  const authCookie = getCookie('accessToken') || null
 
   const [isSaveClicked, setIsSaveClicked] = useState(false)
   const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
@@ -181,7 +181,7 @@ const JobDetail = ({
       router.push(applyJobLink)
     }
   }
-
+  
   const isCategoryApplied = category === 'applied'
   const isCategorySaved = category === 'saved'
   const publicJobUrl = isCategoryApplied
@@ -194,6 +194,24 @@ const JobDetail = ({
     }
     return false
   }
+
+  const handleShowReportJob = () => {
+    if ( authCookie && userCookie) {
+      setIsShowReportJob(true)
+    } else {
+      setCookie('isReportJob', true)
+      setCookie('reportJobId', selectedJob.id)
+      router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
+    }
+  }
+
+  useEffect(() => {
+    if (getCookie('isReportJob') && authCookie && userCookie) {
+      setIsShowReportJob(true)
+      removeCookie('isReportJob')
+      removeCookie('reportJobId')
+    }
+  }, [])
 
   return (
     <React.Fragment>
@@ -212,9 +230,7 @@ const JobDetail = ({
                         </Link>
                         <div
                           className={styles.JobDetailOptionItem}
-                          onClick={() => {
-                            setIsShowReportJob(true)
-                          }}
+                          onClick={handleShowReportJob}
                         >
                           <Text textStyle='lg'>Report job</Text>
                         </div>
@@ -552,7 +568,6 @@ const JobDetail = ({
 
       {quickApplyModalShow && <QuickApplyModal
         jobDetails={selectedJob}
-        applyJobLink={applyJobLink}
         modalShow={quickApplyModalShow}
         handleModalShow={setQuickApplyModalShow}
         config={config}

@@ -1,27 +1,31 @@
 import { combineReducers } from 'redux'
 
 import registerUserReducer from './registerUser'
-import updateUserCompleteProfileReducer from './updateUserCompleteProfile'
+import updateUserOnboardingInfoReducer from './updateUserOnboardingInfo'
 import uploadUserResumeReducer from './uploadUserResume'
 import generateUserResumeReducer from './generateUserResume'
 import fetchUserOwnDetailReducer from './fetchUserOwnDetail'
 import fetchUserWorkExperienceReducer from './fetchUserWorkExperience'
 import fetchUserEducationReducer from './fetchUserEducation'
 import completeUserProfileReducer from './completeUserProfile'
+import updateUserProfileReducer from './updateUserProfile'
 import generateVerifyEmailOTPReducer from './generateVerifyEmailOTP'
 import checkVerifyEmailOTPReducer from './checkVerifyEmailOTP'
+import manageUserWorkExperiencesReducer from './manageUserWorkExperiences'
 
 const usersReducers = combineReducers({
   registerUser: registerUserReducer,
-  updateUserCompleteProfile: updateUserCompleteProfileReducer,
+  updateUserOnboardingInfo: updateUserOnboardingInfoReducer,
   fetchUserOwnDetail: fetchUserOwnDetailReducer,
   uploadUserResume: uploadUserResumeReducer,
   fetchUserWorkExperience: fetchUserWorkExperienceReducer,
   fetchUserEducation: fetchUserEducationReducer,
   generateUserResume: generateUserResumeReducer,
   completeUserProfile: completeUserProfileReducer,
+  updateUserProfile: updateUserProfileReducer,
   generateVerifyEmailOTP: generateVerifyEmailOTPReducer,
   checkVerifyEmailOTP: checkVerifyEmailOTPReducer,
+  manageUserWorkExperiences: manageUserWorkExperiencesReducer,
 })
 
 export default usersReducers

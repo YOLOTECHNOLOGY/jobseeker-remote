@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next dev -p 3004",
     "build:development": "env-cmd -f .env.devsite --use-shell MAINTENANCE=$MAINTENANCE next build",
+    "build:staging": "env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
     "build:production": "env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
     "start": "next start",
     "lint": "next lint",

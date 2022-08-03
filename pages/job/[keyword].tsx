@@ -41,7 +41,7 @@ import AdSlot from '../../components/AdSlot'
 const ModalWithdrawApplication = dynamic(() => import('components/ModalWithdrawApplication'))
 
 /* Helpers */
-import { getCookie, setCookie } from 'helpers/cookies'
+import { getCookie, setCookie, removeCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
 import { userFilterSelectionDataParser, getApplyJobLink } from 'helpers/jobPayloadFormatter'
 
@@ -110,6 +110,7 @@ const Job = ({
   const dispatch = useDispatch()
   const router = useRouter()
   const userCookie = getCookie('user') || null
+  const authCookie = accessToken;
   const applyJobLink = getApplyJobLink(jobDetail, userCookie, accessToken)
 
   const [isSavedJob, setIsSavedJob] = useState(jobDetail?.is_saved)
@@ -358,6 +359,23 @@ const Job = ({
     await dispatch(withdrawAppliedJobRequest(payload))
   }
 
+  const handleReportJob = () => {
+    if ( authCookie && userCookie) {
+      setIsShowReportJob(true)
+    } else {
+      // mobile get jobDetail is by url id
+      setCookie('isMobileReportJob', true)
+      router.push('/login/jobseeker?redirect=' + jobDetail.job_url)
+    }
+  }
+
+  useEffect(() => {
+    if (getCookie('isMobileReportJob') && authCookie && userCookie) {
+      setIsShowReportJob(true)
+      removeCookie('isMobileReportJob')
+    }
+  }, [])
+
   return (
     <Layout>
       <SEO
@@ -428,6 +446,18 @@ const Job = ({
                       <Text>Withdraw Application</Text>
                     </div>
                   )}
+                  <div
+                    className={styles.jobDetailOptionItem}
+                    onClick={() => setIsShowModalShare(true)}
+                  >
+                    <Text textStyle='lg'>Share this job</Text>
+                  </div>
+                  <div
+                    className={styles.jobDetailOptionItem}
+                    onClick={handleReportJob}
+                  >
+                    <Text textStyle='lg'>Report job</Text>
+                  </div>
               </Dropdown>
             </div>
             <img
@@ -972,7 +1002,6 @@ const Job = ({
       {quickApplyModalShow && (
         <QuickApplyModal
           jobDetails={jobDetail}
-          applyJobLink={applyJobLink}
           modalShow={quickApplyModalShow}
           handleModalShow={setQuickApplyModalShow}
           config={config}
@@ -997,6 +1026,34 @@ const Job = ({
           isWithdrawApplicationResult={isUnBingwithdrawAppliedStateSuccess}
         />
       )}
+      {isShowReportJob && <ModalReportJob
+        isShowReportJob={isShowReportJob}
+        handleShowReportJob={setIsShowReportJob}
+        reportJobReasonList={reportJobReasonList}
+        selectedJobId={jobDetail.id}
+        handlePostReportJob={handlePostReportJob}
+        isPostingReport={isPostingReport}
+        postReportResponse={postReportResponse}
+      />}
+      
+      {isShowModalShare && <ModalShare
+        jobDetailUrl={jobDetailUrl}
+        isShowModalShare={isShowModalShare}
+        handleShowModalShare={setIsShowModalShare}
+      />}
+
+      {quickApplyModalShow && <QuickApplyModal
+        jobDetails={jobDetail}
+        modalShow={quickApplyModalShow}
+        handleModalShow={setQuickApplyModalShow}
+        config={config}
+      />}
+
+      {isShowModal && <ModalVerifyEmail
+        email={userCookie ? userCookie.email : ''}
+        isShowModal={isShowModal}
+        handleModal={handleCloseModal}
+      />}
     </Layout>
   )
 }
