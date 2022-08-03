@@ -45,8 +45,9 @@ function* completeUserProfileSaga(redirect, accessToken) {
     yield call(setCookie, 'user', userCookie)
 
     let url = '/jobs-hiring/job-search'
+
     if (redirect) {
-      url = `${redirect}&token=${accessToken}`
+      url = redirect
     }
 
     if (isFromCreateResume && isFromCreateResume === '1') {
