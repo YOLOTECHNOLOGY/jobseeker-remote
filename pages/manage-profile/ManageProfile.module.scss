@@ -330,7 +330,19 @@
   padding-right: 8px;
 }
 
+
 .readMoreDescriptionWrapper{
   margin:16px 0;
   word-break: break-all;
 }
+
+.skillMatch {
+  margin-top: 16px;
+
+  .skillChip {
+    margin-right: 16px;
+    margin-bottom: 16px;
+    background-color: #1976d2;
+  }
+}
+
