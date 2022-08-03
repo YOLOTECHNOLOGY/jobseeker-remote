@@ -498,7 +498,12 @@ const ManageProfilePage = ({ config }: any) => {
   } = router
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
-  const jobCategoryList = getJobCategoryList(config)
+  const jobCategoryList = getJobCategoryList(config).map((category) => {
+    return {
+      label: category.value,
+      value: category.id
+    }
+  })
 
   const [modalState, setModalState] = useState({
     profile: {

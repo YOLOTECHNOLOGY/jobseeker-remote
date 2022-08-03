@@ -42,7 +42,9 @@ const EditSkillModal = ({
   } = useForm()
 
   const [skillList, setSkillList] = useState(skills || [])
+  const [searchValue, setSearchValue] = useState('')
   const [suggestionList, setSuggestionList] = useState([])
+  const [categoryId, setCategoryId] = useState(null)
 
   const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserProfile.fetching)
   const updateProfileSuccess = useSelector(
@@ -50,16 +52,30 @@ const EditSkillModal = ({
   )
 
   const handleSuggestionSearch = (val) => {
-    if (val !== '') {
-      fetch(`${process.env.JOB_BOSSJOB_URL}/suggested-search?size=5&query=${val}`)
-        .then((resp) => resp.json())
-        .then((data) => setSuggestionList(data.data.items))
+    let URL = `${process.env.CONFIG_URL}/search/skill-lists?size=5&query=${val}`
+
+    if (categoryId) {
+      URL = URL + '&job_category_ids=' + categoryId
     }
+    
+    fetch(URL)
+      .then((resp) => resp.json())
+      .then((data) => {
+        const items = data.data.skills.map((skill) => {
+          return skill.value
+        })
+
+        setSuggestionList(items)
+    })
   }
 
   useEffect(() => {
     handleCloseModal()
   }, [updateProfileSuccess])
+
+  useEffect(() => {
+    handleSuggestionSearch(searchValue)
+  }, [categoryId])
 
   const onSubmit = () => {
     const payload = {
@@ -102,6 +118,11 @@ const EditSkillModal = ({
               label='Job Function'
               options={categoryList}
               className={styles.sortField}
+              value={categoryId}
+              onChange={(e) => {
+                setCategoryId(e.target.value)
+                setSearchValue('')
+              }}
             />
           </div>
           <div className={styles.form}>
@@ -110,19 +131,24 @@ const EditSkillModal = ({
               label='Search or add a skill'
               variant='outlined'
               size='small'
+              value={searchValue}
               className={styles.searchField}
+              updateSearchValue={setSearchValue}
               searchFn={handleSuggestionSearch}
               onSelect={(val: any) => {
                 if (val !== '') {
                   handleAddSkill(val)
+                  setSearchValue('')
                 }
               }}
               onKeyPress={(e: any) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
+                  setSearchValue(e.target.value)
                   setSuggestionList([])
 
                   if (e.target.value !== '') {
                     handleAddSkill(e.target.value)
+                    setSearchValue('')
                   }
                 }
               }}

@@ -216,7 +216,7 @@ function* completeUserProfileSaga(redirect, accessToken) {
     let url = '/jobs-hiring/job-search'
 
     if (redirect) {
-      url = `${redirect}&token=${accessToken}`
+      url = redirect
     }
 
     removeItem('isFromCreateResume')
