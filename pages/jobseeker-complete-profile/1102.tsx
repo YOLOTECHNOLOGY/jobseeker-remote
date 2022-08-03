@@ -309,43 +309,10 @@ const Step4 = (props: any) => {
     handleResetForm()
   }
 
-  const handleLastStep = () => {
-    if (!userCookie.is_email_verify) {
-      setIsShowModal(true)
-    } else {
-      const isCreateFreeResume =
-      (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
-
-      const redirect = router.query?.redirect ? router.query?.redirect : null
-
-      if (isCreateFreeResume) {
-        dispatch(generateUserResumeRequest({ redirect, accessToken }))
-      }
-
-      if (!isCreateFreeResume) {
-        dispatch(updateUserOnboardingInfoRequest({ currentStep: 5, redirect, accessToken }))
-      }
-    }
-  }
-
-  const handleNextBtn = () => {
-    if (!isNextDisabled && showForm && school && degree && location) {
-      handleLastStep()
-      return
-    }
-    if (!isNextDisabled && !showForm) {
-      handleLastStep()
-      return
-    }
-
-    setShowErrorToComplete(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsShowModal(false)
-    
+  const completePorfile = () => {
     const isCreateFreeResume =
-      (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
+    (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
+
     const redirect = router.query?.redirect ? router.query?.redirect : null
 
     if (isCreateFreeResume) {
@@ -355,6 +322,25 @@ const Step4 = (props: any) => {
     if (!isCreateFreeResume) {
       dispatch(updateUserOnboardingInfoRequest({ currentStep: 5, redirect, accessToken }))
     }
+  }
+
+  const handleNextBtn = () => {
+    if (!isNextDisabled && (showForm && school && degree && location || !showForm)) {
+      if (!userCookie.is_email_verify) {
+        setIsShowModal(true)
+      } else {
+        completePorfile()
+      }
+
+      return
+    }
+
+    setShowErrorToComplete(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsShowModal(false)
+    completePorfile()
   }
 
   return (

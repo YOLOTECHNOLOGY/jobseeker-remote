@@ -93,9 +93,9 @@ const Modal = ({
 
     /* Setting HTML height will disrupt scroll position, so we store scroll position*/
     scrollY.current = window.pageYOffset
-    document.documentElement.classList.add('modal-active')
 
     if (closeModalOnOutsideClick) document.addEventListener('click', handleClickOutside, true)
+    
     return () => {
       if (closeModalOnOutsideClick) document.removeEventListener('click', handleClickOutside, true)
       window.removeEventListener('resize', syncHeight)
