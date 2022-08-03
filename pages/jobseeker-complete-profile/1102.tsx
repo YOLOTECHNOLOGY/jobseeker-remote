@@ -310,7 +310,9 @@ const Step4 = (props: any) => {
   }
 
   const handleLastStep = () => {
-    setIsShowModal(true)
+    if (!userCookie.is_email_verify) {
+      setIsShowModal(true)
+    }
   }
 
   const handleNextBtn = () => {
