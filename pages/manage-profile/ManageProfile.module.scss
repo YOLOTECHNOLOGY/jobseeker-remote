@@ -54,6 +54,7 @@
 }
 
 .workExpSection {
+  width:100%;
   display: flex;
   flex-direction: column;
 
@@ -331,4 +332,5 @@
 
 .readMoreDescriptionWrapper{
   margin:16px 0;
+  word-break: break-all;
 }
