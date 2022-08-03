@@ -1,7 +1,4 @@
-import React from 'react'
-
-/* Vendors */
-import { useForm } from 'react-hook-form'
+import React, {useState} from 'react'
 
 /* Components */
 import Text from 'components/Text'
@@ -29,29 +26,22 @@ type resumeObject = {
   name: string
 }
 
-const UploadResume = ({ title, resume, handleDelete, handleUpload, buttonClassname }: UploadResumeProps) => {
-  const {
-    register,
-    setError,
-    clearErrors,
-    formState: { errors },
-  } = useForm()
+const UploadResume = ({ resume, handleDelete, handleUpload, buttonClassname }: UploadResumeProps) => {
+  const [error, setError] = useState(null)
 
   const handleOnFileChange = (e) => {
     const file = e.target.files[0]
     if (!maxFileSize(file, 5)) {
-      setError(title, {
-        type: 'custom',
-        message: 'File size is too huge. Please upload file that is within 5MB.',
-      })
+      setError('File size is too huge. Please upload file that is within 5MB.')
       return
-  }
+    }
 
+    setError(null)
     if (handleUpload) handleUpload(file)
   }
 
   const handleDeleteResume = (e) => {
-    clearErrors(title)
+    setError(null)
     if (handleDelete) handleDelete(e)
   }
 
@@ -85,12 +75,6 @@ const UploadResume = ({ title, resume, handleDelete, handleUpload, buttonClassna
               Upload your resume
             </Text>
             <input
-              {...register(title, {
-                required: {
-                  value: true,
-                  message: 'Please upload your resume.',
-                },
-              })}
               type='file'
               hidden
               accept='.pdf, .doc, .docx'
@@ -103,9 +87,9 @@ const UploadResume = ({ title, resume, handleDelete, handleUpload, buttonClassna
         Supported file type: PDF, DOC, DOCX. Max. file size: 5MB
       </Text>
 
-      {errors.resume && (
+      {error && (
         <Text textStyle='sm' textColor='red' tagName='p' className={styles.error}>
-          {errors.resume.message}
+          {error}
         </Text>
       )}
     </div>

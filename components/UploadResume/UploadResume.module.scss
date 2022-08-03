@@ -3,7 +3,6 @@
 
 .uploadResumeField {
   width: 100%;
-  margin-bottom: 20px;
 
   span {
     @include msd {
@@ -38,7 +37,6 @@
   > .uploadedResume {
     display: flex;
     justify-content: space-between;
-    max-width:787px;
 
     > .leftResume {
       display: flex;

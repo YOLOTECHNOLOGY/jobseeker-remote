@@ -39,29 +39,6 @@
           }
         } 
       }
-
-      > .uploadedResume {
-        display: flex;
-        justify-content: space-between;
-  
-        > .leftResume {
-          display: flex;
-  
-          > .documentDiv {
-            width: auto;
-            margin-right: 10px;
-          }
-  
-          > .resumeName {
-            line-height: 22px;
-          }
-        }
-  
-        > .trashDiv {
-          width: auto;
-          cursor: pointer;
-        }
-      }
     }
 
     .skillMatchAccordion {

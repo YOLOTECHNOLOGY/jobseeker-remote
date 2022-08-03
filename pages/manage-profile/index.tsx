@@ -169,9 +169,10 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         </div>
         <div className={styles.sectionContent}>
           <div className={styles.skillMatch}>
-            {skills.map((skill) => {
+            {skills.map((skill, i) => {
               return (
                 <Chip
+                  key={i}
                   className={styles.skillChip}
                   label={skill}
                   variant='filled'
