@@ -59,7 +59,7 @@ const MaterialButton = ({
           className={className}
           loading={isLoading}
           style={{ textTransform: !capitalize ? 'uppercase' : 'capitalize' }}
-          sx={sx}
+          sx={sx ? sx : { height: '44px' }}
           loadingIndicator={<CircularProgress color={variant === 'outlined' ? 'primary' : 'secondary'} size={16} />}
         >
           {/* {children} */}

@@ -184,9 +184,10 @@ const EditProfileModal = ({
         isSecondButtonLoading={isUpdatingUserProfile}
         firstButtonIsClose
         // eslint-disable-next-line
-        // handleFirstButton={() => {}}
+        handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
         fullScreen
+        maxHeight='90vh'
       >
         <div className={styles.profile}>
           <div className={styles.profileAvatar}>

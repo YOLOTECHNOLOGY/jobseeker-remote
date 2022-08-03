@@ -17,6 +17,7 @@ import watchFetchSavedJobDetail from 'store/sagas/jobs/fetchSavedJobDetail'
 import watchPostSaveJob from 'store/sagas/jobs/postSaveJob'
 import watchDeleteSaveJob from 'store/sagas/jobs/deleteSaveJob'
 import watchQuickApplyJob from 'store/sagas/jobs/quickApplyJob'
+import watchApplyJob from 'store/sagas/jobs/applyJob'
 
 // Companies
 import watchFetchCompanyDetail from 'store/sagas/companies/fetchCompanyDetail'
@@ -46,6 +47,7 @@ import watchRedirectToNewJobseeker from 'store/sagas/users/redirectToNewJobseeke
 import watchGenerateVerifyEmailOTP from 'store/sagas/users/generateVerifyEmailOTP'
 import watchCheckVerifyEmailOTP from 'store/sagas/users/checkVerifyEmailOTP'
 import watchUpdateUserProfile from 'store/sagas/users/updateUserProfile'
+import watchManageUserWorkExperiences from 'store/sagas/users/manageUserWorkExperiences'
 
 // Courses
 import watchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
@@ -86,6 +88,7 @@ function* rootSaga() {
     watchPostSaveJob(),
     watchDeleteSaveJob(),
     watchQuickApplyJob(),
+    watchApplyJob(),
 
     watchPostReport(),
 
@@ -105,6 +108,7 @@ function* rootSaga() {
     watchGenerateVerifyEmailOTP(),
     watchCheckVerifyEmailOTP(),
     watchUpdateUserProfile(),
+    watchManageUserWorkExperiences(),
 
     watchSocialLogin(),
     watchLogin(),

@@ -1,0 +1,162 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.jobDetail {
+  @extend .GlobalContainer;
+  padding: 20px 0;
+
+  @include msd {
+    flex-direction: column;
+  }
+
+  &Section {
+    margin-bottom: 24px;
+  
+    &Title {
+      margin-bottom: 24px;
+    }
+  
+    &Box {
+      margin-bottom: 24px;
+      padding: 22px 24px;
+      border: 0.5px solid #BCBCBC;
+      border-radius: 4px;
+
+      > .contactInfo {
+        > div {
+          margin-right: 72px;
+          display: inline-flex;
+          align-items: center;
+
+          @include msd {
+            &:not(:last-child) {
+              margin-bottom: 10px;
+            }
+          }
+
+          > img {
+            margin-right: 8px;
+          }
+        } 
+      }
+
+      > .uploadedResume {
+        display: flex;
+        justify-content: space-between;
+  
+        > .leftResume {
+          display: flex;
+  
+          > .documentDiv {
+            width: auto;
+            margin-right: 10px;
+          }
+  
+          > .resumeName {
+            line-height: 22px;
+          }
+        }
+  
+        > .trashDiv {
+          width: auto;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .skillMatchAccordion {
+      padding: 10px;
+      border: 0.5px solid #BCBCBC;
+      border-radius: 4px;
+      box-shadow: none;
+
+      &Details {
+        padding: 0 16px
+      }
+    }
+
+    .skillMatch {
+      margin-top: 16px;
+
+      .skillChip {
+        margin-right: 16px;
+        margin-bottom: 16px;
+      }
+    }
+
+    &ScreeningQuestion {
+      > .info {
+        margin-top: 24px;
+
+        > .question {
+          margin-bottom: 16px;
+        }
+  
+        > .answer {
+          div {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+
+    &BewareMessage {
+      .MuiAlert-icon{
+        margin-top: 10px 
+      }
+    }
+
+    &Footer {
+      border-top: 1px solid rgba($lightgrey, 0.5);
+      justify-content: flex-end;
+      background-color: white;
+      position: sticky;
+      bottom: 0;
+      z-index: 999;
+
+      @include msd {
+        margin-bottom: 24px;
+      }
+
+      &Container {
+        @extend .GlobalContainer;
+        padding: 16px 24px;
+        flex-direction: row;
+        display: flex;
+        margin-bottom: 24px;
+
+        @include msd {
+          display: block;
+        }
+      }
+    }
+
+    &Action {
+      margin-left: auto;
+      display: flex;
+
+      button {
+        width: 150px;
+
+        &:first-child {
+          margin-right: 15px;
+        }
+
+        @include msd {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .MuiAlert-icon{
+    margin-top: 10px;
+  }
+
+  .disclaimerIcon {
+    margin-left: 10px; 
+    cursor: pointer;
+    vertical-align: text-top;
+  }
+}

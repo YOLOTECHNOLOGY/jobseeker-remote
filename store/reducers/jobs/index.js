@@ -14,6 +14,7 @@ import postSaveJobReducer from './postSaveJob'
 import deleteSaveJobReducer from './deleteSaveJob'
 
 import quickApplyJobReducer from './quickApplyJob'
+import applyJobReducer from './applyJob'
 
 const jobsReducers = combineReducers({
   jobList: fetchJobsListReducer,
@@ -29,7 +30,8 @@ const jobsReducers = combineReducers({
   postSaveJob: postSaveJobReducer,
   deleteSaveJob: deleteSaveJobReducer,
 
-  quickApplyJob: quickApplyJobReducer
+  quickApplyJob: quickApplyJobReducer,
+  applyJob: applyJobReducer
 })
 
 export default jobsReducers

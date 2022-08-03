@@ -12,6 +12,7 @@ import postSaveJob from './postSaveJob'
 import deleteSaveJob from './deleteSaveJob'
 
 import quickApplyJob from './quickApplyJob'
+import applyJob from './applyJob'
 
 export default {
   fetchJobsList,
@@ -27,5 +28,6 @@ export default {
   postSaveJob,
   deleteSaveJob,
 
-  quickApplyJob
+  quickApplyJob,
+  applyJob
 }
