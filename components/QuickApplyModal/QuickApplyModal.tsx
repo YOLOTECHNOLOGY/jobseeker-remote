@@ -91,6 +91,12 @@ const QuickApplyModal = ({
     setIsSubmitting(isQuickApplyJobFetching)
   }, [isQuickApplyJobFetching])
 
+  const onError = () => {
+    if (!resume) {
+      setError('resume', { type: 'custom', message: 'Please upload your resume' })
+    }
+  }
+
   const onSubmit = (data) => {
     const screeningAnswers = []
 
@@ -142,6 +148,7 @@ const QuickApplyModal = ({
 
   const handleUploadResume = (file) => {
     setResume(file)
+    clearErrors('resume')
   }
 
   return (
@@ -158,7 +165,7 @@ const QuickApplyModal = ({
           variant='contained'
           type='submit'
           isLoading={isSubmitting}
-          onClick={handleSubmit(onSubmit)}
+          onClick={handleSubmit(onSubmit, onError)}
           className={styles.ctaButton}
         >
           <Text textColor='white' bold>
@@ -316,6 +323,7 @@ const QuickApplyModal = ({
           handleDelete={handleDeleteResume}
           handleUpload={handleUploadResume}
         />
+        {errors.resume && errorText(errors.resume.message)}
 
         <div className={styles.quickApplyFormField}>
           {screeningQuestions.length > 0 && (
