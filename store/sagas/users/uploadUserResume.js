@@ -10,16 +10,13 @@ import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 function* uploadUserResumeReq({ payload }) {
   const { resume, redirect } = payload
   try {
-    const resumePayload = {
-      resume
-    }
-    const { data } = yield call(uploadUserResumeService, resumePayload)
+    const { data } = yield call(uploadUserResumeService, resume)
+
     yield put(uploadUserResumeSuccess(data.data))
 
     if (redirect) {
       yield put(push(redirect))
     }
-
   } catch (error) {
     yield put(uploadUserResumeFailed(error.response.data))
   }

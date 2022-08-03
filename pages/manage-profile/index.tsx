@@ -47,10 +47,13 @@ import {
 /* Styles */
 import classNames from 'classnames'
 import styles from './ManageProfile.module.scss'
+import { Chip } from '@mui/material'
+import EditSkillModal from 'components/EditSkillModal'
+import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
 
 const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const dispatch = useDispatch()
-  const { work_experiences: workExperiences } = userDetail
+  const { work_experiences: workExperiences, skills } = userDetail
 
   const handleAddData = (type) => {
     switch (type) {
@@ -152,6 +155,37 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       </div>
     )
   }
+
+  const rendeSkillSection = () => {
+    return (
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <Text textStyle='xl' textColor='primaryBlue' bold>
+            Skills
+          </Text>
+          <div className={styles.iconWrapper} onClick={() => handleModal('skills', true)}>
+            <img src={AddIcon} width='14' height='14' />
+          </div>
+        </div>
+        <div className={styles.sectionContent}>
+          <div className={styles.skillMatch}>
+            {skills.map((skill) => {
+              return (
+                <Chip
+                  className={styles.skillChip}
+                  label={skill}
+                  variant='filled'
+                  color='info'
+                  size='small' 
+                />
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <React.Fragment>
       {workExperiences?.length > 0 ? (
@@ -172,13 +206,18 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         // eslint-disable-next-line
         onClick={() => {}}
       />
-      <ProfileSettingCard
-        title='Skills'
-        description='Include relevant skill and keywords to boost your chances of getting an interview.'
-        buttonText='Add skills'
-        // eslint-disable-next-line
-        onClick={() => {}}
-      />
+
+      {skills?.length > 0 ? (
+        rendeSkillSection()
+      ) : (
+        <ProfileSettingCard
+          title='Skills'
+          description='Include relevant skill and keywords to boost your chances of getting an interview.'
+          buttonText='Add skills'
+          // eslint-disable-next-line
+          onClick={() => handleModal('skills', true)}
+        />
+      )}
       <ProfileSettingCard
         title='Links'
         description='Show recruiters your work by sharing your websites, portfolio, articles, or any relevant links.'
@@ -451,6 +490,7 @@ const ManageProfilePage = ({ config }: any) => {
   } = router
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
+  const jobCategoryList = getJobCategoryList(config)
 
   const [modalState, setModalState] = useState({
     profile: {
@@ -510,6 +550,13 @@ const ManageProfilePage = ({ config }: any) => {
         showModal={modalState.workExperience.showModal}
         data={modalState.workExperience.data}
         config={config}
+        handleModal={handleModal}
+      />
+      <EditSkillModal
+        modalName='skills'
+        showModal={modalState.skills.showModal}
+        categoryList={jobCategoryList}
+        skills={userDetail.skills}
         handleModal={handleModal}
       />
       <ProfileLayout
