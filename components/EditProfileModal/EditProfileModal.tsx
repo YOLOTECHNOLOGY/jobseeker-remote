@@ -149,11 +149,8 @@ const EditProfileModal = ({
 
   const onSubmit = (data) => {
     const { noticePeriod, firstName, lastName, summary } = data
-    const avatar = selectedAvatar
-    console.log('avatar: ', avatar)
-    const avatarFile = avatar && new File([avatar], 'avatar')
-    console.log('avatarFile', avatarFile)
-    console.log('selectedAvatar', selectedAvatar)
+    // const avatar = selectedAvatar
+    // const avatarFile = avatar && new File([avatar], 'avatar')
     const payload = {
         avatar: selectedAvatar,
         first_name: firstName,
@@ -165,7 +162,6 @@ const EditProfileModal = ({
         description: summary.length > 0 ? summary : '',
     }
 
-    console.log('payload', payload)
     dispatch(updateUserProfileRequest(payload))
   }
 

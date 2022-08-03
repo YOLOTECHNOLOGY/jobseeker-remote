@@ -150,7 +150,7 @@ export const formatSalary = (salary) => {
 }
 
 export const removeEmptyOrNullValues = (object) => {
-  let newObject = {}
+  const newObject = {}
   Object.entries(object).forEach(([key, value]) => {
     if (value) Object.assign(newObject, { [key]: value })
   })
@@ -174,6 +174,28 @@ export const getCurrentMonthYear = () => {
     month,
     year,
   }
+}
+
+export const getYearMonthDiffBetweenDates = (from, to) =>{
+    const a = moment(from)
+    const b = moment(to)
+    const monthDiff = b.diff(a, 'months')
+    const yearDiff = b.diff(a, 'years')
+    const remainingMonthDiff = monthDiff - yearDiff * 12
+    let dateDiffString = ''
+
+    if (monthDiff < 12 && monthDiff !== 0) {
+      dateDiffString = `${monthDiff} month${monthDiff > 1 ? 's' : ''}`
+    }
+
+    if (yearDiff > 0){
+      dateDiffString =  `${yearDiff} year${yearDiff > 1 ? 's' : ''}`
+      if (remainingMonthDiff > 0) {
+        dateDiffString += ` ${remainingMonthDiff} month${remainingMonthDiff > 1 ? 's' : ''}`
+      }
+    }
+
+    return dateDiffString
 }
 
 export const getFromObject = (obj, allowedAttributes) => {
