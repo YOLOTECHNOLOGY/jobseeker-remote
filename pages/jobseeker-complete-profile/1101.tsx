@@ -101,7 +101,7 @@ const Step3 = (props: any) => {
   const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserOnboardingInfo.fetching)
 
   useEffect(() => {
-    dispatch(fetchUserWorkExperienceRequest())
+    dispatch(fetchUserWorkExperienceRequest({ accessToken }))
     setShowErrorToComplete(false)
   }, [])
 
