@@ -8,12 +8,11 @@ import { logoutRequest } from 'store/actions/auth/logout'
 /* components */
 import Link from 'components/Link'
 import Text from 'components/Text'
-// import Button from 'components/Button'
 import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogo, DefaultAvatar, ChatIcon, BossjobFittedLogo } from 'images'
+import { BossjobLogo, DefaultAvatar, ChatIcon } from 'images'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
@@ -21,7 +20,6 @@ import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Style */
 import styles from '../Header.module.scss'
-import LazyLoad from '../../LazyLoad'
 
 const ProtectedHeader = () => {
   const router = useRouter()
@@ -61,12 +59,7 @@ const ProtectedHeader = () => {
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/'}>
-            <LazyLoad>
-              <img className={styles.headerLogoImage} src={BossjobFittedLogo} title='Bossjob logo' alt='Bossjob logo' />
-            </LazyLoad>
-            <LazyLoad>
-              <img className={styles.headerLogoImageDesktop} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
-            </LazyLoad>
+            <img className={styles.headerLogoImage} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
           </Link>
         </div>
         <div className={styles.headerLinksWrapper}>
