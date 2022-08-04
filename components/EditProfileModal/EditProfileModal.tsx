@@ -102,7 +102,7 @@ const EditProfileModal = ({
   })
 
   const defaultExpLevel = formattedXpLevelList.filter((xp) => expLevel === xp.label)
-  const [yearsOfExperience, setYearsOfExperience] = useState(defaultExpLevel[0].key)
+  const [yearsOfExperience, setYearsOfExperience] = useState(defaultExpLevel[0]?.key)
   // const [yearsOfExperience, setYearsOfExperience] = useState(defaultExpLevel[0].key)
 
   // const noticeList = getNoticePeriodList(config)
@@ -134,8 +134,8 @@ const EditProfileModal = ({
     // }
     if (userDetail && userDetail.xp_lvl) {
 
-      setYearsOfExperience(defaultExpLevel[0].key)
-      setValue('yearsOfExperience', defaultExpLevel[0].key)
+      setYearsOfExperience(defaultExpLevel[0]?.key)
+      setValue('yearsOfExperience', defaultExpLevel[0]?.key)
       // setYearsOfExperience(userDetail.xp_lvl)
       // setValue('yearsOfExperience', userDetail.xp_lvl)
     }
