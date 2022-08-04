@@ -11,6 +11,7 @@ import redirectToNewJobseeker from './redirectToNewJobseeker'
 import generateVerifyEmailOTP from './generateVerifyEmailOTP'
 import checkVerifyEmailOTP from './checkVerifyEmailOTP'
 import manageUserWorkExperiences from './manageUserWorkExperiences'
+import manageUserEducations from './manageUserEducations'
 
 export default {
   registerUser,
@@ -25,5 +26,6 @@ export default {
   redirectToNewJobseeker,
   generateVerifyEmailOTP,
   checkVerifyEmailOTP,
-  manageUserWorkExperiences
+  manageUserWorkExperiences,
+  manageUserEducations
 }

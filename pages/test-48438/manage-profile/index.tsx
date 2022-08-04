@@ -12,6 +12,7 @@ import moment from 'moment'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
+import { manageUserEducationsRequest } from 'store/actions/users/manageUserEducations'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 
@@ -26,6 +27,7 @@ import ReadMore from 'components/ReadMore'
 
 import EditProfileModal from 'components/EditProfileModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
+import EditEducationModal from 'components/EditEducationModal'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
@@ -56,11 +58,13 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
-  const { work_experiences: workExperiences, skills } = userDetail
+  const { work_experiences: workExperiences, educations, skills } = userDetail
 
   const handleAddData = (type) => {
     switch (type) {
       case 'workExperience':
+        handleModal(type, true)
+      case 'education':
         handleModal(type, true)
       default:
         break
@@ -71,6 +75,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     switch (type) {
       case 'workExperience':
         handleModal(type, true, data)
+      case 'education':
+        handleModal(type, true, data)
       default:
         break
     }
@@ -80,6 +86,10 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     handleModal('workExperience', true, workExp)
   }
 
+  const handleEducationModal = (education = null) => {
+    handleModal('education', true, education)
+  }
+
   const handleDeleteData = async (type, id) => {
     switch (type) {
       case 'workExperience':
@@ -87,6 +97,13 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           manageUserWorkExperiencesRequest({
             isDelete: true,
             workExperienceId: id,
+          })
+        )
+      case 'education':
+        dispatch(
+          manageUserEducationsRequest({
+            isDelete: true,
+            educationId: id,
           })
         )
       default:
@@ -164,6 +181,70 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     )
   }
 
+  const renderEducationSection = (sectionName) => {
+    return (
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <Text textStyle='xl' textColor='primaryBlue' bold>
+            Education
+          </Text>
+          <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
+            <img src={AddIcon} width='14' height='14' />
+          </div>
+        </div>
+        <div className={styles.sectionContent}>
+          {educations.map((education) => {
+            let studyPeriod = ""
+
+            if (education?.study_period_from) {
+              studyPeriod += moment(education?.study_period_from).format('MMM yyyy')
+
+              if (education?.is_currently_studying === true) {
+                studyPeriod += " - Present"
+              } else if (education?.is_currently_studying === false && education?.study_period_to) {
+                studyPeriod += " - " + moment(education?.study_period_to).format('MMM yyyy')
+              }
+            }
+
+            return (
+              <div key={education.id} className={styles.educationSection}>
+                <div className={styles.titleWrapper}>
+                  <Text textStyle='lg' bold>
+                    {education.school}
+                  </Text>
+                  <div className={styles.iconWrapperDouble}>
+                    <div
+                      className={styles.iconWrapper}
+                      onClick={() => handleEditData(sectionName, education)}
+                    >
+                      <img src={PencilIcon} width='22' height='22' />
+                    </div>
+                    <div
+                      className={styles.iconWrapper}
+                      onClick={() => handleDeleteData(sectionName, education.id)}
+                    >
+                      <img src={TrashIcon} width='14' height='14' />
+                    </div>
+                  </div>
+                </div>
+                {education?.degree &&
+                  <Text textStyle='lg'>
+                    {education.degree}
+                  </Text>
+                }
+                { studyPeriod !== "" &&
+                  <Text textStyle='base' textColor='darkgrey' >
+                    {studyPeriod}
+                  </Text>
+                }
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
   const rendeSkillSection = () => {
     return (
       <div className={styles.sectionContainer}>
@@ -194,7 +275,6 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       </div>
     )
   }
-
   return (
     <React.Fragment>
       {workExperiences?.length > 0 ? (
@@ -208,13 +288,18 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           onClick={() => handleWorkExpModal()}
         />
       )}
-      <ProfileSettingCard
-        title='Education'
-        description='Highlight your academic qualifications and achievements.'
-        buttonText='Add education'
-        // eslint-disable-next-line
-        onClick={() => {}}
-      />
+
+      {educations?.length > 0 ? (
+        renderEducationSection('education')
+      ) : (
+        <ProfileSettingCard
+          title='Education'
+          description='Highlight your academic qualifications and achievements.'
+          buttonText='Add education'
+          // eslint-disable-next-line
+          onClick={() => handleEducationModal()}
+        />
+      )}
 
       {skills?.length > 0 ? (
         rendeSkillSection()
@@ -554,6 +639,7 @@ const ManageProfilePage = ({ config }: any) => {
     if (callbackFunc) {
       callbackFunc()
     }
+    
   }
 
   return (
@@ -569,6 +655,13 @@ const ManageProfilePage = ({ config }: any) => {
         modalName='workExperience'
         showModal={modalState.workExperience.showModal}
         data={modalState.workExperience.data}
+        config={config}
+        handleModal={handleModal}
+      />
+      <EditEducationModal
+        modalName='education'
+        showModal={modalState.education.showModal}
+        education={modalState.education.data}
         config={config}
         handleModal={handleModal}
       />
