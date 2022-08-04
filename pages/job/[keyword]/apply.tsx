@@ -201,7 +201,7 @@ const Job = ({
               </AccordionSummary>
               <AccordionDetails className={styles.skillMatchAccordionDetails}>
                 <Text>
-                  Add the skill if you have them. Having a low value may not be a bad thing, having rare skill make you unique and outstanding.
+                  Add the skill if you have them. It is not necessary to have all the skills, but having rare skill make you unique and outstanding.
                 </Text>
                 <div className={styles.skillMatch}>
                   {matchedSkills.length > 0 &&
