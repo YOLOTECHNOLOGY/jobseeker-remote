@@ -80,6 +80,11 @@
   }
 }
 
+.educationSection {
+  display: flex;
+  flex-direction: column;
+}
+
 .buttonCTA {
   width: auto !important;
 
