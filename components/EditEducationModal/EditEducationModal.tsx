@@ -14,7 +14,7 @@ import Switch from '@mui/material/Switch'
 import { manageUserEducationsRequest } from 'store/actions/users/manageUserEducations'
 
 /* Helpers*/
-import { getDegreeOptions, getCountryOptions } from 'helpers/optionFormatter'
+import { getDegreeOptions, getCountryOptions } from 'helpers/optionsFormatter'
 import {
   getLocationList
 } from 'helpers/jobPayloadFormatter'
