@@ -6,7 +6,6 @@
   border: 1px solid $white-2;
   padding: 11px 16px;
   border-radius: 5px;
-  min-height: 136px;
   
   @include msd {
     flex-direction: column;
@@ -34,6 +33,10 @@
   }
 
   &Name {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+
     p {
       &:hover {
         text-decoration: underline;

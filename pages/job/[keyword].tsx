@@ -424,18 +424,6 @@ const Job = ({
           <div className={styles.jobDetailPrimary}>
             <div className={styles.jobDetailPrimaryOptions}>
               <Dropdown>
-                <div
-                  className={styles.jobDetailOptionItem}
-                  onClick={() => setIsShowModalShare(true)}
-                >
-                  <Text textStyle='lg'>Share this job</Text>
-                </div>
-                <div
-                  className={styles.jobDetailOptionItem}
-                  onClick={() => setIsShowReportJob(true)}
-                >
-                  <Text textStyle='lg'>Report job</Text>
-                </div>
                 {hasApplied &&
                   !isShowApplicationHistory &&
                   !isUnBingwithdrawAppliedStateSuccess && ( // !isShowApplicationHistory

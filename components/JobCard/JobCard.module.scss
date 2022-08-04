@@ -10,7 +10,6 @@
   padding: 28px 0;
   margin-bottom: 16px;
   padding: 24px;
-  min-height: 405px;
   
   &.isSelected {
     border: 2px solid $primaryBlue;
@@ -24,20 +23,11 @@
     border: 2px solid $primaryBlue;
     cursor: pointer;
   }
-
-  // @include msd {
-  //   border-right: 1px solid rgba($white-2, 0.6);
-  //   padding: 24px 0;
-
-  //   &:first-child {
-  //     border-top: 1px solid rgba($white-2, 0.6);
-  //   }
-  // }
 }
 
 .JobCardImage {
   &Wrapper {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
   }
 
   &Content {
@@ -65,23 +55,22 @@
     display: block;
     padding-right: 18px;
     line-height: 27px;
-    // display: flex;
-    // align-items: center;
-    // min-height: 81px;
+    display: flex;
+    align-items: center;
+    min-height: 54px;
   }
 
   &Tag {
-    margin: 16px 0;
+    margin: 10px 0;
   }
 
   &Item {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 
     span {
       margin-left: 8px;
-      margin-top: 8px;
     }
 
     img {
@@ -93,7 +82,7 @@
   &Status {
     color: #F30000;
     margin-right: 20px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
 
@@ -108,5 +97,5 @@
 }
 
 .JobCardDetailList {
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
