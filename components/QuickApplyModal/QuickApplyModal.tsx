@@ -25,7 +25,6 @@ import { quickApplyJobRequest } from 'store/actions/jobs/quickApplyJob'
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 import Checkbox from '@mui/material/Checkbox'
 import { handleNumericInput } from 'helpers/handleInput'
-
 interface QuickApplyModalProps {
   jobDetails: any
   modalShow?: boolean
@@ -82,9 +81,9 @@ const QuickApplyModal = ({
       } else {
         setError('email', { type: 'custom', message: registerJobseekerState.error['email'] })
       }
-    }
 
-    setIsSubmitting(registerJobseekerState.fetching)
+      setIsSubmitting(false)
+    }
   }, [registerJobseekerState])
 
   useEffect(() => {
@@ -119,12 +118,7 @@ const QuickApplyModal = ({
       jobUrl: jobDetails.job_url
     }
 
-    console.log('payload', payload)
-
-    console.log('quick apply payload', payload)
-
     clearErrors()
-    setIsSubmitting(true)
 
     dispatch(quickApplyJobRequest(payload))
   }
@@ -152,7 +146,6 @@ const QuickApplyModal = ({
       showModal={modalShow}
       handleModal={handleModalShow}
       className={styles.quickApplyModal}
-      closeModalOnOutsideClick={false} // TODO: temporary fix the select country code leads to modal close bug
       customFooter={
         <MaterialButton
           capitalize
@@ -311,14 +304,17 @@ const QuickApplyModal = ({
           />
           {errors.password && errorText(errors.password.message)}
         </div>
+        
+        <div className={styles.quickApplyFormField}>
+          <UploadResume
+            title='resume'
+            resume={resume}
+            handleDelete={handleDeleteResume}
+            handleUpload={handleUploadResume}
+          />
 
-        <UploadResume
-          title='resume'
-          resume={resume}
-          handleDelete={handleDeleteResume}
-          handleUpload={handleUploadResume}
-        />
-        {errors.resume && errorText(errors.resume.message)}
+          {errors.resume && errorText(errors.resume.message)}
+        </div>
 
         <div className={styles.quickApplyFormField}>
           {screeningQuestions.length > 0 && (

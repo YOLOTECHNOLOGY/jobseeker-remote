@@ -9,7 +9,6 @@ import { quickApplyJobSuccess, quickApplyJobFailed } from 'store/actions/jobs/qu
 
 import { setCookie } from 'helpers/cookies'
 import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
-import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import { registerJobseekerService } from 'store/services/auth/registerJobseeker'
 import {
@@ -111,6 +110,10 @@ function* quickApplyJobReq(action) {
         const applyJobResponse = yield call(applyJobService, jobId, applyJobPayload)
 
         yield put(quickApplyJobSuccess(applyJobResponse.data.data))
+
+        if (window !== 'undefined' && window.fbq) {
+          yield fbq.event('ApplicationSuccess', {'source': 'quick_apply'})
+        }
 
         const applySuccessUrl = `${jobUrl}/apply/success`
 
