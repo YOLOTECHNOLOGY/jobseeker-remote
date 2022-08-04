@@ -500,6 +500,16 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const storeState = store.getState()
 
   const companyDetail = storeState.companies.companyDetail
+  
+  if (companyDetail.error) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/404'
+      }
+    } 
+  }
+
   const companyName = companyDetail.response.data.name
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
@@ -507,6 +517,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const seoMetaDescription = encodeURI(
     `Discover career opportunities at ${companyName}, learn more about ${companyName} by reading employee reviews, benefits and culture on Bossjob!`
   )
+
+  
 
   return {
     props: {

@@ -23,6 +23,7 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import Layout from 'components/Layout'
 import Text from 'components/Text'
+import UploadResume from 'components/UploadResume'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
@@ -34,6 +35,8 @@ import { wrapper } from 'store'
 import { applyJobRequest } from 'store/actions/jobs/applyJob'
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 
 /* Styles */
 import styles from './ApplyJob.module.scss'
@@ -45,8 +48,6 @@ import {
   MailIcon,
   ProfileIcon
 } from 'images'
-import UploadResume from 'components/UploadResume'
-
 interface IApplyJobDetail {
   jobDetail: any
   userDetail: any
@@ -116,8 +117,19 @@ const Job = ({
   }
 
   const handleUploadResume = (file) => {
-    setResume(file)
-    clearErrors('resume')
+    uploadUserResumeService(file)
+    .then((response) => {
+      setResume(response.data.data)
+      clearErrors('resume')
+    })
+    .catch(error => {
+      dispatch(displayNotification({
+        open: true,
+        severity: 'error',
+        message: `Failed to upload resume with error: ${error.message}. 
+        Please contact support@bossjob.com for assistance.`
+      }))
+    })
   }
 
   return (

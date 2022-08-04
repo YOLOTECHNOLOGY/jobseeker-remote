@@ -11,8 +11,9 @@ import moment from 'moment'
 /* Redux actions */
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
-import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
 import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 
 /* Components */
 import Layout from 'components/Layout'
@@ -30,7 +31,6 @@ import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
-// import { getCountryList } from 'helpers/jobPayloadFormatter'
 import { getYearMonthDiffBetweenDates } from 'helpers/formatter'
 
 /* Assets */
@@ -50,6 +50,7 @@ import styles from './ManageProfile.module.scss'
 import { Chip } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
 import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
+
 
 const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const dispatch = useDispatch()
@@ -314,12 +315,18 @@ const RenderResumeView = ({ userDetail }: any) => {
   }
 
   const handleUploadResume = (file) => {
-    setResume(file)
-    dispatch(
-      uploadUserResumeRequest({
-        resume: file,
-      })
-    )
+    uploadUserResumeService(file)
+    .then((response) => {
+      setResume(response.data.data)
+    })
+    .catch(error => {
+      dispatch(displayNotification({
+        open: true,
+        severity: 'error',
+        message: `Failed to upload resume with error: ${error.message}. 
+        Please contact support@bossjob.com for assistance.`
+      }))
+    })
   }
 
   const handleDownloadResume = (type) => {

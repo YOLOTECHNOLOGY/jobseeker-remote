@@ -104,12 +104,6 @@ const QuickApplyModal = ({
       screeningAnswers.push(data[`screening_answer_${index}`])
     })
 
-    const jobCategories = jobDetails.categories
-      .map(function (category) {
-        return category.key
-      })
-      .join('-')
-
     const payload = {
       email: data.email,
       password: data.password,
@@ -122,9 +116,10 @@ const QuickApplyModal = ({
       screening_answers: screeningAnswers,
       first_message: firstMessage,
       jobId: jobDetails.id,
-      jobCategories: jobCategories,
-      companyId: jobDetails.company?.id,
+      jobUrl: jobDetails.job_url
     }
+
+    console.log('payload', payload)
 
     console.log('quick apply payload', payload)
 

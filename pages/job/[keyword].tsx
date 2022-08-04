@@ -1126,6 +1126,13 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         seoCanonicalUrl: jobUrl
       }
     }
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/404'
+      }
+    } 
   }
 })
 

@@ -40,8 +40,7 @@ function* quickApplyJobReq(action) {
       first_message,
       resume,
       jobId,
-      jobCategories,
-      companyId
+      jobUrl
     } = action.payload
 
     // Register jobseeker
@@ -99,7 +98,7 @@ function* quickApplyJobReq(action) {
       )
 
       // Upload resume 
-      yield uploadResumeSaga(resume, registeredData.authentication.access_token)
+      yield uploadResumeSaga(resume)
 
       // Apply job
       const applyJobPayload = {
@@ -113,7 +112,7 @@ function* quickApplyJobReq(action) {
 
         yield put(quickApplyJobSuccess(applyJobResponse.data.data))
 
-        const applySuccessUrl = authPathToOldProject(null, `/${jobCategories}/${companyId}/${jobId}/applysuccess`)
+        const applySuccessUrl = `${jobUrl}/apply/success`
 
         yield put(push(applySuccessUrl))
       } catch (error) {
@@ -143,9 +142,9 @@ function* quickApplyJobReq(action) {
   }
 }
 
-function* uploadResumeSaga(resume, accessToken) {
+function* uploadResumeSaga(resume) {
   try {
-    const { data } = yield call(uploadUserResumeService, { resume, accessToken })
+    const { data } = yield call(uploadUserResumeService, resume)
 
     yield put(uploadUserResumeSuccess(data.data))
   } catch (error) {

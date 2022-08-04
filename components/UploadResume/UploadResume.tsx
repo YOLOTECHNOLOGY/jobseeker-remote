@@ -3,16 +3,18 @@ import React, {useState} from 'react'
 /* Components */
 import Text from 'components/Text'
 import MaterialButton from 'components/MaterialButton'
+import Link from 'components/Link'
 
 /* Helpers */
 import { maxFileSize } from 'helpers/handleInput'
 
 /* Styles */
 import styles from './UploadResume.module.scss'
+import classNames from 'classnames'
 
 /* Assets */
 import { TrashIcon, DocumentIcon } from 'images'
-import classNames from 'classnames'
+
 
 type UploadResumeProps = {
   title: string
@@ -24,6 +26,7 @@ type UploadResumeProps = {
 
 type resumeObject = {
   name: string
+  url: string
 }
 
 const UploadResume = ({ resume, handleDelete, handleUpload, buttonClassname }: UploadResumeProps) => {
@@ -53,10 +56,12 @@ const UploadResume = ({ resume, handleDelete, handleUpload, buttonClassname }: U
             <div className={styles.documentDiv}>
               <img src={DocumentIcon} alt='document' width='21' height='21' />
             </div>
-            <Text textStyle='sm' bold className={styles.resumeName}>
-              {' '}
-              {resume?.name}{' '}
-            </Text>
+            <Link to={resume?.url} external>
+              <Text textStyle='sm' bold className={styles.resumeName}>
+                {' '}
+                {resume?.name}{' '}
+              </Text>
+            </Link>
           </div>
           <div className={styles.trashDiv}>
             <img
