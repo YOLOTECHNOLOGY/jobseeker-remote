@@ -518,8 +518,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     `Discover career opportunities at ${companyName}, learn more about ${companyName} by reading employee reviews, benefits and culture on Bossjob!`
   )
 
-  
-
   return {
     props: {
       companyDetail,
