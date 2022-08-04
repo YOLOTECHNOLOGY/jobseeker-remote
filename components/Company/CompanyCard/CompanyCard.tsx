@@ -26,7 +26,7 @@ const CompanyCard = ({
       <div className={styles.companyCardRight}>
         <div className={styles.companyCardName}>
           <Link to={companyUrl}>
-            <Text textStyle='lg' bold>{truncateWords(company.name, 70)}</Text>
+            <Text textStyle='lg' bold>{truncateWords(company.name, 60)}</Text>
           </Link>
         </div>
         <Text textStyle='lg' tagName='p' className={styles.companyCardCategory}>{company?.industry}</Text>
