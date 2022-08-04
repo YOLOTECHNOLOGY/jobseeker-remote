@@ -97,7 +97,7 @@
 .resumeTemplateItem {
   width: 381px;
   height: auto;
-  box-shadow: $box-shadow-2;
+  // box-shadow: $box-shadow-2;
 
   @include msd {
     width: 320px;
@@ -188,6 +188,10 @@
   padding-left: 24px;
   flex: 0 0 50%;
 
+  &:first-child {
+      padding-left: 0;
+    }
+
   @include msd {
     flex: 0 0 100%;
     padding-left: 1vw;
@@ -201,8 +205,8 @@
 .emblaSlideInner {
   position: relative;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
+  // display: flex;
+  // justify-content: center;
 }
 
 .emblaDots {
@@ -290,7 +294,7 @@
 
 .downloadResumeButton {
   display: none;
-  position: absolute;
+  position: absolute !important;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
