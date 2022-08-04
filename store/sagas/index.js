@@ -17,6 +17,7 @@ import watchFetchSavedJobDetail from 'store/sagas/jobs/fetchSavedJobDetail'
 import watchPostSaveJob from 'store/sagas/jobs/postSaveJob'
 import watchDeleteSaveJob from 'store/sagas/jobs/deleteSaveJob'
 import watchQuickApplyJob from 'store/sagas/jobs/quickApplyJob'
+import watchApplyJob from 'store/sagas/jobs/applyJob'
 
 // Companies
 import watchFetchCompanyDetail from 'store/sagas/companies/fetchCompanyDetail'
@@ -35,8 +36,8 @@ import watchDeleteJobAlert from 'store/sagas/alerts/deleteJobAlert'
 import watchCreateJobAlert from 'store/sagas/alerts/createJobAlert'
 
 // Users
-import WatchRegisterUser from 'store/sagas/users/registerUser'
-import WatchUpdateUserCompleteProfile from 'store/sagas/users/updateUserCompleteProfile'
+import watchRegisterUser from 'store/sagas/users/registerUser'
+import watchUpdateUserOnboardingInfo from 'store/sagas/users/updateUserOnboardingInfo'
 import watchFetchUserOwnDetail from 'store/sagas/users/fetchUserOwnDetail'
 import watchUploadUserResume from 'store/sagas/users/uploadUserResume'
 import watchGenerateUserResume from 'store/sagas/users/generateUserResume'
@@ -45,6 +46,9 @@ import watchFetchUserEducation from 'store/sagas/users/fetchUserEducation'
 import watchRedirectToNewJobseeker from 'store/sagas/users/redirectToNewJobseeker'
 import watchGenerateVerifyEmailOTP from 'store/sagas/users/generateVerifyEmailOTP'
 import watchCheckVerifyEmailOTP from 'store/sagas/users/checkVerifyEmailOTP'
+import watchUpdateUserProfile from 'store/sagas/users/updateUserProfile'
+import watchManageUserWorkExperiences from 'store/sagas/users/manageUserWorkExperiences'
+import watchManageUserEducations from 'store/sagas/users/manageUserEducations'
 
 // Courses
 import watchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
@@ -85,6 +89,7 @@ function* rootSaga() {
     watchPostSaveJob(),
     watchDeleteSaveJob(),
     watchQuickApplyJob(),
+    watchApplyJob(),
 
     watchPostReport(),
 
@@ -93,8 +98,8 @@ function* rootSaga() {
     watchDeleteJobAlert(),
     watchCreateJobAlert(),
 
-    WatchRegisterUser(),
-    WatchUpdateUserCompleteProfile(),
+    watchRegisterUser(),
+    watchUpdateUserOnboardingInfo(),
     watchFetchUserOwnDetail(),
     watchUploadUserResume(),
     watchGenerateUserResume(),
@@ -103,6 +108,9 @@ function* rootSaga() {
     watchRedirectToNewJobseeker(),
     watchGenerateVerifyEmailOTP(),
     watchCheckVerifyEmailOTP(),
+    watchUpdateUserProfile(),
+    watchManageUserWorkExperiences(),
+    watchManageUserEducations(),
 
     watchSocialLogin(),
     watchLogin(),

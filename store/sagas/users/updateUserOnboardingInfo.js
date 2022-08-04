@@ -1,11 +1,11 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
-import { UPDATE_USER_COMPLETE_PROFILE_REQUEST } from 'store/types/users/updateUserCompleteProfile'
-import { getCookie, removeCookie, setCookie } from 'helpers/cookies'
+import { UPDATE_USER_ONBOARDING_INFO_REQUEST } from 'store/types/users/updateUserOnboardingInfo'
+import { getCookie, setCookie } from 'helpers/cookies'
 import {
-  updateUserCompleteProfileSuccess,
-  updateUserCompleteProfileFailed,
-} from 'store/actions/users/updateUserCompleteProfile'
+  updateUserProfileSuccess,
+  updateUserProfileFailed,
+} from 'store/actions/users/updateUserProfile'
 import {
   fetchUserWorkExperienceSuccess,
   fetchUserWorkExperienceFailed,
@@ -20,7 +20,7 @@ import {
   completeUserProfileFailed,
 } from 'store/actions/users/completeUserProfile'
 
-import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
+import { updateUserProfileService } from 'store/services/users/updateUserProfile'
 import { addUserPreferencesService } from 'store/services/users/addUserPreferences'
 import { completeUserProfileService } from 'store/services/users/completeUserProfile'
 
@@ -39,7 +39,7 @@ import { getItem, removeItem } from 'helpers/localStorage'
 import { checkErrorCode } from 'helpers/errorHandlers'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
-function* updateUserCompleteProfileReq({ payload }) {
+function* updateUserOnboardingInfoReq({ payload }) {
   const isFromCreateResume = getItem('isFromCreateResume')
 
   const {
@@ -58,12 +58,7 @@ function* updateUserCompleteProfileReq({ payload }) {
   } = payload
 
   try {
-    removeCookie('isVerifyEmailModalClosed')
     if (currentStep === 1) {
-      const profilePayload = {
-        accessToken,
-        profile,
-      }
       const preferencesPayload = {
         accessToken,
         preferences,
@@ -72,10 +67,10 @@ function* updateUserCompleteProfileReq({ payload }) {
       let preferenceResponse, userCompleteProfileResponse
       ;[preferenceResponse, userCompleteProfileResponse] = yield all([
         call(addUserPreferencesService, preferencesPayload),
-        call(updateUserCompleteProfileService, profilePayload),
+        call(updateUserProfileService, profile),
       ])
 
-      yield put(updateUserCompleteProfileSuccess(userCompleteProfileResponse.data.data))
+      yield put(updateUserProfileSuccess(userCompleteProfileResponse.data.data))
       let url = '/jobseeker-complete-profile/10'
 
       if (redirect) {
@@ -147,17 +142,21 @@ function* updateUserCompleteProfileReq({ payload }) {
     if (currentStep === 5) {
       yield completeUserProfileSaga(redirect, accessToken)
     }
+
   } catch (error) {
     const isServerError = checkErrorCode(error)
     if (isServerError) {
-      yield put(displayNotification({
-        open: true,
-        severity: 'error',
-        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
-      }))
+      yield put(
+        displayNotification({
+          open: true,
+          severity: 'error',
+          message:
+            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.',
+        })
+      )
     } else {
-      yield put(updateUserCompleteProfileFailed(error))
-    }    
+      yield put(updateUserProfileFailed(error))
+    }
   }
 }
 
@@ -168,11 +167,14 @@ function* fetchUserWorkExperienceSaga(accessToken) {
   } catch (error) {
     const isServerError = checkErrorCode(error)
     if (isServerError) {
-      yield put(displayNotification({
-        open: true,
-        severity: 'error',
-        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
-      }))
+      yield put(
+        displayNotification({
+          open: true,
+          severity: 'error',
+          message:
+            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.',
+        })
+      )
     } else {
       yield put(fetchUserWorkExperienceFailed(error))
     }
@@ -186,11 +188,14 @@ function* fetchUserEducationServiceSaga(accessToken) {
   } catch (error) {
     const isServerError = checkErrorCode(error)
     if (isServerError) {
-      yield put(displayNotification({
-        open: true,
-        severity: 'error',
-        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
-      }))
+      yield put(
+        displayNotification({
+          open: true,
+          severity: 'error',
+          message:
+            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.',
+        })
+      )
     } else {
       yield put(fetchUserEducationFailed(error))
     }
@@ -199,11 +204,9 @@ function* fetchUserEducationServiceSaga(accessToken) {
 
 function* completeUserProfileSaga(redirect, accessToken) {
   try {
-    removeCookie('isVerifyEmailModalClosed')
     const { data } = yield call(completeUserProfileService, { accessToken })
     yield put(completeUserProfileSuccess(data.data))
-
-    let userCookie = getCookie('user')
+    const userCookie = getCookie('user')
     const accessToken = getCookie('accessToken')
 
     userCookie.is_profile_completed = true
@@ -213,7 +216,7 @@ function* completeUserProfileSaga(redirect, accessToken) {
     let url = '/jobs-hiring/job-search'
 
     if (redirect) {
-      url = `${redirect}&token=${accessToken}`
+      url = redirect
     }
 
     removeItem('isFromCreateResume')
@@ -222,17 +225,20 @@ function* completeUserProfileSaga(redirect, accessToken) {
   } catch (error) {
     const isServerError = checkErrorCode(error)
     if (isServerError) {
-      yield put(displayNotification({
-        open: true,
-        severity: 'error',
-        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
-      }))
+      yield put(
+        displayNotification({
+          open: true,
+          severity: 'error',
+          message:
+            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.',
+        })
+      )
     } else {
       yield put(completeUserProfileFailed(error))
     }
   }
 }
 
-export default function* updateUserCompleteProfileSaga() {
-  yield takeLatest(UPDATE_USER_COMPLETE_PROFILE_REQUEST, updateUserCompleteProfileReq)
+export default function* updateUserOnboardingInfoSaga() {
+  yield takeLatest(UPDATE_USER_ONBOARDING_INFO_REQUEST, updateUserOnboardingInfoReq)
 }

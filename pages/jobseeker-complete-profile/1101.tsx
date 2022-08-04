@@ -14,7 +14,7 @@ import { wrapper } from 'store'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { fetchUserWorkExperienceRequest } from 'store/actions/users/fetchUserWorkExperience'
-import { updateUserCompleteProfileRequest } from 'store/actions/users/updateUserCompleteProfile'
+import { updateUserOnboardingInfoRequest } from 'store/actions/users/updateUserOnboardingInfo'
 
 // Components
 import Switch from '@mui/material/Switch';
@@ -98,10 +98,10 @@ const Step3 = (props: any) => {
   
   const { formState: { errors }} = useForm()
   const userWorkExperiences = useSelector((store: any) => store.users.fetchUserWorkExperience.response)
-  const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserCompleteProfile.fetching)
+  const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserOnboardingInfo.fetching)
 
   useEffect(() => {
-    dispatch(fetchUserWorkExperienceRequest({accessToken}))
+    dispatch(fetchUserWorkExperienceRequest({ accessToken }))
     setShowErrorToComplete(false)
   }, [])
 
@@ -262,7 +262,7 @@ const Step3 = (props: any) => {
       currentStep
     }
 
-    dispatch(updateUserCompleteProfileRequest(deletePayload))
+    dispatch(updateUserOnboardingInfoRequest(deletePayload))
     handleResetForm()
   }
 
@@ -294,7 +294,7 @@ const Step3 = (props: any) => {
       workExperienceData: removeEmptyOrNullValues(workExperienceData),
       proceedingPath
     }
-    dispatch(updateUserCompleteProfileRequest(workExperiencesPayload))
+    dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
 
     handleResetForm()
     setShowForm(false)

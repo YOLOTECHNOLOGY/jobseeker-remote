@@ -1,7 +1,7 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
-.ReadMore {
+.readMore {
   &Action {
     margin-top: 5px;
 
@@ -17,12 +17,14 @@
   &Description * {
     font-size: 16px !important;
     font-family: 'Product Sans' !important;
+    line-height: 24px;
   }
 
   &Description * {
     > ol, ul {
       padding-inline: inherit;
       margin-left: 40px;
+      line-height: 24px;
     }
   }
 }

@@ -124,7 +124,7 @@
 
     button {
       &:first-child {
-        margin-right: 16px;
+        margin-right: 16px !important;
       }
     }
 
@@ -231,6 +231,7 @@
       margin-top: 16px;
       display: block;
       line-height: 24px;
+      overflow: scroll
     }
   
     &SubTitle {
@@ -414,6 +415,7 @@
   border-radius: 4px;
   padding: 24px;
   margin-top: 24px;
+  line-height: 24px;
 
   span {
     display: block;

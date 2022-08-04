@@ -8,7 +8,7 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogo, DefaultAvatar, ChatIcon, BossjobFittedLogo } from 'images'
+import { BossjobLogo, DefaultAvatar, ChatIcon } from 'images'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -36,12 +36,6 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
           <div className={styles.headerLogo}>
             <img
               className={styles.headerLogoImage}
-              src={BossjobFittedLogo}
-              title='Bossjob logo'
-              alt='Bossjob logo'
-            />
-            <img
-              className={styles.headerLogoImageDesktop}
               src={BossjobLogo}
               title='Bossjob logo'
               alt='Bossjob logo'

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 
 /* Components */
 import Modal from 'components/Modal'
@@ -25,11 +24,9 @@ interface ModalVerifyEmailProps {
   email: string
   isShowModal?: boolean
   handleModal?: Function
-  redirectLink?: string
 }
 
 const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailProps) => {
-  const router = useRouter()
   const [otp, setOtp] = useState<string>('') // Text Input field state
   const [timerCount, setTimerCount] = useState<number>(-1) // timer counter
   const [canRequestOTP, setCanRequestOTP] = useState<boolean>(true) // if an otp is requested or timer countdown starts
@@ -123,6 +120,10 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
     setTimerCount(61)
   }
 
+  const handleCloseModal = () => {
+    handleModal(isOTPVerified)
+  }
+
   const modalContent = !isVerifiedEmail ? (
     <div className={styles.ModalVerifyEmail}>
       <Text>
@@ -198,8 +199,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
         variant='contained'
         isLoading={isOTPVerifying}
         onClick={() => {
-          handleModal()
-          router.reload()
+          handleCloseModal()
         }}
       >
         <Text textColor='white' bold>
@@ -213,10 +213,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
     <Modal
       headerTitle='Verify your email'
       showModal={isShowModal}
-      handleModal={() => {
-        handleModal()
-        if (isOTPVerified) router.reload()
-      }}
+      handleModal={handleCloseModal}
     >
       {modalContent}
     </Modal>

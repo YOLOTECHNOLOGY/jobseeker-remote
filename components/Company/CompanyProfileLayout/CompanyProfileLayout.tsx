@@ -84,7 +84,7 @@ const CompanyProfileLayout = ({
     currentTab == 'jobs' ? '/jobs' : currentTab == 'life' ? '/life' : ''
   const companyUrl = company.company_url
   const canonicalUrl = companyUrl + additionalCanonicalText
-  
+
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={canonicalUrl} imageUrl={company.logo_url}/>

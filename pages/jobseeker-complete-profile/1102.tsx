@@ -13,7 +13,7 @@ import { wrapper } from 'store'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { fetchUserEducationRequest } from 'store/actions/users/fetchUserEducation'
-import { updateUserCompleteProfileRequest } from 'store/actions/users/updateUserCompleteProfile'
+import { updateUserOnboardingInfoRequest } from 'store/actions/users/updateUserOnboardingInfo'
 import { generateUserResumeRequest } from 'store/actions/users/generateUserResume'
 
 // Components
@@ -28,10 +28,12 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialDatePicker from 'components/MaterialDatePicker'
+import ModalVerifyEmail from 'components/ModalVerifyEmail'
 
 /* Helpers*/
 import { getCountryList, getLocationList, getDegreeList } from 'helpers/jobPayloadFormatter'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
+import { getCookie } from 'helpers/cookies'
 import { getItem } from 'helpers/localStorage'
 
 // Images
@@ -55,7 +57,13 @@ const Step4 = (props: any) => {
   const countryList = getCountryList(config)
   const locList = getLocationList(config)
 
+  const authCookie = getCookie('accessToken') || null
+  const userCookie = getCookie('user') || null
+
   const [isEditing, setIsEditing] = useState(false)
+
+  const [isShowModal, setIsShowModal] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const [school, setSchool] = useState('')
   const [degree, setDegree] = useState('')
@@ -81,7 +89,7 @@ const Step4 = (props: any) => {
 
   const userEducations = useSelector((store: any) => store.users.fetchUserEducation.response)
   const isUpdatingUserProfile = useSelector(
-    (store: any) => store.users.updateUserCompleteProfile.fetching
+    (store: any) => store.users.updateUserOnboardingInfo.fetching
   )
   const isGeneratingUserResume = useSelector(
     (store: any) => store.users.generateUserResume.fetching
@@ -101,6 +109,10 @@ const Step4 = (props: any) => {
       </>
     )
   }
+
+  useEffect(() => {
+    setIsAuthenticated(authCookie ? true : false)
+  }, [])
 
   useEffect(() => {
     dispatch(fetchUserEducationRequest({ accessToken }))
@@ -279,7 +291,7 @@ const Step4 = (props: any) => {
       educationId,
       educationData: removeEmptyOrNullValues(educationData),
     }
-    dispatch(updateUserCompleteProfileRequest(educationPayload))
+    dispatch(updateUserOnboardingInfoRequest(educationPayload))
 
     handleResetForm()
     setShowForm(false)
@@ -293,13 +305,14 @@ const Step4 = (props: any) => {
       currentStep,
     }
 
-    dispatch(updateUserCompleteProfileRequest(deletePayload))
+    dispatch(updateUserOnboardingInfoRequest(deletePayload))
     handleResetForm()
   }
 
-  const handleLastStep = () => {
+  const completePorfile = () => {
     const isCreateFreeResume =
-      (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
+    (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
+
     const redirect = router.query?.redirect ? router.query?.redirect : null
 
     if (isCreateFreeResume) {
@@ -307,21 +320,27 @@ const Step4 = (props: any) => {
     }
 
     if (!isCreateFreeResume) {
-      dispatch(updateUserCompleteProfileRequest({ currentStep: 5, redirect, accessToken }))
+      dispatch(updateUserOnboardingInfoRequest({ currentStep: 5, redirect, accessToken }))
     }
   }
 
   const handleNextBtn = () => {
-    if (!isNextDisabled && showForm && school && degree && location) {
-      handleLastStep()
-      return
-    }
-    if (!isNextDisabled && !showForm) {
-      handleLastStep()
+    if (!isNextDisabled && (showForm && school && degree && location || !showForm)) {
+      if (!userCookie.is_email_verify) {
+        setIsShowModal(true)
+      } else {
+        completePorfile()
+      }
+
       return
     }
 
     setShowErrorToComplete(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsShowModal(false)
+    completePorfile()
   }
 
   return (
@@ -608,6 +627,12 @@ const Step4 = (props: any) => {
           </div>
         </React.Fragment>
       )}
+
+      <ModalVerifyEmail
+        email={isAuthenticated && userCookie ? userCookie.email : ''}
+        isShowModal={isShowModal}
+        handleModal={handleCloseModal}
+      />
     </OnBoardLayout>
   )
 }

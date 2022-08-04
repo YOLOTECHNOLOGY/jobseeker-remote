@@ -199,6 +199,7 @@
 
   &Body {
     display: block;
+    line-height: 24px;
   }
 
   &SubTitle {
@@ -254,6 +255,7 @@
   border-radius: 4px;
   padding: 24px;
   margin: 24px 0;
+  line-height: 24px;
 
   span {
     display: block;

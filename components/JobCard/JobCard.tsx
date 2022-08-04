@@ -2,6 +2,9 @@
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
 
+/* Helpers */
+import { truncateWords } from 'helpers/formatter'
+
 /* Styles */
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
@@ -52,7 +55,7 @@ const JobCard = ({
         <div className={styles.JobCardImageContent} style={{ backgroundImage: `url(${image})`}} />
       </div>
       <div className={styles.JobCardDetailWrapper}>
-        <Text tagName='h1' textStyle='lg' bold className={styles.JobCardDetailTitle}>{title}</Text>
+        <Text tagName='h1' textStyle='lg' bold className={styles.JobCardDetailTitle}>{truncateWords(title, 60)}</Text>
         <div className={styles.JobCardDetailTag}>
           {isFeatured && (
             <JobTag tag='Featured' tagType='featured' />
