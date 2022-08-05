@@ -112,7 +112,7 @@ function* quickApplyJobReq(action) {
         yield put(quickApplyJobSuccess(applyJobResponse.data.data))
 
         if (window !== 'undefined' && window.fbq) {
-          yield fbq.event('ApplicationSuccess', {'source': 'quick_apply'})
+          yield fbq.event('Application success', {'source': 'quick_apply'})
         }
 
         const applySuccessUrl = `${jobUrl}/apply/success`
