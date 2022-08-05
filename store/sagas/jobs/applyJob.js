@@ -36,7 +36,7 @@ function* applyJobReq(action) {
 		yield put(applyJobSuccess(response.data.data))
 
 		if (window !== 'undefined' && window.fbq) {
-			yield fbq.event('ApplicationSuccess', {'source': source})
+			yield fbq.event('Application success', {'source': source})
 		}
 
 		const applySuccessUrl = `${jobUrl}/apply/success`
