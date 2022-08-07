@@ -472,11 +472,12 @@ const Job = ({
               >
                 {!isAppliedQueryParam && (
                   <div className={styles.jobDetailPrimaryActions}>
-                    {jobDetail?.status_key === 'active' && (
+                    {jobDetail?.status_key === 'active' ? (
                       <MaterialButton
                         variant='contained'
                         capitalize
                         disabled={jobDetail?.is_applied}
+                        className={styles.applyBtn}
                         onClick={(e) => {
                           if (!userCookie) {
                             e.preventDefault()
@@ -494,14 +495,13 @@ const Job = ({
                           {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
                         </Text>
                       </MaterialButton>
-                    )}
-                    
-                    {jobDetail?.status_key !== 'active' && (
+                    ) : (
                       <Text textStyle='base' className={styles.jobDetailStatus}>
                         <img src={ExpireIcon} height='16' width='16' />
                         <span>This job is no longer hiring</span>
                       </Text>
                     )}
+                    
                     <MaterialButton
                       variant='outlined'
                       capitalize
