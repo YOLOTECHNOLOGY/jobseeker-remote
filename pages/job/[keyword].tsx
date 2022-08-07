@@ -473,37 +473,29 @@ const Job = ({
                 {!isAppliedQueryParam && (
                   <div className={styles.jobDetailPrimaryActions}>
                     {jobDetail?.status_key === 'active' && (
-                      <>
-                        {jobDetail?.is_applied ? (
-                          <MaterialButton variant='contained' capitalize disabled>
-                            <Text textColor='white' bold>
-                              Applied
-                            </Text>
-                          </MaterialButton>
-                        ) : (
-                          <MaterialButton
-                            variant='contained'
-                            capitalize
-                            onClick={(e) => {
-                              if (!userCookie) {
-                                e.preventDefault()
-                                setQuickApplyModalShow(true)
-                              } else {
-                                if (!userCookie.is_email_verify) {
-                                  handleVerifyEmailClick()
-                                } else {
-                                  router.push(applyJobLink)
-                                }
-                              }
-                            }}
-                          >
-                            <Text textColor='white' bold>
-                              Apply Now
-                            </Text>
-                          </MaterialButton>
-                        )}
-                      </>
+                      <MaterialButton
+                        variant='contained'
+                        capitalize
+                        disabled={jobDetail?.is_applied}
+                        onClick={(e) => {
+                          if (!userCookie) {
+                            e.preventDefault()
+                            setQuickApplyModalShow(true)
+                          } else {
+                            if (!userCookie.is_email_verify) {
+                              handleVerifyEmailClick()
+                            } else {
+                              router.push(applyJobLink)
+                            }
+                          }
+                        }}
+                      >
+                        <Text textColor='white' bold>
+                          {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
+                        </Text>
+                      </MaterialButton>
                     )}
+                    
                     {jobDetail?.status_key !== 'active' && (
                       <Text textStyle='base' className={styles.jobDetailStatus}>
                         <img src={ExpireIcon} height='16' width='16' />
@@ -1053,7 +1045,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobId = keywordQuery?.split('-').pop()
   
   if (jobId) {
-    // store actions
     if (isApplied === 'true') {
       store.dispatch(fetchAppliedJobDetailRequest({ jobId, accessToken }))
     } else {
@@ -1076,11 +1067,13 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const jobDetail = storeState.job.jobDetail.response
+  let jobDetail = storeState.job.jobDetail.response
   const appliedJobDetail = storeState.job.appliedJobDetail.response
   const config = storeState.config.config.response
 
   if (Object.keys(jobDetail).length > 0 || Object.keys(appliedJobDetail).length > 0) {
+    jobDetail = jobDetail?.id ? jobDetail : appliedJobDetail?.job
+    
     const {
       id: jobId,
       job_title: jobTitle,
@@ -1089,7 +1082,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       full_address: fullAddress,
       location,
       job_url: jobUrl
-    } = jobDetail?.id ? jobDetail : appliedJobDetail
+    } = jobDetail
 
     let categoryMetaText = ''
     categories.forEach((el) => {
