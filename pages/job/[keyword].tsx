@@ -1051,6 +1051,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const { keyword, isApplied } = query
   const keywordQuery: any = keyword
   const jobId = keywordQuery?.split('-').pop()
+  
   if (jobId) {
     // store actions
     if (isApplied === 'true') {
@@ -1064,6 +1065,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         })
       )
     }
+  } else {
+    return {
+      notFound: true
+    }
   }
 
   store.dispatch(fetchConfigRequest())
@@ -1071,16 +1076,11 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const jobDetail = storeState.job?.jobDetail
-  const appliedJobDetail = storeState.job?.appliedJobDetail
+  const jobDetail = storeState.job.jobDetail.response
+  const appliedJobDetail = storeState.job.appliedJobDetail.response
   const config = storeState.config.config.response
 
-  if (jobDetail || appliedJobDetail) {
-    if (jobDetail.error || appliedJobDetail.error) {
-      return {
-        notFound: true
-      }
-    }
+  if (Object.keys(jobDetail).length > 0 || Object.keys(appliedJobDetail).length > 0) {
     const {
       id: jobId,
       job_title: jobTitle,
@@ -1089,7 +1089,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       full_address: fullAddress,
       location,
       job_url: jobUrl
-    } = jobDetail?.response?.id ? jobDetail?.response : appliedJobDetail?.response?.job
+    } = jobDetail?.id ? jobDetail : appliedJobDetail
+
     let categoryMetaText = ''
     categories.forEach((el) => {
       categoryMetaText += `${el.value}, `
@@ -1106,8 +1107,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     return {
       props: {
         config,
-        jobDetail: jobDetail?.response?.id ? jobDetail?.response : appliedJobDetail?.response?.job,
-        applicationHistory: appliedJobDetail?.response?.application_histories || null,
+        jobDetail: jobDetail?.id ? jobDetail : appliedJobDetail?.job,
+        applicationHistory: appliedJobDetail?.application_histories || null,
         accessToken,
         seoMetaTitle,
         seoMetaDescription,
@@ -1116,11 +1117,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     }
   } else {
     return {
-      redirect: {
-        permanent: false,
-        destination: '/404'
-      }
-    } 
+      notFound: true
+    }
   }
 })
 
