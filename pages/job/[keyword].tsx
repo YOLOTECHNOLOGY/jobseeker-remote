@@ -369,6 +369,54 @@ const Job = ({
     }
   }
 
+  const handleApplyJob = () => {
+    if (!userCookie) {
+      setQuickApplyModalShow(true)
+    } else {
+      if (!userCookie.is_email_verify) {
+        handleVerifyEmailClick()
+      } else {
+        router.push(applyJobLink)
+      }
+    }
+  }
+
+  const renderSaveAndApplyActions = () => {
+    return (
+      <div className={styles.jobDetailPrimaryActions}>
+        {jobDetail?.status_key === 'active' ? (
+          <>
+            <MaterialButton
+              variant='contained'
+              capitalize
+              disabled={jobDetail?.is_applied}
+              className={styles.applyBtn}
+              onClick={handleApplyJob}
+            >
+              <Text textColor='white' bold>
+                {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
+              </Text>
+            </MaterialButton>
+            <MaterialButton
+              variant='outlined'
+              capitalize
+              onClick={() => handlePostSaveJob()}
+              >
+              <Text textColor='primary' bold>
+                {isSavedJob ? 'Saved' : 'Save Job'}
+              </Text>
+            </MaterialButton>
+          </>
+        ) : (
+          <Text textStyle='base' className={styles.jobDetailStatus}>
+            <img src={ExpireIcon} height='16' width='16' />
+            <span>This job is no longer hiring</span>
+          </Text>
+        )}
+      </div>
+    )
+  }
+
   useEffect(() => {
     if (getCookie('isMobileReportJob') && authCookie && userCookie) {
       setIsShowReportJob(true)
@@ -470,49 +518,7 @@ const Job = ({
                   breakpointStyles.hideOnMobileAndTablet
                 ])}
               >
-                {!isAppliedQueryParam && (
-                  <div className={styles.jobDetailPrimaryActions}>
-                    {jobDetail?.status_key === 'active' ? (
-                      <MaterialButton
-                        variant='contained'
-                        capitalize
-                        disabled={jobDetail?.is_applied}
-                        className={styles.applyBtn}
-                        onClick={(e) => {
-                          if (!userCookie) {
-                            e.preventDefault()
-                            setQuickApplyModalShow(true)
-                          } else {
-                            if (!userCookie.is_email_verify) {
-                              handleVerifyEmailClick()
-                            } else {
-                              router.push(applyJobLink)
-                            }
-                          }
-                        }}
-                      >
-                        <Text textColor='white' bold>
-                          {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
-                        </Text>
-                      </MaterialButton>
-                    ) : (
-                      <Text textStyle='base' className={styles.jobDetailStatus}>
-                        <img src={ExpireIcon} height='16' width='16' />
-                        <span>This job is no longer hiring</span>
-                      </Text>
-                    )}
-                    
-                    <MaterialButton
-                      variant='outlined'
-                      capitalize
-                      onClick={() => handlePostSaveJob()}
-                    >
-                      <Text textColor='primary' bold>
-                        {isSavedJob ? 'Saved' : 'Save Job'}
-                      </Text>
-                    </MaterialButton>
-                  </div>
-                )}
+                {!isAppliedQueryParam && renderSaveAndApplyActions()}
               </div>
             </div>
             <div className={styles.jobDetailPrimarySub}>
@@ -534,53 +540,8 @@ const Job = ({
           <div
             className={classNamesCombined([styles.jobDetailCTA, breakpointStyles.hideOnDesktop])}
           >
-            {!isAppliedQueryParam && (
-              <div className={styles.jobDetailPrimaryActions}>
-                {jobDetail?.status_key === 'active' && (
-                  <>
-                    {jobDetail?.is_applied ? (
-                      <MaterialButton variant='contained' capitalize disabled>
-                        <Text textColor='white' bold>
-                          Applied
-                        </Text>
-                      </MaterialButton>
-                    ) : (
-                      <MaterialButton
-                        variant='contained'
-                        capitalize
-                        onClick={(e) => {
-                          if (!userCookie) {
-                            e.preventDefault()
-                            setQuickApplyModalShow(true)
-                          } else {
-                            if (!userCookie.is_email_verify) {
-                              handleVerifyEmailClick()
-                            } else {
-                              router.push(applyJobLink)
-                            }
-                          }
-                        }}
-                      >
-                        <Text textColor='white' bold>
-                          Apply Now
-                        </Text>
-                      </MaterialButton>
-                    )}
-                  </>
-                )}
-                {jobDetail?.status_key !== 'active' && (
-                  <Text textStyle='base' className={styles.jobDetailStatus}>
-                    <img src={ExpireIcon} height='16' width='16' />
-                    <span>This job is no longer hiring</span>
-                  </Text>
-                )}
-                <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
-                  <Text textColor='primary' bold>
-                    {isSavedJob ? 'Saved' : 'Save Job'}
-                  </Text>
-                </MaterialButton>
-              </div>
-            )}
+            {!isAppliedQueryParam && renderSaveAndApplyActions()}
+            
             <Text textStyle='base' textColor='darkgrey' className={styles.jobDetailPostedAt}>
               Posted on {jobDetail?.published_at}
             </Text>
