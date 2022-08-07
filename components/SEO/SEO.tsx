@@ -140,7 +140,7 @@ const SEO = ({ title, description, imageUrl, canonical, jobDetail=null }: SEOPro
       <meta name='twitter:image:alt' content={decodeURI(description)} />
       <meta name='twitter:creator' content='BossjobPH' />
 
-      {jobDetail && (
+      {jobDetail && jobDetail?.status_key === 'active' && (
         <script
           defer
           async
