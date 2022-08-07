@@ -122,10 +122,8 @@
   &PrimaryActions {
     margin-top: 20px;
 
-    button {
-      &:first-child {
-        margin-right: 16px;
-      }
+    .applyBtn {
+      margin-right: 16px;
     }
 
     @include sm {
@@ -134,6 +132,10 @@
       justify-content: space-between;
 
       button {
+        &:first-child {
+          margin-right: 16px;
+        }
+
         width: 100%;
       }
     }
