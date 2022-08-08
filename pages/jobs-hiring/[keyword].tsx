@@ -340,8 +340,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const jobTypeList = config.inputs.job_types
-
-  console.log(config.filters.salary_range_filters, 'config.filters.salary_range_filters')
   const salaryRangeList = config.filters.salary_range_filters
 
   const updateUrl = (queryParam, queryObject) => {
