@@ -369,6 +369,54 @@ const Job = ({
     }
   }
 
+  const handleApplyJob = () => {
+    if (!userCookie) {
+      setQuickApplyModalShow(true)
+    } else {
+      if (!userCookie.is_email_verify) {
+        handleVerifyEmailClick()
+      } else {
+        router.push(applyJobLink)
+      }
+    }
+  }
+
+  const renderSaveAndApplyActions = () => {
+    return (
+      <div className={styles.jobDetailPrimaryActions}>
+        {jobDetail?.status_key === 'active' ? (
+          <>
+            <MaterialButton
+              variant='contained'
+              capitalize
+              disabled={jobDetail?.is_applied}
+              className={styles.applyBtn}
+              onClick={handleApplyJob}
+            >
+              <Text textColor='white' bold>
+                {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
+              </Text>
+            </MaterialButton>
+            <MaterialButton
+              variant='outlined'
+              capitalize
+              onClick={() => handlePostSaveJob()}
+              >
+              <Text textColor='primary' bold>
+                {isSavedJob ? 'Saved' : 'Save Job'}
+              </Text>
+            </MaterialButton>
+          </>
+        ) : (
+          <Text textStyle='base' className={styles.jobDetailStatus}>
+            <img src={ExpireIcon} height='16' width='16' />
+            <span>This job is no longer hiring</span>
+          </Text>
+        )}
+      </div>
+    )
+  }
+
   useEffect(() => {
     if (getCookie('isMobileReportJob') && authCookie && userCookie) {
       setIsShowReportJob(true)
@@ -470,57 +518,7 @@ const Job = ({
                   breakpointStyles.hideOnMobileAndTablet
                 ])}
               >
-                {!isAppliedQueryParam && (
-                  <div className={styles.jobDetailPrimaryActions}>
-                    {jobDetail?.status_key === 'active' && (
-                      <>
-                        {jobDetail?.is_applied ? (
-                          <MaterialButton variant='contained' capitalize disabled>
-                            <Text textColor='white' bold>
-                              Applied
-                            </Text>
-                          </MaterialButton>
-                        ) : (
-                          <MaterialButton
-                            variant='contained'
-                            capitalize
-                            onClick={(e) => {
-                              if (!userCookie) {
-                                e.preventDefault()
-                                setQuickApplyModalShow(true)
-                              } else {
-                                if (!userCookie.is_email_verify) {
-                                  handleVerifyEmailClick()
-                                } else {
-                                  router.push(applyJobLink)
-                                }
-                              }
-                            }}
-                          >
-                            <Text textColor='white' bold>
-                              Apply Now
-                            </Text>
-                          </MaterialButton>
-                        )}
-                      </>
-                    )}
-                    {jobDetail?.status_key !== 'active' && (
-                      <Text textStyle='base' className={styles.jobDetailStatus}>
-                        <img src={ExpireIcon} height='16' width='16' />
-                        <span>This job is no longer hiring</span>
-                      </Text>
-                    )}
-                    <MaterialButton
-                      variant='outlined'
-                      capitalize
-                      onClick={() => handlePostSaveJob()}
-                    >
-                      <Text textColor='primary' bold>
-                        {isSavedJob ? 'Saved' : 'Save Job'}
-                      </Text>
-                    </MaterialButton>
-                  </div>
-                )}
+                {!isAppliedQueryParam && renderSaveAndApplyActions()}
               </div>
             </div>
             <div className={styles.jobDetailPrimarySub}>
@@ -542,53 +540,8 @@ const Job = ({
           <div
             className={classNamesCombined([styles.jobDetailCTA, breakpointStyles.hideOnDesktop])}
           >
-            {!isAppliedQueryParam && (
-              <div className={styles.jobDetailPrimaryActions}>
-                {jobDetail?.status_key === 'active' && (
-                  <>
-                    {jobDetail?.is_applied ? (
-                      <MaterialButton variant='contained' capitalize disabled>
-                        <Text textColor='white' bold>
-                          Applied
-                        </Text>
-                      </MaterialButton>
-                    ) : (
-                      <MaterialButton
-                        variant='contained'
-                        capitalize
-                        onClick={(e) => {
-                          if (!userCookie) {
-                            e.preventDefault()
-                            setQuickApplyModalShow(true)
-                          } else {
-                            if (!userCookie.is_email_verify) {
-                              handleVerifyEmailClick()
-                            } else {
-                              router.push(applyJobLink)
-                            }
-                          }
-                        }}
-                      >
-                        <Text textColor='white' bold>
-                          Apply Now
-                        </Text>
-                      </MaterialButton>
-                    )}
-                  </>
-                )}
-                {jobDetail?.status_key !== 'active' && (
-                  <Text textStyle='base' className={styles.jobDetailStatus}>
-                    <img src={ExpireIcon} height='16' width='16' />
-                    <span>This job is no longer hiring</span>
-                  </Text>
-                )}
-                <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
-                  <Text textColor='primary' bold>
-                    {isSavedJob ? 'Saved' : 'Save Job'}
-                  </Text>
-                </MaterialButton>
-              </div>
-            )}
+            {!isAppliedQueryParam && renderSaveAndApplyActions()}
+            
             <Text textStyle='base' textColor='darkgrey' className={styles.jobDetailPostedAt}>
               Posted on {jobDetail?.published_at}
             </Text>
@@ -1051,8 +1004,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const { keyword, isApplied } = query
   const keywordQuery: any = keyword
   const jobId = keywordQuery?.split('-').pop()
+  
   if (jobId) {
-    // store actions
     if (isApplied === 'true') {
       store.dispatch(fetchAppliedJobDetailRequest({ jobId, accessToken }))
     } else {
@@ -1064,6 +1017,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         })
       )
     }
+  } else {
+    return {
+      notFound: true
+    }
   }
 
   store.dispatch(fetchConfigRequest())
@@ -1071,16 +1028,13 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const jobDetail = storeState.job?.jobDetail
-  const appliedJobDetail = storeState.job?.appliedJobDetail
+  let jobDetail = storeState.job.jobDetail.response
+  const appliedJobDetail = storeState.job.appliedJobDetail.response
   const config = storeState.config.config.response
 
-  if (jobDetail || appliedJobDetail) {
-    if (jobDetail.error || appliedJobDetail.error) {
-      return {
-        notFound: true
-      }
-    }
+  if (Object.keys(jobDetail).length > 0 || Object.keys(appliedJobDetail).length > 0) {
+    jobDetail = jobDetail?.id ? jobDetail : appliedJobDetail?.job
+    
     const {
       id: jobId,
       job_title: jobTitle,
@@ -1089,7 +1043,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       full_address: fullAddress,
       location,
       job_url: jobUrl
-    } = jobDetail?.response?.id ? jobDetail?.response : appliedJobDetail?.response?.job
+    } = jobDetail
+
     let categoryMetaText = ''
     categories.forEach((el) => {
       categoryMetaText += `${el.value}, `
@@ -1106,8 +1061,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     return {
       props: {
         config,
-        jobDetail: jobDetail?.response?.id ? jobDetail?.response : appliedJobDetail?.response?.job,
-        applicationHistory: appliedJobDetail?.response?.application_histories || null,
+        jobDetail: jobDetail?.id ? jobDetail : appliedJobDetail?.job,
+        applicationHistory: appliedJobDetail?.application_histories || null,
         accessToken,
         seoMetaTitle,
         seoMetaDescription,
@@ -1116,11 +1071,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     }
   } else {
     return {
-      redirect: {
-        permanent: false,
-        destination: '/404'
-      }
-    } 
+      notFound: true
+    }
   }
 })
 

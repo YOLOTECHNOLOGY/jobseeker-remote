@@ -42,6 +42,10 @@
     display: flex;
     align-items: center;
 
+    img {
+      margin-right: 5px;
+    }
+
     div {
       margin-right: 10px;
     }
@@ -122,10 +126,8 @@
   &PrimaryActions {
     margin-top: 20px;
 
-    button {
-      &:first-child {
-        margin-right: 16px !important;
-      }
+    .applyBtn {
+      margin-right: 16px;
     }
 
     @include sm {
