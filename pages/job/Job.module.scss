@@ -25,11 +25,11 @@
     width: 100%;
     margin-right: 24px;
   }
-  
+
   &OptionItem {
     padding: 12px 20px;
     display: block;
-    
+
     &:hover {
       cursor: pointer;
       background-color: $white-1;
@@ -37,7 +37,7 @@
   }
 
   &Status {
-    color: #F30000;
+    color: #f30000;
     margin-right: 20px;
     display: flex;
     align-items: center;
@@ -74,7 +74,7 @@
   }
 
   &PrimaryInfo {
-    width:min-content;
+    width: min-content;
     flex-grow: 1;
     word-break: break-word;
     display: flex;
@@ -82,7 +82,7 @@
     flex-direction: column;
 
     @include msd {
-      width:100%;
+      width: 100%;
       align-items: flex-start;
       flex-direction: column;
     }
@@ -91,7 +91,6 @@
   &PrimaryInfoTitle {
     margin: 16px 24px 0 0;
     line-height: 27px;
-
   }
 
   &PrimaryInfoImage {
@@ -129,7 +128,7 @@
     }
 
     @include sm {
-      display:flex;
+      display: flex;
       flex-direction: row;
       justify-content: space-between;
 
@@ -170,7 +169,7 @@
       @include sm {
         margin-top: 24px;
         flex-direction: column;
-      } 
+      }
     }
 
     &Item {
@@ -183,19 +182,19 @@
 
         @include sm {
           margin-top: 0;
-        } 
+        }
       }
 
       @include sm {
         width: 100%;
         margin-bottom: 14px;
-      } 
+      }
     }
 
     &Text {
       margin-left: 10px;
       span {
-        display: block
+        display: block;
       }
     }
 
@@ -215,33 +214,35 @@
       margin-top: 24px;
       border-top: 1px solid $lightgrey;
       background-color: transparent;
-    }   
+    }
   }
 
   &Section {
     margin-top: 26px;
     margin-bottom: 48px;
-  
+
     &Title {
       display: block;
       margin-bottom: 16px;
     }
-  
+
     &Body {
       margin-top: 16px;
       display: block;
       line-height: 24px;
-      overflow: scroll
+      @include msd {
+        overflow: scroll;
+      }
     }
-  
+
     &SubTitle {
       margin-top: 18px;
       display: block;
     }
-  
+
     &SubBodyLink {
       color: $primaryBlue;
-      
+
       &:hover {
         text-decoration: underline;
       }
@@ -261,7 +262,8 @@
 
   &DescriptionSectionBody,
   &RequirementSectionBody {
-    > ol, ul {
+    > ol,
+    ul {
       padding-inline: inherit;
       margin-left: 40px;
     }
@@ -277,7 +279,7 @@
         flex-direction: column;
       }
     }
-  
+
     &Item {
       display: flex;
       align-items: center;
@@ -289,7 +291,7 @@
         width: 100%;
       }
     }
-  
+
     &Text {
       margin-left: 16px;
     }
@@ -302,7 +304,7 @@
       flex-wrap: wrap;
       margin-top: 22px;
     }
-  
+
     &Item {
       background-color: $primaryBlue;
       border-radius: 16px;
@@ -325,7 +327,7 @@
     img {
       margin-right: 4px !important;
     }
-    
+
     span {
       display: block;
       margin-top: 8px;
@@ -441,7 +443,7 @@
     span {
       padding-right: 20px;
       position: relative;
-      
+
       &:not(:last-child) {
         border-right: 1px solid $lightgrey;
       }
@@ -453,7 +455,7 @@
 
     @include msd {
       flex-direction: column;
-      
+
       span {
         &:not(:last-child) {
           border-right: none;
@@ -524,7 +526,7 @@
       text-decoration: underline;
     }
   }
-  
+
   &Title {
     &:hover {
       text-decoration: underline;
@@ -592,11 +594,11 @@
   }
 }
 
-.sideSquareBanner{
-  width:250px;
-  height:250px;
+.sideSquareBanner {
+  width: 250px;
+  height: 250px;
   margin-bottom: 24px;
-  overflow:hidden;
+  overflow: hidden;
 
   @include msd {
     margin: 48px auto;
