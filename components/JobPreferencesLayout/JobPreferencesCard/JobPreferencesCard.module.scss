@@ -1,9 +1,10 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
-.CardContainer {
+.JobPreferencesCard {
     display: flex;
     flex-direction: column;
+    position: relative;
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
@@ -14,8 +15,90 @@
     margin-bottom: 24px;
 
     @include msd {
-        padding: 0;
-        border: none;
+        padding: 16px;
+        // border: none;
         margin: 36px 0px;
+    }
+
+    &Button {
+        width: 250px;
+
+        @include msd {
+            width: 100%;
+        }
+    }
+
+    &Detail {
+        display: inline-block;
+        width: 60%;
+
+        &List {
+            list-style: none;
+
+            & > li {
+                margin-top: 16px;
+                display: flex;
+                position: relative;
+                // justify-content: space-between;
+                // margin-right: auto;
+                // align-items: center;
+            }
+
+            @include msd {
+                display: flex;
+                flex-direction: column;
+                // position: relative;
+                // justify-content: space-between;
+                // margin-right: auto;
+                // align-items: center;
+            }
+        }
+
+        &Text {
+            position: absolute;
+            margin-left: 250px;
+
+            @include msd {
+                margin-left: 200px;
+            }
+        }
+    }
+
+    &EditIcon {
+        position: absolute;
+        top: 16px;
+        right: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 45px;
+        height: 45px;
+        // padding-left: 750px;
+
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #f1f1f1;
+            z-index: -1;
+            opacity: 0;
+            transition: 0.2s ease-out;
+        }
+
+        &:hover {
+            cursor: pointer;
+            &:after {
+                opacity: 1;
+            }
+        }
+
+        @include msd {
+            top: 0;
+            right: 0;
+        }
     }
 }

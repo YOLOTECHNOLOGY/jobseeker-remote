@@ -1,7 +1,7 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
-.CardContainer {
+.OpenToWorkCard {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -18,8 +18,8 @@
     }
 
     @include msd {
-        padding: 0;
-        border: none;
+        padding: 16px;
+        // border: none;
         margin: 36px 0px;
     }
 }

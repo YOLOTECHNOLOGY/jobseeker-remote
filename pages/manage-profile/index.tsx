@@ -25,6 +25,9 @@ import MaterialButton from 'components/MaterialButton'
 import EditProfileModal from 'components/EditProfileModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
 
+import JobPreferencesCard from 'components/JobPreferencesLayout/JobPreferencesCard'
+import OpenToWorkCard from 'components/JobPreferencesLayout/OpenToWorkCard'
+
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
@@ -181,8 +184,25 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
   )
 }
 
-const RenderPreferencesView = () => {
-  return <React.Fragment>preferences content</React.Fragment>
+const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handleModal }: any) => {
+  return (
+    <React.Fragment>
+      <div>
+        <JobPreferencesCard
+            title='Job Preferences'
+            modalName={modalName}
+            showModal={showModal}
+            // workingSetting='Work from home'
+            userDetail={userDetail}
+            config={config}
+            handleModal={handleModal}
+        />
+        <OpenToWorkCard
+            title='Open to work'
+        />
+      </div>
+    </React.Fragment>
+  )
 }
 
 const RenderResumeView = ({ userDetail }: any) => {
@@ -506,7 +526,7 @@ const ManageProfilePage = ({ config }: any) => {
         {tabValue === 'profile' && (
           <RenderProfileView userDetail={userDetail} handleModal={handleModal} />
         )}
-        {tabValue === 'job-preferences' && <RenderPreferencesView />}
+        {tabValue === 'job-preferences' && <RenderPreferencesView modalName='jobPreferences' showModal={modalState.jobPreferences.showModal} config={config} userDetail={userDetail} handleModal={handleModal} />}
         {tabValue === 'resume' && <RenderResumeView userDetail={userDetail} />}
       </ProfileLayout>
     </Layout>

@@ -1143,6 +1143,14 @@ const appendGeneralQueryPattern = () => {
   return 'job-search'
 }
 
+const getJobTypeList = (config) => {
+  return config?.inputs.job_types.map((jobType) => ({
+    ...jobType,
+    label: jobType.value,
+    value: jobType.key
+  }))
+}
+
 const getLocationList = (config) => {
   if (!config) return []
 
@@ -1356,6 +1364,7 @@ export {
   SEOJobSearchMetaBuilder,
   getPredefinedParamsFromUrl,
   formatLocationConfig,
+  getJobTypeList,
   getLocationList,
   getNoticePeriodList,
   getSmsCountryList,

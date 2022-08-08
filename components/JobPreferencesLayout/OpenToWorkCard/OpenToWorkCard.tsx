@@ -11,24 +11,8 @@ import styles from './OpenToWorkCard.module.scss'
 /* Services */
 import { toggleOpenToWorkService } from 'store/services/jobs/toggleOpenToWork'
 
-import MaterialButton from '../../MaterialButton'
-
-// import ModalJobPreferences from 'components/ModalJobPreferences/ModalJobPreferences'
-import DynamicModalJobPreferences from 'components/DynamicModalJobPreferences'
-
 type OpenToWorkCardProps = {
     title: string
-}
-
-const onClickTest = () => {
-    return (
-        <DynamicModalJobPreferences
-            isShowModal={true}
-        />
-        // <ModalJobPreferences
-        //     isShowModal={true}
-        // />
-    )
 }
 
 const OpenToWorkCard = ({
@@ -44,8 +28,8 @@ const OpenToWorkCard = ({
     }
 
     return (
-        <div className={styles.CardContainer}>
-            <Text className={styles.CardContainerTitle} bold textStyle='xl' textColor='primaryBlue'>
+        <div className={styles.OpenToWorkCard}>
+            <Text className={styles.OpenToWorkCardTitle} bold textStyle='xl' textColor='primaryBlue'>
                 {title}
             </Text>
             <FormControlLabel
@@ -57,7 +41,7 @@ const OpenToWorkCard = ({
                 }
                 label={
                 <Text textStyle='lg'>
-                Let recruiters know that you are open to work
+                    Let recruiters know that you are open to work
                 </Text>
                 }
             />
