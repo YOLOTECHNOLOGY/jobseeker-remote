@@ -31,7 +31,7 @@ const CompanyJobsProfile = (props: any) => {
   const { page } = router.query
   const dispatch = useDispatch()
   const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs } = props
-  const company = companyDetail?.response.data
+  const company = companyDetail
 
   const [jobQuery, setJobQuery] = useState('')
   const [jobLocation, setJobLocation] = useState(null)
@@ -218,14 +218,21 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
+  const companyDetail = storeState.companies.companyDetail.response.data
   
+  if (!companyDetail) {
+    return {
+      notFound: true
+    }
+  }
+
   const config = storeState.config.config.response
-  const companyDetail = storeState.companies.companyDetail || null
-  const companyName = companyDetail.response.data.name
+  const companyName = companyDetail?.name
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `${companyName} Careers in Philippines, Job Opportunities | Bossjob`
   const seoMetaDescription = encodeURI(`View all current job opportunities at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`)
+  
   return {
     props: {
       config,
