@@ -1,9 +1,9 @@
 import configuredAxios from 'helpers/configuredAxios'
 
 const applyJobService = (jobId, payload) => {
-  const axios = configuredAxios('job', 'protected')
+  const axios = configuredAxios('data', 'protected')
 
-  return axios.post(`/${jobId}/apply`, payload)
+  return axios.post(`jobs/${jobId}/applications`, payload)
 }
 
 export { applyJobService }

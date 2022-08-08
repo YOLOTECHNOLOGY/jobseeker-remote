@@ -11,8 +11,10 @@ import moment from 'moment'
 /* Redux actions */
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
-import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
 import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
+import { manageUserEducationsRequest } from 'store/actions/users/manageUserEducations'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 
 /* Components */
 import Layout from 'components/Layout'
@@ -21,9 +23,11 @@ import ProfileLayout from 'components/ProfileLayout'
 import ProfileSettingCard from 'components/ProfileSettingCard'
 import UploadResume from 'components/UploadResume'
 import MaterialButton from 'components/MaterialButton'
+import ReadMore from 'components/ReadMore'
 
 import EditProfileModal from 'components/EditProfileModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
+import EditEducationModal from 'components/EditEducationModal'
 
 import JobPreferencesCard from 'components/JobPreferencesLayout/JobPreferencesCard'
 import OpenToWorkCard from 'components/JobPreferencesLayout/OpenToWorkCard'
@@ -32,6 +36,7 @@ import OpenToWorkCard from 'components/JobPreferencesLayout/OpenToWorkCard'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
+import { getYearMonthDiffBetweenDates } from 'helpers/formatter'
 
 /* Assets */
 import {
@@ -40,22 +45,29 @@ import {
   DownloadWhiteIcon,
   CarouselRightRoundedBlueButton,
   AddIcon,
-  CreateFilledIcon,
-  DeleteFilledIcon,
+  PencilIcon,
+  TrashIcon,
 } from 'images'
 
 /* Styles */
 import classNames from 'classnames'
 import styles from './ManageProfile.module.scss'
+import { Chip } from '@mui/material'
+import EditSkillModal from 'components/EditSkillModal'
+import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
+
 
 const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const dispatch = useDispatch()
-  console.log('RenderProfileView userDetail', userDetail)
-  const { work_experiences: workExperiences } = userDetail
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
+  const { work_experiences: workExperiences, educations, skills } = userDetail
 
   const handleAddData = (type) => {
     switch (type) {
       case 'workExperience':
+        handleModal(type, true)
+      case 'education':
         handleModal(type, true)
       default:
         break
@@ -66,6 +78,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     switch (type) {
       case 'workExperience':
         handleModal(type, true, data)
+      case 'education':
+        handleModal(type, true, data)
       default:
         break
     }
@@ -75,6 +89,10 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     handleModal('workExperience', true, workExp)
   }
 
+  const handleEducationModal = (education = null) => {
+    handleModal('education', true, education)
+  }
+
   const handleDeleteData = async (type, id) => {
     switch (type) {
       case 'workExperience':
@@ -82,6 +100,13 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           manageUserWorkExperiencesRequest({
             isDelete: true,
             workExperienceId: id,
+          })
+        )
+      case 'education':
+        dispatch(
+          manageUserEducationsRequest({
+            isDelete: true,
+            educationId: id,
           })
         )
       default:
@@ -102,11 +127,18 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         </div>
         <div className={styles.sectionContent}>
           {workExperiences.map((workExp) => {
-            console.log('workExp', workExp)
+            const workingPeriodFrom = moment(workExp?.working_period_from)
+            const workingPeriodTo = moment(workExp?.working_period_to)
+            const dateDiff = getYearMonthDiffBetweenDates(
+              workingPeriodFrom,
+              workExp.is_currently_work_here
+                ? moment(new Date()).format('YYYY-MM-DD')
+                : workingPeriodTo
+            )
             return (
               <div key={workExp.id} className={styles.workExpSection}>
                 <div className={styles.titleWrapper}>
-                  <Text textStyle='base' bold>
+                  <Text textStyle='lg' bold>
                     {workExp.job_title}
                   </Text>
                   <div className={styles.iconWrapperDouble}>
@@ -114,27 +146,134 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                       className={styles.iconWrapper}
                       onClick={() => handleEditData(sectionName, workExp)}
                     >
-                      <img src={CreateFilledIcon} width='14' height='14' />
+                      <img src={PencilIcon} width='22' height='22' />
                     </div>
                     <div
                       className={styles.iconWrapper}
                       onClick={() => handleDeleteData(sectionName, workExp.id)}
                     >
-                      <img src={DeleteFilledIcon} width='14' height='14' />
+                      <img src={TrashIcon} width='14' height='14' />
                     </div>
                   </div>
                 </div>
-                <Text textStyle='base'>{workExp.company}</Text> | <Text>{workExp.location}</Text>
-                <Text textStyle='base'>
-                  {moment(workExp?.working_period_from).format('MMMM yyyy')} to{' '}
+                <div className={styles.companyInfoWrapper}>
+                  <Text textStyle='lg'>{workExp.company}</Text>
+                  <Text textStyle='lg'>{`${workExp.location}${
+                    workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
+                  }`}</Text>
+                </div>
+                <Text textStyle='base' textColor='darkgrey'>
+                  {workingPeriodFrom.format('MMMM yyyy')} to{' '}
                   {workExp?.is_currently_work_here
                     ? 'Present'
-                    : moment(workExp?.working_period_to).format('MMMM yyyy')}
+                    : workingPeriodTo.format('MMMM yyyy')}{' '}
+                  {dateDiff ? `(${dateDiff})` : ''}
                 </Text>
-                {workExp?.descriptipon && <Text>{workExp?.description}</Text>}
+                {workExp?.description && (
+                  <ReadMore
+                    size={isMobile ? 210 : 300}
+                    text={workExp?.description}
+                    className={styles.readMoreDescriptionWrapper}
+                  />
+                )}
               </div>
             )
           })}
+        </div>
+      </div>
+    )
+  }
+
+  const renderEducationSection = (sectionName) => {
+    return (
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <Text textStyle='xl' textColor='primaryBlue' bold>
+            Education
+          </Text>
+          <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
+            <img src={AddIcon} width='14' height='14' />
+          </div>
+        </div>
+        <div className={styles.sectionContent}>
+          {educations.map((education) => {
+            let studyPeriod = ""
+
+            if (education?.study_period_from) {
+              studyPeriod += moment(education?.study_period_from).format('MMM yyyy')
+
+              if (education?.is_currently_studying === true) {
+                studyPeriod += " - Present"
+              } else if (education?.is_currently_studying === false && education?.study_period_to) {
+                studyPeriod += " - " + moment(education?.study_period_to).format('MMM yyyy')
+              }
+            }
+
+            return (
+              <div key={education.id} className={styles.educationSection}>
+                <div className={styles.titleWrapper}>
+                  <Text textStyle='lg' bold>
+                    {education.school}
+                  </Text>
+                  <div className={styles.iconWrapperDouble}>
+                    <div
+                      className={styles.iconWrapper}
+                      onClick={() => handleEditData(sectionName, education)}
+                    >
+                      <img src={PencilIcon} width='22' height='22' />
+                    </div>
+                    <div
+                      className={styles.iconWrapper}
+                      onClick={() => handleDeleteData(sectionName, education.id)}
+                    >
+                      <img src={TrashIcon} width='14' height='14' />
+                    </div>
+                  </div>
+                </div>
+                {education?.degree &&
+                  <Text textStyle='lg'>
+                    {education.degree}
+                  </Text>
+                }
+                { studyPeriod !== "" &&
+                  <Text textStyle='base' textColor='darkgrey' >
+                    {studyPeriod}
+                  </Text>
+                }
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  const rendeSkillSection = () => {
+    return (
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <Text textStyle='xl' textColor='primaryBlue' bold>
+            Skills
+          </Text>
+          <div className={styles.iconWrapper} onClick={() => handleModal('skills', true)}>
+            <img src={AddIcon} width='14' height='14' />
+          </div>
+        </div>
+        <div className={styles.sectionContent}>
+          <div className={styles.skill}>
+            {skills.map((skill, i) => {
+              return (
+                <Chip
+                  key={i}
+                  className={styles.skillChip}
+                  label={skill}
+                  variant='filled'
+                  color='info'
+                  size='small' 
+                />
+              )
+            })}
+          </div>
         </div>
       </div>
     )
@@ -152,20 +291,30 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           onClick={() => handleWorkExpModal()}
         />
       )}
-      <ProfileSettingCard
-        title='Education'
-        description='Highlight your academic qualifications and achievements.'
-        buttonText='Add education'
-        // eslint-disable-next-line
-        onClick={() => {}}
-      />
-      <ProfileSettingCard
-        title='Skills'
-        description='Include relevant skill and keywords to boost your chances of getting an interview.'
-        buttonText='Add skills'
-        // eslint-disable-next-line
-        onClick={() => {}}
-      />
+
+      {educations?.length > 0 ? (
+        renderEducationSection('education')
+      ) : (
+        <ProfileSettingCard
+          title='Education'
+          description='Highlight your academic qualifications and achievements.'
+          buttonText='Add education'
+          // eslint-disable-next-line
+          onClick={() => handleEducationModal()}
+        />
+      )}
+
+      {skills?.length > 0 ? (
+        rendeSkillSection()
+      ) : (
+        <ProfileSettingCard
+          title='Skills'
+          description='Include relevant skill and keywords to boost your chances of getting an interview.'
+          buttonText='Add skills'
+          // eslint-disable-next-line
+          onClick={() => handleModal('skills', true)}
+        />
+      )}
       <ProfileSettingCard
         title='Links'
         description='Show recruiters your work by sharing your websites, portfolio, articles, or any relevant links.'
@@ -271,12 +420,18 @@ const RenderResumeView = ({ userDetail }: any) => {
   }
 
   const handleUploadResume = (file) => {
-    setResume(file)
-    dispatch(
-      uploadUserResumeRequest({
-        resume: file,
-      })
-    )
+    uploadUserResumeService(file)
+    .then((response) => {
+      setResume(response.data.data)
+    })
+    .catch(error => {
+      dispatch(displayNotification({
+        open: true,
+        severity: 'error',
+        message: `Failed to upload resume with error: ${error.message}. 
+        Please contact support@bossjob.com for assistance.`
+      }))
+    })
   }
 
   const handleDownloadResume = (type) => {
@@ -455,6 +610,12 @@ const ManageProfilePage = ({ config }: any) => {
   } = router
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
+  const jobCategoryList = getJobCategoryList(config).map((category) => {
+    return {
+      label: category.value,
+      value: category.id
+    }
+  })
 
   const [modalState, setModalState] = useState({
     profile: {
@@ -498,6 +659,7 @@ const ManageProfilePage = ({ config }: any) => {
     if (callbackFunc) {
       callbackFunc()
     }
+    
   }
 
   return (
@@ -516,6 +678,20 @@ const ManageProfilePage = ({ config }: any) => {
         config={config}
         handleModal={handleModal}
       />
+      <EditEducationModal
+        modalName='education'
+        showModal={modalState.education.showModal}
+        education={modalState.education.data}
+        config={config}
+        handleModal={handleModal}
+      />
+      <EditSkillModal
+        modalName='skills'
+        showModal={modalState.skills.showModal}
+        categoryList={jobCategoryList}
+        skills={userDetail.skills}
+        handleModal={handleModal}
+      />
       <ProfileLayout
         userDetail={userDetail}
         tabValue={tabValue}
@@ -524,7 +700,7 @@ const ManageProfilePage = ({ config }: any) => {
         handleModal={handleModal}
       >
         {tabValue === 'profile' && (
-          <RenderProfileView userDetail={userDetail} handleModal={handleModal} />
+          <RenderProfileView userDetail={userDetail} handleModal={handleModal} config={config}/>
         )}
         {tabValue === 'job-preferences' && <RenderPreferencesView modalName='jobPreferences' showModal={modalState.jobPreferences.showModal} config={config} userDetail={userDetail} handleModal={handleModal} />}
         {tabValue === 'resume' && <RenderResumeView userDetail={userDetail} />}

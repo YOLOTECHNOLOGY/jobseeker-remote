@@ -38,7 +38,7 @@ const CompanyDetail = (props: any) => {
   const [jobQuery, setJobQuery] = useState('')
 
   const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs } = props
-  const company = companyDetail?.response.data
+  const company = companyDetail
   const [companyJobs, setCompanyJobs] = useState(null)
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
   const [totalPages, setTotalPages] = useState(null)
@@ -498,9 +498,15 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
+  const companyDetail = storeState.companies.companyDetail.response.data
 
-  const companyDetail = storeState.companies.companyDetail
-  const companyName = companyDetail.response.data.name
+  if (!companyDetail) {
+    return {
+      notFound: true
+    }
+  }
+
+  const companyName = companyDetail.name
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `Working at ${companyName}| Bossjob`

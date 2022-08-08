@@ -7,7 +7,8 @@ import { fetchSimilarJobsService } from 'store/services/jobs/fetchSimilarJobs'
 function* fetchSimilarJobsReq(actions) {
   try {
     const payload = {
-      jobId: actions.payload.jobId
+      jobId: actions.payload.jobId,
+      size: actions.payload.size || 5
     }
 
     const response = yield call(fetchSimilarJobsService, payload)

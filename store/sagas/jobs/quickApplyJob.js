@@ -9,7 +9,6 @@ import { quickApplyJobSuccess, quickApplyJobFailed } from 'store/actions/jobs/qu
 
 import { setCookie } from 'helpers/cookies'
 import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
-import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import { registerJobseekerService } from 'store/services/auth/registerJobseeker'
 import {
@@ -40,8 +39,7 @@ function* quickApplyJobReq(action) {
       first_message,
       resume,
       jobId,
-      jobCategories,
-      companyId
+      jobUrl
     } = action.payload
 
     // Register jobseeker
@@ -99,7 +97,7 @@ function* quickApplyJobReq(action) {
       )
 
       // Upload resume 
-      yield uploadResumeSaga(resume, registeredData.authentication.access_token)
+      yield uploadResumeSaga(resume)
 
       // Apply job
       const applyJobPayload = {
@@ -113,7 +111,11 @@ function* quickApplyJobReq(action) {
 
         yield put(quickApplyJobSuccess(applyJobResponse.data.data))
 
-        const applySuccessUrl = authPathToOldProject(null, `/${jobCategories}/${companyId}/${jobId}/applysuccess`)
+        if (window !== 'undefined' && window.fbq) {
+          yield fbq.event('Application success', {'source': 'quick_apply'})
+        }
+
+        const applySuccessUrl = `${jobUrl}/apply/success`
 
         yield put(push(applySuccessUrl))
       } catch (error) {
@@ -143,9 +145,9 @@ function* quickApplyJobReq(action) {
   }
 }
 
-function* uploadResumeSaga(resume, accessToken) {
+function* uploadResumeSaga(resume) {
   try {
-    const { data } = yield call(uploadUserResumeService, { resume, accessToken })
+    const { data } = yield call(uploadUserResumeService, resume)
 
     yield put(uploadUserResumeSuccess(data.data))
   } catch (error) {

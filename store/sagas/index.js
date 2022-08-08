@@ -49,6 +49,7 @@ import watchCheckVerifyEmailOTP from 'store/sagas/users/checkVerifyEmailOTP'
 import watchUpdateUserProfile from 'store/sagas/users/updateUserProfile'
 import watchUpdateUserPreferences from 'store/sagas/users/updateUserPreferences'
 import watchManageUserWorkExperiences from 'store/sagas/users/manageUserWorkExperiences'
+import watchManageUserEducations from 'store/sagas/users/manageUserEducations'
 
 // Courses
 import watchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
@@ -111,6 +112,7 @@ function* rootSaga() {
     watchUpdateUserProfile(),
     watchUpdateUserPreferences(),
     watchManageUserWorkExperiences(),
+    watchManageUserEducations(),
 
     watchSocialLogin(),
     watchLogin(),

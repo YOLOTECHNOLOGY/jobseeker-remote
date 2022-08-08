@@ -15,7 +15,7 @@ import styles from '../Company.module.scss'
 
 const CompanyLifeProfile = (props: any) => {
   const { companyDetail, seoMetaTitle, seoMetaDescription, totalActiveJobs } = props
-  const company = companyDetail?.response.data
+  const company = companyDetail
 
   return (
     <CompanyProfileLayout
@@ -110,13 +110,20 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
+  const companyDetail = storeState.companies.companyDetail.response.data
 
-  const companyDetail = storeState.companies.companyDetail
-  const companyName = companyDetail.response.data.name
+  if (!companyDetail) {
+    return {
+      notFound: true
+    }
+  }
+
+  const companyName = companyDetail?.name
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `Culture & Life at ${companyName} | Bossjob`
   const seoMetaDescription = encodeURI(`Discover company culture & life at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`)
+  
   return {
     props: {
       companyDetail,

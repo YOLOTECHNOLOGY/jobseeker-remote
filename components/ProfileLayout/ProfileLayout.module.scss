@@ -20,13 +20,13 @@
 
   &UserOverview {
     grid-area: overview;
-    width: 100%;
+    width: 264px;
     height: 100%;
   }
 
   &Settings {
     grid-area: detail;
-    width: 100%;
+    width: 838px;
     height: 100%;
   }
 }

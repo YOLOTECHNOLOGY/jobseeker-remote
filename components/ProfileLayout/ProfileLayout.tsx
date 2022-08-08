@@ -53,7 +53,7 @@ const ProfileLayout = ({
   handleModal,
   children,
 }: ProfileLayoutProps) => {
-  const { avatar, email, phone_num: contactNum, first_name: firstName, last_name:lastName, location: userLocation } = userDetail
+  const { avatar, email, phone_num: contactNum, first_name: firstName, last_name:lastName, location: userLocation, description, xp_lvl: expLevel, birthdate } = userDetail
 
   const handleShowModal = () => {
     handleModal(modalName, true)
@@ -86,6 +86,9 @@ const ProfileLayout = ({
           email={email}
           avatarUrl={avatar}
           contactNumber={contactNum}
+          description={description}
+          expLevel={expLevel}
+          birthdate={birthdate}
           handleEditClick={handleEditClick}
         />
       </div>

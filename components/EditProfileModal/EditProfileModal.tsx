@@ -19,7 +19,7 @@ import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 
 /* Helpers */
-import { getNoticePeriodList } from 'helpers/jobPayloadFormatter'
+// import { getNoticePeriodList } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
 
 import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
@@ -77,11 +77,10 @@ const errorText = (errorMessage: string) => {
 const EditProfileModal = ({
   modalName,
   showModal,
-  config,
   userDetail,
   handleModal,
 }: EditProfileModalProps) => {
-  const { avatar, first_name, last_name, location: userLocation, description } = userDetail
+  const { avatar, first_name, last_name, location: userLocation, description, xp_lvl: expLevel } = userDetail
 
   const dispatch = useDispatch()
 
@@ -92,9 +91,6 @@ const EditProfileModal = ({
   const [summary, setSummary] = useState(description || '')
 
   const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserProfile.fetching)
-  const updateProfileSuccess = useSelector(
-    (store: any) => store.users.updateUserProfile.response
-  )
 
   const xpLevelList = useSelector((store: any) => store.config.config.response?.inputs?.xp_lvls)
   const locationList = useSelector(
@@ -104,10 +100,13 @@ const EditProfileModal = ({
   const formattedXpLevelList = xpLevelList.map((xp) => {
     return { ...xp, label: xp.value, value: xp.key }
   })
-  const [yearsOfExperience, setYearsOfExperience] = useState(formattedXpLevelList[0].key)
 
-  const noticeList = getNoticePeriodList(config)
-  const [availability, setAvailability] = useState(noticeList[0].value)
+  const defaultExpLevel = formattedXpLevelList.filter((xp) => expLevel === xp.label)
+  const [yearsOfExperience, setYearsOfExperience] = useState(defaultExpLevel[0]?.key)
+  // const [yearsOfExperience, setYearsOfExperience] = useState(defaultExpLevel[0].key)
+
+  // const noticeList = getNoticePeriodList(config)
+  // const [availability, setAvailability] = useState(noticeList[0].value)
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
   const [location, setLocation] = useState(formattedLocationList[0])
@@ -129,43 +128,40 @@ const EditProfileModal = ({
         setValue('location', matchedLocation)
       }
     }
-    if (userDetail && userDetail.notice_period_id) {
-      setAvailability(userDetail.notice_period_id)
-      setValue('noticePeriod', userDetail.notice_period_id)
-    }
+    // if (userDetail && userDetail.notice_period_id) {
+    //   setAvailability(userDetail.notice_period_id)
+    //   setValue('noticePeriod', userDetail.notice_period_id)
+    // }
     if (userDetail && userDetail.xp_lvl) {
-      setYearsOfExperience(userDetail.xp_lvl)
-      setValue('yearsOfExperience', userDetail.xp_lvl)
+
+      setYearsOfExperience(defaultExpLevel[0]?.key)
+      setValue('yearsOfExperience', defaultExpLevel[0]?.key)
+      // setYearsOfExperience(userDetail.xp_lvl)
+      // setValue('yearsOfExperience', userDetail.xp_lvl)
     }
   }, [userDetail])
 
   useEffect(() => {
     handleCloseModal()
-  }, [updateProfileSuccess])
+  }, [userDetail])
 
   const onLocationSearch = (e, value) => {
     setLocation(value)
   }
 
   const onSubmit = (data) => {
-    const { noticePeriod, firstName, lastName, summary } = data
-    const avatar = selectedAvatar
-    console.log('avatar: ', avatar)
-    const avatarFile = avatar && new File([avatar], 'avatar')
-    console.log('avatarFile', avatarFile)
-    console.log('selectedAvatar', selectedAvatar)
+    const { firstName, lastName, summary } = data
     const payload = {
         avatar: selectedAvatar,
         first_name: firstName,
         last_name: lastName,
         birthdate: birthdate && moment(new Date(birthdate)).format('yyyy-MM-DD'),
         location_key: (location as any).key || '',
-        xp_level_key: yearsOfExperience || '',
-        notice_period_id: noticePeriod,
+        xp_lvl_key: yearsOfExperience || '',
+        // notice_period_id: noticePeriod,
         description: summary.length > 0 ? summary : '',
     }
 
-    console.log('payload', payload)
     dispatch(updateUserProfileRequest(payload))
   }
 
@@ -201,7 +197,7 @@ const EditProfileModal = ({
             <div className={styles.profileFormGroup}>
               <MaterialTextField
                 refs={{
-                  ...register('firstName'),
+                  ...register('firstName')
                 }}
                 className={styles.profileFormInput}
                 name='firstName'
@@ -215,7 +211,7 @@ const EditProfileModal = ({
               <div style={{ width: '20px' }}></div>
               <MaterialTextField
                 refs={{
-                  ...register('lastName'),
+                  ...register('lastName')
                 }}
                 className={styles.profileFormInput}
                 name='lastName'
@@ -289,9 +285,9 @@ const EditProfileModal = ({
                   ...register('location', {
                     required: {
                       value: true,
-                      message: 'This field is required.',
-                    },
-                  }),
+                      message: 'This field is required.'
+                    }
+                  })
                 }}
                 className={styles.profileFormInput}
                 label={requiredLabel('Current Location')}
@@ -305,7 +301,7 @@ const EditProfileModal = ({
             <div className={styles.profileFormGroup}>
               <MaterialBasicSelect
                 fieldRef={{
-                  ...register('yearsOfExperience'),
+                  ...register('yearsOfExperience')
                 }}
                 className={styles.profileFormInput}
                 label='Years of Experience'
@@ -316,7 +312,7 @@ const EditProfileModal = ({
                 }}
               />
             </div>
-            <div className={styles.profileFormGroup}>
+            {/* <div className={styles.profileFormGroup}>
               <MaterialBasicSelect
                 fieldRef={{
                   ...register('noticePeriod'),
@@ -330,15 +326,15 @@ const EditProfileModal = ({
                   setAvailability(e.target.value)
                 }}
               />
-            </div>
+            </div> */}
             <div className={styles.profileFormGroup}>
               <div className={styles.descriptionField}>
                 <TextField
                   {...register('summary', {
                     required: {
                       value: true,
-                      message: 'This field is required.',
-                    },
+                      message: 'This field is required.'
+                    }
                   })}
                   className={styles.profileFormInput}
                   placeholder='Provide a career summary and briefly highlight your relevant experience, achievement and skills.'

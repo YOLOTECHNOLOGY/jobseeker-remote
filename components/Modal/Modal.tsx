@@ -73,10 +73,7 @@ const Modal = ({
   }
 
   const syncHeight = () => {
-    document.documentElement.style.setProperty(
-      '--window-inner-height',
-      `${window.innerHeight}px`
-    )
+    document.documentElement.style.setProperty('--window-inner-height', `${window.innerHeight}px`)
   }
 
   // const preventDefault = (e) => {
@@ -86,22 +83,19 @@ const Modal = ({
   useEffect(() => {
     /* To handle IOS Safari footer */
     // Set initial height to window.innerHeight
-    document.documentElement.style.setProperty(
-      '--window-inner-height',
-      `${window.innerHeight}px`
-    )
+    document.documentElement.style.setProperty('--window-inner-height', `${window.innerHeight}px`)
     // When IOS footer/header toggles, it triggers a resize event
     // We update body height on 'resize'
     window.addEventListener('resize', syncHeight)
-    
+
     // const modal = document.querySelector('.modal-wrapper')
     // modal.addEventListener('pointermove', preventDefault)
 
     /* Setting HTML height will disrupt scroll position, so we store scroll position*/
     scrollY.current = window.pageYOffset
-    document.documentElement.classList.add('modal-active')
-    
+
     if (closeModalOnOutsideClick) document.addEventListener('click', handleClickOutside, true)
+    
     return () => {
       if (closeModalOnOutsideClick) document.removeEventListener('click', handleClickOutside, true)
       window.removeEventListener('resize', syncHeight)
@@ -111,7 +105,7 @@ const Modal = ({
 
   return ReactDOM.createPortal(
     <>
-      <div className={styles.modalOverlay} ref={ref}/>
+      <div className={styles.modalOverlay} ref={ref} />
       <div
         id='modal'
         className={styles.modalWrapper}
@@ -122,56 +116,47 @@ const Modal = ({
         role='dialog'
         {...rest}
       >
-          <div
-            className={classNames([
-              styles.modalContent,
-              className,
-            ])}
-          >
-              <div className={styles.modalHeader}>
-                <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
-                  {headerTitle}
-                </Text>
-                <div className={styles.modalCloseButton}>
-                  <Text onClick={handleCloseModal}>
-                    <img
-                      src={CloseIcon}
-                      title='close modal'
-                      alt='close modal'
-                      width='14'
-                      height='14'
-                    />
-                  </Text>
-                </div>
-              </div>
-              <div className={styles.modalBody}>{children}</div>
-              {customFooter && <div className={styles.modalFooter}>{customFooter}</div>}
-              {(hasFirstButton || hasSecondButton) && (
-                <div className={styles.modalFooter}>
-                  {hasFirstButton && (
-                    <Button
-                      onClick={() => {
-                        handleFirstButton()
-                        if (firstButtonIsClose) handleCloseModal()
-                      }}
-                    >
-                      {firstButtonText}
-                    </Button>
-                  )}
-                  {hasSecondButton && (
-                    <Button
-                      onClick={() => {
-                        handleSecondButton()
-                        if (secondButtonIsClose) handleCloseModal()
-                      }}
-                    >
-                      {secondButtonText}
-                    </Button>
-                  )}
-                </div>
-              )}
+        <div className={classNames([styles.modalContent, className])}>
+          <div className={styles.modalHeader}>
+            <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
+              {headerTitle}
+            </Text>
+            <div className={styles.modalCloseButton}>
+              <Text onClick={handleCloseModal}>
+                <img src={CloseIcon} title='close modal' alt='close modal' width='14' height='14' />
+              </Text>
+            </div>
           </div>
+          <div className={styles.modalBody}>{children}</div>
+          {customFooter && <div className={styles.modalFooter}>{customFooter}</div>}
+          {(hasFirstButton || hasSecondButton) && (
+            <div className={styles.modalFooter}>
+              {hasFirstButton && (
+                <Button
+                  className={styles.modalFooterFirstButtonBock}
+                  onClick={() => {
+                    handleFirstButton()
+                    if (firstButtonIsClose) handleCloseModal()
+                  }}
+                >
+                  {firstButtonText}
+                </Button>
+              )}
+              {hasSecondButton && (
+                <Button
+                  className={styles.modalFooterSecondButtonOnfirm}
+                  onClick={() => {
+                    handleSecondButton()
+                    if (secondButtonIsClose) handleCloseModal()
+                  }}
+                >
+                  {secondButtonText}
+                </Button>
+              )}
+            </div>
+          )}
         </div>
+      </div>
     </>,
     document.body
   )

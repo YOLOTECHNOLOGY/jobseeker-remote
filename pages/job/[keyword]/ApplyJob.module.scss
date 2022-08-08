@@ -18,7 +18,7 @@
   
     &Box {
       margin-bottom: 24px;
-      padding: 22px 24px;
+      padding: 16px 24px;
       border: 0.5px solid #BCBCBC;
       border-radius: 4px;
 
@@ -38,29 +38,6 @@
             margin-right: 8px;
           }
         } 
-      }
-
-      > .uploadedResume {
-        display: flex;
-        justify-content: space-between;
-  
-        > .leftResume {
-          display: flex;
-  
-          > .documentDiv {
-            width: auto;
-            margin-right: 10px;
-          }
-  
-          > .resumeName {
-            line-height: 22px;
-          }
-        }
-  
-        > .trashDiv {
-          width: auto;
-          cursor: pointer;
-        }
       }
     }
 

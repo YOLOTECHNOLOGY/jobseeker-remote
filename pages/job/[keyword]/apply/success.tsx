@@ -45,7 +45,7 @@ const ApplySuccess = ({
   const isSimilarJobsFetching = useSelector((store: any) => store.job.similarJobs.fetching)
   
   useEffect(() => {
-    dispatch(fetchSimilarJobsRequest({ jobId: jobDetails.id }))
+    dispatch(fetchSimilarJobsRequest({ jobId: jobDetails.id, size: 9 }))
   }, [])
 
   useEffect(() => {

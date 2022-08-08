@@ -11,15 +11,14 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogo, BossjobFittedLogo } from 'images'
+import { BossjobLogo } from 'images'
 
 const PlaceHolderPublicHeader = () => {
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
-            <img className={styles.headerLogoImage} src={BossjobFittedLogo} title='Bossjob logo' alt='Bossjob logo' />
-            <img className={styles.headerLogoImageDesktop} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+            <img className={styles.headerLogoImage} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
         </div>
         <div className={styles.headerLinksWrapper}>
           <ul className={styles.headerLinksList}>

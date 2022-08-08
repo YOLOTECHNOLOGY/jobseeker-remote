@@ -25,7 +25,6 @@ import { quickApplyJobRequest } from 'store/actions/jobs/quickApplyJob'
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 import Checkbox from '@mui/material/Checkbox'
 import { handleNumericInput } from 'helpers/handleInput'
-
 interface QuickApplyModalProps {
   jobDetails: any
   modalShow?: boolean
@@ -82,14 +81,20 @@ const QuickApplyModal = ({
       } else {
         setError('email', { type: 'custom', message: registerJobseekerState.error['email'] })
       }
-    }
 
-    setIsSubmitting(registerJobseekerState.fetching)
+      setIsSubmitting(false)
+    }
   }, [registerJobseekerState])
 
   useEffect(() => {
     setIsSubmitting(isQuickApplyJobFetching)
   }, [isQuickApplyJobFetching])
+
+  const onError = () => {
+    if (!resume) {
+      setError('resume', { type: 'custom', message: 'Please upload your resume' })
+    }
+  }
 
   const onSubmit = (data) => {
     const screeningAnswers = []
@@ -97,12 +102,6 @@ const QuickApplyModal = ({
     screeningQuestions.forEach((element, index) => {
       screeningAnswers.push(data[`screening_answer_${index}`])
     })
-
-    const jobCategories = jobDetails.categories
-      .map(function (category) {
-        return category.key
-      })
-      .join('-')
 
     const payload = {
       email: data.email,
@@ -116,14 +115,10 @@ const QuickApplyModal = ({
       screening_answers: screeningAnswers,
       first_message: firstMessage,
       jobId: jobDetails.id,
-      jobCategories: jobCategories,
-      companyId: jobDetails.company?.id,
+      jobUrl: jobDetails.job_url
     }
 
-    console.log('quick apply payload', payload)
-
     clearErrors()
-    setIsSubmitting(true)
 
     dispatch(quickApplyJobRequest(payload))
   }
@@ -142,6 +137,7 @@ const QuickApplyModal = ({
 
   const handleUploadResume = (file) => {
     setResume(file)
+    clearErrors('resume')
   }
 
   return (
@@ -150,7 +146,6 @@ const QuickApplyModal = ({
       showModal={modalShow}
       handleModal={handleModalShow}
       className={styles.quickApplyModal}
-      closeModalOnOutsideClick={false} // TODO: temporary fix the select country code leads to modal close bug
       customFooter={
         <MaterialButton
           capitalize
@@ -158,7 +153,7 @@ const QuickApplyModal = ({
           variant='contained'
           type='submit'
           isLoading={isSubmitting}
-          onClick={handleSubmit(onSubmit)}
+          onClick={handleSubmit(onSubmit, onError)}
           className={styles.ctaButton}
         >
           <Text textColor='white' bold>
@@ -309,13 +304,17 @@ const QuickApplyModal = ({
           />
           {errors.password && errorText(errors.password.message)}
         </div>
+        
+        <div className={styles.quickApplyFormField}>
+          <UploadResume
+            title='resume'
+            resume={resume}
+            handleDelete={handleDeleteResume}
+            handleUpload={handleUploadResume}
+          />
 
-        <UploadResume
-          title='resume'
-          resume={resume}
-          handleDelete={handleDeleteResume}
-          handleUpload={handleUploadResume}
-        />
+          {errors.resume && errorText(errors.resume.message)}
+        </div>
 
         <div className={styles.quickApplyFormField}>
           {screeningQuestions.length > 0 && (

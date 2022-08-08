@@ -20,41 +20,68 @@
   }
 }
 
-.sectionHeader{
-  width:100%;
-  display:flex;
+.sectionHeader {
+  width: 100%;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 
   & > * {
-    display:flex;
+    display: flex;
   }
 }
 
-.sectionContent{
-  width:100%;
-  display:flex;
+.sectionContent {
+  width: 100%;
+  display: flex;
   flex-direction: column;
-   
+
   & > * {
-    display:flex;
+    display: flex;
   }
 
-  .titleWrapper{
-    display:flex;
+  .titleWrapper {
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
     & > * {
-      display:flex;
+      display: flex;
     }
   }
 }
 
-.workExpSection{
-  display:flex;
+.workExpSection {
+  width:100%;
+  display: flex;
+  flex-direction: column;
+
+  .companyInfoWrapper {
+    display: flex;
+
+    span {
+      margin-right: 16px;
+      position: relative;
+
+      &:not(:last-child) {
+        &::after {
+          position: absolute;
+          content: '';
+          height: 18px;
+          width: 1px;
+          background-color: $lightgrey;
+          top: 0;
+          right:-8px;
+        }
+      }
+    }
+  }
+}
+
+.educationSection {
+  display: flex;
   flex-direction: column;
 }
 
@@ -75,7 +102,7 @@
 .resumeTemplateItem {
   width: 381px;
   height: auto;
-  box-shadow: $box-shadow-2;
+  // box-shadow: $box-shadow-2;
 
   @include msd {
     width: 320px;
@@ -88,16 +115,16 @@
   }
 }
 
-.iconWrapper{
-  display:flex;
+.iconWrapper {
+  display: flex;
   justify-content: center;
   align-items: center;
-  position:relative;
-  width:45px;
-  height:45px;
+  position: relative;
+  width: 40px;
+  height: 40px;
 
   & > * {
-    display:flex;
+    display: flex;
   }
 
   // &:first-child {
@@ -118,20 +145,18 @@
     transition: 0.2s ease-out;
   }
 
-  &:hover{
-    cursor:pointer;
+  &:hover {
+    cursor: pointer;
     &:after {
-        opacity: 1;
-      }
+      opacity: 1;
+    }
   }
 
-  &Double{
+  &Double {
     display: flex;
     align-items: center;
   }
 }
-
-
 
 // Embla
 .embla {
@@ -168,6 +193,10 @@
   padding-left: 24px;
   flex: 0 0 50%;
 
+  &:first-child {
+      padding-left: 0;
+    }
+
   @include msd {
     flex: 0 0 100%;
     padding-left: 1vw;
@@ -181,8 +210,8 @@
 .emblaSlideInner {
   position: relative;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
+  // display: flex;
+  // justify-content: center;
 }
 
 .emblaDots {
@@ -270,7 +299,7 @@
 
 .downloadResumeButton {
   display: none;
-  position: absolute;
+  position: absolute !important;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -309,3 +338,23 @@
 .downloadText {
   padding-right: 8px;
 }
+
+
+.readMoreDescriptionWrapper{
+  margin:16px 0;
+  word-break: break-all;
+}
+
+.skill {
+  margin-top: 16px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  &Chip {
+    margin-right: 16px;
+    margin-bottom: 16px;
+    background-color: #1976d2;
+  }
+}
+

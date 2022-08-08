@@ -1202,6 +1202,7 @@ const getJobCategoryList = (config) => {
 
   config?.inputs?.job_category_lists.forEach((mainCategory) => {
     mainCategory.sub_list.forEach((subList) => {
+      subList['label'] = subList['value']
       categories.push(subList)
     })
   })
@@ -1304,7 +1305,7 @@ const getApplyJobLink = (job, user, accessToken = null) => {
   
   if (user) {
     if (!user?.is_profile_completed) {
-      return `/jobseeker-complete-profile/1?redirect=${applyJobUrl}`
+      return `${process.env.HOST_PATH}/jobseeker-complete-profile/1?redirect=${applyJobUrl}`
     }
 
     if (job?.external_apply_url) {
@@ -1314,7 +1315,7 @@ const getApplyJobLink = (job, user, accessToken = null) => {
     return applyJobUrl
   }
   
-  return `/login/jobseeker?redirect=${applyJobUrl}`
+  return `${process.env.HOST_PATH}/login/jobseeker?redirect=${applyJobUrl}`
 }
 
 // TODO: remove isLocation param after backend as renamed the field

@@ -7,10 +7,9 @@ const uploadUserResumeService = (resume) => {
     'Content-Type': 'multipart/form-data'
   }
 
-  const formData = new FormData({
-    'file': resume,
-    'filename': resume.name
-  })
+  let formData = new FormData()
+  formData.append('file', resume)
+  formData.append('filename', resume.name)
 
   return axios.post(URL, formData, { headers })
 }
