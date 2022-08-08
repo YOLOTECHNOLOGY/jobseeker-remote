@@ -36,8 +36,6 @@ const JobPreferencesCard = ({
   config,
   handleModal
 }: JobPreferencesCardProps) => {
-  console.log('userDetail', userDetail)
-
   const noticeList = getNoticePeriodList(config)
 
   const getAvailability = (userDetail) => {
