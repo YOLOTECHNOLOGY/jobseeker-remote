@@ -56,7 +56,7 @@ const UploadUserAvatar = ({ currentAvatarUrl, setSelectedAvatar }: UploadUserAva
             style={{ display: 'none' }}
             onChange={handleChosenPhoto}
           />
-          <button onClick={handleChoosePhoto} className={styles.uploadAvatarButton}>
+          <button className={styles.uploadAvatarButton}>
             <img src={CameraIcon} height='14' width='14' />
           </button>
         </div>
