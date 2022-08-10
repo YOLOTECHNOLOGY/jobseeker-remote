@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import moment from 'moment'
 
-/* Actions */ 
-
 /* Components */
 import Text from 'components/Text'
 import { TextField } from '@mui/material'
@@ -60,7 +58,7 @@ const requiredLabel = (text: string) => {
   return (
     <>
       <span>{text}</span>
-      <span className={styles.stepFieldRequired}>*</span>
+      <span className={styles.requiredField}>*</span>
     </>
   )
 }
@@ -182,34 +180,52 @@ const EditProfileModal = ({
           </div>
           <div className={styles.profileForm}>
             <div className={styles.profileFormGroup}>
-              <MaterialTextField
-                refs={{
-                  ...register('firstName')
-                }}
-                className={styles.profileFormInput}
-                name='firstName'
-                label='First Name'
-                variant='outlined'
-                value={firstName}
-                defaultValue={firstName}
-                autoComplete='off'
-                onChange={(e) => setFirstName(e.target.value)}
-              />
+              <div className={styles.profileFormGroupName}>
+                <MaterialTextField
+                  refs={{
+                    ...register('firstName', {
+                      required: {
+                        value: true,
+                        message: 'Please enter your first name.'
+                      }
+                    })
+                  }}
+                  className={styles.profileFormInput}
+                  name='firstName'
+                  label={requiredLabel('First Name')}
+                  variant='outlined'
+                  value={firstName}
+                  defaultValue={firstName}
+                  autoComplete='off'
+                  onChange={(e) => setFirstName(e.target.value)}
+                  error={errors.firstName}
+                />
+                {errors.firstName && errorText(errors.firstName.message)}
+              </div>
               <div style={{ width: '20px' }}></div>
-              <MaterialTextField
-                refs={{
-                  ...register('lastName')
-                }}
-                className={styles.profileFormInput}
-                name='lastName'
-                label='Last Name'
-                variant='outlined'
-                value={lastName}
-                size='small'
-                defaultValue={lastName}
-                autoComplete='off'
-                onChange={(e) => setlastName(e.target.value)}
-              />
+              <div className={styles.profileFormGroupName}>
+                <MaterialTextField
+                  refs={{
+                    ...register('lastName', {
+                      required: {
+                        value: true,
+                        message: 'Please enter your last name.'
+                      }
+                    })
+                  }}
+                  className={styles.profileFormInput}
+                  name='lastName'
+                  label={requiredLabel('Last Name')}
+                  variant='outlined'
+                  value={lastName}
+                  size='small'
+                  defaultValue={lastName}
+                  autoComplete='off'
+                  onChange={(e) => setlastName(e.target.value)}
+                  error={errors.lastName}
+                />
+                {errors.lastName && errorText(errors.lastName.message)}
+              </div>
             </div>
             <div className={styles.profileFormTitle}>
               <Text textStyle='lg' bold>
@@ -264,12 +280,7 @@ const EditProfileModal = ({
             <div className={styles.profileFormGroup}>
               <div className={styles.descriptionField}>
                 <TextField
-                  {...register('summary', {
-                    required: {
-                      value: true,
-                      message: 'This field is required.'
-                    }
-                  })}
+                  {...register('summary')}
                   className={styles.profileFormInput}
                   placeholder='Provide a career summary and briefly highlight your relevant experience, achievement and skills.'
                   name='summary'
@@ -282,7 +293,6 @@ const EditProfileModal = ({
                   multiline
                   rows={9}
                 />
-                {errors.summary && errorText(errors.summary.message)}
               </div>
             </div>
           </div>
