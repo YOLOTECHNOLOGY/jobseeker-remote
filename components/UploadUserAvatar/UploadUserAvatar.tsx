@@ -43,8 +43,8 @@ const UploadUserAvatar = ({ currentAvatarUrl, setSelectedAvatar }: UploadUserAva
 
   return (
     <div>
-      <div className={styles.UploadAvatar}>
-        <div className={styles.UploadAvatarDisplay} onClick={handleChoosePhoto}>
+      <div className={styles.uploadAvatar}>
+        <div className={styles.uploadAvatarDisplay} onClick={handleChoosePhoto}>
           <Avatar
             sx={{ width: '80px', height: '80px' }}
             src={preview || currentAvatarUrl || DefaultAvatar}
@@ -56,16 +56,16 @@ const UploadUserAvatar = ({ currentAvatarUrl, setSelectedAvatar }: UploadUserAva
             style={{ display: 'none' }}
             onChange={handleChosenPhoto}
           />
-          <button onClick={handleChoosePhoto} className={styles.UploadAvatarButton}>
+          <button onClick={handleChoosePhoto} className={styles.uploadAvatarButton}>
             <img src={CameraIcon} height='14' width='14' />
           </button>
         </div>
-        <div className={styles.UploadAvatarText}>
+        <div className={styles.uploadAvatarText}>
           For the best visual results, we recommend uploading photo with a square shape or 1:1
           aspect ratio.
         </div>
       </div>
-      <div className={styles.UploadAvatarError}></div>
+      <div className={styles.uploadAvatarError}></div>
     </div>
   )
 }
