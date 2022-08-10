@@ -19,7 +19,6 @@ import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 
 /* Helpers */
-// import { getNoticePeriodList } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
 
 import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
@@ -103,10 +102,6 @@ const EditProfileModal = ({
 
   const defaultExpLevel = formattedXpLevelList.filter((xp) => expLevel === xp.label)
   const [yearsOfExperience, setYearsOfExperience] = useState(defaultExpLevel[0]?.key)
-  // const [yearsOfExperience, setYearsOfExperience] = useState(defaultExpLevel[0].key)
-
-  // const noticeList = getNoticePeriodList(config)
-  // const [availability, setAvailability] = useState(noticeList[0].value)
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
   const [location, setLocation] = useState(formattedLocationList[0])
@@ -128,16 +123,10 @@ const EditProfileModal = ({
         setValue('location', matchedLocation)
       }
     }
-    // if (userDetail && userDetail.notice_period_id) {
-    //   setAvailability(userDetail.notice_period_id)
-    //   setValue('noticePeriod', userDetail.notice_period_id)
-    // }
     if (userDetail && userDetail.xp_lvl) {
 
       setYearsOfExperience(defaultExpLevel[0]?.key)
       setValue('yearsOfExperience', defaultExpLevel[0]?.key)
-      // setYearsOfExperience(userDetail.xp_lvl)
-      // setValue('yearsOfExperience', userDetail.xp_lvl)
     }
   }, [userDetail])
 
@@ -158,7 +147,6 @@ const EditProfileModal = ({
         birthdate: birthdate && moment(new Date(birthdate)).format('yyyy-MM-DD'),
         location_key: (location as any).key || '',
         xp_lvl_key: yearsOfExperience || '',
-        // notice_period_id: noticePeriod,
         description: summary.length > 0 ? summary : '',
     }
 
@@ -179,7 +167,6 @@ const EditProfileModal = ({
         secondButtonText='Save'
         isSecondButtonLoading={isUpdatingUserProfile}
         firstButtonIsClose
-        // eslint-disable-next-line
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
         fullScreen
@@ -240,44 +227,6 @@ const EditProfileModal = ({
                 }}
                 fullWidth={true}
               />
-              {/* <MaterialBasicSelect
-                fieldRef={{
-                  ...register('day'),
-                }}
-                className={styles.profileFormInput}
-                label='Day'
-                value={day}
-                options={dayList}
-                onChange={(e) => {
-                  setDay(e.target.value)
-                }}
-              />
-              <div style={{ width: '16px' }}></div>
-              <MaterialBasicSelect
-                fieldRef={{
-                  ...register('month'),
-                }}
-                className={styles.profileFormInput}
-                label='Month'
-                value={month}
-                options={monthList}
-                onChange={(e) => {
-                  setMonth(e.target.value)
-                }}
-              />
-              <div style={{ width: '16px' }}></div>
-              <MaterialBasicSelect
-                fieldRef={{
-                  ...register('year'),
-                }}
-                className={styles.profileFormInput}
-                label='Year'
-                value={year}
-                options={yearList}
-                onChange={(e) => {
-                  setYear(e.target.value)
-                }}
-              /> */}
             </div>
             <div className={styles.profileFormGroup}>
               <MaterialLocationField
@@ -312,21 +261,6 @@ const EditProfileModal = ({
                 }}
               />
             </div>
-            {/* <div className={styles.profileFormGroup}>
-              <MaterialBasicSelect
-                fieldRef={{
-                  ...register('noticePeriod'),
-                }}
-                className={styles.profileFormInput}
-                label='Availability'
-                value={availability}
-                options={noticeList}
-                onChange={(e) => {
-                  console.log(e.target.value)
-                  setAvailability(e.target.value)
-                }}
-              />
-            </div> */}
             <div className={styles.profileFormGroup}>
               <div className={styles.descriptionField}>
                 <TextField
