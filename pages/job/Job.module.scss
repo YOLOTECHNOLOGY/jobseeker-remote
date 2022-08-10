@@ -237,6 +237,12 @@
       }
     }
 
+    @include msd {
+      &Body::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
     &SubTitle {
       margin-top: 18px;
       display: block;

@@ -130,6 +130,12 @@
   }
 }
 
+@include msd {
+  .companyDescription::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .companyCulture {
   &Heading {
     display: flex;
