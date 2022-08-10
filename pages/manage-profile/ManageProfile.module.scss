@@ -298,7 +298,7 @@
 }
 
 .downloadResumeButton {
-  display: none;
+  // display: none;
   position: absolute !important;
   top: 50%;
   left: 50%;
@@ -306,7 +306,7 @@
 
   &Active {
     @extend .downloadResumeButton;
-    display: flex;
+    // display: flex;
     transition: all ease 0.2s;
 
     &:hover {

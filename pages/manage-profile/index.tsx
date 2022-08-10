@@ -491,6 +491,7 @@ const RenderResumeView = ({ userDetail }: any) => {
                           ? styles.downloadResumeButtonActive
                           : styles.downloadResumeButton
                       }
+                      sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
                     >
                       <img
                         src={DownloadWhiteIcon}
