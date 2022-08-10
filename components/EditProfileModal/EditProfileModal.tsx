@@ -75,17 +75,22 @@ const EditProfileModal = ({
   modalName,
   showModal,
   userDetail,
-  handleModal,
+  handleModal
 }: EditProfileModalProps) => {
-  const { avatar, first_name, last_name, location: userLocation, description, xp_lvl: expLevel } = userDetail
+  const {
+    avatar,
+    first_name,
+    last_name,
+    birthdate: dob,
+    location: userLocation,
+    description,
+    xp_lvl: expLevel
+  } = userDetail
 
   const dispatch = useDispatch()
 
   const [selectedAvatar, setSelectedAvatar] = useState(null)
-  const [firstName, setFirstName] = useState(first_name || '')
-  const [lastName, setlastName] = useState(last_name || '')
-  const [birthdate, setBirthdate] = useState(null)
-  const [summary, setSummary] = useState(description || '')
+  const [birthdate, setBirthdate] = useState(dob)
 
   const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserProfile.fetching)
 
@@ -104,12 +109,30 @@ const EditProfileModal = ({
   const formattedLocationList = flat(formatLocationConfig(locationList))
   const [location, setLocation] = useState(formattedLocationList[0])
 
+  // Limit user from selecting date more than 16-100 years ago from now.
+  const today = new Date()
+  const sixteenYearsAgo = today.getFullYear() - 16
+  const hundredYearsAgo = today.getFullYear() - 100
+
+
   const {
     register,
     handleSubmit,
+    reset,
+    setError,
+    clearErrors,
     formState: { errors },
-    setValue,
-  } = useForm()
+    setValue
+  } = useForm({
+    defaultValues: {
+      firstName: first_name,
+      lastName: last_name,
+      summary: description,
+      location: userLocation,
+      birthdate: birthdate,
+      yearsOfExperience: defaultExpLevel[0]?.value
+    }
+  })
 
   useEffect(() => {
     if (userDetail && userDetail.location) {
@@ -117,14 +140,10 @@ const EditProfileModal = ({
         const matchedLocation = formattedLocationList.find((loc) => {
           return loc.value == userLocation
         })
-        setLocation(matchedLocation)
-        setValue('location', matchedLocation)
+        console.log('settingLocation', matchedLocation)
+        // setLocation(matchedLocation)
+        setValue('location', matchedLocation?.key)
       }
-    }
-    if (userDetail && userDetail.xp_lvl) {
-
-      setYearsOfExperience(defaultExpLevel[0]?.key)
-      setValue('yearsOfExperience', defaultExpLevel[0]?.key)
     }
   }, [userDetail])
 
@@ -137,15 +156,19 @@ const EditProfileModal = ({
   }
 
   const onSubmit = (data) => {
-    const { firstName, lastName, summary } = data
+    const { firstName, lastName, summary, yearsOfExperience, location } = data
+    const matchedLocation = formattedLocationList.find((loc) => {
+      return loc.value == location
+    })
+
     const payload = {
-        avatar: selectedAvatar,
-        first_name: firstName,
-        last_name: lastName,
-        birthdate: birthdate && moment(new Date(birthdate)).format('yyyy-MM-DD'),
-        location_key: (location as any).key || '',
-        xp_lvl_key: yearsOfExperience || '',
-        description: summary.length > 0 ? summary : '',
+      avatar: selectedAvatar,
+      first_name: firstName,
+      last_name: lastName,
+      birthdate: birthdate && moment(new Date(birthdate)).format('yyyy-MM-DD'),
+      location_key: matchedLocation?.key,
+      xp_lvl_key: yearsOfExperience || '',
+      description: summary.length > 0 ? summary : ''
     }
 
     dispatch(updateUserProfileRequest(payload))
@@ -153,6 +176,21 @@ const EditProfileModal = ({
 
   const handleCloseModal = () => {
     handleModal(modalName, false)
+    reset()
+  }
+
+  const onDateChange = (value) => {
+    const year = value.getFullYear()
+    if (year < hundredYearsAgo || year > sixteenYearsAgo) {
+      setError(
+        'birthdate',
+        { message: 'You need to be at least 16 years old to use Bossjob.' },
+        { shouldFocus: true }
+      )
+    } else {
+      clearErrors('birthdate')
+      setBirthdate(value)
+    }
   }
 
   return (
@@ -180,7 +218,7 @@ const EditProfileModal = ({
           </div>
           <div className={styles.profileForm}>
             <div className={styles.profileFormGroup}>
-              <div className={styles.profileFormGroupName}>
+              <div className={styles.profileFormGroupField}>
                 <MaterialTextField
                   refs={{
                     ...register('firstName', {
@@ -194,16 +232,13 @@ const EditProfileModal = ({
                   name='firstName'
                   label={requiredLabel('First Name')}
                   variant='outlined'
-                  value={firstName}
-                  defaultValue={firstName}
                   autoComplete='off'
-                  onChange={(e) => setFirstName(e.target.value)}
                   error={errors.firstName}
                 />
                 {errors.firstName && errorText(errors.firstName.message)}
               </div>
               <div style={{ width: '20px' }}></div>
-              <div className={styles.profileFormGroupName}>
+              <div className={styles.profileFormGroupField}>
                 <MaterialTextField
                   refs={{
                     ...register('lastName', {
@@ -217,11 +252,8 @@ const EditProfileModal = ({
                   name='lastName'
                   label={requiredLabel('Last Name')}
                   variant='outlined'
-                  value={lastName}
                   size='small'
-                  defaultValue={lastName}
                   autoComplete='off'
-                  onChange={(e) => setlastName(e.target.value)}
                   error={errors.lastName}
                 />
                 {errors.lastName && errorText(errors.lastName.message)}
@@ -233,16 +265,20 @@ const EditProfileModal = ({
               </Text>
             </div>
             <div className={styles.profileFormGroup}>
-              <MaterialDatePicker
-                label='Date of birth'
-                views={['year', 'month', 'day']}
-                inputFormat='yyyy-MM-dd'
-                value={birthdate}
-                onDateChange={(value) => {
-                  setBirthdate(value)
-                }}
-                fullWidth={true}
-              />
+              <div className={styles.profileFormGroupField}>
+                <MaterialDatePicker
+                  refs={{
+                    ...register('birthdate')
+                  }}
+                  label='Date of birth'
+                  views={['year', 'month', 'day']}
+                  inputFormat='yyyy-MM-dd'
+                  value={birthdate}
+                  onDateChange={onDateChange}
+                  fullWidth={true}
+                />
+                {errors.birthdate && errorText(errors.birthdate.message)}
+              </div>
             </div>
             <div className={styles.profileFormGroup}>
               <MaterialLocationField
@@ -285,11 +321,7 @@ const EditProfileModal = ({
                   placeholder='Provide a career summary and briefly highlight your relevant experience, achievement and skills.'
                   name='summary'
                   variant='outlined'
-                  value={summary}
                   autoComplete='off'
-                  onChange={(e) => {
-                    setSummary(e.target.value)
-                  }}
                   multiline
                   rows={9}
                 />
