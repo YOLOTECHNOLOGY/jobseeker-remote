@@ -114,7 +114,6 @@ const EditProfileModal = ({
   const sixteenYearsAgo = today.getFullYear() - 16
   const hundredYearsAgo = today.getFullYear() - 100
 
-
   const {
     register,
     handleSubmit,
@@ -205,6 +204,8 @@ const EditProfileModal = ({
         firstButtonIsClose
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
+        // Disable button if error exist for fields with manual setError
+        isSecondButtonDisabled={errors && errors.birthdate}
         fullScreen
         maxHeight='90vh'
       >
