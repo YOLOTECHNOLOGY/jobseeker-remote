@@ -68,7 +68,7 @@ const UserProfileOverview = ({
         </Text>
       </div>
       <div className={styles.userOverviewInfo}>
-        {birthdate && age > 0 && (
+        {birthdate && age >= 16 && (
           <div className={styles.userOverviewInfoDetail}>
             <img src={BodyIcon} width='14' height='14' style={{ marginRight: '6px' }} />
             <Text textStyle='lg'> {age} year{age > 0 ? 's' : ''} old</Text>

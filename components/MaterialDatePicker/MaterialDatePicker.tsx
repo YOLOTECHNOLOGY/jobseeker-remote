@@ -6,11 +6,12 @@ import { TextField } from '@mui/material'
 
 interface MaterialDatePickerProps {
   value?: any
-  onDateChange: Function
+  onDateChange?: Function
   label?: string
   inputFormat?: string
   views?: any
   fullWidth?: boolean
+  refs?: any
 }
 
 const MaterialDatePicker = ({
@@ -20,6 +21,7 @@ const MaterialDatePicker = ({
   inputFormat,
   views,
   fullWidth,
+  refs,
 }: MaterialDatePickerProps) => {
   const theme = createTheme({
     components: {
@@ -30,48 +32,59 @@ const MaterialDatePicker = ({
             transform: 'translate(14px, 10px) scale(1)',
             letterSpacing: '1px',
             '&.Mui-focused': {
-              fontSize: '10px',
-            },
+              fontSize: '10px'
+            }
           },
           shrink: {
             fontSize: '10px',
-            transform: 'translate(12px, -8px) scale(1)',
+            transform: 'translate(12px, -8px) scale(1)'
           },
           outlined: {
             '&.MuiInputLabel-shrink': {
-              fontSize: '10px',
-            },
-          },
-        },
+              fontSize: '10px'
+            }
+          }
+        }
       },
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
             fontSize: '14px',
-            backgroundColor: 'white',
+            backgroundColor: 'white'
           },
           input: {
-            padding: '10.5px 14px',
-          },
-        },
-      },
-    },
+            padding: '10.5px 14px'
+          }
+        }
+      }
+    }
   })
   return (
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
+          {...refs}
           disableMaskedInput={true}
           views={views}
           label={label}
           inputFormat={inputFormat || ''}
+          maxDate={new Date()}
           minDate={new Date('1942-01-01')}
           value={value}
-          onChange={(date) => onDateChange(date)}
+          onChange={(date) => {
+            if (onDateChange) {
+              onDateChange(date)
+            }
+          }}
           renderInput={(params) => (
-            <TextField error={true} aria-readonly {...params} fullWidth={fullWidth} helperText={null} />
+            <TextField
+              error={true}
+              aria-readonly
+              {...params}
+              fullWidth={fullWidth}
+              helperText={null}
+            />
           )}
-          maxDate={new Date()}
         />
       </LocalizationProvider>
     </ThemeProvider>
