@@ -1,8 +1,8 @@
 import configuredAxios from 'helpers/configuredAxios'
 
-const toggleOpenToWorkService = (payload) => {
+const updateUserVisibilityToWorkService = (payload) => {
     const axios = configuredAxios('data', 'protected')
     return axios.post('/users/visibility', payload)
 }
 
-export { toggleOpenToWorkService }
+export { updateUserVisibilityToWorkService }

@@ -24,19 +24,23 @@ import ProfileSettingCard from 'components/ProfileSettingCard'
 import UploadResume from 'components/UploadResume'
 import MaterialButton from 'components/MaterialButton'
 import ReadMore from 'components/ReadMore'
+import Switch from '@mui/material/Switch'
+import FormControlLabel from '@mui/material/FormControlLabel'
 
 import EditProfileModal from 'components/EditProfileModal'
+import EditJobPreferencesModal from 'components/EditJobPreferencesModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
 import EditEducationModal from 'components/EditEducationModal'
-
-import JobPreferencesCard from 'components/JobPreferencesLayout/JobPreferencesCard'
-import OpenToWorkCard from 'components/JobPreferencesLayout/OpenToWorkCard'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { getYearMonthDiffBetweenDates } from 'helpers/formatter'
+import { getNoticePeriodList } from 'helpers/jobPayloadFormatter'
+
+/* Services */
+import { updateUserVisibilityToWorkService } from 'store/services/jobs/updateUserVisibilityToWork'
 
 /* Assets */
 import {
@@ -334,20 +338,145 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
 }
 
 const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handleModal }: any) => {
+  const [openToWork, setOpenToWork] = useState(true)
+
+  const noticeList = getNoticePeriodList(config)
+
+  const getAvailability = (userDetail) => {
+    const checkNoticePeriod = notice => userDetail.notice_period_id === notice.value
+    const findAvailability = noticeList.find(checkNoticePeriod).label
+
+    return findAvailability
+  }
+
+  const truncateSalary = (userDetail) => {
+    let minSalary = userDetail.job_preference.salary_range_from
+    let maxSalary = userDetail.job_preference.salary_range_to
+
+    const minCharIndex = minSalary.indexOf('.')
+    const maxCharIndex = maxSalary.indexOf('.')
+
+    // To truncate ".00"
+    minSalary = minSalary.substring(0, minCharIndex != -1 ? minCharIndex : minSalary.length)
+    maxSalary = maxSalary.substring(0, maxCharIndex != -1 ? maxCharIndex : maxSalary.length)
+
+    // To add ','
+    minSalary = `${minSalary.slice(0, -3)},${minSalary.slice(-3, minSalary.length)}`
+    maxSalary = `${maxSalary.slice(0, -3)},${maxSalary.slice(-3, maxSalary.length)}`
+
+    const salaryRange = { minSalary, maxSalary }
+    return salaryRange
+  }
+
+  const handleEditClick = () => {
+    handleModal(modalName, true)
+  }
+
+  const handleVisibility = () => {
+    setOpenToWork(!openToWork)
+    updateUserVisibilityToWorkService({
+      is_visible: !openToWork
+    })
+}
+
   return (
     <React.Fragment>
-      <div>
-        <JobPreferencesCard
-            title='Job Preferences'
-            modalName={modalName}
-            showModal={showModal}
-            // workingSetting='Work from home'
-            userDetail={userDetail}
-            config={config}
-            handleModal={handleModal}
-        />
-        <OpenToWorkCard
-            title='Open to work'
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <Text bold textColor='primaryBlue' textStyle='xl'>
+            Job Preferences
+          </Text>
+          <div className={styles.iconWrapper} onClick={handleEditClick}>
+            <img src={PencilIcon} width='22' height='22' />
+          </div>
+        </div>
+        <div>
+          <Text tagName='p' textStyle='lg'>
+            We will find jobs that are of a good match to you based on your job preferences.
+          </Text>
+        </div>
+        <div className={styles.jobPreferencesSectionDetail}>
+          {!userDetail.job_preference.job_title && !userDetail.job_preference.job_type && 
+            !userDetail.job_preference.salary_range_from && !userDetail.job_preference.location && 
+            !userDetail.notice_period_id ? (
+              <MaterialButton
+                className={styles.jobPreferencesSectionButton}
+                variant='outlined'
+                capitalize={false}
+                size='large'
+                onClick={handleEditClick}
+                style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
+              >
+                Add job preferences
+              </MaterialButton>
+            ) : (
+              <ul className={styles.jobPreferencesSectionDetailList}>
+                {userDetail.job_preference.job_title && (
+                  <li style={{ marginTop: '8px' }}>
+                    <Text textColor='lightgrey'>Desire job title:</Text>
+                    <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.job_title}</Text>
+                  </li>
+                )}
+                {userDetail.job_preference.job_type && (
+                  <li>
+                    <Text textColor='lightgrey'>Desire job type:</Text>
+                    <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.job_type}</Text>
+                  </li>
+                )}
+                {userDetail.job_preference.salary_range_from && (
+                  <li>
+                      <Text textColor='lightgrey'>Expected salary:</Text>
+                      <Text className={styles.jobPreferencesSectionDetailText}>
+                        P{truncateSalary(userDetail).minSalary} - P{truncateSalary(userDetail).maxSalary}
+                      </Text>
+                  </li>
+                )}
+                {userDetail.job_preference.location && (
+                  <li>
+                      <Text textColor='lightgrey'>Desire working location:</Text>
+                      <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.location}</Text>
+                  </li>
+                )}
+                {/* {workingSetting && (
+                  <li>
+                      <Text textColor='lightgrey'>Desire working setting:</Text>
+                      <Text>{workingSetting}</Text>
+                  </li>
+                )} */}
+                {userDetail.notice_period_id && (
+                  <li>
+                      <Text textColor='lightgrey'>Availability:</Text>
+                      <Text className={styles.jobPreferencesSectionDetailText}>{getAvailability(userDetail)}</Text>
+                  </li>
+                )}
+              </ul>
+              )
+            }
+            <EditJobPreferencesModal 
+              modalName={modalName}
+              showModal={showModal}
+              config={config}
+              userDetail={userDetail}
+              handleModal={handleModal}
+            />
+        </div>
+      </div>
+      <div className={styles.sectionContainer}>
+        <Text className={styles.openToWorkSectionTitle} bold textStyle='xl' textColor='primaryBlue'>
+          Open to work
+        </Text>
+        <FormControlLabel
+          control={
+          <Switch 
+              checked={openToWork}
+              onChange={handleVisibility}
+          />
+          }
+          label={
+          <Text textStyle='lg'>
+            Let recruiters know that you are open to work
+          </Text>
+          }
         />
       </div>
     </React.Fragment>
