@@ -28,6 +28,10 @@
     grid-area: detail;
     width: 838px;
     height: 100%;
+
+    @include msd{
+      width:100%;
+    }
   }
 }
 
