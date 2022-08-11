@@ -60,7 +60,11 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
             </Link>
             <Link
               className={styles.defaultLink}
-              to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`}
+              to={
+                isAuthenticated
+                  ? authPathToOldProject(null, '/dashboard/headhunt-me')
+                  : `${process.env.OLD_PROJECT_URL}/headhunt-me`
+              }
               title='Headhunt Me'
               aTag
             >
@@ -68,11 +72,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 <Text textStyle='xl'>Headhunt Me</Text>
               </li>
             </Link>
-            <Link
-              className={styles.defaultLink}
-              to='/companies'
-              title='Companies'
-            >
+            <Link className={styles.defaultLink} to='/companies' title='Companies'>
               <li className={styles.menuList} onClick={handleClick}>
                 <Text textStyle='xl'>Companies</Text>
               </li>
@@ -116,7 +116,9 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 </Link>
                 <Link className={styles.defaultLink} to='/register/jobseeker' title='Sign Up'>
                   <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle='xl' className={styles.activeLink}>Sign Up</Text>
+                    <Text textStyle='xl' className={styles.activeLink}>
+                      Sign Up
+                    </Text>
                   </li>
                 </Link>
               </>
@@ -135,13 +137,19 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 </Link>
                 <Link
                   className={styles.defaultLink}
-                  to={userCookie?.is_profile_completed ? '/manage-profile' : '/jobseeker-complete-profile/1'}
+                  to={
+                    userCookie?.is_profile_completed
+                      ? `${process.env.HOST_PATH}/manage-profile`
+                      : `${process.env.HOST_PATH}/jobseeker-complete-profile/1`
+                  }
                   // to={userCookie?.is_profile_completed ? authPathToOldProject(null, '/dashboard/profile/jobseeker') : '/jobseeker-complete-profile/1'}
                   aTag
                   title='Manage Resume'
                 >
                   <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle='xl' className={styles.activeLink}>Manage Resume</Text>
+                    <Text textStyle='xl' className={styles.activeLink}>
+                      Manage Resume
+                    </Text>
                   </li>
                 </Link>
                 <Link className={styles.defaultLink} to='/my-jobs/saved?page=1' title='My Jobs'>
@@ -149,17 +157,32 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>My Jobs</Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} to={authPathToOldProject(null, '/dashboard/profile/settings')} aTag title='Account Settings'>
+                <Link
+                  className={styles.defaultLink}
+                  to={authPathToOldProject(null, '/dashboard/profile/settings')}
+                  aTag
+                  title='Account Settings'
+                >
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Account Settings</Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} to={authPathToOldProject(null, '/dashboard/bosspoint')} aTag title='BossPoints'>
+                <Link
+                  className={styles.defaultLink}
+                  to={authPathToOldProject(null, '/dashboard/bosspoint')}
+                  aTag
+                  title='BossPoints'
+                >
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>BossPoints</Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} to='https://blog.bossjob.ph/' aTag title='Career Guide'>
+                <Link
+                  className={styles.defaultLink}
+                  to='https://blog.bossjob.ph/'
+                  aTag
+                  title='Career Guide'
+                >
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Career Guide</Text>
                   </li>
@@ -167,7 +190,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
 
                 <div className={styles.defaultLink}>
                   <li className={styles.menuList} onClick={() => handleLogOut()}>
-                    <Text textStyle='xl'>Log Out</Text>  
+                    <Text textStyle='xl'>Log Out</Text>
                   </li>
                 </div>
               </>
