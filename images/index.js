@@ -71,6 +71,11 @@ export const BodyIcon = `${S3BucketJobseeker}/BodyIcon.svg`
 export const DownloadWhiteIcon = `${S3BucketJobseeker}/DownloadWhite.svg`
 export const CarouselRightRoundedBlueButton = `${S3BucketJobseeker}/CarouselRightRoundedBlueButton.svg`
 
+/* Manage profile highlight section */
+export const HighlightAboutYouIcon = `${S3BucketJobseeker}/HighlightAboutYou.svg`
+export const HighlightSkillIcon = `${S3BucketJobseeker}/HighlightSkill.svg`
+export const HighlightEducationIcon = `${S3BucketJobseeker}/HighlightEducation.svg`
+export const HighlightWorkExpIcon = `${S3BucketJobseeker}/HighlightWorkExp.svg`
 
 /* Footer Social Links Logo */
 export const facebook = `${S3BucketJobseeker}/facebook.svg`
