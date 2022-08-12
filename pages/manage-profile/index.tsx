@@ -226,7 +226,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                     </div>
                   </div>
                 </div>
-                {education?.degree && <Text textStyle='lg'>{education.degree}</Text>}
+                {education?.degree && education?.field_of_study ? <Text textStyle='lg'>{education.degree} in {education.field_of_study}</Text> : education?.degree ?  <Text textStyle='lg'>{education.degree} </Text> : null}
                 {studyPeriod !== '' && (
                   <Text textStyle='base' textColor='darkgrey'>
                     {studyPeriod}
