@@ -165,6 +165,8 @@
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
+  display:flex;
+  flex-direction: column;
 
   @include sm {
     padding: 10px;
@@ -219,6 +221,10 @@
   list-style: none;
   justify-content: center;
   padding-top: 10px;
+  
+  @include msd{
+    display:none;
+  }
 }
 
 .emblaDot {
@@ -278,6 +284,10 @@
     position: absolute;
     top: 50%;
 
+    @include msd{
+      top:40%;
+    }
+
     &:hover {
       cursor: pointer;
     }
@@ -315,15 +325,23 @@
   }
 
   @include msd {
+    // display:none;
     display: flex;
-    position: absolute;
-    top: unset;
-    bottom: 25px;
-    left: 50%;
+    // position: absolute;
+    // top: unset;
+    // bottom: 25px;
+    // left: 50%;
 
-    &:hover {
-      cursor: pointer;
-    }
+    // &:hover {
+    //   cursor: pointer;
+    // }
+  }
+
+  &Mobile{
+    display:flex;
+    align-self: center;
+    width:143px;
+    margin-top:24px;
   }
 
   &:hover {
