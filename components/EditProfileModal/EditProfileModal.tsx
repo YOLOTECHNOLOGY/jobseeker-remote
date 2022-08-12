@@ -139,7 +139,6 @@ const EditProfileModal = ({
         const matchedLocation = formattedLocationList.find((loc) => {
           return loc.value == userLocation
         })
-        console.log('settingLocation', matchedLocation)
         // setLocation(matchedLocation)
         setValue('location', matchedLocation?.key)
       }

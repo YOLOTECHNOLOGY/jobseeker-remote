@@ -534,6 +534,7 @@ const RenderResumeView = ({ userDetail }: any) => {
   const isFirstRender = useFirstRender()
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
   const isSuccessfulUpload = useSelector((store: any) => store.users.uploadUserResume.response)
 
   const initialDownloadState = {
@@ -671,19 +672,33 @@ const RenderResumeView = ({ userDetail }: any) => {
                 <div className={styles.emblaSlide}>
                   <div
                     className={styles.emblaSlideInner}
-                    onMouseEnter={() => onTemplateHover('corporate', true)}
-                    onMouseLeave={() => onTemplateHover('corporate', false)}
+                    onMouseEnter={(e) => {
+                      if (isMobile) {
+                        e.preventDefault()
+                      } else {
+                        onTemplateHover('corporate', true)
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (isMobile) {
+                        e.preventDefault()
+                      } else {
+                        onTemplateHover('corporate', false)
+                      }
+                    }}
                   >
                     <img
                       src={ResumeTemplate1}
                       alt='Corporate Template'
                       className={`${styles.resumeTemplateItem}`}
                     />
-                    <MaterialButton
+                    {!isMobile && (<MaterialButton
                       variant='contained'
                       size='medium'
                       capitalize
-                      onClick={() => handleDownloadResume('corporate')}
+                      onClick={() => {
+                        handleDownloadResume('corporate')
+                      }}
                       className={
                         isTemplateDownloadable?.corporate
                           ? styles.downloadResumeButtonActive
@@ -700,6 +715,7 @@ const RenderResumeView = ({ userDetail }: any) => {
                         Download
                       </Text>
                     </MaterialButton>
+                    )}
                   </div>
                 </div>
                 <div className={styles.emblaSlide}>
@@ -713,7 +729,7 @@ const RenderResumeView = ({ userDetail }: any) => {
                       alt='Creative Template'
                       className={`${styles.resumeTemplateItem}`}
                     />
-                    <MaterialButton
+                    {!isMobile && (<MaterialButton
                       variant='contained'
                       size='medium'
                       capitalize
@@ -736,6 +752,7 @@ const RenderResumeView = ({ userDetail }: any) => {
                         Download
                       </Text>
                     </MaterialButton>
+                    )}
                   </div>
                 </div>
               </div>
@@ -767,6 +784,24 @@ const RenderResumeView = ({ userDetail }: any) => {
               )}
             </div>
             <div className={styles.sectionContentSmallDivider}></div>
+            {isMobile && (
+              <MaterialButton
+                variant='contained'
+                size='medium'
+                capitalize
+                onClick={() => handleDownloadResume('corporate')}
+                className={styles.downloadResumeButtonMobile}
+              >
+                <img
+                  src={DownloadWhiteIcon}
+                  alt='Download Corporate Template'
+                  className={styles.downloadIcon}
+                />
+                <Text textStyle='lg' textColor='white' className={styles.downloadText}>
+                  Download
+                </Text>
+              </MaterialButton>
+            )}
             <div className={styles.emblaDots}>
               {scrollSnaps.map((_, index) => (
                 <div
