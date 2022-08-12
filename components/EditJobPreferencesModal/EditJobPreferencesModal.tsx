@@ -92,8 +92,6 @@ const EditJobPreferencesModal = ({
 		return type.label == preferredJobType
 	})
 
-	// to try
-
 	const {
 		register,
 		handleSubmit,
