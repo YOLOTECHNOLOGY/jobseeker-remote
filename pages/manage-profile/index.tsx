@@ -73,8 +73,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     educations,
     skills
   } = userDetail
-  const isProfileInformationFilled =
-    firstName && lastName && birthdate && location && expLevel && description && avatar
+  const isProfileInformationFilled = !! (firstName && lastName && birthdate && location && expLevel && description && avatar)
   const [isSliderButtonVisible, setIsSliderButtonVisible] = useState(true)
   const [isHighlightSectionVisible, setIsHighlightSectionVisible] = useState(true)
 
@@ -120,7 +119,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     if (count <= 2) {
       setIsSliderButtonVisible(false)
     }
-    if (count === 4) {
+    if (count === 0) {
       setIsHighlightSectionVisible(false)
     }
   }, [userDetail])
@@ -292,7 +291,13 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                     </div>
                   </div>
                 </div>
-                {education?.degree && education?.field_of_study ? <Text textStyle='lg'>{education.degree} in {education.field_of_study}</Text> : education?.degree ?  <Text textStyle='lg'>{education.degree} </Text> : null}
+                {education?.degree && education?.field_of_study ? (
+                  <Text textStyle='lg'>
+                    {education.degree} in {education.field_of_study}
+                  </Text>
+                ) : education?.degree ? (
+                  <Text textStyle='lg'>{education.degree} </Text>
+                ) : null}
                 {studyPeriod !== '' && (
                   <Text textStyle='base' textColor='darkgrey'>
                     {studyPeriod}
@@ -692,29 +697,30 @@ const RenderResumeView = ({ userDetail }: any) => {
                       alt='Corporate Template'
                       className={`${styles.resumeTemplateItem}`}
                     />
-                    {!isMobile && (<MaterialButton
-                      variant='contained'
-                      size='medium'
-                      capitalize
-                      onClick={() => {
-                        handleDownloadResume('corporate')
-                      }}
-                      className={
-                        isTemplateDownloadable?.corporate
-                          ? styles.downloadResumeButtonActive
-                          : styles.downloadResumeButton
-                      }
-                      sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
-                    >
-                      <img
-                        src={DownloadWhiteIcon}
-                        alt='Download Corporate Template'
-                        className={styles.downloadIcon}
-                      />
-                      <Text textStyle='lg' textColor='white' className={styles.downloadText}>
-                        Download
-                      </Text>
-                    </MaterialButton>
+                    {!isMobile && (
+                      <MaterialButton
+                        variant='contained'
+                        size='medium'
+                        capitalize
+                        onClick={() => {
+                          handleDownloadResume('corporate')
+                        }}
+                        className={
+                          isTemplateDownloadable?.corporate
+                            ? styles.downloadResumeButtonActive
+                            : styles.downloadResumeButton
+                        }
+                        sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
+                      >
+                        <img
+                          src={DownloadWhiteIcon}
+                          alt='Download Corporate Template'
+                          className={styles.downloadIcon}
+                        />
+                        <Text textStyle='lg' textColor='white' className={styles.downloadText}>
+                          Download
+                        </Text>
+                      </MaterialButton>
                     )}
                   </div>
                 </div>
@@ -729,29 +735,30 @@ const RenderResumeView = ({ userDetail }: any) => {
                       alt='Creative Template'
                       className={`${styles.resumeTemplateItem}`}
                     />
-                    {!isMobile && (<MaterialButton
-                      variant='contained'
-                      size='medium'
-                      capitalize
-                      onClick={() => handleDownloadResume('creative')}
-                      className={
-                        isTemplateDownloadable?.creative
-                          ? styles.downloadResumeButtonActive
-                          : styles.downloadResumeButton
-                      }
-                      sx={{ display: isTemplateDownloadable?.creative ? 'flex' : 'none' }}
-                    >
-                      <img
-                        src={DownloadWhiteIcon}
-                        alt='Download Creative Template'
-                        className={styles.downloadIcon}
-                        width='24px'
-                        height='24px'
-                      />
-                      <Text textStyle='lg' textColor='white' className={styles.downloadText}>
-                        Download
-                      </Text>
-                    </MaterialButton>
+                    {!isMobile && (
+                      <MaterialButton
+                        variant='contained'
+                        size='medium'
+                        capitalize
+                        onClick={() => handleDownloadResume('creative')}
+                        className={
+                          isTemplateDownloadable?.creative
+                            ? styles.downloadResumeButtonActive
+                            : styles.downloadResumeButton
+                        }
+                        sx={{ display: isTemplateDownloadable?.creative ? 'flex' : 'none' }}
+                      >
+                        <img
+                          src={DownloadWhiteIcon}
+                          alt='Download Creative Template'
+                          className={styles.downloadIcon}
+                          width='24px'
+                          height='24px'
+                        />
+                        <Text textStyle='lg' textColor='white' className={styles.downloadText}>
+                          Download
+                        </Text>
+                      </MaterialButton>
                     )}
                   </div>
                 </div>
