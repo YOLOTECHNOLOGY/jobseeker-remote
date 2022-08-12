@@ -58,24 +58,24 @@ const EditJobPreferencesModal = ({
 }: EditJobPreferencesModalProps) => {
 	// to add work setting
 	const {
-		job_title,
-		job_type,
-		salary_range_from,
-		salary_range_to,
+		job_title: preferredJobTitle,
+		job_type: preferredJobType,
+		salary_range_from: preferredMinSalary,
+		salary_range_to: preferredMaxSalary,
 		location: workLocation
 	} = userDetail.job_preference
-	const { notice_period_id } = userDetail
+	const { notice_period_id: preferredAvailability } = userDetail
 
 	const dispatch = useDispatch()
 
-	const [jobType, setJobType] = useState(job_type || null)
+	const [jobType, setJobType] = useState(preferredJobTitle || null)
 
-	const [minSalary, setMinSalary] = useState(Number(salary_range_from) || null)
-	const [maxSalary, setMaxSalary] = useState(Number(salary_range_to) || null)
+	const [minSalary, setMinSalary] = useState(Number(preferredMinSalary) || null)
+	const [maxSalary, setMaxSalary] = useState(Number(preferredMaxSalary) || null)
 	const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
 
 	// const [workSetting, setWorkSetting] = useState(work_setting || '')
-	const [availability, setAvailability] = useState(notice_period_id || null)
+	const [availability, setAvailability] = useState(preferredAvailability || null)
 
 	const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserProfile.fetching)
 
@@ -89,24 +89,23 @@ const EditJobPreferencesModal = ({
 	const minSalaryOptions = getSalaryOptions(config)
 
 	const matchedJobType = jobTypeList.find((type) => {
-		return type.label == job_type
+		return type.label == preferredJobType
 	})
 
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		// formState: { errors },
 		setValue,
-		getValues,
 		reset
 	} = useForm({
 		defaultValues: {
-			jobTitle: job_title,
+			jobTitle: preferredJobTitle,
 			jobType: matchedJobType.key,
-			minSalary: Number(salary_range_from),
-			maxSalary: Number(salary_range_to),
+			minSalary: Number(preferredMinSalary),
+			maxSalary: Number(preferredMaxSalary),
 			location: workLocation,
-			noticePeriod: notice_period_id
+			noticePeriod: preferredAvailability
 		}
 	})
 
@@ -131,7 +130,7 @@ const EditJobPreferencesModal = ({
 
 		if (userDetail && userDetail.job_preference.job_type) {
 			const getJobType = jobTypeList.find((type) => {
-				return type.label == job_type
+				return type.label == preferredJobType
 			})
 			setJobType(getJobType?.key)
 			setValue('jobType', getJobType?.key)

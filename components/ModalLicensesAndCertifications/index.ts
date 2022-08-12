@@ -1,3 +1,0 @@
-import ModalLicensesAndCertifications from './ModalLicensesAndCertifications'
-
-export default ModalLicensesAndCertifications
