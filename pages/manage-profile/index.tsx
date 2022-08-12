@@ -36,7 +36,7 @@ import EditEducationModal from 'components/EditEducationModal'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
-import { getYearMonthDiffBetweenDates } from 'helpers/formatter'
+import { formatSalaryRange, getYearMonthDiffBetweenDates } from 'helpers/formatter'
 import { getNoticePeriodList } from 'helpers/jobPayloadFormatter'
 
 /* Services */
@@ -340,6 +340,10 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
 const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handleModal }: any) => {
   const [openToWork, setOpenToWork] = useState(true)
 
+  const minSalary = userDetail.job_preference.salary_range_from
+  const maxSalary = userDetail.job_preference.salary_range_to
+  const salaryRange = minSalary + " - " + maxSalary
+
   const noticeList = getNoticePeriodList(config)
 
   const getAvailability = (userDetail) => {
@@ -347,25 +351,6 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
     const findAvailability = noticeList.find(checkNoticePeriod).label
 
     return findAvailability
-  }
-
-  const truncateSalary = (userDetail) => {
-    let minSalary = userDetail.job_preference.salary_range_from
-    let maxSalary = userDetail.job_preference.salary_range_to
-
-    const minCharIndex = minSalary.indexOf('.')
-    const maxCharIndex = maxSalary.indexOf('.')
-
-    // To truncate ".00"
-    minSalary = minSalary.substring(0, minCharIndex != -1 ? minCharIndex : minSalary.length)
-    maxSalary = maxSalary.substring(0, maxCharIndex != -1 ? maxCharIndex : maxSalary.length)
-
-    // To add ','
-    minSalary = `${minSalary.slice(0, -3)},${minSalary.slice(-3, minSalary.length)}`
-    maxSalary = `${maxSalary.slice(0, -3)},${maxSalary.slice(-3, maxSalary.length)}`
-
-    const salaryRange = { minSalary, maxSalary }
-    return salaryRange
   }
 
   const handleEditClick = () => {
@@ -427,7 +412,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
                   <li>
                       <Text textColor='lightgrey'>Expected salary:</Text>
                       <Text className={styles.jobPreferencesSectionDetailText}>
-                        P{truncateSalary(userDetail).minSalary} - P{truncateSalary(userDetail).maxSalary}
+                        {formatSalaryRange(salaryRange)}
                       </Text>
                   </li>
                 )}
