@@ -101,7 +101,7 @@ const EditJobPreferencesModal = ({
 	} = useForm({
 		defaultValues: {
 			jobTitle: preferredJobTitle,
-			jobType: matchedJobType.key,
+			jobType: matchedJobType?.key,
 			minSalary: Number(preferredMinSalary),
 			maxSalary: Number(preferredMaxSalary),
 			location: workLocation,
