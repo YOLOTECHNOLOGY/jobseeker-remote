@@ -25,8 +25,11 @@ import ProfileSettingCard from 'components/ProfileSettingCard'
 import UploadResume from 'components/UploadResume'
 import MaterialButton from 'components/MaterialButton'
 import ReadMore from 'components/ReadMore'
+import Switch from '@mui/material/Switch'
+import FormControlLabel from '@mui/material/FormControlLabel'
 
 import EditProfileModal from 'components/EditProfileModal'
+import EditJobPreferencesModal from 'components/EditJobPreferencesModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
 import EditEducationModal from 'components/EditEducationModal'
 import EditLicensesAndCertificationsModal from 'components/EditLicenseAndCertificationsModal'
@@ -35,7 +38,11 @@ import EditLicensesAndCertificationsModal from 'components/EditLicenseAndCertifi
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
-import { getYearMonthDiffBetweenDates } from 'helpers/formatter'
+import { formatSalaryRange, getYearMonthDiffBetweenDates } from 'helpers/formatter'
+import { getNoticePeriodList } from 'helpers/jobPayloadFormatter'
+
+/* Services */
+import { updateUserVisibilityToWorkService } from 'store/services/jobs/updateUserVisibilityToWork'
 
 /* Assets */
 import {
@@ -628,8 +635,135 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
   )
 }
 
-const RenderPreferencesView = () => {
-  return <React.Fragment>preferences content</React.Fragment>
+const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handleModal }: any) => {
+  const [openToWork, setOpenToWork] = useState(true)
+
+  const minSalary = userDetail?.job_preference?.salary_range_from
+  const maxSalary = userDetail?.job_preference?.salary_range_to
+  const salaryRange = minSalary + " - " + maxSalary
+
+  const noticeList = getNoticePeriodList(config)
+
+  const getAvailability = (userDetail) => {
+    const checkNoticePeriod = notice => userDetail.notice_period_id === notice.value
+    const findAvailability = noticeList.find(checkNoticePeriod).label
+
+    return findAvailability
+  }
+
+  const handleEditClick = () => {
+    handleModal(modalName, true)
+  }
+
+  const handleVisibility = () => {
+    setOpenToWork(!openToWork)
+    updateUserVisibilityToWorkService({
+      is_visible: !openToWork
+    })
+}
+
+  return (
+    <React.Fragment>
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <Text bold textColor='primaryBlue' textStyle='xl'>
+            Job Preferences
+          </Text>
+          <div className={styles.iconWrapper} onClick={handleEditClick}>
+            <img src={PencilIcon} width='22' height='22' />
+          </div>
+        </div>
+        <div>
+          <Text tagName='p' textStyle='lg'>
+            We will find jobs that are of a good match to you based on your job preferences.
+          </Text>
+        </div>
+        <div className={styles.jobPreferencesSectionDetail}>
+          {!userDetail?.job_preference?.job_title && !userDetail?.job_preference?.job_type && 
+            !userDetail?.job_preference?.salary_range_from && !userDetail?.job_preference?.location && 
+            !userDetail?.notice_period_id ? (
+              <MaterialButton
+                className={styles.jobPreferencesSectionButton}
+                variant='outlined'
+                capitalize={false}
+                size='large'
+                onClick={handleEditClick}
+                style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
+              >
+                Add job preferences
+              </MaterialButton>
+            ) : (
+              <ul className={styles.jobPreferencesSectionDetailList}>
+                {userDetail.job_preference.job_title && (
+                  <li style={{ marginTop: '8px' }}>
+                    <Text textColor='lightgrey'>Desire job title:</Text>
+                    <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.job_title}</Text>
+                  </li>
+                )}
+                {userDetail.job_preference.job_type && (
+                  <li>
+                    <Text textColor='lightgrey'>Desire job type:</Text>
+                    <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.job_type}</Text>
+                  </li>
+                )}
+                {userDetail.job_preference.salary_range_from && (
+                  <li>
+                      <Text textColor='lightgrey'>Expected salary:</Text>
+                      <Text className={styles.jobPreferencesSectionDetailText}>
+                        {formatSalaryRange(salaryRange)}
+                      </Text>
+                  </li>
+                )}
+                {userDetail.job_preference.location && (
+                  <li>
+                      <Text textColor='lightgrey'>Desire working location:</Text>
+                      <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.location}</Text>
+                  </li>
+                )}
+                {/* {workingSetting && (
+                  <li>
+                      <Text textColor='lightgrey'>Desire working setting:</Text>
+                      <Text>{workingSetting}</Text>
+                  </li>
+                )} */}
+                {userDetail.notice_period_id && (
+                  <li>
+                      <Text textColor='lightgrey'>Availability:</Text>
+                      <Text className={styles.jobPreferencesSectionDetailText}>{getAvailability(userDetail)}</Text>
+                  </li>
+                )}
+              </ul>
+              )
+            }
+            <EditJobPreferencesModal 
+              modalName={modalName}
+              showModal={showModal}
+              config={config}
+              userDetail={userDetail}
+              handleModal={handleModal}
+            />
+        </div>
+      </div>
+      <div className={styles.sectionContainer}>
+        <Text className={styles.openToWorkSectionTitle} bold textStyle='xl' textColor='primaryBlue'>
+          Open to work
+        </Text>
+        <FormControlLabel
+          control={
+          <Switch 
+              checked={openToWork}
+              onChange={handleVisibility}
+          />
+          }
+          label={
+          <Text textStyle='lg'>
+            Let recruiters know that you are open to work
+          </Text>
+          }
+        />
+      </div>
+    </React.Fragment>
+  )
 }
 
 const RenderResumeView = ({ userDetail }: any) => {
@@ -1027,7 +1161,7 @@ const ManageProfilePage = ({ config }: any) => {
         {tabValue === 'profile' && (
           <RenderProfileView userDetail={userDetail} handleModal={handleModal} config={config} />
         )}
-        {tabValue === 'job-preferences' && <RenderPreferencesView />}
+        {tabValue === 'job-preferences' && <RenderPreferencesView modalName='jobPreferences' showModal={modalState.jobPreferences.showModal} config={config} userDetail={userDetail} handleModal={handleModal} />}
         {tabValue === 'resume' && <RenderResumeView userDetail={userDetail} />}
       </ProfileLayout>
     </Layout>

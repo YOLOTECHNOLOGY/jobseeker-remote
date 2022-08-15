@@ -12,6 +12,8 @@ import postSaveJob from './postSaveJob'
 import deleteSaveJob from './deleteSaveJob'
 import addJobView from './addJobView'
 
+import updateUserVisibilityToWork from './updateUserVisibilityToWork'
+
 export default {
   fetchJobsList,
   fetchJobDetail,
@@ -27,5 +29,7 @@ export default {
   postSaveJob,
   deleteSaveJob,
 
-  applyJobService
+  applyJobService,
+
+  updateUserVisibilityToWork
 }
