@@ -13,6 +13,7 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
 import { manageUserEducationsRequest } from 'store/actions/users/manageUserEducations'
+import { manageUserLicensesAndCertificationsRequest } from 'store/actions/users/manageUserLicensesAndCertifications'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 
@@ -28,6 +29,7 @@ import ReadMore from 'components/ReadMore'
 import EditProfileModal from 'components/EditProfileModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
 import EditEducationModal from 'components/EditEducationModal'
+import EditLicensesAndCertificationsModal from 'components/EditLicenseAndCertificationsModal'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
@@ -71,7 +73,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     avatar,
     work_experiences: workExperiences,
     educations,
-    skills
+    skills,
+    license_certifications: licensesCertifications
   } = userDetail
   const isProfileInformationFilled = !! (firstName && lastName && birthdate && location && expLevel && description && avatar)
   const [isSliderButtonVisible, setIsSliderButtonVisible] = useState(true)
@@ -130,6 +133,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         handleModal(type, true)
       case 'education':
         handleModal(type, true)
+      case 'license':
+        handleModal(type, true)
       default:
         break
     }
@@ -140,6 +145,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       case 'workExperience':
         handleModal(type, true, data)
       case 'education':
+        handleModal(type, true, data)
+      case 'license':
         handleModal(type, true, data)
       default:
         break
@@ -152,6 +159,10 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
 
   const handleEducationModal = (education = null) => {
     handleModal('education', true, education)
+  }
+
+  const handleLicenseAndCertificationsModal = (license = null) => {
+    handleModal('license', true, license)
   }
 
   const handleDeleteData = async (type, id) => {
@@ -168,6 +179,13 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           manageUserEducationsRequest({
             isDelete: true,
             educationId: id
+          })
+        )
+      case 'license':
+        dispatch(
+          manageUserLicensesAndCertificationsRequest({
+            isDelete: true,
+            licenseId: id
           })
         )
       default:
@@ -337,6 +355,81 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
               )
             })}
           </div>
+        </div>
+      </div>
+    )
+  }
+
+  const renderLicensesAndCertificationsSection = (sectionName) => {
+    return (
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <Text textStyle='xl' textColor='primaryBlue' bold>
+            Licenses And Certifications
+          </Text>
+          <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
+            <img src={AddIcon} width='14' height='14' />
+          </div>
+        </div>
+        <div className={styles.sectionContent}>
+          {licensesCertifications.map((licenseCertification) => {
+            let validityPeriod = ''
+
+            if (licenseCertification?.issue_date) {
+              validityPeriod += moment(licenseCertification?.issue_date).format('MMM yyy')
+
+              if (licenseCertification?.is_permanent) {
+                validityPeriod = validityPeriod 
+              } else if (licenseCertification?.expiry_date && !licenseCertification?.is_permanent) {
+                validityPeriod += " - " + moment(licenseCertification?.expiry_date).format('MMM yyy')
+              }
+            }
+
+            return (
+              <div key={licenseCertification.id} className={styles.licenseCertificationSection}>
+                <div className={styles.titleWrapper}>
+                  <Text textStyle='lg' bold>
+                    {licenseCertification.title}
+                  </Text>
+                  <div className={styles.iconWrapperDouble}>
+                    <div
+                      className={styles.iconWrapper}
+                      onClick={() => handleEditData(sectionName, licenseCertification)}
+                    >
+                      <img src={PencilIcon} width='22' height='22' />
+                    </div>
+                    <div
+                      className={styles.iconWrapper}
+                      onClick={() => handleDeleteData(sectionName, licenseCertification.id)}
+                    >
+                      <img src={TrashIcon} width='14' height='14' />
+                    </div>
+                  </div>
+                </div>
+                {licenseCertification?.issuing_organisation && 
+                  <Text textStyle='lg'>
+                    {licenseCertification.issuing_organisation}
+                  </Text>
+                }
+                {validityPeriod !== "" && 
+                  <Text textStyle='base' textColor='darkgrey'>
+                    {validityPeriod}
+                  </Text>                
+                }
+                <div style={{ height: '16px' }}></div>
+                {licenseCertification?.credential_id && 
+                  <Text textStyle='lg'>
+                    Credential ID: {licenseCertification.credential_id}
+                  </Text>
+                }
+                {licenseCertification?.credential_url &&
+                  <Text textStyle='lg'>
+                    {licenseCertification.credential_url}
+                  </Text>
+                }
+              </div>
+            )
+          })}
         </div>
       </div>
     )
@@ -519,13 +612,18 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         // eslint-disable-next-line
         onClick={() => {}}
       />
-      <ProfileSettingCard
-        title='Licences And Certifications'
-        description='Stand out among the rest by sharing that expertise that you have earned to show your passion for the job.'
-        buttonText='Add licenses & cert'
-        // eslint-disable-next-line
-        onClick={() => {}}
-      />
+
+      {licensesCertifications?.length > 0 ? (
+        renderLicensesAndCertificationsSection('license')
+      ) : (
+        <ProfileSettingCard
+          title='Licenses And Certifications'
+          description='Stand out among the rest by sharing that expertise that you have earned to show your passion for the job.'
+          buttonText='Add licenses & cert'
+          // eslint-disable-next-line
+          onClick={() => handleLicenseAndCertificationsModal()}
+        />
+      )}
     </React.Fragment>
   )
 }
@@ -911,6 +1009,12 @@ const ManageProfilePage = ({ config }: any) => {
         showModal={modalState.skills.showModal}
         categoryList={jobCategoryList}
         skills={userDetail.skills}
+        handleModal={handleModal}
+      />
+      <EditLicensesAndCertificationsModal
+        modalName='license'
+        showModal={modalState.license.showModal}
+        licenseData={modalState.license.data}
         handleModal={handleModal}
       />
       <ProfileLayout
