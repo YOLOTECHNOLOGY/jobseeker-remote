@@ -47,6 +47,10 @@
           box-shadow: $box-shadow-1;
         }
       }
+
+      @include msd{
+        width:100%;
+      }
     }
   }
 
