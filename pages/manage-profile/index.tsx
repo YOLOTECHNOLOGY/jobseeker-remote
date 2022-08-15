@@ -396,19 +396,19 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
               </MaterialButton>
             ) : (
               <ul className={styles.jobPreferencesSectionDetailList}>
-                {userDetail.job_preference.job_title && (
+                {userDetail?.job_preference?.job_title && (
                   <li style={{ marginTop: '8px' }}>
                     <Text textColor='lightgrey'>Desire job title:</Text>
                     <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.job_title}</Text>
                   </li>
                 )}
-                {userDetail.job_preference.job_type && (
+                {userDetail?.job_preference?.job_type && (
                   <li>
                     <Text textColor='lightgrey'>Desire job type:</Text>
                     <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.job_type}</Text>
                   </li>
                 )}
-                {userDetail.job_preference.salary_range_from && (
+                {userDetail?.job_preference?.salary_range_from && (
                   <li>
                       <Text textColor='lightgrey'>Expected salary:</Text>
                       <Text className={styles.jobPreferencesSectionDetailText}>
@@ -416,7 +416,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
                       </Text>
                   </li>
                 )}
-                {userDetail.job_preference.location && (
+                {userDetail?.job_preference?.location && (
                   <li>
                       <Text textColor='lightgrey'>Desire working location:</Text>
                       <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.location}</Text>
@@ -428,7 +428,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
                       <Text>{workingSetting}</Text>
                   </li>
                 )} */}
-                {userDetail.notice_period_id && (
+                {userDetail?.notice_period_id && (
                   <li>
                       <Text textColor='lightgrey'>Availability:</Text>
                       <Text className={styles.jobPreferencesSectionDetailText}>{getAvailability(userDetail)}</Text>
