@@ -133,6 +133,49 @@
   flex-direction: column;
 }
 
+.jobPreferencesSection {
+  &Button {
+    width: 250px;
+
+    @include msd {
+        width: 100%;
+    }
+  }
+
+  &Detail {
+    display: inline-block;
+    width: 60%;
+
+    &List {
+      list-style: none;
+
+      & > li {
+        margin-top: 16px;
+        display: flex;
+        position: relative;
+      }
+
+      @include msd {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    &Text {
+      position: absolute;
+      margin-left: 250px;
+  
+      @include msd {
+        margin-left: 200px;
+      }
+    }
+  }
+}
+
+.openToWorkSectionTitle {
+  margin-bottom: 8px;
+}
+
 .buttonCTA {
   width: auto !important;
 
