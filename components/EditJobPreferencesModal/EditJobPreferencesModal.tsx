@@ -116,8 +116,8 @@ const EditJobPreferencesModal = ({
 	}, [minSalary])
 
 	useEffect(() => {
-		if (userDetail && userDetail?.job_preference?.location) {
-			if (userDetail?.job_preference?.location) {
+		if (userDetail && workLocation) {
+			if (workLocation) {
 				const matchedLocation = formattedLocationList.find((loc) => {
 					return loc.value == workLocation
 				})
