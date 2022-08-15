@@ -796,7 +796,7 @@ const RenderResumeView = ({ userDetail }: any) => {
                 variant='contained'
                 size='medium'
                 capitalize
-                onClick={() => handleDownloadResume('corporate')}
+                onClick={() => selectedIndex === 0 ? handleDownloadResume('corporate') : handleDownloadResume('creative')}
                 className={styles.downloadResumeButtonMobile}
               >
                 <img
