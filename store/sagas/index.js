@@ -106,7 +106,6 @@ function* rootSaga() {
     watchGenerateUserResume(),
     watchFetchUserWorkExperience(),
     watchFetchUserEducation(),
-    watchFetchUserLicensesAndCertifications(),
     watchRedirectToNewJobseeker(),
     watchGenerateVerifyEmailOTP(),
     watchCheckVerifyEmailOTP(),
