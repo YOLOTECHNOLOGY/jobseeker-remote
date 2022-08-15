@@ -106,7 +106,7 @@ function* quickApplyJobReq(action) {
         const applyJobResponse = yield call(applyJobService, jobId, applyJobPayload)
 
         if (applyJobResponse) {
-          const { job_categories, company_industry } = response.data.data
+          const { job_categories, company_industry } = applyJobResponse.data.data
 
           // Send Google event
           const IT_job_categories = [
