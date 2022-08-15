@@ -57,14 +57,12 @@ const EditJobPreferencesModal = ({
 	handleModal
 }: EditJobPreferencesModalProps) => {
 	// to add work setting
-	const {
-		job_title: preferredJobTitle,
-		job_type: preferredJobType,
-		salary_range_from: preferredMinSalary,
-		salary_range_to: preferredMaxSalary,
-		location: workLocation
-	} = userDetail.job_preference
-	const { notice_period_id: preferredAvailability } = userDetail
+	const preferredJobTitle = userDetail?.job_preference?.job_title
+	const preferredJobType = userDetail?.job_preference?.job_type
+	const preferredMinSalary = userDetail?.job_preference?.salary_range_from
+	const preferredMaxSalary = userDetail?.job_preference?.salary_range_to
+	const workLocation = userDetail?.job_preference?.location
+	const preferredAvailability = userDetail?.notice_period_id
 
 	const dispatch = useDispatch()
 
@@ -118,8 +116,8 @@ const EditJobPreferencesModal = ({
 	}, [minSalary])
 
 	useEffect(() => {
-		if (userDetail && userDetail.job_preference.location) {
-			if (userDetail.job_preference.location) {
+		if (userDetail && workLocation) {
+			if (workLocation) {
 				const matchedLocation = formattedLocationList.find((loc) => {
 					return loc.value == workLocation
 				})
@@ -128,7 +126,7 @@ const EditJobPreferencesModal = ({
 			}
 		}
 
-		if (userDetail && userDetail.job_preference.job_type) {
+		if (userDetail && preferredJobType) {
 			const getJobType = jobTypeList.find((type) => {
 				return type.label == preferredJobType
 			})
@@ -136,17 +134,17 @@ const EditJobPreferencesModal = ({
 			setValue('jobType', getJobType?.key)
 		}
 
-		if (userDetail && userDetail.job_preference.salary_range_from) {
+		if (userDetail && preferredMinSalary) {
 			setMinSalary(Number(userDetail.job_preference.salary_range_from))
 			setValue('minSalary', userDetail.job_preference.salary_range_from)
 		}
 
-		if (userDetail && userDetail.job_preference.salary_range_to) {
+		if (userDetail && preferredMaxSalary) {
 			setMaxSalary(Number(userDetail.job_preference.salary_range_to))
 			setValue('maxSalary', userDetail.job_preference.salary_range_to)
 		}
 
-		if (userDetail && userDetail.notice_period_id) {
+		if (userDetail && preferredAvailability) {
 			setAvailability(userDetail.notice_period_id)
 			setValue('noticePeriod', userDetail.notice_period_id)
 		}

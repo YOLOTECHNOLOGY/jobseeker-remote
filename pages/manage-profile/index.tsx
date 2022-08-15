@@ -540,8 +540,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
 const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handleModal }: any) => {
   const [openToWork, setOpenToWork] = useState(true)
 
-  const minSalary = userDetail.job_preference.salary_range_from
-  const maxSalary = userDetail.job_preference.salary_range_to
+  const minSalary = userDetail?.job_preference?.salary_range_from
+  const maxSalary = userDetail?.job_preference?.salary_range_to
   const salaryRange = minSalary + " - " + maxSalary
 
   const noticeList = getNoticePeriodList(config)
@@ -581,9 +581,9 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           </Text>
         </div>
         <div className={styles.jobPreferencesSectionDetail}>
-          {!userDetail.job_preference.job_title && !userDetail.job_preference.job_type && 
-            !userDetail.job_preference.salary_range_from && !userDetail.job_preference.location && 
-            !userDetail.notice_period_id ? (
+          {!userDetail?.job_preference?.job_title && !userDetail?.job_preference?.job_type && 
+            !userDetail?.job_preference?.salary_range_from && !userDetail?.job_preference?.location && 
+            !userDetail?.notice_period_id ? (
               <MaterialButton
                 className={styles.jobPreferencesSectionButton}
                 variant='outlined'
