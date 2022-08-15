@@ -13,7 +13,6 @@ import generateVerifyEmailOTPReducer from './generateVerifyEmailOTP'
 import checkVerifyEmailOTPReducer from './checkVerifyEmailOTP'
 import manageUserWorkExperiencesReducer from './manageUserWorkExperiences'
 import manageUserEducationsReducer from './manageUserEducations'
-import manageUserLicensesAndCertificationsReducer from './manageUserLicensesAndCertifications'
 
 const usersReducers = combineReducers({
   registerUser: registerUserReducer,
@@ -28,8 +27,7 @@ const usersReducers = combineReducers({
   generateVerifyEmailOTP: generateVerifyEmailOTPReducer,
   checkVerifyEmailOTP: checkVerifyEmailOTPReducer,
   manageUserWorkExperiences: manageUserWorkExperiencesReducer,
-  manageUserEducations: manageUserEducationsReducer,
-  manageUserLicensesAndCertifications: manageUserLicensesAndCertificationsReducer
+  manageUserEducations: manageUserEducationsReducer
 })
 
 export default usersReducers

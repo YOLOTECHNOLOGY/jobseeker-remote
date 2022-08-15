@@ -1,3 +1,0 @@
-import EditLicensesAndCertificationsModal from './EditLicensesAndCertificationsModal'
-
-export default EditLicensesAndCertificationsModal
