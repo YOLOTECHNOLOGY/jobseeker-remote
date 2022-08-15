@@ -87,7 +87,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) {
-      emblaApi.scrollPrev()
+      emblaApi.scrollNext()
     }
   }, [emblaApi])
 
