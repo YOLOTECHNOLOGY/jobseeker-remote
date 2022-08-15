@@ -178,7 +178,7 @@ const EditProfileModal = ({
   }
 
   const onDateChange = (value) => {
-    const year = value.getFullYear()
+    const year = value?.getFullYear()
     if (year < hundredYearsAgo || year > sixteenYearsAgo) {
       setError(
         'birthdate',
