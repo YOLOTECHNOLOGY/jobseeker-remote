@@ -371,9 +371,9 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           <Text bold textColor='primaryBlue' textStyle='xl'>
             Job Preferences
           </Text>
-          {userDetail?.job_preference?.job_title || userDetail?.job_preference?.job_type || 
+          {(userDetail?.job_preference?.job_title || userDetail?.job_preference?.job_type || 
             userDetail?.job_preference?.salary_range_from || userDetail?.job_preference?.location || 
-            userDetail?.notice_period_id && (
+            userDetail?.notice_period_id) && (
             <div className={styles.iconWrapper} onClick={handleEditClick}>
               <img src={PencilIcon} width='22' height='22' />
             </div>
