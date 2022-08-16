@@ -24,6 +24,7 @@ import ProfileSettingCard from 'components/ProfileSettingCard'
 import UploadResume from 'components/UploadResume'
 import MaterialButton from 'components/MaterialButton'
 import ReadMore from 'components/ReadMore'
+import SeeMore from 'components/SeeMore'
 import Switch from '@mui/material/Switch'
 import FormControlLabel from '@mui/material/FormControlLabel'
 
@@ -331,8 +332,10 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         </div>
         <div className={styles.sectionContent}>
           <div className={styles.skill}>
-            {skills.map((skill, i) => {
-              return (
+            <SeeMore
+              count={10}
+              items={skills}
+              renderElement={(i, skill) => (
                 <Chip
                   key={i}
                   className={styles.skillChip}
@@ -341,8 +344,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                   color='info'
                   size='small'
                 />
-              )
-            })}
+              )}
+            />
           </div>
         </div>
       </div>
