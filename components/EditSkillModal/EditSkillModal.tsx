@@ -70,7 +70,9 @@ const EditSkillModal = ({
   }
 
   useEffect(() => {
-    handleCloseModal()
+    if (updateProfileSuccess){
+      handleCloseModal()
+    }
   }, [updateProfileSuccess])
 
   useEffect(() => {

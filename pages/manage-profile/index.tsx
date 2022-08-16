@@ -318,7 +318,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     )
   }
 
-  const rendeSkillSection = () => {
+  const renderSkillSection = () => {
     return (
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
@@ -509,7 +509,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       )}
 
       {skills?.length > 0 ? (
-        rendeSkillSection()
+        renderSkillSection()
       ) : (
         <ProfileSettingCard
           title='Skills'
@@ -571,7 +571,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           <Text bold textColor='primaryBlue' textStyle='xl'>
             Job Preferences
           </Text>
-          <div className={styles.iconWrapper} onClick={handleEditClick}>
+          <div className={styles.iconWrapper} onClick={()=>handleEditClick()}>
             <img src={PencilIcon} width='22' height='22' />
           </div>
         </div>
@@ -591,7 +591,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
               variant='outlined'
               capitalize={false}
               size='large'
-              onClick={handleEditClick}
+              onClick={()=>handleEditClick()}
               style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
             >
               Add job preferences
