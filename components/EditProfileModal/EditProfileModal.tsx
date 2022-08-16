@@ -237,7 +237,7 @@ const EditProfileModal = ({
                 />
                 {errors.firstName && errorText(errors.firstName.message)}
               </div>
-              <div style={{ width: '20px' }}></div>
+              <div style={{ width: '20px', height: '24px' }}></div>
               <div className={styles.profileFormGroupField}>
                 <MaterialTextField
                   refs={{
