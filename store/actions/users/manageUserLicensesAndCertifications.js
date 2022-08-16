@@ -14,7 +14,7 @@ const manageUserLicensesAndCertificationsSuccess = (payload) => ({
 	payload,
 })
 
-const manageUserLicensesAndCertificationsFailed = (payload) => ({
+const manageUserLicensesAndCertificationsFailed = (error) => ({
 	type: MANAGE_USER_LICENSES_CERTIFICATIONS_FAILED,
 	error,
 })

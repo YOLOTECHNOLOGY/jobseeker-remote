@@ -12,6 +12,7 @@ import generateVerifyEmailOTP from './generateVerifyEmailOTP'
 import checkVerifyEmailOTP from './checkVerifyEmailOTP'
 import manageUserWorkExperiences from './manageUserWorkExperiences'
 import manageUserEducations from './manageUserEducations'
+import manageUserLicensesAndCertifications from './manageUserLicensesAndCertifications'
 
 export default {
   registerUser,
@@ -27,5 +28,6 @@ export default {
   generateVerifyEmailOTP,
   checkVerifyEmailOTP,
   manageUserWorkExperiences,
-  manageUserEducations
+  manageUserEducations,
+  manageUserLicensesAndCertifications
 }

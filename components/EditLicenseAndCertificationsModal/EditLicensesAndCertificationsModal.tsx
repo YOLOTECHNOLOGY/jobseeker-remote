@@ -17,6 +17,9 @@ import MaterialTextField from 'components/MaterialTextField'
 /* Actions */
 import { manageUserLicensesAndCertificationsRequest } from 'store/actions/users/manageUserLicensesAndCertifications'
 
+/* Helpers */
+import { urlValidation } from 'helpers/formValidation'
+
 /* Styles */
 import styles from './EditLicensesAndCertificationsModal.module.scss'
 
@@ -58,6 +61,14 @@ const EditLicensesAndCertificationsModal = ({
 				<span>{text}</span>
 				<span className={styles.fieldRequired}>*</span>
 			</>
+		)
+	}
+
+	const errorText = (errorMessage: string) => {
+		return (
+			<Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
+				{errorMessage}
+			</Text>
 		)
 	}
 
@@ -261,6 +272,9 @@ const EditLicensesAndCertificationsModal = ({
 							onChange={(e) => setCredentialUrl(e.target.value)}
 						/>
 					</div>
+					{credentialUrl && (
+						errorText(urlValidation(credentialUrl))
+					)}
 				</div>
 			</div>
 		</div>
