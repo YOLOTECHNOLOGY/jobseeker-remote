@@ -136,6 +136,11 @@
 .licenseCertificationSection {
   display: flex;
   flex-direction: column;
+
+  &Link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }
 
 .jobPreferencesSection {

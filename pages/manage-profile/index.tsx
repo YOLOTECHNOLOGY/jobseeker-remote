@@ -27,6 +27,7 @@ import MaterialButton from 'components/MaterialButton'
 import ReadMore from 'components/ReadMore'
 import Switch from '@mui/material/Switch'
 import FormControlLabel from '@mui/material/FormControlLabel'
+import Link from 'components/Link'
 
 import EditProfileModal from 'components/EditProfileModal'
 import EditJobPreferencesModal from 'components/EditJobPreferencesModal'
@@ -430,9 +431,11 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                   </Text>
                 }
                 {licenseCertification?.credential_url &&
-                  <Text textStyle='lg'>
-                    {licenseCertification.credential_url}
-                  </Text>
+                  <Link className={styles.licenseCertificationSectionLink} to={licenseCertification.credential_url} external title={licenseCertification.title}>
+                    <Text textStyle='lg'>
+                      {licenseCertification.credential_url}
+                    </Text>
+                  </Link>
                 }
               </div>
             )
