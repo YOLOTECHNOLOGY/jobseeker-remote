@@ -56,7 +56,7 @@ const UserProfileOverview = ({
   }
   return (
     <div className={styles.userOverview}>
-      <div className={styles.userOverviewEditIcon} onClick={handleEditClick}>
+      <div className={styles.userOverviewEditIcon} onClick={()=>handleEditClick()}>
         <img src={PencilIcon} width='24' height='24' />
       </div>
       <div className={styles.userOverviewAvatar}>
