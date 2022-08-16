@@ -162,7 +162,6 @@ const EditJobPreferencesModal = ({
 
 	const onSubmit = (data) => {
 		// to add workSetting
-		console.log('data', data)
 		const { jobTitle, jobType, minSalary, maxSalary, location, noticePeriod } = data // jobType is a key
 		const matchedLocation = formattedLocationList.find((loc) => {
 			return loc.value == location
