@@ -56,7 +56,6 @@ const EditJobPreferencesModal = ({
   userDetail,
   handleModal
 }: EditJobPreferencesModalProps) => {
-  console.log('userDetail', userDetail)
   // to add work setting
   const preferredJobTitle = userDetail?.job_preference?.job_title
   const preferredJobType = userDetail?.job_preference?.job_type

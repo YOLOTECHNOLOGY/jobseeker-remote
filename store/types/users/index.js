@@ -7,6 +7,7 @@ import fetchUserWorkExperience from './fetchUserWorkExperience'
 import fetchUserEducation from './fetchUserEducation'
 import completeUserProfile from './completeUserProfile'
 import updateUserProfile from './updateUserProfile'
+import updateUserPreferences from './updateUserPreferences'
 import redirectToNewJobseeker from './redirectToNewJobseeker'
 import generateVerifyEmailOTP from './generateVerifyEmailOTP'
 import checkVerifyEmailOTP from './checkVerifyEmailOTP'
@@ -24,6 +25,7 @@ export default {
   fetchUserEducation,
   completeUserProfile,
   updateUserProfile,
+  updateUserPreferences,
   redirectToNewJobseeker,
   generateVerifyEmailOTP,
   checkVerifyEmailOTP,

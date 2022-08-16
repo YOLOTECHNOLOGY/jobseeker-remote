@@ -9,6 +9,7 @@ import fetchUserWorkExperienceReducer from './fetchUserWorkExperience'
 import fetchUserEducationReducer from './fetchUserEducation'
 import completeUserProfileReducer from './completeUserProfile'
 import updateUserProfileReducer from './updateUserProfile'
+import updateUserPreferencesReducer from './updateUserPreferences'
 import generateVerifyEmailOTPReducer from './generateVerifyEmailOTP'
 import checkVerifyEmailOTPReducer from './checkVerifyEmailOTP'
 import manageUserWorkExperiencesReducer from './manageUserWorkExperiences'
@@ -25,6 +26,7 @@ const usersReducers = combineReducers({
   generateUserResume: generateUserResumeReducer,
   completeUserProfile: completeUserProfileReducer,
   updateUserProfile: updateUserProfileReducer,
+  updateUserPreferences: updateUserPreferencesReducer,
   generateVerifyEmailOTP: generateVerifyEmailOTPReducer,
   checkVerifyEmailOTP: checkVerifyEmailOTPReducer,
   manageUserWorkExperiences: manageUserWorkExperiencesReducer,
