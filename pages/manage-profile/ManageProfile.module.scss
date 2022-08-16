@@ -53,8 +53,56 @@
   }
 }
 
+.highlightContainer {
+  background-color: #136fd31a;
+  position: relative;
+  margin-bottom: 24px;
+  padding: 24px;
+  border-radius:4px;
+
+  .highlightCard {
+    width: 385px;
+    height: 180px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    background-color: $white-3;
+    border-radius: 4px;
+    box-shadow: $box-shadow-1;
+
+    @include msd{
+      width:100%;
+      height:auto;
+      // align-items:stretch;
+    }
+
+    & > * {
+      display: flex;
+    }
+
+    &Header {
+      flex-direction: row;
+      align-items: center;
+
+      & > img {
+        display: flex;
+        margin-right: 8px;
+      }
+    }
+
+    &Content {
+      margin: 8px 0 16px;
+    }
+
+    &Button {
+      width: 200px;
+      // height:44px !important;
+      // text-transform: none !important;
+    }
+  }
+}
 .workExpSection {
-  width:100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 
@@ -73,7 +121,7 @@
           width: 1px;
           background-color: $lightgrey;
           top: 0;
-          right:-8px;
+          right: -8px;
         }
       }
     }
@@ -96,29 +144,44 @@
 
   &Detail {
     display: inline-block;
-    width: 60%;
+    width: 100%;
 
     &List {
       list-style: none;
 
-      & > li {
+      & > * {
         margin-top: 16px;
         display: flex;
-        position: relative;
       }
 
+      &Wrapper{
+        display:flex;
+        flex-direction: row;
+        @include msd{
+          flex-direction: column;
+        }
+      }
+      
       @include msd {
         display: flex;
         flex-direction: column;
       }
     }
 
+    &Title {
+      display: flex;
+      width: 30%;
+
+      @include msd{
+        width:100%;
+      }
+    }
+
     &Text {
-      position: absolute;
-      margin-left: 250px;
+      width:70%;
   
       @include msd {
-        margin-left: 200px;
+        width:100%;
       }
     }
   }
@@ -208,9 +271,16 @@
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
+  display:flex;
+  flex-direction: column;
 
   @include sm {
     padding: 10px;
+  }
+
+  &Highlight {
+    @extend .embla;
+    padding: 24px 0 0;
   }
 }
 
@@ -236,9 +306,20 @@
   padding-left: 24px;
   flex: 0 0 50%;
 
-  &:first-child {
-      padding-left: 0;
+  &Highlight{
+    @extend .emblaSlide;
+    padding-left:0;
+    display:flex;
+    align-items: stretch;
+
+    &:nth-child(3){
+      padding: 0 16px 0 24px;
     }
+  }
+
+  &:first-child {
+    padding-left: 0;
+  }
 
   @include msd {
     flex: 0 0 100%;
@@ -262,6 +343,10 @@
   list-style: none;
   justify-content: center;
   padding-top: 10px;
+  
+  @include msd{
+    display:none;
+  }
 }
 
 .emblaDot {
@@ -321,6 +406,10 @@
     position: absolute;
     top: 50%;
 
+    @include msd{
+      top:40%;
+    }
+
     &:hover {
       cursor: pointer;
     }
@@ -338,6 +427,30 @@
   @include msd {
     display: block;
   }
+}
+
+.slidesControlHighlight {
+  display: block !important;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  height: unset;
+  width: unset;
+
+  &Item {
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    top: 50%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+    &Right {
+      right: 0;
+    }
 }
 
 .downloadResumeButton {
@@ -358,15 +471,23 @@
   }
 
   @include msd {
+    // display:none;
     display: flex;
-    position: absolute;
-    top: unset;
-    bottom: 25px;
-    left: 50%;
+    // position: absolute;
+    // top: unset;
+    // bottom: 25px;
+    // left: 50%;
 
-    &:hover {
-      cursor: pointer;
-    }
+    // &:hover {
+    //   cursor: pointer;
+    // }
+  }
+
+  &Mobile{
+    display:flex;
+    align-self: center;
+    width:143px;
+    margin-top:24px;
   }
 
   &:hover {
@@ -382,9 +503,8 @@
   padding-right: 8px;
 }
 
-
-.readMoreDescriptionWrapper{
-  margin:16px 0;
+.readMoreDescriptionWrapper {
+  margin: 16px 0;
   word-break: break-all;
 }
 
@@ -400,4 +520,3 @@
     background-color: #1976d2;
   }
 }
-

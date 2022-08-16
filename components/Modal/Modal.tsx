@@ -69,7 +69,7 @@ const Modal = ({
 
   const handleClickOutside = (event) => {
     // Invariant: any click outside modal will be caught in modalWrapper
-    if (event.target.className.includes('modalWrapper')) handleCloseModal()
+    if (event.target.className?.includes('modalWrapper')) handleCloseModal()
   }
 
   const syncHeight = () => {

@@ -93,7 +93,9 @@ const EditProfileModal = ({
   const [birthdate, setBirthdate] = useState(dob)
 
   const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserProfile.fetching)
-
+  const updateUserProfileSuccess = useSelector(
+    (store: any) => store.users.updateUserProfile.response
+  )
   const xpLevelList = useSelector((store: any) => store.config.config.response?.inputs?.xp_lvls)
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
@@ -107,7 +109,10 @@ const EditProfileModal = ({
   const [yearsOfExperience, setYearsOfExperience] = useState(defaultExpLevel[0]?.key)
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
-  const [location, setLocation] = useState(formattedLocationList[0])
+  const matchedLocation = formattedLocationList.find((loc) => {
+    return loc.value == userLocation
+  })
+  const [location, setLocation] = useState(matchedLocation)
 
   // Limit user from selecting date more than 16-100 years ago from now.
   const today = new Date()
@@ -140,13 +145,15 @@ const EditProfileModal = ({
           return loc.value == userLocation
         })
         // setLocation(matchedLocation)
-        setValue('location', matchedLocation?.key)
+        setValue('location', matchedLocation?.value)
       }
     }
   }, [userDetail])
 
   useEffect(() => {
-    handleCloseModal()
+    if (updateUserProfileSuccess){
+      handleCloseModal()
+    }
   }, [userDetail])
 
   const onLocationSearch = (e, value) => {
@@ -178,7 +185,7 @@ const EditProfileModal = ({
   }
 
   const onDateChange = (value) => {
-    const year = value.getFullYear()
+    const year = value?.getFullYear()
     if (year < hundredYearsAgo || year > sixteenYearsAgo) {
       setError(
         'birthdate',
@@ -237,7 +244,7 @@ const EditProfileModal = ({
                 />
                 {errors.firstName && errorText(errors.firstName.message)}
               </div>
-              <div style={{ width: '20px' }}></div>
+              <div style={{ width: '20px', height: '24px' }}></div>
               <div className={styles.profileFormGroupField}>
                 <MaterialTextField
                   refs={{
@@ -281,23 +288,25 @@ const EditProfileModal = ({
               </div>
             </div>
             <div className={styles.profileFormGroup}>
-              <MaterialLocationField
-                fieldRef={{
-                  ...register('location', {
-                    required: {
-                      value: true,
-                      message: 'This field is required.'
-                    }
-                  })
-                }}
-                className={styles.profileFormInput}
-                label={requiredLabel('Current Location')}
-                error={errors.location ? true : false}
-                value={location}
-                defaultValue={location}
-                onChange={onLocationSearch}
-              />
-              {errors.location && errorText(errors.location.message)}
+              <div className={styles.profileFormGroupField}>
+                <MaterialLocationField
+                  fieldRef={{
+                    ...register('location', {
+                      required: {
+                        value: true,
+                        message: 'This field is required.'
+                      }
+                    })
+                  }}
+                  className={styles.profileFormInput}
+                  label={requiredLabel('Current Location')}
+                  error={errors.location ? true : false}
+                  value={location}
+                  defaultValue={location}
+                  onChange={onLocationSearch}
+                />
+                {errors.location && errorText(errors.location.message)}
+              </div>
             </div>
             <div className={styles.profileFormGroup}>
               <MaterialBasicSelect

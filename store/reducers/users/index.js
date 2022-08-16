@@ -29,7 +29,7 @@ const usersReducers = combineReducers({
   generateVerifyEmailOTP: generateVerifyEmailOTPReducer,
   checkVerifyEmailOTP: checkVerifyEmailOTPReducer,
   manageUserWorkExperiences: manageUserWorkExperiencesReducer,
-  manageUserEducations: manageUserEducationsReducer
+  manageUserEducations: manageUserEducationsReducer,
 })
 
 export default usersReducers

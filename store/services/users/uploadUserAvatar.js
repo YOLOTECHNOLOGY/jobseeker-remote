@@ -12,7 +12,7 @@ const uploadUserAvatarService = (file) => {
   formData.append('avatar', file)
   formData.append('filename', file)
 
-  return axios.post(`${process.env.DATA_BOSSJOB_URL}/data/users/avatars`, formData, {
+  return axios.post(`${process.env.DATA_BOSSJOB_URL}/users/avatars`, formData, {
     headers: headers,
   })
 }

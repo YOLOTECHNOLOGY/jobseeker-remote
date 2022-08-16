@@ -145,12 +145,13 @@ const EditEducationModal = ({
     const trimmedSchool = school.trim()
 
     if (
-      trimmedSchool.length > 0
-      && degreeKey !== null 
-      && studyPeriodFrom !== null
-      && (isCurrentlyStudying === true || studyPeriodTo !== null)
-      && location !== null
-      && (location?.key !== "overseas" || countryKey !== null) 
+      trimmedSchool.length > 0 &&
+      degreeKey !== null &&
+      studyPeriodFrom !== null &&
+      (isCurrentlyStudying === true || studyPeriodTo !== null) &&
+      !moment(studyPeriodFrom).isAfter(studyPeriodTo) &&
+      location !== null &&
+      (location?.key !== 'overseas' || countryKey !== null)
     ) {
       setHasValidationError(false)
     } else {

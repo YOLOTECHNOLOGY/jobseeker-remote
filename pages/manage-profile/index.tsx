@@ -24,6 +24,7 @@ import ProfileSettingCard from 'components/ProfileSettingCard'
 import UploadResume from 'components/UploadResume'
 import MaterialButton from 'components/MaterialButton'
 import ReadMore from 'components/ReadMore'
+import SeeMore from 'components/SeeMore'
 import Switch from '@mui/material/Switch'
 import FormControlLabel from '@mui/material/FormControlLabel'
 
@@ -51,6 +52,10 @@ import {
   AddIcon,
   PencilIcon,
   TrashIcon,
+  HighlightAboutYouIcon,
+  HighlightEducationIcon,
+  HighlightSkillIcon,
+  HighlightWorkExpIcon
 } from 'images'
 
 /* Styles */
@@ -60,12 +65,72 @@ import { Chip } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
 import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
 
-
 const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
-  const { work_experiences: workExperiences, educations, skills } = userDetail
+  const {
+    first_name: firstName,
+    last_name: lastName,
+    birthdate,
+    location,
+    xp_lvl: expLevel,
+    description,
+    avatar,
+    work_experiences: workExperiences,
+    educations,
+    skills
+  } = userDetail
+  const isProfileInformationFilled = !! (firstName && lastName && birthdate && location && expLevel && description && avatar)
+  const [isSliderButtonVisible, setIsSliderButtonVisible] = useState(true)
+  const [isHighlightSectionVisible, setIsHighlightSectionVisible] = useState(true)
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    loop: true,
+    skipSnaps: false,
+    inViewThreshold: 0.7,
+    slidesToScroll: width < 799 ? 1 : 2
+  })
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) {
+      emblaApi.scrollNext()
+    }
+  }, [emblaApi])
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    onSelect()
+    emblaApi.on('select', onSelect)
+    emblaApi.reInit()
+  }, [emblaApi, onSelect])
+
+  useEffect(() => {
+    let count = 0
+    if (workExperiences.length === 0) {
+      count += 1
+    }
+    if (educations.length === 0) {
+      count += 1
+    }
+    if (skills.length === 0) {
+      count += 1
+    }
+    if (!isProfileInformationFilled) {
+      count += 1
+    }
+    if (count <= 2) {
+      setIsSliderButtonVisible(false)
+    }
+    if (count === 0) {
+      setIsHighlightSectionVisible(false)
+    }
+  }, [userDetail])
 
   const handleAddData = (type) => {
     switch (type) {
@@ -103,14 +168,14 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         dispatch(
           manageUserWorkExperiencesRequest({
             isDelete: true,
-            workExperienceId: id,
+            workExperienceId: id
           })
         )
       case 'education':
         dispatch(
           manageUserEducationsRequest({
             isDelete: true,
-            educationId: id,
+            educationId: id
           })
         )
       default:
@@ -201,15 +266,15 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         </div>
         <div className={styles.sectionContent}>
           {educations.map((education) => {
-            let studyPeriod = ""
+            let studyPeriod = ''
 
             if (education?.study_period_from) {
               studyPeriod += moment(education?.study_period_from).format('MMM yyyy')
 
               if (education?.is_currently_studying === true) {
-                studyPeriod += " - Present"
+                studyPeriod += ' - Present'
               } else if (education?.is_currently_studying === false && education?.study_period_to) {
-                studyPeriod += " - " + moment(education?.study_period_to).format('MMM yyyy')
+                studyPeriod += ' - ' + moment(education?.study_period_to).format('MMM yyyy')
               }
             }
 
@@ -234,16 +299,18 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                     </div>
                   </div>
                 </div>
-                {education?.degree &&
+                {education?.degree && education?.field_of_study ? (
                   <Text textStyle='lg'>
-                    {education.degree}
+                    {education.degree} in {education.field_of_study}
                   </Text>
-                }
-                { studyPeriod !== "" &&
-                  <Text textStyle='base' textColor='darkgrey' >
+                ) : education?.degree ? (
+                  <Text textStyle='lg'>{education.degree} </Text>
+                ) : null}
+                {studyPeriod !== '' && (
+                  <Text textStyle='base' textColor='darkgrey'>
                     {studyPeriod}
                   </Text>
-                }
+                )}
               </div>
             )
           })}
@@ -252,7 +319,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     )
   }
 
-  const rendeSkillSection = () => {
+  const renderSkillSection = () => {
     return (
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
@@ -265,25 +332,161 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         </div>
         <div className={styles.sectionContent}>
           <div className={styles.skill}>
-            {skills.map((skill, i) => {
-              return (
+            <SeeMore
+              count={10}
+              items={skills}
+              renderElement={(i, skill) => (
                 <Chip
                   key={i}
                   className={styles.skillChip}
                   label={skill}
                   variant='filled'
                   color='info'
-                  size='small' 
+                  size='small'
                 />
-              )
-            })}
+              )}
+            />
           </div>
         </div>
       </div>
     )
   }
+
   return (
     <React.Fragment>
+      {isHighlightSectionVisible && (
+        <div className={styles.highlightContainer}>
+          <Text textStyle='xl' bold>
+            Let employer find you faster!
+          </Text>
+          <div className={styles.emblaHighlight}>
+            <div className={styles.emblaViewport} ref={emblaRef}>
+              <div className={styles.emblaContainer}>
+                {workExperiences.length === 0 && (
+                  <div className={styles.emblaSlideHighlight}>
+                    <div className={styles.highlightCard}>
+                      <div className={styles.highlightCardHeader}>
+                        <img src={HighlightWorkExpIcon} height='35px' />
+                        <Text textStyle='lg' bold>
+                          Add work experience
+                        </Text>
+                      </div>
+                      <Text textStyle='lg' className={styles.highlightCardContent}>
+                        Showcase your past contributions and that you can be an asset to potential
+                        employer
+                      </Text>
+                      <MaterialButton
+                        variant='contained'
+                        size='medium'
+                        className={styles.highlightCardButton}
+                        onClick={() => handleModal('workExperience', true)}
+                        style={{ height: '44px', textTransform: 'none' }}
+                      >
+                        <Text textStyle='lg' textColor='white'>
+                          Add experience
+                        </Text>
+                      </MaterialButton>
+                    </div>
+                  </div>
+                )}
+                {educations.length === 0 && (
+                  <div className={styles.emblaSlideHighlight}>
+                    <div className={styles.highlightCard}>
+                      <div className={styles.highlightCardHeader}>
+                        <img src={HighlightEducationIcon} height='35px' />
+                        <Text textStyle='lg' bold>
+                          Add education
+                        </Text>
+                      </div>
+                      <Text textStyle='lg' className={styles.highlightCardContent}>
+                        Highlight your academic qualifications and achievements
+                      </Text>
+                      <MaterialButton
+                        variant='contained'
+                        size='medium'
+                        className={styles.highlightCardButton}
+                        onClick={() => handleModal('education', true)}
+                        style={{ height: '44px', textTransform: 'none' }}
+                      >
+                        <Text textStyle='lg' textColor='white'>
+                          Add education
+                        </Text>
+                      </MaterialButton>
+                    </div>
+                  </div>
+                )}
+                {skills.length === 0 && (
+                  <div className={styles.emblaSlideHighlight}>
+                    <div className={styles.highlightCard}>
+                      <div className={styles.highlightCardHeader}>
+                        <img src={HighlightSkillIcon} height='35px' />
+                        <Text textStyle='lg' bold>
+                          Add skill
+                        </Text>
+                      </div>
+                      <Text textStyle='lg' className={styles.highlightCardContent}>
+                        Include relevant skill and keywords to boost your chances of getting an
+                        interview.
+                      </Text>
+                      <MaterialButton
+                        variant='contained'
+                        size='medium'
+                        className={styles.highlightCardButton}
+                        onClick={() => handleModal('skills', true)}
+                        style={{ height: '44px', textTransform: 'none' }}
+                      >
+                        <Text textStyle='lg' textColor='white'>
+                          Add skill
+                        </Text>
+                      </MaterialButton>
+                    </div>
+                  </div>
+                )}
+                {!isProfileInformationFilled && (
+                  <div className={styles.emblaSlideHighlight}>
+                    <div className={styles.highlightCard}>
+                      <div className={styles.highlightCardHeader}>
+                        <img src={HighlightAboutYouIcon} height='35px' />
+                        <Text textStyle='lg' bold>
+                          Complete all information about you
+                        </Text>
+                      </div>
+                      <Text textStyle='lg' className={styles.highlightCardContent}>
+                        Help the recruiter to know more about you and connect more easily with you.
+                      </Text>
+                      <MaterialButton
+                        variant='contained'
+                        size='medium'
+                        className={styles.highlightCardButton}
+                        onClick={() => handleModal('profile', true)}
+                        style={{ height: '44px', textTransform: 'none' }}
+                      >
+                        <Text textStyle='lg' textColor='white'>
+                          Add information
+                        </Text>
+                      </MaterialButton>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          {isSliderButtonVisible && (
+            <div className={styles.slidesControlHighlight}>
+              <div
+                className={classNames([styles.slidesControlItem, styles.slidesControlHighlight])}
+                onClick={scrollPrev}
+              >
+                <img
+                  src={CarouselRightRoundedBlueButton}
+                  alt='next'
+                  className={styles.carouselNext}
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      )}
       {workExperiences?.length > 0 ? (
         renderWorkExperienceSection('workExperience')
       ) : (
@@ -309,7 +512,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       )}
 
       {skills?.length > 0 ? (
-        rendeSkillSection()
+        renderSkillSection()
       ) : (
         <ProfileSettingCard
           title='Skills'
@@ -385,69 +588,91 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           </Text>
         </div>
         <div className={styles.jobPreferencesSectionDetail}>
-          {!userDetail?.job_preference?.job_title && !userDetail?.job_preference?.job_type && 
-            !userDetail?.job_preference?.salary_range_from && !userDetail?.job_preference?.location && 
-            !userDetail?.notice_period_id ? (
-              <MaterialButton
-                className={styles.jobPreferencesSectionButton}
-                variant='outlined'
-                capitalize={false}
-                size='large'
-                onClick={handleEditClick}
-                style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
-              >
-                Add job preferences
-              </MaterialButton>
-            ) : (
-              <ul className={styles.jobPreferencesSectionDetailList}>
-                {userDetail?.job_preference?.job_title && (
-                  <li style={{ marginTop: '8px' }}>
-                    <Text textColor='lightgrey'>Desire job title:</Text>
-                    <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.job_title}</Text>
-                  </li>
-                )}
-                {userDetail?.job_preference?.job_type && (
-                  <li>
-                    <Text textColor='lightgrey'>Desire job type:</Text>
-                    <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.job_type}</Text>
-                  </li>
-                )}
-                {userDetail?.job_preference?.salary_range_from && (
-                  <li>
-                      <Text textColor='lightgrey'>Expected salary:</Text>
-                      <Text className={styles.jobPreferencesSectionDetailText}>
-                        {formatSalaryRange(salaryRange)}
-                      </Text>
-                  </li>
-                )}
-                {userDetail?.job_preference?.location && (
-                  <li>
-                      <Text textColor='lightgrey'>Desire working location:</Text>
-                      <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.location}</Text>
-                  </li>
-                )}
-                {/* {workingSetting && (
-                  <li>
+          {!userDetail?.job_preference?.job_title &&
+          !userDetail?.job_preference?.job_type &&
+          !userDetail?.job_preference?.salary_range_from &&
+          !userDetail?.job_preference?.location &&
+          !userDetail?.notice_period_id ? (
+            <MaterialButton
+              className={styles.jobPreferencesSectionButton}
+              variant='outlined'
+              capitalize={false}
+              size='large'
+              onClick={()=>handleEditClick()}
+              style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
+            >
+              Add job preferences
+            </MaterialButton>
+          ) : (
+            <div className={styles.jobPreferencesSectionDetailList}>
+              {userDetail.job_preference.job_title && (
+                <div
+                  className={styles.jobPreferencesSectionDetailListWrapper}
+                  style={{ marginTop: '8px' }}
+                >
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Desire job title:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {userDetail.job_preference.job_title}
+                  </Text>
+                </div>
+              )}
+              {userDetail.job_preference.job_type && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Desire job type:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {userDetail.job_preference.job_type}
+                  </Text>
+                </div>
+              )}
+              {userDetail.job_preference.salary_range_from && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Expected salary:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {formatSalaryRange(salaryRange)}
+                  </Text>
+                </div>
+              )}
+              {userDetail.job_preference.location && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Desire working location:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {userDetail.job_preference.location}
+                  </Text>
+                </div>
+              )}
+              {/* {workingSetting && (
+                  <div>
                       <Text textColor='lightgrey'>Desire working setting:</Text>
                       <Text>{workingSetting}</Text>
-                  </li>
+                  </div>
                 )} */}
-                {userDetail?.notice_period_id && (
-                  <li>
-                      <Text textColor='lightgrey'>Availability:</Text>
-                      <Text className={styles.jobPreferencesSectionDetailText}>{getAvailability(userDetail)}</Text>
-                  </li>
-                )}
-              </ul>
-              )
-            }
-            <EditJobPreferencesModal 
-              modalName={modalName}
-              showModal={showModal}
-              config={config}
-              userDetail={userDetail}
-              handleModal={handleModal}
-            />
+              {userDetail.notice_period_id && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Availability:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {getAvailability(userDetail)}
+                  </Text>
+                </div>
+              )}
+            </div>
+          )}
+          <EditJobPreferencesModal
+            modalName={modalName}
+            showModal={showModal}
+            config={config}
+            userDetail={userDetail}
+            handleModal={handleModal}
+          />
         </div>
       </div>
       <div className={styles.sectionContainer}>
@@ -455,17 +680,8 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           Open to work
         </Text>
         <FormControlLabel
-          control={
-          <Switch 
-              checked={openToWork}
-              onChange={handleVisibility}
-          />
-          }
-          label={
-          <Text textStyle='lg'>
-            Let recruiters know that you are open to work
-          </Text>
-          }
+          control={<Switch checked={openToWork} onChange={handleVisibility} />}
+          label={<Text textStyle='lg'>Let recruiters know that you are open to work</Text>}
         />
       </div>
     </React.Fragment>
@@ -477,11 +693,12 @@ const RenderResumeView = ({ userDetail }: any) => {
   const isFirstRender = useFirstRender()
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
   const isSuccessfulUpload = useSelector((store: any) => store.users.uploadUserResume.response)
 
   const initialDownloadState = {
     creative: false,
-    corporate: false,
+    corporate: false
   }
   const [resume, setResume] = useState(userDetail.resume || null)
   const [isTemplateDownloadable, setIsTemplateDownloadable] = useState(initialDownloadState)
@@ -493,7 +710,7 @@ const RenderResumeView = ({ userDetail }: any) => {
     loop: true,
     skipSnaps: false,
     inViewThreshold: 0.7,
-    slidesToScroll: width < 799 ? 1 : 2,
+    slidesToScroll: width < 799 ? 1 : 2
   })
 
   useEffect(() => {
@@ -539,17 +756,19 @@ const RenderResumeView = ({ userDetail }: any) => {
 
   const handleUploadResume = (file) => {
     uploadUserResumeService(file)
-    .then((response) => {
-      setResume(response.data.data)
-    })
-    .catch(error => {
-      dispatch(displayNotification({
-        open: true,
-        severity: 'error',
-        message: `Failed to upload resume with error: ${error.message}. 
+      .then((response) => {
+        setResume(response.data.data)
+      })
+      .catch((error) => {
+        dispatch(
+          displayNotification({
+            open: true,
+            severity: 'error',
+            message: `Failed to upload resume with error: ${error.message}. 
         Please contact support@bossjob.com for assistance.`
-      }))
-    })
+          })
+        )
+      })
   }
 
   const handleDownloadResume = (type) => {
@@ -573,10 +792,11 @@ const RenderResumeView = ({ userDetail }: any) => {
     if (width > 799) {
       setIsTemplateDownloadable({
         ...initialDownloadState,
-        [type]: boolean,
+        [type]: boolean
       })
     }
   }
+
   return (
     <React.Fragment>
       <div className={styles.sectionContainer}>
@@ -611,35 +831,51 @@ const RenderResumeView = ({ userDetail }: any) => {
                 <div className={styles.emblaSlide}>
                   <div
                     className={styles.emblaSlideInner}
-                    onMouseEnter={() => onTemplateHover('corporate', true)}
-                    onMouseLeave={() => onTemplateHover('corporate', false)}
+                    onMouseEnter={(e) => {
+                      if (isMobile) {
+                        e.preventDefault()
+                      } else {
+                        onTemplateHover('corporate', true)
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (isMobile) {
+                        e.preventDefault()
+                      } else {
+                        onTemplateHover('corporate', false)
+                      }
+                    }}
                   >
                     <img
                       src={ResumeTemplate1}
                       alt='Corporate Template'
                       className={`${styles.resumeTemplateItem}`}
                     />
-                    <MaterialButton
-                      variant='contained'
-                      size='medium'
-                      capitalize
-                      onClick={() => handleDownloadResume('corporate')}
-                      className={
-                        isTemplateDownloadable?.corporate
-                          ? styles.downloadResumeButtonActive
-                          : styles.downloadResumeButton
-                      }
-                      sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
-                    >
-                      <img
-                        src={DownloadWhiteIcon}
-                        alt='Download Corporate Template'
-                        className={styles.downloadIcon}
-                      />
-                      <Text textStyle='lg' textColor='white' className={styles.downloadText}>
-                        Download
-                      </Text>
-                    </MaterialButton>
+                    {!isMobile && (
+                      <MaterialButton
+                        variant='contained'
+                        size='medium'
+                        capitalize
+                        onClick={() => {
+                          handleDownloadResume('corporate')
+                        }}
+                        className={
+                          isTemplateDownloadable?.corporate
+                            ? styles.downloadResumeButtonActive
+                            : styles.downloadResumeButton
+                        }
+                        sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
+                      >
+                        <img
+                          src={DownloadWhiteIcon}
+                          alt='Download Corporate Template'
+                          className={styles.downloadIcon}
+                        />
+                        <Text textStyle='lg' textColor='white' className={styles.downloadText}>
+                          Download
+                        </Text>
+                      </MaterialButton>
+                    )}
                   </div>
                 </div>
                 <div className={styles.emblaSlide}>
@@ -653,29 +889,31 @@ const RenderResumeView = ({ userDetail }: any) => {
                       alt='Creative Template'
                       className={`${styles.resumeTemplateItem}`}
                     />
-                    <MaterialButton
-                      variant='contained'
-                      size='medium'
-                      capitalize
-                      onClick={() => handleDownloadResume('creative')}
-                      className={
-                        isTemplateDownloadable?.creative
-                          ? styles.downloadResumeButtonActive
-                          : styles.downloadResumeButton
-                      }
-                      sx={{ display: isTemplateDownloadable?.creative ? 'flex' : 'none' }}
-                    >
-                      <img
-                        src={DownloadWhiteIcon}
-                        alt='Download Creative Template'
-                        className={styles.downloadIcon}
-                        width='24px'
-                        height='24px'
-                      />
-                      <Text textStyle='lg' textColor='white' className={styles.downloadText}>
-                        Download
-                      </Text>
-                    </MaterialButton>
+                    {!isMobile && (
+                      <MaterialButton
+                        variant='contained'
+                        size='medium'
+                        capitalize
+                        onClick={() => handleDownloadResume('creative')}
+                        className={
+                          isTemplateDownloadable?.creative
+                            ? styles.downloadResumeButtonActive
+                            : styles.downloadResumeButton
+                        }
+                        sx={{ display: isTemplateDownloadable?.creative ? 'flex' : 'none' }}
+                      >
+                        <img
+                          src={DownloadWhiteIcon}
+                          alt='Download Creative Template'
+                          className={styles.downloadIcon}
+                          width='24px'
+                          height='24px'
+                        />
+                        <Text textStyle='lg' textColor='white' className={styles.downloadText}>
+                          Download
+                        </Text>
+                      </MaterialButton>
+                    )}
                   </div>
                 </div>
               </div>
@@ -707,6 +945,24 @@ const RenderResumeView = ({ userDetail }: any) => {
               )}
             </div>
             <div className={styles.sectionContentSmallDivider}></div>
+            {isMobile && (
+              <MaterialButton
+                variant='contained'
+                size='medium'
+                capitalize
+                onClick={() => selectedIndex === 0 ? handleDownloadResume('corporate') : handleDownloadResume('creative')}
+                className={styles.downloadResumeButtonMobile}
+              >
+                <img
+                  src={DownloadWhiteIcon}
+                  alt='Download Corporate Template'
+                  className={styles.downloadIcon}
+                />
+                <Text textStyle='lg' textColor='white' className={styles.downloadText}>
+                  Download
+                </Text>
+              </MaterialButton>
+            )}
             <div className={styles.emblaDots}>
               {scrollSnaps.map((_, index) => (
                 <div
@@ -726,7 +982,7 @@ const RenderResumeView = ({ userDetail }: any) => {
 const ManageProfilePage = ({ config }: any) => {
   const router = useRouter()
   const {
-    query: { tab },
+    query: { tab }
   } = router
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
@@ -740,32 +996,32 @@ const ManageProfilePage = ({ config }: any) => {
   const [modalState, setModalState] = useState({
     profile: {
       showModal: false,
-      data: null,
+      data: null
     },
     workExperience: {
       showModal: false,
-      data: null,
+      data: null
     },
     education: {
       showModal: false,
-      data: null,
+      data: null
     },
     skills: {
       showModal: false,
-      data: null,
+      data: null
     },
     links: {
       showModal: false,
-      data: null,
+      data: null
     },
     license: {
       showModal: false,
-      data: null,
+      data: null
     },
     jobPreferences: {
       showModal: false,
-      data: null,
-    },
+      data: null
+    }
   })
 
   const handleModal = (modalName, showModal, data, callbackFunc) => {
@@ -773,13 +1029,12 @@ const ManageProfilePage = ({ config }: any) => {
       ...modalState,
       [modalName]: {
         showModal: showModal,
-        data: data,
-      },
+        data: data
+      }
     })
     if (callbackFunc) {
       callbackFunc()
     }
-    
   }
 
   return (
@@ -820,7 +1075,7 @@ const ManageProfilePage = ({ config }: any) => {
         handleModal={handleModal}
       >
         {tabValue === 'profile' && (
-          <RenderProfileView userDetail={userDetail} handleModal={handleModal} config={config}/>
+          <RenderProfileView userDetail={userDetail} handleModal={handleModal} config={config} />
         )}
         {tabValue === 'job-preferences' && <RenderPreferencesView modalName='jobPreferences' showModal={modalState.jobPreferences.showModal} config={config} userDetail={userDetail} handleModal={handleModal} />}
         {tabValue === 'resume' && <RenderResumeView userDetail={userDetail} />}
@@ -835,8 +1090,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     return {
       redirect: {
         destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/1',
-        permanent: false,
-      },
+        permanent: false
+      }
     }
   }
 
@@ -850,8 +1105,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   return {
     props: {
       config,
-      accessToken,
-    },
+      accessToken
+    }
   }
 })
 
