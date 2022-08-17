@@ -174,7 +174,7 @@ const EditProfileModal = ({
       birthdate: birthdate && moment(new Date(birthdate)).format('yyyy-MM-DD'),
       location_key: matchedLocation?.key,
       xp_lvl_key: yearsOfExperience || '',
-      description: summary.length > 0 ? summary : ''
+      description: summary?.length > 0 ? summary : ''
     }
 
     dispatch(updateUserProfileRequest(payload))
