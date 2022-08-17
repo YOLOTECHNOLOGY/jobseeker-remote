@@ -1,8 +1,8 @@
 import {
-  UPDATE_USER_PREFERENCES_REQUEST,
-  UPDATE_USER_PREFERENCES_SUCCESS,
-  UPDATE_USER_PREFERENCES_FAILED
-} from 'store/types/users/updateUserPreferences'
+  MANAGE_USER_LINKS_REQUEST,
+  MANAGE_USER_LINKS_SUCCESS,
+  MANAGE_USER_LINKS_FAILED
+} from 'store/types/users/manageUserLinks'
 
 const initialState = {
   fetching: false,
@@ -10,21 +10,21 @@ const initialState = {
   error: null
 }
 
-export default function updateUserPreferences(state = initialState, action) {
+export default function manageUserLinks(state = initialState, action) {
   switch (action.type) {
-    case UPDATE_USER_PREFERENCES_REQUEST:
+    case MANAGE_USER_LINKS_REQUEST:
       return {
         ...state,
         fetching: true
       }
-    case UPDATE_USER_PREFERENCES_SUCCESS:
+    case MANAGE_USER_LINKS_SUCCESS:
       return {
         ...state,
         fetching: false,
         response: action.payload,
         error: null
       }
-    case UPDATE_USER_PREFERENCES_FAILED:
+    case MANAGE_USER_LINKS_FAILED:
       return {
         ...state,
         fetching: false,

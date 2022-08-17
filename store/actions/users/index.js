@@ -7,12 +7,14 @@ import fetchUserWorkExperience from './fetchUserWorkExperience'
 import fetchUserEducation from './fetchUserEducation'
 import completeUserProfile from './completeUserProfile'
 import updateUserProfile from './updateUserProfile'
+import updateUserPreferences from './updateUserPreferences'
 import redirectToNewJobseeker from './redirectToNewJobseeker'
 import generateVerifyEmailOTP from './generateVerifyEmailOTP'
 import checkVerifyEmailOTP from './checkVerifyEmailOTP'
 import manageUserWorkExperiences from './manageUserWorkExperiences'
 import manageUserEducations from './manageUserEducations'
 import manageUserLicensesAndCertifications from './manageUserLicensesAndCertifications'
+import manageUserLinks from './manageUserLinks'
 
 export default {
   registerUser,
@@ -24,10 +26,12 @@ export default {
   fetchUserEducation,
   completeUserProfile,
   updateUserProfile,
+  updateUserPreferences,
   redirectToNewJobseeker,
   generateVerifyEmailOTP,
   checkVerifyEmailOTP,
   manageUserWorkExperiences,
   manageUserEducations,
-  manageUserLicensesAndCertifications
+  manageUserLicensesAndCertifications,
+  manageUserLinks
 }

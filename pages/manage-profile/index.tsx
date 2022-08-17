@@ -14,6 +14,7 @@ import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetai
 import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
 import { manageUserEducationsRequest } from 'store/actions/users/manageUserEducations'
 import { manageUserLicensesAndCertificationsRequest } from 'store/actions/users/manageUserLicensesAndCertifications'
+import { manageUserLinksRequest } from 'store/actions/users/manageUserLinks'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 
@@ -25,6 +26,7 @@ import ProfileSettingCard from 'components/ProfileSettingCard'
 import UploadResume from 'components/UploadResume'
 import MaterialButton from 'components/MaterialButton'
 import ReadMore from 'components/ReadMore'
+import SeeMore from 'components/SeeMore'
 import Switch from '@mui/material/Switch'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Link from 'components/Link'
@@ -34,6 +36,7 @@ import EditJobPreferencesModal from 'components/EditJobPreferencesModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
 import EditEducationModal from 'components/EditEducationModal'
 import EditLicensesAndCertificationsModal from 'components/EditLicenseAndCertificationsModal'
+import EditLinkModal from 'components/EditLinkModal'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
@@ -78,13 +81,13 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     location,
     xp_lvl: expLevel,
     description,
-    avatar,
     work_experiences: workExperiences,
     educations,
     skills,
-    license_certifications: licensesCertifications
+    license_certifications: licensesCertifications,
+    websites
   } = userDetail
-  const isProfileInformationFilled = !! (firstName && lastName && birthdate && location && expLevel && description && avatar)
+  const isProfileInformationFilled = !! (firstName && lastName && birthdate && location && expLevel && description)
   const [isSliderButtonVisible, setIsSliderButtonVisible] = useState(true)
   const [isHighlightSectionVisible, setIsHighlightSectionVisible] = useState(true)
 
@@ -98,7 +101,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) {
-      emblaApi.scrollPrev()
+      emblaApi.scrollNext()
     }
   }, [emblaApi])
 
@@ -127,7 +130,10 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     if (!isProfileInformationFilled) {
       count += 1
     }
-    if (count <= 2) {
+    if (count <= 2 && !isMobile) {
+      setIsSliderButtonVisible(false)
+    }
+    if (count <= 1 && isMobile){
       setIsSliderButtonVisible(false)
     }
     if (count === 0) {
@@ -143,6 +149,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         handleModal(type, true)
       case 'license':
         handleModal(type, true)
+      case 'links':
+        handleModal(type, true)
       default:
         break
     }
@@ -155,6 +163,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       case 'education':
         handleModal(type, true, data)
       case 'license':
+        handleModal(type, true, data)
+      case 'links':
         handleModal(type, true, data)
       default:
         break
@@ -171,6 +181,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
 
   const handleLicenseAndCertificationsModal = (license = null) => {
     handleModal('license', true, license)
+  const handleLinksModal = (link = null) => {
+    handleModal('links', true, link)
   }
 
   const handleDeleteData = async (type, id) => {
@@ -194,6 +206,13 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           manageUserLicensesAndCertificationsRequest({
             isDelete: true,
             licenseId: id
+          })
+        )
+      case 'links':
+        dispatch(
+          manageUserLinksRequest({
+            isDelete: true,
+            linkId: id
           })
         )
       default:
@@ -337,7 +356,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     )
   }
 
-  const rendeSkillSection = () => {
+  const renderSkillSection = () => {
     return (
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
@@ -350,8 +369,10 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         </div>
         <div className={styles.sectionContent}>
           <div className={styles.skill}>
-            {skills.map((skill, i) => {
-              return (
+            <SeeMore
+              count={10}
+              items={skills}
+              renderElement={(i, skill) => (
                 <Chip
                   key={i}
                   className={styles.skillChip}
@@ -360,9 +381,69 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                   color='info'
                   size='small'
                 />
-              )
-            })}
+              )}
+            />
           </div>
+        </div>
+      </div>
+    )
+  }
+
+  // title, url, description
+  const renderLinkSection = (sectionName) => {
+    return (
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <Text textStyle='xl' textColor='primaryBlue' bold>
+            Links
+          </Text>
+          <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
+            <img src={AddIcon} width='14' height='14' />
+          </div>
+        </div>
+        <div className={styles.sectionContent}>
+          {websites.map((link) => {
+            return (
+              <div key={link.id} className={styles.linkSection}>
+                <div className={styles.titleWrapper}>
+                  {(link.url && link.title) ? (
+                    <Link className={styles.linkSectionUrl} to={link.url} external title={link.title}>
+                      <Text textStyle='lg' bold>
+                        {link.title}
+                      </Text>
+                    </Link>
+                  ) : (
+                    <Link className={styles.linkSectionUrl} to={link.url} external title={link.title}>
+                      <Text textStyle='lg' bold>
+                        {link.url}
+                      </Text>
+                    </Link>
+                  )}
+                  <div className={styles.iconWrapperDouble}>
+                    <div
+                      className={styles.iconWrapper}
+                      onClick={() => handleEditData(sectionName, link)}
+                    >
+                      <img src={PencilIcon} width='22' height='22' />
+                    </div>
+                    <div
+                      className={styles.iconWrapper}
+                      onClick={() => handleDeleteData(sectionName, link.id)}
+                    >
+                      <img src={TrashIcon} width='14' height='14' />
+                    </div>
+                  </div>
+                </div>
+                {link?.description && (
+                  <ReadMore
+                    size={isMobile ? 210 : 300}
+                    text={link?.description}
+                    className={styles.readMoreDescriptionWrapper}
+                  />
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
     )
@@ -580,6 +661,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           )}
         </div>
       )}
+      
       {workExperiences?.length > 0 ? (
         renderWorkExperienceSection('workExperience')
       ) : (
@@ -605,7 +687,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       )}
 
       {skills?.length > 0 ? (
-        rendeSkillSection()
+        renderSkillSection()
       ) : (
         <ProfileSettingCard
           title='Skills'
@@ -615,13 +697,6 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           onClick={() => handleModal('skills', true)}
         />
       )}
-      <ProfileSettingCard
-        title='Links'
-        description='Show recruiters your work by sharing your websites, portfolio, articles, or any relevant links.'
-        buttonText='Add links'
-        // eslint-disable-next-line
-        onClick={() => {}}
-      />
 
       {licensesCertifications?.length > 0 ? (
         renderLicensesAndCertificationsSection('license')
@@ -634,8 +709,20 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           onClick={() => handleLicenseAndCertificationsModal()}
         />
       )}
+
+      {websites?.length > 0 ? (
+        renderLinkSection('links')
+      ) : (
+        <ProfileSettingCard
+          title='Links'
+          description='Show recruiters your work by sharing your websites, portfolio, articles, or any relevant links.'
+          buttonText='Add links'
+          // eslint-disable-next-line
+          onClick={() => handleLinksModal()}
+        />
+      )}
     </React.Fragment>
-  )
+  )}
 }
 
 const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handleModal }: any) => {
@@ -672,9 +759,13 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           <Text bold textColor='primaryBlue' textStyle='xl'>
             Job Preferences
           </Text>
-          <div className={styles.iconWrapper} onClick={handleEditClick}>
-            <img src={PencilIcon} width='22' height='22' />
-          </div>
+          {(userDetail?.job_preference?.job_title || userDetail?.job_preference?.job_type || 
+            userDetail?.job_preference?.salary_range_from || userDetail?.job_preference?.location || 
+            userDetail?.notice_period_id) && (
+            <div className={styles.iconWrapper} onClick={handleEditClick}>
+              <img src={PencilIcon} width='22' height='22' />
+            </div>
+          )}
         </div>
         <div>
           <Text tagName='p' textStyle='lg'>
@@ -682,69 +773,91 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           </Text>
         </div>
         <div className={styles.jobPreferencesSectionDetail}>
-          {!userDetail?.job_preference?.job_title && !userDetail?.job_preference?.job_type && 
-            !userDetail?.job_preference?.salary_range_from && !userDetail?.job_preference?.location && 
-            !userDetail?.notice_period_id ? (
-              <MaterialButton
-                className={styles.jobPreferencesSectionButton}
-                variant='outlined'
-                capitalize={false}
-                size='large'
-                onClick={handleEditClick}
-                style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
-              >
-                Add job preferences
-              </MaterialButton>
-            ) : (
-              <ul className={styles.jobPreferencesSectionDetailList}>
-                {userDetail.job_preference.job_title && (
-                  <li style={{ marginTop: '8px' }}>
-                    <Text textColor='lightgrey'>Desire job title:</Text>
-                    <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.job_title}</Text>
-                  </li>
-                )}
-                {userDetail.job_preference.job_type && (
-                  <li>
-                    <Text textColor='lightgrey'>Desire job type:</Text>
-                    <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.job_type}</Text>
-                  </li>
-                )}
-                {userDetail.job_preference.salary_range_from && (
-                  <li>
-                      <Text textColor='lightgrey'>Expected salary:</Text>
-                      <Text className={styles.jobPreferencesSectionDetailText}>
-                        {formatSalaryRange(salaryRange)}
-                      </Text>
-                  </li>
-                )}
-                {userDetail.job_preference.location && (
-                  <li>
-                      <Text textColor='lightgrey'>Desire working location:</Text>
-                      <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.location}</Text>
-                  </li>
-                )}
-                {/* {workingSetting && (
-                  <li>
+          {!userDetail?.job_preference?.job_title &&
+          !userDetail?.job_preference?.job_type &&
+          !userDetail?.job_preference?.salary_range_from &&
+          !userDetail?.job_preference?.location &&
+          !userDetail?.notice_period_id ? (
+            <MaterialButton
+              className={styles.jobPreferencesSectionButton}
+              variant='outlined'
+              capitalize={false}
+              size='large'
+              onClick={()=>handleEditClick()}
+              style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
+            >
+              Add job preferences
+            </MaterialButton>
+          ) : (
+            <div className={styles.jobPreferencesSectionDetailList}>
+              {userDetail?.job_preference?.job_title && (
+                <div
+                  className={styles.jobPreferencesSectionDetailListWrapper}
+                  style={{ marginTop: '8px' }}
+                >
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Desire job title:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {userDetail.job_preference.job_title}
+                  </Text>
+                </div>
+              )}
+              {userDetail?.job_preference?.job_type && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Desire job type:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {userDetail.job_preference.job_type}
+                  </Text>
+                </div>
+              )}
+              {userDetail?.job_preference?.salary_range_from && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Expected salary:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {formatSalaryRange(salaryRange)}
+                  </Text>
+                </div>
+              )}
+              {userDetail?.job_preference?.location && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Desire working location:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {userDetail.job_preference.location}
+                  </Text>
+                </div>
+              )}
+              {/* {workingSetting && (
+                  <div>
                       <Text textColor='lightgrey'>Desire working setting:</Text>
                       <Text>{workingSetting}</Text>
-                  </li>
+                  </div>
                 )} */}
-                {userDetail.notice_period_id && (
-                  <li>
-                      <Text textColor='lightgrey'>Availability:</Text>
-                      <Text className={styles.jobPreferencesSectionDetailText}>{getAvailability(userDetail)}</Text>
-                  </li>
-                )}
-              </ul>
-              )
-            }
-            <EditJobPreferencesModal 
-              modalName={modalName}
-              showModal={showModal}
-              config={config}
-              userDetail={userDetail}
-              handleModal={handleModal}
-            />
+              {userDetail?.notice_period_id && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Availability:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {getAvailability(userDetail)}
+                  </Text>
+                </div>
+              )}
+            </div>
+          )} 
+          <EditJobPreferencesModal
+            modalName={modalName}
+            showModal={showModal}
+            config={config}
+            userDetail={userDetail}
+            handleModal={handleModal}
+          />
         </div>
       </div>
       <div className={styles.sectionContainer}>
@@ -752,17 +865,8 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           Open to work
         </Text>
         <FormControlLabel
-          control={
-          <Switch 
-              checked={openToWork}
-              onChange={handleVisibility}
-          />
-          }
-          label={
-          <Text textStyle='lg'>
-            Let recruiters know that you are open to work
-          </Text>
-          }
+          control={<Switch checked={openToWork} onChange={handleVisibility} />}
+          label={<Text textStyle='lg'>Let recruiters know that you are open to work</Text>}
         />
       </div>
     </React.Fragment>
@@ -1031,7 +1135,7 @@ const RenderResumeView = ({ userDetail }: any) => {
                 variant='contained'
                 size='medium'
                 capitalize
-                onClick={() => handleDownloadResume('corporate')}
+                onClick={() => selectedIndex === 0 ? handleDownloadResume('corporate') : handleDownloadResume('creative')}
                 className={styles.downloadResumeButtonMobile}
               >
                 <img
@@ -1152,6 +1256,12 @@ const ManageProfilePage = ({ config }: any) => {
         modalName='license'
         showModal={modalState.license.showModal}
         licenseData={modalState.license.data}
+        handleModal={handleModal}
+      />
+      <EditLinkModal
+        modalName='links'
+        showModal={modalState.links.showModal}
+        linkData={modalState.links.data}
         handleModal={handleModal}
       />
       <ProfileLayout

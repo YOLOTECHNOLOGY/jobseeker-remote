@@ -15,6 +15,9 @@ import updateUserEducation from './updateUserEducation'
 import addUserLicensesAndCertifications from './addUserLicensesAndCertifications'
 import updateUserLicensesAndCertifications from './updateUserLicensesAndCertifications'
 import deleteUserLicensesAndCertifications from './deleteUserLicensesAndCertifications'
+import addUserLink from './addUserLinks'
+import updateUserLink from './updateUserLinks'
+import deleteUserLink from './deleteUserLinks'
 import generateVerifyEmailOTP from './generateVerifyEmailOTP'
 
 export default {
@@ -35,5 +38,8 @@ export default {
   addUserLicensesAndCertifications,
   updateUserLicensesAndCertifications,
   deleteUserLicensesAndCertifications,
+  addUserLink,
+  updateUserLink,
+  deleteUserLink,
   generateVerifyEmailOTP,
 }

@@ -51,6 +51,7 @@ import watchUpdateUserPreferences from 'store/sagas/users/updateUserPreferences'
 import watchManageUserWorkExperiences from 'store/sagas/users/manageUserWorkExperiences'
 import watchManageUserEducations from 'store/sagas/users/manageUserEducations'
 import watchManageUserLicensesAndCertifications from 'store/sagas/users/manageUserLicensesAndCertifications'
+import watchManageUserLinks from 'store/sagas/users/manageUserLinks'
 
 // Courses
 import watchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
@@ -115,6 +116,7 @@ function* rootSaga() {
     watchManageUserWorkExperiences(),
     watchManageUserEducations(),
     watchManageUserLicensesAndCertifications(),
+    watchManageUserLinks(),
 
     watchSocialLogin(),
     watchLogin(),
