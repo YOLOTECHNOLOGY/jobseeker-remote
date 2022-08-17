@@ -57,6 +57,34 @@
     }
   }
 
+  &ContentFullscreen {
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    background: white;
+    /* Center Modal content relative to viewport*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 581px;
+    height: 85vh;
+    border-radius: 5px;
+
+    // If fullscreen is indicated, modal covers entire view port in mobile
+    @include sm {
+      height: 85vh !important;
+      width: 100%;
+      /* center-bottom Modal content relative to viewport*/
+      top: unset;
+      left: unset;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 0px);
+    }
+  }
+
+ 
   &Header {
     display: flex;
     padding: 16px 24px;
