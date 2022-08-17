@@ -68,7 +68,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 581px;
-    height: 85vh;
+    max-height: 680px;
     border-radius: 5px;
 
     // If fullscreen is indicated, modal covers entire view port in mobile
