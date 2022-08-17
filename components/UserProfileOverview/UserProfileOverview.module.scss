@@ -80,6 +80,10 @@
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+
+      & > img {
+        margin-right: 6px !important;
+      }
     }
 
     &About{
