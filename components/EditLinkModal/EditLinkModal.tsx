@@ -101,7 +101,7 @@ const EditLinkModal = ({
   }
 
   const validateInput = () => {
-    if (linkUrl?.length > 0) {
+    if (linkUrl?.length > 0 && !urlValidation(linkUrl)) {
       setHasValidationError(false)
     } else {
       setHasValidationError(true)
