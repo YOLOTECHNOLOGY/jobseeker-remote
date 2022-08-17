@@ -231,7 +231,7 @@ const EditJobPreferencesModal = ({
             options={minSalaryOptions}
             onChange={(e) => setMinSalary(e.target.value)}
           />
-          <div style={{ width: '16px' }}></div>
+          <div style={{ width: '20px', height: '24px' }}></div>
           <MaterialBasicSelect
             fieldRef={{
               ...register('maxSalary')
