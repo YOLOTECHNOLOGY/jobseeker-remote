@@ -76,12 +76,11 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     location,
     xp_lvl: expLevel,
     description,
-    avatar,
     work_experiences: workExperiences,
     educations,
     skills
   } = userDetail
-  const isProfileInformationFilled = !! (firstName && lastName && birthdate && location && expLevel && description && avatar)
+  const isProfileInformationFilled = !! (firstName && lastName && birthdate && location && expLevel && description)
   const [isSliderButtonVisible, setIsSliderButtonVisible] = useState(true)
   const [isHighlightSectionVisible, setIsHighlightSectionVisible] = useState(true)
 
