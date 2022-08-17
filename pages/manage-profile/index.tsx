@@ -124,7 +124,10 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     if (!isProfileInformationFilled) {
       count += 1
     }
-    if (count <= 2) {
+    if (count <= 2 && !isMobile) {
+      setIsSliderButtonVisible(false)
+    }
+    if (count <= 1 && isMobile){
       setIsSliderButtonVisible(false)
     }
     if (count === 0) {
