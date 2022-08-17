@@ -181,6 +181,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
 
   const handleLicenseAndCertificationsModal = (license = null) => {
     handleModal('license', true, license)
+  }
+  
   const handleLinksModal = (link = null) => {
     handleModal('links', true, link)
   }
@@ -722,7 +724,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         />
       )}
     </React.Fragment>
-  )}
+  )
 }
 
 const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handleModal }: any) => {

@@ -127,7 +127,11 @@ const EditLicensesAndCertificationsModal = ({
 			&& (isLicenseCertificationPermanent === true) || (expiryDate !== null)
 			&& hasErrorOnExpiryDate !== true
 		) {
-			setHasValidationError(false)
+			if (urlValidation(credentialUrl)) {
+				setHasValidationError(true)
+			} else {
+				setHasValidationError(false)
+			}
 		} else {
 			setHasValidationError(true)
 		}
@@ -165,7 +169,9 @@ const EditLicensesAndCertificationsModal = ({
 		issuingOrganisation,
 		issueDate,
 		expiryDate,
-		isLicenseCertificationPermanent
+		isLicenseCertificationPermanent,
+		hasErrorOnExpiryDate,
+		credentialUrl
 	])
 
 	const editLicensesAndCertificationsModal = (
