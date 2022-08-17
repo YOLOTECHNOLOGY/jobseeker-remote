@@ -1210,6 +1210,14 @@ const ManageProfilePage = ({ config }: any) => {
       data: null
     }
   })
+  
+  useEffect(()=>{
+    // if (disableScrolling){
+    //  disable body from scrolling when modal is open
+    const body = document.querySelector('body')
+    const anyModalIsOpen = Object.values(modalState).filter((state)=>state.showModal)
+    body.style.overflow = anyModalIsOpen.length > 0 ? 'hidden' : 'auto'
+  },[modalState])
 
   const handleModal = (modalName, showModal, data, callbackFunc) => {
     setModalState({
