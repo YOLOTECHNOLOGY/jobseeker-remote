@@ -13,6 +13,7 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
 import { manageUserEducationsRequest } from 'store/actions/users/manageUserEducations'
+import { manageUserLicensesAndCertificationsRequest } from 'store/actions/users/manageUserLicensesAndCertifications'
 import { manageUserLinksRequest } from 'store/actions/users/manageUserLinks'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
@@ -34,6 +35,7 @@ import EditProfileModal from 'components/EditProfileModal'
 import EditJobPreferencesModal from 'components/EditJobPreferencesModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
 import EditEducationModal from 'components/EditEducationModal'
+import EditLicensesAndCertificationsModal from 'components/EditLicenseAndCertificationsModal'
 import EditLinkModal from 'components/EditLinkModal'
 
 /* Helpers */
@@ -82,6 +84,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     work_experiences: workExperiences,
     educations,
     skills,
+    license_certifications: licensesCertifications,
     websites
   } = userDetail
   const isProfileInformationFilled = !! (firstName && lastName && birthdate && location && expLevel && description)
@@ -144,6 +147,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         handleModal(type, true)
       case 'education':
         handleModal(type, true)
+      case 'license':
+        handleModal(type, true)
       case 'links':
         handleModal(type, true)
       default:
@@ -156,6 +161,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       case 'workExperience':
         handleModal(type, true, data)
       case 'education':
+        handleModal(type, true, data)
+      case 'license':
         handleModal(type, true, data)
       case 'links':
         handleModal(type, true, data)
@@ -172,6 +179,10 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     handleModal('education', true, education)
   }
 
+  const handleLicenseAndCertificationsModal = (license = null) => {
+    handleModal('license', true, license)
+  }
+  
   const handleLinksModal = (link = null) => {
     handleModal('links', true, link)
   }
@@ -190,6 +201,13 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           manageUserEducationsRequest({
             isDelete: true,
             educationId: id
+          })
+        )
+      case 'license':
+        dispatch(
+          manageUserLicensesAndCertificationsRequest({
+            isDelete: true,
+            licenseId: id
           })
         )
       case 'links':
@@ -433,6 +451,83 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     )
   }
 
+  const renderLicensesAndCertificationsSection = (sectionName) => {
+    return (
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <Text textStyle='xl' textColor='primaryBlue' bold>
+            Licenses And Certifications
+          </Text>
+          <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
+            <img src={AddIcon} width='14' height='14' />
+          </div>
+        </div>
+        <div className={styles.sectionContent}>
+          {licensesCertifications.map((licenseCertification) => {
+            let validityPeriod = ''
+
+            if (licenseCertification?.issue_date) {
+              validityPeriod += moment(licenseCertification?.issue_date).format('MMM yyy')
+
+              if (licenseCertification?.is_permanent) {
+                validityPeriod = validityPeriod 
+              } else if (licenseCertification?.expiry_date && !licenseCertification?.is_permanent) {
+                validityPeriod += " - " + moment(licenseCertification?.expiry_date).format('MMM yyy')
+              }
+            }
+
+            return (
+              <div key={licenseCertification.id} className={styles.licenseCertificationSection}>
+                <div className={styles.titleWrapper}>
+                  <Text textStyle='lg' bold>
+                    {licenseCertification.title}
+                  </Text>
+                  <div className={styles.iconWrapperDouble}>
+                    <div
+                      className={styles.iconWrapper}
+                      onClick={() => handleEditData(sectionName, licenseCertification)}
+                    >
+                      <img src={PencilIcon} width='22' height='22' />
+                    </div>
+                    <div
+                      className={styles.iconWrapper}
+                      onClick={() => handleDeleteData(sectionName, licenseCertification.id)}
+                    >
+                      <img src={TrashIcon} width='14' height='14' />
+                    </div>
+                  </div>
+                </div>
+                {licenseCertification?.issuing_organisation && 
+                  <Text textStyle='lg'>
+                    {licenseCertification.issuing_organisation}
+                  </Text>
+                }
+                {validityPeriod !== "" && 
+                  <Text textStyle='base' textColor='darkgrey'>
+                    {validityPeriod}
+                  </Text>                
+                }
+                <div style={{ height: '16px' }}></div>
+                {licenseCertification?.credential_id && 
+                  <Text textStyle='lg'>
+                    Credential ID: {licenseCertification.credential_id}
+                  </Text>
+                }
+                {licenseCertification?.credential_url &&
+                  <Link className={styles.licenseCertificationSectionLink} to={licenseCertification.credential_url} external title={licenseCertification.title}>
+                    <Text textStyle='lg'>
+                      {licenseCertification.credential_url}
+                    </Text>
+                  </Link>
+                }
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <React.Fragment>
       {isHighlightSectionVisible && (
@@ -568,6 +663,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           )}
         </div>
       )}
+      
       {workExperiences?.length > 0 ? (
         renderWorkExperienceSection('workExperience')
       ) : (
@@ -603,6 +699,19 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           onClick={() => handleModal('skills', true)}
         />
       )}
+
+      {licensesCertifications?.length > 0 ? (
+        renderLicensesAndCertificationsSection('license')
+      ) : (
+        <ProfileSettingCard
+          title='Licenses And Certifications'
+          description='Stand out among the rest by sharing that expertise that you have earned to show your passion for the job.'
+          buttonText='Add licenses & cert'
+          // eslint-disable-next-line
+          onClick={() => handleLicenseAndCertificationsModal()}
+        />
+      )}
+
       {websites?.length > 0 ? (
         renderLinkSection('links')
       ) : (
@@ -614,13 +723,6 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           onClick={() => handleLinksModal()}
         />
       )}
-      <ProfileSettingCard
-        title='Licences And Certifications'
-        description='Stand out among the rest by sharing that expertise that you have earned to show your passion for the job.'
-        buttonText='Add licenses & cert'
-        // eslint-disable-next-line
-        onClick={() => {}}
-      />
     </React.Fragment>
   )
 }
@@ -690,7 +792,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
             </MaterialButton>
           ) : (
             <div className={styles.jobPreferencesSectionDetailList}>
-              {userDetail.job_preference.job_title && (
+              {userDetail?.job_preference?.job_title && (
                 <div
                   className={styles.jobPreferencesSectionDetailListWrapper}
                   style={{ marginTop: '8px' }}
@@ -703,7 +805,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
                   </Text>
                 </div>
               )}
-              {userDetail.job_preference.job_type && (
+              {userDetail?.job_preference?.job_type && (
                 <div className={styles.jobPreferencesSectionDetailListWrapper}>
                   <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
                     Desire job type:
@@ -713,7 +815,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
                   </Text>
                 </div>
               )}
-              {userDetail.job_preference.salary_range_from && (
+              {userDetail?.job_preference?.salary_range_from && (
                 <div className={styles.jobPreferencesSectionDetailListWrapper}>
                   <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
                     Expected salary:
@@ -723,7 +825,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
                   </Text>
                 </div>
               )}
-              {userDetail.job_preference.location && (
+              {userDetail?.job_preference?.location && (
                 <div className={styles.jobPreferencesSectionDetailListWrapper}>
                   <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
                     Desire working location:
@@ -739,7 +841,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
                       <Text>{workingSetting}</Text>
                   </div>
                 )} */}
-              {userDetail.notice_period_id && (
+              {userDetail?.notice_period_id && (
                 <div className={styles.jobPreferencesSectionDetailListWrapper}>
                   <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
                     Availability:
@@ -750,7 +852,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
                 </div>
               )}
             </div>
-          )}
+          )} 
           <EditJobPreferencesModal
             modalName={modalName}
             showModal={showModal}
@@ -1150,6 +1252,12 @@ const ManageProfilePage = ({ config }: any) => {
         showModal={modalState.skills.showModal}
         categoryList={jobCategoryList}
         skills={userDetail.skills}
+        handleModal={handleModal}
+      />
+      <EditLicensesAndCertificationsModal
+        modalName='license'
+        showModal={modalState.license.showModal}
+        licenseData={modalState.license.data}
         handleModal={handleModal}
       />
       <EditLinkModal
