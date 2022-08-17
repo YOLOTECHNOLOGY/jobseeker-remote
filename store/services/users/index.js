@@ -12,6 +12,9 @@ import fetchUserEducation from './fetchUserEducation'
 import addUserEducation from './addUserEducation'
 import deleteUserEducation from './deleteUserEducation'
 import updateUserEducation from './updateUserEducation'
+import addUserLink from './addUserLinks'
+import updateUserLink from './updateUserLinks'
+import deleteUserLink from './deleteUserLinks'
 import generateVerifyEmailOTP from './generateVerifyEmailOTP'
 
 export default {
