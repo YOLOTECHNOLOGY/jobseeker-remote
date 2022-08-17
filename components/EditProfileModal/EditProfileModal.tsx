@@ -119,6 +119,14 @@ const EditProfileModal = ({
   const sixteenYearsAgo = today.getFullYear() - 16
   const hundredYearsAgo = today.getFullYear() - 100
 
+  const defaultValues = {
+    firstName: first_name,
+    lastName: last_name,
+    summary: description,
+    location: userLocation,
+    birthdate: birthdate,
+    yearsOfExperience: defaultExpLevel[0]?.value
+  }
   const {
     register,
     handleSubmit,
@@ -128,14 +136,7 @@ const EditProfileModal = ({
     formState: { errors },
     setValue
   } = useForm({
-    defaultValues: {
-      firstName: first_name,
-      lastName: last_name,
-      summary: description,
-      location: userLocation,
-      birthdate: birthdate,
-      yearsOfExperience: defaultExpLevel[0]?.value
-    }
+    defaultValues
   })
 
   useEffect(() => {
@@ -181,7 +182,7 @@ const EditProfileModal = ({
 
   const handleCloseModal = () => {
     handleModal(modalName, false)
-    reset()
+    reset(defaultValues)
   }
 
   const onDateChange = (value) => {
