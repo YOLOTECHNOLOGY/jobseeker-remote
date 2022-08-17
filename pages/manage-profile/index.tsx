@@ -25,6 +25,7 @@ import ProfileSettingCard from 'components/ProfileSettingCard'
 import UploadResume from 'components/UploadResume'
 import MaterialButton from 'components/MaterialButton'
 import ReadMore from 'components/ReadMore'
+import SeeMore from 'components/SeeMore'
 import Switch from '@mui/material/Switch'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Link from 'components/Link'
@@ -98,7 +99,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) {
-      emblaApi.scrollPrev()
+      emblaApi.scrollNext()
     }
   }, [emblaApi])
 
@@ -337,7 +338,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     )
   }
 
-  const rendeSkillSection = () => {
+  const renderSkillSection = () => {
     return (
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
@@ -350,8 +351,10 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         </div>
         <div className={styles.sectionContent}>
           <div className={styles.skill}>
-            {skills.map((skill, i) => {
-              return (
+            <SeeMore
+              count={10}
+              items={skills}
+              renderElement={(i, skill) => (
                 <Chip
                   key={i}
                   className={styles.skillChip}
@@ -360,8 +363,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                   color='info'
                   size='small'
                 />
-              )
-            })}
+              )}
+            />
           </div>
         </div>
       </div>
@@ -588,7 +591,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       )}
 
       {skills?.length > 0 ? (
-        rendeSkillSection()
+        renderSkillSection()
       ) : (
         <ProfileSettingCard
           title='Skills'
@@ -654,9 +657,13 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           <Text bold textColor='primaryBlue' textStyle='xl'>
             Job Preferences
           </Text>
-          <div className={styles.iconWrapper} onClick={handleEditClick}>
-            <img src={PencilIcon} width='22' height='22' />
-          </div>
+          {(userDetail?.job_preference?.job_title || userDetail?.job_preference?.job_type || 
+            userDetail?.job_preference?.salary_range_from || userDetail?.job_preference?.location || 
+            userDetail?.notice_period_id) && (
+            <div className={styles.iconWrapper} onClick={handleEditClick}>
+              <img src={PencilIcon} width='22' height='22' />
+            </div>
+          )}
         </div>
         <div>
           <Text tagName='p' textStyle='lg'>
@@ -664,69 +671,91 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           </Text>
         </div>
         <div className={styles.jobPreferencesSectionDetail}>
-          {!userDetail?.job_preference?.job_title && !userDetail?.job_preference?.job_type && 
-            !userDetail?.job_preference?.salary_range_from && !userDetail?.job_preference?.location && 
-            !userDetail?.notice_period_id ? (
-              <MaterialButton
-                className={styles.jobPreferencesSectionButton}
-                variant='outlined'
-                capitalize={false}
-                size='large'
-                onClick={handleEditClick}
-                style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
-              >
-                Add job preferences
-              </MaterialButton>
-            ) : (
-              <ul className={styles.jobPreferencesSectionDetailList}>
-                {userDetail.job_preference.job_title && (
-                  <li style={{ marginTop: '8px' }}>
-                    <Text textColor='lightgrey'>Desire job title:</Text>
-                    <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.job_title}</Text>
-                  </li>
-                )}
-                {userDetail.job_preference.job_type && (
-                  <li>
-                    <Text textColor='lightgrey'>Desire job type:</Text>
-                    <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.job_type}</Text>
-                  </li>
-                )}
-                {userDetail.job_preference.salary_range_from && (
-                  <li>
-                      <Text textColor='lightgrey'>Expected salary:</Text>
-                      <Text className={styles.jobPreferencesSectionDetailText}>
-                        {formatSalaryRange(salaryRange)}
-                      </Text>
-                  </li>
-                )}
-                {userDetail.job_preference.location && (
-                  <li>
-                      <Text textColor='lightgrey'>Desire working location:</Text>
-                      <Text className={styles.jobPreferencesSectionDetailText}>{userDetail.job_preference.location}</Text>
-                  </li>
-                )}
-                {/* {workingSetting && (
-                  <li>
+          {!userDetail?.job_preference?.job_title &&
+          !userDetail?.job_preference?.job_type &&
+          !userDetail?.job_preference?.salary_range_from &&
+          !userDetail?.job_preference?.location &&
+          !userDetail?.notice_period_id ? (
+            <MaterialButton
+              className={styles.jobPreferencesSectionButton}
+              variant='outlined'
+              capitalize={false}
+              size='large'
+              onClick={()=>handleEditClick()}
+              style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
+            >
+              Add job preferences
+            </MaterialButton>
+          ) : (
+            <div className={styles.jobPreferencesSectionDetailList}>
+              {userDetail.job_preference.job_title && (
+                <div
+                  className={styles.jobPreferencesSectionDetailListWrapper}
+                  style={{ marginTop: '8px' }}
+                >
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Desire job title:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {userDetail.job_preference.job_title}
+                  </Text>
+                </div>
+              )}
+              {userDetail.job_preference.job_type && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Desire job type:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {userDetail.job_preference.job_type}
+                  </Text>
+                </div>
+              )}
+              {userDetail.job_preference.salary_range_from && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Expected salary:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {formatSalaryRange(salaryRange)}
+                  </Text>
+                </div>
+              )}
+              {userDetail.job_preference.location && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Desire working location:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {userDetail.job_preference.location}
+                  </Text>
+                </div>
+              )}
+              {/* {workingSetting && (
+                  <div>
                       <Text textColor='lightgrey'>Desire working setting:</Text>
                       <Text>{workingSetting}</Text>
-                  </li>
+                  </div>
                 )} */}
-                {userDetail.notice_period_id && (
-                  <li>
-                      <Text textColor='lightgrey'>Availability:</Text>
-                      <Text className={styles.jobPreferencesSectionDetailText}>{getAvailability(userDetail)}</Text>
-                  </li>
-                )}
-              </ul>
-              )
-            }
-            <EditJobPreferencesModal 
-              modalName={modalName}
-              showModal={showModal}
-              config={config}
-              userDetail={userDetail}
-              handleModal={handleModal}
-            />
+              {userDetail.notice_period_id && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Availability:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {getAvailability(userDetail)}
+                  </Text>
+                </div>
+              )}
+            </div>
+          )}
+          <EditJobPreferencesModal
+            modalName={modalName}
+            showModal={showModal}
+            config={config}
+            userDetail={userDetail}
+            handleModal={handleModal}
+          />
         </div>
       </div>
       <div className={styles.sectionContainer}>
@@ -734,17 +763,8 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           Open to work
         </Text>
         <FormControlLabel
-          control={
-          <Switch 
-              checked={openToWork}
-              onChange={handleVisibility}
-          />
-          }
-          label={
-          <Text textStyle='lg'>
-            Let recruiters know that you are open to work
-          </Text>
-          }
+          control={<Switch checked={openToWork} onChange={handleVisibility} />}
+          label={<Text textStyle='lg'>Let recruiters know that you are open to work</Text>}
         />
       </div>
     </React.Fragment>
@@ -1013,7 +1033,7 @@ const RenderResumeView = ({ userDetail }: any) => {
                 variant='contained'
                 size='medium'
                 capitalize
-                onClick={() => handleDownloadResume('corporate')}
+                onClick={() => selectedIndex === 0 ? handleDownloadResume('corporate') : handleDownloadResume('creative')}
                 className={styles.downloadResumeButtonMobile}
               >
                 <img

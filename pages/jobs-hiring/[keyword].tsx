@@ -53,7 +53,7 @@ import breakpointStyles from 'styles/breakpoint.module.scss'
 import {
   checkFilterMatch,
   userFilterSelectionDataParser,
-  mapSeoValueToGetValue,
+  mapSeoValueToGetValue
 } from 'helpers/jobPayloadFormatter'
 import { flat, unslugify, getCurrentMonthYear } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
@@ -92,91 +92,71 @@ const renderPopularSearch = () => {
   return (
     <div className={styles.popularSearch}>
       <Link
-          className={styles.link}
-          to={`${jobsPageLink}/finance-accounting-jobs`}
-          title='Accounting jobs'
-        >
-          <Text textStyle='base' textColor='darkgrey'>
-            Accounting jobs
-          </Text>
-        </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/sales-marketing-jobs`}
-          title='Sales jobs'
-        >
-          <Text textStyle='base' textColor='darkgrey'>
-            Sales jobs
-          </Text>
-        </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/sales-marketing-jobs`}
-          title='Marketing jobs'
-        >
-          <Text textStyle='base' textColor='darkgrey'>
-            Marketing jobs
-          </Text>
-        </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/computer-information-technology-jobs`}
-          title='IT jobs'
-        >
-          <Text textStyle='base' textColor='darkgrey'>
-            IT jobs
-          </Text>
-        </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/customer-service-jobs`}
-          title='Customer Service jobs'
-        >
-          <Text textStyle='base' textColor='darkgrey'>
-            Customer Service jobs
-          </Text>
-        </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/hr-recruitment-jobs`}
-          title='HR jobs'
-        >
-          <Text textStyle='base' textColor='darkgrey'>
-            HR jobs
-          </Text>
-        </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/bpo-team-lead-jobs`}
-          title='BPO Team Lead'
-        >
-          <Text textStyle='base' textColor='darkgrey'>
-            BPO Team Lead
-          </Text>
-        </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/homebased-jobs`}
-          title='WFH'
-        >
-          <Text textStyle='base' textColor='darkgrey'>
-            WFH
-          </Text>
-        </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/manager-jobs`}
-          title='Manager'
-        >
-          <Text textStyle='base' textColor='darkgrey'>
-            Manager
-          </Text>
-        </Link>
-        <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs'>
-          <Text textStyle='base' textColor='darkgrey'>
-            Manila jobs
-          </Text>
-        </Link>
+        className={styles.link}
+        to={`${jobsPageLink}/finance-accounting-jobs`}
+        title='Accounting jobs'
+      >
+        <Text textStyle='base' textColor='darkgrey'>
+          Accounting jobs
+        </Text>
+      </Link>
+      <Link className={styles.link} to={`${jobsPageLink}/sales-marketing-jobs`} title='Sales jobs'>
+        <Text textStyle='base' textColor='darkgrey'>
+          Sales jobs
+        </Text>
+      </Link>
+      <Link
+        className={styles.link}
+        to={`${jobsPageLink}/sales-marketing-jobs`}
+        title='Marketing jobs'
+      >
+        <Text textStyle='base' textColor='darkgrey'>
+          Marketing jobs
+        </Text>
+      </Link>
+      <Link
+        className={styles.link}
+        to={`${jobsPageLink}/computer-information-technology-jobs`}
+        title='IT jobs'
+      >
+        <Text textStyle='base' textColor='darkgrey'>
+          IT jobs
+        </Text>
+      </Link>
+      <Link
+        className={styles.link}
+        to={`${jobsPageLink}/customer-service-jobs`}
+        title='Customer Service jobs'
+      >
+        <Text textStyle='base' textColor='darkgrey'>
+          Customer Service jobs
+        </Text>
+      </Link>
+      <Link className={styles.link} to={`${jobsPageLink}/hr-recruitment-jobs`} title='HR jobs'>
+        <Text textStyle='base' textColor='darkgrey'>
+          HR jobs
+        </Text>
+      </Link>
+      <Link className={styles.link} to={`${jobsPageLink}/bpo-team-lead-jobs`} title='BPO Team Lead'>
+        <Text textStyle='base' textColor='darkgrey'>
+          BPO Team Lead
+        </Text>
+      </Link>
+      <Link className={styles.link} to={`${jobsPageLink}/homebased-jobs`} title='WFH'>
+        <Text textStyle='base' textColor='darkgrey'>
+          WFH
+        </Text>
+      </Link>
+      <Link className={styles.link} to={`${jobsPageLink}/manager-jobs`} title='Manager'>
+        <Text textStyle='base' textColor='darkgrey'>
+          Manager
+        </Text>
+      </Link>
+      <Link className={styles.link} to={`${jobsPageLink}/manila-jobs`} title='Manila jobs'>
+        <Text textStyle='base' textColor='darkgrey'>
+          Manila jobs
+        </Text>
+      </Link>
     </div>
   )
 }
@@ -245,7 +225,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     predefinedLocation,
     matchedLocation,
     matchedConfigFromUrl,
-    filterCount,
+    filterCount
   } = checkFilterMatch(router.query, config, isMobile)
   const [selectedPage, setSelectedPage] = useState(defaultPage)
 
@@ -286,13 +266,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         ? mapSeoValueToGetValue((workExperience as string).split(','), expLvlList)
         : null,
       sort,
-      page: page ? Number(page) : 1,
+      page: page ? Number(page) : 1
     }
 
     for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
       payload = {
         ...payload,
-        [key]: payload[key] ? (payload[key] += value[0].value) : value[0].value,
+        [key]: payload[key] ? (payload[key] += value[0].value) : value[0].value
       }
     }
     for (const [key, value] of Object.entries(matchedLocation)) {
@@ -301,7 +281,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         [key]:
           payload[key] && payload[key] !== value[0].value
             ? (payload[key] += value[0].value)
-            : value[0].value,
+            : value[0].value
       }
     }
 
@@ -352,7 +332,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const sortOptions = [
     { label: 'Newest', value: 1 },
     { label: 'Relevance', value: 2 },
-    { label: 'Highest Salary', value: 3 },
+    { label: 'Highest Salary', value: 3 }
   ]
 
   const handleShowFilter = () => {
@@ -360,16 +340,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const jobTypeList = config.inputs.job_types
-
-  const salaryRangeList = flat(
-    config.filters.salary_range_filters.map((range) => {
-      const rangeObj = {
-        ...range,
-        value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
-      }
-      return rangeObj
-    })
-  )
+  const salaryRangeList = config.filters.salary_range_filters
 
   const updateUrl = (queryParam, queryObject) => {
     queryObject['page'] = '1'
@@ -378,7 +349,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     router.push(
       {
         pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
-        query: queryObject,
+        query: queryObject
       },
       undefined,
       { shallow: true }
@@ -399,7 +370,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       filterParamsObject,
       matchedConfig,
       matchedConfigFromUrl,
-      matchedConfigFromUserSelection,
+      matchedConfigFromUserSelection
     } = userFilterSelectionDataParser('query', sanitisedVal, router.query, config, isClear)
 
     for (const [key, value] of Object.entries(matchedConfig)) {
@@ -445,43 +416,42 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             let newSubList = data.sub_list.map((subListData) => {
               // if checked === true, set subOption isChecked = true
               if (
-                categorySelected.includes(
-                  subListData['seo-value']) || predefinedQuery === subListData['seo-value']
+                categorySelected.includes(subListData['seo-value']) ||
+                predefinedQuery === subListData['seo-value']
               ) {
                 // if (subListData['seo-value'] === value[0]['seo-value']) {
                 return {
                   ...subListData,
-                  isChecked: true,
+                  isChecked: true
                 }
-              }
-              else {
+              } else {
                 return {
                   ...subListData,
-                  isChecked: false,
+                  isChecked: false
                 }
               }
             })
             if (
-              categorySelected.includes(data['seo-value']) || predefinedQuery === data['seo-value']
+              categorySelected.includes(data['seo-value']) ||
+              predefinedQuery === data['seo-value']
             ) {
               // if (data['seo-value'] === value[0]['seo-value']){
               newSubList = data.sub_list.map((data) => {
                 return {
                   ...data,
-                  isChecked: true,
+                  isChecked: true
                 }
               })
               newData = {
                 ...newData,
                 isChecked: true,
-                sub_list: newSubList,
+                sub_list: newSubList
               }
-            }
-            else {
+            } else {
               newData = {
                 ...newData,
                 isChecked: false,
-                sub_list: newSubList,
+                sub_list: newSubList
               }
             }
             return newData
@@ -608,7 +578,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleFetchJobDetail = (jobId) =>
     dispatch(fetchJobDetailRequest({ jobId, status: userCookie ? 'protected' : 'public' }))
 
-  const handleSelectedJobId = (jobId, jobUrl='/') => {
+  const handleSelectedJobId = (jobId, jobUrl = '/') => {
     // Open new tab in mobile
     if (isMobile && typeof window !== 'undefined') {
       window.open(jobUrl)
@@ -623,7 +593,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleUpdateJobAlert = (updateJobAlertData) => {
     const updateJobAlertPayload = {
       updateJobAlertData,
-      accessToken,
+      accessToken
     }
 
     dispatch(updateJobAlertRequest(updateJobAlertPayload))
@@ -632,7 +602,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleDeleteJobAlert = (jobAlertId) => {
     const deleteJobAlertPayload = {
       jobAlertId,
-      accessToken,
+      accessToken
     }
 
     dispatch(deleteJobAlertRequest(deleteJobAlertPayload))
@@ -641,7 +611,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handlePostReportJob = (reportJobData) => {
     const postReportJobPayload = {
       reportJobData,
-      accessToken,
+      accessToken
     }
 
     dispatch(postReportRequest(postReportJobPayload))
@@ -653,7 +623,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     const createJobAlertPayload = {
       jobAlertData,
       accessToken,
-      user_id: userCookie.id,
+      user_id: userCookie.id
     }
 
     dispatch(createJobAlertRequest(createJobAlertPayload))
@@ -662,7 +632,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handlePostSaveJob = ({ jobId }) => {
     const postSaveJobPayload = {
       jobId,
-      user_id: userCookie.id,
+      user_id: userCookie.id
     }
 
     dispatch(postSaveJobRequest(postSaveJobPayload))
@@ -670,7 +640,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   const handleDeleteSavedJob = ({ jobId }) => {
     const deleteJobPayload = {
-      jobId,
+      jobId
     }
 
     dispatch(deleteSaveJobRequest(deleteJobPayload))
@@ -681,7 +651,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonical} />
       <div
         className={classNamesCombined([
-          displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection,
+          displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection
           // isStickyClass,
         ])}
       >
@@ -738,14 +708,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                 Filters
               </Text>
               {filterCount > 0 && (
-              <Text
-                textStyle='base'
-                textColor='white'
-                className={styles.searchFilterCount}
-              >
-                {filterCount}
-              </Text>
-            )}
+                <Text textStyle='base' textColor='white' className={styles.searchFilterCount}>
+                  {filterCount}
+                </Text>
+              )}
             </MaterialButton>
           </div>
         </div>
@@ -795,11 +761,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
               More Filters
             </Text>
             {filterCount > 0 && (
-              <Text
-                textStyle='base'
-                textColor='white'
-                className={styles.searchFilterCount}
-              >
+              <Text textStyle='base' textColor='white' className={styles.searchFilterCount}>
                 {filterCount}
               </Text>
             )}
@@ -852,7 +814,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                         >
                           <span>
                             <LazyLoad>
-                              <img src={company.logoUrl} alt={company.name} width='30' height='30' />
+                              <img
+                                src={company.logoUrl}
+                                alt={company.name}
+                                width='30'
+                                height='30'
+                              />
                             </LazyLoad>
                           </span>
                         </Tooltip>
@@ -864,16 +831,18 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           </div>
         </div>
       </div>
-      {isShowFilter && <JobSearchFilters
-        urlDefaultValues={clientDefaultValues}
-        categories={categories}
-        isShowFilter={isShowFilter}
-        onResetFilter={handleResetFilter}
-        handleShowFilter={handleShowFilter}
-        moreFilterReset={moreFilterReset}
-        isShowingEmailAlert={accessToken && !userCookie?.is_email_verify}
-        setClientDefaultValues={setClientDefaultValues}
-      />}
+      {isShowFilter && (
+        <JobSearchFilters
+          urlDefaultValues={clientDefaultValues}
+          categories={categories}
+          isShowFilter={isShowFilter}
+          onResetFilter={handleResetFilter}
+          handleShowFilter={handleShowFilter}
+          moreFilterReset={moreFilterReset}
+          isShowingEmailAlert={accessToken && !userCookie?.is_email_verify}
+          setClientDefaultValues={setClientDefaultValues}
+        />
+      )}
       {/* <div className={breakpointStyles.hideOnTabletAndDesktop}>
         {hasMoreFilters && (
           <div className={styles.resetFilterBtnMobile}>
@@ -932,7 +901,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req, resolvedUrl }) => {
       const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-      
 
       const { keyword, page } = query
       // store actions
@@ -961,7 +929,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         predefinedQuery,
         predefinedLocation,
         matchedLocation,
-        matchedConfigFromUrl,
+        matchedConfigFromUrl
       } = checkFilterMatch(query, config)
 
       // query parameters
@@ -972,7 +940,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const queryIndustry: any = query?.industry
       const queryWorkExp: any = query?.workExperience
       const queryCategory: any = query?.category
-      
+
       const defaultValues: any = {
         urlQuery: searchQuery,
         // if sort param exist, follow sort defined in param, otherwise if search exist, sort default to 2 'Relevance'
@@ -983,41 +951,43 @@ export const getServerSideProps = wrapper.getServerSideProps(
         location: queryLocation?.split(',') || null,
         industry: queryIndustry?.split(',') || null,
         workExperience: queryWorkExp?.split(',') || null,
-        category: queryCategory?.split(',') || null,
+        category: queryCategory?.split(',') || null
       }
-      
+
       for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
         defaultValues[key] = [value[0]['seo-value']]
       }
       for (const [key, value] of Object.entries(matchedLocation)) {
         defaultValues[key] = value[0]
         // to prevent cases where /jobs-hiring/makati-jobs, whereby the query & location is populated with values
-        if (defaultValues.urlQuery === value[0]['seo_value']){
+        if (defaultValues.urlQuery === value[0]['seo_value']) {
           defaultValues.urlQuery = ''
         }
       }
-      
+
       if (defaultValues.category) {
         const defaultCategories = defaultValues.category
         const initialListOptions = catList.map((data) => {
           const newSubList = data.sub_list.map((subData) => ({
             ...subData,
             isChecked:
-            defaultCategories.includes(subData['seo-value']) ||
-            defaultCategories.includes(data['seo-value']),
+              defaultCategories.includes(subData['seo-value']) ||
+              defaultCategories.includes(data['seo-value'])
           }))
           const newList = {
             ...data,
             isChecked: defaultCategories.includes(data['seo-value']),
-            sub_list: newSubList,
+            sub_list: newSubList
           }
           return newList
         })
         defaultValues.categoryList = initialListOptions
       }
-      
-      // sanitise searchQuery 
-      defaultValues.urlQuery = defaultValues.urlQuery ? unslugify(searchQuery).replace('+', '-') : ''
+
+      // sanitise searchQuery
+      defaultValues.urlQuery = defaultValues.urlQuery
+        ? unslugify(searchQuery).replace('+', '-')
+        : ''
 
       /* Handle SEO Meta Tags*/
       const { month, year } = getCurrentMonthYear()
@@ -1078,7 +1048,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           seoMetaTitle,
           seoMetaDescription: encodeURI(seoMetaDescription),
           seoCanonical
-        },
+        }
       }
     }
 )

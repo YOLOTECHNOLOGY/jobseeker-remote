@@ -6,7 +6,7 @@
   flex-direction: column;
   position: relative;
   width: 100%;
-  padding: 25px 12px 8px 12px;
+  padding: 24px 16px;
   border: 1px solid $lightgrey-2;
   border-radius: 5px;
 
@@ -23,8 +23,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
 
     &:after {
       content: '';

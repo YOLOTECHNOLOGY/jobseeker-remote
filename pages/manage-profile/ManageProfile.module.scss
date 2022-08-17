@@ -154,29 +154,44 @@
 
   &Detail {
     display: inline-block;
-    width: 60%;
+    width: 100%;
 
     &List {
       list-style: none;
 
-      & > li {
+      & > * {
         margin-top: 16px;
         display: flex;
-        position: relative;
       }
 
+      &Wrapper{
+        display:flex;
+        flex-direction: row;
+        @include msd{
+          flex-direction: column;
+        }
+      }
+      
       @include msd {
         display: flex;
         flex-direction: column;
       }
     }
 
+    &Title {
+      display: flex;
+      width: 30%;
+
+      @include msd{
+        width:100%;
+      }
+    }
+
     &Text {
-      position: absolute;
-      margin-left: 250px;
+      width:70%;
   
       @include msd {
-        margin-left: 200px;
+        width:100%;
       }
     }
   }
