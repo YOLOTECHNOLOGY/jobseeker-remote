@@ -133,6 +133,16 @@
   flex-direction: column;
 }
 
+.linkSection {
+  display: flex;
+  flex-direction: column;
+
+  &Url {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
 .jobPreferencesSection {
   &Button {
     width: 250px;

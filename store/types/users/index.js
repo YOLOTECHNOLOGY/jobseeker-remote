@@ -13,6 +13,7 @@ import generateVerifyEmailOTP from './generateVerifyEmailOTP'
 import checkVerifyEmailOTP from './checkVerifyEmailOTP'
 import manageUserWorkExperiences from './manageUserWorkExperiences'
 import manageUserEducations from './manageUserEducations'
+import manageUserLinks from './manageUserLinks'
 import updateUserPreferences from './updateUserPreferences'
 
 export default {
@@ -31,5 +32,6 @@ export default {
   checkVerifyEmailOTP,
   manageUserWorkExperiences,
   manageUserEducations,
+  manageUserLinks,
   updateUserPreferences
 }
