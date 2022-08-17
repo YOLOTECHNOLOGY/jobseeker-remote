@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 /* Components */
-import ModalDialog from 'components/ModalDialog'
+import Modal from 'components/Modal'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialDatePicker from 'components/MaterialDatePicker'
@@ -203,9 +203,9 @@ const EditEducationModal = ({
 
   return (
     <div>
-      <ModalDialog
-        open={showModal}
-        onClose={handleCloseModal}
+      <Modal
+        showModal={showModal}
+        handleModal={handleCloseModal}
         headerTitle='Education'
         firstButtonText='Cancel'
         secondButtonText='Save'
@@ -215,7 +215,6 @@ const EditEducationModal = ({
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
         fullScreen
-        maxHeight='90vh'
       >
         <div className={styles.container}>
           <div className={styles.formWrapper}>
@@ -340,7 +339,7 @@ const EditEducationModal = ({
             </div>
           </div>
         </div>
-      </ModalDialog>
+      </Modal>
     </div>
   )
 }

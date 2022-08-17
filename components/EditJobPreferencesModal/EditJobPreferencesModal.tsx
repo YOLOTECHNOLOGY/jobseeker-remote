@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 
 /* Components */
-import ModalDialog from 'components/ModalDialog'
+import Modal from 'components/Modal'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialTextField from 'components/MaterialTextField'
@@ -288,9 +288,9 @@ const EditJobPreferencesModal = ({
   )
 
   return (
-    <ModalDialog
-      open={showModal}
-      onClose={handleCloseModal}
+    <Modal
+      showModal={showModal}
+      handleModal={handleCloseModal}
       headerTitle='Job Preference'
       firstButtonText='Cancel'
       secondButtonText='Save'
@@ -301,7 +301,7 @@ const EditJobPreferencesModal = ({
       fullScreen
     >
       {modalJobPreferenceContent}
-    </ModalDialog>
+    </Modal>
   )
 }
 
