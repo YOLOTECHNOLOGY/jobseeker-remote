@@ -125,6 +125,7 @@ const EditLicensesAndCertificationsModal = ({
 			&& issuingOrganisation?.length > 0
 			&& issueDate !== null
 			&& (isLicenseCertificationPermanent === true) || (expiryDate !== null)
+			&& hasErrorOnExpiryDate !== true
 		) {
 			setHasValidationError(false)
 		} else {
