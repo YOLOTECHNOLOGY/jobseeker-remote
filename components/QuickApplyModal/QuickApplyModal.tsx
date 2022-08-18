@@ -103,6 +103,12 @@ const QuickApplyModal = ({
       screeningAnswers.push(data[`screening_answer_${index}`])
     })
 
+    let externalApplyUrl = jobDetails.external_apply_url
+
+    if (externalApplyUrl !== '' && externalApplyUrl !== null && !/^(f|ht)tps?:\/\//i.test(externalApplyUrl)) {
+      externalApplyUrl = 'https://' + externalApplyUrl
+    }
+
     const payload = {
       email: data.email,
       password: data.password,
@@ -116,7 +122,7 @@ const QuickApplyModal = ({
       first_message: firstMessage,
       jobId: jobDetails.id,
       jobUrl: jobDetails.job_url,
-      externalApplyUrl: jobDetails.external_apply_url
+      externalApplyUrl: externalApplyUrl
     }
 
     clearErrors()

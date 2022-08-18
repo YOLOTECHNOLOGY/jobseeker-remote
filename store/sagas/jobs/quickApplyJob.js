@@ -108,7 +108,10 @@ function* quickApplyJobReq(action) {
         // If external apply exists redirect jobseeker to external apply url (No application will be created)
         if (externalApplyUrl) {
           yield call(addExternalJobClickService, jobId)
-          yield put(push(externalApplyUrl))
+          
+          yield window.open(externalApplyUrl)
+
+          yield window.location.reload()
         } else {
           const applyJobResponse = yield call(applyJobService, jobId, applyJobPayload)
 
