@@ -408,6 +408,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                     postedAt={jobs.job.refreshed_at}
                     selectedId={selectedJobId}
                     status={jobs.job.status_key}
+                    applicationStatus={jobs.status}
                     handleSelectedId={() =>
                       handleSelectedJobId(jobs.job.id, jobs.job.job_url, jobs.job.status_key)
                     }

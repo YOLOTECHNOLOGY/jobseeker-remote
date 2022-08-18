@@ -5,25 +5,48 @@
   margin-right: 10px;
   padding: 3px 8px 4px;
   border-radius: 10px;
-  background-color: rgba(#FFE4B9, 1);
+  background-color: rgba(#ffe4b9, 1);
 
   span {
-    color: #7B5002;
+    color: #7b5002;
   }
 
   &.urgent {
-    background-color: rgba(#FF4747, 0.15);
+    background-color: rgba(#ff4747, 0.15);
 
     span {
-      color: #FF4747;
+      color: #ff4747;
     }
   }
 
   &.featured {
-    background-color: rgba(#C7DFFF, 1);
+    background-color: rgba(#c7dfff, 1);
 
     span {
-      color: #136FD3;
+      color: #136fd3;
+    }
+  }
+
+  // resume application status
+
+  &.happy {
+    background: rgba(50, 160, 113, 0.15);
+    span {
+      color: #32a071;
+    }
+  }
+
+  &.quiet {
+    background: #f0f0f0;
+    span {
+      color: #707070;
+    }
+  }
+
+  &.warning {
+    background: rgba(255, 71, 71, 0.15);
+    span {
+      color: #ff4747;
     }
   }
 }
