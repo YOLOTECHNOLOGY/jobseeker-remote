@@ -372,6 +372,17 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           <Text textStyle='xl' bold>
             Let employer find you faster!
           </Text>
+          <MaterialButton
+            variant='contained'
+            size='medium'
+            className={styles.highlightCardButton}
+            onClick={() => handleModal('workExperience', true)}
+            style={{ height: '44px', textTransform: 'none' }}
+          >
+            <Text textStyle='lg' textColor='white'>
+              Add experience
+            </Text>
+          </MaterialButton>
           <div className={styles.emblaHighlight}>
             <div className={styles.emblaViewport} ref={emblaRef}>
               <div className={styles.emblaContainer}>
