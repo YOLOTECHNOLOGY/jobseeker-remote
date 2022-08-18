@@ -108,6 +108,7 @@
 
   .companyInfoWrapper {
     display: flex;
+    flex-wrap: wrap;
 
     span {
       margin-right: 16px;
@@ -126,11 +127,21 @@
       }
     }
   }
+
+  .companySecondaryInfoWrapper{
+    display:flex;
+    flex-direction: column;
+    margin:18px 0;
+  }
 }
 
 .educationSection {
   display: flex;
   flex-direction: column;
+  
+  &:not(:last-child){
+    margin-bottom:24px;
+  }
 }
 
 .licenseCertificationSection {
@@ -525,7 +536,7 @@
 }
 
 .readMoreDescriptionWrapper {
-  margin: 16px 0;
+  margin-bottom:16px;
   word-break: break-all;
 }
 
