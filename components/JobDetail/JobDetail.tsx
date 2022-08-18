@@ -58,6 +58,7 @@ import {
 import { getApplyJobLink } from 'helpers/jobPayloadFormatter'
 import { fetchUserOwnDetailService } from '../../store/services/users/fetchUserOwnDetail'
 
+import { addExternalJobClickService } from 'store/services/jobs/addExternalJobClick'
 interface IJobDetailProps {
   selectedJob: any
   setIsShowModalShare?: Function
@@ -165,13 +166,19 @@ const JobDetail = ({
     }
   }
 
-  const handleQuickApplyClick = (e) => {
-    if (!userCookie) { // user not logged in
-      e.preventDefault()
+  const handleApplyJob = () => {
+    if (!userCookie) { 
       setQuickApplyModalShow(true)
-    } else if (userCookie && !userCookie.is_email_verify) { // user email not verified
-      e.preventDefault()
-      handleVerifyEmailClick()
+    } else {
+      if (userCookie && !userCookie.is_email_verify) {
+        handleVerifyEmailClick()
+      }
+      
+      if (selectedJob?.external_apply_url) {
+        addExternalJobClickService(selectedJob?.id)
+      }
+      
+      window.open(applyJobLink)
     }
   }
 
@@ -283,17 +290,15 @@ const JobDetail = ({
                       {selectedJob?.status_key === 'active' && (
                         <>
                           {!selectedJob?.is_applied ? (
-                            <Link to={applyJobLink} external>
-                              <MaterialButton
-                                variant='contained'
-                                capitalize
-                                onClick={handleQuickApplyClick}
-                              >
-                                <Text textColor='white' bold>
-                                  Apply Now
-                                </Text>
-                              </MaterialButton>
-                            </Link>
+                            <MaterialButton
+                              variant='contained'
+                              capitalize
+                              onClick={handleApplyJob}
+                            >
+                              <Text textColor='white' bold>
+                                Apply Now
+                              </Text>
+                            </MaterialButton>
                           ) : (
                             <MaterialButton variant='contained' capitalize disabled>
                               <Text textColor='white' bold>

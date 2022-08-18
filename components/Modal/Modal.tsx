@@ -6,7 +6,8 @@ import classNames from 'classnames/bind'
 
 /* Components */
 import Text from 'components/Text'
-import Button from 'components/Button'
+// import Button from 'components/Button'
+import MaterialButton from 'components/MaterialButton'
 
 /* Styles */
 import styles from './Modal.module.scss'
@@ -27,8 +28,12 @@ type ModalProps = {
   firstButtonIsClose?: boolean
   handleSecondButton?: Function
   secondButtonIsClose?: boolean
+  isFirstButtonLoading?: boolean
+  isSecondButtonLoading?: boolean
+  isSecondButtonDisabled?: boolean
   firstButtonText?: string
   secondButtonText?: string
+  fullScreen?: boolean
   customFooter?: React.ReactNode
 }
 
@@ -37,8 +42,6 @@ const Modal = ({
   className,
   children,
   showModal,
-  // clearError,
-  // disableCloseModal,
   closeModalOnOutsideClick = true,
   headerTitle,
   handleModal,
@@ -48,6 +51,10 @@ const Modal = ({
   firstButtonText,
   secondButtonIsClose,
   secondButtonText,
+  isFirstButtonLoading,
+  isSecondButtonLoading,
+  isSecondButtonDisabled,
+  fullScreen = false,
   customFooter,
   ...rest
 }: ModalProps) => {
@@ -95,7 +102,7 @@ const Modal = ({
     scrollY.current = window.pageYOffset
 
     if (closeModalOnOutsideClick) document.addEventListener('click', handleClickOutside, true)
-    
+
     return () => {
       if (closeModalOnOutsideClick) document.removeEventListener('click', handleClickOutside, true)
       window.removeEventListener('resize', syncHeight)
@@ -104,7 +111,7 @@ const Modal = ({
   }, [])
 
   return ReactDOM.createPortal(
-    <>
+    <React.Fragment>
       <div className={styles.modalOverlay} ref={ref} />
       <div
         id='modal'
@@ -116,7 +123,12 @@ const Modal = ({
         role='dialog'
         {...rest}
       >
-        <div className={classNames([styles.modalContent, className])}>
+        <div
+          className={classNames([
+            fullScreen ? styles.modalContentFullscreen : styles.modalContent,
+            className
+          ])}
+        >
           <div className={styles.modalHeader}>
             <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
               {headerTitle}
@@ -129,7 +141,7 @@ const Modal = ({
           </div>
           <div className={styles.modalBody}>{children}</div>
           {customFooter && <div className={styles.modalFooter}>{customFooter}</div>}
-          {(hasFirstButton || hasSecondButton) && (
+          {/* {(hasFirstButton || hasSecondButton) && (
             <div className={styles.modalFooter}>
               {hasFirstButton && (
                 <Button
@@ -152,12 +164,47 @@ const Modal = ({
                 >
                   {secondButtonText}
                 </Button>
-              )}
+              )} */}
+              {(hasFirstButton || hasSecondButton) && (
+              <div className={styles.modalFooter}>
+                {hasFirstButton && (
+                  <MaterialButton
+                    variant='outlined'
+                    capitalize
+                    onClick={() => {
+                      handleFirstButton()
+                      if (firstButtonIsClose) handleModal()
+                    }}
+                    isLoading={isFirstButtonLoading}
+                    sx={{ height: '44px' }}
+                  >
+                    <Text textColor='primaryBlue' bold>
+                      {firstButtonText}
+                    </Text>
+                  </MaterialButton>
+                )}
+                {hasSecondButton && (
+                  <MaterialButton
+                    variant='contained'
+                    capitalize
+                    onClick={() => {
+                      handleSecondButton()
+                      if (secondButtonIsClose) handleModal()
+                    }}
+                    isLoading={isSecondButtonLoading}
+                    sx={{ height: '44px', marginLeft: hasFirstButton ? '18px' : '' }}
+                    disabled={isSecondButtonDisabled}
+                  >
+                    <Text textColor='white' bold>
+                      {secondButtonText}
+                    </Text>
+                  </MaterialButton>
+                )}
             </div>
           )}
         </div>
       </div>
-    </>,
+    </React.Fragment>,
     document.body
   )
 }

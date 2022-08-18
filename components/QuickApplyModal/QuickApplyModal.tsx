@@ -115,7 +115,8 @@ const QuickApplyModal = ({
       screening_answers: screeningAnswers,
       first_message: firstMessage,
       jobId: jobDetails.id,
-      jobUrl: jobDetails.job_url
+      jobUrl: jobDetails.job_url,
+      externalApplyUrl: jobDetails.external_apply_url
     }
 
     clearErrors()
@@ -244,37 +245,33 @@ const QuickApplyModal = ({
         </div>
 
         <div className={`${styles.quickApplyFormField} ${styles.halfWidth}`}>
-          <div>
-            <MaterialBasicSelect
-              label='Country'
-              value={smsCode}
-              options={smsCountryList}
-              onChange={(e) => {
-                setSmsCode(e.target.value)
-              }}
-            />
-          </div>
+          <MaterialBasicSelect
+            label='Country'
+            value={smsCode}
+            options={smsCountryList}
+            onChange={(e) => {
+              setSmsCode(e.target.value)
+            }}
+          />
+          <MaterialTextField
+            refs={{
+              ...register('contactNumber', {
+                required: {
+                  value: true,
+                  message: 'Please enter your contact number.',
+                },
+              }),
+            }}
+            label='Contact number'
+            size='small'
+            onChange={(e) => {
+              clearErrors('contactNumber')
 
-          <div>
-            <MaterialTextField
-              refs={{
-                ...register('contactNumber', {
-                  required: {
-                    value: true,
-                    message: 'Please enter your contact number.',
-                  },
-                }),
-              }}
-              label='Contact number'
-              size='small'
-              onChange={(e) => {
-                clearErrors('contactNumber')
+              setValue('contactNumber', handleNumericInput(e.target.value))
+            }}
+          />
 
-                setValue('contactNumber', handleNumericInput(e.target.value))
-              }}
-            />
-            {errors.contactNumber && errorText(errors.contactNumber.message)}
-          </div>
+          {errors.contactNumber && errorText(errors.contactNumber.message)}
         </div>
 
         <div className={styles.quickApplyFormField}>
@@ -302,6 +299,7 @@ const QuickApplyModal = ({
               clearErrors('password')
             }}
           />
+
           {errors.password && errorText(errors.password.message)}
         </div>
         
@@ -315,76 +313,77 @@ const QuickApplyModal = ({
 
           {errors.resume && errorText(errors.resume.message)}
         </div>
-
-        <div className={styles.quickApplyFormField}>
-          {screeningQuestions.length > 0 && (
-            <Text textStyle='lg' bold>
-              Questions from recruiter
-            </Text>
-          )}
-
-          {screeningQuestions.length > 0 &&
-            screeningQuestions.map((question, i) => {
-              return (
-                <div key={i} className={styles.question}>
-                  <Text textStyle='lg'>
-                    {i + 1}. {question}
-                  </Text>
-
-                  <MaterialTextField
-                    refs={{
-                      ...register(`screening_answer_${i}`, {
-                        required: {
-                          value: true,
-                          message: 'Please enter a valid answer.',
-                        },
-                      }),
-                    }}
-                    className={styles.answer}
-                    label='Answer'
-                    multiline
-                    rows={9}
-                    variant='outlined'
-                    size='small'
-                  />
-                  {errors[`screening_answer_${i}`] &&
-                    errorText(errors[`screening_answer_${i}`].message)}
-                </div>
-              )
-            })}
-
-          {screeningQuestions.length === 0 && (
-            <div className={styles.question}>
-              <Text textStyle='md'>
-                On Bossjob, you can message with the recruiter in real-time. Impress the recruiter
-                by sending a message first. (Tips: the reason why you are the perfect fit for this
-                job)
+        
+        {!jobDetails.external_apply_url && (
+          <div className={styles.quickApplyFormField}>
+            {screeningQuestions.length > 0 && (
+              <Text textStyle='lg' bold>
+                Questions from recruiter
               </Text>
+            )}
 
-              <MaterialTextField
-                refs={{
-                  ...register('firstMessage', {
-                    required: {
-                      value: true,
-                      message: 'Please enter a valid answer.',
-                    },
-                  }),
-                }}
-                className={styles.answer}
-                label='Answer'
-                multiline
-                rows={4}
-                variant='outlined'
-                size='small'
-                value={firstMessage}
-                onChange={(e) => {
-                  setFirstMessage(e.target.value)
-                }}
-              />
-              {errors.firstMessage && errorText(errors.firstMessage.message)}
-            </div>
-          )}
-        </div>
+            {screeningQuestions.length > 0 &&
+              screeningQuestions.map((question, i) => {
+                return (
+                  <div key={i} className={styles.question}>
+                    <Text textStyle='lg'>
+                      {i + 1}. {question}
+                    </Text>
+                    <MaterialTextField
+                      refs={{
+                        ...register(`screening_answer_${i}`, {
+                          required: {
+                            value: true,
+                            message: 'Please enter a valid answer.',
+                          },
+                        }),
+                      }}
+                      className={styles.answer}
+                      label='Answer'
+                      multiline
+                      rows={9}
+                      variant='outlined'
+                      size='small'
+                    />
+                    {errors[`screening_answer_${i}`] &&
+                      errorText(errors[`screening_answer_${i}`].message)}
+                  </div>
+                )
+              })}
+
+            {screeningQuestions.length === 0 && (
+              <div className={styles.question}>
+                <Text textStyle='md'>
+                  On Bossjob, you can message with the recruiter in real-time. Impress the recruiter
+                  by sending a message first. (Tips: the reason why you are the perfect fit for this
+                  job)
+                </Text>
+                <MaterialTextField
+                  refs={{
+                    ...register('firstMessage', {
+                      required: {
+                        value: true,
+                        message: 'Please enter a valid answer.',
+                      },
+                    }),
+                  }}
+                  className={styles.answer}
+                  label='Answer'
+                  multiline
+                  rows={4}
+                  variant='outlined'
+                  size='small'
+                  value={firstMessage}
+                  onChange={(e) => {
+                    setFirstMessage(e.target.value)
+                  }}
+                />
+
+                {errors.firstMessage && errorText(errors.firstMessage.message)}
+              </div>
+            )}
+          </div>
+        )}
 
         <div className={styles.quickApplyFormField}>
           <FormControlLabel
@@ -399,7 +398,6 @@ const QuickApplyModal = ({
               <Text textStyle='sm'>Email me exclusive newsletters & job updates from Bossjob.</Text>
             }
           />
-
           <Text textColor='darkgrey' textStyle='xsm'>
             By signing up, I have read and agreed to Terms of Use and Privacy Policy
           </Text>
