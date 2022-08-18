@@ -115,7 +115,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
   useEffect(() => {
     setTimeout(() => {
       setIsCarouselButtonVisible(true)
-    }, 1200)
+    }, 300)
   }, [])
 
   useEffect(() => {

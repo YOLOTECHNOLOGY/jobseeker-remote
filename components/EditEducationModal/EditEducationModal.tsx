@@ -14,10 +14,8 @@ import Switch from '@mui/material/Switch'
 import { manageUserEducationsRequest } from 'store/actions/users/manageUserEducations'
 
 /* Helpers*/
-import { getDegreeOptions, getCountryOptions } from 'helpers/optionsFormatter'
-import {
-  getLocationList
-} from 'helpers/jobPayloadFormatter'
+import { getCountryOptions } from 'helpers/optionsFormatter'
+import { getLocationList, getDegreeList } from 'helpers/jobPayloadFormatter'
 
 /* Vendors */
 import { useForm } from 'react-hook-form'
@@ -63,9 +61,10 @@ const EditEducationModal = ({
 }: EditEducationModalProps) => {
   const dispatch = useDispatch()
 
-  const degreeOptions = getDegreeOptions(config)
+  // const degreeOptions = getDegreeOptions(config)
   const countryOptions = getCountryOptions(config)
   const locList = getLocationList(config)
+  const degreeList = getDegreeList(config)
 
   const [school, setSchool] = useState('')
   const [degreeKey, setDegreeKey] = useState(null)
@@ -162,8 +161,9 @@ const EditEducationModal = ({
 
   useEffect(() => {
     if (education) {
+      const degKey = degreeList.filter((degree) => degree.label === education.degree)[0].value
       setSchool(education.school)
-      setDegreeKey(education.degree_key)
+      setDegreeKey(degKey)
       setIsCurrentlyStudying(education.is_currently_studying)
       setStudyPeriodFrom(education.study_period_from)
       setStudyPeriodTo(education.study_period_to)
@@ -236,8 +236,9 @@ const EditEducationModal = ({
                   className={styles.fullWidth}
                   label={requiredLabel('Education Level')}
                   value={degreeKey}
+                  defaultValue={degreeKey}
                   onChange={(e) => setDegreeKey(e.target.value)}
-                  options={degreeOptions}
+                  options={degreeList}
                 />
               </div>
               <div className={styles.field}>
