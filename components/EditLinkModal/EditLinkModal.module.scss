@@ -14,23 +14,6 @@
     &Required {
       color: $red;
     }
-
-    &Header {
-      margin-bottom: 10px;
-    }
-
-    &Date {
-      display: flex;
-    }
-
-    &DateItem {
-      width: 50%;
-      margin-right: 20px;
-
-      & > * {
-        width: 100%;
-      }
-    }
   }
 }
 
