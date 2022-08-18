@@ -108,6 +108,7 @@
 
   .companyInfoWrapper {
     display: flex;
+    flex-wrap: wrap;
 
     span {
       margin-right: 16px;
@@ -137,6 +138,10 @@
 .educationSection {
   display: flex;
   flex-direction: column;
+  
+  &:not(:last-child){
+    margin-bottom:24px;
+  }
 }
 
 .jobPreferencesSection {

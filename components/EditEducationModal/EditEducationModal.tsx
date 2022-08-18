@@ -127,9 +127,9 @@ const EditEducationModal = ({
       country_key: countryKey,
     }
 
-    const trimmedFieldOfStudy = fieldOfStudy.trim()
+    const trimmedFieldOfStudy = fieldOfStudy?.trim()
 
-    if (trimmedFieldOfStudy.length > 0) {
+    if (trimmedFieldOfStudy?.length > 0) {
       data["field_of_study"] = trimmedFieldOfStudy
     } 
 
@@ -138,6 +138,7 @@ const EditEducationModal = ({
       educationId: education ? education.id : null,
       educationData: data,
     }
+
     dispatch(manageUserEducationsRequest(educationPayload))
   }
 
