@@ -250,12 +250,12 @@ const EditLicensesAndCertificationsModal = ({
 												setExpiryDate(value)
 										}}
 									/>
+									{hasErrorOnExpiryDate && (
+										<Text textColor='red' textStyle='sm'>
+											Issue date must be earlier than expiry date.
+										</Text>
+									)}
 								</div>
-								{hasErrorOnExpiryDate && (
-									<Text textColor='red' textStyle='sm'>
-										Issue date must be earlier than expiry date.
-									</Text>
-								)}
 							</div>
 						</div>
 					)}
@@ -276,6 +276,7 @@ const EditLicensesAndCertificationsModal = ({
 							variant='outlined'
 							value={credentialUrl}
 							defaultValue={credentialUrl}
+							onClick={() => setCredentialUrl('https://')}
 							onChange={(e) => setCredentialUrl(e.target.value)}
 						/>
 					</div>
