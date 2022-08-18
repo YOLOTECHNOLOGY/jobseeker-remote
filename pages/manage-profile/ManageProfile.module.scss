@@ -144,6 +144,27 @@
   }
 }
 
+.licenseCertificationSection {
+  display: flex;
+  flex-direction: column;
+  
+  &Link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.linkSection {
+  display: flex;
+  flex-direction: column;
+
+  &Url {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+
 .jobPreferencesSection {
   &Button {
     width: 250px;
