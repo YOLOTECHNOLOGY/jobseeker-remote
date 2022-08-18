@@ -30,7 +30,7 @@ type JobCardProps = {
   status: string
   selectedId?: number
   handleSelectedId?: Function
-  ApplicationStatus?: string
+  applicationStatus?: string
 }
 
 const JobCard = ({
@@ -47,7 +47,7 @@ const JobCard = ({
   status,
   handleSelectedId,
   selectedId,
-  ApplicationStatus
+  applicationStatus
 }: JobCardProps) => {
   const cx = classNames.bind(styles)
   const isSelectedClass = cx({ isSelected: selectedId == id })
@@ -78,8 +78,8 @@ const JobCard = ({
           {isFeatured && <JobTag tag='Featured' tagType='featured' />}
           {isUrgent && <JobTag tag='Urgent' tagType='urgent' />}
           {jobType && <JobTag tag={jobType} />}
-          {ApplicationStatus && (
-            <JobTag tag={ApplicationStatus} tagType={handleMyJobTagStyle(ApplicationStatus)} />
+          {applicationStatus && (
+            <JobTag tag={applicationStatus} tagType={handleMyJobTagStyle(applicationStatus)} />
           )}
         </div>
         <div className={styles.JobCardDetailList}>
