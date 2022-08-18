@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 
 /* Components */
 import Text from 'components/Text'
-import ModalDialog from 'components/ModalDialog'
+import Modal from 'components/Modal'
 import MaterialTextField from 'components/MaterialTextField'
 import TextEditor from 'components/TextEditor/TextEditor'
 
@@ -101,7 +101,7 @@ const EditLinkModal = ({
   }
 
   const validateInput = () => {
-    if (linkUrl?.length > 0) {
+    if (linkUrl?.length > 0 && !urlValidation(linkUrl)) {
       setHasValidationError(false)
     } else {
       setHasValidationError(true)
@@ -163,9 +163,9 @@ const EditLinkModal = ({
 
   return (
     <div>
-      <ModalDialog
-        open={showModal}
-        onClose={handleCloseModal}
+      <Modal
+        showModal={showModal}
+        handleModal={handleCloseModal}
         headerTitle='Links'
         firstButtonText='Cancel'
         secondButtonText='Save'
@@ -175,10 +175,9 @@ const EditLinkModal = ({
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
         fullScreen
-        maxHeight='90vh'
       >
         {editLinkModal}
-      </ModalDialog>
+      </Modal>
     </div>
   )
 

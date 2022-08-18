@@ -16,7 +16,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 
 import Text from 'components/Text'
 import TextEditor from 'components/TextEditor/TextEditor'
-import ModalDialog from 'components/ModalDialog'
+import Modal from 'components/Modal'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
@@ -260,9 +260,9 @@ const EditWorkExperienceModal = ({
 
   return (
     <div>
-      <ModalDialog
-        open={showModal}
-        onClose={handleCloseModal}
+      <Modal
+        showModal={showModal}
+        handleModal={handleCloseModal}
         headerTitle='Work experience'
         firstButtonText='Cancel'
         secondButtonText='Save'
@@ -272,7 +272,6 @@ const EditWorkExperienceModal = ({
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
         fullScreen
-        maxHeight='90vh'
       >
         <div className={styles.container}>
           <div className={styles.formWrapper}>
@@ -443,7 +442,7 @@ const EditWorkExperienceModal = ({
             </Text>
           )}
         </div>
-      </ModalDialog>
+      </Modal>
     </div>
   )
 }

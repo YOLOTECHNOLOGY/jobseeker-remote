@@ -24,155 +24,157 @@ import { urlValidation } from 'helpers/formValidation'
 import styles from './EditLicensesAndCertificationsModal.module.scss'
 
 type EditLicensesAndCertificationsModalProps = {
-	modalName: string
-	showModal: boolean
-	licenseData: any
-	handleModal: Function
+  modalName: string
+  showModal: boolean
+  licenseData: any
+  handleModal: Function
 }
 
 const EditLicensesAndCertificationsModal = ({
-	modalName,
-	showModal,
-	licenseData,
-	handleModal
+  modalName,
+  showModal,
+  licenseData,
+  handleModal
 }: EditLicensesAndCertificationsModalProps) => {
-	
-	const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-	const [licenseCertificationTitle, setLicenseCertificationTitle] = useState(null)
-	const [issuingOrganisation, setIssuingOrganisation] = useState(null)
-	const [isLicenseCertificationPermanent, setIsLicenseCertificationPermanent] = useState(false)
-	const [issueDate, setIssueDate] = useState(null)
-	const [expiryDate, setExpiryDate] = useState(null)
-	const [credentialId, setCredentialId] = useState(null)
-	const [credentialUrl, setCredentialUrl] = useState(null)
+  const [licenseCertificationTitle, setLicenseCertificationTitle] = useState(null)
+  const [issuingOrganisation, setIssuingOrganisation] = useState(null)
+  const [isLicenseCertificationPermanent, setIsLicenseCertificationPermanent] = useState(false)
+  const [issueDate, setIssueDate] = useState(null)
+  const [expiryDate, setExpiryDate] = useState(null)
+  const [credentialId, setCredentialId] = useState(null)
+  const [credentialUrl, setCredentialUrl] = useState(null)
 
-	const [hasErrorOnExpiryDate, setHasErrorOnExpiryDate] = useState(false)
-	const [hasValidationError, setHasValidationError] = useState(true)
+  const [hasErrorOnExpiryDate, setHasErrorOnExpiryDate] = useState(false)
+  const [hasValidationError, setHasValidationError] = useState(true)
 
-	const isUpdating = useSelector((store: any) => store.users.manageUserLicensesAndCertifications.fetching)
-	const updateLicensesAndCertificationsSuccess = useSelector(
-		(store: any) => store.users.manageUserLicensesAndCertifications.response
-	)
+  const isUpdating = useSelector(
+    (store: any) => store.users.manageUserLicensesAndCertifications.fetching
+  )
+  const updateLicensesAndCertificationsSuccess = useSelector(
+    (store: any) => store.users.manageUserLicensesAndCertifications.response
+  )
 
-	const requiredLabel = (text: string) => {
-		return (
-			<>
-				<span>{text}</span>
-				<span className={styles.fieldRequired}>*</span>
-			</>
-		)
-	}
+  const requiredLabel = (text: string) => {
+    return (
+      <>
+        <span>{text}</span>
+        <span className={styles.fieldRequired}>*</span>
+      </>
+    )
+  }
 
-	const errorText = (errorMessage: string) => {
-		return (
-			<Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
-				{errorMessage}
-			</Text>
-		)
-	}
+  const errorText = (errorMessage: string) => {
+    return (
+      <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
+        {errorMessage}
+      </Text>
+    )
+  }
 
-	const {
-		handleSubmit
-	} = useForm()
+  const { handleSubmit } = useForm()
 
-	const handleResetForm = () => {
-		setLicenseCertificationTitle('')
-		setIssuingOrganisation('')
-		setIsLicenseCertificationPermanent(false)
-		setIssueDate(null)
-		setExpiryDate(null)
-		setHasErrorOnExpiryDate(false)
-		setCredentialId('')
-		setCredentialUrl('')
-		setHasValidationError(true)
-	}
+  const handleResetForm = () => {
+    setLicenseCertificationTitle('')
+    setIssuingOrganisation('')
+    setIsLicenseCertificationPermanent(false)
+    setIssueDate(null)
+    setExpiryDate(null)
+    setHasErrorOnExpiryDate(false)
+    setCredentialId('')
+    setCredentialUrl('')
+    setHasValidationError(true)
+  }
 
-	const handleCloseModal = () => {
-		handleModal(modalName, false)
-		handleResetForm()
-	}
+  const handleCloseModal = () => {
+    handleModal(modalName, false)
+    handleResetForm()
+  }
 
-	const onSubmit = () => {
-		const data = {
-			title: licenseCertificationTitle,
-			issuing_organisation: issuingOrganisation,
-			is_permanent: isLicenseCertificationPermanent,
-			issue_date: moment(new Date(issueDate)).format('yyyy-MM-DD'),
-			expiry_date: isLicenseCertificationPermanent == true ? null : moment(new Date(expiryDate)).format('yyyy-MM-DD'),
-		}
+  const onSubmit = () => {
+    const data = {
+      title: licenseCertificationTitle,
+      issuing_organisation: issuingOrganisation,
+      is_permanent: isLicenseCertificationPermanent,
+      issue_date: moment(new Date(issueDate)).format('yyyy-MM-DD'),
+      expiry_date:
+        isLicenseCertificationPermanent == true
+          ? null
+          : moment(new Date(expiryDate)).format('yyyy-MM-DD')
+    }
 
-		if (credentialId.length > 0) {
-			data['credential_id'] = credentialId
-		}
+    if (credentialId.length > 0) {
+      data['credential_id'] = credentialId
+    }
 
-		if (credentialUrl.length > 0) {
-			data['credential_url'] = credentialUrl
-		}
+    if (credentialUrl.length > 0) {
+      data['credential_url'] = credentialUrl
+    }
 
-		const licenseCertificationPayload = {
-			isUpdate: licenseData ? true : false,
-			licenseId: licenseData ? licenseData.id : null,
-			licenseData: data
-		}
+    const licenseCertificationPayload = {
+      isUpdate: licenseData ? true : false,
+      licenseId: licenseData ? licenseData.id : null,
+      licenseData: data
+    }
 
-		dispatch(manageUserLicensesAndCertificationsRequest(licenseCertificationPayload))
-	}
+    dispatch(manageUserLicensesAndCertificationsRequest(licenseCertificationPayload))
+  }
 
-	const validateInput = () => {
-		if (
-			licenseCertificationTitle?.length > 0
-			&& issuingOrganisation?.length > 0
-			&& issueDate !== null
-			&& (isLicenseCertificationPermanent === true) || (expiryDate !== null)
-			&& hasErrorOnExpiryDate !== true
-		) {
-			if (urlValidation(credentialUrl)) {
-				setHasValidationError(true)
-			} else {
-				setHasValidationError(false)
-			}
-		} else {
-			setHasValidationError(true)
-		}
-	}
+  const validateInput = () => {
+    if (
+      (licenseCertificationTitle?.length > 0 &&
+        issuingOrganisation?.length > 0 &&
+        issueDate !== null &&
+        isLicenseCertificationPermanent === true) ||
+      (expiryDate !== null && hasErrorOnExpiryDate !== true)
+    ) {
+      if (urlValidation(credentialUrl)) {
+        setHasValidationError(true)
+      } else {
+        setHasValidationError(false)
+      }
+    } else {
+      setHasValidationError(true)
+    }
+  }
 
-	useEffect(() => {
-		if (licenseData) {
-			setLicenseCertificationTitle(licenseData.title)
-			setIssuingOrganisation(licenseData.issuing_organisation)
-			setIsLicenseCertificationPermanent(licenseData.is_permanent)
-			setIssueDate(licenseData.issue_date || null)
-			setExpiryDate(licenseData.expiry_date || null)
-			setCredentialId(licenseData.credential_id || '')
-			setCredentialUrl(licenseData.credential_url || '')
-			setHasValidationError(true)
-			validateInput()
-		}
-	}, [licenseData])
+  useEffect(() => {
+    if (licenseData) {
+      setLicenseCertificationTitle(licenseData.title)
+      setIssuingOrganisation(licenseData.issuing_organisation)
+      setIsLicenseCertificationPermanent(licenseData.is_permanent)
+      setIssueDate(licenseData.issue_date || null)
+      setExpiryDate(licenseData.expiry_date || null)
+      setCredentialId(licenseData.credential_id || '')
+      setCredentialUrl(licenseData.credential_url || '')
+      setHasValidationError(true)
+      validateInput()
+    }
+  }, [licenseData])
 
-	useEffect(() => {
-		const periodIssue = moment(new Date(issueDate))
-		const periodExpiry = moment(new Date(expiryDate))
+  useEffect(() => {
+    const periodIssue = moment(new Date(issueDate))
+    const periodExpiry = moment(new Date(expiryDate))
 
-		setHasErrorOnExpiryDate(moment(periodIssue).isAfter(periodExpiry) ? true : false)
-	}, [issueDate, expiryDate])
+    setHasErrorOnExpiryDate(moment(periodIssue).isAfter(periodExpiry) ? true : false)
+  }, [issueDate, expiryDate])
 
-	useEffect(() => {
-		handleCloseModal()
-	}, [updateLicensesAndCertificationsSuccess])
+  useEffect(() => {
+    handleCloseModal()
+  }, [updateLicensesAndCertificationsSuccess])
 
-	useEffect(() => {
-		validateInput()
-	}, [
-		licenseCertificationTitle,
-		issuingOrganisation,
-		issueDate,
-		expiryDate,
-		isLicenseCertificationPermanent,
-		hasErrorOnExpiryDate,
-		credentialUrl
-	])
+  useEffect(() => {
+    validateInput()
+  }, [
+    licenseCertificationTitle,
+    issuingOrganisation,
+    issueDate,
+    expiryDate,
+    isLicenseCertificationPermanent,
+    hasErrorOnExpiryDate,
+    credentialUrl
+  ])
 
 	const editLicensesAndCertificationsModal = (
 		<div className={styles.container}>
@@ -308,7 +310,6 @@ const EditLicensesAndCertificationsModal = ({
 			</ModalDialog>
 		</div>
 	)
-
 }
 
 export default EditLicensesAndCertificationsModal

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
@@ -100,7 +100,11 @@ const renderPopularSearch = () => {
           Accounting jobs
         </Text>
       </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/sales-marketing-jobs`} title='Sales jobs'>
+      <Link
+        className={styles.link}
+        to={`${jobsPageLink}/sales-marketing-jobs`}
+        title='Sales jobs'
+      >
         <Text textStyle='base' textColor='darkgrey'>
           Sales jobs
         </Text>
@@ -132,22 +136,38 @@ const renderPopularSearch = () => {
           Customer Service jobs
         </Text>
       </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/hr-recruitment-jobs`} title='HR jobs'>
+      <Link
+        className={styles.link}
+        to={`${jobsPageLink}/hr-recruitment-jobs`}
+        title='HR jobs'
+      >
         <Text textStyle='base' textColor='darkgrey'>
           HR jobs
         </Text>
       </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/bpo-team-lead-jobs`} title='BPO Team Lead'>
+      <Link
+        className={styles.link}
+        to={`${jobsPageLink}/bpo-team-lead-jobs`}
+        title='BPO Team Lead'
+      >
         <Text textStyle='base' textColor='darkgrey'>
           BPO Team Lead
         </Text>
       </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/homebased-jobs`} title='WFH'>
+      <Link
+        className={styles.link}
+        to={`${jobsPageLink}/homebased-jobs`}
+        title='WFH'
+      >
         <Text textStyle='base' textColor='darkgrey'>
           WFH
         </Text>
       </Link>
-      <Link className={styles.link} to={`${jobsPageLink}/manager-jobs`} title='Manager'>
+      <Link
+        className={styles.link}
+        to={`${jobsPageLink}/manager-jobs`}
+        title='Manager'
+      >
         <Text textStyle='base' textColor='darkgrey'>
           Manager
         </Text>
@@ -159,6 +179,68 @@ const renderPopularSearch = () => {
       </Link>
     </div>
   )
+}
+
+const useJobAlert = () => {
+  const accessToken = getCookie('accessToken')
+  const userCookie = getCookie('user')
+  const isLogin = useMemo(() => {
+    return getCookie('accessToken') ? true : false
+  }, [getCookie])
+  const dispatch = useDispatch()
+  // const filterJobPayload = useSelector((store: any) => store.job.jobList.payload)
+
+  const showJobAlert = useCallback(filterJobPayload => {
+    const jobAlertData = {
+
+      keyword: filterJobPayload?.query ? filterJobPayload.query : '',
+      location_values: filterJobPayload?.location ? filterJobPayload.location : 'all',
+      job_type_values: filterJobPayload?.jobType ? filterJobPayload.jobType : 'all',
+      salary_range_values: filterJobPayload?.salary ? filterJobPayload.salary : 'all',
+      job_category_values: filterJobPayload?.category ? filterJobPayload.category : 'all',
+      industry_values: filterJobPayload?.industry ? filterJobPayload.industry : 'all',
+      xp_lvl_values: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
+      degree_values: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',
+      is_company_verified: 'all',
+      frequency_id: 1,
+    }
+    const createJobAlertPayload = {
+      jobAlertData,
+      accessToken,
+      user_id: userCookie.id
+    }
+    dispatch(createJobAlertRequest(createJobAlertPayload))
+
+  }, [userCookie])
+  const router = useRouter()
+
+  const setLastSearch = useCallback(search => {
+    if (!isLogin) {
+      sessionStorage.setItem('search-job-last-keyword', search)
+    }
+  }, [isLogin])
+
+  useEffect(() => {
+    if (!isLogin) {
+      return
+    } else {
+      const lastSearch = JSON.parse(sessionStorage.getItem('search-job-last-keyword'))
+      const shouldShowAlert = sessionStorage.getItem('should-show-alert')
+      const hasRedirect = sessionStorage.getItem('has-redirect')
+      if (lastSearch && shouldShowAlert && !hasRedirect) {
+        if (lastSearch) {
+          sessionStorage.setItem('has-redirect', '1')
+          router.push(lastSearch?.searchParams)
+        }
+      } else if (shouldShowAlert && hasRedirect) {
+        sessionStorage.removeItem('should-show-alert')
+        sessionStorage.removeItem('has-redirect')
+        sessionStorage.removeItem('search-job-last-keyword')
+        showJobAlert(lastSearch?.filterJobPayload)
+      }
+    }
+  }, [])
+  return setLastSearch
 }
 
 const JobSearchPage = (props: JobSearchPageProps) => {
@@ -209,7 +291,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   const jobDetailResponse = useSelector((store: any) => store.job.jobDetail.response)
   const isJobDetailFetching = useSelector((store: any) => store.job.jobDetail.fetching)
-
+  const filterJobPayload = useSelector((store: any) => store.job.jobList.payload)
   const createdJobAlertResponse = useSelector((store: any) => store.alerts.createJobAlert)
   const isCreatingJobAlert = useSelector((store: any) => store.alerts.createJobAlert.fetching)
   const jobAlertListResponse = useSelector((store: any) => store.alerts.fetchJobAlertsList.response)
@@ -338,19 +420,20 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleShowFilter = () => {
     setIsShowFilter(false)
   }
-
+  const setLastSearch = useJobAlert()
   const jobTypeList = config.inputs.job_types
   const salaryRangeList = config.filters.salary_range_filters
 
   const updateUrl = (queryParam, queryObject) => {
     queryObject['page'] = '1'
     setSelectedPage(Number(queryObject['page']))
-
+    const pushObject = {
+      pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
+      query: queryObject
+    }
+    setLastSearch(JSON.stringify({ filterJobPayload, searchParams: pushObject }))
     router.push(
-      {
-        pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
-        query: queryObject
-      },
+      pushObject,
       undefined,
       { shallow: true }
     )
@@ -646,6 +729,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     dispatch(deleteSaveJobRequest(deleteJobPayload))
   }
 
+
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonical} />
@@ -708,7 +792,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                 Filters
               </Text>
               {filterCount > 0 && (
-                <Text textStyle='base' textColor='white' className={styles.searchFilterCount}>
+                <Text
+                  textStyle='base'
+                  textColor='white'
+                  className={styles.searchFilterCount}
+                >
                   {filterCount}
                 </Text>
               )}
@@ -902,6 +990,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req, resolvedUrl }) => {
       const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
 
+
       const { keyword, page } = query
       // store actions
       store.dispatch(fetchConfigRequest())
@@ -972,7 +1061,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
             ...subData,
             isChecked:
               defaultCategories.includes(subData['seo-value']) ||
-              defaultCategories.includes(data['seo-value'])
+              defaultCategories.includes(data['seo-value']),
           }))
           const newList = {
             ...data,
@@ -984,10 +1073,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
         defaultValues.categoryList = initialListOptions
       }
 
-      // sanitise searchQuery
-      defaultValues.urlQuery = defaultValues.urlQuery
-        ? unslugify(searchQuery).replace('+', '-')
-        : ''
+      // sanitise searchQuery 
+      defaultValues.urlQuery = defaultValues.urlQuery ? unslugify(searchQuery).replace('+', '-') : ''
 
       /* Handle SEO Meta Tags*/
       const { month, year } = getCurrentMonthYear()

@@ -65,7 +65,7 @@ interface JobListSectionProps {
   config: any
 }
 
-const JobListSection = ({ 
+const JobListSection = ({
   page,
   jobList,
   query,
@@ -93,7 +93,7 @@ const JobListSection = ({
   postReportResponse,
   isPostingReport,
   config
-}: JobListSectionProps) => {  
+}: JobListSectionProps) => {
   const { width } = useWindowDimensions()
   const router = useRouter()
   const prevScrollY = useRef(0)
@@ -102,7 +102,7 @@ const JobListSection = ({
   const [isSticky, setIsSticky] = useState(false)
   const [jobNumStart, setJobNumStart] = useState(0)
   const [jobNumEnd, setJobNumEnd] = useState(30)
-  
+
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
@@ -154,7 +154,7 @@ const JobListSection = ({
     createJobAlert(createJobAlertPayload)
   }
 
-  const handleCreateJobAlert = (email?:any) => {
+  const handleCreateJobAlert = (email?: any) => {
     handleCreateJobAlertData(email)
   }
 
@@ -187,10 +187,16 @@ const JobListSection = ({
                     className={styles.jobListOptionAlertsItem}
                     onClick={() => {
                       if (isUserAuthenticated) handleCreateJobAlert()
-                      else router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
+                      else {
+                        const lastSearch = sessionStorage.getItem('search-job-last-keyword')
+                        if (lastSearch) {
+                          sessionStorage.setItem('should-show-alert', '1')
+                        }
+                        router.push('/register/jobseeker?redirect=/jobs-hiring/job-search')
+                      }
                     }}
                   >
-                      <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
+                    <Text textStyle='base'>{isUserAuthenticated} Enable job alert</Text>
                   </div>
                   {isUserAuthenticated && (
                     <div
@@ -205,8 +211,8 @@ const JobListSection = ({
                 </div>
               </div>
             )}
-              
-            <div className={styles.jobListOptionOtherContent}/>
+
+            <div className={styles.jobListOptionOtherContent} />
           </div>
         </div>
         <div className={classNamesCombined([styles.container, styles.jobContent])}>
@@ -225,8 +231,8 @@ const JobListSection = ({
                 <div className={styles.emptyResultMobile}>
                   {emptyResult()}
                 </div>
-              )}  
-              
+              )}
+
               {!isJobListFetching && jobList?.jobs?.length > 0 && jobList.jobs.map((job) => (
                 <JobCard
                   key={job.id}
@@ -260,7 +266,7 @@ const JobListSection = ({
             )}
 
             {!isJobDetailFetching && selectedJob?.['id'] && (
-              <JobDetail 
+              <JobDetail
                 selectedJob={selectedJob}
                 setIsShowModalShare={setIsShowModalShare}
                 setIsShowReportJob={setIsShowReportJob}
@@ -277,7 +283,7 @@ const JobListSection = ({
               <div className={styles.emptyResult}>
                 {emptyResult()}
               </div>
-            )} 
+            )}
           </div>
           <div className={styles.jobAds}>
             <div className={styles.skyscraperBanner}>
@@ -308,9 +314,9 @@ const JobListSection = ({
         isPublicPostReportJob={!isUserAuthenticated}
       />
 
-      {isShowReportJob && <ModalReportJob 
-        isShowReportJob={isShowReportJob} 
-        handleShowReportJob={setIsShowReportJob} 
+      {isShowReportJob && <ModalReportJob
+        isShowReportJob={isShowReportJob}
+        handleShowReportJob={setIsShowReportJob}
         reportJobReasonList={reportJobReasonList}
         selectedJobId={selectedJob?.['id']}
         handlePostReportJob={handlePostReportJob}

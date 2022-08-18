@@ -9,7 +9,7 @@ import moment from 'moment'
 /* Components */
 import Text from 'components/Text'
 import { TextField } from '@mui/material'
-import ModalDialog from 'components/ModalDialog'
+import Modal from 'components/Modal'
 import UploadUserAvatar from 'components/UploadUserAvatar'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
@@ -119,6 +119,14 @@ const EditProfileModal = ({
   const sixteenYearsAgo = today.getFullYear() - 16
   const hundredYearsAgo = today.getFullYear() - 100
 
+  const defaultValues = {
+    firstName: first_name,
+    lastName: last_name,
+    summary: description,
+    location: userLocation,
+    birthdate: birthdate,
+    yearsOfExperience: defaultExpLevel[0]?.value
+  }
   const {
     register,
     handleSubmit,
@@ -128,14 +136,7 @@ const EditProfileModal = ({
     formState: { errors },
     setValue
   } = useForm({
-    defaultValues: {
-      firstName: first_name,
-      lastName: last_name,
-      summary: description,
-      location: userLocation,
-      birthdate: birthdate,
-      yearsOfExperience: defaultExpLevel[0]?.value
-    }
+    defaultValues
   })
 
   useEffect(() => {
@@ -173,7 +174,7 @@ const EditProfileModal = ({
       birthdate: birthdate && moment(new Date(birthdate)).format('yyyy-MM-DD'),
       location_key: matchedLocation?.key,
       xp_lvl_key: yearsOfExperience || '',
-      description: summary.length > 0 ? summary : ''
+      description: summary?.length > 0 ? summary : ''
     }
 
     dispatch(updateUserProfileRequest(payload))
@@ -181,7 +182,7 @@ const EditProfileModal = ({
 
   const handleCloseModal = () => {
     handleModal(modalName, false)
-    reset()
+    reset(defaultValues)
   }
 
   const onDateChange = (value) => {
@@ -200,9 +201,9 @@ const EditProfileModal = ({
 
   return (
     <div>
-      <ModalDialog
-        open={showModal}
-        onClose={handleCloseModal}
+      <Modal
+        showModal={showModal}
+        handleModal={handleCloseModal}
         headerTitle='About me'
         firstButtonText='Cancel'
         secondButtonText='Save'
@@ -213,7 +214,6 @@ const EditProfileModal = ({
         // Disable button if error exist for fields with manual setError
         isSecondButtonDisabled={errors && errors.birthdate}
         fullScreen
-        maxHeight='90vh'
       >
         <div className={styles.profile}>
           <div className={styles.profileAvatar}>
@@ -338,7 +338,7 @@ const EditProfileModal = ({
             </div>
           </div>
         </div>
-      </ModalDialog>
+      </Modal>
     </div>
   )
 }
