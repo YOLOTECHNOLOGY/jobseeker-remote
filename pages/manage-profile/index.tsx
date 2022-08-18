@@ -37,7 +37,7 @@ import EditEducationModal from 'components/EditEducationModal'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
-import { formatSalaryRange, getYearMonthDiffBetweenDates } from 'helpers/formatter'
+import { formatSalary, formatSalaryRange, getYearMonthDiffBetweenDates } from 'helpers/formatter'
 import { getNoticePeriodList } from 'helpers/jobPayloadFormatter'
 
 /* Services */
@@ -240,6 +240,17 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                     : workingPeriodTo.format('MMMM yyyy')}{' '}
                   {dateDiff ? `(${dateDiff})` : ''}
                 </Text>
+                <div className={styles.companySecondaryInfoWrapper}>
+                  {workExp?.job_categories.length > 0 && (
+                    <Text textStyle='base'>{workExp?.job_categories.join(', ')}</Text>
+                  )}
+                  {workExp?.company_industry && (
+                    <Text textStyle='base'>{workExp?.company_industry}</Text>
+                  )}
+                  {workExp?.salary && (
+                    <Text textStyle='base'>{formatSalary(workExp?.salary)} per month</Text>
+                  )}
+                </div>
                 {workExp?.description && (
                   <ReadMore
                     size={isMobile ? 210 : 300}
