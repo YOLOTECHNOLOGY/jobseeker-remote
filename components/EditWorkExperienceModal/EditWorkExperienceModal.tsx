@@ -32,7 +32,6 @@ import {
   getCountryList,
   getJobCategoryIds,
 } from 'helpers/jobPayloadFormatter'
-import { removeEmptyOrNullValues } from 'helpers/formatter'
 
 /* Styles */
 import styles from './EditWorkExperienceModal.module.scss'
@@ -220,7 +219,7 @@ const EditWorkExperienceModal = ({
      const workExperiencesPayload = {
        isUpdate: data ? true : false,
        workExperienceId: data ? data.id : null,
-       workExperienceData: removeEmptyOrNullValues(workExperienceData),
+       workExperienceData: workExperienceData,
      }
      dispatch(manageUserWorkExperiencesRequest(workExperiencesPayload))
   }
