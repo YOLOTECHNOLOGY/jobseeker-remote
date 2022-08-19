@@ -92,7 +92,13 @@ const EditSkillModal = ({
   }
 
   const handleAddSkill = (skill) => {
-    setSkillList(prevState => [...prevState, skill])
+    setSkillList(prevState => {
+      if (!prevState.includes(skill)){
+        return [...prevState, skill]
+      }else{
+        return [...prevState]
+      }
+    })
   }
 
   const handleCloseModal = () => {
