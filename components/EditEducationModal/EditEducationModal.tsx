@@ -67,7 +67,7 @@ const EditEducationModal = ({
   const degreeList = getDegreeList(config)
 
   const [school, setSchool] = useState('')
-  const [degreeKey, setDegreeKey] = useState(null)
+  const [degreeKey, setDegreeKey] = useState('')
   const [isCurrentlyStudying, setIsCurrentlyStudying] = useState(false)
   const [studyPeriodFrom, setStudyPeriodFrom] = useState(null)
   const [studyPeriodTo, setStudyPeriodTo] = useState(null)
@@ -95,7 +95,7 @@ const EditEducationModal = ({
 
   const handleResetForm = () => {
     setSchool('')
-    setDegreeKey(null)
+    setDegreeKey('')
     setIsCurrentlyStudying(false)
     setStudyPeriodFrom(null)
     setStudyPeriodTo(null)
@@ -235,7 +235,6 @@ const EditEducationModal = ({
                   className={styles.fullWidth}
                   label={requiredLabel('Education Level')}
                   value={degreeKey}
-                  defaultValue={degreeKey}
                   onChange={(e) => setDegreeKey(e.target.value)}
                   options={degreeList}
                 />
