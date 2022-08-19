@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form'
 import { Chip } from '@mui/material'
 import ClearIcon from '@mui/icons-material/Clear';
 import Text from 'components/Text'
-import ModalDialog from 'components/ModalDialog'
+import Modal from 'components/Modal'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 
@@ -70,7 +70,9 @@ const EditSkillModal = ({
   }
 
   useEffect(() => {
-    handleCloseModal()
+    if (updateProfileSuccess){
+      handleCloseModal()
+    }
   }, [updateProfileSuccess])
 
   useEffect(() => {
@@ -90,7 +92,13 @@ const EditSkillModal = ({
   }
 
   const handleAddSkill = (skill) => {
-    setSkillList(prevState => [...prevState, skill])
+    setSkillList(prevState => {
+      if (!prevState.includes(skill)){
+        return [...prevState, skill]
+      }else{
+        return [...prevState]
+      }
+    })
   }
 
   const handleCloseModal = () => {
@@ -99,9 +107,9 @@ const EditSkillModal = ({
 
   return (
     <div>
-      <ModalDialog
-        open={showModal}
-        onClose={handleCloseModal}
+      <Modal
+        showModal={showModal}
+        handleModal={handleCloseModal}
         headerTitle='Skills'
         firstButtonText='Cancel'
         secondButtonText='Save'
@@ -174,7 +182,7 @@ const EditSkillModal = ({
             })}
           </div>
         </div>
-      </ModalDialog>
+      </Modal>
     </div>
   )
 }

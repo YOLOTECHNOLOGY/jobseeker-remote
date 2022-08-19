@@ -95,7 +95,12 @@ const ProfileLayout = ({
       <div className={styles.profileLayoutSettings}>
         <div className={styles.settingTabs}>
           <ThemeProvider theme={theme}>
-            <Tabs value={tabValue} centered onChange={handleTabChange}>
+            <Tabs
+              value={tabValue}
+              variant='scrollable'
+              scrollButtons='auto'
+              onChange={handleTabChange}
+            >
               <Tab
                 className={styles.settingTabsItem}
                 value='profile'

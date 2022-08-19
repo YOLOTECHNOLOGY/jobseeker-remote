@@ -22,12 +22,20 @@
     grid-area: overview;
     width: 264px;
     height: 100%;
+    
+    @include msd{
+      width:100%;
+    }
   }
 
   &Settings {
     grid-area: detail;
     width: 838px;
     height: 100%;
+
+    @include msd{
+      width:100%;
+    }
   }
 }
 

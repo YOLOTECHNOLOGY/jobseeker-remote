@@ -19,15 +19,15 @@ const ProfileSettingCard = ({
   onClick,
 }: ProfileSettingCardProps) => {
   return (
-    <div className={styles.CardContainer}>
-      <Text textColor='primaryBlue' textStyle='xl'>
+    <div className={styles.cardContainer}>
+      <Text textColor='primaryBlue' textStyle='xl' bold>
         {title}
       </Text>
       <Text tagName='p' textStyle='lg'>
         {description}
       </Text>
       <MaterialButton
-        className={styles.CardButton}
+        className={styles.cardButton}
         variant='outlined'
         capitalize={false}
         size='large'

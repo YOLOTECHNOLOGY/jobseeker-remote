@@ -64,6 +64,8 @@ import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDeta
 
 import { withdrawAppliedJobRequest } from 'store/actions/jobs/withdrawAppliedJob'
 
+import { addExternalJobClickService } from 'store/services/jobs/addExternalJobClick'
+
 /* Styles */
 import styles from './Job.module.scss'
 import breakpointStyles from 'styles/breakpoint.module.scss'
@@ -370,14 +372,18 @@ const Job = ({
   }
 
   const handleApplyJob = () => {
-    if (!userCookie) {
+    if (!userCookie) { 
       setQuickApplyModalShow(true)
     } else {
-      if (!userCookie.is_email_verify) {
+      if (userCookie && !userCookie.is_email_verify) {
         handleVerifyEmailClick()
-      } else {
-        router.push(applyJobLink)
       }
+      
+      if (jobDetail?.external_apply_url) {
+        addExternalJobClickService(jobDetail?.id)
+      }
+      
+      window.open(applyJobLink)
     }
   }
 

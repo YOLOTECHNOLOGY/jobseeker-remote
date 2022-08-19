@@ -1,28 +1,28 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
-.CardContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    padding: 24px;
-    height: max-content;
-    border: 1px solid $lightgrey-2;
-    border-radius: 5px;
-    margin-bottom: 24px;
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  padding: 24px;
+  height: max-content;
+  border: 1px solid $lightgrey-2;
+  border-radius: 5px;
+  margin-bottom: 24px;
 
-    @include msd {
-        padding: 0;
-        border: none;
-        margin: 36px 0px;
-    }
+  @include msd {
+    padding: 0;
+    border: none;
+    margin: 36px 0px;
+  }
 }
 
-.CardButton {
-    width: 250px;
-    @include msd {
-        width: 100%;
-    }
+.cardButton {
+  width: 250px;
+  @include msd {
+    width: 100%;
+  }
 }

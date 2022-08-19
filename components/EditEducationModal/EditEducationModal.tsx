@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 /* Components */
-import ModalDialog from 'components/ModalDialog'
+import Modal from 'components/Modal'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialDatePicker from 'components/MaterialDatePicker'
@@ -14,10 +14,8 @@ import Switch from '@mui/material/Switch'
 import { manageUserEducationsRequest } from 'store/actions/users/manageUserEducations'
 
 /* Helpers*/
-import { getDegreeOptions, getCountryOptions } from 'helpers/optionsFormatter'
-import {
-  getLocationList
-} from 'helpers/jobPayloadFormatter'
+import { getCountryOptions } from 'helpers/optionsFormatter'
+import { getLocationList, getDegreeList } from 'helpers/jobPayloadFormatter'
 
 /* Vendors */
 import { useForm } from 'react-hook-form'
@@ -63,9 +61,10 @@ const EditEducationModal = ({
 }: EditEducationModalProps) => {
   const dispatch = useDispatch()
 
-  const degreeOptions = getDegreeOptions(config)
+  // const degreeOptions = getDegreeOptions(config)
   const countryOptions = getCountryOptions(config)
   const locList = getLocationList(config)
+  const degreeList = getDegreeList(config)
 
   const [school, setSchool] = useState('')
   const [degreeKey, setDegreeKey] = useState(null)
@@ -127,9 +126,9 @@ const EditEducationModal = ({
       country_key: countryKey,
     }
 
-    const trimmedFieldOfStudy = fieldOfStudy.trim()
+    const trimmedFieldOfStudy = fieldOfStudy?.trim()
 
-    if (trimmedFieldOfStudy.length > 0) {
+    if (trimmedFieldOfStudy?.length > 0) {
       data["field_of_study"] = trimmedFieldOfStudy
     } 
 
@@ -138,6 +137,7 @@ const EditEducationModal = ({
       educationId: education ? education.id : null,
       educationData: data,
     }
+
     dispatch(manageUserEducationsRequest(educationPayload))
   }
 
@@ -145,12 +145,13 @@ const EditEducationModal = ({
     const trimmedSchool = school.trim()
 
     if (
-      trimmedSchool.length > 0
-      && degreeKey !== null 
-      && studyPeriodFrom !== null
-      && (isCurrentlyStudying === true || studyPeriodTo !== null)
-      && location !== null
-      && (location?.key !== "overseas" || countryKey !== null) 
+      trimmedSchool.length > 0 &&
+      degreeKey !== null &&
+      studyPeriodFrom !== null &&
+      (isCurrentlyStudying === true || studyPeriodTo !== null) &&
+      !moment(studyPeriodFrom).isAfter(studyPeriodTo) &&
+      location !== null &&
+      (location?.key !== 'overseas' || countryKey !== null)
     ) {
       setHasValidationError(false)
     } else {
@@ -160,8 +161,9 @@ const EditEducationModal = ({
 
   useEffect(() => {
     if (education) {
+      const degKey = degreeList.filter((degree) => degree.label === education.degree)[0].value
       setSchool(education.school)
-      setDegreeKey(education.degree_key)
+      setDegreeKey(degKey)
       setIsCurrentlyStudying(education.is_currently_studying)
       setStudyPeriodFrom(education.study_period_from)
       setStudyPeriodTo(education.study_period_to)
@@ -202,9 +204,9 @@ const EditEducationModal = ({
 
   return (
     <div>
-      <ModalDialog
-        open={showModal}
-        onClose={handleCloseModal}
+      <Modal
+        showModal={showModal}
+        handleModal={handleCloseModal}
         headerTitle='Education'
         firstButtonText='Cancel'
         secondButtonText='Save'
@@ -214,7 +216,6 @@ const EditEducationModal = ({
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
         fullScreen
-        maxHeight='90vh'
       >
         <div className={styles.container}>
           <div className={styles.formWrapper}>
@@ -234,8 +235,9 @@ const EditEducationModal = ({
                   className={styles.fullWidth}
                   label={requiredLabel('Education Level')}
                   value={degreeKey}
+                  defaultValue={degreeKey}
                   onChange={(e) => setDegreeKey(e.target.value)}
-                  options={degreeOptions}
+                  options={degreeList}
                 />
               </div>
               <div className={styles.field}>
@@ -339,7 +341,7 @@ const EditEducationModal = ({
             </div>
           </div>
         </div>
-      </ModalDialog>
+      </Modal>
     </div>
   )
 }

@@ -1143,6 +1143,14 @@ const appendGeneralQueryPattern = () => {
   return 'job-search'
 }
 
+const getJobTypeList = (config) => {
+  return config?.inputs.job_types.map((jobType) => ({
+    ...jobType,
+    label: jobType.value,
+    value: jobType.key
+  }))
+}
+
 const getLocationList = (config) => {
   if (!config) return []
 
@@ -1301,7 +1309,13 @@ const getApplyJobLink = (job, user, accessToken = null) => {
     }
 
     if (job?.external_apply_url) {
-      return job?.external_apply_url
+      let externalApplyUrl = job?.external_apply_url
+
+      if (externalApplyUrl !== '' && externalApplyUrl !== null && !/^(f|ht)tps?:\/\//i.test(externalApplyUrl)) {
+        externalApplyUrl = 'https://' + externalApplyUrl
+      }
+
+      return externalApplyUrl
     }
 
     return applyJobUrl
@@ -1357,6 +1371,7 @@ export {
   SEOJobSearchMetaBuilder,
   getPredefinedParamsFromUrl,
   formatLocationConfig,
+  getJobTypeList,
   getLocationList,
   getNoticePeriodList,
   getSmsCountryList,

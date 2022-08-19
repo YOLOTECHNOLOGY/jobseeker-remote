@@ -22,6 +22,7 @@ import {
   uploadUserResumeFailed
 } from 'store/actions/users/uploadUserResume'
 import { applyJobService } from 'store/services/jobs/applyJob'
+import { addExternalJobClickService } from 'store/services/jobs/addExternalJobClick'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { checkErrorCode } from 'helpers/errorHandlers'
 
@@ -39,7 +40,8 @@ function* quickApplyJobReq(action) {
       first_message,
       resume,
       jobId,
-      jobUrl
+      jobUrl,
+      externalApplyUrl
     } = action.payload
 
     // Register jobseeker
@@ -103,68 +105,30 @@ function* quickApplyJobReq(action) {
       }
 
       try {
-        const applyJobResponse = yield call(applyJobService, jobId, applyJobPayload)
+        // If external apply exists redirect jobseeker to external apply url (No application will be created)
+        if (externalApplyUrl) {
+          yield call(addExternalJobClickService, jobId)
+          
+          yield window.open(externalApplyUrl)
 
-        if (applyJobResponse) {
-          const { job_categories, company_industry } = applyJobResponse.data.data
+          yield window.location.reload()
+        } else {
+          const applyJobResponse = yield call(applyJobService, jobId, applyJobPayload)
 
-          // Send Google event
-          const IT_job_categories = [
-            'IT - Hardware',
-            'IT - Network/Sys/DB Admin',
-            'IT - Software Engineering',
-            'Sales - Eng/Tech/IT',
-            'Tech & Helpdesk Support'
-          ]
+          if (applyJobResponse) {
+            const { job_categories, company_industry } = applyJobResponse.data.data
 
-          const finance_categories = [
-            'Audit & Taxation',
-            'Banking/Financial',
-            'Corporate Finance/Investment',
-            'Sales - Insurance/Financial Services',
-            'General/Cost Accounting'
-          ]
+            yield put(quickApplyJobSuccess(applyJobResponse.data.data))
 
-          if (window !== 'undefined' && window.gtag) {
-            // job application success tracker
-            window.gtag('event', 'conversion', {
-              send_to: 'AW-844310282/OLR1CNOj7aoBEIrOzJID'
-            })
+            sendGoogleEvent(job_categories, company_industry)
 
-            // if job_categories includes IT jobs or industry is IT, send marketing tracker
-            if (
-              company_industry.indexOf('Information Technology') !== -1 ||
-              job_categories.some((job) => IT_job_categories.indexOf(job) !== -1)
-            ) {
-              // IT job application tracker
-              window.gtag('event', 'conversion', {
-                send_to: 'AW-844310282/13DTCOHj_tIBEIrOzJID'
-              })
+            if (window !== 'undefined' && window.fbq) {
+              yield fbq.event('Application success', { source: 'quick_apply' })
             }
 
-            // if job_categories includes finance jobs or industry is finance, send marketing tracker
-            if (
-              company_industry.indexOf('Accounting & Finance') !== -1 ||
-              company_industry.indexOf('Financial Services') !== -1 ||
-              job_categories.some((job) => finance_categories.indexOf(job) !== -1)
-            ) {
-              // IT job application tracker
-              window.gtag('event', 'conversion', {
-                send_to: 'AW-844310282/7ufFCPuXsfEBEIrOzJID'
-              })
-            }
+            yield put(push(`${jobUrl}/apply/success`))
           }
         }
-
-        yield put(quickApplyJobSuccess(applyJobResponse.data.data))
-
-        if (window !== 'undefined' && window.fbq) {
-          yield fbq.event('Application success', { source: 'quick_apply' })
-        }
-
-        const applySuccessUrl = `${jobUrl}/apply/success`
-
-        yield put(push(applySuccessUrl))
       } catch (error) {
         const isServerError = checkErrorCode(error)
         if (isServerError) {
@@ -216,6 +180,55 @@ function* uploadResumeSaga(resume) {
       )
     } else {
       yield put(uploadUserResumeFailed(error.response.data))
+    }
+  }
+}
+
+function sendGoogleEvent(job_categories, company_industry) {
+  // Send Google event
+  const IT_job_categories = [
+    'IT - Hardware',
+    'IT - Network/Sys/DB Admin',
+    'IT - Software Engineering',
+    'Sales - Eng/Tech/IT',
+    'Tech & Helpdesk Support'
+  ]
+
+  const finance_categories = [
+    'Audit & Taxation',
+    'Banking/Financial',
+    'Corporate Finance/Investment',
+    'Sales - Insurance/Financial Services',
+    'General/Cost Accounting'
+  ]
+
+  if (window !== 'undefined' && window.gtag) {
+    // job application success tracker
+    window.gtag('event', 'conversion', {
+      send_to: 'AW-844310282/OLR1CNOj7aoBEIrOzJID'
+    })
+
+    // if job_categories includes IT jobs or industry is IT, send marketing tracker
+    if (
+      company_industry.indexOf('Information Technology') !== -1 ||
+      job_categories.some((job) => IT_job_categories.indexOf(job) !== -1)
+    ) {
+      // IT job application tracker
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-844310282/13DTCOHj_tIBEIrOzJID'
+      })
+    }
+
+    // if job_categories includes finance jobs or industry is finance, send marketing tracker
+    if (
+      company_industry.indexOf('Accounting & Finance') !== -1 ||
+      company_industry.indexOf('Financial Services') !== -1 ||
+      job_categories.some((job) => finance_categories.indexOf(job) !== -1)
+    ) {
+      // IT job application tracker
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-844310282/7ufFCPuXsfEBEIrOzJID'
+      })
     }
   }
 }
