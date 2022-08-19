@@ -109,7 +109,7 @@ function* quickApplyJobReq(action) {
         if (externalApplyUrl) {
           yield call(addExternalJobClickService, jobId)
           
-          yield window.open(externalApplyUrl)
+          yield window.open(externalApplyUrl, "_blank")
 
           yield window.location.reload()
         } else {
