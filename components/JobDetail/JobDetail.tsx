@@ -342,7 +342,7 @@ const JobDetail = ({
 
                 {(!isCategoryApplied || !isCategorySaved) && (
                   <Text textStyle='sm' textColor='darkgrey' className={styles.JobDetailPostedAt}>
-                    Applied on {selectedJob?.refreshed_at}
+                    Posted on {selectedJob?.refreshed_at}
                   </Text>
                 )}
               </div>
