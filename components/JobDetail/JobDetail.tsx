@@ -73,6 +73,7 @@ interface IJobDetailProps {
   applicationHistory?: any
   isPostingSaveJob?: boolean
   config: any
+  applicationUpdatedAt?: string
 }
 
 const JobDetail = ({
@@ -87,7 +88,8 @@ const JobDetail = ({
   handlePostSaveJob,
   handleDeleteSavedJob,
   applicationHistory,
-  config
+  config,
+  applicationUpdatedAt
 }: IJobDetailProps) => {
   const router = useRouter()
   const detailHeaderRef = useRef(null)
@@ -340,11 +342,9 @@ const JobDetail = ({
                   </Text>
                 )}
 
-                {(!isCategoryApplied || !isCategorySaved) && (
-                  <Text textStyle='sm' textColor='darkgrey' className={styles.JobDetailPostedAt}>
-                    Posted on {selectedJob?.refreshed_at}
-                  </Text>
-                )}
+                <Text textStyle='sm' textColor='darkgrey' className={styles.JobDetailPostedAt}>
+                  {applicationUpdatedAt ? `Last updated on ${applicationUpdatedAt}` : `Posted on ${selectedJob?.refreshed_at}`}
+                </Text>
               </div>
             </div>
           </div>

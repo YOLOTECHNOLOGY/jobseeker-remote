@@ -109,6 +109,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
   const [totalPages, setTotalPages] = useState(null)
   const [totalNum, setTotalNum] = useState(0)
   const [applicationHistories, setApplicationHistories] = useState([])
+  const [applicationUpdatedAt, setApplicationUpdatedAt] = useState(null)
   const [withdrawApplicationResult, setWithdrawApplicationResult] = useState(false)
 
   const [isShowModalShare, setIsShowModalShare] = useState(false)
@@ -177,6 +178,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
   useEffect(() => {
     if (appliedJobDetailResponse) {
       setSelectedJob(appliedJobDetailResponse?.job)
+      setApplicationUpdatedAt(appliedJobDetailResponse?.updated_at)
       setApplicationHistories(appliedJobDetailResponse?.application_histories)
     }
   }, [appliedJobDetailResponse])
@@ -409,6 +411,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                     selectedId={selectedJobId}
                     status={jobs.job.status_key}
                     applicationStatus={jobs.status}
+                    applicationUpdatedAt={jobs.updated_at}
                     handleSelectedId={() =>
                       handleSelectedJobId(jobs.job.id, jobs.job.job_url, jobs.job.status_key)
                     }
@@ -437,6 +440,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                 isSticky={isSticky}
                 category={category}
                 applicationHistory={applicationHistories}
+                applicationUpdatedAt={applicationUpdatedAt}
                 setIsShowModalShare={setIsShowModalShare}
                 setIsShowModalWithdrawApplication={setIsShowModalWithdrawApplication}
                 setIsShowReportJob={setIsShowReportJob}
