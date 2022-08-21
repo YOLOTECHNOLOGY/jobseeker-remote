@@ -108,7 +108,7 @@ const JobCard = ({
             <span>This job is no longer hiring</span>
           </Text>
         )}
-        <Text textStyle='sm'>Applied on {postedAt}</Text>
+        <Text textStyle='sm'>Posted on {postedAt}</Text>
       </div>
     </div>
   )
