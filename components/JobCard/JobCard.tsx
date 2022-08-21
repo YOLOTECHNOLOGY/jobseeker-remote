@@ -31,6 +31,7 @@ type JobCardProps = {
   selectedId?: number
   handleSelectedId?: Function
   applicationStatus?: string
+  applicationUpdatedAt?: string
 }
 
 const JobCard = ({
@@ -47,7 +48,8 @@ const JobCard = ({
   status,
   handleSelectedId,
   selectedId,
-  applicationStatus
+  applicationStatus,
+  applicationUpdatedAt
 }: JobCardProps) => {
   const cx = classNames.bind(styles)
   const isSelectedClass = cx({ isSelected: selectedId == id })
@@ -108,7 +110,8 @@ const JobCard = ({
             <span>This job is no longer hiring</span>
           </Text>
         )}
-        <Text textStyle='sm'>Posted on {postedAt}</Text>
+
+        <Text textStyle='sm'>{applicationUpdatedAt ? `Last updated on ${applicationUpdatedAt}` : `Posted on ${postedAt}`}</Text>
       </div>
     </div>
   )
