@@ -209,7 +209,7 @@ const EditWorkExperienceModal = ({
        is_currently_work_here: isCurrentJob,
        job_category_ids:
          jobFunction?.length > 0 ? getJobCategoryIds(config, jobFunction).join(',') : '',
-       salary: Number(salary),
+       salary: salary ? Number(salary) : null,
        working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
        working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
        description: description ? description : '',
@@ -220,7 +220,7 @@ const EditWorkExperienceModal = ({
        isUpdate: data ? true : false,
        workExperienceId: data ? data.id : null,
        workExperienceData: workExperienceData,
-     }
+     }   
      dispatch(manageUserWorkExperiencesRequest(workExperiencesPayload))
   }
 
