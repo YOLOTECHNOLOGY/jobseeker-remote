@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
@@ -59,6 +59,7 @@ import { flat, unslugify, getCurrentMonthYear } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { getCookie } from 'helpers/cookies'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import configuredAxios from 'helpers/configuredAxios'
 
 interface JobSearchPageProps {
   seoMetaTitle: string
@@ -100,11 +101,7 @@ const renderPopularSearch = () => {
           Accounting jobs
         </Text>
       </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/sales-marketing-jobs`}
-        title='Sales jobs'
-      >
+      <Link className={styles.link} to={`${jobsPageLink}/sales-marketing-jobs`} title='Sales jobs'>
         <Text textStyle='base' textColor='darkgrey'>
           Sales jobs
         </Text>
@@ -136,38 +133,22 @@ const renderPopularSearch = () => {
           Customer Service jobs
         </Text>
       </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/hr-recruitment-jobs`}
-        title='HR jobs'
-      >
+      <Link className={styles.link} to={`${jobsPageLink}/hr-recruitment-jobs`} title='HR jobs'>
         <Text textStyle='base' textColor='darkgrey'>
           HR jobs
         </Text>
       </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/bpo-team-lead-jobs`}
-        title='BPO Team Lead'
-      >
+      <Link className={styles.link} to={`${jobsPageLink}/bpo-team-lead-jobs`} title='BPO Team Lead'>
         <Text textStyle='base' textColor='darkgrey'>
           BPO Team Lead
         </Text>
       </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/homebased-jobs`}
-        title='WFH'
-      >
+      <Link className={styles.link} to={`${jobsPageLink}/homebased-jobs`} title='WFH'>
         <Text textStyle='base' textColor='darkgrey'>
           WFH
         </Text>
       </Link>
-      <Link
-        className={styles.link}
-        to={`${jobsPageLink}/manager-jobs`}
-        title='Manager'
-      >
+      <Link className={styles.link} to={`${jobsPageLink}/manager-jobs`} title='Manager'>
         <Text textStyle='base' textColor='darkgrey'>
           Manager
         </Text>
@@ -190,35 +171,39 @@ const useJobAlert = () => {
   const dispatch = useDispatch()
   // const filterJobPayload = useSelector((store: any) => store.job.jobList.payload)
 
-  const showJobAlert = useCallback(filterJobPayload => {
-    const jobAlertData = {
-
-      keyword: filterJobPayload?.query ? filterJobPayload.query : '',
-      location_values: filterJobPayload?.location ? filterJobPayload.location : 'all',
-      job_type_values: filterJobPayload?.jobType ? filterJobPayload.jobType : 'all',
-      salary_range_values: filterJobPayload?.salary ? filterJobPayload.salary : 'all',
-      job_category_values: filterJobPayload?.category ? filterJobPayload.category : 'all',
-      industry_values: filterJobPayload?.industry ? filterJobPayload.industry : 'all',
-      xp_lvl_values: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
-      degree_values: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',
-      is_company_verified: 'all',
-      frequency_id: 1,
-    }
-    const createJobAlertPayload = {
-      jobAlertData,
-      accessToken,
-      user_id: userCookie.id
-    }
-    dispatch(createJobAlertRequest(createJobAlertPayload))
-
-  }, [userCookie])
+  const showJobAlert = useCallback(
+    (filterJobPayload) => {
+      const jobAlertData = {
+        keyword: filterJobPayload?.query ? filterJobPayload.query : '',
+        location_values: filterJobPayload?.location ? filterJobPayload.location : 'all',
+        job_type_values: filterJobPayload?.jobType ? filterJobPayload.jobType : 'all',
+        salary_range_values: filterJobPayload?.salary ? filterJobPayload.salary : 'all',
+        job_category_values: filterJobPayload?.category ? filterJobPayload.category : 'all',
+        industry_values: filterJobPayload?.industry ? filterJobPayload.industry : 'all',
+        xp_lvl_values: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
+        degree_values: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',
+        is_company_verified: 'all',
+        frequency_id: 1
+      }
+      const createJobAlertPayload = {
+        jobAlertData,
+        accessToken,
+        user_id: userCookie.id
+      }
+      dispatch(createJobAlertRequest(createJobAlertPayload))
+    },
+    [userCookie]
+  )
   const router = useRouter()
 
-  const setLastSearch = useCallback(search => {
-    if (!isLogin) {
-      sessionStorage.setItem('search-job-last-keyword', search)
-    }
-  }, [isLogin])
+  const setLastSearch = useCallback(
+    (search) => {
+      if (!isLogin) {
+        sessionStorage.setItem('search-job-last-keyword', search)
+      }
+    },
+    [isLogin]
+  )
 
   useEffect(() => {
     if (!isLogin) {
@@ -261,6 +246,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const isMobile = width < 768 ? true : false
   const userCookie = getCookie('user') || null
 
+  // No need to request data for the first time
+  const didMountRef = useRef(false)
   const [clientDefaultValues, setClientDefaultValues] = useState(defaultValues || {})
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.location)
@@ -301,72 +288,16 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
 
-  const {
-    searchQuery,
-    predefinedQuery,
-    predefinedLocation,
-    matchedLocation,
-    matchedConfigFromUrl,
-    filterCount
-  } = checkFilterMatch(router.query, config, isMobile)
+  const { searchQuery, predefinedQuery, predefinedLocation, filterCount } = checkFilterMatch(
+    router.query,
+    config,
+    isMobile
+  )
   const [selectedPage, setSelectedPage] = useState(defaultPage)
 
+  // TODO
   useEffect(() => {
-    const { page, industry, workExperience, category, jobType, salary, location, qualification } =
-      router.query
-
-    if (!firstRender) setDisplayQuickLinks(false)
-
-    const formatLocationConfig = (locationList) => {
-      const locationConfig = locationList?.map((region) => region.locations)
-      return locationConfig
-    }
-
-    const industryList = config.inputs.industry_lists
-    const expLvlList = config.inputs.xp_lvls
-    const eduLevelList = config.filters.educations
-    const locationList = config.inputs.location_lists
-    const formattedLocationList = flat(formatLocationConfig(locationList))
-
-    let payload = {
-      query: searchValue,
-      location: location
-        ? mapSeoValueToGetValue((location as string).split(','), formattedLocationList, false, true)
-        : null,
-      category: category
-        ? mapSeoValueToGetValue((category as string).split(','), catList, true)
-        : null,
-      salary: salary ? mapSeoValueToGetValue((salary as string).split(','), salaryRangeList) : null,
-      jobType: jobType ? mapSeoValueToGetValue((jobType as string).split(','), jobTypeList) : null,
-      industry: industry
-        ? mapSeoValueToGetValue((industry as string).split(','), industryList)
-        : null,
-      qualification: qualification
-        ? mapSeoValueToGetValue((qualification as string).split(','), eduLevelList)
-        : null,
-      workExperience: workExperience
-        ? mapSeoValueToGetValue((workExperience as string).split(','), expLvlList)
-        : null,
-      sort,
-      page: page ? Number(page) : 1
-    }
-
-    for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
-      payload = {
-        ...payload,
-        [key]: payload[key] ? (payload[key] += value[0].value) : value[0].value
-      }
-    }
-    for (const [key, value] of Object.entries(matchedLocation)) {
-      payload = {
-        ...payload,
-        [key]:
-          payload[key] && payload[key] !== value[0].value
-            ? (payload[key] += value[0].value)
-            : value[0].value
-      }
-    }
-
+    const { industry, workExperience, category, jobType, salary, qualification } = router.query
     const hasActiveFilters = !!(
       industry ||
       workExperience ||
@@ -377,11 +308,17 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       predefinedLocation ||
       predefinedQuery
     )
-
-    dispatch(fetchJobsListRequest(payload, accessToken))
     setHasMoreFilters(hasActiveFilters)
-    setIsCategoryReset(false)
-    setMoreFilterReset(false)
+    if (!didMountRef.current) {
+      didMountRef.current = true
+      return
+    }
+    if (!firstRender) setDisplayQuickLinks(false)
+    ;(async () => {
+      dispatch(fetchJobsListRequest(await initPagePayLoad(router.query, config), accessToken))
+      setIsCategoryReset(false)
+      setMoreFilterReset(false)
+    })()
   }, [router.query])
 
   useEffect(() => {
@@ -432,11 +369,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       query: queryObject
     }
     setLastSearch(JSON.stringify({ filterJobPayload, searchParams: pushObject }))
-    router.push(
-      pushObject,
-      undefined,
-      { shallow: true }
-    )
+    router.push(pushObject, undefined, { shallow: true })
   }
 
   const onKeywordSearch = (val) => {
@@ -729,7 +662,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     dispatch(deleteSaveJobRequest(deleteJobPayload))
   }
 
-
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonical} />
@@ -792,11 +724,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                 Filters
               </Text>
               {filterCount > 0 && (
-                <Text
-                  textStyle='base'
-                  textColor='white'
-                  className={styles.searchFilterCount}
-                >
+                <Text textStyle='base' textColor='white' className={styles.searchFilterCount}>
                   {filterCount}
                 </Text>
               )}
@@ -985,14 +913,135 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   )
 }
 
+const initPagePayLoad = async (query, config = null) => {
+  const { page, industry, workExperience, category, jobType, salary, location, qualification } =
+    query
+  const axios = configuredAxios('config', 'public')
+  if (!config) {
+    const { data } = await axios.get(`/list`)
+    config = data.data
+  }
+
+  const formatLocationConfig = (locationList) => {
+    const locationConfig = locationList?.map((region) => region.locations)
+    return locationConfig
+  }
+  const industryList = config.inputs.industry_lists
+  const expLvlList = config.inputs.xp_lvls
+  const eduLevelList = config.filters.educations
+  const locationList = config.inputs.location_lists
+  const formattedLocationList = flat(formatLocationConfig(locationList))
+  const catList = config && config.inputs && config.inputs.job_category_lists
+  const jobTypeList = config.inputs.job_types
+  const salaryRangeList = config.filters.salary_range_filters
+
+  // query parameters
+  const queryJobType: any = query?.jobType
+  const querySalary: any = query?.salary
+  const queryQualification: any = query?.qualification
+  const queryLocation: any = query?.location
+  const queryIndustry: any = query?.industry
+  const queryWorkExp: any = query?.workExperience
+  const queryCategory: any = query?.category
+
+  const { searchQuery, matchedLocation, matchedConfigFromUrl } = checkFilterMatch(query, config)
+
+  const defaultValues: any = {
+    urlQuery: searchQuery,
+    // if sort param exist, follow sort defined in param, otherwise if search exist, sort default to 2 'Relevance'
+    sort: query?.sort ? query?.sort : searchQuery ? 2 : 1,
+    jobType: queryJobType?.split(',') || null,
+    salary: querySalary?.split(',') || null,
+    qualification: queryQualification?.split(',') || null,
+    location: queryLocation?.split(',') || null,
+    industry: queryIndustry?.split(',') || null,
+    workExperience: queryWorkExp?.split(',') || null,
+    category: queryCategory?.split(',') || null
+  }
+
+  for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
+    defaultValues[key] = [value[0]['seo-value']]
+  }
+  for (const [key, value] of Object.entries(matchedLocation)) {
+    defaultValues[key] = value[0]
+    // to prevent cases where /jobs-hiring/makati-jobs, whereby the query & location is populated with values
+    if (defaultValues.urlQuery === value[0]['seo_value']) {
+      defaultValues.urlQuery = ''
+    }
+  }
+
+  if (defaultValues.category) {
+    const defaultCategories = defaultValues.category
+    const initialListOptions = catList.map((data) => {
+      const newSubList = data.sub_list.map((subData) => ({
+        ...subData,
+        isChecked:
+          defaultCategories.includes(subData['seo-value']) ||
+          defaultCategories.includes(data['seo-value'])
+      }))
+      const newList = {
+        ...data,
+        isChecked: defaultCategories.includes(data['seo-value']),
+        sub_list: newSubList
+      }
+      return newList
+    })
+    defaultValues.categoryList = initialListOptions
+  }
+
+  // sanitise searchQuery
+  defaultValues.urlQuery = defaultValues.urlQuery ? unslugify(searchQuery).replace('+', '-') : ''
+  const sort = defaultValues?.sort
+
+  let payload = {
+    query: defaultValues?.urlQuery,
+    location: location
+      ? mapSeoValueToGetValue((location as string).split(','), formattedLocationList, false, true)
+      : null,
+    category: category
+      ? mapSeoValueToGetValue((category as string).split(','), catList, true)
+      : null,
+    salary: salary ? mapSeoValueToGetValue((salary as string).split(','), salaryRangeList) : null,
+    jobType: jobType ? mapSeoValueToGetValue((jobType as string).split(','), jobTypeList) : null,
+    industry: industry
+      ? mapSeoValueToGetValue((industry as string).split(','), industryList)
+      : null,
+    qualification: qualification
+      ? mapSeoValueToGetValue((qualification as string).split(','), eduLevelList)
+      : null,
+    workExperience: workExperience
+      ? mapSeoValueToGetValue((workExperience as string).split(','), expLvlList)
+      : null,
+    sort,
+    page: page ? Number(page) : 1
+  }
+
+  for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
+    payload = {
+      ...payload,
+      [key]: payload[key] ? (payload[key] += value[0].value) : value[0].value
+    }
+  }
+  for (const [key, value] of Object.entries(matchedLocation)) {
+    payload = {
+      ...payload,
+      [key]:
+        payload[key] && payload[key] !== value[0].value
+          ? (payload[key] += value[0].value)
+          : value[0].value
+    }
+  }
+  return payload
+}
+
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req, resolvedUrl }) => {
       const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
 
-
       const { keyword, page } = query
       // store actions
+      store.dispatch(fetchJobsListRequest(await initPagePayLoad(query), accessToken))
       store.dispatch(fetchConfigRequest())
       store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
       store.dispatch(END)
@@ -1061,7 +1110,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
             ...subData,
             isChecked:
               defaultCategories.includes(subData['seo-value']) ||
-              defaultCategories.includes(data['seo-value']),
+              defaultCategories.includes(data['seo-value'])
           }))
           const newList = {
             ...data,
@@ -1073,8 +1122,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
         defaultValues.categoryList = initialListOptions
       }
 
-      // sanitise searchQuery 
-      defaultValues.urlQuery = defaultValues.urlQuery ? unslugify(searchQuery).replace('+', '-') : ''
+      // sanitise searchQuery
+      defaultValues.urlQuery = defaultValues.urlQuery
+        ? unslugify(searchQuery).replace('+', '-')
+        : ''
 
       /* Handle SEO Meta Tags*/
       const { month, year } = getCurrentMonthYear()
