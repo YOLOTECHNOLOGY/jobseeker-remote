@@ -24,3 +24,11 @@ export const authPathToOldProject = (accessToken, redirectUrl) => {
 
   return `${redirectUrl}&isAppRedirectModalClosed=${isAppRedirectModalClosed}`
 }
+
+export const authPathToNewProject = (accessToken, redirectUrl) => {
+  const authToken = accessToken ? accessToken : getCookie('accessToken')
+  const newProjectUrl = `${process.env.NEW_PROJECT_URL}/new-jobseeker-login-redirect`
+  return authToken
+    ? `${newProjectUrl}?token=${authToken}&redirectUrl=${redirectUrl}`
+    : `${newProjectUrl}?redirectUrl=${redirectUrl}`
+}
