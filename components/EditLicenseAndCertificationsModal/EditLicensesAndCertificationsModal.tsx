@@ -10,7 +10,7 @@ import classNames from 'classnames/bind'
 import Text from 'components/Text'
 import Switch from '@mui/material/Switch'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import ModalDialog from 'components/ModalDialog'
+import Modal from 'components/Modal'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 import MaterialTextField from 'components/MaterialTextField'
 
@@ -176,140 +176,135 @@ const EditLicensesAndCertificationsModal = ({
     credentialUrl
   ])
 
-	const editLicensesAndCertificationsModal = (
-		<div className={styles.container}>
-			<div className={styles.formWrapper}>
-				<div id='form' className={styles.form}>
-					<div className={styles.field}>
-						<MaterialTextField
-							className={styles.fullWidth}
-							label={requiredLabel('Title of licenses/certification')}
-							size='small'
-							variant='outlined'
-							value={licenseCertificationTitle}
-							defaultValue={licenseCertificationTitle}
-							onChange={(e) => setLicenseCertificationTitle(e.target.value)}
-						/>
-					</div>
-					<div className={styles.field}>
-						<MaterialTextField
-							className={styles.fullWidth}
-							label={requiredLabel('Issuing organisation')}
-							variant='outlined'
-							value={issuingOrganisation}
-							defaultValue={issuingOrganisation}
-							onChange={(e) => setIssuingOrganisation(e.target.value)}
-						/>
-					</div>
-					<div className={styles.field}>
-						<div>
-							<Text bold textStyle='lg'>
-								License/certification validity<span className={styles.fieldRequired}>*</span>
-							</Text>
-						</div>
-						<div>
-							<FormControlLabel
-								control={
-									<Switch
-										checked={isLicenseCertificationPermanent}
-										onChange={() => setIsLicenseCertificationPermanent(!isLicenseCertificationPermanent)}
-										name='isLicenseCertificationPermanent'
-									/>
-								}
-								label={
-									<Text textStyle='lg'>
-										This license or certificate doesn't expire
-									</Text>
-								}
-							/>
-						</div>
-					</div>
-					<div className={styles.field}>
-						<div className={classNames(styles.fieldDate)}>
-							<div className={styles.fieldDateItem}>
-								<MaterialDatePicker
-									label='Issue date'
-									views={['year', 'month']}
-									inputFormat='MMM yyyy'
-									value={issueDate}
-									onDateChange={(value) => {
-											setIssueDate(value)
-									}}
-								/>
-							</div>
-						</div>
-					</div>
-					{!isLicenseCertificationPermanent && (
-						<div className={styles.field}>
-							<div className={classNames(styles.fieldDate)}>
-								<div className={styles.fieldDateItem}>
-									<MaterialDatePicker
-										label='Expiry date'
-										views={['year', 'month']}
-										inputFormat='MMM yyyy'
-										value={expiryDate}
-										onDateChange={(value) => {
-												setExpiryDate(value)
-										}}
-									/>
-									{hasErrorOnExpiryDate && (
-										<Text textColor='red' textStyle='sm'>
-											Issue date must be earlier than expiry date.
-										</Text>
-									)}
-								</div>
-							</div>
-						</div>
-					)}
-					<div className={styles.field}>
-						<MaterialTextField
-							className={styles.fullWidth}
-							label='Credential ID'
-							variant='outlined'
-							value={credentialId}
-							defaultValue={credentialId}
-							onChange={(e) => setCredentialId(e.target.value)}
-						/>
-					</div>
-					<div className={styles.field}>
-						<MaterialTextField
-							className={styles.fullWidth}
-							label='Credential URL'
-							variant='outlined'
-							value={credentialUrl}
-							defaultValue={credentialUrl}
-							onClick={() => setCredentialUrl('https://')}
-							onChange={(e) => setCredentialUrl(e.target.value)}
-						/>
-					</div>
-					{credentialUrl && (
-						errorText(urlValidation(credentialUrl))
-					)}
-				</div>
-			</div>
-		</div>
-	)
+  const editLicensesAndCertificationsModal = (
+    <div className={styles.container}>
+      <div className={styles.formWrapper}>
+        <div id='form' className={styles.form}>
+          <div className={styles.field}>
+            <MaterialTextField
+              className={styles.fullWidth}
+              label={requiredLabel('Title of licenses/certification')}
+              size='small'
+              variant='outlined'
+              value={licenseCertificationTitle}
+              defaultValue={licenseCertificationTitle}
+              onChange={(e) => setLicenseCertificationTitle(e.target.value)}
+            />
+          </div>
+          <div className={styles.field}>
+            <MaterialTextField
+              className={styles.fullWidth}
+              label={requiredLabel('Issuing organisation')}
+              variant='outlined'
+              value={issuingOrganisation}
+              defaultValue={issuingOrganisation}
+              onChange={(e) => setIssuingOrganisation(e.target.value)}
+            />
+          </div>
+          <div className={styles.field}>
+            <div>
+              <Text bold textStyle='lg'>
+                License/certification validity<span className={styles.fieldRequired}>*</span>
+              </Text>
+            </div>
+            <div>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={isLicenseCertificationPermanent}
+                    onChange={() =>
+                      setIsLicenseCertificationPermanent(!isLicenseCertificationPermanent)
+                    }
+                    name='isLicenseCertificationPermanent'
+                  />
+                }
+                label={<Text textStyle='lg'>This license or certificate doesn't expire</Text>}
+              />
+            </div>
+          </div>
+          <div className={styles.field}>
+            <div className={classNames(styles.fieldDate)}>
+              <div className={styles.fieldDateItem}>
+                <MaterialDatePicker
+                  label='Issue date'
+                  views={['year', 'month']}
+                  inputFormat='MMM yyyy'
+                  value={issueDate}
+                  onDateChange={(value) => {
+                    setIssueDate(value)
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          {!isLicenseCertificationPermanent && (
+            <div className={styles.field}>
+              <div className={classNames(styles.fieldDate)}>
+                <div className={styles.fieldDateItem}>
+                  <MaterialDatePicker
+                    label='Expiry date'
+                    views={['year', 'month']}
+                    inputFormat='MMM yyyy'
+                    value={expiryDate}
+                    onDateChange={(value) => {
+                      setExpiryDate(value)
+                    }}
+                  />
+                  {hasErrorOnExpiryDate && (
+                    <Text textColor='red' textStyle='sm'>
+                      Issue date must be earlier than expiry date.
+                    </Text>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+          <div className={styles.field}>
+            <MaterialTextField
+              className={styles.fullWidth}
+              label='Credential ID'
+              variant='outlined'
+              value={credentialId}
+              defaultValue={credentialId}
+              onChange={(e) => setCredentialId(e.target.value)}
+            />
+          </div>
+          <div className={styles.field}>
+            <MaterialTextField
+              className={styles.fullWidth}
+              label='Credential URL'
+              variant='outlined'
+              value={credentialUrl}
+              defaultValue={credentialUrl}
+              onClick={() => setCredentialUrl('https://')}
+              onChange={(e) => setCredentialUrl(e.target.value)}
+            />
+          </div>
+          {credentialUrl && errorText(urlValidation(credentialUrl))}
+        </div>
+      </div>
+    </div>
+  )
 
-	return (
-		<div>
-			<ModalDialog
-				open={showModal}
-				onClose={handleCloseModal}
-				headerTitle='Licenses And Certifications'
-				firstButtonText='Cancel'
-				secondButtonText='Save'
-				isSecondButtonLoading={isUpdating}
-				isSecondButtonDisabled={hasValidationError}
-				firstButtonIsClose
-				handleFirstButton={handleCloseModal}
-				handleSecondButton={handleSubmit(onSubmit)}
-				fullScreen
-				maxHeight='90vh'
-			>
-				{editLicensesAndCertificationsModal}
-			</ModalDialog>
-		</div>
-	)
+  return (
+    <div>
+      <Modal
+        showModal={showModal}
+        handleModal={handleCloseModal}
+        headerTitle='Licenses And Certifications'
+        firstButtonText='Cancel'
+        secondButtonText='Save'
+        isSecondButtonLoading={isUpdating}
+        isSecondButtonDisabled={hasValidationError}
+        firstButtonIsClose
+        handleFirstButton={handleCloseModal}
+        handleSecondButton={handleSubmit(onSubmit)}
+        fullScreen
+      >
+        {editLicensesAndCertificationsModal}
+      </Modal>
+    </div>
+  )
 }
 
 export default EditLicensesAndCertificationsModal

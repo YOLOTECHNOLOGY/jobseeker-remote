@@ -20,11 +20,11 @@ import styles from './QuickApplyModal.module.scss'
 /* Redux Actions */
 import { quickApplyJobRequest } from 'store/actions/jobs/quickApplyJob'
 
-
 /* Helpers*/
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 import Checkbox from '@mui/material/Checkbox'
 import { handleNumericInput } from 'helpers/handleInput'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 interface QuickApplyModalProps {
   jobDetails: any
   modalShow?: boolean
@@ -39,6 +39,8 @@ const QuickApplyModal = ({
   config,
 }: QuickApplyModalProps) => {
   const dispatch = useDispatch()
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
   const {
     register,
     handleSubmit,
@@ -122,7 +124,8 @@ const QuickApplyModal = ({
       first_message: firstMessage,
       jobId: jobDetails.id,
       jobUrl: jobDetails.job_url,
-      externalApplyUrl: externalApplyUrl
+      externalApplyUrl: externalApplyUrl,
+      source: isMobile ? 'mobile_web' : 'web'
     }
 
     clearErrors()
