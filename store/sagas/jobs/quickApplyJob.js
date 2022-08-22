@@ -41,7 +41,8 @@ function* quickApplyJobReq(action) {
       resume,
       jobId,
       jobUrl,
-      externalApplyUrl
+      externalApplyUrl,
+      source
     } = action.payload
 
     // Register jobseeker
@@ -53,7 +54,7 @@ function* quickApplyJobReq(action) {
       terms_and_condition,
       contact_number,
       is_subscribe,
-      source: 'web',
+      source,
       country_key: process.env.COUNTRY_KEY,
       ...(yield* getUtmCampaignData())
     }
@@ -108,7 +109,13 @@ function* quickApplyJobReq(action) {
         // If external apply exists redirect jobseeker to external apply url (No application will be created)
         if (externalApplyUrl) {
           yield call(addExternalJobClickService, jobId)
-          yield put(push(externalApplyUrl))
+          
+          if (source === 'mobile_web') {
+            yield window.location.href = externalApplyUrl
+          } else {
+            yield window.open(externalApplyUrl)
+            yield window.location.reload()
+          }
         } else {
           const applyJobResponse = yield call(applyJobService, jobId, applyJobPayload)
 

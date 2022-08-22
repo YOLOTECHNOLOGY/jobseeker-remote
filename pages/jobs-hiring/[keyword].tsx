@@ -990,7 +990,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req, resolvedUrl }) => {
       const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
 
-
       const { keyword, page } = query
       // store actions
       store.dispatch(fetchConfigRequest())

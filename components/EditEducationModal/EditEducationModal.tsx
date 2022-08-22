@@ -14,10 +14,8 @@ import Switch from '@mui/material/Switch'
 import { manageUserEducationsRequest } from 'store/actions/users/manageUserEducations'
 
 /* Helpers*/
-import { getDegreeOptions, getCountryOptions } from 'helpers/optionsFormatter'
-import {
-  getLocationList
-} from 'helpers/jobPayloadFormatter'
+import { getCountryOptions } from 'helpers/optionsFormatter'
+import { getLocationList, getDegreeList } from 'helpers/jobPayloadFormatter'
 
 /* Vendors */
 import { useForm } from 'react-hook-form'
@@ -63,12 +61,13 @@ const EditEducationModal = ({
 }: EditEducationModalProps) => {
   const dispatch = useDispatch()
 
-  const degreeOptions = getDegreeOptions(config)
+  // const degreeOptions = getDegreeOptions(config)
   const countryOptions = getCountryOptions(config)
   const locList = getLocationList(config)
+  const degreeList = getDegreeList(config)
 
   const [school, setSchool] = useState('')
-  const [degreeKey, setDegreeKey] = useState(null)
+  const [degreeKey, setDegreeKey] = useState('')
   const [isCurrentlyStudying, setIsCurrentlyStudying] = useState(false)
   const [studyPeriodFrom, setStudyPeriodFrom] = useState(null)
   const [studyPeriodTo, setStudyPeriodTo] = useState(null)
@@ -96,7 +95,7 @@ const EditEducationModal = ({
 
   const handleResetForm = () => {
     setSchool('')
-    setDegreeKey(null)
+    setDegreeKey('')
     setIsCurrentlyStudying(false)
     setStudyPeriodFrom(null)
     setStudyPeriodTo(null)
@@ -127,9 +126,9 @@ const EditEducationModal = ({
       country_key: countryKey,
     }
 
-    const trimmedFieldOfStudy = fieldOfStudy.trim()
+    const trimmedFieldOfStudy = fieldOfStudy?.trim()
 
-    if (trimmedFieldOfStudy.length > 0) {
+    if (trimmedFieldOfStudy?.length > 0) {
       data["field_of_study"] = trimmedFieldOfStudy
     } 
 
@@ -138,6 +137,7 @@ const EditEducationModal = ({
       educationId: education ? education.id : null,
       educationData: data,
     }
+
     dispatch(manageUserEducationsRequest(educationPayload))
   }
 
@@ -161,8 +161,9 @@ const EditEducationModal = ({
 
   useEffect(() => {
     if (education) {
+      const degKey = degreeList.filter((degree) => degree.label === education.degree)[0].value
       setSchool(education.school)
-      setDegreeKey(education.degree_key)
+      setDegreeKey(degKey)
       setIsCurrentlyStudying(education.is_currently_studying)
       setStudyPeriodFrom(education.study_period_from)
       setStudyPeriodTo(education.study_period_to)
@@ -235,7 +236,7 @@ const EditEducationModal = ({
                   label={requiredLabel('Education Level')}
                   value={degreeKey}
                   onChange={(e) => setDegreeKey(e.target.value)}
-                  options={degreeOptions}
+                  options={degreeList}
                 />
               </div>
               <div className={styles.field}>

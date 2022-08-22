@@ -11,7 +11,7 @@ import {
   TimelineSeparator,
   TimelineConnector,
   TimelineContent,
-  TimelineDot,
+  TimelineDot
 } from '@mui/lab'
 import dynamic from 'next/dynamic'
 
@@ -51,7 +51,7 @@ import {
   ExpireIcon,
   LocationPinIcon,
   RateIcon,
-  DefaultAvatar,
+  DefaultAvatar
 } from 'images'
 
 /* Helpers */
@@ -73,6 +73,7 @@ interface IJobDetailProps {
   applicationHistory?: any
   isPostingSaveJob?: boolean
   config: any
+  applicationUpdatedAt?: string
 }
 
 const JobDetail = ({
@@ -88,10 +89,13 @@ const JobDetail = ({
   handleDeleteSavedJob,
   applicationHistory,
   config,
+  applicationUpdatedAt
 }: IJobDetailProps) => {
   const router = useRouter()
-  const detailHeaderRef = useRef(null);
-  const [detailHeaderHeight, setDetailHeaderHeight] = useState(detailHeaderRef?.current?.clientHeight || 0);
+  const detailHeaderRef = useRef(null)
+  const [detailHeaderHeight, setDetailHeaderHeight] = useState(
+    detailHeaderRef?.current?.clientHeight || 0
+  )
 
   const userCookie = getCookie('user') || null
   const authCookie = getCookie('accessToken') || null
@@ -110,8 +114,8 @@ const JobDetail = ({
   }, [selectedJob])
 
   useEffect(() => {
-    setDetailHeaderHeight(detailHeaderRef?.current?.clientHeight);
-  }, [detailHeaderHeight]);
+    setDetailHeaderHeight(detailHeaderRef?.current?.clientHeight)
+  }, [detailHeaderHeight])
 
   const handleBenefitIcon = (benefit) => {
     const Icon = `${benefit.replace(/ /g, '')}Icon`
@@ -140,12 +144,14 @@ const JobDetail = ({
 
   const handleVerifyEmailClick = async () => {
     // revalidate verify email status
-    const response = await fetchUserOwnDetailService({accessToken: authCookie})
+    const response = await fetchUserOwnDetailService({ accessToken: authCookie })
     const userDetails = response?.data?.data
     const isVerifiedEmail = userDetails?.is_email_verify
-    if (!isVerifiedEmail) { // email is not verified
-      setIsShowModal(true);
-    } else { // email is verified and user cookie is outdated
+    if (!isVerifiedEmail) {
+      // email is not verified
+      setIsShowModal(true)
+    } else {
+      // email is verified and user cookie is outdated
       const userCookie = {
         active_key: userDetails.active_key,
         id: userDetails.id,
@@ -158,7 +164,7 @@ const JobDetail = ({
         additional_info: userDetails.additional_info,
         is_email_verify: true,
         notice_period_id: userDetails.notice_period_id,
-        is_profile_completed: userDetails.is_profile_completed,
+        is_profile_completed: userDetails.is_profile_completed
       }
 
       setCookie('user', userCookie)
@@ -167,17 +173,17 @@ const JobDetail = ({
   }
 
   const handleApplyJob = () => {
-    if (!userCookie) { 
+    if (!userCookie) {
       setQuickApplyModalShow(true)
     } else {
       if (userCookie && !userCookie.is_email_verify) {
         handleVerifyEmailClick()
       }
-      
+
       if (selectedJob?.external_apply_url) {
         addExternalJobClickService(selectedJob?.id)
       }
-      
+
       window.open(applyJobLink)
     }
   }
@@ -188,7 +194,7 @@ const JobDetail = ({
       router.push(applyJobLink)
     }
   }
-  
+
   const isCategoryApplied = category === 'applied'
   const isCategorySaved = category === 'saved'
   const publicJobUrl = isCategoryApplied
@@ -203,7 +209,7 @@ const JobDetail = ({
   }
 
   const handleShowReportJob = () => {
-    if ( authCookie && userCookie) {
+    if (authCookie && userCookie) {
       setIsShowReportJob(true)
     } else {
       setCookie('isReportJob', true)
@@ -224,40 +230,38 @@ const JobDetail = ({
     <React.Fragment>
       <div className={styles.JobDetail}>
         <div className={classNamesCombined([styles.JobDetailContent])}>
-          <div className={classNamesCombined([isStickyClass, styles.JobDetailHeader])} ref={detailHeaderRef}>
+          <div
+            className={classNamesCombined([isStickyClass, styles.JobDetailHeader])}
+            ref={detailHeaderRef}
+          >
             <div>
-              <div
-                className={styles.JobDetailOptionImage}
-              >
+              <div className={styles.JobDetailOptionImage}>
                 <Dropdown>
-                    {selectedJob?.status_key === 'active' && (
-                      <>
-                        <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
-                          <Text textStyle='lg'>View in new tab</Text>
-                        </Link>
-                        <div
-                          className={styles.JobDetailOptionItem}
-                          onClick={handleShowReportJob}
-                        >
-                          <Text textStyle='lg'>Report job</Text>
-                        </div>
-                      </>
-                    )}
-                    {isCategoryApplied && !checkHasApplicationWithdrawn() && (
-                      <div
-                        className={styles.JobDetailOptionItem}
-                        onClick={() => setIsShowModalWithdrawApplication(true)}
-                      >
-                        <Text textStyle='lg'>Withdraw Application</Text>
+                  {selectedJob?.status_key === 'active' && (
+                    <>
+                      <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
+                        <Text textStyle='lg'>View in new tab</Text>
+                      </Link>
+                      <div className={styles.JobDetailOptionItem} onClick={handleShowReportJob}>
+                        <Text textStyle='lg'>Report job</Text>
                       </div>
-                    )}
-
+                    </>
+                  )}
+                  {isCategoryApplied && !checkHasApplicationWithdrawn() && (
                     <div
                       className={styles.JobDetailOptionItem}
-                      onClick={() => setIsShowModalShare(true)}
+                      onClick={() => setIsShowModalWithdrawApplication(true)}
                     >
-                      <Text textStyle='lg'>Share this job</Text>
+                      <Text textStyle='lg'>Withdraw Application</Text>
                     </div>
+                  )}
+
+                  <div
+                    className={styles.JobDetailOptionItem}
+                    onClick={() => setIsShowModalShare(true)}
+                  >
+                    <Text textStyle='lg'>Share this job</Text>
+                  </div>
                 </Dropdown>
               </div>
 
@@ -268,10 +272,7 @@ const JobDetail = ({
               style={{ backgroundImage: `url(${selectedJob?.company?.logo})` }}
             />
             <div className={styles.JobDetailInfo}>
-              <Link
-                to={publicJobUrl}
-                external
-              >
+              <Link to={publicJobUrl} external>
                 <Text textStyle='lg' bold className={styles.JobDetailTitle}>
                   {selectedJob?.job_title}
                 </Text>
@@ -285,58 +286,54 @@ const JobDetail = ({
               {selectedJob?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
               <JobTag tag={selectedJob?.job_type_value} />
               <div className={styles.JobDetailButtonsWrapper}>
-                  {!isCategoryApplied && (
-                    <div className={styles.JobDetailButtons}>
-                      {selectedJob?.status_key === 'active' && (
-                        <>
-                          {!selectedJob?.is_applied ? (
-                            <MaterialButton
-                              variant='contained'
-                              capitalize
-                              onClick={handleApplyJob}
-                            >
-                              <Text textColor='white' bold>
-                                Apply Now
-                              </Text>
-                            </MaterialButton>
-                          ) : (
-                            <MaterialButton variant='contained' capitalize disabled>
-                              <Text textColor='white' bold>
-                                Applied
-                              </Text>
-                            </MaterialButton>
-                          )}
-                        </>
-                      )}
-                      <MaterialButton
-                        variant='outlined'
-                        capitalize
-                        isLoading={!userCookie && isSaveClicked}
-                        onClick={() => {
-                          if (userCookie) {
-                            if (!isCategorySaved && !isSavedJob) {
-                              handlePostSaveJob({ jobId: selectedJob?.id })
-                              setIsSavedJob(true)
-                            }
-
-                            if (isSavedJob) {
-                              handleDeleteSavedJob({ jobId: selectedJob?.id })
-                              setIsSavedJob(false)
-                            }
+                {!isCategoryApplied && (
+                  <div className={styles.JobDetailButtons}>
+                    {selectedJob?.status_key === 'active' && (
+                      <>
+                        {!selectedJob?.is_applied ? (
+                          <MaterialButton variant='contained' capitalize onClick={handleApplyJob}>
+                            <Text textColor='white' bold>
+                              Apply Now
+                            </Text>
+                          </MaterialButton>
+                        ) : (
+                          <MaterialButton variant='contained' capitalize disabled>
+                            <Text textColor='white' bold>
+                              Applied
+                            </Text>
+                          </MaterialButton>
+                        )}
+                      </>
+                    )}
+                    <MaterialButton
+                      variant='outlined'
+                      capitalize
+                      isLoading={!userCookie && isSaveClicked}
+                      onClick={() => {
+                        if (userCookie) {
+                          if (!isCategorySaved && !isSavedJob) {
+                            handlePostSaveJob({ jobId: selectedJob?.id })
+                            setIsSavedJob(true)
                           }
 
-                          if (!userCookie) {
-                            setIsSaveClicked(true)
-                            router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
+                          if (isSavedJob) {
+                            handleDeleteSavedJob({ jobId: selectedJob?.id })
+                            setIsSavedJob(false)
                           }
-                        }}
-                      >
-                        <Text textColor='primaryBlue' bold>
-                          {isSavedJob || isCategorySaved ? 'Saved' : 'Save Job'}
-                        </Text>
-                      </MaterialButton>
-                    </div>
-                  )}
+                        }
+
+                        if (!userCookie) {
+                          setIsSaveClicked(true)
+                          router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
+                        }
+                      }}
+                    >
+                      <Text textColor='primaryBlue' bold>
+                        {isSavedJob || isCategorySaved ? 'Saved' : 'Save Job'}
+                      </Text>
+                    </MaterialButton>
+                  </div>
+                )}
 
                 {selectedJob?.status_key !== 'active' && (
                   <Text textStyle='base' className={styles.JobDetailStatus}>
@@ -344,16 +341,17 @@ const JobDetail = ({
                     <span>This job is no longer hiring</span>
                   </Text>
                 )}
-                
-                {(!isCategoryApplied || !isCategorySaved) && (
-                  <Text textStyle='sm' textColor='darkgrey' className={styles.JobDetailPostedAt}>
-                    Posted on {selectedJob?.refreshed_at}
-                  </Text>
-                )}
+
+                <Text textStyle='sm' textColor='darkgrey' className={styles.JobDetailPostedAt}>
+                  {applicationUpdatedAt ? `Last updated on ${applicationUpdatedAt}` : `Posted on ${selectedJob?.refreshed_at}`}
+                </Text>
               </div>
             </div>
           </div>
-          <div className={classNamesCombined([styles.JobDetailBody, isStickyClass])} style={{ top: detailHeaderHeight }}>
+          <div
+            className={classNamesCombined([styles.JobDetailBody, isStickyClass])}
+            style={{ top: detailHeaderHeight }}
+          >
             <div className={styles.JobDetailPref}>
               <ul className={styles.JobDetailPrefList}>
                 <li className={styles.JobDetailPrefItem}>
@@ -433,7 +431,7 @@ const JobDetail = ({
               <div
                 className={classNamesCombined([
                   styles.JobDetailSectionBody,
-                  styles.JobDetailDescriptionSectionBody,
+                  styles.JobDetailDescriptionSectionBody
                 ])}
                 dangerouslySetInnerHTML={{ __html: selectedJob?.job_description_html }}
               />
@@ -445,7 +443,7 @@ const JobDetail = ({
               <div
                 className={classNamesCombined([
                   styles.JobDetailSectionBody,
-                  styles.JobDetailRequirementSectionBody,
+                  styles.JobDetailRequirementSectionBody
                 ])}
                 dangerouslySetInnerHTML={{ __html: selectedJob?.job_requirements_html }}
               />
@@ -516,42 +514,42 @@ const JobDetail = ({
               )}
             </div>
             {selectedJob?.recruiter && (
-            <div className={styles.JobDetailRecruiter}>
-              <Text textStyle='xl' bold>
-                Connect directly to recruiter after applying
-              </Text>
-              <div className={styles.JobDetailRecruiterInfo}>
-                <div
-                  className={styles.JobDetailRecruiterInfoImage}
-                  style={{
-                    backgroundImage: `url(${selectedJob?.recruiter.avatar || DefaultAvatar})`,
-                  }}
-                />
-                <div className={styles.JobDetailRecruiterInfoText}>
-                  <div className={styles.JobDetailRecruiterName}>
-                    <Text textStyle='lg' bold>
-                      {selectedJob?.recruiter.full_name},{' '}
-                    </Text>
-                    <Text textStyle='lg'>
-                      &nbsp;{selectedJob?.recruiter.work_experience.job_title}
-                    </Text>
-                  </div>
-                  <div className={styles.JobDetailRecruiterContent}>
-                    <Text textStyle='lg' textColor='darkgrey'>
-                      <img src={RateIcon} height='14' width='15' />
-                      {selectedJob?.recruiter.response_rate}% response rate, responds{' '}
-                      {selectedJob?.recruiter.response_time}
-                    </Text>
-                    <Text textStyle='lg' textColor='darkgrey'>
-                      <img src={LocationPinIcon} height='14' width='15' />
-                      Last active on{' '}
-                      {moment(selectedJob?.recruiter.last_active_at).format('MM/DD/YYYY')}
-                    </Text>
+              <div className={styles.JobDetailRecruiter}>
+                <Text textStyle='xl' bold>
+                  Connect directly to recruiter after applying
+                </Text>
+                <div className={styles.JobDetailRecruiterInfo}>
+                  <div
+                    className={styles.JobDetailRecruiterInfoImage}
+                    style={{
+                      backgroundImage: `url(${selectedJob?.recruiter.avatar || DefaultAvatar})`
+                    }}
+                  />
+                  <div className={styles.JobDetailRecruiterInfoText}>
+                    <div className={styles.JobDetailRecruiterName}>
+                      <Text textStyle='lg' bold>
+                        {selectedJob?.recruiter.full_name},{' '}
+                      </Text>
+                      <Text textStyle='lg'>
+                        &nbsp;{selectedJob?.recruiter.work_experience.job_title}
+                      </Text>
+                    </div>
+                    <div className={styles.JobDetailRecruiterContent}>
+                      <Text textStyle='lg' textColor='darkgrey'>
+                        <img src={RateIcon} height='14' width='15' />
+                        {selectedJob?.recruiter.response_rate}% response rate, responds{' '}
+                        {selectedJob?.recruiter.response_time}
+                      </Text>
+                      <Text textStyle='lg' textColor='darkgrey'>
+                        <img src={LocationPinIcon} height='14' width='15' />
+                        Last active on{' '}
+                        {moment(selectedJob?.recruiter.last_active_at).format('MM/DD/YYYY')}
+                      </Text>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
             <div className={styles.aboutCompany}>
               <Text bold textStyle='lg' className={styles.aboutCompanyHeader}>
                 About the company
@@ -571,18 +569,22 @@ const JobDetail = ({
         </div>
       </div>
 
-      {quickApplyModalShow && <QuickApplyModal
-        jobDetails={selectedJob}
-        modalShow={quickApplyModalShow}
-        handleModalShow={setQuickApplyModalShow}
-        config={config}
-      />}
+      {quickApplyModalShow && (
+        <QuickApplyModal
+          jobDetails={selectedJob}
+          modalShow={quickApplyModalShow}
+          handleModalShow={setQuickApplyModalShow}
+          config={config}
+        />
+      )}
 
-      {isShowModal && <ModalVerifyEmail
-        email={userCookie ? userCookie.email : ''}
-        isShowModal={isShowModal}
-        handleModal={handleCloseModal}
-      />}
+      {isShowModal && (
+        <ModalVerifyEmail
+          email={userCookie ? userCookie.email : ''}
+          isShowModal={isShowModal}
+          handleModal={handleCloseModal}
+        />
+      )}
     </React.Fragment>
   )
 }

@@ -137,6 +137,7 @@ const EditLinkModal = ({
               variant='outlined'
               value={linkUrl}
               defaultValue={linkUrl}
+              onClick={() => setLinkUrl('https://')}
               onChange={(e) => setLinkUrl(e.target.value)}
             />
           </div>

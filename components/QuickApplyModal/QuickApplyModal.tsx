@@ -20,11 +20,11 @@ import styles from './QuickApplyModal.module.scss'
 /* Redux Actions */
 import { quickApplyJobRequest } from 'store/actions/jobs/quickApplyJob'
 
-
 /* Helpers*/
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 import Checkbox from '@mui/material/Checkbox'
 import { handleNumericInput } from 'helpers/handleInput'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 interface QuickApplyModalProps {
   jobDetails: any
   modalShow?: boolean
@@ -39,6 +39,8 @@ const QuickApplyModal = ({
   config,
 }: QuickApplyModalProps) => {
   const dispatch = useDispatch()
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768 ? true : false
   const {
     register,
     handleSubmit,
@@ -103,6 +105,12 @@ const QuickApplyModal = ({
       screeningAnswers.push(data[`screening_answer_${index}`])
     })
 
+    let externalApplyUrl = jobDetails.external_apply_url
+
+    if (externalApplyUrl !== '' && externalApplyUrl !== null && !/^(f|ht)tps?:\/\//i.test(externalApplyUrl)) {
+      externalApplyUrl = 'https://' + externalApplyUrl
+    }
+
     const payload = {
       email: data.email,
       password: data.password,
@@ -116,7 +124,8 @@ const QuickApplyModal = ({
       first_message: firstMessage,
       jobId: jobDetails.id,
       jobUrl: jobDetails.job_url,
-      externalApplyUrl: jobDetails.external_apply_url
+      externalApplyUrl: externalApplyUrl,
+      source: isMobile ? 'mobile_web' : 'web'
     }
 
     clearErrors()

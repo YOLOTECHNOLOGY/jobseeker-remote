@@ -42,7 +42,7 @@ import EditLinkModal from 'components/EditLinkModal'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
-import { formatSalaryRange, getYearMonthDiffBetweenDates } from 'helpers/formatter'
+import { formatSalary, formatSalaryRange, getYearMonthDiffBetweenDates } from 'helpers/formatter'
 import { getNoticePeriodList } from 'helpers/jobPayloadFormatter'
 
 /* Services */
@@ -87,9 +87,19 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     license_certifications: licensesCertifications,
     websites
   } = userDetail
-  const isProfileInformationFilled = !! (firstName && lastName && birthdate && location && expLevel && description)
+  const isProfileInformationFilled = !!(
+    firstName &&
+    lastName &&
+    birthdate &&
+    location &&
+    expLevel &&
+    description
+  )
   const [isSliderButtonVisible, setIsSliderButtonVisible] = useState(true)
   const [isHighlightSectionVisible, setIsHighlightSectionVisible] = useState(true)
+
+  // Display button after a few sec to prevent weird MUI bug when it's within caoursel
+  const [isCarouselButtonVisible, setIsCarouselButtonVisible] = useState(false)
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -108,6 +118,12 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const onSelect = useCallback(() => {
     if (!emblaApi) return
   }, [emblaApi])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsCarouselButtonVisible(true)
+    }, 300)
+  }, [])
 
   useEffect(() => {
     if (!emblaApi) return
@@ -133,7 +149,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     if (count <= 2 && !isMobile) {
       setIsSliderButtonVisible(false)
     }
-    if (count <= 1 && isMobile){
+    if (count <= 1 && isMobile) {
       setIsSliderButtonVisible(false)
     }
     if (count === 0) {
@@ -277,6 +293,17 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                     : workingPeriodTo.format('MMMM yyyy')}{' '}
                   {dateDiff ? `(${dateDiff})` : ''}
                 </Text>
+                <div className={styles.companySecondaryInfoWrapper}>
+                  {workExp?.job_categories.length > 0 && (
+                    <Text textStyle='base'>{workExp?.job_categories.join(', ')}</Text>
+                  )}
+                  {workExp?.company_industry && (
+                    <Text textStyle='base'>{workExp?.company_industry}</Text>
+                  )}
+                  {workExp?.salary && workExp?.salary !== '0.00' && (
+                    <Text textStyle='base'>{formatSalary(workExp?.salary)} per month</Text>
+                  )}
+                </div>
                 {workExp?.description && (
                   <ReadMore
                     size={isMobile ? 210 : 300}
@@ -551,17 +578,19 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                         Showcase your past contributions and that you can be an asset to potential
                         employer
                       </Text>
-                      <MaterialButton
-                        variant='contained'
-                        size='medium'
-                        className={styles.highlightCardButton}
-                        onClick={() => handleModal('workExperience', true)}
-                        style={{ height: '44px', textTransform: 'none' }}
-                      >
-                        <Text textStyle='lg' textColor='white'>
-                          Add experience
-                        </Text>
-                      </MaterialButton>
+                      {isCarouselButtonVisible && (
+                        <MaterialButton
+                          variant='contained'
+                          size='medium'
+                          className={styles.highlightCardButton}
+                          onClick={() => handleModal('workExperience', true)}
+                          style={{ height: '44px', textTransform: 'none' }}
+                        >
+                          <Text textStyle='lg' textColor='white'>
+                            Add experience
+                          </Text>
+                        </MaterialButton>
+                      )}
                     </div>
                   </div>
                 )}
@@ -577,17 +606,19 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                       <Text textStyle='lg' className={styles.highlightCardContent}>
                         Highlight your academic qualifications and achievements
                       </Text>
-                      <MaterialButton
-                        variant='contained'
-                        size='medium'
-                        className={styles.highlightCardButton}
-                        onClick={() => handleModal('education', true)}
-                        style={{ height: '44px', textTransform: 'none' }}
-                      >
-                        <Text textStyle='lg' textColor='white'>
-                          Add education
-                        </Text>
-                      </MaterialButton>
+                      {isCarouselButtonVisible && (
+                        <MaterialButton
+                          variant='contained'
+                          size='medium'
+                          className={styles.highlightCardButton}
+                          onClick={() => handleModal('education', true)}
+                          style={{ height: '44px', textTransform: 'none' }}
+                        >
+                          <Text textStyle='lg' textColor='white'>
+                            Add education
+                          </Text>
+                        </MaterialButton>
+                      )}
                     </div>
                   </div>
                 )}
@@ -604,17 +635,19 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                         Include relevant skill and keywords to boost your chances of getting an
                         interview.
                       </Text>
-                      <MaterialButton
-                        variant='contained'
-                        size='medium'
-                        className={styles.highlightCardButton}
-                        onClick={() => handleModal('skills', true)}
-                        style={{ height: '44px', textTransform: 'none' }}
-                      >
-                        <Text textStyle='lg' textColor='white'>
-                          Add skill
-                        </Text>
-                      </MaterialButton>
+                      {isCarouselButtonVisible && (
+                        <MaterialButton
+                          variant='contained'
+                          size='medium'
+                          className={styles.highlightCardButton}
+                          onClick={() => handleModal('skills', true)}
+                          style={{ height: '44px', textTransform: 'none' }}
+                        >
+                          <Text textStyle='lg' textColor='white'>
+                            Add skill
+                          </Text>
+                        </MaterialButton>
+                      )}
                     </div>
                   </div>
                 )}
@@ -630,17 +663,19 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                       <Text textStyle='lg' className={styles.highlightCardContent}>
                         Help the recruiter to know more about you and connect more easily with you.
                       </Text>
-                      <MaterialButton
-                        variant='contained'
-                        size='medium'
-                        className={styles.highlightCardButton}
-                        onClick={() => handleModal('profile', true)}
-                        style={{ height: '44px', textTransform: 'none' }}
-                      >
-                        <Text textStyle='lg' textColor='white'>
-                          Add information
-                        </Text>
-                      </MaterialButton>
+                      {isCarouselButtonVisible && (
+                        <MaterialButton
+                          variant='contained'
+                          size='medium'
+                          className={styles.highlightCardButton}
+                          onClick={() => handleModal('profile', true)}
+                          style={{ height: '44px', textTransform: 'none' }}
+                        >
+                          <Text textStyle='lg' textColor='white'>
+                            Add information
+                          </Text>
+                        </MaterialButton>
+                      )}
                     </div>
                   </div>
                 )}
@@ -732,12 +767,12 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
 
   const minSalary = userDetail?.job_preference?.salary_range_from
   const maxSalary = userDetail?.job_preference?.salary_range_to
-  const salaryRange = minSalary + " - " + maxSalary
+  const salaryRange = minSalary + ' - ' + maxSalary
 
   const noticeList = getNoticePeriodList(config)
 
   const getAvailability = (userDetail) => {
-    const checkNoticePeriod = notice => userDetail.notice_period_id === notice.value
+    const checkNoticePeriod = (notice) => userDetail.notice_period_id === notice.value
     const findAvailability = noticeList.find(checkNoticePeriod).label
 
     return findAvailability
@@ -752,7 +787,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
     updateUserVisibilityToWorkService({
       is_visible: !openToWork
     })
-}
+  }
 
   return (
     <React.Fragment>
@@ -785,7 +820,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
               variant='outlined'
               capitalize={false}
               size='large'
-              onClick={()=>handleEditClick()}
+              onClick={() => handleEditClick()}
               style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
             >
               Add job preferences
@@ -1137,7 +1172,11 @@ const RenderResumeView = ({ userDetail }: any) => {
                 variant='contained'
                 size='medium'
                 capitalize
-                onClick={() => selectedIndex === 0 ? handleDownloadResume('corporate') : handleDownloadResume('creative')}
+                onClick={() =>
+                  selectedIndex === 0
+                    ? handleDownloadResume('corporate')
+                    : handleDownloadResume('creative')
+                }
                 className={styles.downloadResumeButtonMobile}
               >
                 <img
@@ -1284,7 +1323,15 @@ const ManageProfilePage = ({ config }: any) => {
         {tabValue === 'profile' && (
           <RenderProfileView userDetail={userDetail} handleModal={handleModal} config={config} />
         )}
-        {tabValue === 'job-preferences' && <RenderPreferencesView modalName='jobPreferences' showModal={modalState.jobPreferences.showModal} config={config} userDetail={userDetail} handleModal={handleModal} />}
+        {tabValue === 'job-preferences' && (
+          <RenderPreferencesView
+            modalName='jobPreferences'
+            showModal={modalState.jobPreferences.showModal}
+            config={config}
+            userDetail={userDetail}
+            handleModal={handleModal}
+          />
+        )}
         {tabValue === 'resume' && <RenderResumeView userDetail={userDetail} />}
       </ProfileLayout>
     </Layout>

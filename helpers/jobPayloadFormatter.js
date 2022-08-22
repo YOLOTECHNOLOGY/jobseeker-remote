@@ -1309,7 +1309,13 @@ const getApplyJobLink = (job, user, accessToken = null) => {
     }
 
     if (job?.external_apply_url) {
-      return job?.external_apply_url
+      let externalApplyUrl = job?.external_apply_url
+
+      if (externalApplyUrl !== '' && externalApplyUrl !== null && !/^(f|ht)tps?:\/\//i.test(externalApplyUrl)) {
+        externalApplyUrl = 'https://' + externalApplyUrl
+      }
+
+      return externalApplyUrl
     }
 
     return applyJobUrl
