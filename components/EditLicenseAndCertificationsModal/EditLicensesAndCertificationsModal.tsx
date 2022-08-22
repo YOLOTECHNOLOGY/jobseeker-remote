@@ -92,6 +92,14 @@ const EditLicensesAndCertificationsModal = ({
     handleResetForm()
   }
 
+	const handleCredentialUrl = (credentialUrl) => {
+		if (credentialUrl) {
+			return credentialUrl
+		} else {
+			return 'https://'
+		}
+	}
+
   const onSubmit = () => {
     const data = {
       title: licenseCertificationTitle,
@@ -278,7 +286,7 @@ const EditLicensesAndCertificationsModal = ({
 							variant='outlined'
 							value={credentialUrl}
 							defaultValue={credentialUrl}
-							onClick={() => setCredentialUrl('https://')}
+							onClick={() => setCredentialUrl(handleCredentialUrl(credentialUrl))}
 							onChange={(e) => setCredentialUrl(e.target.value)}
 						/>
 					</div>
