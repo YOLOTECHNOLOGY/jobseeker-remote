@@ -300,7 +300,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                   {workExp?.company_industry && (
                     <Text textStyle='base'>{workExp?.company_industry}</Text>
                   )}
-                  {workExp?.salary && (
+                  {workExp?.salary && workExp?.salary !== '0.00' && (
                     <Text textStyle='base'>{formatSalary(workExp?.salary)} per month</Text>
                   )}
                 </div>
