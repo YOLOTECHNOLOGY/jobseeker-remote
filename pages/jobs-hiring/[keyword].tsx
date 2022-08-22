@@ -1153,10 +1153,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           true
         )} Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
       } else if (searchQuery && !predefinedQuery && predefinedLocation) {
-        seoMetaTitle = `${unslugify(searchQuery, true)} Jobs in ${unslugify(
-          predefinedLocation,
+        seoMetaTitle = `${unslugify(
+          searchQuery,
           true
-        )}, Philippines, Job Opportunities - ${month} ${year} | Bossjob`
+        )} Jobs in Philippines, Apply Job Opportunities - ${month} ${year} | Bossjob`
         seoMetaDescription = `New ${unslugify(searchQuery, true)} Jobs in ${unslugify(
           predefinedLocation,
           true
