@@ -11,6 +11,10 @@
 
 .MyJobsContent {
   display: flex;
+  min-height: 1200px;
+  @media (min-width: 1800px) {
+    min-height: 1800px;
+  }
 }
 
 .MyJobs {
