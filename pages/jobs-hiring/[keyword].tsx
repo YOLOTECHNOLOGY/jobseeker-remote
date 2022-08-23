@@ -1031,7 +1031,8 @@ const initPagePayLoad = async (query, config = null) => {
           : value[0].value
     }
   }
-  return payload
+  
+  return { defaultValues, payload }
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -1040,8 +1041,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
 
       const { keyword, page } = query
+      const { defaultValues, payload: initPayload } = await initPagePayLoad(query)
+
       // store actions
-      store.dispatch(fetchJobsListRequest(await initPagePayLoad(query), accessToken))
+      store.dispatch(fetchJobsListRequest(initPayload, accessToken))
       store.dispatch(fetchConfigRequest())
       store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
       store.dispatch(END)
@@ -1061,71 +1064,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       })
 
       /* Handle job search logic */
-      const catList = config && config.inputs && config.inputs.job_category_lists
       const {
         searchQuery,
         predefinedQuery,
         predefinedLocation,
-        matchedLocation,
-        matchedConfigFromUrl
       } = checkFilterMatch(query, config)
-
-      // query parameters
-      const queryJobType: any = query?.jobType
-      const querySalary: any = query?.salary
-      const queryQualification: any = query?.qualification
-      const queryLocation: any = query?.location
-      const queryIndustry: any = query?.industry
-      const queryWorkExp: any = query?.workExperience
-      const queryCategory: any = query?.category
-
-      const defaultValues: any = {
-        urlQuery: searchQuery,
-        // if sort param exist, follow sort defined in param, otherwise if search exist, sort default to 2 'Relevance'
-        sort: query?.sort ? query?.sort : searchQuery ? 2 : 1,
-        jobType: queryJobType?.split(',') || null,
-        salary: querySalary?.split(',') || null,
-        qualification: queryQualification?.split(',') || null,
-        location: queryLocation?.split(',') || null,
-        industry: queryIndustry?.split(',') || null,
-        workExperience: queryWorkExp?.split(',') || null,
-        category: queryCategory?.split(',') || null
-      }
-
-      for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
-        defaultValues[key] = [value[0]['seo-value']]
-      }
-      for (const [key, value] of Object.entries(matchedLocation)) {
-        defaultValues[key] = value[0]
-        // to prevent cases where /jobs-hiring/makati-jobs, whereby the query & location is populated with values
-        if (defaultValues.urlQuery === value[0]['seo_value']) {
-          defaultValues.urlQuery = ''
-        }
-      }
-
-      if (defaultValues.category) {
-        const defaultCategories = defaultValues.category
-        const initialListOptions = catList.map((data) => {
-          const newSubList = data.sub_list.map((subData) => ({
-            ...subData,
-            isChecked:
-              defaultCategories.includes(subData['seo-value']) ||
-              defaultCategories.includes(data['seo-value'])
-          }))
-          const newList = {
-            ...data,
-            isChecked: defaultCategories.includes(data['seo-value']),
-            sub_list: newSubList
-          }
-          return newList
-        })
-        defaultValues.categoryList = initialListOptions
-      }
-
-      // sanitise searchQuery
-      defaultValues.urlQuery = defaultValues.urlQuery
-        ? unslugify(searchQuery).replace('+', '-')
-        : ''
 
       /* Handle SEO Meta Tags*/
       const { month, year } = getCurrentMonthYear()
