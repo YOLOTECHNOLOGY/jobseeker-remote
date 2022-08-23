@@ -59,6 +59,7 @@ import { flat, unslugify, getCurrentMonthYear } from 'helpers/formatter'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { getCookie } from 'helpers/cookies'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import useSearchHistory from 'helpers/useSearchHistory'
 
 interface JobSearchPageProps {
   seoMetaTitle: string
@@ -410,7 +411,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   useEffect(() => {
     if (jobDetailResponse) setSelectedJob(jobDetailResponse)
   }, [jobDetailResponse])
-
+  const [searchHistories,addSearchHistory] = useSearchHistory()
   const sortOptions = [
     { label: 'Newest', value: 1 },
     { label: 'Relevance', value: 2 },
@@ -440,6 +441,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const onKeywordSearch = (val) => {
+    addSearchHistory(val)
     // convert any value with '-' to '+' so that when it gets parsed from URL, we are able to map it back to '-'
     const sanitisedVal = val.replace('-', '+')
 
@@ -555,14 +557,28 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const handleSuggestionSearch = (val) => {
-    if (val !== '') {
+    
+    const valueLength = val?.length ?? 0
+    if (valueLength === 0) {
+      setSuggestionList(searchHistories as any)
+    } else if (valueLength === 1) {
+      setSuggestionList([])
+    } else if ((val?.length ?? 0) > 1) {
       fetch(`${process.env.JOB_BOSSJOB_URL}/suggested-search?size=5&query=${val}`)
         .then((resp) => resp.json())
         .then((data) => setSuggestionList(data.data.items))
     }
   }
+  // const handleSuggestionSearch = (val) => {
+  //   if (val !== '') {
+  //     fetch(`${process.env.JOB_BOSSJOB_URL}/suggested-search?size=5&query=${val}`)
+  //       .then((resp) => resp.json())
+  //       .then((data) => setSuggestionList(data.data.items))
+  //   }
+  // }
 
   const onLocationSearch = (event, value) => {
+    addSearchHistory(searchValue)
     const isClear = !value
     const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
       'location',

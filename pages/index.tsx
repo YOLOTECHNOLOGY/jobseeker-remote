@@ -55,6 +55,7 @@ import {
 import styles from './Home.module.scss'
 import breakpointStyles from 'styles/breakpoint.module.scss'
 import MetaText from '../components/MetaText'
+import useSearchHistory from 'helpers/useSearchHistory'
 // import classNamesCombined from 'classnames'
 
 type configObject = {
@@ -103,12 +104,12 @@ const Home = (props: HomeProps) => {
         activeFeature === 1
           ? firstFeatureImgNode
           : activeFeature === 2
-          ? secondFeatureImgNode
-          : activeFeature === 3
-          ? thirdFeatureImgNode
-          : activeFeature === 4
-          ? fourthFeatureImgNode
-          : null
+            ? secondFeatureImgNode
+            : activeFeature === 3
+              ? thirdFeatureImgNode
+              : activeFeature === 4
+                ? fourthFeatureImgNode
+                : null
 
       let paragraphHeight = 0
       paragraphHeight = activeNode.current.querySelector('p').offsetHeight
@@ -124,12 +125,12 @@ const Home = (props: HomeProps) => {
         activeFeature === 1
           ? firstFeatureImgNode
           : activeFeature === 2
-          ? secondFeatureImgNode
-          : activeFeature === 3
-          ? thirdFeatureImgNode
-          : activeFeature === 4
-          ? fourthFeatureImgNode
-          : null
+            ? secondFeatureImgNode
+            : activeFeature === 3
+              ? thirdFeatureImgNode
+              : activeFeature === 4
+                ? fourthFeatureImgNode
+                : null
 
       if (activeNode.current.style.height <= 50) {
         const paragraphHeight = activeNode.current.querySelector('p').offsetHeight
@@ -137,7 +138,7 @@ const Home = (props: HomeProps) => {
       }
     }
   }, [activeFeature])
-
+  const [searchHistories,addSearchHistory] = useSearchHistory()
   const updateUrl = (queryParam) => {
     const queryObject = {
       page: 1,
@@ -155,6 +156,7 @@ const Home = (props: HomeProps) => {
   }
 
   const onLocationSearch = (event, value) => {
+    addSearchHistory(searchValue)
     const isClear = !value
     const { searchQuery } = userFilterSelectionDataParser(
       'location',
@@ -167,6 +169,7 @@ const Home = (props: HomeProps) => {
   }
 
   const onSearch = (value = searchValue) => {
+    addSearchHistory(value)
     // convert any value with '-' to '+' so that when it gets parsed from URL, we are able to map it back to '-'
     const sanitisedVal = value.replace('-', '+')
     const { searchQuery } = userFilterSelectionDataParser(
@@ -179,7 +182,12 @@ const Home = (props: HomeProps) => {
   }
 
   const handleSuggestionSearch = (val) => {
-    if (val !== '') {
+    const valueLength = val?.length ?? 0
+    if (valueLength === 0) {
+      setSuggestionList(searchHistories as any)
+    } else if (valueLength === 1) {
+      setSuggestionList([])
+    } else if ((val?.length ?? 0) > 1) {
       fetch(`${process.env.JOB_BOSSJOB_URL}/suggested-search?size=5&query=${val}`)
         .then((resp) => resp.json())
         .then((data) => setSuggestionList(data.data.items))
