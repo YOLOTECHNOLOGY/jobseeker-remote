@@ -2,7 +2,6 @@ import { all } from 'redux-saga/effects'
 
 // Config
 import watchFetchConfig from 'store/sagas/config/fetchConfig'
-import watchOldFetchConfig from 'store/sagas/config/oldFetchConfig'
 
 // Job
 import watchFetchJobsList from 'store/sagas/jobs/fetchJobsList'
@@ -74,7 +73,6 @@ import watchFetchRecruiterSubscriptionFeature from 'store/sagas/recruiters/fetch
 function* rootSaga() {
   yield all([
     watchFetchConfig(),
-    watchOldFetchConfig(),
     watchFetchJobsList(),
     watchFetchJobDetail(),
     watchFetchSimilarJobs(),

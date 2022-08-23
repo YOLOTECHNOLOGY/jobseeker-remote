@@ -9,18 +9,14 @@ import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
 
-/* Helpers */
-import { authPathToNewProject } from 'helpers/authenticationTransition'
-
 /* Actions */
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
-import { oldFetchConfigRequest } from 'store/actions/config/oldFetchConfig'
 
 /* Styles */
 import styles from './PublicSitemap.module.scss'
 import { useSelector } from 'react-redux'
 
-const PublicSitemap = ({ config, oldConfig }) => {
+const PublicSitemap = ({ config }) => {
   const [locationList, setLocationList] = useState([])
   const [categoryList, setCategoryList] = useState([])
   const [industryList, setIndustryList] = useState([])
@@ -33,7 +29,6 @@ const PublicSitemap = ({ config, oldConfig }) => {
   console.log('storeState', storeState)
 
   console.log('config', config)
-  console.log('oldConfig', oldConfig)
 
   useEffect(() => {
     if (config) {
@@ -115,18 +110,6 @@ const PublicSitemap = ({ config, oldConfig }) => {
           }
         })
 
-      if (oldConfig) {
-        oldConfig &&
-        oldConfig.inputs.job_category_lists &&
-        oldConfig.inputs.job_category_lists.map(category => {
-          categoryList.push({
-            key: category.key,
-            label: category.value,
-            value: category.value
-          })
-        })
-      }
-
       // setRegionLocationList(regionLocationList)
       setLocationList(locationList)
       setCategoryList(categoryList)
@@ -139,17 +122,11 @@ const PublicSitemap = ({ config, oldConfig }) => {
   }, [])
 
   const generatePath = (param, label) => {
-    const pathUrl = `/jobs-hiring/${param}-jobs`
-    // let pathUrl
-    // if (type === 'jobLocation' || type === 'jobCategory') {
-    //   pathUrl = `/jobs-hiring/${param}-jobs`
-    // } else {
-    //   pathUrl = `jobs-hiring/?${type}=${param}`
-    // }
+    const pathUrl = `${process.env.NEW_PROJECT_URL}/jobs-hiring/${param}-jobs`
 
     return (
       <Link
-        to={authPathToNewProject(null, pathUrl)}
+        to={pathUrl}
         external
         // style={{ display: 'flex' }}
         className={styles.item}
@@ -174,7 +151,7 @@ const PublicSitemap = ({ config, oldConfig }) => {
           </Text>
           <div className={styles.section}>
             <Link
-              to={authPathToNewProject(null, '/register/jobseeker')}
+              to={`${process.env.NEW_PROJECT_URL}/register/jobseeker`}
               aTag
               className={styles.item}
               external
@@ -184,7 +161,7 @@ const PublicSitemap = ({ config, oldConfig }) => {
               </Text>
             </Link>
             <Link
-              to={authPathToNewProject(null, '/login/jobseeker')}
+              to={`${process.env.NEW_PROJECT_URL}/login/jobseeker`}
               aTag
               className={styles.item}
               external
@@ -213,7 +190,10 @@ const PublicSitemap = ({ config, oldConfig }) => {
             </Text>
             <div className={styles.itemWrapperCategory}>
               {categoryList.map(cat =>
-                generatePath(cat.key, `${cat.value} jobs`)
+                <div>
+                  {generatePath(cat.key, `${cat.value} jobs`)}
+                  {cat.sub_list.map(sub => generatePath(sub.key, `${sub.value} jobs`))}
+                </div>
               )}
             </div>
           </div>
@@ -291,7 +271,7 @@ const PublicSitemap = ({ config, oldConfig }) => {
             <Link
               className={styles.item}
               aTag
-              to={authPathToNewProject(null, '/resumetemplate')}
+              to={`${process.env.NEW_PROJECT_URL}/resumetemplate`}
               title="Create Free Resume"
               external
             >
@@ -434,28 +414,15 @@ const PublicSitemap = ({ config, oldConfig }) => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
-  // const accessToken = req.cookies.accessToken
-  // if (!accessToken) {
-  //   return {
-  //     redirect: {
-  //       destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/1',
-  //       permanent: false
-  //     }
-  //   }
-  // }
-
   store.dispatch(fetchConfigRequest())
-  store.dispatch(oldFetchConfigRequest())
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
-  const oldConfig = storeState.config.oldConfig.response
 
   return {
     props: {
       config,
-      oldConfig
     }
   }
 })

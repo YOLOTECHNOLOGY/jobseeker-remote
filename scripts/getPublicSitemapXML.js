@@ -1,5 +1,5 @@
-export const getPublicSitemapXML = (oldConfig, newConfig) => {
-  const config = newConfig
+export const getPublicSitemapXML = (response) => {
+  const config = response.data.data
 
   let locationList,
     categoryList,
@@ -9,37 +9,36 @@ export const getPublicSitemapXML = (oldConfig, newConfig) => {
     jobTypeList,
     salaryList = []
 
-  if (config && newConfig) {
+  if (config) {
     locationList =
-      config &&
-      config.inputs.location_lists
-        .map((region) => region.locations)
-        .reduce((a, c) => a.concat(c), [])
-        .sort((a, b) => a.value.localeCompare(b.value))
+        config &&
+        config.inputs.location_lists
+          .map(region =>
+            region.locations.map(loc => ({
+              ...loc,
+              value: loc.value,
+              // loc value all lower case
+              valueLowerCase: loc.value.toLowerCase()
+            }))
+          )
+          .reduce((a, c) => a.concat(c), [])
+          .sort((a, b) => a.value.localeCompare(b.value))
 
     categoryList =
       config &&
       config.inputs.job_category_lists &&
       config.inputs.job_category_lists.map((category) => {
-        // if (category.sub_list) {
-        //   return {
-        //     key: category.key,
-        //     label: category.value,
-        //     value: category.value,
-        //     sub_list: category.sub_list.map((sub) => {
-        //       return {
-        //         key: sub.key,
-        //         label: sub.value,
-        //         value: sub.value
-        //       }
-        //     })
-        //   }
-        // }
-
         return {
           key: category.key,
           label: category.value,
           value: category.value,
+          sub_list: category.sub_list.map((sub) => {
+            return {
+              key: sub.key,
+              label: sub.value,
+              value: sub.value
+            }
+          })
         }
       })
 
@@ -94,20 +93,6 @@ export const getPublicSitemapXML = (oldConfig, newConfig) => {
           value: Object.keys(salary)[0],
         }
       })
-
-    if (oldConfig) {
-      const config = oldConfig
-
-      config &&
-      config.inputs.job_category_lists &&
-      config.inputs.job_category_lists.map((category) => {
-        categoryList.push({
-          key: category.key,
-          label: category.value,
-          value: category.value,
-        })
-      })
-    }
   }
 
   const generateJobFilterPath = (param, priority) => {
@@ -116,12 +101,6 @@ export const getPublicSitemapXML = (oldConfig, newConfig) => {
     const url = `https://bossjob.ph/jobs-hiring/${
       param ? param.replace(/\s+/g, '-').toLowerCase() : ''
     }-jobs`
-    // const url =
-    //   type === 'jobCategory' || type === 'jobLocation'
-    //     ? `https://bossjob.ph/jobs-hiring/${
-    //         param ? param.replace(/\s+/g, '-').toLowerCase() : ''
-    //       }-jobs`
-    //     : `https://bossjob.ph/jobs-hiring/?${type}=${param}`
 
     return `
       <url>
@@ -165,7 +144,7 @@ export const getPublicSitemapXML = (oldConfig, newConfig) => {
   return `<?xml version="1.0" encoding="utf-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
       ${generatePath('/', 1.0)}
-      ${generatePath('/jobs-hiring/', 1.0)}
+      ${generatePath('/jobs-hiring/job-search', 1.0)}
       ${
         locationList &&
         locationList.map((loc) => generateJobFilterPath(loc.value, 0.8)).join('')
@@ -173,6 +152,12 @@ export const getPublicSitemapXML = (oldConfig, newConfig) => {
       ${
         categoryList &&
         categoryList.map((cat) => generateJobFilterPath(cat.key, 0.8)).join('')
+      }
+      ${
+        categoryList &&
+        categoryList.map((cat) => 
+          cat.sub_list.map((sub) => generateJobFilterPath(sub.key, 0.8)).join('')
+        )
       }
       ${
         industryList &&
@@ -210,8 +195,6 @@ export const getPublicSitemapXML = (oldConfig, newConfig) => {
       ${generatePath('/employer/bosshunt/agency', 0.8, true)}
       ${generatePath('/legal', 0.8, true)}
       ${generatePath('/support', 0.8, true)}
-      ${generatePath('/legal', 0.8, true)}
-      ${generatePath('/legal', 0.8, true)}
       ${generateExternalPath('https://blog.bossjob.com.ph/', 0.8)}
       ${generateExternalPath('https://hunt.bossjob.com.ph', 0.8)}
       ${generateExternalPath('https://hunt.bossjob.com.ph/get-started', 0.8)}
