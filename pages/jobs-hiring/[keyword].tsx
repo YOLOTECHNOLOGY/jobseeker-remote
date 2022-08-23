@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
@@ -247,7 +247,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const userCookie = getCookie('user') || null
 
   // No need to request data for the first time
-  const didMountRef = useRef(false)
   const [clientDefaultValues, setClientDefaultValues] = useState(defaultValues || {})
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.location)
@@ -309,8 +308,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       predefinedQuery
     )
     setHasMoreFilters(hasActiveFilters)
-    if (!didMountRef.current) {
-      didMountRef.current = true
+    if (firstRender) {
       return
     }
     if (!firstRender) setDisplayQuickLinks(false)
@@ -1031,7 +1029,7 @@ const initPagePayLoad = async (query, config = null) => {
           : value[0].value
     }
   }
-  
+
   return { defaultValues, payload }
 }
 
@@ -1064,11 +1062,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       })
 
       /* Handle job search logic */
-      const {
-        searchQuery,
-        predefinedQuery,
-        predefinedLocation,
-      } = checkFilterMatch(query, config)
+      const { searchQuery, predefinedQuery, predefinedLocation } = checkFilterMatch(query, config)
 
       /* Handle SEO Meta Tags*/
       const { month, year } = getCurrentMonthYear()
