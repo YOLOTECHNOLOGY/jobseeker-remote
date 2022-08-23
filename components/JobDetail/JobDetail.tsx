@@ -489,7 +489,7 @@ const JobDetail = ({
                 Working Location
               </Text>
               <Text textStyle='lg' className={styles.JobDetailSectionSubBody}>
-                {`${selectedJob?.location?.value}`}
+                {`${selectedJob?.full_address}`}
               </Text>
               {selectedJob?.categories.length > 0 && (
                 <>
