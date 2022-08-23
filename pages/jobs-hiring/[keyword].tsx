@@ -313,7 +313,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     }
     if (!firstRender) setDisplayQuickLinks(false)
     ;(async () => {
-      dispatch(fetchJobsListRequest(await initPagePayLoad(router.query, config), accessToken))
+      const { payload } = await initPagePayLoad(router.query, config)
+      dispatch(fetchJobsListRequest(payload, accessToken))
       setIsCategoryReset(false)
       setMoreFilterReset(false)
     })()
