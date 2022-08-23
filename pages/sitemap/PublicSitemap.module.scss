@@ -1,0 +1,77 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.contentWrapper {
+  background: white;
+  box-shadow: $box-shadow-8;
+  display: flex;
+  flex-direction: column;
+  margin: 80px;
+  padding: 5%;
+}
+
+.sectionWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom:20px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom:20px;
+
+  &Header {
+    margin-bottom: 12px;
+  }
+}
+
+.itemWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+
+  &Location {
+    @extend .itemWrapper;
+    height: 700px;
+  }
+
+  &Category{
+    @extend .itemWrapper;
+    height: 550px
+  }
+
+  &Industry {
+    @extend .itemWrapper;
+    height: 400px;
+  }
+
+  &Experience {
+    @extend .itemWrapper;
+    height: 70px;
+  }
+
+  &Qualification {
+    @extend .itemWrapper;
+    height: 90px;
+  }
+
+  &JobType{
+    @extend .itemWrapper;
+    height: 110px;
+  }
+
+  &Salary{
+    @extend .itemWrapper;
+    height: 110px;
+  }
+}
+
+.item {
+  display: flex;
+  width: 200px;
+  font-weight:300;
+}
