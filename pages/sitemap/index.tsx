@@ -32,13 +32,6 @@ const PublicSitemap = ({ config }) => {
 
   useEffect(() => {
     if (config) {
-      // const regionLocationList =
-      //   config &&
-      //   config.inputs.location_lists.map(region => ({
-      //     label: region.display_name,
-      //     value: region.value,
-      //     subList: region.locations
-      //   }))
       const locationList =
         config &&
         config.inputs.location_lists
@@ -110,7 +103,6 @@ const PublicSitemap = ({ config }) => {
           }
         })
 
-      // setRegionLocationList(regionLocationList)
       setLocationList(locationList)
       setCategoryList(categoryList)
       setIndustryList(industryList)
@@ -128,7 +120,6 @@ const PublicSitemap = ({ config }) => {
       <Link
         to={pathUrl}
         external
-        // style={{ display: 'flex' }}
         className={styles.item}
         key={param}
       >
@@ -317,14 +308,6 @@ const PublicSitemap = ({ config }) => {
               <Text textStyle="base">FAQ</Text>
             </Link>
           </div>
-          {/* <div className={styles.section}>
-              <Text textColor="primaryBlue" bold tagName="h3" textStyle="base">Jobs by Location (Region) </Text>
-              {regionLocationList.map(region =>
-                region.subList.map(loc => {
-                  return generateLocationPath(loc)
-                })
-              )}
-            </div> */}
         </div>
         <div className={styles.sectionWrapper}>
           <Text className={styles.sectionHeader} textColor="primaryBlue" bold tagName="h2" textStyle="lg">
