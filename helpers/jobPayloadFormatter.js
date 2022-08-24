@@ -39,7 +39,7 @@ const formatLocationConfig = (locationList) => {
     return {
       label: region.display_name,
       value: region.value,
-      subList: region.locations,
+      subList: region.locations
     }
   })
   return locationConfig
@@ -116,7 +116,7 @@ const SEOJobSearchMetaBuilder = (query, location, category, path) => {
   const data = {
     title: title,
     description: description,
-    canonical: canonical,
+    canonical: canonical
   }
 
   return data
@@ -130,7 +130,7 @@ const nonFilterKeys = [
   'sort',
   'utm_source',
   'utm_campaign',
-  'utm_medium',
+  'utm_medium'
 ]
 
 // const buildQueryParams = (data) => {
@@ -150,7 +150,7 @@ const nonFilterKeys = [
 // }
 
 // check if there is a match/a reserved keyword, and return matched data under matchedFilter
-const checkFilterMatch = (routerQuery, config, isMobile=false) => {
+const checkFilterMatch = (routerQuery, config, isMobile = false) => {
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
   const locationList = config.inputs.location_lists
@@ -162,7 +162,7 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
-    ['seo-value']: range['seo-value'],
+    ['seo-value']: range['seo-value']
   }))
   const formatLocationConfig = (locationList) => {
     const locationConfig = locationList?.map((region) => region.locations)
@@ -176,7 +176,7 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
     workExperience: expLvlList,
     qualification: eduLevelList,
     location: formattedLocationList,
-    category: categoryList,
+    category: categoryList
   }
   let predefinedQuery = ''
   let searchQuery = ''
@@ -214,13 +214,13 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
         if (mainOptionMatched.length > 0) {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: mainOptionMatched,
+            [key]: mainOptionMatched
           }
         }
         if (subOptionMatched.length > 0) {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: subOptionMatched,
+            [key]: subOptionMatched
           }
         }
       } else {
@@ -248,11 +248,11 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
         if (hasMatch.length > 0 && key !== 'location') {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: hasMatch,
+            [key]: hasMatch
           }
         } else if (hasMatch.length > 0 && key === 'location') {
           matchedLocation = {
-            [key]: hasMatch,
+            [key]: hasMatch
           }
         }
       }
@@ -271,7 +271,7 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
         filterData = {
           ...filterData,
           // ensure to only push unduplicated results
-          [key]: Array.from(new Set(arrayVal)).join(','),
+          [key]: Array.from(new Set(arrayVal)).join(',')
         }
         const hasMatch = []
         let isLocationMatch = false
@@ -300,14 +300,14 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
               const prevValue = matchedConfigFromUserSelection[key]
               matchedConfigFromUserSelection = {
                 ...matchedConfigFromUserSelection,
-                [key]: prevValue ? [...prevValue, ...mainOptionMatched] : mainOptionMatched,
+                [key]: prevValue ? [...prevValue, ...mainOptionMatched] : mainOptionMatched
               }
             }
             if (subOptionMatched.length > 0) {
               const prevValue = matchedConfigFromUserSelection[key]
               matchedConfigFromUserSelection = {
                 ...matchedConfigFromUserSelection,
-                [key]: prevValue ? [...prevValue, ...subOptionMatched] : subOptionMatched,
+                [key]: prevValue ? [...prevValue, ...subOptionMatched] : subOptionMatched
               }
             }
           } else {
@@ -329,12 +329,12 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
             locationMatch = true
             matchedLocation = {
               ...matchedLocation,
-              [key]: hasMatch,
+              [key]: hasMatch
             }
           } else {
             matchedConfigFromUserSelection = {
               ...matchedConfigFromUserSelection,
-              [key]: hasMatch,
+              [key]: hasMatch
             }
           }
         }
@@ -355,8 +355,10 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
     array.push(matchedConfigFromUserSelection)
 
   // Fields that need to be counted based on mobile or desktop view
-  const filterCountField = isMobile ? ['jobType', 'salary', 'industry', 'workExperience', 'qualification', 'category'] : ['industry', 'workExperience', 'qualification']
-  
+  const filterCountField = isMobile
+    ? ['jobType', 'salary', 'industry', 'workExperience', 'qualification', 'category']
+    : ['industry', 'workExperience', 'qualification']
+
   array.forEach((matchData) => {
     for (const [key] of Object.entries(matchData)) {
       const data = matchData[key].map((filter) => filter['seo-value'])
@@ -395,7 +397,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
-    ['seo-value']: range['seo-value'],
+    ['seo-value']: range['seo-value']
   }))
   const formatLocationConfig = (locationList) => {
     const locationConfig = locationList?.map((region) => region.locations)
@@ -409,7 +411,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     workExperience: expLvlList,
     qualification: eduLevelList,
     location: formattedLocationList,
-    category: categoryList,
+    category: categoryList
   }
 
   let matchedConfigFromUrl = {}
@@ -448,13 +450,13 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         if (mainOptionMatched.length > 0) {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: mainOptionMatched,
+            [key]: mainOptionMatched
           }
         }
         if (subOptionMatched.length > 0) {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: subOptionMatched,
+            [key]: subOptionMatched
           }
         }
       } else {
@@ -479,11 +481,11 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         if (hasMatch.length > 0 && key !== 'location') {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: hasMatch,
+            [key]: hasMatch
           }
         } else if (hasMatch.length > 0 && key === 'location') {
           matchedLocation = {
-            [key]: hasMatch,
+            [key]: hasMatch
           }
         }
       }
@@ -515,21 +517,21 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         if (mainOptionMatched.length > 0) {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: mainOptionMatched,
+            [key]: mainOptionMatched
           }
           matchedConfig = {
             ...matchedConfig,
-            [key]: mainOptionMatched,
+            [key]: mainOptionMatched
           }
         }
         if (subOptionMatched.length > 0) {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: subOptionMatched,
+            [key]: subOptionMatched
           }
           matchedConfig = {
             ...matchedConfig,
-            [key]: subOptionMatched,
+            [key]: subOptionMatched
           }
         }
       } else {
@@ -550,19 +552,19 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         if (hasMatch.length > 0 && key !== 'location') {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: hasMatch,
+            [key]: hasMatch
           }
           matchedConfig = {
             ...matchedConfig,
-            [key]: hasMatch,
+            [key]: hasMatch
           }
         } else if (hasMatch.length > 0 && key === 'location') {
           matchedLocation = {
-            [key]: hasMatch,
+            [key]: hasMatch
           }
           matchedConfig = {
             ...matchedConfig,
-            [key]: hasMatch,
+            [key]: hasMatch
           }
         }
       }
@@ -589,7 +591,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         updatedFilters = {
           ...updatedFilters,
           // ensure to only push unduplicated results
-          [key]: [...new Set(value)].join(),
+          [key]: [...new Set(value)].join()
         }
       }
     }
@@ -612,7 +614,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         filterData = {
           ...filterData,
           // ensure to only push unduplicated results
-          [key]: Array.from(new Set(arrayVal)).join(','),
+          [key]: Array.from(new Set(arrayVal)).join(',')
         }
         const hasMatch = []
         let isLocationMatch = false
@@ -641,14 +643,14 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
               const prevValue = matchedConfigFromUserSelection[key]
               matchedConfigFromUserSelection = {
                 ...matchedConfigFromUserSelection,
-                [key]: prevValue ? [...prevValue, ...mainOptionMatched] : mainOptionMatched,
+                [key]: prevValue ? [...prevValue, ...mainOptionMatched] : mainOptionMatched
               }
             }
             if (subOptionMatched.length > 0) {
               const prevValue = matchedConfigFromUserSelection[key]
               matchedConfigFromUserSelection = {
                 ...matchedConfigFromUserSelection,
-                [key]: prevValue ? [...prevValue, ...subOptionMatched] : subOptionMatched,
+                [key]: prevValue ? [...prevValue, ...subOptionMatched] : subOptionMatched
               }
             }
           } else {
@@ -669,12 +671,12 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
           if (isLocationMatch) {
             matchedLocation = {
               ...matchedLocation,
-              [key]: hasMatch,
+              [key]: hasMatch
             }
           } else {
             matchedConfigFromUserSelection = {
               ...matchedConfigFromUserSelection,
-              [key]: hasMatch,
+              [key]: hasMatch
             }
           }
         }
@@ -698,13 +700,25 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     })
   })
 
-  const array = []
+  let array = []
   if (Object.keys(matchedLocation).length > 0) array.push(matchedLocation)
   if (Object.keys(matchedConfigFromUrl).length > 0) array.push(matchedConfigFromUrl)
   if (Object.keys(matchedConfigFromUserSelection).length > 0)
     array.push(matchedConfigFromUserSelection)
 
   let uniqueList = []
+
+  /* If field === category && array includes 2 keys from category,
+   *  remove matchedConfigFromUrl, only take in matchedConfigFromUserSelection
+   */
+  if (
+    field === 'category' &&
+    Object.keys(matchedConfigFromUrl).includes('category') &&
+    Object.keys(matchedConfigFromUserSelection).includes('category')
+  ) {
+    array = array.filter((matchData) => matchData !== matchedConfigFromUrl)
+  }
+
   array.forEach((matchData) => {
     for (const [key] of Object.entries(matchData)) {
       const data =
@@ -720,12 +734,12 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       if (filterParamsObject[key]) {
         filterParamsObject = {
           ...filterParamsObject,
-          [key]: uniqueList.join(),
+          [key]: uniqueList.join()
         }
       } else {
         filterParamsObject = {
           ...filterParamsObject,
-          [key]: match,
+          [key]: match
         }
       }
 
@@ -1054,7 +1068,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       } else {
         filterParamsObject = {
           ...filterParamsObject,
-          [key]: valueArray.join(),
+          [key]: valueArray.join()
         }
       }
     }
@@ -1065,7 +1079,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     filterParamsObject,
     matchedConfig,
     matchedConfigFromUrl,
-    matchedConfigFromUserSelection,
+    matchedConfigFromUserSelection
   }
 
   return data
@@ -1119,7 +1133,7 @@ const getPredefinedParamsFromUrl = (routerQuery, catList, locList, clearAllFilte
   return {
     predefinedQuery,
     predefinedCategory,
-    predefinedLocation,
+    predefinedLocation
   }
 }
 
@@ -1162,7 +1176,7 @@ const getLocationList = (config) => {
         region.locations.map((loc) => ({
           ...loc,
           // loc value all lower case
-          value: loc.value,
+          value: loc.value
         }))
       )
       .reduce((a, c) => a.concat(c), [])
@@ -1179,7 +1193,7 @@ const getSmsCountryList = (config) => {
     if (country.is_sms_allowed) {
       const smsCountry = {
         value: country['code'],
-        label: country['code'] + ' (' + country['value'] + ')',
+        label: country['code'] + ' (' + country['value'] + ')'
       }
 
       smsCountryList.push(smsCountry)
@@ -1231,7 +1245,7 @@ const getNoticePeriodList = (config) => {
   return config?.inputs?.notice_period_lists.map((notice) => ({
     ...notice,
     label: notice.value,
-    value: notice.id,
+    value: notice.id
   }))
 }
 
@@ -1259,7 +1273,7 @@ const getCountryList = (config) => {
     return {
       label: country.value,
       value: country.value,
-      key: country.key,
+      key: country.key
     }
   })
 
@@ -1278,7 +1292,7 @@ const getIndustryList = (config) => {
     return {
       label: industry.value,
       value: industry.value,
-      key: industry.key,
+      key: industry.key
     }
   })
 }
@@ -1293,7 +1307,7 @@ const getDegreeList = (config) => {
     return {
       label: degree.value,
       value: degree.value,
-      key: degree.key,
+      key: degree.key
     }
   })
 }
@@ -1301,8 +1315,8 @@ const getDegreeList = (config) => {
 const getApplyJobLink = (job, user, accessToken = null) => {
   // jobUrl => /job/xxxx
   // Apply job url format: /apply-job/xxx
-  let applyJobUrl = `${process.env.HOST_PATH}${job?.job_url}/apply`;
-  
+  let applyJobUrl = `${process.env.HOST_PATH}${job?.job_url}/apply`
+
   if (user) {
     if (!user?.is_profile_completed) {
       return `${process.env.HOST_PATH}/jobseeker-complete-profile/1?redirect=${applyJobUrl}`
@@ -1311,7 +1325,11 @@ const getApplyJobLink = (job, user, accessToken = null) => {
     if (job?.external_apply_url) {
       let externalApplyUrl = job?.external_apply_url
 
-      if (externalApplyUrl !== '' && externalApplyUrl !== null && !/^(f|ht)tps?:\/\//i.test(externalApplyUrl)) {
+      if (
+        externalApplyUrl !== '' &&
+        externalApplyUrl !== null &&
+        !/^(f|ht)tps?:\/\//i.test(externalApplyUrl)
+      ) {
         externalApplyUrl = 'https://' + externalApplyUrl
       }
 
@@ -1320,7 +1338,7 @@ const getApplyJobLink = (job, user, accessToken = null) => {
 
     return applyJobUrl
   }
-  
+
   return `${process.env.HOST_PATH}/login/jobseeker?redirect=${applyJobUrl}`
 }
 
@@ -1384,5 +1402,5 @@ export {
   getApplyJobLink,
   userFilterSelectionDataParser,
   checkFilterMatch,
-  mapSeoValueToGetValue,
+  mapSeoValueToGetValue
 }
