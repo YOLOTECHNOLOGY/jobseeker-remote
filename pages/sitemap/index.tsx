@@ -114,7 +114,7 @@ const PublicSitemap = ({ config }: any) => {
   }, [])
 
   const generatePath = (param, label) => {
-    const pathUrl = `${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/${param}-jobs`
+    const pathUrl = `${process.env.NEW_PROJECT_URL}/jobs-hiring/${param}-jobs`
 
     return (
       <Link
