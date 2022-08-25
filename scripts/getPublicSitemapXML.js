@@ -187,7 +187,8 @@ export const getPublicSitemapXML = (response) => {
       ${generatePath('/bosspoints', 0.8, true)}
       ${generatePath('/register/jobseeker', 0.8)}
       ${generatePath('/register/employer', 0.8, true)}
-      ${generatePath('/login', 0.8)}
+      ${generatePath('/login/jobseeker', 0.8)}
+      ${generatePath('/login/employer', 0.8, true)}
       ${generatePath('/employer', 0.8, true)}
       ${generatePath('/employer/post-a-job', 0.8, true)}
       ${generatePath('/employer#pricing', 0.8, true)}
@@ -195,9 +196,9 @@ export const getPublicSitemapXML = (response) => {
       ${generatePath('/employer/bosshunt/agency', 0.8, true)}
       ${generatePath('/legal', 0.8, true)}
       ${generatePath('/support', 0.8, true)}
-      ${generateExternalPath('https://blog.bossjob.com.ph/', 0.8)}
-      ${generateExternalPath('https://hunt.bossjob.com.ph', 0.8)}
-      ${generateExternalPath('https://hunt.bossjob.com.ph/get-started', 0.8)}
+      ${generateExternalPath('https://blog.bossjob.ph/', 0.8)}
+      ${generateExternalPath('https://hunt.bossjob.ph', 0.8)}
+      ${generateExternalPath('https://hunt.bossjob.ph/get-started', 0.8)}
       ${generatePath('/companies', 0.8)}
       ${generatePath('/companies/search', 0.8)}
       </urlset>`
