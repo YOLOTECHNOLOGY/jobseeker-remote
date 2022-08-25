@@ -16,7 +16,7 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import styles from './PublicSitemap.module.scss'
 import { useSelector } from 'react-redux'
 
-const PublicSitemap = ({ config }) => {
+const PublicSitemap = ({ config }: any) => {
   const [locationList, setLocationList] = useState([])
   const [categoryList, setCategoryList] = useState([])
   const [industryList, setIndustryList] = useState([])
@@ -181,7 +181,7 @@ const PublicSitemap = ({ config }) => {
             </Text>
             <div className={styles.itemWrapperCategory}>
               {categoryList.map(cat =>
-                <div>
+                <div key={cat.id}>
                   {generatePath(cat.key, `${cat.value} jobs`)}
                   {cat.sub_list.map(sub => generatePath(sub.key, `${sub.value} jobs`))}
                 </div>
@@ -270,7 +270,7 @@ const PublicSitemap = ({ config }) => {
             </Link>
             <Link
               className={styles.item}
-              to={`${process.env.OLD_PROJECT_URL}/jobs-hiring/`}
+              to={`${process.env.OLD_PROJECT_URL}/jobs-hiring/job-search`}
               title="Jobs in Philippines"
               external
             >
