@@ -114,7 +114,7 @@ const PublicSitemap = ({ config }: any) => {
   }, [])
 
   const generatePath = (param, label) => {
-    const pathUrl = `${process.env.NEW_PROJECT_URL}/jobs-hiring/${param}-jobs`
+    const pathUrl = `${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search/${param}-jobs`
 
     return (
       <Link
@@ -270,7 +270,7 @@ const PublicSitemap = ({ config }: any) => {
             </Link>
             <Link
               className={styles.item}
-              to={`${process.env.OLD_PROJECT_URL}/jobs-hiring/`}
+              to={`${process.env.OLD_PROJECT_URL}/jobs-hiring/job-search`}
               title="Jobs in Philippines"
               external
             >

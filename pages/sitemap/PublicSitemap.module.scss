@@ -2,12 +2,20 @@
 @import 'styles/mixins.scss';
 
 .contentWrapper {
+  @extend .GlobalContainer;
   background: white;
   box-shadow: $box-shadow-8;
   display: flex;
   flex-direction: column;
-  margin: 80px;
-  padding: 5%;
+  margin: 100px;
+  padding: 3%;
+  max-width: 88%;
+
+  @include msd {
+    margin: 0;
+    margin-top: 5px;
+    max-width: 100%;
+  }
 }
 
 .sectionWrapper {
@@ -26,6 +34,10 @@
   &Header {
     margin-bottom: 12px;
   }
+
+  @include msd {
+    margin-bottom: 16px;
+  }
 }
 
 .itemWrapper {
@@ -37,36 +49,71 @@
   &Location {
     @extend .itemWrapper;
     height: 700px;
+
+    @include msd {
+      display: block;
+      height: 3400px
+    }
   }
 
   &Category{
     @extend .itemWrapper;
-    height: 550px
+    height: 550px;
+
+    @include msd {
+      display: block;
+      height: 2185px;
+    }
   }
 
   &Industry {
     @extend .itemWrapper;
     height: 400px;
+
+    @include msd {
+      display: block;
+      height: 480px;
+    }
   }
 
   &Experience {
     @extend .itemWrapper;
     height: 70px;
+
+    @include msd {
+      display: block;
+      height: 125px;
+    }
   }
 
   &Qualification {
     @extend .itemWrapper;
     height: 90px;
+
+    @include msd {
+      display: block;
+      height: 145px;
+    }
   }
 
   &JobType{
     @extend .itemWrapper;
     height: 110px;
+
+    @include msd {
+      display: block;
+      height: 125px;
+    }
   }
 
   &Salary{
     @extend .itemWrapper;
     height: 110px;
+
+    @include msd {
+      display: block;
+      height: 125px;
+    }
   }
 }
 
