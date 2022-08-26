@@ -189,6 +189,7 @@
       }
 
       @include msd {
+        flex-direction: column;
         justify-content: center;
         margin: 30px 0;
       }
