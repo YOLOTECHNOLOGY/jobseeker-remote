@@ -426,7 +426,7 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
  * PART III - logic to determine URL format, utilizes function call appendGeneralQueryPattern, appendSingleQueryPattern, appendDoubleQueryPattern
  * 
  */
-const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear) => {
+const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear = false) => {
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
   const locationList = config.inputs.location_lists

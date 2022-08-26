@@ -420,10 +420,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           // append current search that matches catergory
           categorySelected.push(value[0]['seo-value'])
           // append the other options that was selected previously
-          Object.values(matchedConfigFromUrl).forEach((value) => {
+          Object.values(matchedConfigFromUrl).forEach((value:any) => {
             value.forEach((val) => categorySelected.push(val['seo-value']))
           })
-          Object.values(matchedConfigFromUserSelection).forEach((value) => {
+          Object.values(matchedConfigFromUserSelection).forEach((value:any) => {
             value.forEach((val) => categorySelected.push(val['seo-value']))
           })
 
