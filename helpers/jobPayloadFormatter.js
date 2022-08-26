@@ -149,7 +149,13 @@ const nonFilterKeys = [
 //   return queryString
 // }
 
-// check if there is a match/a reserved keyword, and return matched data under matchedFilter
+/**
+ * This function solely returns matched filter from URL
+ * @param {Object} routerQuery -  router query data retrieved from router.query at the point of user's selection
+ * @param {Object} config - config retrieved from config API
+ * @return {Object} 
+ * @description  Main part to the logic is to handle data extracted from URL
+ */
 const checkFilterMatch = (routerQuery, config, isMobile = false) => {
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
@@ -188,6 +194,12 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
   let matchedConfigFromUserSelection = {}
   let filterCount = 0
 
+  /* handle keyword extracted from url
+   * iterate based on number of results from queryParser
+   * queryParser can only return at most 2 result.
+   * 1 = search keyword
+   * 2 = location
+   */
   Object.keys(sanitisedConfig).forEach((key) => {
     // iterate based on number of results from queryParser
     queryParser.forEach((parsedData, index) => {
@@ -384,7 +396,36 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
   return matchedFilter
 }
 
-// handle filters from user selection in job search page
+/**
+ * handle filters selected by user in job search page
+ * @param {string} field -  the field's name. E.g: query, location, sort etc. 
+ * @param {string|string[]|Object} optionValue -  value of the filters selected. 
+ * For 'query' field = string
+ * For 'location' field = object
+ * For 'moreFilters' field = object
+ * e.g: moreFilter's optionValue object will look something like this = {
+    category: null
+    industry: ['accounting-finance']
+    jobType: null
+    location: null
+    qualification: ['bachelor']
+    salary: null
+    sort: [1]
+    urlQuery: ""
+    workExperience: ['1-year']
+  }
+  For any other filters, field = array of strings
+ * @param {Object} routerQuery -  router query data retrieved from router.query at the point of user's selection
+ * @param {Object} config - config retrieved from config API
+ * @param {Boolean} isClear - truthy value denotes that the user has reset/deselected the option
+ * @return {Object} 
+ * @description 
+ * 3 main parts to the logic :
+ * PART I - to handle data extracted from URL
+ * PART II - to handle data from user selections
+ * PART III - logic to determine URL format, utilizes function call appendGeneralQueryPattern, appendSingleQueryPattern, appendDoubleQueryPattern
+ * 
+ */
 const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear) => {
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
@@ -404,6 +445,8 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     return locationConfig
   }
   const formattedLocationList = flat(formatLocationConfig(locationList))
+
+  // Create a config object that includes all filter's field name for ease of mapping
   const sanitisedConfig = {
     industry: industryList,
     jobType: jobTypeList,
@@ -414,15 +457,21 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     category: categoryList
   }
 
-  let matchedConfigFromUrl = {}
-  let matchedConfigFromUserSelection = {}
-  let matchedLocation = {}
+  let matchedConfigFromUrl = {} // get matched filter object from config if url keyword matches any of our config filter
+  let matchedConfigFromUserSelection = {} // get matched filter object from config if filter selected by user matched any of our config filter
+  let matchedLocation = {} // get matched location object from config if url contains location keyword
   let matchedConfig = {} // specifically to return match for query
-  let predefinedQuery = ''
-  let searchQuery = ''
-  let predefinedLocation = ''
+  let predefinedQuery = '' // query detected from url (if keyword does not meet any filter, it is a predefinedKeyword)
+  let searchQuery = '' // search query typed by user
+  let predefinedLocation = '' // location detected from url
   let filterData = {}
 
+  /* PART I - handle keyword extracted from url
+   * iterate based on number of results from queryParser
+   * queryParser can only return at most 2 result.
+   * 1 = search keyword
+   * 2 = location
+   */
   Object.keys(sanitisedConfig).forEach((key) => {
     // handle predefined filters from url (keyword)
     // iterate based on number of results from queryParser
@@ -578,6 +627,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     if (queryParser.length > 0 && queryParser[0] !== predefinedQuery) searchQuery = queryParser[0]
   }
 
+  /* PART II - handle filters from user selection */
   // handle filters from user selection
   let updatedFilters = { ...rest }
   // if optionValue !== [], include current filter with the rest of the filters
@@ -764,6 +814,10 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
 
   filterCount = uniqueList.length
 
+  /* PART III - logic to determine URL format
+   * There are 4 types of scenario
+   * when filterCount === 0 ||  filterCount === 1 || filterCount === 2 || filterCount > 2
+   */
   if (filterCount === 0) {
     if ((field === 'query' && isClear) || (field === 'moreFilters' && isClear)) {
       query = appendGeneralQueryPattern()
