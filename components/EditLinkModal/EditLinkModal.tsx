@@ -78,6 +78,14 @@ const EditLinkModal = ({
     handleResetForm()
   }
 
+  const handleLinkUrl = (linkUrl) => {
+    if (linkUrl) {
+      return linkUrl
+    } else {
+      return 'https://'
+    }
+  }
+
   const onSubmit = () => {
     const data = {
       url: linkUrl
@@ -137,7 +145,7 @@ const EditLinkModal = ({
               variant='outlined'
               value={linkUrl}
               defaultValue={linkUrl}
-              onClick={() => setLinkUrl('https://')}
+              onClick={() => setLinkUrl(handleLinkUrl(linkUrl))}
               onChange={(e) => setLinkUrl(e.target.value)}
             />
           </div>

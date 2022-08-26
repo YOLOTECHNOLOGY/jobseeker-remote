@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import * as ReactDOM from 'react-dom'
-
+import { flatMap } from 'lodash-es'
 /* Vendor */
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
@@ -54,7 +54,50 @@ type optionsType = {
   // eslint-disable-next-line camelcase
   sub_list?: any
 }
+const useOptionDataSelect = (initOptionData, form) => {
+  const [optionData, setOptionData] = useState(initOptionData)
 
+  useEffect(() => {
+    const category = flatMap(optionData, parent => [parent, ...(parent?.sub_list ?? [])])
+      .map(item => item.isChecked ? item['seo-value'] : undefined)
+      .filter(a => a)
+
+    form.setValue('category', category)
+  }, [optionData])
+
+  const syncParent = useCallback(data => setOptionData(data.map(parent => {
+
+    if (parent.sub_list?.length) {
+      const parentCheck = !(parent.sub_list.filter(sub => !sub.isChecked).length > 0)
+      return { ...parent, isChecked: parentCheck }
+    }
+    return parent
+  })), [setOptionData])
+
+  const onParentCheck = useCallback((e, checkedKey) => syncParent(optionData.map(parent => {
+    if (parent['seo-value'] === checkedKey && parent.sub_list?.length) {
+      const isChecked = !parent.isChecked
+      return { ...parent, sub_list: parent.sub_list.map(sub => ({ ...sub, isChecked })) }
+    }
+    return parent
+  })), [syncParent, optionData, setOptionData])
+
+  const onSubCheck = useCallback((e, checkedKey) => syncParent(optionData.map(parent => {
+    if (parent.sub_list?.length) {
+
+      return {
+        ...parent, sub_list: parent.sub_list.map(sub => {
+          if (sub['seo-value'] === checkedKey) {
+            return { ...sub, isChecked: !sub.isChecked }
+          }
+          return sub
+        })
+      }
+    }
+    return parent
+  })), [syncParent, optionData])
+  return [optionData, onParentCheck, onSubCheck]
+}
 const NavSearchFilter = ({
   urlDefaultValues,
   isShowFilter,
@@ -83,7 +126,9 @@ const NavSearchFilter = ({
   const { width } = useWindowDimensions()
   const filterRef = useRef(null)
   const sortRef = useRef(null)
-  const { register, handleSubmit, reset } = useForm()
+  const form = useForm()
+  const { register, handleSubmit, reset } = form
+
   const cx = classNames.bind(styles)
   const isShowFilterClass = cx({
     isShowingEmailAlert: isShowingEmailAlert,
@@ -165,8 +210,7 @@ const NavSearchFilter = ({
       })
       updatedData.category = category
     }
-
-    const clearFilter = []
+   const clearFilter = []
     for (const [key, value] of Object.entries<any>(data)) {
       if (value && value.length === 0) {
         clearFilter.push(key)
@@ -218,7 +262,7 @@ const NavSearchFilter = ({
         Array.isArray(urlDefaultValues[fieldName]) || typeof urlDefaultValues[fieldName] === 'string'
       const newSubList = data.sub_list.map((subData) => ({
         ...subData,
-        isChecked: isArrayOrString ? 
+        isChecked: isArrayOrString ?
           urlDefaultValues[fieldName]?.includes(subData['seo-value']) ||
           urlDefaultValues[fieldName]?.includes(data['seo-value']) : false,
       }))
@@ -229,83 +273,9 @@ const NavSearchFilter = ({
       }
       return newList
     })
-    const [listOptions, setListOptions] = useState(initialListOptions)
-
-    const onMainSelection = (e, optionData) => {
-      /* find the corresponding option data based on option['seo-value'] && 
-    update the corresponding option data with new isChecked value */
-      const data = listOptions.map((data) => {
-        let newData = { ...data }
-        if (data['seo-value'] === optionData) {
-          const newSubList = data.sub_list.map((subData) => {
-            return {
-              ...subData,
-              isChecked: !data.isChecked,
-            }
-          })
-          newData = {
-            ...newData,
-            isChecked: !data.isChecked,
-            sub_list: newSubList,
-          }
-        }
-        return newData
-      })
-      setListOptions(data)
-    }
-
-    const onSubSelection = (e, optionData) => {
-      /* find the corresponding parent option data based on option['seo-value'] && 
-    update the corresponding parent and sub option data with new isChecked value */
-      const data = listOptions.map((data) => {
-        let newData = { ...data }
-        const newSubList = data.sub_list.map((subListData) => {
-          // if checked === true, set subOption isChecked = true
-          if (e.target.checked) {
-            if (subListData['seo-value'] === optionData) {
-              return {
-                ...subListData,
-                isChecked: true,
-              }
-            } else {
-              return {
-                ...subListData,
-              }
-            }
-          } else {
-            // if checked === false, set subOption isChecked = false
-            if (subListData['seo-value'] === optionData) {
-              return {
-                ...subListData,
-                isChecked: false,
-              }
-            } else {
-              // if main option isChecked is true, set all other option's isChecked = true
-              if (data.isChecked) {
-                return {
-                  ...subListData,
-                  isChecked: true,
-                }
-              } else {
-                return {
-                  ...subListData,
-                }
-              }
-            }
-          }
-        })
-        newData = {
-          ...newData,
-          // if sub option is deselected, deselect main option as well
-          isChecked: !e.target.checked ? e.target.checked : newData.isChecked,
-          sub_list: newSubList,
-        }
-        return newData
-      })
-
-      setListOptions(data)
-    }
-
+   
+    const [listOptions, onMainSelection, onSubSelection] = useOptionDataSelect(initialListOptions, form)
+   
     return (
       <div className={styles.searchFilterSection}>
         <Accordian
@@ -330,7 +300,7 @@ const NavSearchFilter = ({
                   {i === 0 && (
                     // injecting an empty checkbox fixes weird bug where selecting the second checkbox will auto select first checkbox
                     <label key='empty' style={{ display: 'none' }}>
-                      <input type='checkbox' value={null} {...register(fieldName)} />
+                      <input type='checkbox' value={null}/>
                       <Text textStyle='lg'>Empty</Text>
                     </label>
                   )}
@@ -340,7 +310,6 @@ const NavSearchFilter = ({
                       value={option['seo-value']}
                       checked={option.isChecked || allSubOptionSelected}
                       onClick={(e) => onMainSelection(e, option['seo-value'])}
-                      {...register(fieldName)}
                     />
                     <Text textStyle='lg'>{option.value}</Text>
                   </label>
@@ -352,7 +321,6 @@ const NavSearchFilter = ({
                           value={subOption['seo-value']}
                           checked={option.isChecked || subOption.isChecked}
                           onClick={(e) => onSubSelection(e, subOption['seo-value'])}
-                          {...register(fieldName)}
                         />
                         <Text textStyle='lg'>{subOption.value}</Text>
                       </label>
@@ -504,6 +472,13 @@ const NavSearchFilter = ({
                 title='Qualification'
                 fieldName='qualification'
                 options={eduLevelList}
+                defaultOpenState={true}
+                isNotCollapsible={true}
+              />
+              <SearchFilters
+                title='Company'
+                fieldName='company'
+                options={[{value: 'View verified companies', label: 'is_verified'}]} // add in backend?
                 defaultOpenState={true}
                 isNotCollapsible={true}
               />

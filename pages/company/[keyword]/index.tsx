@@ -49,7 +49,7 @@ const CompanyDetail = (props: any) => {
     loop: false,
     skipSnaps: false,
     slidesToScroll: 1,
-    inViewThreshold: 1,
+    inViewThreshold: 1
   })
 
   const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
@@ -68,7 +68,7 @@ const CompanyDetail = (props: any) => {
       size,
       page,
       query: jobQuery,
-      location: jobLocation?.value || '',
+      location: jobLocation?.value || ''
     }
 
     dispatch(fetchJobsListRequest({ ...payload }, accessToken))
@@ -331,14 +331,14 @@ const CompanyDetail = (props: any) => {
                             <div
                               className={classNames([
                                 styles.slidesControlItem,
-                                styles.slidesControlLeft,
+                                styles.slidesControlLeft
                               ])}
                               onClick={scrollPrev}
                             />
                             <div
                               className={classNames([
                                 styles.slidesControlItem,
-                                styles.slidesControlRight,
+                                styles.slidesControlRight
                               ])}
                               onClick={scrollNext}
                             />
@@ -439,7 +439,7 @@ const CompanyDetail = (props: any) => {
                           location: companyJob.job_location,
                           salary: companyJob.salary_range_value,
                           availability: companyJob.job_type,
-                          jobUrl: companyJob.job_url,
+                          jobUrl: companyJob.job_url
                         }
 
                         return <CompanyJobsCard {...company} key={companyJob.id} />
@@ -488,7 +488,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobFilterpayload = {
     companyIds: companyId,
     size: 10,
-    page: 1,
+    page: 1
   }
 
   store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
@@ -509,7 +509,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const companyName = companyDetail.name
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
-  const seoMetaTitle = `Working at ${companyName}| Bossjob`
+  const seoMetaTitle = `Working at ${companyName} | Bossjob`
   const seoMetaDescription = encodeURI(
     `Discover career opportunities at ${companyName}, learn more about ${companyName} by reading employee reviews, benefits and culture on Bossjob!`
   )
@@ -520,8 +520,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       accessToken,
       seoMetaTitle,
       seoMetaDescription,
-      totalActiveJobs,
-    },
+      totalActiveJobs
+    }
   }
 })
 

@@ -6,13 +6,15 @@ interface MaterialMobileTooltipProps {
   className: string
   title: string
   placement?: any
+  style?:any
 }
 
 const MaterialMobileTooltip = ({
   icon,
   className,
   title,
-  placement='top'
+  placement='top',
+  ...rest
 }: MaterialMobileTooltipProps) => {
   const [openTooltip, setOpenTooltip] = useState(false)
   
@@ -24,6 +26,7 @@ const MaterialMobileTooltip = ({
       disableFocusListener
       disableTouchListener
       open={openTooltip}
+      {...rest}
     >
       <span className={className}>
         <img 

@@ -13,11 +13,22 @@
   }
 
   &Company {
-    margin-top: 8px;
-    display: block;
+    display: flex;
 
-    &:hover {
-      text-decoration: underline;
+    &Name {
+      margin-top: 8px;
+      display: block;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &Tooltip {
+      vertical-align: middle;
+      margin-left: 5px;
+      margin-top: 11px;
+      cursor: pointer;
     }
   }
 
@@ -426,7 +437,7 @@
   padding: 24px;
   margin-top: 24px;
   line-height: 24px;
-
+  
   span {
     display: block;
   }
@@ -565,6 +576,12 @@
     height: 52px;
   }
 
+  &Tooltip {
+    vertical-align: middle;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+
   @include msd {
     padding: 24px;
     border: 1px solid rgba($lightgrey, 0.5);
@@ -611,4 +628,12 @@
   @include msd {
     margin: 48px auto;
   }
+}
+
+
+.companyIsVerifiedToolTip{
+  display:inline-block !important;
+  vertical-align: middle;
+  margin-left: 5px;
+  cursor: pointer;
 }
