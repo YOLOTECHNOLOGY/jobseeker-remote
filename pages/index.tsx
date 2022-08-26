@@ -81,7 +81,8 @@ const Home = (props: HomeProps) => {
   const router = useRouter()
   const isAuthenticated = getCookie('accessToken') ? true : false
   const [searchValue, setSearchValue] = useState('')
-  const [suggestionList, setSuggestionList] = useState([])
+  const [searchHistories,addSearchHistory] = useSearchHistory()
+  const [suggestionList, setSuggestionList] = useState(searchHistories)
   const [showLogo, setShowLogo] = useState(false)
 
   const [activeFeature, updateActiveFeature] = useState(1)
@@ -138,7 +139,7 @@ const Home = (props: HomeProps) => {
       }
     }
   }, [activeFeature])
-  const [searchHistories,addSearchHistory] = useSearchHistory()
+  
   const updateUrl = (queryParam) => {
     const queryObject = {
       page: 1,
