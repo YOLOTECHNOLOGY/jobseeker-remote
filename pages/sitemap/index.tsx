@@ -14,7 +14,6 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 /* Styles */
 import styles from './PublicSitemap.module.scss'
-import { useSelector } from 'react-redux'
 
 const PublicSitemap = ({ config }: any) => {
   const [locationList, setLocationList] = useState([])
@@ -24,11 +23,6 @@ const PublicSitemap = ({ config }: any) => {
   const [experienceList, setExperienceList] = useState([])
   const [jobTypeList, setJobTypeList] = useState([])
   const [salaryList, setSalaryList] = useState([])
-
-  const storeState = useSelector((store: any) => store)
-  console.log('storeState', storeState)
-
-  console.log('config', config)
 
   useEffect(() => {
     if (config) {
@@ -40,7 +34,7 @@ const PublicSitemap = ({ config }: any) => {
               ...loc,
               value: loc.value,
               // loc value all lower case
-              valueLowerCase: loc.value.toLowerCase()
+              seoValue: loc.seo_value
             }))
           )
           .reduce((a, c) => a.concat(c), [])
@@ -167,10 +161,11 @@ const PublicSitemap = ({ config }: any) => {
               Jobs by Location
             </Text>
             <div className={styles.itemWrapperLocation}>
-              {locationList.map(loc =>
-                generatePath(
-                  loc.valueLowerCase,
-                  `Jobs in ${loc.value}`
+              {locationList.map(loc => (
+                  generatePath(
+                    loc.seoValue,
+                    `Jobs in ${loc.value}`
+                  )
                 )
               )}
             </div>
