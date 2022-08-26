@@ -729,7 +729,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     dispatch(deleteSaveJobRequest(deleteJobPayload))
   }
 
-
   return (
     <Layout>
       <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonical} />

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { isMobile } from 'react-device-detect'
 
 // @ts-ignore
 import { END } from 'redux-saga'
@@ -30,6 +31,8 @@ import ReadMore from 'components/ReadMore'
 import JobDetailSidebarCard from 'components/Loader/JobDetailSidebarCard'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 import MaterialLocationField from 'components/MaterialLocationField'
+import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
+import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 const ModalVerifyEmail = dynamic(() => import('components/ModalVerifyEmail'))
 // import AdSlot from 'components/AdSlot'
 
@@ -87,6 +90,7 @@ import {
   ExpireIcon,
   RateIcon,
   LocationPinIcon,
+  BlueTickIcon,
   DefaultAvatar,
   CarIcon
 } from 'images'
@@ -512,11 +516,26 @@ const Job = ({
                 <Text textStyle='xl' tagName='h1' bold className={styles.jobDetailPrimaryInfoTitle}>
                   {jobDetail?.job_title}
                 </Text>
-                <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
-                  <Text textStyle='lg' className={styles.jobDetailCompany}>
-                    {jobDetail?.company?.name}
-                  </Text>
-                </Link>
+                <div className={styles.jobDetailCompany}>
+                  <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
+                    <Text textStyle='lg' className={styles.jobDetailCompanyName}>
+                      {jobDetail?.company?.name}
+                    </Text>
+                  </Link>
+                  {jobDetail?.company?.is_verify && (isMobile ? (
+                    <MaterialMobileTooltip
+                      icon={BlueTickIcon}
+                      className={styles.jobDetailCompanyTooltip}
+                      title='Verified'
+                    />
+                  ) : (
+                    <MaterialDesktopTooltip
+                      icon={BlueTickIcon}
+                      className={styles.jobDetailCompanyTooltip}
+                      title='Verified'
+                    />
+                  ))}
+                </div>
               </div>
               <div
                 className={classNamesCombined([
@@ -804,8 +823,21 @@ const Job = ({
                           {job.truncated_job_title || job.job_title}
                         </Text>
                       </Link>
-                      <Text textStyle='lg' tagName='p'>
+                      <Text className={styles.jobDetailSidebarCardCompanyName} textStyle='lg' tagName='p'>
                         {job.company_name}
+                        {jobDetail?.company?.is_verify && (isMobile ? (
+                          <MaterialMobileTooltip
+                            icon={BlueTickIcon}
+                            className={styles.jobDetailSidebarCardTooltip}
+                            title='Verified'
+                          />
+                        ) : (
+                          <MaterialDesktopTooltip
+                            icon={BlueTickIcon}
+                            className={styles.jobDetailSidebarCardTooltip}
+                            title='Verified'
+                          />
+                        ))}
                       </Text>
                       <Text textStyle='lg' tagName='p'>
                         {job.location_value}

@@ -112,11 +112,21 @@
   }
 
   &Company {
-    display: block;
-    margin: 8px 0 13px;
-    &:hover {
-      color: $primaryBlue;
-      text-decoration: underline;
+    display: flex;
+
+    &Name {
+      display: block;
+      margin: 8px 0 13px;
+      &:hover {
+        color: $primaryBlue;
+        text-decoration: underline;
+      }
+    }
+
+    &Tooltip {
+      vertical-align: text-top;
+      margin-left: 5px;
+      cursor: pointer;
     }
   }
 

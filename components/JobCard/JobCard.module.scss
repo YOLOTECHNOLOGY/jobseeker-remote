@@ -77,6 +77,11 @@
       z-index: -1;
       margin-top: 5px;
     }
+
+    &Tooltip {
+      vertical-align: middle;
+      cursor: pointer;
+    }
   }
 
   &Status {

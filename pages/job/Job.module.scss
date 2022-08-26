@@ -13,11 +13,22 @@
   }
 
   &Company {
-    margin-top: 8px;
-    display: block;
+    display: flex;
 
-    &:hover {
-      text-decoration: underline;
+    &Name {
+      margin-top: 8px;
+      display: block;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &Tooltip {
+      vertical-align: middle;
+      margin-left: 5px;
+      margin-top: 11px;
+      cursor: pointer;
     }
   }
 
@@ -563,6 +574,12 @@
   &Image {
     width: 52px;
     height: 52px;
+  }
+
+  &Tooltip {
+    vertical-align: middle;
+    margin-left: 5px;
+    cursor: pointer;
   }
 
   @include msd {

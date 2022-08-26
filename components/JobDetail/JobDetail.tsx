@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import moment from 'moment'
+import { isMobile } from 'react-device-detect'
 
 /* Vendors */
 import classNames from 'classnames/bind'
@@ -19,6 +20,8 @@ import dynamic from 'next/dynamic'
 import Link from 'components/Link'
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
+import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
+import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 import ReadMore from 'components/ReadMore'
 const QuickApplyModal = dynamic(() => import('components/QuickApplyModal'))
 const ModalVerifyEmail = dynamic(() => import('../ModalVerifyEmail'))
@@ -51,6 +54,7 @@ import {
   ExpireIcon,
   LocationPinIcon,
   RateIcon,
+  BlueTickIcon,
   DefaultAvatar
 } from 'images'
 
@@ -74,6 +78,7 @@ interface IJobDetailProps {
   isPostingSaveJob?: boolean
   config: any
   applicationUpdatedAt?: string
+  isCompanyVerified?: boolean
 }
 
 const JobDetail = ({
@@ -89,7 +94,8 @@ const JobDetail = ({
   handleDeleteSavedJob,
   applicationHistory,
   config,
-  applicationUpdatedAt
+  applicationUpdatedAt,
+  isCompanyVerified
 }: IJobDetailProps) => {
   const router = useRouter()
   const detailHeaderRef = useRef(null)
@@ -277,11 +283,24 @@ const JobDetail = ({
                   {selectedJob?.job_title}
                 </Text>
               </Link>
-              <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
-                <Text textStyle='lg' className={styles.JobDetailCompany}>
+              <Text textStyle='lg' className={styles.JobDetailCompanyName}>
+                <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
                   {selectedJob?.company?.name}
-                </Text>
-              </Link>
+                </Link>
+                {isCompanyVerified && (isMobile ? (
+                  <MaterialMobileTooltip
+                    icon={BlueTickIcon}
+                    className={styles.JobDetailCompanyTooltip}
+                    title='Verified'
+                  />
+                ) : (
+                  <MaterialDesktopTooltip
+                    icon={BlueTickIcon}
+                    className={styles.JobDetailCompanyTooltip}
+                    title='Verified'
+                  />
+                ))}
+              </Text>
               {selectedJob?.is_featured && <JobTag tag='Featured' tagType='featured' />}
               {selectedJob?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
               <JobTag tag={selectedJob?.job_type_value} />
