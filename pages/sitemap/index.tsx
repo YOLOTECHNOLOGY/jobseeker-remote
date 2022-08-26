@@ -270,7 +270,7 @@ const PublicSitemap = ({ config }: any) => {
             </Link>
             <Link
               className={styles.item}
-              to={`${process.env.OLD_PROJECT_URL}/jobs-hiring/job-search`}
+              to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search`}
               title="Jobs in Philippines"
               external
             >
