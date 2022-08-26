@@ -70,6 +70,7 @@ export const AddIcon = `${S3BucketJobseeker}/add.svg`
 export const BodyIcon = `${S3BucketJobseeker}/BodyIcon.svg`
 export const DownloadWhiteIcon = `${S3BucketJobseeker}/DownloadWhite.svg`
 export const CarouselRightRoundedBlueButton = `${S3BucketJobseeker}/CarouselRightRoundedBlueButton.svg`
+export const BlueTickIcon = `${S3BucketJobseeker}/BlueTick.svg`
 
 /* Manage profile highlight section */
 export const HighlightAboutYouIcon = `${S3BucketJobseeker}/HighlightAboutYou.svg`

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Tabs, Tab } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { isMobile } from 'react-device-detect'
 
 // Redux Actions
 import { fetchSimilarCompanyRequest } from 'store/actions/companies/fetchSimilarCompany'
@@ -11,10 +12,15 @@ import Layout from 'components/Layout'
 import SEO from 'components/SEO'
 import Text from 'components/Text'
 import Link from 'components/Link'
+import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
+import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 
 // Styles
 import styles from './CompanyProfileLayout.module.scss'
 import JobDetailSidebarCard from 'components/Loader/JobDetailSidebarCard'
+
+// Assets
+import { BlueTickIcon } from 'images'
 
 const theme = createTheme({
   components: {
@@ -97,9 +103,22 @@ const CompanyProfileLayout = ({
               className={styles.companyBanner}
             />
             <div className={styles.companyProfile}>
-              <img src={company.logo_url} alt={`${company.name} logo`} />
+              <img src={company.logo_url} alt={`${company.name} logo`} width='78px' height='78px' className={styles.companyProfileImage}/>
               <Text tagName='h1' textStyle='xxl' bold>
                 {company.name}
+                {company?.is_verify && (isMobile ? (
+                  <MaterialMobileTooltip
+                    icon={BlueTickIcon}
+                    className={styles.companyTooltip}
+                    title='Verified'
+                  />
+                ) : (
+                  <MaterialDesktopTooltip
+                    icon={BlueTickIcon}
+                    className={styles.companyTooltip}
+                    title='Verified'
+                  />
+                ))}
               </Text>
             </div>
 
@@ -175,21 +194,44 @@ const CompanyProfileLayout = ({
             {similarCompanies?.length > 0 && (
               <div className={styles.relatedCompanyList}>
                 {similarCompanies.map((company) => (
-                  <Link
-                    to={company?.company_url || '/'}
-                    key={company.id}
-                    className={styles.relatedCompanyItem}
-                  >
-                    <img
-                      src={company.logo_url}
-                      alt={`${company.name} logo`}
-                      className={styles.relatedCompanyImage}
-                    />
+                  <div key={company.id}>
+                    <Link
+                      to={company?.company_url || '/'}
+                      key={company.id}
+                      className={styles.relatedCompanyImageItem}
+                    >
+                      <img
+                        src={company.logo_url}
+                        alt={`${company.name} logo`}
+                        className={styles.relatedCompanyImage}
+                      />
+                    </Link>
                     <Text textStyle='lg' bold className={styles.relatedCompanyName}>
-                      {company.name}
+                      <Link
+                        to={company?.company_url || '/'}
+                        key={company.id}
+                        className={styles.relatedCompanyNameItem}
+                      >
+                        {company.name}
+                      </Link>
+                      {company?.is_verify && (isMobile ? (
+                        <MaterialMobileTooltip
+                          icon={BlueTickIcon}
+                          className={styles.companyTooltip}
+                          title='Verified'
+                        />
+                      ) : (
+                        <MaterialDesktopTooltip
+                          icon={BlueTickIcon}
+                          className={styles.companyTooltip}
+                          title='Verified'
+                        />
+                      ))}
                     </Text>
-                    <Text textStyle='lg'>{company.industry}</Text>
-                  </Link>
+                    <div className={styles.relatedCompanyIndustry}>
+                      <Text textStyle='lg'>{company.industry}</Text>
+                    </div>
+                  </div>
                 ))}
               </div>
             )}

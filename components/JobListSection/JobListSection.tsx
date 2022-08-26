@@ -251,6 +251,7 @@ const JobListSection = ({
                   handleSelectedId={() => {
                     handleSelectedJobId(job.id, job.job_url)
                   }}
+                  isCompanyVerified={job.is_company_verify}
                 />
               ))}
             </div>
@@ -276,6 +277,7 @@ const JobListSection = ({
                 handlePostSaveJob={handlePostSaveJob}
                 handleDeleteSavedJob={handleDeleteSavedJob}
                 config={config}
+                isCompanyVerified={selectedJob?.['company']?.['is_verify']}
               />
             )}
 

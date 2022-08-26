@@ -1,6 +1,10 @@
+import { isMobile } from 'react-device-detect'
+
 /* Components */
 import Text from 'components/Text'
 import Link from 'components/Link'
+import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
+import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 
 /* Helpers */
 import { truncateWords } from 'helpers/formatter'
@@ -10,6 +14,9 @@ import styles from './CompanyCard.module.scss'
 interface ICompanyCard {
   company: any
 }
+
+// Assets
+import { BlueTickIcon } from 'images'
 
 const CompanyCard = ({
   company
@@ -25,9 +32,24 @@ const CompanyCard = ({
       </div>
       <div className={styles.companyCardRight}>
         <div className={styles.companyCardName}>
-          <Link to={companyUrl}>
-            <Text textStyle='lg' bold>{truncateWords(company.name, 60)}</Text>
-          </Link>
+          <Text textStyle='lg' bold>
+            <Link to={companyUrl}>
+              {truncateWords(company.name, 60)}
+            </Link>
+            {company?.is_verify && (isMobile ? (
+              <MaterialMobileTooltip
+                icon={BlueTickIcon}
+                className={styles.companyCardTooltip}
+                title='Verified'
+              />
+            ) : (
+              <MaterialDesktopTooltip
+                icon={BlueTickIcon}
+                className={styles.companyCardTooltip}
+                title='Verified'
+              />
+            ))}
+          </Text>
         </div>
         <Text textStyle='lg' tagName='p' className={styles.companyCardCategory}>{company?.industry}</Text>
         <Link to={`${companyUrl}/jobs`} className={styles.companyCardOpenings}>

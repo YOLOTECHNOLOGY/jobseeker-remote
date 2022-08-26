@@ -475,6 +475,13 @@ const NavSearchFilter = ({
                 defaultOpenState={true}
                 isNotCollapsible={true}
               />
+              <SearchFilters
+                title='Company'
+                fieldName='company'
+                options={[{value: 'View verified companies', label: 'is_verified'}]} // add in backend?
+                defaultOpenState={true}
+                isNotCollapsible={true}
+              />
               {displayMobileFilters && (
                 <MainSubFilters
                   title='Specialization'
