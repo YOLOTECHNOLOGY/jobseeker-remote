@@ -708,11 +708,12 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
 
   let uniqueList = []
 
-  /* If field === category && array includes 2 keys from category,
-   *  remove matchedConfigFromUrl, only take in matchedConfigFromUserSelection
+  /* If field === category or field === 'moreFilters' (in mobile) && 
+   * array includes 2 keys from category,
+   * remove matchedConfigFromUrl, only take in matchedConfigFromUserSelection
    */
   if (
-    field === 'category' &&
+    (field === 'category' || field === 'moreFilters') && 
     Object.keys(matchedConfigFromUrl).includes('category') &&
     Object.keys(matchedConfigFromUserSelection).includes('category')
   ) {
