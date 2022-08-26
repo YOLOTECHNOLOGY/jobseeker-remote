@@ -525,14 +525,16 @@ const Job = ({
                   {jobDetail?.company?.is_verify && (isMobile ? (
                     <MaterialMobileTooltip
                       icon={BlueTickIcon}
-                      className={styles.jobDetailCompanyTooltip}
+                      className={styles.companyIsVerifiedToolTip}
                       title='Verified'
+                      style={{ marginTop:'10px' }}
                     />
                   ) : (
                     <MaterialDesktopTooltip
                       icon={BlueTickIcon}
-                      className={styles.jobDetailCompanyTooltip}
+                      className={styles.companyIsVerifiedToolTip}
                       title='Verified'
+                      style={{ marginTop:'10px' }}
                     />
                   ))}
                 </div>
@@ -780,8 +782,21 @@ const Job = ({
               external
               className={styles.aboutCompanyTitle}
             >
-              <Text bold textStyle='lg' textColor='primaryBlue'>
+              <Text bold textStyle='lg' textColor='primaryBlue' className={styles.aboutCompanyTitleName}>
                 {jobDetail?.company?.name}
+                {jobDetail?.company?.is_verify && (isMobile ? (
+                    <MaterialMobileTooltip
+                      icon={BlueTickIcon}
+                      className={styles.companyIsVerifiedToolTip}
+                      title='Verified'
+                    />
+                  ) : (
+                    <MaterialDesktopTooltip
+                      icon={BlueTickIcon}
+                      className={styles.companyIsVerifiedToolTip}
+                      title='Verified'
+                    />
+                  ))}
               </Text>
             </Link>
             <div className={styles.aboutCompanyDetail}>

@@ -576,6 +576,19 @@ const JobDetail = ({
               <Link to={companyUrl} className={styles.aboutCompanyTitle}>
                 <Text bold textStyle='lg' textColor='primaryBlue'>
                   {selectedJob?.company?.name}
+                  {isCompanyVerified && (isMobile ? (
+                    <MaterialMobileTooltip
+                      icon={BlueTickIcon}
+                      className={styles.JobDetailCompanyTooltip}
+                      title='Verified'
+                    />
+                  ) : (
+                    <MaterialDesktopTooltip
+                      icon={BlueTickIcon}
+                      className={styles.JobDetailCompanyTooltip}
+                      title='Verified'
+                    />
+                  ))}
                 </Text>
               </Link>
               <div className={styles.aboutCompanyDetail}>

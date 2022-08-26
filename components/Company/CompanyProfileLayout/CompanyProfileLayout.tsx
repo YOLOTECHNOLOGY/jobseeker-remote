@@ -103,7 +103,7 @@ const CompanyProfileLayout = ({
               className={styles.companyBanner}
             />
             <div className={styles.companyProfile}>
-              <img src={company.logo_url} alt={`${company.name} logo`} width='78px' height='78px' />
+              <img src={company.logo_url} alt={`${company.name} logo`} width='78px' height='78px' className={styles.companyProfileImage}/>
               <Text tagName='h1' textStyle='xxl' bold>
                 {company.name}
                 {company?.is_verify && (isMobile ? (
@@ -217,13 +217,13 @@ const CompanyProfileLayout = ({
                       {company?.is_verify && (isMobile ? (
                         <MaterialMobileTooltip
                           icon={BlueTickIcon}
-                          className={styles.relatedCompanyTooltip}
+                          className={styles.companyTooltip}
                           title='Verified'
                         />
                       ) : (
                         <MaterialDesktopTooltip
                           icon={BlueTickIcon}
-                          className={styles.relatedCompanyTooltip}
+                          className={styles.companyTooltip}
                           title='Verified'
                         />
                       ))}

@@ -415,6 +415,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                     handleSelectedId={() =>
                       handleSelectedJobId(jobs.job.id, jobs.job.job_url, jobs.job.status_key)
                     }
+                    isCompanyVerified={jobs.job.company.is_verify}
                   />
                 ))}
             </div>
@@ -429,7 +430,6 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
               </div>
             )}
           </div>
-
           <div className={styles.MyJobsDetailInfoSection}>
             {isLoadingJobDetails && <JobDetailLoader />}
             {!isLoadingJobDetails && selectedJob && (
@@ -447,6 +447,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                 handleDeleteSavedJob={handleDeleteSavedJob}
                 handlePostSaveJob={handlePostSaveJob}
                 config={config}
+                isCompanyVerified={selectedJob.company.is_verify}
               />
             )}
             {jobsList?.length === 0 && !isLoadingJobList && (
