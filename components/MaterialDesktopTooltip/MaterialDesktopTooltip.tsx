@@ -6,19 +6,22 @@ interface MaterialDesktopTooltipProps {
   className: string
   title: string
   placement?: any
+  style?:any
 }
 
 const MaterialDesktopTooltip = ({
   icon,
   className,
   title,
-  placement='top'
+  placement='top',
+  ...rest
 }: MaterialDesktopTooltipProps) => {
   return (
     <Tooltip 
       title={title}
       placement={placement}
       arrow
+      {...rest}
     >
       <span className={className}>
         <img 

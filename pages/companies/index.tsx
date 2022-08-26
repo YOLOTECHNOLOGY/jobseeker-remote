@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
+import { isMobile } from 'react-device-detect'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -16,6 +17,8 @@ import SEO from 'components/SEO'
 import CompanyCardList from 'components/Company/CompanyCardList'
 import SearchCompanyField from 'components/SearchCompanyField'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
+import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
+import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 import { ImageList, ImageListItem } from '@mui/material'
 
 // Redux Actions
@@ -25,6 +28,9 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 // Styles
 import styles from './Companies.module.scss'
 import BannerCarousel from 'components/BannerCarousel'
+
+// Assets
+import { BlueTickIcon } from 'images'
 
 const Companies = () => {
   const dispatch = useDispatch()
@@ -65,6 +71,8 @@ const Companies = () => {
     router.query.page = val
     router.push(router, undefined, { shallow: true })
   }
+
+  console.log('featuredCompany', featuredCompany)
 
   return (
     <Layout>
@@ -107,14 +115,27 @@ const Companies = () => {
                 />
               </Link>
               <div className={styles.featuredEmployerDetails}>
-                <Link
-                  to={featuredCompany?.company_url || '/'}
-                  className={styles.featuredEmployerName}
-                >
-                  <Text textStyle='xl' bold>
+                <Text textStyle='xl' bold>
+                  <Link
+                    to={featuredCompany?.company_url || '/'}
+                    className={styles.featuredEmployerName}
+                  >
                     {featuredCompany?.name}
-                  </Text>
-                </Link>
+                  </Link>
+                  {featuredCompany?.is_verify && (isMobile ? (
+                    <MaterialMobileTooltip
+                      icon={BlueTickIcon}
+                      className={styles.featuredEmployerTooltip}
+                      title='Verified'
+                    />
+                  ) : (
+                    <MaterialDesktopTooltip
+                      icon={BlueTickIcon}
+                      className={styles.featuredEmployerTooltip}
+                      title='Verified'
+                    />
+                  ))}
+                </Text>
                 <div className={styles.featuredEmployerAbout}>
                   <div className={styles.featuredEmployerAboutItem}>
                     <Text textStyle='lg' bold>
