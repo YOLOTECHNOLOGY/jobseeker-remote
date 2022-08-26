@@ -1,15 +1,18 @@
-import { useCallback, useEffect, useState } from "react"
-
+import { useCallback, useEffect, useMemo, useState } from "react"
+const isServerSide = typeof window === 'undefined'
 export default () => {
-
-    const [searchHistories, setSearchHistories] = useState([] as string[])
     const historyPath = 'search_history'
+    const initHitory = useMemo(() => {
+        if (isServerSide) {
+            return []
+        } else {
+            return JSON.parse(localStorage.getItem(historyPath) ?? '[]')
+        }
+    }, [isServerSide])
+    const [searchHistories, setSearchHistories] = useState(initHitory)
+
     useEffect(() => {
-        const loadedSearchHistory = JSON.parse(localStorage.getItem(historyPath) ?? '[]')
-        setSearchHistories(loadedSearchHistory)
-    }, [historyPath])
-    useEffect(() => {
-       localStorage.setItem(historyPath, JSON.stringify(searchHistories))
+        localStorage.setItem(historyPath, JSON.stringify(searchHistories))
     }, [searchHistories])
 
     const addHistory: (string) => void = useCallback(newHistory => {

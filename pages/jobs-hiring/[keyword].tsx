@@ -270,8 +270,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     keyword === 'job-search' && Object.entries(rest).length === 0
   )
   const [hasMoreFilters, setHasMoreFilters] = useState(false)
-  const [suggestionList, setSuggestionList] = useState([])
-
+  const [searchHistories, addSearchHistory] = useSearchHistory()
+  const [suggestionList, setSuggestionList] = useState(searchHistories)
+  
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
@@ -314,12 +315,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       return
     }
     if (!firstRender) setDisplayQuickLinks(false)
-    ;(async () => {
-      const { payload } = await initPagePayLoad(router.query, config)
-      dispatch(fetchJobsListRequest(payload, accessToken))
-      setIsCategoryReset(false)
-      setMoreFilterReset(false)
-    })()
+      ; (async () => {
+        const { payload } = await initPagePayLoad(router.query, config)
+        dispatch(fetchJobsListRequest(payload, accessToken))
+        setIsCategoryReset(false)
+        setMoreFilterReset(false)
+      })()
   }, [router.query])
 
   useEffect(() => {
@@ -348,7 +349,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   useEffect(() => {
     if (jobDetailResponse) setSelectedJob(jobDetailResponse)
   }, [jobDetailResponse])
-  const [searchHistories,addSearchHistory] = useSearchHistory()
+
   const sortOptions = [
     { label: 'Newest', value: 1 },
     { label: 'Relevance', value: 2 },
@@ -490,7 +491,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const handleSuggestionSearch = (val) => {
-    
+    console.log('handleSuggestionSearch', handleSuggestionSearch)
     const valueLength = val?.length ?? 0
     if (valueLength === 0) {
       setSuggestionList(searchHistories as any)
