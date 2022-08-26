@@ -330,17 +330,17 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
         title={`${titleCase(category)} Jobs - Career Platform for Professionals in Philippines`}
         description={'Bossjob - Career Platform for Professionals in Philippines'}
       />
-      <div className={styles.MyJobsMenuContent}>
+      <div className={styles.myJobsMenuContent}>
         <div className={styles.container}>
           <ThemeProvider theme={theme}>
             <Tabs value={category}>
               <Tab
-                className={styles.MyJobsMenuTab}
+                className={styles.myJobsMenuTab}
                 value='saved'
                 label={
                   <Link
                     to={'/my-jobs/saved?page=1&size=10'}
-                    className={classNamesCombined([styles.MyJobsMenuLink, isSavedCategoryActive])}
+                    className={classNamesCombined([styles.myJobsMenuLink, isSavedCategoryActive])}
                   >
                     <Text bold textStyle='lg'>
                       Saved Jobs
@@ -349,12 +349,12 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                 }
               />
               <Tab
-                className={styles.MyJobsMenuTab}
+                className={styles.myJobsMenuTab}
                 value='applied'
                 label={
                   <Link
                     to={'/my-jobs/applied?page=1&size=10'}
-                    className={classNamesCombined([styles.MyJobsMenuLink, isAppliedCategoryActive])}
+                    className={classNamesCombined([styles.myJobsMenuLink, isAppliedCategoryActive])}
                   >
                     <Text bold textStyle='lg'>
                       Applied Jobs
@@ -367,10 +367,10 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
         </div>
       </div>
 
-      <div className={styles.MyJobs}>
-        <div className={classNamesCombined([styles.MyJobsMenu, isStickyClass])}>
+      <div className={styles.myJobs}>
+        <div className={classNamesCombined([styles.myJobsMenu, isStickyClass])}>
           <div className={styles.container}>
-            <div className={styles.MyJobsListOptionContent}>
+            <div className={styles.myJobsListOptionContent}>
               {!isMobile && (
                 <Text textStyle='base' bold>
                   {jobNumStart.toLocaleString()}-{jobNumEnd.toLocaleString()} of{' '}
@@ -381,9 +381,9 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
           </div>
         </div>
 
-        <div className={classNamesCombined([styles.container, styles.MyJobsContent])}>
-          <div className={styles.MyJobsList}>
-            <div className={styles.MyJobsListContent}>
+        <div className={classNamesCombined([styles.container, styles.myJobsContent])}>
+          <div className={styles.myJobsList}>
+            <div className={styles.myJobsListContent}>
               {isLoadingJobList && (
                 <React.Fragment>
                   <JobCardLoader />
@@ -394,7 +394,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
               )}
 
               {jobsList?.length === 0 && !isLoadingJobList && (
-                <div className={styles.MyJobsDetailInfoEmptyMobile}>{emptyResult()}</div>
+                <div className={styles.myJobsDetailInfoEmptyMobile}>{emptyResult()}</div>
               )}
 
               {!isLoadingJobList &&
@@ -430,7 +430,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
               </div>
             )}
           </div>
-          <div className={styles.MyJobsDetailInfoSection}>
+          <div className={styles.myJobsDetailInfoSection}>
             {isLoadingJobDetails && <JobDetailLoader />}
             {!isLoadingJobDetails && selectedJob && (
               <JobDetail
@@ -451,11 +451,11 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
               />
             )}
             {jobsList?.length === 0 && !isLoadingJobList && (
-              <div className={styles.MyJobsDetailInfoEmpty}>{emptyResult()}</div>
+              <div className={styles.myJobsDetailInfoEmpty}>{emptyResult()}</div>
             )}
           </div>
 
-          {/* <div className={styles.MyJobsAds}>
+          {/* <div className={styles.myJobsAds}>
             <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'job-page-skyscraper-1'} />
             </div>
