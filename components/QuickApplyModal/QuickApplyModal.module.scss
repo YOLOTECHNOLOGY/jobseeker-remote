@@ -5,9 +5,23 @@
   overflow-y: auto;
   height: 90vh;
   height: --webkit-fill-available;
+  max-height: 100%;
 
   @include sm{
     height:95vh !important;
+  }
+
+  [class^="Modal_modalHeader"] {
+    padding: 16px 30px;
+  }
+
+  [class^="Modal_modalBody"] {
+    padding: 16px 15px;
+    scrollbar-gutter: stable both-edges; 
+  }
+
+  [class^="Modal_modalFooter"] {
+    padding: 16px 30px;
   }
 }
 
@@ -15,12 +29,6 @@
 
   &Field {
     margin-bottom: 20px;
-
-    span {
-      @include msd {
-        line-height: 15px !important;
-      }
-    }
 
     div { 
       width: 100%;
@@ -94,6 +102,8 @@
 }
 
 .ctaButton{
+  flex: 1;
+
   @include sm{
     width:100%;
   }

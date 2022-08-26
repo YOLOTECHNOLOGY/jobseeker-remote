@@ -559,8 +559,8 @@ const Home = (props: HomeProps) => {
                           className={styles.flatDisplayImage}
                           src={BuildProfessionalResume}
                           alt='Build Professional Resume'
-                          width='335'
-                          height='265'
+                          width='645'
+                          height='525'
                         />
                         <div className={styles.featureText}>
                           <p className={styles.title}>
@@ -584,8 +584,8 @@ const Home = (props: HomeProps) => {
                           className={styles.flatDisplayImage}
                           src={ChatDirectlyWithBoss}
                           alt='Chat Directly'
-                          width='335'
-                          height='265'
+                          width='645'
+                          height='525'
                         />
                         <div className={styles.featureText}>
                           <p className={styles.title}>
@@ -607,8 +607,8 @@ const Home = (props: HomeProps) => {
                           className={styles.flatDisplayImage}
                           src={GetHeadhunted}
                           alt='Get Headhunted'
-                          width='335'
-                          height='274'
+                          width='645'
+                          height='525'
                         />
                         <div className={styles.featureText}>
                           <p className={styles.title}>
@@ -630,8 +630,8 @@ const Home = (props: HomeProps) => {
                           className={styles.flatDisplayImage}
                           src={LevelUpCareer}
                           alt='Level Up Your Career'
-                          width='335'
-                          height='265'
+                          width='645'
+                          height='525'
                         />
                         <div className={styles.featureText}>
                           <p className={styles.title}>
@@ -659,8 +659,8 @@ const Home = (props: HomeProps) => {
           </Text>
           <LazyLoad className={styles.video}>
             <iframe
-              width='560'
-              height='315'
+              width='688'
+              height='351'
               src='https://www.youtube.com/embed/_taCBqITsGM'
               title='YouTube video player'
               frameBorder='0'
@@ -690,8 +690,7 @@ const Home = (props: HomeProps) => {
                 <div className={styles.featureContentMobile}>
                   <Text textStyle='xl' className={styles.featureContentMobile}>
                     Recruitment Platform Bossjob Launches a Tool for Headhunters to Easily Spot
-                    Their
-                    <br /> Ideal Candidates
+                    Their Ideal Candidates
                   </Text>
                   <Link
                     to='https://markets.businessinsider.com/news/stocks/recruitment-platform-bossjob-launches-a-tool-for-headhunters-to-easily-spot-their-ideal-candidates-1028874126'
@@ -762,8 +761,7 @@ const Home = (props: HomeProps) => {
               ) : (
                 <div className={styles.featureContentMobile}>
                   <Text textStyle='xl' className={styles.featureContentDesc}>
-                    Grab officially kicks off Grab Ventures Ignite programme to propel Vietnam’s
-                    <br /> startup ecosystem forward
+                    Grab officially kicks off Grab Ventures Ignite programme to propel Vietnam’s startup ecosystem forward
                   </Text>
                   <Link
                     to='https://www.grab.com/vn/en/press/business/vigrab-chinh-thuc-khoi-dong-chuong-trinh-grab-ventures-ignite-nham-gop-phan-thuc-day-he-sinh-thai-khoi-nghiep-viet-namengrab-officially-kicks-off-grab-ventures-ignite-programme-to-propel-vie/'

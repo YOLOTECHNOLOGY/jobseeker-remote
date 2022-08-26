@@ -131,7 +131,7 @@ const CompanyDetail = (props: any) => {
               <div className={styles.companyOverviewLeft}>
                 {company.company_size && (
                   <div className={styles.companyOverviewItem}>
-                    <Text textStyle='xl' bold>
+                    <Text textStyle='lg' bold>
                       Company Size:{' '}
                     </Text>
                     <Text textStyle='lg'>{company.company_size} Employees</Text>
@@ -139,7 +139,7 @@ const CompanyDetail = (props: any) => {
                 )}
                 {company.industry && (
                   <div className={styles.companyOverviewItem}>
-                    <Text textStyle='xl' bold>
+                    <Text textStyle='lg' bold>
                       Industry:{' '}
                     </Text>
                     <Text textStyle='lg'>{company.industry}</Text>
@@ -147,7 +147,7 @@ const CompanyDetail = (props: any) => {
                 )}
                 {company.website && (
                   <div className={styles.companyOverviewItem}>
-                    <Text textStyle='xl' bold>
+                    <Text textStyle='lg' bold>
                       Website:{' '}
                     </Text>
                     <Link to={company.website} external>
@@ -161,7 +161,7 @@ const CompanyDetail = (props: any) => {
               <div className={styles.companyOverviewRight}>
                 {company.full_address && (
                   <div className={styles.companyOverviewItem}>
-                    <Text textStyle='xl' bold>
+                    <Text textStyle='lg' bold>
                       Location:{' '}
                     </Text>
                     <Text textStyle='lg' className={styles.companyOverviewLocation}>
@@ -175,7 +175,7 @@ const CompanyDetail = (props: any) => {
                     styles.companyOverviewItemSocial
                   )}
                 >
-                  <Text textStyle='xl' bold>
+                  <Text textStyle='lg' bold>
                     Social Media:{' '}
                   </Text>
                   <div className={styles.companyOverviewSocial}>

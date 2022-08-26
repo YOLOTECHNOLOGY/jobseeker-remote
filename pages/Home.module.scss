@@ -224,6 +224,10 @@
   width: 100%;
   margin: 80px 0;
 
+  @include msd {
+    align-items: flex-start;
+  }
+
   &ContentWrapper {
     display: flex;
     flex-direction: row;
@@ -231,11 +235,9 @@
     width: 100%;
     margin-top: 30px;
 
-    @include sm {
+    @include msd {
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
+      margin-top: 10px;
     }
   }
 
@@ -246,8 +248,10 @@
     align-items: center;
     width: 250px;
 
-    @include sm {
+    @include msd {
       margin-bottom: 25px;
+      align-items: flex-start;
+      width: auto;
 
       &:last-child {
         margin-bottom: 0px;
@@ -265,7 +269,7 @@
     }
 
     &Description {
-      text-align: center;
+      text-align: left;
     }
   }
 }
@@ -435,7 +439,7 @@
 
     .flatDisplay {
       display: none;
-      text-align: center;
+      text-align: left;
 
       @include msd {
         width: 100%;
@@ -452,6 +456,22 @@
       &Image {
         width: 100%;
         height: auto;
+
+        &[alt="Build Professional Resume"] {
+          left: -120px !important;
+        }
+
+        &[alt="Chat Directly"] {
+          left: -135px !important;
+        }
+
+        &[alt="Get Headhunted"] {
+          left: -120px !important;
+        }
+
+        &[alt="Level Up Your Career"] {
+          left: -75px !important;
+        }
       }
     }
 
@@ -475,10 +495,12 @@
       .featureText {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        top: -20px;
 
         .title {
           //   @extend .globalPrimaryTitle;
-          margin-top: 15px;
           font-weight: bold;
           font-size: pxToRem(24px);
           display: flex;
@@ -490,7 +512,7 @@
           font-size: pxToRem(15px);
           margin-top: 20px;
           display: flex;
-          text-align: center;
+          text-align: left;
           justify-content: center;
         }
       }
@@ -506,6 +528,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @include msd {
+    align-items: flex-start;
+  }
 
   & > * {
     display: flex;
@@ -531,8 +557,9 @@
       border-bottom: 1px solid $lightgrey;
       align-items: center;
 
-      @include msd {
+      @include sm {
         flex-direction: column;
+        align-items: flex-start;
       }
 
       &:last-child {
@@ -547,12 +574,37 @@
           margin-right: 0;
           margin-bottom: 10px;
         }
+
+        @include sm {
+          position: relative;
+          left: -20px;
+        
+          img[alt="Business Insider"] {
+            position: relative;
+            left: -22px;
+          }
+
+          img[alt="Grab Ventures"] {
+            margin: 10px 0;
+          }
+
+          img[alt="Moneymax"] {
+            position: relative;
+            left: -24px;
+          }
+
+          img[alt="KR Asia"] {
+            margin: 5px 0;
+            position: relative;
+            left: -14px;
+          }
+        }
       }
 
       &Desc {
         @include msd {
           display: flex;
-          text-align: center;
+          text-align: left;
         }
 
         &:hover {
@@ -566,11 +618,15 @@
         display: flex;
         text-align: center;
         flex-direction: column;
+
+        @include sm { 
+          text-align: left;
+        }
       }
       &ReadMore {
         display: flex;
         text-align: center;
-        justify-content: center;
+        justify-content: flex-start;
         margin: 10px 0;
 
         &:hover {
