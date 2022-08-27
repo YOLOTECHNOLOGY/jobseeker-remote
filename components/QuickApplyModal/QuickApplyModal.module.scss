@@ -11,17 +11,8 @@
     height:95vh !important;
   }
 
-  [class^="Modal_modalHeader"] {
-    padding: 16px 30px;
-  }
-
-  [class^="Modal_modalBody"] {
-    padding: 16px 15px;
-    scrollbar-gutter: stable both-edges; 
-  }
-
-  [class^="Modal_modalFooter"] {
-    padding: 16px 30px;
+  [class^="Modal_modalHeader__"],[class^="Modal_modalBody__"],[class^="Modal_modalFooter__"] {
+    padding: 16px 5%;
   }
 }
 
