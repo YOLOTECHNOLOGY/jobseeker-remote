@@ -1,11 +1,12 @@
 import { flat, thousandsToNumber, unslugify } from 'helpers/formatter'
-
+import queryEncoder from './queryEncoder'
 /* Helpers */
 import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Vendors */
 import moment from 'moment'
 import slugify from 'slugify'
+import { equals } from 'ramda'
 
 const handleSalary = (salaryRanges) => {
   let salaryFrom = ''
@@ -427,6 +428,7 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
  * 
  */
 const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear = false) => {
+  
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
   const locationList = config.inputs.location_lists
@@ -763,7 +765,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
    * remove matchedConfigFromUrl, only take in matchedConfigFromUserSelection
    */
   if (
-    (field === 'category' || field === 'moreFilters') && 
+    (field === 'category' || field === 'moreFilters') &&
     Object.keys(matchedConfigFromUrl).includes('category') &&
     Object.keys(matchedConfigFromUserSelection).includes('category')
   ) {
@@ -1136,6 +1138,22 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     matchedConfigFromUrl,
     matchedConfigFromUserSelection
   }
+  const dataV2 = queryEncoder(field, optionValue, routerQuery, config, isClear = false)
+  
+  console.log("routerQuery", routerQuery)
+  console.log("isClear", isClear)
+  console.log("config", config)
+  console.log("field", field)
+  console.log("optionValue", optionValue)
+  
+  console.log("data", data)
+  console.log("dataV2", dataV2)
+  // if(!equals(result.searchQuery,query)){
+  //   throw(new Error('not equal!',result.searchQuery,query))
+  // }
+  // if(!equals(result.filterParamsObject,filterParamsObject)){
+  //   throw(new Error('not equal!',result.filterParamsObject,filterParamsObject))
+  // }
 
   return data
 }
