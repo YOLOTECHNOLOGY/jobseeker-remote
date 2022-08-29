@@ -19,6 +19,7 @@ const build = (field, optionValue, routerQuery, config, isClear) => pipe(
             parseFullParams(config),
             mergeLeft(parseIncrement(field)(optionValue)),
             filter(complement(either(isEmpty, isNil))),
+            dissoc('keyword'),
             when(() => is(Array)(isClear), omit(isClear)),
             buildQueryParams,
 
