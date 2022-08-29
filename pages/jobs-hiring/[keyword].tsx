@@ -297,7 +297,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   )
   const [selectedPage, setSelectedPage] = useState(defaultPage)
 
-  // TODO
   useEffect(() => {
     const { industry, workExperience, category, jobType, salary, qualification } = router.query
     const hasActiveFilters = !!(
