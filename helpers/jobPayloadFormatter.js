@@ -11,19 +11,19 @@ const handleSalary = (salaryRanges) => {
   let salaryFrom = ''
   let salaryTo = ''
   if (salaryRanges) {
-    const sanitiseSalaryRange = salaryRanges.map((range) =>
-      range === 'Below 30K' ? '10K - 30K' : range
-    )
-
-    salaryFrom = sanitiseSalaryRange
-      .filter((salary) => salary !== 'Above 200K')
+    salaryFrom = salaryRanges
+      .filter((salary) => salary !== 'Below 30K' && salary !== 'Above 200K')
       .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split(' - ')[0]))
 
-    salaryTo = sanitiseSalaryRange
-      .filter((salary) => salary !== 'Above 200K')
+    salaryTo = salaryRanges
+      .filter((salary) => salary !== 'Below 30K' && salary !== 'Above 200K')
       .map((salaryTo) => thousandsToNumber('' + salaryTo.split(' - ')[1]))
 
-    if (sanitiseSalaryRange.includes('Above 200K')) {
+    if (salaryRanges.includes('Below 30K')) {
+      salaryFrom.push(0)
+      salaryTo.push(30000)
+    }
+    if (salaryRanges.includes('Above 200K')) {
       salaryFrom.push(200001)
       salaryTo.push(400000)
     }
