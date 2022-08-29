@@ -674,7 +674,7 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img src={BusinessInsider} alt='Business Insider' width='206' height='70' />
+                  <img className={styles.featureContentImageBusinessInsider} src={BusinessInsider} alt='Business Insider' width='206' height='70' />
                 </LazyLoad>
               </div>
               {width > 576 ? (
@@ -712,7 +712,7 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
+                  <img className={styles.featureContentImageTechInAsia} src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
                 </LazyLoad>
               </div>
               {width > 576 ? (
@@ -747,7 +747,7 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
+                  <img className={styles.featureContentImageGrabVentures} src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
                 </LazyLoad>
               </div>
               {width > 576 ? (
@@ -783,7 +783,7 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img src={MoneyMax} alt='Moneymax' width='206' height='40' />
+                  <img className={styles.featureContentImageMoneyMax} src={MoneyMax} alt='Moneymax' width='206' height='40' />
                 </LazyLoad>
               </div>
               {width > 576 ? (
@@ -812,7 +812,7 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img src={KrAsia} alt='KR Asia' width='206' height='40' />
+                  <img className={styles.featureContentImageKrAsia} src={KrAsia} alt='KR Asia' width='206' height='40' />
                 </LazyLoad>
               </div>
               {width > 576 ? (
