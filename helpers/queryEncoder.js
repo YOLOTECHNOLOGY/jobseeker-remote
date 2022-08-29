@@ -1,4 +1,4 @@
-import { map, T, mergeLeft, chain, reduce, flip, always, path, toPairs, split, equals, test, append, prop, applySpec, cond, includes, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt } from 'ramda'
+import { map, T, mergeLeft, chain, reduce, flip, always, path, toPairs, split, equals, test, append, prop, applySpec, cond, includes, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, mergeRight, converge } from 'ramda'
 const userSelectKeys = ['salary', 'jobType', 'category', 'industry', 'qualification', 'workExperience']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
@@ -24,9 +24,7 @@ const build = (field, optionValue, routerQuery, config) => {
         parseFullParams(config),
         mergeLeft(parseIncrement(field)(optionValue)),
         filter(complement(either(isEmpty, isNil))),
-        dissoc('keyword'),
-        buildQueryParams,
-        mergeLeft(buildMatchedConfigs(config)(routerQuery)) // why need this?
+        converge(mergeLeft,[pipe( dissoc('keyword'),buildQueryParams),buildMatchedConfigs(config)])
     )(routerQuery)
 }
 
@@ -86,7 +84,8 @@ const parseIncrement = cond([
             .map(key => ({ [key]: obj[key] }))
             .reduce(mergeLeft, {}),
         filter(complement(either(isEmpty, isNil))),
-        map(when(is(Array), pipe(filter(identity), join(','))))
+        map(when(is(Array), pipe(filter(identity), join(',')))),
+        filter(identity)
     )],
     [T, field => applySpec({ [field]: identity })]
 ])
@@ -96,7 +95,7 @@ const parseFullParams = config => routerQuery =>
         prop('keyword'),
         keywordParser,
         map(keywordMatches(config)),
-        reduce(mergeLeft, routerQuery),
+        reduce(mergeRight, routerQuery),
         filter(complement(either(isEmpty, isNil))),
         map(when(is(Array), join(',')))
     )(routerQuery)
