@@ -14,11 +14,19 @@ const onlyOneIn = keys => pipe(totalOf(keys), equals(1))
 const firstKeyIn = keys => pipe(allKeysIn(keys), prop(0))
 
 const build = (field, optionValue, routerQuery, config) => pipe(
-        parseFullParams(config),
-        mergeLeft(parseIncrement(field)(optionValue)),
-        filter(complement(either(isEmpty, isNil))),
-        converge(mergeLeft,[pipe( dissoc('keyword'),buildQueryParams),buildMatchedConfigs(config)])
-    )(routerQuery)
+    converge(mergeLeft, [
+        pipe(
+            parseFullParams(config),
+            mergeLeft(parseIncrement(field)(optionValue)),
+            filter(complement(either(isEmpty, isNil))),
+            dissoc('keyword'), buildQueryParams
+        ),
+        pipe(
+            mergeLeft(parseIncrement(field)(optionValue)),
+            buildMatchedConfigs(config)
+        )
+    ])
+)(routerQuery)
 
 const conditions = {
     noParams: ['query', 'location', ...userSelectKeys].map(key => no(key)).reduce(both),
@@ -65,7 +73,7 @@ const buildQueryParams = cond([
 const buildMatchedConfigs = config => applySpec({
     matchedConfig: {},
     matchedConfigFromUrl: pipe(prop('keyword'), keywordParser, itemFilter(config)),
-    matchedConfigFromUserSelection: pipe(parseFullParams(config), allKeysIn(userSelectKeys), itemFilter(config))
+    matchedConfigFromUserSelection: pipe(allKeysIn(userSelectKeys), itemFilter(config))
 })
 
 const parseIncrement = cond([
