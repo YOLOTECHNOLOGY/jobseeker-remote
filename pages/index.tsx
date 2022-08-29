@@ -56,6 +56,7 @@ import styles from './Home.module.scss'
 import breakpointStyles from 'styles/breakpoint.module.scss'
 import MetaText from '../components/MetaText'
 import useSearchHistory from 'helpers/useSearchHistory'
+import classNames from 'classnames/bind'
 // import classNamesCombined from 'classnames'
 
 type configObject = {
@@ -556,7 +557,7 @@ const Home = (props: HomeProps) => {
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
-                          className={styles.flatDisplayImage}
+                          className={classNames([styles.flatDisplayImage, styles.flatDisplayImageBuildResume])}
                           src={BuildProfessionalResume}
                           alt='Build Professional Resume'
                           width='645'
@@ -581,7 +582,7 @@ const Home = (props: HomeProps) => {
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
-                          className={styles.flatDisplayImage}
+                          className={classNames([styles.flatDisplayImage, styles.flatDisplayImageChatDirectly])}
                           src={ChatDirectlyWithBoss}
                           alt='Chat Directly'
                           width='645'
@@ -604,7 +605,7 @@ const Home = (props: HomeProps) => {
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
-                          className={styles.flatDisplayImage}
+                          className={classNames([styles.flatDisplayImage, styles.flatDisplayImageGetHeadhunted])}
                           src={GetHeadhunted}
                           alt='Get Headhunted'
                           width='645'
@@ -627,7 +628,7 @@ const Home = (props: HomeProps) => {
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
-                          className={styles.flatDisplayImage}
+                          className={classNames([styles.flatDisplayImage, styles.flatDisplayImageLevelupCareer])}
                           src={LevelUpCareer}
                           alt='Level Up Your Career'
                           width='645'

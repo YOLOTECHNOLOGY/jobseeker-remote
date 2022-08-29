@@ -458,20 +458,20 @@
         width: 100%;
         height: auto;
 
-        &[alt="Build Professional Resume"] {
-          left: -120px !important;
+        &BuildResume {
+          left: -15% !important;
+        }
+        
+        &ChatDirectly {
+          left: -21% !important;
         }
 
-        &[alt="Chat Directly"] {
-          left: -135px !important;
+        &GetHeadhunted {
+          left: -20% !important;
         }
 
-        &[alt="Get Headhunted"] {
-          left: -120px !important;
-        }
-
-        &[alt="Level Up Your Career"] {
-          left: -75px !important;
+        &LevelupCareer {
+          left: -12% !important;
         }
       }
     }
