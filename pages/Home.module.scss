@@ -580,24 +580,24 @@
           position: relative;
           left: -20px;
         
-          img[alt="Business Insider"] {
+          &BusinessInsider {
             position: relative;
             left: -22px;
           }
 
-          img[alt="Grab Ventures"] {
+          &GrabVentures {
             margin: 10px 0;
           }
 
-          img[alt="Moneymax"] {
+          &MoneyMax {
             position: relative;
             left: -24px;
           }
 
-          img[alt="KR Asia"] {
+          &KrAsia {
             margin: 5px 0;
             position: relative;
-            left: -14px;
+            left: -13px;
           }
         }
       }
