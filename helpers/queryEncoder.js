@@ -1,4 +1,4 @@
-import { map, T, mergeLeft, chain, reduce, flip, always, path, toPairs, split, equals, test, append, prop, applySpec, cond, includes, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, mergeRight, converge } from 'ramda'
+import { map, T, omit, mergeLeft, chain, reduce, flip, always, path, toPairs, split, equals, test, append, prop, applySpec, cond, includes, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, mergeRight, converge } from 'ramda'
 const userSelectKeys = ['salary', 'jobType', 'category', 'industry', 'qualification', 'workExperience']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
@@ -13,13 +13,15 @@ const totalOf = keys => pipe(allKeysIn(keys), prop('length'))
 const onlyOneIn = keys => pipe(totalOf(keys), equals(1))
 const firstKeyIn = keys => pipe(allKeysIn(keys), prop(0))
 
-const build = (field, optionValue, routerQuery, config) => pipe(
+const build = (field, optionValue, routerQuery, config, isClear) => pipe(
     converge(mergeLeft, [
         pipe(
             parseFullParams(config),
             mergeLeft(parseIncrement(field)(optionValue)),
             filter(complement(either(isEmpty, isNil))),
-            dissoc('keyword'), buildQueryParams
+            omit(['keyword', ...(isClear?.length ? isClear : [])]),
+            buildQueryParams,
+
         ),
         pipe(
             mergeLeft(parseIncrement(field)(optionValue)),

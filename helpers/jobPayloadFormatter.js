@@ -1138,7 +1138,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     matchedConfigFromUrl,
     matchedConfigFromUserSelection
   }
-  const dataV2 = queryEncoder(field, optionValue, routerQuery, config, isClear = false)
+  const dataV2 = queryEncoder(field, optionValue, routerQuery, config, isClear)
   
   console.log("routerQuery", routerQuery)
   console.log("isClear", isClear)
