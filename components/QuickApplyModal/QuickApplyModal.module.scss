@@ -5,9 +5,25 @@
   overflow-y: auto;
   height: 90vh;
   height: --webkit-fill-available;
+  max-height: 100%;
 
   @include sm{
     height:95vh !important;
+  }
+
+  &Header, &Body, &Footer {
+    padding: 16px 5%;
+  }
+
+  @include md{
+    &Header, &Footer {
+      padding: 16px 5%;
+    }
+
+    &Body {
+      padding: 16px 2.5%;
+      scrollbar-gutter: stable both-edges;
+    }
   }
 }
 
@@ -15,12 +31,6 @@
 
   &Field {
     margin-bottom: 20px;
-
-    span {
-      @include msd {
-        line-height: 15px !important;
-      }
-    }
 
     div { 
       width: 100%;
@@ -32,6 +42,10 @@
 
     > .question {
       margin-top: 15px;
+
+      span {
+        line-height: 24px;
+      }
 
       > .answer {
         margin-top: 15px;
@@ -94,6 +108,8 @@
 }
 
 .ctaButton{
+  flex: 1;
+
   @include sm{
     width:100%;
   }
