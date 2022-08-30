@@ -41,7 +41,7 @@ function* fetchJobsListReq(action) {
       xp_lvls: workExperience,
       job_types: jobType,
       company_ids: companyIds,
-      is_verify: verifiedCompany,
+      is_company_verified: verifiedCompany,
       sort,
       page,
       size: size || 30,
