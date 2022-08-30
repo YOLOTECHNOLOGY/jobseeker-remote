@@ -63,7 +63,7 @@ const useOptionDataSelect = (initOptionData, form) => {
       .map(item => item.isChecked ? item['seo-value'] : undefined)
       .filter(a => a)
 
-    form.setValue('category', category)
+    form.setValue('category', category.length === 0 ? null : category)
   }, [optionData])
 
   const syncParent = useCallback(data => setOptionData(data.map(parent => {
@@ -211,7 +211,7 @@ const NavSearchFilter = ({
       })
       updatedData.category = category
     }
-   const clearFilter = []
+    const clearFilter = []
     for (const [key, value] of Object.entries<any>(data)) {
       if (value && value.length === 0) {
         clearFilter.push(key)
