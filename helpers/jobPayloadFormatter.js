@@ -165,6 +165,12 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
   const eduLevelList = config.filters.educations
   const jobTypeList = config.inputs.job_types
   const categoryList = config.inputs.job_category_lists
+  const verifiedCompanyList = [{
+    key: 'is-verify',
+    ['seo-value']: 'is-verify',
+    value: 'View verified companies',
+    label: 'View verified companies'
+}]
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
@@ -182,7 +188,8 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
     workExperience: expLvlList,
     qualification: eduLevelList,
     location: formattedLocationList,
-    category: categoryList
+    category: categoryList,
+    verifiedCompany: verifiedCompanyList
   }
   let predefinedQuery = ''
   let searchQuery = ''
@@ -435,6 +442,12 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
   const eduLevelList = config.filters.educations
   const jobTypeList = config.inputs.job_types
   const categoryList = config.inputs.job_category_lists
+  const verifiedCompanyList = [{
+    key: 'is-verify',
+    ['seo-value']: 'is-verify',
+    value: 'View verified companies',
+    label: 'View verified companies'
+  }]
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
@@ -454,7 +467,8 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     workExperience: expLvlList,
     qualification: eduLevelList,
     location: formattedLocationList,
-    category: categoryList
+    category: categoryList,
+    verifiedCompany: verifiedCompanyList
   }
 
   let matchedConfigFromUrl = {} // get matched filter object from config if url keyword matches any of our config filter

@@ -49,6 +49,7 @@ interface SearchFilters {
 type optionsType = {
   value: string
   label: string
+  'seo-value'?: string
   id?: any
   key?: any
   // eslint-disable-next-line camelcase
@@ -476,9 +477,14 @@ const NavSearchFilter = ({
                 isNotCollapsible={true}
               />
               <SearchFilters
-                title='Company'
-                fieldName='company'
-                options={[{value: 'View verified companies', label: 'is_verified'}]} // add in backend?
+                title='Verified Company'
+                fieldName='verifiedCompany'
+                options={[{
+                  key: 'is-verify',
+                  ['seo-value']: 'is-verify',
+                  value: 'View verified companies',
+                  label: 'View verified companies'
+                }]}
                 defaultOpenState={true}
                 isNotCollapsible={true}
               />

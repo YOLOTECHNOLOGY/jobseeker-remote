@@ -18,6 +18,7 @@ function* fetchJobsListReq(action) {
       qualification,
       jobType,
       industry,
+      verifiedCompany,
       page,
       // isVerified,
       sort,
@@ -40,6 +41,7 @@ function* fetchJobsListReq(action) {
       xp_lvls: workExperience,
       job_types: jobType,
       company_ids: companyIds,
+      is_verify: verifiedCompany,
       sort,
       page,
       size: size || 30,
@@ -52,7 +54,6 @@ function* fetchJobsListReq(action) {
       yield put(fetchJobsListSuccess(response.data))
     }
   } catch (error) {
-    console.log('error', error)
     yield put(fetchJobsListFailed(error))
   }
 }
