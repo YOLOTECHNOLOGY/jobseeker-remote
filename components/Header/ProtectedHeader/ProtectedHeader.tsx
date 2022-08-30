@@ -101,6 +101,16 @@ const ProtectedHeader = () => {
                   </Text>
                 </a>
               </li>
+              <li className={styles.headerLink} style={{ position:'relative' }}>
+                <Link title='Virtual Career Fair' to={process.env.VCF_CLIENT_URL} aTag>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    Virtual Career Fair
+                    <span className={styles.hotTag}>
+                      Hot!
+                    </span>
+                  </Text>
+                </Link>
+              </li>
             </React.Fragment>
           </ul>
         </div>
