@@ -35,6 +35,7 @@ module.exports = {
     PAYMENT_URL: process.env.PAYMENT_URL,
     ACADEMY_URL: process.env.ACADEMY_URL,
     ACADEMY_CLIENT_URL: process.env.ACADEMY_CLIENT_URL,
+    VCF_CLIENT_URL: process.env.VCF_CLIENT_URL,
     COMPANY_URL: process.env.COMPANY_URL,
     CONFIG_URL: process.env.CONFIG_URL,
     GA_TRACKING_ID: process.env.GA_TRACKING_ID,
