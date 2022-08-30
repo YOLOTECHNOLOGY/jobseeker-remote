@@ -86,13 +86,13 @@ const ProtectedHeader = () => {
                   </Text>
                 </Link>
               </li>
-              <li className={styles.headerLink}>
+              {/* <li className={styles.headerLink}>
                 <Link title='Courses' to='https://academy.bossjob.ph/courses/search-courses' aTag external>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Courses
                   </Text>
                 </Link>
-              </li>
+              </li> */}
               <li className={styles.headerLink}>
                 <a className={styles.headerLinkIcon} title='Chats' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/chat')} href='/dashboard/chat'>
                   <img src={ChatIcon} width='20' height='20' />
