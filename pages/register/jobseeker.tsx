@@ -1,4 +1,4 @@
-import React, {  } from 'react'
+import React from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -24,17 +24,27 @@ import useRegister from 'pages/hooks/useRegister'
 
 const Register = () => {
   const {
-    firstName, setFirstName, 
-    firstNameError, lastName, setLastName, 
-    lastNameError, email, setEmail, 
-    emailError, password, setPassword, 
-    passwordError, showPassword, isSubscribe, setIsSubscribe,
+    firstName,
+    setFirstName,
+    firstNameError,
+    lastName,
+    setLastName,
+    lastNameError,
+    email,
+    setEmail,
+    emailError,
+    password,
+    setPassword,
+    passwordError,
+    showPassword,
+    isSubscribe,
+    setIsSubscribe,
     errors,
     register,
     handleRegister,
     isRegisteringJobseeker,
     handleOnShowPassword,
-    callbackRequest,
+    callbackRequest
   } = useRegister()
 
   const errorText = (errorMessage: string) => {
@@ -150,7 +160,7 @@ const Register = () => {
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
-              ),
+              )
             }}
             isSubmitOnEnter={true}
             onSubmit={handleRegister}

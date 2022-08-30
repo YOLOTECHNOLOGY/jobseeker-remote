@@ -295,7 +295,9 @@ const JobListSection = ({
             )}
           </div>
           <div className={styles.jobAds}>
-            <UploadResumeButton />
+            <div className={styles.jobAds_quickCreateResume}>
+              <UploadResumeButton />
+            </div>
             <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'jobs-search/skyscraper-1'} />
             </div>

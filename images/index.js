@@ -88,6 +88,7 @@ export const GoogleLogo = `${S3BucketJobseeker}/google-logo.png`
 export const LinkedinLogo = `${S3BucketJobseeker}/linkedin-logo.png`
 export const FacebookLogo = `${S3BucketJobseeker}/facebook-logo.png`
 export const tiktok = `${S3BucketJobseeker}/tiktok.svg`
+export const quickCreateResume = `${S3BucketJobseeker}/increase-user-conversion-details_background-2.png`
 
 /* Landing Page Images */
 export const BuildProfessionalResume = `${S3BucketJobseeker}/BuildProfessionalResume.png`

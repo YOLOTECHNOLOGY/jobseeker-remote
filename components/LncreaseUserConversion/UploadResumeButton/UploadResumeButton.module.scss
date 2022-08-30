@@ -1,9 +1,19 @@
 .uploadResumeButton {
   width: 100%;
+  padding: 12px 13px;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  background-size: contain;
   &_button {
     width: 100%;
     border-radius: 10px;
     background-color: #136fd3;
     color: #fff;
+    font-size: 14px;
+    line-height: 17px;
+    text-transform: capitalize;
+  }
+  &_button:hover {
+    background-color: #136fd3;
   }
 }
