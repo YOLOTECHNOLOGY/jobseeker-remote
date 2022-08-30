@@ -480,8 +480,8 @@ const NavSearchFilter = ({
                 title='Verified Company'
                 fieldName='verifiedCompany'
                 options={[{
-                  key: 'is-verify',
-                  ['seo-value']: 'is-verify',
+                  key: 'verified-companies',
+                  ['seo-value']: 'verified-companies',
                   value: 'View verified companies',
                   label: 'View verified companies'
                 }]}

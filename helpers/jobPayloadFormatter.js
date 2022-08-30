@@ -166,8 +166,8 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
   const jobTypeList = config.inputs.job_types
   const categoryList = config.inputs.job_category_lists
   const verifiedCompanyList = [{
-    key: 'is-verify',
-    ['seo-value']: 'is-verify',
+    key: 'verified-companies',
+    ['seo-value']: 'verified-companies',
     value: 'View verified companies',
     label: 'View verified companies'
 }]
@@ -443,8 +443,8 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
   const jobTypeList = config.inputs.job_types
   const categoryList = config.inputs.job_category_lists
   const verifiedCompanyList = [{
-    key: 'is-verify',
-    ['seo-value']: 'is-verify',
+    key: 'verified-companies',
+    ['seo-value']: 'verified-companies',
     value: 'View verified companies',
     label: 'View verified companies'
   }]
