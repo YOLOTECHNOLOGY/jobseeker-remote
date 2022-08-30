@@ -72,8 +72,6 @@ const Companies = () => {
     router.push(router, undefined, { shallow: true })
   }
 
-  console.log('featuredCompany', featuredCompany)
-
   return (
     <Layout>
       <SEO
