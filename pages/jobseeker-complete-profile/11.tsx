@@ -5,12 +5,12 @@ import { END } from 'redux-saga'
 import { wrapper } from 'store'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 // Components
-import useUploadResume from '../hooks/useUploadResume'
+import useFakeUploadResume from '../hooks/useFakeUploadResume'
 // Styles
 import OnRegisterUpload from './components/OnRegisterUpload'
 
 const Step2 = (props: any) => {
-  const hookProps = useUploadResume(props)
+  const hookProps = useFakeUploadResume(props)
   return (<OnRegisterUpload {...hookProps} />)
 }
 
