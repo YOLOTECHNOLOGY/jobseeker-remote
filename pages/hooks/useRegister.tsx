@@ -20,7 +20,7 @@ export interface SnackbarType extends SnackbarOrigin {
 
 type HandleRegisterAng = boolean | any
 
-export default () => {
+const useRegister = () => {
   const {
     vertical,
     horizontal,
@@ -28,7 +28,8 @@ export default () => {
     handleSnackbarClose,
     isLoading,
     uploadResumeFile,
-    setSnackbarState
+    setSnackbarState,
+    userInfo
   } = useRegisterInfo()
 
   const router = useRouter()
@@ -53,7 +54,6 @@ export default () => {
 
   const isRegisteringJobseeker = useSelector((store: any) => store.auth.registerJobseeker.fetching)
   const registerJobseekerState = useSelector((store: any) => store.auth.registerJobseeker)
-  const userInfo = useSelector((store: any) => store.auth.registerJobseeker.response)
 
   const handleOnShowPassword = () => setShowPassword(!showPassword)
 
@@ -215,3 +215,5 @@ export default () => {
     uploadResumeFile
   }
 }
+
+export default useRegister

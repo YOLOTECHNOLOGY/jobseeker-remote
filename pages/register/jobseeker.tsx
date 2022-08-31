@@ -190,7 +190,7 @@ const Register = () => {
             variant='contained'
             className={styles.RegisterButton}
             isLoading={isRegisteringJobseeker}
-            onClick={() => handleRegister()}
+            onClick={() => handleRegister(true)}
           >
             <Text textStyle='xl' textColor='white' bold>
               Sign up

@@ -168,7 +168,7 @@ const JobListSection = ({
   }
 
   const handleQuickUploadResumeClick = () => {
-    router.push('/jobseeker-complete-profile/11')
+    router.push('/Increase-user-conversion/quick-upload-resume')
   }
 
   const emptyResult = () => {

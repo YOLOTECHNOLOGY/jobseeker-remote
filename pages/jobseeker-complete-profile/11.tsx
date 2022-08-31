@@ -7,7 +7,7 @@ import useFakeUploadResume from '../hooks/useFakeUploadResume'
 // Styles
 import OnRegisterUpload from './components/OnRegisterUpload'
 
-const Step2 = (props: any) => {
+const Step2 = () => {
   const router = useRouter()
   const hookProps = useFakeUploadResume()
   return (
