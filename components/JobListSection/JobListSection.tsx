@@ -167,6 +167,10 @@ const JobListSection = ({
     }
   }
 
+  const handleQuickUploadResumeClick = () => {
+    router.push('/jobseeker-complete-profile/11')
+  }
+
   const emptyResult = () => {
     return (
       <React.Fragment>
@@ -296,7 +300,10 @@ const JobListSection = ({
           </div>
           <div className={styles.jobAds}>
             <div className={styles.jobAds_quickCreateResume}>
-              <UploadResumeButton />
+              <UploadResumeButton
+                isShowBtn={!accessToken}
+                handleClick={handleQuickUploadResumeClick}
+              />
             </div>
             <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'jobs-search/skyscraper-1'} />

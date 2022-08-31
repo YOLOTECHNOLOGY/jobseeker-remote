@@ -1,22 +1,18 @@
 import React from 'react'
-import { isMobile } from 'react-device-detect'
 
 // @ts-ignore
 // Components
 import Text from 'components/Text'
-import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialButton from 'components/MaterialButton'
-import Divider from '@mui/material/Divider'
 // Styles
-import styles from '../../Onboard.module.scss'
+import styles from './styles.module.scss'
 import Link from 'components/Link'
 import { useRouter } from 'next/router'
 
-const Step2 = (props: any) => {
+const UploadResume = (props: any) => {
   const router = useRouter()
   const {
     existingResume,
-    isDisabled,
     errorMessage,
     isCreatingResume,
     setIsCreatingResume,
@@ -24,25 +20,20 @@ const Step2 = (props: any) => {
     isUploading,
     setResume,
     redirect,
-    currentStep,
     resume
   } = props
 
   return (
-    <OnBoardLayout
-      headingText={
-        <Text bold textStyle='xxxl' tagName='h2'>
-          Add your resume 📄
-        </Text>
-      }
-      currentStep={currentStep}
-      totalStep={4}
-      isMobile={isMobile}
-      nextFnBtn={() => router.push(redirect)}
-      backFnBtn={() => router.push('/jobseeker-complete-profile/1')}
-      isNextDisabled={isDisabled}
-    >
+    <div>
       <div className={styles.stepForm}>
+        <div className={styles.stepForm_title}>
+          <Text bold textStyle='xxxl' tagName='h2'>
+            {' '}
+            Fill in your details to
+            <br />
+            continue 🎉
+          </Text>
+        </div>
         <Text className={styles.step2Caption} textStyle='lg'>
           You can build an online resume to apply for jobs and export it with different templates.{' '}
           <br />
@@ -110,33 +101,8 @@ const Step2 = (props: any) => {
           </MaterialButton>
         </div>
       </div>
-      {isMobile && (
-        <React.Fragment>
-          <Divider className={styles.divider} />
-
-          <div className={styles.stepFormActions}>
-            <MaterialButton
-              className={styles.stepFormActionsleftBtn}
-              variant='outlined'
-              capitalize
-              onClick={() => router.push('/jobseeker-complete-profile/1')}
-            >
-              <Text textColor='primaryBlue'>Back</Text>
-            </MaterialButton>
-
-            <MaterialButton
-              variant='contained'
-              disabled={isDisabled}
-              capitalize
-              onClick={() => router.push(redirect)}
-            >
-              <Text textColor='white'>Next</Text>
-            </MaterialButton>
-          </div>
-        </React.Fragment>
-      )}
-    </OnBoardLayout>
+    </div>
   )
 }
 
-export default Step2
+export default UploadResume

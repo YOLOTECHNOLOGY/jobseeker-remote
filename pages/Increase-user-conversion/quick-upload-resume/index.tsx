@@ -1,18 +1,52 @@
-import Layout from 'components/Layout'
-import QuickUploadResume from './quick-upload-resume'
-import SEO from 'components/SEO'
+import React from 'react'
+import Text from 'components/Text'
+import { BossjobLogo } from 'images'
+import QuickLayout from '../quickLayout'
+import UploadResume from '../components/UploadResume'
+import RegisterInfo from '../components/RegisterInfo'
 
-const LayoutQuickUploadResume = () => {
+import LinearProgress from '@mui/material/LinearProgress'
+
+import useRegister from 'pages/hooks/useRegister'
+import useFakeUploadResume from 'pages/hooks/useFakeUploadResume'
+
+import styles from './styles.module.scss'
+
+const QuickUploadResume = () => {
+  const UseHooksRegister = useRegister()
+  const useHooksFakeUploadResume = useFakeUploadResume()
+  const { isRegisteringJobseeker, isLoading, uploadResumeFile } = UseHooksRegister
+
   return (
-    <Layout>
-      <SEO
-        title='Sign Up | Bossjob'
-        description='Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.'
-        canonical='/register/jobseeker'
-      />
-      <QuickUploadResume></QuickUploadResume>
-    </Layout>
+    <QuickLayout>
+      <div className={styles.AuthLayout}>
+        <div className={styles.AuthLayoutBody}>
+          <div className={styles.wrapper}>
+            <div className={styles.loadingWrapper}></div>
+          </div>
+          <div className={styles.AuthWrapper}>
+            {isLoading | isRegisteringJobseeker ? (
+              <div className={styles.AuthWrapperLoading}>
+                <div className={styles.loadingLogo}>
+                  <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+                </div>
+                <div className={styles.loadingIndicator}>
+                  <LinearProgress />
+                </div>
+                <Text textStyle='sm'>Please hold on while we are parsing your resume.</Text>
+              </div>
+            ) : null}
+
+            {uploadResumeFile?.size ? (
+              <RegisterInfo {...UseHooksRegister} />
+            ) : (
+              <UploadResume {...useHooksFakeUploadResume} />
+            )}
+          </div>
+        </div>
+      </div>
+    </QuickLayout>
   )
 }
 
-export default LayoutQuickUploadResume
+export default QuickUploadResume

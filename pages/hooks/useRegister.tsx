@@ -2,12 +2,35 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
+
+import { SnackbarOrigin } from '@mui/material'
+
 /* Redux Actions */
 import { socialLoginRequest } from 'store/actions/auth/socialLogin'
 import { registerJobseekerRequest } from 'store/actions/auth/registerJobseeker'
+import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
+
+import useRegisterInfo from 'pages/Increase-user-conversion/quick-upload-resume/useRegisterInfo'
+
 import Link from '../../components/Link'
 
+export interface SnackbarType extends SnackbarOrigin {
+  open: boolean
+}
+
+type HandleRegisterAng = boolean | any
+
 export default () => {
+  const {
+    vertical,
+    horizontal,
+    open,
+    handleSnackbarClose,
+    isLoading,
+    uploadResumeFile,
+    setSnackbarState
+  } = useRegisterInfo()
+
   const router = useRouter()
   const dispatch = useDispatch()
 
@@ -25,12 +48,12 @@ export default () => {
 
   const {
     register,
-    formState: { errors },
+    formState: { errors }
   } = useForm()
 
   const isRegisteringJobseeker = useSelector((store: any) => store.auth.registerJobseeker.fetching)
-
   const registerJobseekerState = useSelector((store: any) => store.auth.registerJobseeker)
+  const userInfo = useSelector((store: any) => store.auth.registerJobseeker.response)
 
   const handleOnShowPassword = () => setShowPassword(!showPassword)
 
@@ -54,7 +77,6 @@ export default () => {
     }
 
     setEmailError(emailErrorMessage)
-
   }, [email])
 
   useEffect(() => {
@@ -72,12 +94,33 @@ export default () => {
 
   useEffect(() => {
     if (registerJobseekerState.error === 'The email has already been taken.') {
-      setEmailError(<p>A user with this email address already exists. Please enter a different email address or <Link to='/login/jobseeker' className='default'>log in</Link>.</p>)
+      setEmailError(
+        <p>
+          A user with this email address already exists. Please enter a different email address or{' '}
+          <Link to='/login/jobseeker' className='default'>
+            log in
+          </Link>
+          .
+        </p>
+      )
     }
-  
   }, [registerJobseekerState])
 
-  const handleRegister = () => {
+  useEffect(() => {
+    const accessToken = registerJobseekerState?.response?.data?.authentication?.access_token
+    console.log(uploadResumeFile, registerJobseekerState, accessToken)
+    if (uploadResumeFile?.size && accessToken) {
+      const payload = {
+        resume: uploadResumeFile,
+        accessToken: accessToken,
+        redirect: false
+      }
+      dispatch(uploadUserResumeRequest(payload))
+    }
+  }, [userInfo])
+
+  const handleRegister = (isRedirect: HandleRegisterAng) => {
+    console.log(isRedirect)
     if (!firstName) {
       setFirstNameError('Please enter your first name.')
     }
@@ -94,7 +137,16 @@ export default () => {
       setPasswordError('Please enter a longer password(minimum of 8 characters)')
     }
 
-    if (firstName && lastName && email && password && !firstNameError && !lastNameError && !emailError && !passwordError) {
+    if (
+      firstName &&
+      lastName &&
+      email &&
+      password &&
+      !firstNameError &&
+      !lastNameError &&
+      !emailError &&
+      !passwordError
+    ) {
       const payload = {
         email,
         password,
@@ -102,7 +154,20 @@ export default () => {
         last_name: lastName,
         terms_and_condition: false,
         is_subscribe: isSubscribe,
-        redirect: router.query?.redirect || null
+        redirect: router.query?.redirect || null,
+        isRedirect
+      }
+
+      if (!isRedirect) {
+        // increates user conversion  quick register
+        if (!uploadResumeFile?.size) {
+          setSnackbarState({
+            vertical: 'top',
+            horizontal: 'center',
+            open: true
+          })
+          return
+        }
       }
 
       dispatch(registerJobseekerRequest({ ...payload }))
@@ -114,12 +179,26 @@ export default () => {
   }
 
   return {
-    firstName,setFirstName,firstNameError,setFirstNameError,
-    lastName,setLastName,lastNameError,setLastNameError,
-    email,setEmail,emailError,setEmailError,
-    password,setPassword,passwordError,setPasswordError,
-    showPassword,setShowPassword,
-    isSubscribe,setIsSubscribe,
+    firstName,
+    setFirstName,
+    firstNameError,
+    setFirstNameError,
+    lastName,
+    setLastName,
+    lastNameError,
+    setLastNameError,
+    email,
+    setEmail,
+    emailError,
+    setEmailError,
+    password,
+    setPassword,
+    passwordError,
+    setPasswordError,
+    showPassword,
+    setShowPassword,
+    isSubscribe,
+    setIsSubscribe,
     errors,
     register,
     handleRegister,
@@ -127,9 +206,12 @@ export default () => {
     registerJobseekerState,
     handleOnShowPassword,
     callbackRequest,
+    // quick upload resume
+    vertical,
+    horizontal,
+    open,
+    isLoading,
+    handleSnackbarClose,
+    uploadResumeFile
   }
-  
 }
-
-
-
