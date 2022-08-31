@@ -156,6 +156,9 @@ const QuickApplyModal = ({
       showModal={modalShow}
       handleModal={handleModalShow}
       className={styles.quickApplyModal}
+      headerClass={styles.quickApplyModalHeader}
+      bodyClass={styles.quickApplyModalBody}
+      footerClass={styles.quickApplyModalFooter}
       customFooter={
         <MaterialButton
           capitalize

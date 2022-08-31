@@ -49,6 +49,7 @@ interface SearchFilters {
 type optionsType = {
   value: string
   label: string
+  'seo-value'?: string
   id?: any
   key?: any
   // eslint-disable-next-line camelcase
@@ -62,7 +63,7 @@ const useOptionDataSelect = (initOptionData, form) => {
       .map(item => item.isChecked ? item['seo-value'] : undefined)
       .filter(a => a)
 
-    form.setValue('category', category)
+    form.setValue('category', category.length === 0 ? null : category)
   }, [optionData])
 
   const syncParent = useCallback(data => setOptionData(data.map(parent => {
@@ -210,7 +211,7 @@ const NavSearchFilter = ({
       })
       updatedData.category = category
     }
-   const clearFilter = []
+    const clearFilter = []
     for (const [key, value] of Object.entries<any>(data)) {
       if (value && value.length === 0) {
         clearFilter.push(key)
@@ -476,9 +477,14 @@ const NavSearchFilter = ({
                 isNotCollapsible={true}
               />
               <SearchFilters
-                title='Company'
-                fieldName='company'
-                options={[{value: 'View verified companies', label: 'is_verified'}]} // add in backend?
+                title='Verified Company'
+                fieldName='verifiedCompany'
+                options={[{
+                  key: 'verified-companies',
+                  ['seo-value']: 'verified-companies',
+                  value: 'View verified companies',
+                  label: 'View verified companies'
+                }]}
                 defaultOpenState={true}
                 isNotCollapsible={true}
               />

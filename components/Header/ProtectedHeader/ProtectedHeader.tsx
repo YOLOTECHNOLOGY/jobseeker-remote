@@ -86,13 +86,13 @@ const ProtectedHeader = () => {
                   </Text>
                 </Link>
               </li>
-              <li className={styles.headerLink}>
+              {/* <li className={styles.headerLink}>
                 <Link title='Courses' to='https://academy.bossjob.ph/courses/search-courses' aTag external>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Courses
                   </Text>
                 </Link>
-              </li>
+              </li> */}
               <li className={styles.headerLink}>
                 <a className={styles.headerLinkIcon} title='Chats' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/chat')} href='/dashboard/chat'>
                   <img src={ChatIcon} width='20' height='20' />
@@ -100,6 +100,16 @@ const ProtectedHeader = () => {
                     Chats
                   </Text>
                 </a>
+              </li>
+              <li className={styles.headerLink} style={{ position:'relative' }}>
+                <Link title='Virtual Career Fair' to={process.env.VCF_CLIENT_URL} aTag>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    Virtual Career Fair
+                    <span className={styles.hotTag}>
+                      Hot!
+                    </span>
+                  </Text>
+                </Link>
               </li>
             </React.Fragment>
           </ul>

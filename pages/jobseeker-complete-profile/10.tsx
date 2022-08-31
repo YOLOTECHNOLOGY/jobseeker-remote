@@ -84,7 +84,7 @@ const Step2 = (props: any) => {
       isNextDisabled={isDisabled}
     >
       <div className={styles.stepForm}>
-        <Text className={styles.step2Caption} textStyle='xl'>
+        <Text className={styles.step2Caption} textStyle='lg'>
           You can build an online resume to apply for jobs and export it with different
           templates. <br/><br/> You can also upload your resume, it 
           will be saved to your profile.
