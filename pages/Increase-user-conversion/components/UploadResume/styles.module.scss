@@ -4,6 +4,7 @@
 .stepForm {
   &_title {
     text-align: center;
+    margin-bottom: 30px;
   }
   &Actions {
     @media (max-width: 768px) {
@@ -248,6 +249,7 @@
 
   &Create {
     text-align: center;
+    padding-bottom: 110px;
 
     @media (max-width: 768px) {
       button {

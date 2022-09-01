@@ -157,9 +157,7 @@ const RegisterInfo = (props: any) => {
                 onChange={(e) => setIsSubscribe(e.target.checked)}
               />
             }
-            label={
-              <Text textStyle='sm'>Email me exclusive newsletters & job updates from Bossjob.</Text>
-            }
+            label={<Text textStyle='sm'>Email me exclusive newsletters & job updates</Text>}
           />
         </div>
 

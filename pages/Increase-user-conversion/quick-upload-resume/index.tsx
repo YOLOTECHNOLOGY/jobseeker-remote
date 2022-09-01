@@ -1,6 +1,6 @@
 import React from 'react'
 import Text from 'components/Text'
-import { BossjobLogo } from 'images'
+import { BossjobLogo, increaseUserConversionModelBg } from 'images'
 import QuickLayout from '../quickLayout'
 import UploadResume from '../components/UploadResume'
 import RegisterInfo from '../components/RegisterInfo'
@@ -25,23 +25,41 @@ const QuickUploadResume = () => {
             <div className={styles.loadingWrapper}></div>
           </div>
           <div className={styles.AuthWrapper}>
-            {isLoading | isRegisteringJobseeker ? (
-              <div className={styles.AuthWrapperLoading}>
-                <div className={styles.loadingLogo}>
-                  <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
-                </div>
-                <div className={styles.loadingIndicator}>
-                  <LinearProgress />
-                </div>
-                <Text textStyle='sm'>Please hold on while we are parsing your resume.</Text>
+            <div className={styles.AuthWrapperImage}>
+              <div className={styles.AuthWrapperImageTitle}>
+                <Text textColor='white' textStyle='xxxl' block bold>
+                  Chat with Boss
+                </Text>
+                <Text textColor='white' textStyle='xxxl' block bold>
+                  to get your
+                </Text>
+                <Text textColor='white' textStyle='xxxl' block bold>
+                  next offer!
+                </Text>
               </div>
-            ) : null}
+              <div className={styles.AuthWrapperImageContext}>
+                <img src={increaseUserConversionModelBg} />
+              </div>
+            </div>
+            <div className={styles.AuthWrapperInfo}>
+              {isLoading | isRegisteringJobseeker ? (
+                <div className={styles.AuthWrapperLoading}>
+                  <div className={styles.loadingLogo}>
+                    <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+                  </div>
+                  <div className={styles.loadingIndicator}>
+                    <LinearProgress />
+                  </div>
+                  <Text textStyle='sm'>Please hold on while we are parsing your resume.</Text>
+                </div>
+              ) : null}
 
-            {uploadResumeFile?.size ? (
-              <RegisterInfo {...UseHooksRegister} />
-            ) : (
-              <UploadResume {...useHooksFakeUploadResume} />
-            )}
+              {uploadResumeFile?.size ? (
+                <RegisterInfo {...UseHooksRegister} />
+              ) : (
+                <UploadResume {...useHooksFakeUploadResume} />
+              )}
+            </div>
           </div>
         </div>
       </div>

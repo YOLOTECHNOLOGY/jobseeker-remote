@@ -29,15 +29,13 @@ const UploadResume = (props: any) => {
         <div className={styles.stepForm_title}>
           <Text bold textStyle='xxxl' tagName='h2'>
             {' '}
-            Fill in your details to
-            <br />
-            continue 🎉
+            Upload your resume 📄
           </Text>
         </div>
         <Text className={styles.step2Caption} textStyle='lg'>
-          You can build an online resume to apply for jobs and export it with different templates.{' '}
+          Upload your resume and start applying for job now!
           <br />
-          <br /> You can also upload your resume, it will be saved to your profile.
+          <br />
         </Text>
 
         <div className={styles.step2Upload}>
