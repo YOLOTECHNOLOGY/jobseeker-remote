@@ -1,4 +1,4 @@
-import { map, T, omit, mergeLeft, chain, reduce, flip, always, path, toPairs, split, equals, test, append, prop, applySpec, cond, includes, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, mergeRight, converge } from 'ramda'
+import { map, T, omit, intersection, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, mergeRight, converge } from 'ramda'
 const userSelectKeys = ['salary', 'jobType', 'category', 'industry', 'qualification', 'workExperience']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
@@ -13,24 +13,28 @@ const totalOf = keys => pipe(allKeysIn(keys), prop('length'))
 const onlyOneIn = keys => pipe(totalOf(keys), equals(1))
 const firstKeyIn = keys => pipe(allKeysIn(keys), prop(0))
 
-const build = (field, optionValue, routerQuery, config, isClear) => pipe(
-    converge(mergeLeft, [
-        pipe(
-            parseFullParams(config),
-            mergeLeft(parseIncrement(field)(optionValue)),
-            filter(complement(either(isEmpty, isNil))),
-            dissoc('keyword'),
-            when(() => is(Array)(isClear), omit(isClear)),
-            buildQueryParams,
+const build = (field, optionValue, routerQuery, config, isClear) => {
+    const pullParams = parseFullParams(config)(routerQuery)
+    console.log("pullParams", pullParams)
+    return pipe(
+        converge(mergeLeft, [
+            pipe(
+                parseFullParams(config),
+                mergeLeft(parseIncrement(field)(optionValue)),
+                filter(complement(either(isEmpty, isNil))),
+                dissoc('keyword'),
+                when(() => is(Array)(isClear), omit(isClear)),
+                buildQueryParams,
 
-        ),
-        pipe(
-            mergeLeft(parseIncrement(field)(optionValue)),
-            when(() => is(Array)(isClear), omit(isClear)),
-            buildMatchedConfigs(config)
-        )
-    ])
-)(routerQuery)
+            ),
+            pipe(
+                mergeLeft(parseIncrement(field)(optionValue)),
+                when(() => is(Array)(isClear), omit(isClear)),
+                buildMatchedConfigs(config)
+            )
+        ])
+    )(routerQuery)
+}
 
 const conditions = {
     noParams: ['query', 'location', ...userSelectKeys].map(key => no(key)).reduce(both),
@@ -52,7 +56,7 @@ const buildQueryParams = cond([
             firstKeyIn(['query', 'location', ...userSelectKeys]),
             key => key + '-jobs'
         ),
-        filterParamsObject: { page: prop('page') }
+        filterParamsObject: { page: either(prop('page'), always(1)) }
     })],
     [conditions.oneWithLocation,
     applySpec({
@@ -60,7 +64,7 @@ const buildQueryParams = cond([
             juxt([firstKeyIn(['query', ...userSelectKeys]), prop('location')]),
             join('-jobs-in-')
         ),
-        filterParamsObject: { page: prop('page') }
+        filterParamsObject: { page: either(prop('page'), always(1)) }
     })],
     [conditions.queryMany,
     applySpec({
@@ -98,9 +102,9 @@ const parseFullParams = config => routerQuery =>
     pipe(
         prop('keyword'),
         keywordParser,
-        map(keywordMatches(config)),
-        reduce(mergeRight, routerQuery),
+        keywords => map(intersection(keywords), configKeys(config)),
         filter(complement(either(isEmpty, isNil))),
+        mergeRight(routerQuery),
         map(when(is(Array), join(',')))
     )(routerQuery)
 
@@ -122,17 +126,11 @@ const itemFilter = config => keys => pipe(
 
 const configKeys = pipe(configItems, map(map(ifElse(has('seo-value'), prop('seo-value'), prop('seo_value')))))
 
-const keywordMatches = pipe(
-    configKeys,
-    toPairs,
-    map(([key, list]) => [flip(includes)(list), applySpec({ [key]: identity })]),
-    append([T, applySpec({ query: identity })]),
-    cond
-)
 const keywordParser = cond([
     [test(/((\B|\b)-jobs-in-\b)/g), split('-jobs-in-')],
     [test(/((\B|\b)-jobs\b)/g), pipe(split('-jobs'), dropLast(1))],
-    [equals('job-search'), always([])]
+    [equals('job-search'), always([])],
+    [T, always([])]
 ])
 
 export default build
