@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { isMobile } from 'react-device-detect'
 
@@ -17,6 +17,7 @@ import {
   TimelineContent,
   TimelineDot
 } from '@mui/lab'
+import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import dynamic from 'next/dynamic'
 
@@ -47,6 +48,7 @@ const ModalWithdrawApplication = dynamic(() => import('components/ModalWithdrawA
 import { getCookie, setCookie, removeCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
 import { userFilterSelectionDataParser, getApplyJobLink } from 'helpers/jobPayloadFormatter'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -115,10 +117,13 @@ const Job = ({
 }: IJobDetail) => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const { width } = useWindowDimensions()
+  const prevScrollY = useRef(0)
   const userCookie = getCookie('user') || null
   const authCookie = accessToken;
   const applyJobLink = getApplyJobLink(jobDetail, userCookie, accessToken)
 
+  const [isSticky, setIsSticky] = useState(false)
   const [isSavedJob, setIsSavedJob] = useState(jobDetail?.is_saved)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
@@ -132,6 +137,9 @@ const Job = ({
   const [recommendedCourses, setRecommendedCourses] = useState([])
   const [similarJobs, setSimilarJobs] = useState(null)
   const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
+
+  const cx = classNames.bind(styles)
+  const isStickyClass = cx({ isSticky: isSticky })
 
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
@@ -167,6 +175,12 @@ const Job = ({
     }
     return false
   })
+
+  useEffect(() => {
+    window.addEventListener('scroll', updateScrollPosition)
+
+    return () => window.removeEventListener('scroll', updateScrollPosition)
+  }, [])
 
   useEffect(() => {
     handleFetchRecommendedCourses()
@@ -276,6 +290,16 @@ const Job = ({
       fetch(`${process.env.JOB_BOSSJOB_URL}/suggested-search?size=5&query=${val}`)
         .then((resp) => resp.json())
         .then((data) => setSuggestionList(data.data.items))
+    }
+  }
+
+  const updateScrollPosition = () => {
+    if (width > 798) {
+      prevScrollY.current = window.pageYOffset
+      setIsSticky(prevScrollY.current >= 330 ? true : false)
+    } else if (width < 577) {
+      prevScrollY.current = window.pageYOffset
+      setIsSticky(prevScrollY.current >= 590 ? true : false)
     }
   }
 
@@ -393,9 +417,62 @@ const Job = ({
 
   const renderSaveAndApplyActions = () => {
     return (
-      <div className={styles.jobDetailPrimaryActions}>
+      <div
+        className={classNamesCombined([
+          styles.jobDetailCTA,
+          breakpointStyles.hideOnMobileAndTablet
+        ])}
+      >
+        {!isAppliedQueryParam && <div className={classNamesCombined([styles.jobDetailPrimaryActions, isStickyClass])}>
+          {jobDetail?.status_key === 'active' ? (
+            <>
+              <MaterialButton
+                variant='contained'
+                capitalize
+                disabled={jobDetail?.is_applied}
+                className={styles.applyBtn}
+                onClick={handleApplyJob}
+              >
+                <Text textColor='white' bold>
+                  {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
+                </Text>
+              </MaterialButton>
+              <MaterialButton
+                variant='outlined'
+                capitalize
+                onClick={() => handlePostSaveJob()}
+                >
+                <Text textColor='primary' bold>
+                  {isSavedJob ? 'Saved' : 'Save'}
+                </Text>
+              </MaterialButton>
+            </>
+          ) : (
+            <Text textStyle='base' className={styles.jobDetailStatus}>
+              <img src={ExpireIcon} height='16' width='16' />
+              <span>This job is no longer hiring</span>
+            </Text>
+          )}
+        </div>}
+      </div>
+    )
+  }
+
+  const mobileRenderSaveAndApplyActions = () => {
+    return (
+      <div className={classNamesCombined([styles.jobDetailPrimaryActions, isStickyClass])}>
         {jobDetail?.status_key === 'active' ? (
           <>
+            <MaterialButton
+              variant='outlined'
+              capitalize
+              className={styles.saveBtn}
+              onClick={() => handlePostSaveJob()}
+            >
+              <Text textColor='primary' bold>
+                {isSavedJob ? 'Saved' : 'Save'}
+              </Text>
+            </MaterialButton>
             <MaterialButton
               variant='contained'
               capitalize
@@ -407,15 +484,6 @@ const Job = ({
                 {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
               </Text>
             </MaterialButton>
-            <MaterialButton
-              variant='outlined'
-              capitalize
-              onClick={() => handlePostSaveJob()}
-              >
-              <Text textColor='primary' bold>
-                {isSavedJob ? 'Saved' : 'Save Job'}
-              </Text>
-            </MaterialButton>
           </>
         ) : (
           <Text textStyle='base' className={styles.jobDetailStatus}>
@@ -423,6 +491,38 @@ const Job = ({
             <span>This job is no longer hiring</span>
           </Text>
         )}
+      </div>
+    )
+  }
+
+  const renderJobDetailPrimarySection = () => {
+    return (
+      <div className={styles.jobDetailPrimaryInfo}>
+        <Text textStyle='xl' tagName='h1' bold className={classNamesCombined([styles.jobDetailPrimaryInfoTitle, isStickyClass])}>
+          {jobDetail?.job_title}
+        </Text>
+        <div className={classNamesCombined([styles.jobDetailCompany, isStickyClass])}>
+          <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
+            <Text textStyle='lg' className={styles.jobDetailCompanyName}>
+              {jobDetail?.company?.name}
+            </Text>
+          </Link>
+          {jobDetail?.company?.is_verify && (isMobile ? (
+            <MaterialMobileTooltip
+              icon={BlueTickIcon}
+              className={styles.companyIsVerifiedToolTip}
+              title='Verified'
+              style={{ marginTop:'10px' }}
+            />
+          ) : (
+            <MaterialDesktopTooltip
+              icon={BlueTickIcon}
+              className={styles.companyIsVerifiedToolTip}
+              title='Verified'
+              style={{ marginTop:'10px' }}
+            />
+          ))}
+        </div>
       </div>
     )
   }
@@ -511,43 +611,56 @@ const Job = ({
               className={styles.jobDetailPrimaryInfoImage}
               alt={`${jobDetail?.company?.name} logo`}
             />
-            <div className={styles.jobDetailPrimaryInfoWrapper}>
-              <div className={styles.jobDetailPrimaryInfo}>
-                <Text textStyle='xl' tagName='h1' bold className={styles.jobDetailPrimaryInfoTitle}>
-                  {jobDetail?.job_title}
-                </Text>
-                <div className={styles.jobDetailCompany}>
-                  <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
-                    <Text textStyle='lg' className={styles.jobDetailCompanyName}>
-                      {jobDetail?.company?.name}
-                    </Text>
-                  </Link>
-                  {jobDetail?.company?.is_verify && (isMobile ? (
-                    <MaterialMobileTooltip
-                      icon={BlueTickIcon}
-                      className={styles.companyIsVerifiedToolTip}
-                      title='Verified'
-                      style={{ marginTop:'10px' }}
-                    />
-                  ) : (
-                    <MaterialDesktopTooltip
-                      icon={BlueTickIcon}
-                      className={styles.companyIsVerifiedToolTip}
-                      title='Verified'
-                      style={{ marginTop:'10px' }}
-                    />
-                  ))}
+            {width > 798 ? (
+              <div className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}>
+                {renderJobDetailPrimarySection()}
+                {renderSaveAndApplyActions()}
+              </div>
+            ) : (
+              <div className={styles.jobDetailPrimaryInfoWrapper}>
+                {renderJobDetailPrimarySection()}
+                {renderSaveAndApplyActions()}
+              </div>
+            )}
+            {/* <div className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}>
+              <div>
+                <div className={styles.jobDetailPrimaryInfo}>
+                  <Text textStyle='xl' tagName='h1' bold className={classNamesCombined([styles.jobDetailPrimaryInfoTitle, isStickyClass])}>
+                    {jobDetail?.job_title}
+                  </Text>
+                  <div className={classNamesCombined([styles.jobDetailCompany, isStickyClass])}>
+                    <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
+                      <Text textStyle='lg' className={styles.jobDetailCompanyName}>
+                        {jobDetail?.company?.name}
+                      </Text>
+                    </Link>
+                    {jobDetail?.company?.is_verify && (isMobile ? (
+                      <MaterialMobileTooltip
+                        icon={BlueTickIcon}
+                        className={styles.companyIsVerifiedToolTip}
+                        title='Verified'
+                        style={{ marginTop:'10px' }}
+                      />
+                    ) : (
+                      <MaterialDesktopTooltip
+                        icon={BlueTickIcon}
+                        className={styles.companyIsVerifiedToolTip}
+                        title='Verified'
+                        style={{ marginTop:'10px' }}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div
+                  className={classNamesCombined([
+                    styles.jobDetailCTA,
+                    breakpointStyles.hideOnMobileAndTablet
+                  ])}
+                >
+                  {!isAppliedQueryParam && renderSaveAndApplyActions()}
                 </div>
               </div>
-              <div
-                className={classNamesCombined([
-                  styles.jobDetailCTA,
-                  breakpointStyles.hideOnMobileAndTablet
-                ])}
-              >
-                {!isAppliedQueryParam && renderSaveAndApplyActions()}
-              </div>
-            </div>
+            </div> */}
             <div className={styles.jobDetailPrimarySub}>
               {jobDetail?.is_featured && <JobTag tag='Featured' tagType='featured' />}
               {jobDetail?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
@@ -567,7 +680,7 @@ const Job = ({
           <div
             className={classNamesCombined([styles.jobDetailCTA, breakpointStyles.hideOnDesktop])}
           >
-            {!isAppliedQueryParam && renderSaveAndApplyActions()}
+            {!isAppliedQueryParam && mobileRenderSaveAndApplyActions()}
             
             <Text textStyle='base' textColor='darkgrey' className={styles.jobDetailPostedAt}>
               Posted on {jobDetail?.published_at}
