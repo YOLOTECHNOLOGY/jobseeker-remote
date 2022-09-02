@@ -30,6 +30,10 @@
       margin-top: 11px;
       cursor: pointer;
     }
+
+    &.isSticky {
+      margin-left: 105px;
+    }
   }
 
   &Content {
@@ -77,6 +81,10 @@
     top: 3px;
     right: 0px;
 
+    img {
+      transform: rotate(90deg);
+    }
+
     &:hover {
       cursor: pointer;
     }
@@ -86,6 +94,17 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    &.isSticky {
+      top: 0;
+      left: 0;
+      position: fixed;
+      z-index: 1;
+      background-color: $white-3;
+      border-bottom: 1px solid $lightgrey;
+      height: 86px;
+      width: 100%;
+    }
   }
 
   &PrimaryInfo {
@@ -106,6 +125,10 @@
   &PrimaryInfoTitle {
     margin: 16px 24px 0 0;
     line-height: 27px;
+
+    &.isSticky {
+      margin-left: 105px;
+    }
   }
 
   &PrimaryInfoImage {
@@ -140,13 +163,41 @@
       margin-right: 16px;
     }
 
-    @include sm {
+    .saveBtn {
+      margin-right: 16px;
+    }
+
+    &.isSticky {
+      margin-right: 100px;
+    }
+
+    @include media(sm, msd) {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
 
       button {
         width: 100%;
+      }
+
+      &.isSticky {
+        align-items: center;
+        left: 0;
+        bottom: 0;
+        position: fixed;
+        z-index: 1;
+        background-color: $white-3;
+        border-top: 1px solid $lightgrey;
+        height: 76px;
+        width: 100%;
+
+        // .applyBtn {
+        //   margin-right: 24px;
+        // }
+
+        .saveBtn {
+          margin-left: 16px;
+        }
       }
     }
   }
