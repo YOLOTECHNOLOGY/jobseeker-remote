@@ -230,6 +230,7 @@ function* completeUserProfileSaga(redirect, accessToken) {
 
     removeItem('isFromCreateResume')
     removeItem('isCreateFreeResume')
+    removeItem('quickUpladResume')
     yield put(push(url))
   } catch (error) {
     const isServerError = checkErrorCode(error)

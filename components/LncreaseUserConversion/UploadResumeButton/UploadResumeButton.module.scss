@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 .uploadResumeButton {
   width: 100%;
   padding: 12px 13px;
@@ -15,5 +17,20 @@
   }
   &_button:hover {
     background-color: #136fd3;
+  }
+}
+
+.arrowContainer {
+  .uploadResumeButton_button {
+    padding: 6px 35px;
+    background-repeat: no-repeat;
+    background-position-y: 7px;
+    background-position-x: 15px;
+  }
+  @include msd {
+    padding: 20px;
+    .uploadResumeButton_button {
+      padding: 14px 35px;
+    }
   }
 }

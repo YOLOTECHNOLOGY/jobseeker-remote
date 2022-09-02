@@ -116,6 +116,7 @@ const CompanyDetail = (props: any) => {
       totalJobs={totalActiveJobs}
       seoMetaTitle={seoMetaTitle}
       seoMetaDescription={seoMetaDescription}
+      accessToken={accessToken}
     >
       <div className={styles.companyTabsContent}>
         <div className={styles.companySection}>

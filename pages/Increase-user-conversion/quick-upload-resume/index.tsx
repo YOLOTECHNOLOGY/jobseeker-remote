@@ -1,7 +1,7 @@
 import React from 'react'
 import Text from 'components/Text'
 import { BossjobLogo, increaseUserConversionModelBg } from 'images'
-import QuickLayout from '../quickLayout'
+import QuickLayout from '../components/quickLayout/quickLayout'
 import UploadResume from '../components/UploadResume'
 import RegisterInfo from '../components/RegisterInfo'
 
