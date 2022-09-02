@@ -9,28 +9,28 @@
   &_button {
     width: 100%;
     border-radius: 10px;
-    background-color: #136fd3;
-    color: #fff;
-    font-size: 14px;
-    line-height: 17px;
-    text-transform: capitalize;
+    background-color: #136fd3 !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    line-height: 17px !important;
+    text-transform: capitalize !important;
   }
   &_button:hover {
-    background-color: #136fd3;
+    background-color: #136fd3 !important;
   }
 }
 
 .arrowContainer {
   .uploadResumeButton_button {
-    padding: 6px 35px;
-    background-repeat: no-repeat;
-    background-position-y: 7px;
-    background-position-x: 15px;
+    padding: 6px 35px !important;
+    background-repeat: no-repeat !important;
+    background-position-y: 7px !important;
+    background-position-x: 15px !important;
   }
   @include msd {
-    padding: 20px;
+    padding: 20px !important;
     .uploadResumeButton_button {
-      padding: 14px 35px;
+      padding: 14px 35px !important;
     }
   }
 }
