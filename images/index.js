@@ -72,6 +72,8 @@ export const DownloadWhiteIcon = `${S3BucketJobseeker}/DownloadWhite.svg`
 export const CarouselRightRoundedBlueButton = `${S3BucketJobseeker}/CarouselRightRoundedBlueButton.svg`
 export const BlueTickIcon = `${S3BucketJobseeker}/BlueTick.svg`
 export const OpenInNewTabIcon = `${S3BucketJobseeker}/OpenNewTab.svg`
+export const increaseUserConversionModelBg = `${S3BucketJobseeker}/increaseUserConversionModelBg.png`
+export const ncreaseUserConversionDetailsBackgroundarrowArrow = `${S3BucketJobseeker}/ncreaseUserConversionDetailsBackgroundarrowArrow.svg`
 
 /* Manage profile highlight section */
 export const HighlightAboutYouIcon = `${S3BucketJobseeker}/HighlightAboutYou.svg`
@@ -89,6 +91,7 @@ export const GoogleLogo = `${S3BucketJobseeker}/google-logo.png`
 export const LinkedinLogo = `${S3BucketJobseeker}/linkedin-logo.png`
 export const FacebookLogo = `${S3BucketJobseeker}/facebook-logo.png`
 export const tiktok = `${S3BucketJobseeker}/tiktok.svg`
+export const quickCreateResume = `${S3BucketJobseeker}/increase-user-conversion-details_background-2.png`
 
 /* Landing Page Images */
 export const BuildProfessionalResume = `${S3BucketJobseeker}/BuildProfessionalResume.png`

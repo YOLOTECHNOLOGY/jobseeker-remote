@@ -62,7 +62,6 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import useSearchHistory from 'helpers/useSearchHistory'
 import configuredAxios from 'helpers/configuredAxios'
 
-
 interface JobSearchPageProps {
   seoMetaTitle: string
   seoMetaDescription: string
@@ -271,7 +270,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [hasMoreFilters, setHasMoreFilters] = useState(false)
   const [searchHistories, addSearchHistory] = useSearchHistory()
   const [suggestionList, setSuggestionList] = useState(searchHistories)
-  
+
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
@@ -314,12 +313,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       return
     }
     if (!firstRender) setDisplayQuickLinks(false)
-      ; (async () => {
-        const { payload } = await initPagePayLoad(router.query, config)
-        dispatch(fetchJobsListRequest(payload, accessToken))
-        setIsCategoryReset(false)
-        setMoreFilterReset(false)
-      })()
+    ;(async () => {
+      const { payload } = await initPagePayLoad(router.query, config)
+      dispatch(fetchJobsListRequest(payload, accessToken))
+      setIsCategoryReset(false)
+      setMoreFilterReset(false)
+    })()
   }, [router.query])
 
   useEffect(() => {
@@ -423,10 +422,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           // append current search that matches catergory
           categorySelected.push(value[0]['seo-value'])
           // append the other options that was selected previously
-          Object.values(matchedConfigFromUrl).forEach((value:any) => {
+          Object.values(matchedConfigFromUrl).forEach((value: any) => {
             value.forEach((val) => categorySelected.push(val['seo-value']))
           })
-          Object.values(matchedConfigFromUserSelection).forEach((value:any) => {
+          Object.values(matchedConfigFromUserSelection).forEach((value: any) => {
             value.forEach((val) => categorySelected.push(val['seo-value']))
           })
 

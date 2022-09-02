@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
 import moment from 'moment'
-import { isMobile } from 'react-device-detect';
+import { isMobile } from 'react-device-detect'
 
 // @ts-ignore
 import { END } from 'redux-saga'
@@ -43,15 +43,25 @@ import { DeleteFilledIcon, CreateFilledIcon, AddOutlineIcon } from 'images'
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
 
+const quickUpladResumeType = getItem('quickUpladResume')
+
 const Step4 = (props: any) => {
   const { config, userDetail, accessToken } = props
 
   const currentStep = 4
+  const totalStep =
+    quickUpladResumeType === 'onLine' ? 2 : quickUpladResumeType === 'upFile' ? 3 : 4
   const router = useRouter()
   const dispatch = useDispatch()
-  const backBtnUrl = router.query?.redirect
+  let backBtnUrl = router.query?.redirect
     ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1101'
+
+  if (quickUpladResumeType) {
+    if (quickUpladResumeType === 'onLine') {
+      backBtnUrl = '/jobseeker-complete-profile/1'
+    }
+  }
 
   const degreeList = getDegreeList(config)
   const countryList = getCountryList(config)
@@ -156,7 +166,7 @@ const Step4 = (props: any) => {
     studyPeriodFrom,
     studyPeriodTo,
     hasErrorOnFromPeriod,
-    hasErrorOnToPeriod,
+    hasErrorOnToPeriod
   ])
 
   useEffect(() => {
@@ -204,7 +214,7 @@ const Step4 = (props: any) => {
     stepForm?.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
-      inline: 'nearest',
+      inline: 'nearest'
     })
   }
 
@@ -281,7 +291,7 @@ const Step4 = (props: any) => {
         : moment(new Date(studyPeriodTo)).format('yyyy-MM-DD'),
       location_key: location?.key || '',
       field_of_study: fieldStudy,
-      degree_key: degree,
+      degree_key: degree
     }
 
     const educationPayload = {
@@ -289,7 +299,7 @@ const Step4 = (props: any) => {
       currentStep,
       isUpdate: isEditing,
       educationId,
-      educationData: removeEmptyOrNullValues(educationData),
+      educationData: removeEmptyOrNullValues(educationData)
     }
     dispatch(updateUserOnboardingInfoRequest(educationPayload))
 
@@ -302,7 +312,7 @@ const Step4 = (props: any) => {
       accessToken,
       educationId: id,
       isDelete: true,
-      currentStep,
+      currentStep
     }
 
     dispatch(updateUserOnboardingInfoRequest(deletePayload))
@@ -311,11 +321,11 @@ const Step4 = (props: any) => {
 
   const completePorfile = () => {
     const isCreateFreeResume =
-    (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
+      (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
 
     const redirect = router.query?.redirect ? router.query?.redirect : null
 
-    if (isCreateFreeResume) {
+    if (isCreateFreeResume || quickUpladResumeType === 'onLine') {
       dispatch(generateUserResumeRequest({ redirect, accessToken }))
     }
 
@@ -325,7 +335,7 @@ const Step4 = (props: any) => {
   }
 
   const handleNextBtn = () => {
-    if (!isNextDisabled && (showForm && school && degree && location || !showForm)) {
+    if (!isNextDisabled && ((showForm && school && degree && location) || !showForm)) {
       if (!userCookie.is_email_verify) {
         setIsShowModal(true)
       } else {
@@ -350,8 +360,8 @@ const Step4 = (props: any) => {
           All about your education 🎓
         </Text>
       }
-      currentStep={4}
-      totalStep={4}
+      currentStep={totalStep}
+      totalStep={totalStep}
       isMobile={isMobile}
       backFnBtn={() => router.push(backBtnUrl)}
       nextFnBtn={() => handleNextBtn()}
@@ -366,7 +376,7 @@ const Step4 = (props: any) => {
                 <Text bold textStyle='base' tagName='p'>
                   {education?.school}
                 </Text>
-                <br/>
+                <br />
                 <Text textStyle='base' tagName='p'>
                   {education?.degree}
                 </Text>
@@ -376,7 +386,7 @@ const Step4 = (props: any) => {
                     ? 'Present'
                     : moment(education?.study_period_to).format('MMMM yyyy')}
                 </Text>
-                <br/>
+                <br />
                 <Text textStyle='base' tagName='p'>
                   {education?.location} -{' '}
                   {getLocation(education?.location)?.[0].region_display_name}
@@ -643,8 +653,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     return {
       redirect: {
         destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/1102',
-        permanent: false,
-      },
+        permanent: false
+      }
     }
   }
 
@@ -660,8 +670,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     props: {
       config,
       userDetail,
-      accessToken,
-    },
+      accessToken
+    }
   }
 })
 export default Step4
