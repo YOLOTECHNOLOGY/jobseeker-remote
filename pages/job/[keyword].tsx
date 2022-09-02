@@ -835,7 +835,7 @@ const Job = ({
                       {jobDetail?.recruiter.full_name},{' '}
                     </Text>
                     <Text textStyle='lg'>
-                      &nbsp;{jobDetail?.recruiter.work_experience.job_title}
+                      &nbsp;{jobDetail?.recruiter?.work_experience?.job_title}
                     </Text>
                   </div>
                   <div className={styles.jobDetailRecruiterContent}>
