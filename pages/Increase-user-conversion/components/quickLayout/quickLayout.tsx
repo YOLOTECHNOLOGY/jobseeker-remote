@@ -6,7 +6,7 @@ interface PropsType {
 
 const QuickLayout = ({ children }: PropsType) => {
   return (
-    <Layout>
+    <Layout isHiddenFooter>
       <SEO
         title='Sign Up | Bossjob'
         description='Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.'

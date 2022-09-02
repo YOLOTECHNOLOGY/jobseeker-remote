@@ -2,7 +2,7 @@
 @import 'styles/variable.scss';
 
 .AuthLayout {
-  height: 100%;
+  height: calc(100vh - 64px);
   width: 100%;
   background-color: rgba(240, 240, 240, 0.4);
 

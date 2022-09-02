@@ -55,6 +55,9 @@ import { handleNumericInput } from '../../helpers/handleInput'
 const quickUpladResumeType = getItem('quickUpladResume')
 const Step3 = (props: any) => {
   const currentStep = 3
+  const totalStep =
+    quickUpladResumeType === 'onLine' ? 2 : quickUpladResumeType === 'upFile' ? 3 : 4
+  const currentStepPure = quickUpladResumeType === 'upFile' ? 2 : 3
   const router = useRouter()
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props
@@ -419,8 +422,8 @@ const Step3 = (props: any) => {
           Add your work experience 💼
         </Text>
       }
-      currentStep={currentStep}
-      totalStep={4}
+      currentStep={currentStepPure}
+      totalStep={totalStep}
       isMobile={isMobile}
       nextFnBtn={() => handleNextBtn()}
       isNextDisabled={isNextDisabled}

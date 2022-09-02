@@ -49,6 +49,8 @@ const Step4 = (props: any) => {
   const { config, userDetail, accessToken } = props
 
   const currentStep = 4
+  const totalStep =
+    quickUpladResumeType === 'onLine' ? 2 : quickUpladResumeType === 'upFile' ? 3 : 4
   const router = useRouter()
   const dispatch = useDispatch()
   let backBtnUrl = router.query?.redirect
@@ -358,8 +360,8 @@ const Step4 = (props: any) => {
           All about your education 🎓
         </Text>
       }
-      currentStep={4}
-      totalStep={4}
+      currentStep={totalStep}
+      totalStep={totalStep}
       isMobile={isMobile}
       backFnBtn={() => router.push(backBtnUrl)}
       nextFnBtn={() => handleNextBtn()}
