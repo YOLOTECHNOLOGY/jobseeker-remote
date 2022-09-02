@@ -35,20 +35,24 @@ import { BlueTickIcon } from 'images'
 const Companies = () => {
   const dispatch = useDispatch()
   const router = useRouter()
-  
+
   const [featuredCompanies, setFeaturedCompanies] = useState(null)
   const [featuredCompany, setFeaturedCompany] = useState(null)
   const [totalPage, setTotalPage] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
-  
-  const featuredCompaniesResponse = useSelector((store: any) => store.companies.fetchFeaturedCompaniesList.response)
+
+  const featuredCompaniesResponse = useSelector(
+    (store: any) => store.companies.fetchFeaturedCompaniesList.response
+  )
   const featureBanners = useSelector((store: any) => store.config.config.response.feature_banners)
 
-  const isFeaturedCompaniesFetching = useSelector((store: any) => store.companies.fetchFeaturedCompaniesList.fetching)
+  const isFeaturedCompaniesFetching = useSelector(
+    (store: any) => store.companies.fetchFeaturedCompaniesList.fetching
+  )
 
   useEffect(() => {
     setCurrentPage(Number(router.query.page))
-    dispatch(fetchFeaturedCompaniesListRequest({page: Number(router.query.page)}))
+    dispatch(fetchFeaturedCompaniesListRequest({ page: Number(router.query.page) }))
   }, [router.query])
 
   useEffect(() => {
@@ -72,8 +76,6 @@ const Companies = () => {
     router.push(router, undefined, { shallow: true })
   }
 
-  console.log('featuredCompany', featuredCompany)
-
   return (
     <Layout>
       <SEO
@@ -95,9 +97,7 @@ const Companies = () => {
           <SearchCompanyField onKeywordSearch={handleKeywordSearch} />
         </div>
 
-        <BannerCarousel 
-          slides={featureBanners} 
-        />
+        <BannerCarousel slides={featureBanners} />
 
         <Text textStyle='xxl' tagName='h2' bold className={styles.featuredEmployerSectionTitle}>
           Featured Employer
@@ -105,9 +105,7 @@ const Companies = () => {
         <div className={styles.featuredEmployer}>
           <div className={styles.featuredEmployerLeft}>
             <div className={styles.featuredEmployerInfo}>
-              <Link
-                to={featuredCompany?.company_url || '/'}
-              >
+              <Link to={featuredCompany?.company_url || '/'}>
                 <img
                   src={featuredCompany?.logo_url}
                   alt={`${featuredCompany?.name} logo`}
@@ -122,19 +120,20 @@ const Companies = () => {
                   >
                     {featuredCompany?.name}
                   </Link>
-                  {featuredCompany?.is_verify && (isMobile ? (
-                    <MaterialMobileTooltip
-                      icon={BlueTickIcon}
-                      className={styles.featuredEmployerTooltip}
-                      title='Verified'
-                    />
-                  ) : (
-                    <MaterialDesktopTooltip
-                      icon={BlueTickIcon}
-                      className={styles.featuredEmployerTooltip}
-                      title='Verified'
-                    />
-                  ))}
+                  {featuredCompany?.is_verify &&
+                    (isMobile ? (
+                      <MaterialMobileTooltip
+                        icon={BlueTickIcon}
+                        className={styles.featuredEmployerTooltip}
+                        title='Verified'
+                      />
+                    ) : (
+                      <MaterialDesktopTooltip
+                        icon={BlueTickIcon}
+                        className={styles.featuredEmployerTooltip}
+                        title='Verified'
+                      />
+                    ))}
                 </Text>
                 <div className={styles.featuredEmployerAbout}>
                   <div className={styles.featuredEmployerAboutItem}>
@@ -154,7 +153,9 @@ const Companies = () => {
                   {featuredCompany?.short_description}
                 </Text>
                 <Link
-                  to={`${featuredCompany?.company_url ? featuredCompany.company_url + '/jobs' : '/jobs'}`}
+                  to={`${
+                    featuredCompany?.company_url ? featuredCompany.company_url + '/jobs' : '/jobs'
+                  }`}
                   className={styles.featuredEmployerOpenings}
                 >
                   <Text textStyle='lg' bold>
@@ -216,7 +217,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const { page } = query
 
   store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchFeaturedCompaniesListRequest({page: Number(page) || 1}))
+  store.dispatch(fetchFeaturedCompaniesListRequest({ page: Number(page) || 1 }))
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()

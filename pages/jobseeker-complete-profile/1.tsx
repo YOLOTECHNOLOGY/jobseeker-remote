@@ -49,7 +49,6 @@ import { DisclaimerIcon } from 'images'
 const Step1 = (props: any) => {
   const currentStep = 1
   const router = useRouter()
-  console.log(router)
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props
   const rhTooltipTitle =

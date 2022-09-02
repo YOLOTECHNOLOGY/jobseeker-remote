@@ -4,20 +4,20 @@ import { UPDATE_USER_ONBOARDING_INFO_REQUEST } from 'store/types/users/updateUse
 import { getCookie, setCookie } from 'helpers/cookies'
 import {
   updateUserProfileSuccess,
-  updateUserProfileFailed,
+  updateUserProfileFailed
 } from 'store/actions/users/updateUserProfile'
 import {
   fetchUserWorkExperienceSuccess,
-  fetchUserWorkExperienceFailed,
+  fetchUserWorkExperienceFailed
 } from 'store/actions/users/fetchUserWorkExperience'
 import {
   fetchUserEducationSuccess,
-  fetchUserEducationFailed,
+  fetchUserEducationFailed
 } from 'store/actions/users/fetchUserEducation'
 
 import {
   completeUserProfileSuccess,
-  completeUserProfileFailed,
+  completeUserProfileFailed
 } from 'store/actions/users/completeUserProfile'
 
 import { updateUserProfileService } from 'store/services/users/updateUserProfile'
@@ -41,6 +41,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 
 function* updateUserOnboardingInfoReq({ payload }) {
   const isFromCreateResume = getItem('isFromCreateResume')
+  const quickUpladResumeType = getItem('quickUpladResume')
 
   const {
     preferences,
@@ -54,20 +55,21 @@ function* updateUserOnboardingInfoReq({ payload }) {
     educationData,
     currentStep,
     redirect,
-    proceedingPath,
+    proceedingPath
   } = payload
 
   try {
     if (currentStep === 1) {
       const preferencesPayload = {
         accessToken,
-        preferences,
+        preferences
       }
 
-      let preferenceResponse, userCompleteProfileResponse
+      let preferenceResponse
+      let userCompleteProfileResponse
       ;[preferenceResponse, userCompleteProfileResponse] = yield all([
         call(addUserPreferencesService, preferencesPayload),
-        call(updateUserProfileService, profile),
+        call(updateUserProfileService, profile)
       ])
 
       yield put(updateUserProfileSuccess(userCompleteProfileResponse.data.data))
@@ -81,6 +83,14 @@ function* updateUserOnboardingInfoReq({ payload }) {
         url = '/jobseeker-complete-profile/1101'
       }
 
+      if (quickUpladResumeType) {
+        if (quickUpladResumeType === 'onLine') {
+          url = '/jobseeker-complete-profile/1102'
+        } else {
+          url = '/jobseeker-complete-profile/1101'
+        }
+      }
+
       yield put(push(url))
     }
 
@@ -88,7 +98,7 @@ function* updateUserOnboardingInfoReq({ payload }) {
       if (isDelete) {
         const deletePayload = {
           accessToken,
-          workExperienceId,
+          workExperienceId
         }
         yield call(deleteUserWorkExperienceService, deletePayload)
       }
@@ -97,7 +107,7 @@ function* updateUserOnboardingInfoReq({ payload }) {
         const updatePayload = {
           accessToken,
           workExperienceId,
-          workExperienceData,
+          workExperienceData
         }
         yield call(updateUserWorkExperienceService, updatePayload)
       }
@@ -122,7 +132,7 @@ function* updateUserOnboardingInfoReq({ payload }) {
       if (isDelete) {
         const deletePayload = {
           accessToken,
-          educationId,
+          educationId
         }
         yield call(deleteUserEducationService, deletePayload)
       }
@@ -131,7 +141,7 @@ function* updateUserOnboardingInfoReq({ payload }) {
         const updatePayload = {
           accessToken,
           educationId,
-          educationData,
+          educationData
         }
         yield call(updateUserEducationService, updatePayload)
       }
@@ -142,7 +152,6 @@ function* updateUserOnboardingInfoReq({ payload }) {
     if (currentStep === 5) {
       yield completeUserProfileSaga(redirect, accessToken)
     }
-
   } catch (error) {
     const isServerError = checkErrorCode(error)
     if (isServerError) {
@@ -151,7 +160,7 @@ function* updateUserOnboardingInfoReq({ payload }) {
           open: true,
           severity: 'error',
           message:
-            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.',
+            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
         })
       )
     } else {
@@ -172,7 +181,7 @@ function* fetchUserWorkExperienceSaga(accessToken) {
           open: true,
           severity: 'error',
           message:
-            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.',
+            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
         })
       )
     } else {
@@ -193,7 +202,7 @@ function* fetchUserEducationServiceSaga(accessToken) {
           open: true,
           severity: 'error',
           message:
-            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.',
+            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
         })
       )
     } else {
@@ -230,7 +239,7 @@ function* completeUserProfileSaga(redirect, accessToken) {
           open: true,
           severity: 'error',
           message:
-            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.',
+            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
         })
       )
     } else {

@@ -33,15 +33,7 @@ const Step2 = () => {
         setErrorMessage('')
         if (localStorage.getItem('isCreateFreeResume'))
           localStorage.removeItem('isCreateFreeResume')
-        console.log(resume, 'file')
-
-        // const payload = {
-        //   redirect,
-        //   resume,
-        //   accessToken
-        // }
         dispatch(saveUserDevUpdateResumeFileInfo(resume))
-        // dispatch(uploadUserResumeRequest(payload))
       } else {
         setErrorMessage('File size is too huge. Please upload file that is within 5MB.')
       }

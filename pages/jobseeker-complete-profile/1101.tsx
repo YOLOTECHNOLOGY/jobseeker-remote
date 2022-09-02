@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import classNames from 'classnames/bind'
 import moment from 'moment'
-import { isMobile } from 'react-device-detect';
+import { isMobile } from 'react-device-detect'
 
 // @ts-ignore
 import { END } from 'redux-saga'
@@ -13,14 +13,17 @@ import { END } from 'redux-saga'
 import { wrapper } from 'store'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
-import { fetchUserWorkExperienceRequest } from 'store/actions/users/fetchUserWorkExperience'
+import {
+  fetchUserWorkExperienceRequest,
+  fetchUserWorkExperienceQuickUploadResume
+} from 'store/actions/users/fetchUserWorkExperience'
 import { updateUserOnboardingInfoRequest } from 'store/actions/users/updateUserOnboardingInfo'
 
 // Components
-import Switch from '@mui/material/Switch';
+import Switch from '@mui/material/Switch'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Divider from '@mui/material/Divider';
+import Divider from '@mui/material/Divider'
 
 import Text from 'components/Text'
 import OnBoardLayout from 'components/OnBoardLayout'
@@ -32,12 +35,7 @@ import MaterialDatePicker from 'components/MaterialDatePicker'
 import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
 
 // Images
-import { 
-  InfoIcon, 
-  DeleteFilledIcon, 
-  CreateFilledIcon, 
-  AddOutlineIcon 
-} from 'images'
+import { InfoIcon, DeleteFilledIcon, CreateFilledIcon, AddOutlineIcon } from 'images'
 
 /* Helpers */
 import {
@@ -45,7 +43,7 @@ import {
   getLocationList,
   getIndustryList,
   getCountryList,
-  getJobCategoryIds,
+  getJobCategoryIds
 } from 'helpers/jobPayloadFormatter'
 import { formatSalary, removeEmptyOrNullValues } from 'helpers/formatter'
 import { getItem } from 'helpers/localStorage'
@@ -54,16 +52,30 @@ import { getItem } from 'helpers/localStorage'
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
 import { handleNumericInput } from '../../helpers/handleInput'
-
+const quickUpladResumeType = getItem('quickUpladResume')
 const Step3 = (props: any) => {
   const currentStep = 3
   const router = useRouter()
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props
   const isFromCreateResume = getItem('isFromCreateResume') === '1'
-  
-  const nextBtnUrl = router.query?.redirect ? `/jobseeker-complete-profile/1102?redirect=${router.query.redirect}` : '/jobseeker-complete-profile/1102'
-  const backBtnUrl = router.query?.redirect ? `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}?redirect=${router.query.redirect}` : `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}`
+
+  const nextBtnUrl = router.query?.redirect
+    ? `/jobseeker-complete-profile/1102?redirect=${router.query.redirect}`
+    : '/jobseeker-complete-profile/1102'
+  let backBtnUrl = router.query?.redirect
+    ? `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}?redirect=${
+        router.query.redirect
+      }`
+    : `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}`
+
+  if (quickUpladResumeType) {
+    if (quickUpladResumeType === 'onLine') {
+      backBtnUrl = '/Increase-user-conversion/quick-upload-resume'
+    } else {
+      backBtnUrl = '/jobseeker-complete-profile/1'
+    }
+  }
 
   const locList = getLocationList(config)
   const jobCategoryList = getJobCategoryList(config)
@@ -95,13 +107,25 @@ const Step3 = (props: any) => {
   const [isUpdating, setIsUpdating] = useState(false)
   const [selectedExperience, setSelectedExperience] = useState(null)
   const [showErrorToComplete, setShowErrorToComplete] = useState(false)
-  
-  const { formState: { errors }} = useForm()
-  const userWorkExperiences = useSelector((store: any) => store.users.fetchUserWorkExperience.response)
-  const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserOnboardingInfo.fetching)
+
+  // increase user conversion quick upload resume
+  const [isQuickUpladResume] = useState(quickUpladResumeType && quickUpladResumeType === 'onLine')
+  const [selectArrayIndex, setSelectArrayIndex] = useState(null)
+
+  const {
+    formState: { errors }
+  } = useForm()
+  const userWorkExperiences = useSelector(
+    (store: any) => store.users.fetchUserWorkExperience.response
+  )
+  const isUpdatingUserProfile = useSelector(
+    (store: any) => store.users.updateUserOnboardingInfo.fetching
+  )
 
   useEffect(() => {
-    dispatch(fetchUserWorkExperienceRequest({ accessToken }))
+    if (!isQuickUpladResume) {
+      dispatch(fetchUserWorkExperienceRequest({ accessToken }))
+    }
     setShowErrorToComplete(false)
   }, [])
 
@@ -126,9 +150,16 @@ const Step3 = (props: any) => {
       setWorkPeriodFrom(selectedExperience.working_period_from)
       setWorkPeriodTo(selectedExperience.working_period_to)
       setSalary(selectedExperience.salary)
-      if (selectedExperience.company_industry) setIndustry(industryList.filter((industry) => industry.label === selectedExperience.company_industry)[0].value)
+      if (selectedExperience.company_industry)
+        setIndustry(
+          industryList.filter(
+            (industry) => industry.label === selectedExperience.company_industry
+          )[0].value
+        )
       if (selectedExperience.location && selectedExperience.location.toLowerCase() === 'overseas') {
-        setCountry(countryList.filter((country) => country.key === selectedExperience.country_key)[0].value)
+        setCountry(
+          countryList.filter((country) => country.key === selectedExperience.country_key)[0].value
+        )
         setIsShowCountry(true)
       }
 
@@ -150,10 +181,7 @@ const Step3 = (props: any) => {
     const periodTo = moment(new Date(workPeriodTo))
 
     setHasErrorOnToPeriod(moment(periodFrom).isAfter(periodTo) ? true : false)
-  }, [
-    workPeriodFrom,
-    workPeriodTo
-  ])
+  }, [workPeriodFrom, workPeriodTo])
 
   useEffect(() => {
     const requireFields = jobTitle && companyName && location && workPeriodFrom
@@ -161,7 +189,8 @@ const Step3 = (props: any) => {
     const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
     if (isCurrentJob) {
-      if (emptyRequiredFields) setDisabledButton(emptyRequiredFields && !hasErrorOnFromPeriod ? true : false)
+      if (emptyRequiredFields)
+        setDisabledButton(emptyRequiredFields && !hasErrorOnFromPeriod ? true : false)
       setDisabledButton(requireFields && !hasErrorOnFromPeriod ? true : false)
     } else {
       if (emptyRequiredFields) setDisabledButton(emptyRequiredFields && isValidDate ? true : false)
@@ -170,10 +199,10 @@ const Step3 = (props: any) => {
 
     if (requireFields) setShowErrorToComplete(false)
   }, [
-    jobTitle, 
-    companyName, 
-    location, 
-    isCurrentJob, 
+    jobTitle,
+    companyName,
+    location,
+    isCurrentJob,
     workPeriodFrom,
     workPeriodTo,
     hasErrorOnFromPeriod,
@@ -190,10 +219,10 @@ const Step3 = (props: any) => {
       } else {
         scrollToForm()
       }
-    } 
+    }
 
     if (!hasNoWorkExperience) {
-      setIsNextDisabled(true)
+      setIsNextDisabled(userWorkExperiences.length > 0 ? false : true)
       setShowForm(workExperience?.length === 0 ? true : false)
       setIsEditing(false)
     }
@@ -201,9 +230,11 @@ const Step3 = (props: any) => {
 
   const setDisabledButton = (value) => {
     setIsSaveDisabled(!value)
-    setIsNextDisabled(!value)
+    if (userWorkExperiences.length > 0 ? false : true) {
+      setIsNextDisabled(!value)
+    }
   }
-  
+
   const requiredLabel = (text: string) => {
     return (
       <>
@@ -214,7 +245,11 @@ const Step3 = (props: any) => {
   }
 
   const errorText = (errorMessage: string) => {
-    return <Text textStyle='sm' textColor='red' tagName='p' className={styles.stepFieldError}>{errorMessage}</Text>
+    return (
+      <Text textStyle='sm' textColor='red' tagName='p' className={styles.stepFieldError}>
+        {errorMessage}
+      </Text>
+    )
   }
 
   const onLocationSearch = (_, value) => {
@@ -246,12 +281,15 @@ const Step3 = (props: any) => {
     setIsUpdating(false)
     setIsSaveDisabled(true)
     setShowErrorToComplete(false)
+
+    setSelectedExperience(null)
   }
 
   const newExperienceForm = () => {
     setShowForm(!showForm)
     setIsEditing(false)
     setIsNextDisabled(true)
+    setSelectArrayIndex(null)
   }
 
   const handleDeleteExperience = (id) => {
@@ -262,11 +300,16 @@ const Step3 = (props: any) => {
       currentStep
     }
 
-    dispatch(updateUserOnboardingInfoRequest(deletePayload))
-    handleResetForm()
+    if (isQuickUpladResume) {
+      userWorkExperiences.splice(selectArrayIndex, 1)
+      dispatch(fetchUserWorkExperienceQuickUploadResume(userWorkExperiences))
+    } else {
+      dispatch(updateUserOnboardingInfoRequest(deletePayload))
+      handleResetForm()
+    }
   }
 
-  const handleSaveForm = (proceedingPath='') => {
+  const handleSaveForm = (proceedingPath = '') => {
     // eslint-disable-next-line no-console
     const matchedIndustry = industryList.filter((option) => {
       return option.value === industry
@@ -278,12 +321,20 @@ const Step3 = (props: any) => {
       country_key: country || 'ph',
       company_industry_key: matchedIndustry?.[0]?.key || null,
       is_currently_work_here: isCurrentJob,
-      job_category_ids: jobFunction?.length > 0 ? getJobCategoryIds(config, jobFunction).join(',') : '',
+      job_category_ids:
+        jobFunction?.length > 0 ? getJobCategoryIds(config, jobFunction).join(',') : '',
       salary: Number(salary),
       working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
       working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
       description: description ? description : '',
-      location_key: location?.key || ''
+      location_key: location?.key || '',
+
+      // isQuickUpladResume
+      job_categories: null,
+      industry: null,
+      country: null,
+      location: null,
+      id: null
     }
 
     const workExperiencesPayload = {
@@ -294,7 +345,30 @@ const Step3 = (props: any) => {
       workExperienceData: removeEmptyOrNullValues(workExperienceData),
       proceedingPath
     }
-    dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
+    if (!isQuickUpladResume) {
+      dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
+    } else {
+      workExperienceData.job_categories = jobFunction
+      ;(workExperienceData.industry = matchedIndustry?.[0]?.key || null),
+        (workExperienceData.country = country || 'ph'),
+        (workExperienceData.location = location?.key || '')
+      workExperienceData.id = Math.round(Math.random() * 1000)
+
+      if (Object.keys(userWorkExperiences).length) {
+        if (selectArrayIndex !== null) {
+          userWorkExperiences.splice(selectArrayIndex, 1, workExperienceData)
+          dispatch(fetchUserWorkExperienceQuickUploadResume(userWorkExperiences))
+        } else {
+          dispatch(
+            fetchUserWorkExperienceQuickUploadResume(
+              userWorkExperiences.concat([workExperienceData])
+            )
+          )
+        }
+      } else {
+        dispatch(fetchUserWorkExperienceQuickUploadResume([workExperienceData]))
+      }
+    }
 
     handleResetForm()
     setShowForm(false)
@@ -312,7 +386,7 @@ const Step3 = (props: any) => {
   }
 
   const handleNextBtn = () => {
-    if (!isNextDisabled && showForm && (jobTitle && companyName && location)) {
+    if (!isNextDisabled && showForm && jobTitle && companyName && location) {
       handleSaveForm(nextBtnUrl)
       return
     }
@@ -321,8 +395,11 @@ const Step3 = (props: any) => {
       setShowErrorToComplete(true)
       return
     }
-
-    router.push(nextBtnUrl)
+    if (isQuickUpladResume) {
+      router.push('/Increase-user-conversion/quick-upload-resume')
+    } else {
+      router.push(nextBtnUrl)
+    }
   }
 
   const scrollToForm = () => {
@@ -336,7 +413,12 @@ const Step3 = (props: any) => {
 
   return (
     <OnBoardLayout
-      headingText={<Text bold textStyle='xxxl' tagName='h2'> Add your work experience 💼</Text>}
+      headingText={
+        <Text bold textStyle='xxxl' tagName='h2'>
+          {' '}
+          Add your work experience 💼
+        </Text>
+      }
       currentStep={currentStep}
       totalStep={4}
       isMobile={isMobile}
@@ -347,45 +429,80 @@ const Step3 = (props: any) => {
     >
       <div className={styles.stepNotice}>
         <img src={InfoIcon} alt='' width='30' height='30' />
-        <Text textStyle='base'>Fill in your complete work experiences will increase your chances of being shortlisted by 83%.</Text>
+        <Text textStyle='base'>
+          Fill in your complete work experiences will increase your chances of being shortlisted by
+          83%.
+        </Text>
       </div>
       {workExperience?.length > 0 && (
         <div className={styles.stepDataList}>
-          {workExperience.map((experience) => (
+          {workExperience.map((experience, index) => (
             <div className={styles.stepDataItem} key={experience.id}>
               <div className={styles.stepDataInfo}>
-                <Text bold textStyle='base' tagName='p'>{experience?.job_title}</Text>
-                <br/>
-                <Text textStyle='base' tagName='p'>{experience?.company}</Text>
-                <Text textStyle='base' tagName='p'>{experience?.location} - {getLocation(experience?.location)?.[0].region_display_name}</Text>
-                <Text textStyle='base' tagName='p'>{moment(experience?.working_period_from).format("MMMM yyyy")} to {experience?.is_currently_work_here ? 'Present' : moment(experience.working_period_to).format("MMMM yyyy")}</Text>
-                <br/>
-                {experience?.job_categories.length > 0 && <Text textStyle='base' tagName='p'>{experience?.job_categories.join(', ')}</Text>}
-                {experience?.company_industry && <Text textStyle='base' tagName='p'>{experience?.company_industry}</Text>}
-                {experience?.salary && <Text textStyle='base' tagName='p'>{formatSalary(experience?.salary)} per month</Text>}
-                <br/>
+                <Text bold textStyle='base' tagName='p'>
+                  {experience?.job_title}
+                </Text>
+                <br />
+                <Text textStyle='base' tagName='p'>
+                  {experience?.company}
+                </Text>
+                <Text textStyle='base' tagName='p'>
+                  {experience?.location} -{' '}
+                  {getLocation(experience?.location)?.[0]?.region_display_name}
+                </Text>
+                <Text textStyle='base' tagName='p'>
+                  {moment(experience?.working_period_from).format('MMMM yyyy')} to{' '}
+                  {experience?.is_currently_work_here
+                    ? 'Present'
+                    : moment(experience.working_period_to).format('MMMM yyyy')}
+                </Text>
+                <br />
+                {experience?.job_categories?.length > 0 && (
+                  <Text textStyle='base' tagName='p'>
+                    {experience?.job_categories.join(', ')}
+                  </Text>
+                )}
+                {experience?.company_industry && (
+                  <Text textStyle='base' tagName='p'>
+                    {experience?.company_industry}
+                  </Text>
+                )}
+                {experience?.salary && (
+                  <Text textStyle='base' tagName='p'>
+                    {formatSalary(experience?.salary)} per month
+                  </Text>
+                )}
+                <br />
                 {experience?.description && (
                   <>
-                    <Text textStyle='base' tagName='p'>Description: </Text>
-                    <div className={styles.stepDataDescription} dangerouslySetInnerHTML={{__html: experience.description}} />
+                    <Text textStyle='base' tagName='p'>
+                      Description:{' '}
+                    </Text>
+                    <div
+                      className={styles.stepDataDescription}
+                      dangerouslySetInnerHTML={{ __html: experience.description }}
+                    />
                   </>
                 )}
               </div>
               <div className={styles.stepDataActions}>
-                <div 
-                  className={styles.stepDataActionItem} 
+                <div
+                  className={styles.stepDataActionItem}
                   onClick={() => {
                     setShowForm(!showForm)
-
+                    setSelectArrayIndex(index)
                     setIsEditing(true)
                     setSelectedExperience(experience)
                   }}
                 >
                   <img src={CreateFilledIcon} width='18' height='18' />
                 </div>
-                <div 
-                  className={styles.stepDataActionItem} 
-                  onClick={() => handleDeleteExperience(experience.id)}
+                <div
+                  className={styles.stepDataActionItem}
+                  onClick={() => {
+                    handleDeleteExperience(experience.id)
+                    setSelectArrayIndex(index)
+                  }}
                 >
                   <img src={DeleteFilledIcon} width='18' height='18' />
                 </div>
@@ -394,10 +511,10 @@ const Step3 = (props: any) => {
           ))}
         </div>
       )}
-      
+
       {showForm && (
         <div className={styles.step3FormWrapper}>
-          <div id="step3Form" className={classNames(styles.stepForm, styles.step3Form)}>
+          <div id='step3Form' className={classNames(styles.stepForm, styles.step3Form)}>
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
@@ -446,15 +563,17 @@ const Step3 = (props: any) => {
 
             <div className={styles.stepFieldGroup}>
               <div className={styles.stepFieldHeader}>
-                <Text textStyle='base' bold>Working Period <span className={styles.stepFieldRequired}>*</span></Text>
+                <Text textStyle='base' bold>
+                  Working Period <span className={styles.stepFieldRequired}>*</span>
+                </Text>
               </div>
               <div className={styles.stepFieldBody}>
                 <FormControlLabel
                   control={
-                    <Switch 
-                      checked={isCurrentJob} 
-                      onChange={() => setIsCurrentJob(!isCurrentJob)} 
-                      name='currentJob' 
+                    <Switch
+                      checked={isCurrentJob}
+                      onChange={() => setIsCurrentJob(!isCurrentJob)}
+                      name='currentJob'
                     />
                   }
                   label={<Text textStyle='base'>I currently work here</Text>}
@@ -464,14 +583,16 @@ const Step3 = (props: any) => {
 
             <div className={styles.stepField}>
               <div className={styles.stepFieldHeader}>
-                <Text textStyle='base' bold>From</Text>
+                <Text textStyle='base' bold>
+                  From
+                </Text>
               </div>
               <div className={classNames(styles.stepFieldBody, styles.stepFieldDate)}>
                 <div className={styles.stepFieldDateItem}>
                   <MaterialDatePicker
-                    label="Month Year"
+                    label='Month Year'
                     views={['year', 'month']}
-                    inputFormat="MMM yyyy"
+                    inputFormat='MMM yyyy'
                     value={workPeriodFrom}
                     onDateChange={(value) => {
                       setWorkPeriodFrom(value)
@@ -479,20 +600,26 @@ const Step3 = (props: any) => {
                   />
                 </div>
               </div>
-              {hasErrorOnFromPeriod && <Text textColor='red' textStyle='sm'>Start date must be earlier than completion date.</Text>}
+              {hasErrorOnFromPeriod && (
+                <Text textColor='red' textStyle='sm'>
+                  Start date must be earlier than completion date.
+                </Text>
+              )}
             </div>
 
             {!isCurrentJob && (
               <div className={styles.stepField}>
                 <div className={styles.stepFieldHeader}>
-                  <Text textStyle='base' bold>To</Text>
+                  <Text textStyle='base' bold>
+                    To
+                  </Text>
                 </div>
                 <div className={classNames(styles.stepFieldBody, styles.stepFieldDate)}>
                   <div className={styles.stepFieldDateItem}>
                     <MaterialDatePicker
-                      label="Month Year"
+                      label='Month Year'
                       views={['year', 'month']}
-                      inputFormat="MMM yyyy"
+                      inputFormat='MMM yyyy'
                       value={workPeriodTo}
                       onDateChange={(value) => {
                         setWorkPeriodTo(value)
@@ -500,11 +627,15 @@ const Step3 = (props: any) => {
                     />
                   </div>
                 </div>
-                {hasErrorOnToPeriod && <Text textColor='red' textStyle='sm'>Start date must be earlier than completion date.</Text>}
+                {hasErrorOnToPeriod && (
+                  <Text textColor='red' textStyle='sm'>
+                    Start date must be earlier than completion date.
+                  </Text>
+                )}
               </div>
             )}
 
-            <div id="jobFunction" className={styles.stepField}>
+            <div id='jobFunction' className={styles.stepField}>
               <MaterialSelectCheckmarks
                 className={styles.stepFullwidth}
                 label={'Job Functions'}
@@ -521,8 +652,8 @@ const Step3 = (props: any) => {
                 label='Industry'
                 value={industry}
                 onChange={(e) => {
-                  setIndustry(e.target.value)}
-                }
+                  setIndustry(e.target.value)
+                }}
                 options={industryList}
               />
             </div>
@@ -537,37 +668,35 @@ const Step3 = (props: any) => {
                 onChange={(e) => setSalary(handleNumericInput(e.target.value))}
               />
             </div>
-            
+
             <div className={styles.step3Editor}>
-              <TextEditor
-                value={description}
-                setValue={setDescription}
-              />
+              <TextEditor value={description} setValue={setDescription} />
             </div>
           </div>
         </div>
       )}
 
       {!showForm && (
-        <div 
-          className={styles.stepFormToggle} 
-          onClick={() => newExperienceForm() }
-        >
+        <div className={styles.stepFormToggle} onClick={() => newExperienceForm()}>
           <img src={AddOutlineIcon} width='18' height='18' />
-          <Text textColor='primaryBlue' textStyle='sm'>Add a work experience</Text>
+          <Text textColor='primaryBlue' textStyle='sm'>
+            Add a work experience
+          </Text>
         </div>
       )}
 
       {showErrorToComplete && (
-        <Text textStyle='base' textColor='red' tagName='p'>Fill up the required field to proceed.</Text>
+        <Text textStyle='base' textColor='red' tagName='p'>
+          Fill up the required field to proceed.
+        </Text>
       )}
 
-      {workExperience.length === 0 && (
+      {workExperience?.length === 0 && (
         <div className={styles.stepField}>
           <FormControlLabel
             control={
               <Checkbox
-                name='noWorkExperience' 
+                name='noWorkExperience'
                 onChange={() => setHasNoWorkExperience(!hasNoWorkExperience)}
                 checked={hasNoWorkExperience}
               />
@@ -579,29 +708,51 @@ const Step3 = (props: any) => {
 
       {showForm && (
         <React.Fragment>
-          <Divider style={{ marginTop: '20px', marginBottom: '20px'}}/>
+          <Divider style={{ marginTop: '20px', marginBottom: '20px' }} />
           <div className={styles.stepFormActions}>
-            <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={handleCancelForm}>
+            <MaterialButton
+              className={styles.stepFormActionsleftBtn}
+              variant='outlined'
+              capitalize
+              onClick={handleCancelForm}
+            >
               <Text textColor='primaryBlue'>Cancel</Text>
             </MaterialButton>
 
-            <MaterialButton disabled={isSaveDisabled} variant='contained' capitalize onClick={() => handleSaveForm()} isLoading={isUpdating}>
+            <MaterialButton
+              disabled={isSaveDisabled}
+              variant='contained'
+              capitalize
+              onClick={() => handleSaveForm()}
+              isLoading={isUpdating}
+            >
               <Text textColor='white'>Save</Text>
             </MaterialButton>
           </div>
         </React.Fragment>
       )}
 
-      {!showForm && isMobile &&  (
+      {!showForm && isMobile && (
         <React.Fragment>
           <Divider className={styles.divider} />
-          
+
           <div className={styles.stepFormActions}>
-            <MaterialButton className={styles.stepFormActionsleftBtn} variant='outlined' capitalize onClick={() => router.push(backBtnUrl)}>
+            <MaterialButton
+              className={styles.stepFormActionsleftBtn}
+              variant='outlined'
+              capitalize
+              onClick={() => router.push(backBtnUrl)}
+            >
               <Text textColor='primaryBlue'>Back</Text>
             </MaterialButton>
 
-            <MaterialButton variant='contained' disabled={isNextDisabled} capitalize onClick={() => handleNextBtn()} isLoading={isUpdating}>
+            <MaterialButton
+              variant='contained'
+              disabled={isNextDisabled}
+              capitalize
+              onClick={() => handleNextBtn()}
+              isLoading={isUpdating}
+            >
               <Text textColor='white'>Next</Text>
             </MaterialButton>
           </div>
@@ -612,18 +763,20 @@ const Step3 = (props: any) => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
-  const accessToken = req.cookies.accessToken
-  if (!accessToken) {
-    return { 
-      redirect: { 
-        destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/1101', 
-        permanent: false, 
-      }
-    }
-  }
+  const accessToken = req.cookies.accessToken ? req.cookies.accessToken : null
+  // if (!accessToken) {
+  //   return {
+  //     redirect: {
+  //       destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/1101',
+  //       permanent: false
+  //     }
+  //   }
+  // }
 
   store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchUserOwnDetailRequest({accessToken}))
+  if (accessToken) {
+    store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
+  }
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
@@ -635,7 +788,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       config,
       userDetail,
       accessToken
-    },
+    }
   }
 })
 

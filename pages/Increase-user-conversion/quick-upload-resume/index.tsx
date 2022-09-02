@@ -15,7 +15,7 @@ import styles from './styles.module.scss'
 const QuickUploadResume = () => {
   const UseHooksRegister = useRegister()
   const useHooksFakeUploadResume = useFakeUploadResume()
-  const { isRegisteringJobseeker, isLoading, uploadResumeFile } = UseHooksRegister
+  const { isRegisteringJobseeker, isLoading, isShowRegisterInfo } = UseHooksRegister
 
   return (
     <QuickLayout>
@@ -54,7 +54,7 @@ const QuickUploadResume = () => {
                 </div>
               ) : null}
 
-              {uploadResumeFile?.size ? (
+              {isShowRegisterInfo() ? (
                 <RegisterInfo {...UseHooksRegister} />
               ) : (
                 <UploadResume {...useHooksFakeUploadResume} />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
+import { getItem } from 'helpers/localStorage'
 
 import { SnackbarOrigin } from '@mui/material'
 
@@ -11,6 +12,7 @@ import { registerJobseekerRequest } from 'store/actions/auth/registerJobseeker'
 import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
 
 import useRegisterInfo from 'pages/Increase-user-conversion/quick-upload-resume/useRegisterInfo'
+import { addUserWorkExperienceService } from 'store/services/users/addUserWorkExperience'
 
 import Link from '../../components/Link'
 
@@ -29,7 +31,9 @@ const useRegister = () => {
     isLoading,
     uploadResumeFile,
     setSnackbarState,
-    userInfo
+    userInfo,
+    isShowRegisterInfo,
+    userWorkExperiences
   } = useRegisterInfo()
 
   const router = useRouter()
@@ -108,19 +112,38 @@ const useRegister = () => {
 
   useEffect(() => {
     const accessToken = registerJobseekerState?.response?.data?.authentication?.access_token
-    console.log(uploadResumeFile, registerJobseekerState, accessToken)
-    if (uploadResumeFile?.size && accessToken) {
-      const payload = {
-        resume: uploadResumeFile,
-        accessToken: accessToken,
-        redirect: false
+    const createresumeType = getItem('quickUpladResume')
+    if (createresumeType === 'upFile' && accessToken) {
+      if (uploadResumeFile?.size && accessToken) {
+        const payload = {
+          resume: uploadResumeFile,
+          accessToken: accessToken,
+          redirect: false
+        }
+        dispatch(uploadUserResumeRequest(payload))
       }
-      dispatch(uploadUserResumeRequest(payload))
+    } else if (createresumeType === 'onLine' && accessToken) {
+      if (userWorkExperiences.length) {
+        const workExperiencesPayload = {
+          accessToken,
+          workExperience: null
+        }
+        const workListRequest = []
+        userWorkExperiences.forEach((element) => {
+          workExperiencesPayload.workExperience = element
+          workListRequest.push(addUserWorkExperienceService(workExperiencesPayload))
+        })
+        Promise.all(workListRequest).then((res) => {
+          if (res.length) {
+            router.push('/jobseeker-complete-profile/1')
+          }
+        })
+        // dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
+      }
     }
   }, [userInfo])
 
   const handleRegister = (isRedirect: HandleRegisterAng) => {
-    console.log(isRedirect)
     if (!firstName) {
       setFirstNameError('Please enter your first name.')
     }
@@ -160,7 +183,7 @@ const useRegister = () => {
 
       if (!isRedirect) {
         // increates user conversion  quick register
-        if (!uploadResumeFile?.size) {
+        if (!uploadResumeFile?.size && !userWorkExperiences.length) {
           setSnackbarState({
             vertical: 'top',
             horizontal: 'center',
@@ -212,7 +235,8 @@ const useRegister = () => {
     open,
     isLoading,
     handleSnackbarClose,
-    uploadResumeFile
+    uploadResumeFile,
+    isShowRegisterInfo
   }
 }
 

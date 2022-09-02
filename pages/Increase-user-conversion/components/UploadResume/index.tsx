@@ -8,6 +8,7 @@ import MaterialButton from 'components/MaterialButton'
 import styles from './styles.module.scss'
 import Link from 'components/Link'
 import { useRouter } from 'next/router'
+import { setItem } from 'helpers/localStorage'
 
 const UploadResume = (props: any) => {
   const router = useRouter()
@@ -58,7 +59,10 @@ const UploadResume = (props: any) => {
               type='file'
               hidden
               accept='.pdf, .doc, .docx'
-              onChange={(e) => setResume(e.target.files[0])}
+              onChange={(e) => {
+                setResume(e.target.files[0])
+                setItem('quickUpladResume', 'upFile')
+              }}
             />
           </MaterialButton>
           <Text textColor='darkgrey' textStyle='xsm' className={styles.step2UploadAllowed}>
@@ -88,7 +92,7 @@ const UploadResume = (props: any) => {
             capitalize
             isLoading={isCreatingResume}
             onClick={() => {
-              localStorage.setItem('isCreateFreeResume', 'true')
+              setItem('quickUpladResume', 'onLine')
               setIsCreatingResume(true)
               router.push(redirect)
             }}
