@@ -171,7 +171,7 @@
       margin-right: 100px;
     }
 
-    @include media(sm, msd) {
+    @include msd {
       display: flex;
       flex-direction: row;
       justify-content: space-between;

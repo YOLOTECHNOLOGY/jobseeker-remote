@@ -622,45 +622,6 @@ const Job = ({
                 {renderSaveAndApplyActions()}
               </div>
             )}
-            {/* <div className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}>
-              <div>
-                <div className={styles.jobDetailPrimaryInfo}>
-                  <Text textStyle='xl' tagName='h1' bold className={classNamesCombined([styles.jobDetailPrimaryInfoTitle, isStickyClass])}>
-                    {jobDetail?.job_title}
-                  </Text>
-                  <div className={classNamesCombined([styles.jobDetailCompany, isStickyClass])}>
-                    <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
-                      <Text textStyle='lg' className={styles.jobDetailCompanyName}>
-                        {jobDetail?.company?.name}
-                      </Text>
-                    </Link>
-                    {jobDetail?.company?.is_verify && (isMobile ? (
-                      <MaterialMobileTooltip
-                        icon={BlueTickIcon}
-                        className={styles.companyIsVerifiedToolTip}
-                        title='Verified'
-                        style={{ marginTop:'10px' }}
-                      />
-                    ) : (
-                      <MaterialDesktopTooltip
-                        icon={BlueTickIcon}
-                        className={styles.companyIsVerifiedToolTip}
-                        title='Verified'
-                        style={{ marginTop:'10px' }}
-                      />
-                    ))}
-                  </div>
-                </div>
-                <div
-                  className={classNamesCombined([
-                    styles.jobDetailCTA,
-                    breakpointStyles.hideOnMobileAndTablet
-                  ])}
-                >
-                  {!isAppliedQueryParam && renderSaveAndApplyActions()}
-                </div>
-              </div>
-            </div> */}
             <div className={styles.jobDetailPrimarySub}>
               {jobDetail?.is_featured && <JobTag tag='Featured' tagType='featured' />}
               {jobDetail?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
