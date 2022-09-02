@@ -169,46 +169,56 @@ const CompanyDetail = (props: any) => {
                     </Text>
                   </div>
                 )}
-                <div
-                  className={classNames(
-                    styles.companyOverviewItem,
-                    styles.companyOverviewItemSocial
-                  )}
-                >
-                  <Text textStyle='lg' bold>
-                    Social Media:{' '}
-                  </Text>
-                  <div className={styles.companyOverviewSocial}>
-                    <Link
-                      external
-                      className={styles.companyOverviewSocialLink}
-                      to={company.facebook_url ? company.facebook_url : router.asPath}
-                    >
-                      <img src={FacebookOutline} />
-                    </Link>
-                    <Link
-                      external
-                      className={styles.companyOverviewSocialLink}
-                      to={company.linkedin_url ? company.linkedin_url : router.asPath}
-                    >
-                      <img src={LinkedinOutline} />
-                    </Link>
-                    <Link
-                      external
-                      className={styles.companyOverviewSocialLink}
-                      to={company.instagram_url ? company.instagram_url : router.asPath}
-                    >
-                      <img src={InstagramOutline} />
-                    </Link>
-                    <Link
-                      external
-                      className={styles.companyOverviewSocialLink}
-                      to={company.youtube_url ? company.youtube_url : router.asPath}
-                    >
-                      <img src={YoutubeOutline} />
-                    </Link>
+                {company.facebook_url || company.instagram_url || company.linkedin_url || company.youtube_url ? (
+                  <div
+                    className={classNames(
+                      styles.companyOverviewItem,
+                      styles.companyOverviewItemSocial
+                    )}
+                  >
+                    <Text textStyle='lg' bold>
+                      Social Media:{' '}
+                    </Text>
+                    <div className={styles.companyOverviewSocial}>
+                      {company.facebook_url && (
+                        <Link
+                          external
+                          className={styles.companyOverviewSocialLink}
+                          to={company.facebook_url}
+                        >
+                          <img src={FacebookOutline} />
+                        </Link>
+                      )}
+                      {company.linkedin_url && (
+                        <Link
+                          external
+                          className={styles.companyOverviewSocialLink}
+                          to={company.linkedin_url}
+                        >
+                          <img src={LinkedinOutline} />
+                        </Link>
+                      )}
+                      {company.instagram_url && (
+                        <Link
+                          external
+                          className={styles.companyOverviewSocialLink}
+                          to={company.instagram_url}
+                        >
+                          <img src={InstagramOutline} />
+                        </Link>
+                      )}
+                      {company.youtube_url && (
+                        <Link
+                          external
+                          className={styles.companyOverviewSocialLink}
+                          to={company.youtube_url}
+                        >
+                          <img src={YoutubeOutline} />
+                        </Link>
+                      )}
+                    </div>
                   </div>
-                </div>
+                ) : null}
               </div>
             </div>
           </div>
