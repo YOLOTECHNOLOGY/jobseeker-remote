@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 /* Redux Actions */
 import { saveUserDevUpdateResumeFileInfo } from 'store/actions/users/uploadUserResume'
-import { maxFileSize } from '../../helpers/handleInput'
+import { maxFileSize } from '../helpers/handleInput'
 
 const Step2 = () => {
   const currentStep = 2

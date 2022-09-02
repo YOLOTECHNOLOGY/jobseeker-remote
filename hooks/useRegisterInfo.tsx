@@ -32,7 +32,7 @@ const useRegisterInfo = () => {
     if (uploadResumeFile?.size || userWorkExperiences.length) {
       return true
     } else {
-      false
+      return false
     }
   }
 

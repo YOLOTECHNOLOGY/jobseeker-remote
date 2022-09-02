@@ -20,7 +20,7 @@ import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 /* Styles */
 import styles from './Register.module.scss'
 import MetaText from '../../components/MetaText'
-import useRegister from 'pages/hooks/useRegister'
+import useRegister from 'hooks/useRegister'
 
 const Register = () => {
   const {

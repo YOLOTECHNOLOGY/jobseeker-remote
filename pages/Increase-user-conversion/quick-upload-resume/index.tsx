@@ -1,14 +1,14 @@
 import React from 'react'
 import Text from 'components/Text'
 import { BossjobLogo, increaseUserConversionModelBg } from 'images'
-import QuickLayout from '../components/quickLayout/quickLayout'
-import UploadResume from '../components/UploadResume'
-import RegisterInfo from '../components/RegisterInfo'
+import QuickLayout from 'components/IncreaseUserConversion/quickLayout/quickLayout'
+import UploadResume from 'components/IncreaseUserConversion/UploadResume'
+import RegisterInfo from 'components/IncreaseUserConversion/RegisterInfo'
 
 import LinearProgress from '@mui/material/LinearProgress'
 
-import useRegister from 'pages/hooks/useRegister'
-import useFakeUploadResume from 'pages/hooks/useFakeUploadResume'
+import useRegister from 'hooks/useRegister'
+import useFakeUploadResume from 'hooks/useFakeUploadResume'
 
 import styles from './styles.module.scss'
 

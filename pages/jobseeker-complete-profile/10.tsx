@@ -1,17 +1,17 @@
-import React, { } from 'react'
+import React from 'react'
 // @ts-ignore
 import { END } from 'redux-saga'
 /* Redux Actions */
 import { wrapper } from 'store'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 // Components
-import useUploadResume from '../hooks/useUploadResume'
+import useUploadResume from '../../hooks/useUploadResume'
 // Styles
-import OnRegisterUpload from './components/OnRegisterUpload'
+import OnRegisterUpload from '../../components/JobseekerCompleteProfile/OnRegisterUpload'
 
 const Step2 = (props: any) => {
   const hookProps = useUploadResume(props)
-  return (<OnRegisterUpload {...hookProps} />)
+  return <OnRegisterUpload {...hookProps} />
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
@@ -20,8 +20,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     return {
       redirect: {
         destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/10',
-        permanent: false,
-      },
+        permanent: false
+      }
     }
   }
 
@@ -34,8 +34,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   return {
     props: {
       userDetail,
-      accessToken,
-    },
+      accessToken
+    }
   }
 })
 

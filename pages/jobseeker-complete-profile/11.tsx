@@ -3,9 +3,9 @@ import React from 'react'
 // @ts-ignore
 /* Redux Actions */
 // Components
-import useFakeUploadResume from '../hooks/useFakeUploadResume'
+import useFakeUploadResume from '../../hooks/useFakeUploadResume'
 // Styles
-import OnRegisterUpload from './components/OnRegisterUpload'
+import OnRegisterUpload from '../../components/JobseekerCompleteProfile/OnRegisterUpload'
 
 const Step2 = () => {
   const router = useRouter()

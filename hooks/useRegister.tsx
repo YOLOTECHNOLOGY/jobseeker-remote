@@ -11,10 +11,10 @@ import { socialLoginRequest } from 'store/actions/auth/socialLogin'
 import { registerJobseekerRequest } from 'store/actions/auth/registerJobseeker'
 import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
 
-import useRegisterInfo from 'pages/Increase-user-conversion/quick-upload-resume/useRegisterInfo'
+import useRegisterInfo from 'hooks/useRegisterInfo'
 import { addUserWorkExperienceService } from 'store/services/users/addUserWorkExperience'
 
-import Link from '../../components/Link'
+import Link from 'components/Link'
 
 export interface SnackbarType extends SnackbarOrigin {
   open: boolean
@@ -189,7 +189,7 @@ const useRegister = () => {
             horizontal: 'center',
             open: true
           })
-          return
+          return false
         }
       }
 

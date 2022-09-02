@@ -60,7 +60,9 @@ const UploadResume = (props: any) => {
               hidden
               accept='.pdf, .doc, .docx'
               onChange={(e) => {
-                setResume(e.target.files[0])
+                if (e.target?.files[0]) {
+                  setResume(e.target.files[0])
+                }
                 setItem('quickUpladResume', 'upFile')
               }}
             />
