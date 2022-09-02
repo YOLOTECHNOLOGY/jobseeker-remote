@@ -296,10 +296,10 @@ const Job = ({
   const updateScrollPosition = () => {
     if (width > 798) {
       prevScrollY.current = window.pageYOffset
-      setIsSticky(prevScrollY.current >= 330 ? true : false)
-    } else if (width < 577) {
+      setIsSticky(prevScrollY.current >= 389 ? true : false)
+    } else {
       prevScrollY.current = window.pageYOffset
-      setIsSticky(prevScrollY.current >= 590 ? true : false)
+      setIsSticky(prevScrollY.current >= 592 ? true : false)
     }
   }
 
