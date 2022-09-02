@@ -55,3 +55,33 @@
   height:1px;
   display: none;
 }
+
+@mixin media($keys...) {
+  @each $key in $keys {
+    @if ($key == xsm) {
+      @include xsm {
+        @content
+      }
+    } @else if ($key == sm) {
+      @include sm {
+        @content
+      }
+    } @else if ($key == msd) {
+      @include msd {
+        @content
+      }
+    } @else if ($key == md) {
+      @include md {
+        @content
+      }
+    } @else if ($key == lg) {
+      @include lg {
+        @content
+      }
+    } @else if ($key == xl) {
+      @include xl {
+        @content
+      }
+    }
+  }
+}

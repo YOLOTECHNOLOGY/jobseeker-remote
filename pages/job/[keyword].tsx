@@ -294,7 +294,7 @@ const Job = ({
   }
 
   const updateScrollPosition = () => {
-    if (width > 798) {
+    if (width > 799) {
       prevScrollY.current = window.pageYOffset
       setIsSticky(prevScrollY.current >= 389 ? true : false)
     } else {
@@ -611,7 +611,7 @@ const Job = ({
               className={styles.jobDetailPrimaryInfoImage}
               alt={`${jobDetail?.company?.name} logo`}
             />
-            {width > 798 ? (
+            {width > 799 ? (
               <div className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}>
                 {renderJobDetailPrimarySection()}
                 {renderSaveAndApplyActions()}
