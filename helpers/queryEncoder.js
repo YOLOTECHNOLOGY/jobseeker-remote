@@ -1,4 +1,4 @@
-import { map, T, omit, intersection, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, mergeRight, converge } from 'ramda'
+import { map, T, ap, memoizeWith, reduce, omit, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
 const userSelectKeys = ['salary', 'jobType', 'category', 'industry', 'qualification', 'workExperience']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
@@ -13,27 +13,64 @@ const totalOf = keys => pipe(allKeysIn(keys), prop('length'))
 const onlyOneIn = keys => pipe(totalOf(keys), equals(1))
 const firstKeyIn = keys => pipe(allKeysIn(keys), prop(0))
 
-const build = (field, optionValue, routerQuery, config, isClear) => {
-    const pullParams = parseFullParams(config)(routerQuery)
-    console.log("pullParams", pullParams)
-    return pipe(
-        converge(mergeLeft, [
-            pipe(
-                parseFullParams(config),
-                mergeLeft(parseIncrement(field)(optionValue)),
-                filter(complement(either(isEmpty, isNil))),
-                dissoc('keyword'),
-                when(() => is(Array)(isClear), omit(isClear)),
-                buildQueryParams,
+const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
+    console.log("checkFilterMatchFunc invoked!!!!")
+    return pipe(ap([
+        pipe(buildMatchedConfigs(config), dissoc('matchedConfig')),
+        pipe(parseKeywordParams(config), converge(mergeLeft, [
+            pipe(allKeysIn(['location']), applySpec({
+                predefinedLocation: when(is(Array), join(',')),
+            })),
+            pipe(allKeysIn(userSelectKeys), applySpec({
+                predefinedQuery: when(is(Array), join(',')),
+                searchMatch: complement(either(isEmpty, isNil)),
+            }))
+        ])),
+        pipe(
+            parseFullParams(config),
+            applySpec({
+                matchedLocation: pipe(
+                    prop('location'),
+                    locationkey => configItems(config).location.filter(location => location['seo_value'] === locationkey),
+                    ifElse(either(isEmpty, isNil), always({}), applySpec({
+                        location: identity
+                    }))
+                ),
+                locationMatch: pipe(prop('location'), complement(either(isEmpty, isNil))),
+            })
+        ),
+        pipe(
+            prop('keyword'), keywordParser, prop(0), keywordMatches(config), applySpec({
+                searchQuery: either(prop('query'), prop('location'))
+            })
+        ),
+        applySpec({
+            filterCount: totalOf(isMobile ? userSelectKeys : ['industry', 'workExperience', 'qualification'])
+        })
+    ]), reduce(mergeLeft, {}))([routerQuery])
+}
 
-            ),
-            pipe(
-                mergeLeft(parseIncrement(field)(optionValue)),
-                when(() => is(Array)(isClear), omit(isClear)),
-                buildMatchedConfigs(config)
-            )
-        ])
-    )(routerQuery)
+export const checkFilterMatch = memoizeWith((routerQuery, config, isMobile = false) => {
+    return toPairs(routerQuery).map(join('')).join('') + isMobile
+}, checkFilterMatchFunc)
+
+export const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear) => {
+    return converge(mergeLeft, [
+        pipe(
+            parseFullParams(config),
+            mergeLeft(parseIncrement(field)(optionValue)),
+            filter(complement(either(isEmpty, isNil))),
+            dissoc('keyword'),
+            when(() => is(Array)(isClear), omit(isClear)),
+            buildQueryParams,
+
+        ),
+        pipe(
+            mergeLeft(parseIncrement(field)(optionValue)),
+            when(() => is(Array)(isClear), omit(isClear)),
+            buildMatchedConfigs(config)
+        )
+    ])(routerQuery)
 }
 
 const conditions = {
@@ -98,15 +135,13 @@ const parseIncrement = cond([
     [T, field => applySpec({ [field]: identity })]
 ])
 
-const parseFullParams = config => routerQuery =>
+
+
+const parseFullParams = config =>
     pipe(
-        prop('keyword'),
-        keywordParser,
-        keywords => map(intersection(keywords), configKeys(config)),
-        filter(complement(either(isEmpty, isNil))),
-        mergeRight(routerQuery),
+        converge(mergeLeft, [parseKeywordParams(config), identity]),
         map(when(is(Array), join(',')))
-    )(routerQuery)
+    )
 
 const configItems = applySpec({
     location: pipe(path(['inputs', 'location_lists']), chain(prop('locations'))),
@@ -125,12 +160,23 @@ const itemFilter = config => keys => pipe(
 )(config)
 
 const configKeys = pipe(configItems, map(map(ifElse(has('seo-value'), prop('seo-value'), prop('seo_value')))))
-
+const keywordMatches = pipe(
+    configKeys,
+    toPairs,
+    map(([key, list]) => [flip(includes)(list), applySpec({ [key]: identity })]),
+    append([T, applySpec({ query: identity })]),
+    cond
+)
+const parseKeywordParams = config =>
+    pipe(
+        prop('keyword'),
+        keywordParser,
+        map(keywordMatches(config)),
+        reduce(mergeLeft, {})
+    )
 const keywordParser = cond([
     [test(/((\B|\b)-jobs-in-\b)/g), split('-jobs-in-')],
     [test(/((\B|\b)-jobs\b)/g), pipe(split('-jobs'), dropLast(1))],
     [equals('job-search'), always([])],
     [T, always([])]
 ])
-
-export default build
