@@ -23,7 +23,7 @@ const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
                 predefinedLocation: when(is(Array), join(',')),
             })),
             pipe(allKeysIn(userSelectKeys), applySpec({
-               // predefinedQuery: when(is(Array), join(',')),
+                // predefinedQuery: when(is(Array), join(',')),
                 searchMatch: complement(either(isEmpty, isNil)),
             }))
         ])),
@@ -78,42 +78,46 @@ export const userFilterSelectionDataParser = (field, optionValue, routerQuery, c
 }
 
 const conditions = {
-    noParams: ['query', 'location', ...userSelectKeys].map(key => no(key)).reduce(both),
+    noParams: pipe(allKeysIn(['query', 'location', ...userSelectKeys]), isEmpty),
     onlyOne: onlyOneIn(['query', 'location', ...userSelectKeys]),
-    oneWithLocation: [onlyOneIn(['query', ...userSelectKeys]), has('location')].reduce(both),
-    queryMany: [has('query'), pipe(totalOf(['location', ...userSelectKeys]), lte(2))].reduce(both),
-    noQueryMany: [no('query'), pipe(totalOf(['location', ...userSelectKeys]), lte(2))].reduce(both),
+    oneWithLocation: both(
+        onlyOneIn(['query', ...userSelectKeys]),
+        has('location')
+    ),
+    queryMany: both(
+        has('query'),
+        pipe(totalOf(['location', ...userSelectKeys]), lte(2))
+    ),
+    noQueryMany: both(
+        no('query'),
+        pipe(totalOf(['location', ...userSelectKeys]), lte(2))
+    )
 }
 
 const buildQueryParams = cond([
-    [conditions.noParams,
-    applySpec({
-        searchQuery: always(undefined),
+    [conditions.noParams, applySpec({
+        searchQuery: always('job-search'),
         filterParamsObject: identity
     })],
-    [conditions.onlyOne,
-    applySpec({
+    [conditions.onlyOne, applySpec({
         searchQuery: pipe(
             firstKeyIn(['query', 'location', ...userSelectKeys]),
             key => key + '-jobs'
         ),
         filterParamsObject: { page: either(prop('page'), always(1)) }
     })],
-    [conditions.oneWithLocation,
-    applySpec({
+    [conditions.oneWithLocation, applySpec({
         searchQuery: pipe(
             juxt([firstKeyIn(['query', ...userSelectKeys]), prop('location')]),
             join('-jobs-in-')
         ),
         filterParamsObject: { page: either(prop('page'), always(1)) }
     })],
-    [conditions.queryMany,
-    applySpec({
+    [conditions.queryMany, applySpec({
         searchQuery: pipe(prop('query'), key => key + '-jobs'),
         filterParamsObject: dissoc('query')
     })],
-    [conditions.noQueryMany,
-    applySpec({
+    [conditions.noQueryMany, applySpec({
         searchQuery: always('job-search'),
         filterParamsObject: identity
     })]
