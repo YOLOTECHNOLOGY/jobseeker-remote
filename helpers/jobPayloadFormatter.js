@@ -393,11 +393,11 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
     matchedConfigFromUserSelection,
     filterCount
   }
-  console.log("routerQuery", routerQuery)
-  console.log("matchedFilter", matchedFilter)
+  // console.log("routerQuery", routerQuery)
+  // console.log("matchedFilter", matchedFilter)
 
   const matchedFilterV2 = checkFilterMatchV2(routerQuery, config, isMobile)
-  console.log("matchedFilterV2", matchedFilterV2)
+  //console.log("matchedFilterV2", matchedFilterV2)
   return matchedFilter
 }
 

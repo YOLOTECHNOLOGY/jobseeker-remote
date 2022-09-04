@@ -1,4 +1,4 @@
-import { map, T, ap, memoizeWith, last, reduce, omit, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
+import { map, T, ap, values, memoizeWith, flatten, last, reduce, omit, toPairs, append, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
 const userSelectKeys = ['salary', 'jobType', 'category', 'industry', 'qualification', 'workExperience']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
@@ -16,6 +16,7 @@ const lastKeyIn = keys => pipe(allKeysIn(keys), last)
 
 const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
     console.log("checkFilterMatchFunc invoked!!!!")
+
     return pipe(ap([
         pipe(buildMatchedConfigs(config), dissoc('matchedConfig')),
         pipe(parseKeywordParams(config), converge(mergeLeft, [
@@ -54,22 +55,44 @@ export const checkFilterMatch = memoizeWith((routerQuery, config, isMobile = fal
 }, checkFilterMatchFunc)
 
 export const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear) => {
-    return converge(mergeLeft, [
-        pipe(
-            parseFullParams(config),
-            mergeLeft(parseIncrement(field)(optionValue)),
-            filter(complement(either(isEmpty, isNil))),
-            dissoc('keyword'),
-            when(() => is(Array)(isClear), omit(isClear)),
+    const match = keywordMatchConfigItem(configItems(config).salary)('below 30k')
+    console.log('match', match)
+    return pipe(
+        parseFullParams(config),
+        mergeLeft(parseIncrement(config)(field)(optionValue)),
+        filter(complement(either(isEmpty, isNil))),
+        dissoc('keyword'),
+        when(() => is(Array)(isClear), omit(isClear)),
+        converge(mergeLeft, [
             buildQueryParams,
+            applySpec({
+                newParams: pipe(
+                    dissoc('page'), 
+                    values, 
+                    flatten, 
+                    join(','), 
+                    split(','),
+                    itemFilter(config)
+                    )
+            })
+        ])
+    )(routerQuery)
+    // return converge(mergeLeft, [
+    //     pipe(
+    //         parseFullParams(config),
+    //         mergeLeft(parseIncrement(config)(field)(optionValue)),
+    //         filter(complement(either(isEmpty, isNil))),
+    //         dissoc('keyword'),
+    //         when(() => is(Array)(isClear), omit(isClear)),
+    //         buildQueryParams,
 
-        ),
-        pipe(
-            mergeLeft(parseIncrement(field)(optionValue)),
-            when(() => is(Array)(isClear), omit(isClear)),
-            buildMatchedConfigs(config)
-        )
-    ])(routerQuery)
+    //     ),
+    //     pipe(
+    //         mergeLeft(parseIncrement(config)(field)(optionValue)),
+    //         when(() => is(Array)(isClear), omit(isClear)),
+    //         buildMatchedConfigs(config)
+    //     )
+    // ])(routerQuery)
 }
 
 const conditions = {
@@ -124,7 +147,7 @@ const buildMatchedConfigs = config => applySpec({
     matchedConfigFromUserSelection: pipe(allKeysIn(userSelectKeys), itemFilter(config))
 })
 
-const parseIncrement = cond([
+const parseIncrement = config => cond([
     [equals('location'), field => applySpec({ [field]: prop('seo_value') })],
     [equals('moreFilters'), () => pipe(obj =>
         Object.keys(obj)
@@ -135,6 +158,7 @@ const parseIncrement = cond([
         map(when(is(Array), pipe(filter(identity), join(',')))),
         filter(identity)
     )],
+    [equals('query'), field => either(keywordMatches(config), applySpec({ [field]: identity }))],
     [T, field => applySpec({ [field]: identity })]
 ])
 
@@ -156,15 +180,25 @@ const configItems = applySpec({
 
 const itemFilter = config => keys => pipe(
     configItems,
-    map(items => items.filter(item => keys.includes(item['seo-value'] || keys.includes['seo_value']))),
+    map(items => items.filter(item => keys.includes(item['seo-value']) || keys.includes(item['seo_value']))),
     filter(pipe(prop('length'), lt(0)))
 )(config)
 
-const configKeys = pipe(configItems, map(map(ifElse(has('seo-value'), prop('seo-value'), prop('seo_value')))))
+const keywordMatchConfigItem = list => keyword => list?.filter?.(item =>
+    [item['seo-value'], item['seo_value'], item.value.toLowerCase()].filter(a => a)
+        .includes(keyword?.toLowerCase?.()))
+
 const keywordMatches = pipe(
-    configKeys,
+    configItems,
     toPairs,
-    map(([key, list]) => [flip(includes)(list), applySpec({ [key]: identity })]),
+    map(([key, list]) => [
+        pipe(keywordMatchConfigItem(list), complement(either(isEmpty, isNil))),
+        applySpec({
+            [key]: pipe(
+                keywordMatchConfigItem(list),
+                either(path([0, 'seo-value']), path([0, 'seo_value'])))
+        })
+    ]),
     append([T, applySpec({ query: identity })]),
     cond
 )
