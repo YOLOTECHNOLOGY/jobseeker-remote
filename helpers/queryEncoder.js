@@ -1,4 +1,4 @@
-import { map, T, ap, memoizeWith, reduce, omit, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
+import { map, T, ap, memoizeWith, last, reduce, omit, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
 const userSelectKeys = ['salary', 'jobType', 'category', 'industry', 'qualification', 'workExperience']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
@@ -12,6 +12,7 @@ const allKeysIn = keys => pipe(
 const totalOf = keys => pipe(allKeysIn(keys), prop('length'))
 const onlyOneIn = keys => pipe(totalOf(keys), equals(1))
 const firstKeyIn = keys => pipe(allKeysIn(keys), prop(0))
+const lastKeyIn = keys => pipe(allKeysIn(keys), last)
 
 const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
     console.log("checkFilterMatchFunc invoked!!!!")
@@ -22,10 +23,13 @@ const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
                 predefinedLocation: when(is(Array), join(',')),
             })),
             pipe(allKeysIn(userSelectKeys), applySpec({
-                predefinedQuery: when(is(Array), join(',')),
+               // predefinedQuery: when(is(Array), join(',')),
                 searchMatch: complement(either(isEmpty, isNil)),
             }))
         ])),
+        pipe(parseFullParams(config), applySpec({
+            predefinedQuery: lastKeyIn(userSelectKeys)
+        })),
         pipe(
             parseFullParams(config),
             applySpec({
