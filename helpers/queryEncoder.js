@@ -23,35 +23,30 @@ const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
                 predefinedLocation: when(is(Array), join(',')),
             })),
             pipe(allKeysIn(userSelectKeys), applySpec({
-                // predefinedQuery: when(is(Array), join(',')),
                 searchMatch: complement(either(isEmpty, isNil)),
             }))
         ])),
         pipe(parseFullParams(config), applySpec({
-            predefinedQuery: lastKeyIn(userSelectKeys)
+            predefinedQuery: either(
+                pipe(parseKeywordParams(config), allKeysIn(userSelectKeys), when(is(Array), join(','))),
+                either(lastKeyIn(['category']), always('')))
         })),
-        pipe(
-            parseFullParams(config),
-            applySpec({
-                matchedLocation: pipe(
-                    prop('location'),
-                    locationkey => configItems(config).location.filter(location => location['seo_value'] === locationkey),
-                    ifElse(either(isEmpty, isNil), always({}), applySpec({
-                        location: identity
-                    }))
-                ),
-                locationMatch: pipe(prop('location'), complement(either(isEmpty, isNil))),
-            })
-        ),
-        pipe(
-            prop('keyword'), keywordParser, prop(0), keywordMatches(config), applySpec({
-                searchQuery: either(prop('query'), prop('location'))
-            })
-        ),
+        pipe(parseFullParams(config), applySpec({
+            matchedLocation: pipe(
+                prop('location'),
+                locationkey => configItems(config).location.filter(location => location['seo_value'] === locationkey),
+                ifElse(either(isEmpty, isNil), always({}), applySpec({
+                    location: identity
+                }))
+            ),
+            locationMatch: pipe(prop('location'), complement(either(isEmpty, isNil))),
+        })),
+        pipe(prop('keyword'), keywordParser, prop(0), keywordMatches(config), applySpec({
+            searchQuery: [prop('query'), prop('location'), always('')].reduce(either)
+        })),
         applySpec({
             filterCount: totalOf(isMobile ? userSelectKeys : ['industry', 'workExperience', 'qualification'])
-        })
-    ]), reduce(mergeLeft, {}))([routerQuery])
+        })]), reduce(mergeLeft, {}))([routerQuery])
 }
 
 export const checkFilterMatch = memoizeWith((routerQuery, config, isMobile = false) => {
@@ -142,8 +137,6 @@ const parseIncrement = cond([
     )],
     [T, field => applySpec({ [field]: identity })]
 ])
-
-
 
 const parseFullParams = config =>
     pipe(
