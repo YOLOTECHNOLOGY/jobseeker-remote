@@ -62,7 +62,6 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import useSearchHistory from 'helpers/useSearchHistory'
 import configuredAxios from 'helpers/configuredAxios'
 
-
 interface JobSearchPageProps {
   seoMetaTitle: string
   seoMetaDescription: string
@@ -248,7 +247,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const isMobile = width < 768 ? true : false
   const userCookie = getCookie('user') || null
 
-  // No need to request data for the first time
   const [clientDefaultValues, setClientDefaultValues] = useState(defaultValues || {})
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.location)
@@ -272,7 +270,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [hasMoreFilters, setHasMoreFilters] = useState(false)
   const [searchHistories, addSearchHistory] = useSearchHistory()
   const [suggestionList, setSuggestionList] = useState(searchHistories)
-  
+
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
@@ -297,9 +295,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   )
   const [selectedPage, setSelectedPage] = useState(defaultPage)
 
-  // TODO
   useEffect(() => {
-    const { industry, workExperience, category, jobType, salary, qualification } = router.query
+    const { industry, workExperience, category, jobType, salary, qualification, verifiedCompany } = router.query
     const hasActiveFilters = !!(
       industry ||
       workExperience ||
@@ -307,6 +304,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       qualification ||
       jobType ||
       salary ||
+      verifiedCompany ||
       predefinedLocation ||
       predefinedQuery
     )
@@ -315,12 +313,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       return
     }
     if (!firstRender) setDisplayQuickLinks(false)
-      ; (async () => {
-        const { payload } = await initPagePayLoad(router.query, config)
-        dispatch(fetchJobsListRequest(payload, accessToken))
-        setIsCategoryReset(false)
-        setMoreFilterReset(false)
-      })()
+    ;(async () => {
+      const { payload } = await initPagePayLoad(router.query, config)
+      dispatch(fetchJobsListRequest(payload, accessToken))
+      setIsCategoryReset(false)
+      setMoreFilterReset(false)
+    })()
   }, [router.query])
 
   useEffect(() => {
@@ -415,15 +413,19 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           setClientDefaultValues(newDefaultValue)
           setSearchValue('')
           break
+        case 'verifiedCompany':
+          setClientDefaultValues(newDefaultValue)
+          setSearchValue('')
+          break
         case 'category':
           let categorySelected = []
           // append current search that matches catergory
           categorySelected.push(value[0]['seo-value'])
           // append the other options that was selected previously
-          Object.values(matchedConfigFromUrl).forEach((value:any) => {
+          Object.values(matchedConfigFromUrl).forEach((value: any) => {
             value.forEach((val) => categorySelected.push(val['seo-value']))
           })
-          Object.values(matchedConfigFromUserSelection).forEach((value:any) => {
+          Object.values(matchedConfigFromUserSelection).forEach((value: any) => {
             value.forEach((val) => categorySelected.push(val['seo-value']))
           })
 
@@ -491,7 +493,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const handleSuggestionSearch = (val) => {
-    console.log('handleSuggestionSearch', handleSuggestionSearch)
     const valueLength = val?.length ?? 0
     if (valueLength === 0) {
       setSuggestionList(searchHistories as any)
@@ -931,7 +932,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 }
 
 const initPagePayLoad = async (query, config = null) => {
-  const { page, industry, workExperience, category, jobType, salary, location, qualification } =
+  const { page, industry, workExperience, category, jobType, salary, location, qualification, verifiedCompany } =
     query
   const axios = configuredAxios('config', 'public')
   if (!config) {
@@ -960,6 +961,7 @@ const initPagePayLoad = async (query, config = null) => {
   const queryIndustry: any = query?.industry
   const queryWorkExp: any = query?.workExperience
   const queryCategory: any = query?.category
+  const queryVerifiedCompany: any = query?.verifiedCompany
 
   const { searchQuery, matchedLocation, matchedConfigFromUrl } = checkFilterMatch(query, config)
 
@@ -973,7 +975,8 @@ const initPagePayLoad = async (query, config = null) => {
     location: queryLocation?.split(',') || null,
     industry: queryIndustry?.split(',') || null,
     workExperience: queryWorkExp?.split(',') || null,
-    category: queryCategory?.split(',') || null
+    category: queryCategory?.split(',') || null,
+    verifiedCompany: queryVerifiedCompany?.split(',') || null
   }
 
   for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
@@ -1029,14 +1032,22 @@ const initPagePayLoad = async (query, config = null) => {
     workExperience: workExperience
       ? mapSeoValueToGetValue((workExperience as string).split(','), expLvlList)
       : null,
+    verifiedCompany: Boolean(verifiedCompany),
     sort,
     page: page ? Number(page) : 1
   }
 
   for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
-    payload = {
-      ...payload,
-      [key]: payload[key] ? (payload[key] += value[0].value) : value[0].value
+    if (key === 'verifiedCompany') {
+      payload = {
+        ...payload,
+        [key]: value[0].value ? true : false
+      }
+    } else {
+      payload = {
+        ...payload,
+        [key]: payload[key] ? (payload[key] += value[0].value) : value[0].value
+      }
     }
   }
   for (const [key, value] of Object.entries(matchedLocation)) {
@@ -1141,7 +1152,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           accessToken,
           seoMetaTitle,
           seoMetaDescription: encodeURI(seoMetaDescription),
-          seoCanonical
+          seoCanonical,
         }
       }
     }

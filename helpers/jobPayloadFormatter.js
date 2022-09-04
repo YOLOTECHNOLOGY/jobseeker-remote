@@ -12,19 +12,19 @@ const handleSalary = (salaryRanges) => {
   let salaryFrom = ''
   let salaryTo = ''
   if (salaryRanges) {
-    const sanitiseSalaryRange = salaryRanges.map((range) =>
-      range === 'Below 30K' ? '10K - 30K' : range
-    )
-
-    salaryFrom = sanitiseSalaryRange
-      .filter((salary) => salary !== 'Above 200K')
+    salaryFrom = salaryRanges
+      .filter((salary) => salary !== 'Below 30K' && salary !== 'Above 200K')
       .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split(' - ')[0]))
 
-    salaryTo = sanitiseSalaryRange
-      .filter((salary) => salary !== 'Above 200K')
+    salaryTo = salaryRanges
+      .filter((salary) => salary !== 'Below 30K' && salary !== 'Above 200K')
       .map((salaryTo) => thousandsToNumber('' + salaryTo.split(' - ')[1]))
 
-    if (sanitiseSalaryRange.includes('Above 200K')) {
+    if (salaryRanges.includes('Below 30K')) {
+      salaryFrom.push(0)
+      salaryTo.push(30000)
+    }
+    if (salaryRanges.includes('Above 200K')) {
       salaryFrom.push(200001)
       salaryTo.push(400000)
     }
@@ -166,6 +166,12 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
   const eduLevelList = config.filters.educations
   const jobTypeList = config.inputs.job_types
   const categoryList = config.inputs.job_category_lists
+  const verifiedCompanyList = [{
+    key: 'verified-companies',
+    ['seo-value']: 'verified-companies',
+    value: 'View verified companies',
+    label: 'View verified companies'
+}]
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
@@ -183,7 +189,8 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
     workExperience: expLvlList,
     qualification: eduLevelList,
     location: formattedLocationList,
-    category: categoryList
+    category: categoryList,
+    verifiedCompany: verifiedCompanyList
   }
   let predefinedQuery = ''
   let searchQuery = ''
@@ -441,6 +448,12 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
   const eduLevelList = config.filters.educations
   const jobTypeList = config.inputs.job_types
   const categoryList = config.inputs.job_category_lists
+  const verifiedCompanyList = [{
+    key: 'verified-companies',
+    ['seo-value']: 'verified-companies',
+    value: 'View verified companies',
+    label: 'View verified companies'
+  }]
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
@@ -460,7 +473,8 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     workExperience: expLvlList,
     qualification: eduLevelList,
     location: formattedLocationList,
-    category: categoryList
+    category: categoryList,
+    verifiedCompany: verifiedCompanyList
   }
 
   let matchedConfigFromUrl = {} // get matched filter object from config if url keyword matches any of our config filter

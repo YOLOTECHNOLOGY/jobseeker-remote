@@ -22,11 +22,21 @@
     }
   }
 
+  &Options {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: -10px;
+  }
+
   &OptionImage {
     position: absolute;
     top: 25px;
     right: 30px;
     z-index: 1;
+
+    img {
+      transform: rotate(90deg);
+    }
 
     &:hover {
       cursor: pointer;
@@ -36,10 +46,21 @@
   &OptionItem {
     padding: 12px 20px;
     display: block;
+
+    img {
+      margin-right: 5px;
+    }
     
     &:hover {
       cursor: pointer;
       background-color: $white-1;
+    }
+  }
+
+  &OptionNewTab {
+    &:hover {
+      text-decoration: underline;
+      text-decoration-color: $primaryBlue;
     }
   }
 
@@ -51,7 +72,7 @@
 
     &.isSticky {
       position: fixed;
-      width: 533px;
+      width: 550px;
       top: 0;
       z-index: 1;
     }
@@ -137,6 +158,7 @@
   &Buttons {
     display: flex;
     align-items: center;
+    margin-left: 86px;
 
     button {
       margin-right: 16px;

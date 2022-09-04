@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { isMobile } from 'react-device-detect'
 
@@ -17,6 +17,7 @@ import {
   TimelineContent,
   TimelineDot
 } from '@mui/lab'
+import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import dynamic from 'next/dynamic'
 
@@ -33,6 +34,7 @@ import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWit
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
 import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
+import UploadResumeButton from 'components/LncreaseUserConversion/UploadResumeButton/UploadResumeButton'
 const ModalVerifyEmail = dynamic(() => import('components/ModalVerifyEmail'))
 // import AdSlot from 'components/AdSlot'
 
@@ -47,6 +49,7 @@ const ModalWithdrawApplication = dynamic(() => import('components/ModalWithdrawA
 import { getCookie, setCookie, removeCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
 import { userFilterSelectionDataParser, getApplyJobLink } from 'helpers/jobPayloadFormatter'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -115,10 +118,13 @@ const Job = ({
 }: IJobDetail) => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const { width } = useWindowDimensions()
+  const prevScrollY = useRef(0)
   const userCookie = getCookie('user') || null
-  const authCookie = accessToken;
+  const authCookie = accessToken
   const applyJobLink = getApplyJobLink(jobDetail, userCookie, accessToken)
 
+  const [isSticky, setIsSticky] = useState(false)
   const [isSavedJob, setIsSavedJob] = useState(jobDetail?.is_saved)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
@@ -132,6 +138,9 @@ const Job = ({
   const [recommendedCourses, setRecommendedCourses] = useState([])
   const [similarJobs, setSimilarJobs] = useState(null)
   const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
+
+  const cx = classNames.bind(styles)
+  const isStickyClass = cx({ isSticky: isSticky })
 
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
@@ -167,6 +176,12 @@ const Job = ({
     }
     return false
   })
+
+  useEffect(() => {
+    window.addEventListener('scroll', updateScrollPosition)
+
+    return () => window.removeEventListener('scroll', updateScrollPosition)
+  }, [])
 
   useEffect(() => {
     handleFetchRecommendedCourses()
@@ -279,6 +294,16 @@ const Job = ({
     }
   }
 
+  const updateScrollPosition = () => {
+    if (width > 799) {
+      prevScrollY.current = window.pageYOffset
+      setIsSticky(prevScrollY.current >= 389 ? true : false)
+    } else {
+      prevScrollY.current = window.pageYOffset
+      setIsSticky(prevScrollY.current >= 592 ? true : false)
+    }
+  }
+
   const updateUrl = (queryParam) => {
     const queryObject = {
       page: 1,
@@ -366,7 +391,7 @@ const Job = ({
   }
 
   const handleReportJob = () => {
-    if ( authCookie && userCookie) {
+    if (authCookie && userCookie) {
       setIsShowReportJob(true)
     } else {
       // mobile get jobDetail is by url id
@@ -376,26 +401,77 @@ const Job = ({
   }
 
   const handleApplyJob = () => {
-    if (!userCookie) { 
+    if (!userCookie) {
       setQuickApplyModalShow(true)
     } else {
       if (userCookie && !userCookie.is_email_verify) {
         handleVerifyEmailClick()
       }
-      
+
       if (jobDetail?.external_apply_url) {
         addExternalJobClickService(jobDetail?.id)
       }
-      
+
       window.open(applyJobLink)
     }
   }
 
   const renderSaveAndApplyActions = () => {
     return (
-      <div className={styles.jobDetailPrimaryActions}>
+      <div
+        className={classNamesCombined([
+          styles.jobDetailCTA,
+          breakpointStyles.hideOnMobileAndTablet
+        ])}
+      >
+        {!isAppliedQueryParam && (
+          <div className={classNamesCombined([styles.jobDetailPrimaryActions, isStickyClass])}>
+            {jobDetail?.status_key === 'active' ? (
+              <>
+                <MaterialButton
+                  variant='contained'
+                  capitalize
+                  disabled={jobDetail?.is_applied}
+                  className={styles.applyBtn}
+                  onClick={handleApplyJob}
+                >
+                  <Text textColor='white' bold>
+                    {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
+                  </Text>
+                </MaterialButton>
+                <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
+                  <Text textColor='primary' bold>
+                    {isSavedJob ? 'Saved' : 'Save'}
+                  </Text>
+                </MaterialButton>
+              </>
+            ) : (
+              <Text textStyle='base' className={styles.jobDetailStatus}>
+                <img src={ExpireIcon} height='16' width='16' />
+                <span>This job is no longer hiring</span>
+              </Text>
+            )}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  const mobileRenderSaveAndApplyActions = () => {
+    return (
+      <div className={classNamesCombined([styles.jobDetailPrimaryActions, isStickyClass])}>
         {jobDetail?.status_key === 'active' ? (
           <>
+            <MaterialButton
+              variant='outlined'
+              capitalize
+              className={styles.saveBtn}
+              onClick={() => handlePostSaveJob()}
+            >
+              <Text textColor='primary' bold>
+                {isSavedJob ? 'Saved' : 'Save'}
+              </Text>
+            </MaterialButton>
             <MaterialButton
               variant='contained'
               capitalize
@@ -405,15 +481,6 @@ const Job = ({
             >
               <Text textColor='white' bold>
                 {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
-              </Text>
-            </MaterialButton>
-            <MaterialButton
-              variant='outlined'
-              capitalize
-              onClick={() => handlePostSaveJob()}
-              >
-              <Text textColor='primary' bold>
-                {isSavedJob ? 'Saved' : 'Save Job'}
               </Text>
             </MaterialButton>
           </>
@@ -427,12 +494,54 @@ const Job = ({
     )
   }
 
+  const renderJobDetailPrimarySection = () => {
+    return (
+      <div className={styles.jobDetailPrimaryInfo}>
+        <Text
+          textStyle='xl'
+          tagName='h1'
+          bold
+          className={classNamesCombined([styles.jobDetailPrimaryInfoTitle, isStickyClass])}
+        >
+          {jobDetail?.job_title}
+        </Text>
+        <div className={classNamesCombined([styles.jobDetailCompany, isStickyClass])}>
+          <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
+            <Text textStyle='lg' className={styles.jobDetailCompanyName}>
+              {jobDetail?.company?.name}
+            </Text>
+          </Link>
+          {jobDetail?.company?.is_verify &&
+            (isMobile ? (
+              <MaterialMobileTooltip
+                icon={BlueTickIcon}
+                className={styles.companyIsVerifiedToolTip}
+                title='Verified'
+                style={{ marginTop: '10px' }}
+              />
+            ) : (
+              <MaterialDesktopTooltip
+                icon={BlueTickIcon}
+                className={styles.companyIsVerifiedToolTip}
+                title='Verified'
+                style={{ marginTop: '10px' }}
+              />
+            ))}
+        </div>
+      </div>
+    )
+  }
+
   useEffect(() => {
     if (getCookie('isMobileReportJob') && authCookie && userCookie) {
       setIsShowReportJob(true)
       removeCookie('isMobileReportJob')
     }
   }, [])
+
+  const handleQuickUploadResumeClick = () => {
+    router.push('/Increase-user-conversion/quick-upload-resume')
+  }
 
   return (
     <Layout>
@@ -492,18 +601,15 @@ const Job = ({
                       <Text>Withdraw Application</Text>
                     </div>
                   )}
-                  <div
-                    className={styles.jobDetailOptionItem}
-                    onClick={() => setIsShowModalShare(true)}
-                  >
-                    <Text textStyle='lg'>Share this job</Text>
-                  </div>
-                  <div
-                    className={styles.jobDetailOptionItem}
-                    onClick={handleReportJob}
-                  >
-                    <Text textStyle='lg'>Report job</Text>
-                  </div>
+                <div
+                  className={styles.jobDetailOptionItem}
+                  onClick={() => setIsShowModalShare(true)}
+                >
+                  <Text textStyle='lg'>Share this job</Text>
+                </div>
+                <div className={styles.jobDetailOptionItem} onClick={handleReportJob}>
+                  <Text textStyle='lg'>Report job</Text>
+                </div>
               </Dropdown>
             </div>
             <img
@@ -511,43 +617,19 @@ const Job = ({
               className={styles.jobDetailPrimaryInfoImage}
               alt={`${jobDetail?.company?.name} logo`}
             />
-            <div className={styles.jobDetailPrimaryInfoWrapper}>
-              <div className={styles.jobDetailPrimaryInfo}>
-                <Text textStyle='xl' tagName='h1' bold className={styles.jobDetailPrimaryInfoTitle}>
-                  {jobDetail?.job_title}
-                </Text>
-                <div className={styles.jobDetailCompany}>
-                  <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
-                    <Text textStyle='lg' className={styles.jobDetailCompanyName}>
-                      {jobDetail?.company?.name}
-                    </Text>
-                  </Link>
-                  {jobDetail?.company?.is_verify && (isMobile ? (
-                    <MaterialMobileTooltip
-                      icon={BlueTickIcon}
-                      className={styles.companyIsVerifiedToolTip}
-                      title='Verified'
-                      style={{ marginTop:'10px' }}
-                    />
-                  ) : (
-                    <MaterialDesktopTooltip
-                      icon={BlueTickIcon}
-                      className={styles.companyIsVerifiedToolTip}
-                      title='Verified'
-                      style={{ marginTop:'10px' }}
-                    />
-                  ))}
-                </div>
-              </div>
+            {width > 799 ? (
               <div
-                className={classNamesCombined([
-                  styles.jobDetailCTA,
-                  breakpointStyles.hideOnMobileAndTablet
-                ])}
+                className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}
               >
-                {!isAppliedQueryParam && renderSaveAndApplyActions()}
+                {renderJobDetailPrimarySection()}
+                {renderSaveAndApplyActions()}
               </div>
-            </div>
+            ) : (
+              <div className={styles.jobDetailPrimaryInfoWrapper}>
+                {renderJobDetailPrimarySection()}
+                {renderSaveAndApplyActions()}
+              </div>
+            )}
             <div className={styles.jobDetailPrimarySub}>
               {jobDetail?.is_featured && <JobTag tag='Featured' tagType='featured' />}
               {jobDetail?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
@@ -567,8 +649,7 @@ const Job = ({
           <div
             className={classNamesCombined([styles.jobDetailCTA, breakpointStyles.hideOnDesktop])}
           >
-            {!isAppliedQueryParam && renderSaveAndApplyActions()}
-            
+            {!isAppliedQueryParam && mobileRenderSaveAndApplyActions()}
             <Text textStyle='base' textColor='darkgrey' className={styles.jobDetailPostedAt}>
               Posted on {jobDetail?.published_at}
             </Text>
@@ -754,7 +835,7 @@ const Job = ({
                       {jobDetail?.recruiter.full_name},{' '}
                     </Text>
                     <Text textStyle='lg'>
-                      &nbsp;{jobDetail?.recruiter.work_experience.job_title}
+                      &nbsp;{jobDetail?.recruiter?.work_experience?.job_title}
                     </Text>
                   </div>
                   <div className={styles.jobDetailRecruiterContent}>
@@ -782,9 +863,15 @@ const Job = ({
               external
               className={styles.aboutCompanyTitle}
             >
-              <Text bold textStyle='lg' textColor='primaryBlue' className={styles.aboutCompanyTitleName}>
+              <Text
+                bold
+                textStyle='lg'
+                textColor='primaryBlue'
+                className={styles.aboutCompanyTitleName}
+              >
                 {jobDetail?.company?.name}
-                {jobDetail?.company?.is_verify && (isMobile ? (
+                {jobDetail?.company?.is_verify &&
+                  (isMobile ? (
                     <MaterialMobileTooltip
                       icon={BlueTickIcon}
                       className={styles.companyIsVerifiedToolTip}
@@ -810,6 +897,15 @@ const Job = ({
           <div className={styles.sideSquareBanner}>
             <AdSlot adSlot='job-detail/square-banner-1' />
           </div>
+
+          <div className={styles.quickCreateResume}>
+            <UploadResumeButton
+              isShowBtn={!accessToken}
+              handleClick={handleQuickUploadResumeClick}
+              isShowArrowIcon
+            />
+          </div>
+
           {!isSimilarJobsFetching && similarJobs?.length > 0 ? (
             <div className={styles.jobDetailSidebarContent}>
               <div className={styles.jobDetailSidebarSection}>
@@ -838,21 +934,26 @@ const Job = ({
                           {job.truncated_job_title || job.job_title}
                         </Text>
                       </Link>
-                      <Text className={styles.jobDetailSidebarCardCompanyName} textStyle='lg' tagName='p'>
+                      <Text
+                        className={styles.jobDetailSidebarCardCompanyName}
+                        textStyle='lg'
+                        tagName='p'
+                      >
                         {job.company_name}
-                        {jobDetail?.company?.is_verify && (isMobile ? (
-                          <MaterialMobileTooltip
-                            icon={BlueTickIcon}
-                            className={styles.jobDetailSidebarCardTooltip}
-                            title='Verified'
-                          />
-                        ) : (
-                          <MaterialDesktopTooltip
-                            icon={BlueTickIcon}
-                            className={styles.jobDetailSidebarCardTooltip}
-                            title='Verified'
-                          />
-                        ))}
+                        {jobDetail?.company?.is_verify &&
+                          (isMobile ? (
+                            <MaterialMobileTooltip
+                              icon={BlueTickIcon}
+                              className={styles.jobDetailSidebarCardTooltip}
+                              title='Verified'
+                            />
+                          ) : (
+                            <MaterialDesktopTooltip
+                              icon={BlueTickIcon}
+                              className={styles.jobDetailSidebarCardTooltip}
+                              title='Verified'
+                            />
+                          ))}
                       </Text>
                       <Text textStyle='lg' tagName='p'>
                         {job.location_value}
@@ -1020,34 +1121,42 @@ const Job = ({
           isWithdrawApplicationResult={isUnBingwithdrawAppliedStateSuccess}
         />
       )}
-      {isShowReportJob && <ModalReportJob
-        isShowReportJob={isShowReportJob}
-        handleShowReportJob={setIsShowReportJob}
-        reportJobReasonList={reportJobReasonList}
-        selectedJobId={jobDetail.id}
-        handlePostReportJob={handlePostReportJob}
-        isPostingReport={isPostingReport}
-        postReportResponse={postReportResponse}
-      />}
-      
-      {isShowModalShare && <ModalShare
-        jobDetailUrl={jobDetailUrl}
-        isShowModalShare={isShowModalShare}
-        handleShowModalShare={setIsShowModalShare}
-      />}
+      {isShowReportJob && (
+        <ModalReportJob
+          isShowReportJob={isShowReportJob}
+          handleShowReportJob={setIsShowReportJob}
+          reportJobReasonList={reportJobReasonList}
+          selectedJobId={jobDetail.id}
+          handlePostReportJob={handlePostReportJob}
+          isPostingReport={isPostingReport}
+          postReportResponse={postReportResponse}
+        />
+      )}
 
-      {quickApplyModalShow && <QuickApplyModal
-        jobDetails={jobDetail}
-        modalShow={quickApplyModalShow}
-        handleModalShow={setQuickApplyModalShow}
-        config={config}
-      />}
+      {isShowModalShare && (
+        <ModalShare
+          jobDetailUrl={jobDetailUrl}
+          isShowModalShare={isShowModalShare}
+          handleShowModalShare={setIsShowModalShare}
+        />
+      )}
 
-      {isShowModal && <ModalVerifyEmail
-        email={userCookie ? userCookie.email : ''}
-        isShowModal={isShowModal}
-        handleModal={handleCloseModal}
-      />}
+      {quickApplyModalShow && (
+        <QuickApplyModal
+          jobDetails={jobDetail}
+          modalShow={quickApplyModalShow}
+          handleModalShow={setQuickApplyModalShow}
+          config={config}
+        />
+      )}
+
+      {isShowModal && (
+        <ModalVerifyEmail
+          email={userCookie ? userCookie.email : ''}
+          isShowModal={isShowModal}
+          handleModal={handleCloseModal}
+        />
+      )}
     </Layout>
   )
 }
@@ -1057,7 +1166,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const { keyword, isApplied } = query
   const keywordQuery: any = keyword
   const jobId = keywordQuery?.split('-').pop()
-  
+
   if (jobId) {
     if (isApplied === 'true') {
       store.dispatch(fetchAppliedJobDetailRequest({ jobId, accessToken }))
@@ -1087,7 +1196,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   if (Object.keys(jobDetail).length > 0 || Object.keys(appliedJobDetail).length > 0) {
     jobDetail = jobDetail?.id ? jobDetail : appliedJobDetail?.job
-    
+
     const {
       id: jobId,
       job_title: jobTitle,

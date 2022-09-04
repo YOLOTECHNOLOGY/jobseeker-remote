@@ -23,9 +23,10 @@ import { useUserAgent } from 'next-useragent'
 interface LayoutProps {
   children: React.ReactNode
   className?: string
+  isHiddenFooter?: Boolean
 }
 
-const Layout = ({ children, className }: LayoutProps) => {
+const Layout = ({ children, className, isHiddenFooter }: LayoutProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isEmailVerified, setIsEmailVerified] = useState(false)
   const [isShowModal, setIsShowModal] = useState(false)
@@ -34,15 +35,14 @@ const Layout = ({ children, className }: LayoutProps) => {
   const authCookie = getCookie('accessToken')
   const userCookie = getCookie('user')
 
-
   useEffect(() => {
     setIsAuthenticated(authCookie ? true : false)
     setIsEmailVerified(userCookie?.is_email_verify)
-    
+
     if (userCookie && authCookie) {
       setIsShowModal(false)
     }
-    
+
     const userAgent = useUserAgent(window.navigator.userAgent)
     if (userAgent.isMobile && !getCookie('isAppRedirectModalClosed')) {
       setIsShowAppRedirectModal(true)
@@ -71,7 +71,7 @@ const Layout = ({ children, className }: LayoutProps) => {
         additional_info: userDetails.additional_info,
         is_email_verify: true,
         notice_period_id: userDetails.notice_period_id,
-        is_profile_completed: userDetails.is_profile_completed,
+        is_profile_completed: userDetails.is_profile_completed
       }
       setCookie('user', userCookie)
       setIsEmailVerified(true)
@@ -86,7 +86,7 @@ const Layout = ({ children, className }: LayoutProps) => {
   const handleAppRedirectModal = () => {
     setIsShowAppRedirectModal(false)
     setCookieWithExpiry('isAppRedirectModalClosed', true, 1800) // cookie expires to renable auto show modal after 30 minutes
-    
+
     // Enables scrolling again
     document.documentElement.classList.remove('modal-active')
   }
@@ -106,16 +106,14 @@ const Layout = ({ children, className }: LayoutProps) => {
       <Header />
       <HamburgerMenu />
       {children}
-      <Footer />
+      {!isHiddenFooter && <Footer />}
+
       <ModalVerifyEmail
         email={isAuthenticated && userCookie ? userCookie.email : ''}
         isShowModal={isShowModal}
         handleModal={handleVerifyEmailModal}
       />
-      <ModalAppRedirect
-        isShowModal={isShowAppRedirectModal}
-        handleModal={handleAppRedirectModal}
-      />
+      <ModalAppRedirect isShowModal={isShowAppRedirectModal} handleModal={handleAppRedirectModal} />
     </div>
   )
 }

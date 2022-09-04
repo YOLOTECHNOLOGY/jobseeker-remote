@@ -1,0 +1,315 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.stepForm {
+  &_title {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  &Actions {
+    @media (max-width: 768px) {
+      display: flex;
+    }
+
+    &leftBtn {
+      margin-right: 15px !important;
+    }
+
+    button {
+      width: 100px;
+    }
+
+    @media (max-width: 768px) {
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &Actions {
+      display: flex;
+    }
+  }
+
+  &Toggle {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+
+    span {
+      margin-left: 10px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.stepFullwidth {
+  width: 100%;
+}
+
+.stepNotice {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba($primaryBlue, 0.1);
+  padding: 15px 10px;
+  border-radius: 4px;
+
+  span {
+    display: block;
+    width: 90%;
+    line-height: 20px;
+    color: rgb(13, 60, 97);
+  }
+}
+
+.stepField {
+  margin-top: 16px;
+
+  &Header {
+    margin-bottom: 10px;
+  }
+
+  &Group {
+    margin-top: 20px;
+  }
+
+  &Date {
+    display: flex;
+  }
+
+  &DateItem {
+    width: 50%;
+    margin-right: 20px;
+
+    & > * {
+      width: 100%;
+    }
+  }
+
+  &Required {
+    color: $red;
+  }
+
+  &Error {
+    margin: 6px 0 0;
+  }
+
+  &Country {
+    margin-bottom: 30px;
+  }
+}
+
+.stepData {
+  &Item {
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid $lightgrey;
+    padding-bottom: 20px;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &Description {
+    ul,
+    ol {
+      display: block;
+      margin-left: 20px;
+
+      li {
+        font-size: 14px;
+        color: $black;
+        font-weight: 300;
+        line-height: 20px;
+      }
+    }
+
+    p {
+      font-size: 14px;
+      color: $black;
+      font-weight: 300;
+      line-height: 20px;
+    }
+  }
+
+  &Actions {
+    display: flex;
+  }
+
+  &ActionItem {
+    margin-left: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.step1 {
+  &Contact {
+    display: flex;
+    justify-content: space-between;
+
+    @include msd {
+      display: block;
+    }
+  }
+  &ContactCountry {
+    width: 100%;
+    margin-right: 10px !important;
+
+    @include msd {
+      margin-bottom: 16px !important;
+    }
+  }
+
+  &ContactNumber {
+    width: 100%;
+  }
+
+  &ContactNumberField {
+    width: 100%;
+  }
+
+  &ContactDigits {
+    margin-top: 4px;
+    margin-left: 15px;
+  }
+
+  &Salary {
+    margin-top: 16px;
+  }
+
+  &SalaryRanges {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: 768px) {
+      display: block;
+    }
+  }
+
+  &SalaryRange {
+    width: 48%;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      margin-top: 16px;
+    }
+  }
+
+  &Subscribe {
+    margin-top: 16px;
+    display: flex;
+  }
+}
+
+.step2 {
+  &Caption {
+    text-align: center;
+    display: block;
+  }
+
+  &Upload {
+    @media (max-width: 768px) {
+      label {
+        width: 100%;
+      }
+    }
+
+    margin-top: 20px;
+    text-align: center;
+
+    span {
+      display: block;
+    }
+  }
+
+  &UploadError {
+    margin-bottom: 10px;
+  }
+
+  &UploadAllowed {
+    margin-top: 10px;
+  }
+
+  &UploadDivider {
+    display: block;
+    margin: 30px 0;
+    text-align: center;
+  }
+
+  &Create {
+    text-align: center;
+    padding-bottom: 110px;
+
+    @media (max-width: 768px) {
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  &UploadInput {
+    display: none;
+  }
+}
+
+.step3 {
+  &Form {
+    .step3Form:not(:last-child) {
+      padding-bottom: 20px;
+      border-bottom: 1px dotted rgba($lightgrey, 0.5);
+      margin-bottom: 20px;
+    }
+  }
+  &Form {
+    padding-top: 10px;
+    margin-top: 0;
+  }
+
+  &Editor {
+    margin-top: 15px;
+
+    div[class*='TextEditor_textEditor'] {
+      padding: 0;
+    }
+
+    & > * {
+      padding: 0;
+
+      @include msd {
+        width: 100%;
+      }
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}
+
+.stepFormDatePicker {
+  border: 1px solid red;
+}
+
+.divider {
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+.disclaimerIcon {
+  vertical-align: -webkit-baseline-middle;
+  margin-left: 5px;
+  margin-top: 14px;
+  cursor: pointer;
+  display: flex;
+}

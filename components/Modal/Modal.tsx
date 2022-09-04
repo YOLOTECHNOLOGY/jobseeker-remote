@@ -35,6 +35,9 @@ type ModalProps = {
   secondButtonText?: string
   fullScreen?: boolean
   customFooter?: React.ReactNode
+  headerClass?: string
+  bodyClass?: string
+  footerClass?: string
 }
 
 const Modal = ({
@@ -56,6 +59,9 @@ const Modal = ({
   isSecondButtonDisabled,
   fullScreen = false,
   customFooter,
+  headerClass,
+  bodyClass,
+  footerClass,
   ...rest
 }: ModalProps) => {
   if (!showModal) return null
@@ -134,7 +140,7 @@ const Modal = ({
             className
           ])}
         >
-          <div className={styles.modalHeader}>
+          <div className={classNames([styles.modalHeader, headerClass])}>
             <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
               {headerTitle}
             </Text>
@@ -144,8 +150,9 @@ const Modal = ({
               </Text>
             </div>
           </div>
-          <div className={styles.modalBody}>{children}</div>
-          {customFooter && <div className={styles.modalFooter}>{customFooter}</div>}
+          <div className={classNames([styles.modalBody, bodyClass])}>{children}</div>
+          {customFooter && 
+          <div className={classNames([styles.modalFooter, footerClass])}>{customFooter}</div>}
           {/* {(hasFirstButton || hasSecondButton) && (
             <div className={styles.modalFooter}>
               {hasFirstButton && (

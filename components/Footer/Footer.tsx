@@ -105,9 +105,8 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/sitemap`}
+                    to='/sitemap'
                     title='Sitemap'
-                    external
                   >
                     <Text textStyle='sm'>Sitemap</Text>
                   </Link>
@@ -496,9 +495,8 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/sitemap`}
+                      to='/sitemap'
                       title='sitemap'
-                      external
                     >
                       <Text textStyle='sm'>Sitemap</Text>
                     </Link>

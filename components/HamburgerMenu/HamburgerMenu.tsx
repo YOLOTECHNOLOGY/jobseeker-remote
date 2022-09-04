@@ -45,7 +45,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
     // enable body scroll again
     document.body.style.position = ''
     document.body.style.top = ''
-    toggleMenu();
+    toggleMenu()
   }
 
   return (
@@ -91,6 +91,19 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
               <>
                 <Link
                   className={styles.defaultLink}
+                  title='Virtual Career Fair'
+                  to={process.env.VCF_CLIENT_URL}
+                  aTag
+                >
+                  <li className={styles.menuList} onClick={handleClick} style={{ display:'flex', alignItems:'center' }}>
+                    <Text textStyle='xl'>
+                      Virtual Career Fair
+                    </Text>
+                    <span className={styles.hotTag}>Hot!</span>
+                  </li>
+                </Link>
+                {/* <Link
+                  className={styles.defaultLink}
                   to='https://blog.bossjob.ph/'
                   aTag
                   title='Career Guide'
@@ -98,7 +111,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Career Guide</Text>
                   </li>
-                </Link>
+                </Link> */}
                 <Link
                   className={styles.defaultLink}
                   to={`${process.env.OLD_PROJECT_URL}/employer`}
@@ -133,6 +146,19 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 >
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Chats</Text>
+                  </li>
+                </Link>
+                <Link
+                  className={styles.defaultLink}
+                  title='Virtual Career Fair'
+                  to={process.env.VCF_CLIENT_URL}
+                  aTag
+                >
+                  <li className={styles.menuList} onClick={handleClick} style={{ display:'flex', alignItems:'center' }}>
+                    <Text textStyle='xl'>
+                      Virtual Career Fair
+                    </Text>
+                    <span className={styles.hotTag}>Hot!</span>
                   </li>
                 </Link>
                 <Link
@@ -177,7 +203,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>BossPoints</Text>
                   </li>
                 </Link>
-                <Link
+                {/* <Link
                   className={styles.defaultLink}
                   to='https://blog.bossjob.ph/'
                   aTag
@@ -186,7 +212,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Career Guide</Text>
                   </li>
-                </Link>
+                </Link> */}
 
                 <div className={styles.defaultLink}>
                   <li className={styles.menuList} onClick={() => handleLogOut()}>
@@ -204,11 +230,11 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
 
 const mapStateToProps = (state) => {
   return {
-    openState: state.navbar.toggleMenu.menu,
+    openState: state.navbar.toggleMenu.menu
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  toggleMenu: () => dispatch(toggleMenu()),
+  toggleMenu: () => dispatch(toggleMenu())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HamburgerMenu)
