@@ -313,12 +313,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       return
     }
     if (!firstRender) setDisplayQuickLinks(false)
-    ;(async () => {
-      const { payload } = await initPagePayLoad(router.query, config)
-      dispatch(fetchJobsListRequest(payload, accessToken))
-      setIsCategoryReset(false)
-      setMoreFilterReset(false)
-    })()
+      ; (async () => {
+        const { payload } = await initPagePayLoad(router.query, config)
+        dispatch(fetchJobsListRequest(payload, accessToken))
+        setIsCategoryReset(false)
+        setMoreFilterReset(false)
+      })()
   }, [router.query])
 
   useEffect(() => {
@@ -358,6 +358,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setIsShowFilter(false)
   }
   const setLastSearch = useJobAlert()
+  useEffect(() => {
+    setLastSearch(JSON.stringify({
+      filterJobPayload,
+      searchParams: { pathname: router.pathname, query: router.query }
+    }))
+  }, [filterJobPayload, router.pathname, router.query])
   const jobTypeList = config.inputs.job_types
   const salaryRangeList = config.filters.salary_range_filters
 
@@ -368,7 +374,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
       query: queryObject
     }
-    setLastSearch(JSON.stringify({ filterJobPayload, searchParams: pushObject }))
     router.push(pushObject, undefined, { shallow: true })
   }
 
