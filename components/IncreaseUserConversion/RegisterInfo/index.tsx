@@ -11,7 +11,7 @@ import Checkbox from '@mui/material/Checkbox'
 import { Snackbar } from '@mui/material'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 
-import styles from 'pages/Increase-user-conversion/quick-upload-resume/styles.module.scss'
+import styles from 'pages/quick-upload-resume/styles.module.scss'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />

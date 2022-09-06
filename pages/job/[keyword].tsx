@@ -540,7 +540,7 @@ const Job = ({
   }, [])
 
   const handleQuickUploadResumeClick = () => {
-    router.push('/Increase-user-conversion/quick-upload-resume')
+    router.push('/quick-upload-resume')
   }
 
   return (

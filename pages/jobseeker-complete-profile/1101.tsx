@@ -52,12 +52,12 @@ import { getItem } from 'helpers/localStorage'
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
 import { handleNumericInput } from '../../helpers/handleInput'
-const quickUpladResumeType = getItem('quickUpladResume')
+
 const Step3 = (props: any) => {
+  const quickUpladResumeType = getItem('quickUpladResume')
   const currentStep = 3
-  const totalStep =
-    quickUpladResumeType === 'onLine' ? 2 : quickUpladResumeType === 'upFile' ? 3 : 4
-  const currentStepPure = quickUpladResumeType === 'upFile' ? 2 : 3
+  const totalStep = quickUpladResumeType ? 3 : 4
+  const currentStepPure = quickUpladResumeType ? 2 : 3
   const router = useRouter()
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props
@@ -72,11 +72,13 @@ const Step3 = (props: any) => {
       }`
     : `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}`
 
-  if (quickUpladResumeType) {
-    if (quickUpladResumeType === 'onLine') {
-      backBtnUrl = '/Increase-user-conversion/quick-upload-resume'
-    } else {
+  if (quickUpladResumeType && quickUpladResumeType === 'upFile') {
+    backBtnUrl = '/jobseeker-complete-profile/1'
+  } else {
+    if (accessToken) {
       backBtnUrl = '/jobseeker-complete-profile/1'
+    } else {
+      backBtnUrl = '/quick-upload-resume'
     }
   }
 
@@ -101,7 +103,9 @@ const Step3 = (props: any) => {
   const [hasErrorOnToPeriod, setHasErrorOnToPeriod] = useState(false)
 
   const [workExperienceId, setWorkExperienceId] = useState(null)
-  const [workExperience, setWorkExperience] = useState(userDetail?.work_experiences)
+  const [workExperience, setWorkExperience] = useState(
+    userDetail?.work_experiences ? userDetail?.work_experiences : []
+  )
   const [showForm, setShowForm] = useState(workExperience?.length === 0 ? true : false)
   const [isSaveDisabled, setIsSaveDisabled] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
@@ -112,7 +116,9 @@ const Step3 = (props: any) => {
   const [showErrorToComplete, setShowErrorToComplete] = useState(false)
 
   // increase user conversion quick upload resume
-  const [isQuickUpladResume] = useState(quickUpladResumeType && quickUpladResumeType === 'onLine')
+  const [isQuickUpladResume] = useState(
+    quickUpladResumeType && quickUpladResumeType === 'onLine' && !accessToken
+  )
   const [selectArrayIndex, setSelectArrayIndex] = useState(null)
 
   const {
@@ -134,8 +140,33 @@ const Step3 = (props: any) => {
 
   useEffect(() => {
     if (userWorkExperiences) {
-      setWorkExperience(userWorkExperiences || [])
-      setIsNextDisabled(userWorkExperiences.length > 0 ? false : true)
+      setWorkExperience(userWorkExperiences.length ? userWorkExperiences : [])
+      setIsNextDisabled(userWorkExperiences.length > 1 ? false : true)
+      if (userWorkExperiences.length === 1) {
+        const experience = userWorkExperiences[0]
+        const requireFields =
+          !experience.job_title ||
+          !experience.company ||
+          !experience.location ||
+          !experience.working_period_from
+        if (experience.is_currently_work_here && requireFields) {
+          //  || experience.working_period_to
+          setSelectedExperience(experience)
+          setShowForm(true)
+          setIsEditing(true)
+          // setIsNextDisabled(true)
+        } else if (
+          !experience.is_currently_work_here &&
+          requireFields &&
+          !experience.workPeriodTo
+        ) {
+          setSelectedExperience(experience)
+          setShowForm(true)
+          setIsEditing(true)
+        } else {
+          setIsNextDisabled(false)
+        }
+      }
       setIsUpdating(false)
     }
   }, [userWorkExperiences])
@@ -165,7 +196,6 @@ const Step3 = (props: any) => {
         )
         setIsShowCountry(true)
       }
-
       setDescription(selectedExperience.description)
       setJobFunction(selectedExperience.job_categories)
     }
@@ -295,7 +325,7 @@ const Step3 = (props: any) => {
     setSelectArrayIndex(null)
   }
 
-  const handleDeleteExperience = (id) => {
+  const handleDeleteExperience = (id, index?) => {
     const deletePayload = {
       accessToken,
       workExperienceId: id,
@@ -304,7 +334,8 @@ const Step3 = (props: any) => {
     }
 
     if (isQuickUpladResume) {
-      userWorkExperiences.splice(selectArrayIndex, 1)
+      userWorkExperiences.splice(index, 1)
+      dispatch(fetchUserWorkExperienceQuickUploadResume(null))
       dispatch(fetchUserWorkExperienceQuickUploadResume(userWorkExperiences))
     } else {
       dispatch(updateUserOnboardingInfoRequest(deletePayload))
@@ -348,6 +379,7 @@ const Step3 = (props: any) => {
       workExperienceData: removeEmptyOrNullValues(workExperienceData),
       proceedingPath
     }
+
     if (!isQuickUpladResume) {
       dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
     } else {
@@ -379,7 +411,6 @@ const Step3 = (props: any) => {
 
   const handleCancelForm = () => {
     setShowForm(false)
-    setIsNextDisabled(userWorkExperiences.length > 0 ? false : true)
 
     if (selectedExperience) {
       handleResetForm()
@@ -399,7 +430,11 @@ const Step3 = (props: any) => {
       return
     }
     if (isQuickUpladResume) {
-      router.push('/Increase-user-conversion/quick-upload-resume')
+      if (hasNoWorkExperience) {
+        // no workExperience
+        dispatch(fetchUserWorkExperienceQuickUploadResume({ hasNoWorkExperience: true }))
+      }
+      router.push('/quick-upload-resume')
     } else {
       router.push(nextBtnUrl)
     }
@@ -503,8 +538,7 @@ const Step3 = (props: any) => {
                 <div
                   className={styles.stepDataActionItem}
                   onClick={() => {
-                    handleDeleteExperience(experience.id)
-                    setSelectArrayIndex(index)
+                    handleDeleteExperience(experience.id, index)
                   }}
                 >
                   <img src={DeleteFilledIcon} width='18' height='18' />
@@ -767,14 +801,6 @@ const Step3 = (props: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies.accessToken ? req.cookies.accessToken : null
-  // if (!accessToken) {
-  //   return {
-  //     redirect: {
-  //       destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/1101',
-  //       permanent: false
-  //     }
-  //   }
-  // }
 
   store.dispatch(fetchConfigRequest())
   if (accessToken) {

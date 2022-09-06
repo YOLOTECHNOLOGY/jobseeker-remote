@@ -139,6 +139,9 @@ const useRegister = () => {
           }
         })
         // dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
+      } else {
+        // noworkExperiences
+        router.push('/jobseeker-complete-profile/1')
       }
     }
   }, [userInfo])
@@ -183,7 +186,11 @@ const useRegister = () => {
 
       if (!isRedirect) {
         // increates user conversion  quick register
-        if (!uploadResumeFile?.size && !userWorkExperiences.length) {
+        if (
+          !uploadResumeFile?.size &&
+          !userWorkExperiences.length &&
+          !userWorkExperiences?.hasNoWorkExperience
+        ) {
           setSnackbarState({
             vertical: 'top',
             horizontal: 'center',

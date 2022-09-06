@@ -43,25 +43,17 @@ import { DeleteFilledIcon, CreateFilledIcon, AddOutlineIcon } from 'images'
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
 
-const quickUpladResumeType = getItem('quickUpladResume')
-
 const Step4 = (props: any) => {
   const { config, userDetail, accessToken } = props
 
+  const quickUpladResumeType = getItem('quickUpladResume')
   const currentStep = 4
-  const totalStep =
-    quickUpladResumeType === 'onLine' ? 2 : quickUpladResumeType === 'upFile' ? 3 : 4
+  const totalStep = quickUpladResumeType ? 3 : 4
   const router = useRouter()
   const dispatch = useDispatch()
-  let backBtnUrl = router.query?.redirect
+  const backBtnUrl = router.query?.redirect
     ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1101'
-
-  if (quickUpladResumeType) {
-    if (quickUpladResumeType === 'onLine') {
-      backBtnUrl = '/jobseeker-complete-profile/1'
-    }
-  }
 
   const degreeList = getDegreeList(config)
   const countryList = getCountryList(config)
@@ -236,11 +228,11 @@ const Step4 = (props: any) => {
 
   const handleSelectEducation = (education) => {
     setSelectedEducation(education)
-    setIsEditing(false)
+    setIsEditing(true)
     setShowForm(!showForm)
     setEducationId(education.id)
     setSchool(education.school)
-    setDegree(degreeList.filter((degree) => degree.label === education.degree)[0].value)
+    setDegree(degreeList.filter((degree) => degree.label === education.degree)[0]?.value)
     setLocation(education.location ? getLocation(education.location)[0] : null)
     if (education.location && education.location.toLowerCase() === 'overseas') {
       setCountry(countryList.filter((country) => country.key === education.country_key)[0].value)
@@ -398,7 +390,9 @@ const Step4 = (props: any) => {
               <div className={styles.stepDataActions}>
                 <div
                   className={styles.stepDataActionItem}
-                  onClick={() => handleSelectEducation(education)}
+                  onClick={() => {
+                    handleSelectEducation(education)
+                  }}
                 >
                   <img src={CreateFilledIcon} width='18' height='18' />
                 </div>

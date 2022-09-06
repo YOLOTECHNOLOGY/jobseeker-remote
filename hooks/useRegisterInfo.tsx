@@ -29,7 +29,11 @@ const useRegisterInfo = () => {
   }
 
   const isShowRegisterInfo = () => {
-    if (uploadResumeFile?.size || userWorkExperiences.length) {
+    if (
+      uploadResumeFile?.size ||
+      userWorkExperiences.length ||
+      userWorkExperiences?.hasNoWorkExperience
+    ) {
       return true
     } else {
       return false
