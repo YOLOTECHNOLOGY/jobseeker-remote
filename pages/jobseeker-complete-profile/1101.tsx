@@ -72,8 +72,14 @@ const Step3 = (props: any) => {
       }`
     : `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}`
 
-  if (quickUpladResumeType) {
+  if (quickUpladResumeType && quickUpladResumeType === 'upFile') {
     backBtnUrl = '/jobseeker-complete-profile/1'
+  } else {
+    if (accessToken) {
+      backBtnUrl = '/jobseeker-complete-profile/1'
+    } else {
+      backBtnUrl = '/quick-upload-resume'
+    }
   }
 
   const locList = getLocationList(config)
@@ -97,7 +103,9 @@ const Step3 = (props: any) => {
   const [hasErrorOnToPeriod, setHasErrorOnToPeriod] = useState(false)
 
   const [workExperienceId, setWorkExperienceId] = useState(null)
-  const [workExperience, setWorkExperience] = useState(userDetail?.work_experiences)
+  const [workExperience, setWorkExperience] = useState(
+    userDetail?.work_experiences ? userDetail?.work_experiences : []
+  )
   const [showForm, setShowForm] = useState(workExperience?.length === 0 ? true : false)
   const [isSaveDisabled, setIsSaveDisabled] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
@@ -132,8 +140,33 @@ const Step3 = (props: any) => {
 
   useEffect(() => {
     if (userWorkExperiences) {
-      setWorkExperience(userWorkExperiences || [])
-      setIsNextDisabled(userWorkExperiences.length > 0 ? false : true)
+      setWorkExperience(userWorkExperiences.length ? userWorkExperiences : [])
+      setIsNextDisabled(userWorkExperiences.length > 1 ? false : true)
+      if (userWorkExperiences.length === 1) {
+        const experience = userWorkExperiences[0]
+        const requireFields =
+          !experience.job_title ||
+          !experience.company ||
+          !experience.location ||
+          !experience.working_period_from
+        if (experience.is_currently_work_here && requireFields) {
+          //  || experience.working_period_to
+          setSelectedExperience(experience)
+          setShowForm(true)
+          setIsEditing(true)
+          // setIsNextDisabled(true)
+        } else if (
+          !experience.is_currently_work_here &&
+          requireFields &&
+          !experience.workPeriodTo
+        ) {
+          setSelectedExperience(experience)
+          setShowForm(true)
+          setIsEditing(true)
+        } else {
+          setIsNextDisabled(false)
+        }
+      }
       setIsUpdating(false)
     }
   }, [userWorkExperiences])
@@ -378,7 +411,6 @@ const Step3 = (props: any) => {
 
   const handleCancelForm = () => {
     setShowForm(false)
-    setIsNextDisabled(userWorkExperiences.length > 0 ? false : true)
 
     if (selectedExperience) {
       handleResetForm()

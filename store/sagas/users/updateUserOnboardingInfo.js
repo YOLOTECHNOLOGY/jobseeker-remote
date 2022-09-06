@@ -40,7 +40,6 @@ import { checkErrorCode } from 'helpers/errorHandlers'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 function* updateUserOnboardingInfoReq({ payload }) {
-  console.log('-------')
   const isFromCreateResume = getItem('isFromCreateResume')
   const quickUpladResumeType = getItem('quickUpladResume')
 
