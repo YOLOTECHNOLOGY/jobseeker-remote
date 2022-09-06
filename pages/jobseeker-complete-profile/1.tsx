@@ -50,8 +50,7 @@ import { getItem } from 'helpers/localStorage'
 const Step1 = (props: any) => {
   const currentStep = 1
   const quickUpladResumeType = getItem('quickUpladResume')
-  const totalStep =
-    quickUpladResumeType === 'onLine' ? 2 : quickUpladResumeType === 'upFile' ? 3 : 4
+  const totalStep = quickUpladResumeType === 'upFile' || quickUpladResumeType === 'onLine' ? 3 : 4
   const router = useRouter()
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props

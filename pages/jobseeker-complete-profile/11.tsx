@@ -13,9 +13,7 @@ const Step2 = () => {
   return (
     <>
       <OnRegisterUpload {...hookProps} />
-      <div onClick={() => router.push('/Increase-user-conversion/quick-upload-resume')}>
-        下一个提交页面
-      </div>
+      <div onClick={() => router.push('/quick-upload-resume')}>下一个提交页面</div>
     </>
   )
 }

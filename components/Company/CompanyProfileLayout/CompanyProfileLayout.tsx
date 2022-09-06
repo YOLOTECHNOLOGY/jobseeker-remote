@@ -94,7 +94,7 @@ const CompanyProfileLayout = ({
   }, [similarCompaniesResponse])
 
   const handleQuickUploadResumeClick = () => {
-    router.push('/Increase-user-conversion/quick-upload-resume')
+    router.push('/quick-upload-resume')
   }
 
   const additionalCanonicalText =

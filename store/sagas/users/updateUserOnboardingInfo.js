@@ -40,6 +40,7 @@ import { checkErrorCode } from 'helpers/errorHandlers'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 function* updateUserOnboardingInfoReq({ payload }) {
+  console.log('-------')
   const isFromCreateResume = getItem('isFromCreateResume')
   const quickUpladResumeType = getItem('quickUpladResume')
 
@@ -84,11 +85,7 @@ function* updateUserOnboardingInfoReq({ payload }) {
       }
 
       if (quickUpladResumeType) {
-        if (quickUpladResumeType === 'onLine') {
-          url = '/jobseeker-complete-profile/1102'
-        } else {
-          url = '/jobseeker-complete-profile/1101'
-        }
+        url = '/jobseeker-complete-profile/1101'
       }
 
       yield put(push(url))
