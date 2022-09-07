@@ -7,11 +7,13 @@ import MaterialButton from 'components/MaterialButton'
 // Styles
 import styles from './styles.module.scss'
 import Link from 'components/Link'
-import { useRouter } from 'next/router'
 import { setItem } from 'helpers/localStorage'
+import { useDispatch } from 'react-redux'
+
+import { fetchUserWorkExperienceQuickUploadResume } from 'store/actions/users/fetchUserWorkExperience'
 
 const UploadResume = (props: any) => {
-  const router = useRouter()
+  const dispatch = useDispatch()
   const {
     existingResume,
     errorMessage,
@@ -20,7 +22,6 @@ const UploadResume = (props: any) => {
     isDoneUpdating,
     isUploading,
     setResume,
-    redirect,
     resume
   } = props
 
@@ -95,8 +96,9 @@ const UploadResume = (props: any) => {
             isLoading={isCreatingResume}
             onClick={() => {
               setItem('quickUpladResume', 'onLine')
+              dispatch(fetchUserWorkExperienceQuickUploadResume({ hasNoWorkExperience: true }))
               setIsCreatingResume(true)
-              router.push(redirect)
+              // router.push(redirect)
             }}
           >
             <Text textColor='primary' bold>

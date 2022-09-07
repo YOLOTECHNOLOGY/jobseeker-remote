@@ -324,7 +324,9 @@
     margin-bottom: 25px;
     .arrowIconPostion {
       button {
-        background-position-x: 0px;
+        background-position-x: 3px !important;
+        background-size: 32px !important;
+        background-position-y: 8px !important;
       }
     }
   }
