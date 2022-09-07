@@ -50,7 +50,7 @@ const QuickUploadResume = () => {
                   <div className={styles.loadingIndicator}>
                     <LinearProgress />
                   </div>
-                  <Text textStyle='sm'>Please hold on while we are parsing your resume.</Text>
+                  <Text textStyle='lg'>Please hold on while we are parsing your resume.</Text>
                 </div>
               ) : null}
 
