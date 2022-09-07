@@ -243,7 +243,8 @@ const useRegister = () => {
     isLoading,
     handleSnackbarClose,
     uploadResumeFile,
-    isShowRegisterInfo
+    isShowRegisterInfo,
+    userWorkExperiences
   }
 }
 

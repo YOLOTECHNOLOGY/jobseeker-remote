@@ -1,6 +1,6 @@
 import React from 'react'
 import Text from 'components/Text'
-import { BossjobLogo, increaseUserConversionModelBg } from 'images'
+import { BossjobLogo, increaseUserConversionModelBg, increaseUserConversionBrush } from 'images'
 import QuickLayout from 'components/IncreaseUserConversion/quickLayout/quickLayout'
 import UploadResume from 'components/IncreaseUserConversion/UploadResume'
 import RegisterInfo from 'components/IncreaseUserConversion/RegisterInfo'
@@ -15,7 +15,8 @@ import styles from './styles.module.scss'
 const QuickUploadResume = () => {
   const UseHooksRegister = useRegister()
   const useHooksFakeUploadResume = useFakeUploadResume()
-  const { isRegisteringJobseeker, isLoading, isShowRegisterInfo } = UseHooksRegister
+  const { isRegisteringJobseeker, isLoading, isShowRegisterInfo, userWorkExperiences } =
+    UseHooksRegister
 
   return (
     <QuickLayout>
@@ -39,6 +40,7 @@ const QuickUploadResume = () => {
               </div>
               <div className={styles.AuthWrapperImageContext}>
                 <img src={increaseUserConversionModelBg} />
+                <img src={increaseUserConversionBrush} className={styles.AuthWrapperImageBrush} />
               </div>
             </div>
             <div className={styles.AuthWrapperInfo}>
@@ -50,7 +52,11 @@ const QuickUploadResume = () => {
                   <div className={styles.loadingIndicator}>
                     <LinearProgress />
                   </div>
-                  <Text textStyle='lg'>Please hold on while we are parsing your resume.</Text>
+                  <Text textStyle='lg'>
+                    {userWorkExperiences?.hasNoWorkExperience
+                      ? 'Please hold on while we are preparing your resume.'
+                      : 'Please hold on while we are parsing your resume'}
+                  </Text>
                 </div>
               ) : null}
 

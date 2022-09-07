@@ -78,7 +78,7 @@ const Step4 = (props: any) => {
   const [isCurrentStudying, setIsCurrentStudying] = useState(false)
   const [hasNoEducation, setHasNoEducation] = useState(false)
   const [educationId, setEducationId] = useState(null)
-  const [educations, setEducations] = useState(userDetail?.educations)
+  const [educations, setEducations] = useState(userDetail?.educations ? userDetail?.educations : [])
   const [showForm, setShowForm] = useState(educations?.length === 0 ? true : false)
   const [isNextDisabled, setIsNextDisabled] = useState(true)
   const [isSaveDisabled, setIsSaveDisabled] = useState(true)
@@ -123,8 +123,33 @@ const Step4 = (props: any) => {
   useEffect(() => {
     if (userEducations) {
       setEducations(userEducations || [])
-      setIsNextDisabled(userEducations.length > 0 ? false : true)
+      setIsNextDisabled(userEducations.length > 1 ? false : true)
       setIsUpdating(false)
+
+      if (userEducations.length === 1) {
+        const experience = userEducations[0]
+        const requireFields =
+          !experience.school ||
+          // !experience.degree ||
+          !experience.location ||
+          !experience.study_period_from ||
+          !degreeList.filter((degree) => degree.label === experience.degree_key)[0]?.value
+
+        if (experience.is_currently_studying && requireFields) {
+          handleSelectEducation(experience)
+          setShowForm(true)
+          setIsEditing(true)
+        } else if (
+          !experience.is_currently_studying &&
+          (requireFields || !experience.study_period_to)
+        ) {
+          handleSelectEducation(experience)
+          setShowForm(true)
+          setIsEditing(true)
+        } else {
+          setIsNextDisabled(false)
+        }
+      }
     }
   }, [userEducations])
 
@@ -227,12 +252,13 @@ const Step4 = (props: any) => {
   }
 
   const handleSelectEducation = (education) => {
+    scrollToForm()
     setSelectedEducation(education)
     setIsEditing(true)
     setShowForm(!showForm)
     setEducationId(education.id)
     setSchool(education.school)
-    setDegree(degreeList.filter((degree) => degree.label === education.degree)[0]?.value)
+    setDegree(degreeList.filter((degree) => degree.label === education.degree_key)[0]?.value)
     setLocation(education.location ? getLocation(education.location)[0] : null)
     if (education.location && education.location.toLowerCase() === 'overseas') {
       setCountry(countryList.filter((country) => country.key === education.country_key)[0].value)
@@ -262,7 +288,7 @@ const Step4 = (props: any) => {
 
   const handleCancelForm = () => {
     setShowForm(false)
-    setIsNextDisabled(userEducations.length > 0 ? false : true)
+    setIsNextDisabled(userEducations.length > 1 ? false : true)
 
     if (selectedEducation) {
       handleResetForm()
@@ -370,7 +396,7 @@ const Step4 = (props: any) => {
                 </Text>
                 <br />
                 <Text textStyle='base' tagName='p'>
-                  {education?.degree}
+                  {education?.degree_key}
                 </Text>
                 <Text textStyle='base' tagName='p'>
                   {moment(education?.study_period_from).format('MMMM yyyy')} to{' '}
