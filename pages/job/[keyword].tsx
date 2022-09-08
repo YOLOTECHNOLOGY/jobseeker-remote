@@ -456,13 +456,15 @@ const Job = ({
     router.push('/quick-upload-resume')
   }
 
-  const useInterval = (callback?, dep = 60000) => {
+  const useInterval = (callback?, dep = 6000) => {
     clearInterval(time.current)
     const isShowRegisterModule = () => {
       const nowTime = moment().format('YYYY-MM-DD HH:mm:ss')
       if (moment(closeRegisterModuleTime).isBefore(nowTime)) {
-        handleOpenRegisterModule()
-        clearTimeout(time.current)
+        if (!quickApplyModalShow) {
+          handleOpenRegisterModule()
+          clearTimeout(time.current)
+        }
       } else {
         console.log('还没有到弹出的时候')
       }
@@ -481,15 +483,19 @@ const Job = ({
         // }, 60000)
         return useInterval()
       } else {
-        const time = setTimeout(() => {
-          handleOpenRegisterModule()
-        }, 3000)
+        const callBack = () => {
+          if (!quickApplyModalShow) {
+            handleOpenRegisterModule()
+            clearTimeout(time)
+          }
+        }
+        const time = setInterval(callBack, 3000)
         return () => {
           clearTimeout(time)
         }
       }
     }
-  }, [closeRegisterModuleTime])
+  }, [closeRegisterModuleTime, quickApplyModalShow])
 
   const handleOpenRegisterModule = () => setOpenRegister(true)
   const handleCloseRegisterModule = () => {
@@ -574,7 +580,7 @@ const Job = ({
                 </div>
               </div>
 
-              <RegisterInfo register4Step isHiddenTitle {...UseHooksRegister} />
+              <RegisterInfo register4Step isRegisterModuleRedirect {...UseHooksRegister} />
 
               <div className={styles.forModuleFooterText}>
                 <Text tagName='p' textStyle='base'>

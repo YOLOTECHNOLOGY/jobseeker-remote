@@ -43,7 +43,8 @@ const RegisterInfo = (props: any) => {
     horizontal,
     open,
     handleSnackbarClose,
-    register4Step
+    register4Step,
+    isRegisterModuleRedirect
   } = props
 
   const errorText = (errorMessage: string) => {
@@ -170,7 +171,7 @@ const RegisterInfo = (props: any) => {
           variant='contained'
           className={styles.RegisterButton}
           isLoading={isRegisteringJobseeker}
-          onClick={() => handleRegister(register4Step ? true : false, true)}
+          onClick={() => handleRegister(register4Step ? true : false, isRegisterModuleRedirect)}
         >
           {/* hanleRegister false 3step; true 4step */}
           <Text textStyle='xl' textColor='white' bold>

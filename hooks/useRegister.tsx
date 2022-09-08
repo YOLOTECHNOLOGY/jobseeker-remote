@@ -146,7 +146,7 @@ const useRegister = () => {
     }
   }, [userInfo])
 
-  const handleRegister = (isRedirect: HandleRegisterAng, isRegisterModule?) => {
+  const handleRegister = (isRedirect: HandleRegisterAng, isRegisterModuleRedirect?) => {
     if (!firstName) {
       setFirstNameError('Please enter your first name.')
     }
@@ -201,7 +201,7 @@ const useRegister = () => {
         removeItem('isRegisterModuleRedirect')
       }
 
-      if (isRegisterModule) {
+      if (isRegisterModuleRedirect) {
         setItem('isRegisterModuleRedirect', router.asPath)
         removeItem('quickUpladResume')
       }

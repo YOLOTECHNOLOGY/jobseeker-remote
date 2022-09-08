@@ -56,6 +56,7 @@ function* completeUserProfileSaga(redirect, accessToken) {
     removeItem('isFromCreateResume')
     removeItem('isCreateFreeResume')
     removeItem('quickUpladResume')
+    removeItem('isRegisterModuleRedirect')
     yield put(push(url))
   } catch (error) {
     yield put(completeUserProfileFailed(error))
