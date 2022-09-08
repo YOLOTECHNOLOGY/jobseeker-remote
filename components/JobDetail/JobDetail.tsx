@@ -243,7 +243,7 @@ const JobDetail = ({
           >
             <div>
               <div className={classNamesCombined([isStickyClass, styles.JobDetailOptions])}>
-                <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
+                <Link to={publicJobUrl} external className={styles.JobDetailOptionNewTab}>
                   <img src={OpenInNewTabIcon} width='10' height='10' />
                   <Text textStyle='base' textColor='primaryBlue' className={styles.JobDetailOptionNewTab}>
                     View in a new tab
@@ -327,8 +327,12 @@ const JobDetail = ({
               {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
             </div>
           </div>
-          <div className={styles.JobDetailHeader}>
-            <div
+          <div
+           className={classNamesCombined([styles.JobDetailBody, isStickyClass])}
+            style={{ top: isSticky ? detailHeaderHeight : ''}}
+          >
+            
+             <div
               className={styles.JobDetailImage}
               style={{ backgroundImage: `url(${selectedJob?.company?.logo})` }}
             />
@@ -372,11 +376,6 @@ const JobDetail = ({
                 )}
               </div>
             </div>
-          </div>
-          <div
-            className={styles.JobDetailBody}
-            style={{ top: detailHeaderHeight }}
-          >
             <div className={styles.JobDetailPref}>
               <ul className={styles.JobDetailPrefList}>
                 <li className={styles.JobDetailPrefItem}>
