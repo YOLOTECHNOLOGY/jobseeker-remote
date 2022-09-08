@@ -18,7 +18,6 @@ import Link from 'components/Link'
 
 // Helpers
 import useWindowDimensions from 'helpers/useWindowDimensions'
-import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import { getCookie } from 'helpers/cookies'
 // Images
@@ -214,7 +213,7 @@ const ResumeTemplate = () => {
                 onClick={() => {
                   if (userCookie) {
                     userCookie.is_profile_completed
-                      ? router.push(authPathToOldProject(null, '/dashboard/profile/jobseeker'))
+                      ? router.push('/manage-profile?tab=resume')
                       : router.push('/jobseeker-complete-profile/1')
                   } else {
                     onRegister()
