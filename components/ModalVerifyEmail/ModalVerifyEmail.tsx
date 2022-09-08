@@ -92,7 +92,6 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
         //   router.push(redirectLink)
         // }
       }, 1000)
-
     }
   }, [isOTPVerified])
 
@@ -131,39 +130,39 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
         sent to <b>{email}</b>
       </Text>
       <div className={styles.VerifyingEmailForm}>
-      <div className={styles.VerifyingEmailFormInput}>
-        <MaterialTextField
-          id='otp'
-          label='Enter 6-digit OTP'
-          variant='outlined'
-          value={otp}
-          error={OTPErrorMessage}
-          size='small'
-          defaultValue={otp}
-          autoComplete='off'
-          disabled={isVerifyingOTP}
-          onChange={(e) => setOtp(e.target.value)}
-          fullWidth={true}
-        />
-      </div>
-      <MaterialButton
-        className={
-          !isVerifiedEmail ? styles.VerifyingEmailFormButton : styles.VerifiedEmailFormButton
-        }
-        capitalize
-        size='large'
-        variant='contained'
-        isLoading={isOTPVerifying}
-        disabled={!canRequestOTP || isVerifyingOTP || isOTPVerified}
-        onClick={handleRequestOtp}
-      >
-        <Text textColor='white' bold>
-          Get OTP {timerCount > 1 ? '(' + (timerCount - 1) + ')' : ''}
-        </Text>
-      </MaterialButton>
+        <div className={styles.VerifyingEmailFormInput}>
+          <MaterialTextField
+            id='otp'
+            label='Enter 6-digit OTP'
+            variant='outlined'
+            value={otp}
+            error={OTPErrorMessage}
+            size='small'
+            defaultValue={otp}
+            autoComplete='off'
+            disabled={isVerifyingOTP}
+            onChange={(e) => setOtp(e.target.value)}
+            fullWidth={true}
+          />
+        </div>
+        <MaterialButton
+          className={
+            !isVerifiedEmail ? styles.VerifyingEmailFormButton : styles.VerifiedEmailFormButton
+          }
+          capitalize
+          size='large'
+          variant='contained'
+          isLoading={isOTPVerifying}
+          disabled={!canRequestOTP || isVerifyingOTP || isOTPVerified}
+          onClick={handleRequestOtp}
+        >
+          <Text textColor='white' bold>
+            Get OTP {timerCount > 1 ? '(' + (timerCount - 1) + ')' : ''}
+          </Text>
+        </MaterialButton>
       </div>
       <div className={styles.VerifyingEmailErrorMessage}>
-      {OTPErrorMessage && (
+        {OTPErrorMessage && (
           <Text textStyle='sm' textColor='red' tagName='p' className={styles.inputMessage}>
             {OTPErrorMessage}
           </Text>
@@ -210,11 +209,7 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
   )
 
   return (
-    <Modal
-      headerTitle='Verify your email'
-      showModal={isShowModal}
-      handleModal={handleCloseModal}
-    >
+    <Modal headerTitle='Verify your email' showModal={isShowModal} handleModal={handleCloseModal}>
       {modalContent}
     </Modal>
   )

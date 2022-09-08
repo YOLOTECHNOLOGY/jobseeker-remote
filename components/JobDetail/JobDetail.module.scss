@@ -22,11 +22,21 @@
     }
   }
 
+  &Options {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: -10px;
+  }
+
   &OptionImage {
     position: absolute;
-    top: 25px;
+    top: 35px;
     right: 30px;
     z-index: 1;
+
+    img {
+      transform: rotate(90deg);
+    }
 
     &:hover {
       cursor: pointer;
@@ -36,10 +46,28 @@
   &OptionItem {
     padding: 12px 20px;
     display: block;
+
+    img {
+      margin-right: 5px;
+    }
     
     &:hover {
       cursor: pointer;
       background-color: $white-1;
+    }
+  }
+
+  &OptionNewTab {
+    padding: 12px 20px 12px 0;
+    display:inline-block;
+
+    img {
+      margin-right: 5px;
+    }
+
+    &:hover {
+      text-decoration: underline;
+      text-decoration-color: $primaryBlue;
     }
   }
 
@@ -51,7 +79,7 @@
 
     &.isSticky {
       position: fixed;
-      width: 533px;
+      width: 550px;
       top: 0;
       z-index: 1;
     }
@@ -61,6 +89,8 @@
     padding: 0 24px;
     height: 100%;
     overflow-y: scroll;
+    width:533px;
+    height: calc(100vh - 107px);
 
     &::-webkit-scrollbar {
       width: 8px;
@@ -83,7 +113,7 @@
     &.isSticky {
       position: fixed;
       width: 533px;
-      height: calc(100vh - 256px);
+      height: calc(100vh - 107px);
     }
   }
 
@@ -137,6 +167,7 @@
   &Buttons {
     display: flex;
     align-items: center;
+    margin-left: 86px;
 
     button {
       margin-right: 16px;

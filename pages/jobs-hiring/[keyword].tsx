@@ -62,7 +62,6 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import useSearchHistory from 'helpers/useSearchHistory'
 import configuredAxios from 'helpers/configuredAxios'
 
-
 interface JobSearchPageProps {
   seoMetaTitle: string
   seoMetaDescription: string
@@ -271,7 +270,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [hasMoreFilters, setHasMoreFilters] = useState(false)
   const [searchHistories, addSearchHistory] = useSearchHistory()
   const [suggestionList, setSuggestionList] = useState(searchHistories)
-  
+
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
@@ -359,6 +358,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setIsShowFilter(false)
   }
   const setLastSearch = useJobAlert()
+  useEffect(() => {
+    setLastSearch(JSON.stringify({
+      filterJobPayload,
+      searchParams: { pathname: router.pathname, query: router.query }
+    }))
+  }, [filterJobPayload, router.pathname, router.query])
   const jobTypeList = config.inputs.job_types
   const salaryRangeList = config.filters.salary_range_filters
 
@@ -369,7 +374,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
       query: queryObject
     }
-    setLastSearch(JSON.stringify({ filterJobPayload, searchParams: pushObject }))
     router.push(pushObject, undefined, { shallow: true })
   }
 
@@ -423,10 +427,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           // append current search that matches catergory
           categorySelected.push(value[0]['seo-value'])
           // append the other options that was selected previously
-          Object.values(matchedConfigFromUrl).forEach((value:any) => {
+          Object.values(matchedConfigFromUrl).forEach((value: any) => {
             value.forEach((val) => categorySelected.push(val['seo-value']))
           })
-          Object.values(matchedConfigFromUserSelection).forEach((value:any) => {
+          Object.values(matchedConfigFromUserSelection).forEach((value: any) => {
             value.forEach((val) => categorySelected.push(val['seo-value']))
           })
 

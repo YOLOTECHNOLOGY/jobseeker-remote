@@ -81,7 +81,7 @@
     &Item {
       margin: 0;
     }
-    
+
     &Content {
       padding: 15px 0;
     }
@@ -106,7 +106,8 @@
 .companyDescription {
   margin-bottom: 10px;
 
-  ol, ul {
+  ol,
+  ul {
     padding-inline: inherit;
   }
 }
@@ -319,6 +320,17 @@
 .relatedCompany {
   width: 206px;
 
+  &QuickUploadResume {
+    margin-bottom: 25px;
+    .arrowIconPostion {
+      button {
+        background-position-x: 3px !important;
+        background-size: 32px !important;
+        background-position-y: 8px !important;
+      }
+    }
+  }
+
   @include msd {
     width: 100%;
     display: block;
@@ -367,7 +379,7 @@
   &Link {
     display: block;
     margin-top: 20px;
-  
+
     &:hover {
       span {
         text-decoration: underline;
@@ -382,8 +394,8 @@
   // }
 }
 
-.companyTooltip{
-    vertical-align: baseline;
-    margin-left: 5px;
-    cursor: pointer;
+.companyTooltip {
+  vertical-align: baseline;
+  margin-left: 5px;
+  cursor: pointer;
 }

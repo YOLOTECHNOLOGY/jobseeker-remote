@@ -55,6 +55,7 @@ import {
   LocationPinIcon,
   RateIcon,
   BlueTickIcon,
+  OpenInNewTabIcon,
   DefaultAvatar
 } from 'images'
 
@@ -241,70 +242,13 @@ const JobDetail = ({
             ref={detailHeaderRef}
           >
             <div>
-              <div className={styles.JobDetailOptionImage}>
-                <Dropdown>
-                  {selectedJob?.status_key === 'active' && (
-                    <>
-                      <Link to={publicJobUrl} external className={styles.JobDetailOptionItem}>
-                        <Text textStyle='lg'>View in new tab</Text>
-                      </Link>
-                      <div className={styles.JobDetailOptionItem} onClick={handleShowReportJob}>
-                        <Text textStyle='lg'>Report job</Text>
-                      </div>
-                    </>
-                  )}
-                  {isCategoryApplied && !checkHasApplicationWithdrawn() && (
-                    <div
-                      className={styles.JobDetailOptionItem}
-                      onClick={() => setIsShowModalWithdrawApplication(true)}
-                    >
-                      <Text textStyle='lg'>Withdraw Application</Text>
-                    </div>
-                  )}
-
-                  <div
-                    className={styles.JobDetailOptionItem}
-                    onClick={() => setIsShowModalShare(true)}
-                  >
-                    <Text textStyle='lg'>Share this job</Text>
-                  </div>
-                </Dropdown>
-              </div>
-
-              {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
-            </div>
-            <div
-              className={styles.JobDetailImage}
-              style={{ backgroundImage: `url(${selectedJob?.company?.logo})` }}
-            />
-            <div className={styles.JobDetailInfo}>
-              <Link to={publicJobUrl} external>
-                <Text textStyle='lg' bold className={styles.JobDetailTitle}>
-                  {selectedJob?.job_title}
-                </Text>
-              </Link>
-              <Text textStyle='lg' className={styles.JobDetailCompanyName}>
-                <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
-                  {selectedJob?.company?.name}
+              <div className={classNamesCombined([isStickyClass, styles.JobDetailOptions])}>
+                <Link to={publicJobUrl} external className={styles.JobDetailOptionNewTab}>
+                  <img src={OpenInNewTabIcon} width='10' height='10' />
+                  <Text textStyle='base' textColor='primaryBlue' className={styles.JobDetailOptionNewTab}>
+                    View in a new tab
+                  </Text>
                 </Link>
-                {isCompanyVerified && (isMobile ? (
-                  <MaterialMobileTooltip
-                    icon={BlueTickIcon}
-                    className={styles.JobDetailCompanyTooltip}
-                    title='Verified'
-                  />
-                ) : (
-                  <MaterialDesktopTooltip
-                    icon={BlueTickIcon}
-                    className={styles.JobDetailCompanyTooltip}
-                    title='Verified'
-                  />
-                ))}
-              </Text>
-              {selectedJob?.is_featured && <JobTag tag='Featured' tagType='featured' />}
-              {selectedJob?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
-              <JobTag tag={selectedJob?.job_type_value} />
-              <div className={styles.JobDetailButtonsWrapper}>
                 {!isCategoryApplied && (
                   <div className={styles.JobDetailButtons}>
                     {selectedJob?.status_key === 'active' && (
@@ -348,29 +292,90 @@ const JobDetail = ({
                       }}
                     >
                       <Text textColor='primaryBlue' bold>
-                        {isSavedJob || isCategorySaved ? 'Saved' : 'Save Job'}
+                        {isSavedJob || isCategorySaved ? 'Saved' : 'Save'}
                       </Text>
                     </MaterialButton>
                   </div>
                 )}
+                <div className={styles.JobDetailOptionImage}>
+                  <Dropdown>
+                    <div
+                      className={styles.JobDetailOptionItem}
+                      onClick={() => setIsShowModalShare(true)}
+                    >
+                      <Text textStyle='lg'>Share this job</Text>
+                    </div>
+                    {isCategoryApplied && !checkHasApplicationWithdrawn() && (
+                      <div
+                        className={styles.JobDetailOptionItem}
+                        onClick={() => setIsShowModalWithdrawApplication(true)}
+                      >
+                        <Text textStyle='lg'>Withdraw Application</Text>
+                      </div>
+                    )}
+                    {selectedJob?.status_key === 'active' && (
+                      <>
+                        <div className={styles.JobDetailOptionItem} onClick={handleShowReportJob}>
+                          <Text textStyle='lg'>Report job</Text>
+                        </div>
+                      </>
+                    )}
+                  </Dropdown>
+                </div>
+              </div>
 
+              {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
+            </div>
+          </div>
+          <div
+           className={classNamesCombined([styles.JobDetailBody, isStickyClass])}
+            style={{ top: isSticky ? detailHeaderHeight : ''}}
+          >
+            
+             <div
+              className={styles.JobDetailImage}
+              style={{ backgroundImage: `url(${selectedJob?.company?.logo})` }}
+            />
+            <div className={styles.JobDetailInfo}>
+              <Link to={publicJobUrl} external>
+                <Text textStyle='lg' bold className={styles.JobDetailTitle}>
+                  {selectedJob?.job_title}
+                </Text>
+              </Link>
+              <Text textStyle='lg' className={styles.JobDetailCompanyName}>
+                <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
+                  {selectedJob?.company?.name}
+                </Link>
+                {isCompanyVerified && (isMobile ? (
+                  <MaterialMobileTooltip
+                    icon={BlueTickIcon}
+                    className={styles.JobDetailCompanyTooltip}
+                    title='Verified'
+                  />
+                ) : (
+                  <MaterialDesktopTooltip
+                    icon={BlueTickIcon}
+                    className={styles.JobDetailCompanyTooltip}
+                    title='Verified'
+                  />
+                ))}
+              </Text>
+              <Text textStyle='sm' textColor='darkgrey' className={styles.JobDetailPostedAt}>
+                {applicationUpdatedAt ? `Last updated on ${applicationUpdatedAt}` : `Posted on ${selectedJob?.refreshed_at}`}
+              </Text>
+              <div style={{ height: '16px' }}></div>
+              {selectedJob?.is_featured && <JobTag tag='Featured' tagType='featured' />}
+              {selectedJob?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
+              <JobTag tag={selectedJob?.job_type_value} />
+              <div className={styles.JobDetailButtonsWrapper}>
                 {selectedJob?.status_key !== 'active' && (
                   <Text textStyle='base' className={styles.JobDetailStatus}>
                     <img src={ExpireIcon} height='16' width='16' />
                     <span>This job is no longer hiring</span>
                   </Text>
                 )}
-
-                <Text textStyle='sm' textColor='darkgrey' className={styles.JobDetailPostedAt}>
-                  {applicationUpdatedAt ? `Last updated on ${applicationUpdatedAt}` : `Posted on ${selectedJob?.refreshed_at}`}
-                </Text>
               </div>
             </div>
-          </div>
-          <div
-            className={classNamesCombined([styles.JobDetailBody, isStickyClass])}
-            style={{ top: detailHeaderHeight }}
-          >
             <div className={styles.JobDetailPref}>
               <ul className={styles.JobDetailPrefList}>
                 <li className={styles.JobDetailPrefItem}>

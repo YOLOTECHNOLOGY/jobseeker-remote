@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
 import moment from 'moment'
-import { isMobile } from 'react-device-detect';
+import { isMobile } from 'react-device-detect'
 
 // @ts-ignore
 import { END } from 'redux-saga'
@@ -46,7 +46,9 @@ import MaterialButton from 'components/MaterialButton'
 const Step4 = (props: any) => {
   const { config, userDetail, accessToken } = props
 
+  const quickUpladResumeType = getItem('quickUpladResume')
   const currentStep = 4
+  const totalStep = quickUpladResumeType ? 3 : 4
   const router = useRouter()
   const dispatch = useDispatch()
   const backBtnUrl = router.query?.redirect
@@ -76,7 +78,7 @@ const Step4 = (props: any) => {
   const [isCurrentStudying, setIsCurrentStudying] = useState(false)
   const [hasNoEducation, setHasNoEducation] = useState(false)
   const [educationId, setEducationId] = useState(null)
-  const [educations, setEducations] = useState(userDetail?.educations)
+  const [educations, setEducations] = useState(userDetail?.educations ? userDetail?.educations : [])
   const [showForm, setShowForm] = useState(educations?.length === 0 ? true : false)
   const [isNextDisabled, setIsNextDisabled] = useState(true)
   const [isSaveDisabled, setIsSaveDisabled] = useState(true)
@@ -121,8 +123,33 @@ const Step4 = (props: any) => {
   useEffect(() => {
     if (userEducations) {
       setEducations(userEducations || [])
-      setIsNextDisabled(userEducations.length > 0 ? false : true)
+      setIsNextDisabled(userEducations.length > 1 ? false : true)
       setIsUpdating(false)
+
+      if (userEducations.length === 1) {
+        const experience = userEducations[0]
+        const requireFields =
+          !experience.school ||
+          // !experience.degree ||
+          !experience.location ||
+          !experience.study_period_from ||
+          !degreeList.filter((degree) => degree.label === experience.degree_key)[0]?.value
+
+        if (experience.is_currently_studying && requireFields) {
+          handleSelectEducation(experience)
+          setShowForm(true)
+          setIsEditing(true)
+        } else if (
+          !experience.is_currently_studying &&
+          (requireFields || !experience.study_period_to)
+        ) {
+          handleSelectEducation(experience)
+          setShowForm(true)
+          setIsEditing(true)
+        } else {
+          setIsNextDisabled(false)
+        }
+      }
     }
   }, [userEducations])
 
@@ -156,7 +183,7 @@ const Step4 = (props: any) => {
     studyPeriodFrom,
     studyPeriodTo,
     hasErrorOnFromPeriod,
-    hasErrorOnToPeriod,
+    hasErrorOnToPeriod
   ])
 
   useEffect(() => {
@@ -204,7 +231,7 @@ const Step4 = (props: any) => {
     stepForm?.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
-      inline: 'nearest',
+      inline: 'nearest'
     })
   }
 
@@ -225,12 +252,13 @@ const Step4 = (props: any) => {
   }
 
   const handleSelectEducation = (education) => {
+    scrollToForm()
     setSelectedEducation(education)
-    setIsEditing(false)
+    setIsEditing(true)
     setShowForm(!showForm)
     setEducationId(education.id)
     setSchool(education.school)
-    setDegree(degreeList.filter((degree) => degree.label === education.degree)[0].value)
+    setDegree(degreeList.filter((degree) => degree.label === education.degree_key)[0]?.value)
     setLocation(education.location ? getLocation(education.location)[0] : null)
     if (education.location && education.location.toLowerCase() === 'overseas') {
       setCountry(countryList.filter((country) => country.key === education.country_key)[0].value)
@@ -260,7 +288,7 @@ const Step4 = (props: any) => {
 
   const handleCancelForm = () => {
     setShowForm(false)
-    setIsNextDisabled(userEducations.length > 0 ? false : true)
+    setIsNextDisabled(userEducations.length > 1 ? false : true)
 
     if (selectedEducation) {
       handleResetForm()
@@ -281,7 +309,7 @@ const Step4 = (props: any) => {
         : moment(new Date(studyPeriodTo)).format('yyyy-MM-DD'),
       location_key: location?.key || '',
       field_of_study: fieldStudy,
-      degree_key: degree,
+      degree_key: degree
     }
 
     const educationPayload = {
@@ -289,7 +317,7 @@ const Step4 = (props: any) => {
       currentStep,
       isUpdate: isEditing,
       educationId,
-      educationData: removeEmptyOrNullValues(educationData),
+      educationData: removeEmptyOrNullValues(educationData)
     }
     dispatch(updateUserOnboardingInfoRequest(educationPayload))
 
@@ -302,7 +330,7 @@ const Step4 = (props: any) => {
       accessToken,
       educationId: id,
       isDelete: true,
-      currentStep,
+      currentStep
     }
 
     dispatch(updateUserOnboardingInfoRequest(deletePayload))
@@ -311,11 +339,15 @@ const Step4 = (props: any) => {
 
   const completePorfile = () => {
     const isCreateFreeResume =
-    (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
+      (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
+    const isRegisterModuleRedirect = getItem('isRegisterModuleRedirect')
 
-    const redirect = router.query?.redirect ? router.query?.redirect : null
+    let redirect = router.query?.redirect ? router.query?.redirect : null
 
-    if (isCreateFreeResume) {
+    if (isRegisterModuleRedirect && !quickUpladResumeType) {
+      redirect = isRegisterModuleRedirect
+    }
+    if (isCreateFreeResume || quickUpladResumeType === 'onLine') {
       dispatch(generateUserResumeRequest({ redirect, accessToken }))
     }
 
@@ -325,7 +357,7 @@ const Step4 = (props: any) => {
   }
 
   const handleNextBtn = () => {
-    if (!isNextDisabled && (showForm && school && degree && location || !showForm)) {
+    if (!isNextDisabled && ((showForm && school && degree && location) || !showForm)) {
       if (!userCookie.is_email_verify) {
         setIsShowModal(true)
       } else {
@@ -350,8 +382,8 @@ const Step4 = (props: any) => {
           All about your education 🎓
         </Text>
       }
-      currentStep={4}
-      totalStep={4}
+      currentStep={totalStep}
+      totalStep={totalStep}
       isMobile={isMobile}
       backFnBtn={() => router.push(backBtnUrl)}
       nextFnBtn={() => handleNextBtn()}
@@ -366,9 +398,9 @@ const Step4 = (props: any) => {
                 <Text bold textStyle='base' tagName='p'>
                   {education?.school}
                 </Text>
-                <br/>
+                <br />
                 <Text textStyle='base' tagName='p'>
-                  {education?.degree}
+                  {education?.degree_key}
                 </Text>
                 <Text textStyle='base' tagName='p'>
                   {moment(education?.study_period_from).format('MMMM yyyy')} to{' '}
@@ -376,7 +408,7 @@ const Step4 = (props: any) => {
                     ? 'Present'
                     : moment(education?.study_period_to).format('MMMM yyyy')}
                 </Text>
-                <br/>
+                <br />
                 <Text textStyle='base' tagName='p'>
                   {education?.location} -{' '}
                   {getLocation(education?.location)?.[0].region_display_name}
@@ -388,7 +420,9 @@ const Step4 = (props: any) => {
               <div className={styles.stepDataActions}>
                 <div
                   className={styles.stepDataActionItem}
-                  onClick={() => handleSelectEducation(education)}
+                  onClick={() => {
+                    handleSelectEducation(education)
+                  }}
                 >
                   <img src={CreateFilledIcon} width='18' height='18' />
                 </div>
@@ -643,8 +677,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     return {
       redirect: {
         destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/1102',
-        permanent: false,
-      },
+        permanent: false
+      }
     }
   }
 
@@ -660,8 +694,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     props: {
       config,
       userDetail,
-      accessToken,
-    },
+      accessToken
+    }
   }
 })
 export default Step4

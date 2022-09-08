@@ -1,14 +1,14 @@
-import {call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
 import { getCookie, setCookie } from 'helpers/cookies'
 import { GENERATE_USER_RESUME_REQUEST } from 'store/types/users/generateUserResume'
 import {
   generateUserResumeSuccess,
-  generateUserResumeFailed,
+  generateUserResumeFailed
 } from 'store/actions/users/generateUserResume'
 import {
   completeUserProfileSuccess,
-  completeUserProfileFailed,
+  completeUserProfileFailed
 } from 'store/actions/users/completeUserProfile'
 
 import { generateUserResumeService } from 'store/services/users/generateUserResume'
@@ -24,7 +24,6 @@ function* generateUserResumeReq({ payload }) {
       yield put(generateUserResumeSuccess(response.data.data))
       yield completeUserProfileSaga(redirect, accessToken)
     }
-
   } catch (error) {
     yield put(generateUserResumeFailed(error.response.data))
   }
@@ -41,7 +40,7 @@ function* completeUserProfileSaga(redirect, accessToken) {
     const accessToken = getCookie('accessToken')
 
     userCookie.is_profile_completed = true
-    
+
     yield call(setCookie, 'user', userCookie)
 
     let url = '/jobs-hiring/job-search'
@@ -56,6 +55,8 @@ function* completeUserProfileSaga(redirect, accessToken) {
 
     removeItem('isFromCreateResume')
     removeItem('isCreateFreeResume')
+    removeItem('quickUpladResume')
+    removeItem('isRegisterModuleRedirect')
     yield put(push(url))
   } catch (error) {
     yield put(completeUserProfileFailed(error))
