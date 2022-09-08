@@ -340,9 +340,13 @@ const Step4 = (props: any) => {
   const completePorfile = () => {
     const isCreateFreeResume =
       (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
+    const isRegisterModuleRedirect = getItem('isRegisterModuleRedirect')
 
-    const redirect = router.query?.redirect ? router.query?.redirect : null
+    let redirect = router.query?.redirect ? router.query?.redirect : null
 
+    if (isRegisterModuleRedirect && !quickUpladResumeType) {
+      redirect = isRegisterModuleRedirect
+    }
     if (isCreateFreeResume || quickUpladResumeType === 'onLine') {
       dispatch(generateUserResumeRequest({ redirect, accessToken }))
     }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import { getItem } from 'helpers/localStorage'
+import { getItem, removeItem, setItem } from 'helpers/localStorage'
 
 import { SnackbarOrigin } from '@mui/material'
 
@@ -146,7 +146,7 @@ const useRegister = () => {
     }
   }, [userInfo])
 
-  const handleRegister = (isRedirect: HandleRegisterAng) => {
+  const handleRegister = (isRedirect: HandleRegisterAng, isRegisterModule?) => {
     if (!firstName) {
       setFirstNameError('Please enter your first name.')
     }
@@ -198,6 +198,12 @@ const useRegister = () => {
           })
           return false
         }
+        removeItem('isRegisterModuleRedirect')
+      }
+
+      if (isRegisterModule) {
+        setItem('isRegisterModuleRedirect', router.asPath)
+        removeItem('quickUpladResume')
       }
 
       dispatch(registerJobseekerRequest({ ...payload }))
