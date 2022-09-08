@@ -132,7 +132,7 @@
     @include msd {
       width: 100%;
       align-items: flex-start;
-      flex-direction: row;
+      flex-direction: column;
     }
 
     &.isSticky{
