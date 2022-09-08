@@ -525,7 +525,10 @@ const Job = ({
         >
           {jobDetail?.job_title}
         </Text>
-        <div className={classNamesCombined([styles.jobDetailCompany, isStickyClass])}>
+        <div
+          className={classNamesCombined([styles.jobDetailCompany, isStickyClass])}
+          style={{ display: 'flex', flexDirection: 'row' }}
+        >
           <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
             <Text textStyle='lg' className={styles.jobDetailCompanyName}>
               {jobDetail?.company?.name}
@@ -789,8 +792,10 @@ const Job = ({
               <div
                 className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}
               >
-                {renderJobDetailPrimarySection()}
-                {renderSaveAndApplyActions()}
+                <div className={styles.jobDetailPrimaryInfoWrapperContainer}>
+                  {renderJobDetailPrimarySection()}
+                  {renderSaveAndApplyActions()}
+                </div>
               </div>
             ) : (
               <div className={styles.jobDetailPrimaryInfoWrapper}>

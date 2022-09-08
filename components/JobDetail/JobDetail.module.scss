@@ -58,6 +58,13 @@
   }
 
   &OptionNewTab {
+    padding: 12px 20px 12px 0;
+    display:inline-block;
+
+    img {
+      margin-right: 5px;
+    }
+
     &:hover {
       text-decoration: underline;
       text-decoration-color: $primaryBlue;
@@ -82,6 +89,8 @@
     padding: 0 24px;
     height: 100%;
     overflow-y: scroll;
+    width:533px;
+    height: calc(100vh - 107px);
 
     &::-webkit-scrollbar {
       width: 8px;
@@ -104,7 +113,7 @@
     &.isSticky {
       position: fixed;
       width: 533px;
-      height: calc(100vh - 256px);
+      height: calc(100vh - 107px);
     }
   }
 

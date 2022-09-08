@@ -163,7 +163,7 @@ const JobListSection = ({
   const updateScrollPosition = () => {
     if (width > 798) {
       prevScrollY.current = window.pageYOffset
-      setIsSticky(prevScrollY.current >= 330 ? true : false)
+      setIsSticky(prevScrollY.current >= 256 ? true : false)
     }
   }
 
