@@ -1,0 +1,7 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.accessSettings {
+  @extend .GlobalContainer;
+  padding: 20px 0 100px;
+}
