@@ -28,9 +28,14 @@ const QuickUploadResume = () => {
           <div className={styles.AuthWrapper}>
             <div className={styles.AuthWrapperImage}>
               <div className={styles.AuthWrapperImageTitle}>
-                <Text textColor='white' textStyle='xxxl' block bold>
-                  Chat with Boss
-                </Text>
+                <div
+                  className={styles.AuthWrapperImageTitleLineBg}
+                  style={{ backgroundImage: 'url(' + increaseUserConversionBrush + ')' }}
+                >
+                  <Text textColor='white' textStyle='xxxl' block bold>
+                    Chat with Boss
+                  </Text>
+                </div>
                 <Text textColor='white' textStyle='xxxl' block bold>
                   to get your
                 </Text>
@@ -40,7 +45,6 @@ const QuickUploadResume = () => {
               </div>
               <div className={styles.AuthWrapperImageContext}>
                 <img src={increaseUserConversionModelBg} />
-                <img src={increaseUserConversionBrush} className={styles.AuthWrapperImageBrush} />
               </div>
             </div>
             <div className={styles.AuthWrapperInfo}>

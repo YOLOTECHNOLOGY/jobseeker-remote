@@ -645,9 +645,14 @@ const Job = ({
           <div className={quickStyles.AuthWrapper}>
             <div className={quickStyles.AuthWrapperImage}>
               <div className={quickStyles.AuthWrapperImageTitle}>
-                <Text textColor='white' textStyle='xxxl' block bold>
-                  Chat with Boss
-                </Text>
+                <div
+                  className={quickStyles.AuthWrapperImageTitleLineBg}
+                  style={{ backgroundImage: 'url(' + increaseUserConversionBrush + ')' }}
+                >
+                  <Text textColor='white' textStyle='xxxl' block bold>
+                    Chat with Boss
+                  </Text>
+                </div>
                 <Text textColor='white' textStyle='xxxl' block bold>
                   to get your
                 </Text>
@@ -657,10 +662,10 @@ const Job = ({
               </div>
               <div className={quickStyles.AuthWrapperImageContext}>
                 <img src={increaseUserConversionModelBg} />
-                <img
+                {/* <img
                   src={increaseUserConversionBrush}
                   className={quickStyles.AuthWrapperImageBrush}
-                />
+                /> */}
               </div>
             </div>
             <div
