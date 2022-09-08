@@ -14,7 +14,8 @@
 
   &Company {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    // flex-direction: column;
     
     &Name {
       margin-top: 8px;
@@ -110,6 +111,11 @@
       flex-direction: row;
       justify-content: space-between;
       @extend .GlobalContainer;
+
+      &.isSticky {
+        // max width - padding
+        width:calc(1166px - 48px);
+      }  
     }
   }
 
@@ -119,24 +125,28 @@
     word-break: break-word;
     display: flex;
     align-items: flex-start;
-    flex-direction: row;
+    flex-direction: column;
+    // flex-direction: row;
     justify-content: space-between;
-
-    &.isSticky {
-      // max width - padding
-      width:calc(1166px - 48px);
-    }
 
     @include msd {
       width: 100%;
       align-items: flex-start;
       flex-direction: row;
     }
+
+    &.isSticky{
+      justify-content: center;
+    }
   }
 
   &PrimaryInfoTitle {
     margin: 16px 24px 0 0;
     line-height: 27px;
+
+    &.isSticky{
+      margin:0;
+    }
   }
 
   &PrimaryInfoImage {

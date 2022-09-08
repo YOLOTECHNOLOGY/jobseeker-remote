@@ -516,7 +516,7 @@ const Job = ({
 
   const renderJobDetailPrimarySection = () => {
     return (
-      <div className={styles.jobDetailPrimaryInfo}>
+      <div className={classNamesCombined([styles.jobDetailPrimaryInfo, isStickyClass])}>
         <Text
           textStyle='xl'
           tagName='h1'
@@ -527,7 +527,6 @@ const Job = ({
         </Text>
         <div
           className={classNamesCombined([styles.jobDetailCompany, isStickyClass])}
-          style={{ display: 'flex', flexDirection: 'row' }}
         >
           <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
             <Text textStyle='lg' className={styles.jobDetailCompanyName}>
@@ -788,7 +787,20 @@ const Job = ({
               className={styles.jobDetailPrimaryInfoImage}
               alt={`${jobDetail?.company?.name} logo`}
             />
-            {width > 799 ? (
+            {width > 799 && isSticky ?  (
+              <div
+                className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}
+              >
+                <div className={styles.jobDetailPrimaryInfoWrapperContainer}>
+                  {renderJobDetailPrimarySection()}
+                  {renderSaveAndApplyActions()}
+                </div>
+              </div>
+            ) : <div className={styles.jobDetailPrimaryInfoWrapper}>
+            {renderJobDetailPrimarySection()}
+            {renderSaveAndApplyActions()}
+          </div>}
+            {/* {width > 799 ? (
               <div
                 className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}
               >
@@ -802,7 +814,7 @@ const Job = ({
                 {renderJobDetailPrimarySection()}
                 {renderSaveAndApplyActions()}
               </div>
-            )}
+            )} */}
             <div className={styles.jobDetailPrimarySub}>
               {jobDetail?.is_featured && <JobTag tag='Featured' tagType='featured' />}
               {jobDetail?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
