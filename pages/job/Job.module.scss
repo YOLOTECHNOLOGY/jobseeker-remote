@@ -691,3 +691,66 @@
   margin-left: 5px;
   cursor: pointer;
 }
+
+.forShowRegisterModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400;
+  box-shadow: 24px;
+  .forModuleFooterText {
+    text-align: center;
+    p {
+      margin: 10px 0;
+      font-weight: 400;
+      font-size: 16px;
+      color: #707070;
+    }
+  }
+  .modalHeader {
+    display: flex;
+    padding: 16px 24px;
+    background-color: $white-1;
+
+    &Title {
+      flex: auto;
+    }
+  }
+
+  .modalCloseButton {
+    cursor: pointer;
+  }
+
+  .AuthWrapperInfoModuleReg {
+    padding-top: 20px;
+  }
+}
+
+.RegisterDivider {
+  position: relative;
+  height: 16px;
+  margin-top: 28px;
+
+  &Text {
+    color: $lightgrey;
+    position: absolute;
+    background-color: $white-3;
+    width: 100px;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: $lightgrey-2;
+    top: 50%;
+    left: 0;
+  }
+}

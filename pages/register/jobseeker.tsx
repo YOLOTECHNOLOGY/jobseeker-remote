@@ -21,6 +21,7 @@ import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 import styles from './Register.module.scss'
 import MetaText from '../../components/MetaText'
 import useRegister from 'hooks/useRegister'
+import { removeItem } from 'helpers/localStorage'
 
 const Register = () => {
   const {
@@ -190,7 +191,11 @@ const Register = () => {
             variant='contained'
             className={styles.RegisterButton}
             isLoading={isRegisteringJobseeker}
-            onClick={() => handleRegister(true)}
+            onClick={() => {
+              handleRegister(true)
+              removeItem('quickUpladResume')
+              removeItem('isRegisterModuleRedirect')
+            }}
           >
             <Text textStyle='xl' textColor='white' bold>
               Sign up

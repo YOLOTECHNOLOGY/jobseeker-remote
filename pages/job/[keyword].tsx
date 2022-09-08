@@ -18,6 +18,8 @@ import {
   TimelineDot
 } from '@mui/lab'
 import classNames from 'classnames/bind'
+import Modal from '@mui/material/Modal'
+import LinearProgress from '@mui/material/LinearProgress'
 import classNamesCombined from 'classnames'
 import dynamic from 'next/dynamic'
 
@@ -35,6 +37,8 @@ import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
 import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 import UploadResumeButton from 'components/LncreaseUserConversion/UploadResumeButton/UploadResumeButton'
+import RegisterInfo from 'components/IncreaseUserConversion/RegisterInfo'
+import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 const ModalVerifyEmail = dynamic(() => import('components/ModalVerifyEmail'))
 // import AdSlot from 'components/AdSlot'
 
@@ -72,9 +76,12 @@ import { withdrawAppliedJobRequest } from 'store/actions/jobs/withdrawAppliedJob
 
 import { addExternalJobClickService } from 'store/services/jobs/addExternalJobClick'
 
+import useRegister from 'hooks/useRegister'
+
 /* Styles */
 import styles from './Job.module.scss'
 import breakpointStyles from 'styles/breakpoint.module.scss'
+import quickStyles from 'pages/quick-upload-resume/styles.module.scss'
 
 /* Images */
 import {
@@ -95,8 +102,13 @@ import {
   LocationPinIcon,
   BlueTickIcon,
   DefaultAvatar,
-  CarIcon
+  CarIcon,
+  BossjobLogo,
+  increaseUserConversionModelBg,
+  increaseUserConversionBrush,
+  CloseIcon
 } from 'images'
+import { getItem, setItem } from 'helpers/localStorage'
 interface IJobDetail {
   jobDetail: any
   applicationHistory: any
@@ -116,6 +128,9 @@ const Job = ({
   seoMetaDescription,
   seoCanonicalUrl
 }: IJobDetail) => {
+  const UseHooksRegister = useRegister()
+  const { isRegisteringJobseeker, isLoading, callbackRequest } = UseHooksRegister
+
   const dispatch = useDispatch()
   const router = useRouter()
   const { width } = useWindowDimensions()
@@ -125,6 +140,7 @@ const Job = ({
   const applyJobLink = getApplyJobLink(jobDetail, userCookie, accessToken)
 
   const [isSticky, setIsSticky] = useState(false)
+  const [openRegister, setOpenRegister] = useState(false)
   const [isSavedJob, setIsSavedJob] = useState(jobDetail?.is_saved)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
@@ -132,6 +148,10 @@ const Job = ({
   const [searchValue, setSearchValue] = useState('')
   const [isShowModal, setIsShowModal] = useState(false)
   const [isWithdrawApplicationModal, setIsWithdrawApplicationModal] = useState(false)
+  const [closeRegisterModuleTime, setCloseRegisterModuleTime] = useState(
+    getItem('notLoginShowRegisterModuleTime')
+  )
+  const time = useRef(null)
 
   const jobDetailUrl = jobDetail?.['job_url'] || '/'
   const companyUrl = jobDetail?.['company']?.['company_url'] || '/'
@@ -543,6 +563,55 @@ const Job = ({
     router.push('/quick-upload-resume')
   }
 
+  const useInterval = (callback?, dep = 6000) => {
+    clearInterval(time.current)
+    const isShowRegisterModule = () => {
+      const nowTime = moment().format('YYYY-MM-DD HH:mm:ss')
+      if (moment(closeRegisterModuleTime).isBefore(nowTime)) {
+        if (!quickApplyModalShow) {
+          handleOpenRegisterModule()
+          clearTimeout(time.current)
+        }
+      } else {
+        console.log('还没有到弹出的时候')
+      }
+    }
+
+    time.current = setInterval(isShowRegisterModule, dep)
+    return () => clearInterval(time.current)
+  }
+
+  useEffect(() => {
+    if (!accessToken) {
+      const notLoginShowRegisterModule = getItem('notLoginShowRegisterModuleTime')
+      if (notLoginShowRegisterModule) {
+        // Time 1 minute show module
+        // const intTime = setTimeout(() => {
+        // }, 60000)
+        return useInterval()
+      } else {
+        const callBack = () => {
+          if (!quickApplyModalShow) {
+            handleOpenRegisterModule()
+            clearTimeout(time)
+          }
+        }
+        const time = setInterval(callBack, 3000)
+        return () => {
+          clearTimeout(time)
+        }
+      }
+    }
+  }, [closeRegisterModuleTime, quickApplyModalShow])
+
+  const handleOpenRegisterModule = () => setOpenRegister(true)
+  const handleCloseRegisterModule = () => {
+    setOpenRegister(false)
+    const closeTime = moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss')
+    setItem('notLoginShowRegisterModuleTime', closeTime)
+    setCloseRegisterModuleTime(closeTime)
+  }
+
   return (
     <Layout>
       <SEO
@@ -552,6 +621,105 @@ const Job = ({
         jobDetail={jobDetail}
         imageUrl={jobDetail?.company?.logo}
       />
+
+      <Modal
+        open={openRegister}
+        onClose={handleCloseRegisterModule}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+        keepMounted
+        // hideBackdrop
+        disableAutoFocus
+      >
+        <div className={styles.forShowRegisterModal}>
+          <div className={styles.modalHeader}>
+            <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
+              Join Bossjob, kick-start your career!
+            </Text>
+            <div className={styles.modalCloseButton}>
+              <Text onClick={handleCloseRegisterModule}>
+                <img src={CloseIcon} title='close modal' alt='close modal' width='14' height='14' />
+              </Text>
+            </div>
+          </div>
+          <div className={quickStyles.AuthWrapper}>
+            <div className={quickStyles.AuthWrapperImage}>
+              <div className={quickStyles.AuthWrapperImageTitle}>
+                <Text textColor='white' textStyle='xxxl' block bold>
+                  Chat with Boss
+                </Text>
+                <Text textColor='white' textStyle='xxxl' block bold>
+                  to get your
+                </Text>
+                <Text textColor='white' textStyle='xxxl' block bold>
+                  next offer!
+                </Text>
+              </div>
+              <div className={quickStyles.AuthWrapperImageContext}>
+                <img src={increaseUserConversionModelBg} />
+                <img
+                  src={increaseUserConversionBrush}
+                  className={quickStyles.AuthWrapperImageBrush}
+                />
+              </div>
+            </div>
+            <div
+              className={classNames([quickStyles.AuthWrapperInfo, styles.AuthWrapperInfoModuleReg])}
+            >
+              {isLoading | isRegisteringJobseeker ? (
+                <div className={quickStyles.AuthWrapperLoading}>
+                  <div className={quickStyles.loadingLogo}>
+                    <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+                  </div>
+                  <div className={quickStyles.loadingIndicator}>
+                    <LinearProgress />
+                  </div>
+                  <Text textStyle='lg'>'Please hold on while we are parsing your resume'</Text>
+                </div>
+              ) : null}
+
+              <div className={styles.Register}>
+                <SocialMediaAuth callbackRequest={callbackRequest} />
+                <div className={styles.RegisterDivider}>
+                  <Text textStyle='lg' className={styles.RegisterDividerText}>
+                    Or
+                  </Text>
+                </div>
+              </div>
+
+              <RegisterInfo register4Step isRegisterModuleRedirect {...UseHooksRegister} />
+
+              <div className={styles.forModuleFooterText}>
+                <Text tagName='p' textStyle='base'>
+                  Already on Bossjob?
+                  <Link
+                    to={`/login/jobseeker?redirect=${router.asPath}`}
+                    className={styles.AuthCTALink}
+                  >
+                    <Text textColor='primaryBlue' underline>
+                      {' '}
+                      Log in
+                    </Text>
+                  </Link>
+                </Text>
+
+                <Text tagName='p' textStyle='base'>
+                  Looking to hire people? Sign up as
+                  <Link
+                    to={`${process.env.OLD_PROJECT_URL}/login`}
+                    className={styles.AuthCTALink}
+                    aTag
+                    external
+                  >
+                    <Text textColor='primaryBlue'> Employer</Text>
+                  </Link>
+                </Text>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
+
       <div className={styles.searchAndLocationContainer}>
         <MaterialTextFieldWithSuggestionList
           id='search'
