@@ -575,7 +575,7 @@ const Job = ({
           clearTimeout(time.current)
         }
       } else {
-        console.log('还没有到弹出的时候')
+        // console.log('还没有到弹出的时候')
       }
     }
 
@@ -624,103 +624,119 @@ const Job = ({
         imageUrl={jobDetail?.company?.logo}
       />
 
-      <Modal
-        open={openRegister}
-        onClose={handleCloseRegisterModule}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-        keepMounted
-        // hideBackdrop
-        disableAutoFocus
-      >
-        <div className={styles.forShowRegisterModal}>
-          <div className={styles.modalHeader}>
-            <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
-              Join Bossjob, kick-start your career!
-            </Text>
-            <div className={styles.modalCloseButton}>
-              <Text onClick={handleCloseRegisterModule}>
-                <img src={CloseIcon} title='close modal' alt='close modal' width='14' height='14' />
+      {width > 799 && (
+        <Modal
+          open={openRegister}
+          onClose={handleCloseRegisterModule}
+          aria-labelledby='modal-modal-title'
+          aria-describedby='modal-modal-description'
+          keepMounted
+          // hideBackdrop
+          disableAutoFocus
+        >
+          <div className={styles.forShowRegisterModal}>
+            <div className={styles.modalHeader}>
+              <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
+                Join Bossjob, kick-start your career!
               </Text>
-            </div>
-          </div>
-          <div className={quickStyles.AuthWrapper}>
-            <div className={quickStyles.AuthWrapperImage}>
-              <div className={quickStyles.AuthWrapperImageTitle}>
-                <Text textColor='white' textStyle='xxxl' block bold>
-                  Chat with Boss
-                </Text>
-                <Text textColor='white' textStyle='xxxl' block bold>
-                  to get your
-                </Text>
-                <Text textColor='white' textStyle='xxxl' block bold>
-                  next offer!
+              <div className={styles.modalCloseButton}>
+                <Text onClick={handleCloseRegisterModule}>
+                  <img
+                    src={CloseIcon}
+                    title='close modal'
+                    alt='close modal'
+                    width='14'
+                    height='14'
+                  />
                 </Text>
               </div>
-              <div className={quickStyles.AuthWrapperImageContext}>
-                <img src={increaseUserConversionModelBg} />
-                <img
+            </div>
+            <div className={quickStyles.AuthWrapper}>
+              <div className={quickStyles.AuthWrapperImage}>
+                <div className={quickStyles.AuthWrapperImageTitle}>
+                  <div
+                    className={quickStyles.AuthWrapperImageTitleLineBg}
+                    style={{ backgroundImage: 'url(' + increaseUserConversionBrush + ')' }}
+                  >
+                    <Text textColor='white' textStyle='xxxl' block bold>
+                      Chat with Boss
+                    </Text>
+                  </div>
+                  <Text textColor='white' textStyle='xxxl' block bold>
+                    to get your
+                  </Text>
+                  <Text textColor='white' textStyle='xxxl' block bold>
+                    next offer!
+                  </Text>
+                </div>
+                <div className={quickStyles.AuthWrapperImageContext}>
+                  <img src={increaseUserConversionModelBg} />
+                  {/* <img
                   src={increaseUserConversionBrush}
                   className={quickStyles.AuthWrapperImageBrush}
-                />
-              </div>
-            </div>
-            <div
-              className={classNames([quickStyles.AuthWrapperInfo, styles.AuthWrapperInfoModuleReg])}
-            >
-              {isLoading | isRegisteringJobseeker ? (
-                <div className={quickStyles.AuthWrapperLoading}>
-                  <div className={quickStyles.loadingLogo}>
-                    <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
-                  </div>
-                  <div className={quickStyles.loadingIndicator}>
-                    <LinearProgress />
-                  </div>
-                  <Text textStyle='lg'>'Please hold on while we are parsing your resume'</Text>
+                /> */}
                 </div>
-              ) : null}
+              </div>
+              <div
+                className={classNames([
+                  quickStyles.AuthWrapperInfo,
+                  styles.AuthWrapperInfoModuleReg
+                ])}
+              >
+                {isLoading | isRegisteringJobseeker ? (
+                  <div className={quickStyles.AuthWrapperLoading}>
+                    <div className={quickStyles.loadingLogo}>
+                      <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+                    </div>
+                    <div className={quickStyles.loadingIndicator}>
+                      <LinearProgress />
+                    </div>
+                    <Text textStyle='lg'>'Please hold on while we are parsing your resume'</Text>
+                  </div>
+                ) : null}
 
-              <div className={styles.Register}>
-                <SocialMediaAuth callbackRequest={callbackRequest} />
-                <div className={styles.RegisterDivider}>
-                  <Text textStyle='lg' className={styles.RegisterDividerText}>
-                    Or
+                <div className={styles.Register}>
+                  <SocialMediaAuth callbackRequest={callbackRequest} />
+                  <div className={styles.RegisterDivider}>
+                    <Text textStyle='lg' className={styles.RegisterDividerText}>
+                      Or
+                    </Text>
+                  </div>
+                </div>
+
+                <RegisterInfo register4Step isRegisterModuleRedirect {...UseHooksRegister} />
+
+                <div className={styles.forModuleFooterText}>
+                  <Text tagName='p' textStyle='base'>
+                    Already on Bossjob?
+                    <Link
+                      to={`/login/jobseeker?redirect=${router.asPath}`}
+                      className={styles.AuthCTALink}
+                    >
+                      <Text textColor='primaryBlue' underline>
+                        {' '}
+                        Log in
+                      </Text>
+                    </Link>
+                  </Text>
+
+                  <Text tagName='p' textStyle='base'>
+                    Looking to hire people? Sign up as
+                    <Link
+                      to={`${process.env.OLD_PROJECT_URL}/login`}
+                      className={styles.AuthCTALink}
+                      aTag
+                      external
+                    >
+                      <Text textColor='primaryBlue'> Employer</Text>
+                    </Link>
                   </Text>
                 </div>
               </div>
-
-              <RegisterInfo register4Step isRegisterModuleRedirect {...UseHooksRegister} />
-
-              <div className={styles.forModuleFooterText}>
-                <Text tagName='p' textStyle='base'>
-                  Already on Bossjob?
-                  <Link
-                    to={`/login/jobseeker?redirect=${router.asPath}`}
-                    className={styles.AuthCTALink}
-                  >
-                    <Text textColor='primaryBlue' underline>
-                      {' '}
-                      Log in
-                    </Text>
-                  </Link>
-                </Text>
-
-                <Text tagName='p' textStyle='base'>
-                  Looking to hire people? Sign up as
-                  <Link
-                    to={`${process.env.OLD_PROJECT_URL}/login`}
-                    className={styles.AuthCTALink}
-                    aTag
-                    external
-                  >
-                    <Text textColor='primaryBlue'> Employer</Text>
-                  </Link>
-                </Text>
-              </div>
             </div>
           </div>
-        </div>
-      </Modal>
+        </Modal>
+      )}
 
       <div className={styles.searchAndLocationContainer}>
         <MaterialTextFieldWithSuggestionList

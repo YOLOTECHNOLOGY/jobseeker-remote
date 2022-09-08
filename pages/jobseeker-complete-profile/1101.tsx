@@ -157,7 +157,7 @@ const Step3 = (props: any) => {
           // setIsNextDisabled(true)
         } else if (
           !experience.is_currently_work_here &&
-          (requireFields || !experience.workPeriodTo)
+          (requireFields || !experience.working_period_to)
         ) {
           setSelectedExperience(experience)
           setShowForm(true)
