@@ -1,7 +1,7 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
-.JobDetail {
+.jobDetail {
   position: relative;
 
   &Content {
@@ -117,6 +117,11 @@
     }
   }
 
+  &ImageInfoWrapper{
+    display:flex;
+    flex-direction: row;
+  }
+
   &Image {
     width: 78px;
     height: 78px;
@@ -196,7 +201,7 @@
   }
 }
 
-.JobDetailPref {
+.jobDetailPref {
   background-color: $white-1;
   padding: 16px;
   border-radius: 5px;
@@ -230,7 +235,7 @@
   }
 }
 
-.JobDetailSection {
+.jobDetailSection {
   margin-top: 24px;
 
   &Title {
@@ -256,7 +261,7 @@
   }
 }
 
-.JobDetailBenefits {
+.jobDetailBenefits {
   &List {
     list-style-type: none;
     display: flex;
@@ -275,7 +280,7 @@
   }
 }
 
-.JobDetailSkills {
+.jobDetailSkills {
   &List {
     list-style-type: none;
     display: flex;
@@ -348,7 +353,7 @@
   }
 }
 
-.JobDetailApplication {
+.jobDetailApplication {
   &Wrapper {
     border: 1px solid $primaryBlue;
     border-radius: 4px;
@@ -378,21 +383,21 @@
   }
 }
 
-.JobDetailDescriptionSectionBody *,
-.JobDetailRequirementSectionBody * {
+.jobDetailDescriptionSectionBody *,
+.jobDetailRequirementSectionBody * {
   font-size: 16px !important;
   font-family: 'Product Sans' !important;
 }
 
-.JobDetailDescriptionSectionBody,
-.JobDetailRequirementSectionBody {
+.jobDetailDescriptionSectionBody,
+.jobDetailRequirementSectionBody {
   > ol, ul {
     padding-inline: inherit;
     margin-left: 40px;
   }
 }
 
-.JobDetailRecruiter {
+.jobDetailRecruiter {
   margin-top: 48px;
 
   &Info {
