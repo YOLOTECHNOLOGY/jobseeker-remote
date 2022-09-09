@@ -241,87 +241,85 @@ const JobDetail = ({
             className={classNamesCombined([isStickyClass, styles.jobDetailHeader])}
             ref={detailHeaderRef}
           >
-            <div>
-              <div className={classNamesCombined([isStickyClass, styles.jobDetailOptions])}>
-                <Link to={publicJobUrl} external className={styles.jobDetailOptionNewTab}>
-                  <img src={OpenInNewTabIcon} width='10' height='10' />
-                  <Text textStyle='base' textColor='primaryBlue' className={styles.jobDetailOptionNewTab}>
-                    View in a new tab
-                  </Text>
-                </Link>
-                {!isCategoryApplied && (
-                  <div className={styles.jobDetailButtons}>
-                    {selectedJob?.status_key === 'active' && (
-                      <>
-                        {!selectedJob?.is_applied ? (
-                          <MaterialButton variant='contained' capitalize onClick={handleApplyJob}>
-                            <Text textColor='white' bold>
-                              Apply Now
-                            </Text>
-                          </MaterialButton>
-                        ) : (
-                          <MaterialButton variant='contained' capitalize disabled>
-                            <Text textColor='white' bold>
-                              Applied
-                            </Text>
-                          </MaterialButton>
-                        )}
-                      </>
-                    )}
-                    <MaterialButton
-                      variant='outlined'
-                      capitalize
-                      isLoading={!userCookie && isSaveClicked}
-                      onClick={() => {
-                        if (userCookie) {
-                          if (!isCategorySaved && !isSavedJob) {
-                            handlePostSaveJob({ jobId: selectedJob?.id })
-                            setIsSavedJob(true)
-                          }
-
-                          if (isSavedJob) {
-                            handleDeleteSavedJob({ jobId: selectedJob?.id })
-                            setIsSavedJob(false)
-                          }
+            <div className={classNamesCombined([isStickyClass, styles.jobDetailOptions])}>
+              <Link to={publicJobUrl} external className={styles.jobDetailOptionNewTab}>
+                <img src={OpenInNewTabIcon} width='10' height='10' />
+                <Text textStyle='base' textColor='primaryBlue' className={styles.jobDetailOptionNewTab}>
+                  View in a new tab
+                </Text>
+              </Link>
+              {!isCategoryApplied && (
+                <div className={styles.jobDetailButtons}>
+                  {selectedJob?.status_key === 'active' && (
+                    <>
+                      {!selectedJob?.is_applied ? (
+                        <MaterialButton variant='contained' capitalize onClick={handleApplyJob}>
+                          <Text textColor='white' bold>
+                            Apply Now
+                          </Text>
+                        </MaterialButton>
+                      ) : (
+                        <MaterialButton variant='contained' capitalize disabled>
+                          <Text textColor='white' bold>
+                            Applied
+                          </Text>
+                        </MaterialButton>
+                      )}
+                    </>
+                  )}
+                  <MaterialButton
+                    variant='outlined'
+                    capitalize
+                    isLoading={!userCookie && isSaveClicked}
+                    onClick={() => {
+                      if (userCookie) {
+                        if (!isCategorySaved && !isSavedJob) {
+                          handlePostSaveJob({ jobId: selectedJob?.id })
+                          setIsSavedJob(true)
                         }
 
-                        if (!userCookie) {
-                          setIsSaveClicked(true)
-                          router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
+                        if (isSavedJob) {
+                          handleDeleteSavedJob({ jobId: selectedJob?.id })
+                          setIsSavedJob(false)
                         }
-                      }}
-                    >
-                      <Text textColor='primaryBlue' bold>
-                        {isSavedJob || isCategorySaved ? 'Saved' : 'Save'}
-                      </Text>
-                    </MaterialButton>
+                      }
+
+                      if (!userCookie) {
+                        setIsSaveClicked(true)
+                        router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
+                      }
+                    }}
+                  >
+                    <Text textColor='primaryBlue' bold>
+                      {isSavedJob || isCategorySaved ? 'Saved' : 'Save'}
+                    </Text>
+                  </MaterialButton>
+                </div>
+              )}
+              <div className={styles.jobDetailOptionImage}>
+                <Dropdown>
+                  <div
+                    className={styles.jobDetailOptionItem}
+                    onClick={() => setIsShowModalShare(true)}
+                  >
+                    <Text textStyle='lg'>Share this job</Text>
                   </div>
-                )}
-                <div className={styles.jobDetailOptionImage}>
-                  <Dropdown>
+                  {isCategoryApplied && !checkHasApplicationWithdrawn() && (
                     <div
                       className={styles.jobDetailOptionItem}
-                      onClick={() => setIsShowModalShare(true)}
+                      onClick={() => setIsShowModalWithdrawApplication(true)}
                     >
-                      <Text textStyle='lg'>Share this job</Text>
+                      <Text textStyle='lg'>Withdraw Application</Text>
                     </div>
-                    {isCategoryApplied && !checkHasApplicationWithdrawn() && (
-                      <div
-                        className={styles.jobDetailOptionItem}
-                        onClick={() => setIsShowModalWithdrawApplication(true)}
-                      >
-                        <Text textStyle='lg'>Withdraw Application</Text>
+                  )}
+                  {selectedJob?.status_key === 'active' && (
+                    <>
+                      <div className={styles.jobDetailOptionItem} onClick={handleShowReportJob}>
+                        <Text textStyle='lg'>Report job</Text>
                       </div>
-                    )}
-                    {selectedJob?.status_key === 'active' && (
-                      <>
-                        <div className={styles.jobDetailOptionItem} onClick={handleShowReportJob}>
-                          <Text textStyle='lg'>Report job</Text>
-                        </div>
-                      </>
-                    )}
-                  </Dropdown>
-                </div>
+                    </>
+                  )}
+                </Dropdown>
               </div>
             </div>
           </div>
