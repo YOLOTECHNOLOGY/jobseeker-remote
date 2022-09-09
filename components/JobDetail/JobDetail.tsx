@@ -323,57 +323,56 @@ const JobDetail = ({
                   </Dropdown>
                 </div>
               </div>
-
-              {/* TODO: Job Application status: SAVED JOBS / APPLIED JOBS */}
             </div>
           </div>
           <div
            className={classNamesCombined([styles.JobDetailBody, isStickyClass])}
             style={{ top: isSticky ? detailHeaderHeight : ''}}
           >
-            
-             <div
-              className={styles.JobDetailImage}
-              style={{ backgroundImage: `url(${selectedJob?.company?.logo})` }}
-            />
-            <div className={styles.JobDetailInfo}>
-              <Link to={publicJobUrl} external>
-                <Text textStyle='lg' bold className={styles.JobDetailTitle}>
-                  {selectedJob?.job_title}
-                </Text>
-              </Link>
-              <Text textStyle='lg' className={styles.JobDetailCompanyName}>
-                <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
-                  {selectedJob?.company?.name}
-                </Link>
-                {isCompanyVerified && (isMobile ? (
-                  <MaterialMobileTooltip
-                    icon={BlueTickIcon}
-                    className={styles.JobDetailCompanyTooltip}
-                    title='Verified'
-                  />
-                ) : (
-                  <MaterialDesktopTooltip
-                    icon={BlueTickIcon}
-                    className={styles.JobDetailCompanyTooltip}
-                    title='Verified'
-                  />
-                ))}
-              </Text>
-              <Text textStyle='sm' textColor='darkgrey' className={styles.JobDetailPostedAt}>
-                {applicationUpdatedAt ? `Last updated on ${applicationUpdatedAt}` : `Posted on ${selectedJob?.refreshed_at}`}
-              </Text>
-              <div style={{ height: '16px' }}></div>
-              {selectedJob?.is_featured && <JobTag tag='Featured' tagType='featured' />}
-              {selectedJob?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
-              <JobTag tag={selectedJob?.job_type_value} />
-              <div className={styles.JobDetailButtonsWrapper}>
-                {selectedJob?.status_key !== 'active' && (
-                  <Text textStyle='base' className={styles.JobDetailStatus}>
-                    <img src={ExpireIcon} height='16' width='16' />
-                    <span>This job is no longer hiring</span>
+            <div className={styles.JobDetailImageInfoWrapper}>
+              <div
+                className={styles.JobDetailImage}
+                style={{ backgroundImage: `url(${selectedJob?.company?.logo})` }}
+              />
+              <div className={styles.JobDetailInfo}>
+                <Link to={publicJobUrl} external>
+                  <Text textStyle='lg' bold className={styles.JobDetailTitle}>
+                    {selectedJob?.job_title}
                   </Text>
-                )}
+                </Link>
+                <Text textStyle='lg' className={styles.JobDetailCompanyName}>
+                  <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
+                    {selectedJob?.company?.name}
+                  </Link>
+                  {isCompanyVerified && (isMobile ? (
+                    <MaterialMobileTooltip
+                      icon={BlueTickIcon}
+                      className={styles.JobDetailCompanyTooltip}
+                      title='Verified'
+                    />
+                  ) : (
+                    <MaterialDesktopTooltip
+                      icon={BlueTickIcon}
+                      className={styles.JobDetailCompanyTooltip}
+                      title='Verified'
+                    />
+                  ))}
+                </Text>
+                <Text textStyle='sm' textColor='darkgrey' className={styles.JobDetailPostedAt}>
+                  {applicationUpdatedAt ? `Last updated on ${applicationUpdatedAt}` : `Posted on ${selectedJob?.refreshed_at}`}
+                </Text>
+                <div style={{ height: '16px' }}></div>
+                {selectedJob?.is_featured && <JobTag tag='Featured' tagType='featured' />}
+                {selectedJob?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
+                <JobTag tag={selectedJob?.job_type_value} />
+                <div className={styles.JobDetailButtonsWrapper}>
+                  {selectedJob?.status_key !== 'active' && (
+                    <Text textStyle='base' className={styles.JobDetailStatus}>
+                      <img src={ExpireIcon} height='16' width='16' />
+                      <span>This job is no longer hiring</span>
+                    </Text>
+                  )}
+                </div>
               </div>
             </div>
             <div className={styles.JobDetailPref}>
