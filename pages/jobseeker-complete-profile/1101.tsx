@@ -106,7 +106,7 @@ const Step3 = (props: any) => {
   const [workExperience, setWorkExperience] = useState(
     userDetail?.work_experiences ? userDetail?.work_experiences : []
   )
-  const [showForm, setShowForm] = useState(workExperience?.length === 0 ? true : false)
+  const [showForm, setShowForm] = useState(false)
   const [isSaveDisabled, setIsSaveDisabled] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
   const [isNextDisabled, setIsNextDisabled] = useState(true)
@@ -157,8 +157,7 @@ const Step3 = (props: any) => {
           // setIsNextDisabled(true)
         } else if (
           !experience.is_currently_work_here &&
-          requireFields &&
-          !experience.workPeriodTo
+          (requireFields || !experience.working_period_to)
         ) {
           setSelectedExperience(experience)
           setShowForm(true)
@@ -175,7 +174,6 @@ const Step3 = (props: any) => {
     if (selectedExperience) {
       scrollToForm()
       setShowForm(true)
-
       setWorkExperienceId(selectedExperience.id)
       setJobTitle(selectedExperience.job_title)
       setCompanyName(selectedExperience.company)

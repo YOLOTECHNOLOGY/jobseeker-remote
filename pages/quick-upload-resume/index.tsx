@@ -1,6 +1,6 @@
 import React from 'react'
 import Text from 'components/Text'
-import { BossjobLogo, increaseUserConversionModelBg } from 'images'
+import { BossjobLogo, increaseUserConversionModelBg, increaseUserConversionBrush } from 'images'
 import QuickLayout from 'components/IncreaseUserConversion/quickLayout/quickLayout'
 import UploadResume from 'components/IncreaseUserConversion/UploadResume'
 import RegisterInfo from 'components/IncreaseUserConversion/RegisterInfo'
@@ -15,7 +15,8 @@ import styles from './styles.module.scss'
 const QuickUploadResume = () => {
   const UseHooksRegister = useRegister()
   const useHooksFakeUploadResume = useFakeUploadResume()
-  const { isRegisteringJobseeker, isLoading, isShowRegisterInfo } = UseHooksRegister
+  const { isRegisteringJobseeker, isLoading, isShowRegisterInfo, userWorkExperiences } =
+    UseHooksRegister
 
   return (
     <QuickLayout>
@@ -27,9 +28,14 @@ const QuickUploadResume = () => {
           <div className={styles.AuthWrapper}>
             <div className={styles.AuthWrapperImage}>
               <div className={styles.AuthWrapperImageTitle}>
-                <Text textColor='white' textStyle='xxxl' block bold>
-                  Chat with Boss
-                </Text>
+                <div
+                  className={styles.AuthWrapperImageTitleLineBg}
+                  style={{ backgroundImage: 'url(' + increaseUserConversionBrush + ')' }}
+                >
+                  <Text textColor='white' textStyle='xxxl' block bold>
+                    Chat with Boss
+                  </Text>
+                </div>
                 <Text textColor='white' textStyle='xxxl' block bold>
                   to get your
                 </Text>
@@ -50,7 +56,11 @@ const QuickUploadResume = () => {
                   <div className={styles.loadingIndicator}>
                     <LinearProgress />
                   </div>
-                  <Text textStyle='sm'>Please hold on while we are parsing your resume.</Text>
+                  <Text textStyle='lg'>
+                    {userWorkExperiences?.hasNoWorkExperience
+                      ? 'Please hold on while we are preparing your resume.'
+                      : 'Please hold on while we are parsing your resume'}
+                  </Text>
                 </div>
               ) : null}
 

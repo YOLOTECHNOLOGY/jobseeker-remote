@@ -76,6 +76,7 @@ export const increaseUserConversionModelBg = `${S3BucketJobseeker}/increaseUserC
 export const ncreaseUserConversionDetailsBackgroundarrowArrow = `${S3BucketJobseeker}/ncreaseUserConversionDetailsBackgroundarrowArrow.svg`
 export const AccountSettingDeleteIconBin = `${S3BucketJobseeker}/accountSettingDeleteIconBin.svg`
 export const AccountSettingEditIconPen = `${S3BucketJobseeker}/accountSettingEditIconPen.svg`
+export const increaseUserConversionBrush = `${S3BucketJobseeker}/increaseUserConversionBrush.svg`
 
 /* Manage profile highlight section */
 export const HighlightAboutYouIcon = `${S3BucketJobseeker}/HighlightAboutYou.svg`

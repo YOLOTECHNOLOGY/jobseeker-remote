@@ -2,6 +2,8 @@
 @import 'styles/mixins.scss';
 
 .modalReportJob {
+  height: 305px;
+
   &Item {
     padding: 0 10px;
     position: relative;

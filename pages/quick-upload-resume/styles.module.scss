@@ -49,6 +49,11 @@
     &Title {
       margin-top: 68px;
       text-align: center;
+      &LineBg {
+        background-repeat: no-repeat;
+        background-position-x: -12px;
+        background-position-y: 25px;
+      }
     }
     &Context {
       width: 100%;
@@ -62,7 +67,14 @@
       }
     }
 
-    @include sm {
+    &Brush {
+      position: absolute;
+      top: -113px;
+      width: 77px !important;
+      left: 27px;
+    }
+
+    @include msd {
       display: none;
     }
   }
@@ -85,6 +97,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 0 20px;
+    text-align: center;
 
     .loadingLogo,
     .loadingIndicator {

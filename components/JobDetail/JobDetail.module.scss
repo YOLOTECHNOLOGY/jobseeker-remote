@@ -1,7 +1,7 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
-.JobDetail {
+.jobDetail {
   position: relative;
 
   &Content {
@@ -30,7 +30,7 @@
 
   &OptionImage {
     position: absolute;
-    top: 25px;
+    top: 35px;
     right: 30px;
     z-index: 1;
 
@@ -58,6 +58,13 @@
   }
 
   &OptionNewTab {
+    padding: 12px 20px 12px 0;
+    display:inline-block;
+
+    img {
+      margin-right: 5px;
+    }
+
     &:hover {
       text-decoration: underline;
       text-decoration-color: $primaryBlue;
@@ -82,6 +89,8 @@
     padding: 0 24px;
     height: 100%;
     overflow-y: scroll;
+    width:533px;
+    height: calc(100vh - 107px);
 
     &::-webkit-scrollbar {
       width: 8px;
@@ -104,8 +113,13 @@
     &.isSticky {
       position: fixed;
       width: 533px;
-      height: calc(100vh - 256px);
+      height: calc(100vh - 107px);
     }
+  }
+
+  &ImageInfoWrapper{
+    display:flex;
+    flex-direction: row;
   }
 
   &Image {
@@ -187,7 +201,7 @@
   }
 }
 
-.JobDetailPref {
+.jobDetailPref {
   background-color: $white-1;
   padding: 16px;
   border-radius: 5px;
@@ -221,7 +235,7 @@
   }
 }
 
-.JobDetailSection {
+.jobDetailSection {
   margin-top: 24px;
 
   &Title {
@@ -247,7 +261,7 @@
   }
 }
 
-.JobDetailBenefits {
+.jobDetailBenefits {
   &List {
     list-style-type: none;
     display: flex;
@@ -266,7 +280,7 @@
   }
 }
 
-.JobDetailSkills {
+.jobDetailSkills {
   &List {
     list-style-type: none;
     display: flex;
@@ -339,7 +353,7 @@
   }
 }
 
-.JobDetailApplication {
+.jobDetailApplication {
   &Wrapper {
     border: 1px solid $primaryBlue;
     border-radius: 4px;
@@ -369,21 +383,21 @@
   }
 }
 
-.JobDetailDescriptionSectionBody *,
-.JobDetailRequirementSectionBody * {
+.jobDetailDescriptionSectionBody *,
+.jobDetailRequirementSectionBody * {
   font-size: 16px !important;
   font-family: 'Product Sans' !important;
 }
 
-.JobDetailDescriptionSectionBody,
-.JobDetailRequirementSectionBody {
+.jobDetailDescriptionSectionBody,
+.jobDetailRequirementSectionBody {
   > ol, ul {
     padding-inline: inherit;
     margin-left: 40px;
   }
 }
 
-.JobDetailRecruiter {
+.jobDetailRecruiter {
   margin-top: 48px;
 
   &Info {

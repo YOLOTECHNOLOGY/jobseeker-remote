@@ -42,7 +42,9 @@ const RegisterInfo = (props: any) => {
     vertical,
     horizontal,
     open,
-    handleSnackbarClose
+    handleSnackbarClose,
+    register4Step,
+    isRegisterModuleRedirect
   } = props
 
   const errorText = (errorMessage: string) => {
@@ -56,12 +58,14 @@ const RegisterInfo = (props: any) => {
   return (
     <div>
       <div className={styles.AuthLayoutTitle}>
-        <Text bold textStyle='xxxl' tagName='h2'>
-          {' '}
-          Fill in your details to
-          <br />
-          continue 🎉
-        </Text>
+        {!register4Step && (
+          <Text bold textStyle='xxxl' tagName='h2'>
+            {' '}
+            Fill in your details to
+            <br />
+            continue 🎉
+          </Text>
+        )}
       </div>
       <form className={styles.RegisterForm}>
         <div className={styles.RegisterFormName}>
@@ -167,8 +171,9 @@ const RegisterInfo = (props: any) => {
           variant='contained'
           className={styles.RegisterButton}
           isLoading={isRegisteringJobseeker}
-          onClick={() => handleRegister(false)}
+          onClick={() => handleRegister(register4Step ? true : false, isRegisterModuleRedirect)}
         >
+          {/* hanleRegister false 3step; true 4step */}
           <Text textStyle='xl' textColor='white' bold>
             Submit
           </Text>
