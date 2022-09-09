@@ -3,5 +3,34 @@
 
 .accessSettings {
   @extend .GlobalContainer;
-  padding: 20px 0 100px;
+  padding: 50px 0 100px;
+  display: flex;
+  &Tabs {
+    width: 25%;
+    &Button {
+      background-color: rebeccapurple;
+    }
+    &Title {
+      padding-bottom: 30px;
+    }
+  }
+
+  &Container {
+    width: 75%;
+
+    .formWrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .RegisterForm {
+        margin-top: 20px;
+
+        &Input {
+          width: 100%;
+          margin-top: 16px !important;
+        }
+      }
+    }
+  }
 }

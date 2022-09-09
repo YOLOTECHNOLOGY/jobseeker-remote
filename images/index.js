@@ -74,6 +74,8 @@ export const BlueTickIcon = `${S3BucketJobseeker}/BlueTick.svg`
 export const OpenInNewTabIcon = `${S3BucketJobseeker}/OpenNewTab.svg`
 export const increaseUserConversionModelBg = `${S3BucketJobseeker}/increaseUserConversionModelBg.png`
 export const ncreaseUserConversionDetailsBackgroundarrowArrow = `${S3BucketJobseeker}/ncreaseUserConversionDetailsBackgroundarrowArrow.svg`
+export const AccountSettingDeleteIconBin = `${S3BucketJobseeker}/accountSettingDeleteIconBin.svg`
+export const AccountSettingEditIconPen = `${S3BucketJobseeker}/accountSettingEditIconPen.svg`
 
 /* Manage profile highlight section */
 export const HighlightAboutYouIcon = `${S3BucketJobseeker}/HighlightAboutYou.svg`

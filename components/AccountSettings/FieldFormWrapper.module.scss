@@ -1,0 +1,18 @@
+.fieldFromWrapper {
+  border: 0.5px solid #bcbcbc;
+  border-radius: 4px;
+  padding: 25px 22px;
+  &_title {
+    display: flex;
+    justify-content: space-between;
+
+    &_edit_icon {
+      img {
+        width: 12px;
+      }
+      img:nth-child(2) {
+        margin-left: 25px;
+      }
+    }
+  }
+}
