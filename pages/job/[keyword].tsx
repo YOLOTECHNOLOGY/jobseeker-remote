@@ -466,10 +466,11 @@ const Job = ({
                 </MaterialButton>
               </>
             ) : (
-              <Text textStyle='base' className={styles.jobDetailStatus}>
-                <img src={ExpireIcon} height='16' width='16' />
-                <span>This job is no longer hiring</span>
-              </Text>
+              <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
+                <Text textColor='primary' bold>
+                  {isSavedJob ? 'Saved' : 'Save'}
+                </Text>
+              </MaterialButton>
             )}
           </div>
         )}
@@ -478,40 +479,48 @@ const Job = ({
   }
 
   const mobileRenderSaveAndApplyActions = () => {
-    return (
-      <div className={classNamesCombined([styles.jobDetailPrimaryActions, isStickyClass])}>
-        {jobDetail?.status_key === 'active' ? (
-          <>
-            <MaterialButton
-              variant='outlined'
-              capitalize
-              className={styles.saveBtn}
-              onClick={() => handlePostSaveJob()}
-            >
-              <Text textColor='primary' bold>
-                {isSavedJob ? 'Saved' : 'Save'}
-              </Text>
-            </MaterialButton>
-            <MaterialButton
-              variant='contained'
-              capitalize
-              disabled={jobDetail?.is_applied}
-              className={styles.applyBtn}
-              onClick={handleApplyJob}
-            >
-              <Text textColor='white' bold>
-                {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
-              </Text>
-            </MaterialButton>
-          </>
-        ) : (
-          <Text textStyle='base' className={styles.jobDetailStatus}>
-            <img src={ExpireIcon} height='16' width='16' />
-            <span>This job is no longer hiring</span>
-          </Text>
-        )}
-      </div>
-    )
+    if (jobDetail?.status_key === 'active') {
+      return (
+        <div className={classNamesCombined([styles.jobDetailPrimaryActions, isStickyClass])}>
+          <MaterialButton
+            variant='outlined'
+            capitalize
+            className={styles.saveBtn}
+            onClick={() => handlePostSaveJob()}
+          >
+            <Text textColor='primary' bold>
+              {isSavedJob ? 'Saved' : 'Save'}
+            </Text>
+          </MaterialButton>
+          <MaterialButton
+            variant='contained'
+            capitalize
+            disabled={jobDetail?.is_applied}
+            className={styles.applyBtn}
+            onClick={handleApplyJob}
+          >
+            <Text textColor='white' bold>
+              {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
+            </Text>
+          </MaterialButton>
+        </div>
+      )
+    } else {
+      return (
+        <div className={classNamesCombined([styles.jobDetailPrimaryActions, isStickyClass])}>
+          <MaterialButton
+            variant='outlined'
+            capitalize
+            className={styles.saveBtn}
+            onClick={() => handlePostSaveJob()}
+          >
+            <Text textColor='primary' bold>
+              {isSavedJob ? 'Saved' : 'Save'}
+            </Text>
+          </MaterialButton>
+        </div>
+      )
+    }
   }
 
   const renderJobDetailPrimarySection = () => {
@@ -525,9 +534,7 @@ const Job = ({
         >
           {jobDetail?.job_title}
         </Text>
-        <div
-          className={classNamesCombined([styles.jobDetailCompany, isStickyClass])}
-        >
+        <div className={classNamesCombined([styles.jobDetailCompany, isStickyClass])}>
           <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
             <Text textStyle='lg' className={styles.jobDetailCompanyName}>
               {jobDetail?.company?.name}
@@ -803,7 +810,7 @@ const Job = ({
               className={styles.jobDetailPrimaryInfoImage}
               alt={`${jobDetail?.company?.name} logo`}
             />
-            {width > 799 && isSticky ?  (
+            {width > 799 && isSticky ? (
               <div
                 className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}
               >
@@ -812,10 +819,12 @@ const Job = ({
                   {renderSaveAndApplyActions()}
                 </div>
               </div>
-            ) : <div className={styles.jobDetailPrimaryInfoWrapper}>
-            {renderJobDetailPrimarySection()}
-            {renderSaveAndApplyActions()}
-          </div>}
+            ) : (
+              <div className={styles.jobDetailPrimaryInfoWrapper}>
+                {renderJobDetailPrimarySection()}
+                {renderSaveAndApplyActions()}
+              </div>
+            )}
             {/* {width > 799 ? (
               <div
                 className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}
@@ -846,6 +855,18 @@ const Job = ({
             >
               Posted on {jobDetail?.published_at}
             </Text>
+            {jobDetail?.status_key !== 'active' && (
+              <Text
+                textStyle='base'
+                className={classNamesCombined([
+                  styles.jobDetailStatus,
+                  breakpointStyles.hideOnMobileAndTablet
+                ])}
+              >
+                <img src={ExpireIcon} height='16' width='16' />
+                <span>This job is no longer hiring</span>
+              </Text>
+            )}
           </div>
           <div
             className={classNamesCombined([styles.jobDetailCTA, breakpointStyles.hideOnDesktop])}
@@ -854,6 +875,12 @@ const Job = ({
             <Text textStyle='base' textColor='darkgrey' className={styles.jobDetailPostedAt}>
               Posted on {jobDetail?.published_at}
             </Text>
+            {jobDetail?.status_key !== 'active' && (
+              <Text textStyle='base' className={styles.jobDetailStatus}>
+                <img src={ExpireIcon} height='16' width='16' />
+                <span>This job is no longer hiring</span>
+              </Text>
+            )}
           </div>
           <div className={styles.jobDetailPref}>
             <ul className={styles.jobDetailPrefList}>

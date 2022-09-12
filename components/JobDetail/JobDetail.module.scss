@@ -26,6 +26,9 @@
     display: flex;
     flex-direction: row;
     margin-bottom: -10px;
+    // 45px of ellipsis image width
+    width: calc(100% - 45px);
+    justify-content:space-between;
   }
 
   &OptionImage {
@@ -172,7 +175,7 @@
   &Buttons {
     display: flex;
     align-items: center;
-    margin-left: 86px;
+    // margin-left: 86px;
 
     button {
       margin-right: 16px;
@@ -182,6 +185,7 @@
   &Status {
     color: #F30000;
     margin-right: 20px;
+    margin: 48px 20px 48px 0;
     display: flex;
     align-items: center;
     margin-top: 16px;
