@@ -466,7 +466,7 @@ const Job = ({
                 </MaterialButton>
               </>
             ) : (
-              <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}  disabled={isSavedJob}>
+              <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
                 <Text textColor='primary' bold>
                   {isSavedJob ? 'Saved' : 'Save'}
                 </Text>
@@ -513,7 +513,6 @@ const Job = ({
             capitalize
             className={styles.saveBtn}
             onClick={() => handlePostSaveJob()}
-            disabled={isSavedJob}
           >
             <Text textColor='primary' bold>
               {isSavedJob ? 'Saved' : 'Save'}
