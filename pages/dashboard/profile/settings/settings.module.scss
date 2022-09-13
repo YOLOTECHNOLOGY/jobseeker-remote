@@ -32,5 +32,40 @@
         }
       }
     }
+
+    &_fromWrapper {
+      &_edit {
+        &_input {
+          margin-top: 20px;
+          width: 100%;
+        }
+
+        &_wrapper {
+          display: flex;
+          justify-content: space-between;
+          &_block {
+            width: 49%;
+          }
+        }
+      }
+    }
+
+    &_swtich {
+      color: blue;
+      justify-content: space-between;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .JobAlertContainer {
+    &_title {
+      margin-bottom: 15px;
+    }
+
+    &_desc {
+      color: #707070;
+      margin-bottom: 5px;
+    }
   }
 }
