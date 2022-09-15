@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 /** Vendors */
-import classNames from 'classnames'
+import classNames from 'classnames/bind'
 
 /** Component */
 import Text from 'components/Text'
@@ -18,11 +18,15 @@ const FieldFormWrapper = ({
   style,
   sideNode,
   titleInlineBlock,
+  edit,
   setEdit,
-  btnSuccessText
+  btnSuccessText,
+  isEdit,
+  isDetele,
+  isBtnDisabled,
+  handleConfirm,
+  handleCancel
 }: any) => {
-  const [isShowSubmtButton, setIsShowSubmtButton] = useState(false)
-
   return (
     <div className={classNames([className, styles.fieldFromWrapper])} style={style}>
       <div className={styles.fieldFromWrapper_title}>
@@ -38,30 +42,39 @@ const FieldFormWrapper = ({
           {label}
         </Text>
         <div className={styles.fieldFromWrapper_title_edit_icon}>
-          <img
-            onClick={() => {
-              setIsShowSubmtButton(true)
-              setEdit(label)
-            }}
-            src={AccountSettingEditIconPen}
-            alt='account setting edit icon pen'
-          />
-          <img src={AccountSettingDeleteIconBin} alt='account setting eelete icon bin' />
+          {isEdit && (
+            <img
+              onClick={() => {
+                setEdit(label)
+              }}
+              src={AccountSettingEditIconPen}
+              alt='account setting edit icon pen'
+            />
+          )}
+
+          {isDetele && (
+            <img src={AccountSettingDeleteIconBin} alt='account setting eelete icon bin' />
+          )}
         </div>
       </div>
       {sideNode}
       <div style={{ padding: '10px 0 0' }}>
         {children}
-        {isShowSubmtButton && (
+        {edit == label && (
           <div className={styles.fieldFromWrapper_button}>
-            <Button variant='contained' disableElevation>
+            <Button
+              variant='contained'
+              disableElevation
+              disabled={isBtnDisabled}
+              onClick={handleConfirm}
+            >
               {btnSuccessText ? btnSuccessText : 'Send OTP'}
             </Button>
             <Button
               variant='outlined'
               onClick={() => {
+                handleCancel()
                 setEdit(null)
-                setIsShowSubmtButton(false)
               }}
             >
               Cancel

@@ -4,6 +4,7 @@ import { END } from 'redux-saga'
 
 import Layout from 'components/Layout'
 import Text from 'components/Text'
+import CreditCardFrom from 'components/CreditCardFrom/CreditCardFrom'
 import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
@@ -25,6 +26,8 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import styles from './settings.module.scss'
 import { blue } from '@mui/material/colors'
 import { handleNumericInput } from 'helpers/handleInput'
+
+// api
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -55,11 +58,11 @@ function a11yProps(index: number) {
 }
 
 const AccountSettings = ({ userOwnDetail, config }: any) => {
-  console.log(userOwnDetail)
   const smsCountryList = getSmsCountryList(config)
 
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
+  const [isBtnDisabled, setBtnDisabled] = useState(false)
 
   const getSmsCountryCode = (phoneNumber, smsCountryList) => {
     if (!phoneNumber || !smsCountryList) return null
@@ -88,10 +91,18 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
   const [passwordError] = useState(null)
 
   const [emailSubscribe] = useState({
-    notifications: false,
+    notifications: true,
     newNotifications: false,
-    careerHiringNewNotifications: false
+    careerHiringNewNotifications: true
   })
+
+  useEffect(() => {
+    if (emailError) {
+      setBtnDisabled(true)
+    } else {
+      setBtnDisabled(false)
+    }
+  }, [emailError])
 
   useEffect(() => {
     let errorText = null
@@ -155,6 +166,15 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
     )
   }
 
+  const sendEmailOTPS = async (data: any) => {
+    // const response = await generateOTPService(data)
+    // console.log(response)
+  }
+
+  const reductionEmail = () => {
+    setEmail(userOwnDetail.email ? userOwnDetail.email : null)
+  }
+
   return (
     <Layout>
       <div className={styles.accessSettings}>
@@ -182,7 +202,15 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
         <div className={styles.accessSettingsContainer}>
           <TabPanel value={value} index={0}>
             <ThemeProvider theme={accountTheme}>
-              <FieldFormWrapper label='Email' setEdit={setEdit}>
+              <FieldFormWrapper
+                label='Email'
+                edit={edit}
+                setEdit={setEdit}
+                isEdit
+                isBtnDisabled={isBtnDisabled}
+                handleConfirm={sendEmailOTPS}
+                handleCancel={reductionEmail}
+              >
                 {edit === 'Email' ? (
                   <div className={styles.accessSettingsContainer_fromWrapper}>
                     <Text>To receive job applications update, please verify your email.</Text>
@@ -192,7 +220,6 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
                         id='email'
                         label='Email Address'
                         variant='outlined'
-                        value={email}
                         size='small'
                         defaultValue={email}
                         autoComplete='off'
@@ -210,7 +237,7 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
               </FieldFormWrapper>
 
               {/*  mobile number  */}
-              <FieldFormWrapper label='Mobile Number' setEdit={setEdit}>
+              <FieldFormWrapper label='Mobile Number' edit={edit} setEdit={setEdit} isEdit>
                 {edit === 'Mobile Number' ? (
                   <div className={styles.accessSettingsContainer_fromWrapper}>
                     <Text>To receive job applications update, please verify your email.</Text>
@@ -255,7 +282,7 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
               </FieldFormWrapper>
 
               {/* password */}
-              <FieldFormWrapper label='Password' setEdit={setEdit}>
+              <FieldFormWrapper label='Password' edit={edit} setEdit={setEdit} isEdit>
                 {edit === 'Password' ? (
                   <div className={styles.accessSettingsContainer_fromWrapper}>
                     <Text>To receive job applications update, please verify your email.</Text>
@@ -318,11 +345,10 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
               </FieldFormWrapper>
 
               {/*  Email Notification  */}
-              <FieldFormWrapper label='Email Notification' setEdit={setEdit}>
+              <FieldFormWrapper label='Email Notification' edit={edit} setEdit={setEdit}>
                 <div className={styles.accessSettingsContainer_swtich}>
                   <Text>Receive system notifications:</Text>
                   <Switch
-                    defaultChecked
                     checked={emailSubscribe.careerHiringNewNotifications}
                     // onChange={(ev) => {}}
                   />
@@ -330,30 +356,32 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
                 <div className={styles.accessSettingsContainer_swtich}>
                   <Text>Receive new chat notifications:</Text>
                   <Switch
-                    defaultChecked
+                    checked={emailSubscribe.careerHiringNewNotifications}
                     // onChange={(ev) => {}}
                   />
                 </div>
                 <div className={styles.accessSettingsContainer_swtich}>
                   <Text>Receive career and hiring tips newsletter:</Text>
                   <Switch
-                    defaultChecked
+                    checked={emailSubscribe.careerHiringNewNotifications}
                     // onChange={(ev) => {}}
                   />
                 </div>
               </FieldFormWrapper>
 
-              <FieldFormWrapper label='Linked Accounts' setEdit={setEdit}>
+              <FieldFormWrapper label='Linked Accounts' edit={edit} setEdit={setEdit}>
                 <div className={styles.accessSettingsContainer_swtich}>
                   <Text>Facebook Messenger</Text>
                   <Switch
-                    defaultChecked
+                    checked={emailSubscribe.careerHiringNewNotifications}
                     // onChange={(ev) => {}}
                   />
                 </div>
               </FieldFormWrapper>
 
-              <FieldFormWrapper label='Credit Card' setEdit={setEdit}></FieldFormWrapper>
+              <FieldFormWrapper label='Credit Card' edit={edit} setEdit={setEdit}>
+                <CreditCardFrom />
+              </FieldFormWrapper>
             </ThemeProvider>
           </TabPanel>
 
