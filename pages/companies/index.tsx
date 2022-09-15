@@ -35,7 +35,7 @@ import { BlueTickIcon } from 'images'
 const Companies = () => {
   const dispatch = useDispatch()
   const router = useRouter()
-
+  const { page } = router.query
   const [featuredCompanies, setFeaturedCompanies] = useState(null)
   const [featuredCompany, setFeaturedCompany] = useState(null)
   const [totalPage, setTotalPage] = useState(null)
@@ -51,7 +51,7 @@ const Companies = () => {
   )
 
   useEffect(() => {
-    setCurrentPage(Number(router.query.page))
+    setCurrentPage(Number(page) || 1)
     dispatch(fetchFeaturedCompaniesListRequest({ page: Number(router.query.page) }))
   }, [router.query])
 
@@ -206,6 +206,7 @@ const Companies = () => {
             onChange={handlePaginationClick}
             defaultPage={Number(currentPage) || 1}
             totalPages={totalPage || 1}
+            page={currentPage}
           />
         </div>
       </div>
