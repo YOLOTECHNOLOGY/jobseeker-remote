@@ -6,9 +6,9 @@ import Layout from 'components/Layout'
 import Text from 'components/Text'
 import CreditCardFrom from 'components/CreditCardFrom/CreditCardFrom'
 import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
-import MaterialTextField from 'components/MaterialTextField'
-import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import VerifyMailAndBindEmail from 'components/AccountSettings/VerifyMailAndBindEmail'
+import VerifyPhoneNumber from 'components/AccountSettings/VerifyPhoneNumber'
+import ChangePasswrod from 'components/AccountSettings/ChangePassword'
 
 // mui
 import Tabs from '@mui/material/Tabs'
@@ -17,7 +17,6 @@ import Switch from '@mui/material/Switch'
 import { ThemeProvider, createTheme } from '@mui/material'
 
 // tools
-import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 
 // actions
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
@@ -58,37 +57,14 @@ const COUNT_DOWN_VERIFY_DEFAULT = 10
 let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
 
 const AccountSettings = ({ userOwnDetail, config }: any) => {
+  console.log(userOwnDetail)
   const refCountDownTimeName = useRef(null)
 
-  const smsCountryList = getSmsCountryList(config)
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
 
   const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
   const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
-
-  const getSmsCountryCode = (phoneNumber, smsCountryList) => {
-    if (!phoneNumber || !smsCountryList) return null
-
-    const matchedCountryCode = smsCountryList.filter((country) => {
-      return phoneNumber.includes(country.value)
-    })
-
-    return matchedCountryCode ? matchedCountryCode[0]?.value : null
-  }
-  const [smsCode, setSmsCode] = useState(
-    getSmsCountryCode(userOwnDetail?.phone_num, smsCountryList) || '+63'
-  )
-
-  const [phoneNum] = useState(userOwnDetail.phone_num ? userOwnDetail.phone_num : null)
-  const [phoneNumError] = useState(null)
-
-  const [password, setPassword] = useState({
-    currentPassword: '',
-    newPassword: null,
-    confirmNewPassword: null
-  })
-  const [passwordError] = useState(null)
 
   const [emailSubscribe] = useState({
     notifications: true,
@@ -117,13 +93,6 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
       setCountDown(COUNT_DOWN_VERIFY_DEFAULT)
     }
   }, [isShowCountDownSwitch])
-
-  useEffect(() => {
-    // const errorText = null
-    // if (!/\D/.test(phoneNum)) {
-    //   errorText =
-    // }
-  }, [phoneNum])
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
@@ -156,14 +125,14 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
     )
   }
 
-  const requiredLabel = (text: string) => {
-    return (
-      <>
-        <span>{text}</span>
-        <span className={styles.stepFieldRequired}>*</span>
-      </>
-    )
-  }
+  // const requiredLabel = (text: string) => {
+  //   return (
+  //     <>
+  //       <span>{text}</span>
+  //       <span className={styles.stepFieldRequired}>*</span>
+  //     </>
+  //   )
+  // }
 
   return (
     <Layout>
@@ -205,52 +174,30 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
             />
 
             {/*  mobile number  */}
-            <FieldFormWrapper label='Mobile Number' edit={edit} setEdit={setEdit} isEdit>
-              {edit === 'Mobile Number' ? (
-                <div className={styles.accessSettingsContainer_fromWrapper}>
-                  <Text>To receive job applications update, please verify your email.</Text>
-                  <div className={styles.accessSettingsContainer_fromWrapper_edit}>
-                    <div className={styles.accessSettingsContainer_fromWrapper_edit_wrapper}>
-                      <div
-                        className={styles.accessSettingsContainer_fromWrapper_edit_wrapper_block}
-                      >
-                        <MaterialBasicSelect
-                          className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                          label='Country'
-                          value={smsCode}
-                          options={smsCountryList}
-                          onChange={(e) => {
-                            setSmsCode(e.target.value)
-                          }}
-                        />
-                        {phoneNumError && errorText(phoneNumError)}
-                      </div>
-
-                      <div
-                        className={styles.accessSettingsContainer_fromWrapper_edit_wrapper_block}
-                      >
-                        <MaterialTextField
-                          className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                          label={requiredLabel('Contact Number')}
-                          size='small'
-                          error={phoneNumError ? true : false}
-                          value={phoneNum}
-                          // onChange={(e) => setPhoneNum(handleNumericInput(e.target.value))}
-                        />
-                        {phoneNumError && errorText(phoneNumError)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className={styles.formWrapper}>
-                  <Text className={styles.bottomSpacing}>{phoneNum}</Text>
-                </div>
-              )}
-            </FieldFormWrapper>
+            <VerifyPhoneNumber
+              label='Mobile Number'
+              edit={edit}
+              setEdit={setEdit}
+              isEdit
+              errorText={errorText}
+              phoneDefault={userOwnDetail.phone_num ? userOwnDetail.phone_num : null}
+              valid={userOwnDetail.is_mobile_verified}
+              setIsShowCountDownSwitch={setIsShowCountDownSwitch}
+              isShowCountDownSwitch={isShowCountDownSwitch}
+              countDown={countDown}
+              config={config}
+            />
 
             {/* password */}
-            <FieldFormWrapper label='Password' edit={edit} setEdit={setEdit} isEdit>
+            <ChangePasswrod
+              label='Password'
+              edit={edit}
+              setEdit={setEdit}
+              isEdit
+              errorText={errorText}
+            />
+
+            {/* <FieldFormWrapper label='Password' edit={edit} setEdit={setEdit} isEdit>
               {edit === 'Password' ? (
                 <div className={styles.accessSettingsContainer_fromWrapper}>
                   <Text>To receive job applications update, please verify your email.</Text>
@@ -310,7 +257,7 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
                   <Text className={styles.bottomSpacing}>***********</Text>
                 </div>
               )}
-            </FieldFormWrapper>
+            </FieldFormWrapper> */}
 
             {/*  Email Notification  */}
             <FieldFormWrapper label='Email Notification' edit={edit} setEdit={setEdit}>
@@ -375,7 +322,7 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
 
   if (!accessToken) {
