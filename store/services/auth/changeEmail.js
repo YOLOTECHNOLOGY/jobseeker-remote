@@ -77,6 +77,20 @@ const changePassword = (payload) => {
   )
 }
 
+const emailNotificationUpdate = (payload) => {
+  const axios = configuredAxios('jobseeker', 'protected')
+  return Promise.resolve(
+    axios.patch(`/email-notification-setting/update`, {
+      ...payload
+    })
+  )
+}
+
+const accountSetting = (payload) => {
+  const axios = configuredAxios('jobseeker', 'protected', '', payload.accessToken)
+  return Promise.resolve(axios.get(`/account-setting`))
+}
+
 export {
   sendEmaillOtp,
   changeEmail,
@@ -84,5 +98,7 @@ export {
   sendPhoneNumberOTP,
   verifyPhoneNumber,
   changePhoneNumber,
-  changePassword
+  changePassword,
+  emailNotificationUpdate,
+  accountSetting
 }

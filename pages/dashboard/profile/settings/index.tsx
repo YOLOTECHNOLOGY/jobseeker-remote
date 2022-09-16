@@ -9,14 +9,14 @@ import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import VerifyMailAndBindEmail from 'components/AccountSettings/VerifyMailAndBindEmail'
 import VerifyPhoneNumber from 'components/AccountSettings/VerifyPhoneNumber'
 import ChangePasswrod from 'components/AccountSettings/ChangePassword'
+import EmailNotificationsetting from 'components/AccountSettings/EmailNotificationSetting'
+import Alerts from 'components/AccountSettings/Alerts'
 
 // mui
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Switch from '@mui/material/Switch'
 import { ThemeProvider, createTheme } from '@mui/material'
-
-// tools
 
 // actions
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
@@ -25,6 +25,7 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 // styles
 import styles from './settings.module.scss'
 
+import { accountSetting } from 'store/services/auth/changeEmail'
 interface TabPanelProps {
   children?: React.ReactNode
   index: number
@@ -56,8 +57,7 @@ function a11yProps(index: number) {
 const COUNT_DOWN_VERIFY_DEFAULT = 10
 let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
 
-const AccountSettings = ({ userOwnDetail, config }: any) => {
-  console.log(userOwnDetail)
+const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any) => {
   const refCountDownTimeName = useRef(null)
 
   const [value, setValue] = useState(0)
@@ -65,12 +65,14 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
 
   const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
   const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
-
+  // const [userDetail, setUserDetail] = useState(null)
   const [emailSubscribe] = useState({
     notifications: true,
     newNotifications: false,
     careerHiringNewNotifications: true
   })
+
+  // useEffect(() => {}, [])
 
   // Count Down
   useEffect(() => {
@@ -197,92 +199,13 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
               errorText={errorText}
             />
 
-            {/* <FieldFormWrapper label='Password' edit={edit} setEdit={setEdit} isEdit>
-              {edit === 'Password' ? (
-                <div className={styles.accessSettingsContainer_fromWrapper}>
-                  <Text>To receive job applications update, please verify your email.</Text>
-                  <div className={styles.accessSettingsContainer_fromWrapper_edit}>
-                    <div>
-                      <MaterialTextField
-                        className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                        label={requiredLabel('Current password')}
-                        size='small'
-                        error={passwordError ? true : false}
-                        value={password.currentPassword}
-                        onChange={(e) =>
-                          setPassword((params) => ({
-                            ...params,
-                            currentPassword: e.target.value
-                          }))
-                        }
-                        type='password'
-                      />
-                      {passwordError && errorText(passwordError)}
-
-                      <MaterialTextField
-                        className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                        label={requiredLabel('New password')}
-                        size='small'
-                        error={passwordError ? true : false}
-                        value={password.currentPassword}
-                        onChange={(e) =>
-                          setPassword((params) => ({
-                            ...params,
-                            currentPassword: e.target.value
-                          }))
-                        }
-                        type='password'
-                      />
-                      {passwordError && errorText(passwordError)}
-
-                      <MaterialTextField
-                        className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                        label={requiredLabel('Confirm new password')}
-                        size='small'
-                        error={passwordError ? true : false}
-                        value={password.currentPassword}
-                        onChange={(e) =>
-                          setPassword((params) => ({
-                            ...params,
-                            currentPassword: e.target.value
-                          }))
-                        }
-                        type='password'
-                      />
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className={styles.formWrapper}>
-                  <Text className={styles.bottomSpacing}>***********</Text>
-                </div>
-              )}
-            </FieldFormWrapper> */}
-
             {/*  Email Notification  */}
-            <FieldFormWrapper label='Email Notification' edit={edit} setEdit={setEdit}>
-              <div className={styles.accessSettingsContainer_swtich}>
-                <Text>Receive system notifications:</Text>
-                <Switch
-                  checked={emailSubscribe.careerHiringNewNotifications}
-                  // onChange={(ev) => {}}
-                />
-              </div>
-              <div className={styles.accessSettingsContainer_swtich}>
-                <Text>Receive new chat notifications:</Text>
-                <Switch
-                  checked={emailSubscribe.careerHiringNewNotifications}
-                  // onChange={(ev) => {}}
-                />
-              </div>
-              <div className={styles.accessSettingsContainer_swtich}>
-                <Text>Receive career and hiring tips newsletter:</Text>
-                <Switch
-                  checked={emailSubscribe.careerHiringNewNotifications}
-                  // onChange={(ev) => {}}
-                />
-              </div>
-            </FieldFormWrapper>
+            <EmailNotificationsetting
+              label='Email Notification'
+              edit={edit}
+              setEdit={setEdit}
+              emailNotificationSetting={userDetail ? userDetail.email_notification_setting : null}
+            />
 
             <FieldFormWrapper label='Linked Accounts' edit={edit} setEdit={setEdit}>
               <div className={styles.accessSettingsContainer_swtich}>
@@ -294,27 +217,12 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
               </div>
             </FieldFormWrapper>
 
-            <FieldFormWrapper label='Credit Card' edit={edit} setEdit={setEdit}>
-              <CreditCardFrom />
-            </FieldFormWrapper>
+            <CreditCardFrom label='Credit Card' edit={edit} setEdit={setEdit} />
           </TabPanel>
 
           {/* Job Alert */}
           <TabPanel value={value} index={1}>
-            <div className={styles.JobAlertContainer}>
-              <Text tagName='h3'>Job alert</Text>
-              <FieldFormWrapper label='All jobs' setEdit={setEdit} btnSuccessText='Save'>
-                <Text block className={styles.JobAlertContainer_title}>
-                  All location
-                </Text>
-                <Text block className={styles.JobAlertContainer_desc}>
-                  Filters: No active filters selected
-                </Text>
-                <Text block className={styles.JobAlertContainer_desc}>
-                  Frequency: Daily
-                </Text>
-              </FieldFormWrapper>
-            </div>
+            <Alerts accessToken={accessToken} />
           </TabPanel>
         </div>
       </div>
@@ -334,18 +242,25 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     }
   }
 
+  let userDetail = {}
+  await accountSetting({ accessToken }).then(({ data }) => {
+    userDetail = data.data
+  })
+
   store.dispatch(fetchConfigRequest())
   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
+
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
-  const userOwnDetail = storeState.users.fetchUserOwnDetail.response
+  // const userOwnDetail = storeState.users.fetchUserOwnDetail.response
   return {
     props: {
       config,
       accessToken,
-      userOwnDetail
+      userOwnDetail: userDetail,
+      userDetail
     }
   }
 })

@@ -5,6 +5,7 @@
   @extend .GlobalContainer;
   padding: 50px 0 100px;
   display: flex;
+
   &Tabs {
     width: 25%;
     &Button {
@@ -66,6 +67,14 @@
     &_desc {
       color: #707070;
       margin-bottom: 5px;
+    }
+  }
+
+  @include sm {
+    flex-direction: column;
+    &Tabs,
+    &Container {
+      width: 100%;
     }
   }
 }

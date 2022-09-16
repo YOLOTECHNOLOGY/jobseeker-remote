@@ -49,7 +49,6 @@ const VerifyMailAndBindEmail = ({
 
   useEffect(() => {
     let errorText = null
-    console.log('roor')
     if (email && !/\S+@\S+\.\S+/.test(email)) {
       errorText = 'Please enter a valid email address.'
     }
@@ -81,9 +80,7 @@ const VerifyMailAndBindEmail = ({
     setIsShowCountDownSwitch(true)
     setIsShowemailVerify(true)
     setEmail(email)
-    console.log(email, emailDefault, email === emailDefault)
     sendEmaillOtp({ email }).then(({ data }) => {
-      console.log(data)
       if (data.success) {
         dispatch(
           displayNotification({
@@ -97,11 +94,9 @@ const VerifyMailAndBindEmail = ({
   }
 
   const verifyEmailOrChangeEmail = () => {
-    console.log(emailDefault, email)
     if (emailDefault === email) {
       // verify
-      verifyEmail({ otp }).then(({ data }) => {
-        console.log(data)
+      verifyEmail({ otp }).then(() => {
         dispatch(
           displayNotification({
             open: true,
@@ -112,8 +107,7 @@ const VerifyMailAndBindEmail = ({
       })
     } else {
       // change
-      changeEmail({ otp, email }).then(({ data }) => {
-        console.log(data)
+      changeEmail({ otp, email }).then(() => {
         dispatch(
           displayNotification({
             open: true,

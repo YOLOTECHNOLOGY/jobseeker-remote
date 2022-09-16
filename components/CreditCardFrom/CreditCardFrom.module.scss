@@ -104,3 +104,15 @@
   transform: scaleX(1);
   transition: transform 0.25s ease-in-out;
 }
+
+.VerifyMailAndBindEmail_button {
+  margin-top: 24px;
+  button {
+    text-transform: none;
+    min-width: 143px;
+    height: 44px;
+  }
+  button:nth-child(2) {
+    margin-left: 20px;
+  }
+}

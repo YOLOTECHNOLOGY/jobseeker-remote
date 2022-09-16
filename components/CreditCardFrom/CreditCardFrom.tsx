@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react'
 
 import Text from 'components/Text'
 import BraintreeWeb from 'braintree-web'
+import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 
 import { Button } from '@mui/material'
 
 import getBraintreeClientTokenService from 'store/services/payment/getBraintreeClientTokenService'
 
 import styles from './CreditCardFrom.module.scss'
+import { useFirstRender } from 'helpers/useFirstRender'
 
-const CreditCardFrom = () => {
+const CreditCardFrom = ({ label, setEdit, edit }: any) => {
+  const firstRender = useFirstRender()
   const [cvv, setCvv] = useState(null)
   const [fieldsState, setFieldsState] = useState(null)
   const [unsupportedCard, setUnsupportedCard] = useState(false)
@@ -17,16 +20,20 @@ const CreditCardFrom = () => {
   const [braintreeClientToken, setBraintreeClientToken] = useState(null)
   const [hostedFieldsInstance, setHostedFieldsInstance] = useState(null)
   const [errorTips, setErrorTips] = useState(false)
+  const [isBtnDisabled] = useState(true)
 
   useEffect(() => {
     console.log(cvv, isUnsupportedCard)
+    if (firstRender && braintreeClientToken) {
+      return
+    }
     ;(async () => {
       const { data } = await getBraintreeClientTokenService()
       if (data.success) {
         setBraintreeClientToken(data.data.token)
       }
     })()
-  }, [])
+  }, [edit])
 
   useEffect(() => {
     createHostedFields()
@@ -36,7 +43,6 @@ const CreditCardFrom = () => {
     hostedFieldsInstance.tokenize((tokenizeErr, payload) => {
       if (tokenizeErr) {
         // error
-        console.log(tokenizeErr, 'tokenizeerr')
         setErrorTips(tokenizeErr.message)
         return false
       }
@@ -147,79 +153,95 @@ const CreditCardFrom = () => {
 
   return (
     <div id='cardForm'>
-      <div className={styles.formContentContainer}>
-        {errorTips && (
-          <Text block className={styles.error}>
-            We could not add this card. Please try again later or contact support@bossjob.com for
-            assistance if this issue persists.
-          </Text>
-        )}
+      <FieldFormWrapper label={label} edit={edit} setEdit={setEdit} isEdit>
+        {edit === 'Credit Card' ? (
+          <div className={styles.formContentContainer}>
+            {errorTips && (
+              <Text block className={styles.error}>
+                We could not add this card. Please try again later or contact support@bossjob.com
+                for assistance if this issue persists.
+              </Text>
+            )}
 
-        <div className={styles.formRow}>
-          <div className={styles.formColumn}>
-            <div id='cardholder-name' className={styles.hostedField} />
-            <Text className={styles.errorField} textColor='red'>
-              {(fieldsState && fieldsState.cardholderName.isEmpty) ||
-              (fieldsState && fieldsState.cardholderName.isPotentiallyValid)
-                ? ''
-                : fieldsState &&
-                  !fieldsState.cardholderName.isEmpty &&
-                  !fieldsState.cardholderName.isValid
-                ? 'Invalid'
-                : ''}
-            </Text>
-          </div>
-        </div>
-        <div className={styles.formRow}>
-          <div className={styles.formColumn}>
-            <div
-              id='card-number'
-              className={unsupportedCard ? styles.hostedFieldUnsupported : styles.hostedField}
-            />
-            <Text className={styles.errorField} textColor='red'>
-              {unsupportedCard
-                ? 'We only accept Visa, MasterCard & AMEX'
-                : (fieldsState && fieldsState.number.isEmpty) ||
-                  (fieldsState && fieldsState.number.isPotentiallyValid)
-                ? ''
-                : fieldsState && !fieldsState.number.isEmpty && !fieldsState.number.isValid
-                ? 'Invalid'
-                : ''}
-            </Text>
-          </div>
-        </div>
-        <div className={styles.formRow}>
-          <div className={`${styles.formColumn} ${styles.columnMargin}`}>
-            <div id='expiration-date' className={styles.hostedField} />
-            <Text className={styles.errorField} textColor='red'>
-              {(fieldsState && fieldsState.expirationDate.isEmpty) ||
-              (fieldsState && fieldsState.expirationDate.isPotentiallyValid)
-                ? ''
-                : fieldsState &&
-                  !fieldsState.expirationDate.isEmpty &&
-                  !fieldsState.expirationDate.isValid
-                ? 'Invalid'
-                : ''}
-            </Text>
-          </div>
-        </div>
+            <div className={styles.formRow}>
+              <div className={styles.formColumn}>
+                <div id='cardholder-name' className={styles.hostedField} />
+                <Text className={styles.errorField} textColor='red'>
+                  {(fieldsState && fieldsState.cardholderName.isEmpty) ||
+                  (fieldsState && fieldsState.cardholderName.isPotentiallyValid)
+                    ? ''
+                    : fieldsState &&
+                      !fieldsState.cardholderName.isEmpty &&
+                      !fieldsState.cardholderName.isValid
+                    ? 'Invalid'
+                    : ''}
+                </Text>
+              </div>
+            </div>
+            <div className={styles.formRow}>
+              <div className={styles.formColumn}>
+                <div
+                  id='card-number'
+                  className={unsupportedCard ? styles.hostedFieldUnsupported : styles.hostedField}
+                />
+                <Text className={styles.errorField} textColor='red'>
+                  {unsupportedCard
+                    ? 'We only accept Visa, MasterCard & AMEX'
+                    : (fieldsState && fieldsState.number.isEmpty) ||
+                      (fieldsState && fieldsState.number.isPotentiallyValid)
+                    ? ''
+                    : fieldsState && !fieldsState.number.isEmpty && !fieldsState.number.isValid
+                    ? 'Invalid'
+                    : ''}
+                </Text>
+              </div>
+            </div>
+            <div className={styles.formRow}>
+              <div className={`${styles.formColumn} ${styles.columnMargin}`}>
+                <div id='expiration-date' className={styles.hostedField} />
+                <Text className={styles.errorField} textColor='red'>
+                  {(fieldsState && fieldsState.expirationDate.isEmpty) ||
+                  (fieldsState && fieldsState.expirationDate.isPotentiallyValid)
+                    ? ''
+                    : fieldsState &&
+                      !fieldsState.expirationDate.isEmpty &&
+                      !fieldsState.expirationDate.isValid
+                    ? 'Invalid'
+                    : ''}
+                </Text>
+              </div>
+            </div>
 
-        <div className={styles.formRow}>
-          <div className={styles.formColumn}>
-            <div id='cvv' className={styles.hostedField} />
-            <Text className={styles.errorField} textColor='red'>
-              {(fieldsState && fieldsState.cvv.isEmpty) ||
-              (fieldsState && fieldsState.cvv.isPotentiallyValid)
-                ? ''
-                : fieldsState && !fieldsState.cvv.isEmpty && !fieldsState.cvv.isValid
-                ? 'Invalid'
-                : ''}
-            </Text>
-          </div>
-        </div>
+            <div className={styles.formRow}>
+              <div className={styles.formColumn}>
+                <div id='cvv' className={styles.hostedField} />
+                <Text className={styles.errorField} textColor='red'>
+                  {(fieldsState && fieldsState.cvv.isEmpty) ||
+                  (fieldsState && fieldsState.cvv.isPotentiallyValid)
+                    ? ''
+                    : fieldsState && !fieldsState.cvv.isEmpty && !fieldsState.cvv.isValid
+                    ? 'Invalid'
+                    : ''}
+                </Text>
+              </div>
+            </div>
 
-        <Button onClick={saveCard}>save</Button>
-      </div>
+            <div className={styles.VerifyMailAndBindEmail_button}>
+              <Button variant='contained' disabled={isBtnDisabled} onClick={saveCard}>
+                Save
+              </Button>
+              <Button
+                variant='outlined'
+                onClick={() => {
+                  setEdit(null)
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        ) : null}
+      </FieldFormWrapper>
     </div>
   )
 }

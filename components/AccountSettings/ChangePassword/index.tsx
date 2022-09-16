@@ -52,7 +52,6 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
   const setChangePassword = async () => {
     await changePassword({ old_password: currentPassword, new_password: newPassword }).then(
       ({ data }) => {
-        console.log(data)
         if (data.success) {
           setSuccessState(true)
           dispatch(

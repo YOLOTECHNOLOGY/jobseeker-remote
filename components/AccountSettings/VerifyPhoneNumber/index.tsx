@@ -67,16 +67,6 @@ const VerifyPhoneNumber = ({
     setOtp('')
   }
 
-  // useEffect(() => {
-  //   let errorText = null
-  //   console.log('roor')
-  //   if (email && !/\S+@\S+\.\S+/.test(email)) {
-  //     errorText = 'Please enter a valid email address.'
-  //   }
-
-  //   setEmailError(errorText)
-  // }, [email])
-
   useEffect(() => {
     if (otp.length === 6) {
       setIsBtnDisabledVerify(false)
@@ -102,7 +92,6 @@ const VerifyPhoneNumber = ({
     setIsShowPhoneVerify(true)
     setPhoneNum(phoneNum)
     sendPhoneNumberOTP({ phone_number: phoneNum }).then(({ data }) => {
-      console.log(data)
       if (data.success) {
         dispatch(
           displayNotification({
@@ -119,7 +108,6 @@ const VerifyPhoneNumber = ({
     if (phoneDefault === phoneNum) {
       // verify
       verifyPhoneNumber({ otp: Number(otp) }).then(({ data }) => {
-        console.log(data)
         if (data.success) {
           dispatch(
             displayNotification({
