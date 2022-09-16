@@ -6,7 +6,6 @@ import classNames from 'classnames/bind'
 /** Component */
 import Text from 'components/Text'
 import { AccountSettingEditIconPen, AccountSettingDeleteIconBin } from 'images'
-import { Button } from '@mui/material'
 
 // styles
 import styles from './FieldFormWrapper.module.scss'
@@ -16,29 +15,14 @@ const FieldFormWrapper = ({
   children,
   className,
   style,
-  sideNode,
-  titleInlineBlock,
-  edit,
   setEdit,
-  btnSuccessText,
   isEdit,
-  isDetele,
-  isBtnDisabled,
-  handleConfirm,
-  handleCancel
+  isDetele
 }: any) => {
   return (
     <div className={classNames([className, styles.fieldFromWrapper])} style={style}>
       <div className={styles.fieldFromWrapper_title}>
-        <Text
-          tagName='h2'
-          textStyle='xl'
-          style={{
-            margin: '0 0 0.5em',
-            ...(titleInlineBlock ? { display: 'inline-block' } : '')
-          }}
-          bold
-        >
+        <Text tagName='h2' textStyle='xl' bold>
           {label}
         </Text>
         <div className={styles.fieldFromWrapper_title_edit_icon}>
@@ -57,31 +41,7 @@ const FieldFormWrapper = ({
           )}
         </div>
       </div>
-      {sideNode}
-      <div style={{ padding: '10px 0 0' }}>
-        {children}
-        {edit == label && (
-          <div className={styles.fieldFromWrapper_button}>
-            <Button
-              variant='contained'
-              disableElevation
-              disabled={isBtnDisabled}
-              onClick={handleConfirm}
-            >
-              {btnSuccessText ? btnSuccessText : 'Send OTP'}
-            </Button>
-            <Button
-              variant='outlined'
-              onClick={() => {
-                handleCancel()
-                setEdit(null)
-              }}
-            >
-              Cancel
-            </Button>
-          </div>
-        )}
-      </div>
+      <div style={{ padding: '10px 0 0' }}>{children}</div>
     </div>
   )
 }

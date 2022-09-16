@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { wrapper } from 'store'
 import { END } from 'redux-saga'
 
@@ -8,6 +8,7 @@ import CreditCardFrom from 'components/CreditCardFrom/CreditCardFrom'
 import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
+import VerifyMailAndBindEmail from 'components/AccountSettings/VerifyMailAndBindEmail'
 
 // mui
 import Tabs from '@mui/material/Tabs'
@@ -24,10 +25,6 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 // styles
 import styles from './settings.module.scss'
-import { blue } from '@mui/material/colors'
-import { handleNumericInput } from 'helpers/handleInput'
-
-// api
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -57,12 +54,18 @@ function a11yProps(index: number) {
   }
 }
 
-const AccountSettings = ({ userOwnDetail, config }: any) => {
-  const smsCountryList = getSmsCountryList(config)
+const COUNT_DOWN_VERIFY_DEFAULT = 10
+let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
 
+const AccountSettings = ({ userOwnDetail, config }: any) => {
+  const refCountDownTimeName = useRef(null)
+
+  const smsCountryList = getSmsCountryList(config)
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
-  const [isBtnDisabled, setBtnDisabled] = useState(false)
+
+  const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
+  const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
 
   const getSmsCountryCode = (phoneNumber, smsCountryList) => {
     if (!phoneNumber || !smsCountryList) return null
@@ -77,10 +80,7 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
     getSmsCountryCode(userOwnDetail?.phone_num, smsCountryList) || '+63'
   )
 
-  const [email, setEmail] = useState(userOwnDetail.email ? userOwnDetail.email : null)
-  const [emailError, setEmailError] = useState(null)
-
-  const [phoneNum, setPhoneNum] = useState(userOwnDetail.phone_num ? userOwnDetail.phone_num : null)
+  const [phoneNum] = useState(userOwnDetail.phone_num ? userOwnDetail.phone_num : null)
   const [phoneNumError] = useState(null)
 
   const [password, setPassword] = useState({
@@ -96,22 +96,27 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
     careerHiringNewNotifications: true
   })
 
+  // Count Down
   useEffect(() => {
-    if (emailError) {
-      setBtnDisabled(true)
+    if (isShowCountDownSwitch) {
+      const eventCallBack = () => {
+        if (countDownVerify <= 1) {
+          setIsShowCountDownSwitch(false)
+          clearInterval()
+        } else {
+          countDownVerify = countDownVerify - 1
+          setCountDown(countDownVerify)
+        }
+      }
+      refCountDownTimeName.current = setInterval(eventCallBack, 1000)
+      return () => clearInterval(refCountDownTimeName.current)
     } else {
-      setBtnDisabled(false)
+      clearInterval(refCountDownTimeName.current)
+      // setBtnDisabled(false)
+      countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
+      setCountDown(COUNT_DOWN_VERIFY_DEFAULT)
     }
-  }, [emailError])
-
-  useEffect(() => {
-    let errorText = null
-    if (email && !/\S+@\S+\.\S+/.test(email)) {
-      errorText = 'Please enter a valid email address.'
-    }
-
-    setEmailError(errorText)
-  }, [email])
+  }, [isShowCountDownSwitch])
 
   useEffect(() => {
     // const errorText = null
@@ -143,12 +148,6 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
     }
   })
 
-  const accountTheme = createTheme({
-    palette: {
-      primary: blue
-    }
-  })
-
   const errorText = (errorMessage: string) => {
     return (
       <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
@@ -164,15 +163,6 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
         <span className={styles.stepFieldRequired}>*</span>
       </>
     )
-  }
-
-  const sendEmailOTPS = async (data: any) => {
-    // const response = await generateOTPService(data)
-    // console.log(response)
-  }
-
-  const reductionEmail = () => {
-    setEmail(userOwnDetail.email ? userOwnDetail.email : null)
   }
 
   return (
@@ -201,188 +191,165 @@ const AccountSettings = ({ userOwnDetail, config }: any) => {
 
         <div className={styles.accessSettingsContainer}>
           <TabPanel value={value} index={0}>
-            <ThemeProvider theme={accountTheme}>
-              <FieldFormWrapper
-                label='Email'
-                edit={edit}
-                setEdit={setEdit}
-                isEdit
-                isBtnDisabled={isBtnDisabled}
-                handleConfirm={sendEmailOTPS}
-                handleCancel={reductionEmail}
-              >
-                {edit === 'Email' ? (
-                  <div className={styles.accessSettingsContainer_fromWrapper}>
-                    <Text>To receive job applications update, please verify your email.</Text>
-                    <div className={styles.accessSettingsContainer_fromWrapper_edit}>
+            <VerifyMailAndBindEmail
+              label='Email'
+              edit={edit}
+              setEdit={setEdit}
+              isEdit
+              errorText={errorText}
+              emailDefault={userOwnDetail.email ? userOwnDetail.email : null}
+              valid={userOwnDetail.is_email_verify}
+              setIsShowCountDownSwitch={setIsShowCountDownSwitch}
+              isShowCountDownSwitch={isShowCountDownSwitch}
+              countDown={countDown}
+            />
+
+            {/*  mobile number  */}
+            <FieldFormWrapper label='Mobile Number' edit={edit} setEdit={setEdit} isEdit>
+              {edit === 'Mobile Number' ? (
+                <div className={styles.accessSettingsContainer_fromWrapper}>
+                  <Text>To receive job applications update, please verify your email.</Text>
+                  <div className={styles.accessSettingsContainer_fromWrapper_edit}>
+                    <div className={styles.accessSettingsContainer_fromWrapper_edit_wrapper}>
+                      <div
+                        className={styles.accessSettingsContainer_fromWrapper_edit_wrapper_block}
+                      >
+                        <MaterialBasicSelect
+                          className={styles.accessSettingsContainer_fromWrapper_edit_input}
+                          label='Country'
+                          value={smsCode}
+                          options={smsCountryList}
+                          onChange={(e) => {
+                            setSmsCode(e.target.value)
+                          }}
+                        />
+                        {phoneNumError && errorText(phoneNumError)}
+                      </div>
+
+                      <div
+                        className={styles.accessSettingsContainer_fromWrapper_edit_wrapper_block}
+                      >
+                        <MaterialTextField
+                          className={styles.accessSettingsContainer_fromWrapper_edit_input}
+                          label={requiredLabel('Contact Number')}
+                          size='small'
+                          error={phoneNumError ? true : false}
+                          value={phoneNum}
+                          // onChange={(e) => setPhoneNum(handleNumericInput(e.target.value))}
+                        />
+                        {phoneNumError && errorText(phoneNumError)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className={styles.formWrapper}>
+                  <Text className={styles.bottomSpacing}>{phoneNum}</Text>
+                </div>
+              )}
+            </FieldFormWrapper>
+
+            {/* password */}
+            <FieldFormWrapper label='Password' edit={edit} setEdit={setEdit} isEdit>
+              {edit === 'Password' ? (
+                <div className={styles.accessSettingsContainer_fromWrapper}>
+                  <Text>To receive job applications update, please verify your email.</Text>
+                  <div className={styles.accessSettingsContainer_fromWrapper_edit}>
+                    <div>
                       <MaterialTextField
                         className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                        id='email'
-                        label='Email Address'
-                        variant='outlined'
+                        label={requiredLabel('Current password')}
                         size='small'
-                        defaultValue={email}
-                        autoComplete='off'
-                        error={emailError ? true : false}
-                        onChange={(e) => setEmail(e.target.value)}
+                        error={passwordError ? true : false}
+                        value={password.currentPassword}
+                        onChange={(e) =>
+                          setPassword((params) => ({
+                            ...params,
+                            currentPassword: e.target.value
+                          }))
+                        }
+                        type='password'
                       />
-                      {emailError && errorText(emailError)}
+                      {passwordError && errorText(passwordError)}
+
+                      <MaterialTextField
+                        className={styles.accessSettingsContainer_fromWrapper_edit_input}
+                        label={requiredLabel('New password')}
+                        size='small'
+                        error={passwordError ? true : false}
+                        value={password.currentPassword}
+                        onChange={(e) =>
+                          setPassword((params) => ({
+                            ...params,
+                            currentPassword: e.target.value
+                          }))
+                        }
+                        type='password'
+                      />
+                      {passwordError && errorText(passwordError)}
+
+                      <MaterialTextField
+                        className={styles.accessSettingsContainer_fromWrapper_edit_input}
+                        label={requiredLabel('Confirm new password')}
+                        size='small'
+                        error={passwordError ? true : false}
+                        value={password.currentPassword}
+                        onChange={(e) =>
+                          setPassword((params) => ({
+                            ...params,
+                            currentPassword: e.target.value
+                          }))
+                        }
+                        type='password'
+                      />
                     </div>
                   </div>
-                ) : (
-                  <div className={styles.formWrapper}>
-                    <Text className={styles.bottomSpacing}>{email}</Text>
-                  </div>
-                )}
-              </FieldFormWrapper>
-
-              {/*  mobile number  */}
-              <FieldFormWrapper label='Mobile Number' edit={edit} setEdit={setEdit} isEdit>
-                {edit === 'Mobile Number' ? (
-                  <div className={styles.accessSettingsContainer_fromWrapper}>
-                    <Text>To receive job applications update, please verify your email.</Text>
-                    <div className={styles.accessSettingsContainer_fromWrapper_edit}>
-                      <div className={styles.accessSettingsContainer_fromWrapper_edit_wrapper}>
-                        <div
-                          className={styles.accessSettingsContainer_fromWrapper_edit_wrapper_block}
-                        >
-                          <MaterialBasicSelect
-                            className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                            label='Country'
-                            value={smsCode}
-                            options={smsCountryList}
-                            onChange={(e) => {
-                              setSmsCode(e.target.value)
-                            }}
-                          />
-                          {phoneNumError && errorText(phoneNumError)}
-                        </div>
-
-                        <div
-                          className={styles.accessSettingsContainer_fromWrapper_edit_wrapper_block}
-                        >
-                          <MaterialTextField
-                            className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                            label={requiredLabel('Contact Number')}
-                            size='small'
-                            error={phoneNumError ? true : false}
-                            value={phoneNum}
-                            onChange={(e) => setPhoneNum(handleNumericInput(e.target.value))}
-                          />
-                          {phoneNumError && errorText(phoneNumError)}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className={styles.formWrapper}>
-                    <Text className={styles.bottomSpacing}>{phoneNum}</Text>
-                  </div>
-                )}
-              </FieldFormWrapper>
-
-              {/* password */}
-              <FieldFormWrapper label='Password' edit={edit} setEdit={setEdit} isEdit>
-                {edit === 'Password' ? (
-                  <div className={styles.accessSettingsContainer_fromWrapper}>
-                    <Text>To receive job applications update, please verify your email.</Text>
-                    <div className={styles.accessSettingsContainer_fromWrapper_edit}>
-                      <div>
-                        <MaterialTextField
-                          className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                          label={requiredLabel('Current password')}
-                          size='small'
-                          error={passwordError ? true : false}
-                          value={password.currentPassword}
-                          onChange={(e) =>
-                            setPassword((params) => ({
-                              ...params,
-                              currentPassword: e.target.value
-                            }))
-                          }
-                          type='password'
-                        />
-                        {passwordError && errorText(passwordError)}
-
-                        <MaterialTextField
-                          className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                          label={requiredLabel('New password')}
-                          size='small'
-                          error={passwordError ? true : false}
-                          value={password.currentPassword}
-                          onChange={(e) =>
-                            setPassword((params) => ({
-                              ...params,
-                              currentPassword: e.target.value
-                            }))
-                          }
-                          type='password'
-                        />
-                        {passwordError && errorText(passwordError)}
-
-                        <MaterialTextField
-                          className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                          label={requiredLabel('Confirm new password')}
-                          size='small'
-                          error={passwordError ? true : false}
-                          value={password.currentPassword}
-                          onChange={(e) =>
-                            setPassword((params) => ({
-                              ...params,
-                              currentPassword: e.target.value
-                            }))
-                          }
-                          type='password'
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className={styles.formWrapper}>
-                    <Text className={styles.bottomSpacing}>***********</Text>
-                  </div>
-                )}
-              </FieldFormWrapper>
-
-              {/*  Email Notification  */}
-              <FieldFormWrapper label='Email Notification' edit={edit} setEdit={setEdit}>
-                <div className={styles.accessSettingsContainer_swtich}>
-                  <Text>Receive system notifications:</Text>
-                  <Switch
-                    checked={emailSubscribe.careerHiringNewNotifications}
-                    // onChange={(ev) => {}}
-                  />
                 </div>
-                <div className={styles.accessSettingsContainer_swtich}>
-                  <Text>Receive new chat notifications:</Text>
-                  <Switch
-                    checked={emailSubscribe.careerHiringNewNotifications}
-                    // onChange={(ev) => {}}
-                  />
+              ) : (
+                <div className={styles.formWrapper}>
+                  <Text className={styles.bottomSpacing}>***********</Text>
                 </div>
-                <div className={styles.accessSettingsContainer_swtich}>
-                  <Text>Receive career and hiring tips newsletter:</Text>
-                  <Switch
-                    checked={emailSubscribe.careerHiringNewNotifications}
-                    // onChange={(ev) => {}}
-                  />
-                </div>
-              </FieldFormWrapper>
+              )}
+            </FieldFormWrapper>
 
-              <FieldFormWrapper label='Linked Accounts' edit={edit} setEdit={setEdit}>
-                <div className={styles.accessSettingsContainer_swtich}>
-                  <Text>Facebook Messenger</Text>
-                  <Switch
-                    checked={emailSubscribe.careerHiringNewNotifications}
-                    // onChange={(ev) => {}}
-                  />
-                </div>
-              </FieldFormWrapper>
+            {/*  Email Notification  */}
+            <FieldFormWrapper label='Email Notification' edit={edit} setEdit={setEdit}>
+              <div className={styles.accessSettingsContainer_swtich}>
+                <Text>Receive system notifications:</Text>
+                <Switch
+                  checked={emailSubscribe.careerHiringNewNotifications}
+                  // onChange={(ev) => {}}
+                />
+              </div>
+              <div className={styles.accessSettingsContainer_swtich}>
+                <Text>Receive new chat notifications:</Text>
+                <Switch
+                  checked={emailSubscribe.careerHiringNewNotifications}
+                  // onChange={(ev) => {}}
+                />
+              </div>
+              <div className={styles.accessSettingsContainer_swtich}>
+                <Text>Receive career and hiring tips newsletter:</Text>
+                <Switch
+                  checked={emailSubscribe.careerHiringNewNotifications}
+                  // onChange={(ev) => {}}
+                />
+              </div>
+            </FieldFormWrapper>
 
-              <FieldFormWrapper label='Credit Card' edit={edit} setEdit={setEdit}>
-                <CreditCardFrom />
-              </FieldFormWrapper>
-            </ThemeProvider>
+            <FieldFormWrapper label='Linked Accounts' edit={edit} setEdit={setEdit}>
+              <div className={styles.accessSettingsContainer_swtich}>
+                <Text>Facebook Messenger</Text>
+                <Switch
+                  checked={emailSubscribe.careerHiringNewNotifications}
+                  // onChange={(ev) => {}}
+                />
+              </div>
+            </FieldFormWrapper>
+
+            <FieldFormWrapper label='Credit Card' edit={edit} setEdit={setEdit}>
+              <CreditCardFrom />
+            </FieldFormWrapper>
           </TabPanel>
 
           {/* Job Alert */}
