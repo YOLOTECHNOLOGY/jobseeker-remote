@@ -1,6 +1,7 @@
 /* Components */
 import Text from 'components/Text'
 import JobTag from 'components/JobTag'
+import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
 
 /* Helpers */
 import { truncateWords } from 'helpers/formatter'
@@ -10,7 +11,7 @@ import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import styles from './JobCard.module.scss'
 
-import { CompanyIcon, SalaryIcon, LocationIcon, ExpireIcon } from 'images'
+import { CompanyIcon, SalaryIcon, LocationIcon, ExpireIcon, BlueTickIcon } from 'images'
 
 const Warning: Array<String> = ['Not suitable']
 const Happy: Array<String> = ['New', 'Under review', 'Shortlisted', 'Interviewed', 'Hired']
@@ -31,6 +32,8 @@ type JobCardProps = {
   selectedId?: number
   handleSelectedId?: Function
   applicationStatus?: string
+  applicationUpdatedAt?: string
+  isCompanyVerified?: boolean
 }
 
 const JobCard = ({
@@ -47,7 +50,9 @@ const JobCard = ({
   status,
   handleSelectedId,
   selectedId,
-  applicationStatus
+  applicationStatus,
+  applicationUpdatedAt,
+  isCompanyVerified,
 }: JobCardProps) => {
   const cx = classNames.bind(styles)
   const isSelectedClass = cx({ isSelected: selectedId == id })
@@ -85,8 +90,15 @@ const JobCard = ({
         <div className={styles.JobCardDetailList}>
           <div className={styles.JobCardDetailItem}>
             <img src={CompanyIcon} width='20' height='20' />
-            <Text className={styles.JobCardDetailItemText} textStyle='lg'>
+            <Text textStyle='lg'>
               {company}
+              {isCompanyVerified && (
+                <MaterialDesktopTooltip
+                  icon={BlueTickIcon}
+                  className={styles.JobCardDetailItemTooltip}
+                  title='Verified'
+                />
+              )}
             </Text>
           </div>
           <div className={styles.JobCardDetailItem}>
@@ -108,7 +120,8 @@ const JobCard = ({
             <span>This job is no longer hiring</span>
           </Text>
         )}
-        <Text textStyle='sm'>Applied on {postedAt}</Text>
+
+        <Text textStyle='sm'>{applicationUpdatedAt ? `Last updated on ${applicationUpdatedAt}` : `Posted on ${postedAt}`}</Text>
       </div>
     </div>
   )

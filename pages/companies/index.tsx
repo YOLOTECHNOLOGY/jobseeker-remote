@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
+import { isMobile } from 'react-device-detect'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -16,6 +17,8 @@ import SEO from 'components/SEO'
 import CompanyCardList from 'components/Company/CompanyCardList'
 import SearchCompanyField from 'components/SearchCompanyField'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
+import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
+import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 import { ImageList, ImageListItem } from '@mui/material'
 
 // Redux Actions
@@ -26,23 +29,30 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import styles from './Companies.module.scss'
 import BannerCarousel from 'components/BannerCarousel'
 
+// Assets
+import { BlueTickIcon } from 'images'
+
 const Companies = () => {
   const dispatch = useDispatch()
   const router = useRouter()
-  
+
   const [featuredCompanies, setFeaturedCompanies] = useState(null)
   const [featuredCompany, setFeaturedCompany] = useState(null)
   const [totalPage, setTotalPage] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
-  
-  const featuredCompaniesResponse = useSelector((store: any) => store.companies.fetchFeaturedCompaniesList.response)
+
+  const featuredCompaniesResponse = useSelector(
+    (store: any) => store.companies.fetchFeaturedCompaniesList.response
+  )
   const featureBanners = useSelector((store: any) => store.config.config.response.feature_banners)
 
-  const isFeaturedCompaniesFetching = useSelector((store: any) => store.companies.fetchFeaturedCompaniesList.fetching)
+  const isFeaturedCompaniesFetching = useSelector(
+    (store: any) => store.companies.fetchFeaturedCompaniesList.fetching
+  )
 
   useEffect(() => {
     setCurrentPage(Number(router.query.page))
-    dispatch(fetchFeaturedCompaniesListRequest({page: Number(router.query.page)}))
+    dispatch(fetchFeaturedCompaniesListRequest({ page: Number(router.query.page) }))
   }, [router.query])
 
   useEffect(() => {
@@ -87,9 +97,7 @@ const Companies = () => {
           <SearchCompanyField onKeywordSearch={handleKeywordSearch} />
         </div>
 
-        <BannerCarousel 
-          slides={featureBanners} 
-        />
+        <BannerCarousel slides={featureBanners} />
 
         <Text textStyle='xxl' tagName='h2' bold className={styles.featuredEmployerSectionTitle}>
           Featured Employer
@@ -97,9 +105,7 @@ const Companies = () => {
         <div className={styles.featuredEmployer}>
           <div className={styles.featuredEmployerLeft}>
             <div className={styles.featuredEmployerInfo}>
-              <Link
-                to={featuredCompany?.company_url || '/'}
-              >
+              <Link to={featuredCompany?.company_url || '/'}>
                 <img
                   src={featuredCompany?.logo_url}
                   alt={`${featuredCompany?.name} logo`}
@@ -107,14 +113,28 @@ const Companies = () => {
                 />
               </Link>
               <div className={styles.featuredEmployerDetails}>
-                <Link
-                  to={featuredCompany?.company_url || '/'}
-                  className={styles.featuredEmployerName}
-                >
-                  <Text textStyle='xl' bold>
+                <Text textStyle='xl' bold>
+                  <Link
+                    to={featuredCompany?.company_url || '/'}
+                    className={styles.featuredEmployerName}
+                  >
                     {featuredCompany?.name}
-                  </Text>
-                </Link>
+                  </Link>
+                  {featuredCompany?.is_verify &&
+                    (isMobile ? (
+                      <MaterialMobileTooltip
+                        icon={BlueTickIcon}
+                        className={styles.featuredEmployerTooltip}
+                        title='Verified'
+                      />
+                    ) : (
+                      <MaterialDesktopTooltip
+                        icon={BlueTickIcon}
+                        className={styles.featuredEmployerTooltip}
+                        title='Verified'
+                      />
+                    ))}
+                </Text>
                 <div className={styles.featuredEmployerAbout}>
                   <div className={styles.featuredEmployerAboutItem}>
                     <Text textStyle='lg' bold>
@@ -133,7 +153,9 @@ const Companies = () => {
                   {featuredCompany?.short_description}
                 </Text>
                 <Link
-                  to={`${featuredCompany?.company_url ? featuredCompany.company_url + '/jobs' : '/jobs'}`}
+                  to={`${
+                    featuredCompany?.company_url ? featuredCompany.company_url + '/jobs' : '/jobs'
+                  }`}
                   className={styles.featuredEmployerOpenings}
                 >
                   <Text textStyle='lg' bold>
@@ -195,7 +217,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const { page } = query
 
   store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchFeaturedCompaniesListRequest({page: Number(page) || 1}))
+  store.dispatch(fetchFeaturedCompaniesListRequest({ page: Number(page) || 1 }))
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()

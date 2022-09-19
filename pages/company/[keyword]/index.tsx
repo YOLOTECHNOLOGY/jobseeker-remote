@@ -49,7 +49,7 @@ const CompanyDetail = (props: any) => {
     loop: false,
     skipSnaps: false,
     slidesToScroll: 1,
-    inViewThreshold: 1,
+    inViewThreshold: 1
   })
 
   const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
@@ -68,7 +68,7 @@ const CompanyDetail = (props: any) => {
       size,
       page,
       query: jobQuery,
-      location: jobLocation?.value || '',
+      location: jobLocation?.value || ''
     }
 
     dispatch(fetchJobsListRequest({ ...payload }, accessToken))
@@ -116,6 +116,7 @@ const CompanyDetail = (props: any) => {
       totalJobs={totalActiveJobs}
       seoMetaTitle={seoMetaTitle}
       seoMetaDescription={seoMetaDescription}
+      accessToken={accessToken}
     >
       <div className={styles.companyTabsContent}>
         <div className={styles.companySection}>
@@ -131,7 +132,7 @@ const CompanyDetail = (props: any) => {
               <div className={styles.companyOverviewLeft}>
                 {company.company_size && (
                   <div className={styles.companyOverviewItem}>
-                    <Text textStyle='xl' bold>
+                    <Text textStyle='lg' bold>
                       Company Size:{' '}
                     </Text>
                     <Text textStyle='lg'>{company.company_size} Employees</Text>
@@ -139,7 +140,7 @@ const CompanyDetail = (props: any) => {
                 )}
                 {company.industry && (
                   <div className={styles.companyOverviewItem}>
-                    <Text textStyle='xl' bold>
+                    <Text textStyle='lg' bold>
                       Industry:{' '}
                     </Text>
                     <Text textStyle='lg'>{company.industry}</Text>
@@ -147,7 +148,7 @@ const CompanyDetail = (props: any) => {
                 )}
                 {company.website && (
                   <div className={styles.companyOverviewItem}>
-                    <Text textStyle='xl' bold>
+                    <Text textStyle='lg' bold>
                       Website:{' '}
                     </Text>
                     <Link to={company.website} external>
@@ -161,7 +162,7 @@ const CompanyDetail = (props: any) => {
               <div className={styles.companyOverviewRight}>
                 {company.full_address && (
                   <div className={styles.companyOverviewItem}>
-                    <Text textStyle='xl' bold>
+                    <Text textStyle='lg' bold>
                       Location:{' '}
                     </Text>
                     <Text textStyle='lg' className={styles.companyOverviewLocation}>
@@ -169,46 +170,56 @@ const CompanyDetail = (props: any) => {
                     </Text>
                   </div>
                 )}
-                <div
-                  className={classNames(
-                    styles.companyOverviewItem,
-                    styles.companyOverviewItemSocial
-                  )}
-                >
-                  <Text textStyle='xl' bold>
-                    Social Media:{' '}
-                  </Text>
-                  <div className={styles.companyOverviewSocial}>
-                    <Link
-                      external
-                      className={styles.companyOverviewSocialLink}
-                      to={company.facebook_url ? company.facebook_url : router.asPath}
-                    >
-                      <img src={FacebookOutline} />
-                    </Link>
-                    <Link
-                      external
-                      className={styles.companyOverviewSocialLink}
-                      to={company.linkedin_url ? company.linkedin_url : router.asPath}
-                    >
-                      <img src={LinkedinOutline} />
-                    </Link>
-                    <Link
-                      external
-                      className={styles.companyOverviewSocialLink}
-                      to={company.instagram_url ? company.instagram_url : router.asPath}
-                    >
-                      <img src={InstagramOutline} />
-                    </Link>
-                    <Link
-                      external
-                      className={styles.companyOverviewSocialLink}
-                      to={company.youtube_url ? company.youtube_url : router.asPath}
-                    >
-                      <img src={YoutubeOutline} />
-                    </Link>
+                {company.facebook_url || company.instagram_url || company.linkedin_url || company.youtube_url ? (
+                  <div
+                    className={classNames(
+                      styles.companyOverviewItem,
+                      styles.companyOverviewItemSocial
+                    )}
+                  >
+                    <Text textStyle='lg' bold>
+                      Social Media:{' '}
+                    </Text>
+                    <div className={styles.companyOverviewSocial}>
+                      {company.facebook_url && (
+                        <Link
+                          external
+                          className={styles.companyOverviewSocialLink}
+                          to={company.facebook_url}
+                        >
+                          <img src={FacebookOutline} />
+                        </Link>
+                      )}
+                      {company.linkedin_url && (
+                        <Link
+                          external
+                          className={styles.companyOverviewSocialLink}
+                          to={company.linkedin_url}
+                        >
+                          <img src={LinkedinOutline} />
+                        </Link>
+                      )}
+                      {company.instagram_url && (
+                        <Link
+                          external
+                          className={styles.companyOverviewSocialLink}
+                          to={company.instagram_url}
+                        >
+                          <img src={InstagramOutline} />
+                        </Link>
+                      )}
+                      {company.youtube_url && (
+                        <Link
+                          external
+                          className={styles.companyOverviewSocialLink}
+                          to={company.youtube_url}
+                        >
+                          <img src={YoutubeOutline} />
+                        </Link>
+                      )}
+                    </div>
                   </div>
-                </div>
+                ) : null}
               </div>
             </div>
           </div>
@@ -331,14 +342,14 @@ const CompanyDetail = (props: any) => {
                             <div
                               className={classNames([
                                 styles.slidesControlItem,
-                                styles.slidesControlLeft,
+                                styles.slidesControlLeft
                               ])}
                               onClick={scrollPrev}
                             />
                             <div
                               className={classNames([
                                 styles.slidesControlItem,
-                                styles.slidesControlRight,
+                                styles.slidesControlRight
                               ])}
                               onClick={scrollNext}
                             />
@@ -439,7 +450,7 @@ const CompanyDetail = (props: any) => {
                           location: companyJob.job_location,
                           salary: companyJob.salary_range_value,
                           availability: companyJob.job_type,
-                          jobUrl: companyJob.job_url,
+                          jobUrl: companyJob.job_url
                         }
 
                         return <CompanyJobsCard {...company} key={companyJob.id} />
@@ -488,7 +499,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobFilterpayload = {
     companyIds: companyId,
     size: 10,
-    page: 1,
+    page: 1
   }
 
   store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
@@ -509,7 +520,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const companyName = companyDetail.name
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
-  const seoMetaTitle = `Working at ${companyName}| Bossjob`
+  const seoMetaTitle = `Working at ${companyName} | Bossjob`
   const seoMetaDescription = encodeURI(
     `Discover career opportunities at ${companyName}, learn more about ${companyName} by reading employee reviews, benefits and culture on Bossjob!`
   )
@@ -520,8 +531,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       accessToken,
       seoMetaTitle,
       seoMetaDescription,
-      totalActiveJobs,
-    },
+      totalActiveJobs
+    }
   }
 })
 

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
+import { isMobile } from 'react-device-detect'
 
 // @ts-ignore
 import { END } from 'redux-saga'
@@ -16,6 +17,9 @@ import {
   TimelineContent,
   TimelineDot
 } from '@mui/lab'
+import classNames from 'classnames/bind'
+import Modal from '@mui/material/Modal'
+import LinearProgress from '@mui/material/LinearProgress'
 import classNamesCombined from 'classnames'
 import dynamic from 'next/dynamic'
 
@@ -30,6 +34,11 @@ import ReadMore from 'components/ReadMore'
 import JobDetailSidebarCard from 'components/Loader/JobDetailSidebarCard'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 import MaterialLocationField from 'components/MaterialLocationField'
+import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
+import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
+import UploadResumeButton from 'components/LncreaseUserConversion/UploadResumeButton/UploadResumeButton'
+import RegisterInfo from 'components/IncreaseUserConversion/RegisterInfo'
+import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 const ModalVerifyEmail = dynamic(() => import('components/ModalVerifyEmail'))
 // import AdSlot from 'components/AdSlot'
 
@@ -44,6 +53,7 @@ const ModalWithdrawApplication = dynamic(() => import('components/ModalWithdrawA
 import { getCookie, setCookie, removeCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
 import { userFilterSelectionDataParser, getApplyJobLink } from 'helpers/jobPayloadFormatter'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -66,9 +76,12 @@ import { withdrawAppliedJobRequest } from 'store/actions/jobs/withdrawAppliedJob
 
 import { addExternalJobClickService } from 'store/services/jobs/addExternalJobClick'
 
+import useRegister from 'hooks/useRegister'
+
 /* Styles */
 import styles from './Job.module.scss'
 import breakpointStyles from 'styles/breakpoint.module.scss'
+import quickStyles from 'pages/quick-upload-resume/styles.module.scss'
 
 /* Images */
 import {
@@ -87,9 +100,15 @@ import {
   ExpireIcon,
   RateIcon,
   LocationPinIcon,
+  BlueTickIcon,
   DefaultAvatar,
-  CarIcon
+  CarIcon,
+  BossjobLogo,
+  increaseUserConversionModelBg,
+  increaseUserConversionBrush,
+  CloseIcon
 } from 'images'
+import { getItem, setItem } from 'helpers/localStorage'
 interface IJobDetail {
   jobDetail: any
   applicationHistory: any
@@ -109,12 +128,19 @@ const Job = ({
   seoMetaDescription,
   seoCanonicalUrl
 }: IJobDetail) => {
+  const UseHooksRegister = useRegister()
+  const { isRegisteringJobseeker, isLoading, callbackRequest } = UseHooksRegister
+
   const dispatch = useDispatch()
   const router = useRouter()
+  const { width } = useWindowDimensions()
+  const prevScrollY = useRef(0)
   const userCookie = getCookie('user') || null
-  const authCookie = accessToken;
+  const authCookie = accessToken
   const applyJobLink = getApplyJobLink(jobDetail, userCookie, accessToken)
 
+  const [isSticky, setIsSticky] = useState(false)
+  const [openRegister, setOpenRegister] = useState(false)
   const [isSavedJob, setIsSavedJob] = useState(jobDetail?.is_saved)
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
@@ -122,12 +148,19 @@ const Job = ({
   const [searchValue, setSearchValue] = useState('')
   const [isShowModal, setIsShowModal] = useState(false)
   const [isWithdrawApplicationModal, setIsWithdrawApplicationModal] = useState(false)
+  const [closeRegisterModuleTime, setCloseRegisterModuleTime] = useState(
+    getItem('notLoginShowRegisterModuleTime')
+  )
+  const time = useRef(null)
 
   const jobDetailUrl = jobDetail?.['job_url'] || '/'
   const companyUrl = jobDetail?.['company']?.['company_url'] || '/'
   const [recommendedCourses, setRecommendedCourses] = useState([])
   const [similarJobs, setSimilarJobs] = useState(null)
   const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
+
+  const cx = classNames.bind(styles)
+  const isStickyClass = cx({ isSticky: isSticky })
 
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
@@ -163,6 +196,12 @@ const Job = ({
     }
     return false
   })
+
+  useEffect(() => {
+    window.addEventListener('scroll', updateScrollPosition)
+
+    return () => window.removeEventListener('scroll', updateScrollPosition)
+  }, [])
 
   useEffect(() => {
     handleFetchRecommendedCourses()
@@ -275,6 +314,16 @@ const Job = ({
     }
   }
 
+  const updateScrollPosition = () => {
+    if (width > 799) {
+      prevScrollY.current = window.pageYOffset
+      setIsSticky(prevScrollY.current >= 389 ? true : false)
+    } else {
+      prevScrollY.current = window.pageYOffset
+      setIsSticky(prevScrollY.current >= 592 ? true : false)
+    }
+  }
+
   const updateUrl = (queryParam) => {
     const queryObject = {
       page: 1,
@@ -362,7 +411,7 @@ const Job = ({
   }
 
   const handleReportJob = () => {
-    if ( authCookie && userCookie) {
+    if (authCookie && userCookie) {
       setIsShowReportJob(true)
     } else {
       // mobile get jobDetail is by url id
@@ -372,53 +421,142 @@ const Job = ({
   }
 
   const handleApplyJob = () => {
-    if (!userCookie) { 
+    if (!userCookie) {
       setQuickApplyModalShow(true)
     } else {
       if (userCookie && !userCookie.is_email_verify) {
         handleVerifyEmailClick()
       }
-      
+
       if (jobDetail?.external_apply_url) {
         addExternalJobClickService(jobDetail?.id)
       }
-      
+
       window.open(applyJobLink)
     }
   }
 
   const renderSaveAndApplyActions = () => {
     return (
-      <div className={styles.jobDetailPrimaryActions}>
-        {jobDetail?.status_key === 'active' ? (
-          <>
-            <MaterialButton
-              variant='contained'
-              capitalize
-              disabled={jobDetail?.is_applied}
-              className={styles.applyBtn}
-              onClick={handleApplyJob}
-            >
-              <Text textColor='white' bold>
-                {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
-              </Text>
-            </MaterialButton>
-            <MaterialButton
-              variant='outlined'
-              capitalize
-              onClick={() => handlePostSaveJob()}
-              >
-              <Text textColor='primary' bold>
-                {isSavedJob ? 'Saved' : 'Save Job'}
-              </Text>
-            </MaterialButton>
-          </>
-        ) : (
-          <Text textStyle='base' className={styles.jobDetailStatus}>
-            <img src={ExpireIcon} height='16' width='16' />
-            <span>This job is no longer hiring</span>
-          </Text>
+      <div
+        className={classNamesCombined([
+          styles.jobDetailCTA,
+          breakpointStyles.hideOnMobileAndTablet
+        ])}
+      >
+        {!isAppliedQueryParam && (
+          <div className={classNamesCombined([styles.jobDetailPrimaryActions, isStickyClass])}>
+            {jobDetail?.status_key === 'active' ? (
+              <>
+                <MaterialButton
+                  variant='contained'
+                  capitalize
+                  disabled={jobDetail?.is_applied}
+                  className={styles.applyBtn}
+                  onClick={handleApplyJob}
+                >
+                  <Text textColor='white' bold>
+                    {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
+                  </Text>
+                </MaterialButton>
+                <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
+                  <Text textColor='primary' bold>
+                    {isSavedJob ? 'Saved' : 'Save'}
+                  </Text>
+                </MaterialButton>
+              </>
+            ) : (
+              <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
+                <Text textColor='primary' bold>
+                  {isSavedJob ? 'Saved' : 'Save'}
+                </Text>
+              </MaterialButton>
+            )}
+          </div>
         )}
+      </div>
+    )
+  }
+
+  const mobileRenderSaveAndApplyActions = () => {
+    if (jobDetail?.status_key === 'active') {
+      return (
+        <div className={classNamesCombined([styles.jobDetailPrimaryActions, isStickyClass])}>
+          <MaterialButton
+            variant='outlined'
+            capitalize
+            className={styles.saveBtn}
+            onClick={() => handlePostSaveJob()}
+          >
+            <Text textColor='primary' bold>
+              {isSavedJob ? 'Saved' : 'Save'}
+            </Text>
+          </MaterialButton>
+          <MaterialButton
+            variant='contained'
+            capitalize
+            disabled={jobDetail?.is_applied}
+            className={styles.applyBtn}
+            onClick={handleApplyJob}
+          >
+            <Text textColor='white' bold>
+              {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
+            </Text>
+          </MaterialButton>
+        </div>
+      )
+    } else {
+      return (
+        <div className={classNamesCombined([styles.jobDetailPrimaryActions, isStickyClass])}>
+          <MaterialButton
+            variant='outlined'
+            capitalize
+            className={styles.saveBtn}
+            onClick={() => handlePostSaveJob()}
+          >
+            <Text textColor='primary' bold>
+              {isSavedJob ? 'Saved' : 'Save'}
+            </Text>
+          </MaterialButton>
+        </div>
+      )
+    }
+  }
+
+  const renderJobDetailPrimarySection = () => {
+    return (
+      <div className={classNamesCombined([styles.jobDetailPrimaryInfo, isStickyClass])}>
+        <Text
+          textStyle='xl'
+          tagName='h1'
+          bold
+          className={classNamesCombined([styles.jobDetailPrimaryInfoTitle, isStickyClass])}
+        >
+          {jobDetail?.job_title}
+        </Text>
+        <div className={classNamesCombined([styles.jobDetailCompany, isStickyClass])}>
+          <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
+            <Text textStyle='lg' className={styles.jobDetailCompanyName}>
+              {jobDetail?.company?.name}
+            </Text>
+          </Link>
+          {jobDetail?.company?.is_verify &&
+            (isMobile ? (
+              <MaterialMobileTooltip
+                icon={BlueTickIcon}
+                className={styles.companyIsVerifiedToolTip}
+                title='Verified'
+                style={{ marginTop: '10px' }}
+              />
+            ) : (
+              <MaterialDesktopTooltip
+                icon={BlueTickIcon}
+                className={styles.companyIsVerifiedToolTip}
+                title='Verified'
+                style={{ marginTop: '10px' }}
+              />
+            ))}
+        </div>
       </div>
     )
   }
@@ -430,6 +568,59 @@ const Job = ({
     }
   }, [])
 
+  const handleQuickUploadResumeClick = () => {
+    router.push('/quick-upload-resume')
+  }
+
+  const useInterval = (callback?, dep = 6000) => {
+    clearInterval(time.current)
+    const isShowRegisterModule = () => {
+      const nowTime = moment().format('YYYY-MM-DD HH:mm:ss')
+      if (moment(closeRegisterModuleTime).isBefore(nowTime)) {
+        if (!quickApplyModalShow) {
+          handleOpenRegisterModule()
+          clearTimeout(time.current)
+        }
+      } else {
+        // console.log('还没有到弹出的时候')
+      }
+    }
+
+    time.current = setInterval(isShowRegisterModule, dep)
+    return () => clearInterval(time.current)
+  }
+
+  useEffect(() => {
+    if (!accessToken) {
+      const notLoginShowRegisterModule = getItem('notLoginShowRegisterModuleTime')
+      if (notLoginShowRegisterModule) {
+        // Time 1 minute show module
+        // const intTime = setTimeout(() => {
+        // }, 60000)
+        return useInterval()
+      } else {
+        const callBack = () => {
+          if (!quickApplyModalShow) {
+            handleOpenRegisterModule()
+            clearTimeout(time)
+          }
+        }
+        const time = setInterval(callBack, 3000)
+        return () => {
+          clearTimeout(time)
+        }
+      }
+    }
+  }, [closeRegisterModuleTime, quickApplyModalShow])
+
+  const handleOpenRegisterModule = () => setOpenRegister(true)
+  const handleCloseRegisterModule = () => {
+    setOpenRegister(false)
+    const closeTime = moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss')
+    setItem('notLoginShowRegisterModuleTime', closeTime)
+    setCloseRegisterModuleTime(closeTime)
+  }
+
   return (
     <Layout>
       <SEO
@@ -439,6 +630,121 @@ const Job = ({
         jobDetail={jobDetail}
         imageUrl={jobDetail?.company?.logo}
       />
+
+      {width > 799 && (
+        <Modal
+          open={openRegister}
+          onClose={handleCloseRegisterModule}
+          aria-labelledby='modal-modal-title'
+          aria-describedby='modal-modal-description'
+          keepMounted
+          // hideBackdrop
+          disableAutoFocus
+        >
+          <div className={styles.forShowRegisterModal}>
+            <div className={styles.modalHeader}>
+              <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
+                Join Bossjob, kick-start your career!
+              </Text>
+              <div className={styles.modalCloseButton}>
+                <Text onClick={handleCloseRegisterModule}>
+                  <img
+                    src={CloseIcon}
+                    title='close modal'
+                    alt='close modal'
+                    width='14'
+                    height='14'
+                  />
+                </Text>
+              </div>
+            </div>
+            <div className={quickStyles.AuthWrapper}>
+              <div className={quickStyles.AuthWrapperImage}>
+                <div className={quickStyles.AuthWrapperImageTitle}>
+                  <div
+                    className={quickStyles.AuthWrapperImageTitleLineBg}
+                    style={{ backgroundImage: 'url(' + increaseUserConversionBrush + ')' }}
+                  >
+                    <Text textColor='white' textStyle='xxxl' block bold>
+                      Chat with Boss
+                    </Text>
+                  </div>
+                  <Text textColor='white' textStyle='xxxl' block bold>
+                    to get your
+                  </Text>
+                  <Text textColor='white' textStyle='xxxl' block bold>
+                    next offer!
+                  </Text>
+                </div>
+                <div className={quickStyles.AuthWrapperImageContext}>
+                  <img src={increaseUserConversionModelBg} />
+                  {/* <img
+                  src={increaseUserConversionBrush}
+                  className={quickStyles.AuthWrapperImageBrush}
+                /> */}
+                </div>
+              </div>
+              <div
+                className={classNames([
+                  quickStyles.AuthWrapperInfo,
+                  styles.AuthWrapperInfoModuleReg
+                ])}
+              >
+                {isLoading | isRegisteringJobseeker ? (
+                  <div className={quickStyles.AuthWrapperLoading}>
+                    <div className={quickStyles.loadingLogo}>
+                      <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+                    </div>
+                    <div className={quickStyles.loadingIndicator}>
+                      <LinearProgress />
+                    </div>
+                    <Text textStyle='lg'>'Please hold on while we are parsing your resume'</Text>
+                  </div>
+                ) : null}
+
+                <div className={styles.Register}>
+                  <SocialMediaAuth callbackRequest={callbackRequest} />
+                  <div className={styles.RegisterDivider}>
+                    <Text textStyle='lg' className={styles.RegisterDividerText}>
+                      Or
+                    </Text>
+                  </div>
+                </div>
+
+                <RegisterInfo register4Step isRegisterModuleRedirect {...UseHooksRegister} />
+
+                <div className={styles.forModuleFooterText}>
+                  <Text tagName='p' textStyle='base'>
+                    Already on Bossjob?
+                    <Link
+                      to={`/login/jobseeker?redirect=${router.asPath}`}
+                      className={styles.AuthCTALink}
+                    >
+                      <Text textColor='primaryBlue' underline>
+                        {' '}
+                        Log in
+                      </Text>
+                    </Link>
+                  </Text>
+
+                  <Text tagName='p' textStyle='base'>
+                    Looking to hire people? Sign up as
+                    <Link
+                      to={`${process.env.OLD_PROJECT_URL}/login`}
+                      className={styles.AuthCTALink}
+                      aTag
+                      external
+                    >
+                      <Text textColor='primaryBlue'> Employer</Text>
+                    </Link>
+                  </Text>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
+
       <div className={styles.searchAndLocationContainer}>
         <MaterialTextFieldWithSuggestionList
           id='search'
@@ -488,18 +794,15 @@ const Job = ({
                       <Text>Withdraw Application</Text>
                     </div>
                   )}
-                  <div
-                    className={styles.jobDetailOptionItem}
-                    onClick={() => setIsShowModalShare(true)}
-                  >
-                    <Text textStyle='lg'>Share this job</Text>
-                  </div>
-                  <div
-                    className={styles.jobDetailOptionItem}
-                    onClick={handleReportJob}
-                  >
-                    <Text textStyle='lg'>Report job</Text>
-                  </div>
+                <div
+                  className={styles.jobDetailOptionItem}
+                  onClick={() => setIsShowModalShare(true)}
+                >
+                  <Text textStyle='lg'>Share this job</Text>
+                </div>
+                <div className={styles.jobDetailOptionItem} onClick={handleReportJob}>
+                  <Text textStyle='lg'>Report job</Text>
+                </div>
               </Dropdown>
             </div>
             <img
@@ -507,26 +810,36 @@ const Job = ({
               className={styles.jobDetailPrimaryInfoImage}
               alt={`${jobDetail?.company?.name} logo`}
             />
-            <div className={styles.jobDetailPrimaryInfoWrapper}>
-              <div className={styles.jobDetailPrimaryInfo}>
-                <Text textStyle='xl' tagName='h1' bold className={styles.jobDetailPrimaryInfoTitle}>
-                  {jobDetail?.job_title}
-                </Text>
-                <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
-                  <Text textStyle='lg' className={styles.jobDetailCompany}>
-                    {jobDetail?.company?.name}
-                  </Text>
-                </Link>
-              </div>
+            {width > 799 && isSticky ? (
               <div
-                className={classNamesCombined([
-                  styles.jobDetailCTA,
-                  breakpointStyles.hideOnMobileAndTablet
-                ])}
+                className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}
               >
-                {!isAppliedQueryParam && renderSaveAndApplyActions()}
+                <div className={styles.jobDetailPrimaryInfoWrapperContainer}>
+                  {renderJobDetailPrimarySection()}
+                  {renderSaveAndApplyActions()}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className={styles.jobDetailPrimaryInfoWrapper}>
+                {renderJobDetailPrimarySection()}
+                {renderSaveAndApplyActions()}
+              </div>
+            )}
+            {/* {width > 799 ? (
+              <div
+                className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}
+              >
+                <div className={styles.jobDetailPrimaryInfoWrapperContainer}>
+                  {renderJobDetailPrimarySection()}
+                  {renderSaveAndApplyActions()}
+                </div>
+              </div>
+            ) : (
+              <div className={styles.jobDetailPrimaryInfoWrapper}>
+                {renderJobDetailPrimarySection()}
+                {renderSaveAndApplyActions()}
+              </div>
+            )} */}
             <div className={styles.jobDetailPrimarySub}>
               {jobDetail?.is_featured && <JobTag tag='Featured' tagType='featured' />}
               {jobDetail?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
@@ -542,15 +855,32 @@ const Job = ({
             >
               Posted on {jobDetail?.published_at}
             </Text>
+            {jobDetail?.status_key !== 'active' && (
+              <Text
+                textStyle='base'
+                className={classNamesCombined([
+                  styles.jobDetailStatus,
+                  breakpointStyles.hideOnMobileAndTablet
+                ])}
+              >
+                <img src={ExpireIcon} height='16' width='16' />
+                <span>This job is no longer hiring</span>
+              </Text>
+            )}
           </div>
           <div
             className={classNamesCombined([styles.jobDetailCTA, breakpointStyles.hideOnDesktop])}
           >
-            {!isAppliedQueryParam && renderSaveAndApplyActions()}
-            
+            {!isAppliedQueryParam && mobileRenderSaveAndApplyActions()}
             <Text textStyle='base' textColor='darkgrey' className={styles.jobDetailPostedAt}>
               Posted on {jobDetail?.published_at}
             </Text>
+            {jobDetail?.status_key !== 'active' && (
+              <Text textStyle='base' className={styles.jobDetailStatus}>
+                <img src={ExpireIcon} height='16' width='16' />
+                <span>This job is no longer hiring</span>
+              </Text>
+            )}
           </div>
           <div className={styles.jobDetailPref}>
             <ul className={styles.jobDetailPrefList}>
@@ -733,7 +1063,7 @@ const Job = ({
                       {jobDetail?.recruiter.full_name},{' '}
                     </Text>
                     <Text textStyle='lg'>
-                      &nbsp;{jobDetail?.recruiter.work_experience.job_title}
+                      &nbsp;{jobDetail?.recruiter?.work_experience?.job_title}
                     </Text>
                   </div>
                   <div className={styles.jobDetailRecruiterContent}>
@@ -761,8 +1091,27 @@ const Job = ({
               external
               className={styles.aboutCompanyTitle}
             >
-              <Text bold textStyle='lg' textColor='primaryBlue'>
+              <Text
+                bold
+                textStyle='lg'
+                textColor='primaryBlue'
+                className={styles.aboutCompanyTitleName}
+              >
                 {jobDetail?.company?.name}
+                {jobDetail?.company?.is_verify &&
+                  (isMobile ? (
+                    <MaterialMobileTooltip
+                      icon={BlueTickIcon}
+                      className={styles.companyIsVerifiedToolTip}
+                      title='Verified'
+                    />
+                  ) : (
+                    <MaterialDesktopTooltip
+                      icon={BlueTickIcon}
+                      className={styles.companyIsVerifiedToolTip}
+                      title='Verified'
+                    />
+                  ))}
               </Text>
             </Link>
             <div className={styles.aboutCompanyDetail}>
@@ -776,6 +1125,15 @@ const Job = ({
           <div className={styles.sideSquareBanner}>
             <AdSlot adSlot='job-detail/square-banner-1' />
           </div>
+
+          <div className={styles.quickCreateResume}>
+            <UploadResumeButton
+              isShowBtn={!accessToken}
+              handleClick={handleQuickUploadResumeClick}
+              isShowArrowIcon
+            />
+          </div>
+
           {!isSimilarJobsFetching && similarJobs?.length > 0 ? (
             <div className={styles.jobDetailSidebarContent}>
               <div className={styles.jobDetailSidebarSection}>
@@ -804,8 +1162,26 @@ const Job = ({
                           {job.truncated_job_title || job.job_title}
                         </Text>
                       </Link>
-                      <Text textStyle='lg' tagName='p'>
+                      <Text
+                        className={styles.jobDetailSidebarCardCompanyName}
+                        textStyle='lg'
+                        tagName='p'
+                      >
                         {job.company_name}
+                        {jobDetail?.company?.is_verify &&
+                          (isMobile ? (
+                            <MaterialMobileTooltip
+                              icon={BlueTickIcon}
+                              className={styles.jobDetailSidebarCardTooltip}
+                              title='Verified'
+                            />
+                          ) : (
+                            <MaterialDesktopTooltip
+                              icon={BlueTickIcon}
+                              className={styles.jobDetailSidebarCardTooltip}
+                              title='Verified'
+                            />
+                          ))}
                       </Text>
                       <Text textStyle='lg' tagName='p'>
                         {job.location_value}
@@ -973,34 +1349,42 @@ const Job = ({
           isWithdrawApplicationResult={isUnBingwithdrawAppliedStateSuccess}
         />
       )}
-      {isShowReportJob && <ModalReportJob
-        isShowReportJob={isShowReportJob}
-        handleShowReportJob={setIsShowReportJob}
-        reportJobReasonList={reportJobReasonList}
-        selectedJobId={jobDetail.id}
-        handlePostReportJob={handlePostReportJob}
-        isPostingReport={isPostingReport}
-        postReportResponse={postReportResponse}
-      />}
-      
-      {isShowModalShare && <ModalShare
-        jobDetailUrl={jobDetailUrl}
-        isShowModalShare={isShowModalShare}
-        handleShowModalShare={setIsShowModalShare}
-      />}
+      {isShowReportJob && (
+        <ModalReportJob
+          isShowReportJob={isShowReportJob}
+          handleShowReportJob={setIsShowReportJob}
+          reportJobReasonList={reportJobReasonList}
+          selectedJobId={jobDetail.id}
+          handlePostReportJob={handlePostReportJob}
+          isPostingReport={isPostingReport}
+          postReportResponse={postReportResponse}
+        />
+      )}
 
-      {quickApplyModalShow && <QuickApplyModal
-        jobDetails={jobDetail}
-        modalShow={quickApplyModalShow}
-        handleModalShow={setQuickApplyModalShow}
-        config={config}
-      />}
+      {isShowModalShare && (
+        <ModalShare
+          jobDetailUrl={jobDetailUrl}
+          isShowModalShare={isShowModalShare}
+          handleShowModalShare={setIsShowModalShare}
+        />
+      )}
 
-      {isShowModal && <ModalVerifyEmail
-        email={userCookie ? userCookie.email : ''}
-        isShowModal={isShowModal}
-        handleModal={handleCloseModal}
-      />}
+      {quickApplyModalShow && (
+        <QuickApplyModal
+          jobDetails={jobDetail}
+          modalShow={quickApplyModalShow}
+          handleModalShow={setQuickApplyModalShow}
+          config={config}
+        />
+      )}
+
+      {isShowModal && (
+        <ModalVerifyEmail
+          email={userCookie ? userCookie.email : ''}
+          isShowModal={isShowModal}
+          handleModal={handleCloseModal}
+        />
+      )}
     </Layout>
   )
 }
@@ -1010,7 +1394,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const { keyword, isApplied } = query
   const keywordQuery: any = keyword
   const jobId = keywordQuery?.split('-').pop()
-  
+
   if (jobId) {
     if (isApplied === 'true') {
       store.dispatch(fetchAppliedJobDetailRequest({ jobId, accessToken }))
@@ -1040,7 +1424,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   if (Object.keys(jobDetail).length > 0 || Object.keys(appliedJobDetail).length > 0) {
     jobDetail = jobDetail?.id ? jobDetail : appliedJobDetail?.job
-    
+
     const {
       id: jobId,
       job_title: jobTitle,

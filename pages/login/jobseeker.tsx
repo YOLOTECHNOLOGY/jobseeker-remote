@@ -6,6 +6,8 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
 
+import { authPathToOldProject } from 'helpers/authenticationTransition'
+
 /* Components */
 import MaterialButton from 'components/MaterialButton'
 import MaterialTextField from 'components/MaterialTextField'
@@ -212,13 +214,20 @@ export async function getServerSideProps({ req, res, query }) {
 
   if (accessToken) {
     let redirectUrl = '/jobs-hiring/job-search'
-    const queryRedirect = query?.redirect
+    
+    const redirect = query?.redirect
 
-    if (queryRedirect) {
-      let reqUrl = req?.url
-      reqUrl = reqUrl.split('/login/jobseeker?redirect=').pop()
-      if (reqUrl) {
-        redirectUrl = reqUrl
+    if (redirect) {
+      if (redirect.includes(process.env.OLD_PROJECT_URL)) {
+        const newUrl = new URL(redirect)
+
+        redirectUrl = authPathToOldProject(
+          accessToken,
+          newUrl.pathname + newUrl.search
+        )
+
+      } else {
+        redirectUrl = redirect
       }
     }
 

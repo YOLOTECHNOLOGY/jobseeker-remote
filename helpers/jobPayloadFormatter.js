@@ -11,19 +11,19 @@ const handleSalary = (salaryRanges) => {
   let salaryFrom = ''
   let salaryTo = ''
   if (salaryRanges) {
-    const sanitiseSalaryRange = salaryRanges.map((range) =>
-      range === 'Below 30K' ? '10K - 30K' : range
-    )
-
-    salaryFrom = sanitiseSalaryRange
-      .filter((salary) => salary !== 'Above 200K')
+    salaryFrom = salaryRanges
+      .filter((salary) => salary !== 'Below 30K' && salary !== 'Above 200K')
       .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split(' - ')[0]))
 
-    salaryTo = sanitiseSalaryRange
-      .filter((salary) => salary !== 'Above 200K')
+    salaryTo = salaryRanges
+      .filter((salary) => salary !== 'Below 30K' && salary !== 'Above 200K')
       .map((salaryTo) => thousandsToNumber('' + salaryTo.split(' - ')[1]))
 
-    if (sanitiseSalaryRange.includes('Above 200K')) {
+    if (salaryRanges.includes('Below 30K')) {
+      salaryFrom.push(0)
+      salaryTo.push(30000)
+    }
+    if (salaryRanges.includes('Above 200K')) {
       salaryFrom.push(200001)
       salaryTo.push(400000)
     }
@@ -39,7 +39,7 @@ const formatLocationConfig = (locationList) => {
     return {
       label: region.display_name,
       value: region.value,
-      subList: region.locations,
+      subList: region.locations
     }
   })
   return locationConfig
@@ -116,7 +116,7 @@ const SEOJobSearchMetaBuilder = (query, location, category, path) => {
   const data = {
     title: title,
     description: description,
-    canonical: canonical,
+    canonical: canonical
   }
 
   return data
@@ -130,7 +130,7 @@ const nonFilterKeys = [
   'sort',
   'utm_source',
   'utm_campaign',
-  'utm_medium',
+  'utm_medium'
 ]
 
 // const buildQueryParams = (data) => {
@@ -149,8 +149,14 @@ const nonFilterKeys = [
 //   return queryString
 // }
 
-// check if there is a match/a reserved keyword, and return matched data under matchedFilter
-const checkFilterMatch = (routerQuery, config, isMobile=false) => {
+/**
+ * This function solely returns matched filter from URL
+ * @param {Object} routerQuery -  router query data retrieved from router.query at the point of user's selection
+ * @param {Object} config - config retrieved from config API
+ * @return {Object} 
+ * @description  Main part to the logic is to handle data extracted from URL
+ */
+const checkFilterMatch = (routerQuery, config, isMobile = false) => {
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
   const locationList = config.inputs.location_lists
@@ -159,10 +165,16 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
   const eduLevelList = config.filters.educations
   const jobTypeList = config.inputs.job_types
   const categoryList = config.inputs.job_category_lists
+  const verifiedCompanyList = [{
+    key: 'verified-companies',
+    ['seo-value']: 'verified-companies',
+    value: 'View verified companies',
+    label: 'View verified companies'
+}]
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
-    ['seo-value']: range['seo-value'],
+    ['seo-value']: range['seo-value']
   }))
   const formatLocationConfig = (locationList) => {
     const locationConfig = locationList?.map((region) => region.locations)
@@ -177,6 +189,7 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
     qualification: eduLevelList,
     location: formattedLocationList,
     category: categoryList,
+    verifiedCompany: verifiedCompanyList
   }
   let predefinedQuery = ''
   let searchQuery = ''
@@ -188,6 +201,12 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
   let matchedConfigFromUserSelection = {}
   let filterCount = 0
 
+  /* handle keyword extracted from url
+   * iterate based on number of results from queryParser
+   * queryParser can only return at most 2 result.
+   * 1 = search keyword
+   * 2 = location
+   */
   Object.keys(sanitisedConfig).forEach((key) => {
     // iterate based on number of results from queryParser
     queryParser.forEach((parsedData, index) => {
@@ -214,13 +233,13 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
         if (mainOptionMatched.length > 0) {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: mainOptionMatched,
+            [key]: mainOptionMatched
           }
         }
         if (subOptionMatched.length > 0) {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: subOptionMatched,
+            [key]: subOptionMatched
           }
         }
       } else {
@@ -248,11 +267,11 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
         if (hasMatch.length > 0 && key !== 'location') {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: hasMatch,
+            [key]: hasMatch
           }
         } else if (hasMatch.length > 0 && key === 'location') {
           matchedLocation = {
-            [key]: hasMatch,
+            [key]: hasMatch
           }
         }
       }
@@ -271,7 +290,7 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
         filterData = {
           ...filterData,
           // ensure to only push unduplicated results
-          [key]: Array.from(new Set(arrayVal)).join(','),
+          [key]: Array.from(new Set(arrayVal)).join(',')
         }
         const hasMatch = []
         let isLocationMatch = false
@@ -300,14 +319,14 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
               const prevValue = matchedConfigFromUserSelection[key]
               matchedConfigFromUserSelection = {
                 ...matchedConfigFromUserSelection,
-                [key]: prevValue ? [...prevValue, ...mainOptionMatched] : mainOptionMatched,
+                [key]: prevValue ? [...prevValue, ...mainOptionMatched] : mainOptionMatched
               }
             }
             if (subOptionMatched.length > 0) {
               const prevValue = matchedConfigFromUserSelection[key]
               matchedConfigFromUserSelection = {
                 ...matchedConfigFromUserSelection,
-                [key]: prevValue ? [...prevValue, ...subOptionMatched] : subOptionMatched,
+                [key]: prevValue ? [...prevValue, ...subOptionMatched] : subOptionMatched
               }
             }
           } else {
@@ -329,12 +348,12 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
             locationMatch = true
             matchedLocation = {
               ...matchedLocation,
-              [key]: hasMatch,
+              [key]: hasMatch
             }
           } else {
             matchedConfigFromUserSelection = {
               ...matchedConfigFromUserSelection,
-              [key]: hasMatch,
+              [key]: hasMatch
             }
           }
         }
@@ -355,8 +374,10 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
     array.push(matchedConfigFromUserSelection)
 
   // Fields that need to be counted based on mobile or desktop view
-  const filterCountField = isMobile ? ['jobType', 'salary', 'industry', 'workExperience', 'qualification', 'category'] : ['industry', 'workExperience', 'qualification']
-  
+  const filterCountField = isMobile
+    ? ['jobType', 'salary', 'industry', 'workExperience', 'qualification', 'category']
+    : ['industry', 'workExperience', 'qualification']
+
   array.forEach((matchData) => {
     for (const [key] of Object.entries(matchData)) {
       const data = matchData[key].map((filter) => filter['seo-value'])
@@ -382,8 +403,37 @@ const checkFilterMatch = (routerQuery, config, isMobile=false) => {
   return matchedFilter
 }
 
-// handle filters from user selection in job search page
-const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear) => {
+/**
+ * handle filters selected by user in job search page
+ * @param {string} field -  the field's name. E.g: query, location, sort etc. 
+ * @param {string|string[]|Object} optionValue -  value of the filters selected. 
+ * For 'query' field = string
+ * For 'location' field = object
+ * For 'moreFilters' field = object
+ * e.g: moreFilter's optionValue object will look something like this = {
+    category: null
+    industry: ['accounting-finance']
+    jobType: null
+    location: null
+    qualification: ['bachelor']
+    salary: null
+    sort: [1]
+    urlQuery: ""
+    workExperience: ['1-year']
+  }
+  For any other filters, field = array of strings
+ * @param {Object} routerQuery -  router query data retrieved from router.query at the point of user's selection
+ * @param {Object} config - config retrieved from config API
+ * @param {Boolean} isClear - truthy value denotes that the user has reset/deselected the option
+ * @return {Object} 
+ * @description 
+ * 3 main parts to the logic :
+ * PART I - to handle data extracted from URL
+ * PART II - to handle data from user selections
+ * PART III - logic to determine URL format, utilizes function call appendGeneralQueryPattern, appendSingleQueryPattern, appendDoubleQueryPattern
+ * 
+ */
+const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear = false) => {
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
   const locationList = config.inputs.location_lists
@@ -392,16 +442,24 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
   const eduLevelList = config.filters.educations
   const jobTypeList = config.inputs.job_types
   const categoryList = config.inputs.job_category_lists
+  const verifiedCompanyList = [{
+    key: 'verified-companies',
+    ['seo-value']: 'verified-companies',
+    value: 'View verified companies',
+    label: 'View verified companies'
+  }]
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
-    ['seo-value']: range['seo-value'],
+    ['seo-value']: range['seo-value']
   }))
   const formatLocationConfig = (locationList) => {
     const locationConfig = locationList?.map((region) => region.locations)
     return locationConfig
   }
   const formattedLocationList = flat(formatLocationConfig(locationList))
+
+  // Create a config object that includes all filter's field name for ease of mapping
   const sanitisedConfig = {
     industry: industryList,
     jobType: jobTypeList,
@@ -410,17 +468,24 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     qualification: eduLevelList,
     location: formattedLocationList,
     category: categoryList,
+    verifiedCompany: verifiedCompanyList
   }
 
-  let matchedConfigFromUrl = {}
-  let matchedConfigFromUserSelection = {}
-  let matchedLocation = {}
+  let matchedConfigFromUrl = {} // get matched filter object from config if url keyword matches any of our config filter
+  let matchedConfigFromUserSelection = {} // get matched filter object from config if filter selected by user matched any of our config filter
+  let matchedLocation = {} // get matched location object from config if url contains location keyword
   let matchedConfig = {} // specifically to return match for query
-  let predefinedQuery = ''
-  let searchQuery = ''
-  let predefinedLocation = ''
+  let predefinedQuery = '' // query detected from url (if keyword does not meet any filter, it is a predefinedKeyword)
+  let searchQuery = '' // search query typed by user
+  let predefinedLocation = '' // location detected from url
   let filterData = {}
 
+  /* PART I - handle keyword extracted from url
+   * iterate based on number of results from queryParser
+   * queryParser can only return at most 2 result.
+   * 1 = search keyword
+   * 2 = location
+   */
   Object.keys(sanitisedConfig).forEach((key) => {
     // handle predefined filters from url (keyword)
     // iterate based on number of results from queryParser
@@ -448,13 +513,13 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         if (mainOptionMatched.length > 0) {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: mainOptionMatched,
+            [key]: mainOptionMatched
           }
         }
         if (subOptionMatched.length > 0) {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: subOptionMatched,
+            [key]: subOptionMatched
           }
         }
       } else {
@@ -479,11 +544,11 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         if (hasMatch.length > 0 && key !== 'location') {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: hasMatch,
+            [key]: hasMatch
           }
         } else if (hasMatch.length > 0 && key === 'location') {
           matchedLocation = {
-            [key]: hasMatch,
+            [key]: hasMatch
           }
         }
       }
@@ -515,21 +580,21 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         if (mainOptionMatched.length > 0) {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: mainOptionMatched,
+            [key]: mainOptionMatched
           }
           matchedConfig = {
             ...matchedConfig,
-            [key]: mainOptionMatched,
+            [key]: mainOptionMatched
           }
         }
         if (subOptionMatched.length > 0) {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: subOptionMatched,
+            [key]: subOptionMatched
           }
           matchedConfig = {
             ...matchedConfig,
-            [key]: subOptionMatched,
+            [key]: subOptionMatched
           }
         }
       } else {
@@ -550,19 +615,19 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         if (hasMatch.length > 0 && key !== 'location') {
           matchedConfigFromUrl = {
             ...matchedConfigFromUrl,
-            [key]: hasMatch,
+            [key]: hasMatch
           }
           matchedConfig = {
             ...matchedConfig,
-            [key]: hasMatch,
+            [key]: hasMatch
           }
         } else if (hasMatch.length > 0 && key === 'location') {
           matchedLocation = {
-            [key]: hasMatch,
+            [key]: hasMatch
           }
           matchedConfig = {
             ...matchedConfig,
-            [key]: hasMatch,
+            [key]: hasMatch
           }
         }
       }
@@ -576,6 +641,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     if (queryParser.length > 0 && queryParser[0] !== predefinedQuery) searchQuery = queryParser[0]
   }
 
+  /* PART II - handle filters from user selection */
   // handle filters from user selection
   let updatedFilters = { ...rest }
   // if optionValue !== [], include current filter with the rest of the filters
@@ -589,7 +655,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         updatedFilters = {
           ...updatedFilters,
           // ensure to only push unduplicated results
-          [key]: [...new Set(value)].join(),
+          [key]: [...new Set(value)].join()
         }
       }
     }
@@ -612,7 +678,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
         filterData = {
           ...filterData,
           // ensure to only push unduplicated results
-          [key]: Array.from(new Set(arrayVal)).join(','),
+          [key]: Array.from(new Set(arrayVal)).join(',')
         }
         const hasMatch = []
         let isLocationMatch = false
@@ -641,14 +707,14 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
               const prevValue = matchedConfigFromUserSelection[key]
               matchedConfigFromUserSelection = {
                 ...matchedConfigFromUserSelection,
-                [key]: prevValue ? [...prevValue, ...mainOptionMatched] : mainOptionMatched,
+                [key]: prevValue ? [...prevValue, ...mainOptionMatched] : mainOptionMatched
               }
             }
             if (subOptionMatched.length > 0) {
               const prevValue = matchedConfigFromUserSelection[key]
               matchedConfigFromUserSelection = {
                 ...matchedConfigFromUserSelection,
-                [key]: prevValue ? [...prevValue, ...subOptionMatched] : subOptionMatched,
+                [key]: prevValue ? [...prevValue, ...subOptionMatched] : subOptionMatched
               }
             }
           } else {
@@ -669,12 +735,12 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
           if (isLocationMatch) {
             matchedLocation = {
               ...matchedLocation,
-              [key]: hasMatch,
+              [key]: hasMatch
             }
           } else {
             matchedConfigFromUserSelection = {
               ...matchedConfigFromUserSelection,
-              [key]: hasMatch,
+              [key]: hasMatch
             }
           }
         }
@@ -698,13 +764,26 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     })
   })
 
-  const array = []
+  let array = []
   if (Object.keys(matchedLocation).length > 0) array.push(matchedLocation)
   if (Object.keys(matchedConfigFromUrl).length > 0) array.push(matchedConfigFromUrl)
   if (Object.keys(matchedConfigFromUserSelection).length > 0)
     array.push(matchedConfigFromUserSelection)
 
   let uniqueList = []
+
+  /* If field === category or field === 'moreFilters' (in mobile) && 
+   * array includes 2 keys from category,
+   * remove matchedConfigFromUrl, only take in matchedConfigFromUserSelection
+   */
+  if (
+    (field === 'category' || field === 'moreFilters') && 
+    Object.keys(matchedConfigFromUrl).includes('category') &&
+    Object.keys(matchedConfigFromUserSelection).includes('category')
+  ) {
+    array = array.filter((matchData) => matchData !== matchedConfigFromUrl)
+  }
+
   array.forEach((matchData) => {
     for (const [key] of Object.entries(matchData)) {
       const data =
@@ -720,12 +799,12 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       if (filterParamsObject[key]) {
         filterParamsObject = {
           ...filterParamsObject,
-          [key]: uniqueList.join(),
+          [key]: uniqueList.join()
         }
       } else {
         filterParamsObject = {
           ...filterParamsObject,
-          [key]: match,
+          [key]: match
         }
       }
 
@@ -749,6 +828,10 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
 
   filterCount = uniqueList.length
 
+  /* PART III - logic to determine URL format
+   * There are 4 types of scenario
+   * when filterCount === 0 ||  filterCount === 1 || filterCount === 2 || filterCount > 2
+   */
   if (filterCount === 0) {
     if ((field === 'query' && isClear) || (field === 'moreFilters' && isClear)) {
       query = appendGeneralQueryPattern()
@@ -1054,7 +1137,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
       } else {
         filterParamsObject = {
           ...filterParamsObject,
-          [key]: valueArray.join(),
+          [key]: valueArray.join()
         }
       }
     }
@@ -1065,7 +1148,7 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
     filterParamsObject,
     matchedConfig,
     matchedConfigFromUrl,
-    matchedConfigFromUserSelection,
+    matchedConfigFromUserSelection
   }
 
   return data
@@ -1119,7 +1202,7 @@ const getPredefinedParamsFromUrl = (routerQuery, catList, locList, clearAllFilte
   return {
     predefinedQuery,
     predefinedCategory,
-    predefinedLocation,
+    predefinedLocation
   }
 }
 
@@ -1162,7 +1245,7 @@ const getLocationList = (config) => {
         region.locations.map((loc) => ({
           ...loc,
           // loc value all lower case
-          value: loc.value,
+          value: loc.value
         }))
       )
       .reduce((a, c) => a.concat(c), [])
@@ -1179,7 +1262,7 @@ const getSmsCountryList = (config) => {
     if (country.is_sms_allowed) {
       const smsCountry = {
         value: country['code'],
-        label: country['code'] + ' (' + country['value'] + ')',
+        label: country['code'] + ' (' + country['value'] + ')'
       }
 
       smsCountryList.push(smsCountry)
@@ -1231,7 +1314,7 @@ const getNoticePeriodList = (config) => {
   return config?.inputs?.notice_period_lists.map((notice) => ({
     ...notice,
     label: notice.value,
-    value: notice.id,
+    value: notice.id
   }))
 }
 
@@ -1259,7 +1342,7 @@ const getCountryList = (config) => {
     return {
       label: country.value,
       value: country.value,
-      key: country.key,
+      key: country.key
     }
   })
 
@@ -1278,7 +1361,7 @@ const getIndustryList = (config) => {
     return {
       label: industry.value,
       value: industry.value,
-      key: industry.key,
+      key: industry.key
     }
   })
 }
@@ -1293,7 +1376,7 @@ const getDegreeList = (config) => {
     return {
       label: degree.value,
       value: degree.value,
-      key: degree.key,
+      key: degree.key
     }
   })
 }
@@ -1301,8 +1384,8 @@ const getDegreeList = (config) => {
 const getApplyJobLink = (job, user, accessToken = null) => {
   // jobUrl => /job/xxxx
   // Apply job url format: /apply-job/xxx
-  let applyJobUrl = `${process.env.HOST_PATH}${job?.job_url}/apply`;
-  
+  let applyJobUrl = `${process.env.HOST_PATH}${job?.job_url}/apply`
+
   if (user) {
     if (!user?.is_profile_completed) {
       return `${process.env.HOST_PATH}/jobseeker-complete-profile/1?redirect=${applyJobUrl}`
@@ -1311,7 +1394,11 @@ const getApplyJobLink = (job, user, accessToken = null) => {
     if (job?.external_apply_url) {
       let externalApplyUrl = job?.external_apply_url
 
-      if (externalApplyUrl !== '' && externalApplyUrl !== null && !/^(f|ht)tps?:\/\//i.test(externalApplyUrl)) {
+      if (
+        externalApplyUrl !== '' &&
+        externalApplyUrl !== null &&
+        !/^(f|ht)tps?:\/\//i.test(externalApplyUrl)
+      ) {
         externalApplyUrl = 'https://' + externalApplyUrl
       }
 
@@ -1320,7 +1407,7 @@ const getApplyJobLink = (job, user, accessToken = null) => {
 
     return applyJobUrl
   }
-  
+
   return `${process.env.HOST_PATH}/login/jobseeker?redirect=${applyJobUrl}`
 }
 
@@ -1384,5 +1471,5 @@ export {
   getApplyJobLink,
   userFilterSelectionDataParser,
   checkFilterMatch,
-  mapSeoValueToGetValue,
+  mapSeoValueToGetValue
 }

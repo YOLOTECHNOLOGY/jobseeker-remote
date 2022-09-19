@@ -12,7 +12,7 @@ import { REGISTER_JOBSEEKER_REQUEST } from 'store/types/auth/registerJobseeker'
 
 import {
   registerJobseekerSuccess,
-  registerJobseekerFailed,
+  registerJobseekerFailed
 } from 'store/actions/auth/registerJobseeker'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
@@ -30,6 +30,7 @@ function* registerJobSeekerReq(actions) {
       is_subscribe,
       source,
       redirect,
+      isRedirect
     } = actions.payload
 
     let randomPassword
@@ -47,7 +48,7 @@ function* registerJobSeekerReq(actions) {
       source: source || 'web',
       country_key: process.env.COUNTRY_KEY,
       terms_and_condition: terms_and_condition || 0,
-      ...(yield* getUtmCampaignData()),
+      ...(yield* getUtmCampaignData())
     }
 
     const response = yield call(registerJobseekerService, registerJobseekerPayload)
@@ -57,12 +58,12 @@ function* registerJobSeekerReq(actions) {
 
       if (window !== 'undefined' && window.gtag) {
         yield window.gtag('event', 'conversion', {
-          send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID',
+          send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
         })
       }
 
       if (window !== 'undefined' && window.fbq) {
-        yield fbq.event('CompleteRegistration', {'source': 'sign_up'})
+        yield fbq.event('CompleteRegistration', { source: 'sign_up' })
       }
 
       const registeredData = response.data.data
@@ -78,7 +79,7 @@ function* registerJobSeekerReq(actions) {
         additional_info: registeredData.additional_info,
         is_email_verify: registeredData.is_email_verify,
         notice_period_id: registeredData.notice_period_id,
-        is_profile_completed: registeredData.is_profile_completed,
+        is_profile_completed: registeredData.is_profile_completed
       }
       setItem(isFromCreateResume, source === 'free_resume' ? '1' : '0')
 
@@ -88,7 +89,10 @@ function* registerJobSeekerReq(actions) {
       let url = '/jobseeker-complete-profile/1'
 
       if (redirect) {
-        if (redirect.includes(process.env.OLD_PROJECT_URL) && !redirect.includes('/jobseeker-login-redirect')) {
+        if (
+          redirect.includes(process.env.OLD_PROJECT_URL) &&
+          !redirect.includes('/jobseeker-login-redirect')
+        ) {
           const newUrl = new URL(redirect)
 
           url = authPathToOldProject(
@@ -100,16 +104,21 @@ function* registerJobSeekerReq(actions) {
         }
       }
 
-      yield put(push(url))
+      if (isRedirect) {
+        yield put(push(url))
+      }
     }
   } catch (err) {
     const isServerError = checkErrorCode(err)
     if (isServerError) {
-      yield put(displayNotification({
-        open: true,
-        severity: 'error',
-        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
-      }))
+      yield put(
+        displayNotification({
+          open: true,
+          severity: 'error',
+          message:
+            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+        })
+      )
     } else {
       const statusCode = err.response.status
       if (statusCode === 422) {

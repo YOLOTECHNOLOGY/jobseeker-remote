@@ -190,7 +190,6 @@ const EditJobPreferencesModal = ({
     reset()
   }
 
-  console.log('preferredJobTitle', preferredJobTitle)
   const modalJobPreferenceContent = (
     <div className={styles.jobPreferences}>
       <div className={styles.jobPreferencesForm}>

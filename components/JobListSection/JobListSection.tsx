@@ -15,6 +15,7 @@ import Text from 'components/Text'
 import JobCard from 'components/JobCard'
 import JobDetail from 'components/JobDetail'
 import AdSlot from 'components/AdSlot'
+import UploadResumeButton from 'components/LncreaseUserConversion/UploadResumeButton/UploadResumeButton'
 
 import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
@@ -122,12 +123,14 @@ const JobListSection = ({
 
   useEffect(() => {
     setSelectedPage(router.query.page ? Number(router.query.page) : 1)
-    document.documentElement.scrollTop = 0;
+    document.documentElement.scrollTop = 0
   }, [router.query.page])
 
   useEffect(() => {
-    setJobNumStart(((jobList?.page - 1) * jobList?.size) + 1)
-    setJobNumEnd(jobList?.jobs.length > 0 ? ((jobList?.page - 1) * jobList?.size) + jobList?.jobs.length : 30)
+    setJobNumStart((jobList?.page - 1) * jobList?.size + 1)
+    setJobNumEnd(
+      jobList?.jobs.length > 0 ? (jobList?.page - 1) * jobList?.size + jobList?.jobs.length : 30
+    )
   }, [jobList])
 
   const handlePaginationClick = (event, val) => {
@@ -136,7 +139,6 @@ const JobListSection = ({
   }
 
   const handleCreateJobAlertData = (email) => {
-
     const createJobAlertPayload = {
       email: email,
       keyword: filterJobPayload?.query ? filterJobPayload.query : '',
@@ -148,7 +150,7 @@ const JobListSection = ({
       xp_lvl_values: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
       degree_values: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',
       is_company_verified: 'all',
-      frequency_id: 1,
+      frequency_id: 1
     }
 
     createJobAlert(createJobAlertPayload)
@@ -161,14 +163,20 @@ const JobListSection = ({
   const updateScrollPosition = () => {
     if (width > 798) {
       prevScrollY.current = window.pageYOffset
-      setIsSticky(prevScrollY.current >= 330 ? true : false)
+      setIsSticky(prevScrollY.current >= 256 ? true : false)
     }
+  }
+
+  const handleQuickUploadResumeClick = () => {
+    router.push('/quick-upload-resume')
   }
 
   const emptyResult = () => {
     return (
       <React.Fragment>
-        <Text textStyle='xl' bold>We couldn't find any jobs matching your search.</Text>
+        <Text textStyle='xl' bold>
+          We couldn't find any jobs matching your search.
+        </Text>
         <Text textStyle='md'>Check the spelling and adjust the filter criteria.</Text>
       </React.Fragment>
     )
@@ -181,7 +189,10 @@ const JobListSection = ({
           <div className={styles.container}>
             {!isJobListFetching && (
               <div className={styles.jobListOptionContent}>
-                <Text textStyle='base' bold>{jobNumStart.toLocaleString()}-{jobNumEnd.toLocaleString()} of {jobList?.total_num.toLocaleString()} jobs </Text>
+                <Text textStyle='base' bold>
+                  {jobNumStart.toLocaleString()}-{jobNumEnd.toLocaleString()} of{' '}
+                  {jobList?.total_num.toLocaleString()} jobs{' '}
+                </Text>
                 <div className={styles.jobListOptionAlerts}>
                   <div
                     className={styles.jobListOptionAlertsItem}
@@ -228,42 +239,45 @@ const JobListSection = ({
               )}
 
               {jobList?.jobs?.length === 0 && !isJobDetailFetching && (
-                <div className={styles.emptyResultMobile}>
-                  {emptyResult()}
-                </div>
+                <div className={styles.emptyResultMobile}>{emptyResult()}</div>
               )}
 
-              {!isJobListFetching && jobList?.jobs?.length > 0 && jobList.jobs.map((job) => (
-                <JobCard
-                  key={job.id}
-                  id={job.id}
-                  image={job.company_logo}
-                  title={job.job_title}
-                  jobType={job.job_type}
-                  isFeatured={Boolean(job.is_featured)}
-                  isUrgent={Boolean(job.highlighted)}
-                  company={job.company_name}
-                  location={job.job_location}
-                  salary={job.salary_range_value}
-                  postedAt={job.refreshed_at}
-                  status={job.status_key}
-                  selectedId={selectedJobId}
-                  handleSelectedId={() => {
-                    handleSelectedJobId(job.id, job.job_url)
-                  }}
-                />
-              ))}
+              {!isJobListFetching &&
+                jobList?.jobs?.length > 0 &&
+                jobList.jobs.map((job) => (
+                  <JobCard
+                    key={job.id}
+                    id={job.id}
+                    image={job.company_logo}
+                    title={job.job_title}
+                    jobType={job.job_type}
+                    isFeatured={Boolean(job.is_featured)}
+                    isUrgent={Boolean(job.highlighted)}
+                    company={job.company_name}
+                    location={job.job_location}
+                    salary={job.salary_range_value}
+                    postedAt={job.refreshed_at}
+                    status={job.status_key}
+                    selectedId={selectedJobId}
+                    handleSelectedId={() => {
+                      handleSelectedJobId(job.id, job.job_url)
+                    }}
+                    isCompanyVerified={job.is_company_verify}
+                  />
+                ))}
             </div>
-            {jobList?.jobs?.length > 0 &&
+            {jobList?.jobs?.length > 0 && (
               <div className={styles.paginationWrapper}>
-                <MaterialRoundedPagination onChange={handlePaginationClick} page={selectedPage} totalPages={totalPages} />
+                <MaterialRoundedPagination
+                  onChange={handlePaginationClick}
+                  page={selectedPage}
+                  totalPages={totalPages}
+                />
               </div>
-            }
+            )}
           </div>
           <div className={styles.jobDetailInfoSection}>
-            {(isJobDetailFetching || isJobListFetching) && (
-              <JobDetailLoader />
-            )}
+            {(isJobDetailFetching || isJobListFetching) && <JobDetailLoader />}
 
             {!isJobDetailFetching && selectedJob?.['id'] && (
               <JobDetail
@@ -276,16 +290,24 @@ const JobListSection = ({
                 handlePostSaveJob={handlePostSaveJob}
                 handleDeleteSavedJob={handleDeleteSavedJob}
                 config={config}
+                isCompanyVerified={selectedJob?.['company']?.['is_verify']}
               />
             )}
 
             {jobList?.jobs?.length === 0 && !isJobDetailFetching && (
-              <div className={styles.emptyResult}>
-                {emptyResult()}
-              </div>
+              <div className={styles.emptyResult}>{emptyResult()}</div>
             )}
           </div>
           <div className={styles.jobAds}>
+            {!accessToken && (
+              <div className={styles.jobAds_quickCreateResume}>
+                <UploadResumeButton
+                  isShowBtn={!accessToken}
+                  handleClick={handleQuickUploadResumeClick}
+                />
+              </div>
+            )}
+
             <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'jobs-search/skyscraper-1'} />
             </div>
@@ -314,21 +336,25 @@ const JobListSection = ({
         isPublicPostReportJob={!isUserAuthenticated}
       />
 
-      {isShowReportJob && <ModalReportJob
-        isShowReportJob={isShowReportJob}
-        handleShowReportJob={setIsShowReportJob}
-        reportJobReasonList={reportJobReasonList}
-        selectedJobId={selectedJob?.['id']}
-        handlePostReportJob={handlePostReportJob}
-        isPostingReport={isPostingReport}
-        postReportResponse={postReportResponse}
-      />}
+      {isShowReportJob && (
+        <ModalReportJob
+          isShowReportJob={isShowReportJob}
+          handleShowReportJob={setIsShowReportJob}
+          reportJobReasonList={reportJobReasonList}
+          selectedJobId={selectedJob?.['id']}
+          handlePostReportJob={handlePostReportJob}
+          isPostingReport={isPostingReport}
+          postReportResponse={postReportResponse}
+        />
+      )}
 
-      {isShowModalShare && <ModalShare
-        jobDetailUrl={selectedJob?.['job_url']}
-        isShowModalShare={isShowModalShare}
-        handleShowModalShare={setIsShowModalShare}
-      />}
+      {isShowModalShare && (
+        <ModalShare
+          jobDetailUrl={selectedJob?.['job_url']}
+          isShowModalShare={isShowModalShare}
+          handleShowModalShare={setIsShowModalShare}
+        />
+      )}
     </React.Fragment>
   )
 }

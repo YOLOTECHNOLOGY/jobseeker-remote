@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
-import { isMobile } from 'react-device-detect';
+import { isMobile } from 'react-device-detect'
 
 // @ts-ignore
 import { END } from 'redux-saga'
@@ -44,16 +44,18 @@ import { handleNumericInput } from 'helpers/handleInput'
 import styles from './Onboard.module.scss'
 
 /* Images */
-import {
-  DisclaimerIcon
-} from 'images'
+import { DisclaimerIcon } from 'images'
+import { getItem } from 'helpers/localStorage'
 
 const Step1 = (props: any) => {
   const currentStep = 1
+  const quickUpladResumeType = getItem('quickUpladResume')
+  const totalStep = quickUpladResumeType === 'upFile' || quickUpladResumeType === 'onLine' ? 3 : 4
   const router = useRouter()
   const dispatch = useDispatch()
   const { config, userDetail, accessToken } = props
-  const rhTooltipTitle = 'Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.'
+  const rhTooltipTitle =
+    'Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.'
 
   const locList = getLocationList(config)
   const countryList = getCountryList(config)
@@ -61,7 +63,7 @@ const Step1 = (props: any) => {
   const smsCountryList = getSmsCountryList(config)
   const jobCategoryList = getJobCategoryList(config)
   const salaryFromOptions = getSalaryOptions(config)
-  
+
   const [location, setLocation] = useState([])
   const [country, setCountry] = useState('')
 
@@ -71,26 +73,41 @@ const Step1 = (props: any) => {
     const matchedCountryCode = smsCountryList.filter((country) => {
       return phoneNumber.includes(country.value)
     })
-    
+
     return matchedCountryCode ? matchedCountryCode[0]?.value : null
   }
-  const [smsCode, setSmsCode] = useState(getSmsCountryCode(userDetail?.phone_num, smsCountryList) || '+63')
-  const [contactNumber, setContactNumber] = useState(userDetail?.phone_num?.replace(smsCode, "") || null)
+  const [smsCode, setSmsCode] = useState(
+    getSmsCountryCode(userDetail?.phone_num, smsCountryList) || '+63'
+  )
+  const [contactNumber, setContactNumber] = useState(
+    userDetail?.phone_num?.replace(smsCode, '') || null
+  )
 
   const [isShowCountry, setIsShowCountry] = useState(false)
   const [noticePeriod, setNoticePeriod] = useState(userDetail?.notice_period_id)
-  const [specialization, setSpecialization] = useState(userDetail?.job_preference?.job_categories || [])
+  const [specialization, setSpecialization] = useState(
+    userDetail?.job_preference?.job_categories || []
+  )
   const [headhuntMe, setHeadhuntMe] = useState(true)
 
-  const [salaryFrom, setSalaryFrom] = useState(Number(userDetail?.job_preference?.salary_range_from) || null)
+  const [salaryFrom, setSalaryFrom] = useState(
+    Number(userDetail?.job_preference?.salary_range_from) || null
+  )
   const [salaryTo, setSalaryTo] = useState(null)
   const [salaryToOptions, setSalaryToOptions] = useState([])
   const [hasSelectedSpecMore, setHasSelectedSpecMore] = useState(false)
   const [isDisabled, setIsDisabled] = useState(true)
 
-  const { register, handleSubmit, setValue, formState: { errors }} = useForm()
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors }
+  } = useForm()
 
-  const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserOnboardingInfo.fetching)
+  const isUpdatingUserProfile = useSelector(
+    (store: any) => store.users.updateUserOnboardingInfo.fetching
+  )
 
   useEffect(() => {
     getSalaryToOptions(salaryFrom)
@@ -99,7 +116,7 @@ const Step1 = (props: any) => {
   useEffect(() => {
     getSalaryToOptions(salaryFrom)
   }, [salaryFrom])
-  
+
   useEffect(() => {
     if (userDetail) {
       if (userDetail.location) {
@@ -110,7 +127,8 @@ const Step1 = (props: any) => {
         setValue('location', matchedLocation[0])
       }
 
-      if (userDetail?.job_preference?.salary_range_to) setSalaryTo(Number(userDetail?.job_preference?.salary_range_to))
+      if (userDetail?.job_preference?.salary_range_to)
+        setSalaryTo(Number(userDetail?.job_preference?.salary_range_to))
     }
   }, [userDetail])
 
@@ -119,7 +137,8 @@ const Step1 = (props: any) => {
       contactNumber &&
       location &&
       noticePeriod &&
-      (specialization?.length > 0 && specialization?.length <= 3) &&
+      specialization?.length > 0 &&
+      specialization?.length <= 3 &&
       salaryFrom &&
       salaryTo
     ) {
@@ -127,14 +146,7 @@ const Step1 = (props: any) => {
     } else {
       setIsDisabled(true)
     }
-  }, [
-    contactNumber,
-    location,
-    noticePeriod,
-    specialization,
-    salaryFrom,
-    salaryTo
-  ])
+  }, [contactNumber, location, noticePeriod, specialization, salaryFrom, salaryTo])
 
   const getSalaryToOptions = (salaryFrom) => {
     const salaryOptions = getSalaryOptions(config, salaryFrom, true)
@@ -157,19 +169,23 @@ const Step1 = (props: any) => {
   }
 
   const errorText = (errorMessage: string) => {
-    return <Text textStyle='sm' textColor='red' tagName='p' className={styles.stepFieldError}>{errorMessage}</Text>
+    return (
+      <Text textStyle='sm' textColor='red' tagName='p' className={styles.stepFieldError}>
+        {errorMessage}
+      </Text>
+    )
   }
 
   const handleUpdateProfile = (data) => {
     const { specialization, salaryFrom, salaryTo, contactNumber, noticePeriod } = data
     let _specialization = specialization
-    if (typeof _specialization === 'string'){
+    if (typeof _specialization === 'string') {
       _specialization = _specialization.split(',')
     }
 
     setHasSelectedSpecMore(_specialization?.length > 3 ? true : false)
     if (_specialization?.length > 3) return
-    
+
     const payload = {
       redirect: router.query?.redirect ? router.query.redirect : null,
       preferences: {
@@ -182,10 +198,11 @@ const Step1 = (props: any) => {
         phone_num: smsCode + contactNumber,
         country_key: country || '',
         location_key: (location as any)?.key || '',
-        notice_period_id: noticePeriod,
+        notice_period_id: noticePeriod
       },
       accessToken,
-      currentStep
+      currentStep,
+      type: null
     }
 
     dispatch(updateUserOnboardingInfoRequest(payload))
@@ -193,9 +210,13 @@ const Step1 = (props: any) => {
 
   return (
     <OnBoardLayout
-      headingText={<Text bold textStyle='xxxl' tagName='h2'>Let’s get you a job! 🎉👏 <br/> Tell us about yourself.</Text>}
+      headingText={
+        <Text bold textStyle='xxxl' tagName='h2'>
+          Let’s get you a job! 🎉👏 <br /> Tell us about yourself.
+        </Text>
+      }
       currentStep={currentStep}
-      totalStep={4}
+      totalStep={totalStep}
       isMobile={isMobile}
       nextFnBtn={handleSubmit(handleUpdateProfile)}
       isUpdating={isUpdatingUserProfile}
@@ -214,12 +235,14 @@ const Step1 = (props: any) => {
           />
           <div className={styles.step1ContactNumber}>
             <MaterialTextField
-              refs={{...register('contactNumber', { 
-                required: {
-                  value: true,
-                  message: 'This field is required.'
-                }
-              })}}
+              refs={{
+                ...register('contactNumber', {
+                  required: {
+                    value: true,
+                    message: 'This field is required.'
+                  }
+                })
+              }}
               className={styles.step1ContactNumberField}
               label={requiredLabel('Contact Number')}
               size='small'
@@ -234,12 +257,14 @@ const Step1 = (props: any) => {
 
         <div className={styles.stepField}>
           <MaterialLocationField
-            fieldRef={{...register('location', { 
-              required: {
-                value: true,
-                message: 'This field is required.'
-              }
-            })}}
+            fieldRef={{
+              ...register('location', {
+                required: {
+                  value: true,
+                  message: 'This field is required.'
+                }
+              })
+            }}
             className={styles.stepFullwidth}
             label={requiredLabel('Current Location')}
             error={errors.location ? true : false}
@@ -253,12 +278,14 @@ const Step1 = (props: any) => {
             <div className={classNames(styles.stepField, styles.stepFieldCountry)}>
               <MaterialBasicSelect
                 className={styles.stepFullwidth}
-                fieldRef={{...register('country', { 
-                  required: {
-                    value: true,
-                    message: 'This field is required.'
-                  }
-                })}}
+                fieldRef={{
+                  ...register('country', {
+                    required: {
+                      value: true,
+                      message: 'This field is required.'
+                    }
+                  })
+                }}
                 label={requiredLabel('Country')}
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
@@ -273,12 +300,14 @@ const Step1 = (props: any) => {
         <div className={styles.stepField}>
           <MaterialBasicSelect
             className={styles.stepFullwidth}
-            fieldRef={{...register('noticePeriod', { 
-              required: {
-                value: true,
-                message: 'This field is required.'
-              }
-            })}}
+            fieldRef={{
+              ...register('noticePeriod', {
+                required: {
+                  value: true,
+                  message: 'This field is required.'
+                }
+              })
+            }}
             label={requiredLabel('Availability')}
             value={noticePeriod}
             onChange={(e) => setNoticePeriod(e.target.value)}
@@ -291,12 +320,14 @@ const Step1 = (props: any) => {
         <div className={styles.stepField}>
           <MaterialSelectCheckmarks
             className={styles.stepFullwidth}
-            fieldRef={{...register('specialization', { 
-              required: {
-                value: true,
-                message: 'This field is required.'
-              }
-            })}}
+            fieldRef={{
+              ...register('specialization', {
+                required: {
+                  value: true,
+                  message: 'This field is required.'
+                }
+              })
+            }}
             label={requiredLabel('I’m looking for jobs in these specializations')}
             value={specialization}
             onSelect={(e) => {
@@ -306,25 +337,29 @@ const Step1 = (props: any) => {
             error={errors.specialization ? true : false || hasSelectedSpecMore}
             options={jobCategoryList}
           />
-          <Text textStyle='xsm' textColor={hasSelectedSpecMore ? 'red' : 'darkgrey'}>(Max of 3 Categories)</Text>
+          <Text textStyle='xsm' textColor={hasSelectedSpecMore ? 'red' : 'darkgrey'}>
+            (Max of 3 Categories)
+          </Text>
           {errors.specialization && errorText(errors.specialization.message)}
         </div>
 
         <div className={styles.step1Salary}>
           <Text textColor='darkgrey' textStyle='base' bold>
-            Expected salary per month 
+            Expected salary per month
             <span className={styles.stepFieldRequired}>*</span>
           </Text>
           <div className={styles.step1SalaryRanges}>
             <div className={styles.step1SalaryRange}>
               <MaterialBasicSelect
                 className={styles.stepFullwidth}
-                fieldRef={{...register('salaryFrom', { 
-                  required: {
-                    value: true,
-                    message: 'This field is required.'
-                  }
-                })}}
+                fieldRef={{
+                  ...register('salaryFrom', {
+                    required: {
+                      value: true,
+                      message: 'This field is required.'
+                    }
+                  })
+                }}
                 label={requiredLabel('From')}
                 value={salaryFrom}
                 onChange={(e) => setSalaryFrom(e.target.value)}
@@ -338,12 +373,14 @@ const Step1 = (props: any) => {
               <div className={styles.step1SalaryRange}>
                 <MaterialBasicSelect
                   className={styles.stepFullwidth}
-                  fieldRef={{...register('salaryTo', { 
-                    required: {
-                      value: true,
-                      message: 'This field is required.'
-                    }
-                  })}}
+                  fieldRef={{
+                    ...register('salaryTo', {
+                      required: {
+                        value: true,
+                        message: 'This field is required.'
+                      }
+                    })
+                  }}
                   label={requiredLabel('To')}
                   value={salaryTo}
                   onChange={(e) => setSalaryTo(e.target.value)}
@@ -355,19 +392,18 @@ const Step1 = (props: any) => {
             )}
           </div>
         </div>
-        
+
         <div className={styles.step1Subscribe}>
           <FormControlLabel
             style={{ marginRight: '0px' }}
             control={
-              <Switch 
-                checked={headhuntMe}
-                onChange={(e) => setHeadhuntMe(e.target.checked)}
-              />
+              <Switch checked={headhuntMe} onChange={(e) => setHeadhuntMe(e.target.checked)} />
             }
-            label={<Text textStyle='sm'>
-              I’d like to join Headhunt Me to discover more job opportunities. 
-            </Text>}
+            label={
+              <Text textStyle='sm'>
+                I’d like to join Headhunt Me to discover more job opportunities.
+              </Text>
+            }
           />
           {isMobile ? (
             <MaterialMobileTooltip
@@ -375,26 +411,25 @@ const Step1 = (props: any) => {
               className={styles.disclaimerIcon}
               title={rhTooltipTitle}
             />
-            ) : (
+          ) : (
             <MaterialDesktopTooltip
               icon={DisclaimerIcon}
               className={styles.disclaimerIcon}
               title={rhTooltipTitle}
             />
-            )
-          }
+          )}
         </div>
       </div>
-      {isMobile &&  (
+      {isMobile && (
         <React.Fragment>
-        <Divider className={styles.divider} />
-        
+          <Divider className={styles.divider} />
+
           <div className={styles.stepFormActions}>
-            <MaterialButton 
-              variant='contained' 
-              isLoading={isUpdatingUserProfile} 
-              disabled={isDisabled} 
-              capitalize 
+            <MaterialButton
+              variant='contained'
+              isLoading={isUpdatingUserProfile}
+              disabled={isDisabled}
+              capitalize
               onClick={handleSubmit(handleUpdateProfile)}
             >
               <Text textColor='white'>Next</Text>
@@ -409,16 +444,16 @@ const Step1 = (props: any) => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies.accessToken
   if (!accessToken) {
-    return { 
-      redirect: { 
-        destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/1', 
-        permanent: false, 
+    return {
+      redirect: {
+        destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/1',
+        permanent: false
       }
     }
   }
 
   store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchUserOwnDetailRequest({accessToken}))
+  store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
@@ -430,7 +465,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       config,
       userDetail,
       accessToken
-    },
+    }
   }
 })
 

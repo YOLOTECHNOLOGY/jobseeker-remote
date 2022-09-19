@@ -10,7 +10,7 @@ import classNames from 'classnames/bind'
 import Text from 'components/Text'
 import Switch from '@mui/material/Switch'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import ModalDialog from 'components/ModalDialog'
+import Modal from 'components/Modal'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 import MaterialTextField from 'components/MaterialTextField'
 
@@ -91,6 +91,14 @@ const EditLicensesAndCertificationsModal = ({
     handleModal(modalName, false)
     handleResetForm()
   }
+
+	const handleCredentialUrl = (credentialUrl) => {
+		if (credentialUrl) {
+			return credentialUrl
+		} else {
+			return 'https://'
+		}
+	}
 
   const onSubmit = () => {
     const data = {
@@ -278,7 +286,7 @@ const EditLicensesAndCertificationsModal = ({
 							variant='outlined'
 							value={credentialUrl}
 							defaultValue={credentialUrl}
-							onClick={() => setCredentialUrl('https://')}
+							onClick={() => setCredentialUrl(handleCredentialUrl(credentialUrl))}
 							onChange={(e) => setCredentialUrl(e.target.value)}
 						/>
 					</div>
@@ -290,26 +298,25 @@ const EditLicensesAndCertificationsModal = ({
 		</div>
 	)
 
-	return (
-		<div>
-			<ModalDialog
-				open={showModal}
-				onClose={handleCloseModal}
-				headerTitle='Licenses And Certifications'
-				firstButtonText='Cancel'
-				secondButtonText='Save'
-				isSecondButtonLoading={isUpdating}
-				isSecondButtonDisabled={hasValidationError}
-				firstButtonIsClose
-				handleFirstButton={handleCloseModal}
-				handleSecondButton={handleSubmit(onSubmit)}
-				fullScreen
-				maxHeight='90vh'
-			>
-				{editLicensesAndCertificationsModal}
-			</ModalDialog>
-		</div>
-	)
+  return (
+    <div>
+      <Modal
+        showModal={showModal}
+        handleModal={handleCloseModal}
+        headerTitle='Licenses And Certifications'
+        firstButtonText='Cancel'
+        secondButtonText='Save'
+        isSecondButtonLoading={isUpdating}
+        isSecondButtonDisabled={hasValidationError}
+        firstButtonIsClose
+        handleFirstButton={handleCloseModal}
+        handleSecondButton={handleSubmit(onSubmit)}
+        fullScreen
+      >
+        {editLicensesAndCertificationsModal}
+      </Modal>
+    </div>
+  )
 }
 
 export default EditLicensesAndCertificationsModal

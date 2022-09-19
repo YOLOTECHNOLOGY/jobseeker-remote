@@ -1,4 +1,4 @@
-import configuredAxios from '../helpers/configuredAxios'
+import configuredAxios from 'helpers/configuredAxios'
 import { getPublicSitemapXML } from '../scripts/getPublicSitemapXML'
 
 const Sitemap = () => {
@@ -6,8 +6,8 @@ const Sitemap = () => {
 }
 
 export const getServerSideProps = async ({ res }) => {
-  const axios = configuredAxios('data', 'public')
-  const response = await axios.get('/config?country_code=ph')
+  const axios = configuredAxios('config', 'public')
+  const response = await axios.get('/list')
   const publicSiteMap = getPublicSitemapXML(response)
 
   res.setHeader('Content-Type', 'text/xml')
