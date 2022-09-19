@@ -1,10 +1,114 @@
 .JobAlertContainer {
+  border: 0.5px solid #bcbcbc;
+  border-radius: 4px;
+
+  .JobAlertTitle {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+    padding-left: 22px;
+    padding-top: 25px;
+  }
+
+  .fieldWrapperTitle {
+    font-size: 16px;
+    color: #353535;
+  }
+
+  .fieldWrapper {
+    border: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+
+    .fieldFromWrapper_title_context {
+      font-size: 12px;
+      color: #353535;
+    }
+
+    &_border {
+      width: 100%;
+      border-bottom: 1px solid #707070;
+      margin-top: 20px;
+      opacity: 0.3;
+    }
+  }
   &_title {
     margin-bottom: 15px;
+    font-size: 14px;
   }
 
   &_desc {
     color: #707070;
     margin-bottom: 5px;
+    font-size: 14px;
+  }
+
+  &_Text {
+    margin-bottom: 5px;
+  }
+
+  &_EditContainer {
+    margin-top: 25px;
+  }
+
+  &_button {
+    margin-top: 15px;
+    button {
+      text-transform: none;
+      min-width: 143px;
+      height: 44px;
+    }
+    button:nth-child(2) {
+      margin-left: 20px;
+    }
+  }
+
+  &Info {
+    width: 480px;
+    padding: 50px 25px;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+
+  &Loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    text-align: center;
+
+    .loadingLogo,
+    .loadingIndicator {
+      width: 180px;
+    }
+
+    .loadingLogo {
+      margin-bottom: 20px;
+      img {
+        width: 100%;
+      }
+    }
+
+    .loadingIndicator {
+      margin-bottom: 48px;
+    }
+  }
+  &_noJobAlert {
+    padding: 0 22px;
+    padding-top: 25px;
+    &_backBtn {
+      margin: 25px 0;
+      height: 44px;
+      text-transform: none;
+    }
   }
 }
