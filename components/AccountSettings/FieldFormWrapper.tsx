@@ -17,19 +17,27 @@ const FieldFormWrapper = ({
   style,
   setEdit,
   isEdit,
-  isDetele
+  edit,
+  isDetele,
+  textClassName,
+  deleteJobAlert
 }: any) => {
   return (
     <div className={classNames([className, styles.fieldFromWrapper])} style={style}>
       <div className={styles.fieldFromWrapper_title}>
-        <Text tagName='h2' textStyle='xl' bold>
+        <Text
+          tagName='h2'
+          textStyle='xl'
+          bold
+          className={classNames([styles.fieldFromWrapper_title_context, textClassName])}
+        >
           {label}
         </Text>
         <div className={styles.fieldFromWrapper_title_edit_icon}>
           {isEdit && (
             <img
               onClick={() => {
-                setEdit(label)
+                setEdit(edit ? edit : label)
               }}
               src={AccountSettingEditIconPen}
               alt='account setting edit icon pen'
@@ -37,7 +45,11 @@ const FieldFormWrapper = ({
           )}
 
           {isDetele && (
-            <img src={AccountSettingDeleteIconBin} alt='account setting eelete icon bin' />
+            <img
+              src={AccountSettingDeleteIconBin}
+              onClick={() => deleteJobAlert(edit)}
+              alt='account setting eelete icon bin'
+            />
           )}
         </div>
       </div>

@@ -6,10 +6,15 @@
   &_title {
     display: flex;
     justify-content: space-between;
+    font-size: 18px;
+
+    &_context {
+      text-transform: capitalize;
+    }
 
     &_edit_icon {
       img {
-        width: 12px;
+        width: 14px;
         cursor: pointer;
       }
       img:nth-child(2) {
