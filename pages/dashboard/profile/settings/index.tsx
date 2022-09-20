@@ -4,7 +4,6 @@ import { END } from 'redux-saga'
 
 import Layout from 'components/Layout'
 import Text from 'components/Text'
-import CreditCardFrom from 'components/CreditCardFrom/CreditCardFrom'
 import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import VerifyMailAndBindEmail from 'components/AccountSettings/VerifyMailAndBindEmail'
 import VerifyPhoneNumber from 'components/AccountSettings/VerifyPhoneNumber'
@@ -59,12 +58,11 @@ function a11yProps(index: number) {
   }
 }
 
-const COUNT_DOWN_VERIFY_DEFAULT = 10
+const COUNT_DOWN_VERIFY_DEFAULT = 60
 let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
 
 const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any) => {
   const refCountDownTimeName = useRef(null)
-
   const [userId, setUserId] = useState(null)
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
@@ -73,7 +71,9 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
   const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
 
   useEffect(() => {
-    setUserId(getCookie('user')?.id)
+    let id = getCookie('user')?.id
+    id += '_' + new Date().getTime()
+    setUserId(id)
   }, [])
 
   // Count Down
@@ -200,7 +200,7 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
               setEdit={setEdit}
               isEdit
               errorText={errorText}
-              emailDefault={userOwnDetail.email ? userOwnDetail.email : null}
+              emailDefault={userOwnDetail?.email ? userOwnDetail.email : null}
               valid={userOwnDetail.is_email_verify}
               setIsShowCountDownSwitch={setIsShowCountDownSwitch}
               isShowCountDownSwitch={isShowCountDownSwitch}
@@ -239,11 +239,20 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
               emailNotificationSetting={userDetail ? userDetail.email_notification_setting : null}
             />
 
-            <FieldFormWrapper label='Linked Accounts' edit={edit} setEdit={setEdit}>
+            <FieldFormWrapper
+              label='Linked Accounts'
+              edit={edit}
+              setEdit={setEdit}
+              titleTips='Login to your Facebook Messenger and your job application updates will be sent to your Facebook Messenger.'
+            >
               <div className={styles.accessSettingsContainer_swtich}>
                 <div className={styles.accessSettingsContainer_swtich_fb}>
                   <Text>Facebook Messenger</Text>
-                  <div>{userId && <FbMessengerCheckin userRef={'account_' + userId} />}</div>
+                  <div>
+                    {userId && !userDetail.is_fb_messenger_active && (
+                      <FbMessengerCheckin userRef={'account_' + userId} />
+                    )}
+                  </div>
                 </div>
 
                 <Switch
@@ -255,7 +264,7 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
               </div>
             </FieldFormWrapper>
 
-            <CreditCardFrom label='Credit Card' edit={edit} setEdit={setEdit} />
+            {/* <CreditCardFrom label='Credit Card' edit={edit} setEdit={setEdit} /> */}
           </TabPanel>
 
           {/* Job Alert */}

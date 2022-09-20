@@ -41,4 +41,18 @@
     float: right;
     margin-top: 3px;
   }
+
+  .formWrapper {
+    display: flex;
+
+    .bottomSpacing {
+      margin-right: 5px;
+    }
+
+    &_tooltip {
+      font-size: 16px;
+      color: #ffffff;
+      max-width: 450px;
+    }
+  }
 }

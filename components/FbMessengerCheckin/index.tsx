@@ -23,6 +23,26 @@ const FbMessengerCheckin = ({ userRef }) => {
     }
   }, [])
 
+  // useEffect(() => {
+  //   if (window.FB !== undefined) {
+  //     console.log(window.FB)
+  //     ;(window as any).FB.Event.subscribe('messenger_checkbox', function (e) {
+  //       console.log('messenger_checkbox event')
+  //       console.log(e)
+  //       if (e.event == 'rendered') {
+  //         console.log('Plugin was rendered')
+  //       } else if (e.event == 'checkbox') {
+  //         const checkboxState = e.state
+  //         console.log('Checkbox state: ' + checkboxState)
+  //       } else if (e.event == 'not_you') {
+  //         console.log("User clicked 'not you'")
+  //       } else if (e.event == 'hidden') {
+  //         console.log('Plugin was hidden')
+  //       }
+  //     })
+  //   }
+  // }, [])
+
   return (
     <div
       className='fb-messenger-checkbox'

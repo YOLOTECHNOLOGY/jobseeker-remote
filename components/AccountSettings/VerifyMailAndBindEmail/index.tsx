@@ -10,6 +10,8 @@ import { handleNumericInput } from 'helpers/handleInput'
 
 // ui
 import { Button } from '@mui/material'
+import OfflinePinRounded from '@mui/icons-material/OfflinePinRounded'
+import Tooltip from '@mui/material/Tooltip'
 
 // api
 import { sendEmaillOtp, changeEmail, verifyEmail } from 'store/services/auth/changeEmail'
@@ -130,7 +132,12 @@ const VerifyMailAndBindEmail = ({
 
   return (
     <div className={styles.VerifyMailAndBindEmail}>
-      <FieldFormWrapper label={label} setEdit={setEdit} isEdit>
+      <FieldFormWrapper
+        label={label}
+        setEdit={setEdit}
+        isEdit
+        titleTips='Receive job applications updates through your email. '
+      >
         {edit === 'Email' ? (
           <div className={styles.accessSettingsContainer_fromWrapper}>
             <Text>To receive job applications update, please verify your email.</Text>
@@ -216,6 +223,16 @@ const VerifyMailAndBindEmail = ({
         ) : (
           <div className={styles.formWrapper}>
             <Text className={styles.bottomSpacing}>{email}</Text>
+            {Verify && (
+              <Tooltip
+                title={label}
+                placement='top'
+                arrow
+                classes={{ tooltip: styles.formWrapper_tooltip }}
+              >
+                <OfflinePinRounded sx={{ color: '#2DA871' }} />
+              </Tooltip>
+            )}
           </div>
         )}
       </FieldFormWrapper>
