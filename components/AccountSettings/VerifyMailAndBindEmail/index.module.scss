@@ -1,3 +1,6 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
 .VerifyMailAndBindEmail {
   .accessSettingsContainer_fromWrapper {
     &_verifyContainer {
@@ -30,5 +33,12 @@
     button:nth-child(2) {
       margin-left: 20px;
     }
+  }
+
+  .stepFieldRequired {
+    color: $red;
+    display: block;
+    float: right;
+    margin-top: 3px;
   }
 }
