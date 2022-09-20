@@ -26,6 +26,7 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import styles from './settings.module.scss'
 
 import { accountSetting } from 'store/services/auth/changeEmail'
+import { getCookie } from 'helpers/cookies'
 interface TabPanelProps {
   children?: React.ReactNode
   index: number
@@ -66,11 +67,6 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
   const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
   const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
   // const [userDetail, setUserDetail] = useState(null)
-  const [emailSubscribe] = useState({
-    notifications: true,
-    newNotifications: false,
-    careerHiringNewNotifications: true
-  })
 
   // useEffect(() => {}, [])
 
@@ -135,6 +131,31 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
   //     </>
   //   )
   // }
+
+  const sendFbMessengerCheckboxEvent = (ref: number, userRef: string) => {
+    if (typeof window !== undefined) {
+      ;(window as any).FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
+        app_id:
+          process.env.CUSTOM_NODE_ENV === 'development' ? '2026042927653653' : '2111002932479859',
+        page_id:
+          process.env.CUSTOM_NODE_ENV === 'development' ? '307776753021449' : '638091659945858',
+        ref: ref,
+        user_ref: userRef
+      })
+    }
+  }
+
+  const comfirmOptIn = () => {
+    // Send Facebook checkbox messenger opt-in event
+    sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + getCookie('user').id)
+
+    // Wait for 3 seconds for the FB event callback hits the server
+    setTimeout(function () {
+      if (typeof window !== undefined) {
+        window.location.reload()
+      }
+    }, 3000)
+  }
 
   return (
     <Layout>
@@ -211,8 +232,10 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
               <div className={styles.accessSettingsContainer_swtich}>
                 <Text>Facebook Messenger</Text>
                 <Switch
-                  checked={emailSubscribe.careerHiringNewNotifications}
-                  // onChange={(ev) => {}}
+                  checked={userDetail.is_fb_messenger_active}
+                  onChange={() => {
+                    comfirmOptIn()
+                  }}
                 />
               </div>
             </FieldFormWrapper>
