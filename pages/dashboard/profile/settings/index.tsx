@@ -11,6 +11,7 @@ import VerifyPhoneNumber from 'components/AccountSettings/VerifyPhoneNumber'
 import ChangePasswrod from 'components/AccountSettings/ChangePassword'
 import EmailNotificationsetting from 'components/AccountSettings/EmailNotificationSetting'
 import Alerts from 'components/AccountSettings/Alerts'
+import FbMessengerCheckin from 'components/FbMessengerCheckin'
 
 // mui
 import Tabs from '@mui/material/Tabs'
@@ -21,6 +22,9 @@ import { ThemeProvider, createTheme } from '@mui/material'
 // actions
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+
+// api
+import { facebookMsgDeactivate } from 'store/services/auth/changeEmail'
 
 // styles
 import styles from './settings.module.scss'
@@ -61,14 +65,16 @@ let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
 const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any) => {
   const refCountDownTimeName = useRef(null)
 
+  const [userId, setUserId] = useState(null)
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
 
   const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
   const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
-  // const [userDetail, setUserDetail] = useState(null)
 
-  // useEffect(() => {}, [])
+  useEffect(() => {
+    setUserId(getCookie('user')?.id)
+  }, [])
 
   // Count Down
   useEffect(() => {
@@ -136,18 +142,23 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
     if (typeof window !== undefined) {
       ;(window as any).FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
         app_id:
-          process.env.CUSTOM_NODE_ENV === 'development' ? '2026042927653653' : '2111002932479859',
+          process.env.CUSTOM_NODE_ENV === 'production' ? '2026042927653653' : '2111002932479859',
         page_id:
-          process.env.CUSTOM_NODE_ENV === 'development' ? '307776753021449' : '638091659945858',
+          process.env.CUSTOM_NODE_ENV === 'production' ? '307776753021449' : '638091659945858',
         ref: ref,
         user_ref: userRef
       })
     }
   }
 
-  const comfirmOptIn = () => {
+  const comfirmOptIn = (ev) => {
+    if (ev.target.checked) {
+      sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + getCookie('user').id)
+    } else {
+      facebookMsgDeactivate()
+    }
     // Send Facebook checkbox messenger opt-in event
-    sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + getCookie('user').id)
+    //
 
     // Wait for 3 seconds for the FB event callback hits the server
     setTimeout(function () {
@@ -230,11 +241,15 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
 
             <FieldFormWrapper label='Linked Accounts' edit={edit} setEdit={setEdit}>
               <div className={styles.accessSettingsContainer_swtich}>
-                <Text>Facebook Messenger</Text>
+                <div className={styles.accessSettingsContainer_swtich_fb}>
+                  <Text>Facebook Messenger</Text>
+                  <div>{userId && <FbMessengerCheckin userRef={'account_' + userId} />}</div>
+                </div>
+
                 <Switch
-                  checked={userDetail.is_fb_messenger_active}
-                  onChange={() => {
-                    comfirmOptIn()
+                  defaultChecked={userDetail.is_fb_messenger_active}
+                  onChange={(ev) => {
+                    comfirmOptIn(ev)
                   }}
                 />
               </div>

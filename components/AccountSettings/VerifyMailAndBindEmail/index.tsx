@@ -119,6 +119,15 @@ const VerifyMailAndBindEmail = ({
     }
   }
 
+  const requiredLabel = (text: string) => {
+    return (
+      <>
+        <span>{text}&nbsp;</span>
+        <span className={styles.stepFieldRequired}>* &nbsp; &nbsp;</span>
+      </>
+    )
+  }
+
   return (
     <div className={styles.VerifyMailAndBindEmail}>
       <FieldFormWrapper label={label} setEdit={setEdit} isEdit>
@@ -136,7 +145,7 @@ const VerifyMailAndBindEmail = ({
               <MaterialTextField
                 className={styles.accessSettingsContainer_fromWrapper_edit_input}
                 id='email'
-                label='Email Address'
+                label={requiredLabel('Email Address')}
                 variant='outlined'
                 size='small'
                 value={email}
