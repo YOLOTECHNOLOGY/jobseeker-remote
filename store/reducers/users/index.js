@@ -5,6 +5,7 @@ import updateUserOnboardingInfoReducer from './updateUserOnboardingInfo'
 import uploadUserResumeReducer from './uploadUserResume'
 import generateUserResumeReducer from './generateUserResume'
 import fetchUserOwnDetailReducer from './fetchUserOwnDetail'
+import fetchUserDetailReducer from './fetchUserDetail'
 import fetchUserWorkExperienceReducer from './fetchUserWorkExperience'
 import fetchUserEducationReducer from './fetchUserEducation'
 import completeUserProfileReducer from './completeUserProfile'
@@ -21,6 +22,7 @@ const usersReducers = combineReducers({
   registerUser: registerUserReducer,
   updateUserOnboardingInfo: updateUserOnboardingInfoReducer,
   fetchUserOwnDetail: fetchUserOwnDetailReducer,
+  fetchUserDetail: fetchUserDetailReducer,
   uploadUserResume: uploadUserResumeReducer,
   fetchUserWorkExperience: fetchUserWorkExperienceReducer,
   fetchUserEducation: fetchUserEducationReducer,

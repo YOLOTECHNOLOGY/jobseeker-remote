@@ -105,15 +105,16 @@ const Alerts = ({ accessToken }: any) => {
             Job alert
           </Text>
           {jobAlertListResponse.length ? (
-            jobAlertListResponse.map((item) => (
+            jobAlertListResponse.map((item, index) => (
               <FieldFormWrapper
-                label={item.keyword_value}
+                label={item.id}
+                alertTitle={item.keyword_value}
                 isEdit
                 isDetele
                 key={item.id}
                 className={styles.fieldWrapper}
                 textClassName={styles.fieldWrapperTitle}
-                edit={item.id}
+                edit={alertEdit}
                 setEdit={setAlertEdit}
                 deleteJobAlert={showDeleteJobAlertModule}
               >
@@ -173,7 +174,9 @@ const Alerts = ({ accessToken }: any) => {
                   </div>
                 )}
 
-                <div className={styles.fieldWrapper_border}></div>
+                {index !== jobAlertListResponse.length - 1 && (
+                  <div className={styles.fieldWrapper_border}></div>
+                )}
               </FieldFormWrapper>
             ))
           ) : (

@@ -88,7 +88,7 @@ const emailNotificationUpdate = (payload) => {
 
 const accountSetting = (payload) => {
   const axios = configuredAxios('jobseeker', 'protected', '', payload.accessToken)
-  return Promise.resolve(axios.get(`/account-setting`))
+  return axios.get(`/account-setting`)
 }
 
 const facebookMsgDeactivate = () => {

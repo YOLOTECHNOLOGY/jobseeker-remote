@@ -4,7 +4,6 @@ import { END } from 'redux-saga'
 
 import Layout from 'components/Layout'
 import Text from 'components/Text'
-import CreditCardFrom from 'components/CreditCardFrom/CreditCardFrom'
 import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import VerifyMailAndBindEmail from 'components/AccountSettings/VerifyMailAndBindEmail'
 import VerifyPhoneNumber from 'components/AccountSettings/VerifyPhoneNumber'
@@ -20,8 +19,8 @@ import Switch from '@mui/material/Switch'
 import { ThemeProvider, createTheme } from '@mui/material'
 
 // actions
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+import { fetchUserDetailRequest } from 'store/actions/users/fetchUserDetail'
 
 // api
 import { facebookMsgDeactivate } from 'store/services/auth/changeEmail'
@@ -29,8 +28,8 @@ import { facebookMsgDeactivate } from 'store/services/auth/changeEmail'
 // styles
 import styles from './settings.module.scss'
 
-import { accountSetting } from 'store/services/auth/changeEmail'
 import { getCookie } from 'helpers/cookies'
+import { useDispatch, useSelector } from 'react-redux'
 interface TabPanelProps {
   children?: React.ReactNode
   index: number
@@ -59,21 +58,29 @@ function a11yProps(index: number) {
   }
 }
 
-const COUNT_DOWN_VERIFY_DEFAULT = 10
+const COUNT_DOWN_VERIFY_DEFAULT = 60
 let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
 
-const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any) => {
+const AccountSettings = ({ config, accessToken }: any) => {
+  const dispatch = useDispatch()
   const refCountDownTimeName = useRef(null)
-
   const [userId, setUserId] = useState(null)
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
 
+  const userDetail = useSelector((store: any) => store.users.fetchUserDetail.response)
+
   const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
   const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
 
+  const getInitData = () => {
+    dispatch(fetchUserDetailRequest({ accessToken }))
+  }
+
   useEffect(() => {
-    setUserId(getCookie('user')?.id)
+    let id = getCookie('user')?.id
+    id += '_' + new Date().getTime()
+    setUserId(id)
   }, [])
 
   // Count Down
@@ -151,21 +158,13 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
     }
   }
 
-  const comfirmOptIn = (ev) => {
+  const comfirmOptIn = async (ev) => {
     if (ev.target.checked) {
-      sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + getCookie('user').id)
+      await sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + userId)
     } else {
-      facebookMsgDeactivate()
+      await facebookMsgDeactivate()
     }
-    // Send Facebook checkbox messenger opt-in event
-    //
-
-    // Wait for 3 seconds for the FB event callback hits the server
-    setTimeout(function () {
-      if (typeof window !== undefined) {
-        window.location.reload()
-      }
-    }, 3000)
+    await getInitData()
   }
 
   return (
@@ -200,8 +199,8 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
               setEdit={setEdit}
               isEdit
               errorText={errorText}
-              emailDefault={userOwnDetail.email ? userOwnDetail.email : null}
-              valid={userOwnDetail.is_email_verify}
+              emailDefault={userDetail?.email ? userDetail.email : null}
+              valid={userDetail.is_email_verify}
               setIsShowCountDownSwitch={setIsShowCountDownSwitch}
               isShowCountDownSwitch={isShowCountDownSwitch}
               countDown={countDown}
@@ -214,8 +213,8 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
               setEdit={setEdit}
               isEdit
               errorText={errorText}
-              phoneDefault={userOwnDetail.phone_num ? userOwnDetail.phone_num : null}
-              valid={userOwnDetail.is_mobile_verified}
+              phoneDefault={userDetail.phone_num ? userDetail.phone_num : null}
+              valid={userDetail.is_mobile_verified}
               setIsShowCountDownSwitch={setIsShowCountDownSwitch}
               isShowCountDownSwitch={isShowCountDownSwitch}
               countDown={countDown}
@@ -239,15 +238,24 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
               emailNotificationSetting={userDetail ? userDetail.email_notification_setting : null}
             />
 
-            <FieldFormWrapper label='Linked Accounts' edit={edit} setEdit={setEdit}>
+            <FieldFormWrapper
+              label='Linked Accounts'
+              edit={edit}
+              setEdit={setEdit}
+              titleTips='Login to your Facebook Messenger and your job application updates will be sent to your Facebook Messenger.'
+            >
               <div className={styles.accessSettingsContainer_swtich}>
                 <div className={styles.accessSettingsContainer_swtich_fb}>
                   <Text>Facebook Messenger</Text>
-                  <div>{userId && <FbMessengerCheckin userRef={'account_' + userId} />}</div>
+                  <div>
+                    {userId && !userDetail.is_fb_messenger_active && (
+                      <FbMessengerCheckin userRef={'account_' + userId} />
+                    )}
+                  </div>
                 </div>
 
                 <Switch
-                  defaultChecked={userDetail.is_fb_messenger_active}
+                  checked={userDetail.is_fb_messenger_active}
                   onChange={(ev) => {
                     comfirmOptIn(ev)
                   }}
@@ -255,7 +263,7 @@ const AccountSettings = ({ userOwnDetail, config, userDetail, accessToken }: any
               </div>
             </FieldFormWrapper>
 
-            <CreditCardFrom label='Credit Card' edit={edit} setEdit={setEdit} />
+            {/* <CreditCardFrom label='Credit Card' edit={edit} setEdit={setEdit} /> */}
           </TabPanel>
 
           {/* Job Alert */}
@@ -280,24 +288,23 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     }
   }
 
-  let userDetail = {}
-  await accountSetting({ accessToken }).then(({ data }) => {
-    userDetail = data.data
-  })
+  // let userDetail = {}
+  // await accountSetting({ accessToken }).then(({ data }) => {
+  //   userDetail = data.data
+  // })
 
+  store.dispatch(fetchUserDetailRequest({ accessToken }))
   store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
 
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const config = storeState.config.config.response
-  // const userOwnDetail = storeState.users.fetchUserOwnDetail.response
+  const userDetail = storeState.users.fetchUserDetail.response
   return {
     props: {
       config,
       accessToken,
-      userOwnDetail: userDetail,
       userDetail
     }
   }

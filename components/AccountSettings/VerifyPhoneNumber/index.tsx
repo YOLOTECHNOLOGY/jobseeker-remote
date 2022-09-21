@@ -144,7 +144,13 @@ const VerifyPhoneNumber = ({
 
   return (
     <div className={styles.VerifyMailAndBindEmail}>
-      <FieldFormWrapper label={label} setEdit={setEdit} isEdit>
+      <FieldFormWrapper
+        label={label}
+        setEdit={setEdit}
+        edit={edit}
+        isEdit
+        titleTips='Help recruiters to better contact you for job opportunities.'
+      >
         {edit === 'Mobile Number' ? (
           <div className={styles.accessSettingsContainer_fromWrapper}>
             <Text>
@@ -237,7 +243,7 @@ const VerifyPhoneNumber = ({
           </div>
         ) : (
           <div className={styles.formWrapper}>
-            <Text className={styles.bottomSpacing}>{phoneNum}</Text>
+            <Text className={styles.bottomSpacing}>{phoneNum ? phoneNum : 'Not provided'}</Text>
           </div>
         )}
       </FieldFormWrapper>
