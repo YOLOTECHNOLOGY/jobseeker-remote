@@ -39,6 +39,7 @@ import watchCreateJobAlert from 'store/sagas/alerts/createJobAlert'
 import watchRegisterUser from 'store/sagas/users/registerUser'
 import watchUpdateUserOnboardingInfo from 'store/sagas/users/updateUserOnboardingInfo'
 import watchFetchUserOwnDetail from 'store/sagas/users/fetchUserOwnDetail'
+import watchFetchUserDetail from 'store/sagas/users/fetchUserDetail'
 import watchUploadUserResume from 'store/sagas/users/uploadUserResume'
 import watchGenerateUserResume from 'store/sagas/users/generateUserResume'
 import watchFetchUserWorkExperience from 'store/sagas/users/fetchUserWorkExperience'
@@ -104,6 +105,7 @@ function* rootSaga() {
     watchRegisterUser(),
     watchUpdateUserOnboardingInfo(),
     watchFetchUserOwnDetail(),
+    watchFetchUserDetail(),
     watchUploadUserResume(),
     watchGenerateUserResume(),
     watchFetchUserWorkExperience(),
@@ -129,7 +131,7 @@ function* rootSaga() {
 
     watchRegisterJobseeker(),
 
-    watchFetchRecommendedCourses(),
+    watchFetchRecommendedCourses()
   ])
 }
 
