@@ -63,7 +63,7 @@ const FieldFormWrapper = ({
           {isDetele && (
             <img
               src={AccountSettingDeleteIconBin}
-              onClick={() => deleteJobAlert(edit)}
+              onClick={() => deleteJobAlert(label)}
               alt='account setting eelete icon bin'
             />
           )}

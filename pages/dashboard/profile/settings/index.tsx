@@ -114,14 +114,16 @@ const AccountSettings = ({ config, accessToken }: any) => {
       MuiTabs: {
         styleOverrides: {
           indicator: {
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
+            display: 'flex'
           }
         }
       },
       MuiButtonBase: {
         styleOverrides: {
           root: {
-            alignItems: 'flex-start'
+            alignItems: 'flex-start',
+            display: 'flex'
           }
         }
       }
@@ -176,7 +178,12 @@ const AccountSettings = ({ config, accessToken }: any) => {
           </Text>
 
           <ThemeProvider theme={theme}>
-            <Tabs orientation='vertical' value={value} onChange={handleChange}>
+            <Tabs
+              orientation='vertical'
+              value={value}
+              onChange={handleChange}
+              classes={{ flexContainer: styles.accessSettingsTabs_tab }}
+            >
               <Tab
                 label='Account'
                 {...a11yProps(0)}
@@ -248,7 +255,9 @@ const AccountSettings = ({ config, accessToken }: any) => {
             >
               <div className={styles.accessSettingsContainer_swtich}>
                 <div className={styles.accessSettingsContainer_swtich_fb}>
-                  <Text>Facebook Messenger</Text>
+                  <Text className={styles.accessSettingsContainer_swtich_fb_context}>
+                    Facebook Messenger
+                  </Text>
                   <div>
                     {userId && !userDetail.is_fb_messenger_active && (
                       <FbMessengerCheckin userRef={'account_' + userId} />

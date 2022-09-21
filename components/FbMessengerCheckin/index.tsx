@@ -59,7 +59,7 @@ const FbMessengerCheckin = ({ userRef }) => {
       // center_align='<true>'
 
       allow_login='true'
-      size='small'
+      size='<small>'
       skin='light'
       center_align='<true>'
     />
