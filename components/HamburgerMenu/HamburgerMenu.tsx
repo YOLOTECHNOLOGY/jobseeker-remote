@@ -95,10 +95,12 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   to={process.env.VCF_CLIENT_URL}
                   aTag
                 >
-                  <li className={styles.menuList} onClick={handleClick} style={{ display:'flex', alignItems:'center' }}>
-                    <Text textStyle='xl'>
-                      Virtual Career Fair
-                    </Text>
+                  <li
+                    className={styles.menuList}
+                    onClick={handleClick}
+                    style={{ display: 'flex', alignItems: 'center' }}
+                  >
+                    <Text textStyle='xl'>Virtual Career Fair</Text>
                     <span className={styles.hotTag}>Hot!</span>
                   </li>
                 </Link>
@@ -154,10 +156,12 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   to={process.env.VCF_CLIENT_URL}
                   aTag
                 >
-                  <li className={styles.menuList} onClick={handleClick} style={{ display:'flex', alignItems:'center' }}>
-                    <Text textStyle='xl'>
-                      Virtual Career Fair
-                    </Text>
+                  <li
+                    className={styles.menuList}
+                    onClick={handleClick}
+                    style={{ display: 'flex', alignItems: 'center' }}
+                  >
+                    <Text textStyle='xl'>Virtual Career Fair</Text>
                     <span className={styles.hotTag}>Hot!</span>
                   </li>
                 </Link>
@@ -185,7 +189,8 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 </Link>
                 <Link
                   className={styles.defaultLink}
-                  to={authPathToOldProject(null, '/dashboard/profile/settings')}
+                  // to={authPathToOldProject(null, '/dashboard/profile/settings')}
+                  to='/dashboard/profile/settings'
                   aTag
                   title='Account Settings'
                 >

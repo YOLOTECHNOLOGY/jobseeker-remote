@@ -57,7 +57,7 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
           dispatch(
             displayNotification({
               open: true,
-              message: '密码更换成功',
+              message: 'Change password successfully',
               severity: 'success'
             })
           )
@@ -66,7 +66,7 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
         } else {
           displayNotification({
             open: true,
-            message: '密码更换失败',
+            message: 'Failed to change password',
             severity: 'warning'
           })
         }
