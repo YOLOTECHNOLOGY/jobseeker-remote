@@ -6,8 +6,8 @@ import classNames from 'classnames/bind'
 /** Component */
 import Text from 'components/Text'
 import { AccountSettingEditIconPen, AccountSettingDeleteIconBin } from 'images'
-import InfoRounded from '@mui/icons-material/InfoRounded'
 import Tooltip from '@mui/material/Tooltip'
+import { TooltipIcon } from 'images'
 
 // styles
 import styles from './FieldFormWrapper.module.scss'
@@ -23,7 +23,8 @@ const FieldFormWrapper = ({
   isDetele,
   textClassName,
   deleteJobAlert,
-  titleTips
+  titleTips,
+  alertTitle
 }: any) => {
   return (
     <div className={classNames([className, styles.fieldFromWrapper])} style={style}>
@@ -35,7 +36,7 @@ const FieldFormWrapper = ({
             bold
             className={classNames([styles.fieldFromWrapper_title_context, textClassName])}
           >
-            {label}
+            {alertTitle ? alertTitle : label}
           </Text>
           {titleTips && (
             <Tooltip
@@ -44,15 +45,15 @@ const FieldFormWrapper = ({
               arrow
               classes={{ tooltip: styles.fieldFromWrapper_title_toolTip }}
             >
-              <InfoRounded sx={{ color: '#136FD3' }} />
+              <img src={TooltipIcon} alt='icon' width='20' height='20' />
             </Tooltip>
           )}
         </div>
         <div className={styles.fieldFromWrapper_title_edit_icon}>
-          {isEdit && (
+          {isEdit && edit !== label && (
             <img
               onClick={() => {
-                setEdit(edit ? edit : label)
+                setEdit(label)
               }}
               src={AccountSettingEditIconPen}
               alt='account setting edit icon pen'

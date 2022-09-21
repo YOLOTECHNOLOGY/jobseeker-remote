@@ -147,6 +147,7 @@ const VerifyPhoneNumber = ({
       <FieldFormWrapper
         label={label}
         setEdit={setEdit}
+        edit={edit}
         isEdit
         titleTips='Help recruiters to better contact you for job opportunities.'
       >
@@ -242,7 +243,7 @@ const VerifyPhoneNumber = ({
           </div>
         ) : (
           <div className={styles.formWrapper}>
-            <Text className={styles.bottomSpacing}>{phoneNum}</Text>
+            <Text className={styles.bottomSpacing}>{phoneNum ? phoneNum : 'Not provided'}</Text>
           </div>
         )}
       </FieldFormWrapper>

@@ -4,13 +4,13 @@ import { useDispatch } from 'react-redux'
 import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import MaterialTextField from 'components/MaterialTextField'
 import Text from 'components/Text'
+import { BlueTickIcon } from 'images'
 
 // tools
 import { handleNumericInput } from 'helpers/handleInput'
 
 // ui
 import { Button } from '@mui/material'
-import OfflinePinRounded from '@mui/icons-material/OfflinePinRounded'
 import Tooltip from '@mui/material/Tooltip'
 
 // api
@@ -135,6 +135,7 @@ const VerifyMailAndBindEmail = ({
       <FieldFormWrapper
         label={label}
         setEdit={setEdit}
+        edit={edit}
         isEdit
         titleTips='Receive job applications updates through your email. '
       >
@@ -225,12 +226,12 @@ const VerifyMailAndBindEmail = ({
             <Text className={styles.bottomSpacing}>{email}</Text>
             {Verify && (
               <Tooltip
-                title={label}
+                title='Verified'
                 placement='top'
                 arrow
                 classes={{ tooltip: styles.formWrapper_tooltip }}
               >
-                <OfflinePinRounded sx={{ color: '#2DA871' }} />
+                <img src={BlueTickIcon} alt='icon' width='20' height='20' />
               </Tooltip>
             )}
           </div>
