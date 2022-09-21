@@ -68,10 +68,10 @@ const AccountSettings = ({ config, accessToken }: any) => {
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
 
-  const userDetail = useSelector((store: any) => store.users.fetchUserDetail.response)
-
   const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
   const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
+
+  const userDetail = useSelector((store: any) => store.users.fetchUserDetail.response)
 
   const getInitData = () => {
     dispatch(fetchUserDetailRequest({ accessToken }))
@@ -200,10 +200,11 @@ const AccountSettings = ({ config, accessToken }: any) => {
               isEdit
               errorText={errorText}
               emailDefault={userDetail?.email ? userDetail.email : null}
-              valid={userDetail.is_email_verify}
+              verify={userDetail.is_email_verify}
               setIsShowCountDownSwitch={setIsShowCountDownSwitch}
               isShowCountDownSwitch={isShowCountDownSwitch}
               countDown={countDown}
+              getInitData={getInitData}
             />
 
             {/*  mobile number  */}
@@ -214,11 +215,12 @@ const AccountSettings = ({ config, accessToken }: any) => {
               isEdit
               errorText={errorText}
               phoneDefault={userDetail.phone_num ? userDetail.phone_num : null}
-              valid={userDetail.is_mobile_verified}
+              verify={userDetail.is_mobile_verified}
               setIsShowCountDownSwitch={setIsShowCountDownSwitch}
               isShowCountDownSwitch={isShowCountDownSwitch}
               countDown={countDown}
               config={config}
+              getInitData={getInitData}
             />
 
             {/* password */}

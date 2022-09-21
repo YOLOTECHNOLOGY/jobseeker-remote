@@ -5,6 +5,7 @@ import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import MaterialTextField from 'components/MaterialTextField'
 import Text from 'components/Text'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
+import { BlueTickIcon } from 'images'
 
 // tools
 import { handleNumericInput } from 'helpers/handleInput'
@@ -12,6 +13,7 @@ import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 
 // ui
 import { Button } from '@mui/material'
+import Tooltip from '@mui/material/Tooltip'
 
 // api
 import {
@@ -25,20 +27,24 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 
 // styles
 import styles from './index.module.scss'
+import { useFirstRender } from 'helpers/useFirstRender'
 
 const VerifyPhoneNumber = ({
   label,
   setEdit,
   edit,
   phoneDefault,
-  Verify,
+  verify,
   errorText,
   setIsShowCountDownSwitch,
   isShowCountDownSwitch,
   countDown,
-  config
+  config,
+  getInitData
 }: any) => {
   const dispatch = useDispatch()
+
+  const firstRender = useFirstRender()
 
   const smsCountryList = getSmsCountryList(config)
   const getSmsCountryCode = (phoneNumber, smsCountryList) => {
@@ -52,20 +58,42 @@ const VerifyPhoneNumber = ({
   }
   const [smsCode, setSmsCode] = useState(getSmsCountryCode(phoneDefault, smsCountryList) || '+63')
 
-  const [isBtnDisabled, setBtnDisabled] = useState(Verify)
+  const [isBtnDisabled, setBtnDisabled] = useState(verify)
   const [isBtnDisabledVerify, setIsBtnDisabledVerify] = useState(true)
 
   const [phoneNumError] = useState(null)
   const [phoneNum, setPhoneNum] = useState(phoneDefault)
+  const [isDone, setDone] = useState(false)
 
   const [isShowPhoneVerify, setIsShowPhoneVerify] = useState(false)
   const [otp, setOtp] = useState('')
+  const [otpError, setOtpError] = useState('')
+  const [phoneTip, setPhoneTip] = useState(
+    'To receive job applications update, please verify your email.'
+  )
 
   const reductionEmail = () => {
     setPhoneNum(phoneDefault ? phoneDefault : null)
     setIsShowPhoneVerify(false)
     setOtp('')
+    setPhoneTip('To receive job applications update, please verify your email.')
   }
+
+  useEffect(() => {
+    if (verify && phoneNum !== phoneDefault) {
+      setPhoneTip(
+        'Your mobile number has been verified. Recruiters will be able to contact you through your mobile number. To change your mobile number, please verify your new mobile number.'
+      )
+    } else {
+      setPhoneTip('To receive job applications update, please verify your email.')
+    }
+
+    if (phoneNum.length) {
+      setBtnDisabled(false)
+    } else {
+      setBtnDisabled(true)
+    }
+  }, [phoneNum])
 
   useEffect(() => {
     if (otp.length === 6) {
@@ -76,6 +104,9 @@ const VerifyPhoneNumber = ({
   }, [otp])
 
   useEffect(() => {
+    if (firstRender) {
+      return
+    }
     if (phoneNumError) {
       setBtnDisabled(true)
     } else {
@@ -84,6 +115,9 @@ const VerifyPhoneNumber = ({
   }, [phoneNumError])
 
   useEffect(() => {
+    if (firstRender) {
+      return
+    }
     setBtnDisabled(isShowCountDownSwitch)
   }, [isShowCountDownSwitch])
 
@@ -91,12 +125,12 @@ const VerifyPhoneNumber = ({
     setIsShowCountDownSwitch(true)
     setIsShowPhoneVerify(true)
     setPhoneNum(phoneNum)
-    sendPhoneNumberOTP({ phone_number: phoneNum }).then(({ data }) => {
+    sendPhoneNumberOTP({ phone_number: smsCode + phoneNum }).then(({ data }) => {
       if (data.success) {
         dispatch(
           displayNotification({
             open: true,
-            message: '验证码已发送注意查收',
+            message: 'The verification code has been sent, please check it',
             severity: 'success'
           })
         )
@@ -104,41 +138,57 @@ const VerifyPhoneNumber = ({
     })
   }
 
+  const verifiSuccess = () => {
+    setPhoneTip(
+      'Your mobile number has been verified. Recruiters will be able to contact you through your mobile number.'
+    )
+    setIsShowPhoneVerify(false)
+    setDone(true)
+    getInitData()
+    setOtpError(null)
+  }
+
+  const verifiError = () => {
+    setOtpError('OTP is incorrect. Please try again.')
+  }
+
   const verifyEmailOrChangeEmail = () => {
     if (phoneDefault === phoneNum) {
       // verify
-      verifyPhoneNumber({ otp: Number(otp) }).then(({ data }) => {
-        if (data.success) {
-          dispatch(
-            displayNotification({
-              open: true,
-              message: '手机验证成功',
-              severity: 'success'
-            })
-          )
-        } else {
-          dispatch(
-            displayNotification({
-              open: true,
-              message: '手机验证失败' + data?.error?.message,
-              severity: 'warning'
-            })
-          )
-        }
-      })
+      verifyPhoneNumber({ otp: Number(otp) })
+        .then(({ data }) => {
+          if (data.success) {
+            dispatch(
+              displayNotification({
+                open: true,
+                message: 'Mobile number verification is successful',
+                severity: 'success'
+              })
+            )
+            verifiSuccess()
+          }
+        })
+        .catch(() => {
+          verifiError()
+        })
     } else {
       // change
-      changePhoneNumber({ otp: Number(otp), phoneNum }).then(({ data }) => {
-        if (data.success) {
-          dispatch(
-            displayNotification({
-              open: true,
-              message: '手机修改成功',
-              severity: 'success'
-            })
-          )
-        }
-      })
+      changePhoneNumber({ otp: Number(otp), phone_num: Number(phoneNum) })
+        .then(({ data }) => {
+          if (data.success) {
+            dispatch(
+              displayNotification({
+                open: true,
+                message: 'The phone number has been modified successfully',
+                severity: 'success'
+              })
+            )
+            verifiSuccess()
+          }
+        })
+        .catch(() => {
+          verifiError()
+        })
     }
   }
 
@@ -153,10 +203,7 @@ const VerifyPhoneNumber = ({
       >
         {edit === 'Mobile Number' ? (
           <div className={styles.accessSettingsContainer_fromWrapper}>
-            <Text>
-              To help recruiters to better contact you for job opportunities. please verify your
-              mobile number.
-            </Text>
+            <Text>{phoneTip}</Text>
 
             <div className={styles.accessSettingsContainer_fromWrapper_edit_wrapper}>
               <div className={styles.accessSettingsContainer_fromWrapper_edit_wrapper_block}>
@@ -169,7 +216,6 @@ const VerifyPhoneNumber = ({
                     setSmsCode(e.target.value)
                   }}
                 />
-                {phoneNumError && errorText(phoneNumError)}
               </div>
 
               <div className={styles.accessSettingsContainer_fromWrapper_edit_wrapper_block}>
@@ -184,22 +230,35 @@ const VerifyPhoneNumber = ({
                 {phoneNumError && errorText(phoneNumError)}
               </div>
             </div>
-            <div className={styles.VerifyMailAndBindEmail_button}>
-              <Button variant='contained' disabled={isBtnDisabled} onClick={sendPhoneNumberOTPS}>
-                Send OTP {isShowCountDownSwitch && `(${countDown}s)`}
-              </Button>
-              {!isShowPhoneVerify && (
+            {!isDone ? (
+              <div className={styles.VerifyMailAndBindEmail_button}>
+                <Button variant='contained' disabled={isBtnDisabled} onClick={sendPhoneNumberOTPS}>
+                  Send OTP {isShowCountDownSwitch && `(${countDown}s)`}
+                </Button>
+                {!isShowPhoneVerify && (
+                  <Button
+                    variant='outlined'
+                    onClick={() => {
+                      reductionEmail()
+                      setEdit(null)
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                )}
+              </div>
+            ) : (
+              <div className={styles.VerifyMailAndBindEmail_button}>
                 <Button
-                  variant='outlined'
+                  variant='contained'
                   onClick={() => {
-                    reductionEmail()
                     setEdit(null)
                   }}
                 >
-                  Cancel
+                  Done
                 </Button>
-              )}
-            </div>
+              </div>
+            )}
 
             {isShowPhoneVerify && (
               <div className={styles.accessSettingsContainer_fromWrapper_verifyContainer}>
@@ -213,10 +272,10 @@ const VerifyPhoneNumber = ({
                     size='small'
                     value={otp}
                     autoComplete='off'
-                    error={phoneNumError ? true : false}
+                    error={otpError ? true : false}
                     onChange={(e) => setOtp(handleNumericInput(e.target.value))}
                   />
-                  {phoneNumError && errorText(phoneNumError)}
+                  {otpError && errorText(otpError)}
                 </div>
 
                 <div className={styles.VerifyMailAndBindEmail_button}>
@@ -244,6 +303,16 @@ const VerifyPhoneNumber = ({
         ) : (
           <div className={styles.formWrapper}>
             <Text className={styles.bottomSpacing}>{phoneNum ? phoneNum : 'Not provided'}</Text>
+            {verify && (
+              <Tooltip
+                title='Verified'
+                placement='top'
+                arrow
+                classes={{ tooltip: styles.formWrapper_tooltip }}
+              >
+                <img src={BlueTickIcon} alt='icon' width='20' height='20' />
+              </Tooltip>
+            )}
           </div>
         )}
       </FieldFormWrapper>

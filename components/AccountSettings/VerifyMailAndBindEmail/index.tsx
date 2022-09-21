@@ -21,41 +21,70 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 
 // styles
 import styles from './index.module.scss'
+import { useFirstRender } from 'helpers/useFirstRender'
 
 const VerifyMailAndBindEmail = ({
   label,
   setEdit,
   edit,
   emailDefault,
-  Verify,
+  verify,
   errorText,
   setIsShowCountDownSwitch,
   isShowCountDownSwitch,
-  countDown
+  countDown,
+  getInitData
 }: any) => {
   const dispatch = useDispatch()
-  const [isBtnDisabled, setBtnDisabled] = useState(Verify)
+
+  const firstRender = useFirstRender()
+  const [isBtnDisabled, setBtnDisabled] = useState(verify)
   const [isBtnDisabledVerify, setIsBtnDisabledVerify] = useState(true)
 
   const [emailError, setEmailError] = useState(null)
   const [email, setEmail] = useState(emailDefault)
+  const [isDone, setDone] = useState(false)
 
   const [isShowemailVerify, setIsShowemailVerify] = useState(false)
   const [otp, setOtp] = useState('')
+  const [otpError, setOtpError] = useState('')
+  const [emailTip, setEmailTip] = useState(
+    'To receive job applications update, please verify your email.'
+  )
 
   const reductionEmail = () => {
     setEmail(emailDefault ? emailDefault : null)
     setIsShowemailVerify(false)
     setOtp('')
+    setEmailTip('To receive job applications update, please verify your email.')
+    setOtpError(null)
+    setBtnDisabled(verify)
   }
 
   useEffect(() => {
+    if (firstRender) {
+      return
+    }
     let errorText = null
     if (email && !/\S+@\S+\.\S+/.test(email)) {
       errorText = 'Please enter a valid email address.'
     }
 
+    if (errorText) {
+      setBtnDisabled(true)
+    } else {
+      setBtnDisabled(false)
+    }
+
     setEmailError(errorText)
+
+    if (verify && email !== emailDefault) {
+      setEmailTip(
+        'Your email has been verified. You will be able to receive job applications update through your email. To change your email address, please verify your new email address.'
+      )
+    } else {
+      setEmailTip('To receive job applications update, please verify your email.')
+    }
   }, [email])
 
   useEffect(() => {
@@ -67,14 +96,9 @@ const VerifyMailAndBindEmail = ({
   }, [otp])
 
   useEffect(() => {
-    if (emailError) {
-      setBtnDisabled(true)
-    } else {
-      setBtnDisabled(false)
+    if (firstRender) {
+      return
     }
-  }, [emailError])
-
-  useEffect(() => {
     setBtnDisabled(isShowCountDownSwitch)
   }, [isShowCountDownSwitch])
 
@@ -87,7 +111,7 @@ const VerifyMailAndBindEmail = ({
         dispatch(
           displayNotification({
             open: true,
-            message: '需要给一个提示不然用户感知不到，是否成功',
+            message: 'The verification code has been sent to your email, please check it',
             severity: 'success'
           })
         )
@@ -95,29 +119,53 @@ const VerifyMailAndBindEmail = ({
     })
   }
 
+  const emailVerifiSuccess = () => {
+    setEmailTip(
+      'Your email has been verified. You will be able to receive job applications update through your email.'
+    )
+    setIsShowemailVerify(false)
+    setDone(true)
+    getInitData()
+    setOtpError(null)
+  }
+
+  const emailVerifiError = () => {
+    setOtpError('OTP is incorrect. Please try again.')
+  }
+
   const verifyEmailOrChangeEmail = () => {
     if (emailDefault === email) {
       // verify
-      verifyEmail({ otp }).then(() => {
-        dispatch(
-          displayNotification({
-            open: true,
-            message: '验证邮箱成功',
-            severity: 'success'
-          })
-        )
-      })
+      verifyEmail({ otp })
+        .then(() => {
+          dispatch(
+            displayNotification({
+              open: true,
+              message: 'Email verification succeeded',
+              severity: 'success'
+            })
+          )
+          emailVerifiSuccess()
+        })
+        .catch(() => {
+          emailVerifiError()
+        })
     } else {
       // change
-      changeEmail({ otp, email }).then(() => {
-        dispatch(
-          displayNotification({
-            open: true,
-            message: '修改邮箱成功',
-            severity: 'success'
-          })
-        )
-      })
+      changeEmail({ otp, email })
+        .then(() => {
+          dispatch(
+            displayNotification({
+              open: true,
+              message: 'Modify email successfully',
+              severity: 'success'
+            })
+          )
+          emailVerifiSuccess()
+        })
+        .catch(() => {
+          emailVerifiError()
+        })
     }
   }
 
@@ -141,14 +189,7 @@ const VerifyMailAndBindEmail = ({
       >
         {edit === 'Email' ? (
           <div className={styles.accessSettingsContainer_fromWrapper}>
-            <Text>To receive job applications update, please verify your email.</Text>
-            {isShowemailVerify && emailDefault !== email && (
-              <Text>
-                Your email has been verified. You will be able to receive job applications update
-                through your email. To change your email address, please verify your new email
-                address.
-              </Text>
-            )}
+            {emailTip}
             <div className={styles.accessSettingsContainer_fromWrapper_edit}>
               <MaterialTextField
                 className={styles.accessSettingsContainer_fromWrapper_edit_input}
@@ -164,22 +205,35 @@ const VerifyMailAndBindEmail = ({
               {emailError && errorText(emailError)}
             </div>
 
-            <div className={styles.VerifyMailAndBindEmail_button}>
-              <Button variant='contained' disabled={isBtnDisabled} onClick={sendEmailOTPS}>
-                Send OTP {isShowCountDownSwitch && `(${countDown}s)`}
-              </Button>
-              {!isShowemailVerify && (
+            {!isDone ? (
+              <div className={styles.VerifyMailAndBindEmail_button}>
+                <Button variant='contained' disabled={isBtnDisabled} onClick={sendEmailOTPS}>
+                  Send OTP {isShowCountDownSwitch && `(${countDown}s)`}
+                </Button>
+                {!isShowemailVerify && (
+                  <Button
+                    variant='outlined'
+                    onClick={() => {
+                      reductionEmail()
+                      setEdit(null)
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                )}
+              </div>
+            ) : (
+              <div className={styles.VerifyMailAndBindEmail_button}>
                 <Button
-                  variant='outlined'
+                  variant='contained'
                   onClick={() => {
-                    reductionEmail()
                     setEdit(null)
                   }}
                 >
-                  Cancel
+                  Done
                 </Button>
-              )}
-            </div>
+              </div>
+            )}
 
             {isShowemailVerify && (
               <div className={styles.accessSettingsContainer_fromWrapper_verifyContainer}>
@@ -193,10 +247,10 @@ const VerifyMailAndBindEmail = ({
                     size='small'
                     value={otp}
                     autoComplete='off'
-                    error={emailError ? true : false}
+                    error={otpError ? true : false}
                     onChange={(e) => setOtp(handleNumericInput(e.target.value))}
                   />
-                  {emailError && errorText(emailError)}
+                  {otpError && errorText(otpError)}
                 </div>
 
                 <div className={styles.VerifyMailAndBindEmail_button}>
@@ -224,12 +278,12 @@ const VerifyMailAndBindEmail = ({
         ) : (
           <div className={styles.formWrapper}>
             <Text className={styles.bottomSpacing}>{email}</Text>
-            {Verify && (
+            {verify && (
               <Tooltip
                 title='Verified'
                 placement='top'
                 arrow
-                classes={{ tooltip: styles.formWrapper_tooltip }}
+                // classes={{ tooltip: styles.formWrapper_tooltip }}
               >
                 <img src={BlueTickIcon} alt='icon' width='20' height='20' />
               </Tooltip>

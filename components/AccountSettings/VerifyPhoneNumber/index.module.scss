@@ -31,4 +31,13 @@
       margin-left: 20px;
     }
   }
+
+  .formWrapper {
+    display: flex;
+    align-items: center;
+
+    .bottomSpacing {
+      margin-right: 5px;
+    }
+  }
 }
