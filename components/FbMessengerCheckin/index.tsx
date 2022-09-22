@@ -1,8 +1,8 @@
 import React, { memo, useEffect } from 'react'
-import PropTypes from 'prop-types'
 
 // user_ref == userId
-const FbMessengerCheckin = ({ userRef }) => {
+
+const FbMessengerCheckin = ({ userRef }: any) => {
   let hostName = ''
 
   switch (process.env.NODE_ENV) {
@@ -22,26 +22,6 @@ const FbMessengerCheckin = ({ userRef }) => {
       ;(window as any).FB?.XFBML.parse()
     }
   }, [])
-
-  // useEffect(() => {
-  //   if (window.FB !== undefined) {
-  //     console.log(window.FB)
-  //     ;(window as any).FB.Event.subscribe('messenger_checkbox', function (e) {
-  //       console.log('messenger_checkbox event')
-  //       console.log(e)
-  //       if (e.event == 'rendered') {
-  //         console.log('Plugin was rendered')
-  //       } else if (e.event == 'checkbox') {
-  //         const checkboxState = e.state
-  //         console.log('Checkbox state: ' + checkboxState)
-  //       } else if (e.event == 'not_you') {
-  //         console.log("User clicked 'not you'")
-  //       } else if (e.event == 'hidden') {
-  //         console.log('Plugin was hidden')
-  //       }
-  //     })
-  //   }
-  // }, [])
 
   return (
     <div
@@ -64,10 +44,6 @@ const FbMessengerCheckin = ({ userRef }) => {
       center_align='<true>'
     />
   )
-}
-
-FbMessengerCheckin.propTypes = {
-  userRef: PropTypes.string.isRequired
 }
 
 export default memo(FbMessengerCheckin)

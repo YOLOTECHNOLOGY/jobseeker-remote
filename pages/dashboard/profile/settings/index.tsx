@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { wrapper } from 'store'
 import { END } from 'redux-saga'
 
@@ -15,8 +15,8 @@ import FbMessengerCheckin from 'components/FbMessengerCheckin'
 // mui
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import Switch from '@mui/material/Switch'
 import { ThemeProvider, createTheme } from '@mui/material'
+import { Button } from '@mui/material'
 
 // actions
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
@@ -59,17 +59,17 @@ function a11yProps(index: number) {
 }
 
 const COUNT_DOWN_VERIFY_DEFAULT = 60
-let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
+// const countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
 
 const AccountSettings = ({ config, accessToken }: any) => {
   const dispatch = useDispatch()
-  const refCountDownTimeName = useRef(null)
+  // const refCountDownTimeName = useRef(null)
   const [userId, setUserId] = useState(null)
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
 
-  const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
-  const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
+  // const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
+  // const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
 
   const userDetail = useSelector((store: any) => store.users.fetchUserDetail.response)
 
@@ -82,28 +82,6 @@ const AccountSettings = ({ config, accessToken }: any) => {
     id += '_' + new Date().getTime()
     setUserId(id)
   }, [])
-
-  // Count Down
-  useEffect(() => {
-    if (isShowCountDownSwitch) {
-      const eventCallBack = () => {
-        if (countDownVerify <= 1) {
-          setIsShowCountDownSwitch(false)
-          clearInterval()
-        } else {
-          countDownVerify = countDownVerify - 1
-          setCountDown(countDownVerify)
-        }
-      }
-      refCountDownTimeName.current = setInterval(eventCallBack, 1000)
-      return () => clearInterval(refCountDownTimeName.current)
-    } else {
-      clearInterval(refCountDownTimeName.current)
-      // setBtnDisabled(false)
-      countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
-      setCountDown(COUNT_DOWN_VERIFY_DEFAULT)
-    }
-  }, [isShowCountDownSwitch])
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
@@ -138,15 +116,6 @@ const AccountSettings = ({ config, accessToken }: any) => {
     )
   }
 
-  // const requiredLabel = (text: string) => {
-  //   return (
-  //     <>
-  //       <span>{text}</span>
-  //       <span className={styles.stepFieldRequired}>*</span>
-  //     </>
-  //   )
-  // }
-
   const sendFbMessengerCheckboxEvent = (ref: number, userRef: string) => {
     if (typeof window !== undefined) {
       ;(window as any).FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
@@ -160,14 +129,47 @@ const AccountSettings = ({ config, accessToken }: any) => {
     }
   }
 
-  const comfirmOptIn = async (ev) => {
-    if (ev.target.checked) {
-      await sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + userId)
-    } else {
-      await facebookMsgDeactivate()
-    }
-    await getInitData()
+  const comfirmOptIn = () => {
+    console.log(userId)
+    sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + userId)
+    setTimeout(() => getInitData(), 2000)
   }
+
+  const unsubscribe = () => {
+    facebookMsgDeactivate().then(() => {
+      let id = getCookie('user')?.id
+      id += '_' + new Date().getTime()
+      console.log(id)
+      setUserId(id)
+      getInitData()
+    })
+  }
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      window.onload = () => {
+        // @ts-ignore #
+        if (typeof window.FB !== undefined) {
+          // @ts-ignore #
+          FB.Event.subscribe('messenger_checkbox', function (e) {
+            if (e.event == 'rendered') {
+              console.log('Plugin was rendered')
+            } else if (e.event == 'checkbox') {
+              const checkboxState = e.state
+              console.log('Checkbox state: ' + checkboxState)
+              if (checkboxState === 'checked') {
+                comfirmOptIn()
+              }
+            } else if (e.event == 'not_you') {
+              console.log("User clicked 'not you'")
+            } else if (e.event == 'hidden') {
+              console.log('Plugin was hidden')
+            }
+          })
+        }
+      }
+    }
+  })
 
   return (
     <Layout>
@@ -208,10 +210,8 @@ const AccountSettings = ({ config, accessToken }: any) => {
               errorText={errorText}
               emailDefault={userDetail?.email ? userDetail.email : null}
               verify={userDetail.is_email_verify}
-              setIsShowCountDownSwitch={setIsShowCountDownSwitch}
-              isShowCountDownSwitch={isShowCountDownSwitch}
-              countDown={countDown}
               getInitData={getInitData}
+              COUNT_DOWN_VERIFY_DEFAULT={COUNT_DOWN_VERIFY_DEFAULT}
             />
 
             {/*  mobile number  */}
@@ -223,11 +223,9 @@ const AccountSettings = ({ config, accessToken }: any) => {
               errorText={errorText}
               phoneDefault={userDetail.phone_num ? userDetail.phone_num : null}
               verify={userDetail.is_mobile_verified}
-              setIsShowCountDownSwitch={setIsShowCountDownSwitch}
-              isShowCountDownSwitch={isShowCountDownSwitch}
-              countDown={countDown}
               config={config}
               getInitData={getInitData}
+              COUNT_DOWN_VERIFY_DEFAULT={COUNT_DOWN_VERIFY_DEFAULT}
             />
 
             {/* password */}
@@ -247,30 +245,28 @@ const AccountSettings = ({ config, accessToken }: any) => {
               emailNotificationSetting={userDetail ? userDetail.email_notification_setting : null}
             />
 
-            <FieldFormWrapper
-              label='Linked Accounts'
-              edit={edit}
-              setEdit={setEdit}
-              titleTips='Login to your Facebook Messenger and your job application updates will be sent to your Facebook Messenger.'
-            >
+            <FieldFormWrapper label='Linked Accounts' edit={edit} setEdit={setEdit}>
               <div className={styles.accessSettingsContainer_swtich}>
                 <div className={styles.accessSettingsContainer_swtich_fb}>
-                  <Text className={styles.accessSettingsContainer_swtich_fb_context}>
-                    Facebook Messenger
+                  <Text>
+                    Login to your Facebook Messenger and your job application updates will be sent
+                    to your Facebook Messenger.
                   </Text>
                   <div>
-                    {userId && !userDetail.is_fb_messenger_active && (
-                      <FbMessengerCheckin userRef={'account_' + userId} />
+                    {userId && !userDetail.is_fb_messenger_active ? (
+                      <div>
+                        <FbMessengerCheckin userRef={'account_' + userId} />
+                      </div>
+                    ) : (
+                      <div
+                        onClick={unsubscribe}
+                        className={styles.accessSettingsContainer_swtich_fb_button}
+                      >
+                        <Button variant='contained'>Unlink from facebook messenger</Button>
+                      </div>
                     )}
                   </div>
                 </div>
-
-                <Switch
-                  checked={userDetail.is_fb_messenger_active}
-                  onChange={(ev) => {
-                    comfirmOptIn(ev)
-                  }}
-                />
               </div>
             </FieldFormWrapper>
 

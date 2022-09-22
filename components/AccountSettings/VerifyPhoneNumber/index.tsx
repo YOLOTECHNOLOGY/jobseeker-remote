@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 
 import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
@@ -36,14 +36,18 @@ const VerifyPhoneNumber = ({
   phoneDefault,
   verify,
   errorText,
-  setIsShowCountDownSwitch,
-  isShowCountDownSwitch,
-  countDown,
   config,
-  getInitData
+  getInitData,
+  COUNT_DOWN_VERIFY_DEFAULT
 }: any) => {
   const dispatch = useDispatch()
 
+  let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
+  const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
+  const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
+  const refCountDownTimeName = useRef(null)
+
+  const [defaultPhone] = useState(phoneDefault)
   const firstRender = useFirstRender()
 
   const smsCountryList = getSmsCountryList(config)
@@ -56,8 +60,13 @@ const VerifyPhoneNumber = ({
 
     return matchedCountryCode ? matchedCountryCode[0]?.value : null
   }
-  const [smsCode, setSmsCode] = useState(getSmsCountryCode(phoneDefault, smsCountryList) || '+63')
 
+  const [smsCode, setSmsCode] = useState(getSmsCountryCode(phoneDefault, smsCountryList))
+  if (!smsCode) {
+    setSmsCode('+63')
+  } else if (phoneDefault) {
+    phoneDefault = phoneDefault.slice(smsCode.length, phoneDefault.length)
+  }
   const [isBtnDisabled, setBtnDisabled] = useState(verify)
   const [isBtnDisabledVerify, setIsBtnDisabledVerify] = useState(true)
 
@@ -69,26 +78,43 @@ const VerifyPhoneNumber = ({
   const [otp, setOtp] = useState('')
   const [otpError, setOtpError] = useState('')
   const [phoneTip, setPhoneTip] = useState(
-    'To receive job applications update, please verify your email.'
+    verify
+      ? 'Your mobile number has been verified. Recruiters will be able to contact you through your mobile number. To change your mobile number, please verify your new mobile number.'
+      : 'To help recruiters to better contact you for job opportunities. please verify your mobile number.'
   )
+
+  useEffect(() => {
+    if (isShowCountDownSwitch) {
+      const eventCallBack = () => {
+        if (countDownVerify <= 1) {
+          setIsShowCountDownSwitch(false)
+          clearInterval()
+        } else {
+          countDownVerify = countDownVerify - 1
+          setCountDown(countDownVerify)
+        }
+      }
+      refCountDownTimeName.current = setInterval(eventCallBack, 1000)
+      return () => clearInterval(refCountDownTimeName.current)
+    } else {
+      clearInterval(refCountDownTimeName.current)
+      // setBtnDisabled(false)
+      countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
+      setCountDown(COUNT_DOWN_VERIFY_DEFAULT)
+    }
+  }, [isShowCountDownSwitch])
 
   const reductionEmail = () => {
     setPhoneNum(phoneDefault ? phoneDefault : null)
     setIsShowPhoneVerify(false)
     setOtp('')
-    setPhoneTip('To receive job applications update, please verify your email.')
   }
 
   useEffect(() => {
-    if (verify && phoneNum !== phoneDefault) {
-      setPhoneTip(
-        'Your mobile number has been verified. Recruiters will be able to contact you through your mobile number. To change your mobile number, please verify your new mobile number.'
-      )
-    } else {
-      setPhoneTip('To receive job applications update, please verify your email.')
+    if (isShowCountDownSwitch) {
+      return
     }
-
-    if (phoneNum.length) {
+    if (phoneNum && phoneNum.length) {
       setBtnDisabled(false)
     } else {
       setBtnDisabled(true)
@@ -96,10 +122,15 @@ const VerifyPhoneNumber = ({
   }, [phoneNum])
 
   useEffect(() => {
+    if (firstRender) {
+      return
+    }
     if (otp.length === 6) {
       setIsBtnDisabledVerify(false)
+      setOtpError('')
     } else {
       setIsBtnDisabledVerify(true)
+      setOtpError('Incorrect format of verification code')
     }
   }, [otp])
 
@@ -215,6 +246,7 @@ const VerifyPhoneNumber = ({
                   onChange={(e) => {
                     setSmsCode(e.target.value)
                   }}
+                  disabled={isShowPhoneVerify}
                 />
               </div>
 
@@ -226,6 +258,7 @@ const VerifyPhoneNumber = ({
                   error={phoneNumError ? true : false}
                   value={phoneNum}
                   onChange={(e) => setPhoneNum(handleNumericInput(e.target.value))}
+                  disabled={isShowPhoneVerify}
                 />
                 {phoneNumError && errorText(phoneNumError)}
               </div>
@@ -302,7 +335,9 @@ const VerifyPhoneNumber = ({
           </div>
         ) : (
           <div className={styles.formWrapper}>
-            <Text className={styles.bottomSpacing}>{phoneNum ? phoneNum : 'Not provided'}</Text>
+            <Text className={styles.bottomSpacing}>
+              {defaultPhone ? defaultPhone : 'Not provided'}
+            </Text>
             {verify && (
               <Tooltip
                 title='Verified'

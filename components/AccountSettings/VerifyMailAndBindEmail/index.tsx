@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 
 import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
@@ -30,12 +30,15 @@ const VerifyMailAndBindEmail = ({
   emailDefault,
   verify,
   errorText,
-  setIsShowCountDownSwitch,
-  isShowCountDownSwitch,
-  countDown,
-  getInitData
+  getInitData,
+  COUNT_DOWN_VERIFY_DEFAULT
 }: any) => {
   const dispatch = useDispatch()
+
+  let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
+  const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
+  const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
+  const refCountDownTimeName = useRef(null)
 
   const firstRender = useFirstRender()
   const [isBtnDisabled, setBtnDisabled] = useState(verify)
@@ -49,20 +52,43 @@ const VerifyMailAndBindEmail = ({
   const [otp, setOtp] = useState('')
   const [otpError, setOtpError] = useState('')
   const [emailTip, setEmailTip] = useState(
-    'To receive job applications update, please verify your email.'
+    verify
+      ? 'Your email has been verified. You will be able to receive job applications update through your email. To change your email address, please verify your new email address.'
+      : 'To receive job applications update, please verify your email.'
   )
+
+  useEffect(() => {
+    if (isShowCountDownSwitch) {
+      const eventCallBack = () => {
+        if (countDownVerify <= 1) {
+          setIsShowCountDownSwitch(false)
+          clearInterval()
+        } else {
+          countDownVerify = countDownVerify - 1
+          setCountDown(countDownVerify)
+        }
+      }
+      refCountDownTimeName.current = setInterval(eventCallBack, 1000)
+      return () => clearInterval(refCountDownTimeName.current)
+    } else {
+      clearInterval(refCountDownTimeName.current)
+      // setBtnDisabled(false)
+      countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
+      setCountDown(COUNT_DOWN_VERIFY_DEFAULT)
+    }
+  }, [isShowCountDownSwitch])
 
   const reductionEmail = () => {
     setEmail(emailDefault ? emailDefault : null)
     setIsShowemailVerify(false)
     setOtp('')
-    setEmailTip('To receive job applications update, please verify your email.')
+    // setEmailTip('To receive job applications update, please verify your email.')
     setOtpError(null)
     setBtnDisabled(verify)
   }
 
   useEffect(() => {
-    if (firstRender) {
+    if (firstRender || isShowCountDownSwitch) {
       return
     }
     let errorText = null
@@ -77,21 +103,18 @@ const VerifyMailAndBindEmail = ({
     }
 
     setEmailError(errorText)
-
-    if (verify && email !== emailDefault) {
-      setEmailTip(
-        'Your email has been verified. You will be able to receive job applications update through your email. To change your email address, please verify your new email address.'
-      )
-    } else {
-      setEmailTip('To receive job applications update, please verify your email.')
-    }
   }, [email])
 
   useEffect(() => {
+    if (firstRender) {
+      return
+    }
     if (otp.length === 6) {
       setIsBtnDisabledVerify(false)
+      setOtpError(null)
     } else {
       setIsBtnDisabledVerify(true)
+      setOtpError('Incorrect format of verification code')
     }
   }, [otp])
 
@@ -201,6 +224,7 @@ const VerifyMailAndBindEmail = ({
                 autoComplete='off'
                 error={emailError ? true : false}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={isShowemailVerify}
               />
               {emailError && errorText(emailError)}
             </div>

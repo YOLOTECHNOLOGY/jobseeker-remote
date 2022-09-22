@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useRouter } from 'next/router'
 
 import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import MaterialTextField from 'components/MaterialTextField'
 import Text from 'components/Text'
+import { useFirstRender } from 'helpers/useFirstRender'
 
 // tools
 
@@ -19,12 +19,11 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 
 // styles
 import styles from './index.module.scss'
-import { removeCookie } from 'helpers/cookies'
 
 const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
   const dispatch = useDispatch()
-  const router = useRouter()
 
+  const firstRender = useFirstRender()
   const [isBtnDisabled, setBtnDisabled] = useState(false)
 
   const [currentPassword, setCurrentPassword] = useState('')
@@ -38,40 +37,64 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
   const [successState, setSuccessState] = useState(false)
 
   useEffect(() => {
-    if (newPassword === confirmNewPassword && newPassword.length > 8) {
+    if (firstRender) {
+      return
+    }
+    if (newPassword === confirmNewPassword) {
       setBtnDisabled(false)
-      setNewPasswordError(null)
       setConfirmNewPasswordError(null)
     } else {
       setBtnDisabled(true)
-      setNewPasswordError('Password do not match. Please try again.')
       setConfirmNewPasswordError('Password do not match. Please try again.')
     }
-  }, [newPassword, confirmNewPassword])
+  }, [confirmNewPassword])
+
+  useEffect(() => {
+    if (firstRender) {
+      return
+    }
+    if (newPassword.length >= 9) {
+      setBtnDisabled(false)
+      setNewPasswordError(null)
+    } else {
+      setBtnDisabled(true)
+      setNewPasswordError('Password length cannot be less than 9 characters')
+    }
+  }, [newPassword])
 
   const setChangePassword = async () => {
-    await changePassword({ old_password: currentPassword, new_password: newPassword }).then(
-      ({ data }) => {
+    await changePassword({ old_password: currentPassword, new_password: newPassword })
+      .then(({ data }) => {
         if (data.success) {
           setSuccessState(true)
           dispatch(
             displayNotification({
               open: true,
-              message: 'Change password successfully',
+              message: 'Your password has been changed successfully',
               severity: 'success'
             })
           )
-          removeCookie('accessToken')
-          router.push('/login/jobseeker?redirect=/dashboard/profile/settings')
+          // removeCookie('accessToken')
+          // router.push('/login/jobseeker?redirect=/dashboard/profile/settings')
         } else {
+          dispatch(
+            displayNotification({
+              open: true,
+              message: 'Failed to change password,Please try again later',
+              severity: 'warning'
+            })
+          )
+        }
+      })
+      .catch(() => {
+        dispatch(
           displayNotification({
             open: true,
-            message: 'Failed to change password',
+            message: 'Failed to change password,Please try again later',
             severity: 'warning'
           })
-        }
-      }
-    )
+        )
+      })
   }
 
   const resetPassword = () => {
@@ -86,7 +109,6 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
       <FieldFormWrapper label={label} edit={edit} setEdit={setEdit} isEdit>
         {edit === 'Password' ? (
           <div className={styles.accessSettingsContainer_fromWrapper}>
-            <Text>To receive job applications update, please verify your email.</Text>
             <div className={styles.accessSettingsContainer_fromWrapper_edit}>
               <div>
                 <MaterialTextField
@@ -140,7 +162,14 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
               </div>
             ) : (
               <div className={styles.VerifyMailAndBindEmail_button}>
-                <Button variant='contained' disabled={isBtnDisabled} onClick={resetPassword}>
+                <Button
+                  variant='contained'
+                  disabled={isBtnDisabled}
+                  onClick={() => {
+                    setEdit(null)
+                    resetPassword()
+                  }}
+                >
                   Done
                 </Button>
               </div>
