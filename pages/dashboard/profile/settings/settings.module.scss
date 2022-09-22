@@ -6,6 +6,12 @@
   padding: 50px 0 100px;
   display: flex;
 
+  @include sm {
+    padding-top: 10px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
   &Tabs {
     width: 25%;
     &Button {
@@ -20,7 +26,16 @@
       background-color: rebeccapurple;
     }
 
+    &_tab {
+      button {
+        font-size: 18px;
+      }
+    }
+
     @include sm {
+      &_scrollButtons {
+        border-bottom: 1px solid rebeccapurple;
+      }
       &Title {
         padding-bottom: 20px;
         text-align: center;
@@ -29,11 +44,13 @@
         display: flex;
         flex-direction: initial;
         margin-bottom: 10px;
+        font-size: 18px;
         button {
           flex: 1;
           text-align: center;
           display: block;
           flex-direction: inherit;
+          font-size: 18px !important;
         }
       }
     }
@@ -119,9 +136,18 @@
 
   @include sm {
     flex-direction: column;
+
+    &Tabs {
+      // border-bottom: 1px solid red;
+    }
+
     &Tabs,
     &Container {
       width: 100%;
     }
+  }
+
+  .fieldError {
+    margin: 0;
   }
 }

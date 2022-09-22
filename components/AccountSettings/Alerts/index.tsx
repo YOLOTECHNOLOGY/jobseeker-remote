@@ -85,140 +85,142 @@ const Alerts = ({ accessToken }: any) => {
 
   return (
     <div className={styles.JobAlertContainer}>
-      {isLoading && (
-        <div>
-          <div className={styles.JobAlertContainerInfo}>
-            <div className={styles.JobAlertContainerLoading}>
-              <div className={styles.loadingLogo}>
-                <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
-              </div>
-              <div className={styles.loadingIndicator}>
-                <LinearProgress />
+      <div className={styles.JobAlertContainer_wrapper}>
+        {isLoading && (
+          <div>
+            <div className={styles.JobAlertContainerInfo}>
+              <div className={styles.JobAlertContainerLoading}>
+                <div className={styles.loadingLogo}>
+                  <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+                </div>
+                <div className={styles.loadingIndicator}>
+                  <LinearProgress />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-      {!isLoading && (
-        <div>
-          <Text tagName='h2' className={styles.JobAlertTitle}>
-            Job alert
-          </Text>
-          {jobAlertListResponse.length ? (
-            jobAlertListResponse.map((item, index) => (
-              <FieldFormWrapper
-                label={item.id}
-                alertTitle={item.keyword_value}
-                isEdit
-                isDetele
-                key={item.id}
-                className={styles.fieldWrapper}
-                textClassName={styles.fieldWrapperTitle}
-                edit={alertEdit}
-                setEdit={setAlertEdit}
-                deleteJobAlert={showDeleteJobAlertModule}
-              >
-                <Text block className={styles.JobAlertContainer_title}>
-                  {item.location_value}
-                </Text>
-                <Text block className={styles.JobAlertContainer_desc}>
-                  Filters: {item.filters}
-                </Text>
-                <Text block className={styles.JobAlertContainer_desc}>
-                  Frequency: {item.frequency_value}
-                </Text>
-                {alertEdit === item.id && (
-                  <div>
-                    <div className={styles.JobAlertContainer_EditContainer}>
-                      <Text
-                        tagName='h5'
-                        textStyle='base'
-                        bold
-                        className={styles.JobAlertContainer_Text}
-                      >
-                        Alert Frequency
-                      </Text>
-                      <div>
-                        <RadioGroup
-                          aria-labelledby='demo-radio-buttons-group-label'
-                          defaultValue={item.frequency_value}
-                          name='radio-buttons-group'
-                          onChange={(ev) => handleFrequencyRadio(item, ev)}
+        )}
+        {!isLoading && (
+          <div>
+            <Text tagName='h2' className={styles.JobAlertTitle}>
+              Job alert
+            </Text>
+            {jobAlertListResponse.length ? (
+              jobAlertListResponse.map((item, index) => (
+                <FieldFormWrapper
+                  label={item.id}
+                  alertTitle={item.keyword_value}
+                  isEdit
+                  isDetele
+                  key={item.id}
+                  className={styles.fieldWrapper}
+                  textClassName={styles.fieldWrapperTitle}
+                  edit={alertEdit}
+                  setEdit={setAlertEdit}
+                  deleteJobAlert={showDeleteJobAlertModule}
+                >
+                  <Text block className={styles.JobAlertContainer_title}>
+                    {item.location_value}
+                  </Text>
+                  <Text block className={styles.JobAlertContainer_desc}>
+                    Filters: {item.filters}
+                  </Text>
+                  <Text block className={styles.JobAlertContainer_desc}>
+                    Frequency: {item.frequency_value}
+                  </Text>
+                  {alertEdit === item.id && (
+                    <div>
+                      <div className={styles.JobAlertContainer_EditContainer}>
+                        <Text
+                          tagName='h5'
+                          textStyle='base'
+                          bold
+                          className={styles.JobAlertContainer_Text}
                         >
-                          <FormControlLabel value='Daily' control={<Radio />} label='Daily' />
-                          <FormControlLabel value='Weekly' control={<Radio />} label='Weekly' />
-                        </RadioGroup>
+                          Alert Frequency
+                        </Text>
+                        <div>
+                          <RadioGroup
+                            aria-labelledby='demo-radio-buttons-group-label'
+                            defaultValue={item.frequency_value}
+                            name='radio-buttons-group'
+                            onChange={(ev) => handleFrequencyRadio(item, ev)}
+                          >
+                            <FormControlLabel value='Daily' control={<Radio />} label='Daily' />
+                            <FormControlLabel value='Weekly' control={<Radio />} label='Weekly' />
+                          </RadioGroup>
+                        </div>
+                      </div>
+                      <div className={styles.JobAlertContainer_button}>
+                        <Button
+                          variant='contained'
+                          onClick={() => {
+                            setAlertEdit(null), handelSaveSetFrequency(item)
+                          }}
+                        >
+                          Save
+                        </Button>
+                        <Button
+                          variant='outlined'
+                          onClick={() => {
+                            setAlertEdit(null),
+                              (item.frequency_value = item.default_frequency_value
+                                ? item.default_frequency_value
+                                : item.frequency_value)
+                          }}
+                        >
+                          Cancel
+                        </Button>
                       </div>
                     </div>
-                    <div className={styles.JobAlertContainer_button}>
-                      <Button
-                        variant='contained'
-                        onClick={() => {
-                          setAlertEdit(null), handelSaveSetFrequency(item)
-                        }}
-                      >
-                        Save
-                      </Button>
-                      <Button
-                        variant='outlined'
-                        onClick={() => {
-                          setAlertEdit(null),
-                            (item.frequency_value = item.default_frequency_value
-                              ? item.default_frequency_value
-                              : item.frequency_value)
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                )}
+                  )}
 
-                {index !== jobAlertListResponse.length - 1 && (
-                  <div className={styles.fieldWrapper_border}></div>
-                )}
-              </FieldFormWrapper>
-            ))
-          ) : (
-            <div className={styles.JobAlertContainer_noJobAlert}>
-              <Text block>You have no job alert yet. </Text>
-              <Button
-                variant='contained'
-                onClick={() => {
-                  handelBackToJobSearch()
-                }}
-                className={styles.JobAlertContainer_noJobAlert_backBtn}
-              >
-                Back to job search
-              </Button>
-            </div>
-          )}
-        </div>
-      )}
+                  {index !== jobAlertListResponse.length - 1 && (
+                    <div className={styles.fieldWrapper_border}></div>
+                  )}
+                </FieldFormWrapper>
+              ))
+            ) : (
+              <div className={styles.JobAlertContainer_noJobAlert}>
+                <Text block>You have no job alert yet. </Text>
+                <Button
+                  variant='contained'
+                  onClick={() => {
+                    handelBackToJobSearch()
+                  }}
+                  className={styles.JobAlertContainer_noJobAlert_backBtn}
+                >
+                  Back to job search
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
 
-      <Modal
-        headerTitle='Delete job alert'
-        showModal={showCreateJobAlertModal}
-        handleModal={() => {
-          dispatch(closeCreateJobAlertModal())
-        }}
-        firstButtonText='Keep'
-        firstButtonIsClose={true}
-        handleFirstButton={() => {
-          dispatch(closeCreateJobAlertModal())
-        }}
-        handleSecondButton={() => {
-          dispatch(closeCreateJobAlertModal())
-          deleteJobAlert()
-        }}
-        secondButtonText='Delete'
-      >
-        <div className={styles.ModalJobAlertBody}>
-          <Text textStyle='lg' tagName='p' className={styles.ModalJobAlertBodyEnabled}>
-            You are about to delete this job alert. This cannot be undone.{' '}
-          </Text>
-        </div>
-      </Modal>
+        <Modal
+          headerTitle='Delete job alert'
+          showModal={showCreateJobAlertModal}
+          handleModal={() => {
+            dispatch(closeCreateJobAlertModal())
+          }}
+          firstButtonText='Keep'
+          firstButtonIsClose={true}
+          handleFirstButton={() => {
+            dispatch(closeCreateJobAlertModal())
+          }}
+          handleSecondButton={() => {
+            dispatch(closeCreateJobAlertModal())
+            deleteJobAlert()
+          }}
+          secondButtonText='Delete'
+        >
+          <div className={styles.ModalJobAlertBody}>
+            <Text textStyle='lg' tagName='p' className={styles.ModalJobAlertBodyEnabled}>
+              You are about to delete this job alert. This cannot be undone.{' '}
+            </Text>
+          </div>
+        </Modal>
+      </div>
     </div>
   )
 }

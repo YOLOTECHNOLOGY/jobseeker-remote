@@ -1,7 +1,22 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
 .JobAlertContainer {
   border: 0.5px solid #bcbcbc;
   border-radius: 4px;
   padding-bottom: 25px;
+
+  @include sm {
+    padding: 25px;
+    border: none;
+  }
+
+  &_wrapper {
+    @include sm {
+      border: 2px solid #2379ea;
+      border-radius: 5px;
+    }
+  }
 
   .JobAlertTitle {
     font-weight: 700;

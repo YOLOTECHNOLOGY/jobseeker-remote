@@ -1,8 +1,16 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
 .fieldFromWrapper {
   border: 0.5px solid #bcbcbc;
   border-radius: 4px;
   padding: 25px 22px;
   margin-bottom: 25px;
+
+  @include sm {
+    border: none;
+  }
+
   &_title {
     display: flex;
     justify-content: space-between;

@@ -30,6 +30,7 @@ import styles from './settings.module.scss'
 
 import { getCookie } from 'helpers/cookies'
 import { useDispatch, useSelector } from 'react-redux'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 interface TabPanelProps {
   children?: React.ReactNode
   index: number
@@ -63,6 +64,7 @@ const COUNT_DOWN_VERIFY_DEFAULT = 60
 
 const AccountSettings = ({ config, accessToken }: any) => {
   const dispatch = useDispatch()
+  const { width } = useWindowDimensions()
   // const refCountDownTimeName = useRef(null)
   const uid = useRef()
   const [value, setValue] = useState(0)
@@ -97,6 +99,19 @@ const AccountSettings = ({ config, accessToken }: any) => {
           }
         }
       },
+      MuiButtonBase: {
+        styleOverrides: {
+          root: {
+            alignItems: 'flex-start',
+            display: 'flex'
+          }
+        }
+      }
+    }
+  })
+
+  const themeMobile = createTheme({
+    components: {
       MuiButtonBase: {
         styleOverrides: {
           root: {
@@ -181,29 +196,35 @@ const AccountSettings = ({ config, accessToken }: any) => {
     <Layout>
       <div className={styles.accessSettings}>
         <div className={styles.accessSettingsTabs}>
-          <Text tagName='h2' bold className={styles.accessSettingsTabsTitle}>
-            Account Setting
-          </Text>
-
-          <ThemeProvider theme={theme}>
-            <Tabs
-              orientation='vertical'
-              value={value}
-              onChange={handleChange}
-              classes={{ flexContainer: styles.accessSettingsTabs_tab }}
-            >
-              <Tab
-                label='Account'
-                {...a11yProps(0)}
-                sx={{ textTransform: 'none', paddingLeft: '0' }}
-              />
-              <Tab
-                label='Job Alert'
-                {...a11yProps(1)}
-                sx={{ textTransform: 'none', paddingLeft: '0' }}
-              />
-            </Tabs>
-          </ThemeProvider>
+          {width > 576 && (
+            <Text tagName='h2' bold className={styles.accessSettingsTabsTitle}>
+              Account Setting
+            </Text>
+          )}
+          {width && (
+            <ThemeProvider theme={width > 576 ? theme : themeMobile}>
+              <Tabs
+                orientation={width > 576 ? 'vertical' : 'horizontal'}
+                value={value}
+                onChange={handleChange}
+                classes={{
+                  flexContainer: styles.accessSettingsTabs_tab,
+                  scrollButtons: styles.accessSettingsTabs_scrollButtons
+                }}
+              >
+                <Tab
+                  label='Account'
+                  {...a11yProps(0)}
+                  sx={{ textTransform: 'none', paddingLeft: '0' }}
+                />
+                <Tab
+                  label='Job Alert'
+                  {...a11yProps(1)}
+                  sx={{ textTransform: 'none', paddingLeft: '0' }}
+                />
+              </Tabs>
+            </ThemeProvider>
+          )}
         </div>
 
         <div className={styles.accessSettingsContainer}>
@@ -254,7 +275,7 @@ const AccountSettings = ({ config, accessToken }: any) => {
             <FieldFormWrapper label='Linked Accounts' edit={edit} setEdit={setEdit}>
               <div className={styles.accessSettingsContainer_swtich}>
                 <div className={styles.accessSettingsContainer_swtich_fb}>
-                  <Text>
+                  <Text tagName='span'>
                     Login to your Facebook Messenger and your job application updates will be sent
                     to your Facebook Messenger.
                   </Text>
