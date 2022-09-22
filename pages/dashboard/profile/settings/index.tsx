@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { wrapper } from 'store'
 import { END } from 'redux-saga'
 
@@ -64,7 +64,7 @@ const COUNT_DOWN_VERIFY_DEFAULT = 60
 const AccountSettings = ({ config, accessToken }: any) => {
   const dispatch = useDispatch()
   // const refCountDownTimeName = useRef(null)
-  const [userId, setUserId] = useState(null)
+  const uid = useRef()
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
 
@@ -80,7 +80,7 @@ const AccountSettings = ({ config, accessToken }: any) => {
   useEffect(() => {
     let id = getCookie('user')?.id
     id += '_' + new Date().getTime()
-    setUserId(id)
+    uid.current = id
   }, [])
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -130,18 +130,38 @@ const AccountSettings = ({ config, accessToken }: any) => {
   }
 
   const comfirmOptIn = () => {
-    console.log(userId)
-    sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + userId)
+    console.log(uid.current)
+    sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + uid.current)
     setTimeout(() => getInitData(), 2000)
   }
 
   const unsubscribe = () => {
+    console.log(uid.current)
     facebookMsgDeactivate().then(() => {
       let id = getCookie('user')?.id
       id += '_' + new Date().getTime()
       console.log(id)
-      setUserId(id)
+      uid.current = id
       getInitData()
+    })
+  }
+
+  const initFBCheckbox = () => {
+    // @ts-ignore
+    FB.Event.subscribe('messenger_checkbox', function (e) {
+      if (e.event == 'rendered') {
+        console.log('Plugin was rendered')
+      } else if (e.event == 'checkbox') {
+        const checkboxState = e.state
+        console.log('Checkbox state: ' + checkboxState)
+        if (checkboxState === 'checked') {
+          comfirmOptIn()
+        }
+      } else if (e.event == 'not_you') {
+        console.log("User clicked 'not you'")
+      } else if (e.event == 'hidden') {
+        console.log('Plugin was hidden')
+      }
     })
   }
 
@@ -151,21 +171,7 @@ const AccountSettings = ({ config, accessToken }: any) => {
         // @ts-ignore #
         if (typeof window.FB !== undefined) {
           // @ts-ignore #
-          FB.Event.subscribe('messenger_checkbox', function (e) {
-            if (e.event == 'rendered') {
-              console.log('Plugin was rendered')
-            } else if (e.event == 'checkbox') {
-              const checkboxState = e.state
-              console.log('Checkbox state: ' + checkboxState)
-              if (checkboxState === 'checked') {
-                comfirmOptIn()
-              }
-            } else if (e.event == 'not_you') {
-              console.log("User clicked 'not you'")
-            } else if (e.event == 'hidden') {
-              console.log('Plugin was hidden')
-            }
-          })
+          initFBCheckbox()
         }
       }
     }
@@ -253,16 +259,16 @@ const AccountSettings = ({ config, accessToken }: any) => {
                     to your Facebook Messenger.
                   </Text>
                   <div>
-                    {userId && !userDetail.is_fb_messenger_active ? (
-                      <div>
-                        <FbMessengerCheckin userRef={'account_' + userId} />
+                    {uid.current && !userDetail.is_fb_messenger_active ? (
+                      <div className={styles.accessSettingsContainer_swtich_fb_component}>
+                        <FbMessengerCheckin userRef={'account_' + uid.current} />
                       </div>
                     ) : (
                       <div
                         onClick={unsubscribe}
                         className={styles.accessSettingsContainer_swtich_fb_button}
                       >
-                        <Button variant='contained'>Unlink from facebook messenger</Button>
+                        <Button variant='contained'>Unlink from Facebook Messenger</Button>
                       </div>
                     )}
                   </div>

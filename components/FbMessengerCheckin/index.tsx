@@ -3,6 +3,7 @@ import React, { memo, useEffect } from 'react'
 // user_ref == userId
 
 const FbMessengerCheckin = ({ userRef }: any) => {
+  console.log(userRef)
   let hostName = ''
 
   switch (process.env.NODE_ENV) {

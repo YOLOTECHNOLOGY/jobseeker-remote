@@ -80,6 +80,10 @@
       display: flex;
       align-items: center;
       &_fb {
+        &_component {
+          margin-left: -13px;
+        }
+
         &_button {
           margin-top: 24px;
           button {

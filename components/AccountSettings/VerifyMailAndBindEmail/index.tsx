@@ -46,7 +46,6 @@ const VerifyMailAndBindEmail = ({
 
   const [emailError, setEmailError] = useState(null)
   const [email, setEmail] = useState(emailDefault)
-  const [isDone, setDone] = useState(false)
 
   const [isShowemailVerify, setIsShowemailVerify] = useState(false)
   const [otp, setOtp] = useState('')
@@ -109,12 +108,12 @@ const VerifyMailAndBindEmail = ({
     if (firstRender) {
       return
     }
-    if (otp.length === 6) {
-      setIsBtnDisabledVerify(false)
-      setOtpError(null)
-    } else {
+    if (otp.length > 6) {
       setIsBtnDisabledVerify(true)
       setOtpError('Incorrect format of verification code')
+    } else {
+      setIsBtnDisabledVerify(false)
+      setOtpError(null)
     }
   }, [otp])
 
@@ -129,16 +128,16 @@ const VerifyMailAndBindEmail = ({
     setIsShowCountDownSwitch(true)
     setIsShowemailVerify(true)
     setEmail(email)
-    sendEmaillOtp({ email }).then(({ data }) => {
-      if (data.success) {
-        dispatch(
-          displayNotification({
-            open: true,
-            message: 'The verification code has been sent to your email, please check it',
-            severity: 'success'
-          })
-        )
-      }
+    sendEmaillOtp({ email }).then(() => {
+      // if (data.success) {
+      //   dispatch(
+      //     displayNotification({
+      //       open: true,
+      //       message: 'The verification code has been sent to your email, please check it',
+      //       severity: 'success'
+      //     })
+      //   )
+      // }
     })
   }
 
@@ -147,9 +146,10 @@ const VerifyMailAndBindEmail = ({
       'Your email has been verified. You will be able to receive job applications update through your email.'
     )
     setIsShowemailVerify(false)
-    setDone(true)
+    // setDone(true)
     getInitData()
     setOtpError(null)
+    setEdit(null)
   }
 
   const emailVerifiError = () => {
@@ -164,7 +164,7 @@ const VerifyMailAndBindEmail = ({
           dispatch(
             displayNotification({
               open: true,
-              message: 'Email verification succeeded',
+              message: 'Your email account has been verified successfully',
               severity: 'success'
             })
           )
@@ -180,7 +180,7 @@ const VerifyMailAndBindEmail = ({
           dispatch(
             displayNotification({
               open: true,
-              message: 'Modify email successfully',
+              message: 'Your email account has been verified successfully',
               severity: 'success'
             })
           )
@@ -229,35 +229,22 @@ const VerifyMailAndBindEmail = ({
               {emailError && errorText(emailError)}
             </div>
 
-            {!isDone ? (
-              <div className={styles.VerifyMailAndBindEmail_button}>
-                <Button variant='contained' disabled={isBtnDisabled} onClick={sendEmailOTPS}>
-                  Send OTP {isShowCountDownSwitch && `(${countDown}s)`}
-                </Button>
-                {!isShowemailVerify && (
-                  <Button
-                    variant='outlined'
-                    onClick={() => {
-                      reductionEmail()
-                      setEdit(null)
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                )}
-              </div>
-            ) : (
-              <div className={styles.VerifyMailAndBindEmail_button}>
+            <div className={styles.VerifyMailAndBindEmail_button}>
+              <Button variant='contained' disabled={isBtnDisabled} onClick={sendEmailOTPS}>
+                Send OTP {isShowCountDownSwitch && `(${countDown}s)`}
+              </Button>
+              {!isShowemailVerify && (
                 <Button
-                  variant='contained'
+                  variant='outlined'
                   onClick={() => {
+                    reductionEmail()
                     setEdit(null)
                   }}
                 >
-                  Done
+                  Cancel
                 </Button>
-              </div>
-            )}
+              )}
+            </div>
 
             {isShowemailVerify && (
               <div className={styles.accessSettingsContainer_fromWrapper_verifyContainer}>
