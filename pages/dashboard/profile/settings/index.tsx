@@ -66,7 +66,10 @@ const AccountSettings = ({ config, accessToken }: any) => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
   // const refCountDownTimeName = useRef(null)
-  const uid = useRef()
+  let id = getCookie('user')?.id
+  id += '_' + new Date().getTime()
+  // uid.current = id
+  const uid = useRef(id)
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
 
@@ -78,12 +81,6 @@ const AccountSettings = ({ config, accessToken }: any) => {
   const getInitData = () => {
     dispatch(fetchUserDetailRequest({ accessToken }))
   }
-
-  useEffect(() => {
-    let id = getCookie('user')?.id
-    id += '_' + new Date().getTime()
-    uid.current = id
-  }, [])
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
@@ -145,17 +142,14 @@ const AccountSettings = ({ config, accessToken }: any) => {
   }
 
   const comfirmOptIn = () => {
-    console.log(uid.current)
     sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + uid.current)
     setTimeout(() => getInitData(), 2000)
   }
 
   const unsubscribe = () => {
-    console.log(uid.current)
     facebookMsgDeactivate().then(() => {
       let id = getCookie('user')?.id
       id += '_' + new Date().getTime()
-      console.log(id)
       uid.current = id
       getInitData()
     })
@@ -209,7 +203,7 @@ const AccountSettings = ({ config, accessToken }: any) => {
                 onChange={handleChange}
                 classes={{
                   flexContainer: styles.accessSettingsTabs_tab,
-                  scrollButtons: styles.accessSettingsTabs_scrollButtons
+                  scroller: styles.accessSettingsTabs_scrollButtons
                 }}
               >
                 <Tab

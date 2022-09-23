@@ -7,14 +7,21 @@
   padding-bottom: 25px;
 
   @include sm {
-    padding: 25px;
     border: none;
+    &_mobileWrapper {
+      padding: 20px;
+    }
+    &_mobileStyle {
+      border: 2px solid #1976d2;
+      border-radius: 5px;
+      padding-bottom: 25px;
+    }
   }
 
   &_wrapper {
     @include sm {
-      border: 2px solid #2379ea;
-      border-radius: 5px;
+      // border: 2px solid #2379ea;
+      // border-radius: 5px;
     }
   }
 
@@ -125,6 +132,10 @@
       margin: 25px 0 !important;
       height: 44px;
       text-transform: none !important;
+
+      @include sm {
+        width: 100%;
+      }
     }
   }
 }

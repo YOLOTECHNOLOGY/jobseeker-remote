@@ -110,7 +110,7 @@ const VerifyMailAndBindEmail = ({
     }
     if (otp.length > 6) {
       setIsBtnDisabledVerify(true)
-      setOtpError('Incorrect format of verification code')
+      setOtpError('OTP is incorrect. Please try again.')
     } else {
       setIsBtnDisabledVerify(false)
       setOtpError(null)

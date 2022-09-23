@@ -7,7 +7,7 @@
   display: flex;
 
   @include sm {
-    padding-top: 10px;
+    padding-top: 0px;
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
@@ -34,7 +34,7 @@
 
     @include sm {
       &_scrollButtons {
-        border-bottom: 1px solid rebeccapurple;
+        border-bottom: 1px solid #dedede;
       }
       &Title {
         padding-bottom: 20px;
@@ -43,7 +43,6 @@
       &_tab {
         display: flex;
         flex-direction: initial;
-        margin-bottom: 10px;
         font-size: 18px;
         button {
           flex: 1;
@@ -51,6 +50,7 @@
           display: block;
           flex-direction: inherit;
           font-size: 18px !important;
+          height: 55px;
         }
       }
     }
@@ -107,6 +107,9 @@
             text-transform: none;
             min-width: 143px;
             height: 44px;
+            @include sm {
+              width: 100%;
+            }
           }
           button:nth-child(2) {
             margin-left: 20px;

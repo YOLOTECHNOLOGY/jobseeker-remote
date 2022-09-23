@@ -33,6 +33,17 @@
     button:nth-child(2) {
       margin-left: 20px;
     }
+
+    @include sm {
+      display: flex;
+      justify-content: space-between;
+      button {
+        width: 50%;
+      }
+      button:nth-child(2) {
+        margin-left: 16px !important;
+      }
+    }
   }
 
   .stepFieldRequired {

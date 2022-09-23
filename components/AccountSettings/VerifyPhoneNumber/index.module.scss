@@ -1,3 +1,6 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
 .VerifyMailAndBindEmail {
   .accessSettingsContainer_fromWrapper {
     &_verifyContainer {
@@ -13,8 +16,17 @@
       &_wrapper {
         display: flex;
         justify-content: space-between;
+        @include sm {
+          flex-direction: column;
+        }
         &_block {
           width: 49%;
+        }
+
+        @include sm {
+          &_block {
+            width: 100%;
+          }
         }
       }
     }
@@ -29,6 +41,17 @@
     }
     button:nth-child(2) {
       margin-left: 20px;
+    }
+
+    @include sm {
+      display: flex;
+      justify-content: space-between;
+      button {
+        width: 50%;
+      }
+      button:nth-child(2) {
+        margin-left: 16px;
+      }
     }
   }
 

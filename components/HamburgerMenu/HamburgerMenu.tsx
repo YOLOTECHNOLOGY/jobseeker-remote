@@ -191,7 +191,6 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   className={styles.defaultLink}
                   // to={authPathToOldProject(null, '/dashboard/profile/settings')}
                   to='/dashboard/profile/settings'
-                  aTag
                   title='Account Settings'
                 >
                   <li className={styles.menuList} onClick={handleClick}>

@@ -30,7 +30,7 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
 
-  const [currentPasswordError] = useState(null)
+  const [currentPasswordError, setCurrentPasswordError] = useState(null)
   const [newPasswordError, setNewPasswordError] = useState(null)
   const [confirmNewPasswordError, setConfirmNewPasswordError] = useState(null)
 
@@ -53,12 +53,12 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
     if (firstRender) {
       return
     }
-    if (newPassword.length >= 9) {
+    if (newPassword.length >= 8 && newPassword.length <= 16) {
       setBtnDisabled(false)
       setNewPasswordError(null)
     } else {
       setBtnDisabled(true)
-      setNewPasswordError('Password length cannot be less than 9 characters')
+      setNewPasswordError('Please enter a longer password (minimum of 8 characters)')
     }
   }, [newPassword])
 
@@ -74,8 +74,6 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
               severity: 'success'
             })
           )
-          // removeCookie('accessToken')
-          // router.push('/login/jobseeker?redirect=/dashboard/profile/settings')
         } else {
           dispatch(
             displayNotification({
@@ -87,13 +85,14 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
         }
       })
       .catch(() => {
-        dispatch(
-          displayNotification({
-            open: true,
-            message: 'Failed to change password,Please try again later',
-            severity: 'warning'
-          })
-        )
+        setCurrentPasswordError('Password is incorrect. Forgot your password? ')
+        // dispatch(
+        //   displayNotification({
+        //     open: true,
+        //     message: 'Failed to change password,Please try again later',
+        //     severity: 'warning'
+        //   })
+        // )
       })
   }
 

@@ -47,7 +47,7 @@ const VerifyPhoneNumber = ({
   const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
   const refCountDownTimeName = useRef(null)
 
-  const [defaultPhone] = useState(phoneDefault)
+  const [defaultPhone, setDefaultPhone] = useState(phoneDefault)
   const firstRender = useFirstRender()
 
   const smsCountryList = getSmsCountryList(config)
@@ -126,7 +126,7 @@ const VerifyPhoneNumber = ({
     }
     if (otp.length > 6) {
       setIsBtnDisabledVerify(true)
-      setOtpError('Incorrect format of verification code')
+      setOtpError('OTP is incorrect. Please try again.')
     } else {
       setIsBtnDisabledVerify(false)
       setOtpError('')
@@ -172,6 +172,7 @@ const VerifyPhoneNumber = ({
     setPhoneTip(
       'Your mobile number has been verified. Recruiters will be able to contact you through your mobile number.'
     )
+    setDefaultPhone(smsCode + phoneNum)
     setIsShowPhoneVerify(false)
     getInitData()
     setOtpError(null)

@@ -22,10 +22,12 @@ import { openCreateJobAlertModal } from 'store/actions/modals/createJobAlertModa
 // styles
 import styles from './index.module.scss'
 import { useRouter } from 'next/router'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 const Alerts = ({ accessToken }: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
+  const { width } = useWindowDimensions()
   const [alertEdit, setAlertEdit] = useState(null)
   const [removeId, setRemoveId] = useState(null)
 
@@ -101,99 +103,107 @@ const Alerts = ({ accessToken }: any) => {
           </div>
         )}
         {!isLoading && (
-          <div>
-            <Text tagName='h2' className={styles.JobAlertTitle}>
-              Job alert
-            </Text>
-            {jobAlertListResponse.length ? (
-              jobAlertListResponse.map((item, index) => (
-                <FieldFormWrapper
-                  label={item.id}
-                  alertTitle={item.keyword_value}
-                  isEdit
-                  isDetele
-                  key={item.id}
-                  className={styles.fieldWrapper}
-                  textClassName={styles.fieldWrapperTitle}
-                  edit={alertEdit}
-                  setEdit={setAlertEdit}
-                  deleteJobAlert={showDeleteJobAlertModule}
-                >
-                  <Text block className={styles.JobAlertContainer_title}>
-                    {item.location_value}
-                  </Text>
-                  <Text block className={styles.JobAlertContainer_desc}>
-                    Filters: {item.filters}
-                  </Text>
-                  <Text block className={styles.JobAlertContainer_desc}>
-                    Frequency: {item.frequency_value}
-                  </Text>
-                  {alertEdit === item.id && (
-                    <div>
-                      <div className={styles.JobAlertContainer_EditContainer}>
-                        <Text
-                          tagName='h5'
-                          textStyle='base'
-                          bold
-                          className={styles.JobAlertContainer_Text}
-                        >
-                          Alert Frequency
-                        </Text>
-                        <div>
-                          <RadioGroup
-                            aria-labelledby='demo-radio-buttons-group-label'
-                            defaultValue={item.frequency_value}
-                            name='radio-buttons-group'
-                            onChange={(ev) => handleFrequencyRadio(item, ev)}
+          <div
+            className={jobAlertListResponse.length ? styles.JobAlertContainer_mobileWrapper : ''}
+          >
+            {width > 576 && (
+              <Text tagName='h2' className={styles.JobAlertTitle}>
+                Job alert
+              </Text>
+            )}
+            <div
+              className={jobAlertListResponse.length ? styles.JobAlertContainer_mobileStyle : ''}
+            >
+              {jobAlertListResponse.length ? (
+                jobAlertListResponse.map((item, index) => (
+                  <FieldFormWrapper
+                    label={item.id}
+                    alertTitle={item.keyword_value}
+                    isEdit
+                    isDetele
+                    key={item.id}
+                    className={styles.fieldWrapper}
+                    textClassName={styles.fieldWrapperTitle}
+                    edit={alertEdit}
+                    setEdit={setAlertEdit}
+                    deleteJobAlert={showDeleteJobAlertModule}
+                  >
+                    <Text block className={styles.JobAlertContainer_title}>
+                      {item.location_value}
+                    </Text>
+                    <Text block className={styles.JobAlertContainer_desc}>
+                      Filters: {item.filters}
+                    </Text>
+                    <Text block className={styles.JobAlertContainer_desc}>
+                      Frequency: {item.frequency_value}
+                    </Text>
+                    {alertEdit === item.id && (
+                      <div>
+                        <div className={styles.JobAlertContainer_EditContainer}>
+                          <Text
+                            tagName='h5'
+                            textStyle='base'
+                            bold
+                            className={styles.JobAlertContainer_Text}
                           >
-                            <FormControlLabel value='Daily' control={<Radio />} label='Daily' />
-                            <FormControlLabel value='Weekly' control={<Radio />} label='Weekly' />
-                          </RadioGroup>
+                            Alert Frequency
+                          </Text>
+                          <div>
+                            <RadioGroup
+                              aria-labelledby='demo-radio-buttons-group-label'
+                              defaultValue={item.frequency_value}
+                              name='radio-buttons-group'
+                              onChange={(ev) => handleFrequencyRadio(item, ev)}
+                            >
+                              <FormControlLabel value='Daily' control={<Radio />} label='Daily' />
+                              <FormControlLabel value='Weekly' control={<Radio />} label='Weekly' />
+                            </RadioGroup>
+                          </div>
+                        </div>
+                        <div className={styles.JobAlertContainer_button}>
+                          <Button
+                            variant='contained'
+                            onClick={() => {
+                              setAlertEdit(null), handelSaveSetFrequency(item)
+                            }}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            variant='outlined'
+                            onClick={() => {
+                              setAlertEdit(null),
+                                (item.frequency_value = item.default_frequency_value
+                                  ? item.default_frequency_value
+                                  : item.frequency_value)
+                            }}
+                          >
+                            Cancel
+                          </Button>
                         </div>
                       </div>
-                      <div className={styles.JobAlertContainer_button}>
-                        <Button
-                          variant='contained'
-                          onClick={() => {
-                            setAlertEdit(null), handelSaveSetFrequency(item)
-                          }}
-                        >
-                          Save
-                        </Button>
-                        <Button
-                          variant='outlined'
-                          onClick={() => {
-                            setAlertEdit(null),
-                              (item.frequency_value = item.default_frequency_value
-                                ? item.default_frequency_value
-                                : item.frequency_value)
-                          }}
-                        >
-                          Cancel
-                        </Button>
-                      </div>
-                    </div>
-                  )}
+                    )}
 
-                  {index !== jobAlertListResponse.length - 1 && (
-                    <div className={styles.fieldWrapper_border}></div>
-                  )}
-                </FieldFormWrapper>
-              ))
-            ) : (
-              <div className={styles.JobAlertContainer_noJobAlert}>
-                <Text block>You have no job alert yet. </Text>
-                <Button
-                  variant='contained'
-                  onClick={() => {
-                    handelBackToJobSearch()
-                  }}
-                  className={styles.JobAlertContainer_noJobAlert_backBtn}
-                >
-                  Back to job search
-                </Button>
-              </div>
-            )}
+                    {index !== jobAlertListResponse.length - 1 && (
+                      <div className={styles.fieldWrapper_border}></div>
+                    )}
+                  </FieldFormWrapper>
+                ))
+              ) : (
+                <div className={styles.JobAlertContainer_noJobAlert}>
+                  <Text block>You have no job alert yet. </Text>
+                  <Button
+                    variant='contained'
+                    onClick={() => {
+                      handelBackToJobSearch()
+                    }}
+                    className={styles.JobAlertContainer_noJobAlert_backBtn}
+                  >
+                    Back to job search
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
