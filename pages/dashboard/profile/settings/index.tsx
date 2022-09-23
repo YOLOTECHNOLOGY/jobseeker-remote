@@ -149,6 +149,7 @@ const AccountSettings = ({ config, accessToken }: any) => {
   }
 
   const comfirmOptIn = () => {
+    console.log('选中')
     sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + uid.current)
     setTimeout(() => getInitData(), 2000)
   }
@@ -164,7 +165,7 @@ const AccountSettings = ({ config, accessToken }: any) => {
 
   const initFBCheckbox = () => {
     // @ts-ignore
-    FB.Event.subscribe('messenger_checkbox', function (e) {
+    ;(window as any).FB.Event.subscribe('messenger_checkbox', function (e) {
       if (e.event == 'rendered') {
         console.log('Plugin was rendered')
       } else if (e.event == 'checkbox') {
