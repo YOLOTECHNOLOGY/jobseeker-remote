@@ -20,10 +20,10 @@ import NotificationProvider from 'components/NotificationProvider'
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
   const accessToken = getCookie('accessToken')
-  const [ isPageLoading, setIsPageLoading ] = useState<boolean>(false);
+  const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    // Facebook pixel 
+    // Facebook pixel
     // This pageview only triggers the first time
     fbq.pageview()
 
@@ -37,7 +37,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     return () => {
       router.events.off('routeChangeComplete', handleRouteComplete)
     }
-    
   }, [router.events])
 
   useEffect(() => {
@@ -46,8 +45,8 @@ const App = ({ Component, pageProps }: AppProps) => {
       fetch(`${process.env.AUTH_BOSSJOB_URL}/token/validate`, {
         method: 'POST',
         headers: new Headers({
-          Authorization: 'Bearer ' + getCookie('accessToken'),
-        }),
+          Authorization: 'Bearer ' + getCookie('accessToken')
+        })
       }).then((resp) => {
         if (resp.status !== 200) {
           removeCookie('user')
@@ -73,19 +72,19 @@ const App = ({ Component, pageProps }: AppProps) => {
       }
     }
     const handleRouteComplete = () => {
-      setIsPageLoading(false);
+      setIsPageLoading(false)
     }
     const handleStart = () => {
       setIsPageLoading(true)
-    };
+    }
 
-    router.events.on('routeChangeStart', handleStart);
-    router.events.on('routeChangeError', handleRouteComplete);
+    router.events.on('routeChangeStart', handleStart)
+    router.events.on('routeChangeError', handleRouteComplete)
     router.events.on('routeChangeComplete', handleRouteComplete)
 
     return () => {
-      router.events.off('routeChangeStart', handleStart);
-      router.events.off('routeChangeError', handleRouteComplete);
+      router.events.off('routeChangeStart', handleStart)
+      router.events.off('routeChangeError', handleRouteComplete)
       router.events.off('routeChangeComplete', handleRouteComplete)
     }
   }, [])
@@ -104,10 +103,10 @@ const App = ({ Component, pageProps }: AppProps) => {
             gtag('config', '${gtag.GA_TRACKING_ID}', {
               page_path: window.location.pathname,
             });
-          `,
+          `
         }}
       />
-      
+
       {/* Google One Tap Sign in */}
       <Script src='https://accounts.google.com/gsi/client' />
       {!accessToken && (
@@ -137,7 +136,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 }
                 window.location.replace("/handlers/googleLoginHandler?access_token=" + accessToken + "&active_key=" + activeKey);
               }
-            `,
+            `
           }}
         />
       )}
@@ -149,28 +148,40 @@ const App = ({ Component, pageProps }: AppProps) => {
             function initialize() {	
               FB.init({	
                 appId            : ${
-                  process.env.ENV === 'production'
-                    ? '2026042927653653'
-                    : '2111002932479859'
+                  process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
                 },
                 xfbml            : true,	
                 version          : 'v6.0'	
               });	
 
-              // FB.Event.subscribe('messenger_checkbox', function(e) {
-              //   console.log("messenger_checkbox event");
-              //   console.log(e);
-              //   if (e.event == 'rendered') {
-              //     console.log("Plugin was rendered");
-              //   } else if (e.event == 'checkbox') {
-              //     var checkboxState = e.state;
-              //     console.log("Checkbox state: " + checkboxState);
-              //   } else if (e.event == 'not_you') {
-              //     console.log("User clicked 'not you'");
-              //   } else if (e.event == 'hidden') {
-              //     console.log("Plugin was hidden");
-              //   }
-              // });
+              FB.Event.subscribe('messenger_checkbox', function(e) {
+                console.log("messenger_checkbox event");
+                console.log(e);
+                if (e.event == 'rendered') {
+                  console.log("Plugin was rendered");
+                } else if (e.event == 'checkbox') {
+                  var checkboxState = e.state;
+                  console.log("Checkbox state: " + checkboxState);
+                  const accessToken = 'accessToken'
+                  if (checkboxState === 'checked') {
+                    FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
+                      app_id: ${
+                        process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
+                      },
+                      page_id:${
+                        process.env.ENV === 'production' ? '307776753021449' : '638091659945858'
+                      },
+                      ref: e.user_ref.slice(8,12),
+                      user_ref: e.user_ref
+                    })
+                    setTimeout(() => {window.location.reload()}, 2000)
+                  }
+                } else if (e.event == 'not_you') {
+                  console.log("User clicked 'not you'");
+                } else if (e.event == 'hidden') {
+                  console.log("Plugin was hidden");
+                }
+              });
             };	
 
             if(window.FB === undefined) {	
@@ -199,7 +210,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', ${fbq.FB_PIXEL_ID});
-            `,
+            `
         }}
       />
 

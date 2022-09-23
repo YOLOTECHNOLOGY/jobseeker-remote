@@ -135,24 +135,23 @@ const AccountSettings = ({ config, accessToken }: any) => {
     )
   }
 
-  const sendFbMessengerCheckboxEvent = (ref: number, userRef: string) => {
-    if (typeof window !== undefined) {
-      ;(window as any).FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
-        app_id:
-          process.env.CUSTOM_NODE_ENV === 'production' ? '2026042927653653' : '2111002932479859',
-        page_id:
-          process.env.CUSTOM_NODE_ENV === 'production' ? '307776753021449' : '638091659945858',
-        ref: ref,
-        user_ref: userRef
-      })
-    }
-  }
+  // const sendFbMessengerCheckboxEvent = (ref: number, userRef: string) => {
+  //   if (typeof window !== undefined) {
+  //     ;(window as any).FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
+  //       app_id:
+  //         process.env.CUSTOM_NODE_ENV === 'production' ? '2026042927653653' : '2111002932479859',
+  //       page_id:
+  //         process.env.CUSTOM_NODE_ENV === 'production' ? '307776753021449' : '638091659945858',
+  //       ref: ref,
+  //       user_ref: userRef
+  //     })
+  //   }
+  // }
 
-  const comfirmOptIn = () => {
-    console.log('选中')
-    sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + uid.current)
-    setTimeout(() => getInitData(), 2000)
-  }
+  // const comfirmOptIn = () => {
+  //   sendFbMessengerCheckboxEvent(getCookie('user').id, 'account_' + uid.current)
+  //   setTimeout(() => getInitData(), 2000)
+  // }
 
   const unsubscribe = () => {
     facebookMsgDeactivate().then(() => {
@@ -163,24 +162,24 @@ const AccountSettings = ({ config, accessToken }: any) => {
     })
   }
 
-  const initFBCheckbox = () => {
-    // @ts-ignore
-    ;(window as any).FB.Event.subscribe('messenger_checkbox', function (e) {
-      if (e.event == 'rendered') {
-        console.log('Plugin was rendered')
-      } else if (e.event == 'checkbox') {
-        const checkboxState = e.state
-        console.log('Checkbox state: ' + checkboxState)
-        if (checkboxState === 'checked') {
-          comfirmOptIn()
-        }
-      } else if (e.event == 'not_you') {
-        console.log("User clicked 'not you'")
-      } else if (e.event == 'hidden') {
-        console.log('Plugin was hidden')
-      }
-    })
-  }
+  // const initFBCheckbox = () => {
+  //   // @ts-ignore
+  //   ;(window as any).FB.Event.subscribe('messenger_checkbox', function (e) {
+  //     if (e.event == 'rendered') {
+  //       console.log('Plugin was rendered')
+  //     } else if (e.event == 'checkbox') {
+  //       const checkboxState = e.state
+  //       console.log('Checkbox state: ' + checkboxState)
+  //       if (checkboxState === 'checked') {
+  //         comfirmOptIn()
+  //       }
+  //     } else if (e.event == 'not_you') {
+  //       console.log("User clicked 'not you'")
+  //     } else if (e.event == 'hidden') {
+  //       console.log('Plugin was hidden')
+  //     }
+  //   })
+  // }
 
   useEffect(() => {
     if (typeof window !== undefined) {
@@ -188,7 +187,7 @@ const AccountSettings = ({ config, accessToken }: any) => {
         // @ts-ignore #
         if (typeof window.FB !== undefined) {
           // @ts-ignore #
-          initFBCheckbox()
+          // initFBCheckbox()
         }
       }
     }
