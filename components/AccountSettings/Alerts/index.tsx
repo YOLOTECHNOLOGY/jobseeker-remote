@@ -104,7 +104,7 @@ const Alerts = ({ accessToken }: any) => {
         )}
         {!isLoading && (
           <div
-            className={jobAlertListResponse.length ? styles.JobAlertContainer_mobileWrapper : ''}
+          // className={jobAlertListResponse.length ? styles.JobAlertContainer_mobileWrapper : ''}
           >
             {width > 576 && (
               <Text tagName='h2' className={styles.JobAlertTitle}>
@@ -112,7 +112,7 @@ const Alerts = ({ accessToken }: any) => {
               </Text>
             )}
             <div
-              className={jobAlertListResponse.length ? styles.JobAlertContainer_mobileStyle : ''}
+            // className={jobAlertListResponse.length ? styles.JobAlertContainer_mobileStyle : ''}
             >
               {jobAlertListResponse.length ? (
                 jobAlertListResponse.map((item, index) => (

@@ -38,10 +38,10 @@
       display: flex;
       justify-content: space-between;
       button {
-        width: 50%;
+        width: calc(50% - 8px);
       }
       button:nth-child(2) {
-        margin-left: 16px !important;
+        margin-left: 0px !important;
       }
     }
   }

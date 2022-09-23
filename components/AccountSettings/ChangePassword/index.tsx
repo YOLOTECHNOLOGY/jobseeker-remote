@@ -19,10 +19,11 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 
 // styles
 import styles from './index.module.scss'
+import { useRouter } from 'next/router'
 
 const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
   const dispatch = useDispatch()
-
+  const router = useRouter()
   const firstRender = useFirstRender()
   const [isBtnDisabled, setBtnDisabled] = useState(false)
 
@@ -85,7 +86,7 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
         }
       })
       .catch(() => {
-        setCurrentPasswordError('Password is incorrect. Forgot your password? ')
+        setCurrentPasswordError('Password is incorrect. Forgot your password? Reset here. ')
         // dispatch(
         //   displayNotification({
         //     open: true,
@@ -101,6 +102,10 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
     setCurrentPassword('')
     setNewPassword('')
     setConfirmNewPassword('')
+  }
+
+  const toHrefResetPassword = () => {
+    router.push('/reset-password')
   }
 
   return (
@@ -119,7 +124,9 @@ const ChangePasswrod = ({ label, setEdit, edit, errorText }: any) => {
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   type='password'
                 />
-                {currentPasswordError && errorText(currentPasswordError)}
+                <div onClick={toHrefResetPassword} style={{ cursor: 'pointer' }}>
+                  {currentPasswordError && errorText(currentPasswordError)}
+                </div>
 
                 <MaterialTextField
                   className={styles.accessSettingsContainer_fromWrapper_edit_input}
