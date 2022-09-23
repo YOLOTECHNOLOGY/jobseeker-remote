@@ -66,12 +66,19 @@ const AccountSettings = ({ config, accessToken }: any) => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
   // const refCountDownTimeName = useRef(null)
-  let id = getCookie('user')?.id
-  id += '_' + new Date().getTime()
+
   // uid.current = id
-  const uid = useRef(id)
+  const uid = useRef()
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
+  const [idRandom, setIdRandom] = useState(null)
+
+  useEffect(() => {
+    let id = getCookie('user')?.id
+    id += '_' + new Date().getTime()
+    uid.current = id
+    setIdRandom(true)
+  }, [])
 
   // const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
   // const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
@@ -274,7 +281,7 @@ const AccountSettings = ({ config, accessToken }: any) => {
                     to your Facebook Messenger.
                   </Text>
                   <div>
-                    {uid.current && !userDetail.is_fb_messenger_active ? (
+                    {idRandom && !userDetail.is_fb_messenger_active ? (
                       <div className={styles.accessSettingsContainer_swtich_fb_component}>
                         <FbMessengerCheckin userRef={'account_' + uid.current} />
                       </div>
