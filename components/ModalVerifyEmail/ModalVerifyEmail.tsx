@@ -18,7 +18,7 @@ import { generateVerifyEmailOTPRequest } from '../../store/actions/users/generat
 import { checkVerifyEmailOTPRequest } from '../../store/actions/users/checkVerifyEmailOTP'
 
 /* Helpers */
-import { authPathToOldProject } from '../../helpers/authenticationTransition'
+// import { authPathToOldProject } from '../../helpers/authenticationTransition'
 
 interface ModalVerifyEmailProps {
   email: string
@@ -175,7 +175,8 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
       </div>
       <Text style={{ display: 'block' }}>
         Want to get the code on another email?{' '}
-        <Link to={authPathToOldProject(null, '/dashboard/profile/settings')}>
+        {/* <Link to={authPathToOldProject(null, '/dashboard/profile/settings')}> */}
+        <Link to='/dashboard/profile/settings'>
           <Text textColor='primaryBlue' underline>
             Change email
           </Text>

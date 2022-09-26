@@ -40,6 +40,7 @@
     "@types/gapi": "^0.0.41",
     "@types/gapi.auth2": "^0.0.56",
     "axios": "^0.24.0",
+    "braintree-web": "^3.88.1",
     "classnames": "^2.3.1",
     "connected-next-router": "^4.1.0",
     "cookie-universal": "^2.1.5",

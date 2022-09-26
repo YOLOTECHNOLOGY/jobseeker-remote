@@ -28,7 +28,7 @@ const ProtectedHeader = () => {
   const ref = useRef(null)
   const [isShowHeaderMenu, setIsShowHeaderMenu] = useState(false)
 
-  const handleClickOutside = event => {
+  const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       setIsShowHeaderMenu(false)
     }
@@ -59,7 +59,12 @@ const ProtectedHeader = () => {
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/'}>
-            <img className={styles.headerLogoImage} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+            <img
+              className={styles.headerLogoImage}
+              src={BossjobLogo}
+              title='Bossjob logo'
+              alt='Bossjob logo'
+            />
           </Link>
         </div>
         <div className={styles.headerLinksWrapper}>
@@ -73,7 +78,11 @@ const ProtectedHeader = () => {
                 </Link>
               </li>
               <li className={styles.headerLink}>
-                <a title='Headhunt Me' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/headhunt-me')} href='/dashboard/headhunt-me'>
+                <a
+                  title='Headhunt Me'
+                  onClick={(e) => handleRedirectAuthentication(e, '/dashboard/headhunt-me')}
+                  href='/dashboard/headhunt-me'
+                >
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Headhunt Me
                   </Text>
@@ -94,20 +103,23 @@ const ProtectedHeader = () => {
                 </Link>
               </li> */}
               <li className={styles.headerLink}>
-                <a className={styles.headerLinkIcon} title='Chats' onClick={(e) => handleRedirectAuthentication(e, '/dashboard/chat')} href='/dashboard/chat'>
+                <a
+                  className={styles.headerLinkIcon}
+                  title='Chats'
+                  onClick={(e) => handleRedirectAuthentication(e, '/dashboard/chat')}
+                  href='/dashboard/chat'
+                >
                   <img src={ChatIcon} width='20' height='20' />
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Chats
                   </Text>
                 </a>
               </li>
-              <li className={styles.headerLink} style={{ position:'relative' }}>
+              <li className={styles.headerLink} style={{ position: 'relative' }}>
                 <Link title='Virtual Career Fair' to={process.env.VCF_CLIENT_URL} aTag>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Virtual Career Fair
-                    <span className={styles.hotTag}>
-                      Hot!
-                    </span>
+                    <span className={styles.hotTag}>Hot!</span>
                   </Text>
                 </Link>
               </li>
@@ -117,17 +129,27 @@ const ProtectedHeader = () => {
         <ul className={styles.headerLinksList}>
           <React.Fragment>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
-              <a title='Manage Resume' onClick={() => {
-                currentUser?.is_profile_completed ? router.push('/manage-profile') : router.push('/jobseeker-complete-profile/1')
-                // currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
-              }}>
+              <a
+                title='Manage Resume'
+                onClick={() => {
+                  currentUser?.is_profile_completed
+                    ? router.push('/manage-profile')
+                    : router.push('/jobseeker-complete-profile/1')
+                  // currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
+                }}
+              >
                 <MaterialButton variant='contained' capitalize>
-                  <Text textColor='white' textStyle='base' bold>Manage Resume</Text>
+                  <Text textColor='white' textStyle='base' bold>
+                    Manage Resume
+                  </Text>
                 </MaterialButton>
               </a>
             </li>
             <li className={styles.headerLink}>
-              <div className={styles.profileWrapper} onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}>
+              <div
+                className={styles.profileWrapper}
+                onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}
+              >
                 <img
                   src={currentUser?.avatar || DefaultAvatar}
                   className={styles.profilePlaceHolder}
@@ -149,27 +171,31 @@ const ProtectedHeader = () => {
             <ul className={styles.headerMenuList}>
               <li className={styles.headerMenuItem}>
                 <Link to='/my-jobs/saved?page=1' className={styles.headerMenuLink}>
-                  <Text textStyle='base'>My Jobs</Text>  
+                  <Text textStyle='base'>My Jobs</Text>
                 </Link>
               </li>
               <li className={styles.headerMenuItem}>
-                <a onClick={(e) => handleRedirectAuthentication(e, '/dashboard/profile/settings')} href='/dashboard/profile/settings' className={styles.headerMenuLink}>
-                  <Text textStyle='base'>Account Settings</Text>  
-                </a>
+                <Link to='/dashboard/profile/settings' className={styles.headerMenuLink}>
+                  <Text textStyle='base'>Account Settings</Text>
+                </Link>
               </li>
               <li className={styles.headerMenuItem}>
-                <a onClick={(e) => handleRedirectAuthentication(e, '/dashboard/bosspoint')} href='/dashboard/bosspoint' className={styles.headerMenuLink}>
-                  <Text textStyle='base'>BossPoints</Text>  
+                <a
+                  onClick={(e) => handleRedirectAuthentication(e, '/dashboard/bosspoint')}
+                  href='/dashboard/bosspoint'
+                  className={styles.headerMenuLink}
+                >
+                  <Text textStyle='base'>BossPoints</Text>
                 </a>
               </li>
               <li className={styles.headerMenuItem}>
                 <Link to='https://blog.bossjob.ph/' aTag external className={styles.headerMenuLink}>
-                  <Text textStyle='base'>Career Guide</Text>  
+                  <Text textStyle='base'>Career Guide</Text>
                 </Link>
               </li>
               <li className={styles.headerMenuItem}>
                 <div className={styles.headerMenuLink} onClick={() => handleLogOut()}>
-                  <Text textStyle='base'>Log Out</Text>  
+                  <Text textStyle='base'>Log Out</Text>
                 </div>
               </li>
             </ul>

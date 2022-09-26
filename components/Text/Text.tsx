@@ -76,7 +76,7 @@ const Text = ({
 }
 
 Text.defaultProps = {
-  tagName: 'span',
+  tagName: 'span'
 }
 
 export default Text

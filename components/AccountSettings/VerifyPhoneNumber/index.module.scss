@@ -1,0 +1,66 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.VerifyMailAndBindEmail {
+  .accessSettingsContainer_fromWrapper {
+    &_verifyContainer {
+      margin-top: 20px;
+    }
+
+    &_edit {
+      &_input {
+        margin-top: 20px;
+        width: 100%;
+      }
+
+      &_wrapper {
+        display: flex;
+        justify-content: space-between;
+        @include sm {
+          flex-direction: column;
+        }
+        &_block {
+          width: 49%;
+        }
+
+        @include sm {
+          &_block {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  &_button {
+    margin-top: 24px;
+    button {
+      text-transform: none;
+      min-width: 143px;
+      height: 44px;
+    }
+    button:nth-child(2) {
+      margin-left: 20px;
+    }
+
+    @include sm {
+      display: flex;
+      justify-content: space-between;
+      button {
+        width: calc(50% - 8px);
+      }
+      button:nth-child(2) {
+        margin-left: 0px !important;
+      }
+    }
+  }
+
+  .formWrapper {
+    display: flex;
+    align-items: center;
+
+    .bottomSpacing {
+      margin-right: 5px;
+    }
+  }
+}
