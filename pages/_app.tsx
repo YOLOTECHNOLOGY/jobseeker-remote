@@ -163,9 +163,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                   var checkboxState = e.state;
                   console.log("Checkbox state: " + checkboxState);
                   if (checkboxState === 'checked') {
-                    let indexNum = e.user_ref.indexOf('_')
-                    const lastNum = e.user_ref.lastIndexOf('_')
-                    indexNum = indexNum + 1
+                    const refStr = e.user_ref.split('_')
                     FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
                       app_id: ${
                         process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
@@ -173,7 +171,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                       page_id:${
                         process.env.ENV === 'production' ? '307776753021449' : '638091659945858'
                       },
-                      ref: e.user_ref.slice(indexNum, lastNum),
+                      ref: refStr[1],
                       user_ref: e.user_ref
                     })
                     setTimeout(() => {window.location.reload()}, 2000)
