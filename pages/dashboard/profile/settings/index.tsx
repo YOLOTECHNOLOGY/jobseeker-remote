@@ -139,9 +139,9 @@ const AccountSettings = ({ config, accessToken }: any) => {
   //   if (typeof window !== undefined) {
   //     ;(window as any).FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
   //       app_id:
-  //         process.env.CUSTOM_NODE_ENV === 'production' ? '2026042927653653' : '2111002932479859',
+  //         process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859',
   //       page_id:
-  //         process.env.CUSTOM_NODE_ENV === 'production' ? '307776753021449' : '638091659945858',
+  //         process.env.ENV === 'production' ? '307776753021449' : '638091659945858',
   //       ref: ref,
   //       user_ref: userRef
   //     })
