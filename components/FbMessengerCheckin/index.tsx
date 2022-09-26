@@ -28,10 +28,8 @@ const FbMessengerCheckin = ({ userRef }: any) => {
       className='fb-messenger-checkbox'
       // @ts-ignore #
       origin={hostName}
-      page_id={process.env.CUSTOM_NODE_ENV === 'production' ? '307776753021449' : '638091659945858'}
-      messenger_app_id={
-        process.env.CUSTOM_NODE_ENV === 'production' ? '2026042927653653' : '2111002932479859'
-      }
+      page_id={process.env.ENV === 'production' ? '307776753021449' : '638091659945858'}
+      messenger_app_id={process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'}
       user_ref={userRef}
       // allow_login='<true>'
       // size='<small>'
