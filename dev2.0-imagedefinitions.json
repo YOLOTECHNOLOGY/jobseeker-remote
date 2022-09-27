@@ -1,0 +1,6 @@
+[
+    {
+        "name": "dev-jobseeker-client-container",
+        "imageUri": "760225532191.dkr.ecr.ap-southeast-1.amazonaws.com/dev-jobseeker-client-2.0:latest"
+    }
+]
