@@ -28,11 +28,11 @@ const PlaceHolderPublicHeader = () => {
                     Jobs
                   </Text>
               </li>
-              <li className={styles.headerLink}>
+              {/* <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Headhunt Me
                   </Text>
-              </li>
+              </li> */}
               <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Companies

@@ -33,13 +33,13 @@ const PublicHeader = () => {
                   </Text>
                 </Link>
               </li>
-              <li className={styles.headerLink}>
+              {/* <li className={styles.headerLink}>
                 <Link title='Headhunt Me' to={`${process.env.OLD_PROJECT_URL}/headhunt-me`} aTag>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Headhunt Me
                   </Text>
                 </Link>
-              </li>
+              </li> */}
               <li className={styles.headerLink}>
                 <Link title='Companies' to='/companies'>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>

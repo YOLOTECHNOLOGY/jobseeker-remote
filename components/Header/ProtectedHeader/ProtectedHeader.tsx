@@ -12,7 +12,7 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogo, DefaultAvatar, ChatIcon } from 'images'
+import { BossjobLogo, DefaultAvatar } from 'images'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
@@ -77,7 +77,7 @@ const ProtectedHeader = () => {
                   </Text>
                 </Link>
               </li>
-              <li className={styles.headerLink}>
+              {/* <li className={styles.headerLink}>
                 <a
                   title='Headhunt Me'
                   onClick={(e) => handleRedirectAuthentication(e, '/dashboard/headhunt-me')}
@@ -87,7 +87,7 @@ const ProtectedHeader = () => {
                     Headhunt Me
                   </Text>
                 </a>
-              </li>
+              </li> */}
               <li className={styles.headerLink}>
                 <Link title='Companies' to='/companies'>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
@@ -102,7 +102,7 @@ const ProtectedHeader = () => {
                   </Text>
                 </Link>
               </li> */}
-              <li className={styles.headerLink}>
+              {/* <li className={styles.headerLink}>
                 <a
                   className={styles.headerLinkIcon}
                   title='Chats'
@@ -114,7 +114,7 @@ const ProtectedHeader = () => {
                     Chats
                   </Text>
                 </a>
-              </li>
+              </li> */}
               <li className={styles.headerLink} style={{ position: 'relative' }}>
                 <Link title='Virtual Career Fair' to={process.env.VCF_CLIENT_URL} aTag>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
