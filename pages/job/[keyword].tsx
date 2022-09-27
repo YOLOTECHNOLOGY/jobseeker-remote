@@ -730,7 +730,7 @@ const Job = ({
                   <Text tagName='p' textStyle='base'>
                     Looking to hire people? Sign up as
                     <Link
-                      to={`${process.env.OLD_PROJECT_URL}/login`}
+                      to={process.env.BOSSHUNT_URL}
                       className={styles.AuthCTALink}
                       aTag
                       external

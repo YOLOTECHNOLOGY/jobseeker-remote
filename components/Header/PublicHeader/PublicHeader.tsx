@@ -77,7 +77,7 @@ const PublicHeader = () => {
         <ul className={styles.headerLinksList}>
           <React.Fragment>
             <li className={styles.headerLink}>
-              <Link title='Employer' to={`${process.env.OLD_PROJECT_URL}/employer`} aTag>
+              <Link title='Employer' to={process.env.BOSSHUNT_URL} aTag>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                   Employer
                 </Text>

@@ -41,6 +41,7 @@ module.exports = {
     GA_TRACKING_ID: process.env.GA_TRACKING_ID,
     OLD_PROJECT_URL: process.env.OLD_PROJECT_URL,
     NEW_PROJECT_URL: process.env.NEW_PROJECT_URL,
+    BOSSHUNT_URL: process.env.BOSSHUNT_URL,
     CLIENT_ID: process.env.CLIENT_ID,
     CLIENT_SECRET: process.env.CLIENT_SECRET,
     COUNTRY_KEY: process.env.COUNTRY_KEY,

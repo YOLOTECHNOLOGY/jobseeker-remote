@@ -194,6 +194,11 @@ const ProtectedHeader = () => {
                 </Link>
               </li>
               <li className={styles.headerMenuItem}>
+                <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
+                  <Text textStyle='base'>For Employer</Text>
+                </Link>
+              </li>
+              <li className={styles.headerMenuItem}>
                 <div className={styles.headerMenuLink} onClick={() => handleLogOut()}>
                   <Text textStyle='base'>Log Out</Text>
                 </div>
