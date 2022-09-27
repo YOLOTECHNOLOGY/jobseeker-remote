@@ -89,7 +89,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
             </Link>
             {!isAuthenticated && (
               <>
-                <Link
+                {/* <Link
                   className={styles.defaultLink}
                   title='Virtual Career Fair'
                   to={process.env.VCF_CLIENT_URL}
@@ -103,17 +103,17 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>Virtual Career Fair</Text>
                     <span className={styles.hotTag}>Hot!</span>
                   </li>
-                </Link>
-                {/* <Link
+                </Link> */}
+                <Link
                   className={styles.defaultLink}
                   to='https://blog.bossjob.ph/'
-                  aTag
+                  external
                   title='Career Guide'
                 >
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Career Guide</Text>
                   </li>
-                </Link> */}
+                </Link>
                 <Link
                   className={styles.defaultLink}
                   to={`${process.env.OLD_PROJECT_URL}/employer`}
@@ -149,8 +149,8 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Chats</Text>
                   </li>
-                </Link> */}
-                <Link
+                </Link>
+                {/* <Link
                   className={styles.defaultLink}
                   title='Virtual Career Fair'
                   to={process.env.VCF_CLIENT_URL}
@@ -164,7 +164,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>Virtual Career Fair</Text>
                     <span className={styles.hotTag}>Hot!</span>
                   </li>
-                </Link>
+                </Link> */}
                 <Link
                   className={styles.defaultLink}
                   to={
@@ -207,7 +207,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>BossPoints</Text>
                   </li>
                 </Link>
-                {/* <Link
+                <Link
                   className={styles.defaultLink}
                   to='https://blog.bossjob.ph/'
                   aTag
@@ -216,7 +216,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Career Guide</Text>
                   </li>
-                </Link> */}
+                </Link>
 
                 <div className={styles.defaultLink}>
                   <li className={styles.menuList} onClick={() => handleLogOut()}>
