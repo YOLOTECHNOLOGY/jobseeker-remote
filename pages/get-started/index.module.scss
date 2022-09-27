@@ -1,0 +1,22 @@
+.Container {
+  background-color: rgb(249, 249, 249);
+  padding-top: 48px;
+  height: calc(100vh - 64px);
+
+  .getStartedContainer {
+    max-width: inherit;
+    width: 770px;
+    margin: 0 auto;
+    padding-top: 30px;
+    padding-bottom: 40px;
+    background: #ffffff;
+    box-shadow: 0px 4px 6px rgba(150, 149, 149, 0.25);
+  }
+
+  .ToEmployer {
+    text-align: center;
+    &_textColor {
+      color: #707070;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+
+.emailLoginContainer {
+  &_title,
+  &_from {
+    text-align: center;
+  }
+
+  &_tip {
+    text-align: center;
+    margin-top: 15px;
+
+    &_content {
+      color: #707070;
+      font-size: 14px;
+    }
+  }
+
+  .formInput,
+  .formButton {
+    width: 551px;
+    height: 44px;
+    margin-top: 24px;
+  }
+
+  &_quickLogin {
+    margin-top: 40px;
+    text-align: center;
+    .RegisterDivider {
+      position: relative;
+      height: 16px;
+      margin-top: 28px;
+      width: 551px;
+      margin: 0 auto;
+      margin-bottom: 30px;
+
+      &Text {
+        color: $lightgrey;
+        position: absolute;
+        background-color: $white-3;
+        width: 100px;
+        z-index: 1;
+        left: 50%;
+        top: 50%;
+        text-align: center;
+        transform: translate(-50%, -50%);
+      }
+
+      &::after {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 1px;
+        background-color: $lightgrey-2;
+        top: 50%;
+        left: 0;
+      }
+    }
+  }
+}
