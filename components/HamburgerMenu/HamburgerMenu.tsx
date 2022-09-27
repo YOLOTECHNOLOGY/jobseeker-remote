@@ -58,7 +58,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 <Text textStyle='xl'>Jobs</Text>
               </li>
             </Link>
-            {/* <Link
+            <Link
               className={styles.defaultLink}
               to={
                 isAuthenticated
@@ -71,7 +71,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
               <li className={styles.menuList} onClick={handleClick}>
                 <Text textStyle='xl'>Headhunt Me</Text>
               </li>
-            </Link> */}
+            </Link>
             <Link className={styles.defaultLink} to='/companies' title='Companies'>
               <li className={styles.menuList} onClick={handleClick}>
                 <Text textStyle='xl'>Companies</Text>
@@ -140,7 +140,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
             )}
             {isAuthenticated && (
               <>
-                {/* <Link
+                <Link
                   className={styles.defaultLink}
                   to={authPathToOldProject(null, '/dashboard/chat')}
                   aTag

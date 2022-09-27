@@ -246,14 +246,14 @@ const PublicSitemap = ({ config }: any) => {
             <Text className={styles.sectionHeader} textColor="primaryBlue" bold tagName="h3" textStyle="base">
               Other Resources
             </Text>
-            {/* <Link
+            <Link
               className={styles.item}
               to={`${process.env.OLD_PROJECT_URL}/headhunt-me`}
               title="Headhunt Me"
               external
             >
               <Text textStyle="base">Headhunt Me</Text>
-            </Link> */}
+            </Link>
             <Link
               className={styles.item}
               aTag

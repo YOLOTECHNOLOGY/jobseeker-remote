@@ -12,7 +12,7 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogo, DefaultAvatar } from 'images'
+import { BossjobLogo, DefaultAvatar, ChatIcon } from 'images'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
@@ -77,7 +77,7 @@ const ProtectedHeader = () => {
                   </Text>
                 </Link>
               </li>
-              {/* <li className={styles.headerLink}>
+              <li className={styles.headerLink}>
                 <a
                   title='Headhunt Me'
                   onClick={(e) => handleRedirectAuthentication(e, '/dashboard/headhunt-me')}
@@ -87,7 +87,7 @@ const ProtectedHeader = () => {
                     Headhunt Me
                   </Text>
                 </a>
-              </li> */}
+              </li>
               <li className={styles.headerLink}>
                 <Link title='Companies' to='/companies'>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
@@ -102,7 +102,7 @@ const ProtectedHeader = () => {
                   </Text>
                 </Link>
               </li> */}
-              {/* <li className={styles.headerLink}>
+              <li className={styles.headerLink}>
                 <a
                   className={styles.headerLinkIcon}
                   title='Chats'
@@ -200,11 +200,6 @@ const ProtectedHeader = () => {
                   <Text textStyle='base'>Career Guide</Text>
                 </Link>
               </li> */}
-              <li className={styles.headerMenuItem}>
-                <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
-                  <Text textStyle='base'>For Employer</Text>
-                </Link>
-              </li>
               <li className={styles.headerMenuItem}>
                 <div className={styles.headerMenuLink} onClick={() => handleLogOut()}>
                   <Text textStyle='base'>Log Out</Text>
