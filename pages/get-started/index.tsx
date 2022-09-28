@@ -1,7 +1,8 @@
 import Layout from 'components/Layout'
 import SEO from 'components/SEO'
-// import EmailLogin from 'components/GetStarted/EmailLogin/EmailLogin'
-import SendTOP from 'components/GetStarted/SendTOP/SendTOP'
+import CheckEmail from 'components/GetStarted/CheckEmail/CheckEmail'
+// import SendTOP from 'components/GetStarted/SendTOP/SendTOP'
+// import MagicLink from 'components/GetStarted/MagicLink/MagicLink'
 // import Text from 'components/Text'
 // import Link from 'components/Link'
 
@@ -18,8 +19,9 @@ const GetStarted = () => {
       <div className={styles.Container}>
         <div>
           <div className={styles.getStartedContainer}>
-            {/* <EmailLogin /> */}
-            <SendTOP />
+            <CheckEmail />
+            {/* <SendTOP /> */}
+            {/* <MagicLink /> */}
           </div>
           <div className={styles.ToEmployer}>
             {/* <Text tagName='p' textStyle='base' className={styles.ToEmployer_textColor}>

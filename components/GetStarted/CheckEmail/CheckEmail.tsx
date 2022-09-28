@@ -6,12 +6,12 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 
-import styles from './EmaiLogin.module.scss'
+import styles from './CheckEmail.module.scss'
 
 /* Redux Actions */
 import { socialLoginRequest } from 'store/actions/auth/socialLogin'
 
-const EmailLogin = () => {
+const CheckEmail = () => {
   const dispatch = useDispatch()
   const [emaile, setEmaile] = useState<string>()
   const [emaileError] = useState()
@@ -77,4 +77,4 @@ const EmailLogin = () => {
   )
 }
 
-export default EmailLogin
+export default CheckEmail

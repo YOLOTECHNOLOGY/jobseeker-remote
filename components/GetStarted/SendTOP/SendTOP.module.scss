@@ -2,5 +2,34 @@
   &_title,
   &_desc {
     text-align: center;
+
+    &_text {
+      color: #353535;
+    }
+  }
+
+  &_main {
+    text-align: center;
+    &_field {
+      width: 400px;
+      height: 44px;
+    }
+
+    &_submit {
+      width: 158px;
+      height: 44px;
+      margin-left: 10px;
+      text-transform: capitalize;
+    }
+  }
+
+  &_sendMagicLink {
+    width: 566px;
+    margin: 0 auto;
+    &_magicLink {
+      color: #2379ea;
+      border-bottom: 1px solid #2379ea;
+      cursor: pointer;
+    }
   }
 }
