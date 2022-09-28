@@ -128,17 +128,35 @@ const VerifyMailAndBindEmail = ({
     setIsShowCountDownSwitch(true)
     setIsShowemailVerify(true)
     setEmail(email)
-    sendEmaillOtp({ email }).then(() => {
-      // if (data.success) {
-      //   dispatch(
-      //     displayNotification({
-      //       open: true,
-      //       message: 'The verification code has been sent to your email, please check it',
-      //       severity: 'success'
-      //     })
-      //   )
-      // }
-    })
+    sendEmaillOtp({ email })
+      .then(() => {
+        // if (data.success) {
+        //   dispatch(
+        //     displayNotification({
+        //       open: true,
+        //       message: 'The verification code has been sent to your email, please check it',
+        //       severity: 'success'
+        //     })
+        //   )
+        // }
+      })
+      .catch((error) => {
+        if (error.response) {
+          const { data } = error.response
+          if (data.error) {
+            dispatch(
+              displayNotification({
+                open: true,
+                message:
+                  'Request was throttled. Expected available in ' +
+                  data.error.retry_after +
+                  ' seconds.',
+                severity: 'warning'
+              })
+            )
+          }
+        }
+      })
   }
 
   const emailVerifiSuccess = () => {
