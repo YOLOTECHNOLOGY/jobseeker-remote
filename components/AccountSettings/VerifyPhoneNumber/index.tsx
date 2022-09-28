@@ -155,17 +155,35 @@ const VerifyPhoneNumber = ({
     setIsShowCountDownSwitch(true)
     setIsShowPhoneVerify(true)
     setPhoneNum(phoneNum)
-    sendPhoneNumberOTP({ phone_number: smsCode + phoneNum }).then(() => {
-      // if (data.success) {
-      //   dispatch(
-      //     displayNotification({
-      //       open: true,
-      //       message: 'The verification code has been sent, please check it',
-      //       severity: 'success'
-      //     })
-      //   )
-      // }
-    })
+    sendPhoneNumberOTP({ phone_number: smsCode + phoneNum })
+      .then(() => {
+        // if (data.success) {
+        //   dispatch(
+        //     displayNotification({
+        //       open: true,
+        //       message: 'The verification code has been sent, please check it',
+        //       severity: 'success'
+        //     })
+        //   )
+        // }
+      })
+      .catch((error) => {
+        if (error.response) {
+          const { data } = error.response
+          if (data.error) {
+            dispatch(
+              displayNotification({
+                open: true,
+                message:
+                  'Request was throttled. Expected available in ' +
+                  data.error.retry_after +
+                  ' seconds.',
+                severity: 'warning'
+              })
+            )
+          }
+        }
+      })
   }
 
   const verifiSuccess = () => {

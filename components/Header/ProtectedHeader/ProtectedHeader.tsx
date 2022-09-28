@@ -95,13 +95,13 @@ const ProtectedHeader = () => {
                   </Text>
                 </Link>
               </li>
-              {/* <li className={styles.headerLink}>
+              <li className={styles.headerLink}>
                 <Link title='Courses' to='https://academy.bossjob.ph/courses/search-courses' aTag external>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Courses
                   </Text>
                 </Link>
-              </li> */}
+              </li>
               <li className={styles.headerLink}>
                 <a
                   className={styles.headerLinkIcon}
@@ -195,11 +195,11 @@ const ProtectedHeader = () => {
                   <Text textStyle='base'>BossPoints</Text>
                 </a>
               </li>
-              {/* <li className={styles.headerMenuItem}>
+              <li className={styles.headerMenuItem}>
                 <Link to='https://blog.bossjob.ph/' aTag external className={styles.headerMenuLink}>
                   <Text textStyle='base'>Career Guide</Text>
                 </Link>
-              </li> */}
+              </li>
               <li className={styles.headerMenuItem}>
                 <div className={styles.headerMenuLink} onClick={() => handleLogOut()}>
                   <Text textStyle='base'>Log Out</Text>

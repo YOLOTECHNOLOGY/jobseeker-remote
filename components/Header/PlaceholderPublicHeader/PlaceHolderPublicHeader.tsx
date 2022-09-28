@@ -38,11 +38,11 @@ const PlaceHolderPublicHeader = () => {
                     Companies
                   </Text>
               </li>
-              {/* <li className={styles.headerLink}>
+              <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Courses
                   </Text>
-              </li> */}
+              </li>
               <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Career Guide

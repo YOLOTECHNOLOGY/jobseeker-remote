@@ -61,11 +61,11 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                     Companies
                   </Text>
                 </li>
-                {/* <li className={styles.headerLink}>
+                <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Courses
                   </Text>
-                </li> */}
+                </li>
                 <li className={styles.headerLink}>
                   <a className={styles.headerLinkIcon} title='Chats'>
                     <img src={ChatIcon} width='20' height='20' />
@@ -74,14 +74,19 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                     </Text>
                   </a>
                 </li>
-                <li className={styles.headerLink} style={{ position:'relative' }}>
+                <li className={styles.headerLink}>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    Career Guide
+                  </Text>
+                </li>
+                {/* <li className={styles.headerLink} style={{ position:'relative' }}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Virtual Career Fair
                     <span className={styles.hotTag}>
                       Hot!
                     </span>
                   </Text>
-              </li>
+                </li> */}
               </React.Fragment>
             </ul>
           </div>
