@@ -1,0 +1,50 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.ContainerMagic {
+  padding-top: 60px !important;
+}
+
+.Container {
+  background-color: rgb(249, 249, 249);
+  padding-top: 48px;
+  height: calc(100vh - 64px);
+
+  @include sm {
+    background-color: #ffffff;
+  }
+
+  .getStartedContainer {
+    max-width: inherit;
+    width: 770px;
+    margin: 0 auto;
+    padding-top: 30px;
+    padding-bottom: 40px;
+    background: #ffffff;
+    box-shadow: 0px 4px 6px rgba(150, 149, 149, 0.25);
+
+    @include sm {
+      width: 100%;
+      box-shadow: none;
+      padding: 0 20px;
+    }
+  }
+
+  .ToEmployer {
+    text-align: center;
+    &_textColor {
+      color: #707070;
+    }
+  }
+}
+
+.fieldError {
+  margin-top: 0;
+  text-align: left;
+  width: 551px;
+  margin: 0 auto;
+
+  @include sm {
+    width: 100%;
+  }
+}

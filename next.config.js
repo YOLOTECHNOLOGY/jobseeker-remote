@@ -9,8 +9,8 @@ module.exports = {
         {
           source: '/((?!maintenance).*)',
           destination: '/maintenance',
-          permanent: false,
-        },
+          permanent: false
+        }
       ]
     }
 
@@ -51,15 +51,15 @@ module.exports = {
     GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'
   },
   sassOptions: {
-    includePaths: [path.join(__dirname, 'node_modules')],
+    includePaths: [path.join(__dirname, 'node_modules')]
   },
   images: {
-    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl'],
+    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl']
   },
   webpack(config, { isServer }) {
     if (isServer) {
       generateRobotsTxt()
     }
     return config
-  },
+  }
 }

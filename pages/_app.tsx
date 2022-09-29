@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import { wrapper } from 'store'
-import { getCookie, removeCookie } from 'helpers/cookies'
+import { getCookie } from 'helpers/cookies'
 import { CookiesProvider } from 'react-cookie'
 import { ConnectedRouter } from 'connected-next-router'
 
@@ -40,25 +40,25 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [router.events])
 
   useEffect(() => {
+    // TODO There is no way to verify the TOKEN of 3.0, and the entrance to obtain TOKEN in 2.0 is not all closed
     // Validate token on every protected page navigation
-    if (accessToken) {
-      fetch(`${process.env.AUTH_BOSSJOB_URL}/token/validate`, {
-        method: 'POST',
-        headers: new Headers({
-          Authorization: 'Bearer ' + getCookie('accessToken')
-        })
-      }).then((resp) => {
-        if (resp.status !== 200) {
-          removeCookie('user')
-          removeCookie('accessToken')
-          removeCookie('splan')
-
-          if (typeof window !== 'undefined') {
-            window.location.href = '/'
-          }
-        }
-      })
-    }
+    // if (accessToken) {
+    //   fetch(`${process.env.AUTH_BOSSJOB_URL}/token/validate`, {
+    //     method: 'POST',
+    //     headers: new Headers({
+    //       Authorization: 'Bearer ' + getCookie('accessToken')
+    //     })
+    //   }).then((resp) => {
+    //     if (resp.status !== 200) {
+    //       removeCookie('user')
+    //       removeCookie('accessToken')
+    //       removeCookie('splan')
+    //       if (typeof window !== 'undefined') {
+    //         window.location.href = '/'
+    //       }
+    //     }
+    //   })
+    // }
   }, [router])
 
   useEffect(() => {
