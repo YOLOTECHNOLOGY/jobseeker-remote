@@ -1,3 +1,6 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+
 .MagicLink {
   &_title,
   &_desc {
@@ -11,6 +14,10 @@
       width: 551px;
       height: 44px;
       text-transform: capitalize;
+
+      @include sm {
+        width: 100%;
+      }
     }
   }
 }

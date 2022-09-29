@@ -1,7 +1,14 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
 .Container {
   background-color: rgb(249, 249, 249);
   padding-top: 48px;
   height: calc(100vh - 64px);
+
+  @include sm {
+    background-color: #ffffff;
+  }
 
   .getStartedContainer {
     max-width: inherit;
@@ -11,6 +18,12 @@
     padding-bottom: 40px;
     background: #ffffff;
     box-shadow: 0px 4px 6px rgba(150, 149, 149, 0.25);
+
+    @include sm {
+      width: 100%;
+      box-shadow: none;
+      padding: 0 20px;
+    }
   }
 
   .ToEmployer {
@@ -26,4 +39,8 @@
   text-align: left;
   width: 551px;
   margin: 0 auto;
+
+  @include sm {
+    width: 100%;
+  }
 }

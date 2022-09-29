@@ -7,27 +7,39 @@ import SendTOP from 'components/GetStarted/SendTOP/SendTOP'
 import MagicLink from 'components/GetStarted/MagicLink/MagicLink'
 import Text from 'components/Text'
 import Link from 'components/Link'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // api
-import { generateSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
+import {
+  authenticationSendEmaillOtp,
+  authenticationJobseekersLogin,
+  authenticationSendEmailMagicLink
+} from 'store/services/auth/generateEmailOtp'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 import styles from './index.module.scss'
+import { setCookie } from 'helpers/cookies'
+import router, { useRouter } from 'next/router'
 
 const COUNT_DOWN_VERIFY_DEFAULT = 10
 
 const GetStarted = () => {
+  const routes = useRouter()
   const dispatch = useDispatch()
-  const [step, setStep] = useState(1)
+  const { width } = useWindowDimensions()
+
+  const [step, setStep] = useState(3)
   const [email, setEmaile] = useState<string>('')
+  const [emailTOP, setEmailTOP] = useState<number>()
   const [userId, setUserId] = useState(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
 
   const handleSendEmailTOP = () => {
     setIsLoading(true)
-    generateSendEmaillOtp({ email })
+    authenticationSendEmaillOtp({ email })
       .then(({ data }) => {
         console.log(data, 'response')
         // show setp 2
@@ -51,6 +63,57 @@ const GetStarted = () => {
       })
       .finally(() => {
         setIsLoading(false)
+      })
+  }
+
+  const handleAuthenticationJobseekersLogin = () => {
+    setEmailOTPInputDisabled(true)
+    const data = {
+      email,
+      otp: emailTOP,
+      source: width > 576 ? 'web' : 'mobile_web',
+      ...router.query
+    }
+    console.log(data, 'login')
+    authenticationJobseekersLogin(data)
+      .then(({ data }) => {
+        if (data.data.token) {
+          setCookie('accessToken', data.data.token)
+          if (userId) {
+            routes.push('/jobs-hiring/job-search')
+          } else {
+            router.push('/jobseeker-complete-profile/1')
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error.response)
+        const errorMessage = error.response.data?.errors?.error[0]
+        if (errorMessage) {
+          dispatch(
+            displayNotification({
+              open: true,
+              message: errorMessage,
+              severity: 'warning'
+            })
+          )
+        }
+      })
+      .finally(() => {
+        setEmailOTPInputDisabled(false)
+      })
+  }
+
+  const handleAuthenticationSendEmailMagicLink = () => {
+    authenticationSendEmailMagicLink({ email })
+      .then(({ data }) => {
+        console.log(data)
+        if (data.data) {
+          setStep(3)
+        }
+      })
+      .catch((error) => {
+        console.log(error)
       })
   }
 
@@ -89,10 +152,15 @@ const GetStarted = () => {
                 COUNT_DOWN_VERIFY_DEFAULT={COUNT_DOWN_VERIFY_DEFAULT}
                 handleSendEmailTOP={handleSendEmailTOP}
                 email={email}
+                emailTOP={emailTOP}
+                setEmailTOP={setEmailTOP}
                 isLoading={isLoading}
+                emailOTPInputDisabled={emailOTPInputDisabled}
+                login={handleAuthenticationJobseekersLogin}
+                magicLink={handleAuthenticationSendEmailMagicLink}
               />
             )}
-            {step == 3 && <MagicLink />}
+            {step == 3 && <MagicLink userId={userId} email={email} />}
           </div>
           <div className={styles.ToEmployer}>
             {step == 1 && (

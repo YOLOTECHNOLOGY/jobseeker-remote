@@ -15,10 +15,14 @@ const SendTOP = ({
   COUNT_DOWN_VERIFY_DEFAULT,
   handleSendEmailTOP,
   email,
-  isLoading
+  emailTOP,
+  setEmailTOP,
+  isLoading,
+  emailOTPInputDisabled,
+  login,
+  magicLink
 }: any) => {
   const firstRender = useFirstRender()
-  const [emailTOP, setEmailTOP] = useState<number>()
   const [emailError] = useState<string>()
   const [sendBtnDisabled, setSendBtnDisabled] = useState(true)
 
@@ -56,6 +60,13 @@ const SendTOP = ({
     }
   }, [isShowCountDownSwitch])
 
+  useEffect(() => {
+    if (String(emailTOP).length === 6) {
+      console.log('Login')
+      login()
+    }
+  }, [emailTOP])
+
   const sendEmailOTP = () => {
     setSendBtnDisabled(true)
     setIsShowCountDownSwitch(true)
@@ -90,10 +101,12 @@ const SendTOP = ({
           label='Enter 6-digit OTP'
           variant='outlined'
           size='small'
-          value={emailTOP}
+          value={emailTOP || ''}
           autoComplete='off'
           error={emailError ? true : false}
           onChange={(e) => setEmailTOP(handleNumericInput(e.target.value))}
+          maxLength={6}
+          disabled={emailOTPInputDisabled}
         />
 
         <MaterialButton
@@ -115,7 +128,7 @@ const SendTOP = ({
       </div>
 
       <div className={styles.SendTOPContainer_sendMagicLink}>
-        <Text tagName='p' textStyle='lg'>
+        <Text tagName='p' textStyle='lg' onClick={magicLink}>
           Having trouble?{' '}
           <a className={styles.SendTOPContainer_sendMagicLink_magicLink}>Request a Magic Link</a>
         </Text>

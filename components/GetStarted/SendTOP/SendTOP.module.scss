@@ -1,3 +1,6 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+
 .SendTOPContainer {
   &_title,
   &_desc {
@@ -13,6 +16,10 @@
     &_field {
       width: 400px;
       height: 44px;
+
+      @include sm {
+        width: 100%;
+      }
     }
 
     &_submit {
@@ -21,6 +28,12 @@
       margin-left: 10px;
       text-transform: capitalize;
       padding: 0;
+
+      @include sm {
+        width: 100%;
+        margin-left: 0px;
+        margin-top: 25px;
+      }
     }
   }
 
@@ -31,6 +44,10 @@
       color: #2379ea;
       border-bottom: 1px solid #2379ea;
       cursor: pointer;
+    }
+
+    @include sm {
+      width: 100%;
     }
   }
 }
