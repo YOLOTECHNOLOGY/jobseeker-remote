@@ -39,9 +39,6 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     case 'chat':
       url = process.env.CHAT_BOSSJOB_URL
       break
-    case 'jobseekerRootUrl':
-      url = process.env.JOB_BOSSJOB_ROOTURL
-      break
     case 'reco':
       url = process.env.RECO_URL
       break

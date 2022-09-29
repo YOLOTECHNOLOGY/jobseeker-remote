@@ -1,18 +1,18 @@
 import configuredAxios from 'helpers/configuredAxios'
 
 const authenticationSendEmaillOtp = (payload) => {
-  const axios = configuredAxios('jobseekerRootUrl', 'protected')
+  const axios = configuredAxios('auth', 'protected')
   return Promise.resolve(
-    axios.post(`authentication/email-otp/generate`, {
+    axios.post(`/email-otp/generate`, {
       ...payload
     })
   )
 }
 
 const authenticationJobseekersLogin = (payload) => {
-  const axios = configuredAxios('jobseekerRootUrl', 'protected')
+  const axios = configuredAxios('auth', 'protected')
   return Promise.resolve(
-    axios.post(`authentication/jobseekers/login`, {
+    axios.post(`/jobseekers/login`, {
       ...payload,
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET
@@ -21,9 +21,9 @@ const authenticationJobseekersLogin = (payload) => {
 }
 
 const authenticationSendEmailMagicLink = (payload) => {
-  const axios = configuredAxios('jobseekerRootUrl', 'protected')
+  const axios = configuredAxios('auth', 'protected')
   return Promise.resolve(
-    axios.post(`authentication/jobseekers/email-magic-link/generate`, {
+    axios.post(`/jobseekers/email-magic-link/generate`, {
       ...payload,
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET

@@ -42,7 +42,6 @@ const GetStarted = () => {
     setIsLoading(true)
     authenticationSendEmaillOtp({ email })
       .then(({ data }) => {
-        console.log(data, 'response')
         // show setp 2
         if (data.data) {
           setUserId(data.data.user_id)
@@ -75,7 +74,6 @@ const GetStarted = () => {
       source: width > 576 ? 'web' : 'mobile_web',
       ...router.query
     }
-    console.log(data, 'login')
     authenticationJobseekersLogin(data)
       .then(({ data }) => {
         if (data.data.token) {
@@ -88,7 +86,6 @@ const GetStarted = () => {
         }
       })
       .catch((error) => {
-        console.log(error.response)
         const errorMessage = error.response.data?.errors?.error[0]
         if (errorMessage) {
           dispatch(
@@ -108,7 +105,6 @@ const GetStarted = () => {
   const handleAuthenticationSendEmailMagicLink = () => {
     authenticationSendEmailMagicLink({ email })
       .then(({ data }) => {
-        console.log(data)
         if (data.data) {
           setStep(3)
         }
