@@ -10,7 +10,6 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
 
   if (typeof window !== 'undefined') {
     // const { store } = configureStore(window.__PRELOADED_STATE__, false)
-
     // remoteAddress = store.getState().Public.utils.setRemoteIp.ip
     // isMobile = store.getState().Public.utils.setUserDevice.userAgent.isMobile
   }
@@ -40,6 +39,9 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     case 'chat':
       url = process.env.CHAT_BOSSJOB_URL
       break
+    case 'jobseekerRootUrl':
+      url = process.env.JOB_BOSSJOB_ROOTURL
+      break
     case 'reco':
       url = process.env.RECO_URL
       break
@@ -67,28 +69,29 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
   if (baseURL === 'bosshunt' && type === 'protected' && getCookie('accessToken')) {
     headers = {
       ...headers,
-      'Bossjob-Token': `Bearer ${getCookie('accessToken')}`,
+      'Bossjob-Token': `Bearer ${getCookie('accessToken')}`
     }
-  }
-  else if (baseURL === 'job' && type === 'protected' && (getCookie('accessToken') || serverAccessToken)) {
-    const jobToken = (getCookie('accessToken') || serverAccessToken)
+  } else if (
+    baseURL === 'job' &&
+    type === 'protected' &&
+    (getCookie('accessToken') || serverAccessToken)
+  ) {
+    const jobToken = getCookie('accessToken') || serverAccessToken
     headers = {
       ...headers,
-      'Authorization': `Bearer ${jobToken}`,
+      Authorization: `Bearer ${jobToken}`
     }
-  }
-  else if (baseURL === 'jobseeker' && type === 'protected' && serverAccessToken) {
+  } else if (baseURL === 'jobseeker' && type === 'protected' && serverAccessToken) {
     headers = {
       ...headers,
-      'Authorization': `Bearer ${serverAccessToken}`,
+      Authorization: `Bearer ${serverAccessToken}`
     }
-  }
-  else {
+  } else {
     /*  END */
     if (type === 'protected' && getCookie('accessToken')) {
       headers = {
         ...headers,
-        Authorization: `Bearer ${getCookie('accessToken')}`,
+        Authorization: `Bearer ${getCookie('accessToken')}`
       }
     }
     // if serverAccessToken exist, pass server access token
@@ -96,7 +99,7 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     if (type === 'protected' && serverAccessToken) {
       headers = {
         ...headers,
-        Authorization: `Bearer ${serverAccessToken}`,
+        Authorization: `Bearer ${serverAccessToken}`
       }
     }
   }
@@ -106,13 +109,13 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
   if (type === 'public' && getCookie('accessToken') && passToken) {
     headers = {
       ...headers,
-      Authorization: `Bearer ${getCookie('accessToken')}`,
+      Authorization: `Bearer ${getCookie('accessToken')}`
     }
   }
 
   const configuredAxios = axios.create({
     baseURL: url,
-    headers: headers,
+    headers: headers
   })
 
   if (type === 'protected' && getCookie('accessToken')) {
@@ -121,7 +124,7 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
         return response
       },
       (error) => {
-        // Remove the accessToken cookie to log the user out 
+        // Remove the accessToken cookie to log the user out
         // when Unauthorized 401 status code is returned from API requests
         if (error.response.status === 401) {
           removeCookie('accessToken')

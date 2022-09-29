@@ -9,8 +9,8 @@ module.exports = {
         {
           source: '/((?!maintenance).*)',
           destination: '/maintenance',
-          permanent: false,
-        },
+          permanent: false
+        }
       ]
     }
 
@@ -27,6 +27,7 @@ module.exports = {
     DATA_BOSSHUNT_URL: process.env.DATA_BOSSHUNT_URL,
     AUTH_BOSSJOB_URL: process.env.AUTH_BOSSJOB_URL,
     JOB_BOSSJOB_URL: process.env.JOB_BOSSJOB_URL,
+    JOB_BOSSJOB_ROOTURL: process.env.JOB_BOSSJOB_ROOTURL,
     SEARCH_BOSSJOB_URL: process.env.SEARCH_BOSSJOB_URL,
     CHAT_BOSSJOB_URL: process.env.CHAT_BOSSJOB_URL,
     JOBSEEKER_URL: process.env.JOBSEEKER_URL,
@@ -51,15 +52,15 @@ module.exports = {
     GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'
   },
   sassOptions: {
-    includePaths: [path.join(__dirname, 'node_modules')],
+    includePaths: [path.join(__dirname, 'node_modules')]
   },
   images: {
-    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl'],
+    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl']
   },
   webpack(config, { isServer }) {
     if (isServer) {
       generateRobotsTxt()
     }
     return config
-  },
+  }
 }

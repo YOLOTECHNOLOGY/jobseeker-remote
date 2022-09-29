@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import Text from 'components/Text'
@@ -10,11 +10,37 @@ import styles from './CheckEmail.module.scss'
 
 /* Redux Actions */
 import { socialLoginRequest } from 'store/actions/auth/socialLogin'
+import { useFirstRender } from 'helpers/useFirstRender'
 
-const CheckEmail = () => {
+const CheckEmail = ({ errorText, email, setEmaile, handleSendEmailTOP, isLoading }: any) => {
   const dispatch = useDispatch()
-  const [emaile, setEmaile] = useState<string>()
-  const [emaileError] = useState()
+  const firstRender = useFirstRender()
+  const [emailError, setEmailError] = useState(false)
+  const [emailBtnDisabled, setEmailBtnDisabled] = useState(true)
+
+  useEffect(() => {
+    if (firstRender) {
+      return
+    }
+
+    let errorText = null
+    if (!email.length || !/\S+@\S+\.\S+/.test(email)) {
+      errorText = 'Please enter a valid email address.'
+    }
+    setEmailError(errorText)
+  }, [email])
+
+  useEffect(() => {
+    if (firstRender) {
+      return
+    }
+
+    if (emailError) {
+      setEmailBtnDisabled(true)
+    } else {
+      setEmailBtnDisabled(false)
+    }
+  }, [emailError])
 
   const callbackRequest = (payload) => {
     dispatch(socialLoginRequest(payload))
@@ -37,21 +63,23 @@ const CheckEmail = () => {
           // placeholder='Enter your email address'
           label='Enter your email address'
           variant='outlined'
-          value={emaile}
+          value={email}
           size='small'
-          defaultValue={emaile}
           autoComplete='off'
           onChange={(e) => setEmaile(e.target.value)}
-          error={emaileError ? true : false}
+          error={emailError ? true : false}
         />
+        {emailError && errorText(emailError)}
 
         <MaterialButton
           capitalize
           size='large'
           variant='contained'
           className={styles.formButton}
+          disabled={emailBtnDisabled}
           // isLoading={isRegisteringJobseeker}
-          // onClick={() => {}}
+          onClick={handleSendEmailTOP}
+          isLoading={isLoading}
         >
           <Text textStyle='xl' textColor='white' bold>
             Submit
