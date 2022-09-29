@@ -1,6 +1,10 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
+.ContainerMagic {
+  padding-top: 60px !important;
+}
+
 .Container {
   background-color: rgb(249, 249, 249);
   padding-top: 48px;

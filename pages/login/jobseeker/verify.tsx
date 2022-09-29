@@ -25,6 +25,7 @@ const Verify = ({ query }: any) => {
       .then(({ data }) => {
         if (data.data.token) {
           setCookie('accessToken', data.data.token)
+          // Only jump to this page for now
           router.push('/jobseeker-complete-profile/1')
         }
       })

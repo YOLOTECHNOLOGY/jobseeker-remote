@@ -1,3 +1,4 @@
+import React from 'react'
 import Text from 'components/Text'
 import { Button } from '@mui/material'
 
@@ -30,4 +31,4 @@ const MagicLink = ({ userId, email }: any) => {
   )
 }
 
-export default MagicLink
+export default React.memo(MagicLink)

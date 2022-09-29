@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Text from 'components/Text'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
@@ -137,4 +137,4 @@ const SendTOP = ({
   )
 }
 
-export default SendTOP
+export default React.memo(SendTOP)

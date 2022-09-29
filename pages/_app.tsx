@@ -40,7 +40,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [router.events])
 
   useEffect(() => {
-    // TODO 3.0的TOKEN没办法校验，2.0获取TOKEN的入口又没有全部关闭
+    // TODO There is no way to verify the TOKEN of 3.0, and the entrance to obtain TOKEN in 2.0 is not all closed
     // Validate token on every protected page navigation
     // if (accessToken) {
     //   fetch(`${process.env.AUTH_BOSSJOB_URL}/token/validate`, {

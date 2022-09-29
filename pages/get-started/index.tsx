@@ -22,6 +22,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import styles from './index.module.scss'
 import { setCookie } from 'helpers/cookies'
 import router, { useRouter } from 'next/router'
+import classNames from 'classnames'
 
 const COUNT_DOWN_VERIFY_DEFAULT = 10
 
@@ -30,7 +31,7 @@ const GetStarted = () => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
 
-  const [step, setStep] = useState(3)
+  const [step, setStep] = useState(1)
   const [email, setEmaile] = useState<string>('')
   const [emailTOP, setEmailTOP] = useState<number>()
   const [userId, setUserId] = useState(null)
@@ -132,7 +133,7 @@ const GetStarted = () => {
         description='Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.'
         canonical='/register/jobseeker'
       />
-      <div className={styles.Container}>
+      <div className={classNames([styles.Container, step === 3 ? styles.ContainerMagic : ''])}>
         <div>
           <div className={styles.getStartedContainer}>
             {step == 1 && (

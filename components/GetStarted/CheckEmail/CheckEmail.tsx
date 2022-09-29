@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import Text from 'components/Text'
@@ -105,4 +105,4 @@ const CheckEmail = ({ errorText, email, setEmaile, handleSendEmailTOP, isLoading
   )
 }
 
-export default CheckEmail
+export default React.memo(CheckEmail)
