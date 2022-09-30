@@ -1,5 +1,6 @@
 import socialLogin from './socialLogin'
 import login from './login'
+import jobseekersLogin from './jobseekersLogin'
 
 import checkResetPasswordCode from './checkResetPasswordCode'
 import sendResetPasswordCode from './sendResetPasswordCode'
@@ -12,6 +13,7 @@ import logout from './logout'
 export default {
   socialLogin,
   login,
+  jobseekersLogin,
 
   checkResetPasswordCode,
   sendResetPasswordCode,
