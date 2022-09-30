@@ -56,7 +56,7 @@ const Verify = ({ query }: any) => {
       dispatch(
         displayNotification({
           open: true,
-          message: errorMessage,
+          message: 'Oops! That magic link has expired. Please try again.',
           severity: 'warning'
         })
       )

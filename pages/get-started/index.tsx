@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Layout from 'components/Layout'
 import SEO from 'components/SEO'
 import CheckEmail from 'components/GetStarted/CheckEmail/CheckEmail'
@@ -12,15 +12,14 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 // api
 import {
   authenticationSendEmaillOtp,
-  authenticationJobseekersLogin,
   authenticationSendEmailMagicLink
 } from 'store/services/auth/generateEmailOtp'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
 
 import styles from './index.module.scss'
-import { setCookie } from 'helpers/cookies'
 import router, { useRouter } from 'next/router'
 import classNames from 'classnames'
 
@@ -37,6 +36,25 @@ const GetStarted = () => {
   const [userId, setUserId] = useState(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
+
+  const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+  const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+
+  useEffect(() => {
+    if (!Object.keys(userInfo).length) {
+      return
+    }
+    const { data } = userInfo
+    logSuccess(data)
+  }, [userInfo])
+
+  useEffect(() => {
+    if (!error) {
+      return
+    }
+    const errorMessage = error.data?.errors?.error[0]
+    loginFailed(errorMessage)
+  }, [error])
 
   const handleSendEmailTOP = () => {
     setIsLoading(true)
@@ -74,32 +92,29 @@ const GetStarted = () => {
       source: width > 576 ? 'web' : 'mobile_web',
       ...router.query
     }
-    authenticationJobseekersLogin(data)
-      .then(({ data }) => {
-        if (data.data.token) {
-          setCookie('accessToken', data.data.token)
-          if (userId) {
-            routes.push('/jobs-hiring/job-search')
-          } else {
-            router.push('/jobseeker-complete-profile/1')
-          }
-        }
-      })
-      .catch((error) => {
-        const errorMessage = error.response.data?.errors?.error[0]
-        if (errorMessage) {
-          dispatch(
-            displayNotification({
-              open: true,
-              message: errorMessage,
-              severity: 'warning'
-            })
-          )
-        }
-      })
-      .finally(() => {
-        setEmailOTPInputDisabled(false)
-      })
+    dispatch(jobbseekersLoginRequest(data))
+  }
+
+  const logSuccess = (data: any) => {
+    const url =
+      data.is_profile_update_required || !data.is_profile_completed
+        ? '/jobseeker-complete-profile/1'
+        : `/jobs-hiring/job-search`
+    routes.push(url)
+    setEmailOTPInputDisabled(false)
+  }
+
+  const loginFailed = (errorMessage: string | null) => {
+    if (errorMessage) {
+      dispatch(
+        displayNotification({
+          open: true,
+          message: errorMessage,
+          severity: 'warning'
+        })
+      )
+    }
+    setEmailOTPInputDisabled(false)
   }
 
   const handleAuthenticationSendEmailMagicLink = () => {
