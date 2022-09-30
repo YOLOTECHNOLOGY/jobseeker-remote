@@ -8,6 +8,10 @@
 
     &_text {
       color: #353535;
+
+      @include sm {
+        text-align: left;
+      }
     }
 
     &_btn {

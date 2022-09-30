@@ -1,5 +1,4 @@
 import React from 'react'
-import classNames from 'classnames/bind'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -20,7 +19,12 @@ const PublicHeader = () => {
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/'}>
-            <img className={styles.headerLogoImage} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+            <img
+              className={styles.headerLogoImage}
+              src={BossjobLogo}
+              title='Bossjob logo'
+              alt='Bossjob logo'
+            />
           </Link>
         </div>
         <div className={styles.headerLinksWrapper}>
@@ -83,17 +87,21 @@ const PublicHeader = () => {
                 </Text>
               </Link>
             </li>
-            <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
+            {/* <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
               <Link title='Log In' to='/login/jobseeker'>
                 <MaterialButton variant='text' size='medium' capitalize>
-                  <Text textStyle='base' textColor='primaryBlue' bold>Log in</Text>
+                  <Text textStyle='base' textColor='primaryBlue' bold>
+                    Log in
+                  </Text>
                 </MaterialButton>
               </Link>
-            </li>
+            </li> */}
             <li className={styles.headerLink}>
-              <Link title='Sign Up' to='/register/jobseeker'>
+              <Link title='Sign Up' to='/get-started'>
                 <MaterialButton variant='outlined' size='medium' capitalize>
-                  <Text textStyle='base' textColor='primaryBlue' bold>Sign up</Text>
+                  <Text textStyle='base' textColor='primaryBlue' bold>
+                    Get Started
+                  </Text>
                 </MaterialButton>
               </Link>
             </li>

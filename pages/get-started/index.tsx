@@ -23,7 +23,7 @@ import styles from './index.module.scss'
 import router, { useRouter } from 'next/router'
 import classNames from 'classnames'
 
-const COUNT_DOWN_VERIFY_DEFAULT = 10
+const COUNT_DOWN_VERIFY_DEFAULT = 60
 
 const GetStarted = () => {
   const routes = useRouter()
