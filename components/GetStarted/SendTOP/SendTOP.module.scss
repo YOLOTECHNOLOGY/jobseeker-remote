@@ -25,9 +25,9 @@
     &_submit {
       width: 158px;
       height: 44px;
-      margin-left: 10px;
+      margin-left: 10px !important;
       text-transform: capitalize;
-      padding: 0;
+      padding: 0 !important;
 
       @include sm {
         width: 100%;

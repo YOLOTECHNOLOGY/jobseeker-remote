@@ -23,10 +23,30 @@ const Verify = ({ query }: any) => {
     }
     authenticationJobseekersLogin(data)
       .then(({ data }) => {
-        if (data.data.token) {
-          setCookie('accessToken', data.data.token)
-          // Only jump to this page for now
-          router.push('/jobseeker-complete-profile/1')
+        const userInfo = data.data
+        if (userInfo.token) {
+          const userCookie = {
+            id: userInfo.id,
+            first_name: userInfo.first_name,
+            last_name: userInfo.last_name,
+            email: userInfo.email,
+            phone_num: userInfo.phone_num,
+            is_mobile_verified: userInfo.is_mobile_verified,
+            avatar: userInfo.avatar,
+            is_email_verify: userInfo.is_email_verify,
+            // notice_period_id: loginData.notice_period_id,
+            // is_bosshunt_talent: loginData.is_bosshunt_talent,
+            // is_bosshunt_talent_active: loginData.is_bosshunt_talent_active,
+            // bosshunt_talent_opt_out_at: loginData.bosshunt_talent_opt_out_at,
+            is_profile_completed: userInfo.is_profile_completed
+          }
+          setCookie('user', userCookie)
+          setCookie('accessToken', userInfo.token)
+          if (userInfo.is_profile_completed) {
+            router.push('/jobs-hiring/job-search')
+          } else {
+            router.push('/jobseeker-complete-profile/1')
+          }
         }
       })
       .catch((error) => {
