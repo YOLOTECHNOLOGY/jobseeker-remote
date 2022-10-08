@@ -56,10 +56,10 @@ const CheckEmail = ({
     }
     // test after delete
     console.log(jobseekersSocialResponse, '快捷登录2')
-    const { data } = jobseekersSocialResponse?.data
+    const { data } = jobseekersSocialResponse
     // test after delete
     console.log(data)
-    if (data.token) {
+    if (data?.token) {
       router.push('/')
     }
   }, [jobseekersSocialResponse])
