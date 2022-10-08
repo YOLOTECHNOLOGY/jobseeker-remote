@@ -9,13 +9,14 @@
     &_text {
       color: #353535;
       width: 570px;
-      margin: 0 auto;
+      margin: 0 auto !important;
       text-align: left;
       padding: 24px 0;
 
       @include sm {
         width: 100%;
         text-align: left;
+        margin: 0 !important;
       }
     }
   }

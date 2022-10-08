@@ -148,9 +148,9 @@ const GetStarted = () => {
   return (
     <Layout isHiddenFooter>
       <SEO
-        title='Sign Up | Bossjob'
+        title='Get started | Bossjob'
         description='Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.'
-        canonical='/register/jobseeker'
+        canonical='/get-started'
       />
       <div className={classNames([styles.Container, step === 3 ? styles.ContainerMagic : ''])}>
         <div>

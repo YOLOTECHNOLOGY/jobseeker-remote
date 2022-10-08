@@ -1,14 +1,15 @@
+import { useState } from 'react'
 import React, { useEffect, useRef } from 'react'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 import Text from 'components/Text'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
+import { useFirstRender } from 'helpers/useFirstRender'
 
 // tools
 import { handleNumericInput } from 'helpers/handleInput'
 
 import styles from './SendTOP.module.scss'
-import { useState } from 'react'
-import { useFirstRender } from 'helpers/useFirstRender'
 
 const SendTOP = ({
   userId,
@@ -23,6 +24,7 @@ const SendTOP = ({
   magicLink,
   emailTOPError
 }: any) => {
+  const { width } = useWindowDimensions()
   const firstRender = useFirstRender()
   const [sendBtnDisabled, setSendBtnDisabled] = useState(true)
 
@@ -93,6 +95,7 @@ const SendTOP = ({
           Please enter the 6-digit one-time password that we sent to {email}.
         </Text>
       </div>
+
       <div className={styles.SendTOPContainer_main}>
         <MaterialTextField
           className={styles.SendTOPContainer_main_field}
@@ -107,6 +110,9 @@ const SendTOP = ({
           maxLength={6}
           disabled={emailOTPInputDisabled}
         />
+        {width < 576 &&
+          emailTOPError &&
+          errorText('The OTP you have entered is wrong. Please try again.')}
 
         <MaterialButton
           capitalize
@@ -123,7 +129,9 @@ const SendTOP = ({
             {!isShowCountDownSwitch && `Get OTP`}
           </Text>
         </MaterialButton>
-        {emailTOPError && errorText('The OTP you have entered is wrong. Please try again.')}
+        {width > 576 &&
+          emailTOPError &&
+          errorText('The OTP you have entered is wrong. Please try again.')}
       </div>
 
       <div className={styles.SendTOPContainer_sendMagicLink}>
