@@ -53,11 +53,7 @@ const CheckEmail = ({
     if (firstRender) {
       return
     }
-    // test after delete
-    console.log(jobseekersSocialResponse, '快捷登录2')
     const { data } = jobseekersSocialResponse
-    // test after delete
-    console.log(data)
     if (data?.token) {
       const url =
         data.is_profile_update_required || !data.is_profile_completed
@@ -92,8 +88,6 @@ const CheckEmail = ({
   }, [emailError])
 
   const callbackRequest = (payload) => {
-    // test after delete
-    console.log(payload)
     const data = {
       ...payload,
       ...router.query,
@@ -102,10 +96,7 @@ const CheckEmail = ({
       social_type: payload.socialType,
       social_user_id: payload.userId,
       source: width > 576 ? 'web' : 'mobile_web'
-      // social_type: payload.
     }
-    // test after delete
-    console.log(data)
     dispatch(jobbseekersSocialLoginRequest(data))
   }
 

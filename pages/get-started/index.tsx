@@ -126,8 +126,14 @@ const GetStarted = () => {
           setStep(3)
         }
       })
-      .catch((error) => {
-        console.log(error)
+      .catch(() => {
+        dispatch(
+          displayNotification({
+            open: true,
+            message: 'send email magicLink failed',
+            severity: 'warning'
+          })
+        )
       })
   }
 

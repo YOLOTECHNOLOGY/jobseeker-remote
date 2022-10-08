@@ -34,8 +34,6 @@ const Facebook = ({
           accessToken = response.authResponse.accessToken
 
           window.FB.api('/me?fields=id,first_name,last_name,email', function (response) {
-            // test after delete
-            console.log(response, 'FbEmail')
             const payload = {
               userId: response.id,
               firstName: response.first_name,
