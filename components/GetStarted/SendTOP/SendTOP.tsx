@@ -20,10 +20,10 @@ const SendTOP = ({
   isLoading,
   emailOTPInputDisabled,
   login,
-  magicLink
+  magicLink,
+  emailTOPError
 }: any) => {
   const firstRender = useFirstRender()
-  const [emailError] = useState<string>()
   const [sendBtnDisabled, setSendBtnDisabled] = useState(true)
 
   // CountDown
@@ -102,7 +102,7 @@ const SendTOP = ({
           size='small'
           value={emailTOP || ''}
           autoComplete='off'
-          error={emailError ? true : false}
+          error={emailTOPError ? true : false}
           onChange={(e) => setEmailTOP(handleNumericInput(e.target.value))}
           maxLength={6}
           disabled={emailOTPInputDisabled}
@@ -123,7 +123,7 @@ const SendTOP = ({
             {!isShowCountDownSwitch && `Get OTP`}
           </Text>
         </MaterialButton>
-        {emailError && errorText(emailError)}
+        {emailTOPError && errorText('The OTP you have entered is wrong. Please try again.')}
       </div>
 
       <div className={styles.SendTOPContainer_sendMagicLink}>

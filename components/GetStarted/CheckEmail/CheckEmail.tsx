@@ -29,9 +29,11 @@ const CheckEmail = ({
   const [emailBtnDisabled, setEmailBtnDisabled] = useState(true)
 
   const jobseekersSocialResponse = useSelector(
-    (store: any) => store.auth.jobseekersSocialLogin.response
+    (store: any) => store.auth.jobseekersSocialLogin?.response
   )
-  const jobseekersSocialFailed = useSelector((store: any) => store.auth.jobseekersSocialLogin.error)
+  const jobseekersSocialFailed = useSelector(
+    (store: any) => store.auth.jobseekersSocialLogin?.error
+  )
 
   useEffect(() => {
     // test after delete

@@ -33,6 +33,7 @@ const GetStarted = () => {
   const [step, setStep] = useState(1)
   const [email, setEmaile] = useState<string>('')
   const [emailTOP, setEmailTOP] = useState<number>()
+  const [emailTOPError, setEmailTOPError] = useState(false)
   const [userId, setUserId] = useState(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
@@ -105,15 +106,16 @@ const GetStarted = () => {
   }
 
   const loginFailed = (errorMessage: string | null) => {
-    if (errorMessage) {
-      dispatch(
-        displayNotification({
-          open: true,
-          message: errorMessage,
-          severity: 'warning'
-        })
-      )
-    }
+    // if (errorMessage) {
+    //   dispatch(
+    //     displayNotification({
+    //       open: true,
+    //       message: errorMessage,
+    //       severity: 'warning'
+    //     })
+    //   )
+    // }
+    setEmailTOPError(true)
     setEmailOTPInputDisabled(false)
   }
 
@@ -171,6 +173,7 @@ const GetStarted = () => {
                 emailOTPInputDisabled={emailOTPInputDisabled}
                 login={handleAuthenticationJobseekersLogin}
                 magicLink={handleAuthenticationSendEmailMagicLink}
+                emailTOPError={emailTOPError}
               />
             )}
             {step == 3 && <MagicLink userId={userId} email={email} />}

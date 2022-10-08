@@ -55,3 +55,14 @@
     }
   }
 }
+
+.fieldError {
+  margin-top: 0;
+  text-align: left;
+  width: 560px;
+  margin: 0 auto !important;
+
+  @include sm {
+    width: 100%;
+  }
+}
