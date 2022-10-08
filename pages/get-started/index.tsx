@@ -50,7 +50,7 @@ const GetStarted = () => {
   }, [userInfo])
 
   useEffect(() => {
-    if (!error) {
+    if (error === null) {
       return
     }
     const errorMessage = error.data?.errors?.error[0]
