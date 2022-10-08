@@ -37,7 +37,6 @@ const CheckEmail = ({
 
   useEffect(() => {
     // test after delete
-    console.log(jobseekersSocialFailed, 'error')
     if (jobseekersSocialFailed?.data) {
       const errorMessage = jobseekersSocialFailed?.data.errors?.email[0]
       dispatch(
@@ -60,7 +59,11 @@ const CheckEmail = ({
     // test after delete
     console.log(data)
     if (data?.token) {
-      router.push('/')
+      const url =
+        data.is_profile_update_required || !data.is_profile_completed
+          ? '/jobseeker-complete-profile/1'
+          : `/jobs-hiring/job-search`
+      router.push(url)
     }
   }, [jobseekersSocialResponse])
 
