@@ -7,9 +7,15 @@
     text-align: center;
 
     &_text {
+      width: 551px;
       color: #353535;
+      margin: 0 auto;
+      text-align: left;
+      padding-bottom: 20px;
+      padding-top: 20px;
 
       @include sm {
+        width: 100%;
         text-align: left;
       }
     }
@@ -17,7 +23,7 @@
     &_btn {
       width: 551px;
       height: 44px;
-      text-transform: capitalize;
+      text-transform: capitalize !important;
 
       @include sm {
         width: 100%;

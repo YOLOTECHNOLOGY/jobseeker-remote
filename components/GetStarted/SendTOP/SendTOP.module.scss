@@ -8,15 +8,27 @@
 
     &_text {
       color: #353535;
+      width: 570px;
+      margin: 0 auto;
+      text-align: left;
+      padding: 24px 0;
 
       @include sm {
+        width: 100%;
         text-align: left;
       }
     }
   }
 
   &_main {
+    width: 570px;
     text-align: center;
+    margin: 0 auto;
+
+    @include sm {
+      width: 100%;
+    }
+
     &_field {
       width: 400px;
       height: 44px;
