@@ -51,8 +51,17 @@ const CheckEmail = ({
   }, [jobseekersSocialFailed])
 
   useEffect(() => {
+    if (firstRender) {
+      return
+    }
     // test after delete
     console.log(jobseekersSocialResponse, '快捷登录2')
+    const { data } = jobseekersSocialResponse?.data
+    // test after delete
+    console.log(data)
+    if (data.token) {
+      router.push('/')
+    }
   }, [jobseekersSocialResponse])
 
   useEffect(() => {
