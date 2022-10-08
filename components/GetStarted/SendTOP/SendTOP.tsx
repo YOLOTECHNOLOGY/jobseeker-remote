@@ -62,7 +62,6 @@ const SendTOP = ({
 
   useEffect(() => {
     if (String(emailTOP).length === 6) {
-      console.log('Login')
       login()
     }
   }, [emailTOP])

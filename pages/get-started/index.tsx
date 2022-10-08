@@ -156,6 +156,7 @@ const GetStarted = () => {
                 setUserId={setUserId}
                 handleSendEmailTOP={handleSendEmailTOP}
                 isLoading={isLoading}
+                router={router}
               />
             )}
             {step == 2 && (

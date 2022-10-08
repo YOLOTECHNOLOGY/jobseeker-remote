@@ -1,22 +1,57 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Text from 'components/Text'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 import styles from './CheckEmail.module.scss'
 
 /* Redux Actions */
-import { socialLoginRequest } from 'store/actions/auth/socialLogin'
+import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
 import { useFirstRender } from 'helpers/useFirstRender'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
-const CheckEmail = ({ errorText, email, setEmaile, handleSendEmailTOP, isLoading }: any) => {
+const CheckEmail = ({
+  errorText,
+  email,
+  setEmaile,
+  handleSendEmailTOP,
+  isLoading,
+  router
+}: any) => {
+  const { width } = useWindowDimensions()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
   const [emailError, setEmailError] = useState(false)
   const [emailBtnDisabled, setEmailBtnDisabled] = useState(true)
+
+  const jobseekersSocialResponse = useSelector(
+    (store: any) => store.auth.jobseekersSocialLogin.response
+  )
+  const jobseekersSocialFailed = useSelector((store: any) => store.auth.jobseekersSocialLogin.error)
+
+  useEffect(() => {
+    // test after delete
+    console.log(jobseekersSocialFailed, 'error')
+    if (jobseekersSocialFailed?.data) {
+      const errorMessage = jobseekersSocialFailed?.data.errors?.email[0]
+      dispatch(
+        displayNotification({
+          open: true,
+          message: errorMessage,
+          severity: 'warning'
+        })
+      )
+    }
+  }, [jobseekersSocialFailed])
+
+  useEffect(() => {
+    // test after delete
+    console.log(jobseekersSocialResponse, '快捷登录2')
+  }, [jobseekersSocialResponse])
 
   useEffect(() => {
     if (firstRender) {
@@ -43,7 +78,21 @@ const CheckEmail = ({ errorText, email, setEmaile, handleSendEmailTOP, isLoading
   }, [emailError])
 
   const callbackRequest = (payload) => {
-    dispatch(socialLoginRequest(payload))
+    // test after delete
+    console.log(payload)
+    const data = {
+      ...payload,
+      ...router.query,
+      email: payload.email ? payload.email : '',
+      social_user_token: payload.accessToken,
+      social_type: payload.socialType,
+      social_user_id: payload.userId,
+      source: width > 576 ? 'web' : 'mobile_web'
+      // social_type: payload.
+    }
+    // test after delete
+    console.log(data)
+    dispatch(jobbseekersSocialLoginRequest(data))
   }
 
   return (

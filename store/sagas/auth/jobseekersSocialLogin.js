@@ -1,20 +1,23 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { setCookie } from 'helpers/cookies'
 
-import { JOBBSEEKERS_LOGIN_REQUEST } from 'store/types/auth/jobseekersLogin'
+import { JOBBSEEKERS_SOCIALLOGIN_REQUEST } from 'store/types/auth/jobseekersSocialLogin'
 
-import { jobbseekersLoginSuccess, jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
+import {
+  jobbseekersSocialLoginSuccess,
+  jobbseekersSocialLoginFailed
+} from 'store/actions/auth/jobseekersSocialLogin'
 
-import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersLogin'
+import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersSocialLogin'
 import { checkErrorCode } from 'helpers/errorHandlers'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
-function* loginReq(actions) {
+function* SocialLoginReq(actions) {
   try {
     const response = yield call(authenticationJobseekersLogin, actions.payload)
 
     if (response.status >= 200 && response.status < 300) {
-      yield put(jobbseekersLoginSuccess(response.data))
+      yield put(jobbseekersSocialLoginSuccess(response.data))
       const loginData = response.data.data
       const userCookie = {
         active_key: loginData.active_key,
@@ -59,14 +62,14 @@ function* loginReq(actions) {
       }
 
       if (errorMessage) {
-        yield put(jobbseekersLoginFailed(errorMessage))
+        yield put(jobbseekersSocialLoginFailed(errorMessage))
       } else {
-        yield put(jobbseekersLoginFailed(err.response))
+        yield put(jobbseekersSocialLoginFailed(err.response))
       }
     }
   }
 }
 
-export default function* jobseekersLoginSaga() {
-  yield takeLatest(JOBBSEEKERS_LOGIN_REQUEST, loginReq)
+export default function* jobseekersSocialLoginSaga() {
+  yield takeLatest(JOBBSEEKERS_SOCIALLOGIN_REQUEST, SocialLoginReq)
 }
