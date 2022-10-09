@@ -50,7 +50,7 @@ const ResumeTemplate = () => {
     loop: true,
     skipSnaps: false,
     inViewThreshold: 0.7,
-    slidesToScroll: width < 768 ? 1 : 2,
+    slidesToScroll: width < 768 ? 1 : 2
   })
   const scrollPrev = useCallback(() => {
     if (emblaApi) {
@@ -85,11 +85,7 @@ const ResumeTemplate = () => {
           setEmailError(
             <p>
               A user with this email address already exists. Please enter a different email address
-              or{' '}
-              <Link to='/login/jobseeker?redirect=/resumetemplate'>
-                  log in
-              </Link>
-              .
+              or <Link to='/get-started?redirect=/resumetemplate'>log in</Link>.
             </p>
           )
         } else {
@@ -138,7 +134,7 @@ const ResumeTemplate = () => {
         email,
         first_name: firstName,
         last_name: lastName,
-        source: 'free_resume',
+        source: 'free_resume'
       }
 
       dispatch(registerJobseekerRequest({ ...payload }))
@@ -227,10 +223,10 @@ const ResumeTemplate = () => {
               {!userCookie && (
                 <Text tagName='p' textStyle='base' style={{ textAlign: 'center' }}>
                   Already on Bossjob?
-                  <Link to='/login/jobseeker?redirect=/resumetemplate'>
+                  <Link to='/get-started?redirect=/resumetemplate'>
                     <Text textColor='primaryBlue' underline>
                       {' '}
-                      Log in
+                      Get started
                     </Text>
                   </Link>
                 </Text>
@@ -376,8 +372,8 @@ export async function getServerSideProps({ req }) {
     return {
       redirect: {
         destination: `${process.env.OLD_PROJECT_URL}/dashboard/profile/jobseeker`,
-        permanent: false,
-      },
+        permanent: false
+      }
     }
   }
   return { props: {} }

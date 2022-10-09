@@ -198,7 +198,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const handleLicenseAndCertificationsModal = (license = null) => {
     handleModal('license', true, license)
   }
-  
+
   const handleLinksModal = (link = null) => {
     handleModal('links', true, link)
   }
@@ -435,14 +435,24 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
             return (
               <div key={link.id} className={styles.linkSection}>
                 <div className={styles.titleWrapper}>
-                  {(link.url && link.title) ? (
-                    <Link className={styles.linkSectionUrl} to={link.url} external title={link.title}>
+                  {link.url && link.title ? (
+                    <Link
+                      className={styles.linkSectionUrl}
+                      to={link.url}
+                      external
+                      title={link.title}
+                    >
                       <Text textStyle='lg' bold>
                         {link.title}
                       </Text>
                     </Link>
                   ) : (
-                    <Link className={styles.linkSectionUrl} to={link.url} external title={link.title}>
+                    <Link
+                      className={styles.linkSectionUrl}
+                      to={link.url}
+                      external
+                      title={link.title}
+                    >
                       <Text textStyle='lg' bold>
                         {link.url}
                       </Text>
@@ -497,9 +507,10 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
               validityPeriod += moment(licenseCertification?.issue_date).format('MMM yyy')
 
               if (licenseCertification?.is_permanent) {
-                validityPeriod = validityPeriod 
+                validityPeriod = validityPeriod
               } else if (licenseCertification?.expiry_date && !licenseCertification?.is_permanent) {
-                validityPeriod += " - " + moment(licenseCertification?.expiry_date).format('MMM yyy')
+                validityPeriod +=
+                  ' - ' + moment(licenseCertification?.expiry_date).format('MMM yyy')
               }
             }
 
@@ -524,29 +535,28 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                     </div>
                   </div>
                 </div>
-                {licenseCertification?.issuing_organisation && 
-                  <Text textStyle='lg'>
-                    {licenseCertification.issuing_organisation}
-                  </Text>
-                }
-                {validityPeriod !== "" && 
+                {licenseCertification?.issuing_organisation && (
+                  <Text textStyle='lg'>{licenseCertification.issuing_organisation}</Text>
+                )}
+                {validityPeriod !== '' && (
                   <Text textStyle='base' textColor='darkgrey'>
                     {validityPeriod}
-                  </Text>                
-                }
-                <div style={{ height: '16px' }}></div>
-                {licenseCertification?.credential_id && 
-                  <Text textStyle='lg'>
-                    Credential ID: {licenseCertification.credential_id}
                   </Text>
-                }
-                {licenseCertification?.credential_url &&
-                  <Link className={styles.licenseCertificationSectionLink} to={licenseCertification.credential_url} external title={licenseCertification.title}>
-                    <Text textStyle='lg'>
-                      {licenseCertification.credential_url}
-                    </Text>
+                )}
+                <div style={{ height: '16px' }}></div>
+                {licenseCertification?.credential_id && (
+                  <Text textStyle='lg'>Credential ID: {licenseCertification.credential_id}</Text>
+                )}
+                {licenseCertification?.credential_url && (
+                  <Link
+                    className={styles.licenseCertificationSectionLink}
+                    to={licenseCertification.credential_url}
+                    external
+                    title={licenseCertification.title}
+                  >
+                    <Text textStyle='lg'>{licenseCertification.credential_url}</Text>
                   </Link>
-                }
+                )}
               </div>
             )
           })}
@@ -698,7 +708,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           )}
         </div>
       )}
-      
+
       {workExperiences?.length > 0 ? (
         renderWorkExperienceSection('workExperience')
       ) : (
@@ -796,8 +806,10 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           <Text bold textColor='primaryBlue' textStyle='xl'>
             Job Preferences
           </Text>
-          {(userDetail?.job_preference?.job_title || userDetail?.job_preference?.job_type || 
-            userDetail?.job_preference?.salary_range_from || userDetail?.job_preference?.location || 
+          {(userDetail?.job_preference?.job_title ||
+            userDetail?.job_preference?.job_type ||
+            userDetail?.job_preference?.salary_range_from ||
+            userDetail?.job_preference?.location ||
             userDetail?.notice_period_id) && (
             <div className={styles.iconWrapper} onClick={handleEditClick}>
               <img src={PencilIcon} width='22' height='22' />
@@ -887,7 +899,7 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
                 </div>
               )}
             </div>
-          )} 
+          )}
           <EditJobPreferencesModal
             modalName={modalName}
             showModal={showModal}
@@ -1249,14 +1261,14 @@ const ManageProfilePage = ({ config }: any) => {
       data: null
     }
   })
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     // if (disableScrolling){
     //  disable body from scrolling when modal is open
     const body = document.querySelector('body')
-    const anyModalIsOpen = Object.values(modalState).filter((state)=>state.showModal)
+    const anyModalIsOpen = Object.values(modalState).filter((state) => state.showModal)
     body.style.overflow = anyModalIsOpen.length > 0 ? 'hidden' : 'auto'
-  },[modalState])
+  }, [modalState])
 
   const handleModal = (modalName, showModal, data, callbackFunc) => {
     setModalState({
@@ -1343,7 +1355,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   if (!accessToken) {
     return {
       redirect: {
-        destination: '/login/jobseeker?redirect=/manage-profile',
+        destination: '/get-started?redirect=/manage-profile',
         permanent: false
       }
     }

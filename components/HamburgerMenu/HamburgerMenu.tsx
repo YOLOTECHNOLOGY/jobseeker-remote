@@ -124,11 +124,6 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>Employers</Text>
                   </li>
                 </Link>
-                {/* <Link className={styles.defaultLink} to='/login/jobseeker' title='Log In'>
-                  <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle='xl'>Log In1</Text>
-                  </li>
-                </Link> */}
                 <Link className={styles.defaultLink} to='/get-started' title='Get Started'>
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl' className={styles.activeLink}>

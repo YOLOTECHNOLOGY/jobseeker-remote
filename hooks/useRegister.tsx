@@ -101,8 +101,8 @@ const useRegister = () => {
       setEmailError(
         <p>
           A user with this email address already exists. Please enter a different email address or{' '}
-          <Link to='/login/jobseeker' className='default'>
-            log in
+          <Link to='/get-started' className='default'>
+            Get started
           </Link>
           .
         </p>

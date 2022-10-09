@@ -266,7 +266,7 @@ const Job = ({
         dispatch(deleteSaveJobRequest(deleteJobPayload))
       }
     } else {
-      router.push(`/login/jobseeker?redirect=${router.asPath}`)
+      router.push(`/get-started?redirect=${router.asPath}`)
     }
   }
 
@@ -416,7 +416,7 @@ const Job = ({
     } else {
       // mobile get jobDetail is by url id
       setCookie('isMobileReportJob', true)
-      router.push('/login/jobseeker?redirect=' + jobDetail.job_url)
+      router.push('/get-started?redirect=' + jobDetail.job_url)
     }
   }
 
@@ -717,12 +717,12 @@ const Job = ({
                   <Text tagName='p' textStyle='base'>
                     Already on Bossjob?
                     <Link
-                      to={`/login/jobseeker?redirect=${router.asPath}`}
+                      to={`/get-started?redirect=${router.asPath}`}
                       className={styles.AuthCTALink}
                     >
                       <Text textColor='primaryBlue' underline>
                         {' '}
-                        Log in
+                        Get Started
                       </Text>
                     </Link>
                   </Text>
