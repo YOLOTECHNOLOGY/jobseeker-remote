@@ -203,7 +203,7 @@ const JobListSection = ({
                         if (lastSearch) {
                           sessionStorage.setItem('should-show-alert', '1')
                         }
-                        router.push('/register/jobseeker?redirect=/jobs-hiring/job-search')
+                        router.push('/get-started?redirect=/jobs-hiring/job-search')
                       }
                     }}
                   >

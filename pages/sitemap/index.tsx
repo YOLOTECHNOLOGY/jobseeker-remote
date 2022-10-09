@@ -139,7 +139,7 @@ const PublicSitemap = ({ config }: any) => {
           </Text>
           <div className={styles.section}>
             <Link
-              to={`${process.env.NEW_PROJECT_URL}/register/jobseeker`}
+              to={`${process.env.NEW_PROJECT_URL}/get-started`}
               aTag
               className={styles.item}
               external

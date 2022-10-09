@@ -69,10 +69,10 @@ const AuthLayout = ({
             <>
               <Text tagName='p' textStyle='base'>
                 New to Bossjob?
-                <Link to='/register/jobseeker' className={styles.AuthCTALink}>
+                <Link to='/get-started' className={styles.AuthCTALink}>
                   <Text textColor='primaryBlue' underline>
                     {' '}
-                    Sign up now
+                    Get started
                   </Text>
                 </Link>
               </Text>
