@@ -10,10 +10,8 @@ import Link from 'components/Link'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // api
-import {
-  authenticationSendEmaillOtp,
-  authenticationSendEmailMagicLink
-} from 'store/services/auth/generateEmailOtp'
+import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
+import { authenticationSendEmailMagicLink } from 'store/services/auth/authenticationSendEmailMagicLink'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
@@ -37,9 +35,19 @@ const GetStarted = () => {
   const [userId, setUserId] = useState(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
+  const [redirectPage, setRedirectPage] = useState<string>(null)
 
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+
+  useEffect(() => {
+    const redirect = routes.query.redirect
+    if (Array.isArray(redirect)) {
+      setRedirectPage(redirect[0])
+    } else {
+      setRedirectPage(redirect)
+    }
+  }, [])
 
   useEffect(() => {
     if (!Object.keys(userInfo).length) {
@@ -100,6 +108,8 @@ const GetStarted = () => {
     const url =
       data.is_profile_update_required || !data.is_profile_completed
         ? '/jobseeker-complete-profile/1'
+        : redirectPage
+        ? redirectPage
         : `/jobs-hiring/job-search`
     routes.push(url)
     setEmailOTPInputDisabled(false)
@@ -165,6 +175,7 @@ const GetStarted = () => {
                 handleSendEmailTOP={handleSendEmailTOP}
                 isLoading={isLoading}
                 router={router}
+                logSuccess={logSuccess}
               />
             )}
             {step == 2 && (

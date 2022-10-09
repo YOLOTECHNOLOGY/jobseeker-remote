@@ -20,7 +20,8 @@ const CheckEmail = ({
   setEmaile,
   handleSendEmailTOP,
   isLoading,
-  router
+  router,
+  logSuccess
 }: any) => {
   const { width } = useWindowDimensions()
   const dispatch = useDispatch()
@@ -55,11 +56,14 @@ const CheckEmail = ({
     }
     const { data } = jobseekersSocialResponse
     if (data?.token) {
-      const url =
-        data.is_profile_update_required || !data.is_profile_completed
-          ? '/jobseeker-complete-profile/1'
-          : `/jobs-hiring/job-search`
-      router.push(url)
+      // const url =
+      //   data.is_profile_update_required || !data.is_profile_completed
+      //     ? '/jobseeker-complete-profile/1'
+      //     : redirectPage
+      //     ? redirectPage
+      //     : `/jobs-hiring/job-search`
+      // router.push(url)
+      logSuccess()
     }
   }, [jobseekersSocialResponse])
 
