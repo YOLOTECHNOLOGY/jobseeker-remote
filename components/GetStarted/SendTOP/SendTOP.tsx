@@ -10,6 +10,8 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { handleNumericInput } from 'helpers/handleInput'
 
 import styles from './SendTOP.module.scss'
+import sendOTPstyles from './SendTOP.module.scss'
+import classNames from 'classnames/bind'
 
 const SendTOP = ({
   userId,
@@ -22,7 +24,8 @@ const SendTOP = ({
   emailOTPInputDisabled,
   login,
   magicLink,
-  emailTOPError
+  emailTOPError,
+  customizeSendOTPContainerMainFieldStyle
 }: any) => {
   const { width } = useWindowDimensions()
   const firstRender = useFirstRender()
@@ -83,7 +86,7 @@ const SendTOP = ({
   }
 
   return (
-    <div className={styles.SendTOPContainer}>
+    <div className={classNames([sendOTPstyles.SendTOPContainer])}>
       <div className={styles.SendTOPContainer_title}>
         <Text bold textStyle='xxxl' tagName='h2'>
           {userId ? 'Welcome back! 👏' : 'Sign up an account 🎉'}
@@ -91,14 +94,21 @@ const SendTOP = ({
       </div>
 
       <div className={styles.SendTOPContainer_desc}>
-        <Text tagName='p' textStyle='lg' className={styles.SendTOPContainer_desc_text}>
+        <Text
+          tagName='p'
+          textStyle='lg'
+          className={classNames([styles.SendTOPContainer_desc_text])}
+        >
           Please enter the 6-digit one-time password that we sent to {email}.
         </Text>
       </div>
 
-      <div className={styles.SendTOPContainer_main}>
+      <div className={classNames([styles.SendTOPContainer_main])}>
         <MaterialTextField
-          className={styles.SendTOPContainer_main_field}
+          className={classNames([
+            styles.SendTOPContainer_main_field,
+            customizeSendOTPContainerMainFieldStyle
+          ])}
           id='email'
           label='Enter 6-digit OTP'
           variant='outlined'

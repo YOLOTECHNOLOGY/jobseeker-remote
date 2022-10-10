@@ -38,7 +38,6 @@ import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
 import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 import UploadResumeButton from 'components/LncreaseUserConversion/UploadResumeButton/UploadResumeButton'
 import RegisterInfo from 'components/IncreaseUserConversion/RegisterInfo'
-import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 const ModalVerifyEmail = dynamic(() => import('components/ModalVerifyEmail'))
 // import AdSlot from 'components/AdSlot'
 
@@ -129,7 +128,7 @@ const Job = ({
   seoCanonicalUrl
 }: IJobDetail) => {
   const UseHooksRegister = useRegister()
-  const { isRegisteringJobseeker, isLoading, callbackRequest } = UseHooksRegister
+  const { isRegisteringJobseeker, isLoading } = UseHooksRegister
 
   const dispatch = useDispatch()
   const router = useRouter()
@@ -702,18 +701,9 @@ const Job = ({
                   </div>
                 ) : null}
 
-                <div className={styles.Register}>
-                  <SocialMediaAuth callbackRequest={callbackRequest} />
-                  <div className={styles.RegisterDivider}>
-                    <Text textStyle='lg' className={styles.RegisterDividerText}>
-                      Or
-                    </Text>
-                  </div>
-                </div>
-
                 <RegisterInfo register4Step isRegisterModuleRedirect {...UseHooksRegister} />
 
-                <div className={styles.forModuleFooterText}>
+                {/* <div className={styles.forModuleFooterText}>
                   <Text tagName='p' textStyle='base'>
                     Already on Bossjob?
                     <Link
@@ -738,7 +728,7 @@ const Job = ({
                       <Text textColor='primaryBlue'> Employer</Text>
                     </Link>
                   </Text>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

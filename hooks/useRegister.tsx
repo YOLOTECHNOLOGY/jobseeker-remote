@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { getItem, removeItem, setItem } from 'helpers/localStorage'
+import useWindowDimensions from 'helpers/useWindowDimensions'
 
 import { SnackbarOrigin } from '@mui/material'
 
@@ -10,11 +11,19 @@ import { SnackbarOrigin } from '@mui/material'
 import { socialLoginRequest } from 'store/actions/auth/socialLogin'
 import { registerJobseekerRequest } from 'store/actions/auth/registerJobseeker'
 import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
 
 import useRegisterInfo from 'hooks/useRegisterInfo'
+import { useFirstRender } from 'helpers/useFirstRender'
+
+// api
 import { addUserWorkExperienceService } from 'store/services/users/addUserWorkExperience'
+import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
+import { authenticationSendEmailMagicLink } from 'store/services/auth/authenticationSendEmailMagicLink'
 
 import Link from 'components/Link'
+import { RouteSharp } from '@mui/icons-material'
 
 export interface SnackbarType extends SnackbarOrigin {
   open: boolean
@@ -38,6 +47,8 @@ const useRegister = () => {
 
   const router = useRouter()
   const dispatch = useDispatch()
+  const firstRender = useFirstRender()
+  const { width } = useWindowDimensions()
 
   const [firstName, setFirstName] = useState('')
   const [firstNameError, setFirstNameError] = useState(null)
@@ -51,6 +62,14 @@ const useRegister = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [passwordError, setPasswordError] = useState(null)
 
+  const [sendOTPBtnDisabled, setSendOTPBtnDisabled] = useState<boolean>(true)
+  const [OTPIsLoading, setOTPIsLoading] = useState<boolean>(false)
+  const [userId, setUserId] = useState(null)
+  const [step, setStep] = useState(1)
+  const [emailTOP, setEmailTOP] = useState<number>()
+  const [emailTOPError, setEmailTOPError] = useState(false)
+  const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
+
   const {
     register,
     formState: { errors }
@@ -58,6 +77,9 @@ const useRegister = () => {
 
   const isRegisteringJobseeker = useSelector((store: any) => store.auth.registerJobseeker.fetching)
   const registerJobseekerState = useSelector((store: any) => store.auth.registerJobseeker)
+
+  const OTPLoginUserInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+  const OTPLoginError = useSelector((store: any) => store.auth.jobseekersLogin.error)
 
   const handleOnShowPassword = () => setShowPassword(!showPassword)
 
@@ -74,13 +96,53 @@ const useRegister = () => {
   }, [lastName])
 
   useEffect(() => {
-    let emailErrorMessage = null
+    if (!Object.keys(OTPLoginUserInfo).length) {
+      return
+    }
+    logSuccess()
+  }, [OTPLoginUserInfo])
 
-    if (email && !/\S+@\S+\.\S+/.test(email)) {
-      emailErrorMessage = 'Please enter a valid email address.'
+  useEffect(() => {
+    if (OTPLoginError === null) {
+      return
+    }
+    const errorMessage = OTPLoginError.data?.errors?.error[0]
+    loginFailed(errorMessage)
+  }, [OTPLoginError])
+
+  const logSuccess = () => {
+    const url = userId ? router.asPath : '/jobseeker-complete-profile/1'
+    router.push(url)
+    setEmailOTPInputDisabled(false)
+  }
+
+  const loginFailed = (errorMessage: string | null) => {
+    setEmailTOPError(true)
+    setEmailOTPInputDisabled(false)
+  }
+
+  useEffect(() => {
+    if (firstRender) {
+      return
     }
 
-    setEmailError(emailErrorMessage)
+    if (emailError) {
+      setSendOTPBtnDisabled(true)
+    } else {
+      setSendOTPBtnDisabled(false)
+    }
+  }, [emailError])
+
+  useEffect(() => {
+    if (firstRender) {
+      return
+    }
+
+    let errorText = null
+    if (!email.length || !/\S+@\S+\.\S+/.test(email)) {
+      errorText = 'Please enter a valid email address.'
+    }
+    setEmailError(errorText)
   }, [email])
 
   useEffect(() => {
@@ -145,6 +207,63 @@ const useRegister = () => {
       }
     }
   }, [userInfo])
+
+  const handleAuthenticationJobseekersLogin = () => {
+    setEmailOTPInputDisabled(true)
+    const data = {
+      email,
+      otp: emailTOP,
+      source: width > 576 ? 'web' : 'mobile_web',
+      ...router.query
+    }
+    dispatch(jobbseekersLoginRequest(data))
+  }
+
+  const handleAuthenticationSendEmailMagicLink = () => {
+    authenticationSendEmailMagicLink({ email })
+      .then(({ data }) => {
+        if (data.data) {
+          setStep(3)
+        }
+      })
+      .catch(() => {
+        dispatch(
+          displayNotification({
+            open: true,
+            message: 'send email magicLink failed',
+            severity: 'warning'
+          })
+        )
+      })
+  }
+
+  const handleSendEmailTOP = () => {
+    setOTPIsLoading(true)
+    authenticationSendEmaillOtp({ email })
+      .then(({ data }) => {
+        // show setp 2
+        if (data.data) {
+          setUserId(data.data.user_id)
+          if (step !== 2) {
+            setStep(2)
+          }
+        }
+      })
+      .catch((error) => {
+        const { data } = error.response
+        const errorMessage = data.data?.detail ? data.data?.detail : data.errors.email[0]
+        dispatch(
+          displayNotification({
+            open: true,
+            message: errorMessage,
+            severity: 'warning'
+          })
+        )
+      })
+      .finally(() => {
+        setOTPIsLoading(false)
+      })
+  }
 
   const handleRegister = (isRedirect: HandleRegisterAng, isRegisterModuleRedirect?) => {
     if (!firstName) {
@@ -250,7 +369,18 @@ const useRegister = () => {
     handleSnackbarClose,
     uploadResumeFile,
     isShowRegisterInfo,
-    userWorkExperiences
+    userWorkExperiences,
+    OTPIsLoading,
+    handleSendEmailTOP,
+    userId,
+    sendOTPBtnDisabled,
+    step,
+    handleAuthenticationJobseekersLogin,
+    handleAuthenticationSendEmailMagicLink,
+    emailTOP,
+    setEmailTOP,
+    emailOTPInputDisabled,
+    emailTOPError
   }
 }
 

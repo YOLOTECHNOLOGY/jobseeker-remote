@@ -8,7 +8,8 @@
 
     &_text {
       color: #353535;
-      width: 570px;
+      max-width: 570px;
+      width: 100%;
       margin: 0 auto !important;
       text-align: left;
       padding: 24px 0;
@@ -22,7 +23,8 @@
   }
 
   &_main {
-    width: 570px;
+    max-width: 570px;
+    width: 100%;
     text-align: center;
     margin: 0 auto;
 

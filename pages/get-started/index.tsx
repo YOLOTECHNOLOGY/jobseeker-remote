@@ -61,8 +61,7 @@ const GetStarted = () => {
     if (error === null) {
       return
     }
-    const errorMessage = error.data?.errors?.error[0]
-    loginFailed(errorMessage)
+    loginFailed()
   }, [error])
 
   const handleSendEmailTOP = () => {
@@ -115,7 +114,7 @@ const GetStarted = () => {
     setEmailOTPInputDisabled(false)
   }
 
-  const loginFailed = (errorMessage: string | null) => {
+  const loginFailed = () => {
     // if (errorMessage) {
     //   dispatch(
     //     displayNotification({

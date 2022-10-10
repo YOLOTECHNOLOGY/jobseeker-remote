@@ -65,7 +65,7 @@ const QuickUploadResume = () => {
               ) : null}
 
               {isShowRegisterInfo() ? (
-                <RegisterInfo {...UseHooksRegister} />
+                <RegisterInfo {...UseHooksRegister} hideSocialMediaAuth />
               ) : (
                 <UploadResume {...useHooksFakeUploadResume} />
               )}
