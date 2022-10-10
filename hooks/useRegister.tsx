@@ -22,9 +22,6 @@ import { addUserWorkExperienceService } from 'store/services/users/addUserWorkEx
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { authenticationSendEmailMagicLink } from 'store/services/auth/authenticationSendEmailMagicLink'
 
-import Link from 'components/Link'
-import { RouteSharp } from '@mui/icons-material'
-
 export interface SnackbarType extends SnackbarOrigin {
   open: boolean
 }
@@ -99,7 +96,9 @@ const useRegister = () => {
     if (!Object.keys(OTPLoginUserInfo).length) {
       return
     }
+    console.log(OTPLoginUserInfo, 'login')
     logSuccess()
+    setEmailOTPInputDisabled(false)
   }, [OTPLoginUserInfo])
 
   useEffect(() => {
@@ -111,9 +110,9 @@ const useRegister = () => {
   }, [OTPLoginError])
 
   const logSuccess = () => {
-    const url = userId ? router.asPath : '/jobseeker-complete-profile/1'
-    router.push(url)
-    setEmailOTPInputDisabled(false)
+    // const url = userId ? router.asPath : '/jobseeker-complete-profile/1'
+    // router.push(url)
+    // setEmailOTPInputDisabled(false)
   }
 
   const loginFailed = (errorMessage: string | null) => {
@@ -145,35 +144,35 @@ const useRegister = () => {
     setEmailError(errorText)
   }, [email])
 
-  useEffect(() => {
-    let passwordErrorMessage = null
+  // useEffect(() => {
+  //   let passwordErrorMessage = null
 
-    if (password?.length > 0 && password?.length < 8) {
-      passwordErrorMessage = 'Please enter a longer password(minimum of 8 characters)'
-    } else if (password?.length > 16) {
-      passwordErrorMessage = 'Please enter a shorter password(maximum of 16 characters)'
-    } else {
-      passwordErrorMessage = null
-    }
-    setPasswordError(passwordErrorMessage)
-  }, [password])
+  //   if (password?.length > 0 && password?.length < 8) {
+  //     passwordErrorMessage = 'Please enter a longer password(minimum of 8 characters)'
+  //   } else if (password?.length > 16) {
+  //     passwordErrorMessage = 'Please enter a shorter password(maximum of 16 characters)'
+  //   } else {
+  //     passwordErrorMessage = null
+  //   }
+  //   setPasswordError(passwordErrorMessage)
+  // }, [password])
+
+  // useEffect(() => {
+  //   if (registerJobseekerState.error === 'The email has already been taken.') {
+  //     setEmailError(
+  //       <p>
+  //         A user with this email address already exists. Please enter a different email address or{' '}
+  //         <Link to='/get-started' className='default'>
+  //           Get started
+  //         </Link>
+  //         .
+  //       </p>
+  //     )
+  //   }
+  // }, [registerJobseekerState])
 
   useEffect(() => {
-    if (registerJobseekerState.error === 'The email has already been taken.') {
-      setEmailError(
-        <p>
-          A user with this email address already exists. Please enter a different email address or{' '}
-          <Link to='/get-started' className='default'>
-            Get started
-          </Link>
-          .
-        </p>
-      )
-    }
-  }, [registerJobseekerState])
-
-  useEffect(() => {
-    const accessToken = registerJobseekerState?.response?.data?.authentication?.access_token
+    const accessToken = OTPLoginUserInfo?.data?.token
     const createresumeType = getItem('quickUpladResume')
     if (createresumeType === 'upFile' && accessToken) {
       if (uploadResumeFile?.size && accessToken) {
@@ -201,12 +200,13 @@ const useRegister = () => {
           }
         })
         // dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
-      } else {
-        // noworkExperiences
-        router.push('/jobseeker-complete-profile/1')
       }
+    } else if (accessToken) {
+      // job details login
+      setItem('isRegisterModuleRedirect', router.asPath)
+      router.push('/jobseeker-complete-profile/1')
     }
-  }, [userInfo])
+  }, [OTPLoginUserInfo])
 
   const handleAuthenticationJobseekersLogin = () => {
     setEmailOTPInputDisabled(true)
@@ -266,32 +266,23 @@ const useRegister = () => {
   }
 
   const handleRegister = (isRedirect: HandleRegisterAng, isRegisterModuleRedirect?) => {
-    if (!firstName) {
-      setFirstNameError('Please enter your first name.')
-    }
+    // if (!firstName) {
+    //   setFirstNameError('Please enter your first name.')
+    // }
 
-    if (!lastName) {
-      setLastNameError('Please enter your last name.')
-    }
+    // if (!lastName) {
+    //   setLastNameError('Please enter your last name.')
+    // }
 
-    if (!email) {
-      setEmailError('Please enter your email address.')
-    }
+    // if (!email) {
+    //   setEmailError('Please enter your email address.')
+    // }
 
-    if (!password) {
-      setPasswordError('Please enter a longer password(minimum of 8 characters)')
-    }
+    // if (!password) {
+    //   setPasswordError('Please enter a longer password(minimum of 8 characters)')
+    // }
 
-    if (
-      firstName &&
-      lastName &&
-      email &&
-      password &&
-      !firstNameError &&
-      !lastNameError &&
-      !emailError &&
-      !passwordError
-    ) {
+    if (email && emailTOP) {
       const payload = {
         email,
         password,
