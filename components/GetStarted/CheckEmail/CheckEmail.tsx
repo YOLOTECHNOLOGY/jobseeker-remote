@@ -63,7 +63,7 @@ const CheckEmail = ({
       //     ? redirectPage
       //     : `/jobs-hiring/job-search`
       // router.push(url)
-      logSuccess()
+      logSuccess(data)
     }
   }, [jobseekersSocialResponse])
 
