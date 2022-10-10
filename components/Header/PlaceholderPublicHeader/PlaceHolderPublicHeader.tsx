@@ -42,11 +42,11 @@ const PlaceHolderPublicHeader = () => {
                   Companies
                 </Text>
               </li>
-              {/* <li className={styles.headerLink}>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Courses
-                  </Text>
-              </li> */}
+              <li className={styles.headerLink}>
+                <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                  Courses
+                </Text>
+              </li>
               <li className={styles.headerLink}>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                   Career Guide
@@ -87,7 +87,7 @@ const PlaceHolderPublicHeader = () => {
             <li className={styles.headerLink}>
               <MaterialButton variant='outlined' size='medium' capitalize>
                 <Text textStyle='base' textColor='primaryBlue' bold>
-                  Get Started
+                  Get Started456
                 </Text>
               </MaterialButton>
             </li>
