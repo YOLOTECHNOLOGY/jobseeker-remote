@@ -87,7 +87,7 @@ const useRegister = () => {
 
   useEffect(() => {
     const { data } = jobseekersSocialResponse
-    if (data.token) {
+    if (data?.token) {
       const url =
         data.is_profile_update_required || !data.is_profile_completed
           ? '/jobseeker-complete-profile/1'
