@@ -92,9 +92,9 @@ const RegisterInfo = (props: any) => {
             {!register4Step && (
               <Text bold textStyle='xxxl' tagName='h2'>
                 {' '}
-                Fill in your details to
+                Join Bossjob,
                 <br />
-                continue 🎉
+                kick-start your career 🎉
               </Text>
             )}
           </div>

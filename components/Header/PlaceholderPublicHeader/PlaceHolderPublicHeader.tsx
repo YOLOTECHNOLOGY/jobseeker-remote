@@ -87,7 +87,7 @@ const PlaceHolderPublicHeader = () => {
             <li className={styles.headerLink}>
               <MaterialButton variant='outlined' size='medium' capitalize>
                 <Text textStyle='base' textColor='primaryBlue' bold>
-                  Get Started456
+                  Get Started
                 </Text>
               </MaterialButton>
             </li>

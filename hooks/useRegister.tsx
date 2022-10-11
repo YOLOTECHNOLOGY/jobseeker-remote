@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import { getItem, removeItem, setItem } from 'helpers/localStorage'
+import { getItem, setItem } from 'helpers/localStorage'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
 import { SnackbarOrigin } from '@mui/material'
 
 /* Redux Actions */
 import { socialLoginRequest } from 'store/actions/auth/socialLogin'
-import { registerJobseekerRequest } from 'store/actions/auth/registerJobseeker'
 import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
@@ -18,15 +17,12 @@ import useRegisterInfo from 'hooks/useRegisterInfo'
 import { useFirstRender } from 'helpers/useFirstRender'
 
 // api
-import { addUserWorkExperienceService } from 'store/services/users/addUserWorkExperience'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { authenticationSendEmailMagicLink } from 'store/services/auth/authenticationSendEmailMagicLink'
 
 export interface SnackbarType extends SnackbarOrigin {
   open: boolean
 }
-
-type HandleRegisterAng = boolean | any
 
 const useRegister = () => {
   const {
@@ -36,8 +32,6 @@ const useRegister = () => {
     handleSnackbarClose,
     isLoading,
     uploadResumeFile,
-    setSnackbarState,
-    userInfo,
     isShowRegisterInfo,
     userWorkExperiences
   } = useRegisterInfo()
@@ -47,17 +41,8 @@ const useRegister = () => {
   const firstRender = useFirstRender()
   const { width } = useWindowDimensions()
 
-  const [firstName, setFirstName] = useState('')
-  const [firstNameError, setFirstNameError] = useState(null)
-  const [lastName, setLastName] = useState('')
-  const [lastNameError, setLastNameError] = useState(null)
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState(null)
-
-  const [password, setPassword] = useState('')
-  const [isSubscribe, setIsSubscribe] = useState(true)
-  const [showPassword, setShowPassword] = useState(false)
-  const [passwordError, setPasswordError] = useState(null)
 
   const [sendOTPBtnDisabled, setSendOTPBtnDisabled] = useState<boolean>(true)
   const [OTPIsLoading, setOTPIsLoading] = useState<boolean>(false)
@@ -72,31 +57,25 @@ const useRegister = () => {
     formState: { errors }
   } = useForm()
 
-  const isRegisteringJobseeker = useSelector((store: any) => store.auth.registerJobseeker.fetching)
-  const registerJobseekerState = useSelector((store: any) => store.auth.registerJobseeker)
-
   const OTPLoginUserInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const OTPLoginError = useSelector((store: any) => store.auth.jobseekersLogin.error)
-
-  const handleOnShowPassword = () => setShowPassword(!showPassword)
-
-  useEffect(() => {
-    if (firstName) {
-      setFirstNameError(null)
-    }
-  }, [firstName])
+  const fileResponse = useSelector((store: any) => store.users.uploadUserResume.response)
 
   useEffect(() => {
-    if (lastName) {
-      setLastNameError(null)
+    const accessToken = OTPLoginUserInfo?.data?.token
+    if (fileResponse?.id && accessToken) {
+      if (userId) {
+        router.push('/jobs-hiring/job-search')
+      } else {
+        router.push('/jobseeker-complete-profile/1')
+      }
     }
-  }, [lastName])
+  }, [fileResponse])
 
   useEffect(() => {
     if (!Object.keys(OTPLoginUserInfo).length) {
       return
     }
-    console.log(OTPLoginUserInfo, 'login')
     logSuccess()
     setEmailOTPInputDisabled(false)
   }, [OTPLoginUserInfo])
@@ -105,8 +84,7 @@ const useRegister = () => {
     if (OTPLoginError === null) {
       return
     }
-    const errorMessage = OTPLoginError.data?.errors?.error[0]
-    loginFailed(errorMessage)
+    loginFailed()
   }, [OTPLoginError])
 
   const logSuccess = () => {
@@ -115,7 +93,7 @@ const useRegister = () => {
     // setEmailOTPInputDisabled(false)
   }
 
-  const loginFailed = (errorMessage: string | null) => {
+  const loginFailed = () => {
     setEmailTOPError(true)
     setEmailOTPInputDisabled(false)
   }
@@ -144,33 +122,6 @@ const useRegister = () => {
     setEmailError(errorText)
   }, [email])
 
-  // useEffect(() => {
-  //   let passwordErrorMessage = null
-
-  //   if (password?.length > 0 && password?.length < 8) {
-  //     passwordErrorMessage = 'Please enter a longer password(minimum of 8 characters)'
-  //   } else if (password?.length > 16) {
-  //     passwordErrorMessage = 'Please enter a shorter password(maximum of 16 characters)'
-  //   } else {
-  //     passwordErrorMessage = null
-  //   }
-  //   setPasswordError(passwordErrorMessage)
-  // }, [password])
-
-  // useEffect(() => {
-  //   if (registerJobseekerState.error === 'The email has already been taken.') {
-  //     setEmailError(
-  //       <p>
-  //         A user with this email address already exists. Please enter a different email address or{' '}
-  //         <Link to='/get-started' className='default'>
-  //           Get started
-  //         </Link>
-  //         .
-  //       </p>
-  //     )
-  //   }
-  // }, [registerJobseekerState])
-
   useEffect(() => {
     const accessToken = OTPLoginUserInfo?.data?.token
     const createresumeType = getItem('quickUpladResume')
@@ -185,26 +136,37 @@ const useRegister = () => {
       }
     } else if (createresumeType === 'onLine' && accessToken) {
       if (userWorkExperiences.length) {
-        const workExperiencesPayload = {
-          accessToken,
-          workExperience: null
-        }
-        const workListRequest = []
-        userWorkExperiences.forEach((element) => {
-          workExperiencesPayload.workExperience = element
-          workListRequest.push(addUserWorkExperienceService(workExperiencesPayload))
-        })
-        Promise.all(workListRequest).then((res) => {
-          if (res.length) {
-            router.push('/jobseeker-complete-profile/1')
-          }
-        })
+        // const workExperiencesPayload = {
+        //   accessToken,
+        //   workExperience: null
+        // }
+        // const workListRequest = []
+        // userWorkExperiences.forEach((element) => {
+        //   workExperiencesPayload.workExperience = element
+        //   workListRequest.push(addUserWorkExperienceService(workExperiencesPayload))
+        // })
+        // Promise.all(workListRequest).then((res) => {
+        //   if (res.length) {
+        //     router.push('/jobseeker-complete-profile/1')
+        //   }
+        // })
         // dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
+      } else {
+        // noworkExperiences
+        if (userId) {
+          router.push('/jobs-hiring/job-search')
+        } else {
+          router.push('/jobseeker-complete-profile/1')
+        }
       }
     } else if (accessToken) {
       // job details login
-      setItem('isRegisterModuleRedirect', router.asPath)
-      router.push('/jobseeker-complete-profile/1')
+      if (userId) {
+        window.location.reload()
+      } else {
+        setItem('isRegisterModuleRedirect', router.asPath)
+        router.push('/jobseeker-complete-profile/1')
+      }
     }
   }, [OTPLoginUserInfo])
 
@@ -219,8 +181,8 @@ const useRegister = () => {
     dispatch(jobbseekersLoginRequest(data))
   }
 
-  const handleAuthenticationSendEmailMagicLink = () => {
-    authenticationSendEmailMagicLink({ email })
+  const handleAuthenticationSendEmailMagicLink = (redirectPath?: string) => {
+    authenticationSendEmailMagicLink({ email, redirect_url: redirectPath ? redirectPath : '' })
       .then(({ data }) => {
         if (data.data) {
           setStep(3)
@@ -250,7 +212,7 @@ const useRegister = () => {
         }
       })
       .catch((error) => {
-        const { data } = error.response
+        const { data } = error?.response
         const errorMessage = data.data?.detail ? data.data?.detail : data.errors.email[0]
         dispatch(
           displayNotification({
@@ -265,92 +227,17 @@ const useRegister = () => {
       })
   }
 
-  const handleRegister = (isRedirect: HandleRegisterAng, isRegisterModuleRedirect?) => {
-    // if (!firstName) {
-    //   setFirstNameError('Please enter your first name.')
-    // }
-
-    // if (!lastName) {
-    //   setLastNameError('Please enter your last name.')
-    // }
-
-    // if (!email) {
-    //   setEmailError('Please enter your email address.')
-    // }
-
-    // if (!password) {
-    //   setPasswordError('Please enter a longer password(minimum of 8 characters)')
-    // }
-
-    if (email && emailTOP) {
-      const payload = {
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-        terms_and_condition: false,
-        is_subscribe: isSubscribe,
-        redirect: router.query?.redirect || null,
-        isRedirect
-      }
-
-      if (!isRedirect) {
-        // increates user conversion  quick register
-        if (
-          !uploadResumeFile?.size &&
-          !userWorkExperiences.length &&
-          !userWorkExperiences?.hasNoWorkExperience
-        ) {
-          setSnackbarState({
-            vertical: 'top',
-            horizontal: 'center',
-            open: true
-          })
-          return false
-        }
-        removeItem('isRegisterModuleRedirect')
-      }
-
-      if (isRegisterModuleRedirect) {
-        setItem('isRegisterModuleRedirect', router.asPath)
-        removeItem('quickUpladResume')
-      }
-
-      dispatch(registerJobseekerRequest({ ...payload }))
-    }
-  }
-
   const callbackRequest = (payload) => {
     dispatch(socialLoginRequest(payload))
   }
 
   return {
-    firstName,
-    setFirstName,
-    firstNameError,
-    setFirstNameError,
-    lastName,
-    setLastName,
-    lastNameError,
-    setLastNameError,
     email,
     setEmail,
     emailError,
     setEmailError,
-    password,
-    setPassword,
-    passwordError,
-    setPasswordError,
-    showPassword,
-    setShowPassword,
-    isSubscribe,
-    setIsSubscribe,
     errors,
     register,
-    handleRegister,
-    isRegisteringJobseeker,
-    registerJobseekerState,
-    handleOnShowPassword,
     callbackRequest,
     // quick upload resume
     vertical,

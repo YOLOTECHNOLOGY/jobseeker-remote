@@ -15,8 +15,7 @@ import styles from './styles.module.scss'
 const QuickUploadResume = () => {
   const UseHooksRegister = useRegister()
   const useHooksFakeUploadResume = useFakeUploadResume()
-  const { isRegisteringJobseeker, isLoading, isShowRegisterInfo, userWorkExperiences } =
-    UseHooksRegister
+  const { isLoading, isShowRegisterInfo, userWorkExperiences } = UseHooksRegister
 
   return (
     <QuickLayout>
@@ -48,7 +47,7 @@ const QuickUploadResume = () => {
               </div>
             </div>
             <div className={styles.AuthWrapperInfo}>
-              {isLoading | isRegisteringJobseeker ? (
+              {isLoading ? (
                 <div className={styles.AuthWrapperLoading}>
                   <div className={styles.loadingLogo}>
                     <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
