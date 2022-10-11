@@ -10,15 +10,15 @@ import styles from '../SocialMediaAuth.module.scss'
 import { LinkedinLogo } from 'images'
 
 interface ILinkedin {
-  className?: string,
-  activeKey?: number,
-  isLogin?: boolean,
-  callBackMethod?: Function,
-  redirect?: string | string[],
+  className?: string
+  activeKey?: number
+  isLogin?: boolean
+  callBackMethod?: Function
+  redirect?: string | string[]
   loading?: boolean
 }
 
-declare const window: any;
+declare const window: any
 
 const Linkedin = ({
   className,
@@ -43,18 +43,14 @@ const Linkedin = ({
           accessToken: accessToken.access_token
         })
 
-      const [userDetails, email] = await Promise.all([
-        fetchUserDetail(),
-        fetchUserEmail()
-      ])
+      const [userDetails, email] = await Promise.all([fetchUserDetail(), fetchUserEmail()])
 
       const payload = {
         firstName: userDetails.data.firstName.localized.en_US,
         lastName: userDetails.data.lastName.localized.en_US,
-        email: email.data.elements[0]['handle~'].emailAddress,
+        email: email.data.elements.length ? email.data.elements[0]['handle~'].emailAddress : '',
         pictureUrl: userDetails.data.profilePicture
-          ? userDetails.data.profilePicture['displayImage~'].elements[0]
-            .identifiers[0].identifier
+          ? userDetails.data.profilePicture['displayImage~'].elements[0].identifiers[0].identifier
           : '',
         userId: userDetails.data.id,
         socialType: 'linkedin',
@@ -81,14 +77,14 @@ const Linkedin = ({
 
     axios
       .post('/api/handlers/linkedinHandlers/accessToken', params)
-      .then(response => {
+      .then((response) => {
         getUserInfo(response.data)
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error)
       })
 
-      window.removeEventListener('message', receiveMessage, false)
+    window.removeEventListener('message', receiveMessage, false)
   }
 
   const handleFailure = (error) => {
@@ -119,7 +115,9 @@ const Linkedin = ({
       state: '423Qka4ISA8t74',
       scope: 'r_liteprofile r_emailaddress w_member_social'
     }
-    const oauthUrl = `https://www.linkedin.com/oauth/v2/authorization?${queryString.stringify(params)}`
+    const oauthUrl = `https://www.linkedin.com/oauth/v2/authorization?${queryString.stringify(
+      params
+    )}`
     const width = 450
     const height = 730
     const left = window.screen.width / 2 - width / 2
@@ -136,7 +134,7 @@ const Linkedin = ({
         top +
         ', left=' +
         left
-      )
+    )
 
     // window.removeEventListener('message', receiveMessage, false)
     window.addEventListener('message', receiveMessage, false)
@@ -155,8 +153,8 @@ const Linkedin = ({
         src={LinkedinLogo}
         width={16}
         height={16}
-        title="Login via Linkedin"
-        alt="Login via Linkedin"
+        title='Login via Linkedin'
+        alt='Login via Linkedin'
       />
     </div>
   )
