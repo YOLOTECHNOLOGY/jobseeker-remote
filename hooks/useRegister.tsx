@@ -8,7 +8,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import { SnackbarOrigin } from '@mui/material'
 
 /* Redux Actions */
-import { socialLoginRequest } from 'store/actions/auth/socialLogin'
+import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
 import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
@@ -57,9 +57,44 @@ const useRegister = () => {
     formState: { errors }
   } = useForm()
 
+  // OTPLOgin or OTPRegister
   const OTPLoginUserInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const OTPLoginError = useSelector((store: any) => store.auth.jobseekersLogin.error)
+  // upFile
   const fileResponse = useSelector((store: any) => store.users.uploadUserResume.response)
+
+  // SocialAUTH
+  const jobseekersSocialResponse = useSelector(
+    (store: any) => store.auth.jobseekersSocialLogin?.response
+  )
+  const jobseekersSocialFailed = useSelector(
+    (store: any) => store.auth.jobseekersSocialLogin?.error
+  )
+
+  useEffect(() => {
+    // test after delete
+    if (jobseekersSocialFailed?.data) {
+      const errorMessage = jobseekersSocialFailed?.data.errors?.email[0]
+      dispatch(
+        displayNotification({
+          open: true,
+          message: errorMessage,
+          severity: 'warning'
+        })
+      )
+    }
+  }, [jobseekersSocialFailed])
+
+  useEffect(() => {
+    const { data } = jobseekersSocialResponse
+    if (data.token) {
+      const url =
+        data.is_profile_update_required || !data.is_profile_completed
+          ? '/jobseeker-complete-profile/1'
+          : `/jobs-hiring/job-search`
+      router.push(url)
+    }
+  }, [jobseekersSocialResponse])
 
   useEffect(() => {
     const accessToken = OTPLoginUserInfo?.data?.token
@@ -227,8 +262,18 @@ const useRegister = () => {
       })
   }
 
-  const callbackRequest = (payload) => {
-    dispatch(socialLoginRequest(payload))
+  const socialAUTHLoginCallBack = (payload) => {
+    // dispatch(socialLoginRequest(payload))
+    const data = {
+      ...payload,
+      ...router.query,
+      email: payload.email ? payload.email : '',
+      social_user_token: payload.accessToken,
+      social_type: payload.socialType,
+      social_user_id: payload.userId,
+      source: width > 576 ? 'web' : 'mobile_web'
+    }
+    dispatch(jobbseekersSocialLoginRequest(data))
   }
 
   return {
@@ -238,7 +283,7 @@ const useRegister = () => {
     setEmailError,
     errors,
     register,
-    callbackRequest,
+    socialAUTHLoginCallBack,
     // quick upload resume
     vertical,
     horizontal,

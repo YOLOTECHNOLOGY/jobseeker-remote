@@ -24,32 +24,14 @@ const COUNT_DOWN_VERIFY_DEFAULT = 60
 
 const RegisterInfo = (props: any) => {
   const {
-    // firstName,
-    // setFirstName,
-    // firstNameError,
-    // lastName,
-    // setLastName,
-    // lastNameError,
     email,
     setEmail,
     emailError,
-    // password,
-    // setPassword,
-    // passwordError,
-    // showPassword,
-    // isSubscribe,
-    // setIsSubscribe,
-    // errors,
-    // register,
-    // handleRegister,
-    // handleOnShowPassword,
-    // isRegisteringJobseeker,
     vertical,
     horizontal,
     open,
     handleSnackbarClose,
     register4Step,
-    // isRegisterModuleRedirect,
     OTPIsLoading,
     handleSendEmailTOP,
     userId,
@@ -61,7 +43,7 @@ const RegisterInfo = (props: any) => {
     setEmailTOP,
     emailOTPInputDisabled,
     emailTOPError,
-    callbackRequest,
+    socialAUTHLoginCallBack,
     hideSocialMediaAuth
   } = props
 
@@ -79,7 +61,7 @@ const RegisterInfo = (props: any) => {
         <div>
           {!hideSocialMediaAuth && (
             <div className={styles.Register}>
-              <SocialMediaAuth callbackRequest={callbackRequest} />
+              <SocialMediaAuth callbackRequest={socialAUTHLoginCallBack} />
               <div className={styles.RegisterDivider}>
                 <Text textStyle='lg' className={styles.RegisterDividerText}>
                   Or
