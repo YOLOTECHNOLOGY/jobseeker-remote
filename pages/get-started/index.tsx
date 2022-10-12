@@ -129,7 +129,12 @@ const GetStarted = () => {
   }
 
   const handleAuthenticationSendEmailMagicLink = () => {
-    authenticationSendEmailMagicLink({ email })
+    const params = {
+      email,
+      redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1',
+      redirect_fail: '/get-started'
+    }
+    authenticationSendEmailMagicLink(params)
       .then(({ data }) => {
         if (data.data) {
           setStep(3)

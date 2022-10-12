@@ -95,6 +95,7 @@ const CheckEmail = ({
     const data = {
       ...payload,
       ...router.query,
+      avatar: payload.pictureUrl ? payload.pictureUrl : '',
       email: payload.email ? payload.email : '',
       social_user_token: payload.accessToken,
       social_type: payload.socialType,

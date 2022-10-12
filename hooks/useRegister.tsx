@@ -216,8 +216,26 @@ const useRegister = () => {
     dispatch(jobbseekersLoginRequest(data))
   }
 
-  const handleAuthenticationSendEmailMagicLink = (redirectPath?: string) => {
-    authenticationSendEmailMagicLink({ email, redirect_url: redirectPath ? redirectPath : '' })
+  const handleAuthenticationSendEmailMagicLink = () => {
+    let params = {}
+    if (router.pathname === '/quick-upload-resume') {
+      params = {
+        redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1',
+        redirect_fail: router.asPath
+      }
+    } else if (router.pathname === '/resumetemplate') {
+      params = {
+        redirect: userId ? '/manage-profile?tab=resume' : '/jobseeker-complete-profile/1',
+        redirect_fail: router.asPath
+      }
+    } else if (router.pathname === '/job/[keyword]') {
+      params = {
+        redirect: userId ? router.asPath : '/jobseeker-complete-profile/1',
+        redirect_fail: '/get-started'
+      }
+    }
+    params = { email, source: width > 576 ? 'web' : 'mobile_web', ...params }
+    authenticationSendEmailMagicLink(params)
       .then(({ data }) => {
         if (data.data) {
           setStep(3)
@@ -267,6 +285,7 @@ const useRegister = () => {
     const data = {
       ...payload,
       ...router.query,
+      avatar: payload.pictureUrl ? payload.pictureUrl : '',
       email: payload.email ? payload.email : '',
       social_user_token: payload.accessToken,
       social_type: payload.socialType,

@@ -705,7 +705,7 @@ const Job = ({
                   </div>
                 ) : null}
 
-                <RegisterInfo register4Step isRegisterModuleRedirect {...UseHooksRegister} />
+                <RegisterInfo register4Step {...UseHooksRegister} />
 
                 {/* <div className={styles.forModuleFooterText}>
                   <Text tagName='p' textStyle='base'>
