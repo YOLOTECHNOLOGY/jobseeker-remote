@@ -161,6 +161,9 @@ const ProtectedHeader = () => {
                   src={currentUser?.avatar || DefaultAvatar}
                   className={styles.profilePlaceHolder}
                   alt='avatar'
+                  onError={(e) => {
+                    ;(e.target as HTMLInputElement).src = DefaultAvatar
+                  }}
                 />
                 <div className={styles.profileCaret} />
               </div>
