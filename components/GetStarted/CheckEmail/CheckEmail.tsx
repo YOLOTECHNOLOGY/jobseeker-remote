@@ -20,8 +20,7 @@ const CheckEmail = ({
   setEmaile,
   handleSendEmailTOP,
   isLoading,
-  router,
-  logSuccess
+  router
 }: any) => {
   const { width } = useWindowDimensions()
   const dispatch = useDispatch()
@@ -29,9 +28,6 @@ const CheckEmail = ({
   const [emailError, setEmailError] = useState(false)
   const [emailBtnDisabled, setEmailBtnDisabled] = useState(true)
 
-  const jobseekersSocialResponse = useSelector(
-    (store: any) => store.auth.jobseekersSocialLogin?.response
-  )
   const jobseekersSocialFailed = useSelector(
     (store: any) => store.auth.jobseekersSocialLogin?.error
   )
@@ -49,23 +45,6 @@ const CheckEmail = ({
       )
     }
   }, [jobseekersSocialFailed])
-
-  useEffect(() => {
-    if (firstRender) {
-      return
-    }
-    const { data } = jobseekersSocialResponse
-    if (data?.token) {
-      // const url =
-      //   data.is_profile_update_required || !data.is_profile_completed
-      //     ? '/jobseeker-complete-profile/1'
-      //     : redirectPage
-      //     ? redirectPage
-      //     : `/jobs-hiring/job-search`
-      // router.push(url)
-      logSuccess(data)
-    }
-  }, [jobseekersSocialResponse])
 
   useEffect(() => {
     if (firstRender) {

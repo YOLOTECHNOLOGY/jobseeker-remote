@@ -52,7 +52,7 @@ const ResumeTemplate = () => {
   const userCookie = getCookie('user') || null
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState([])
-  const [emailBtnDisabled, setEmailBtnDisabled] = useState(true)
+  const [emailBtnDisabled, setEmailBtnDisabled] = useState(userCookie ? false : true)
   const [emailError, setEmailError] = useState(null)
 
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
@@ -452,7 +452,12 @@ const ResumeTemplate = () => {
           </div>
         )}
 
-        {step == 3 && <MagicLink userId={userId} email={email} />}
+        {step == 3 && (
+          <div className={styles.resumeTemplateSendOTP}>
+            {' '}
+            <MagicLink userId={userId} email={email} />
+          </div>
+        )}
       </div>
     </Layout>
   )

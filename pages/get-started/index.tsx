@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
@@ -11,6 +11,7 @@ import MagicLink from 'components/GetStarted/MagicLink/MagicLink'
 import Text from 'components/Text'
 import Link from 'components/Link'
 
+import { useFirstRender } from 'helpers/useFirstRender'
 import useGetStarted from 'hooks/useGetStarted'
 
 import styles from './index.module.scss'
@@ -26,7 +27,7 @@ const GetStarted = () => {
     setUserId,
     handleSendEmailTOP,
     isLoading,
-    logSuccess,
+    defaultLoginCallBack,
     userId,
     emailTOP,
     setEmailTOP,
@@ -36,32 +37,30 @@ const GetStarted = () => {
     emailTOPError
   } = useGetStarted()
   const router = useRouter()
-  const [redirectPage, setRedirectPage] = useState<string>(null)
+  const firstRender = useFirstRender()
 
+  const jobseekersSocialResponse = useSelector(
+    (store: any) => store.auth.jobseekersSocialLogin?.response
+  )
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
 
   useEffect(() => {
-    const redirect = router.query.redirect
-    if (Array.isArray(redirect)) {
-      setRedirectPage(redirect[0])
-    } else {
-      setRedirectPage(redirect)
+    if (firstRender) {
+      return
     }
-  }, [])
-
-  useEffect(() => {
     if (!Object.keys(userInfo).length) {
       return
     }
     const { data } = userInfo
-    const url =
-      data.is_profile_update_required || !data.is_profile_completed
-        ? '/jobseeker-complete-profile/1'
-        : redirectPage
-        ? redirectPage
-        : `/jobs-hiring/job-search`
-    router.push(url)
+    defaultLoginCallBack(data)
   }, [userInfo])
+
+  useEffect(() => {
+    const { data } = jobseekersSocialResponse
+    if (data?.token) {
+      defaultLoginCallBack(data)
+    }
+  }, [jobseekersSocialResponse])
 
   const errorText = (errorMessage: string) => {
     return (
@@ -91,7 +90,6 @@ const GetStarted = () => {
                 handleSendEmailTOP={handleSendEmailTOP}
                 isLoading={isLoading}
                 router={router}
-                logSuccess={logSuccess}
               />
             )}
 

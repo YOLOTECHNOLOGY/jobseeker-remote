@@ -92,7 +92,7 @@ const useGetStarted = () => {
     dispatch(jobbseekersLoginRequest(data))
   }
 
-  const logSuccess = (data: any) => {
+  const defaultLoginCallBack = (data: any) => {
     const url =
       data.is_profile_update_required || !data.is_profile_completed
         ? '/jobseeker-complete-profile/1'
@@ -118,22 +118,43 @@ const useGetStarted = () => {
   }
 
   const handleAuthenticationSendEmailMagicLink = () => {
-    const params = {
-      email,
-      redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1',
-      redirect_fail: '/get-started'
+    let params = {}
+    if (router.pathname === '/quick-upload-resume') {
+      params = {
+        redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1',
+        redirect_fail: router.asPath
+      }
+    } else if (router.pathname === '/resumetemplate') {
+      params = {
+        redirect: userId ? '/manage-profile?tab=resume' : '/jobseeker-complete-profile/1',
+        redirect_fail: router.asPath
+      }
+    } else if (router.pathname === '/job/[keyword]') {
+      params = {
+        redirect: userId ? router.asPath : '/jobseeker-complete-profile/1',
+        redirect_fail: '/get-started'
+      }
+    } else {
+      params = {
+        email,
+        redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1',
+        redirect_fail: '/get-started'
+      }
     }
+    params = { email, source: width > 576 ? 'web' : 'mobile_web', ...params }
     authenticationSendEmailMagicLink(params)
       .then(({ data }) => {
         if (data.data) {
           setStep(3)
         }
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error.response)
+        const { data } = error.response?.data
         dispatch(
           displayNotification({
             open: true,
-            message: 'send email magicLink failed',
+            message: data?.detail,
             severity: 'warning'
           })
         )
@@ -148,7 +169,7 @@ const useGetStarted = () => {
     setUserId,
     handleSendEmailTOP,
     isLoading,
-    logSuccess,
+    defaultLoginCallBack,
     userId,
     emailTOP,
     setEmailTOP,

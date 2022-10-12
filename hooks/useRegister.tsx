@@ -11,14 +11,11 @@ import { SnackbarOrigin } from '@mui/material'
 import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
 import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
 
+import useGetStarted from 'hooks/useGetStarted'
 import useRegisterInfo from 'hooks/useRegisterInfo'
-import { useFirstRender } from 'helpers/useFirstRender'
 
-// api
-import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
-import { authenticationSendEmailMagicLink } from 'store/services/auth/authenticationSendEmailMagicLink'
+import { useFirstRender } from 'helpers/useFirstRender'
 
 export interface SnackbarType extends SnackbarOrigin {
   open: boolean
@@ -36,21 +33,30 @@ const useRegister = () => {
     userWorkExperiences
   } = useRegisterInfo()
 
+  const {
+    step,
+    email,
+    setEmaile,
+    handleSendEmailTOP,
+    isLoading: requestOTPLOading,
+    userId,
+    emailTOP,
+    setEmailTOP,
+    emailOTPInputDisabled,
+    handleAuthenticationJobseekersLogin,
+    handleAuthenticationSendEmailMagicLink,
+    emailTOPError
+  } = useGetStarted()
+
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
   const { width } = useWindowDimensions()
 
-  const [email, setEmail] = useState('')
+  // const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState(null)
 
   const [sendOTPBtnDisabled, setSendOTPBtnDisabled] = useState<boolean>(true)
-  const [OTPIsLoading, setOTPIsLoading] = useState<boolean>(false)
-  const [userId, setUserId] = useState(null)
-  const [step, setStep] = useState(1)
-  const [emailTOP, setEmailTOP] = useState<number>()
-  const [emailTOPError, setEmailTOPError] = useState(false)
-  const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
 
   const {
     register,
@@ -59,7 +65,6 @@ const useRegister = () => {
 
   // OTPLOgin or OTPRegister
   const OTPLoginUserInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
-  const OTPLoginError = useSelector((store: any) => store.auth.jobseekersLogin.error)
   // upFile
   const fileResponse = useSelector((store: any) => store.users.uploadUserResume.response)
 
@@ -86,17 +91,6 @@ const useRegister = () => {
   }, [jobseekersSocialFailed])
 
   useEffect(() => {
-    const { data } = jobseekersSocialResponse
-    if (data?.token) {
-      const url =
-        data.is_profile_update_required || !data.is_profile_completed
-          ? '/jobseeker-complete-profile/1'
-          : `/jobs-hiring/job-search`
-      router.push(url)
-    }
-  }, [jobseekersSocialResponse])
-
-  useEffect(() => {
     const accessToken = OTPLoginUserInfo?.data?.token
     if (fileResponse?.id && accessToken) {
       if (userId) {
@@ -106,32 +100,6 @@ const useRegister = () => {
       }
     }
   }, [fileResponse])
-
-  useEffect(() => {
-    if (!Object.keys(OTPLoginUserInfo).length) {
-      return
-    }
-    logSuccess()
-    setEmailOTPInputDisabled(false)
-  }, [OTPLoginUserInfo])
-
-  useEffect(() => {
-    if (OTPLoginError === null) {
-      return
-    }
-    loginFailed()
-  }, [OTPLoginError])
-
-  const logSuccess = () => {
-    // const url = userId ? router.asPath : '/jobseeker-complete-profile/1'
-    // router.push(url)
-    // setEmailOTPInputDisabled(false)
-  }
-
-  const loginFailed = () => {
-    setEmailTOPError(true)
-    setEmailOTPInputDisabled(false)
-  }
 
   useEffect(() => {
     if (firstRender) {
@@ -158,127 +126,55 @@ const useRegister = () => {
   }, [email])
 
   useEffect(() => {
-    const accessToken = OTPLoginUserInfo?.data?.token
-    const createresumeType = getItem('quickUpladResume')
-    if (createresumeType === 'upFile' && accessToken) {
-      if (uploadResumeFile?.size && accessToken) {
-        const payload = {
-          resume: uploadResumeFile,
-          accessToken: accessToken,
-          redirect: false
+    const { data } = jobseekersSocialResponse
+    if (data?.token || Object.keys(OTPLoginUserInfo).length) {
+      const accessToken = OTPLoginUserInfo?.data?.token
+      const createresumeType = getItem('quickUpladResume')
+      if (createresumeType === 'upFile' && accessToken) {
+        if (uploadResumeFile?.size && accessToken) {
+          const payload = {
+            resume: uploadResumeFile,
+            accessToken: accessToken,
+            redirect: false
+          }
+          dispatch(uploadUserResumeRequest(payload))
         }
-        dispatch(uploadUserResumeRequest(payload))
-      }
-    } else if (createresumeType === 'onLine' && accessToken) {
-      if (userWorkExperiences.length) {
-        // const workExperiencesPayload = {
-        //   accessToken,
-        //   workExperience: null
-        // }
-        // const workListRequest = []
-        // userWorkExperiences.forEach((element) => {
-        //   workExperiencesPayload.workExperience = element
-        //   workListRequest.push(addUserWorkExperienceService(workExperiencesPayload))
-        // })
-        // Promise.all(workListRequest).then((res) => {
-        //   if (res.length) {
-        //     router.push('/jobseeker-complete-profile/1')
-        //   }
-        // })
-        // dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
-      } else {
-        // noworkExperiences
-        if (userId) {
-          router.push('/jobs-hiring/job-search')
+      } else if (createresumeType === 'onLine' && accessToken) {
+        if (userWorkExperiences.length) {
+          // const workExperiencesPayload = {
+          //   accessToken,
+          //   workExperience: null
+          // }
+          // const workListRequest = []
+          // userWorkExperiences.forEach((element) => {
+          //   workExperiencesPayload.workExperience = element
+          //   workListRequest.push(addUserWorkExperienceService(workExperiencesPayload))
+          // })
+          // Promise.all(workListRequest).then((res) => {
+          //   if (res.length) {
+          //     router.push('/jobseeker-complete-profile/1')
+          //   }
+          // })
+          // dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
         } else {
+          // noworkExperiences
+          if (userId) {
+            router.push('/jobs-hiring/job-search')
+          } else {
+            router.push('/jobseeker-complete-profile/1')
+          }
+        }
+      } else if (accessToken) {
+        // job details login
+        if (userId) {
+          window.location.reload()
+        } else {
+          setItem('isRegisterModuleRedirect', router.asPath)
           router.push('/jobseeker-complete-profile/1')
         }
       }
-    } else if (accessToken) {
-      // job details login
-      if (userId) {
-        window.location.reload()
-      } else {
-        setItem('isRegisterModuleRedirect', router.asPath)
-        router.push('/jobseeker-complete-profile/1')
-      }
     }
-  }, [OTPLoginUserInfo])
-
-  const handleAuthenticationJobseekersLogin = () => {
-    setEmailOTPInputDisabled(true)
-    const data = {
-      email,
-      otp: emailTOP,
-      source: width > 576 ? 'web' : 'mobile_web',
-      ...router.query
-    }
-    dispatch(jobbseekersLoginRequest(data))
-  }
-
-  const handleAuthenticationSendEmailMagicLink = () => {
-    let params = {}
-    if (router.pathname === '/quick-upload-resume') {
-      params = {
-        redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1',
-        redirect_fail: router.asPath
-      }
-    } else if (router.pathname === '/resumetemplate') {
-      params = {
-        redirect: userId ? '/manage-profile?tab=resume' : '/jobseeker-complete-profile/1',
-        redirect_fail: router.asPath
-      }
-    } else if (router.pathname === '/job/[keyword]') {
-      params = {
-        redirect: userId ? router.asPath : '/jobseeker-complete-profile/1',
-        redirect_fail: '/get-started'
-      }
-    }
-    params = { email, source: width > 576 ? 'web' : 'mobile_web', ...params }
-    authenticationSendEmailMagicLink(params)
-      .then(({ data }) => {
-        if (data.data) {
-          setStep(3)
-        }
-      })
-      .catch(() => {
-        dispatch(
-          displayNotification({
-            open: true,
-            message: 'send email magicLink failed',
-            severity: 'warning'
-          })
-        )
-      })
-  }
-
-  const handleSendEmailTOP = () => {
-    setOTPIsLoading(true)
-    authenticationSendEmaillOtp({ email })
-      .then(({ data }) => {
-        // show setp 2
-        if (data.data) {
-          setUserId(data.data.user_id)
-          if (step !== 2) {
-            setStep(2)
-          }
-        }
-      })
-      .catch((error) => {
-        const { data } = error?.response
-        const errorMessage = data.data?.detail ? data.data?.detail : data.errors.email[0]
-        dispatch(
-          displayNotification({
-            open: true,
-            message: errorMessage,
-            severity: 'warning'
-          })
-        )
-      })
-      .finally(() => {
-        setOTPIsLoading(false)
-      })
-  }
+  }, [OTPLoginUserInfo, jobseekersSocialResponse])
 
   const socialAUTHLoginCallBack = (payload) => {
     // dispatch(socialLoginRequest(payload))
@@ -297,7 +193,7 @@ const useRegister = () => {
 
   return {
     email,
-    setEmail,
+    setEmail: setEmaile,
     emailError,
     setEmailError,
     errors,
@@ -312,7 +208,7 @@ const useRegister = () => {
     uploadResumeFile,
     isShowRegisterInfo,
     userWorkExperiences,
-    OTPIsLoading,
+    OTPIsLoading: requestOTPLOading,
     handleSendEmailTOP,
     userId,
     sendOTPBtnDisabled,
