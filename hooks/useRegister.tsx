@@ -126,12 +126,6 @@ const useRegister = () => {
   }, [email])
 
   useEffect(() => {
-    // test
-    console.log(jobseekersSocialResponse, '-')
-  }, [jobseekersSocialResponse])
-
-  useEffect(() => {
-    console.log(jobseekersSocialResponse)
     const { data } = jobseekersSocialResponse
     if (data?.token || Object.keys(OTPLoginUserInfo).length) {
       const accessToken = OTPLoginUserInfo?.data?.token
@@ -170,7 +164,7 @@ const useRegister = () => {
             router.push('/jobseeker-complete-profile/1')
           }
         }
-      } else if (accessToken) {
+      } else if (accessToken || data?.token) {
         // job details login
         if (userId) {
           window.location.reload()
