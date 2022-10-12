@@ -1,12 +1,12 @@
 import configuredAxios from 'helpers/configuredAxios'
 
-const authenticationSendEmaillOtp = (payload) => {
+const authenticationSendEmailMagicLink = (payload) => {
   const axios = configuredAxios('auth', 'protected')
   return Promise.resolve(
-    axios.post(`/email-otp/generate`, {
+    axios.post(`/jobseekers/email-magic-link/generate`, {
       ...payload
     })
   )
 }
 
-export { authenticationSendEmaillOtp }
+export { authenticationSendEmailMagicLink }

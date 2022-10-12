@@ -22,6 +22,7 @@ import Modal from '@mui/material/Modal'
 import LinearProgress from '@mui/material/LinearProgress'
 import classNamesCombined from 'classnames'
 import dynamic from 'next/dynamic'
+import { getItem, removeItem, setItem } from 'helpers/localStorage'
 
 /* Components */
 import Layout from 'components/Layout'
@@ -38,7 +39,6 @@ import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
 import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 import UploadResumeButton from 'components/LncreaseUserConversion/UploadResumeButton/UploadResumeButton'
 import RegisterInfo from 'components/IncreaseUserConversion/RegisterInfo'
-import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 const ModalVerifyEmail = dynamic(() => import('components/ModalVerifyEmail'))
 // import AdSlot from 'components/AdSlot'
 
@@ -108,7 +108,7 @@ import {
   increaseUserConversionBrush,
   CloseIcon
 } from 'images'
-import { getItem, setItem } from 'helpers/localStorage'
+
 interface IJobDetail {
   jobDetail: any
   applicationHistory: any
@@ -129,7 +129,7 @@ const Job = ({
   seoCanonicalUrl
 }: IJobDetail) => {
   const UseHooksRegister = useRegister()
-  const { isRegisteringJobseeker, isLoading, callbackRequest } = UseHooksRegister
+  const { isLoading } = UseHooksRegister
 
   const dispatch = useDispatch()
   const router = useRouter()
@@ -266,7 +266,7 @@ const Job = ({
         dispatch(deleteSaveJobRequest(deleteJobPayload))
       }
     } else {
-      router.push(`/login/jobseeker?redirect=${router.asPath}`)
+      router.push(`/get-started?redirect=${router.asPath}`)
     }
   }
 
@@ -416,7 +416,7 @@ const Job = ({
     } else {
       // mobile get jobDetail is by url id
       setCookie('isMobileReportJob', true)
-      router.push('/login/jobseeker?redirect=' + jobDetail.job_url)
+      router.push('/get-started?redirect=' + jobDetail.job_url)
     }
   }
 
@@ -613,7 +613,10 @@ const Job = ({
     }
   }, [closeRegisterModuleTime, quickApplyModalShow])
 
-  const handleOpenRegisterModule = () => setOpenRegister(true)
+  const handleOpenRegisterModule = () => {
+    removeItem('quickUpladResume')
+    setOpenRegister(true)
+  }
   const handleCloseRegisterModule = () => {
     setOpenRegister(false)
     const closeTime = moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss')
@@ -690,7 +693,7 @@ const Job = ({
                   styles.AuthWrapperInfoModuleReg
                 ])}
               >
-                {isLoading | isRegisteringJobseeker ? (
+                {isLoading ? (
                   <div className={quickStyles.AuthWrapperLoading}>
                     <div className={quickStyles.loadingLogo}>
                       <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
@@ -702,27 +705,18 @@ const Job = ({
                   </div>
                 ) : null}
 
-                <div className={styles.Register}>
-                  <SocialMediaAuth callbackRequest={callbackRequest} />
-                  <div className={styles.RegisterDivider}>
-                    <Text textStyle='lg' className={styles.RegisterDividerText}>
-                      Or
-                    </Text>
-                  </div>
-                </div>
+                <RegisterInfo register4Step {...UseHooksRegister} />
 
-                <RegisterInfo register4Step isRegisterModuleRedirect {...UseHooksRegister} />
-
-                <div className={styles.forModuleFooterText}>
+                {/* <div className={styles.forModuleFooterText}>
                   <Text tagName='p' textStyle='base'>
                     Already on Bossjob?
                     <Link
-                      to={`/login/jobseeker?redirect=${router.asPath}`}
+                      to={`/get-started?redirect=${router.asPath}`}
                       className={styles.AuthCTALink}
                     >
                       <Text textColor='primaryBlue' underline>
                         {' '}
-                        Log in
+                        Get Started
                       </Text>
                     </Link>
                   </Text>
@@ -738,7 +732,7 @@ const Job = ({
                       <Text textColor='primaryBlue'> Employer</Text>
                     </Link>
                   </Text>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

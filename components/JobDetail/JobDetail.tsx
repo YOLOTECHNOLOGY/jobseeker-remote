@@ -221,7 +221,7 @@ const JobDetail = ({
     } else {
       setCookie('isReportJob', true)
       setCookie('reportJobId', selectedJob.id)
-      router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
+      router.push('/get-started?redirect=/jobs-hiring/job-search')
     }
   }
 
@@ -244,7 +244,11 @@ const JobDetail = ({
             <div className={classNamesCombined([isStickyClass, styles.jobDetailOptions])}>
               <Link to={publicJobUrl} external className={styles.jobDetailOptionNewTab}>
                 <img src={OpenInNewTabIcon} width='10' height='10' />
-                <Text textStyle='base' textColor='primaryBlue' className={styles.jobDetailOptionNewTab}>
+                <Text
+                  textStyle='base'
+                  textColor='primaryBlue'
+                  className={styles.jobDetailOptionNewTab}
+                >
                   View in a new tab
                 </Text>
               </Link>
@@ -286,7 +290,7 @@ const JobDetail = ({
 
                       if (!userCookie) {
                         setIsSaveClicked(true)
-                        router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
+                        router.push('/get-started?redirect=/jobs-hiring/job-search')
                       }
                     }}
                   >
@@ -324,8 +328,8 @@ const JobDetail = ({
             </div>
           </div>
           <div
-           className={classNamesCombined([styles.jobDetailBody, isStickyClass])}
-            style={{ top: isSticky ? detailHeaderHeight : ''}}
+            className={classNamesCombined([styles.jobDetailBody, isStickyClass])}
+            style={{ top: isSticky ? detailHeaderHeight : '' }}
           >
             <div className={styles.jobDetailImageInfoWrapper}>
               <div
@@ -342,22 +346,25 @@ const JobDetail = ({
                   <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
                     {selectedJob?.company?.name}
                   </Link>
-                  {isCompanyVerified && (isMobile ? (
-                    <MaterialMobileTooltip
-                      icon={BlueTickIcon}
-                      className={styles.jobDetailCompanyTooltip}
-                      title='Verified'
-                    />
-                  ) : (
-                    <MaterialDesktopTooltip
-                      icon={BlueTickIcon}
-                      className={styles.jobDetailCompanyTooltip}
-                      title='Verified'
-                    />
-                  ))}
+                  {isCompanyVerified &&
+                    (isMobile ? (
+                      <MaterialMobileTooltip
+                        icon={BlueTickIcon}
+                        className={styles.jobDetailCompanyTooltip}
+                        title='Verified'
+                      />
+                    ) : (
+                      <MaterialDesktopTooltip
+                        icon={BlueTickIcon}
+                        className={styles.jobDetailCompanyTooltip}
+                        title='Verified'
+                      />
+                    ))}
                 </Text>
                 <Text textStyle='sm' textColor='darkgrey' className={styles.jobDetailPostedAt}>
-                  {applicationUpdatedAt ? `Last updated on ${applicationUpdatedAt}` : `Posted on ${selectedJob?.refreshed_at}`}
+                  {applicationUpdatedAt
+                    ? `Last updated on ${applicationUpdatedAt}`
+                    : `Posted on ${selectedJob?.refreshed_at}`}
                 </Text>
                 <div style={{ height: '16px' }}></div>
                 {selectedJob?.is_featured && <JobTag tag='Featured' tagType='featured' />}
@@ -578,19 +585,20 @@ const JobDetail = ({
               <Link to={companyUrl} className={styles.aboutCompanyTitle}>
                 <Text bold textStyle='lg' textColor='primaryBlue'>
                   {selectedJob?.company?.name}
-                  {isCompanyVerified && (isMobile ? (
-                    <MaterialMobileTooltip
-                      icon={BlueTickIcon}
-                      className={styles.jobDetailCompanyTooltip}
-                      title='Verified'
-                    />
-                  ) : (
-                    <MaterialDesktopTooltip
-                      icon={BlueTickIcon}
-                      className={styles.jobDetailCompanyTooltip}
-                      title='Verified'
-                    />
-                  ))}
+                  {isCompanyVerified &&
+                    (isMobile ? (
+                      <MaterialMobileTooltip
+                        icon={BlueTickIcon}
+                        className={styles.jobDetailCompanyTooltip}
+                        title='Verified'
+                      />
+                    ) : (
+                      <MaterialDesktopTooltip
+                        icon={BlueTickIcon}
+                        className={styles.jobDetailCompanyTooltip}
+                        title='Verified'
+                      />
+                    ))}
                 </Text>
               </Link>
               <div className={styles.aboutCompanyDetail}>

@@ -11,14 +11,8 @@ import MyJobs from 'components/MyJobs'
 
 const Applied = (props: any) => {
   const { accessToken, config } = props
-  
-  return (
-    <MyJobs 
-      category='applied' 
-      config={config}
-      accessToken={accessToken}
-    />
-  )
+
+  return <MyJobs category='applied' config={config} accessToken={accessToken} />
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
@@ -32,10 +26,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const config = storeState.config.config.response
 
   if (!accessToken) {
-    return { 
-      redirect: { 
-        destination: '/login/jobseeker?redirect=/my-jobs/applied?page=1&size=10', 
-        permanent: false, 
+    return {
+      redirect: {
+        destination: '/get-started?redirect=/my-jobs/applied?page=1&size=10',
+        permanent: false
       }
     }
   }
@@ -43,7 +37,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     props: {
       accessToken,
       config
-    },
+    }
   }
 })
 

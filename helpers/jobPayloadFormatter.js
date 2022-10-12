@@ -153,7 +153,7 @@ const nonFilterKeys = [
  * This function solely returns matched filter from URL
  * @param {Object} routerQuery -  router query data retrieved from router.query at the point of user's selection
  * @param {Object} config - config retrieved from config API
- * @return {Object} 
+ * @return {Object}
  * @description  Main part to the logic is to handle data extracted from URL
  */
 const checkFilterMatch = (routerQuery, config, isMobile = false) => {
@@ -165,12 +165,14 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
   const eduLevelList = config.filters.educations
   const jobTypeList = config.inputs.job_types
   const categoryList = config.inputs.job_category_lists
-  const verifiedCompanyList = [{
-    key: 'verified-companies',
-    ['seo-value']: 'verified-companies',
-    value: 'View verified companies',
-    label: 'View verified companies'
-}]
+  const verifiedCompanyList = [
+    {
+      key: 'verified-companies',
+      ['seo-value']: 'verified-companies',
+      value: 'View verified companies',
+      label: 'View verified companies'
+    }
+  ]
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
@@ -433,7 +435,13 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
  * PART III - logic to determine URL format, utilizes function call appendGeneralQueryPattern, appendSingleQueryPattern, appendDoubleQueryPattern
  * 
  */
-const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear = false) => {
+const userFilterSelectionDataParser = (
+  field,
+  optionValue,
+  routerQuery,
+  config,
+  isClear = false
+) => {
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
   const locationList = config.inputs.location_lists
@@ -442,12 +450,14 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
   const eduLevelList = config.filters.educations
   const jobTypeList = config.inputs.job_types
   const categoryList = config.inputs.job_category_lists
-  const verifiedCompanyList = [{
-    key: 'verified-companies',
-    ['seo-value']: 'verified-companies',
-    value: 'View verified companies',
-    label: 'View verified companies'
-  }]
+  const verifiedCompanyList = [
+    {
+      key: 'verified-companies',
+      ['seo-value']: 'verified-companies',
+      value: 'View verified companies',
+      label: 'View verified companies'
+    }
+  ]
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     key: range.key === '10K - 30K' ? 'Below 30K' : range.key,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
@@ -772,12 +782,12 @@ const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, 
 
   let uniqueList = []
 
-  /* If field === category or field === 'moreFilters' (in mobile) && 
+  /* If field === category or field === 'moreFilters' (in mobile) &&
    * array includes 2 keys from category,
    * remove matchedConfigFromUrl, only take in matchedConfigFromUserSelection
    */
   if (
-    (field === 'category' || field === 'moreFilters') && 
+    (field === 'category' || field === 'moreFilters') &&
     Object.keys(matchedConfigFromUrl).includes('category') &&
     Object.keys(matchedConfigFromUserSelection).includes('category')
   ) {
@@ -1384,7 +1394,7 @@ const getDegreeList = (config) => {
 const getApplyJobLink = (job, user, accessToken = null) => {
   // jobUrl => /job/xxxx
   // Apply job url format: /apply-job/xxx
-  let applyJobUrl = `${process.env.HOST_PATH}${job?.job_url}/apply`
+  const applyJobUrl = `${process.env.HOST_PATH}${job?.job_url}/apply`
 
   if (user) {
     if (!user?.is_profile_completed) {
@@ -1408,7 +1418,7 @@ const getApplyJobLink = (job, user, accessToken = null) => {
     return applyJobUrl
   }
 
-  return `${process.env.HOST_PATH}/login/jobseeker?redirect=${applyJobUrl}`
+  return `${process.env.HOST_PATH}/get-started?redirect=${applyJobUrl}`
 }
 
 // TODO: remove isLocation param after backend as renamed the field

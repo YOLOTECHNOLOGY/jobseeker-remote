@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 
 const Verify = ({ query }: any) => {
   const router = useRouter()
+  const routerQuery = router.query
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
 
@@ -44,11 +45,17 @@ const Verify = ({ query }: any) => {
   }, [])
 
   const logSuccess = (data: any) => {
-    const url =
+    const defaultToPath =
       data.is_profile_update_required || !data.is_profile_completed
         ? '/jobseeker-complete-profile/1'
         : `/jobs-hiring/job-search`
-    router.push(url)
+    let redirect
+    if (Array.isArray(routerQuery.redirect)) {
+      redirect = routerQuery.redirect[0]
+    } else {
+      redirect = routerQuery.redirect
+    }
+    router.push(redirect ? redirect : defaultToPath)
   }
 
   const loginFailed = (errorMessage: string | null) => {
@@ -61,7 +68,14 @@ const Verify = ({ query }: any) => {
         })
       )
     }
-    router.push('/get-started')
+    const defaultToPath = '/get-started'
+    let redirectFail
+    if (Array.isArray(routerQuery.redirect_fail)) {
+      redirectFail = routerQuery.redirect_fail[0]
+    } else {
+      redirectFail = routerQuery.redirect_fail
+    }
+    router.push(redirectFail ? redirectFail : defaultToPath)
   }
 
   return ''

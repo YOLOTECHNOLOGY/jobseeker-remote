@@ -87,15 +87,6 @@ const PublicHeader = () => {
                 </Text>
               </Link>
             </li>
-            {/* <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
-              <Link title='Log In' to='/login/jobseeker'>
-                <MaterialButton variant='text' size='medium' capitalize>
-                  <Text textStyle='base' textColor='primaryBlue' bold>
-                    Log in
-                  </Text>
-                </MaterialButton>
-              </Link>
-            </li> */}
             <li className={styles.headerLink}>
               <Link to='/get-started' title='Get Started'>
                 <MaterialButton variant='outlined' size='medium' capitalize>
