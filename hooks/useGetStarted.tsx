@@ -1,0 +1,162 @@
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import useWindowDimensions from 'helpers/useWindowDimensions'
+
+// api
+import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
+import { authenticationSendEmailMagicLink } from 'store/services/auth/authenticationSendEmailMagicLink'
+
+// actions
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
+
+import router, { useRouter } from 'next/router'
+
+const useGetStarted = () => {
+  const routes = useRouter()
+  const dispatch = useDispatch()
+  const { width } = useWindowDimensions()
+
+  const [step, setStep] = useState(1)
+  const [email, setEmaile] = useState<string>('')
+  const [emailTOP, setEmailTOP] = useState<number>()
+  const [emailTOPError, setEmailTOPError] = useState(false)
+  const [userId, setUserId] = useState(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
+  const [defaultRedirectPage, setDefaultRedirectPage] = useState<string>(null)
+
+  // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+  const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+
+  useEffect(() => {
+    const redirect = routes.query.redirect
+    if (Array.isArray(redirect)) {
+      setDefaultRedirectPage(redirect[0])
+    } else {
+      setDefaultRedirectPage(redirect)
+    }
+  }, [])
+
+  // useEffect(() => {
+  //   if (!Object.keys(userInfo).length) {
+  //     return
+  //   }
+  //   const { data } = userInfo
+  //   logSuccess(data)
+  // }, [userInfo])
+
+  useEffect(() => {
+    if (error === null) {
+      return
+    }
+    loginFailed()
+  }, [error])
+
+  const handleSendEmailTOP = () => {
+    setIsLoading(true)
+    authenticationSendEmaillOtp({ email })
+      .then(({ data }) => {
+        // show setp 2
+        if (data.data) {
+          setUserId(data.data.user_id)
+          if (step !== 2) {
+            setStep(2)
+          }
+        }
+      })
+      .catch((error) => {
+        const { data } = error.response
+        const errorMessage = data.data?.detail ? data.data?.detail : data.errors.email[0]
+        dispatch(
+          displayNotification({
+            open: true,
+            message: errorMessage,
+            severity: 'warning'
+          })
+        )
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
+
+  const handleAuthenticationJobseekersLogin = () => {
+    setEmailOTPInputDisabled(true)
+    const data = {
+      email,
+      otp: emailTOP,
+      source: width > 576 ? 'web' : 'mobile_web',
+      ...router.query
+    }
+    dispatch(jobbseekersLoginRequest(data))
+  }
+
+  const logSuccess = (data: any) => {
+    const url =
+      data.is_profile_update_required || !data.is_profile_completed
+        ? '/jobseeker-complete-profile/1'
+        : defaultRedirectPage
+        ? defaultRedirectPage
+        : `/jobs-hiring/job-search`
+    routes.push(url)
+    setEmailOTPInputDisabled(false)
+  }
+
+  const loginFailed = () => {
+    // if (errorMessage) {
+    //   dispatch(
+    //     displayNotification({
+    //       open: true,
+    //       message: errorMessage,
+    //       severity: 'warning'
+    //     })
+    //   )
+    // }
+    setEmailTOPError(true)
+    setEmailOTPInputDisabled(false)
+  }
+
+  const handleAuthenticationSendEmailMagicLink = () => {
+    const params = {
+      email,
+      redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1',
+      redirect_fail: '/get-started'
+    }
+    authenticationSendEmailMagicLink(params)
+      .then(({ data }) => {
+        if (data.data) {
+          setStep(3)
+        }
+      })
+      .catch(() => {
+        dispatch(
+          displayNotification({
+            open: true,
+            message: 'send email magicLink failed',
+            severity: 'warning'
+          })
+        )
+      })
+  }
+
+  return {
+    step,
+    setStep,
+    email,
+    setEmaile,
+    setUserId,
+    handleSendEmailTOP,
+    isLoading,
+    logSuccess,
+    userId,
+    emailTOP,
+    setEmailTOP,
+    emailOTPInputDisabled,
+    handleAuthenticationJobseekersLogin,
+    handleAuthenticationSendEmailMagicLink,
+    emailTOPError
+  }
+}
+
+export default useGetStarted
