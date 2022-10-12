@@ -126,6 +126,12 @@ const useRegister = () => {
   }, [email])
 
   useEffect(() => {
+    // test
+    console.log(jobseekersSocialResponse, '-')
+  }, [jobseekersSocialResponse])
+
+  useEffect(() => {
+    console.log(jobseekersSocialResponse)
     const { data } = jobseekersSocialResponse
     if (data?.token || Object.keys(OTPLoginUserInfo).length) {
       const accessToken = OTPLoginUserInfo?.data?.token
