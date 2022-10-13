@@ -27,6 +27,7 @@ import { ResumeTemplatePreview, ResumeTemplate1, ResumeTemplate2 } from 'images'
 
 // Styles
 import styles from './ResumeTemplate.module.scss'
+import { removeItem } from 'helpers/localStorage'
 
 const COUNT_DOWN_VERIFY_DEFAULT = 60
 
@@ -138,23 +139,6 @@ const ResumeTemplate = () => {
     emblaApi.on('select', onSelect)
   }, [emblaApi, setScrollSnaps, onSelect])
 
-  // useEffect(() => {
-  //   if (registerJobseekerState.error) {
-  //     if (registerJobseekerState.error['email']) {
-  //       if (registerJobseekerState.error['email'] == 'The email has already been taken.') {
-  //         setEmailError(
-  //           <p>
-  //             A user with this email address already exists. Please enter a different email address
-  //             or <Link to='/get-started?redirect=/resumetemplate'>log in</Link>.
-  //           </p>
-  //         )
-  //       } else {
-  //         setEmailError(registerJobseekerState.error['email'])
-  //       }
-  //     }
-  //   }
-  // }, [registerJobseekerState])
-
   const errorText = (errorMessage: string) => {
     return (
       <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
@@ -162,44 +146,6 @@ const ResumeTemplate = () => {
       </Text>
     )
   }
-
-  // const onRegister = () => {
-  //   let invalidEmail = false
-
-  //   if (!email) setEmailError('Please enter your email address.')
-  //   else {
-  //     const emailPattern =
-  //       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
-  //     if (!emailPattern.test(email)) {
-  //       invalidEmail = true
-  //       setEmailError('Please enter a valid email address.')
-  //     } else setEmailError(null)
-  //   }
-
-  //   if (!firstName) {
-  //     setFirstNameError('Please enter your first name.')
-  //   } else {
-  //     setFirstNameError(null)
-  //   }
-
-  //   if (!lastName) {
-  //     setLastNameError('Please enter your last name.')
-  //   } else {
-  //     setLastNameError(null)
-  //   }
-
-  //   if (email && !invalidEmail && firstName && lastName) {
-  //     const payload = {
-  //       email,
-  //       first_name: firstName,
-  //       last_name: lastName,
-  //       source: 'free_resume'
-  //     }
-
-  //     dispatch(registerJobseekerRequest({ ...payload }))
-  //   }
-  // }
 
   return (
     <Layout>
@@ -227,32 +173,6 @@ const ResumeTemplate = () => {
                   </Text>
                   {!userCookie && (
                     <div>
-                      {/* <div className={styles.fullWidth}>
-                    <div style={{ marginRight: '15px' }}>
-                      <MaterialTextField
-                        value={firstName}
-                        defaultValue={firstName}
-                        label='First name'
-                        size='small'
-                        className={styles.halfWidth}
-                        onChange={(e) => setFirstName(e.target.value)}
-                      />
-                      {firstNameError && errorText(firstNameError)}
-                    </div>
-
-                    <div>
-                      <MaterialTextField
-                        value={lastName}
-                        defaultValue={lastName}
-                        label='Last name'
-                        size='small'
-                        className={styles.halfWidth}
-                        onChange={(e) => setLastName(e.target.value)}
-                      />
-                      {lastNameError && errorText(lastNameError)}
-                    </div>
-                  </div> */}
-
                       <MaterialTextField
                         id='email'
                         label='Email address'
@@ -280,6 +200,7 @@ const ResumeTemplate = () => {
                           : router.push('/jobseeker-complete-profile/1')
                       } else {
                         handleSendEmailTOP()
+                        removeItem('quickUpladResume')
                       }
                     }}
                     isLoading={isLoading}

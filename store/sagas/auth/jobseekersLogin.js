@@ -36,6 +36,18 @@ function* loginReq(actions) {
 
       yield call(setCookie, 'user', userCookie)
       yield call(setCookie, 'accessToken', loginData.token)
+
+      if (!actions.payload?.userId) {
+        if (window !== 'undefined' && window.gtag) {
+          yield window.gtag('event', 'conversion', {
+            send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
+          })
+        }
+
+        if (window !== 'undefined' && window.fbq) {
+          yield fbq.event('CompleteRegistration', { source: 'sign_up' })
+        }
+      }
     }
   } catch (err) {
     const isServerError = checkErrorCode(err)

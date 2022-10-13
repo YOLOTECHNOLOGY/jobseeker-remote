@@ -87,7 +87,8 @@ const useGetStarted = () => {
       email,
       otp: emailTOP,
       source: width > 576 ? 'web' : 'mobile_web',
-      ...router.query
+      ...router.query,
+      userId
     }
     dispatch(jobbseekersLoginRequest(data))
   }
