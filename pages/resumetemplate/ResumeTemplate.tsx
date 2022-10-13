@@ -52,19 +52,20 @@ const ResumeTemplate = () => {
   const userCookie = getCookie('user') || null
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState([])
-  const [emailBtnDisabled, setEmailBtnDisabled] = useState(userCookie ? false : true)
+  const [emailBtnDisabled, setEmailBtnDisabled] = useState<boolean>(false)
   const [emailError, setEmailError] = useState(null)
 
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
 
-  // const [firstName, setFirstName] = useState('')
-  // const [firstNameError, setFirstNameError] = useState(null)
-  // const [lastName, setLastName] = useState('')
-  // const [lastNameError, setLastNameError] = useState(null)
-
-  // const [email, setEmail] = useState('')
+  useEffect(() => {
+    setEmailBtnDisabled(userCookie ? false : true)
+  }, [])
 
   useEffect(() => {
+    if (firstRender) {
+      return
+    }
+
     if (!Object.keys(userInfo).length) {
       return
     }

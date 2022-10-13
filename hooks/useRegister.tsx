@@ -2,9 +2,14 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
+
+// helpers
 import { getItem, setItem } from 'helpers/localStorage'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { useFirstRender } from 'helpers/useFirstRender'
+import { getCookie } from 'helpers/cookies'
 
+// mui
 import { SnackbarOrigin } from '@mui/material'
 
 /* Redux Actions */
@@ -12,10 +17,9 @@ import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSoci
 import { uploadUserResumeRequest } from 'store/actions/users/uploadUserResume'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
+// hooks
 import useGetStarted from 'hooks/useGetStarted'
 import useRegisterInfo from 'hooks/useRegisterInfo'
-
-import { useFirstRender } from 'helpers/useFirstRender'
 
 export interface SnackbarType extends SnackbarOrigin {
   open: boolean
@@ -128,7 +132,7 @@ const useRegister = () => {
   useEffect(() => {
     const { data } = jobseekersSocialResponse
     if (data?.token || Object.keys(OTPLoginUserInfo).length) {
-      const accessToken = OTPLoginUserInfo?.data?.token
+      const accessToken = getCookie('accessToken')
       const createresumeType = getItem('quickUpladResume')
       if (createresumeType === 'upFile' && accessToken) {
         if (uploadResumeFile?.size && accessToken) {
@@ -164,7 +168,7 @@ const useRegister = () => {
             router.push('/jobseeker-complete-profile/1')
           }
         }
-      } else if (accessToken || data?.token) {
+      } else if (accessToken) {
         // job details login
         if (userId) {
           window.location.reload()
