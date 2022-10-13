@@ -153,35 +153,6 @@ const App = ({ Component, pageProps }: AppProps) => {
                 xfbml            : true,	
                 version          : 'v6.0'	
               });	
-
-              FB.Event.subscribe('messenger_checkbox', function(e) {
-                console.log("messenger_checkbox event");
-                console.log(e);
-                if (e.event == 'rendered') {
-                  console.log("Plugin was rendered");
-                } else if (e.event == 'checkbox') {
-                  var checkboxState = e.state;
-                  console.log("Checkbox state: " + checkboxState);
-                  if (checkboxState === 'checked') {
-                    const refStr = e.user_ref.split('_')
-                    FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
-                      app_id: ${
-                        process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
-                      },
-                      page_id:${
-                        process.env.ENV === 'production' ? '307776753021449' : '638091659945858'
-                      },
-                      ref: refStr[1],
-                      user_ref: e.user_ref
-                    })
-                    setTimeout(() => {window.location.reload()}, 2000)
-                  }
-                } else if (e.event == 'not_you') {
-                  console.log("User clicked 'not you'");
-                } else if (e.event == 'hidden') {
-                  console.log("Plugin was hidden");
-                }
-              });
             };	
 
             if(window.FB === undefined) {	

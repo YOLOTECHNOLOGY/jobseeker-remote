@@ -149,7 +149,6 @@ const useGetStarted = () => {
         }
       })
       .catch((error) => {
-        console.log(error.response)
         const { data } = error.response?.data
         dispatch(
           displayNotification({

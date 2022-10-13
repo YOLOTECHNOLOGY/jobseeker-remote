@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { FETCH_USER_DETAIL_REQUEST } from 'store/types/users/fetchUserDetail'
 import { fetchUserDetailSuccess, fetchUserDetailFailed } from 'store/actions/users/fetchUserDetail'
-import { accountSetting } from 'store/services/auth/changeEmail'
+import { accountSetting } from 'store/services/auth/accountSetting'
 
 function* fetchUserDetailReq(action) {
   try {

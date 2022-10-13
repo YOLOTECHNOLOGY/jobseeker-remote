@@ -16,11 +16,9 @@ import { Button } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 
 // api
-import {
-  sendPhoneNumberOTP,
-  verifyPhoneNumber,
-  changePhoneNumber
-} from 'store/services/auth/changeEmail'
+import { smsOTPChangePhoneNumverGenerate } from 'store/services/auth/smsOTPChangePhoneNumberGenerate'
+import { verifyPhoneNumber } from 'store/services/auth/verifyPhoneNumber'
+import { changePhoneNumber } from 'store/services/auth/changePhoneNumber'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
@@ -155,17 +153,24 @@ const VerifyPhoneNumber = ({
     setIsShowCountDownSwitch(true)
     setIsShowPhoneVerify(true)
     setPhoneNum(phoneNum)
-    sendPhoneNumberOTP({ phone_number: smsCode + phoneNum }).then(() => {
-      // if (data.success) {
-      //   dispatch(
-      //     displayNotification({
-      //       open: true,
-      //       message: 'The verification code has been sent, please check it',
-      //       severity: 'success'
-      //     })
-      //   )
-      // }
-    })
+    smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNum })
+      .then()
+      .catch((exceptionHandler) => {
+        const { data } = exceptionHandler.response
+        let errorMessage
+        if (data?.data) {
+          errorMessage = data?.data?.detail
+        } else {
+          errorMessage = data?.errors?.phone_num[0]
+        }
+        dispatch(
+          displayNotification({
+            open: true,
+            message: errorMessage,
+            severity: 'warning'
+          })
+        )
+      })
   }
 
   const verifiSuccess = () => {
@@ -196,7 +201,7 @@ const VerifyPhoneNumber = ({
       // verify
       verifyPhoneNumber({ otp: Number(otp) })
         .then(({ data }) => {
-          if (data.success) {
+          if (data.data?.message == 'success') {
             dispatch(
               displayNotification({
                 open: true,
@@ -214,7 +219,7 @@ const VerifyPhoneNumber = ({
       // change
       changePhoneNumber({ otp: Number(otp), phone_num: smsCode + Number(phoneNum) })
         .then(({ data }) => {
-          if (data.success) {
+          if (data.data?.message == 'success') {
             dispatch(
               displayNotification({
                 open: true,
