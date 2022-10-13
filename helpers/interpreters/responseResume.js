@@ -1,7 +1,7 @@
 /* eslint-disable new-cap */
 import { scripts } from 'imforbossjob'
 import { ReaderTPromise as M } from './monads'
-import { sendResume } from './services/resume'
+import { sendResume, decline } from './services/resume'
 const { utils, responseResumeJobseeker: { ModalActions } } = scripts
 const { RequestResult } = utils
 
@@ -19,24 +19,13 @@ export default command => command.cata({
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
     }),
-    requestDecline: payload => M(context => {
-        return new Promise((resolve) => {
-            console.log('payload', payload)
-            context.setLoading(true)
-            setTimeout(() => {
-                resolve({ data: {} })
-                // reject('some error')
-            }, 3000)
-        }).then(result => RequestResult.success(result.data))
+    requestDecline: () => M(context => {
+        const applicationId = context.getApplicationId()
+        const requestResumeId = context.getState?.()?.resume_request?.id
+        context.setLoading(true)
+        return decline(applicationId, requestResumeId)
+            .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
-    }),
-    finish: type => M(context => new Promise(resolve => {
-        context.closeSendResume?.(type)
-        resolve()
-    })),
-    error: error => M(context => new Promise(resolve => {
-        context.onSendResumeError(error)
-        resolve()
-    }))
+    })
 })

@@ -6,11 +6,13 @@ import interpreter from 'helpers/interpreters'
 import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { useRouter } from 'next/router'
+import Interview from 'components/Chat/interview'
 const Chat = () => {
     const router = useRouter()
     const { query: { application_id: applicationId } } = router
     const [loading, setLoading] = useState(false)
-    const [imState, setImState] = useState({})
+    const [imState, setImState] = useState({} as any)
+    console.log({ imState })
     const dispatch = useDispatch()
     const applcationIdRef = useRef(applicationId)
     const stateRef = useRef(imState)
@@ -26,22 +28,10 @@ const Chat = () => {
             contextRef.current?.closeSendResume?.()
         },
         handleError(e) {
-            dispatch(
-                displayNotification({
-                    open: true,
-                    message: e?.toString?.() ?? 'Some error happens',
-                    severity: 'error'
-                })
-            )
+            console.log('error', e)
         },
         handleFinish(type) {
-            dispatch(
-                displayNotification({
-                    open: true,
-                    message: type,
-                    severity: 'success'
-                })
-            )
+            console.log('finish', type)
         },
         updateData(data) {
             console.log('update', data)
@@ -52,10 +42,30 @@ const Chat = () => {
         },
         getState() {
             return stateRef.current
+        },
+        showToast(type, content) {
+            dispatch(
+                displayNotification({
+                    open: true,
+                    message: content,
+                    severity: type
+                })
+            )
         }
     } as any)
     return <>
-        <SendResumeModal loading={loading} contextRef={contextRef} imState={imState} />
+        <SendResumeModal
+            loading={loading}
+            contextRef={contextRef}
+            data={imState.resume_request}
+            applicationId={applicationId}
+        />
+        <Interview
+            loading={loading}
+            contextRef={contextRef}
+            data={imState.interview}
+            applicationId={applicationId}
+        />
         <JobseekerChat
             loading={loading}
             imState={imState}

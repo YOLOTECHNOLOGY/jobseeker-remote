@@ -1,42 +1,43 @@
-/* eslint-disable no-unused-vars */
 import Modal from 'components/Modal'
 import React, { useRef, useState } from 'react'
 import { assign } from 'lodash-es'
-const SendResumeModal = (props: any) => {
+
+const AcceptModal = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef, loading,data ,applicationId} = props
+    const { contextRef, loading, data, applicationId } = props
     const actionsRef = useRef({} as any)
     const context = {
         showSendResume(actions) {
             actionsRef.current = actions
             setShow(true)
         },
-        
+
         closeSendResume() {
             setShow(false)
         }
-        
+
     }
-    const [resumeId,setResumeId] = useState(2)
     contextRef.current = assign(contextRef.current, context)
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
-        headerTitle={''}
-        firstButtonText='Cancel'
-        secondButtonText='Send'
+        headerTitle={'interview invited confirm modal'}
+        firstButtonText='Decline'
+        secondButtonText='Accept'
         firstButtonIsClose={false}
         secondButtonIsClose={false}
-        handleFirstButton={() => actionsRef.current.close?.()}
-        handleSecondButton={() => actionsRef.current.send?.({ 
+        handleFirstButton={() => actionsRef.current.decline?.({
             applicationId,
-            requestResumeId:data.id,
-            params:{resume_id:resumeId} 
+            requestResumeId: data.id,
+        })}
+        handleSecondButton={() => actionsRef.current.accept?.({
+            applicationId,
+            requestResumeId: data.id,
         })}
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        {'send resume modal'}
     </Modal>
 }
-export default SendResumeModal
+
+export default AcceptModal

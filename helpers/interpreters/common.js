@@ -10,7 +10,6 @@ export default command => command.cata({
     })),
     end: type => M(context => Promise.resolve().then(() => {
         context.handleFinish(type)
-        context.hideModals?.()
     })),
     requestUpdate: () => M(context => {
         const applicationId = context.getApplicationId()
@@ -21,7 +20,14 @@ export default command => command.cata({
             .finally(() => context.setLoading(false))
     }),
     syncData: data => M(context => Promise.resolve().then(() => {
+        console.log({ context })
         context.updateData(data)
+    })),
+    showToast: (type, content) => M(context => Promise.resolve().then(() => {
+        context.showToast(type, content)
+    })),
+    closeModals: () => M(context => Promise.resolve().then(() => {
+        context.hideModals?.()
     }))
 })
 
