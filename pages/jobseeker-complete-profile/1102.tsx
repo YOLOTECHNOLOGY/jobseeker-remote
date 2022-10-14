@@ -351,6 +351,9 @@ const Step4 = (props: any) => {
       dispatch(generateUserResumeRequest({ redirect, accessToken }))
     }
 
+    if (quickUpladResumeType === 'onLine') {
+      return
+    }
     if (!isCreateFreeResume) {
       dispatch(updateUserOnboardingInfoRequest({ currentStep: 5, redirect, accessToken }))
     }

@@ -13,13 +13,12 @@ import SEO from 'components/SEO'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
-import Link from 'components/Link'
 import SendTOP from 'components/GetStarted/SendTOP/SendTOP'
 import MagicLink from 'components/GetStarted/MagicLink/MagicLink'
 
 // Helpers
 import useWindowDimensions from 'helpers/useWindowDimensions'
-
+import { removeItem, setItem } from 'helpers/localStorage'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { getCookie } from 'helpers/cookies'
 // Images
@@ -27,7 +26,6 @@ import { ResumeTemplatePreview, ResumeTemplate1, ResumeTemplate2 } from 'images'
 
 // Styles
 import styles from './ResumeTemplate.module.scss'
-import { removeItem } from 'helpers/localStorage'
 
 const COUNT_DOWN_VERIFY_DEFAULT = 60
 
@@ -74,6 +72,7 @@ const ResumeTemplate = () => {
     if (userId) {
       router.push('/manage-profile?tab=resume')
     } else {
+      setItem('isRegisterModuleRedirect', '/manage-profile?tab=resume')
       router.push('/jobseeker-complete-profile/1')
     }
   }, [userInfo])
@@ -208,18 +207,6 @@ const ResumeTemplate = () => {
                   >
                     <Text textColor='white'>Create Resume</Text>
                   </MaterialButton>
-
-                  {!userCookie && (
-                    <Text tagName='p' textStyle='base' style={{ textAlign: 'center' }}>
-                      Already on Bossjob?
-                      <Link to='/get-started?redirect=/resumetemplate'>
-                        <Text textColor='primaryBlue' underline>
-                          {' '}
-                          Get started
-                        </Text>
-                      </Link>
-                    </Text>
-                  )}
                 </form>
                 <img
                   src={ResumeTemplatePreview}

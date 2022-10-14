@@ -72,7 +72,7 @@ const useGetStarted = () => {
           displayNotification({
             open: true,
             message: errorMessage,
-            severity: 'warning'
+            severity: 'error'
           })
         )
       })
@@ -150,12 +150,13 @@ const useGetStarted = () => {
         }
       })
       .catch((error) => {
-        const { data } = error.response?.data
+        // const { data } = error.response?.data
         dispatch(
           displayNotification({
             open: true,
-            message: data?.detail,
-            severity: 'warning'
+            // message: data?.detail,
+            message: '“Having trouble? Request a Magic Link” after 60s of landing on OTP screen',
+            severity: 'error'
           })
         )
       })

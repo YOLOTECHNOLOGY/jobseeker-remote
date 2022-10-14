@@ -13,6 +13,7 @@ import Link from 'components/Link'
 
 import { useFirstRender } from 'helpers/useFirstRender'
 import useGetStarted from 'hooks/useGetStarted'
+import { removeItem } from 'helpers/localStorage'
 
 import styles from './index.module.scss'
 
@@ -52,12 +53,14 @@ const GetStarted = () => {
       return
     }
     const { data } = userInfo
+    removeItem('quickUpladResume')
     defaultLoginCallBack(data)
   }, [userInfo])
 
   useEffect(() => {
     const { data } = jobseekersSocialResponse
     if (data?.token) {
+      removeItem('quickUpladResume')
       defaultLoginCallBack(data)
     }
   }, [jobseekersSocialResponse])

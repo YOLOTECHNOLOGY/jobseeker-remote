@@ -74,12 +74,15 @@ const CheckEmail = ({
     const data = {
       ...payload,
       ...router.query,
-      avatar: payload.pictureUrl ? payload.pictureUrl : '',
+      // avatar: payload.pictureUrl ? payload.pictureUrl : '',
       email: payload.email ? payload.email : '',
       social_user_token: payload.accessToken,
       social_type: payload.socialType,
       social_user_id: payload.userId,
       source: width > 576 ? 'web' : 'mobile_web'
+    }
+    if (payload.pictureUrl) {
+      data.avatar = payload.pictureUrl
     }
     dispatch(jobbseekersSocialLoginRequest(data))
   }

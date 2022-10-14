@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
@@ -13,6 +13,8 @@ import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 // import Checkbox from '@mui/material/Checkbox'
 import { Snackbar } from '@mui/material'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
+
+import { getItem } from 'helpers/localStorage'
 
 import styles from 'pages/quick-upload-resume/styles.module.scss'
 
@@ -46,6 +48,11 @@ const RegisterInfo = (props: any) => {
     socialAUTHLoginCallBack,
     hideSocialMediaAuth
   } = props
+
+  const [quickUpladResume, setQuickUpladResume] = useState(getItem('quickUpladResume'))
+  useEffect(() => {
+    setQuickUpladResume(getItem('quickUpladResume'))
+  }, [])
 
   const errorText = (errorMessage: string) => {
     return (
@@ -136,6 +143,7 @@ const RegisterInfo = (props: any) => {
           magicLink={handleAuthenticationSendEmailMagicLink}
           emailTOPError={emailTOPError}
           customizeSendOTPContainerMainFieldStyle={styles.customizeSendOTPContainerMainField}
+          hideMagicLink={quickUpladResume === 'upFile'}
         />
       )}
 

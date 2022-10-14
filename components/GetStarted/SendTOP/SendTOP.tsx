@@ -25,7 +25,8 @@ const SendTOP = ({
   login,
   magicLink,
   emailTOPError,
-  customizeSendOTPContainerMainFieldStyle
+  customizeSendOTPContainerMainFieldStyle,
+  hideMagicLink
 }: any) => {
   const { width } = useWindowDimensions()
   const firstRender = useFirstRender()
@@ -144,12 +145,14 @@ const SendTOP = ({
           errorText('The OTP you have entered is wrong. Please try again.')}
       </div>
 
-      <div className={styles.SendTOPContainer_sendMagicLink}>
-        <Text tagName='p' textStyle='lg' onClick={magicLink}>
-          Having trouble?{' '}
-          <a className={styles.SendTOPContainer_sendMagicLink_magicLink}>Request a Magic Link</a>
-        </Text>
-      </div>
+      {!hideMagicLink && (
+        <div className={styles.SendTOPContainer_sendMagicLink}>
+          <Text tagName='p' textStyle='lg' onClick={magicLink}>
+            Having trouble?{' '}
+            <a className={styles.SendTOPContainer_sendMagicLink_magicLink}>Request a Magic Link</a>
+          </Text>
+        </div>
+      )}
     </div>
   )
 }
