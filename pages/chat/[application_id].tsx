@@ -26,6 +26,9 @@ const Chat = () => {
         setLoading,
         hideModals() {
             contextRef.current?.closeSendResume?.()
+            contextRef.current?.closeConfirm?.()
+            contextRef.current?.closeAccept?.()
+            contextRef.current?.closeDetail?.()
         },
         handleError(e) {
             console.log('error', e)
