@@ -35,8 +35,20 @@ const SendTOP = ({
   // CountDown
   const refCountDownTimeName = useRef(null)
   const countDownVerify = useRef(COUNT_DOWN_VERIFY_DEFAULT)
+
+  const magicLinkCountDownTime = useRef(null)
   const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
   const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
+  const [isShowMagicLink, setIsShowMagicLink] = useState(false)
+
+  useEffect(() => {
+    magicLinkCountDownTime.current = setTimeout(() => {
+      setIsShowMagicLink(true)
+    }, 1000 * 60)
+    return () => {
+      clearInterval(magicLinkCountDownTime.current)
+    }
+  }, [])
 
   useEffect(() => {
     setIsShowCountDownSwitch(true)
@@ -145,14 +157,23 @@ const SendTOP = ({
           errorText('The OTP you have entered is wrong. Please try again.')}
       </div>
 
-      {!hideMagicLink && (
-        <div className={styles.SendTOPContainer_sendMagicLink}>
-          <Text tagName='p' textStyle='lg' onClick={magicLink}>
-            Having trouble?{' '}
-            <a className={styles.SendTOPContainer_sendMagicLink_magicLink}>Request a Magic Link</a>
-          </Text>
-        </div>
-      )}
+      <div className={styles.SendTOPContainer_sendMagicLinkContariner}>
+        {isShowMagicLink && !hideMagicLink && (
+          <div className={styles.SendTOPContainer_sendMagicLink}>
+            <Text
+              tagName='p'
+              textStyle='lg'
+              onClick={magicLink}
+              className={styles.SendTOPContainer_sendMagicLink_pNode}
+            >
+              Having trouble?{' '}
+              <a className={styles.SendTOPContainer_sendMagicLink_magicLink}>
+                Request a Magic Link
+              </a>
+            </Text>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

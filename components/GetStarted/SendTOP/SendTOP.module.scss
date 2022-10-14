@@ -56,9 +56,18 @@
     }
   }
 
+  &_sendMagicLinkContariner {
+    margin-top: 25px;
+  }
+
   &_sendMagicLink {
     width: 566px;
     margin: 0 auto;
+
+    &_pNode {
+      margin: 0 !important;
+    }
+
     &_magicLink {
       color: #2379ea;
       border-bottom: 1px solid #2379ea;

@@ -150,12 +150,11 @@ const useGetStarted = () => {
         }
       })
       .catch((error) => {
-        // const { data } = error.response?.data
+        const { data } = error.response?.data
         dispatch(
           displayNotification({
             open: true,
-            // message: data?.detail,
-            message: '“Having trouble? Request a Magic Link” after 60s of landing on OTP screen',
+            message: data?.detail,
             severity: 'error'
           })
         )
