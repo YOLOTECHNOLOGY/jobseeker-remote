@@ -58,6 +58,7 @@
 
   &_sendMagicLinkContariner {
     margin-top: 25px;
+    opacity: 0;
   }
 
   &_sendMagicLink {
@@ -71,11 +72,19 @@
     &_magicLink {
       color: #2379ea;
       border-bottom: 1px solid #2379ea;
-      cursor: pointer;
+      cursor: default;
     }
 
     @include sm {
       width: 100%;
+    }
+  }
+
+  &_sendMagicLinkVisibility {
+    opacity: 1;
+
+    &_magicLink {
+      cursor: pointer !important;
     }
   }
 }
