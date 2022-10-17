@@ -47,6 +47,7 @@ const SendTOP = ({
       setIsShowMagicLink(true)
       magicLinkNode.current.addEventListener('click', magicLink)
     }, 1000 * 60)
+    // })
     return () => {
       clearInterval(magicLinkCountDownTime.current)
     }

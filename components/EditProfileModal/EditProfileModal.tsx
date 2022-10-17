@@ -152,7 +152,7 @@ const EditProfileModal = ({
   }, [userDetail])
 
   useEffect(() => {
-    if (updateUserProfileSuccess){
+    if (updateUserProfileSuccess) {
       handleCloseModal()
     }
   }, [userDetail])
