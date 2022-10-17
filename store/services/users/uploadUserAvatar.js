@@ -9,7 +9,6 @@ const uploadUserAvatarService = (file) => {
   }
 
   const formData = new FormData()
-  console.log(file, 'file')
   formData.append('avatar', file)
   formData.append('filename', file?.name)
 

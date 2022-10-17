@@ -19,7 +19,6 @@ const UploadUserAvatar = ({ currentAvatarUrl, setSelectedAvatar }: UploadUserAva
 
   const handleChosenPhoto = async (e) => {
     const file = e.target.files[0]
-    console.log(file, '0--')
     let img
     let aspectRatio
     if (file) {
@@ -29,8 +28,14 @@ const UploadUserAvatar = ({ currentAvatarUrl, setSelectedAvatar }: UploadUserAva
         aspectRatio = this.width / this.height
         const compressedFile = await compressImage(file, 100, aspectRatio, 400) // 100kb
         const preview = URL.createObjectURL(compressedFile)
-        console.log(compressedFile, 'new file')
-        setSelectedAvatar(compressedFile)
+        let createNewFromData
+        if ((compressedFile as any)?.name == undefined) {
+          createNewFromData = new File([compressedFile], file.name, { type: 'image/*' })
+          setSelectedAvatar(createNewFromData)
+        } else {
+          setSelectedAvatar(compressedFile)
+        }
+
         setPreview(preview)
         URL.revokeObjectURL(objectUrl)
       }
