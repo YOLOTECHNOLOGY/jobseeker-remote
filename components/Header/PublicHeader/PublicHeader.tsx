@@ -1,4 +1,6 @@
 import React from 'react'
+import { useRouter } from 'next/router'
+import classNames from 'classnames/bind'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -14,6 +16,7 @@ import MaterialButton from 'components/MaterialButton'
 import { BossjobLogo } from 'images'
 
 const PublicHeader = () => {
+  const router = useRouter()
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
@@ -31,11 +34,29 @@ const PublicHeader = () => {
           <ul className={styles.headerLinksList}>
             <React.Fragment>
               <li className={styles.headerLink}>
-                <Link title='Jobs' to='/jobs-hiring/job-search'>
+                {/* <Link title='Jobs' to='/jobs-hiring/job-search'>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Jobs
                   </Text>
-                </Link>
+                </Link> */}
+                {router.route !== '/jobs-hiring/[keyword]' ? (
+                  <Link title='Jobs' to='/jobs-hiring/job-search'>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      Jobs
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    textColor='darkGrey'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
+                    Jobs
+                  </Text>
+                )}
               </li>
               {/* <li className={styles.headerLink}>
                 <Link title='Headhunt Me' to={`${process.env.OLD_PROJECT_URL}/headhunt-me`} aTag>
@@ -45,11 +66,29 @@ const PublicHeader = () => {
                 </Link>
               </li> */}
               <li className={styles.headerLink}>
-                <Link title='Companies' to='/companies'>
+                {/* <Link title='Companies' to='/companies'>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Companies
                   </Text>
-                </Link>
+                </Link> */}
+                {router.route !== '/companies' ? (
+                  <Link title='Companies' to='/companies'>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      Companies
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    textColor='darkGrey'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
+                    Companies
+                  </Text>
+                )}
               </li>
               <li className={styles.headerLink}>
                 <Link title='Courses' to='https://academy.bossjob.ph/courses/search-courses' aTag>
@@ -88,13 +127,21 @@ const PublicHeader = () => {
               </Link>
             </li>
             <li className={styles.headerLink}>
-              <Link to='/get-started' title='Get Started'>
+              {router.route !== '/get-started' ? (
+                <Link to='/get-started' title='Get Started'>
+                  <MaterialButton variant='outlined' size='medium' capitalize>
+                    <Text textStyle='base' textColor='primaryBlue' bold>
+                      Get Started
+                    </Text>
+                  </MaterialButton>
+                </Link>
+              ) : (
                 <MaterialButton variant='outlined' size='medium' capitalize>
                   <Text textStyle='base' textColor='primaryBlue' bold>
                     Get Started
                   </Text>
                 </MaterialButton>
-              </Link>
+              )}
             </li>
           </React.Fragment>
         </ul>
