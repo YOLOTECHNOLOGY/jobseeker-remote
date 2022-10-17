@@ -35,7 +35,7 @@
 
 .AuthWrapper {
   width: 740px;
-  min-height: 600px;
+  min-height: 560px;
   background-color: $white-3;
   box-shadow: 0px 4px 6px rgba(150, 149, 149, 0.16);
   margin: 0 auto;
@@ -52,10 +52,19 @@
       text-align: center;
       &LineBg {
         background-repeat: no-repeat;
-        background-position-x: -12px;
+        background-position-x: 21px;
         background-position-y: 25px;
       }
+
+      &_context {
+        font-size: 32px !important;
+      }
     }
+
+    &_JobDetailTitle {
+      margin-top: 40px;
+    }
+
     &Context {
       width: 100%;
       margin-top: 20px;
@@ -128,6 +137,10 @@
   }
 }
 
+.AuthJobDetailWrapper {
+  min-height: 530px !important;
+}
+
 .AuthHeading {
   text-align: center;
 }
@@ -186,7 +199,7 @@
 }
 
 .fieldError {
-  margin: 0 0 10px;
+  margin: 0 0 10px !important;
 }
 
 .RegisterDivider {

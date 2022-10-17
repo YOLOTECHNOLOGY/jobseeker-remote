@@ -661,22 +661,56 @@ const Job = ({
                 </Text>
               </div>
             </div>
-            <div className={quickStyles.AuthWrapper}>
+            <div
+              className={classNames([quickStyles.AuthWrapper, quickStyles.AuthJobDetailWrapper])}
+            >
               <div className={quickStyles.AuthWrapperImage}>
-                <div className={quickStyles.AuthWrapperImageTitle}>
+                <div
+                  className={classNames([
+                    quickStyles.AuthWrapperImageTitle,
+                    quickStyles.AuthWrapperImage_JobDetailTitle
+                  ])}
+                >
                   <div
                     className={quickStyles.AuthWrapperImageTitleLineBg}
                     style={{ backgroundImage: 'url(' + increaseUserConversionBrush + ')' }}
                   >
-                    <Text textColor='white' textStyle='xxxl' block bold>
-                      Chat with Boss
+                    <Text
+                      textColor='white'
+                      textStyle='xxxl'
+                      block
+                      bold
+                      className={quickStyles.AuthWrapperImageTitle_context}
+                    >
+                      Chat with
                     </Text>
                   </div>
-                  <Text textColor='white' textStyle='xxxl' block bold>
-                    to get your
+                  <Text
+                    textColor='white'
+                    textStyle='xxxl'
+                    block
+                    bold
+                    className={quickStyles.AuthWrapperImageTitle_context}
+                  >
+                    Boss to get
                   </Text>
-                  <Text textColor='white' textStyle='xxxl' block bold>
-                    next offer!
+                  <Text
+                    textColor='white'
+                    textStyle='xxxl'
+                    block
+                    bold
+                    className={quickStyles.AuthWrapperImageTitle_context}
+                  >
+                    your next
+                  </Text>
+                  <Text
+                    textColor='white'
+                    textStyle='xxxl'
+                    block
+                    bold
+                    className={quickStyles.AuthWrapperImageTitle_context}
+                  >
+                    offer!
                   </Text>
                 </div>
                 <div className={quickStyles.AuthWrapperImageContext}>
