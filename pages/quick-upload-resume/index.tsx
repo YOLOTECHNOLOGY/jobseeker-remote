@@ -31,15 +31,42 @@ const QuickUploadResume = () => {
                   className={styles.AuthWrapperImageTitleLineBg}
                   style={{ backgroundImage: 'url(' + increaseUserConversionBrush + ')' }}
                 >
-                  <Text textColor='white' textStyle='xxxl' block bold>
-                    Chat with Boss
+                  <Text
+                    textColor='white'
+                    textStyle='xxxl'
+                    block
+                    bold
+                    className={styles.AuthWrapperImageTitle_context}
+                  >
+                    Chat with
                   </Text>
                 </div>
-                <Text textColor='white' textStyle='xxxl' block bold>
-                  to get your
+                <Text
+                  textColor='white'
+                  textStyle='xxxl'
+                  block
+                  bold
+                  className={styles.AuthWrapperImageTitle_context}
+                >
+                  Boss to get
                 </Text>
-                <Text textColor='white' textStyle='xxxl' block bold>
-                  next offer!
+                <Text
+                  textColor='white'
+                  textStyle='xxxl'
+                  block
+                  bold
+                  className={styles.AuthWrapperImageTitle_context}
+                >
+                  your next
+                </Text>
+                <Text
+                  textColor='white'
+                  textStyle='xxxl'
+                  block
+                  bold
+                  className={styles.AuthWrapperImageTitle_context}
+                >
+                  offer!
                 </Text>
               </div>
               <div className={styles.AuthWrapperImageContext}>
