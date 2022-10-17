@@ -184,19 +184,15 @@ const VerifyPhoneNumber = ({
     setEdit(null)
   }
 
-  const verifiError = () => {
-    setOtpError('OTP is incorrect. Please try again.')
+  const verifiError = (errorMessage?: string) => {
+    if (errorMessage == 'Invalid otp') {
+      errorMessage = 'OTP is incorrect. Please try again.'
+    }
+    setOtpError(errorMessage)
   }
 
   const verifyEmailOrChangeEmail = () => {
-    const sms = getSmsCountryCode(defaultPhone, smsCountryList)
-
-    let phone
-    if (sms) {
-      phone = sms + Number(phoneNum)
-    } else {
-      phone = phoneNum
-    }
+    const phone = smsCode + phoneNum
     if (defaultPhone === phone) {
       // verify
       verifyPhoneNumber({ otp: Number(otp) })
@@ -212,8 +208,10 @@ const VerifyPhoneNumber = ({
             verifiSuccess()
           }
         })
-        .catch(() => {
-          verifiError()
+        .catch((error) => {
+          const response = error.response
+          const resultError = response.data?.errors
+          verifiError(resultError?.error[0])
         })
     } else {
       // change
@@ -230,8 +228,10 @@ const VerifyPhoneNumber = ({
             verifiSuccess()
           }
         })
-        .catch(() => {
-          verifiError()
+        .catch((error) => {
+          const response = error.response
+          const resultError = response?.data?.errors
+          verifiError(resultError?.error[0])
         })
     }
   }
