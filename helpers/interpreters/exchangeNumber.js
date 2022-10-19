@@ -38,7 +38,9 @@ export default command => command.cata({
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
     }),
-
+    startCountDown: () => M(context => {
+        return Promise.resolve().then(context.startCountDown)
+    }),
     verifyRequest: otp => M(context => {
         context.setLoading(true)
         return verify(otp).then(result => RequestResult.success(result.data))
@@ -73,7 +75,6 @@ export default command => command.cata({
             .finally(() => context.setLoading(false))
     }),
     copyNumber: () => M(context => {
-        console.log()
         return navigator.clipboard.writeText(context.getState()?.contact_exchange_request?.recruiter_contact_num)
     }),
     updateUser: () => M(context => {

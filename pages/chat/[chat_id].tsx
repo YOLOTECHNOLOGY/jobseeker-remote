@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { JobseekerChat } from 'imforbossjob'
 import 'imforbossjob/dist/style.css'
 import SendResumeModal from 'components/Chat/SendResume'
@@ -11,19 +11,27 @@ import NotInterestModal from 'components/Chat/notInterest'
 import { fetchUserDetailRequest } from 'store/actions/users/fetchUserDetail'
 import { getCookie } from 'helpers/cookies'
 import ExchangeModal from 'components/Chat/exchange'
+import { wrapper } from 'store'
+import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+import { END } from 'redux-saga'
 const Chat = () => {
     const router = useRouter()
-    const { query: { application_id: applicationId } } = router
+    const { query: { chat_id: chatId } } = router
     const [loading, setLoading] = useState(false)
     const [imState, setImState] = useState({} as any)
     const accessToken = getCookie('accessToken')
-
-    console.log({ imState })
+    const applicationId = useMemo(() => {
+        return imState?.id ? `${imState.id}` : ''
+    }, [imState])
     const dispatch = useDispatch()
     const applcationIdRef = useRef(applicationId)
     const stateRef = useRef(imState)
     const userDetail = useSelector((store: any) => store.users.fetchUserDetail.response)
     const userDetailRef = useRef(userDetail)
+    const chatIdRef = useRef(chatId)
+    useEffect(() => {
+        chatIdRef.current = chatId
+    }, [chatId])
     useEffect(() => {
         applcationIdRef.current = applicationId
     }, [applicationId])
@@ -59,12 +67,14 @@ const Chat = () => {
             console.log('finish', type)
         },
         isUserNumberValidate() {
-            return undefined
             return userDetailRef.current?.phone_num
         },
         updateData(data) {
-            console.log('update', data)
-            setImState(data?.data)
+            console.log('update', data?.data?.job_application)
+            setImState(data?.data?.job_application)
+        },
+        getChatId() {
+            return chatIdRef.current
         },
         getApplicationId() {
             return applcationIdRef.current
@@ -110,13 +120,23 @@ const Chat = () => {
         <JobseekerChat
             loading={loading}
             imState={imState}
-            applicationId={applicationId}
+            chatId={chatId}
             interpreter={script => interpreter(script).run(contextRef.current)}
         />
 
     </>
 }
-export const getServerSideProps = () => {
-    return { props: {} }
-}
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+    const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
+
+    store.dispatch(fetchConfigRequest())
+    store.dispatch(fetchUserDetailRequest({ accessToken }))
+    store.dispatch(END)
+
+    await (store as any).sagaTask.toPromise()
+
+    return {
+        props: {}
+    }
+})
 export default Chat

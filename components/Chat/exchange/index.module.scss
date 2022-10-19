@@ -1,0 +1,82 @@
+.modalContainer {
+    //width: 758px;
+    //padding: 24px 32px;
+
+    .modalTitle {
+        font-weight: 700;
+        font-size: pxToRem(24px);
+        line-height: 30px;
+        letter-spacing: 1px;
+    }
+
+    .description {
+        margin-top: 16px;
+        font-weight: 400;
+        font-size: pxToRem(14px);
+        line-height: 24px;
+        letter-spacing: 0.75px;
+        color: #353535;
+    }
+
+    .formContainer {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        a {
+            :disabled {
+                color: #707070;
+            }
+        }
+
+        .numberContainer {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            margin-top: 15px;
+
+            .selectContainer {
+                height: 60px;
+                width: 140px;
+                .fullWidth {
+                    width: 100%;
+                }
+            }
+
+            .inputContainer {
+                width: auto;
+                height: 30px;
+                flex-grow: 1;
+                margin-left: 10px;
+            }
+        }
+
+        .detailItemContainer {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            margin-top: 10px;
+            label {
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 24px;
+                letter-spacing: 0.02em;
+                color: #707070;
+                
+            }
+
+            p {
+                margin-left: 10px;
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 24px;
+                letter-spacing: 0.02em;
+                color: #353535;
+            }
+        }
+    }
+}
