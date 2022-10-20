@@ -14,6 +14,9 @@ import ExchangeModal from 'components/Chat/exchange'
 import { wrapper } from 'store'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { END } from 'redux-saga'
+import CancelDetailModal from 'components/Chat/interview/cancelDetail'
+import CancelModal from 'components/Chat/interview/cancel'
+import IssueModal from 'components/Chat/interview/issue'
 const Chat = () => {
     const router = useRouter()
     const { query: { chat_id: chatId } } = router
@@ -56,6 +59,9 @@ const Chat = () => {
             contextRef.current?.closeDetail?.()
             contextRef.current?.closeNotInterest?.()
             contextRef.current?.closeExchange?.()
+            contextRef.current?.closeCancelDetail?.(),
+            contextRef.current?.closeCancel?.(),
+            contextRef.current?.closeIssue?.()
         },
         updateUser() {
             dispatch(fetchUserDetailRequest({ accessToken }))
@@ -115,7 +121,24 @@ const Chat = () => {
             data={imState}
             applicationId={applicationId}
             contextRef={contextRef}
-            interpreter={script => interpreter(script).run(contextRef.current)}
+        />
+        <IssueModal
+            loading={loading}
+            data={imState?.interview}
+            applicationId={applicationId}
+            contextRef={contextRef}
+        />
+        <CancelModal
+            loading={loading}
+            data={imState?.interview}
+            applicationId={applicationId}
+            contextRef={contextRef}
+        />
+        <CancelDetailModal
+            loading={loading}
+            data={imState?.interview}
+            applicationId={applicationId}
+            contextRef={contextRef}
         />
         <JobseekerChat
             loading={loading}

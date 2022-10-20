@@ -14,7 +14,6 @@ const ExchangeModal = (props: any) => {
     const [countryCode, setCountryCode] = useState('')
     const [mobileNumber,setMobileNumber] = useState('')
     const [otp,setOtp] = useState('')
-    const config = useSelector((store:any) => store.users?.fetchUserDetail?.response?.phone_num)
     const dispatch = useDispatch()
     const countryOptions = useSelector((store:any) => store.config.config.response?.inputs?.country_lists
         ?.map?.(item => ({
@@ -22,8 +21,6 @@ const ExchangeModal = (props: any) => {
             value: item.code
         }))
     )
-    console.log({countryOptions})
-    console.log({config})
     const number = useMemo(() => {
         if (countryCode && mobileNumber) {
             return [countryCode, mobileNumber].join(' ')
