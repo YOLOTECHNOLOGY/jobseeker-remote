@@ -92,9 +92,11 @@ export default command => command.cata({
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
     }),
-    requestAskResult: payload => M(context => {
+    requestAskResult: () => M(context => {
         context.setLoading(true)
-        return askResult(payload.applicationId, payload.inviteInterviewId)
+        const applicationId = context.getApplicationId?.()
+        const imState = context.getState?.()
+        return askResult(applicationId, imState?.interview?.id)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
