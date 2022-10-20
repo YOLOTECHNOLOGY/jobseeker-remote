@@ -1,7 +1,6 @@
 import Modal from 'components/Modal'
 import React, { useRef, useState } from 'react'
 import { assign } from 'lodash-es'
-import styles from './index.module.scss'
 import InterviewDetail from '../interviewDetail'
 const CancelDetailModal = (props: any) => {
     const [show, setShow] = useState(false)

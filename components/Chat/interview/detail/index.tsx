@@ -2,7 +2,6 @@
 import Modal from 'components/Modal'
 import React, { useMemo, useRef, useState } from 'react'
 import { assign } from 'lodash-es'
-import { Button } from '@mui/material'
 import { Timeline, TimelineConnector, TimelineContent, TimelineItem, TimelineSeparator } from '@mui/lab'
 import styles from './index.module.scss'
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
@@ -31,9 +30,8 @@ const DetailModal = (props: any) => {
             setShow(false)
         }
     }
-    const cancelReason = 'some reason'
     // const dispatch = useDispatch()
-    const [Upcoming, inProgress] = useMemo(() => {
+    const [upComing, inProgress] = useMemo(() => {
         const hours = dayjs(data?.interviewed_at).diff(dayjs(), 'hours')
         console.log('hours', hours)
         return [hours < 6 && hours > 2, hours <= 2]
@@ -56,7 +54,7 @@ const DetailModal = (props: any) => {
             {
                 title: 'Checked-in',
                 label: 'Check in for the interview with recruiter',
-                isFinish: Upcoming,
+                isFinish: upComing || inProgress || data?.status === 'Interview completed',
                 actionName: 'Check-in',
                 actionEnable: !data?.checked_in_at,
                 action: () => actionsRef.current?.checkIn?.({
@@ -67,7 +65,7 @@ const DetailModal = (props: any) => {
             {
                 title: 'In-progress',
                 label: 'You can report any issue during this stage',
-                isFinish: inProgress,
+                isFinish: inProgress || data?.status === 'Interview completed',
                 actionName: 'Report issues',
                 actionEnable: ['Interview accepted', 'Interview checked in'].includes(data?.status),
                 action: () => actionsRef.current?.reportIssue?.({
@@ -80,6 +78,7 @@ const DetailModal = (props: any) => {
                 label: 'You can request interview result from the recruiter',
                 isFinish: data?.status === 'Interview completed',
                 actionName: 'Requested for results',
+                actionEnable: (inProgress || data?.status === 'Interview completed') && !data?.complete_at,
                 action: () => {
                     // if (data?.status !== 'In-progress') {
                     //     dispatch(
@@ -91,11 +90,11 @@ const DetailModal = (props: any) => {
                     //     )
                     //     return
                     // }
-                    actionsRef.current?.reportIssue?.()
+                    actionsRef.current?.askResult?.()
                 }
             }
         ]
-    }, [data, actionsRef.current, applicationId, inProgress, Upcoming])
+    }, [data, actionsRef.current, applicationId, inProgress, upComing])
 
     return <Modal
         showModal={show}
@@ -112,29 +111,34 @@ const DetailModal = (props: any) => {
     >
         <InterviewDetail data={data} />
         <Timeline position='right' classes={{ root: styles.root }}>
-            {timelineItems.map((item, i) => (
-                <TimelineItem key={i} classes={{ missingOppositeContent: styles.missing }}>
-                    <TimelineSeparator>
-                        <Icon isFinish={item.isFinish} />
-                        {i !== 3 && <TimelineConnector />}
-                    </TimelineSeparator>
-                    <TimelineContent sx={{ width: 400 }}>
-                        <div className={styles.timelineItem}>
-                            <label >{item.title}</label>
-                            <p>{item.label}</p>
-                            {item.actionName && <a
-                                disabled={!item.actionEnable}
-                                onClick={() => {
-                                    if (item.actionEnable) {
-                                        item.action()
-                                    }
-                                }}>
-                                {item.actionName}
-                            </a>}
-                        </div>
-                    </TimelineContent>
-                </TimelineItem>
-            ))}
+            {timelineItems.map((item, i) => {
+                const aProps: any = {
+                    disabled: !item.actionEnable,
+                    onClick: () => {
+                        if (item.actionEnable) {
+                            item.action()
+                        }
+                    }
+                }
+                return (
+                    <TimelineItem key={i} classes={{ missingOppositeContent: styles.missing }}>
+                        <TimelineSeparator>
+                            <Icon isFinish={item.isFinish} />
+                            {i !== 3 && <TimelineConnector />}
+                        </TimelineSeparator>
+                        <TimelineContent sx={{ width: 400 }}>
+                            <div className={styles.timelineItem}>
+                                <label >{item.title}</label>
+                                <p>{item.label}</p>
+                                {item.actionName &&
+                                    <a {...aProps}>
+                                        {item.actionName}
+                                    </a>}
+                            </div>
+                        </TimelineContent>
+                    </TimelineItem>
+                )
+            })}
         </Timeline>
     </Modal>
 }

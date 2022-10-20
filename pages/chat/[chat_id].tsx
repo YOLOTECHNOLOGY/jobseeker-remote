@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { JobseekerChat } from 'imforbossjob'
 import 'imforbossjob/dist/style.css'
-import SendResumeModal from 'components/Chat/SendResume'
+import SendResumeModal from 'components/Chat/sendResume'
 import interpreter from 'helpers/interpreters'
 import { useDispatch, useSelector } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'

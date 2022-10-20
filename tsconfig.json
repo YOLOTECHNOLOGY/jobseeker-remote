@@ -34,7 +34,7 @@
     "pages/**/*.tsx",
     "pages/*.jsx",
     "pages/**/*.jsx"
-  ],
+, "components/Chat/interview/detail/index.tsx"  ],
   "exclude": [
     "node_modules"
   ]

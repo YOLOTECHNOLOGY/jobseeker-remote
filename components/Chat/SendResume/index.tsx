@@ -18,6 +18,7 @@ const SendResumeModal = (props: any) => {
         
     }
     const [resumeId,setResumeId] = useState(2)
+    console.log(setResumeId)
     contextRef.current = assign(contextRef.current, context)
     return <Modal
         showModal={show}
