@@ -987,7 +987,7 @@ const RenderResumeView = ({ userDetail }: any) => {
   const handleDeleteResume = () => {
     setResume(null)
   }
-
+  
   const handleUploadResume = (file) => {
     uploadUserResumeService(file)
       .then((response) => {

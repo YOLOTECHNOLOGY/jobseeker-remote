@@ -1,7 +1,7 @@
 /* eslint-disable new-cap */
 import { ReaderTPromise as M } from './monads'
 import { scripts } from 'imforbossjob'
-import { update } from './services/common'
+import { update, updateChat } from './services/common'
 const { utils } = scripts
 const { RequestResult } = utils
 export default command => command.cata({
@@ -12,9 +12,9 @@ export default command => command.cata({
         context.handleFinish(type)
     })),
     requestUpdate: () => M(context => {
-        const applicationId = context.getApplicationId()
+        const chatId = context.getChatId()
         context.setLoading(true)
-        return update(applicationId)
+        return updateChat(chatId)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
@@ -28,6 +28,9 @@ export default command => command.cata({
     })),
     closeModals: () => M(context => Promise.resolve().then(() => {
         context.hideModals?.()
-    }))
+    })),
+    changeChatRoom: chatId => M(context => Promise.resolve().then(() => {
+        context.changeChat?.(chatId)
+    })),
 })
 

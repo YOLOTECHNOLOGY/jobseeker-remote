@@ -1,44 +1,38 @@
 import Modal from 'components/Modal'
 import React, { useRef, useState } from 'react'
 import { assign } from 'lodash-es'
-import InterviewDetail from './interviewDetail'
-
-const AcceptModal = (props: any) => {
+const IssueModal = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef, loading, data, applicationId } = props
+    const { contextRef, data,applicationId,loading } = props
     const actionsRef = useRef({} as any)
     const context = {
-        showAccept(actions) {
+        showIssue(actions) {
             actionsRef.current = actions
             setShow(true)
         },
-        closeAccept() {
+        closeIssue() {
             setShow(false)
         }
     }
-    console.log('acceptData',data)
     contextRef.current = assign(contextRef.current, context)
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
-        headerTitle={'interview invited accept modal'}
-        firstButtonText='Decline'
-        secondButtonText='Accept'
+        headerTitle={'Report issue'}
+        firstButtonText='Back'
+        secondButtonText='Send'
         firstButtonIsClose={false}
         secondButtonIsClose={false}
-        handleFirstButton={() => actionsRef.current.declined?.({
+        handleFirstButton={() => actionsRef.current.back?.()}
+        handleSecondButton={() => actionsRef.current.send?.({
             applicationId,
             inviteInterviewId: data.id,
-        })}
-        handleSecondButton={() => actionsRef.current.accept?.({
-            applicationId,
-            inviteInterviewId: data.id,
+            params:{}
         })}
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <InterviewDetail data={data}/>
     </Modal>
 }
 
-export default AcceptModal
+export default IssueModal

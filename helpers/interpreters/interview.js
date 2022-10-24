@@ -7,7 +7,9 @@ const { utils,
         AcceptModalActions,
         ConfirmModalActions,
         DetailModalActions,
-        IssueModalActions
+        IssueModalActions,
+        CancelDetailModalActions,
+        CancelModalActions
     }
 } = scripts
 const { RequestResult } = utils
@@ -20,9 +22,21 @@ export default command => command.cata({
             close: () => resolve(AcceptModalActions.close)
         })
     })),
+    modalCancel: () => M(context => new Promise(resolve => {
+        context.showCancel({
+            close: () => resolve(CancelModalActions.close),
+            send: payload => resolve(CancelModalActions.send(payload)),
+            back: () => resolve(CancelModalActions.back)
+        })
+    })),
+    modalCancelDetail: () => M(context => new Promise(resolve => {
+        context.showCancelDetail({
+            close: () => resolve(CancelDetailModalActions.close)
+        })
+    })),
     modalConfirm: () => M(context => new Promise(resolve => {
         context.showConfirm({
-            accept: () => resolve(ConfirmModalActions.accept),
+            accept: payload => resolve(ConfirmModalActions.accept(payload)),
             back: () => resolve(ConfirmModalActions.back),
             close: () => resolve(ConfirmModalActions.close)
         })
@@ -37,9 +51,9 @@ export default command => command.cata({
         })
     })),
     modalIssue: () => M(context => new Promise(resolve => {
-        context.showConfirm({
+        context.showIssue({
             close: () => resolve(IssueModalActions.close),
-            send: () => resolve(IssueModalActions.send),
+            send: payload => resolve(IssueModalActions.send(payload)),
             back: () => resolve(IssueModalActions.back)
         })
     })),
@@ -78,9 +92,11 @@ export default command => command.cata({
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
     }),
-    requestAskResult: payload => M(context => {
+    requestAskResult: () => M(context => {
         context.setLoading(true)
-        return askResult(payload.applicationId, payload.inviteInterviewId)
+        const applicationId = context.getApplicationId?.()
+        const imState = context.getState?.()
+        return askResult(applicationId, imState?.interview?.id)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
