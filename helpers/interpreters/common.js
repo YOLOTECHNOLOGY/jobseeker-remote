@@ -28,6 +28,9 @@ export default command => command.cata({
     })),
     closeModals: () => M(context => Promise.resolve().then(() => {
         context.hideModals?.()
-    }))
+    })),
+    changeChatRoom: chatId => M(context => Promise.resolve().then(() => {
+        context.changeChat?.(chatId)
+    })),
 })
 

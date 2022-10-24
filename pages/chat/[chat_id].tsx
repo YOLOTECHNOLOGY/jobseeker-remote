@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { JobseekerChat } from 'imforbossjob'
+import { JobseekerChat, IMManager } from 'imforbossjob'
 import 'imforbossjob/dist/style.css'
 import SendResumeModal from 'components/Chat/sendResume'
 import interpreter from 'helpers/interpreters'
@@ -8,7 +8,6 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { useRouter } from 'next/router'
 import Interview from 'components/Chat/interview'
 import NotInterestModal from 'components/Chat/notInterest'
-import { fetchUserDetailRequest } from 'store/actions/users/fetchUserDetail'
 import { getCookie } from 'helpers/cookies'
 import ExchangeModal from 'components/Chat/exchange'
 import { wrapper } from 'store'
@@ -17,21 +16,41 @@ import { END } from 'redux-saga'
 import CancelDetailModal from 'components/Chat/interview/cancelDetail'
 import CancelModal from 'components/Chat/interview/cancel'
 import IssueModal from 'components/Chat/interview/issue'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { getAuth } from 'helpers/interpreters/services/chat'
+import { list } from 'helpers/interpreters/services/chat'
+import Layout from 'components/Layout'
 const Chat = () => {
     const router = useRouter()
     const { query: { chat_id: chatId } } = router
     const [loading, setLoading] = useState(false)
     const [imState, setImState] = useState({} as any)
+    const [chatList, setChatList] = useState([])
+
+    useEffect(() => {
+        list().then(result => {
+            setChatList(result.data?.data?.chats)
+        })
+    }, [])
     const accessToken = getCookie('accessToken')
+    const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
     const applicationId = useMemo(() => {
         return imState?.id ? `${imState.id}` : ''
     }, [imState])
     const dispatch = useDispatch()
     const applcationIdRef = useRef(applicationId)
     const stateRef = useRef(imState)
-    const userDetail = useSelector((store: any) => store.users.fetchUserDetail.response)
     const userDetailRef = useRef(userDetail)
     const chatIdRef = useRef(chatId)
+    const userId = userDetail.id
+    console.log('imState', imState)
+    useEffect(() => {
+        if (userId) {
+            IMManager.accessUser('' + userId, userId => getAuth(userId).then(result => {
+                return result.data?.data?.authcode
+            }))
+        }
+    }, [userId])
     useEffect(() => {
         chatIdRef.current = chatId
     }, [chatId])
@@ -44,11 +63,6 @@ const Chat = () => {
     useEffect(() => {
         userDetailRef.current = userDetail
     }, [userDetail])
-    useEffect(() => {
-        if (!Object.keys(userDetail).length) {
-            dispatch(fetchUserDetailRequest({ accessToken }))
-        }
-    }, [userDetail])
 
     const contextRef = useRef({
         setLoading,
@@ -60,11 +74,11 @@ const Chat = () => {
             contextRef.current?.closeNotInterest?.()
             contextRef.current?.closeExchange?.()
             contextRef.current?.closeCancelDetail?.(),
-            contextRef.current?.closeCancel?.(),
-            contextRef.current?.closeIssue?.()
+                contextRef.current?.closeCancel?.(),
+                contextRef.current?.closeIssue?.()
         },
         updateUser() {
-            dispatch(fetchUserDetailRequest({ accessToken }))
+            dispatch(fetchUserOwnDetailRequest({ accessToken }))
         },
         handleError(e) {
             console.log('error', e)
@@ -88,6 +102,10 @@ const Chat = () => {
         getState() {
             return stateRef.current
         },
+        changeChat(chatId) {
+            console.log('onChangeChat', chatId)
+            router.replace(`/chat/${chatId}`, null, { shallow: false, locale: false })
+        },
         showToast(type, content) {
             dispatch(
                 displayNotification({
@@ -98,7 +116,7 @@ const Chat = () => {
             )
         }
     } as any)
-    return <>
+    return <Layout>
         <SendResumeModal
             loading={loading}
             contextRef={contextRef}
@@ -144,16 +162,17 @@ const Chat = () => {
             loading={loading}
             imState={imState}
             chatId={chatId}
+            chatList={chatList}
             interpreter={script => interpreter(script).run(contextRef.current)}
         />
 
-    </>
+    </Layout>
 }
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
     const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
 
     store.dispatch(fetchConfigRequest())
-    store.dispatch(fetchUserDetailRequest({ accessToken }))
+    store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
     store.dispatch(END)
 
     await (store as any).sagaTask.toPromise()

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import moment from 'moment'
 import { isMobile } from 'react-device-detect'
-
+import { createChat } from 'helpers/interpreters/services/chat'
 /* Vendors */
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
@@ -224,7 +224,16 @@ const JobDetail = ({
       router.push('/get-started?redirect=/jobs-hiring/job-search')
     }
   }
-
+  const handleChat = () => {
+    createChat(selectedJob?.id).then(result => {
+      const chatId = result.data.data.chat_id
+      router.push(`/chat/${chatId}`)
+    }).catch(e => {
+      console.log('e', e)
+      router.push(`/chat/null`)
+    })
+  }
+  console.log('selectedJob', selectedJob)
   useEffect(() => {
     if (getCookie('isReportJob') && authCookie && userCookie) {
       setIsShowReportJob(true)
@@ -271,6 +280,11 @@ const JobDetail = ({
                       )}
                     </>
                   )}
+                  <MaterialButton variant='contained' capitalize onClick={handleChat}>
+                    <Text textColor='white' bold>
+                      Chat Now
+                    </Text>
+                  </MaterialButton>
                   <MaterialButton
                     variant='outlined'
                     capitalize

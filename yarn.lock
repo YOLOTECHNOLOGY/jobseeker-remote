@@ -2773,13 +2773,14 @@ image-size@1.0.0:
   dependencies:
     queue "6.0.2"
 
-imforbossjob@^0.0.160:
-  version "0.0.160"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.160.tgz#de7c5e155b350dacfec054c0d1b06ade596b0d07"
-  integrity sha512-UXsIt0oQteaRullV6aAUPOADHTp4L64VfQOhK3NUCQcgPmR3fODRNZo0+IRcjtVWRzNy6tFMT3jZu+GIrAfWOA==
+imforbossjob@^0.0.215:
+  version "0.0.215"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.215.tgz#a41d3c66991544a01c71a19330edc693e9387658"
+  integrity sha512-3lAfCVdFo35k79JTkqxT7xaoFZw6RmTD9aNGp5SlXgdoCFpsUdkuTxmbxZvu1O+s4gibSOa3ZTShFElmMQzjAQ==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     antd "^4.23.3"
+    imsdkweb "^0.0.3"
 
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   version "3.3.0"
@@ -2788,6 +2789,11 @@ import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   dependencies:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
+
+imsdkweb@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.3.tgz#6a55e61b82e42a3677105441887fc08fa35200d5"
+  integrity sha512-HK9W1Xjv+ORAh/mjCej1Z7KFOLDOtyJiJ0RUlzg7dXOIMGmVq3dzNV+agfduT3SQP/mlwhNy/kCw0cgP3Kw25A==
 
 imurmurhash@^0.1.4:
   version "0.1.4"
