@@ -18,7 +18,7 @@ export default command => command.cata({
     })),
     requestNotInterest: payload => M(context => {
         context.setLoading(true)
-        return create(payload.applicationId, payload.id, payload.params)
+        return create(payload.applicationId,payload.params)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
