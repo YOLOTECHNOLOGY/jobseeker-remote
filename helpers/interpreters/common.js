@@ -1,6 +1,5 @@
 /* eslint-disable new-cap */
-import { ReaderTPromise as M } from './monads'
-import { scripts } from 'imforbossjob'
+import { scripts,M } from 'imforbossjob'
 import { update, updateChat } from './services/common'
 const { utils } = scripts
 const { RequestResult } = utils

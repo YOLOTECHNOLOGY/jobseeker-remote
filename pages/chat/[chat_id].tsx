@@ -163,7 +163,9 @@ const Chat = () => {
             imState={imState}
             chatId={chatId}
             chatList={chatList}
-            interpreter={script => interpreter(script).run(contextRef.current)}
+            contextRef={contextRef}
+
+            businessInterpreters={interpreter}
         />
 
     </Layout>

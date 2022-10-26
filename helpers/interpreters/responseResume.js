@@ -1,6 +1,5 @@
 /* eslint-disable new-cap */
-import { scripts } from 'imforbossjob'
-import { ReaderTPromise as M } from './monads'
+import { scripts,M } from 'imforbossjob'
 import { sendResume, decline, askSendResume } from './services/resume'
 const { utils, responseResumeJobseeker: { ModalActions } } = scripts
 const { RequestResult } = utils

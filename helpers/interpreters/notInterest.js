@@ -1,6 +1,5 @@
 /* eslint-disable new-cap */
-import { scripts } from 'imforbossjob'
-import { ReaderTPromise as M } from './monads'
+import { scripts,M } from 'imforbossjob'
 import { create } from './services/notInterest'
 const { utils,
     notInterestJobseeker: {
