@@ -9,11 +9,11 @@ export const sendResume = (applicationId, requestResumeId, params) => {
     )
 }
 
-export const askSendResume = (applicationId, requestResumeId, params) => {
+export const askSendResume = (applicationId, params) => {
 
     const axios = configuredAxios('jobApplication', 'protected')
     return axios.post(
-        `/${applicationId}/jobseekers/resume-requests/${requestResumeId}/create`,
+        `/${applicationId}/jobseekers/resume-requests/create`,
         params
     )
 }

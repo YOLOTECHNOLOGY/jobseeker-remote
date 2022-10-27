@@ -20,7 +20,7 @@ export default command => command.cata({
     }),
     requestAskSendResume: payload => M(context => {
         context.setLoading(true)
-        return askSendResume(payload.applicationId, payload.requestResumeId, payload.params)
+        return askSendResume(payload.applicationId, payload.params)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
