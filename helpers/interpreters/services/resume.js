@@ -12,7 +12,7 @@ export const sendResume = (applicationId, requestResumeId, params) => {
 export const askSendResume = (applicationId, requestResumeId, params) => {
 
     const axios = configuredAxios('jobApplication', 'protected')
-    return axios.put(
+    return axios.post(
         `/${applicationId}/jobseekers/resume-requests/${requestResumeId}/create`,
         params
     )

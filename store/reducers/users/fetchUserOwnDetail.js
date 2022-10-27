@@ -28,7 +28,7 @@ export default function fetchUserOwnDetail(state = initialState, action) {
       return {
         ...state,
         fetching: false,
-        error: action.error,
+        error: action.error?.toString?.(),
         response: {},
       }
     default:
