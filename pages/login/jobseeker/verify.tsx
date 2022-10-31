@@ -5,6 +5,8 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
 
+import { useUserAgent } from 'next-useragent'
+
 // api
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
@@ -17,6 +19,41 @@ const Verify = ({ query }: any) => {
 
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+
+  useEffect(() => {
+    const userAgent = useUserAgent(window.navigator.userAgent)
+    const { email, otp, redirect } = query
+    if (!email || !otp) {
+      return
+    }
+
+    if (userAgent.deviceType === 'mobile') {
+      let redirectUrl: string
+      if (Array.isArray(redirect)) {
+        redirectUrl = redirect[0]
+      } else {
+        redirectUrl = redirect
+      }
+      const schema = `bossjob://jobseeker/verify?email=${email}&otp=${otp}&redirect=${redirectUrl}`
+      window.location.replace(schema)
+
+      const appStoreLink = userAgent?.isIos
+        ? process.env.APP_STORE_LINK
+        : process.env.GOOGLE_PLAY_STORE_LINK
+
+      // Wait 2s and redirect to App Store/Google Play Store if app was not opened
+      setTimeout(() => {
+        window.location.replace(appStoreLink)
+      }, 2000)
+    } else {
+      const data = {
+        email,
+        otp,
+        source: width > 576 ? 'web' : 'mobile_web'
+      }
+      dispatch(jobbseekersLoginRequest(data))
+    }
+  }, [])
 
   useEffect(() => {
     if (!Object.keys(userInfo).length) {
@@ -33,16 +70,6 @@ const Verify = ({ query }: any) => {
     const errorMessage = error.data?.errors?.error[0]
     loginFailed(errorMessage)
   }, [error])
-
-  useEffect(() => {
-    const { email, otp } = query
-    const data = {
-      email,
-      otp,
-      source: width > 576 ? 'web' : 'mobile_web'
-    }
-    dispatch(jobbseekersLoginRequest(data))
-  }, [])
 
   const logSuccess = (data: any) => {
     const defaultToPath =
