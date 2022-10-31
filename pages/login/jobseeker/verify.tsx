@@ -1,11 +1,16 @@
-import { useEffect } from 'react'
-import useWindowDimensions from 'helpers/useWindowDimensions'
+import React, { useEffect, useState } from 'react'
+import { useUserAgent } from 'next-useragent'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
 
-import { useUserAgent } from 'next-useragent'
+// tools
+import useWindowDimensions from 'helpers/useWindowDimensions'
+import { setCookie, setCookieWithExpiry } from 'helpers/cookies'
+
+// components
+import ModalAppRedirect from 'components/ModalAppRedirect'
 
 // api
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,41 +22,23 @@ const Verify = ({ query }: any) => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
 
+  const [isShowAppRedirectModal, setIsShowAppRedirectModal] = useState(false)
+
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
 
   useEffect(() => {
     const userAgent = useUserAgent(window.navigator.userAgent)
-    const { email, otp, redirect } = query
-    if (!email || !otp) {
-      return
+    if (userAgent.isMobile) {
+      setCookie('isAppRedirectModalClosed', true)
+      setIsShowAppRedirectModal(true)
     }
+  }, [])
 
-    if (userAgent.deviceType === 'mobile') {
-      let redirectUrl: string
-      if (Array.isArray(redirect)) {
-        redirectUrl = redirect[0]
-      } else {
-        redirectUrl = redirect
-      }
-      const schema = `bossjob://jobseeker/verify?email=${email}&otp=${otp}&redirect=${redirectUrl}`
-      window.location.replace(schema)
-
-      const appStoreLink = userAgent?.isIos
-        ? process.env.APP_STORE_LINK
-        : process.env.GOOGLE_PLAY_STORE_LINK
-
-      // Wait 2s and redirect to App Store/Google Play Store if app was not opened
-      setTimeout(() => {
-        window.location.replace(appStoreLink)
-      }, 2000)
-    } else {
-      const data = {
-        email,
-        otp,
-        source: width > 576 ? 'web' : 'mobile_web'
-      }
-      dispatch(jobbseekersLoginRequest(data))
+  useEffect(() => {
+    const userAgent = useUserAgent(window.navigator.userAgent)
+    if (userAgent.deviceType != 'mobile') {
+      headerAuthLogin()
     }
   }, [])
 
@@ -67,9 +54,46 @@ const Verify = ({ query }: any) => {
     if (!error) {
       return
     }
-    const errorMessage = error.data?.errors?.error[0]
+    let errorMessage: string
+    const errorKey = Object.keys(error.data?.errors)
+    if (errorKey.length) {
+      errorMessage = errorKey[0] + ': ' + error.data?.errors[errorKey[0]][0]
+    }
     loginFailed(errorMessage)
   }, [error])
+
+  const headerOpenApp = () => {
+    const userAgent = useUserAgent(window.navigator.userAgent)
+    const { email, otp, redirect } = query
+    let redirectUrl: string
+    if (Array.isArray(redirect)) {
+      redirectUrl = redirect[0]
+    } else {
+      redirectUrl = redirect
+    }
+    const schema = `bossjob://jobseeker/verify?email=${email}&otp=${otp}&redirect=${redirectUrl}`
+    window.location.replace(schema)
+
+    const appStoreLink = userAgent?.isIos
+      ? process.env.APP_STORE_LINK
+      : process.env.GOOGLE_PLAY_STORE_LINK
+
+    // Wait 2s and redirect to App Store/Google Play Store if app was not opened
+    setTimeout(() => {
+      window.location.replace(appStoreLink)
+    }, 2000)
+  }
+
+  const headerAuthLogin = () => {
+    const { email, otp } = query
+
+    const data = {
+      email,
+      otp,
+      source: width > 576 ? 'web' : 'mobile_web'
+    }
+    dispatch(jobbseekersLoginRequest(data))
+  }
 
   const logSuccess = (data: any) => {
     const defaultToPath =
@@ -105,7 +129,24 @@ const Verify = ({ query }: any) => {
     router.push(redirectFail ? redirectFail : defaultToPath)
   }
 
-  return ''
+  const handleAppRedirectModal = () => {
+    headerAuthLogin()
+    setIsShowAppRedirectModal(false)
+    setCookieWithExpiry('isAppRedirectModalClosed', true, 1800) // cookie expires to renable auto show modal after 30 minutes
+
+    // Enables scrolling again
+    document.documentElement.classList.remove('modal-active')
+  }
+
+  return (
+    <div>
+      <ModalAppRedirect
+        isShowModal={isShowAppRedirectModal}
+        handleModal={handleAppRedirectModal}
+        handleOpenAppCallBack={headerOpenApp}
+      />
+    </div>
+  )
 }
 
 export async function getServerSideProps({ query }) {

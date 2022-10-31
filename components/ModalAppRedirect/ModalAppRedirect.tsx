@@ -18,9 +18,14 @@ import { BossjobFittedLogoApp, Chrome, Safari, OtherBrowser } from 'images'
 interface ModalAppRedirectProps {
   isShowModal?: boolean
   handleModal?: Function
+  handleOpenAppCallBack?: Function
 }
 
-const ModalAppRedirect = ({ isShowModal, handleModal }: ModalAppRedirectProps) => {
+const ModalAppRedirect = ({
+  isShowModal,
+  handleModal,
+  handleOpenAppCallBack
+}: ModalAppRedirectProps) => {
   const router = useRouter()
 
   const [userAgent, setUserAgent] = useState(null)
@@ -118,7 +123,11 @@ const ModalAppRedirect = ({ isShowModal, handleModal }: ModalAppRedirectProps) =
           />
           <Text className={styles.BossjobLogoText}>Bossjob App</Text>
           <div className={styles.ModalAppRedirectOptionAction}>
-            <MaterialButton variant='contained' capitalize onClick={() => handleOpenApp()}>
+            <MaterialButton
+              variant='contained'
+              capitalize
+              onClick={() => (handleOpenAppCallBack ? handleOpenAppCallBack() : handleOpenApp())}
+            >
               <Text textStyle='base' bold textColor='white'>
                 Open
               </Text>
