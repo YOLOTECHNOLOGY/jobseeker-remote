@@ -43,13 +43,10 @@ const Chat = () => {
     const applcationIdRef = useRef(applicationId)
     const stateRef = useRef(imState)
     const chatIdRef = useRef(chatId)
-    console.log('imState', imState)
-    import("imsdkweb").catch(e=>console.log("imsdkweb",e))
     useEffect(() => {
         if (userId) {
-            typeof window
             IMManager.accessUser('' + userId, userId => getAuth(userId).then(result => {
-               return result.data?.data?.authcode
+                return result.data?.data?.authcode
             }))
         }
     }, [userId])

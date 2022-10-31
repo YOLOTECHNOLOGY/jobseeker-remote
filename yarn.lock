@@ -2733,10 +2733,10 @@ image-size@1.0.0:
   dependencies:
     queue "6.0.2"
 
-imforbossjob@^0.0.245:
-  version "0.0.245"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.245.tgz#05893da9f7c2367826e253d28c20c729a6968275"
-  integrity sha512-/KryhpeG2LGbSXN3T6AgNmlmLAqqHexWOKua9J0M/AiOfD67L4fHI7e03r/qyoaX/2vPn8IeeizCczuwIxR8tg==
+imforbossjob@^0.0.260:
+  version "0.0.260"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.260.tgz#1d42af87b107c0c1a06829d61635fbf065038524"
+  integrity sha512-IB2SyZ53iCVbARLowm0L4aSY6W8egou1RvQLgGHMkEpCJTDS2qKcEp7YqV5hZbPqcraB7CzvcgZysJ+RnDA7bw==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     antd "^4.23.3"
