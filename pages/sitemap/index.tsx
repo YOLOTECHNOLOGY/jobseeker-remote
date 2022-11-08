@@ -32,7 +32,7 @@ const PublicSitemap = ({ config }: any) => {
           .map((region) =>
             region.locations.map((loc) => ({
               ...loc,
-              value: loc.value,
+              value: loc?.value,
               // loc value all lower case
               seoValue: loc.seo_value
             }))
@@ -166,7 +166,7 @@ const PublicSitemap = ({ config }: any) => {
               Jobs by Location
             </Text>
             <div className={styles.itemWrapperLocation}>
-              {locationList.map((loc) => generatePath(loc.seoValue, `Jobs in ${loc.value}`))}
+              {locationList.map((loc) => generatePath(loc.seoValue, `Jobs in ${loc?.value}`))}
             </div>
           </div>
           <div className={styles.section}>

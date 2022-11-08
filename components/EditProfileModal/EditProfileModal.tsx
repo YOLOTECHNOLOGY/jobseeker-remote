@@ -49,7 +49,7 @@ for (let i = date.getFullYear(); i >= date.getFullYear() - 100; --i) {
 const formatLocationConfig = (locationList) => {
   const locationConfig = locationList?.map((region) => region.locations)
   // const formattedConfig = locationConfig.map((loc) => {
-  //   return { ...loc, label: loc.value, value: loc.key }
+  //   return { ...loc, label: loc?.value, value: loc.key }
   // })
   return locationConfig
 }
@@ -110,7 +110,7 @@ const EditProfileModal = ({
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
   const matchedLocation = formattedLocationList.find((loc) => {
-    return loc.value == userLocation
+    return loc?.value == userLocation
   })
   const [location, setLocation] = useState(matchedLocation)
 
@@ -143,7 +143,7 @@ const EditProfileModal = ({
     if (userDetail && userDetail.location) {
       if (userDetail.location) {
         const matchedLocation = formattedLocationList.find((loc) => {
-          return loc.value == userLocation
+          return loc?.value == userLocation
         })
         // setLocation(matchedLocation)
         setValue('location', matchedLocation?.value)
@@ -164,7 +164,7 @@ const EditProfileModal = ({
   const onSubmit = (data) => {
     const { firstName, lastName, summary, yearsOfExperience, location } = data
     const matchedLocation = formattedLocationList.find((loc) => {
-      return loc.value == location
+      return loc?.value == location
     })
 
     const payload = {

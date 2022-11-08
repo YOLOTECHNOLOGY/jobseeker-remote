@@ -2733,10 +2733,10 @@ image-size@1.0.0:
   dependencies:
     queue "6.0.2"
 
-imforbossjob@^0.0.260:
-  version "0.0.260"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.260.tgz#1d42af87b107c0c1a06829d61635fbf065038524"
-  integrity sha512-IB2SyZ53iCVbARLowm0L4aSY6W8egou1RvQLgGHMkEpCJTDS2qKcEp7YqV5hZbPqcraB7CzvcgZysJ+RnDA7bw==
+imforbossjob@^0.0.332:
+  version "0.0.332"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.332.tgz#f2722e608fe7f6ea3d80d1184146d414c0190be2"
+  integrity sha512-SW9Pyoea1jN85+SUClSnC9JWTqCT7ZZmtaQarXtnXzcLo+G8LEchneeGgBi+UTSVSzxWGcKxaCTEWkyTKRfw2Q==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     antd "^4.23.3"
@@ -3837,6 +3837,11 @@ quill@^1.3.7:
     extend "^3.0.2"
     parchment "^1.1.4"
     quill-delta "^3.6.2"
+
+ramda@^0.28.0:
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.28.0.tgz#acd785690100337e8b063cab3470019be427cc97"
+  integrity sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
   version "2.1.0"

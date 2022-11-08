@@ -21,6 +21,7 @@ import { getAuth } from 'helpers/interpreters/services/chat'
 import { list } from 'helpers/interpreters/services/chat'
 import Layout from 'components/Layout'
 import CommonPhrases from 'components/Chat/commonPhrases'
+
 const Chat = () => {
     const router = useRouter()
     const { query: { chat_id: chatId } } = router
@@ -30,6 +31,7 @@ const Chat = () => {
     const [loading, setLoading] = useState(false)
     const [imState, setImState] = useState({} as any)
     const [chatList, setChatList] = useState([])
+    
     useEffect(() => {
         list().then(result => {
             setChatList(result.data?.data?.chats)
@@ -108,7 +110,8 @@ const Chat = () => {
         },
         changeChat(chatId) {
             console.log('onChangeChat', chatId)
-            router.replace(`/chat/${chatId}`, null, { shallow: false, locale: false })
+            // history.replaceState(null,null,`/chat/${chatId}`)
+            router.replace(`/chat/${chatId}`, null, { shallow: true, locale: false })
         },
         showToast(type, content) {
             dispatch(
@@ -120,7 +123,7 @@ const Chat = () => {
             )
         }
     } as any)
-    return <Layout>
+    return <Layout isHiddenFooter>
         <SendResumeModal
             loading={loading}
             contextRef={contextRef}

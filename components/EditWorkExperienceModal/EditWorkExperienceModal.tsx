@@ -244,7 +244,7 @@ const EditWorkExperienceModal = ({
 
   const getLocation = (location) => {
     if (!location) return
-    return locList.filter((loc) => loc.value.toLowerCase() === location.toLowerCase())
+    return locList.filter((loc) => loc?.value.toLowerCase() === location.toLowerCase())
   }
 
   const onLocationSearch = (_, value) => {

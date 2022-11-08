@@ -63,7 +63,7 @@ interface JobListSectionProps {
   accessToken: string
   postReportResponse?: any
   isPostingReport?: boolean
-  config: any
+  config: any,
 }
 
 const JobListSection = ({

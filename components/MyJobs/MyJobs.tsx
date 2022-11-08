@@ -47,6 +47,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 /* Styles */
 import styles from './MyJobs.module.scss'
 import MaterialButton from 'components/MaterialButton'
+import { fetchChatDetailRequest } from 'store/actions/jobs/fetchJobChatDetail'
 
 const theme = createTheme({
   components: {
@@ -122,7 +123,6 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
   const isAppliedJobDetailFetching = useSelector(
     (store: any) => store.job.appliedJobDetail.fetching
   )
-
   const savedJobsListResponse = useSelector((store: any) => store.job.savedJobsList.response)
   const isSavedJobsListFetching = useSelector((store: any) => store.job.savedJobsList.fetching)
 
@@ -180,9 +180,18 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
       setSelectedJob(appliedJobDetailResponse?.job)
       setApplicationUpdatedAt(appliedJobDetailResponse?.updated_at)
       setApplicationHistories(appliedJobDetailResponse?.application_histories)
+
     }
   }, [appliedJobDetailResponse])
-
+  useEffect(() => {
+    if (selectedJob?.id) {
+      console.log('selectedJob', selectedJob)
+      const recruiterId = selectedJob?.recruiter?.id
+      if (recruiterId) {
+        dispatch(fetchChatDetailRequest({ recruiterId, status: 'protected' }))
+      }
+    }
+  }, [selectedJob])
   useEffect(() => {
     setJobsList(savedJobsListResponse.data?.saved_jobs)
     setTotalPages(savedJobsListResponse.data?.total_pages)

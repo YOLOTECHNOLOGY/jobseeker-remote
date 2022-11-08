@@ -117,7 +117,7 @@ const EditJobPreferencesModal = ({
     if (userDetail && workLocation) {
       if (workLocation) {
         const matchedLocation = formattedLocationList.find((loc) => {
-          return loc.value == workLocation
+          return loc?.value == workLocation
         })
         setLocation(matchedLocation)
         setValue('location', matchedLocation?.key)
@@ -162,7 +162,7 @@ const EditJobPreferencesModal = ({
     // to add workSetting
     const { jobTitle, jobType, minSalary, maxSalary, location, noticePeriod } = data // jobType is a key
     const matchedLocation = formattedLocationList.find((loc) => {
-      return loc.value == location
+      return loc?.value == location
     })
 
     const payload = {

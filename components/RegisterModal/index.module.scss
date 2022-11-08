@@ -1,0 +1,775 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.jobDetail {
+  @extend .GlobalContainer;
+  padding: 20px 0 100px;
+  display: flex;
+  justify-content: space-between;
+
+  @include msd {
+    flex-direction: column;
+    padding: 10px 5% 100px;
+  }
+
+  &Company {
+    display: flex;
+    flex-direction: row;
+    // flex-direction: column;
+
+    &Name {
+      margin-top: 8px;
+      display: block;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &Tooltip {
+      vertical-align: middle;
+      margin-left: 5px;
+      margin-top: 11px;
+      cursor: pointer;
+    }
+  }
+
+  &Content {
+    width: 100%;
+    margin-right: 24px;
+  }
+
+  &OptionItem {
+    padding: 12px 20px;
+    display: block;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $white-1;
+    }
+  }
+
+  &Status {
+    color: #f30000;
+    margin: 16px 0;
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-right: 5px;
+    }
+
+    div {
+      margin-right: 10px;
+    }
+  }
+
+  &Primary {
+    border-radius: 4px;
+    position: relative;
+
+    @include msd {
+      border: none;
+      padding: 0;
+    }
+  }
+
+  &PrimaryOptions {
+    position: absolute;
+    top: 3px;
+    right: 0px;
+
+    img {
+      transform: rotate(90deg);
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &PrimaryInfoWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+
+    &.isSticky {
+      top: 0;
+      left: 0;
+      position: fixed;
+      z-index: 1;
+      background-color: $white-3;
+      border-bottom: 1px solid $lightgrey;
+      height: 86px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    &Container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      @extend .GlobalContainer;
+
+      &.isSticky {
+        // max width - padding
+        width: calc(1166px - 48px);
+      }
+    }
+  }
+
+  &PrimaryInfo {
+    width: min-content;
+    flex-grow: 1;
+    word-break: break-word;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    // flex-direction: row;
+    justify-content: space-between;
+
+    @include msd {
+      width: 100%;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    &.isSticky {
+      justify-content: center;
+    }
+  }
+
+  &PrimaryInfoTitle {
+    margin: 16px 24px 0 0;
+    line-height: 27px;
+
+    &.isSticky {
+      margin: 0;
+    }
+  }
+
+  &PrimaryInfoImage {
+    width: 78px;
+    height: 78px;
+    border-radius: 4px;
+    object-fit: cover;
+
+    @include msd {
+      margin-bottom: 20px;
+    }
+  }
+
+  &PrimarySub {
+    display: flex;
+    align-items: center;
+    margin: 16px 0 0;
+
+    div {
+      margin-right: 16px;
+    }
+
+    @include msd {
+      margin: 10px 0;
+    }
+  }
+
+  &PrimaryActions {
+    margin-top: 20px;
+
+    .applyBtn {
+      margin-right: 16px;
+    }
+
+    .saveBtn {
+      margin-right: 16px;
+    }
+
+    @include msd {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      button {
+        width: 100%;
+      }
+
+      &.isSticky {
+        align-items: center;
+        left: 0;
+        bottom: 0;
+        position: fixed;
+        z-index: 1;
+        background-color: $white-3;
+        border-top: 1px solid $lightgrey;
+        height: 76px;
+        width: 100%;
+
+        // .applyBtn {
+        //   margin-right: 24px;
+        // }
+
+        .saveBtn {
+          margin-left: 16px;
+        }
+      }
+    }
+  }
+
+  &PrimaryActionsCategory {
+    display: flex;
+    margin-top: 20px;
+
+    button {
+      margin-right: 20px;
+    }
+
+    @include msd {
+      flex-direction: column;
+      align-items: center;
+
+      button {
+        margin-top: 10px;
+        margin-right: 0;
+      }
+    }
+  }
+
+  &Pref {
+    background-color: $white-1;
+    padding: 20px 30px;
+    margin-top: 24px;
+
+    &List {
+      list-style-type: none;
+      display: flex;
+
+      @include sm {
+        margin-top: 24px;
+        flex-direction: column;
+      }
+    }
+
+    &Item {
+      width: 25%;
+      display: flex;
+      align-items: flex-start;
+
+      > img {
+        margin-top: 3px;
+
+        @include sm {
+          margin-top: 0;
+        }
+      }
+
+      @include sm {
+        width: 100%;
+        margin-bottom: 14px;
+      }
+    }
+
+    &Text {
+      margin-left: 10px;
+      span {
+        display: block;
+      }
+    }
+
+    &Value {
+      margin-top: 2px;
+    }
+
+    &Field {
+      @include msd {
+        line-height: 1;
+        color: $black;
+      }
+    }
+
+    @include sm {
+      padding: 0;
+      margin-top: 24px;
+      border-top: 1px solid $lightgrey;
+      background-color: transparent;
+    }
+  }
+
+  &Section {
+    margin-top: 26px;
+    margin-bottom: 48px;
+
+    &Title {
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    &Body {
+      margin-top: 16px;
+      display: block;
+      line-height: 24px;
+      @include msd {
+        overflow: scroll;
+      }
+    }
+
+    @include msd {
+      &Body::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &SubTitle {
+      margin-top: 18px;
+      display: block;
+    }
+
+    &SubBodyLink {
+      color: $primaryBlue;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    @include msd {
+      margin-top: 12px;
+      margin-bottom: 30px;
+    }
+  }
+
+  &DescriptionSectionBody *,
+  &RequirementSectionBody * {
+    font-size: 16px !important;
+    font-family: 'Product Sans' !important;
+  }
+
+  &DescriptionSectionBody,
+  &RequirementSectionBody {
+    > ol,
+    ul {
+      padding-inline: inherit;
+      margin-left: 40px;
+    }
+  }
+
+  &Benefits {
+    &List {
+      list-style-type: none;
+      display: flex;
+      flex-wrap: wrap;
+
+      @include msd {
+        flex-direction: column;
+      }
+    }
+
+    &Item {
+      display: flex;
+      align-items: center;
+      width: 50%;
+      margin: 0 0 16px;
+
+      @include msd {
+        margin-top: 12px;
+        width: 100%;
+      }
+    }
+
+    &Text {
+      margin-left: 16px;
+    }
+  }
+
+  &Skills {
+    &List {
+      list-style-type: none;
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    &Item {
+      background-color: $primaryBlue;
+      border-radius: 16px;
+      padding: 6px 14px 6px;
+      margin-right: 16px;
+      margin-bottom: 16px;
+    }
+  }
+
+  &RecruiterInfo {
+    display: flex;
+    margin-top: 16px;
+  }
+
+  &RecruiterName {
+    display: flex;
+  }
+
+  &RecruiterContent {
+    img {
+      margin-right: 4px !important;
+    }
+
+    span {
+      display: block;
+      margin-top: 8px;
+    }
+  }
+
+  &RecruiterInfoImage {
+    height: 52px;
+    width: 52px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 20px;
+  }
+
+  &RecruiterInfoText {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @include msd {
+      width: 80%;
+    }
+  }
+
+  &HoverItem {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &PostedAt {
+    display: block;
+    margin-top: 16px;
+  }
+}
+
+.searchAndLocationContainer {
+  @extend .GlobalContainer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 32px;
+
+  .searchField {
+    width: 60%;
+    background-color: white;
+    border-radius: 5px;
+
+    @include msd {
+      width: 100%;
+      margin-bottom: 24px;
+    }
+  }
+  .locationField {
+    height: 40px;
+    width: 30%;
+    background-color: white;
+    border-radius: 5px;
+
+    @include msd {
+      width: 100%;
+      margin-bottom: 24px;
+      height: 48px;
+    }
+  }
+
+  @include msd {
+    flex-direction: column;
+  }
+}
+
+.LeaderBoard {
+  height: 90px;
+  width: 970px;
+  margin: 24px;
+  cursor: pointer;
+
+  @include msd {
+    width: 300px;
+  }
+}
+
+.aboutCompany {
+  border: 1px solid rgba($lightgrey, 0.5);
+  border-radius: 4px;
+  padding: 24px;
+  margin-top: 24px;
+  line-height: 24px;
+
+  span {
+    display: block;
+  }
+
+  &Header {
+    margin-bottom: 16px;
+  }
+
+  &Title {
+    margin-bottom: 12px;
+    display: inline-block;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &Detail {
+    display: flex;
+    margin-bottom: 16px;
+
+    span {
+      padding-right: 20px;
+      position: relative;
+
+      &:not(:last-child) {
+        border-right: 1px solid $lightgrey;
+      }
+
+      &:last-child {
+        margin-left: 20px;
+      }
+    }
+
+    @include msd {
+      flex-direction: column;
+
+      span {
+        &:not(:last-child) {
+          border-right: none;
+        }
+
+        &:last-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  &More {
+    text-align: right;
+    margin-top: 5px;
+
+    span {
+      display: inline;
+      padding: 4px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.jobDetailSidebar {
+  width: 250px;
+
+  .quickCreateResume {
+    margin-bottom: 25px;
+  }
+
+  &Content {
+    border: 1px solid rgba($lightgrey, 0.5);
+    padding: 16px;
+    border-radius: 5px;
+
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
+  }
+
+  @include msd {
+    width: 100%;
+
+    &Content {
+      margin-top: 48px;
+      padding: 0;
+      border: none;
+    }
+  }
+}
+
+.jobDetailSidebarCard {
+  margin-top: 24px;
+  display: block;
+
+  &:not(:last-child) {
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba($lightgrey, 0.5);
+  }
+
+  p {
+    margin: 8px auto;
+  }
+
+  &CTA {
+    color: $primaryBlue;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &Title {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &Salary {
+    margin-top: 0 !important;
+  }
+
+  &Apply {
+    background-color: transparent;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &CourseDetail {
+    span {
+      display: block;
+    }
+  }
+
+  &Image {
+    width: 52px;
+    height: 52px;
+  }
+
+  &Tooltip {
+    vertical-align: middle;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+
+  @include msd {
+    padding: 24px;
+    border: 1px solid rgba($lightgrey, 0.5);
+    border-radius: 5px;
+  }
+}
+
+.jobDetailApplication {
+  &Wrapper {
+    border: 1px solid $primaryBlue;
+    border-radius: 4px;
+    margin: 20px 0;
+    padding: 20px;
+  }
+
+  &Timeline {
+    padding: 0;
+    margin-top: 12px;
+
+    li {
+      &::before {
+        flex: none;
+        padding: 0;
+      }
+
+      &:last-child {
+        min-height: 0;
+      }
+    }
+  }
+
+  &TimelineFirst {
+    background-color: $primaryBlue;
+    box-shadow: $primaryBlue;
+  }
+}
+
+.sideSquareBanner {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 24px;
+  overflow: hidden;
+
+  @include msd {
+    margin: 48px auto;
+  }
+}
+
+.companyIsVerifiedToolTip {
+  display: inline-block !important;
+  vertical-align: middle;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.forShowRegisterModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  box-shadow: 24px;
+  .forModuleFooterText {
+    position: absolute;
+    bottom: 35px;
+    left: 0;
+    text-align: center;
+    width: 100%;
+    p {
+      margin: 10px 0;
+      font-weight: 400;
+      font-size: 16px;
+      color: #707070;
+    }
+  }
+
+  .modalHeader {
+    display: flex;
+    padding: 16px 24px;
+    background-color: $white-1;
+
+    &Title {
+      flex: auto;
+    }
+  }
+
+  .modalCloseButton {
+    cursor: pointer;
+  }
+
+  .AuthWrapperInfoModuleReg {
+    padding-top: 20px;
+  }
+}
+
+.RegisterDivider {
+  position: relative;
+  height: 16px;
+  margin-top: 28px;
+
+  &Text {
+    color: $lightgrey;
+    position: absolute;
+    background-color: $white-3;
+    width: 100px;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: $lightgrey-2;
+    top: 50%;
+    left: 0;
+  }
+}

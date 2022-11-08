@@ -121,7 +121,7 @@ const Step1 = (props: any) => {
     if (userDetail) {
       if (userDetail.location) {
         const matchedLocation = locList.filter((loc) => {
-          return loc.value === userDetail.location.toString()
+          return loc?.value === userDetail.location.toString()
         })
         setLocation(matchedLocation[0])
         setValue('location', matchedLocation[0])
