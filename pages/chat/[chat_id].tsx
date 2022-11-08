@@ -31,7 +31,7 @@ const Chat = () => {
     const [loading, setLoading] = useState(false)
     const [imState, setImState] = useState({} as any)
     const [chatList, setChatList] = useState([])
-    
+
     useEffect(() => {
         list().then(result => {
             setChatList(result.data?.data?.chats)

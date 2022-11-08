@@ -303,7 +303,7 @@ const JobDetail = ({
                   }}
                 >
                   <Text textColor='primaryBlue' bold>
-                    {isSavedJob || isCategorySaved ? 'Delete' : 'Save'}
+                    {isSavedJob || isCategorySaved ? 'Saved' : 'Save'}
                   </Text>
                 </MaterialButton>
               </div>
