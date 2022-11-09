@@ -4094,10 +4094,10 @@ imsdkweb@^0.0.6:
     buffer "^6.0.3"
     viewerjs "^1.11.0"
 
-imsdkweb@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.7.tgz#4d863a174d9a900b322fefc61bc986f4e05b5e18"
-  integrity sha512-DCyFjEQC/VW3vQKsHSej3JggoW9wQuVnAHeY6odyop9ag6eFU68FeN0LkXjGIBgKABSyWskQdTERztzJFXcDjw==
+imsdkweb@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.8.tgz#9fbf7a6bfffd6dc25a8f3c45f37967a013d69483"
+  integrity sha512-wG1q6D3ylF25/DAO4wyfV5LyY0uCBfYwMinwfuVnE+WbdgkL/AkIGvZbkl67SlX62Vyu2Sz8iEGDJ2yjNsoIBg==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
