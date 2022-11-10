@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { JobseekerChat, IMManager } from 'imforbossjob'
 import 'imforbossjob/dist/style.css'
@@ -21,17 +22,35 @@ import { getAuth } from 'helpers/interpreters/services/chat'
 import { list } from 'helpers/interpreters/services/chat'
 import Layout from 'components/Layout'
 import CommonPhrases from 'components/Chat/commonPhrases'
-
+import styles from './index.module.scss'
 const Chat = () => {
     const router = useRouter()
-    const { query: { chat_id: chatId } } = router
+    const { query: { chat_id } } = router
+
+    const chatId = (!chat_id || chat_id === 'list') ? null : chat_id
     const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
     const userDetailRef = useRef(userDetail)
     const userId = userDetail.id
     const [loading, setLoading] = useState(false)
     const [imState, setImState] = useState({} as any)
     const [chatList, setChatList] = useState([])
+    const [mobile, setMobile] = useState(false)
+    useEffect(() => {
+        const old: any = window.onresize
+        setMobile(document.body.clientWidth < 992)
+        window.onresize = (...args) => {
+            old?.(...args)
+            setMobile( document.body.clientWidth < 992)
+            // const newMoble = document.body.clientWidth < 992
+            // if (mobile !== newMoble) {
+            //     setMobile(newMoble)
+                
+            //     console.log('onResize', newMoble,mobile)
+            // }
 
+        }
+        return () => window.onresize = old
+    }, [])
     useEffect(() => {
         list().then(result => {
             setChatList(result.data?.data?.chats)
@@ -111,7 +130,12 @@ const Chat = () => {
         changeChat(chatId) {
             console.log('onChangeChat', chatId)
             // history.replaceState(null,null,`/chat/${chatId}`)
-            router.replace(`/chat/${chatId}`, null, { shallow: true, locale: false })
+            if (chatId) {
+                router.replace(`/chat/${chatId}`, null, { shallow: true, locale: false })
+
+            } else {
+                router.replace(`/chat/${'list'}`, null, { shallow: true, locale: false })
+            }
         },
         showToast(type, content) {
             dispatch(
@@ -123,7 +147,17 @@ const Chat = () => {
             )
         }
     } as any)
-    return <Layout isHiddenFooter>
+    // const chat = <JobseekerChat
+    //     loading={loading}
+    //     imState={imState}
+    //     chatId={chatId}
+    //     setChatId={chatId => contextRef.current?.changeChat?.(chatId)}
+    //     chatList={chatList}
+    //     contextRef={contextRef}
+    //     userId={userId}
+    //     businessInterpreters={interpreters}
+    // />
+    return <>
         <SendResumeModal
             loading={loading}
             contextRef={contextRef}
@@ -171,16 +205,31 @@ const Chat = () => {
             applicationId={applicationId}
             contextRef={contextRef}
         />
-        <JobseekerChat
-            loading={loading}
-            imState={imState}
-            chatId={chatId}
-            chatList={chatList}
-            contextRef={contextRef}
-            userId={userId}
-            businessInterpreters={interpreters}
-        />
-    </Layout>
+        {!mobile && <Layout isHiddenFooter className={styles.pcWeb}>
+            <JobseekerChat
+                loading={loading}
+                imState={imState}
+                chatId={chatId}
+                setChatId={chatId => contextRef.current?.changeChat?.(chatId)}
+                chatList={chatList}
+                contextRef={contextRef}
+                userId={userId}
+                businessInterpreters={interpreters}
+            />
+        </Layout>}
+        {mobile && <div className={styles.mobile}>
+            <JobseekerChat
+                loading={loading}
+                imState={imState}
+                chatId={chatId}
+                setChatId={chatId => contextRef.current?.changeChat?.(chatId)}
+                chatList={chatList}
+                contextRef={contextRef}
+                userId={userId}
+                businessInterpreters={interpreters}
+            />
+        </div>}
+    </>
 }
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
     const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null

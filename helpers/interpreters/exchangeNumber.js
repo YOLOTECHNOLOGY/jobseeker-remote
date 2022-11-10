@@ -9,6 +9,7 @@ const { RequestResult, UserNumberValidation } = utils
 export default command => command.cata({
     queryUserNumberValidation: () => M(context => new Promise(resolve => {
         const number = context.isUserNumberValidate()
+        console.log('command',command)
         if (number) {
             resolve(UserNumberValidation.isValidate(number))
         } else {

@@ -4065,14 +4065,14 @@ image-size@1.0.0:
   dependencies:
     queue "6.0.2"
 
-imforbossjob@^0.0.340:
-  version "0.0.340"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.340.tgz#5a8c7f716247ef87a6d8f6000edb3d01b36984c7"
-  integrity sha512-5V5FnqNVDIiP0e2oVUVjhjYsLwTidjDXzd26sqvYNLFJfVD7x5Pjk8/SP1MJ4yxaKXBffO+if6t8yEuy49x7ww==
+imforbossjob@^0.0.352:
+  version "0.0.352"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.352.tgz#a6bfb646ada33b93f3bcf2b45326f31171123b4f"
+  integrity sha512-zWeBECDd1CUQwkn0Ps+Rp+WHObByTu2CIUWXhNBcIFglbzfUvO+IWGzH2hVhqzSJkcRYm/+45ZHsjCJ54JUUwA==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     antd "^4.23.3"
-    imsdkweb "^0.0.6"
+    imsdkweb "^0.0.9"
 
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   version "3.3.0"
@@ -4082,22 +4082,10 @@ import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
 
-imsdkweb@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.6.tgz#2cbb4272b4d6d6c647547f40fb37726bbacc957a"
-  integrity sha512-N68AdoSMvseFqXJn6fgZnLYfF8ftAZgYVW6L+W2U2/grotZbUOG6TDUGaUvbfSpKKWDkD43w/s8sFqeNR9QGYA==
-  dependencies:
-    "@aws-sdk/client-s3" "^3.3.0"
-    "@aws-sdk/lib-storage" "^3.18.0"
-    "@aws-sdk/s3-request-presigner" "^3.3.0"
-    ali-oss "^6.17.1"
-    buffer "^6.0.3"
-    viewerjs "^1.11.0"
-
-imsdkweb@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.8.tgz#9fbf7a6bfffd6dc25a8f3c45f37967a013d69483"
-  integrity sha512-wG1q6D3ylF25/DAO4wyfV5LyY0uCBfYwMinwfuVnE+WbdgkL/AkIGvZbkl67SlX62Vyu2Sz8iEGDJ2yjNsoIBg==
+imsdkweb@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.9.tgz#c19dbce5909863ea102d4bef9aadfa2eb3cc5b26"
+  integrity sha512-6Wr9c0wRu+JekjHvW3nVUihJw9UyjOCpcy1Lj50CcHO9Keo/ExhMy2RsIb70b/QLcV1CbpXDliZSyJNycv5TNw==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"

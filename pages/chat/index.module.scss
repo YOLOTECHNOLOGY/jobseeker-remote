@@ -1,0 +1,12 @@
+@media screen and (min-width:993px) {
+    .mobile {
+        display: none !important;
+    }
+
+}
+
+@media screen and (max-width:992px) {
+    .pcWeb {
+        display: none !important;
+    }
+}
