@@ -27,8 +27,6 @@ import UploadResume from 'components/UploadResume'
 import MaterialButton from 'components/MaterialButton'
 import ReadMore from 'components/ReadMore'
 import SeeMore from 'components/SeeMore'
-import Switch from '@mui/material/Switch'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import Link from 'components/Link'
 
 import EditProfileModal from 'components/EditProfileModal'
@@ -43,10 +41,8 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { formatSalary, formatSalaryRange, getYearMonthDiffBetweenDates } from 'helpers/formatter'
-import { getNoticePeriodList } from 'helpers/jobPayloadFormatter'
 
 /* Services */
-import { updateUserVisibilityToWorkService } from 'store/services/jobs/updateUserVisibilityToWork'
 
 /* Assets */
 import {
@@ -60,7 +56,8 @@ import {
   HighlightAboutYouIcon,
   HighlightEducationIcon,
   HighlightSkillIcon,
-  HighlightWorkExpIcon
+  HighlightWorkExpIcon,
+  DeleteIcon
 } from 'images'
 
 /* Styles */
@@ -69,6 +66,7 @@ import styles from './ManageProfile.module.scss'
 import { Chip } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
 import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
+import EditJobPreferencesAvailabilityModal from 'components/EditJobPreferencesAvailabilityModal/EditJobPreferencesAvailabilityModal'
 
 const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const dispatch = useDispatch()
@@ -282,9 +280,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                 </div>
                 <div className={styles.companyInfoWrapper}>
                   <Text textStyle='lg'>{workExp.company}</Text>
-                  <Text textStyle='lg'>{`${workExp.location}${
-                    workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
-                  }`}</Text>
+                  <Text textStyle='lg'>{`${workExp.location}${workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
+                    }`}</Text>
                 </div>
                 <Text textStyle='base' textColor='darkgrey'>
                   {workingPeriodFrom.format('MMMM yyyy')} to{' '}
@@ -772,97 +769,100 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
   )
 }
 
-const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handleModal }: any) => {
-  const [openToWork, setOpenToWork] = useState(true)
-
-  const minSalary = userDetail?.job_preference?.salary_range_from
-  const maxSalary = userDetail?.job_preference?.salary_range_to
+const RenderPreferencesView = ({ modalName, config, userDetail, preference }: any) => {
+  // const [openToWork, setOpenToWork] = useState(true)
+  console.log('userDetail', userDetail)
+  const minSalary = preference?.salary_range_from
+  const maxSalary = preference?.salary_range_to
   const salaryRange = minSalary + ' - ' + maxSalary
+  const [showModal, setShowModal] = useState(false)
 
-  const noticeList = getNoticePeriodList(config)
-
-  const getAvailability = (userDetail) => {
-    const checkNoticePeriod = (notice) => userDetail.notice_period_id === notice.value
-    const findAvailability = noticeList.find(checkNoticePeriod).label
-
-    return findAvailability
-  }
 
   const handleEditClick = () => {
-    handleModal(modalName, true)
+    setShowModal(true)
   }
 
-  const handleVisibility = () => {
-    setOpenToWork(!openToWork)
-    updateUserVisibilityToWorkService({
-      is_visible: !openToWork
-    })
-  }
+  // const handleVisibility = () => {
+  //   setOpenToWork(!openToWork)
+  //   updateUserVisibilityToWorkService({
+  //     is_visible: !openToWork
+  //   })
+  // }
 
   return (
     <React.Fragment>
-      <div className={styles.sectionContainer}>
-        <div className={styles.sectionHeader}>
-          <Text bold textColor='primaryBlue' textStyle='xl'>
-            Job Preferences
-          </Text>
-          {(userDetail?.job_preference?.job_title ||
-            userDetail?.job_preference?.job_type ||
-            userDetail?.job_preference?.salary_range_from ||
-            userDetail?.job_preference?.location ||
-            userDetail?.notice_period_id) && (
-            <div className={styles.iconWrapper} onClick={handleEditClick}>
-              <img src={PencilIcon} width='22' height='22' />
-            </div>
-          )}
+
+      <div className={styles.jobPreferencesSectionDetail}>
+        <div style={{ right: 40 }} className={styles.iconWrapper} onClick={handleEditClick}>
+          <img src={PencilIcon} width='22' height='22' />
         </div>
-        <div>
-          <Text tagName='p' textStyle='lg'>
-            We will find jobs that are of a good match to you based on your job preferences.
-          </Text>
+        <div style={{ right: 0 }} className={styles.iconWrapper} onClick={handleEditClick}>
+          <img src={DeleteIcon} width='22' height='22' />
         </div>
-        <div className={styles.jobPreferencesSectionDetail}>
-          {!userDetail?.job_preference?.job_title &&
-          !userDetail?.job_preference?.job_type &&
-          !userDetail?.job_preference?.salary_range_from &&
-          !userDetail?.job_preference?.location &&
-          !userDetail?.notice_period_id ? (
-            <MaterialButton
-              className={styles.jobPreferencesSectionButton}
-              variant='outlined'
-              capitalize={false}
-              size='large'
-              onClick={() => handleEditClick()}
-              style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
-            >
-              Add job preferences
-            </MaterialButton>
-          ) : (
+        {
+          // !userDetail?.job_preference?.job_title &&
+          //   !userDetail?.job_preference?.job_type &&
+          //   !userDetail?.job_preference?.salary_range_from &&
+          //   !userDetail?.job_preference?.location &&
+          //   !userDetail?.notice_period_id ? (
+          //   <MaterialButton
+          //     className={styles.jobPreferencesSectionButton}
+          //     variant='outlined'
+          //     capitalize={false}
+          //     size='large'
+          //     onClick={() => handleEditClick()}
+          //     style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
+          //   >
+          //     Add job preferences
+          //   </MaterialButton>
+          // ) : 
+          (
             <div className={styles.jobPreferencesSectionDetailList}>
-              {userDetail?.job_preference?.job_title && (
+
+              {preference?.job_title && (
                 <div
                   className={styles.jobPreferencesSectionDetailListWrapper}
                   style={{ marginTop: '8px' }}
                 >
                   <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                    Desire job title:
+                    Desired job title:
                   </Text>
                   <Text className={styles.jobPreferencesSectionDetailText}>
-                    {userDetail.job_preference.job_title}
+                    {preference.job_title}
                   </Text>
                 </div>
               )}
-              {userDetail?.job_preference?.job_type && (
+              {preference?.job_type && (
                 <div className={styles.jobPreferencesSectionDetailListWrapper}>
                   <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                    Desire job type:
+                    Desired job type:
                   </Text>
                   <Text className={styles.jobPreferencesSectionDetailText}>
-                    {userDetail.job_preference.job_type}
+                    {preference.job_type}
                   </Text>
                 </div>
               )}
-              {userDetail?.job_preference?.salary_range_from && (
+              {preference?.country && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Desired country:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {preference.country}
+                  </Text>
+                </div>
+              )}
+              {preference?.location && (
+                <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                    Desired city:
+                  </Text>
+                  <Text className={styles.jobPreferencesSectionDetailText}>
+                    {preference.location}
+                  </Text>
+                </div>
+              )}
+              {preference?.salary_range_from && (
                 <div className={styles.jobPreferencesSectionDetailListWrapper}>
                   <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
                     Expected salary:
@@ -872,44 +872,45 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
                   </Text>
                 </div>
               )}
-              {userDetail?.job_preference?.location && (
+              {preference?.industry && (
                 <div className={styles.jobPreferencesSectionDetailListWrapper}>
                   <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                    Desire working location:
+                    Desired industry:
                   </Text>
                   <Text className={styles.jobPreferencesSectionDetailText}>
-                    {userDetail.job_preference.location}
+                    {preference.industry}
                   </Text>
                 </div>
               )}
+
               {/* {workingSetting && (
                   <div>
                       <Text textColor='lightgrey'>Desire working setting:</Text>
                       <Text>{workingSetting}</Text>
                   </div>
                 )} */}
-              {userDetail?.notice_period_id && (
-                <div className={styles.jobPreferencesSectionDetailListWrapper}>
-                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                    Availability:
-                  </Text>
-                  <Text className={styles.jobPreferencesSectionDetailText}>
-                    {getAvailability(userDetail)}
-                  </Text>
-                </div>
-              )}
+              {/* {userDetail?.notice_period_id && (
+                  <div className={styles.jobPreferencesSectionDetailListWrapper}>
+                    <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                      Availability:
+                    </Text>
+                    <Text className={styles.jobPreferencesSectionDetailText}>
+                      {getAvailability(userDetail)}
+                    </Text>
+                  </div>
+                )} */}
             </div>
           )}
-          <EditJobPreferencesModal
-            modalName={modalName}
-            showModal={showModal}
-            config={config}
-            userDetail={userDetail}
-            handleModal={handleModal}
-          />
-        </div>
+        <EditJobPreferencesModal
+          modalName={modalName}
+          showModal={showModal}
+          config={config}
+          userDetail={userDetail}
+          handleModal={() => setShowModal(false)}
+        />
       </div>
-      <div className={styles.sectionContainer}>
+
+      {/* <div className={styles.sectionContainer}>
         <Text className={styles.openToWorkSectionTitle} bold textStyle='xl' textColor='primaryBlue'>
           Open to work
         </Text>
@@ -917,8 +918,8 @@ const RenderPreferencesView = ({ modalName, showModal, config, userDetail, handl
           control={<Switch checked={openToWork} onChange={handleVisibility} />}
           label={<Text textStyle='lg'>Let recruiters know that you are open to work</Text>}
         />
-      </div>
-    </React.Fragment>
+      </div> */}
+    </React.Fragment >
   )
 }
 
@@ -987,7 +988,7 @@ const RenderResumeView = ({ userDetail }: any) => {
   const handleDeleteResume = () => {
     setResume(null)
   }
-  
+
   const handleUploadResume = (file) => {
     uploadUserResumeService(file)
       .then((response) => {
@@ -1230,7 +1231,8 @@ const ManageProfilePage = ({ config }: any) => {
       value: category.id
     }
   })
-
+  const availability = userDetail?.notice_period
+  console.log('availability',availability)
   const [modalState, setModalState] = useState({
     profile: {
       showModal: false,
@@ -1256,7 +1258,7 @@ const ManageProfilePage = ({ config }: any) => {
       showModal: false,
       data: null
     },
-    jobPreferences: {
+    jobPreferencesAvailibility: {
       showModal: false,
       data: null
     }
@@ -1306,6 +1308,13 @@ const ManageProfilePage = ({ config }: any) => {
         config={config}
         handleModal={handleModal}
       />
+      <EditJobPreferencesAvailabilityModal
+        modalName='jobPreferencesAvailibility'
+        showModal={modalState.jobPreferencesAvailibility.showModal}
+        config={config}
+        userDetail={userDetail}
+        handleModal={handleModal}
+      />
       <EditSkillModal
         modalName='skills'
         showModal={modalState.skills.showModal}
@@ -1335,15 +1344,47 @@ const ManageProfilePage = ({ config }: any) => {
         {tabValue === 'profile' && (
           <RenderProfileView userDetail={userDetail} handleModal={handleModal} config={config} />
         )}
-        {tabValue === 'job-preferences' && (
-          <RenderPreferencesView
-            modalName='jobPreferences'
-            showModal={modalState.jobPreferences.showModal}
-            config={config}
-            userDetail={userDetail}
-            handleModal={handleModal}
-          />
-        )}
+        {tabValue === 'job-preferences' && <div>
+          <div className={styles.sectionContainer}>
+
+            <div className={styles.sectionHeader}>
+              <Text bold textColor='primaryBlue' textStyle='xl'>
+                Availavility
+              </Text>
+            </div>
+            <div style={{ position: 'relative', width: '100%' }}>
+              <div className={styles.iconWrapper}
+                onClick={() => handleModal('jobPreferencesAvailibility', true, null, null)}
+              >
+                <img src={PencilIcon} width='22' height='22' />
+              </div>
+              <Text tagName='p' textStyle='lg'>
+                {availability}
+              </Text>
+            </div>
+          </div>
+          <div className={styles.sectionContainer}>
+            <div className={styles.sectionHeader}>
+              <Text bold textColor='primaryBlue' textStyle='xl'>
+                Job Preferences
+              </Text>
+            </div>
+            <div>
+              <Text tagName='p' textStyle='lg'>
+                We will find jobs that are of a good match to you based on your job preferences.
+              </Text>
+            </div> {(
+              userDetail.job_preferences ?? []).map(preference => <RenderPreferencesView
+                key={preference.id}
+                modalName='jobPreferences'
+                config={config}
+                userDetail={userDetail}
+                handleModal={handleModal}
+                preference={preference}
+              />)}
+          </div>
+        </div>
+        }
         {tabValue === 'resume' && <RenderResumeView userDetail={userDetail} />}
       </ProfileLayout>
     </Layout>

@@ -1,0 +1,3 @@
+import EditJobPreferencesModal from './EditJobPreferencesAvailabilityModal'
+
+export default EditJobPreferencesModal

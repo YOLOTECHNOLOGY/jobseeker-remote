@@ -252,15 +252,23 @@
     height: auto;
   }
 }
+.jobPreferencesSectionDetail{
+  position: relative;
+  
+  .jobPreferencesSectionDetailList{
+    margin-bottom: 30px;
+  }
+}
 
 .iconWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: absolute;
   width: 40px;
   height: 40px;
-
+  right: 10px;
+  top:0px;
   & > * {
     display: flex;
   }

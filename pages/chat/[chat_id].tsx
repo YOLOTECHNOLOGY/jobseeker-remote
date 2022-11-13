@@ -1,13 +1,16 @@
 /* eslint-disable camelcase */
 import React, { useContext, useEffect, useState } from 'react'
-import { JobseekerChat } from 'imforbossjob'
 import 'imforbossjob/dist/style.css'
 import interpreters from 'helpers/interpreters'
 import { useRouter } from 'next/router'
-import { wrapper } from 'store'
 import Layout from 'components/Layout'
 import styles from './index.module.scss'
 import { IMContext } from 'components/Chat/IMProvider'
+import dynamic from 'next/dynamic'
+const JobseekerChat = dynamic<any>(import('components/Chat'), {
+    ssr: false
+  })
+
 const Chat = () => {
     const router = useRouter()
     const { query: { chat_id } } = router
@@ -30,7 +33,6 @@ const Chat = () => {
             } else {
                 contextRef.current?.changeChat?.(chat_id)
             }
-
         }
     }, [chat_id])
     useEffect(() => {
@@ -42,42 +44,12 @@ const Chat = () => {
             console.log('chatId', chatId, chat_id)
             if (chatId) {
                 history.replaceState(null, '', `/chat/${chatId}`)
-                // router.replace(`/chat/${chatId}`, null, { shallow: true, locale: false })
-
             } else if (chat_id !== 'list') {
                 history.replaceState(null, '', `/chat/${'list'}`)
-                // router.replace(`/chat/${'list'}`, null, { shallow: true, locale: false })
             }
         }
     }, [chatId])
-
-    // useEffect(() => {
-    //     if (+chat_id !== +chatId) {
-    //         if (chat_id === 'list') {
-    //             if (chatId !== undefined) {
-    //                 contextRef.current?.changeChat?.(undefined)
-    //             }
-    //         } else {
-    //             contextRef.current?.changeChat?.(chat_id)
-    //         }
-
-    //     }
-    // }, [chat_id])
-    // useEffect(() => {
-    //     if (+chatId !== +chat_id) {
-    //         console.log('chatId', chatId, chat_id)
-    //         if (chatId) {
-    //             history.replaceState(null, '', `/chat/${chatId}`)
-    //             // router.replace(`/chat/${chatId}`, null, { shallow: true, locale: false })
-
-    //         } else if (chat_id !== 'list') {
-    //             history.replaceState(null, '', `/chat/${'list'}`)
-    //             // router.replace(`/chat/${'list'}`, null, { shallow: true, locale: false })
-    //         }
-    //     }
-    // }, [chatId])
-
-    return <Layout isHiddenFooter isHiddenHeader={mobile}>
+ return <Layout isHiddenFooter isHiddenHeader={mobile}>
 
         {!mobile &&
             <div className={styles.pcWeb}>
@@ -109,17 +81,9 @@ const Chat = () => {
         </div>}
     </Layout>
 }
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
-    // const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-
-    // store.dispatch(fetchConfigRequest())
-    // store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
-    // store.dispatch(END)
-
-    // await (store as any).sagaTask.toPromise()
-
+export const getServerSideProps = () => {
     return {
         props: {}
     }
-})
+}
 export default Chat

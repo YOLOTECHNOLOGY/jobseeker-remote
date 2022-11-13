@@ -22,15 +22,23 @@ function* updateUserPreferencesReq({ payload }) {
             preferences
         }
 
-        let preferenceResponse, userUpdateProfileResponse;
+        let preferenceResponse;
+        let userUpdateProfileResponse;
+        if (preferences) {
+            preferenceResponse = yield call(addUserPreferencesService, preferencesPayload)
+            yield put(updateUserPreferencesSuccess(preferenceResponse.data.data))
 
-        [preferenceResponse, userUpdateProfileResponse] = yield all([
-            call(addUserPreferencesService, preferencesPayload),
-            call(updateUserProfileService, profile)
-        ])
+        }
+        if (profile) {
+            userUpdateProfileResponse = yield call(updateUserProfileService, profile)
+            yield put(updateUserProfileSuccess(userUpdateProfileResponse.data.data))
 
-        yield put(updateUserPreferencesSuccess(preferenceResponse.data.data)),
-        yield put(updateUserProfileSuccess(userUpdateProfileResponse.data.data))
+        }
+        // [preferenceResponse, userUpdateProfileResponse] = yield all([
+        //     call(addUserPreferencesService, preferencesPayload),
+        //     call(updateUserProfileService, profile)
+        // ])
+
 
         yield put(fetchUserOwnDetailRequest({ accessToken }))
     } catch (error) {
