@@ -1240,7 +1240,6 @@ const ManageProfilePage = ({ config }: any) => {
     }
   })
   const availability = userDetail?.notice_period
-  console.log('availability', availability)
   const [modalState, setModalState] = useState({
     profile: {
       showModal: false,
@@ -1267,6 +1266,10 @@ const ManageProfilePage = ({ config }: any) => {
       data: null
     },
     jobPreferencesAvailibility: {
+      showModal: false,
+      data: null
+    },
+    createJobPreference: {
       showModal: false,
       data: null
     }
@@ -1298,6 +1301,13 @@ const ManageProfilePage = ({ config }: any) => {
       <EditProfileModal
         modalName='profile'
         showModal={modalState.profile.showModal}
+        config={config}
+        userDetail={userDetail}
+        handleModal={handleModal}
+      />
+      <EditJobPreferencesModal
+        modalName='createJobPreference'
+        showModal={modalState.createJobPreference.showModal}
         config={config}
         userDetail={userDetail}
         handleModal={handleModal}
@@ -1372,7 +1382,13 @@ const ManageProfilePage = ({ config }: any) => {
             </div>
           </div>
           <div className={styles.sectionContainer}>
-            <div className={styles.sectionHeader}>
+
+            <div className={styles.sectionHeader}  style={{ position: 'relative', width: '100%' }}>
+              <div className={styles.iconWrapper}
+                onClick={() => handleModal('createJobPreference', true, null, null)}
+              >
+                <img src={AddIcon} width='22' height='22' />
+              </div>
               <Text bold textColor='primaryBlue' textStyle='xl'>
                 Job Preferences
               </Text>

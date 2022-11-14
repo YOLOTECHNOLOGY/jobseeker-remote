@@ -4,7 +4,7 @@ import {
     updateUserPreferencesSuccess,
     updateUserPreferencesFailed,
 } from 'store/actions/users/updateUserPreferences'
-import { addUserPreferencesService, deleteUserPreferencesService } from 'store/services/users/addUserPreferences'
+import { addUserPreferencesService, createUserPreferencesService, deleteUserPreferencesService, updateUserPreferencesService } from 'store/services/users/addUserPreferences'
 import { updateUserProfileService } from 'store/services/users/updateUserProfile'
 import { updateUserProfileSuccess } from 'store/actions/users/updateUserProfile'
 import { fetchUserOwnDetailRequest, fetchUserOwnDetailSuccess } from 'store/actions/users/fetchUserOwnDetail'
@@ -32,10 +32,30 @@ function* updateUserPreferencesReq({ payload }) {
                         yield put(fetchUserOwnDetailRequest({ accessToken }))
                         yield put(updateUserPreferencesSuccess(preferenceResponse.data.data))
                     } else {
-                        yield put(updateUserPreferencesFailed(preferenceResponse.data.data))
+                        yield put(updateUserPreferencesFailed(preferenceResponse.data.error))
                     }
-
                 }
+                break;
+                case 'update':{
+                    preferenceResponse = yield call(updateUserPreferencesService, preferences)
+                    if (!preferenceResponse?.data?.error) {
+                        yield put(fetchUserOwnDetailRequest({ accessToken }))
+                        yield put(updateUserPreferencesSuccess(preferenceResponse.data.data))
+                    } else {
+                        yield put(updateUserPreferencesFailed(preferenceResponse.data.error))
+                    }
+                }
+                break;
+                case 'create':{
+                    preferenceResponse = yield call(createUserPreferencesService, preferences)
+                    if (!preferenceResponse?.data?.error) {
+                        yield put(fetchUserOwnDetailRequest({ accessToken }))
+                        yield put(updateUserPreferencesSuccess(preferenceResponse.data.data))
+                    } else {
+                        yield put(updateUserPreferencesFailed(preferenceResponse.data.error))
+                    }
+                }
+                break;
             }
         }
         if (profile) {

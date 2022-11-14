@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 /* Components */
 import Modal from 'components/Modal'
@@ -25,13 +25,14 @@ type EditJobPreferencesModalProps = {
   config: any
   userDetail: any
   handleModal: Function
-  preference: any
+  preference?: any
 }
 
 const formatLocationConfig = (locationList) => {
   const locationConfig = locationList?.map((region) => region.locations)
   return locationConfig
 }
+
 
 // const requiredLabel = (text: string) => {
 //   return (
@@ -58,122 +59,67 @@ const EditJobPreferencesModal = ({
   handleModal,
   preference
 }: EditJobPreferencesModalProps) => {
-  // to add work setting
-  const preferredJobTitle = preference?.job_title
-  const preferredJobType = preference?.job_type
-  const preferredMinSalary = preference?.salary_range_from
-  const preferredMaxSalary = preference?.salary_range_to
-  const workLocation = preference?.location
-  const preferredIndustry = preference?.industry
-  const dispatch = useDispatch()
-  const [jobType, setJobType] = useState(preferredJobType || null)
-  const [minSalary, setMinSalary] = useState(Number(preferredMinSalary) || null)
-  const [maxSalary, setMaxSalary] = useState(Number(preferredMaxSalary) || null)
-  const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
-  const [industry, setIndustry] = useState(preferredIndustry)
-  const isUpdating = useSelector((store: any) => store.users.updateUserPreferences.fetching)
-  console.log('config', config)
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
   )
   const formattedLocationList = flat(formatLocationConfig(locationList))
-  const [location, setLocation] = useState(formattedLocationList[0])
-
-  const jobTypeList = getJobTypeList(config)
-
-  // const noticeList = getNoticePeriodList(config)
-  const minSalaryOptions = getSalaryOptions(config)
-
-  const matchedJobType = jobTypeList.find((type) => {
-    return type.label == preferredJobType
-  })
-
-  const {
-    register,
-    handleSubmit,
-    // formState: { errors },
-    setValue,
-    reset
-  } = useForm({
-    defaultValues: {
-      jobTitle: preferredJobTitle,
-      jobType: matchedJobType?.key,
-      minSalary: Number(preferredMinSalary),
-      maxSalary: Number(preferredMaxSalary),
-      location: workLocation,
-      industry: preferredIndustry
+  const location = useMemo(() => {
+    return formattedLocationList.find(l => l.key === preference?.location_key)
+  }, [formattedLocationList, preference?.location_key])
+  // to add work setting
+  const defaultValues = useMemo(() => {
+    return {
+      jobTitle: preference?.job_title,
+      jobType: preference?.job_type_key,
+      minSalary: Number(preference?.salary_range_from) ?? undefined,
+      maxSalary: Number(preference?.salary_range_to) ?? undefined,
+      location: location,
+      industry: preference?.industry_key
     }
-  })
-
+  }, [preference])
+  const dispatch = useDispatch()
+  const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
+  const isUpdating = useSelector((store: any) => store.users.updateUserPreferences.fetching)
+  const jobTypeList = getJobTypeList(config)
+  const minSalaryOptions = getSalaryOptions(config)
+  const {
+    handleSubmit,
+    setValue,
+    control,
+    reset
+  } = useForm({ defaultValues })
+  const [minSalary, setMinSalary] = useState(NaN)
   useEffect(() => {
     getMaxSalaryOptions(minSalary)
   }, [minSalary])
 
-  useEffect(() => {
-    if (userDetail && workLocation) {
-      if (workLocation) {
-        const matchedLocation = formattedLocationList.find((loc) => {
-          return loc?.value == workLocation
-        })
-        setLocation(matchedLocation)
-        setValue('location', matchedLocation?.key)
-      }
-    }
-
-    if (preferredJobType) {
-      const getJobType = jobTypeList.find((type) => {
-        return type.label == preferredJobType
-      })
-      setJobType(getJobType?.key)
-      setValue('jobType', getJobType?.key)
-    }
-
-    if (preferredMinSalary) {
-      setMinSalary(Number(preferredMinSalary))
-      setValue('minSalary', preferredMinSalary)
-    }
-
-    if (preferredMaxSalary) {
-      setMaxSalary(Number(preferredMaxSalary))
-      setValue('maxSalary', preferredMaxSalary)
-    }
-
-    if (preferredIndustry) {
-      setIndustry(preferredIndustry)
-      setValue('industry', preferredIndustry)
-    }
-  }, [preference])
   const industryOptions = useMemo(() => {
     return config?.inputs?.industry_lists?.map(industry => ({ label: industry.value, value: industry.key })) ?? []
   }, [config?.inputs?.industry_lists])
-  console.log('industryOptions', industryOptions)
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
-    setMaxSalary(maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : null)
+    // setMaxSalary(maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : null)
+    setValue('maxSalary', maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : null)
     setMaxSalaryOptions(maxSalaryOptions)
   }
-
-  const onLocationSearch = (e, value) => {
-    setLocation(value)
-  }
-
   const onSubmit = (data) => {
     // to add workSetting
-    const { jobTitle, jobType, minSalary, maxSalary, location, noticePeriod } = data // jobType is a key
-    const matchedLocation = formattedLocationList.find((loc) => {
-      return loc?.value == location
-    })
-
+    console.log({ data })
+    const { jobTitle, jobType, minSalary, maxSalary, location, industry } = data // jobType is a key
     const payload = {
       preferences: {
-        job_title: jobTitle || '',
-        job_type_key: jobType || '',
-        location_key: matchedLocation?.key || '',
-        salary_range_from: Number(minSalary),
-        salary_range_to: Number(maxSalary)
-      },
-      profile: {
-        notice_period_id: noticePeriod
+        action: preference?.id ? 'update' : 'create',
+        preferenceId: preference?.id,
+        params: {
+          job_title: jobTitle || '',
+          job_type_key: jobType || '',
+          location_key: location?.key || '',
+          salary_range_from: Number(minSalary),
+          salary_range_to: Number(maxSalary),
+          industry_key: industry,
+          currency_key: 'php',
+          country_key: 'ph'
+        }
       }
     }
 
@@ -193,93 +139,120 @@ const EditJobPreferencesModal = ({
     <div className={styles.jobPreferences}>
       <div className={styles.jobPreferencesForm}>
         <div className={styles.jobPreferencesFormGroup}>
-          <MaterialTextField
-            refs={{
-              ...register('jobTitle')
+          <Controller
+            control={control}
+            name={'jobTitle'}
+            rules={{ required: 'job title is required' }}
+            render={({ field, fieldState }) => {
+              return <MaterialTextField
+                className={styles.jobPreferencesFormInput}
+                label='Desired job title'
+                variant='outlined'
+                autoComplete='off'
+                required
+                {...fieldState}
+                {...field}
+              />
             }}
-            className={styles.jobPreferencesFormInput}
-            name='jobTitle'
-            label='Desire job title'
-            variant='outlined'
-            autoComplete='off'
+          />
+
+        </div>
+        <div className={styles.jobPreferencesFormGroup}>
+          <Controller
+            control={control}
+            name={'jobType'}
+            rules={{ required: 'job type is required' }}
+            render={({ field, fieldState }) => {
+              return <MaterialBasicSelect
+                className={styles.jobPreferencesFormInput}
+                label='Desired job type'
+                options={jobTypeList}
+                required
+                {...fieldState}
+                {...field}
+              />
+            }}
           />
         </div>
         <div className={styles.jobPreferencesFormGroup}>
-          <MaterialBasicSelect
-            fieldRef={{
-              ...register('jobType')
+          <Controller
+            control={control}
+            name={'minSalary'}
+            rules={{ validate: value => !!value }}
+            render={({ field, fieldState }) => {
+              const { value, onChange } = field
+              return <MaterialBasicSelect
+                className={styles.jobPreferencesFormInput}
+                label='Expected min. salary'
+                options={minSalaryOptions}
+                {...fieldState}
+                {...field}
+                value={value || undefined}
+                onChange={e => {
+                  setMinSalary(e.target.value)
+                  onChange(e)
+                }}
+              />
             }}
-            className={styles.jobPreferencesFormInput}
-            label='Desire job type'
-            value={jobType}
-            defaultValue={jobType}
-            options={jobTypeList}
-            onChange={(e) => setJobType(e.target.value)}
-          />
-        </div>
-        <div className={styles.jobPreferencesFormGroup}>
-          <MaterialBasicSelect
-            fieldRef={{
-              ...register('minSalary')
-            }}
-            className={styles.jobPreferencesFormInput}
-            label='Expected min. salary'
-            value={minSalary}
-            defaultValue={minSalary}
-            options={minSalaryOptions}
-            onChange={(e) => setMinSalary(e.target.value)}
           />
           <div style={{ width: '20px', height: '24px' }}></div>
-          <MaterialBasicSelect
-            fieldRef={{
-              ...register('maxSalary')
+          <Controller
+            control={control}
+            name={'maxSalary'}
+            rules={{ validate: value => !!value }}
+            render={({ field, fieldState }) => {
+              const { value } = field
+              return <MaterialBasicSelect
+                className={styles.jobPreferencesFormInput}
+                label='Max. salary'
+                required
+                options={maxSalaryOptions}
+                {...fieldState}
+                {...field}
+                value={value || undefined}
+              />
             }}
-            className={styles.jobPreferencesFormInput}
-            label='Max. salary'
-            value={maxSalary}
-            defaultValue={maxSalary}
-            options={maxSalaryOptions}
-            onChange={(e) => setMaxSalary(e.target.value)}
           />
         </div>
         <div className={styles.jobPreferencesFormGroup}>
-          <MaterialLocationField
-            fieldRef={{
-              ...register('location')
+          <Controller
+            control={control}
+            name={'location'}
+            rules={{ required: 'location is required' }}
+            render={({ field, fieldState }) => {
+              const {value,onChange} = field
+              console.log({value})
+              return <MaterialLocationField
+                className={styles.jobPreferencesFormInput}
+                label='Desired working location'
+                required
+                {...fieldState}
+                {...field}
+                onChange={(_,location)=>{
+                   onChange(location)
+                }}
+              />
             }}
-            className={styles.jobPreferencesFormInput}
-            label='Desire working location'
-            value={location}
-            defaultValue={location}
-            onChange={onLocationSearch}
           />
+
         </div>
-        {/* <div className={styles.jobPreferencesFormGroup}>
-						<MaterialBasicSelect
-								fieldRef={{
-										...register('workSetting'),
-								}}
-								className={styles.jobPreferencesFormInput}
-								label='Desire working setting'
-								value={workSetting}
-								// options={workSettingList}
-								onChange={(e) => {
-										setWorkSetting(e.target.value)
-								}}
-						/>
-				</div> */}
         <div className={styles.jobPreferencesFormGroup}>
-          <MaterialBasicSelect
-            fieldRef={{
-              ...register('industry')
+          <Controller
+            control={control}
+            name={'industry'}
+            rules={{ required: 'industry is required' }}
+            render={({ field, fieldState }) => {
+              return <MaterialBasicSelect
+                className={styles.jobPreferencesFormInput}
+                label='Desired Industry'
+                required
+                options={industryOptions}
+                {...fieldState}
+                {...field}
+              />
             }}
-            className={styles.jobPreferencesFormInput}
-            label='Industry'
-            value={industry}
-            defaultValue={industry}
-            options={industryOptions}
-            onChange={setIndustry}
           />
+
         </div>
       </div>
     </div>
