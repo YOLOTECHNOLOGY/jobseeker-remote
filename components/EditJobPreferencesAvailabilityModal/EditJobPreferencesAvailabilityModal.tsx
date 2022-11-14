@@ -26,7 +26,8 @@ const EditJobPreferencesAvailabilityModal = ({
   const preferredAvailability = userDetail?.notice_period_id
   const dispatch = useDispatch()
   const [availability, setAvailability] = useState(preferredAvailability || null)
-  const isUpdating = useSelector((store: any) => store.users.updateUserProfile.fetching)
+
+  const isUpdating = useSelector((store: any) => store.users.updateUserPreferences.fetching)
   const noticeList = getNoticePeriodList(config)
   const {
     register,
@@ -46,6 +47,7 @@ const EditJobPreferencesAvailabilityModal = ({
   }, [userDetail])
   const onSubmit = (data) => {
     const { noticePeriod } = data // jobType is a key
+    
     const payload = {
       profile: {
         notice_period_id: noticePeriod

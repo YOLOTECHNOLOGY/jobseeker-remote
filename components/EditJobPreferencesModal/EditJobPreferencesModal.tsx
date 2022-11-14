@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,7 +11,7 @@ import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialTextField from 'components/MaterialTextField'
 
 /* Helpers */
-import { getJobTypeList, getSalaryOptions, getNoticePeriodList } from 'helpers/jobPayloadFormatter'
+import { getJobTypeList, getSalaryOptions } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
 
 import { updateUserPreferencesRequest } from 'store/actions/users/updateUserPreferences'
@@ -25,6 +25,7 @@ type EditJobPreferencesModalProps = {
   config: any
   userDetail: any
   handleModal: Function
+  preference: any
 }
 
 const formatLocationConfig = (locationList) => {
@@ -54,29 +55,24 @@ const EditJobPreferencesModal = ({
   showModal,
   config,
   userDetail,
-  handleModal
+  handleModal,
+  preference
 }: EditJobPreferencesModalProps) => {
   // to add work setting
-  const preferredJobTitle = userDetail?.job_preference?.job_title
-  const preferredJobType = userDetail?.job_preference?.job_type
-  const preferredMinSalary = userDetail?.job_preference?.salary_range_from
-  const preferredMaxSalary = userDetail?.job_preference?.salary_range_to
-  const workLocation = userDetail?.job_preference?.location
-  const preferredAvailability = userDetail?.notice_period_id
-
+  const preferredJobTitle = preference?.job_title
+  const preferredJobType = preference?.job_type
+  const preferredMinSalary = preference?.salary_range_from
+  const preferredMaxSalary = preference?.salary_range_to
+  const workLocation = preference?.location
+  const preferredIndustry = preference?.industry
   const dispatch = useDispatch()
-
   const [jobType, setJobType] = useState(preferredJobType || null)
-
   const [minSalary, setMinSalary] = useState(Number(preferredMinSalary) || null)
   const [maxSalary, setMaxSalary] = useState(Number(preferredMaxSalary) || null)
   const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
-
-  // const [workSetting, setWorkSetting] = useState(work_setting || '')
-  const [availability, setAvailability] = useState(preferredAvailability || null)
-
+  const [industry, setIndustry] = useState(preferredIndustry)
   const isUpdating = useSelector((store: any) => store.users.updateUserPreferences.fetching)
-
+  console.log('config', config)
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
   )
@@ -85,7 +81,7 @@ const EditJobPreferencesModal = ({
 
   const jobTypeList = getJobTypeList(config)
 
-  const noticeList = getNoticePeriodList(config)
+  // const noticeList = getNoticePeriodList(config)
   const minSalaryOptions = getSalaryOptions(config)
 
   const matchedJobType = jobTypeList.find((type) => {
@@ -105,7 +101,7 @@ const EditJobPreferencesModal = ({
       minSalary: Number(preferredMinSalary),
       maxSalary: Number(preferredMaxSalary),
       location: workLocation,
-      noticePeriod: preferredAvailability
+      industry: preferredIndustry
     }
   })
 
@@ -124,7 +120,7 @@ const EditJobPreferencesModal = ({
       }
     }
 
-    if (userDetail && preferredJobType) {
+    if (preferredJobType) {
       const getJobType = jobTypeList.find((type) => {
         return type.label == preferredJobType
       })
@@ -132,22 +128,25 @@ const EditJobPreferencesModal = ({
       setValue('jobType', getJobType?.key)
     }
 
-    if (userDetail && preferredMinSalary) {
-      setMinSalary(Number(userDetail.job_preference.salary_range_from))
-      setValue('minSalary', userDetail.job_preference.salary_range_from)
+    if (preferredMinSalary) {
+      setMinSalary(Number(preferredMinSalary))
+      setValue('minSalary', preferredMinSalary)
     }
 
-    if (userDetail && preferredMaxSalary) {
-      setMaxSalary(Number(userDetail.job_preference.salary_range_to))
-      setValue('maxSalary', userDetail.job_preference.salary_range_to)
+    if (preferredMaxSalary) {
+      setMaxSalary(Number(preferredMaxSalary))
+      setValue('maxSalary', preferredMaxSalary)
     }
 
-    if (userDetail && preferredAvailability) {
-      setAvailability(userDetail.notice_period_id)
-      setValue('noticePeriod', userDetail.notice_period_id)
+    if (preferredIndustry) {
+      setIndustry(preferredIndustry)
+      setValue('industry', preferredIndustry)
     }
-  }, [userDetail])
-
+  }, [preference])
+  const industryOptions = useMemo(() => {
+    return config?.inputs?.industry_lists?.map(industry => ({ label: industry.value, value: industry.key })) ?? []
+  }, [config?.inputs?.industry_lists])
+  console.log('industryOptions', industryOptions)
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
     setMaxSalary(maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : null)
@@ -272,14 +271,14 @@ const EditJobPreferencesModal = ({
         <div className={styles.jobPreferencesFormGroup}>
           <MaterialBasicSelect
             fieldRef={{
-              ...register('noticePeriod')
+              ...register('industry')
             }}
             className={styles.jobPreferencesFormInput}
-            label='Availability'
-            value={availability}
-            defaultValue={availability}
-            options={noticeList}
-            onChange={(e) => setAvailability(e.target.value)}
+            label='Industry'
+            value={industry}
+            defaultValue={industry}
+            options={industryOptions}
+            onChange={setIndustry}
           />
         </div>
       </div>

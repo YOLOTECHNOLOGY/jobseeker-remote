@@ -28,7 +28,7 @@ import MaterialButton from 'components/MaterialButton'
 import ReadMore from 'components/ReadMore'
 import SeeMore from 'components/SeeMore'
 import Link from 'components/Link'
-
+import EditJobPreferencesDeleteModal from 'components/EditJobPreferencesDeleteModal'
 import EditProfileModal from 'components/EditProfileModal'
 import EditJobPreferencesModal from 'components/EditJobPreferencesModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
@@ -67,7 +67,6 @@ import { Chip } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
 import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
 import EditJobPreferencesAvailabilityModal from 'components/EditJobPreferencesAvailabilityModal/EditJobPreferencesAvailabilityModal'
-
 const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
@@ -781,7 +780,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
   const handleEditClick = () => {
     setShowModal(true)
   }
-
+  const [showDelete, setShowDelete] = useState(false)
   // const handleVisibility = () => {
   //   setOpenToWork(!openToWork)
   //   updateUserVisibilityToWorkService({
@@ -796,7 +795,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
         <div style={{ right: 40 }} className={styles.iconWrapper} onClick={handleEditClick}>
           <img src={PencilIcon} width='22' height='22' />
         </div>
-        <div style={{ right: 0 }} className={styles.iconWrapper} onClick={handleEditClick}>
+        <div style={{ right: 0 }} className={styles.iconWrapper} onClick={() => setShowDelete(true)}>
           <img src={DeleteIcon} width='22' height='22' />
         </div>
         {
@@ -906,7 +905,16 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
           showModal={showModal}
           config={config}
           userDetail={userDetail}
+          preference={preference}
           handleModal={() => setShowModal(false)}
+        />
+        <EditJobPreferencesDeleteModal
+          modalName={modalName}
+          showModal={showDelete}
+          config={config}
+          userDetail={userDetail}
+          preference={preference}
+          handleModal={() => setShowDelete(false)}
         />
       </div>
 
@@ -1232,7 +1240,7 @@ const ManageProfilePage = ({ config }: any) => {
     }
   })
   const availability = userDetail?.notice_period
-  console.log('availability',availability)
+  console.log('availability', availability)
   const [modalState, setModalState] = useState({
     profile: {
       showModal: false,

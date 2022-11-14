@@ -5,5 +5,9 @@ const addUserPreferencesService = (payload) => {
 
   return axios.post('/job-preferences/update', {...payload.preferences})
 }
+const deleteUserPreferencesService = (payload) => {
+  const axios = configuredAxios('jobseeker', 'protected', '', payload.accessToken)
 
-export { addUserPreferencesService }
+  return axios.delete(`/job-preferences/${payload.preferenceId}/delete`)
+}
+export { addUserPreferencesService,deleteUserPreferencesService }
