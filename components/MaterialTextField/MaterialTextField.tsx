@@ -25,6 +25,8 @@ type MaterialTextFieldProps = {
   maxLength?: Number
   isSubmitOnEnter?: boolean
   onSubmit?: any
+  helperText?:string
+  ref?:any
 } & Omit<Input, 'size'>
 
 const theme = createTheme({
@@ -64,7 +66,7 @@ const theme = createTheme({
     }
   },
 })
-const MaterialTextField = ({ id, label, variant, error, refs, size, color, className, defaultValue, multiline=false, rows=1, maxLength=255, isSubmitOnEnter, onSubmit, ...rest} : MaterialTextFieldProps) => {
+const MaterialTextField = ({ id,ref, label,helperText, variant, error, refs, size, color, className, defaultValue, multiline=false, rows=1, maxLength=255, isSubmitOnEnter, onSubmit, ...rest} : MaterialTextFieldProps) => {
   const [value, setValue] = useState(defaultValue)
 
   useEffect(()=>{
@@ -80,6 +82,7 @@ const MaterialTextField = ({ id, label, variant, error, refs, size, color, class
         onKeyDown={isSubmitOnEnter ? (event)=>{
           if (event.key == 'Enter') onSubmit();
         }: null} 
+        ref={ref}
         {...refs}
         id={id} 
         label={label} 
@@ -92,6 +95,7 @@ const MaterialTextField = ({ id, label, variant, error, refs, size, color, class
         error={error}
         multiline={multiline}
         rows={rows}
+        helperText={helperText}
         {...rest}
         inputProps={{
           maxLength,

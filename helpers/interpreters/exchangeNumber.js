@@ -49,7 +49,7 @@ export default command => command.cata({
     }),
     sendNumberRequest: () => M(context => {
         const applicationId = context.getApplicationId()
-        const id = context.getState().contact_exchange_request.id
+        const id = context.getState()?.contact_exchange_request?.id
         context.setLoading(true)
         return create(applicationId, id)
             .then(result => RequestResult.success(result.data))
@@ -58,7 +58,7 @@ export default command => command.cata({
     }),
     acceptRequest: () => M(context => {
         const applicationId = context.getApplicationId()
-        const id = context.getState().contact_exchange_request.id
+        const id = context.getState()?.contact_exchange_request?.id
         context.setLoading(true)
         return accept(applicationId, id)
             .then(result => RequestResult.success(result.data))
@@ -67,7 +67,7 @@ export default command => command.cata({
     }),
     declineRequest: () => M(context => {
         const applicationId = context.getApplicationId()
-        const id = context.getState().contact_exchange_request.id
+        const id = context.getState()?.contact_exchange_request?.id
         context.setLoading(true)
         return decline(applicationId, id)
             .then(result => RequestResult.success(result.data))

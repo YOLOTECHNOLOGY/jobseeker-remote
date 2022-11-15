@@ -4,6 +4,7 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
+import { FormHelperText } from '@mui/material'
 
 const MaterialBasicSelect = ({
   id,
@@ -16,13 +17,15 @@ const MaterialBasicSelect = ({
   defaultValue,
   fieldRef,
   disabled,
+  required,
+  error,
   ...rest
 }: any) => {
   const [value, setValue] = useState(defaultValue || '')
 
-  useEffect(()=>{
+  useEffect(() => {
     setValue(defaultValue)
-  },[defaultValue])
+  }, [defaultValue])
 
   const handleChange = (event: SelectChangeEvent) => {
     setValue(event.target.value as string)
@@ -79,7 +82,7 @@ const MaterialBasicSelect = ({
           root: {
             fontSize: '16px',
             letterSpacing: '1px',
-            padding:'10px 16px'
+            padding: '10px 16px'
           },
         },
       },
@@ -87,7 +90,7 @@ const MaterialBasicSelect = ({
   })
   return (
     <ThemeProvider theme={theme}>
-      <FormControl className={className} size='small'>
+      <FormControl className={className} size='small' required={required} error={!!error}>
         <InputLabel id={`${id}-select-label`}>{label}</InputLabel>
         <Select
           {...fieldRef}
@@ -95,10 +98,13 @@ const MaterialBasicSelect = ({
           id={id}
           value={value}
           label={label}
+          required={required}
           onChange={handleChange}
           onOpen={onOpen}
           disabled={disabled}
+          helperText={error?.message}
           {...rest}
+
         >
           {options &&
             options.map((option) => (
@@ -107,6 +113,7 @@ const MaterialBasicSelect = ({
               </MenuItem>
             ))}
         </Select>
+        <FormHelperText>{error?.message}</FormHelperText>
       </FormControl>
     </ThemeProvider>
   )

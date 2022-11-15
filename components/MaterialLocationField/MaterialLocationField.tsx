@@ -87,10 +87,16 @@ const MaterialLocationField = ({ className, label, defaultValue, fieldRef, error
         groupBy={(option: any) => option.region_display_name}
         getOptionLabel={(option: any) => option.value || ''}
         size='small'
+        
         className={className}
         renderInput={(params) => (
           <ThemeProvider theme={textFieldTheme}>
-            <TextField id='location' {...fieldRef} error={error} label={label ? label : 'Location'} variant='outlined' size='small' {...params} />
+            <TextField id='location'
+             {...fieldRef}
+              error={!!error} 
+              required={rest.required}
+              helperText={error?.message}
+              label={label ? label : 'Location'} variant='outlined' size='small' {...params} />
           </ThemeProvider>
         )}
         defaultValue={defaultValue}

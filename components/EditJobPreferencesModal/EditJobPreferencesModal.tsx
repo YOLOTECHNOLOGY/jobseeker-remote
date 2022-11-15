@@ -8,7 +8,6 @@ import { Controller, useForm } from 'react-hook-form'
 import Modal from 'components/Modal'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
-import MaterialTextField from 'components/MaterialTextField'
 
 /* Helpers */
 import { getJobTypeList, getSalaryOptions } from 'helpers/jobPayloadFormatter'
@@ -18,6 +17,7 @@ import { updateUserPreferencesRequest } from 'store/actions/users/updateUserPref
 
 /* Styles */
 import styles from './EditJobPreferencesModal.module.scss'
+import JobFunctionSelector from 'components/JobFunctionSelector'
 
 type EditJobPreferencesModalProps = {
   modalName: string
@@ -32,24 +32,6 @@ const formatLocationConfig = (locationList) => {
   const locationConfig = locationList?.map((region) => region.locations)
   return locationConfig
 }
-
-
-// const requiredLabel = (text: string) => {
-//   return (
-//     <>
-//       <span>{text}</span>
-//       <span className={styles.requiredField}>*</span>
-//     </>
-//   )
-// }
-
-// const errorText = (errorMessage: string) => {
-//   return (
-//     <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
-//       {errorMessage}
-//     </Text>
-//   )
-// }
 
 const EditJobPreferencesModal = ({
   modalName,
@@ -104,7 +86,6 @@ const EditJobPreferencesModal = ({
   }
   const onSubmit = (data) => {
     // to add workSetting
-    console.log({ data })
     const { jobTitle, jobType, minSalary, maxSalary, location, industry } = data // jobType is a key
     const payload = {
       preferences: {
@@ -144,11 +125,14 @@ const EditJobPreferencesModal = ({
             name={'jobTitle'}
             rules={{ required: 'job title is required' }}
             render={({ field, fieldState }) => {
-              return <MaterialTextField
+              return <JobFunctionSelector
                 className={styles.jobPreferencesFormInput}
+                control={control}
                 label='Desired job title'
                 variant='outlined'
                 autoComplete='off'
+                title='Job function'
+                helperText={fieldState?.error?.message}
                 required
                 {...fieldState}
                 {...field}
@@ -178,13 +162,14 @@ const EditJobPreferencesModal = ({
           <Controller
             control={control}
             name={'minSalary'}
-            rules={{ validate: value => !!value }}
+            rules={{ validate: value => !!value || 'min salary is required' }}
             render={({ field, fieldState }) => {
               const { value, onChange } = field
               return <MaterialBasicSelect
                 className={styles.jobPreferencesFormInput}
                 label='Expected min. salary'
                 options={minSalaryOptions}
+                required
                 {...fieldState}
                 {...field}
                 value={value || undefined}
@@ -199,12 +184,14 @@ const EditJobPreferencesModal = ({
           <Controller
             control={control}
             name={'maxSalary'}
-            rules={{ validate: value => !!value }}
+            rules={{ validate: value => !!value || 'max salary is required' }}
             render={({ field, fieldState }) => {
               const { value } = field
+              console.log({ fieldState })
               return <MaterialBasicSelect
                 className={styles.jobPreferencesFormInput}
                 label='Max. salary'
+                rules={{ required: 'max salary is required' }}
                 required
                 options={maxSalaryOptions}
                 {...fieldState}
@@ -220,16 +207,15 @@ const EditJobPreferencesModal = ({
             name={'location'}
             rules={{ required: 'location is required' }}
             render={({ field, fieldState }) => {
-              const {value,onChange} = field
-              console.log({value})
+              const { onChange } = field
               return <MaterialLocationField
                 className={styles.jobPreferencesFormInput}
                 label='Desired working location'
                 required
                 {...fieldState}
                 {...field}
-                onChange={(_,location)=>{
-                   onChange(location)
+                onChange={(_, location) => {
+                  onChange(location)
                 }}
               />
             }}
@@ -270,6 +256,7 @@ const EditJobPreferencesModal = ({
       handleFirstButton={handleCloseModal}
       handleSecondButton={handleSubmit(onSubmit)}
       fullScreen
+      closeModalOnOutsideClick={false}
     >
       {modalJobPreferenceContent}
     </Modal>

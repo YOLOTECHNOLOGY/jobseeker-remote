@@ -770,7 +770,6 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
 
 const RenderPreferencesView = ({ modalName, config, userDetail, preference }: any) => {
   // const [openToWork, setOpenToWork] = useState(true)
-  console.log('userDetail', userDetail)
   const minSalary = preference?.salary_range_from
   const maxSalary = preference?.salary_range_to
   const salaryRange = minSalary + ' - ' + maxSalary
