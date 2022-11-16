@@ -1,4 +1,4 @@
-import { FormControl, MenuItem, MenuList, Paper } from "@mui/material"
+import { FormControl, MenuList, Paper } from "@mui/material"
 import MaterialTextField from "components/MaterialTextField"
 import Modal from '@mui/material/Modal';
 import { useEffect, useMemo, useRef, useState } from "react"
@@ -16,8 +16,10 @@ const JobFunctionSelector = (props: any) => {
     const [selectedSubItem, setSelectedSubItem] = useState<any>({})
     const textRef = useRef<any>()
     const jobFunctions = useSelector((store: any) => store.config.config.response?.inputs?.job_function_lists ?? [])
+    console.log({ jobFunctions })
+
     const jobFunctionsKeys = useMemo(() => flatMap(jobFunctions, keys), [jobFunctions])
-    const jobFunctionsObject = useMemo(() => jobFunctions?.reduce(assign), [jobFunctions])
+    const jobFunctionsObject = useMemo(() => jobFunctions?.reduce(assign, {}), [jobFunctions])
     const [selectedTitle, setSelectedTitle] = useState<any>()
     const selectedItem = useMemo(() => {
         if (selectedKey) {
@@ -35,13 +37,13 @@ const JobFunctionSelector = (props: any) => {
         })
         return groupedSelected?.indexOf(group) ?? -1
     }, [groupedSelected, selectedSubItem])
-    useEffect(()=>{
-        if(title){
+    useEffect(() => {
+        if (title) {
             onChange(selectedTitle?.value)
             setShowModal(false)
         }
-        
-    },[selectedTitle])
+
+    }, [selectedTitle])
     console.log('selectedTitle', selectedTitle)
 
     return <FormControl className={className} size='small'>
@@ -70,69 +72,82 @@ const JobFunctionSelector = (props: any) => {
                 setShowModal(false)
             }}
         >
-            <Paper className={styles.webPC}>
-                <TopBar title={title} />
-                <div className={styles.container}>
-                    <MenuList classes={{ root: styles.menu }} >
-                        {jobFunctionsKeys.map(key => {
-                            return <MenuItem
-                                role='cell'
-                                key={key}
-                                selected={key === selectedKey}
-                                classes={{ root: styles.menuItem, selected: styles.selected }}
-                                onClick={() => {
-                                    setSelectedKey(key)
-                                }}
-                            >
-                                <p className={styles.itemText} >{key}</p>
-                            </MenuItem>
-                        })}
-
-                    </MenuList>
-                    <div style={{ flex: 1 }}>
-                        {groupedSelected.map((group, index) => {
-                            return <div className={styles.rowContainer} key={index}>
-                                <div className={styles.rowItemContainer}>
-                                    {group.map(subItem => {
-                                        return <div
-                                            key={subItem.id}
-                                            className={styles.rowItem}
-                                            onClick={() => {
-                                                if (subItem.id === (selectedSubItem as any)?.id) {
-                                                    setSelectedSubItem(undefined)
-                                                } else {
-                                                    setSelectedSubItem(subItem)
-                                                }
-                                            }}
-                                        >
-                                            <img src={subItem.id === (selectedSubItem as any)?.id ? Minus : Plus} height={13} width={13} />
-                                            {subItem.value}
-                                        </div>
-
+            <div>
+                
+                <Paper className={styles.webPC}>
+                    <TopBar title={title} onChange={title => setSelectedTitle(title)} />
+                    <div className={styles.container}>
+                        <MenuList classes={{ root: styles.menu }} >
+                            {jobFunctionsKeys.map(key => {
+                                return <div
+                                    role='cell'
+                                    key={key}
+                                    className={classNames({
+                                        [styles.menuItem]: true,
+                                        [styles.selected]: key === selectedKey
                                     })}
+                                    onClick={() => {
+                                        setSelectedKey(key)
+                                    }}
+                                >
+                                    <div className={styles.itemText}>{key}</div>
                                 </div>
-                                {index === selectedGroupIndex &&
-                                    <div className={styles.titleContainer} >
-                                        {selectedSubItem?.job_titles?.map(title => {
-                                            return <Text
-                                                onClick={() => setSelectedTitle(title)}
-                                                className={classNames({
-                                                    [styles.titleItem]: true,
-                                                    [styles.hightlighted]: title?.id === selectedTitle?.id
-                                                })}
-                                                key={title.id}>{title.value}</Text>
+                            })}
+
+                        </MenuList>
+                        <div style={{ flex: 1 }}>
+                            {groupedSelected.map((group, index) => {
+                                return <div className={styles.rowContainer} key={index}>
+                                    <div className={styles.rowItemContainer}>
+                                        {group.map(subItem => {
+                                            return <div
+                                                key={subItem.id}
+                                                className={styles.rowItem}
+                                                onClick={() => {
+                                                    if (subItem.id === (selectedSubItem as any)?.id) {
+                                                        setSelectedSubItem(undefined)
+                                                    } else {
+                                                        setSelectedSubItem(subItem)
+                                                    }
+                                                }}
+                                            >
+                                                <div className={styles.icon} >
+                                                    <img src={subItem.id === (selectedSubItem as any)?.id ? Minus : Plus} height={10} width={10} />
+                                                </div>
+                                                {subItem.value}
+                                            </div>
+
                                         })}
-
                                     </div>
-                                }
-                            </div>
-                        })}
-                    </div>
-                </div>
+                                    {index === selectedGroupIndex &&
+                                        <div className={styles.titleContainer} >
+                                            {selectedSubItem?.job_titles?.map(title => {
+                                                return <div
+                                                    key={title.id}
+                                                    title={title.value}
+                                                    className={classNames({
+                                                        [styles.titleItem]: true,
+                                                        [styles.hightlighted]: title?.id === selectedTitle?.id
+                                                    })}
+                                                    onClick={() => setSelectedTitle(title)}
+                                                >
+                                                    <Text className={styles.text}>
+                                                        {title.value}
+                                                    </Text>
+                                                </div>
 
-            </Paper>
+                                            })}
+
+                                        </div>
+                                    }
+                                </div>
+                            })}
+                        </div>
+                    </div>
+                </Paper>
+            </div>
         </Modal>
-    </FormControl>
+    </FormControl >
 
 }
 export default JobFunctionSelector

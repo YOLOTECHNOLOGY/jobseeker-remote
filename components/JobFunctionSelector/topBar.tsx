@@ -1,69 +1,68 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import React, { useEffect, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
 import styles from './index.module.scss'
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.55),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white,1),
-  },
-  
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
+import { useAutocomplete } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { flatMapDeep } from 'lodash-es'
+import SearchBar from './searchBar'
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
+export default function PrimarySearchAppBar({ title, onChange }: any) {
 
-export default function PrimarySearchAppBar({ title }:any) {
+  const jobFunctions = useSelector((store: any) => store.config.config.response?.inputs?.job_function_lists ?? [])
 
+  const options = useMemo(() => flatMapDeep(jobFunctions,
+    item =>
+      Object.keys(item)
+        .map(mainCategory => item[mainCategory]
+          .map(subItem => subItem.job_titles
+            .map(title => ({ ...title, mainCategory, subCategory: subItem.value }))))
+  ), [jobFunctions])
+  const {
+    getRootProps,
+    getInputProps,
+    getListboxProps,
+    getOptionProps,
+    groupedOptions,
+    value
+  } = useAutocomplete({
+    id: 'use-autocomplete-demo',
+    options,
+    getOptionLabel: (option: any) => option.value,
+  });
+  console.log('value', value)
+  useEffect(() => {
+    if (value) {
+      onChange?.(value)
+    }
+  }, [value])
   return (
     <Box sx={{ flexGrow: 1 }}>
 
-      <Toolbar style={{background:'#F9F9F9',borderBottom:'1px solid #ccc'}}>
+      <Toolbar style={{ background: '#F9F9F9', borderBottom: '1px solid #ccc' }}>
         <span className={styles.title}>{title}</span>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search for job title"
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </Search>
-      </Toolbar>
 
+
+      </Toolbar>
+      <div className={styles.searchBar}  {...getRootProps()} >
+        <SearchBar style={{background:'#00000000'}} inputProps={getInputProps()} />
+        {groupedOptions.length > 0 ? (
+          <div className={styles.listbox}  {...(getListboxProps() as any)}>
+            {(groupedOptions as any).map((option, index) => (
+              <div
+                {...(getOptionProps({ option, index }) as any)}
+                key={'' + option.title + option.id + index}
+              >
+                <div className={styles.searchItem}>
+                  <label className={styles.mainLabel}>{option.value}</label>
+                  <label className={styles.subLabel}>{option.mainCategory + ' - ' + option.subCategory}</label>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : null}
+      </div>
     </Box>
   );
 }
