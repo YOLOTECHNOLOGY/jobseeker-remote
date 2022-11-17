@@ -5,12 +5,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import styles from './index.module.scss'
 import TopBar from './topBar'
 import { useSelector } from "react-redux";
-import { flatMap, keys, assign, values, groupBy } from 'lodash-es'
+import { flatMap, flatMapDeep, keys, assign, values, groupBy } from 'lodash-es'
 import { Plus, Minus } from "images";
 import Text from "components/Text";
 import classNames from "classnames";
 const JobFunctionSelector = (props: any) => {
-    const { value = '', className, title, onChange, isTouched, onBlur, ...rest } = props
+    const { value, jobTitle = '', className, title, onChange, isTouched, onBlur, ...rest } = props
     const [showModal, setShowModal] = useState(false)
     const [selectedKey, setSelectedKey] = useState<any>()
     const [selectedSubItem, setSelectedSubItem] = useState<any>({})
@@ -20,7 +20,7 @@ const JobFunctionSelector = (props: any) => {
 
     const jobFunctionsKeys = useMemo(() => flatMap(jobFunctions, keys), [jobFunctions])
     const jobFunctionsObject = useMemo(() => jobFunctions?.reduce(assign, {}), [jobFunctions])
-    const [selectedTitle, setSelectedTitle] = useState<any>()
+    const [selectedTitle, setSelectedTitle] = useState<any>(value)
     const selectedItem = useMemo(() => {
         if (selectedKey) {
             return jobFunctionsObject[selectedKey]
@@ -37,10 +37,17 @@ const JobFunctionSelector = (props: any) => {
         })
         return groupedSelected?.indexOf(group) ?? -1
     }, [groupedSelected, selectedSubItem])
+    useEffect(() => {
+        if (jobTitle && !value) {
+            const allTitles = flatMapDeep(values(jobFunctionsObject), group => group.map(item => item.job_titles))
+            const title = allTitles.find(item => item.value === jobTitle)
+            setSelectedTitle(title)
+        }
+    }, [])
 
     useEffect(() => {
-        if (title) {
-            onChange(selectedTitle?.value)
+        if (selectedTitle) {
+            onChange(selectedTitle)
             setShowModal(false)
         }
 
@@ -58,22 +65,24 @@ const JobFunctionSelector = (props: any) => {
             setExpandeds(expandeds.filter(item => item !== id))
         }
     }, [expandeds])
-
+    console.log({textRef})
     return <FormControl className={className} size='small'>
         <MaterialTextField
             ref={(ref) => textRef.current = ref}
-            value={value}
-            onChange={e => {
-                e.preventDefault()
-                e.stopPropagation()
-            }}
+            value={selectedTitle?.value}
+            // onChange={e => {
+            //     // e.preventDefault()
+            //     // e.stopPropagation()
+            //     onChange(selectedTitle)
+            // }}
             onClick={() => {
                 setShowModal(true)
             }}
-            onFocus={() => {
+            onFocus={(e) => {
                 if (!isTouched) {
                     setShowModal(true)
                 }
+                rest?.onFocus?.(e)
             }}
             onBlur={onBlur}
             {...rest}
@@ -120,11 +129,11 @@ const JobFunctionSelector = (props: any) => {
                                             key={titleItem.id}
                                             className={classNames(
                                                 {
-                                                    [styles.groupItem]:true,
-                                                    [styles.isSelected]:selectedTitle?.id === titleItem.id
+                                                    [styles.groupItem]: true,
+                                                    [styles.isSelected]: selectedTitle?.id === titleItem.id
                                                 }
-                                            ) }
-                                            onClick={()=>setSelectedTitle(titleItem)}
+                                            )}
+                                            onClick={() => setSelectedTitle(titleItem)}
                                         >
                                             {titleItem.value}
                                         </div>
