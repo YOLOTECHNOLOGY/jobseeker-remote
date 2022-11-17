@@ -1,7 +1,7 @@
 import { FormControl, MenuList, Paper } from "@mui/material"
 import MaterialTextField from "components/MaterialTextField"
 import Modal from '@mui/material/Modal';
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import styles from './index.module.scss'
 import TopBar from './topBar'
 import { useSelector } from "react-redux";
@@ -14,9 +14,9 @@ const JobFunctionSelector = (props: any) => {
     const [showModal, setShowModal] = useState(false)
     const [selectedKey, setSelectedKey] = useState<any>()
     const [selectedSubItem, setSelectedSubItem] = useState<any>({})
+    const [expandeds, setExpandeds] = useState([])
     const textRef = useRef<any>()
     const jobFunctions = useSelector((store: any) => store.config.config.response?.inputs?.job_function_lists ?? [])
-    console.log({ jobFunctions })
 
     const jobFunctionsKeys = useMemo(() => flatMap(jobFunctions, keys), [jobFunctions])
     const jobFunctionsObject = useMemo(() => jobFunctions?.reduce(assign, {}), [jobFunctions])
@@ -37,6 +37,7 @@ const JobFunctionSelector = (props: any) => {
         })
         return groupedSelected?.indexOf(group) ?? -1
     }, [groupedSelected, selectedSubItem])
+
     useEffect(() => {
         if (title) {
             onChange(selectedTitle?.value)
@@ -44,7 +45,19 @@ const JobFunctionSelector = (props: any) => {
         }
 
     }, [selectedTitle])
-    console.log('selectedTitle', selectedTitle)
+    const isExpanded = useCallback(id => {
+        return expandeds.includes(id)
+    }, [expandeds])
+    const expand = useCallback(id => {
+        if (!expandeds.includes(id)) {
+            setExpandeds([...expandeds, id])
+        }
+    }, [expandeds])
+    const unExpands = useCallback(id => {
+        if (expandeds.includes(id)) {
+            setExpandeds(expandeds.filter(item => item !== id))
+        }
+    }, [expandeds])
 
     return <FormControl className={className} size='small'>
         <MaterialTextField
@@ -73,7 +86,6 @@ const JobFunctionSelector = (props: any) => {
             }}
         >
             <div>
-                
                 <Paper className={styles.webPC}>
                     <TopBar title={title} onChange={title => setSelectedTitle(title)} />
                     <div className={styles.container}>
@@ -95,7 +107,36 @@ const JobFunctionSelector = (props: any) => {
                             })}
 
                         </MenuList>
-                        <div style={{ flex: 1 }}>
+                        <div className={styles.rightContainer}>
+                            {(selectedItem ?? []).map(group => {
+                                const isItemExpand = isExpanded(group.id)
+                                const subItems = isItemExpand ? group.job_titles : group.job_titles.filter((_, index) => index < 5)
+                                return <div className={styles.mobileGroup} key={group.value} >
+                                    <div className={styles.groupTitle}>
+                                        {group.value}
+                                    </div>
+                                    {subItems.map(titleItem => {
+                                        return <div
+                                            key={titleItem.id}
+                                            className={classNames(
+                                                {
+                                                    [styles.groupItem]:true,
+                                                    [styles.isSelected]:selectedTitle?.id === titleItem.id
+                                                }
+                                            ) }
+                                            onClick={()=>setSelectedTitle(titleItem)}
+                                        >
+                                            {titleItem.value}
+                                        </div>
+                                    })}
+                                    <div className={styles.groupAction}>{group.job_titles.length > 5 && (!isItemExpand
+                                        ?
+                                        <div onClick={() => expand(group.id)}>see more</div>
+                                        :
+                                        <div onClick={() => unExpands(group.id)}>see less</div>)}
+                                    </div>
+                                </div>
+                            })}
                             {groupedSelected.map((group, index) => {
                                 return <div className={styles.rowContainer} key={index}>
                                     <div className={styles.rowItemContainer}>

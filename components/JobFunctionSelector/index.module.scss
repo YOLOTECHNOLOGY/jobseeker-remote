@@ -40,6 +40,7 @@
         position: absolute;
         top: 12px;
         left: 130px;
+
         // overflow: hidden;
         @include sm {
             position: relative;
@@ -64,14 +65,16 @@
             background: #FFFFFF;
             box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.1), 2px 2px 4px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
+
             @include sm {
                 width: 100%;
-                height:auto;
+                height: auto;
                 max-height: 1200px;
                 padding-top: 10px;
                 padding-bottom: 10px;
                 overflow: auto;
             }
+
             .searchItem {
                 min-height: 64px;
                 padding: 10px 20px;
@@ -123,32 +126,10 @@
 
         @include sm {
             border-top: 0.5px solid #BCBCBC;
-            height: auto;
+            height: inherit;
         }
 
-        .rowContainer {
-            width: 100%;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
 
-            .rowItemContainer {
-                display: flex;
-                flex-direction: row;
-                width: 100%;
-
-                .rowItem {
-                    width: 33%;
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-
-                    img {
-                        margin-right: 5px;
-                    }
-                }
-            }
-        }
     }
 
     .title {
@@ -194,6 +175,7 @@
                 height: auto;
                 background: #fff;
                 letter-spacing: 0.0075em;
+
                 &.selected {
 
                     background: #ECF4FF;
@@ -205,7 +187,7 @@
                 background: #FFFFFF;
                 color: #136FD3;
 
-                
+
 
                 &:hover {
                     background: #fafafe;
@@ -228,11 +210,12 @@
                 // -webkit-box-orient: vertical;
                 // height: 100%;
                 // -webkit-line-clamp: 2!important;
-                
+
                 overflow: hidden;
 
                 word-wrap: break-word;
                 word-break: break-all;
+
                 @include sm {
                     font-size: 14px;
                     line-height: 18px;
@@ -248,44 +231,156 @@
 
     }
 
-    .titleContainer {
-        width: 100%;
+    .rightContainer {
+        flex: 1;
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-direction: column;
         justify-content: flex-start;
-        border: 0.5px solid #BCBCBC;
-        border-radius: 15px;
-        padding: 10px 15px;
-        margin-top: 20px;
-        height: 440px;
-        overflow: auto;
+        height: 524px;
 
-        .titleItem {
-            width: 30%;
-            margin: 10px 0px;
-            margin: 10px 1.5%;
-            cursor: pointer;
-            background: #F0F0F0;
-            border-radius: 15px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            padding: 12px 16px 12px 24px;
-            gap: 10px;
-            width: 237px;
-            height: 48px;
+        @include sm {
+            height: inherit;
+            overflow: auto;
+        }
 
-            &.hightlighted {
-                background: #136FD3;
+        .mobileGroup {
+            display: none;
 
-                .text {
-                    color: #fff
+            @include sm {
+                display: flex;
+                flex-direction: column;
+                padding-left: 16px;
+                padding-right: 16px;
+                // height: inherit;
+                // overflow: auto;
+            }
+
+            .groupTitle {
+                width: 100%;
+                height: 38px;
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 16px;
+                line-height: 24px;
+                color: #353535;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+            }
+
+            .groupItem {
+                width: 100%;
+                height: 38px;
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 18px;
+                letter-spacing: 0.0075em;
+                color: #353535;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                &.isSelected {
+                    background: #E7F1FB
                 }
+
+                &:hover {
+                    background: #EfFfFB
+                }
+            }
+
+            .groupAction {
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 18px;
+                letter-spacing: 0.0075em;
+                text-decoration-line: underline;
+                color: #353535;
+                height: 30px;
 
             }
         }
+
+        .rowContainer {
+            @include sm {
+                display: none;
+            }
+
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+
+            // flex-grow: 0.1;
+            .rowItemContainer {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+
+                .rowItem {
+                    width: 33%;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+
+                    img {
+                        margin-right: 5px;
+                    }
+                }
+
+            }
+
+            .titleContainer {
+                width: 100%;
+                flex-grow: 1;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                border: 0.5px solid #BCBCBC;
+                border-radius: 15px;
+                padding: 10px 15px;
+                margin-top: 20px;
+                max-height: 440px;
+                overflow: auto;
+
+                .titleItem {
+                    width: 30%;
+                    margin: 10px 0px;
+                    margin: 10px 1.5%;
+                    cursor: pointer;
+                    background: #F0F0F0;
+                    border-radius: 15px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    padding: 12px 16px 12px 24px;
+                    gap: 10px;
+                    width: 237px;
+                    height: 48px;
+
+                    &.hightlighted {
+                        background: #136FD3;
+
+                        .text {
+                            color: #fff
+                        }
+
+                    }
+                }
+            }
+        }
+
+
     }
+
 
 
 }
