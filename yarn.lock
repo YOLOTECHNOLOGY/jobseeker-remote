@@ -4065,14 +4065,14 @@ image-size@1.0.0:
   dependencies:
     queue "6.0.2"
 
-imforbossjob@^0.0.391:
-  version "0.0.391"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.391.tgz#1d8093baf9cd5de83134f46f6c877332a27c79c6"
-  integrity sha512-IB6gNJFsQmnhe7ombS4U5gyGn3EB7y/T4RGlCReMmb1q+yegwX/M1FHZLwhNNWp7uP2rBU5j+RvjcjsBg9MoMQ==
+imforbossjob@^0.0.397:
+  version "0.0.397"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.397.tgz#8cee7cda03da431745d7bbf8ee906465f70c27f2"
+  integrity sha512-ru6R4fk/KT4IxdxH9GqOg8rslWpCDVLqUDu+9MiYH351O6jFc7XG6Bog2LruJ7N92O/VwVC9podf96h/FMgw7g==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     antd "^4.23.3"
-    imsdkweb "^0.0.9"
+    imsdkweb "^0.0.10"
 
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   version "3.3.0"
@@ -4082,10 +4082,10 @@ import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
 
-imsdkweb@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.9.tgz#c19dbce5909863ea102d4bef9aadfa2eb3cc5b26"
-  integrity sha512-6Wr9c0wRu+JekjHvW3nVUihJw9UyjOCpcy1Lj50CcHO9Keo/ExhMy2RsIb70b/QLcV1CbpXDliZSyJNycv5TNw==
+imsdkweb@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.10.tgz#c0fbc40f7f78215421b60c5211e30308749f72d3"
+  integrity sha512-sz8LmmsAhW354PWrweu0MHevKRwWn0LrHUBVMnr79Myh7VvJaL2fOrp7u36h2QNTT91SCS1EBeb4JubQF72/Cg==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
