@@ -44,7 +44,7 @@ const EditJobPreferencesModal = ({
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
   )
-  const [initial,setInital] = useState(true)
+  const [initial, setInital] = useState(true)
   const formattedLocationList = flat(formatLocationConfig(locationList))
   const location = useMemo(() => {
     return formattedLocationList.find(l => l.key === preference?.location_key)
@@ -52,7 +52,7 @@ const EditJobPreferencesModal = ({
   // to add work setting
   const defaultValues = useMemo(() => {
     return {
-      jobTitle: (preference?.function_job_title && preference.function_job_title_id)&&{id:preference.function_job_title_id,value:preference?.function_job_title },
+      jobTitle: { id: preference?.function_job_title_id, value: preference?.function_job_title ?? '' },
       jobType: preference?.job_type_key,
       minSalary: Number(preference?.salary_range_from) ?? undefined,
       maxSalary: Number(preference?.salary_range_to) ?? undefined,
@@ -64,7 +64,7 @@ const EditJobPreferencesModal = ({
   const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
   const isUpdating = useSelector((store: any) => store.users.updateUserPreferences.fetching)
   const response = useSelector((store: any) => store.users.updateUserPreferences.response)
-  
+
   const jobTypeList = getJobTypeList(config)
   const minSalaryOptions = getSalaryOptions(config)
   const {
@@ -78,13 +78,13 @@ const EditJobPreferencesModal = ({
   useEffect(() => {
     getMaxSalaryOptions(minSalary)
   }, [minSalary])
-  useEffect(()=>{
-    if(initial){
+  useEffect(() => {
+    if (initial) {
       setInital(false)
     } else {
       handleCloseModal()
     }
-  },[response])
+  }, [response])
   const industryOptions = useMemo(() => {
     return config?.inputs?.industry_lists?.map(industry => ({ label: industry.value, value: industry.key })) ?? []
   }, [config?.inputs?.industry_lists])
@@ -103,8 +103,8 @@ const EditJobPreferencesModal = ({
         preferenceId: preference?.id,
         params: {
           job_title: jobTitle.value || '',
-          function_job_title_id:jobTitle.id,
-          function_job_title:jobTitle.value,
+          function_job_title_id: jobTitle.id,
+          function_job_title: jobTitle.value,
           job_type_key: jobType || '',
           location_key: location?.key || '',
           salary_range_from: Number(minSalary),
@@ -117,7 +117,7 @@ const EditJobPreferencesModal = ({
     }
 
     dispatch(updateUserPreferencesRequest(payload))
-    setTimeout(handleCloseModal,500)
+    setTimeout(handleCloseModal, 500)
   }
 
   useEffect(() => {
@@ -150,6 +150,7 @@ const EditJobPreferencesModal = ({
                 required
                 {...fieldState}
                 {...field}
+              // onChange={(value)=>setValue('jobTitle',value)}
               />
             }}
           />

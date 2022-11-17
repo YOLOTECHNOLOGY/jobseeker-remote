@@ -17,10 +17,8 @@ const JobFunctionSelector = (props: any) => {
     const [expandeds, setExpandeds] = useState([])
     const textRef = useRef<any>()
     const jobFunctions = useSelector((store: any) => store.config.config.response?.inputs?.job_function_lists ?? [])
-
     const jobFunctionsKeys = useMemo(() => flatMap(jobFunctions, keys), [jobFunctions])
     const jobFunctionsObject = useMemo(() => jobFunctions?.reduce(assign, {}), [jobFunctions])
-    const [selectedTitle, setSelectedTitle] = useState<any>(value)
     const selectedItem = useMemo(() => {
         if (selectedKey) {
             return jobFunctionsObject[selectedKey]
@@ -41,17 +39,17 @@ const JobFunctionSelector = (props: any) => {
         if (jobTitle && !value) {
             const allTitles = flatMapDeep(values(jobFunctionsObject), group => group.map(item => item.job_titles))
             const title = allTitles.find(item => item.value === jobTitle)
-            setSelectedTitle(title)
+            onChange(title)
         }
     }, [])
 
     useEffect(() => {
-        if (selectedTitle) {
-            onChange(selectedTitle)
+        if (value) {
+            onChange(value)
             setShowModal(false)
         }
 
-    }, [selectedTitle])
+    }, [value])
     const isExpanded = useCallback(id => {
         return expandeds.includes(id)
     }, [expandeds])
@@ -65,16 +63,17 @@ const JobFunctionSelector = (props: any) => {
             setExpandeds(expandeds.filter(item => item !== id))
         }
     }, [expandeds])
-    console.log({textRef})
+    console.log({ textRef })
     return <FormControl className={className} size='small'>
         <MaterialTextField
             ref={(ref) => textRef.current = ref}
-            value={selectedTitle?.value}
-            // onChange={e => {
-            //     // e.preventDefault()
-            //     // e.stopPropagation()
-            //     onChange(selectedTitle)
-            // }}
+            value={value?.value}
+            onChange={e => {
+                // e.preventDefault()
+                // e.stopPropagation()
+                console.log('onChange',e.target)
+                onChange(value)
+            }}
             onClick={() => {
                 setShowModal(true)
             }}
@@ -96,7 +95,7 @@ const JobFunctionSelector = (props: any) => {
         >
             <div>
                 <Paper className={styles.webPC}>
-                    <TopBar title={title} onChange={title => setSelectedTitle(title)} />
+                    <TopBar title={title} onChange={title => onChange(title)} />
                     <div className={styles.container}>
                         <MenuList classes={{ root: styles.menu }} >
                             {jobFunctionsKeys.map(key => {
@@ -130,10 +129,10 @@ const JobFunctionSelector = (props: any) => {
                                             className={classNames(
                                                 {
                                                     [styles.groupItem]: true,
-                                                    [styles.isSelected]: selectedTitle?.id === titleItem.id
+                                                    [styles.isSelected]: value?.id === titleItem.id
                                                 }
                                             )}
-                                            onClick={() => setSelectedTitle(titleItem)}
+                                            onClick={() => onChange(titleItem)}
                                         >
                                             {titleItem.value}
                                         </div>
@@ -177,9 +176,9 @@ const JobFunctionSelector = (props: any) => {
                                                     title={title.value}
                                                     className={classNames({
                                                         [styles.titleItem]: true,
-                                                        [styles.hightlighted]: title?.id === selectedTitle?.id
+                                                        [styles.hightlighted]: title?.id === value?.id
                                                     })}
-                                                    onClick={() => setSelectedTitle(title)}
+                                                    onClick={() => onChange(title)}
                                                 >
                                                     <Text className={styles.text}>
                                                         {title.value}
