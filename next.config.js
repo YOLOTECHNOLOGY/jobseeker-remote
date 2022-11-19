@@ -58,6 +58,10 @@ module.exports = {
     domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl']
   },
   webpack(config, { isServer }) {
+    // console.log({config})
+    // if(config.mode === 'development'){
+    //   config.resolve.alias.imforbossjob = path.resolve('../imforbossjob/src/businessModel')
+    // }
     if (isServer) {
       generateRobotsTxt()
     }

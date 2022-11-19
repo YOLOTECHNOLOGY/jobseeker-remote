@@ -9,7 +9,6 @@ const { RequestResult, UserNumberValidation } = utils
 export default command => command.cata({
     queryUserNumberValidation: () => M(context => new Promise(resolve => {
         const number = context.isUserNumberValidate()
-        console.log('command',command)
         if (number) {
             resolve(UserNumberValidation.isValidate(number))
         } else {
@@ -31,9 +30,9 @@ export default command => command.cata({
                 sendNumber: payload => resolve(ModalActions.sendNumber(payload))
             })))
     },
-    sendOTPRequest: () => M(context => {
+    sendOTPRequest: payload => M(context => {
         context.setLoading(true)
-        return sendOTP()
+        return sendOTP(payload?.params)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
@@ -69,7 +68,7 @@ export default command => command.cata({
         const applicationId = context.getApplicationId()
         const id = context.getState()?.contact_exchange_request?.id
         context.setLoading(true)
-        return decline(applicationId, id)
+        return decline(applicationId, id,{message:'no message from web side'})
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))

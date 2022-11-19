@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 import { scripts, M } from 'imforbossjob'
 import { deleteOne, list, update, create } from './services/commonPhrases'
 const { utils, commonPhrases: {

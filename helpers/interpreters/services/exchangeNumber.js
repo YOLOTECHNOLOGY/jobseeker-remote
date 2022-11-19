@@ -8,10 +8,10 @@ export const accept = (applicationId, exchangeId) => {
     )
 }
 
-export const decline = (applicationId, exchangeId) => {
-
+export const decline = (applicationId, exchangeId,params) => {
+    console.log({params})
     const axios = configuredAxios('jobApplication', 'protected')
-    return axios.put(`/${applicationId}/jobseekers/contact-exchange-requests/${exchangeId}/decline`)
+    return axios.put(`/${applicationId}/jobseekers/contact-exchange-requests/${exchangeId}/decline`,params)
 }
 
 export const create = (applicationId) => {
@@ -20,9 +20,9 @@ export const create = (applicationId) => {
     return axios.post(`/${applicationId}/jobseekers/contact-exchange-requests/create`)
 }
 
-export const sendOTP = () => {
+export const sendOTP = (params) => {
     const axios = configuredAxios('auth', 'protected')
-    return axios.post('/sms-otp/verify-phone-number/generate')
+    return axios.post('/sms-otp/change-phone-number/generate',params)
 }
 
 export const verify = otp => {

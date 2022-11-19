@@ -1,6 +1,6 @@
 /* eslint-disable new-cap */
 import { scripts,M } from 'imforbossjob'
-import { update, updateChat } from './services/common'
+import {  updateChat } from './services/common'
 const { utils } = scripts
 const { RequestResult } = utils
 export default command => command.cata({

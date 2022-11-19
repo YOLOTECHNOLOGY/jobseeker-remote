@@ -5,17 +5,17 @@ import { assign } from 'lodash-es'
 import styles from './index.module.scss'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialTextField from 'components/MaterialTextField'
-import MaterialButton from 'components/MaterialButton'
+import classNames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUserDetailRequest } from 'store/actions/users/fetchUserDetail'
 import { getCookie } from 'helpers/cookies'
 const ExchangeModal = (props: any) => {
     const { contextRef, loading, applicationId } = props
     const [countryCode, setCountryCode] = useState('')
-    const [mobileNumber,setMobileNumber] = useState('')
-    const [otp,setOtp] = useState('')
+    const [mobileNumber, setMobileNumber] = useState('')
+    const [otp, setOtp] = useState('')
     const dispatch = useDispatch()
-    const countryOptions = useSelector((store:any) => store.config.config.response?.inputs?.country_lists
+    const countryOptions = useSelector((store: any) => store.config.config.response?.inputs?.country_lists
         ?.map?.(item => ({
             label: `${item.code}(${item.value})`,
             value: item.code
@@ -32,8 +32,8 @@ const ExchangeModal = (props: any) => {
     const [show, setShow] = useState(false)
     const [step, setStep] = useState('init')
     const actionsRef = useRef<any>()
-    const assessToken =getCookie('accessToken')  
-     const [count, setCount] = useState(-1)
+    const assessToken = getCookie('accessToken')
+    const [count, setCount] = useState(-1)
     const context = {
         showExchangeNumber(actions) {
             actionsRef.current = actions
@@ -48,7 +48,7 @@ const ExchangeModal = (props: any) => {
         },
         updateUser() {
             console.log('updateUser')
-            dispatch(fetchUserDetailRequest({assessToken}))
+            dispatch(fetchUserDetailRequest({ assessToken }))
         }
     }
     contextRef.current = assign(contextRef.current, context)
@@ -65,7 +65,7 @@ const ExchangeModal = (props: any) => {
         } else {
             actionsRef.current.verify?.(otp)
         }
-    }, [step])
+    }, [step,otp])
     const sendText = useMemo(() => {
         if (step === 'init') {
             return 'Send OTP'
@@ -117,7 +117,7 @@ const ExchangeModal = (props: any) => {
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current?.close?.()}
-        headerTitle={'Exchange Number Modal'}
+        headerTitle={'Mobile number'}
         firstButtonText='Cancel'
         secondButtonText={rightButtonText}
         firstButtonIsClose={false}
@@ -129,10 +129,10 @@ const ExchangeModal = (props: any) => {
         isFirstButtonLoading={loading}
     >
         <div className={styles.modalContainer}>
-            <p className={styles.modalTitle}>Exchange Mobile Number with Talent</p>
+            <p className={styles.modalTitle}>To exchange mobile number with Boss, please verify your mobile number.</p>
             <div className={styles.formContainer}>
                 {showSendOTP && <>
-                    <label>This allow easier communication with the talent. Please verify your mobile number.</label>
+                    {/* <label>This allow easier communication with the talent. Please verify your mobile number.</label> */}
                     <div className={styles.numberContainer}>
                         <div
                             className={styles.selectContainer}
@@ -154,21 +154,26 @@ const ExchangeModal = (props: any) => {
                             defaultValue={mobileNumber}
                             onChange={(e) => setMobileNumber(e.target.value)}
                         />
-                     </div>
+                    </div>
 
-                    <MaterialButton disabled={!sendEnable} onClick={() => actionsRef.current.sendOTP?.(number)}>{sendText}</MaterialButton>
+                    <div className={classNames({
+                        [styles.sendOTPButton]: true,
+                        [styles.disabled]: !sendEnable
+                    })}
+                        onClick={() => sendEnable && actionsRef.current.sendOTP?.({ params: { phone_num: number } })}
+                    >{sendText}</div>
                 </>}
                 {showInputCode && <>
                     <label>Enter the code that we have message to {number}</label>
                     <MaterialTextField
-                            className={styles.inputContainer}
-                            label="Enter 6 digit OTP"
-                            size='small'
-                            value={otp}
-                            defaultValue={otp}
-                            onChange={(e) => setOtp(e.target.value)}
-                        />
-                   
+                        className={styles.inputContainer}
+                        label="Enter 6 digit OTP"
+                        size='small'
+                        value={otp}
+                        defaultValue={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                    />
+
                 </>}
                 {showSendResult && <>
                     <label>This allow easier communication with the talent</label>

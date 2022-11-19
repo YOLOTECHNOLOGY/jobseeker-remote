@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react'
-import 'imforbossjob/dist/style.css'
 import { assign } from 'lodash-es'
 import styles from './index.module.scss'
 import { TextField } from '@mui/material'

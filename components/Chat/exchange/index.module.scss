@@ -3,10 +3,14 @@
     //padding: 24px 32px;
 
     .modalTitle {
-        font-weight: 700;
-        font-size: pxToRem(24px);
-        line-height: 30px;
-        letter-spacing: 1px;
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        display: flex;
+        align-items: center;
+        color: #353535;
     }
 
     .description {
@@ -37,7 +41,8 @@
 
             .selectContainer {
                 height: 60px;
-                width: 140px;
+                width: 50%;
+
                 .fullWidth {
                     width: 100%;
                 }
@@ -45,9 +50,26 @@
 
             .inputContainer {
                 width: auto;
-                height: 30px;
+                height: 60px;
                 flex-grow: 1;
                 margin-left: 10px;
+            }
+        }
+
+        .sendOTPButton {
+            font-family: 'Product Sans';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 18px;
+            letter-spacing: 0.0075em;
+            text-decoration-line: underline;
+            color: #136FD3;
+            cursor: pointer;
+
+            &.disabled {
+                color: #707070;
+                cursor: not-allowed
             }
         }
 
@@ -56,6 +78,7 @@
             flex-direction: row;
             width: 100%;
             margin-top: 10px;
+
             label {
                 font-family: 'Product Sans';
                 font-style: normal;
@@ -64,7 +87,7 @@
                 line-height: 24px;
                 letter-spacing: 0.02em;
                 color: #707070;
-                
+
             }
 
             p {

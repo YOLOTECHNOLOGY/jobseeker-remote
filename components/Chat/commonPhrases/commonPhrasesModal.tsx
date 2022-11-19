@@ -1,5 +1,4 @@
 import React, { useState, useRef, useCallback } from 'react'
-import 'imforbossjob/dist/style.css'
 import { assign } from 'lodash-es'
 import styles from './index.module.scss'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'

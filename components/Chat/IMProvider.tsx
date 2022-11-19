@@ -29,10 +29,10 @@ const IMProvider = ({children}:any) => {
     const [mobile, setMobile] = useState(false)
     useEffect(() => {
         const old: any = window.onresize
-        setMobile(document.body.clientWidth < 992)
+        setMobile(document.body.clientWidth < 576)
         window.onresize = (...args) => {
             old?.(...args)
-            setMobile(document.body.clientWidth < 992)
+            setMobile(document.body.clientWidth < 576)
         }
         return () => window.onresize = old
     }, [])

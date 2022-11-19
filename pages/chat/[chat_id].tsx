@@ -1,16 +1,16 @@
 /* eslint-disable camelcase */
 import React, { useContext, useEffect, useState } from 'react'
-import 'imforbossjob/dist/style.css'
 import interpreters from 'helpers/interpreters'
 import { useRouter } from 'next/router'
 import Layout from 'components/Layout'
 import styles from './index.module.scss'
 import { IMContext } from 'components/Chat/IMProvider'
-// import dynamic from 'next/dynamic'
-// const JobseekerChat = dynamic<any>(import('components/Chat'), {
-//     ssr: false
-//   })
-import JobseekerChat from 'components/Chat'
+import dynamic from 'next/dynamic'
+
+const JobseekerChat = dynamic<any>(import('components/Chat'), {
+    ssr: false
+  })
+// import JobseekerChat from 'components/Chat'
 const Chat = () => {
     const router = useRouter()
     const { query: { chat_id } } = router
@@ -50,7 +50,6 @@ const Chat = () => {
         }
     }, [chatId])
  return <Layout isHiddenFooter isHiddenHeader={mobile}>
-
         {!mobile &&
             <div className={styles.pcWeb}>
                 <JobseekerChat

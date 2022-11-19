@@ -16,7 +16,6 @@ const AcceptModal = (props: any) => {
             setShow(false)
         }
     }
-    console.log('acceptData',data)
     contextRef.current = assign(contextRef.current, context)
     return <Modal
         showModal={show}

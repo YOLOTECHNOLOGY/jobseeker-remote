@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import 'imforbossjob/dist/style.css'
 import { assign } from 'lodash-es'
 import CommonPhrasesModal from './commonPhrasesModal'
 import { list as getList } from 'helpers/interpreters/services/commonPhrases'
