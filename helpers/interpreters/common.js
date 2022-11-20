@@ -18,9 +18,10 @@ export default command => command.cata({
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
     }),
-    syncData: data => M(context => Promise.resolve().then(() => {
+    syncData: data => M(context => new Promise(resolve => {
         console.log({ context })
         context.updateData(data)
+        setTimeout(resolve,0)
     })),
     showToast: (type, content) => M(context => Promise.resolve().then(() => {
         context.showToast(type, content)
