@@ -27,6 +27,7 @@ const IMProvider = ({children}:any) => {
     const [imState, setImState] = useState({} as any)
     const [chatList, setChatList] = useState([])
     const [mobile, setMobile] = useState(false)
+    console.log({userId})
     useEffect(() => {
         const old: any = window.onresize
         setMobile(document.body.clientWidth < 576)

@@ -1,7 +1,7 @@
 import { FormControl, MenuList, Paper } from "@mui/material"
 import MaterialTextField from "components/MaterialTextField"
 import Modal from '@mui/material/Modal';
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo,  useState } from "react"
 import styles from './index.module.scss'
 import TopBar from './topBar'
 import { useSelector } from "react-redux";
@@ -15,7 +15,6 @@ const JobFunctionSelector = (props: any) => {
     const [selectedKey, setSelectedKey] = useState<any>()
     const [selectedSubItem, setSelectedSubItem] = useState<any>({})
     const [expandeds, setExpandeds] = useState([])
-    const textRef = useRef<any>()
     const jobFunctions = useSelector((store: any) => store.config.config.response?.inputs?.job_function_lists ?? [])
     const jobFunctionsKeys = useMemo(() => flatMap(jobFunctions, keys), [jobFunctions])
     const jobFunctionsObject = useMemo(() => jobFunctions?.reduce(assign, {}), [jobFunctions])
@@ -63,10 +62,8 @@ const JobFunctionSelector = (props: any) => {
             setExpandeds(expandeds.filter(item => item !== id))
         }
     }, [expandeds])
-    console.log({ textRef })
     return <FormControl className={className} size='small'>
         <MaterialTextField
-            ref={(ref) => textRef.current = ref}
             value={value?.value}
             onChange={e => {
                 // e.preventDefault()
