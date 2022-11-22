@@ -4,7 +4,7 @@ import React, { Ref, useCallback, useEffect, useRef, useState } from 'react'
 import { assign } from 'lodash-es'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import styles from './index.module.scss'
-import { getList } from 'helpers/interpreters/services/resume'
+import { getList, deleteOne } from 'helpers/interpreters/services/resume'
 import Loader from 'react-content-loader'
 import MaterialButton from 'components/MaterialButton'
 import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
@@ -13,6 +13,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import Text from 'components/Text'
 import { maxFileSize } from 'helpers/handleInput'
 import classNames from 'classnames'
+import { TrashIcon } from 'images'
 
 const SendResumeModal = (props: any) => {
     const [show, setShow] = useState(false)
@@ -33,15 +34,31 @@ const SendResumeModal = (props: any) => {
     const [resumeLoading, setResumeLoading] = useState(false)
     const [resumeList, setResumeList] = useState([])
     const [resumeId, setResumeId] = useState(0)
+    const [onlyOne, setOnlyOne] = useState(false)
 
     useEffect(() => {
         setResumeLoading(true)
         getList()
             .then(result => result.data.data)
-            .then(setResumeList)
+            .then(list => {
+                setResumeList(list)
+                if (list?.length === 1) {
+                    setOnlyOne(true)
+                    setResumeId(list?.[0]?.id)
+                }
+            })
             .finally(() => setResumeLoading(false))
     }, [])
     const dispatch = useDispatch()
+    const deleteItem = useCallback((item) => {
+        console.log('delete', item)
+        setResumeLoading(true)
+        deleteOne(item.id)
+            .then(getList)
+            .then(result => result.data.data)
+            .then(setResumeList)
+            .finally(() => setResumeLoading(false))
+    }, [])
     const handleUploadResume = useCallback((e) => {
         const file = e.target.files[0]
         if (!maxFileSize(file, 5)) {
@@ -87,65 +104,72 @@ const SendResumeModal = (props: any) => {
         isFirstButtonLoading={loading}
     >
         <div>
-            <p>Please select the resume that you would like to share with recruiter.</p>
+
             {(() => {
                 if (resumeLoading) {
                     return <Loader style={{ width: '100%', height: '100%' }}>
 
                     </Loader>
                 }
-                else if (resumeList.length) {
-                    return <RadioGroup
+                else if (resumeList.length && !onlyOne) {
+                    return <> <p>Please select the resume that you would like to share with recruiter.</p> <RadioGroup
                         aria-labelledby='demo-radio-buttons-group-label'
                         name='radio-buttons-group'
                         onChange={(e) => setResumeId(+e.target.value)}
                     >{resumeList.map(item => (
-                        <FormControlLabel
-                            classes={{ root: styles.item }}
-                            key={item.id}
-                            checked={item.id === resumeId}
-                            value={item.id}
-                            control={<Radio />}
-                            label={<div className={styles.resumeName}>{item.name}</div>} />
+                        <div key={item.id} className={styles.item}>
+                            <FormControlLabel
+                                classes={{ root: styles.label }}
+                                checked={item.id === resumeId}
+                                value={item.id}
+                                control={<Radio />}
+                                label={<div className={styles.resumeName}>{item.name}</div>} />
+                            <img src={TrashIcon} onClick={() => deleteItem(item)} />
+                        </div>
                     ))}
                     </RadioGroup>
+                        <p className={styles.bottomText}> Or upload a new resume {
+                            resumeList.length >= 3 && '(only max. of 3 resumes can be uploaded, please delete at least 1 resume above)'
+                        }</p>
+                        <MaterialButton
+                            className={classNames({
+                                [styles.uploadButton]: true,
+                                [styles.disabled]: resumeList.length >= 3
+                            })}
+                            type='button'
+                            variant='outlined'
+                            isLoading={resumeLoading}
+                            onClick={() => {
+                                console.log('inputRef', inputRef)
+                                inputRef?.current?.click?.()
+                            }}
+                            disabled={resumeList.length >= 3}
+                        > <Text
+                            textStyle='base'
+                            textColor={resumeList.length >= 3 ? '#fff' : 'primaryBlue'}
+                            bold
+                        >
+                                Upload your resume
+                            </Text>
+                            <input
+                                type='file'
+                                hidden
+                                accept='.pdf, .doc, .docx'
+                                onChange={handleUploadResume}
+                                ref={inputRef}
+                            />
+                        </MaterialButton>
+                    </>
+                } else if (onlyOne) {
+                    return <p>Are you sure you want to send your resume to the recruiter?</p>
                 } else {
                     return null
                 }
             })()
 
             }
-            <p className={styles.bottomText}> Or upload a new resume {
-                resumeList.length >= 3 && '(only max. of 3 resumes can be uploaded, please delete at least 1 resume above)'
-            }</p>
-            <MaterialButton
-                className={classNames({
-                    [styles.uploadButton]: true,
-                    [styles.disabled]: resumeList.length >= 3
-                })}
-                type='button'
-                variant='contained'
-                isLoading={resumeLoading}
-                onClick={() => {
-                    console.log('inputRef', inputRef)
-                    inputRef?.current?.click?.()
-                }}
-                disabled={resumeList.length >= 3}
-            > <Text
-                textStyle='base'
-                textColor={resumeList.length >= 3 ? '#fff' : 'primaryBlue'}
-                bold
-            >
-                    Upload your resume
-                </Text>
-                <input
-                    type='file'
-                    hidden
-                    accept='.pdf, .doc, .docx'
-                    onChange={handleUploadResume}
-                    ref={inputRef}
-                />
-            </MaterialButton>
+
+
         </div>
     </Modal>
 }

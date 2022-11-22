@@ -28,3 +28,7 @@ export const getList = () => {
     const axios = configuredAxios('jobseeker', 'protected')
     return axios.get(`/resumes`)
 }
+export const deleteOne = id => {
+    const axios = configuredAxios('jobseeker', 'protected')
+    return axios.delete(`/resumes/${id}/delete`)
+}
