@@ -11,6 +11,10 @@
     width: 100%;
     // border: 1px solid #136FD3;
     // border-radius: 10px;
+    &.disabled {
+        background: #fff;
+        color: white;
+    }
 }
 
 .item {

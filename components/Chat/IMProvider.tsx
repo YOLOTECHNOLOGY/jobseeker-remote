@@ -18,7 +18,7 @@ import { list } from 'helpers/interpreters/services/chat'
 import CommonPhrases from 'components/Chat/commonPhrases'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
-const IMProvider = ({children}:any) => {
+const IMProvider = ({ children }: any) => {
     const [chatId, setChatId] = useState()
     const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
     const userDetailRef = useRef(userDetail)
@@ -27,7 +27,7 @@ const IMProvider = ({children}:any) => {
     const [imState, setImState] = useState({} as any)
     const [chatList, setChatList] = useState([])
     const [mobile, setMobile] = useState(false)
-    console.log({userId})
+    console.log({ userId })
     useEffect(() => {
         const old: any = window.onresize
         setMobile(document.body.clientWidth < 576)
@@ -79,14 +79,16 @@ const IMProvider = ({children}:any) => {
             contextRef.current?.closeDetail?.()
             contextRef.current?.closeNotInterest?.()
             contextRef.current?.closeExchange?.()
-            contextRef.current?.closeCancelDetail?.(),
-                contextRef.current?.closeCancel?.(),
-                contextRef.current?.closeIssue?.(),
-                contextRef.current.closeEditCommonPhrasesList?.()
-            contextRef.current.closeCommonPhrases?.()
-            contextRef.current.closeEditOneCommonPhrases?.()
-            contextRef.current.closeCreateOneCommonPhrases?.()
-            contextRef.current.closeDeleteOneCommonPhrases?.()
+            contextRef.current?.closeCancelDetail?.()
+            contextRef.current?.closeCancel?.()
+            contextRef.current?.closeIssue?.()
+            contextRef.current?.closeEditCommonPhrasesList?.()
+            contextRef.current?.closeCommonPhrases?.()
+            contextRef.current?.closeEditOneCommonPhrases?.()
+            contextRef.current?.closeCreateOneCommonPhrases?.()
+            contextRef.current?.closeDeleteOneCommonPhrases?.()
+            contextRef.current?.closeAttend?.()
+            contextRef.current?.closeAskFailed?.()
         },
         updateUser() {
             dispatch(fetchUserOwnDetailRequest({ accessToken }))
@@ -187,7 +189,7 @@ const IMProvider = ({children}:any) => {
             contextRef={contextRef}
         />
         {children}
-     </Provider>
+    </Provider>
 }
 
 export default IMProvider

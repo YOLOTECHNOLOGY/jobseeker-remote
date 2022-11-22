@@ -1,3 +1,4 @@
+/* eslint-disable valid-jsdoc */
 /* eslint-disable react/prop-types */
 import Modal from 'components/Modal'
 import React, { useMemo, useRef, useState } from 'react'
@@ -6,21 +7,47 @@ import { Timeline, TimelineConnector, TimelineContent, TimelineItem, TimelineSep
 import styles from './index.module.scss'
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-// import { useDispatch } from 'react-redux'
 import dayjs from 'dayjs'
 import InterviewDetail from '../interviewDetail'
-// import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-const Icon = ({ isFinish }) => {
+import classNames from 'classnames'
+/**
+1	Pending interview approval
+2	Interview accepted
+3	Interview declined
+5	Interview completed
+6	Interview cancelled
+7	Interview not accepted
+ */
+const Icon = ({ isFinish, active, ...rest }: any) => {
     if (isFinish) {
-        return <CheckCircleIcon color='success' fontSize='medium' />
+        return <CheckCircleIcon {...rest} color='success' fontSize='medium' />
     } else {
-        return <RadioButtonUncheckedIcon color='primary' fontSize='small' />
+        return <RadioButtonUncheckedIcon {...rest} color={active ? 'primary' : 'disabled'} fontSize='small' />
     }
 }
 const DetailModal = (props: any) => {
     const [show, setShow] = useState(false)
     const { contextRef, loading, data, applicationId } = props
     const actionsRef = useRef({} as any)
+
+    // const dispatch = useDispatch()
+    const [farFromBegin, upComing, inProgress, canCheckedIn, timeout, showReport, askEnable] = useMemo(() => {
+        const hours = (() => {
+            const hours = dayjs(data?.interviewed_at).diff(dayjs(), 'hours')
+            const minutes = dayjs(data?.interviewed_at).diff(dayjs(), 'minutes')
+            return hours + minutes / 60
+        })()
+        console.log('hours', hours)
+        return [
+            hours >= 6,
+            hours < 6 && hours > 2,
+            hours <= 2,
+            hours < 2 && hours >= -0.5,
+            hours < -0.5,
+            hours < 0 && hours >= -3,
+            hours < -3
+        ]
+    }, [data?.interviewed_at])
     const context = {
         showDetail(actions) {
             actionsRef.current = actions
@@ -28,16 +55,14 @@ const DetailModal = (props: any) => {
         },
         closeDetail() {
             setShow(false)
+        },
+        canAskResult() {
+            return askEnable
         }
     }
-    // const dispatch = useDispatch()
-    const [upComing, inProgress] = useMemo(() => {
-        const hours = dayjs(data?.interviewed_at).diff(dayjs(), 'hours')
-        console.log('hours', hours)
-        return [hours < 6 && hours > 2, hours <= 2]
-    }, [data?.interviewed_at])
     contextRef.current = assign(contextRef.current, context)
-
+    const isAttended = data?.jobseeker_mark_jobseeker_attended
+    console.log({ showReport })
     const timelineItems = useMemo(() => {
 
         return [
@@ -45,8 +70,10 @@ const DetailModal = (props: any) => {
                 title: 'Interview Confirmed',
                 label: 'Your interview cannot be cancelled now',
                 isFinish: true,
-                actionName: 'Cancel interview',
-                actionEnable: ['Interview accepted'].includes(data?.status),
+                active: true,
+                show: true,
+                actionName: farFromBegin ? 'Cancel interview' : 'Your interview cannot be cancelled now',
+                actionEnable: ['Interview accepted'].includes(data?.status) && farFromBegin,
                 action: () => {
                     actionsRef.current?.cancel?.()
                 }
@@ -54,9 +81,21 @@ const DetailModal = (props: any) => {
             {
                 title: 'Checked-in',
                 label: 'Check in for the interview with recruiter',
-                isFinish: upComing || inProgress || data?.status === 'Interview completed',
-                actionName: 'Check-in',
-                actionEnable: !data?.checked_in_at,
+                isFinish: !!data?.checked_in_at,
+                actionName: (() => {
+                    if (data?.checked_in_at) {
+                        return 'Checked-in'
+                    }
+                    if (canCheckedIn) {
+                        return 'Check-in now'
+                    }
+                    if (timeout) {
+                        return 'You cannot check in now.'
+                    }
+                })(),
+                active: !timeout,
+                show: true,
+                actionEnable: !data?.checked_in_at && canCheckedIn,
                 action: () => actionsRef.current?.checkIn?.({
                     applicationId,
                     inviteInterviewId: data.id
@@ -66,8 +105,10 @@ const DetailModal = (props: any) => {
                 title: 'In-progress',
                 label: 'You can report any issue during this stage',
                 isFinish: inProgress || data?.status === 'Interview completed',
+                active: true,
+                show: showReport && (isAttended === 'True' || !!data.checked_in_at),
                 actionName: 'Report issues',
-                actionEnable: ['Interview accepted', 'Interview checked in'].includes(data?.status),
+                actionEnable: true,
                 action: () => actionsRef.current?.reportIssue?.({
                     applicationId,
                     inviteInterviewId: data.id
@@ -77,25 +118,17 @@ const DetailModal = (props: any) => {
                 title: 'Finished',
                 label: 'You can request interview result from the recruiter',
                 isFinish: data?.status === 'Interview completed',
-                actionName: 'Requested for results',
-                actionEnable: (inProgress || data?.status === 'Interview completed') && !data?.complete_at,
-                action: () => {
-                    // if (data?.status !== 'In-progress') {
-                    //     dispatch(
-                    //         displayNotification({
-                    //             open: true,
-                    //             message: 'Please complete check-in for the interview with recruiter first.',
-                    //             severity: 'error'
-                    //         })
-                    //     )
-                    //     return
-                    // }
-                    actionsRef.current?.askResult?.()
-                }
+                active: true,
+                show: true,
+                actionName: data?.requested_result_at ? 'Requested for results' : 'Request for results',
+                actionEnable: !data?.requested_result_at,
+                action: () => actionsRef.current?.askResult?.()
             }
-        ]
+        ].filter(item => item.show)
     }, [data, actionsRef.current, applicationId, inProgress, upComing])
-
+    const sureNotCheck = useMemo(() => {
+        return !data?.checked_in_at && data?.jobseeker_mark_jobseeker_attended === false
+    }, [data?.checked_in_at, data?.jobseeker_mark_jobseeker_attended])
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
@@ -109,8 +142,8 @@ const DetailModal = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <InterviewDetail data={data} />
-        <Timeline position='right' classes={{ root: styles.root }}>
+        <InterviewDetail data={data} status={sureNotCheck && 'You did not attend the interview.'} />
+        {!sureNotCheck && <Timeline position='right' classes={{ root: styles.root }}>
             {timelineItems.map((item, i) => {
                 const aProps: any = {
                     disabled: !item.actionEnable,
@@ -123,11 +156,16 @@ const DetailModal = (props: any) => {
                 return (
                     <TimelineItem key={i} classes={{ missingOppositeContent: styles.missing }}>
                         <TimelineSeparator>
-                            <Icon isFinish={item.isFinish} />
-                            {i !== 3 && <TimelineConnector />}
+                            <div className={styles.separatorContainer}>
+                                <Icon className={styles.icon} isFinish={item.isFinish} active={item.active} />
+                            </div>
+                            {i !== timelineItems.length - 1 && <TimelineConnector />}
                         </TimelineSeparator>
                         <TimelineContent sx={{ width: 400 }}>
-                            <div className={styles.timelineItem}>
+                            <div className={classNames({
+                                [styles.timelineItem]: true,
+                                [styles.isFinished]: item.isFinish
+                            })}>
                                 <label >{item.title}</label>
                                 <p>{item.label}</p>
                                 {item.actionName &&
@@ -139,7 +177,7 @@ const DetailModal = (props: any) => {
                     </TimelineItem>
                 )
             })}
-        </Timeline>
+        </Timeline>}
     </Modal>
 }
 

@@ -4065,14 +4065,14 @@ image-size@1.0.0:
   dependencies:
     queue "6.0.2"
 
-imforbossjob@^0.0.471:
-  version "0.0.471"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.471.tgz#82f3b62a94b9ac095b99875c2aa476e3a5ce80c8"
-  integrity sha512-oxvyy6sorGi0CSZlQP9bZ03NnzVASyMCx96isxPXG8rDRZuCPxbaBl5awgLvF6TLJ/p1+o1+0/YC0oliNOAgXQ==
+imforbossjob@^0.0.486:
+  version "0.0.486"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.486.tgz#d48a03fa5ecf478de330957b0bd65b49681d5e38"
+  integrity sha512-2F3uxS4GVCu7+SE+BwsN8/Xe8evAdV94/xcNWt36NylaM8ubueF+7ZKkNJmdjG1GPt7Ij8A52hvy1PkgGuyTTA==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     antd "^4.23.3"
-    imsdkweb "^0.0.10"
+    imsdkweb "^0.0.11"
 
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   version "3.3.0"
@@ -4086,6 +4086,29 @@ imsdkweb@^0.0.10:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.10.tgz#c0fbc40f7f78215421b60c5211e30308749f72d3"
   integrity sha512-sz8LmmsAhW354PWrweu0MHevKRwWn0LrHUBVMnr79Myh7VvJaL2fOrp7u36h2QNTT91SCS1EBeb4JubQF72/Cg==
+  dependencies:
+    "@aws-sdk/client-s3" "^3.3.0"
+    "@aws-sdk/lib-storage" "^3.18.0"
+    "@aws-sdk/s3-request-presigner" "^3.3.0"
+    ali-oss "^6.17.1"
+    axios "^0.18.0"
+    buffer "^6.0.3"
+    crypto-js "^4.1.1"
+    dexie "^3.0.3"
+    lodash "^4.17.21"
+    mobx "^5.15.4"
+    mobx-react "^6.3.1"
+    moment "^2.29.4"
+    react "^17.0.0"
+    react-dom "^17.0.0"
+    react-router-dom "^4.2.2"
+    sha1 "^1.1.1"
+    viewerjs "^1.11.0"
+
+imsdkweb@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.11.tgz#0701d13990ced265a89a7ba550a9d180b891bf30"
+  integrity sha512-6Ii1SPI8OFYYeulHdAY6ktQ/SQJIVox9sdHChWjwjjuKahC/aFCsNLWAJkd6u9WRmFpMWs+Z9ENC3Y8ylJGByA==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"

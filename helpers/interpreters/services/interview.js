@@ -18,9 +18,13 @@ export const checkIn = (applicationId, inviteInterviewId) => {
 }
 export const reportIssue = (applicationId, inviteInterviewId, params) => {
     const axios = configuredAxios('jobApplication', 'protected')
-    return axios.put(`/${applicationId}/jobseekers/interviews/${inviteInterviewId}/report-issue`, params)
+    return axios.post(`/jobseekers/interviews/${inviteInterviewId}/report`, params)
+}
+export const attend = (applicationId, inviteInterviewId,params) => {
+    const axios = configuredAxios('jobApplication', 'protected')
+    return axios.put(`/${applicationId}/jobseekers/interviews/${inviteInterviewId}/mark-attendance`,params)
 }
 export const askResult = (applicationId, inviteInterviewId) => {
     const axios = configuredAxios('jobApplication', 'protected')
-    return axios.put(`/${applicationId}/jobseekers/interviews/${inviteInterviewId}/ask-result`)
+    return axios.put(`/${applicationId}/jobseekers/interviews/${inviteInterviewId}/request-result`)
 }

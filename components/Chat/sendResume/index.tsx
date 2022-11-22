@@ -2,7 +2,7 @@
 import Modal from 'components/Modal'
 import React, { Ref, useCallback, useEffect, useRef, useState } from 'react'
 import { assign } from 'lodash-es'
-import {  FormControlLabel, Radio, RadioGroup } from '@mui/material'
+import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import styles from './index.module.scss'
 import { getList } from 'helpers/interpreters/services/resume'
 import Loader from 'react-content-loader'
@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import Text from 'components/Text'
 import { maxFileSize } from 'helpers/handleInput'
+import classNames from 'classnames'
 
 const SendResumeModal = (props: any) => {
     const [show, setShow] = useState(false)
@@ -118,17 +119,23 @@ const SendResumeModal = (props: any) => {
                 resumeList.length >= 3 && '(only max. of 3 resumes can be uploaded, please delete at least 1 resume above)'
             }</p>
             <MaterialButton
-                className={styles.uploadButton}
+                className={classNames({
+                    [styles.uploadButton]: true,
+                    [styles.disabled]: resumeList.length >= 3
+                })}
                 type='button'
-                variant='outlined'
+                variant='contained'
                 isLoading={resumeLoading}
-
                 onClick={() => {
                     console.log('inputRef', inputRef)
                     inputRef?.current?.click?.()
                 }}
                 disabled={resumeList.length >= 3}
-            > <Text textStyle='base' textColor='primaryBlue' bold>
+            > <Text
+                textStyle='base'
+                textColor={resumeList.length >= 3 ? '#fff' : 'primaryBlue'}
+                bold
+            >
                     Upload your resume
                 </Text>
                 <input

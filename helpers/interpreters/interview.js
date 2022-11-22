@@ -1,19 +1,67 @@
 /* eslint-disable new-cap */
-import { scripts,M } from 'imforbossjob'
-import { accept, decline, cancel, checkIn, reportIssue, askResult } from './services/interview'
+import { scripts, M } from 'imforbossjob'
+import { accept, decline, cancel, checkIn, reportIssue, askResult, attend } from './services/interview'
 const { utils,
     interviewJobseeker: {
+        InterviewAttendedStatus,
         AcceptModalActions,
         ConfirmModalActions,
         DetailModalActions,
         IssueModalActions,
         CancelDetailModalActions,
-        CancelModalActions
+        CancelModalActions,
+        InterviewStatus,
+        AttendModalActions,
+        AskResultFailedModalActions
     }
 } = scripts
 const { RequestResult } = utils
 
 export default command => command.cata({
+    queryInterviewStatus: () => M(context => new Promise(resolve => {
+        const interviewData = context.getState?.()?.interview
+        if (interviewData?.status === 'Pending interview approval') {
+            resolve(InterviewStatus.pendingApproval)
+        } else if (interviewData?.cancelled_role) {
+            resolve(InterviewStatus.cancelled)
+        } else {
+            resolve(InterviewStatus.detail)
+        }
+    })),
+
+    queryAttendStatus: () => M(context => Promise.resolve().then(() => {
+        const interviewData = context.getState?.()?.interview
+        if (interviewData?.checked_in_at) {
+            return InterviewAttendedStatus.attended
+        } else if (interviewData?.jobseeker_mark_jobseeker_attended) {
+            return InterviewAttendedStatus.attended
+        } else if (interviewData?.jobseeker_mark_jobseeker_attended === false) {
+            return InterviewAttendedStatus.notAttended
+        } else {
+            return InterviewAttendedStatus.unknow
+        }
+    })),
+    queryTimeEnableForAskingResult: () => M(context => Promise.resolve().then(() => {
+        return context?.canAskResult()
+    })),
+
+    modalAttend: () => M(context => new Promise(resolve => {
+        context.showAttend({
+            send: payload => resolve(AttendModalActions.send(payload)),
+            back: () => resolve(AttendModalActions.back),
+            close: () => resolve(AttendModalActions.close)
+        })
+    })),
+    modalAskResultFailed: payload => M(context => new Promise(resolve => {
+        const type = payload.cata({
+            notAttended: () => 'notAttended',
+            notTime: () => 'notTime'
+        })
+        context.showAskFailed({
+            type,
+            close: () => resolve(AskResultFailedModalActions.close)
+        })
+    })),
     modalAccept: () => M(context => new Promise(resolve => {
         context.showAccept({
             accept: () => resolve(AcceptModalActions.accept),
@@ -87,6 +135,13 @@ export default command => command.cata({
     requestReportIssue: payload => M(context => {
         context.setLoading(true)
         return reportIssue(payload.applicationId, payload.inviteInterviewId, payload.params)
+            .then(result => RequestResult.success(result.data))
+            .catch(error => RequestResult.error(error))
+            .finally(() => context.setLoading(false))
+    }),
+    requestAttend: payload => M(context => {
+        context.setLoading(true)
+        return attend(payload.applicationId, payload.inviteInterviewId, payload.params)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
