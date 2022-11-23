@@ -126,7 +126,7 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
       (error) => {
         // Remove the accessToken cookie to log the user out
         // when Unauthorized 401 status code is returned from API requests
-        if (error.response.status === 401) {
+        if (error?.response?.status === 401) {
           removeCookie('accessToken')
           window.location.href = '/'
         } else {

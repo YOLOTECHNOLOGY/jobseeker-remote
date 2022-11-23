@@ -482,6 +482,7 @@ const Job = ({
                   variant='contained'
                   capitalize
                   className={styles.applyBtn}
+                  isLoading={!chatDetail}
                   onClick={handleChat}
                 >
                   <Text textColor='white' bold>

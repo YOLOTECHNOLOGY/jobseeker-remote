@@ -274,7 +274,7 @@ const JobDetail = ({
               </Link>
               <div className={styles.jobDetailButtons}>
 
-                <MaterialButton variant='contained' capitalize onClick={handleChat} isLoading={loading}>
+                <MaterialButton variant='contained' capitalize onClick={handleChat} isLoading={loading||!chatDetail}>
                   <Text textColor='white' bold>
                     {(chatDetail.is_exists && chatDetail.job_id === selectedJob.id) ? 'Continue Chat' : 'Chat Now'}
                   </Text>

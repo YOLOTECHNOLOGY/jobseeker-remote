@@ -21,7 +21,7 @@ import {
 } from 'store/actions/users/completeUserProfile'
 
 import { updateUserProfileService } from 'store/services/users/updateUserProfile'
-import { addUserPreferencesService } from 'store/services/users/addUserPreferences'
+import { createUserPreferencesService, updateUserPreferencesService } from 'store/services/users/addUserPreferences'
 import { completeUserProfileService } from 'store/services/users/completeUserProfile'
 
 import { fetchUserWorkExperienceService } from 'store/services/users/fetchUserWorkExperience'
@@ -44,6 +44,7 @@ function* updateUserOnboardingInfoReq({ payload }) {
   const quickUpladResumeType = getItem('quickUpladResume')
 
   const {
+    preferenceId,
     preferences,
     profile,
     accessToken,
@@ -61,14 +62,12 @@ function* updateUserOnboardingInfoReq({ payload }) {
   try {
     if (currentStep === 1) {
       const preferencesPayload = {
+        preferenceId,
         accessToken,
-        preferences
+        params: preferences
       }
-
-      let preferenceResponse
-      let userCompleteProfileResponse
-      ;[preferenceResponse, userCompleteProfileResponse] = yield all([
-        call(addUserPreferencesService, preferencesPayload),
+      const [preferenceResponse, userCompleteProfileResponse] = yield all([
+        call((preferenceId ? updateUserPreferencesService : createUserPreferencesService), preferencesPayload),
         call(updateUserProfileService, profile)
       ])
 
