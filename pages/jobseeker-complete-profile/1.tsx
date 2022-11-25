@@ -49,7 +49,7 @@ const Step1 = (props: any) => {
 
   const location = useMemo(() => {
     return formattedLocationList.find(l => l.value === userDetail?.location)
-  }, [formattedLocationList, userDetail.location])
+  }, [formattedLocationList, userDetail?.location])
   
   const noticeList = getNoticePeriodList(config)
   const smsCountryList = getSmsCountryList(config)
