@@ -1,7 +1,7 @@
 /* eslint-disable valid-jsdoc */
 /* eslint-disable react/prop-types */
 import Modal from 'components/Modal'
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { assign } from 'lodash-es'
 import { Timeline, TimelineConnector, TimelineContent, TimelineItem, TimelineSeparator } from '@mui/lab'
 import styles from './index.module.scss'
@@ -29,24 +29,18 @@ const DetailModal = (props: any) => {
     const [show, setShow] = useState(false)
     const { contextRef, loading, data, applicationId } = props
     const actionsRef = useRef({} as any)
-
+    const isStatusIn = useCallback(status => {
+        return status.includes(data?.jobseeker_display_status)
+    }, [data?.jobseeker_display_status])
     // const dispatch = useDispatch()
-    const [farFromBegin, upComing, inProgress, canCheckedIn, timeout, showReport, askEnable] = useMemo(() => {
+    const  canCheckedIn = useMemo(() => {
         const hours = (() => {
             const hours = dayjs(data?.interviewed_at).diff(dayjs(), 'hours')
             const minutes = dayjs(data?.interviewed_at).diff(dayjs(), 'minutes')
             return hours + minutes / 60
         })()
         console.log('hours', hours)
-        return [
-            hours >= 6,
-            hours < 6 && hours > 2,
-            hours <= 2,
-            hours < 2 && hours >= -0.5,
-            hours < -0.5,
-            hours < 0 && hours >= -3,
-            hours < -3
-        ]
+        return  hours < 2 && hours >= -0.5
     }, [data?.interviewed_at])
     const context = {
         showDetail(actions) {
@@ -57,14 +51,11 @@ const DetailModal = (props: any) => {
             setShow(false)
         },
         canAskResult() {
-            return askEnable
+            return isStatusIn(['Completed'])
         }
     }
     contextRef.current = assign(contextRef.current, context)
-    const isAttended = data?.jobseeker_mark_jobseeker_attended
-    console.log({ showReport })
     const timelineItems = useMemo(() => {
-
         return [
             {
                 title: 'Interview Confirmed',
@@ -72,8 +63,8 @@ const DetailModal = (props: any) => {
                 isFinish: true,
                 active: true,
                 show: true,
-                actionName: farFromBegin ? 'Cancel interview' : 'Your interview cannot be cancelled now',
-                actionEnable: ['Interview accepted'].includes(data?.status) && farFromBegin,
+                actionName: isStatusIn(['Accepted', 'Pending']) ? 'Cancel interview' : 'Your interview cannot be cancelled now',
+                actionEnable: isStatusIn(['Accepted', 'Pending']),
                 action: () => {
                     actionsRef.current?.cancel?.()
                 }
@@ -88,12 +79,11 @@ const DetailModal = (props: any) => {
                     }
                     if (canCheckedIn) {
                         return 'Check-in now'
-                    }
-                    if (timeout) {
+                    } else {
                         return 'You cannot check in now.'
                     }
                 })(),
-                active: !timeout,
+                active: canCheckedIn && isStatusIn(['Accepted','Upcoming']),
                 show: true,
                 actionEnable: !data?.checked_in_at && canCheckedIn,
                 action: () => actionsRef.current?.checkIn?.({
@@ -104,11 +94,13 @@ const DetailModal = (props: any) => {
             {
                 title: 'In-progress',
                 label: 'You can report any issue during this stage',
-                isFinish: inProgress || data?.status === 'Interview completed',
-                active: true,
-                show: showReport && (isAttended === 'True' || !!data.checked_in_at),
-                actionName: 'Report issues',
-                actionEnable: true,
+                isFinish: data?.data?.is_reported,
+                active: !isStatusIn(['Completed']),
+                show: true,
+                actionName: data?.is_reported ? 'Isseus reported' : 'Report issues',
+                actionEnable: isStatusIn(['In Progress'])
+                    && (data?.jobseeker_mark_jobseeker_attended || !!data.checked_in_at)
+                    && !data?.is_reported,
                 action: () => actionsRef.current?.reportIssue?.({
                     applicationId,
                     inviteInterviewId: data.id
@@ -117,7 +109,7 @@ const DetailModal = (props: any) => {
             {
                 title: 'Finished',
                 label: 'You can request interview result from the recruiter',
-                isFinish: data?.status === 'Interview completed',
+                isFinish: isStatusIn(['Completed']),
                 active: true,
                 show: true,
                 actionName: data?.requested_result_at ? 'Requested for results' : 'Request for results',
@@ -125,7 +117,7 @@ const DetailModal = (props: any) => {
                 action: () => actionsRef.current?.askResult?.()
             }
         ].filter(item => item.show)
-    }, [data, actionsRef.current, applicationId, inProgress, upComing])
+    }, [data, actionsRef.current, applicationId, isStatusIn])
     const sureNotCheck = useMemo(() => {
         return !data?.checked_in_at && data?.jobseeker_mark_jobseeker_attended === false
     }, [data?.checked_in_at, data?.jobseeker_mark_jobseeker_attended])
