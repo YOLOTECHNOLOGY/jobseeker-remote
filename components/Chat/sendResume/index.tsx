@@ -95,7 +95,7 @@ const SendResumeModal = (props: any) => {
         handleFirstButton={() => actionsRef.current.close?.()}
         handleSecondButton={() => actionsRef.current.send?.({
             applicationId,
-            requestResumeId: data.id,
+            requestResumeId: data?.id,
             params: { resume_id: resumeId }
         })}
         isSecondButtonDisabled={!(resumeId > 0)}

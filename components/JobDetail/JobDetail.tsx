@@ -209,6 +209,7 @@ const JobDetail = ({
 
   const handleChat = () => {
     if (!userCookie) {
+      sessionStorage.setItem('isChatRedirect',`/chat-redirect/${selectedJob.id}`)
       setOpenRegister(true)
     } else if (chatDetail.is_exists) {
       if (chatDetail.job_id !== selectedJob.id) {

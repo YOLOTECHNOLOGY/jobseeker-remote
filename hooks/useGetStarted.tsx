@@ -94,12 +94,16 @@ const useGetStarted = () => {
   }
 
   const defaultLoginCallBack = (data: any) => {
-    const url =
-      data.is_profile_update_required || !data.is_profile_completed
-        ? '/jobseeker-complete-profile/1'
-        : defaultRedirectPage
+    const url = data.is_profile_update_required || !data.is_profile_completed
+      ? '/jobseeker-complete-profile/1'
+      : defaultRedirectPage
         ? defaultRedirectPage
         : `/jobs-hiring/job-search`
+    // const isChatRedirect = sessionStorage.getItem('isChatRedirect')
+    // if (isChatRedirect) {
+    //   url = isChatRedirect
+    // }
+    // console.log('defaultLoginCallBack',url)
     routes.push(url)
     setEmailOTPInputDisabled(false)
   }

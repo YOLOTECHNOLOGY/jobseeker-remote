@@ -341,11 +341,15 @@ const Step4 = (props: any) => {
     const isCreateFreeResume =
       (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
     const isRegisterModuleRedirect = getItem('isRegisterModuleRedirect')
-
+    const isChatRedirect = sessionStorage.getItem('isChatRedirect')
     let redirect = router.query?.redirect ? router.query?.redirect : null
 
     if (isRegisterModuleRedirect && !quickUpladResumeType) {
       redirect = isRegisterModuleRedirect
+    }
+    if(isChatRedirect){
+      redirect = isChatRedirect
+      sessionStorage.removeItem('isChatRedirect')
     }
     if (isCreateFreeResume || quickUpladResumeType === 'onLine') {
       dispatch(generateUserResumeRequest({ redirect, accessToken }))
