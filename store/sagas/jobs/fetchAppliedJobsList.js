@@ -24,7 +24,6 @@ function* fetchAppliedJobsListReq(action) {
       yield put(fetchAppliedJobsListSuccess(response.data))
     }
   } catch (error) {
-    console.log('error', error)
     yield put(fetchAppliedJobsListFailed(error))
   }
 }

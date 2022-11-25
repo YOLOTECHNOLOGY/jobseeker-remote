@@ -51,7 +51,6 @@ const SendResumeModal = (props: any) => {
     }, [])
     const dispatch = useDispatch()
     const deleteItem = useCallback((item) => {
-        console.log('delete', item)
         setResumeLoading(true)
         deleteOne(item.id)
             .then(getList)
@@ -140,7 +139,6 @@ const SendResumeModal = (props: any) => {
                             variant='outlined'
                             isLoading={resumeLoading}
                             onClick={() => {
-                                console.log('inputRef', inputRef)
                                 inputRef?.current?.click?.()
                             }}
                             disabled={resumeList.length >= 3}

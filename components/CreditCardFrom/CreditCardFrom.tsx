@@ -49,9 +49,6 @@ const CreditCardFrom = ({ label, setEdit, edit }: any) => {
       return payload
       // a
     })
-    // hostedFieldsInstance.tokenize((tokenizeErr, payload) => {
-    //   console.log(tokenizeErr, payload)
-    // })
   }
 
   const options = {

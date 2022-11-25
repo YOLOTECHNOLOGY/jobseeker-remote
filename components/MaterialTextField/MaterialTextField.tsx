@@ -66,9 +66,8 @@ const theme = createTheme({
     }
   },
 })
-const MaterialTextField = ({ id,ref, label,helperText, variant, error, refs, size, color, className, defaultValue, multiline=false, rows=1, maxLength=255, isSubmitOnEnter, onSubmit, ...rest} : MaterialTextFieldProps) => {
+const MaterialTextField = ({ id, label,helperText, variant, error, refs, size, color, className, defaultValue, multiline=false, rows=1, maxLength=255, isSubmitOnEnter, onSubmit, ...rest} : MaterialTextFieldProps) => {
   const [value, setValue] = useState(defaultValue)
-
   useEffect(()=>{
     setValue(defaultValue)
   },[defaultValue])
@@ -82,7 +81,6 @@ const MaterialTextField = ({ id,ref, label,helperText, variant, error, refs, siz
         onKeyDown={isSubmitOnEnter ? (event)=>{
           if (event.key == 'Enter') onSubmit();
         }: null} 
-        ref={ref}
         {...refs}
         id={id} 
         label={label} 

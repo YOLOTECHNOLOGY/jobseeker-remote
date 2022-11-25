@@ -17,7 +17,6 @@ function* fetchSimilarJobsReq(actions) {
       yield put(fetchSimilarJobsSuccess(response.data.data))
     }
   } catch (error) {
-    console.log('error', error)
     yield put(fetchSimilarJobsFailed(error))
   }
 }

@@ -11,7 +11,6 @@ function* fetchUserEducationReq(action) {
     const { data } = yield call(fetchUserEducationService, action.payload)
     yield put(fetchUserEducationSuccess(data.data))
   } catch (error) {
-    console.log(error)
     yield put(fetchUserEducationFailed(error))
   }
 }

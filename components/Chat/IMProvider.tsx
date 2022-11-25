@@ -27,7 +27,6 @@ const IMProvider = ({ children }: any) => {
     const [imState, setImState] = useState({} as any)
     const [chatList, setChatList] = useState([])
     const [mobile, setMobile] = useState(false)
-    console.log({ userId })
     useEffect(() => {
         const old: any = window.onresize
         setMobile(document.body.clientWidth < 576)
@@ -103,7 +102,6 @@ const IMProvider = ({ children }: any) => {
             return userDetailRef.current?.phone_num
         },
         updateData(data) {
-            console.log('update', data?.data?.job_application)
             contextRef.current.imState = data?.data?.job_application
             setImState(data?.data?.job_application)
         },

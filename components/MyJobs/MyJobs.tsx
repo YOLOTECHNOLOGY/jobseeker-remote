@@ -47,7 +47,6 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 /* Styles */
 import styles from './MyJobs.module.scss'
 import MaterialButton from 'components/MaterialButton'
-import { fetchChatDetailRequest } from 'store/actions/jobs/fetchJobChatDetail'
 
 const theme = createTheme({
   components: {
@@ -183,15 +182,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
 
     }
   }, [appliedJobDetailResponse])
-  useEffect(() => {
-    if (selectedJob?.id) {
-      console.log('selectedJob', selectedJob)
-      const recruiterId = selectedJob?.recruiter?.id
-      if (recruiterId) {
-        dispatch(fetchChatDetailRequest({ recruiterId, status: 'protected' }))
-      }
-    }
-  }, [selectedJob])
+  
   useEffect(() => {
     setJobsList(savedJobsListResponse.data?.saved_jobs)
     setTotalPages(savedJobsListResponse.data?.total_pages)

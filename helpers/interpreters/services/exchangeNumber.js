@@ -9,7 +9,6 @@ export const accept = (applicationId, exchangeId) => {
 }
 
 export const decline = (applicationId, exchangeId,params) => {
-    console.log({params})
     const axios = configuredAxios('jobApplication', 'protected')
     return axios.put(`/${applicationId}/jobseekers/contact-exchange-requests/${exchangeId}/decline`,params)
 }

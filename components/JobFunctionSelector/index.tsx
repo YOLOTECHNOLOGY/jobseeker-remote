@@ -65,12 +65,7 @@ const JobFunctionSelector = (props: any) => {
     return <FormControl className={className} size='small'>
         <MaterialTextField
             value={value?.value}
-            onChange={e => {
-                // e.preventDefault()
-                // e.stopPropagation()
-                console.log('onChange',e.target)
-                onChange(value)
-            }}
+            onChange={() => onChange(value)}
             onClick={() => {
                 setShowModal(true)
             }}

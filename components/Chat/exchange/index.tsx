@@ -47,7 +47,6 @@ const ExchangeModal = (props: any) => {
             setCount(60)
         },
         updateUser() {
-            console.log('updateUser')
             dispatch(fetchUserDetailRequest({ assessToken }))
         }
     }

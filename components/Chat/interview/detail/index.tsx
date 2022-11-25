@@ -39,7 +39,6 @@ const DetailModal = (props: any) => {
             const minutes = dayjs(data?.interviewed_at).diff(dayjs(), 'minutes')
             return hours + minutes / 60
         })()
-        console.log('hours', hours)
         return  hours < 2 && hours >= -0.5
     }, [data?.interviewed_at])
     const context = {

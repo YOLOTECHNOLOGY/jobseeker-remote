@@ -202,7 +202,6 @@ const EditJobPreferencesModal = ({
             rules={{ validate: value => !!value || 'max salary is required' }}
             render={({ field, fieldState }) => {
               const { value } = field
-              console.log({ value })
               return <MaterialBasicSelect
                 className={styles.jobPreferencesFormInput}
                 label='Max. salary'

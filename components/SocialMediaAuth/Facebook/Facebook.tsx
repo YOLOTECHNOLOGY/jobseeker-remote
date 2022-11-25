@@ -49,7 +49,6 @@ const Facebook = ({
 
             callBackMethod(payload)
             // eslint-disable-next-line no-console
-            console.log('after callback facebook')
           })
         } else {
           // User cancelled login or did not fully authorize

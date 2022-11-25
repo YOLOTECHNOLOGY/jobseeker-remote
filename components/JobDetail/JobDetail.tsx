@@ -192,7 +192,7 @@ const JobDetail = ({
         dispatch(fetchChatDetailRequest({ recruiterId, status: 'protected' }))
       }
     }
-  }, [selectedJob])
+  }, [selectedJob?.id])
   const requestSwitch = useCallback(() => {
     setLoading(true)
     fetchSwitchJobService({
@@ -219,10 +219,9 @@ const JobDetail = ({
     } else {
       setLoading(true)
       createChat(selectedJob?.id).then(result => {
-        const chatId = result.data.data.chat_id
+        const chatId = result.data.data.id
         router.push(`/chat/${chatId}`)
       }).catch(e => {
-        console.log('e', e)
         router.push(`/chat`)
       }).finally(() => setLoading(false))
     }

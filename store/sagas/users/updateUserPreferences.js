@@ -1,10 +1,10 @@
-import { all, call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 import { UPDATE_USER_PREFERENCES_REQUEST } from 'store/types/users/updateUserPreferences'
 import {
     updateUserPreferencesSuccess,
     updateUserPreferencesFailed,
 } from 'store/actions/users/updateUserPreferences'
-import { addUserPreferencesService, createUserPreferencesService, deleteUserPreferencesService, updateUserPreferencesService } from 'store/services/users/addUserPreferences'
+import { createUserPreferencesService, deleteUserPreferencesService, updateUserPreferencesService } from 'store/services/users/addUserPreferences'
 import { updateUserProfileService } from 'store/services/users/updateUserProfile'
 import { updateUserProfileSuccess } from 'store/actions/users/updateUserProfile'
 import { fetchUserOwnDetailRequest, fetchUserOwnDetailSuccess } from 'store/actions/users/fetchUserOwnDetail'
@@ -16,12 +16,6 @@ function* updateUserPreferencesReq({ payload }) {
     try {
         const accessToken = getCookie('accessToken')
         const { preferences, profile } = payload
-        console.log('update', payload)
-        const preferencesPayload = {
-            accessToken,
-            preferences
-        }
-
         let preferenceResponse;
         let userUpdateProfileResponse;
         if (preferences) {
@@ -35,8 +29,8 @@ function* updateUserPreferencesReq({ payload }) {
                         yield put(updateUserPreferencesFailed(preferenceResponse.data.error))
                     }
                 }
-                break;
-                case 'update':{
+                    break;
+                case 'update': {
                     preferenceResponse = yield call(updateUserPreferencesService, preferences)
                     if (!preferenceResponse?.data?.error) {
                         yield put(fetchUserOwnDetailRequest({ accessToken }))
@@ -45,8 +39,8 @@ function* updateUserPreferencesReq({ payload }) {
                         yield put(updateUserPreferencesFailed(preferenceResponse.data.error))
                     }
                 }
-                break;
-                case 'create':{
+                    break;
+                case 'create': {
                     preferenceResponse = yield call(createUserPreferencesService, preferences)
                     if (!preferenceResponse?.data?.error) {
                         yield put(fetchUserOwnDetailRequest({ accessToken }))
@@ -55,7 +49,7 @@ function* updateUserPreferencesReq({ payload }) {
                         yield put(updateUserPreferencesFailed(preferenceResponse.data.error))
                     }
                 }
-                break;
+                    break;
             }
         }
         if (profile) {

@@ -11,7 +11,6 @@ const JobseekerChat = dynamic<any>(import('components/Chat'), {
     ssr: false
   })
 // import JobseekerChat from 'components/Chat'
-console.log({JobseekerChat})
 const Chat = () => {
     const router = useRouter()
     const { query: { chat_id } } = router
@@ -42,7 +41,6 @@ const Chat = () => {
             return
         }
         if (chatId !== chat_id) {
-            console.log('chatId', chatId, chat_id)
             if (chatId) {
                 history.replaceState(null, '', `/chat/${chatId}`)
             } else if (chat_id !== 'list') {

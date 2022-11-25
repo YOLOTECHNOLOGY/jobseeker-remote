@@ -61,7 +61,6 @@ import { getCookie } from 'helpers/cookies'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import useSearchHistory from 'helpers/useSearchHistory'
 import configuredAxios from 'helpers/configuredAxios'
-import { fetchChatDetailRequest } from 'store/actions/jobs/fetchJobChatDetail'
 
 interface JobSearchPageProps {
   seoMetaTitle: string
@@ -350,15 +349,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       setSelectedJob(jobDetailResponse)
     }
   }, [jobDetailResponse])
-
-  useEffect(()=>{
-    if(selectedJob?.id){
-      const recruiterId = selectedJob?.recruiter?.id
-      if (recruiterId) {
-        dispatch(fetchChatDetailRequest({ recruiterId, status: 'protected' }))
-      }
-    }
-  },[selectedJob])
 
   const sortOptions = [
     { label: 'Newest', value: 1 },

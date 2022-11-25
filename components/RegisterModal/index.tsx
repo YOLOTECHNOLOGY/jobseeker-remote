@@ -25,7 +25,6 @@ const RegisterModal = ({ openRegister, setOpenRegister }: any) => {
     const [closeRegisterModuleTime, setCloseRegisterModuleTime] = useState(
         getItem('notLoginShowRegisterModuleTime')
     )
-    console.log('openRegister',openRegister)
     const useInterval = (callback?, dep = 6000) => {
         clearInterval(time.current)
         const isShowRegisterModule = () => {
@@ -33,7 +32,6 @@ const RegisterModal = ({ openRegister, setOpenRegister }: any) => {
             if (moment(closeRegisterModuleTime).isBefore(nowTime)) {
                 callback?.()
             } else {
-                // console.log('还没有到弹出的时候')
             }
         }
 
@@ -44,7 +42,6 @@ const RegisterModal = ({ openRegister, setOpenRegister }: any) => {
     useEffect(() => {
         if (!accessToken) {
             const notLoginShowRegisterModule = getItem('notLoginShowRegisterModuleTime')
-            console.log('notLoginShowRegisterModule', notLoginShowRegisterModule)
 
             if (notLoginShowRegisterModule) {
                 return useInterval()
@@ -60,9 +57,7 @@ const RegisterModal = ({ openRegister, setOpenRegister }: any) => {
             }
         }
     }, [closeRegisterModuleTime])
-    console.log('closeRegisterModuleTime', closeRegisterModuleTime)
     const handleOpenRegisterModule = () => {
-        console.log('open', open)
         removeItem('quickUpladResume')
         setOpenRegister(true)
     }

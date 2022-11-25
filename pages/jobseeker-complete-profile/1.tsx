@@ -204,6 +204,7 @@ const Step1 = (props: any) => {
                 required
                 {...fieldState}
                 {...field}
+                ref={undefined}
               />
             }}
           />
@@ -221,6 +222,7 @@ const Step1 = (props: any) => {
                   required
                   {...fieldState}
                   {...field}
+                ref={undefined}
                 />
               }}
             />
@@ -244,6 +246,7 @@ const Step1 = (props: any) => {
                 required
                 {...fieldState}
                 {...field}
+                ref={undefined}
               />
             }}
           />
@@ -261,7 +264,8 @@ const Step1 = (props: any) => {
                 required
                 {...fieldState}
                 {...field}
-              />
+                ref={undefined}
+                />
             }}
           />
         </div>
@@ -281,6 +285,7 @@ const Step1 = (props: any) => {
                 onChange={(_, location) => {
                   onChange(location)
                 }}
+                ref={undefined}
               />
             }}
           />
@@ -311,6 +316,7 @@ const Step1 = (props: any) => {
                       setMinSalary(e.target.value)
                       onChange(e)
                     }}
+                    ref={undefined}
                   />
                 }}
               />
@@ -331,6 +337,7 @@ const Step1 = (props: any) => {
                     {...fieldState}
                     {...field}
                     value={value || undefined}
+                    ref={undefined}
                   />
                 }}
               />
@@ -350,6 +357,7 @@ const Step1 = (props: any) => {
                 options={industryOptions}
                 {...fieldState}
                 {...field}
+                ref={undefined}
               />
             }}
           />
@@ -367,6 +375,7 @@ const Step1 = (props: any) => {
                 options={noticeList}
                 {...fieldState}
                 {...field}
+                ref={undefined}
               />
             }}
           />

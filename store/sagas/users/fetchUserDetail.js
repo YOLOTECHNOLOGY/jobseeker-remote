@@ -8,7 +8,6 @@ function* fetchUserDetailReq(action) {
     const { data } = yield call(accountSetting, action.payload)
     yield put(fetchUserDetailSuccess(data.data))
   } catch (error) {
-    console.log(error)
     yield put(fetchUserDetailFailed(error))
   }
 }

@@ -31,7 +31,6 @@ export default function PrimarySearchAppBar({ title, onChange }: any) {
     options,
     getOptionLabel: (option: any) => option.value,
   });
-  console.log('value', value)
   useEffect(() => {
     if (value) {
       onChange?.(value)

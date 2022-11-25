@@ -11,7 +11,6 @@ function* fetchUserWorkExperienceReq(action) {
     const { data } = yield call(fetchUserWorkExperienceService, action.payload)
     yield put(fetchUserWorkExperienceSuccess(data.data))
   } catch (error) {
-    console.log(error)
     yield put(fetchUserWorkExperienceFailed(error))
   }
 }

@@ -11,7 +11,6 @@ function* fetchUserOwnDetailReq(action) {
     const { data } = yield call(fetchUserOwnDetailService, action.payload)
     yield put(fetchUserOwnDetailSuccess(data.data))
   } catch (error) {
-    console.log(error)
     yield put(fetchUserOwnDetailFailed(error))
   }
 }
