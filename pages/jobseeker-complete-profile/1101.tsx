@@ -32,19 +32,15 @@ import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import TextEditor from 'components/TextEditor/TextEditor'
 import MaterialDatePicker from 'components/MaterialDatePicker'
-import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
 
 // Images
 import { InfoIcon, DeleteFilledIcon, CreateFilledIcon, AddOutlineIcon } from 'images'
 
 /* Helpers */
 import {
-  getJobCategoryList,
   getLocationList,
   getIndustryList,
-  getCountryList,
-  getJobCategoryIds
-} from 'helpers/jobPayloadFormatter'
+  getCountryList} from 'helpers/jobPayloadFormatter'
 import { formatSalary, removeEmptyOrNullValues } from 'helpers/formatter'
 import { getItem } from 'helpers/localStorage'
 
@@ -52,6 +48,7 @@ import { getItem } from 'helpers/localStorage'
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
 import { handleNumericInput } from '../../helpers/handleInput'
+import JobFunctionSelector from 'components/JobFunctionSelector'
 
 const Step3 = (props: any) => {
   const quickUpladResumeType = getItem('quickUpladResume')
@@ -67,9 +64,8 @@ const Step3 = (props: any) => {
     ? `/jobseeker-complete-profile/1102?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1102'
   let backBtnUrl = router.query?.redirect
-    ? `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}?redirect=${
-        router.query.redirect
-      }`
+    ? `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}?redirect=${router.query.redirect
+    }`
     : `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}`
 
   if (quickUpladResumeType && quickUpladResumeType === 'upFile') {
@@ -83,7 +79,6 @@ const Step3 = (props: any) => {
   }
 
   const locList = getLocationList(config)
-  const jobCategoryList = getJobCategoryList(config)
   const industryList = getIndustryList(config)
   const countryList = getCountryList(config)
 
@@ -95,7 +90,7 @@ const Step3 = (props: any) => {
   const [isCurrentJob, setIsCurrentJob] = useState(false)
   const [workPeriodFrom, setWorkPeriodFrom] = useState(null)
   const [workPeriodTo, setWorkPeriodTo] = useState(null)
-  const [jobFunction, setJobFunction] = useState([])
+  const [jobFunction, setJobFunction] = useState({ id: undefined, value: '' })
   const [industry, setIndustry] = useState('')
   const [salary, setSalary] = useState('')
   const [description, setDescription] = useState('')
@@ -172,6 +167,7 @@ const Step3 = (props: any) => {
 
   useEffect(() => {
     if (selectedExperience) {
+      console.log('effect')
       scrollToForm()
       setShowForm(true)
       setWorkExperienceId(selectedExperience.id)
@@ -195,7 +191,7 @@ const Step3 = (props: any) => {
         setIsShowCountry(true)
       }
       setDescription(selectedExperience.description)
-      setJobFunction(selectedExperience.job_categories)
+      setJobFunction({id:selectedExperience.function_job_title_id,value:selectedExperience.function_job_title})
     }
   }, [selectedExperience])
 
@@ -306,7 +302,7 @@ const Step3 = (props: any) => {
     setCountry('')
     setIsShowCountry(false)
     setDescription('')
-    setJobFunction([])
+    setJobFunction({value:'',id:undefined})
     setHasErrorOnFromPeriod(false)
     setHasErrorOnToPeriod(false)
     setIsUpdating(false)
@@ -353,14 +349,13 @@ const Step3 = (props: any) => {
       country_key: country || 'ph',
       company_industry_key: matchedIndustry?.[0]?.key || null,
       is_currently_work_here: isCurrentJob,
-      job_category_ids:
-        jobFunction?.length > 0 ? getJobCategoryIds(config, jobFunction).join(',') : '',
       salary: Number(salary),
       working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
       working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
       description: description ? description : '',
       location_key: location?.key || '',
-
+      function_job_title_id: jobFunction.id,
+      function_job_title:jobFunction.value,
       // isQuickUpladResume
       job_categories: null,
       industry: null,
@@ -381,10 +376,11 @@ const Step3 = (props: any) => {
     if (!isQuickUpladResume) {
       dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
     } else {
-      workExperienceData.job_categories = jobFunction
-      ;(workExperienceData.industry = matchedIndustry?.[0]?.key || null),
-        (workExperienceData.country = country || 'ph'),
-        (workExperienceData.location = location?.key || '')
+      workExperienceData.function_job_title_id = jobFunction.id
+      workExperienceData.function_job_title=jobFunction.value
+      workExperienceData.industry = matchedIndustry?.[0]?.key || null
+      workExperienceData.country = country || 'ph'
+      workExperienceData.location = location?.key || ''
       workExperienceData.id = Math.round(Math.random() * 1000)
 
       if (Object.keys(userWorkExperiences).length) {
@@ -409,12 +405,12 @@ const Step3 = (props: any) => {
 
   const handleCancelForm = () => {
     setShowForm(false)
-
     if (selectedExperience) {
       handleResetForm()
     }
 
     setSelectedExperience(null)
+    setIsNextDisabled(!workExperience?.length && !hasNoWorkExperience)
   }
 
   const handleNextBtn = () => {
@@ -669,15 +665,15 @@ const Step3 = (props: any) => {
                 )}
               </div>
             )}
-
             <div id='jobFunction' className={styles.stepField}>
-              <MaterialSelectCheckmarks
+              <JobFunctionSelector
                 className={styles.stepFullwidth}
-                label={'Job Functions'}
-                name='jobCategory'
+                label={'Job Function'}
+                title='Job function'
+                name='jobFunction'
+                isTouched
                 value={jobFunction}
-                onSelect={(e) => setJobFunction(e)}
-                options={jobCategoryList}
+                onChange={(value) => setJobFunction(value)}
               />
             </div>
 
