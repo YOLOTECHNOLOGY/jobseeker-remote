@@ -23,7 +23,7 @@
   &Body {
     @extend .GlobalContainer;
     margin-top: 50px;
-    
+
     @include msd {
       padding: 0 20px;
     }
@@ -53,8 +53,9 @@
   &Wrapper {
     padding: 32px 60px;
     background-color: $white-3;
-    box-shadow: 0px 4px 6px rgba(150, 149, 149, 0.16);
     margin: 0 auto;
+    box-shadow: 0px 4px 6px rgba(150, 149, 149, 0.25);
+    border-radius: 20px;
 
     @include msd {
       width: 100%;

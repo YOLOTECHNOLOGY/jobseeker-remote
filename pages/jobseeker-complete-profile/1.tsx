@@ -42,7 +42,7 @@ const Step1 = (props: any) => {
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
   )
-  const formattedLocationList = flatMap(locationList,l => l.locations)
+  const formattedLocationList = flatMap(locationList, l => l.locations)
   const desiredLoaction = useMemo(() => {
     return formattedLocationList.find(l => l.key === preference?.location_key)
   }, [formattedLocationList, preference?.location_key])
@@ -50,7 +50,7 @@ const Step1 = (props: any) => {
   const location = useMemo(() => {
     return formattedLocationList.find(l => l.value === userDetail?.location)
   }, [formattedLocationList, userDetail?.location])
-  
+
   const noticeList = getNoticePeriodList(config)
   const smsCountryList = getSmsCountryList(config)
   const jobTypeList = getJobTypeList(config)
@@ -76,7 +76,8 @@ const Step1 = (props: any) => {
       countryCode,
       noticePeriod: userDetail?.notice_period_id,
       contactNumber: userDetail?.phone_num?.replace(countryCode, '') || null,
-      country: userDetail?.country_key
+      country: userDetail?.country_key,
+      currency: 'php'
     }
   }, [preference])
   const minSalaryOptions = getSalaryOptions(config)
@@ -106,7 +107,7 @@ const Step1 = (props: any) => {
     (store: any) => store.users.updateUserOnboardingInfo.fetching
   )
   const handleUpdateProfile = (data) => {
-    const { minSalary, maxSalary, contactNumber, country, countryCode, location, noticePeriod, desiredLocation, jobTitle, jobType, industry } = data
+    const { minSalary, maxSalary, contactNumber, currency, country, countryCode, location, noticePeriod, desiredLocation, jobTitle, jobType, industry } = data
     const payload = {
       redirect: router.query?.redirect ? router.query.redirect : null,
       preferenceId: preference?.id,
@@ -119,7 +120,7 @@ const Step1 = (props: any) => {
         salary_range_from: Number(minSalary),
         salary_range_to: Number(maxSalary),
         industry_key: industry,
-        currency_key: 'php',
+        currency_key: currency,
         country_key: 'ph'
       },
       profile: {
@@ -184,7 +185,7 @@ const Step1 = (props: any) => {
                     required
                     {...fieldState}
                     {...field}
-                   />
+                  />
                 }}
               />
 
@@ -222,7 +223,7 @@ const Step1 = (props: any) => {
                   required
                   {...fieldState}
                   {...field}
-                ref={undefined}
+                  ref={undefined}
                 />
               }}
             />
@@ -265,7 +266,7 @@ const Step1 = (props: any) => {
                 {...fieldState}
                 {...field}
                 ref={undefined}
-                />
+              />
             }}
           />
         </div>
@@ -292,12 +293,27 @@ const Step1 = (props: any) => {
 
         </div>
         <div className={styles.step1Salary}>
-          <Text textColor='darkgrey' textStyle='base' bold>
-            Expected salary per month
-            <span className={styles.stepFieldRequired}>*</span>
-          </Text>
           <div className={styles.step1SalaryRanges}>
             <div className={styles.step1SalaryRange}>
+              <Controller
+                control={control}
+                name='currency'
+                rules={{ required: 'This field is required.' }}
+                render={({ field, fieldState }) => {
+                  return <MaterialBasicSelect
+                    className={styles.stepFullwidth}
+                    label='Desired salary currency'
+                    options={[{ value: 'php', label: 'PHP' }]}
+                    required
+                    {...fieldState}
+                    {...field}
+                    ref={undefined}
+                  />
+                }}
+              />
+            </div>
+            <div className={styles.step1SalaryRange}>
+
               <Controller
                 control={control}
                 name={'minSalary'}
@@ -306,7 +322,7 @@ const Step1 = (props: any) => {
                   const { value, onChange } = field
                   return <MaterialBasicSelect
                     className={styles.stepFullwidth}
-                    label='min. salary'
+                    label='Min. salary'
                     options={minSalaryOptions}
                     required
                     {...fieldState}
