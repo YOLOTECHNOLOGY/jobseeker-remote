@@ -780,114 +780,89 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
     setShowModal(true)
   }
   const [showDelete, setShowDelete] = useState(false)
-  // const handleVisibility = () => {
-  //   setOpenToWork(!openToWork)
-  //   updateUserVisibilityToWorkService({
-  //     is_visible: !openToWork
-  //   })
-  // }
-
   return (
     <React.Fragment>
 
       <div className={styles.jobPreferencesSectionDetail}>
-        <div style={{ right: 40 }} className={styles.iconWrapper} onClick={handleEditClick}>
+        <div style={{ right: 40 }} className={styles.iconWrapperP} onClick={handleEditClick}>
           <img src={PencilIcon} width='22' height='22' />
         </div>
-        <div style={{ right: 0 }} className={styles.iconWrapper} onClick={() => setShowDelete(true)}>
+        <div style={{ right: 0 }} className={styles.iconWrapperP} onClick={() => setShowDelete(true)}>
           <img src={DeleteIcon} width='22' height='22' />
         </div>
-        {
-          // !userDetail?.job_preference?.job_title &&
-          //   !userDetail?.job_preference?.job_type &&
-          //   !userDetail?.job_preference?.salary_range_from &&
-          //   !userDetail?.job_preference?.location &&
-          //   !userDetail?.notice_period_id ? (
-          //   <MaterialButton
-          //     className={styles.jobPreferencesSectionButton}
-          //     variant='outlined'
-          //     capitalize={false}
-          //     size='large'
-          //     onClick={() => handleEditClick()}
-          //     style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
-          //   >
-          //     Add job preferences
-          //   </MaterialButton>
-          // ) : 
-          (
-            <div className={styles.jobPreferencesSectionDetailList}>
+        <div className={styles.jobPreferencesSectionDetailList}>
 
-              {preference?.job_title && (
-                <div
-                  className={styles.jobPreferencesSectionDetailListWrapper}
-                  style={{ marginTop: '8px' }}
-                >
-                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                    Desired job title:
-                  </Text>
-                  <Text className={styles.jobPreferencesSectionDetailText}>
-                    {preference.job_title}
-                  </Text>
-                </div>
-              )}
-              {preference?.job_type && (
-                <div className={styles.jobPreferencesSectionDetailListWrapper}>
-                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                    Desired job type:
-                  </Text>
-                  <Text className={styles.jobPreferencesSectionDetailText}>
-                    {preference.job_type}
-                  </Text>
-                </div>
-              )}
-              {preference?.country && (
-                <div className={styles.jobPreferencesSectionDetailListWrapper}>
-                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                    Desired country:
-                  </Text>
-                  <Text className={styles.jobPreferencesSectionDetailText}>
-                    {preference.country}
-                  </Text>
-                </div>
-              )}
-              {preference?.location && (
-                <div className={styles.jobPreferencesSectionDetailListWrapper}>
-                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                    Desired city:
-                  </Text>
-                  <Text className={styles.jobPreferencesSectionDetailText}>
-                    {preference.location}
-                  </Text>
-                </div>
-              )}
-              {preference?.salary_range_from && (
-                <div className={styles.jobPreferencesSectionDetailListWrapper}>
-                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                    Expected salary:
-                  </Text>
-                  <Text className={styles.jobPreferencesSectionDetailText}>
-                    {formatSalaryRange(salaryRange)}
-                  </Text>
-                </div>
-              )}
-              {preference?.industry && (
-                <div className={styles.jobPreferencesSectionDetailListWrapper}>
-                  <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                    Desired industry:
-                  </Text>
-                  <Text className={styles.jobPreferencesSectionDetailText}>
-                    {preference.industry}
-                  </Text>
-                </div>
-              )}
+          {preference?.job_title && (
+            <div
+              className={styles.jobPreferencesSectionDetailListWrapper}
+              style={{ marginTop: '8px' }}
+            >
+              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                Desired job title:
+              </Text>
+              <Text className={styles.jobPreferencesSectionDetailText}>
+                {preference.job_title}
+              </Text>
+            </div>
+          )}
+          {preference?.job_type && (
+            <div className={styles.jobPreferencesSectionDetailListWrapper}>
+              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                Desired job type:
+              </Text>
+              <Text className={styles.jobPreferencesSectionDetailText}>
+                {preference.job_type}
+              </Text>
+            </div>
+          )}
+          {preference?.country && (
+            <div className={styles.jobPreferencesSectionDetailListWrapper}>
+              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                Desired country:
+              </Text>
+              <Text className={styles.jobPreferencesSectionDetailText}>
+                {preference.country}
+              </Text>
+            </div>
+          )}
+          {preference?.location && (
+            <div className={styles.jobPreferencesSectionDetailListWrapper}>
+              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                Desired city:
+              </Text>
+              <Text className={styles.jobPreferencesSectionDetailText}>
+                {preference.location}
+              </Text>
+            </div>
+          )}
+          {preference?.salary_range_from && (
+            <div className={styles.jobPreferencesSectionDetailListWrapper}>
+              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                Expected salary:
+              </Text>
+              <Text className={styles.jobPreferencesSectionDetailText}>
+                {formatSalaryRange(salaryRange)}
+              </Text>
+            </div>
+          )}
+          {preference?.industry && (
+            <div className={styles.jobPreferencesSectionDetailListWrapper}>
+              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+                Desired industry:
+              </Text>
+              <Text className={styles.jobPreferencesSectionDetailText}>
+                {preference.industry}
+              </Text>
+            </div>
+          )}
 
-              {/* {workingSetting && (
+          {/* {workingSetting && (
                   <div>
                       <Text textColor='lightgrey'>Desire working setting:</Text>
                       <Text>{workingSetting}</Text>
                   </div>
                 )} */}
-              {/* {userDetail?.notice_period_id && (
+          {/* {userDetail?.notice_period_id && (
                   <div className={styles.jobPreferencesSectionDetailListWrapper}>
                     <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
                       Availability:
@@ -897,8 +872,8 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
                     </Text>
                   </div>
                 )} */}
-            </div>
-          )}
+        </div>
+
         <EditJobPreferencesModal
           modalName={modalName}
           showModal={showModal}
@@ -916,16 +891,6 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
           handleModal={() => setShowDelete(false)}
         />
       </div>
-
-      {/* <div className={styles.sectionContainer}>
-        <Text className={styles.openToWorkSectionTitle} bold textStyle='xl' textColor='primaryBlue'>
-          Open to work
-        </Text>
-        <FormControlLabel
-          control={<Switch checked={openToWork} onChange={handleVisibility} />}
-          label={<Text textStyle='lg'>Let recruiters know that you are open to work</Text>}
-        />
-      </div> */}
     </React.Fragment >
   )
 }
@@ -1370,7 +1335,7 @@ const ManageProfilePage = ({ config }: any) => {
               </Text>
             </div>
             <div style={{ position: 'relative', width: '100%' }}>
-              <div className={styles.iconWrapper}
+              <div className={styles.iconWrapperP}
                 onClick={() => handleModal('jobPreferencesAvailibility', true, null, null)}
               >
                 <img src={PencilIcon} width='22' height='22' />
@@ -1382,11 +1347,11 @@ const ManageProfilePage = ({ config }: any) => {
           </div>
           <div className={styles.sectionContainer}>
 
-            <div className={styles.sectionHeader}  style={{ position: 'relative', width: '100%' }}>
-              <div className={styles.iconWrapper}
+            <div className={styles.sectionHeader} style={{ position: 'relative', width: '100%' }}>
+              <div className={styles.iconWrapperP}
                 onClick={() => handleModal('createJobPreference', true, null, null)}
               >
-                <img src={AddIcon} width='22' height='22' />
+                <img src={AddIcon} width='14' height='14' />
               </div>
               <Text bold textColor='primaryBlue' textStyle='xl'>
                 Job Preferences

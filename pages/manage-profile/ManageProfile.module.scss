@@ -264,11 +264,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
   width: 40px;
   height: 40px;
-  right: 10px;
-  top:0px;
+  &P{
+    position: absolute;
+    right: 10px;
+    top:0px;
+  }
   & > * {
     display: flex;
   }
@@ -301,6 +303,9 @@
   &Double {
     display: flex;
     align-items: center;
+    img {
+      margin-right: 14px;
+    }
   }
 }
 
