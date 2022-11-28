@@ -62,7 +62,9 @@ const Step1 = (props: any) => {
     })
     return matchedCountryCode ? matchedCountryCode[0]?.value : null
   }
-  const [isShowCountry, setIsShowCountry] = useState(false)
+  const [isShowCountry, setIsShowCountry] = useState(userDetail?.location === 'Overseas')
+  const [isShowDesiredCountry, setIsShowDesiredCountry] = useState(preference?.location_key==='overseas')
+
   const defaultValues = useMemo(() => {
     const countryCode = getSmsCountryCode(userDetail?.phone_num, smsCountryList) || '+63'
     return {
@@ -77,7 +79,8 @@ const Step1 = (props: any) => {
       noticePeriod: userDetail?.notice_period_id,
       contactNumber: userDetail?.phone_num?.replace(countryCode, '') || null,
       country: userDetail?.country_key,
-      currency: 'php'
+      currency: 'php',
+      desiredCountry: preference?.country_key
     }
   }, [preference])
   const minSalaryOptions = getSalaryOptions(config)
@@ -107,7 +110,7 @@ const Step1 = (props: any) => {
     (store: any) => store.users.updateUserOnboardingInfo.fetching
   )
   const handleUpdateProfile = (data) => {
-    const { minSalary, maxSalary, contactNumber, currency, country, countryCode, location, noticePeriod, desiredLocation, jobTitle, jobType, industry } = data
+    const { minSalary, maxSalary, contactNumber, currency, desiredCountry, country, countryCode, location, noticePeriod, desiredLocation, jobTitle, jobType, industry } = data
     const payload = {
       redirect: router.query?.redirect ? router.query.redirect : null,
       preferenceId: preference?.id,
@@ -121,7 +124,7 @@ const Step1 = (props: any) => {
         salary_range_to: Number(maxSalary),
         industry_key: industry,
         currency_key: currency,
-        country_key: 'ph'
+        country_key: desiredCountry
       },
       profile: {
         notice_period_id: noticePeriod,
@@ -242,7 +245,7 @@ const Step1 = (props: any) => {
                 variant='outlined'
                 autoComplete='off'
                 jobTitle={preference?.function_job_title}
-                title='Job function'
+                title='Job Title'
                 helperText={fieldState?.error?.message}
                 required
                 {...fieldState}
@@ -284,13 +287,33 @@ const Step1 = (props: any) => {
                 {...fieldState}
                 {...field}
                 onChange={(_, location) => {
+                  setIsShowDesiredCountry(location?.key === 'overseas')
                   onChange(location)
                 }}
                 ref={undefined}
               />
             }}
           />
+          {isShowDesiredCountry && (
+            <div className={classNames(styles.stepField, styles.stepFieldCountry)}>
+              <Controller
+                control={control}
+                name={'desiredCountry'}
+                rules={{ validate: value => !!value || 'This field is required.' }}
+                render={({ field, fieldState }) => {
+                  return <MaterialBasicSelect
+                    className={styles.stepFullwidth}
+                    label='Country'
+                    options={countryList}
+                    required
+                    {...fieldState}
+                    {...field}
+                  />
+                }}
+              />
 
+            </div>
+          )}
         </div>
         <div className={styles.step1Salary}>
           <div className={styles.step1SalaryRanges}>

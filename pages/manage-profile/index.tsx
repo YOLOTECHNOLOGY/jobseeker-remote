@@ -290,14 +290,14 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                   {dateDiff ? `(${dateDiff})` : ''}
                 </Text>
                 <div className={styles.companySecondaryInfoWrapper}>
-                  {workExp?.job_categories.length > 0 && (
-                    <Text textStyle='base'>{workExp?.job_categories.join(', ')}</Text>
+                  {workExp?.function_job_title.length > 0 && (
+                    <Text textStyle='base' textColor='darkgrey'>{workExp?.function_job_title}</Text>
                   )}
                   {workExp?.company_industry && (
-                    <Text textStyle='base'>{workExp?.company_industry}</Text>
+                    <Text textStyle='base' textColor='darkgrey'>{workExp?.company_industry}</Text>
                   )}
                   {workExp?.salary && workExp?.salary !== '0.00' && (
-                    <Text textStyle='base'>{formatSalary(workExp?.salary)} per month</Text>
+                    <Text textStyle='base' textColor='darkgrey'>{formatSalary(workExp?.salary)} per month</Text>
                   )}
                 </div>
                 {workExp?.description && (

@@ -10,7 +10,7 @@ import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
 
 /* Helpers */
-import { getJobTypeList, getSalaryOptions } from 'helpers/jobPayloadFormatter'
+import { getCountryList, getJobTypeList, getSalaryOptions } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
 
 import { updateUserPreferencesRequest } from 'store/actions/users/updateUserPreferences'
@@ -57,14 +57,16 @@ const EditJobPreferencesModal = ({
       minSalary: Number(preference?.salary_range_from) ?? undefined,
       maxSalary: Number(preference?.salary_range_to) ?? undefined,
       location: location,
-      industry: preference?.industry_key
+      industry: preference?.industry_key,
+      country: preference?.country_key
     }
   }, [preference])
   const dispatch = useDispatch()
   const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
   const isUpdating = useSelector((store: any) => store.users.updateUserPreferences.fetching)
   const response = useSelector((store: any) => store.users.updateUserPreferences.response)
-
+  const countryList = getCountryList(config).map(country => ({ label: country.label, value: country.key }))
+  const [isShowCountry, setIsShowCountry] = useState(preference?.location_key === 'overseas')
   const jobTypeList = getJobTypeList(config)
   const minSalaryOptions = getSalaryOptions(config)
   const {
@@ -96,7 +98,7 @@ const EditJobPreferencesModal = ({
   }
   const onSubmit = (data) => {
     // to add workSetting
-    const { jobTitle, jobType, minSalary, maxSalary, location, industry } = data // jobType is a key
+    const { jobTitle, jobType, minSalary, maxSalary, location, industry, country } = data // jobType is a key
     const payload = {
       preferences: {
         action: preference?.id ? 'update' : 'create',
@@ -111,7 +113,7 @@ const EditJobPreferencesModal = ({
           salary_range_to: Number(maxSalary),
           industry_key: industry,
           currency_key: 'php',
-          country_key: 'ph'
+          country_key: location?.key === 'overseas' ? country : 'ph'
         }
       }
     }
@@ -229,6 +231,7 @@ const EditJobPreferencesModal = ({
                 {...fieldState}
                 {...field}
                 onChange={(_, location) => {
+                  setIsShowCountry(location.key === 'overseas')
                   onChange(location)
                 }}
               />
@@ -236,6 +239,25 @@ const EditJobPreferencesModal = ({
           />
 
         </div>
+        {isShowCountry && (
+          <div className={styles.jobPreferencesFormGroup}>
+            <Controller
+              control={control}
+              name={'country'}
+              rules={{ required: 'country is required when location is overseas' }}
+              render={({ field, fieldState }) => {
+                return <MaterialBasicSelect
+                  className={styles.jobPreferencesFormInput}
+                  label={'Country'}
+                  options={countryList}
+                  {...fieldState}
+                  {...field}
+                />
+              }}
+            />
+
+          </div>
+        )}
         <div className={styles.jobPreferencesFormGroup}>
           <Controller
             control={control}

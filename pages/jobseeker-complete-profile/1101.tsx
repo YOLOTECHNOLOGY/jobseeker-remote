@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -40,8 +40,9 @@ import { InfoIcon, DeleteFilledIcon, CreateFilledIcon, AddOutlineIcon } from 'im
 import {
   getLocationList,
   getIndustryList,
-  getCountryList} from 'helpers/jobPayloadFormatter'
-import { formatSalary, removeEmptyOrNullValues } from 'helpers/formatter'
+  getCountryList
+} from 'helpers/jobPayloadFormatter'
+import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { getItem } from 'helpers/localStorage'
 
 // Styles
@@ -80,7 +81,7 @@ const Step3 = (props: any) => {
 
   const locList = getLocationList(config)
   const industryList = getIndustryList(config)
-  const countryList = getCountryList(config)
+  const countryList = getCountryList(config).map(country => ({ label: country.label, value: country.key }))
 
   const [jobTitle, setJobTitle] = useState('')
   const [companyName, setCompanyName] = useState('')
@@ -125,7 +126,9 @@ const Step3 = (props: any) => {
   const isUpdatingUserProfile = useSelector(
     (store: any) => store.users.updateUserOnboardingInfo.fetching
   )
-
+  const countryLabel = useMemo(() => {
+    return countryList.find(item => item.value === country)?.label
+  }, [country, countryList])
   useEffect(() => {
     if (!isQuickUpladResume) {
       dispatch(fetchUserWorkExperienceRequest({ accessToken }))
@@ -185,13 +188,11 @@ const Step3 = (props: any) => {
           )[0].value
         )
       if (selectedExperience.location && selectedExperience.location.toLowerCase() === 'overseas') {
-        setCountry(
-          countryList.filter((country) => country.key === selectedExperience.country_key)[0].value
-        )
+        setCountry(selectedExperience.country_key)
         setIsShowCountry(true)
       }
       setDescription(selectedExperience.description)
-      setJobFunction({id:selectedExperience.function_job_title_id,value:selectedExperience.function_job_title})
+      setJobFunction({ id: selectedExperience.function_job_title_id, value: selectedExperience.function_job_title })
     }
   }, [selectedExperience])
 
@@ -302,7 +303,7 @@ const Step3 = (props: any) => {
     setCountry('')
     setIsShowCountry(false)
     setDescription('')
-    setJobFunction({value:'',id:undefined})
+    setJobFunction({ value: '', id: undefined })
     setHasErrorOnFromPeriod(false)
     setHasErrorOnToPeriod(false)
     setIsUpdating(false)
@@ -355,7 +356,7 @@ const Step3 = (props: any) => {
       description: description ? description : '',
       location_key: location?.key || '',
       function_job_title_id: jobFunction.id,
-      function_job_title:jobFunction.value,
+      function_job_title: jobFunction.value,
       // isQuickUpladResume
       job_categories: null,
       industry: null,
@@ -377,9 +378,9 @@ const Step3 = (props: any) => {
       dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
     } else {
       workExperienceData.function_job_title_id = jobFunction.id
-      workExperienceData.function_job_title=jobFunction.value
+      workExperienceData.function_job_title = jobFunction.value
       workExperienceData.industry = matchedIndustry?.[0]?.key || null
-      workExperienceData.country = country || 'ph'
+      workExperienceData.country = countryLabel
       workExperienceData.location = location?.key || ''
       workExperienceData.id = Math.round(Math.random() * 1000)
 
@@ -476,34 +477,37 @@ const Step3 = (props: any) => {
                 </Text>
                 <br />
                 <Text textStyle='base' tagName='p'>
-                  {experience?.company}
+                  {experience?.company + ' | ' + location?.value + ',' + (countryLabel || 'Philippines')}
                 </Text>
-                <Text textStyle='base' tagName='p'>
-                  {experience?.location} -{' '}
-                  {getLocation(experience?.location)?.[0]?.region_display_name}
+
+                <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
+                  {((from, to) => {
+                    const years = to.diff(from, 'year')
+                    const month = to.diff(from, 'month') - years * 12
+                    return `${from?.format?.('MMMM yyyy')}-${experience?.is_currently_work_here
+                      ? 'Present'
+                      : to?.format?.('MMMM yyyy')}(${years} year${years !== 1 ? 's' : ''}  ${month} month${month !== 1 ? 's' : ''})`
+                  })(moment(
+                    experience?.working_period_from),
+                    experience?.is_currently_work_here ? moment() : moment(experience.working_period_to
+                    ))}
                 </Text>
-                <Text textStyle='base' tagName='p'>
-                  {moment(experience?.working_period_from).format('MMMM yyyy')} to{' '}
-                  {experience?.is_currently_work_here
-                    ? 'Present'
-                    : moment(experience.working_period_to).format('MMMM yyyy')}
-                </Text>
+
                 <br />
-                {experience?.job_categories?.length > 0 && (
-                  <Text textStyle='base' tagName='p'>
-                    {experience?.job_categories.join(', ')}
-                  </Text>
-                )}
+                <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
+                  Job function: {experience?.function_job_title}
+                </Text>
+
                 {experience?.company_industry && (
-                  <Text textStyle='base' tagName='p'>
-                    {experience?.company_industry}
+                  <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
+                    Industry: {experience?.company_industry}
                   </Text>
                 )}
-                {experience?.salary && (
+                {/* {experience?.salary && (
                   <Text textStyle='base' tagName='p'>
                     {formatSalary(experience?.salary)} per month
                   </Text>
-                )}
+                )} */}
                 <br />
                 {experience?.description && (
                   <>
