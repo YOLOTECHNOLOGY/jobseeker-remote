@@ -486,7 +486,7 @@ const Step3 = (props: any) => {
                     const month = to.diff(from, 'month') - years * 12
                     return `${from?.format?.('MMMM yyyy')}-${experience?.is_currently_work_here
                       ? 'Present'
-                      : to?.format?.('MMMM yyyy')}(${years} year${years !== 1 ? 's' : ''}  ${month} month${month !== 1 ? 's' : ''})`
+                      : to?.format?.('MMMM yyyy')}(${years?`year${years !== 1 ? 's ' : ' '}`:''}${month?`month${month !== 1 ? 's' : ''}`:''})`
                   })(moment(
                     experience?.working_period_from),
                     experience?.is_currently_work_here ? moment() : moment(experience.working_period_to
