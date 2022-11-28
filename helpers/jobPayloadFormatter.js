@@ -2,10 +2,11 @@ import { flat, thousandsToNumber, unslugify } from 'helpers/formatter'
 
 /* Helpers */
 import { authPathToOldProject } from 'helpers/authenticationTransition'
-
+import { checkFilterMatch as checkFilterMatchV2, userFilterSelectionDataParser as userFilterSelectionDataParserV2 } from './queryEncoder'
 /* Vendors */
 import moment from 'moment'
 import slugify from 'slugify'
+import { equals } from 'ramda'
 
 const handleSalary = (salaryRanges) => {
   let salaryFrom = ''
@@ -401,7 +402,11 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
     matchedConfigFromUserSelection,
     filterCount
   }
+  // console.log("routerQuery", routerQuery)
+  // console.log("matchedFilter", matchedFilter)
 
+  const matchedFilterV2 = checkFilterMatchV2(routerQuery, config, isMobile)
+  //console.log("matchedFilterV2", matchedFilterV2)
   return matchedFilter
 }
 
@@ -435,13 +440,8 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
  * PART III - logic to determine URL format, utilizes function call appendGeneralQueryPattern, appendSingleQueryPattern, appendDoubleQueryPattern
  * 
  */
-const userFilterSelectionDataParser = (
-  field,
-  optionValue,
-  routerQuery,
-  config,
-  isClear = false
-) => {
+const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear = false) => {
+
   const { keyword, ...rest } = routerQuery
   const queryParser = urlQueryParser(keyword)
   const locationList = config.inputs.location_lists
@@ -1160,7 +1160,15 @@ const userFilterSelectionDataParser = (
     matchedConfigFromUrl,
     matchedConfigFromUserSelection
   }
+  const dataV2 = userFilterSelectionDataParserV2(field, optionValue, routerQuery, config, isClear)
 
+  console.log("routerQuery", routerQuery)
+  console.log("isClear", isClear)
+  console.log("config", config)
+  console.log("field", field)
+  console.log("optionValue", optionValue)
+  console.log("data", data)
+  console.log("dataV2", dataV2)
   return data
 }
 
