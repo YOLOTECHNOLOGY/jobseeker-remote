@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 
 /* Vendors */
@@ -31,7 +33,6 @@ import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
 import MaterialButton from 'components/MaterialButton'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 import MaterialLocationField from 'components/MaterialLocationField'
-import MaterialCategoryField from 'components/MaterialCategoryField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialSelectCheckmarksCustomSEO from 'components/MaterialSelectCheckmarksCustomSEO'
 import Tooltip from '@mui/material/Tooltip'
@@ -61,6 +62,7 @@ import { getCookie } from 'helpers/cookies'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import useSearchHistory from 'helpers/useSearchHistory'
 import configuredAxios from 'helpers/configuredAxios'
+import JobFunctionMultiSelector from 'components/JobFunctionMultiSelector'
 
 interface JobSearchPageProps {
   seoMetaTitle: string
@@ -287,7 +289,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
-
   const { searchQuery, predefinedQuery, predefinedLocation, filterCount } = checkFilterMatch(
     router.query,
     config,
@@ -429,10 +430,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
           // append current search that matches catergory
           categorySelected.push(value[0]['seo-value'])
           // append the other options that was selected previously
-          Object.values(matchedConfigFromUrl).forEach((value: any) => {
+          Object.values(matchedConfigFromUrl)?.forEach?.((value: any) => {
             value.forEach((val) => categorySelected.push(val['seo-value']))
           })
-          Object.values(matchedConfigFromUserSelection).forEach((value: any) => {
+          Object.values(matchedConfigFromUserSelection)?.forEach?.((value: any) => {
             value.forEach((val) => categorySelected.push(val['seo-value']))
           })
 
@@ -766,13 +767,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             value={sort}
             defaultValue={defaultValues?.sort}
           />
-          <MaterialSelectCheckmarksCustomSEO
-            id='jobType'
-            label='Job Type'
-            options={jobTypeList}
+          <JobFunctionMultiSelector 
             className={styles.sortField}
-            onSelect={onJobTypeSelection}
-            value={jobTypes}
+            id='jobFunction'
+            label='Job Function'
           />
           <MaterialSelectCheckmarksCustomSEO
             id='salary'
@@ -782,7 +780,15 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             onSelect={onSalarySelection}
             value={salaries}
           />
-          <MaterialCategoryField
+          <MaterialSelectCheckmarksCustomSEO
+            id='jobType'
+            label='Job Type'
+            options={jobTypeList}
+            className={styles.sortField}
+            onSelect={onJobTypeSelection}
+            value={jobTypes}
+          />
+          {/* <MaterialCategoryField
             id='specialization'
             label='Specialization'
             options={config.inputs.job_category_lists}
@@ -791,7 +797,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             list={categoryList}
             value={categories}
             isReset={isCategoryReset}
-          />
+          /> */}
           <MaterialButton
             variant='outlined'
             className={styles.moreFiltersBtn}
@@ -976,14 +982,14 @@ const initPagePayLoad = async (query, config = null) => {
     urlQuery: searchQuery,
     // if sort param exist, follow sort defined in param, otherwise if search exist, sort default to 2 'Relevance'
     sort: query?.sort ? query?.sort : searchQuery ? 2 : 1,
-    jobType: queryJobType?.split(',') || null,
-    salary: querySalary?.split(',') || null,
-    qualification: queryQualification?.split(',') || null,
-    location: queryLocation?.split(',') || null,
-    industry: queryIndustry?.split(',') || null,
-    workExperience: queryWorkExp?.split(',') || null,
-    category: queryCategory?.split(',') || null,
-    verifiedCompany: queryVerifiedCompany?.split(',') || null
+    jobType: queryJobType?.split?.(',') || null,
+    salary: querySalary?.split?.(',') || null,
+    qualification: queryQualification?.split?.(',') || null,
+    location: queryLocation?.split?.(',') || null,
+    industry: queryIndustry?.split?.(',') || null,
+    workExperience: queryWorkExp?.split?.(',') || null,
+    category: queryCategory?.split?.(',') || null,
+    verifiedCompany: queryVerifiedCompany?.split?.(',') || null
   }
 
   for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
@@ -1023,21 +1029,21 @@ const initPagePayLoad = async (query, config = null) => {
   let payload = {
     query: defaultValues?.urlQuery,
     location: location
-      ? mapSeoValueToGetValue((location as string).split(','), formattedLocationList, false, true)
+      ? mapSeoValueToGetValue((location as string).split?.(','), formattedLocationList, false, true)
       : null,
     category: category
-      ? mapSeoValueToGetValue((category as string).split(','), catList, true)
+      ? mapSeoValueToGetValue((category as string).split?.(','), catList, true)
       : null,
-    salary: salary ? mapSeoValueToGetValue((salary as string).split(','), salaryRangeList) : null,
-    jobType: jobType ? mapSeoValueToGetValue((jobType as string).split(','), jobTypeList) : null,
+    salary: salary ? mapSeoValueToGetValue((salary as string).split?.(','), salaryRangeList) : null,
+    jobType: jobType ? mapSeoValueToGetValue((jobType as string).split?.(','), jobTypeList) : null,
     industry: industry
-      ? mapSeoValueToGetValue((industry as string).split(','), industryList)
+      ? mapSeoValueToGetValue((industry as string).split?.(','), industryList)
       : null,
     qualification: qualification
-      ? mapSeoValueToGetValue((qualification as string).split(','), eduLevelList)
+      ? mapSeoValueToGetValue((qualification as string).split?.(','), eduLevelList)
       : null,
     workExperience: workExperience
-      ? mapSeoValueToGetValue((workExperience as string).split(','), expLvlList)
+      ? mapSeoValueToGetValue((workExperience as string).split?.(','), expLvlList)
       : null,
     verifiedCompany: Boolean(verifiedCompany),
     sort,

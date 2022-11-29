@@ -72,6 +72,9 @@ export const userFilterSelectionDataParser = (field, optionValue, routerQuery, c
     ])(routerQuery)
 }
 
+export const parseParamsFromUrl = (url,config) => parseFullParams(config)(url)
+export const buildUrlFromParams = params => buildQueryParams(params)
+
 const conditions = {
     noParams: pipe(allKeysIn(['query', 'location', ...userSelectKeys]), isEmpty),
     onlyOne: onlyOneIn(['query', 'location', ...userSelectKeys]),
