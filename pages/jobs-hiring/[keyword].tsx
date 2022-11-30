@@ -63,6 +63,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import useSearchHistory from 'helpers/useSearchHistory'
 import configuredAxios from 'helpers/configuredAxios'
 import JobFunctionMultiSelector from 'components/JobFunctionMultiSelector'
+import { fetchConfigService } from 'store/services/config/fetchConfig'
 
 interface JobSearchPageProps {
   seoMetaTitle: string
@@ -273,6 +274,15 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [searchHistories, addSearchHistory] = useSearchHistory()
   const [suggestionList, setSuggestionList] = useState(searchHistories)
 
+  const [mainFunctions, setMainfunctions] = useState(defaultValues.mainFunctions ?? [])
+  const [jobFunctions, setJobFunctions] = useState(defaultValues.jobFunctions ?? [])
+  const [functionTitles, setFunctionTitles] = useState(defaultValues.functionTitles ?? [])
+
+  const jobFunctionValue = useMemo(() => {
+    return { mainFunctions, jobFunctions, functionTitles }
+  }, [mainFunctions, jobFunctions, functionTitles])
+
+
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
@@ -377,9 +387,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
       query: queryObject
     }
+    console.log('updateurl', pushObject, queryParam)
     router.push(pushObject, undefined, { shallow: true })
-  }
 
+  }
+  console.log({ defaultValues })
   const onKeywordSearch = (val) => {
     addSearchHistory(val)
     // convert any value with '-' to '+' so that when it gets parsed from URL, we are able to map it back to '-'
@@ -397,7 +409,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       matchedConfigFromUrl,
       matchedConfigFromUserSelection
     } = userFilterSelectionDataParser('query', sanitisedVal, router.query, config, isClear)
-
     for (const [key, value] of Object.entries(matchedConfig)) {
       const newDefaultValue = { ...defaultValues, [key]: [value[0]['seo-value']] }
       switch (key) {
@@ -512,14 +523,22 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         .then((data) => setSuggestionList(data.data.items))
     }
   }
-  // const handleSuggestionSearch = (val) => {
-  //   if (val !== '') {
-  //     fetch(`${process.env.JOB_BOSSJOB_URL}/suggested-search?size=5&query=${val}`)
-  //       .then((resp) => resp.json())
-  //       .then((data) => setSuggestionList(data.data.items))
-  //   }
-  // }
 
+  const jobFunctionChange = useCallback(data => {
+    setMainfunctions(data.mainFunctions)
+    setJobFunctions(data.jobFunctions)
+    setFunctionTitles(data.functionTitles)
+    const { searchQuery, filterParamsObject = {} } = userFilterSelectionDataParser(
+      'jobFunctions',
+      data,
+      router.query,
+      config,
+    )
+    console.log({ filterParamsObject, searchQuery })
+    updateUrl(searchQuery, filterParamsObject)
+
+  }, [])
+  // console.log({ jobFunctionValue })
   const onLocationSearch = (event, value) => {
     addSearchHistory(searchValue)
     const isClear = !value
@@ -767,10 +786,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             value={sort}
             defaultValue={defaultValues?.sort}
           />
-          <JobFunctionMultiSelector 
+          <JobFunctionMultiSelector
             className={styles.sortField}
             id='jobFunction'
             label='Job Function'
+            value={jobFunctionValue}
+            onChange={jobFunctionChange}
           />
           <MaterialSelectCheckmarksCustomSEO
             id='salary'
@@ -947,10 +968,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 const initPagePayLoad = async (query, config = null) => {
   const { page, industry, workExperience, category, jobType, salary, location, qualification, verifiedCompany } =
     query
-  const axios = configuredAxios('config', 'public')
   if (!config) {
-    const { data } = await axios.get(`/list`)
-    config = data.data
+    const result = await fetchConfigService()
+    config = result
   }
 
   const formatLocationConfig = (locationList) => {
@@ -989,11 +1009,14 @@ const initPagePayLoad = async (query, config = null) => {
     industry: queryIndustry?.split?.(',') || null,
     workExperience: queryWorkExp?.split?.(',') || null,
     category: queryCategory?.split?.(',') || null,
-    verifiedCompany: queryVerifiedCompany?.split?.(',') || null
+    verifiedCompany: queryVerifiedCompany?.split?.(',') || null,
+    mainFunctions: query?.main_functions ?? null,
+    jobFunctions: query?.job_functions ?? null,
+    functionTitles: query?.function_titles ?? null
   }
 
   for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
-    defaultValues[key] = [value[0]['seo-value']]
+    defaultValues[key] = [value[0]['seo-value']||value[0]['seo_value']]
   }
   for (const [key, value] of Object.entries(matchedLocation)) {
     defaultValues[key] = value[0]

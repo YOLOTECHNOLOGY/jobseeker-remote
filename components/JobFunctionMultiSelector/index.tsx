@@ -3,7 +3,7 @@ import MaterialTextField from "components/MaterialTextField"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import styles from './index.module.scss'
 import { useSelector } from "react-redux"
-import { keys, flatMap } from 'lodash-es'
+import { keys, flatMap, identity, isEqual } from 'lodash-es'
 import JobItem from "./item"
 const theme = createTheme({
     components: {
@@ -60,6 +60,7 @@ const theme = createTheme({
         },
     },
 })
+const toSeo = value => value.replaceAll('/', '-').replaceAll(' ','-').toLowerCase()
 const JobFunctionMultiSelector = (props: any) => {
     const { label, className, value, isTouched, onChange, ...rest } = props
 
@@ -74,90 +75,32 @@ const JobFunctionMultiSelector = (props: any) => {
     const thirdList = useMemo(() => {
         return [{ value: 'all', id: -1, parent: activeSecond }].concat(activeSecond?.children ?? [])
     }, [activeSecond])
-    const [mainFuctions, setMainfunctions] = useState(value?.mainFunctions ?? [])
+    const [mainFunctions, setMainfunctions] = useState(value?.mainFunctions ?? [])
     const [functionIds, setFunctionIds] = useState(value?.jobFunctions ?? [])
     const [functionTitleIds, setFunctionTitleIds] = useState(value?.functionTitles ?? [])
+    useEffect(() => {
+        if (!isEqual(value, {
+            mainFunctions: mainFunctions,
+            jobFunctions: functionIds,
+            functionTitles: functionTitleIds
+        })) {
+            setMainfunctions(value?.mainFunctions ?? [])
+            setFunctionIds(value?.jobFunctions ?? [])
+            setFunctionTitleIds(value?.functionTitles ?? [])
+        }
+    }, [value])
+    useEffect(() => {
+        if (!showModal) {
+            onChange?.({
+                mainFunctions: mainFunctions,
+                jobFunctions: functionIds,
+                functionTitles: functionTitleIds
+            })
+        }
+
+    }, [showModal])
     const jobFunctions = useSelector((store: any) => store.config.config.response?.inputs?.job_function_lists ?? [])
-    const isThirdSelected = useCallback(third => {
-        const parentSelect = functionIds.includes(third.parent.id) || mainFuctions.includes(third.parent.parent.value)
-        if (third.id === -1) {
-            return parentSelect
-        }
-        if (parentSelect) {
-            return false
-        }
-        return functionTitleIds.includes(third.id)
-    }, [functionTitleIds, functionIds, mainFuctions])
 
-    const isSecondSelected = useCallback(second => {
-        if (second.id === -1) {
-            return mainFuctions.includes(second.parent.value)
-        }
-        if (mainFuctions.includes(second.parent.value)) {
-            return false
-        }
-        return functionIds.includes(second.id) || (second.children ?? []).filter(isThirdSelected).length > 0
-    }, [functionIds, isThirdSelected, mainFuctions])
-
-    const isFirstSelected = useCallback(first => {
-        return mainFuctions.includes(first.value) || first.children.filter(isSecondSelected).length > 0
-    }, [mainFuctions, isSecondSelected])
-
-    const onFirstClick = useCallback(first => {
-        if (mainFuctions.includes(first.value)) {
-            setMainfunctions(mainFuctions.filter(value => value !== first.value))
-        } else {
-            setMainfunctions([first.value, ...mainFuctions])
-            const selectedSecondIds = first.children.map(second => second.id)
-            setFunctionIds(functionIds.filter(id => !selectedSecondIds.includes(id)))
-            const selectedThirdIds = flatMap(first.children, second => second.children.map(third => third.id))
-            setFunctionTitleIds(functionTitleIds.filter(id => !selectedThirdIds.includes(id)))
-        }
-    }, [mainFuctions, functionIds, functionTitleIds])
-
-    const onSecondClick = useCallback(second => {
-        if (second.id === -1) {
-            onFirstClick(second.parent)
-        } else {
-            if (mainFuctions.includes(second.parent.value)) {
-                setMainfunctions(mainFuctions.filter(value => value !== second.parent.value))
-            }
-            if (functionIds.includes(second.id)) {
-                setFunctionIds(functionIds.filter(id => id !== second.id))
-            } else {
-                const newSelected = [second.id, ...functionIds.filter(id => second.parent.children.map(item => item.id).includes(id))]
-                if (newSelected.length === second.parent.children.length) {
-                    onFirstClick(second.parent)
-                } else {
-                    setFunctionIds([second.id, ...functionIds])
-                    const selectedThirdIds = second.children.map(item => item.id)
-                    setFunctionTitleIds(functionTitleIds.filter(id => !selectedThirdIds.includes(id)))
-                }
-            }
-        }
-    }, [onFirstClick, functionIds, functionTitleIds, mainFuctions])
-
-    const onThirdClick = useCallback(third => {
-        if (third.id === -1) {
-            onSecondClick(third.parent)
-        } else {
-            if (functionIds.includes(third.parent.id) || mainFuctions.includes(third.parent.parent.value)) {
-                setMainfunctions(mainFuctions.filter(value => value !== third.parent.parent.value))
-                setFunctionIds(functionIds.filter(id => id !== third.parent.id))
-            }
-            if (functionTitleIds.includes(third.id)) {
-                setFunctionTitleIds(functionTitleIds.filter(id => id !== third.id))
-            } else {
-                const newSelected = [third.id, ...functionTitleIds.filter(id => third.parent.children.map(item => item.id).includes(id))]
-                console.log({ newSelected })
-                if (newSelected.length === third.parent.children.length) {
-                    onSecondClick(third.parent)
-                } else {
-                    setFunctionTitleIds([third.id, ...functionTitleIds])
-                }
-            }
-        }
-    }, [onSecondClick, mainFuctions, functionIds, functionTitleIds])
     const formattedJobfunctions = useMemo(() => {
         return jobFunctions.map((obj, index) => {
             const key = keys(obj)[0]
@@ -165,17 +108,26 @@ const JobFunctionMultiSelector = (props: any) => {
             const firstParent = {
                 value: key,
                 id: index,
+                seo_value: toSeo(key),
+                key: toSeo(key),
                 children: undefined
             }
             firstParent.children = value.map(second => {
                 const secondParent = {
                     id: second.id,
                     value: second.value,
+                    seo_value: toSeo(second.value),
+                    key: toSeo(second.value),
                     parent: firstParent,
                     children: undefined
                 }
                 secondParent.children = second.job_titles.map(third => {
-                    return { ...third, parent: secondParent }
+                    return {
+                        ...third,
+                        parent: secondParent,
+                        seo_value: toSeo(third.value) + '-' + third.id,
+                        key: toSeo(third.value) + '-' + third.id,
+                    }
                 })
 
                 return secondParent
@@ -183,6 +135,95 @@ const JobFunctionMultiSelector = (props: any) => {
             return firstParent
         })
     }, [jobFunctions])
+    const allSeconds = useMemo(() => flatMap(formattedJobfunctions, item => item.children), [formattedJobfunctions])
+    const allThirds = useMemo(() => flatMap(allSeconds, item => item.children), [allSeconds])
+    const textValue = useMemo(() => {
+        return mainFunctions
+            .concat(functionIds.map(key => allSeconds.find(item => item.seo_value === key)?.value))
+            .concat(functionTitleIds.map(key => allThirds.find(item => item.seo_value === key)?.value))
+            .filter(identity)
+            .join(',') ?? ''
+    }, [mainFunctions, functionIds, functionTitleIds])
+    const isThirdSelected = useCallback(third => {
+        const parentSelect = functionIds.includes(third.parent.seo_value) || mainFunctions.includes(third.parent.parent.seo_value)
+        if (third.id === -1) {
+            return parentSelect
+        }
+        if (parentSelect) {
+            return false
+        }
+        return functionTitleIds.includes(third.seo_value)
+    }, [functionTitleIds, functionIds, mainFunctions])
+
+    const isSecondSelected = useCallback(second => {
+        if (second.id === -1) {
+            return mainFunctions.includes(second.parent.seo_value)
+        }
+        if (mainFunctions.includes(second.parent.seo_value)) {
+            return false
+        }
+        return functionIds.includes(second.seo_value) || (second.children ?? []).filter(isThirdSelected).length > 0
+    }, [functionIds, isThirdSelected, mainFunctions])
+
+    const isFirstSelected = useCallback(first => {
+        return mainFunctions.includes(first.seo_value) || first.children.filter(isSecondSelected).length > 0
+    }, [mainFunctions, isSecondSelected])
+
+    const onFirstClick = useCallback(first => {
+        if (mainFunctions.includes(first.seo_value)) {
+            setMainfunctions(mainFunctions.filter(key => key !== first.seo_value))
+        } else {
+            setMainfunctions([first.seo_value, ...mainFunctions])
+            const selectedSecondIds = first.children.map(second => second.seo_value)
+            setFunctionIds(functionIds.filter(key => !selectedSecondIds.includes(key)))
+            const selectedThirdIds = flatMap(first.children, second => second.children.map(third => third.seo_value))
+            setFunctionTitleIds(functionTitleIds.filter(key => !selectedThirdIds.includes(key)))
+        }
+    }, [mainFunctions, functionIds, functionTitleIds])
+
+    const onSecondClick = useCallback(second => {
+        if (second.id === -1) {
+            onFirstClick(second.parent)
+        } else {
+            if (mainFunctions.includes(second.parent.seo_value)) {
+                setMainfunctions(mainFunctions.filter(value => value !== second.parent.seo_value))
+            }
+            if (functionIds.includes(second.seo_value)) {
+                setFunctionIds(functionIds.filter(key => key !== second.seo_value))
+            } else {
+                const newSelected = [second.seo_value, ...functionIds.filter(key => second.parent.children.map(item => item.seo_value).includes(key))]
+                if (newSelected.length === second.parent.children.length) {
+                    onFirstClick(second.parent)
+                } else {
+                    setFunctionIds([second.seo_value, ...functionIds])
+                    const selectedThirdIds = second.children.map(item => item.seo_value)
+                    setFunctionTitleIds(functionTitleIds.filter(key => !selectedThirdIds.includes(key)))
+                }
+            }
+        }
+    }, [onFirstClick, functionIds, functionTitleIds, mainFunctions])
+
+    const onThirdClick = useCallback(third => {
+        if (third.id === -1) {
+            onSecondClick(third.parent)
+        } else {
+            if (functionIds.includes(third.parent.seo_value) || mainFunctions.includes(third.parent.parent.seo_value)) {
+                setMainfunctions(mainFunctions.filter(value => value !== third.parent.parent.seo_value))
+                setFunctionIds(functionIds.filter(key => key !== third.parent.seo_value))
+            }
+            if (functionTitleIds.includes(third.seo_value)) {
+                setFunctionTitleIds(functionTitleIds.filter(key => key !== third.seo_value))
+            } else {
+                const newSelected = [third.seo_value, ...functionTitleIds.filter(key => third.parent.children.map(item => item.seo_value).includes(key))]
+                if (newSelected.length === third.parent.children.length) {
+                    onSecondClick(third.parent)
+                } else {
+                    setFunctionTitleIds([third.seo_value, ...functionTitleIds])
+                }
+            }
+        }
+    }, [onSecondClick, mainFunctions, functionIds, functionTitleIds])
+
     useEffect(() => {
         const listener = () => {
             setShowModal(false)
@@ -200,7 +241,7 @@ const JobFunctionMultiSelector = (props: any) => {
         setActiveSecond(hoverThirdList)
     }, [])
     const onFirstHover = useCallback(hoverSecondList => {
-        if (activeFirst?.id !== hoverSecondList.id) {
+        if (activeFirst?.seo_value !== hoverSecondList.seo_value) {
             setActiveFirst(hoverSecondList)
             setActiveSecond(undefined)
         }
@@ -210,8 +251,7 @@ const JobFunctionMultiSelector = (props: any) => {
         <ThemeProvider theme={theme}>
             <FormControl className={className} size='small'>
                 <MaterialTextField
-                    value={value?.value}
-                    onChange={() => onChange(value)}
+                    value={textValue}
                     label={label}
                     onClick={e => {
                         e.preventDefault()
@@ -237,7 +277,7 @@ const JobFunctionMultiSelector = (props: any) => {
                             return <JobItem
                                 key={first.value}
                                 data={first}
-                                active={activeFirst?.id === first.id}
+                                active={activeFirst?.seo_value === first.seo_value}
                                 checked={isFirstSelected(first)}
                                 onMouseOver={() => onFirstHover(first)}
                                 onClick={() => onFirstClick(first)}
@@ -247,9 +287,9 @@ const JobFunctionMultiSelector = (props: any) => {
                     {secondList.length > 1 && <div className={styles.column}>
                         {secondList.map(second => {
                             return <JobItem
-                                key={second.value}
+                                key={second.id}
                                 data={second}
-                                active={activeSecond?.id === second.id}
+                                active={activeSecond?.seo_value === second.seo_value}
                                 checked={isSecondSelected(second)}
                                 onMouseOver={() => onSecondHover(second)}
                                 onClick={() => onSecondClick(second)}
@@ -260,7 +300,7 @@ const JobFunctionMultiSelector = (props: any) => {
                     {thirdList.length > 1 && <div className={styles.column}>
                         {thirdList.map(third => {
                             return <JobItem
-                                key={third.value}
+                                key={third.id}
                                 data={third}
                                 checked={isThirdSelected(third)}
                                 onClick={() => onThirdClick(third)}

@@ -7,7 +7,7 @@ const uploadUserResumeService = (resume) => {
     'Content-Type': 'multipart/form-data'
   }
 
-  let formData = new FormData()
+  const formData = new FormData()
   formData.append('file', resume)
   formData.append('filename', resume.name)
 

@@ -5,12 +5,11 @@ import {
   fetchConfigFailed,
 } from 'store/actions/config/fetchConfig'
 import { fetchConfigService } from 'store/services/config/fetchConfig'
-// import { oldFetchConfigService } from 'store/services/config/oldFetchConfig'
-
 function* fetchConfigReq(action) {
   try {
-    const { data } = yield call(fetchConfigService, action.payload)
-    yield put(fetchConfigSuccess(data.data))
+    const result = yield call(fetchConfigService, action.payload)
+    
+    yield put(fetchConfigSuccess(result))
   } catch (error) {
     yield put(fetchConfigFailed(error))
   }

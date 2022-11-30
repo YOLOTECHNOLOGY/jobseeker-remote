@@ -1,5 +1,5 @@
 import { map, T, ap, memoizeWith, last, reduce, omit, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
-const userSelectKeys = ['salary', 'jobType', 'category', 'industry', 'qualification', 'workExperience']
+const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'industry', 'qualification', 'workExperience']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
 const allKeysIn = keys => pipe(
@@ -16,7 +16,8 @@ const lastKeyIn = keys => pipe(allKeysIn(keys), last)
 
 const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
     console.log("checkFilterMatchFunc invoked!!!!")
-    return pipe(ap([
+
+    const result = pipe(ap([
         pipe(buildMatchedConfigs(config), dissoc('matchedConfig')),
         pipe(parseKeywordParams(config), converge(mergeLeft, [
             pipe(allKeysIn(['location']), applySpec({
@@ -29,7 +30,7 @@ const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
         pipe(parseFullParams(config), applySpec({
             predefinedQuery: either(
                 pipe(parseKeywordParams(config), allKeysIn(userSelectKeys), when(is(Array), join(','))),
-                either(lastKeyIn(['category']), always('')))
+                either(lastKeyIn(['mainFunctions', 'jobFunctions']), always('')))
         })),
         pipe(parseFullParams(config), applySpec({
             matchedLocation: pipe(
@@ -47,6 +48,10 @@ const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
         applySpec({
             filterCount: totalOf(isMobile ? userSelectKeys : ['industry', 'workExperience', 'qualification'])
         })]), reduce(mergeLeft, {}))([routerQuery])
+
+    const matches = keywordMatches(config)(routerQuery.keyword.replace('-jobs', ''))
+    console.log({ result, routerQuery, matches, config })
+    return result
 }
 
 export const checkFilterMatch = memoizeWith((routerQuery, config, isMobile = false) => {
@@ -54,6 +59,7 @@ export const checkFilterMatch = memoizeWith((routerQuery, config, isMobile = fal
 }, checkFilterMatchFunc)
 
 export const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear) => {
+   
     return converge(mergeLeft, [
         pipe(
             parseFullParams(config),
@@ -72,7 +78,7 @@ export const userFilterSelectionDataParser = (field, optionValue, routerQuery, c
     ])(routerQuery)
 }
 
-export const parseParamsFromUrl = (url,config) => parseFullParams(config)(url)
+export const parseParamsFromUrl = (url, config) => parseFullParams(config)(url)
 export const buildUrlFromParams = params => buildQueryParams(params)
 
 const conditions = {
@@ -150,13 +156,14 @@ const parseIncrement = cond([
     [equals('location'), field => applySpec({ [field]: prop('seo_value') })],
     [equals('moreFilters'), () => pipe(obj =>
         Object.keys(obj)
-            .filter(key => ['category', 'page', ...userSelectKeys].includes(key))
+            .filter(key => ['page', ...userSelectKeys].includes(key))
             .map(key => ({ [key]: obj[key] }))
             .reduce(mergeLeft, {}),
         filter(complement(either(isEmpty, isNil))),
         map(when(is(Array), pipe(filter(identity), join(',')))),
         filter(identity)
     )],
+    [equals('jobFunctions'), () => map(when(is(Array), join(',')))],
     [T, field => applySpec({ [field]: identity })]
 ])
 
@@ -173,12 +180,14 @@ const configItems = applySpec({
     workExperience: pipe(path(['inputs', 'xp_lvls'])),
     industry: pipe(path(['inputs', 'industry_lists'])),
     qualification: pipe(path(['filters', 'educations'])),
-    category: pipe(path(['inputs', 'job_category_lists']), chain(cate => [cate, ...cate.sub_list]))
+    mainFunctions: pipe(path(['inputs', 'main_functions'])),
+    jobFunctions: pipe(path(['inputs', 'job_functions'])),
+    functionTitles: pipe(path(['inputs', 'function_titles'])),
 })
 
 const itemFilter = config => keys => pipe(
     configItems,
-    map(items => items.filter(item => keys.includes(item['seo-value']) || keys.includes(keys.includes['seo_value']))),
+    map(items => items.filter(item => keys.includes(item['seo-value']) || keys.includes((item['seo_value'])))),
     filter(pipe(prop('length'), lt(0)))
 )(config)
 
