@@ -129,7 +129,7 @@ const Job = ({
   const prevScrollY = useRef(0)
   const userCookie = getCookie('user') || null
   const authCookie = accessToken
-  const applyJobLink = getApplyJobLink(jobDetail, userCookie, accessToken)
+  const applyJobLink = getApplyJobLink(jobDetail, userCookie)
 
   const [isSticky, setIsSticky] = useState(false)
   const [openRegister, setOpenRegister] = useState(false)
@@ -434,7 +434,7 @@ const Job = ({
   }, [jobDetail])
   const handleChat = () => {
     if (!userCookie) {
-      sessionStorage.setItem('isChatRedirect',`/chat-redirect/${jobDetail?.id}`)
+      sessionStorage.setItem('isChatRedirect', `/chat-redirect/${jobDetail?.id}`)
       setOpenRegister(true)
     } else if (chatDetail.is_exists) {
       if (chatDetail.job_id !== jobDetail?.id) {
