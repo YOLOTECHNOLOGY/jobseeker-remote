@@ -63,10 +63,11 @@ import {
 /* Styles */
 import classNames from 'classnames'
 import styles from './ManageProfile.module.scss'
-import { Chip } from '@mui/material'
+import { Chip, FormControlLabel, Switch } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
 import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
 import EditJobPreferencesAvailabilityModal from 'components/EditJobPreferencesAvailabilityModal/EditJobPreferencesAvailabilityModal'
+import { updateUserVisibilityToWorkService } from 'store/services/jobs/updateUserVisibilityToWork'
 const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
@@ -1197,6 +1198,7 @@ const ManageProfilePage = ({ config }: any) => {
   } = router
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
+  const [openToWork, setOpenToWork] = useState(userDetail?.is_visible)
   const jobCategoryList = getJobCategoryList(config).map((category) => {
     return {
       label: category.value,
@@ -1246,7 +1248,12 @@ const ManageProfilePage = ({ config }: any) => {
     const anyModalIsOpen = Object.values(modalState).filter((state) => state.showModal)
     body.style.overflow = anyModalIsOpen.length > 0 ? 'hidden' : 'auto'
   }, [modalState])
-
+  const handleVisibility = () => {
+    setOpenToWork(!openToWork)
+    updateUserVisibilityToWorkService({
+      is_visible: !openToWork
+    })
+  }
   const handleModal = (modalName, showModal, data, callbackFunc) => {
     setModalState({
       ...modalState,
@@ -1370,6 +1377,15 @@ const ManageProfilePage = ({ config }: any) => {
                 handleModal={handleModal}
                 preference={preference}
               />)}
+            <div className={styles.sectionContainer}>
+              <Text className={styles.openToWorkSectionTitle} bold textStyle='xl' textColor='primaryBlue'>
+                Open to work
+              </Text>
+              <FormControlLabel
+                control={<Switch checked={openToWork} onChange={handleVisibility} />}
+                label={<Text textStyle='lg'>Let recruiters know that you are open to work</Text>}
+              />
+            </div>
           </div>
         </div>
         }

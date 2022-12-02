@@ -81,8 +81,8 @@ const Step1 = (props: any) => {
       country: userDetail?.country_key,
       currency: 'php',
       desiredCountry: preference?.country_key,
-      firstName: userDetail.first_name,
-      lastName: userDetail.last_name
+      firstName: userDetail?.first_name,
+      lastName: userDetail?.last_name
     }
   }, [preference])
   const minSalaryOptions = getSalaryOptions(config)
@@ -102,7 +102,7 @@ const Step1 = (props: any) => {
   const dispatch = useDispatch()
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
-    setValue('maxSalary', maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : null)
+    setValue('maxSalary', maxSalaryOptions?.length > 0 ? maxSalaryOptions[0].value : null)
     setMaxSalaryOptions(maxSalaryOptions)
   }
   useEffect(() => {
