@@ -902,7 +902,9 @@ const initPagePayLoad = async (query, config = null) => {
   const catList = config && config.inputs && config.inputs.job_category_lists
   const jobTypeList = config.inputs.job_types
   const salaryRangeList = config.filters.salary_range_filters
-
+  const mainFunctionList = config.inputs.main_functions
+  const jobFunctionList = config.inputs.job_functions
+  const functionsTitleList = config.inputs.function_titles
   // query parameters
   const queryJobType: any = query?.jobType
   const querySalary: any = query?.salary
@@ -927,9 +929,9 @@ const initPagePayLoad = async (query, config = null) => {
     workExperience: queryWorkExp?.split?.(',') || null,
     category: queryCategory?.split?.(',') || null,
     verifiedCompany: queryVerifiedCompany?.split?.(',') || null,
-    mainFunctions: query?.main_functions ?? null,
-    jobFunctions: query?.job_functions ?? null,
-    functionTitles: query?.function_titles ?? null
+    mainFunctions: query?.mainFunctions?.split?.(',') ?? null,
+    jobFunctions: query?.jobFunctions?.split?.(',') ?? null,
+    functionTitles: query?.functionTitles?.split?.(',') ?? null
   }
 
   for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
@@ -942,26 +944,6 @@ const initPagePayLoad = async (query, config = null) => {
       defaultValues.urlQuery = ''
     }
   }
-
-  if (defaultValues.category) {
-    const defaultCategories = defaultValues.category
-    const initialListOptions = catList.map((data) => {
-      const newSubList = data.sub_list.map((subData) => ({
-        ...subData,
-        isChecked:
-          defaultCategories.includes(subData['seo-value']) ||
-          defaultCategories.includes(data['seo-value'])
-      }))
-      const newList = {
-        ...data,
-        isChecked: defaultCategories.includes(data['seo-value']),
-        sub_list: newSubList
-      }
-      return newList
-    })
-    defaultValues.categoryList = initialListOptions
-  }
-
   // sanitise searchQuery
   defaultValues.urlQuery = defaultValues.urlQuery ? unslugify(searchQuery).replace('+', '-') : ''
   const sort = defaultValues?.sort
@@ -986,6 +968,9 @@ const initPagePayLoad = async (query, config = null) => {
       ? mapSeoValueToGetValue((workExperience as string).split?.(','), expLvlList)
       : null,
     verifiedCompany: Boolean(verifiedCompany),
+    mainFunctions: query?.mainFunctions?.split?.(',')?.map?.(seo => mainFunctionList.find(item => item.seo_value === seo)?.value)?.join?.(',') ?? null,
+    jobFunctions: query?.jobFunctions?.split?.(',')?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
+    functionTitles: query?.functionTitles?.split?.(',')?.map?.(seo => functionsTitleList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
     sort,
     page: page ? Number(page) : 1
   }
@@ -995,6 +980,11 @@ const initPagePayLoad = async (query, config = null) => {
       payload = {
         ...payload,
         [key]: value[0].value ? true : false
+      }
+    } else if(['jobFunctions','functionTitles'].includes(key)){
+      payload = {
+        ...payload,
+        [key]: payload[key] ? (payload[key] += value[0].id) : value[0].id
       }
     } else {
       payload = {
