@@ -159,6 +159,23 @@
     }
   }
 
+  &Names {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+
+    &First {
+      flex: 1;
+      margin-right: 5px;
+    }
+
+    &Last {
+      flex: 1;
+      margin-left: 5px;
+    }
+  }
+
   &ContactCountry {
     width: 100%;
     margin-right: 10px !important;

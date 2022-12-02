@@ -63,7 +63,7 @@ const Step1 = (props: any) => {
     return matchedCountryCode ? matchedCountryCode[0]?.value : null
   }
   const [isShowCountry, setIsShowCountry] = useState(userDetail?.location === 'Overseas')
-  const [isShowDesiredCountry, setIsShowDesiredCountry] = useState(preference?.location_key==='overseas')
+  const [isShowDesiredCountry, setIsShowDesiredCountry] = useState(preference?.location_key === 'overseas')
 
   const defaultValues = useMemo(() => {
     const countryCode = getSmsCountryCode(userDetail?.phone_num, smsCountryList) || '+63'
@@ -80,7 +80,9 @@ const Step1 = (props: any) => {
       contactNumber: userDetail?.phone_num?.replace(countryCode, '') || null,
       country: userDetail?.country_key,
       currency: 'php',
-      desiredCountry: preference?.country_key
+      desiredCountry: preference?.country_key,
+      firstName: userDetail.first_name,
+      lastName: userDetail.last_name
     }
   }, [preference])
   const minSalaryOptions = getSalaryOptions(config)
@@ -110,7 +112,23 @@ const Step1 = (props: any) => {
     (store: any) => store.users.updateUserOnboardingInfo.fetching
   )
   const handleUpdateProfile = (data) => {
-    const { minSalary, maxSalary, contactNumber, currency, desiredCountry, country, countryCode, location, noticePeriod, desiredLocation, jobTitle, jobType, industry } = data
+    const {
+      minSalary,
+      maxSalary,
+      contactNumber,
+      currency,
+      desiredCountry,
+      country,
+      countryCode,
+      location,
+      noticePeriod,
+      desiredLocation,
+      jobTitle,
+      jobType,
+      industry,
+      firstName,
+      lastName
+    } = data
     const payload = {
       redirect: router.query?.redirect ? router.query.redirect : null,
       preferenceId: preference?.id,
@@ -130,7 +148,9 @@ const Step1 = (props: any) => {
         notice_period_id: noticePeriod,
         country_key: country,
         location_key: location?.key || '',
-        phone_num: countryCode + contactNumber
+        phone_num: countryCode + contactNumber,
+        first_name: firstName,
+        last_name: lastName
       },
       accessToken,
       currentStep,
@@ -154,6 +174,42 @@ const Step1 = (props: any) => {
       isNextDisabled={false}
     >
       <div className={styles.stepForm}>
+        <div className={styles.step1Names}>
+          <div className={styles.step1NamesFirst}>
+            <Controller
+              control={control}
+              name={'firstName'}
+              rules={{ required: 'This field is required.' }}
+              render={({ field, fieldState }) => {
+                return <MaterialTextField
+                  className={styles.stepFullwidth}
+                  label='First Name'
+                  required
+                  {...fieldState}
+                  {...field}
+
+                />
+              }}
+            />
+          </div>
+          <div className={styles.step1NamesLast}>
+            <Controller
+              control={control}
+              name={'lastName'}
+              rules={{ required: 'This field is required.' }}
+              render={({ field, fieldState }) => {
+                return <MaterialTextField
+                  className={styles.stepFullwidth}
+                  label='Last Name'
+                  required
+                  {...fieldState}
+                  {...field}
+
+                />
+              }}
+            />
+          </div>
+        </div>
         <div className={styles.stepField} style={{ marginBottom: 20 }}>
           <Controller
             control={control}
