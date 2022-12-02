@@ -10,6 +10,7 @@ import Header from "./header"
 import classNames from "classnames"
 import MaterialButton from "components/MaterialButton"
 import Text from "components/Text"
+import { useRef } from "react"
 const theme = createTheme({
     components: {
         MuiInputLabel: {
@@ -95,15 +96,17 @@ const JobFunctionMultiSelector = (props: any) => {
             setFunctionTitleIds(value?.functionTitles ?? [])
         }
     }, [value])
+    const preShowModal = useRef(false)
     useEffect(() => {
-        if (!showModal && !isMobile) {
+        if (!showModal && preShowModal.current && !isMobile) {
+            console.log('onChange')
             onChange?.({
                 mainFunctions: mainFunctions,
                 jobFunctions: functionIds,
                 functionTitles: functionTitleIds
             })
         }
-
+        preShowModal.current = showModal
     }, [showModal])
     const jobFunctions = useSelector((store: any) => store.config.config.response?.inputs?.job_function_lists ?? [])
 
@@ -229,16 +232,22 @@ const JobFunctionMultiSelector = (props: any) => {
             }
         }
     }, [onSecondClick, mainFunctions, functionIds, functionTitleIds])
+    const listener = useCallback(() => {
 
+        setShowModal(false)
+        document.removeEventListener('click', listener)
+    }, [])
     useEffect(() => {
         if (!isMobile) {
-            const listener = () => {
-                setShowModal(false)
+
+            if (showModal) {
+                document.addEventListener('click', listener)
+            } else {
+                document.removeEventListener('click', listener)
             }
-            document.addEventListener('click', listener)
-            return () => document.removeEventListener('click', listener)
+            // return () => document.removeEventListener('click', listener)
         }
-    }, [])
+    }, [showModal])
     const onBack = useCallback(() => {
         setActiveFirst(undefined)
         setActiveSecond(undefined)

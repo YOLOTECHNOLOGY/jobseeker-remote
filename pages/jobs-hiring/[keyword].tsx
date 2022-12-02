@@ -60,7 +60,6 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { getCookie } from 'helpers/cookies'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import useSearchHistory from 'helpers/useSearchHistory'
-import configuredAxios from 'helpers/configuredAxios'
 import JobFunctionMultiSelector from 'components/JobFunctionMultiSelector'
 import { fetchConfigService } from 'store/services/config/fetchConfig'
 import classNames from 'classnames'
@@ -177,6 +176,7 @@ const useJobAlert = () => {
 
   const showJobAlert = useCallback(
     (filterJobPayload) => {
+      console.log({ filterJobPayload })
       const jobAlertData = {
         keyword: filterJobPayload?.query ? filterJobPayload.query : '',
         location_values: filterJobPayload?.location ? filterJobPayload.location : 'all',
@@ -186,6 +186,9 @@ const useJobAlert = () => {
         industry_values: filterJobPayload?.industry ? filterJobPayload.industry : 'all',
         xp_lvl_values: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
         degree_values: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',
+        main_functions: filterJobPayload?.mainFunctions ?? 'all',
+        job_functions: filterJobPayload?.jobFunctions ?? 'all',
+        function_titles: filterJobPayload?.functionTitles ?? 'all',
         is_company_verified: 'all',
         frequency_id: 1
       }
@@ -260,7 +263,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [selectedJob, setSelectedJob] = useState(null)
   const [selectedJobId, setSelectedJobId] = useState(null)
   const [searchValue, setSearchValue] = useState(defaultValues?.urlQuery || '')
-  const [categories, setCategories] = useState(defaultValues?.category || [])
   const [isCategoryReset, setIsCategoryReset] = useState(false)
   const [jobTypes, setJobTypes] = useState(defaultValues?.jobType || [])
   const [salaries, setSalaries] = useState(defaultValues?.salary || [])
@@ -280,7 +282,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     return { mainFunctions, jobFunctions, functionTitles }
   }, [mainFunctions, jobFunctions, functionTitles])
 
-
+  const functionTitleList = config?.inputs?.function_titles ?? []
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
@@ -305,7 +307,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [selectedPage, setSelectedPage] = useState(defaultPage)
 
   useEffect(() => {
-    const { industry, workExperience, category, jobType, salary, qualification, verifiedCompany } = router.query
+    const { industry, workExperience, category, jobType, salary, qualification, verifiedCompany, mainFunctions, functionTitles } = router.query
     const hasActiveFilters = !!(
       industry ||
       workExperience ||
@@ -315,7 +317,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       salary ||
       verifiedCompany ||
       predefinedLocation ||
-      predefinedQuery
+      predefinedQuery ||
+      mainFunctions ||
+      jobFunctions ||
+      functionTitles
     )
     setHasMoreFilters(hasActiveFilters)
     if (firstRender) {
@@ -476,6 +481,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setMainfunctions(data.mainFunctions)
     setJobFunctions(data.jobFunctions)
     setFunctionTitles(data.functionTitles)
+    if (!data?.main_functions?.length && !data?.jobFunction?.length && data?.functionTitles?.length === 1) {
+      const value = functionTitleList.find(item => item.seo_value === data.functionTitles[0]).value
+      setSearchValue(value)
+      onKeywordSearch(value)
+      return
+    }
     const { searchQuery, filterParamsObject = {} } = userFilterSelectionDataParser(
       'jobFunctions',
       data,
@@ -485,7 +496,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     console.log({ filterParamsObject, searchQuery })
     updateUrl(searchQuery, filterParamsObject)
 
-  }, [])
+  }, [router.query, functionTitleList, config])
   // console.log({ jobFunctionValue })
   const onLocationSearch = (event, value) => {
     addSearchHistory(searchValue)
@@ -981,7 +992,7 @@ const initPagePayLoad = async (query, config = null) => {
         ...payload,
         [key]: value[0].value ? true : false
       }
-    } else if(['jobFunctions','functionTitles'].includes(key)){
+    } else if (['jobFunctions', 'functionTitles'].includes(key)) {
       payload = {
         ...payload,
         [key]: payload[key] ? (payload[key] += value[0].id) : value[0].id

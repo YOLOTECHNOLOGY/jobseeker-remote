@@ -16,7 +16,6 @@ const lastKeyIn = keys => pipe(allKeysIn(keys), last)
 
 const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
     console.log("checkFilterMatchFunc invoked!!!!")
-
     const result = pipe(ap([
         pipe(buildMatchedConfigs(config), dissoc('matchedConfig')),
         pipe(parseKeywordParams(config), converge(mergeLeft, [
@@ -57,21 +56,45 @@ export const checkFilterMatch = memoizeWith((routerQuery, config, isMobile = fal
 }, checkFilterMatchFunc)
 
 export const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear) => {
-   
+    console.log({ routerQuery })
+
     return converge(mergeLeft, [
         pipe(
             parseFullParams(config),
             mergeLeft(parseIncrement(field)(optionValue)),
             filter(complement(either(isEmpty, isNil))),
+            ifElse(
+                both(onlyOneIn(['query', ...userSelectKeys]), onlyOneIn(['functionTitles'])),
+                query => {
+                    const newQuery = { ...query }
+                    const dropId = query.functionTitles.split('-')
+                    dropId.pop()
+                    newQuery.query = dropId.join('-'),
+                        delete newQuery['functionTitles']
+                    return newQuery
+                },
+                identity,
+            ),
+            
             dissoc('keyword'),
             when(() => is(Array)(isClear), omit(isClear)),
+            // a => {
+            //     console.log({ a })
+            //     console.log('noParams',conditions.noParams(a))
+            //     console.log('onlyOne',conditions.onlyOne(a))
+            //     console.log('oneWithLocation',conditions.oneWithLocation(a))
+            //     console.log('queryMany',conditions.queryMany(a))
+            //     console.log('noQueryMany',conditions.noQueryMany(a))
+
+            //     return a
+            // },
             buildQueryParams,
 
         ),
         pipe(
             mergeLeft(parseIncrement(field)(optionValue)),
             when(() => is(Array)(isClear), omit(isClear)),
-            buildMatchedConfigsQuery(config)(field, optionValue)
+            buildMatchedConfigsQuery(config)(field, optionValue),
         )
     ])(routerQuery)
 }
@@ -88,7 +111,7 @@ const conditions = {
     ),
     queryMany: both(
         has('query'),
-        pipe(totalOf(['location', ...userSelectKeys]), lte(2))
+        pipe(totalOf(['query','location', ...userSelectKeys]), lte(2))
     ),
     noQueryMany: both(
         no('query'),
