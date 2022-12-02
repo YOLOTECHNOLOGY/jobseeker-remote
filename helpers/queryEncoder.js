@@ -49,8 +49,6 @@ const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
             filterCount: totalOf(isMobile ? userSelectKeys : ['industry', 'workExperience', 'qualification'])
         })]), reduce(mergeLeft, {}))([routerQuery])
 
-    const matches = keywordMatches(config)(routerQuery.keyword.replace('-jobs', ''))
-    console.log({ result, routerQuery, matches, config })
     return result
 }
 
@@ -129,10 +127,6 @@ const buildQueryParams = cond([
 
 const matchConfig = config => keyword => ifElse(either(isEmpty, isNil), always({}), pipe(
     () => configItems(config),
-    (a) => {
-        console.log("keyword", keyword)
-        return a
-    },
     map(items => items.filter(item => item.value.toLowerCase() === keyword?.toLowerCase?.())),
     filter(complement(either(isEmpty, isNil))),
     filter(identity)

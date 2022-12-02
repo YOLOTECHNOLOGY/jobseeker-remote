@@ -170,7 +170,6 @@ const Step3 = (props: any) => {
 
   useEffect(() => {
     if (selectedExperience) {
-      console.log('effect')
       scrollToForm()
       setShowForm(true)
       setWorkExperienceId(selectedExperience.id)
