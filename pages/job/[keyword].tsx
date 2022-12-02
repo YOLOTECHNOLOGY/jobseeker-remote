@@ -436,6 +436,8 @@ const Job = ({
     if (!userCookie) {
       sessionStorage.setItem('isChatRedirect', `/chat-redirect/${jobDetail?.id}`)
       setOpenRegister(true)
+    } else if (jobDetail?.external_apply_url) {
+      addExternalJobClickService(jobDetail?.id)
     } else if (chatDetail.is_exists) {
       if (chatDetail.job_id !== jobDetail?.id) {
         setShowModal(true)
@@ -487,7 +489,15 @@ const Job = ({
                   onClick={handleChat}
                 >
                   <Text textColor='white' bold>
-                    {(chatDetail.is_exists && chatDetail.job_id === jobDetail?.id) ? 'Continue Chat' : 'Chat Now'}
+                    {(() => {
+                      if (jobDetail?.external_apply_url) {
+                        return 'Apply Now'
+                      } else if (chatDetail.is_exists && chatDetail.job_id === jobDetail.id) {
+                        return 'Continue Chat'
+                      } else {
+                        return 'Chat Now'
+                      }
+                    })()}
                   </Text>
                 </MaterialButton>
                 <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>

@@ -65,6 +65,7 @@ import { fetchSwitchJobService } from 'store/services/jobs/fetchSwitchJob'
 import RegisterModal from 'components/RegisterModal'
 import { fetchChatDetailRequest } from 'store/actions/jobs/fetchJobChatDetail'
 import { useDispatch, useSelector } from 'react-redux'
+import { addExternalJobClickService } from 'store/services/jobs/addExternalJobClick'
 interface IJobDetailProps {
   selectedJob: any
   setIsShowModalShare?: Function
@@ -209,8 +210,10 @@ const JobDetail = ({
 
   const handleChat = () => {
     if (!userCookie) {
-      sessionStorage.setItem('isChatRedirect',`/chat-redirect/${selectedJob.id}`)
+      sessionStorage.setItem('isChatRedirect', `/chat-redirect/${selectedJob.id}`)
       setOpenRegister(true)
+    } else if (selectedJob?.external_apply_url) {
+      addExternalJobClickService(selectedJob?.id)
     } else if (chatDetail.is_exists) {
       if (chatDetail.job_id !== selectedJob.id) {
         setShowModal(true)
@@ -274,9 +277,17 @@ const JobDetail = ({
               </Link>
               <div className={styles.jobDetailButtons}>
 
-                <MaterialButton variant='contained' capitalize onClick={handleChat} isLoading={loading||!chatDetail}>
+                <MaterialButton variant='contained' capitalize onClick={handleChat} isLoading={loading || !chatDetail}>
                   <Text textColor='white' bold>
-                    {(chatDetail.is_exists && chatDetail.job_id === selectedJob.id) ? 'Continue Chat' : 'Chat Now'}
+                    {(()=>{
+                      if(selectedJob?.external_apply_url){
+                        return 'Apply Now'
+                      } else if(chatDetail.is_exists && chatDetail.job_id === selectedJob.id) {
+                        return 'Continue Chat'
+                      } else {
+                        return 'Chat Now'
+                      }
+                    })()}
                   </Text>
                 </MaterialButton>
                 <MaterialButton
