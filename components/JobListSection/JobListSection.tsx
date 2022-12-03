@@ -145,7 +145,7 @@ const JobListSection = ({
       location_values: filterJobPayload?.location ? filterJobPayload.location : 'all',
       job_type_values: filterJobPayload?.jobType ? filterJobPayload.jobType : 'all',
       salary_range_values: filterJobPayload?.salary ? filterJobPayload.salary : 'all',
-      job_category_values: filterJobPayload?.category ? filterJobPayload.category : 'all',
+      // job_category_values: filterJobPayload?.category ? filterJobPayload.category : 'all',
       industry_values: filterJobPayload?.industry ? filterJobPayload.industry : 'all',
       xp_lvl_values: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
       degree_values: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { CREATE_JOB_ALERT_REQUEST } from 'store/types/alerts/createJobAlert'
 import {
@@ -60,6 +61,9 @@ function* createJobAlertReq(action) {
           degree_values: jobAlertData.degree_values,
           is_company_verified: jobAlertData.is_company_verified,
           frequency_id: jobAlertData.frequency_id,
+          main_function_values:jobAlertData.main_functions,
+          job_function_ids:jobAlertData.job_functions,
+          function_job_title_ids:jobAlertData.function_titles
         },
         accessToken: accessToken
       }
