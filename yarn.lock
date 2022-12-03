@@ -1717,13 +1717,6 @@
   dependencies:
     parchment "^1.1.2"
 
-"@types/ramda@^0.28.15":
-  version "0.28.15"
-  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.28.15.tgz#36bb4c8de430e3bbcd29590537569aef64409716"
-  integrity sha512-FCaLNVZry65jW8x/FDnKgjgkCNQxgc5AYMQwdNn6yW5M+62R+0nt2Y36U43dTNora9hcquemfrY5gxhE5pcilQ==
-  dependencies:
-    ts-toolbelt "^6.15.1"
-
 "@types/react-is@^16.7.1 || ^17.0.0":
   version "17.0.3"
   resolved "https://registry.yarnpkg.com/@types/react-is/-/react-is-17.0.3.tgz#2d855ba575f2fc8d17ef9861f084acc4b90a137a"
@@ -2878,11 +2871,6 @@ csstype@^3.0.10, csstype@^3.0.2, csstype@^3.0.9:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.10.tgz#2ad3a7bed70f35b965707c092e5f30b327c290e5"
   integrity sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==
 
-daggy@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/daggy/-/daggy-0.0.1.tgz#ae9c932c9f7136e655a04afb21e8baadfd0d3707"
-  integrity sha512-zMSxQ1O+9xx1CyvUP2Z2cdD+o6zB3nyInl+UcwTIq08gK704hLZkHK+ZU9boyrk8nBCIUxpZF7aXbys3BTr+rQ==
-
 damerau-levenshtein@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.7.tgz#64368003512a1a6992593741a09a9d31a836f55d"
@@ -3548,29 +3536,6 @@ extend@^3.0.2:
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
 
-fantasy-lenses@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/fantasy-lenses/-/fantasy-lenses-0.1.1.tgz#328f78f2f6bee6e2e0c72ce94008f1e8d7f9b75b"
-  integrity sha512-/pp2hkjCzpXU3giUU3eVBtw+5Mg1Ex1gMRHaX8UUHNxDd8ftzcY5TjQyf/ec+SuLfV/gd/q9LQ2NDBP/bU5/Hg==
-  dependencies:
-    daggy "0.0.1"
-    fantasy-options "0.0.1"
-    fantasy-stores "~0.1.0"
-
-fantasy-options@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/fantasy-options/-/fantasy-options-0.0.1.tgz#6e1bddbb7ba6ee19b55fc3109978782f593d4fee"
-  integrity sha512-GwctFGct/ee40Eug88cowZpT/TvyJSc6CkZQMe2aasFcMA4WV9RmOFSlisCbv/dwCQprrV8f1blbH/R2q4hebA==
-  dependencies:
-    daggy "0.0.1"
-
-fantasy-stores@~0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/fantasy-stores/-/fantasy-stores-0.1.0.tgz#f0032c65233f52f18d2ba34fcac5823889157e56"
-  integrity sha512-mou/SZG0Ytypd9tOls3a0uQ8AyGcV7QpLlGG1hq2R304DlZ0uRvWZoBGKCdN6XRrLWFjo+cE7MSiIwmohmHj7w==
-  dependencies:
-    daggy "0.0.1"
-
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
@@ -4100,14 +4065,24 @@ image-size@1.0.0:
   dependencies:
     queue "6.0.2"
 
-imforbossjob@^0.0.494:
-  version "0.0.494"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.494.tgz#bee9372c2d96a62f6f5255d007a4314c51c80a6d"
-  integrity sha512-573bD3TOkG3yNbgzflxOQ7UUsSfnNOadWC7uKVE9lrBO8tAp82yt1awzISgHH80vGsDPeUO+r5w0flhyxs3pVA==
+imforbossjob@^0.0.501:
+  version "0.0.501"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.501.tgz#d526200e8aa0a292fff9742f752359b5aadf337a"
+  integrity sha512-+0iF8jSxkedxi1b0HYpSxMvWLRRhIPb+oo7Xc0IrS1kG0gXyymCMix0msryS4ocap0m8LWIndqjbpNHjuClB1Q==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     antd "^4.23.3"
-    imsdkweb "^0.0.11"
+    imsdkweb "^0.0.13"
+
+imforbossjob@^0.0.511:
+  version "0.0.511"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.511.tgz#fe1161b200c3169348e389b422adb8278c66a528"
+  integrity sha512-F7oXHGGTFzQhMOCG7/0fQ93ADu+wG7EhdddCUnKP08DQSsdxvaAQs0L8oNkJG28DhzQpefGwjipkp3AsVPaCDQ==
+  dependencies:
+    "@ant-design/icons" "^4.7.0"
+    antd "^4.23.3"
+    imforbossjob "^0.0.501"
+    imsdkweb "^0.0.13"
 
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   version "3.3.0"
@@ -4117,10 +4092,10 @@ import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
 
-imsdkweb@^0.0.11:
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.11.tgz#0701d13990ced265a89a7ba550a9d180b891bf30"
-  integrity sha512-6Ii1SPI8OFYYeulHdAY6ktQ/SQJIVox9sdHChWjwjjuKahC/aFCsNLWAJkd6u9WRmFpMWs+Z9ENC3Y8ylJGByA==
+imsdkweb@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.13.tgz#bd66ebee7c32b8e6e87f5de776768b4b635b9494"
+  integrity sha512-jBQr9+WrHqsYeUthMXaqT6MfgIBXpiZIQBRvuRWo3NoAbVhyK2w0hVPxpAHkiuBpNC2uQz1jBt2Jts6SXJk6kA==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
