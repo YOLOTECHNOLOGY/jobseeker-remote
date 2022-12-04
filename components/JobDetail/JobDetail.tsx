@@ -279,10 +279,10 @@ const JobDetail = ({
 
                 <MaterialButton variant='contained' capitalize onClick={handleChat} isLoading={loading || !chatDetail}>
                   <Text textColor='white' bold>
-                    {(()=>{
-                      if(selectedJob?.external_apply_url){
+                    {(() => {
+                      if (selectedJob?.external_apply_url) {
                         return 'Apply Now'
-                      } else if(chatDetail.is_exists && chatDetail.job_id === selectedJob.id) {
+                      } else if (chatDetail.is_exists && chatDetail.job_id === selectedJob.id) {
                         return 'Continue Chat'
                       } else {
                         return 'Chat Now'
@@ -336,11 +336,9 @@ const JobDetail = ({
                     </div>
                   )}
                   {selectedJob?.status_key === 'active' && (
-                    <>
-                      <div className={styles.jobDetailOptionItem} onClick={handleShowReportJob}>
-                        <Text textStyle='lg'>Report job</Text>
-                      </div>
-                    </>
+                    <div className={styles.jobDetailOptionItem} onClick={handleShowReportJob}>
+                      <Text textStyle='lg'>Report job</Text>
+                    </div>
                   )}
                 </Dropdown>
               </div>

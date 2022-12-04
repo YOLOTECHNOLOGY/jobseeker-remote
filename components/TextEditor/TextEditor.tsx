@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-var */
+'use client'
 /* Vendors */
 import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css'
@@ -12,8 +15,8 @@ interface TextEditorInterface {
 
 // Refer to link below for React-quill implementation on Nextjs:
 // https://www.simplenextjs.com/posts/react-quill
-
-const QuillNoSSRWrapper = dynamic(import('react-quill'), {	
+// eslint-disable-next-line no-unused-vars
+const QuillNoSSRWrapper = typeof window !== 'undefined' && dynamic(import('react-quill'), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
 })
@@ -26,17 +29,17 @@ const modules = {
 
 const formats = ['list', 'bullet']
 
-const TextEditor = ( { value, setValue } : TextEditorInterface) => {
+const TextEditor = ({ value, setValue }: TextEditorInterface) => {
   return (
     <div className={styles.textEditor}>
-      <QuillNoSSRWrapper
+      {QuillNoSSRWrapper ? <QuillNoSSRWrapper
         theme="snow"
         modules={modules}
         formats={formats}
         placeholder="Type here..."
         value={value}
         onChange={setValue}
-      />
+      /> : null}
     </div>
   )
 }

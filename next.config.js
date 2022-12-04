@@ -16,7 +16,7 @@ module.exports = {
 
     return redirectionPaths
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   env: {
     ENV: process.env.ENV,
     MAINTENANCE: process.env.MAINTENANCE,

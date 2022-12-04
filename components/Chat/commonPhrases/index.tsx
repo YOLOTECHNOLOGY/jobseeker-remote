@@ -11,11 +11,16 @@ const CommonPhrases = (props: any) => {
     const { contextRef, loading, applicationId } = props
     const [list, setList] = useState([])
     const [listLoading, setListLoading] = useState(false)
-
+    const [init, setInit] = useState(true)
     useEffect(() => {
-        getList().then(result => {
-            setList(result.data.data)
-        })
+        if (init) {
+            console.log({ init })
+            getList().then(result => {
+                setList(result.data.data)
+            })
+            setInit(false)
+        }
+
     }, [])
     const context = {
         updateList(list) {

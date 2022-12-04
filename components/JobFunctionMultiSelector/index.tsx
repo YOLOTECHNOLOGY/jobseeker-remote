@@ -99,7 +99,6 @@ const JobFunctionMultiSelector = (props: any) => {
     const preShowModal = useRef(false)
     useEffect(() => {
         if (!showModal && preShowModal.current && !isMobile) {
-            console.log('onChange')
             onChange?.({
                 mainFunctions: mainFunctions,
                 jobFunctions: functionIds,

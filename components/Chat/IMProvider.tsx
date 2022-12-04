@@ -14,7 +14,7 @@ import CancelModal from 'components/Chat/interview/cancel'
 import IssueModal from 'components/Chat/interview/issue'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { getAuth } from 'helpers/interpreters/services/chat'
-import { list } from 'helpers/interpreters/services/chat'
+// import { list } from 'helpers/interpreters/services/chat'
 import CommonPhrases from 'components/Chat/commonPhrases'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
@@ -25,7 +25,7 @@ const IMProvider = ({ children }: any) => {
     const userId = userDetail.id
     const [loading, setLoading] = useState(false)
     const [imState, setImState] = useState({} as any)
-    const [chatList, setChatList] = useState([])
+    // const [chatList, setChatList] = useState([])
     const [mobile, setMobile] = useState(false)
     useEffect(() => {
         const old: any = window.onresize
@@ -36,11 +36,11 @@ const IMProvider = ({ children }: any) => {
         }
         return () => window.onresize = old
     }, [])
-    useEffect(() => {
-        list().then(result => {
-            setChatList(result.data?.data?.chats)
-        })
-    }, [])
+    // useEffect(() => {
+    //     list().then(result => {
+    //         setChatList(result.data?.data?.chats)
+    //     })
+    // }, [])
     const accessToken = getCookie('accessToken')
     const applicationId = useMemo(() => {
         return imState?.id ? `${imState.id}` : ''
@@ -135,7 +135,7 @@ const IMProvider = ({ children }: any) => {
         applicationId,
         contextRef,
         loading,
-        chatList,
+        // chatList,
         mobile,
         chatId
     }}>

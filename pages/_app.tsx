@@ -16,9 +16,9 @@ const TransitionLoader = dynamic(() => import('components/TransitionLoader/Trans
 const MaintenancePage = dynamic(() => import('./maintenance'))
 import * as fbq from 'lib/fpixel'
 import NotificationProvider from 'components/NotificationProvider'
-import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
-import { useDispatch } from 'react-redux'
+// import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+// import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+// import { useDispatch } from 'react-redux'
 import IMProvider from 'components/Chat/IMProvider'
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -64,9 +64,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     //   })
     // }
   }, [router])
-  const dispatch = useDispatch()
-  dispatch(fetchConfigRequest())
-  dispatch(fetchUserOwnDetailRequest({ accessToken }))
+  // const dispatch = useDispatch()
+  // dispatch(fetchConfigRequest())
+  // dispatch(fetchUserOwnDetailRequest({ accessToken }))
   useEffect(() => {
     if (!getItem('utmCampaign')) {
       // Save utm keys if found

@@ -63,6 +63,8 @@ import useSearchHistory from 'helpers/useSearchHistory'
 import JobFunctionMultiSelector from 'components/JobFunctionMultiSelector'
 import { fetchConfigService } from 'store/services/config/fetchConfig'
 import classNames from 'classnames'
+import { fetchUserDetailRequest } from 'store/actions/users/fetchUserDetail'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 interface JobSearchPageProps {
   seoMetaTitle: string
@@ -176,7 +178,6 @@ const useJobAlert = () => {
 
   const showJobAlert = useCallback(
     (filterJobPayload) => {
-      console.log({ filterJobPayload })
       const jobAlertData = {
         keyword: filterJobPayload?.query ? filterJobPayload.query : '',
         location_values: filterJobPayload?.location ? filterJobPayload.location : 'all',
@@ -409,7 +410,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       matchedConfig,
 
     } = userFilterSelectionDataParser('query', sanitisedVal, router.query, config, isClear)
-    console.log({ matchedConfig, filterParamsObject })
     for (const [key, value] of Object.entries(matchedConfig)) {
       const newDefaultValue = { ...defaultValues, [key]: [value[0]['seo-value']] }
       switch (key) {
@@ -493,7 +493,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       router.query,
       config,
     )
-    console.log({ filterParamsObject, searchQuery })
     updateUrl(searchQuery, filterParamsObject)
 
   }, [router.query, functionTitleList, config])
@@ -1028,6 +1027,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // store actions
       store.dispatch(fetchJobsListRequest(initPayload, accessToken))
       store.dispatch(fetchConfigRequest())
+      if(accessToken){
+        store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
+      }
       store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
       store.dispatch(END)
       await (store as any).sagaTask.toPromise()

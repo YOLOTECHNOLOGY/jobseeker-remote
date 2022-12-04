@@ -6,10 +6,14 @@ import Layout from 'components/Layout'
 import styles from './index.module.scss'
 import { IMContext } from 'components/Chat/IMProvider'
 import dynamic from 'next/dynamic'
+import { wrapper } from 'store'
+import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { END } from 'redux-saga'
 
 const JobseekerChat = dynamic<any>(import('components/Chat'), {
     ssr: false
-  })
+})
 // import JobseekerChat from 'components/Chat'
 const Chat = () => {
     const router = useRouter()
@@ -48,7 +52,7 @@ const Chat = () => {
             }
         }
     }, [chatId])
- return <Layout isHiddenFooter isHiddenHeader={mobile}>
+    return <Layout isHiddenFooter isHiddenHeader={mobile}>
         {!mobile &&
             <div className={styles.pcWeb}>
                 <JobseekerChat
@@ -79,9 +83,18 @@ const Chat = () => {
         </div>}
     </Layout>
 }
-export const getServerSideProps = () => {
-    return {
-        props: {}
-    }
-}
+export const getServerSideProps = wrapper.getServerSideProps(
+    (store) =>
+        async ({ req }) => {
+            const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
+            // store actions
+            store.dispatch(fetchConfigRequest())
+            if (accessToken) {
+                store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
+            }
+            store.dispatch(END)
+            await (store as any).sagaTask.toPromise()
+            return { props: {} }
+        }
+)
 export default Chat

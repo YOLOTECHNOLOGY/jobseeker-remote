@@ -14,7 +14,7 @@ import { openManageJobAlertsModal } from 'store/actions/modals/manageJobAlertsMo
 import Text from 'components/Text'
 import JobCard from 'components/JobCard'
 import JobDetail from 'components/JobDetail'
-import AdSlot from 'components/AdSlot'
+// import AdSlot from 'components/AdSlot'
 import UploadResumeButton from 'components/LncreaseUserConversion/UploadResumeButton/UploadResumeButton'
 
 import JobCardLoader from 'components/Loader/JobCard'
@@ -311,7 +311,7 @@ const JobListSection = ({
               </div>
             )}
 
-            <div className={styles.skyscraperBanner}>
+            {/* <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'jobs-search/skyscraper-1'} />
             </div>
             <div className={styles.skyscraperBanner}>
@@ -319,7 +319,7 @@ const JobListSection = ({
             </div>
             <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'jobs-search/skyscraper-3'} />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

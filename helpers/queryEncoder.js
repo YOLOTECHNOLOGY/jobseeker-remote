@@ -56,8 +56,6 @@ export const checkFilterMatch = memoizeWith((routerQuery, config, isMobile = fal
 }, checkFilterMatchFunc)
 
 export const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear) => {
-    console.log({ routerQuery })
-
     return converge(mergeLeft, [
         pipe(
             parseFullParams(config),
