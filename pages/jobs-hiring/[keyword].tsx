@@ -444,11 +444,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
         case 'mainFunctions':
           if (!mainFunctions.includes(value[0]?.seo_value)) {
             setMainfunctions([value[0]?.seo_value, ...mainFunctions])
+            setSearchValue('')
           }
           break
         case 'jobFunctions':
           if (!jobFunctions.includes(value[0]?.seo_value)) {
             setJobFunctions([value[0]?.seo_value, ...jobFunctions])
+            setSearchValue('')
           }
           break
         // case 'functionTitles':
@@ -1027,7 +1029,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // store actions
       store.dispatch(fetchJobsListRequest(initPayload, accessToken))
       store.dispatch(fetchConfigRequest())
-      if(accessToken){
+      if (accessToken) {
         store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
       }
       store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
