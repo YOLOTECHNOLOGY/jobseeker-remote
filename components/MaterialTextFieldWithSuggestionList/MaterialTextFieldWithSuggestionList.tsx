@@ -88,7 +88,7 @@ const MaterialTextFieldWithSuggestionList = ({
           }
         }}
         defaultValue={defaultValue}
-        value={value}
+        inputValue={value}
         renderInput={(params) => (
           <MaterialTextField
             {...refs}
