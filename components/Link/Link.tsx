@@ -21,43 +21,47 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
  */
 const Link = ({
   children,
-  to,
+  to: propTo,
   className,
   passHref,
   external,
   aTag,
   title,
   ...rest
-}: 
-LinkProps) => {
+}: LinkProps) => {
+  let to = propTo
   if (external || aTag) {
     // check if https is appended before the url
     if (to !== '' && to !== null && !/^(f|ht)tps?:\/\//i.test(to)) {
       to = 'https://' + to
     }
-    return (
-      <a
-        href={to}
-        className={className}
-        target={external ? '_blank' : '_self'}
-        rel='noopener noreferrer'
-        title={title}
-        {...rest}
-      >
-        {children}
-      </a>
-    )
+    // return (
+    //   <a
+    //     href={to}
+    //     className={className}
+    //     target={external ? '_blank' : '_self'}
+    //     rel='noopener noreferrer'
+    //     title={title}
+    //     {...rest}
+    //   >
+    //     {children}
+    //   </a>
+    // )
   }
+  
   return (
-    <NextLink href={to} passHref={passHref} {...rest}>
-      <div
-        className={className}
-        style={
-          className == 'default' ? { color: '#2379ea', textDecoration: 'underline' } : undefined
-        }
-      >
-        {children}
-      </div>
+    <NextLink
+      href={to}
+      passHref={passHref}
+      target={external ? '_blank' : '_self'}
+      rel='noopener noreferrer'
+      className={className}
+      style={
+        className == 'default' ? { color: '#2379ea', textDecoration: 'underline' } : undefined
+      } {...rest}>
+
+      {children}
+
     </NextLink>
   )
 }
