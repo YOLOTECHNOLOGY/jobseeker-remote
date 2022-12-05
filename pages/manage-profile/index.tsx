@@ -1338,7 +1338,7 @@ const ManageProfilePage = ({ config }: any) => {
 
             <div className={styles.sectionHeader}>
               <Text bold textColor='primaryBlue' textStyle='xl'>
-                Availavility
+                Availability
               </Text>
             </div>
             <div style={{ position: 'relative', width: '100%' }}>
@@ -1377,15 +1377,16 @@ const ManageProfilePage = ({ config }: any) => {
                 handleModal={handleModal}
                 preference={preference}
               />)}
-            <div className={styles.sectionContainer}>
-              <Text className={styles.openToWorkSectionTitle} bold textStyle='xl' textColor='primaryBlue'>
-                Open to work
-              </Text>
-              <FormControlLabel
-                control={<Switch checked={openToWork} onChange={handleVisibility} />}
-                label={<Text textStyle='lg'>Let recruiters know that you are open to work</Text>}
-              />
-            </div>
+
+          </div>
+          <div className={styles.sectionContainer}>
+            <Text className={styles.openToWorkSectionTitle} bold textStyle='xl' textColor='primaryBlue'>
+              Open to work
+            </Text>
+            <FormControlLabel
+              control={<Switch checked={openToWork} onChange={handleVisibility} />}
+              label={<Text textStyle='lg'>Let recruiters know that you are open to work</Text>}
+            />
           </div>
         </div>
         }
