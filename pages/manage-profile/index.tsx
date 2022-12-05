@@ -57,7 +57,7 @@ import {
   HighlightEducationIcon,
   HighlightSkillIcon,
   HighlightWorkExpIcon,
-  DeleteIcon
+  AccountSettingDeleteIconBin
 } from 'images'
 
 /* Styles */
@@ -68,6 +68,7 @@ import EditSkillModal from 'components/EditSkillModal'
 import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
 import EditJobPreferencesAvailabilityModal from 'components/EditJobPreferencesAvailabilityModal/EditJobPreferencesAvailabilityModal'
 import { updateUserVisibilityToWorkService } from 'store/services/jobs/updateUserVisibilityToWork'
+import Image from 'next/image'
 const RenderProfileView = ({ userDetail, handleModal }: any) => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
@@ -789,7 +790,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
           <img src={PencilIcon} width='22' height='22' />
         </div>
         <div style={{ right: 0 }} className={styles.iconWrapperP} onClick={() => setShowDelete(true)}>
-          <img src={DeleteIcon} width='22' height='22' />
+          <img src={AccountSettingDeleteIconBin} width='14' height='14' />
         </div>
         <div className={styles.jobPreferencesSectionDetailList}>
 
@@ -1358,7 +1359,7 @@ const ManageProfilePage = ({ config }: any) => {
               <div className={styles.iconWrapperP}
                 onClick={() => handleModal('createJobPreference', true, null, null)}
               >
-                <img src={AddIcon} width='14' height='14' />
+                <Image src={AddIcon} width='14' height='14' color="#337f43" alt={''} />
               </div>
               <Text bold textColor='primaryBlue' textStyle='xl'>
                 Job Preferences
