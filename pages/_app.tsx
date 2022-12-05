@@ -25,7 +25,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
-
+  const [toPath,setToPath] = useState('')
   useEffect(() => {
     // Facebook pixel
     // This pageview only triggers the first time
@@ -78,23 +78,25 @@ const App = ({ Component, pageProps }: AppProps) => {
       }
     }
     const handleRouteComplete = () => {
+      setToPath('')
       setIsPageLoading(false)
     }
-    const handleStart = () => {
+    const handleStart = (toPath) => {
+      setToPath(toPath)
       setIsPageLoading(true)
     }
 
     router.events.on('routeChangeStart', handleStart)
     router.events.on('routeChangeError', handleRouteComplete)
     router.events.on('routeChangeComplete', handleRouteComplete)
-
+    
     return () => {
       router.events.off('routeChangeStart', handleStart)
       router.events.off('routeChangeError', handleRouteComplete)
       router.events.off('routeChangeComplete', handleRouteComplete)
     }
   }, [])
-
+  console.log({router,isPageLoading})
   return (
     <>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
@@ -225,7 +227,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <CookiesProvider>
           {process.env.MAINTENANCE === 'true' ? (
             <MaintenancePage {...pageProps} />
-          ) : isPageLoading && !router.pathname.includes('jobs-hiring') ? (
+          ) : isPageLoading && !(router.pathname.includes('jobs-hiring') && toPath.includes('jobs-hiring')) ? (
             <TransitionLoader accessToken={accessToken} />
           ) : (
             <NotificationProvider>
