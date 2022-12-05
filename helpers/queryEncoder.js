@@ -73,7 +73,7 @@ export const userFilterSelectionDataParser = (field, optionValue, routerQuery, c
                 },
                 identity,
             ),
-            
+
             dissoc('keyword'),
             when(() => is(Array)(isClear), omit(isClear)),
             // a => {
@@ -109,7 +109,7 @@ const conditions = {
     ),
     queryMany: both(
         has('query'),
-        pipe(totalOf(['query','location', ...userSelectKeys]), lte(2))
+        pipe(totalOf(['query', 'location', ...userSelectKeys]), lte(2))
     ),
     noQueryMany: both(
         no('query'),
@@ -202,11 +202,11 @@ const configItems = applySpec({
 
 const itemFilter = config => keys => pipe(
     configItems,
-    map(items => items.filter(item => keys.includes(item['seo-value']) || keys.includes((item['seo_value'])))),
+    map(items => items.filter(item => keys.includes(item['seo-value']) || keys.includes((item['seo_value'])) || keys.includes((item['function_title_value'])))),
     filter(pipe(prop('length'), lt(0)))
 )(config)
 
-const configKeys = pipe(configItems, map(map(ifElse(has('seo-value'), prop('seo-value'), prop('seo_value')))))
+const configKeys = pipe(configItems, map(map(ifElse(has('seo-value'), prop('seo-value'), ifElse(has('function_title_value'), prop('function_title_value'), prop('seo_value'))))))
 const keywordMatches = pipe(
     configKeys,
     toPairs,

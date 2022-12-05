@@ -451,11 +451,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             setJobFunctions([value[0]?.seo_value, ...jobFunctions])
           }
           break
-        case 'functionTitles':
-          if (!functionTitles.includes(value[0]?.seo_value)) {
-            setFunctionTitles([value[0]?.seo_value, ...functionTitles])
-          }
-          break
+        // case 'functionTitles':
+        //   if (!functionTitles.includes(value[0]?.seo_value)) {
+        //     setFunctionTitles([value[0]?.seo_value, ...functionTitles])
+        //   }
+        //   break
         default:
           break
       }
@@ -481,12 +481,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setMainfunctions(data.mainFunctions)
     setJobFunctions(data.jobFunctions)
     setFunctionTitles(data.functionTitles)
-    if (!data?.main_functions?.length && !data?.jobFunction?.length && data?.functionTitles?.length === 1) {
-      const value = functionTitleList.find(item => item.seo_value === data.functionTitles[0]).value
-      setSearchValue(value)
-      onKeywordSearch(value)
-      return
-    }
+    // if (!data?.main_functions?.length && !data?.jobFunction?.length && data?.functionTitles?.length === 1) {
+    //   const value = functionTitleList.find(item => item.seo_value === data.functionTitles[0]).value
+    //   setSearchValue(value)
+    //   onKeywordSearch(value)
+    //   return
+    // }
     const { searchQuery, filterParamsObject = {} } = userFilterSelectionDataParser(
       'jobFunctions',
       data,

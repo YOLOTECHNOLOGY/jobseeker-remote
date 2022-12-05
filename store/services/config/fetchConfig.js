@@ -32,6 +32,7 @@ const fetchConfigService = () => {
         return {
           key: toSeo(item.value) + '-' + item.id,
           seo_value: toSeo(item.value) + '-' + item.id,
+          function_title_value: toSeo(item.value),
           value: item.value,
           id: item.id
         }
