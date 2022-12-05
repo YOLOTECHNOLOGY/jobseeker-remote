@@ -295,6 +295,7 @@ const JobFunctionMultiSelector = (props: any) => {
             <FormControl className={className} size='small'>
                 <MaterialTextField
                     value={textValue}
+                    autoComplete="off"
                     label={label}
                     onClick={e => {
                         e.preventDefault()
