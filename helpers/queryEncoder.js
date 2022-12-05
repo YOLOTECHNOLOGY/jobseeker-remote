@@ -1,4 +1,4 @@
-import { map, T, ap, memoizeWith, last, reduce, omit, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
+import { map, T, ap, memoizeWith,toLower, last, reduce, omit, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
 const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'industry', 'qualification', 'workExperience']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
@@ -221,9 +221,9 @@ const parseKeywordParams = config =>
         map(keywordMatches(config)),
         reduce(mergeLeft, {})
     )
-const keywordParser = cond([
+const keywordParser = pipe(toLower, cond([
     [test(/((\B|\b)-jobs-in-\b)/g), split('-jobs-in-')],
     [test(/((\B|\b)-jobs\b)/g), pipe(split('-jobs'), dropLast(1))],
     [equals('job-search'), always([])],
     [T, always([])]
-])
+]))
