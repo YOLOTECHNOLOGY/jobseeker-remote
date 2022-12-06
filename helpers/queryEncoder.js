@@ -1,4 +1,4 @@
-import { map, T, ap, memoizeWith,toLower, last, reduce, omit, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
+import { map, T, ap, memoizeWith, toLower, last, reduce, omit, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
 const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'industry', 'qualification', 'workExperience']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
@@ -66,9 +66,15 @@ export const userFilterSelectionDataParser = (field, optionValue, routerQuery, c
                 query => {
                     const newQuery = { ...query }
                     const dropId = query.functionTitles.split('-')
-                    dropId.pop()
-                    newQuery.query = dropId.join('-'),
-                        delete newQuery['functionTitles']
+                    const heads = [...dropId]
+                    const tail = heads.pop()
+                    if (test(/^[1-9]\d*$/, tail)) {
+                        console.log({ tail })
+                        newQuery.functionTitles = heads.join('-')
+                    } else {
+                        newQuery.query = newQuery.functionTitles
+                    }
+                    delete newQuery['functionTitles']
                     return newQuery
                 },
                 identity,

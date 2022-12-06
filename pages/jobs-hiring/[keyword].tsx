@@ -453,11 +453,18 @@ const JobSearchPage = (props: JobSearchPageProps) => {
             setSearchValue('')
           }
           break
-        // case 'functionTitles':
-        //   if (!functionTitles.includes(value[0]?.seo_value)) {
-        //     setFunctionTitles([value[0]?.seo_value, ...functionTitles])
-        //   }
-        //   break
+        case 'functionTitles':
+          // if (filterParamsObject.functionTitles?.includes?.(value[0]?.function_title_value)) {
+          //   console.log({ filterParamsObject,value,searchQuery })
+          //   filterParamsObject.functionTitles = filterParamsObject
+          //     .functionTitles?.split(',')
+          //     ?.filter(item => item !== value[0]?.function_title_value)?.join(',')
+          //   // setFunctionTitles([value[0]?.seo_value, ...functionTitles])
+          //   if(!filterParamsObject?.functionTitles){
+          //     delete filterParamsObject['functionTitles']
+          //   }
+          // }
+          // break
         default:
           break
       }

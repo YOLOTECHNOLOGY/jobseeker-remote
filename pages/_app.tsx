@@ -96,7 +96,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       router.events.off('routeChangeComplete', handleRouteComplete)
     }
   }, [])
-  console.log({router,isPageLoading})
   return (
     <>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
