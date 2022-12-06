@@ -3612,15 +3612,15 @@ imforbossjob@^0.0.501:
     antd "^4.23.3"
     imsdkweb "^0.0.13"
 
-imforbossjob@^0.0.511:
-  version "0.0.511"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.511.tgz#fe1161b200c3169348e389b422adb8278c66a528"
-  integrity sha512-F7oXHGGTFzQhMOCG7/0fQ93ADu+wG7EhdddCUnKP08DQSsdxvaAQs0L8oNkJG28DhzQpefGwjipkp3AsVPaCDQ==
+imforbossjob@^0.0.514:
+  version "0.0.514"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.514.tgz#443c734205f34d147580e13e506b1f2509271f2e"
+  integrity sha512-OWqOpWqgtyj/+2D54o2SPCvjKvjjDFh/+/siZWWfFu4NTmGCy4L5pS3F7MeE9occaPrduMQANv4sKlOr2bab6Q==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     antd "^4.23.3"
     imforbossjob "^0.0.501"
-    imsdkweb "^0.0.13"
+    imsdkweb "^0.0.14"
 
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   version "3.3.0"
@@ -3647,6 +3647,30 @@ imsdkweb@^0.0.13:
     mobx "^5.15.4"
     mobx-react "^6.3.1"
     moment "^2.29.4"
+    react "^17.0.0"
+    react-dom "^17.0.0"
+    react-router-dom "^4.2.2"
+    sha1 "^1.1.1"
+    viewerjs "^1.11.0"
+
+imsdkweb@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.14.tgz#e756cebb17e6740a58d88af7e1de49afaeb50e92"
+  integrity sha512-IwmqkF3zWcoh7Nz1JpNRF1GyVA6nV+T+NccyjcYAzz8FLWAy6Ibrw9oy8QHVSAkf1g3P54+6DJ+Y1UFTeKD6fA==
+  dependencies:
+    "@aws-sdk/client-s3" "^3.3.0"
+    "@aws-sdk/lib-storage" "^3.18.0"
+    "@aws-sdk/s3-request-presigner" "^3.3.0"
+    ali-oss "^6.17.1"
+    axios "^0.18.0"
+    buffer "^6.0.3"
+    crypto-js "^4.1.1"
+    dexie "^3.0.3"
+    lodash "^4.17.21"
+    mobx "^5.15.4"
+    mobx-react "^6.3.1"
+    moment "^2.29.4"
+    nanoid "^4.0.0"
     react "^17.0.0"
     react-dom "^17.0.0"
     react-router-dom "^4.2.2"
@@ -4240,6 +4264,11 @@ nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
+
+nanoid@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-4.0.0.tgz#6e144dee117609232c3f415c34b0e550e64999a5"
+  integrity sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==
 
 natural-compare@^1.4.0:
   version "1.4.0"
