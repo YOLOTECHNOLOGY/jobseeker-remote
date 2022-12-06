@@ -77,12 +77,12 @@ const EditWorkExperienceModal = ({
   const locList = getLocationList(config)
   const jobCategoryList = getJobCategoryList(config)
   const industryList = getIndustryList(config)
-  const countryList = getCountryList(config)
+  const countryList = getCountryList(config)?.map(item => ({ value: item.key, label: item.value }))
 
   const [jobTitle, setJobTitle] = useState('')
   const [companyName, setCompanyName] = useState('')
   const [location, setLocation] = useState(null)
-  const [country, setCountry] = useState('')
+  const [country, setCountry] = useState<any>({})
   const [isShowCountry, setIsShowCountry] = useState(false)
   const [isCurrentJob, setIsCurrentJob] = useState(false)
   const [workPeriodFrom, setWorkPeriodFrom] = useState(null)
@@ -116,7 +116,7 @@ const EditWorkExperienceModal = ({
       setIsNextDisabled(data.length > 0 ? false : true)
     }
   }, [data])
-
+  console.log({ country, countryList })
   useEffect(() => {
     if (data) {
       setJobTitle(data.job_title)
@@ -132,9 +132,10 @@ const EditWorkExperienceModal = ({
             (industry) => industry.label === data.company_industry
           )[0].value
         )
+      console.log({ data })
       if (data.location && data.location.toLowerCase() === 'overseas') {
         setCountry(
-          countryList.filter((country) => country.key === data.country_key)
+          countryList.find((country) => country.value === data.country_key)
         )
         setIsShowCountry(true)
       }
@@ -203,11 +204,11 @@ const EditWorkExperienceModal = ({
     const workExperienceData = {
       job_title: jobTitle,
       company: companyName,
-      country_key: country || 'ph',
+      country_key: country?.value || 'ph',
       company_industry_key: matchedIndustry?.[0]?.key || null,
       is_currently_work_here: isCurrentJob,
-      function_job_title:jobFunction.value,
-      function_job_title_id:jobFunction.id,
+      function_job_title: jobFunction.value,
+      function_job_title_id: jobFunction.id,
       salary: salary ? Number(salary) : null,
       working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
       working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
@@ -235,7 +236,7 @@ const EditWorkExperienceModal = ({
     setCountry('')
     setIsShowCountry(false)
     setDescription('')
-    setJobFunction({id:undefined,value:''})
+    setJobFunction({ id: undefined, value: '' })
     setHasErrorOnFromPeriod(false)
     setHasErrorOnToPeriod(false)
     setShowErrorToComplete(false)
@@ -311,8 +312,8 @@ const EditWorkExperienceModal = ({
                   <MaterialBasicSelect
                     className={styles.fullWidth}
                     label={requiredLabel('Country')}
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
+                    value={(country as any)?.value}
+                    onChange={(e) => setCountry(countryList.find(item => item.value === e.target.value))}
                     error={errors.country ? true : false}
                     options={countryList}
                   />
