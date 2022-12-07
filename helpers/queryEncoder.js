@@ -70,11 +70,12 @@ export const userFilterSelectionDataParser = (field, optionValue, routerQuery, c
                     const tail = heads.pop()
                     if (test(/^[1-9]\d*$/, tail)) {
                         console.log({ tail })
-                        newQuery.functionTitles = heads.join('-')
+                        newQuery.query = heads.join('-')
                     } else {
                         newQuery.query = newQuery.functionTitles
                     }
                     delete newQuery['functionTitles']
+                    console.log({newQuery})
                     return newQuery
                 },
                 identity,

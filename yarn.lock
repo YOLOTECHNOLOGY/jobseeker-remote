@@ -3603,10 +3603,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.0.525:
-  version "0.0.525"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.525.tgz#ecd09a5aebdc2b39f4edd56c8d1a500d9e949e7e"
-  integrity sha512-5J+i2e99BeCbblEhXhzIdm/0+M0WcgNMvTID59wnE9QiEcmBbhcUGktxThH13Z/MRrPs+YLs6TGKDjeIxEaIqQ==
+imforbossjob@^0.0.526:
+  version "0.0.526"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.526.tgz#bc2b0d7539ae532b1eb84e523ca3de0232123bef"
+  integrity sha512-+JmvUj878oJ1QkPT0o9utRDhMXZ14+v5+LPxB049MWK4vHgB0Np7nPBfq8A9T/xJJpjAf/sP1WRg2IVmFLoW9w==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     antd "^4.23.3"
