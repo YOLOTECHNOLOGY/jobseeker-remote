@@ -45,7 +45,9 @@ const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
             searchQuery: [prop('query'), prop('location'), always('')].reduce(either)
         })),
         applySpec({
-            filterCount: totalOf(isMobile ? userSelectKeys : ['industry', 'workExperience', 'qualification'])
+            filterCount: totalOf(isMobile ?
+                userSelectKeys.filter(key => !(['mainFunctions', 'jobFunctions', 'functionTitles'].includes(key)))
+                : ['industry', 'workExperience', 'qualification'])
         })]), reduce(mergeLeft, {}))([routerQuery])
 
     return result
@@ -75,7 +77,7 @@ export const userFilterSelectionDataParser = (field, optionValue, routerQuery, c
                         newQuery.query = newQuery.functionTitles
                     }
                     delete newQuery['functionTitles']
-                    console.log({newQuery})
+                    console.log({ newQuery })
                     return newQuery
                 },
                 identity,
