@@ -3603,14 +3603,14 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.0.526:
-  version "0.0.526"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.526.tgz#bc2b0d7539ae532b1eb84e523ca3de0232123bef"
-  integrity sha512-+JmvUj878oJ1QkPT0o9utRDhMXZ14+v5+LPxB049MWK4vHgB0Np7nPBfq8A9T/xJJpjAf/sP1WRg2IVmFLoW9w==
+imforbossjob@^0.0.538:
+  version "0.0.538"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.538.tgz#52cff2d065d12d8509952ce8d6c26ab71e772230"
+  integrity sha512-6sVajn2zRAIaxzBsqDAdtN/GZPpsC8U3O1Zik4OStJHWCJKjWUknsiz1Z91UFFdEoRQkFUgKW6wvJuN2LdNPtQ==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     antd "^4.23.3"
-    imsdkweb "^0.0.15"
+    imsdkweb "^0.0.16"
 
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   version "3.3.0"
@@ -3620,10 +3620,10 @@ import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
 
-imsdkweb@^0.0.15:
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.15.tgz#680abfed69577394f6aa58d8e4aecd9a058e89a2"
-  integrity sha512-4NdM8s/i5jJIvlRbT2opLKjDd1ucAl7iu3CpY5gs3W+2QAKMfmnEiWwR4ohJp2s9Qmr6TCTAFB7/KJSaXXsPPg==
+imsdkweb@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.16.tgz#5516892b514ee67c1a7aa5f00087f6acf6a9d674"
+  integrity sha512-MfI2sbRnsDlLclFoEbmG/hFwM6U5f/mtsG/OjU7FsOAkOgAi2nQcIkgm9bpMiMGNqHrzj1ZHy0a5hmQSWcEnkQ==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
