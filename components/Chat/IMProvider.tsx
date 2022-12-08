@@ -102,8 +102,10 @@ const IMProvider = ({ children }: any) => {
             return userDetailRef.current?.phone_num
         },
         updateData(data) {
-            contextRef.current.imState = data?.data?.job_application
-            setImState(data?.data?.job_application)
+            if (+data?.data?.id === +contextRef.current.getChatId()) {
+                contextRef.current.imState = data?.data?.job_application
+                setImState(data?.data?.job_application)
+            }
         },
         getChatId() {
             return chatIdRef.current
