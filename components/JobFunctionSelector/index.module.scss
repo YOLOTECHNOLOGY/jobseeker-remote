@@ -154,13 +154,13 @@
 
         .menuItem {
             width: 197px;
-            height: 60px !important;
+            height: 65px !important;
             background: #F0F0F0;
             font-family: 'Product Sans';
             font-style: normal;
             font-weight: 400;
             font-size: 16px;
-            line-height: 24px;
+            line-height: 16px;
             color: #353535;
             overflow: hidden;
             padding: 10px 25px;
@@ -203,7 +203,7 @@
                 justify-content: center;
                 // align-items: center;
                 height: 100%;
-                // display: -webkit-box;
+                 display: -webkit-box;
                 text-overflow: ellipsis;
                 // width: 100px;
                 // white-space: nowrap;
@@ -213,8 +213,8 @@
 
                 overflow: hidden;
 
-                word-wrap: break-word;
-                word-break: break-all;
+                word-wrap: normal;
+                 word-break: break-word;
 
                 @include sm {
                     font-size: 14px;

@@ -70,7 +70,7 @@ const formatLocationConfig = (locationList) => {
   return locationConfig
 }
 
-const MaterialLocationField = ({ className, label, defaultValue, fieldRef, error, ...rest }: any) => {
+const MaterialLocationField = ({ className, label, defaultValue,required, fieldRef, error, ...rest }: any) => {
   // const [selectedLocation, setSelectedLocation] = useState(defValue.value)
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
@@ -96,7 +96,7 @@ const MaterialLocationField = ({ className, label, defaultValue, fieldRef, error
               error={!!error} 
               required={rest.required}
               helperText={error?.message}
-              label={label ? label : 'Location'} variant='outlined' size='small' {...params} />
+              label={<span>{label ? label : 'Location'} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>} variant='outlined' size='small' {...params} />
           </ThemeProvider>
         )}
         defaultValue={defaultValue}

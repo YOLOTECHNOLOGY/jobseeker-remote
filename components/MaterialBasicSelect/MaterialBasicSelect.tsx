@@ -90,15 +90,14 @@ const MaterialBasicSelect = ({
   })
   return (
     <ThemeProvider theme={theme}>
-      <FormControl className={className} size='small' required={required} error={!!error}>
-        <InputLabel id={`${id}-select-label`}>{label}</InputLabel>
+      <FormControl className={className} size='small' error={!!error}>
+        <InputLabel id={`${id}-select-label`}>{<span>{label} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>}</InputLabel>
         <Select
           {...fieldRef}
           labelId={`${id}-select-label`}
           id={id}
           value={value}
           label={label}
-          required={required}
           onChange={handleChange}
           onOpen={onOpen}
           disabled={disabled}
