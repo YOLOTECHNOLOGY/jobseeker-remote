@@ -1,7 +1,7 @@
 import { FormControl, MenuList, Paper } from "@mui/material"
 import MaterialTextField from "components/MaterialTextField"
 import Modal from '@mui/material/Modal';
-import { useCallback, useEffect, useMemo,  useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import styles from './index.module.scss'
 import TopBar from './topBar'
 import { useSelector } from "react-redux";
@@ -9,6 +9,18 @@ import { flatMap, flatMapDeep, keys, assign, values, groupBy } from 'lodash-es'
 import { Plus, Minus } from "images";
 import Text from "components/Text";
 import classNames from "classnames";
+const formatMenuText = (text) => {
+    if (text.length <= 16) {
+        return text
+    }
+    const lastIndex = text.lastIndexOf('/')+1
+    if(lastIndex!==-1){
+        const newText = text.slice(0,lastIndex) + '\n' + text.slice(lastIndex,text.length+lastIndex)
+        console.log({newText,text})
+        return newText
+    }
+    return text
+}
 const JobFunctionSelector = (props: any) => {
     const { value, jobTitle = '', className, title, onChange, isTouched, onBlur, ...rest } = props
     const [showModal, setShowModal] = useState(false)
@@ -102,7 +114,7 @@ const JobFunctionSelector = (props: any) => {
                                         setSelectedKey(key)
                                     }}
                                 >
-                                    <div className={styles.itemText}>{key}</div>
+                                    <label className={styles.itemText}>{formatMenuText(key)}</label>
                                 </div>
                             })}
 

@@ -148,19 +148,19 @@
         padding-top: 0px;
 
         @include sm {
-            width: 120px;
+            width: 160px;
             border-right: 0.5px solid #BCBCBC;
         }
 
         .menuItem {
             width: 197px;
-            height: 65px !important;
+            height: 75px !important;
             background: #F0F0F0;
             font-family: 'Product Sans';
             font-style: normal;
             font-weight: 400;
             font-size: 16px;
-            line-height: 16px;
+            line-height: 20px;
             color: #353535;
             overflow: hidden;
             padding: 10px 25px;
@@ -195,26 +195,21 @@
             }
 
             .itemText {
-                position: relative;
                 overflow-wrap: break-word;
                 width: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                // align-items: center;
+                align-items: flex-start;
                 height: 100%;
-                 display: -webkit-box;
                 text-overflow: ellipsis;
-                // width: 100px;
-                // white-space: nowrap;
-                // -webkit-box-orient: vertical;
-                // height: 100%;
-                // -webkit-line-clamp: 2!important;
-
+                white-space: pre-wrap;
+                height: 100%;
+                vertical-align: middle;
                 overflow: hidden;
-
+                text-align: left;
                 word-wrap: normal;
-                 word-break: break-word;
+                word-break: keep-all;
 
                 @include sm {
                     font-size: 14px;
