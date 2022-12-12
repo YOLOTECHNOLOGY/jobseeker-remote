@@ -107,14 +107,19 @@
     align-items: flex-start;
     border-bottom: 1px solid $lightgrey;
     padding-bottom: 20px;
-
+    width: 100%;
+    overflow: hidden;
     p {
       margin: 0;
     }
   }
-
+  &Info{
+    width: 100%;
+  }
   &Description {
-
+    white-space: normal;
+    overflow: hidden;
+    word-wrap: break-word;
     ul,
     ol {
       display: block;

@@ -50,6 +50,7 @@ import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
 import { handleNumericInput } from '../../helpers/handleInput'
 import JobFunctionSelector from 'components/JobFunctionSelector'
+import ReadMore from 'components/ReadMore'
 
 const Step3 = (props: any) => {
   const quickUpladResumeType = getItem('quickUpladResume')
@@ -442,7 +443,7 @@ const Step3 = (props: any) => {
       inline: 'nearest'
     })
   }
-
+  console.log({ workExperience })
   return (
     <OnBoardLayout
       headingText={
@@ -476,7 +477,11 @@ const Step3 = (props: any) => {
                 </Text>
                 <br />
                 <Text textStyle='base' tagName='p'>
-                  {experience?.company + ' | ' + location?.value + ',' + (countryLabel || 'Philippines')}
+                  {experience?.company
+                    +
+                    ' | '
+                    + (location?.value ? location?.value + ',' : '')
+                    + (experience?.country || 'Philippines')}
                 </Text>
 
                 <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
@@ -485,7 +490,7 @@ const Step3 = (props: any) => {
                     const month = to.diff(from, 'month') - years * 12
                     return `${from?.format?.('MMMM yyyy')}-${experience?.is_currently_work_here
                       ? 'Present'
-                      : to?.format?.('MMMM yyyy')}(${years?`year${years !== 1 ? 's ' : ' '}`:''}${month?`month${month !== 1 ? 's' : ''}`:''})`
+                      : to?.format?.('MMMM yyyy')}(${years||''}${years ? `year${years !== 1 ? 's ' : ' '}` : ''}${month||''}${month ? `month${month !== 1 ? 's' : ''}` : ''})`
                   })(moment(
                     experience?.working_period_from),
                     experience?.is_currently_work_here ? moment() : moment(experience.working_period_to
@@ -493,9 +498,9 @@ const Step3 = (props: any) => {
                 </Text>
 
                 <br />
-                <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
+                {(experience?.function_job_title ?? null) && <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
                   Job function: {experience?.function_job_title}
-                </Text>
+                </Text>}
 
                 {experience?.company_industry && (
                   <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
@@ -509,15 +514,16 @@ const Step3 = (props: any) => {
                 )} */}
                 <br />
                 {experience?.description && (
-                  <>
+                  <div className={styles.stepDataDescription} >
                     <Text textStyle='base' tagName='p'>
                       Description:{' '}
                     </Text>
-                    <div
+                    <ReadMore size={350} text={experience.description} />
+                    {/* <div
                       className={styles.stepDataDescription}
                       dangerouslySetInnerHTML={{ __html: experience.description }}
-                    />
-                  </>
+                    /> */}
+                  </div>
                 )}
               </div>
               <div className={styles.stepDataActions}>
