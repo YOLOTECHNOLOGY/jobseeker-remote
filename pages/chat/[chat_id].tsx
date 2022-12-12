@@ -34,7 +34,7 @@ const Chat = () => {
     const [status, setStatus] = useState('')
     const searchParams = useMemo(() => {
         return {
-            status,
+            type:status,
             unread: isUnreadOn ? '1' : '0'
         }
     }, [isUnreadOn, status])
