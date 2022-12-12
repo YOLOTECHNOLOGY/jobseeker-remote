@@ -1,6 +1,6 @@
 /* eslint-disable new-cap */
 import { scripts, M } from 'imforbossjob'
-import { confirm } from './services/confirmLocation'
+import { confirm,decline } from './services/confirmLocation'
 const { utils,
     //  confirmLocationJobseeker: { DetailActions } 
     } = scripts
@@ -16,14 +16,10 @@ export default command => command.cata({
             .finally(() => context.setLoading(false))
     }),
     declineRequest: () => M(context => {
-        // const applicationId = context.getApplicationId()
-        // const confirmLocationId = context.getState()?.location_confirmation?.id
+        const applicationId = context.getApplicationId()
+        const confirmLocationId = context.getState()?.location_confirmation?.id
         context.setLoading(true)
-        return new Promise((res) => {
-            setTimeout(() => {
-                res({ mockSuccess: '' })
-            }, 2000)
-        })
+        return decline(applicationId, confirmLocationId)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
