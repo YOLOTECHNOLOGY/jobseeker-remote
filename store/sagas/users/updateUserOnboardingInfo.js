@@ -148,6 +148,7 @@ function* updateUserOnboardingInfoReq({ payload }) {
       yield completeUserProfileSaga(redirect, accessToken)
     }
   } catch (error) {
+    console.log({ error })
     const isServerError = checkErrorCode(error)
     if (isServerError) {
       yield put(
@@ -206,12 +207,13 @@ function* fetchUserEducationServiceSaga(accessToken) {
   }
 }
 
-function* completeUserProfileSaga(redirect, accessToken) {
+function* completeUserProfileSaga(redirect, token) {
   try {
+    const accessToken = token || getCookie('accessToken')
     const { data } = yield call(completeUserProfileService, { accessToken })
     yield put(completeUserProfileSuccess(data.data))
     const userCookie = getCookie('user')
-    const accessToken = getCookie('accessToken')
+    //const accessToken = getCookie('accessToken')
 
     userCookie.is_profile_completed = true
 
