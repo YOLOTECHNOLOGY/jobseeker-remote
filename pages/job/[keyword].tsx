@@ -438,6 +438,8 @@ const Job = ({
       setOpenRegister(true)
     } else if (jobDetail?.external_apply_url) {
       addExternalJobClickService(jobDetail?.id)
+      const link = getApplyJobLink(jobDetail,userCookie)
+      window.open(link)
     } else if (chatDetail.is_exists) {
       if (chatDetail.job_id !== jobDetail?.id) {
         setShowModal(true)

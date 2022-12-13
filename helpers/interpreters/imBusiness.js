@@ -9,8 +9,8 @@ export default command => command.cata({
     })),
     requestFirst: () => M(context => {
         context.setLoading(true)
-        const applicationId = context.getApplicationId()
-        return requestFirstService(applicationId)
+        const chatId = context.getChatId()
+        return requestFirstService(chatId)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))

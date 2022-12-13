@@ -97,7 +97,11 @@ const IMProvider = ({ children }: any) => {
         },
         updateData(data) {
             if (+data?.data?.id === +contextRef.current.getChatId()) {
-                const newData = { ...data?.data?.job_application, initiated_role: data?.data?.initiated_role }
+                const newData = {
+                    ...data?.data?.job_application,
+                    initiated_role: data?.data?.initiated_role,
+                    chatStatus: data?.data?.status
+                }
                 contextRef.current.imState = newData
                 setImState(newData)
             }

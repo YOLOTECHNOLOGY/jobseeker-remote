@@ -1335,9 +1335,9 @@ const ManageProfilePage = ({ config }: any) => {
           <RenderProfileView userDetail={userDetail} handleModal={handleModal} config={config} />
         )}
         {tabValue === 'job-preferences' && <div>
-          <div className={styles.sectionContainer}>
+          <div className={styles.sectionContainer} style={{paddingBottom:0}}>
 
-            <div className={styles.sectionHeader}>
+            <div className={styles.sectionHeader} >
               <Text bold textColor='primaryBlue' textStyle='xl'>
                 Availability
               </Text>

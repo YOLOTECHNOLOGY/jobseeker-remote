@@ -1,7 +1,7 @@
 import configuredAxios from '../../configuredAxios'
 // eslint-disable-next-line no-undef
-export const requestFirstService = applicationId => {
+export const requestFirstService = chatId => {
   const axios = configuredAxios('jobApplication', 'protected')
-  return axios.get(`job-applications/${applicationId}/chats/first/recruiters`)
+  return axios.put(`/chats/${chatId}/jobseekers/process`)
 }
 
