@@ -39,6 +39,24 @@ const PublicHeader = () => {
                     Jobs
                   </Text>
                 </Link> */}
+                {router.route !== '/chat/[chat_id]' ? (
+                  <Link title='Chats' to='/chat/list'>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      Chats
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    textColor='darkGrey'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
+                    Chats
+                  </Text>
+                )}
                 {router.route !== '/jobs-hiring/[keyword]' ? (
                   <Link title='Jobs' to='/jobs-hiring/job-search'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>

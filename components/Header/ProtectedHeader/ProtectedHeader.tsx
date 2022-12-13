@@ -70,6 +70,26 @@ const ProtectedHeader = () => {
         <div className={styles.headerLinksWrapper}>
           <ul className={styles.headerLinksList}>
             <React.Fragment>
+            <li className={styles.headerLink}>
+                {router.route !== '/chat/[chat_id]' ? (
+                  <Link title='Jobs' to='/chat/list'>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      Chats
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    textColor='darkGrey'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
+                    Chats
+                  </Text>
+                )}
+              </li>
               <li className={styles.headerLink}>
                 {router.route !== '/jobs-hiring/[keyword]' ? (
                   <Link title='Jobs' to='/jobs-hiring/job-search'>

@@ -6,6 +6,7 @@ import notInterest from './notInterest'
 import interview from './interview'
 import phrases from './commonPhrases'
 import confirmLocation from './confirmLocation'
+import imBusiness from './imBusiness'
 import { cond } from 'lodash-es'
 const {
     utils,
@@ -14,7 +15,8 @@ const {
     interviewJobseeker,
     notInterestJobseeker,
     commonPhrases,
-    confirmLocationJobseeker
+    confirmLocationJobseeker,
+    im
 } = scripts
 const { CommonActions } = utils
 const { Actions: ResponseResumeActions } = responseResumeJobseeker
@@ -23,6 +25,7 @@ const { Actions: InterviewActions } = interviewJobseeker
 const { Actions: NotInterestActions } = notInterestJobseeker
 const { Actions: CommonPhrasesActions } = commonPhrases
 const { Actions: ConfirmLocationActions } = confirmLocationJobseeker
+const { IMBusinessActions } = im
 
 
 export default cond([
@@ -32,8 +35,8 @@ export default cond([
     [InterviewActions.is, interview],
     [NotInterestActions.is, notInterest],
     [CommonPhrasesActions.is, phrases],
-    [ConfirmLocationActions.is, confirmLocation]
-
+    [ConfirmLocationActions.is, confirmLocation],
+    [IMBusinessActions.is, imBusiness]
 ])
 
 

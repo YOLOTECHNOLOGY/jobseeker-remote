@@ -43,6 +43,11 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
           <div className={styles.headerLinksWrapper}>
             <ul className={styles.headerLinksList}>
               <React.Fragment>
+              <li className={styles.headerLink}>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    Chats
+                  </Text>
+                </li>
                 <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Jobs

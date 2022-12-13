@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState, useMemo } from 'react'
 import interpreters from 'helpers/interpreters'
 import { useRouter } from 'next/router'
 import Layout from 'components/Layout'
-import styles from './index.module.scss'
 import { IMContext } from 'components/Chat/IMProvider'
 import dynamic from 'next/dynamic'
 import { wrapper } from 'store'
@@ -11,7 +10,6 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { END } from 'redux-saga'
 import { list } from 'helpers/interpreters/services/chat'
-import { isMobile } from 'react-device-detect'
 const JobseekerChat = dynamic<any>(import('components/Chat'), {
     ssr: false
 })
@@ -71,7 +69,6 @@ const Chat = () => {
         }
     }, [chatId])
     return <Layout isHiddenFooter isHiddenHeader={mobile}>
-        <div className={isMobile ? styles.mobile : styles.pcWeb}>
             <JobseekerChat
                 key='jobchat'
                 loading={loading}
@@ -88,7 +85,6 @@ const Chat = () => {
                 userId={userId}
                 businessInterpreters={interpreters}
             />
-        </div>
     </Layout>
 }
 export const getServerSideProps = wrapper.getServerSideProps(

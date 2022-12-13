@@ -34,7 +34,7 @@ const IMProvider = ({ children }: any) => {
         }
         return () => window.onresize = old
     }, [])
-   
+
     const accessToken = getCookie('accessToken')
     const applicationId = useMemo(() => {
         return imState?.id ? `${imState.id}` : ''
@@ -97,8 +97,9 @@ const IMProvider = ({ children }: any) => {
         },
         updateData(data) {
             if (+data?.data?.id === +contextRef.current.getChatId()) {
-                contextRef.current.imState = data?.data?.job_application
-                setImState(data?.data?.job_application)
+                const newData = { ...data?.data?.job_application, initiated_role: data?.data?.initiated_role }
+                contextRef.current.imState = newData
+                setImState(newData)
             }
         },
         getChatId() {
@@ -121,7 +122,8 @@ const IMProvider = ({ children }: any) => {
                     severity: type
                 })
             )
-        }
+        },
+        self_role: 'jobseeker'
     } as any)
 
     return <Provider value={{
