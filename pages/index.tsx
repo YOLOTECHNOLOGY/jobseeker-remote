@@ -891,7 +891,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
     props: {
       topCompanies,
     },
-    revalidate: 10
+   // revalidate: 10
   }
 })
 

@@ -212,7 +212,7 @@ const getSmsCountryList = (config) => {
   if (!config) return []
 
   const smsCountryList = []
-  const countryList = config?.inputs?.country_lists
+  const countryList = config?.inputs?.country_lists ?? []
   countryList.forEach((country) => {
     if (country.is_sms_allowed) {
       const smsCountry = {

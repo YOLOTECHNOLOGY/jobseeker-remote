@@ -9,7 +9,7 @@ import dayjs from 'dayjs'
 
 const cached = (data) => {
   if (typeof window !== 'undefined') {
-    localStorage.setItem('cachedConfig', data)
+    localStorage.setItem('cachedConfig', JSON.stringify(data))
     localStorage.setItem('configRefreshTime', dayjs().format('YYYY-MM-DD'))
   } else {
     globalThis.cachedConfig = data
@@ -19,7 +19,7 @@ const cached = (data) => {
 
 const load = () => {
   if (typeof window !== 'undefined') {
-    const data = localStorage.getItem('cachedConfig')
+    const data = JSON.parse(localStorage.getItem('cachedConfig'))
     const time = localStorage.getItem('configRefreshTime')
     return { data, time }
   } else {

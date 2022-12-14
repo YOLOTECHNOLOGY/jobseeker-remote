@@ -934,7 +934,13 @@ const initPagePayLoad = async (query, config = null) => {
   const queryCategory: any = query?.category
   const queryVerifiedCompany: any = query?.verifiedCompany
 
-  const { searchQuery, matchedLocation, matchedConfigFromUrl } = checkFilterMatch(query, config)
+  const { searchQuery, matchedLocation, matchedConfigFromUrl } = useMemo(() => {
+    if (config?.inputs?.location_lists?.length > 0) {
+      return checkFilterMatch(query, config)
+    } else {
+      return { searchQuery: '', matchedLocation: '', matchedConfigFromUrl: [] }
+    }
+  }, [query, config])
 
   const defaultValues: any = {
     urlQuery: searchQuery,
@@ -1022,7 +1028,7 @@ const initPagePayLoad = async (query, config = null) => {
     }
   }
 
-  return { defaultValues, payload, config }
+  return { defaultValues, payload }
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -1031,14 +1037,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
 
       const { keyword, page } = query
-      store.dispatch({type:'JOB_HIRED_SERVER_SIDE',payload:query})
+      store.dispatch({ type: 'JOB_HIRED_SERVER_SIDE', payload: query })
       store.dispatch(END)
       await (store as any).sagaTask.toPromise()
       const storeState = store.getState()
       const config = storeState.config.config.response
       // console.log({storeState})
-      const { defaultValues } = await initPagePayLoad(query, config)
-
+      const defaultValues = storeState?.job?.jobHiredDefaultValues
+      console.log({ defaultValues })
       // store actions
       // store.dispatch(fetchJobsListRequest(initPayload, accessToken))
       // store.dispatch(fetchConfigRequest())
@@ -1048,7 +1054,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
       // store.dispatch(END)
       // await (store as any).sagaTask.toPromise()
-      
+
       // const config = storeState.config.config.response
       const featuredCompanies =
         storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(

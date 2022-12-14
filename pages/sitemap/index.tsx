@@ -21,9 +21,9 @@ const PublicSitemap = () => {
   const [salaryList, setSalaryList] = useState([])
   const config = useSelector((store: any) => store?.config?.config?.response)
   const dispatch = useDispatch()
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(fetchConfigRequest())
-  },[])
+  }, [])
   useEffect(() => {
     if (config) {
       const locationList =
@@ -74,15 +74,14 @@ const PublicSitemap = () => {
         })
 
       const jobTypeList =
-        config &&
-        config.inputs.job_types &&
-        config.inputs.job_types.map((type) => {
+
+        config?.inputs.job_types?.map?.((type) => {
           return {
             key: type['seo-value'],
             label: type.value,
             value: type.value
           }
-        })
+        }) ?? []
 
       const salaryList =
         config &&
