@@ -437,7 +437,7 @@ const Job = ({
     }
   }, [jobDetail])
   const handleChat = () => {
-    if (!userCookie) {
+    if (!userCookie || !authCookie) {
       sessionStorage.setItem('isChatRedirect', `/chat-redirect/${jobDetail?.id}`)
       setOpenRegister(true)
     } else if (jobDetail?.external_apply_url) {
@@ -1291,7 +1291,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
     return {
       props: {
-
         jobDetail: jobDetail?.id ? jobDetail : appliedJobDetail?.job,
         applicationHistory: appliedJobDetail?.application_histories || null,
         accessToken,
