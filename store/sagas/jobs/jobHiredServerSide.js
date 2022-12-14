@@ -1,6 +1,6 @@
 import { getCookie } from 'helpers/cookies'
-import { flat } from 'helpers/formatter'
-import { checkFilterMatch } from 'helpers/jobPayloadFormatter'
+import { flat, unslugify } from 'helpers/formatter'
+import { checkFilterMatch, mapSeoValueToGetValue } from 'helpers/jobPayloadFormatter'
 import { put, takeLatest, select } from 'redux-saga/effects'
 import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
 import { fetchConfigRequest, fetchConfigSuccess } from 'store/actions/config/fetchConfig'
@@ -16,14 +16,15 @@ function* jobHiredServerSide(action) {
         const config = yield select(store => store.config.config.response)
         const accessToken = getCookie('accessToken')
         const { defaultValues, payload: initPayload } = initPagePayLoad(action.payload, config)
-        yield put(setJobHiredDefaultValue(defaultValues))
+        const { searchQuery, predefinedQuery, predefinedLocation } = checkFilterMatch(action.payload, config)
+        yield put(setJobHiredDefaultValue({ searchQuery, predefinedQuery, predefinedLocation,defaultValues } ))
         yield put(fetchJobsListRequest(initPayload, accessToken))
 
         if (accessToken) {
             yield put(fetchUserOwnDetailRequest({ accessToken }))
         }
         yield put(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
-        yield put(fetchConfigSuccess(initialState.response))
+       // yield put(fetchConfigSuccess(initialState.response))
     } catch (error) {
         console.log({ error })
         // yield put(fetchSimilarJobsFailed(error))

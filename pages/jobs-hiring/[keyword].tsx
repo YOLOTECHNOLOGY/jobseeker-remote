@@ -65,6 +65,7 @@ import { fetchConfigService } from 'store/services/config/fetchConfig'
 import classNames from 'classnames'
 import { fetchUserDetailRequest } from 'store/actions/users/fetchUserDetail'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { initialState } from 'store/reducers/config/fetchConfig'
 
 interface JobSearchPageProps {
   seoMetaTitle: string
@@ -253,7 +254,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
   const userCookie = getCookie('user') || null
-  const config = useSelector((store: any) => store?.config?.config?.response)
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     dispatch(fetchConfigRequest())
+  //   }, 0)
+  // }, [])
+  const config = useSelector((store: any) => store?.config?.config?.response ?? initialState.response)
   const [clientDefaultValues, setClientDefaultValues] = useState(defaultValues || {})
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.location)
@@ -934,13 +940,7 @@ const initPagePayLoad = async (query, config = null) => {
   const queryCategory: any = query?.category
   const queryVerifiedCompany: any = query?.verifiedCompany
 
-  const { searchQuery, matchedLocation, matchedConfigFromUrl } = useMemo(() => {
-    if (config?.inputs?.location_lists?.length > 0) {
-      return checkFilterMatch(query, config)
-    } else {
-      return { searchQuery: '', matchedLocation: '', matchedConfigFromUrl: [] }
-    }
-  }, [query, config])
+  const { searchQuery, matchedLocation, matchedConfigFromUrl } = checkFilterMatch(query, config)
 
   const defaultValues: any = {
     urlQuery: searchQuery,
@@ -1041,10 +1041,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       store.dispatch(END)
       await (store as any).sagaTask.toPromise()
       const storeState = store.getState()
-      const config = storeState.config.config.response
-      // console.log({storeState})
-      const defaultValues = storeState?.job?.jobHiredDefaultValues
-      console.log({ defaultValues })
+
+      const values = storeState?.job?.jobHiredDefaultValues
+      const { searchQuery, predefinedQuery, predefinedLocation, defaultValues } = values
+      /* Handle job search logic */
       // store actions
       // store.dispatch(fetchJobsListRequest(initPayload, accessToken))
       // store.dispatch(fetchConfigRequest())
@@ -1068,8 +1068,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         return { ...featuredCompany, logoUrl, companyUrl }
       })
 
-      /* Handle job search logic */
-      const { searchQuery, predefinedQuery, predefinedLocation } = checkFilterMatch(query, config)
+
 
       /* Handle SEO Meta Tags*/
       const { month, year } = getCurrentMonthYear()
