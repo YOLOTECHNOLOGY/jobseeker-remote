@@ -109,17 +109,21 @@
     padding-bottom: 20px;
     width: 100%;
     overflow: hidden;
+
     p {
       margin: 0;
     }
   }
-  &Info{
+
+  &Info {
     width: 100%;
   }
+
   &Description {
     white-space: normal;
     overflow: hidden;
     word-wrap: break-word;
+
     ul,
     ol {
       display: block;
@@ -134,10 +138,13 @@
     }
 
     p {
-      font-size: 14px;
-      color: $black;
-      font-weight: 300;
-      line-height: 20px;
+
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #353535;
     }
   }
 

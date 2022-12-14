@@ -475,7 +475,7 @@ const Step3 = (props: any) => {
                 <Text bold textStyle='base' tagName='p'>
                   {experience?.job_title}
                 </Text>
-                <br />
+                {/* <br /> */}
                 <Text textStyle='base' tagName='p'>
                   {experience?.company
                     +
@@ -490,7 +490,9 @@ const Step3 = (props: any) => {
                     const month = to.diff(from, 'month') - years * 12
                     return `${from?.format?.('MMMM yyyy')}-${experience?.is_currently_work_here
                       ? 'Present'
-                      : to?.format?.('MMMM yyyy')}(${years||''}${years ? `year${years !== 1 ? 's ' : ' '}` : ''}${month||''}${month ? `month${month !== 1 ? 's' : ''}` : ''})`
+                      : to?.format
+                        ?.('MMMM yyyy')
+                      } (${years || ''}${years ? `year${years !== 1 ? 's' : ''}` : ''}${month ? ' ' + month : ''}${month ? `month${month !== 1 ? 's' : ''}` : ''})`
                   })(moment(
                     experience?.working_period_from),
                     experience?.is_currently_work_here ? moment() : moment(experience.working_period_to
@@ -512,18 +514,19 @@ const Step3 = (props: any) => {
                     {formatSalary(experience?.salary)} per month
                   </Text>
                 )} */}
-                <br />
+
                 {experience?.description && (
-                  <div className={styles.stepDataDescription} >
-                    <Text textStyle='base' tagName='p'>
-                      Description:{' '}
-                    </Text>
-                    <ReadMore size={350} text={experience.description} />
-                    {/* <div
+                  <> <br />
+                    <div className={styles.stepDataDescription} >
+                      <Text textStyle='base' tagName='p'>
+                        Description:{' '}
+                      </Text>
+                      <ReadMore size={350} text={experience.description} />
+                      {/* <div
                       className={styles.stepDataDescription}
                       dangerouslySetInnerHTML={{ __html: experience.description }}
                     /> */}
-                  </div>
+                    </div></>
                 )}
               </div>
               <div className={styles.stepDataActions}>
