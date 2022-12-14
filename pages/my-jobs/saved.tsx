@@ -5,7 +5,7 @@ import { wrapper } from 'store'
 /* Components */
 import MyJobs from 'components/MyJobs'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react-transition-group/node_modules/@types/react'
+import { useEffect } from 'react'
 
 const Saved = (props: any) => {
   const { accessToken } = props

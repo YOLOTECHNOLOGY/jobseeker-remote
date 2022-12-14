@@ -7,7 +7,7 @@ import { wrapper } from 'store'
 
 /* Components */
 import MyJobs from 'components/MyJobs'
-import { useEffect } from 'react-transition-group/node_modules/@types/react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Applied = (props: any) => {
