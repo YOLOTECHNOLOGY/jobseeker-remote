@@ -242,7 +242,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     seoMetaTitle,
     seoMetaDescription,
     seoCanonical,
-    config,
+
     topCompanies,
     defaultPage,
     defaultValues
@@ -253,7 +253,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
   const userCookie = getCookie('user') || null
-
+  const config = useSelector((store: any) => store?.config?.config?.response)
   const [clientDefaultValues, setClientDefaultValues] = useState(defaultValues || {})
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [urlLocation, setUrlLocation] = useState(defaultValues?.location)
@@ -1109,7 +1109,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       return {
         props: {
-          config,
           topCompanies,
           key: keyword,
           defaultPage: page ? Number(page) : 1,
