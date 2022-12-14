@@ -34,7 +34,7 @@ import TextEditor from 'components/TextEditor/TextEditor'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 
 // Images
-import { InfoIcon, DeleteFilledIcon, CreateFilledIcon, AddOutlineIcon } from 'images'
+import { InfoIcon, AddOutlineIcon, PencilIcon, AccountSettingDeleteIconBin } from 'images'
 
 /* Helpers */
 import {
@@ -536,7 +536,7 @@ const Step3 = (props: any) => {
                     setSelectedExperience(experience)
                   }}
                 >
-                  <img src={CreateFilledIcon} width='18' height='18' />
+                  <img src={PencilIcon} width='22' height='22' />
                 </div>
                 <div
                   className={styles.stepDataActionItem}
@@ -544,7 +544,7 @@ const Step3 = (props: any) => {
                     handleDeleteExperience(experience.id, index)
                   }}
                 >
-                  <img src={DeleteFilledIcon} width='18' height='18' />
+                  <img src={AccountSettingDeleteIconBin} width='14' height='14' />
                 </div>
               </div>
             </div>

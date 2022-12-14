@@ -37,7 +37,7 @@ import { getCookie } from 'helpers/cookies'
 import { getItem } from 'helpers/localStorage'
 
 // Images
-import { DeleteFilledIcon, CreateFilledIcon, AddOutlineIcon } from 'images'
+import { AddOutlineIcon, PencilIcon, AccountSettingDeleteIconBin } from 'images'
 
 // Styles
 import styles from './Onboard.module.scss'
@@ -55,7 +55,7 @@ const Step4 = (props: any) => {
     ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1101'
 
-  const degreeList = getDegreeList(config)
+  const degreeList = getDegreeList(config)?.filter?.(item=>item.key!=="not_required")
   const countryList = getCountryList(config)
   const locList = getLocationList(config)
 
@@ -288,7 +288,7 @@ const Step4 = (props: any) => {
 
   const handleCancelForm = () => {
     setShowForm(false)
-    setIsNextDisabled(userEducations.length > 1 ? false : true)
+    setIsNextDisabled(userEducations.length >= 1 ? false : true)
 
     if (selectedEducation) {
       handleResetForm()
@@ -431,13 +431,13 @@ const Step4 = (props: any) => {
                     handleSelectEducation(education)
                   }}
                 >
-                  <img src={CreateFilledIcon} width='18' height='18' />
+                  <img src={PencilIcon} width='22' height='22' />
                 </div>
                 <div
                   className={styles.stepDataActionItem}
                   onClick={() => handleDeleteEducation(education.id)}
                 >
-                  <img src={DeleteFilledIcon} width='18' height='18' />
+                  <img src={AccountSettingDeleteIconBin} width='14' height='14' />
                 </div>
               </div>
             </div>
