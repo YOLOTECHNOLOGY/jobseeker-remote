@@ -1060,13 +1060,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
         storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(
           (featuredCompany) => featuredCompany.company
         )
-      const topCompanies = featuredCompanies?.map((featuredCompany) => {
+      
+      const topCompanies = featuredCompanies?.map?.((featuredCompany) => {
         const logoUrl = featuredCompany.logo_url
         const companyUrl = featuredCompany.company_url
         delete featuredCompany.logo_url
         delete featuredCompany.companyUrl
         return { ...featuredCompany, logoUrl, companyUrl }
-      })
+      }) ?? []
 
 
 
