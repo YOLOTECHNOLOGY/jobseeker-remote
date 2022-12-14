@@ -44,7 +44,7 @@ import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
 
 const Step4 = (props: any) => {
-  const { config, userDetail, accessToken } = props
+  const { userDetail, accessToken } = props
 
   const quickUpladResumeType = getItem('quickUpladResume')
   const currentStep = 4
@@ -54,8 +54,12 @@ const Step4 = (props: any) => {
   const backBtnUrl = router.query?.redirect
     ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1101'
+  const config = useSelector((store: any) => store?.config?.config?.response)
 
-  const degreeList = getDegreeList(config)?.filter?.(item=>item.key!=="not_required")
+  useEffect(() => {
+    dispatch(fetchConfigRequest())
+  }, [])
+  const degreeList = getDegreeList(config)?.filter?.(item => item.key !== "not_required")
   const countryList = getCountryList(config)
   const locList = getLocationList(config)
 
@@ -347,7 +351,7 @@ const Step4 = (props: any) => {
     if (isRegisterModuleRedirect && !quickUpladResumeType) {
       redirect = isRegisterModuleRedirect
     }
-    if(isChatRedirect){
+    if (isChatRedirect) {
       redirect = isChatRedirect
       sessionStorage.removeItem('isChatRedirect')
     }
@@ -689,17 +693,17 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     }
   }
 
-  store.dispatch(fetchConfigRequest())
+  // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const config = storeState.config.config.response
+  // const config = storeState.config.config.response
   const userDetail = storeState.users.fetchUserOwnDetail.response
 
   return {
     props: {
-      config,
+      // config,
       userDetail,
       accessToken
     }

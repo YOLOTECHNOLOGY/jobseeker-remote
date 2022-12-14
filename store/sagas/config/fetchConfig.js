@@ -5,10 +5,45 @@ import {
   fetchConfigFailed,
 } from 'store/actions/config/fetchConfig'
 import { fetchConfigService } from 'store/services/config/fetchConfig'
+import dayjs from 'dayjs'
+
+const cached = (data) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('cachedConfig', data)
+    localStorage.setItem('configRefreshTime', dayjs().format('YYYY-MM-DD'))
+  } else {
+    globalThis.cachedConfig = data
+    globalThis.configRefreshTime = dayjs().format('YYYY-MM-DD')
+  }
+}
+
+const load = () => {
+  if (typeof window !== 'undefined') {
+    const data = localStorage.getItem('cachedConfig')
+    const time = localStorage.getItem('configRefreshTime')
+    return { data, time }
+  } else {
+    return {
+      data: globalThis.cachedConfig,
+      time: globalThis.configRefreshTime
+    }
+  }
+}
+
 function* fetchConfigReq(action) {
   try {
-    const result = yield call(fetchConfigService, action.payload)
-    
+    const { data, time: lastDate } = load()
+    let result = data
+    if (!result) {
+      result = yield call(fetchConfigService, action.payload)
+      cached(result)
+    } else {
+      const daypassed = dayjs().diff(dayjs(lastDate), 'days')
+      if (daypassed > 3) {
+        result = yield call(fetchConfigService, action.payload)
+        cached(result)
+      }
+    }
     yield put(fetchConfigSuccess(result))
   } catch (error) {
     yield put(fetchConfigFailed(error))

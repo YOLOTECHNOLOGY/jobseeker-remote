@@ -1,29 +1,34 @@
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 // @ts-ignore
-import { END } from 'redux-saga'
 
 /* Action Creators */
 import { wrapper } from 'store'
 
 /* Components */
 import MyJobs from 'components/MyJobs'
+import { useEffect } from 'react-transition-group/node_modules/@types/react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Applied = (props: any) => {
-  const { accessToken, config } = props
-
+  const { accessToken } = props
+  const config = useSelector((store: any) => store?.config?.config?.response)
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(fetchConfigRequest())
+  },[])
   return <MyJobs category='applied' config={config} accessToken={accessToken} />
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies.accessToken
 
-  store.dispatch(fetchConfigRequest())
-  store.dispatch(END)
+  // store.dispatch(fetchConfigRequest())
+  // store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
-  const storeState = store.getState()
-  const config = storeState.config.config.response
+  // const storeState = store.getState()
+  // const config = storeState.config.config.response
 
   if (!accessToken) {
     return {
@@ -36,7 +41,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   return {
     props: {
       accessToken,
-      config
+      // config
     }
   }
 })

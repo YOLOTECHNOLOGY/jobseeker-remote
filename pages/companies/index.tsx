@@ -40,7 +40,10 @@ const Companies = () => {
   const [featuredCompany, setFeaturedCompany] = useState(null)
   const [totalPage, setTotalPage] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
-
+ 
+  useEffect(()=>{
+    dispatch(fetchConfigRequest())
+  },[])
   const featuredCompaniesResponse = useSelector(
     (store: any) => store.companies.fetchFeaturedCompaniesList.response
   )
@@ -49,7 +52,7 @@ const Companies = () => {
   const isFeaturedCompaniesFetching = useSelector(
     (store: any) => store.companies.fetchFeaturedCompaniesList.fetching
   )
-
+ 
   useEffect(() => {
     setCurrentPage(Number(page) || 1)
     dispatch(fetchFeaturedCompaniesListRequest({ page: Number(router.query.page) }))
@@ -217,7 +220,7 @@ const Companies = () => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
   const { page } = query
 
-  store.dispatch(fetchConfigRequest())
+  // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesListRequest({ page: Number(page) || 1 }))
   store.dispatch(END)
 

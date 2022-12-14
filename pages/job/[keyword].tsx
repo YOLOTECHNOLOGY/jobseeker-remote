@@ -106,7 +106,7 @@ import Modal from 'components/Modal'
 interface IJobDetail {
   jobDetail: any
   applicationHistory: any
-  config: any
+  // config: any
   accessToken: any
   seoMetaTitle: string
   seoMetaDescription: string
@@ -116,7 +116,7 @@ interface IJobDetail {
 const Job = ({
   jobDetail,
   applicationHistory,
-  config,
+  // config,
   accessToken,
   seoMetaTitle,
   seoMetaDescription,
@@ -124,6 +124,10 @@ const Job = ({
 }: IJobDetail) => {
 
   const dispatch = useDispatch()
+  const config = useSelector((store: any) => store?.config?.config?.response)
+  useEffect(() => {
+    dispatch(fetchConfigRequest())
+  }, [])
   const router = useRouter()
   const { width } = useWindowDimensions()
   const prevScrollY = useRef(0)
@@ -438,7 +442,7 @@ const Job = ({
       setOpenRegister(true)
     } else if (jobDetail?.external_apply_url) {
       addExternalJobClickService(jobDetail?.id)
-      const link = getApplyJobLink(jobDetail,userCookie)
+      const link = getApplyJobLink(jobDetail, userCookie)
       window.open(link)
     } else if (chatDetail.is_exists) {
       if (chatDetail.job_id !== jobDetail?.id) {
@@ -1251,14 +1255,14 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     }
   }
 
-  store.dispatch(fetchConfigRequest())
+  // store.dispatch(fetchConfigRequest())
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   let jobDetail = storeState.job.jobDetail.response
   const appliedJobDetail = storeState.job.appliedJobDetail.response
-  const config = storeState.config.config.response
+  // const config = storeState.config.config.response
 
   if (Object.keys(jobDetail).length > 0 || Object.keys(appliedJobDetail).length > 0) {
     jobDetail = jobDetail?.id ? jobDetail : appliedJobDetail?.job
@@ -1287,7 +1291,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
     return {
       props: {
-        config,
+
         jobDetail: jobDetail?.id ? jobDetail : appliedJobDetail?.job,
         applicationHistory: appliedJobDetail?.application_histories || null,
         accessToken,

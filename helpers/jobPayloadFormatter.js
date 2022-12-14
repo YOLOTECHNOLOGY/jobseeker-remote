@@ -284,7 +284,7 @@ const getSalaryOptions = (config, salaryFrom, hasComparedTo) => {
 const getCountryList = (config) => {
   if (!config) return []
 
-  const countryLists = config?.inputs?.country_lists
+  const countryLists = config?.inputs?.country_lists ?? []
   if (countryLists && countryLists.length === 0) return countryLists
 
   let countryOptions = countryLists.map((country) => {

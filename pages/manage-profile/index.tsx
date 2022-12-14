@@ -1192,13 +1192,18 @@ const RenderResumeView = ({ userDetail }: any) => {
   )
 }
 // TODO: Remove this page after testing
-const ManageProfilePage = ({ config }: any) => {
+const ManageProfilePage = () => {
   const router = useRouter()
   const {
     query: { tab }
   } = router
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
+  const config = useSelector((store: any) => store?.config?.config?.response)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchConfigRequest())
+  }, [])
   const [openToWork, setOpenToWork] = useState(userDetail?.is_visible)
   const jobCategoryList = getJobCategoryList(config).map((category) => {
     return {
@@ -1335,7 +1340,7 @@ const ManageProfilePage = ({ config }: any) => {
           <RenderProfileView userDetail={userDetail} handleModal={handleModal} config={config} />
         )}
         {tabValue === 'job-preferences' && <div>
-          <div className={styles.sectionContainer} style={{paddingBottom:0}}>
+          <div className={styles.sectionContainer} style={{ paddingBottom: 0 }}>
 
             <div className={styles.sectionHeader} >
               <Text bold textColor='primaryBlue' textStyle='xl'>
@@ -1408,16 +1413,16 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     }
   }
 
-  store.dispatch(fetchConfigRequest())
+  // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
-  const storeState = store.getState()
-  const config = storeState.config.config.response
+  // const storeState = store.getState()
+  // const config = storeState.config.config.response
 
   return {
     props: {
-      config,
+      // config,
       accessToken
     }
   }

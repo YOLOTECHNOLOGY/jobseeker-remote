@@ -54,9 +54,14 @@ function a11yProps(index: number) {
 const COUNT_DOWN_VERIFY_DEFAULT = 60
 // const countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
 
-const AccountSettings = ({ config, accessToken }: any) => {
+const AccountSettings = ({ accessToken }: any) => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
+  const config = useSelector((store: any) => store?.config?.config?.response)
+ 
+  useEffect(()=>{
+    dispatch(fetchConfigRequest())
+  },[])
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
 
@@ -216,16 +221,16 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   }
 
   store.dispatch(fetchUserDetailRequest({ accessToken }))
-  store.dispatch(fetchConfigRequest())
+ // store.dispatch(fetchConfigRequest())
 
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const config = storeState.config.config.response
+  // const config = storeState.config.config.response
   const userDetail = storeState.users.fetchUserDetail.response
   return {
     props: {
-      config,
+      
       accessToken,
       userDetail
     }

@@ -148,7 +148,6 @@ function* updateUserOnboardingInfoReq({ payload }) {
       yield completeUserProfileSaga(redirect, accessToken)
     }
   } catch (error) {
-    console.log({ error })
     const isServerError = checkErrorCode(error)
     if (isServerError) {
       yield put(

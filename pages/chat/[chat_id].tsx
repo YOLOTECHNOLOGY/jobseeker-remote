@@ -10,6 +10,7 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { END } from 'redux-saga'
 import { list } from 'helpers/interpreters/services/chat'
+import { useDispatch } from 'react-redux'
 const JobseekerChat = dynamic<any>(import('components/Chat'), {
     ssr: false
 })
@@ -25,6 +26,10 @@ const Chat = () => {
         mobile,
         chatId
     } = useContext(IMContext)
+    const dispatch = useDispatch()
+    useEffect(()=>{
+      dispatch(fetchConfigRequest())
+    },[])
     const [first, setFirst] = useState(true)
     const [chatList, setChatList] = useState([])
     const [chatListLoading, setChatListLoading] = useState(false)
@@ -92,7 +97,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         async ({ req }) => {
             const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
             // store actions
-            store.dispatch(fetchConfigRequest())
+            // store.dispatch(fetchConfigRequest())
             if (accessToken) {
                 store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
             }

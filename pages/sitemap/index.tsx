@@ -1,9 +1,4 @@
 import { useState, useEffect } from 'react'
-
-/* Vendors */
-import { END } from 'redux-saga'
-import { wrapper } from 'store'
-
 /* Components */
 import Layout from 'components/Layout'
 import Text from 'components/Text'
@@ -14,8 +9,9 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 /* Styles */
 import styles from './PublicSitemap.module.scss'
+import { useDispatch, useSelector } from 'react-redux'
 
-const PublicSitemap = ({ config }: any) => {
+const PublicSitemap = () => {
   const [locationList, setLocationList] = useState([])
   const [categoryList, setCategoryList] = useState([])
   const [industryList, setIndustryList] = useState([])
@@ -23,7 +19,11 @@ const PublicSitemap = ({ config }: any) => {
   const [experienceList, setExperienceList] = useState([])
   const [jobTypeList, setJobTypeList] = useState([])
   const [salaryList, setSalaryList] = useState([])
-
+  const config = useSelector((store: any) => store?.config?.config?.response)
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(fetchConfigRequest())
+  },[])
   useEffect(() => {
     if (config) {
       const locationList =
@@ -453,18 +453,18 @@ const PublicSitemap = ({ config }: any) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
-  store.dispatch(fetchConfigRequest())
-  store.dispatch(END)
-  await (store as any).sagaTask.toPromise()
-  const storeState = store.getState()
-  const config = storeState.config.config.response
+export const getServerSideProps = () => {
+  // store.dispatch(fetchConfigRequest())
+  // store.dispatch(END)
+  // await (store as any).sagaTask.toPromise()
+  // const storeState = store.getState()
+  // const config = storeState.config.config.response
 
   return {
     props: {
-      config
+      // config
     }
   }
-})
+}
 
 export default PublicSitemap

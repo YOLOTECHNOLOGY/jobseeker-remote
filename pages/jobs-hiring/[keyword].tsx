@@ -284,7 +284,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }, [mainFunctions, jobFunctions, functionTitles])
 
   const functionTitleList = config?.inputs?.function_titles ?? []
-  const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
+  const reportJobReasonList = config?.inputs?.report_job_reasons ?? []
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
   const isJobListFetching = useSelector((store: any) => store.job.jobList.fetching)
@@ -381,8 +381,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       searchParams: { pathname: router.pathname, query: router.query }
     }))
   }, [filterJobPayload, router.pathname, router.query])
-  const jobTypeList = config.inputs.job_types
-  const salaryRangeList = config.filters.salary_range_filters
+  const jobTypeList = config?.inputs?.job_types ?? []
+  const salaryRangeList = config?.filters?.salary_range_filters ?? []
 
   const updateUrl = (queryParam, queryObject) => {
     queryObject['page'] = '1'
@@ -1022,7 +1022,7 @@ const initPagePayLoad = async (query, config = null) => {
     }
   }
 
-  return { defaultValues, payload }
+  return { defaultValues, payload, config }
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -1031,19 +1031,25 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
 
       const { keyword, page } = query
-      const { defaultValues, payload: initPayload } = await initPagePayLoad(query)
-
-      // store actions
-      store.dispatch(fetchJobsListRequest(initPayload, accessToken))
-      store.dispatch(fetchConfigRequest())
-      if (accessToken) {
-        store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
-      }
-      store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
+      store.dispatch({type:'JOB_HIRED_SERVER_SIDE',payload:query})
       store.dispatch(END)
       await (store as any).sagaTask.toPromise()
       const storeState = store.getState()
       const config = storeState.config.config.response
+      // console.log({storeState})
+      const { defaultValues } = await initPagePayLoad(query, config)
+
+      // store actions
+      // store.dispatch(fetchJobsListRequest(initPayload, accessToken))
+      // store.dispatch(fetchConfigRequest())
+      // if (accessToken) {
+      //   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
+      // }
+      // store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
+      // store.dispatch(END)
+      // await (store as any).sagaTask.toPromise()
+      
+      // const config = storeState.config.config.response
       const featuredCompanies =
         storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(
           (featuredCompany) => featuredCompany.company
@@ -1116,7 +1122,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           accessToken,
           seoMetaTitle,
           seoMetaDescription: encodeURI(seoMetaDescription),
-          seoCanonical,
+          seoCanonical
         }
       }
     }

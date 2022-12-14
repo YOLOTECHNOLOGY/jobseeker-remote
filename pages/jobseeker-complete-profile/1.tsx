@@ -34,9 +34,13 @@ const Step1 = (props: any) => {
   const currentStep = 1
   const quickUpladResumeType = getItem('quickUpladResume')
   const totalStep = quickUpladResumeType === 'upFile' || quickUpladResumeType === 'onLine' ? 3 : 4
-  const { config, userDetail, accessToken } = props
+  const {  userDetail, accessToken } = props
   const preference = userDetail?.job_preferences?.[0]
-
+  const config = useSelector((store: any) => store?.config?.config?.response)
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(fetchConfigRequest())
+  },[])
   const rhTooltipTitle =
     'Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.'
   const locationList = useSelector(
@@ -99,7 +103,6 @@ const Step1 = (props: any) => {
   } = useForm({ defaultValues })
   const [minSalary, setMinSalary] = useState(getValues().minSalary)
   const router = useRouter()
-  const dispatch = useDispatch()
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
     setValue('maxSalary', maxSalaryOptions?.length > 0 ? maxSalaryOptions[0].value : null)
@@ -517,17 +520,17 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     }
   }
 
-  store.dispatch(fetchConfigRequest())
+ // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const config = storeState.config.config.response
+//  const config = storeState.config.config.response
   const userDetail = storeState.users.fetchUserOwnDetail.response
 
   return {
     props: {
-      config,
+    //  config,
       userDetail,
       accessToken
     }

@@ -57,12 +57,8 @@ import breakpointStyles from 'styles/breakpoint.module.scss'
 import MetaText from '../components/MetaText'
 import useSearchHistory from 'helpers/useSearchHistory'
 import classNames from 'classnames/bind'
+import { useDispatch, useSelector } from 'react-redux'
 // import classNamesCombined from 'classnames'
-
-type configObject = {
-  inputs: any
-  filters: any
-}
 
 type companyObject = {
   id: number
@@ -72,20 +68,19 @@ type companyObject = {
 }
 
 interface HomeProps {
-  config: configObject
+ // config: configObject
   topCompanies: companyObject[]
 }
 
 const Home = (props: HomeProps) => {
   const { width } = useWindowDimensions()
-  const { config, topCompanies } = props
+  const { topCompanies } = props
   const router = useRouter()
   const isAuthenticated = getCookie('accessToken') ? true : false
   const [searchValue, setSearchValue] = useState('')
-  const [searchHistories,addSearchHistory] = useSearchHistory()
+  const [searchHistories, addSearchHistory] = useSearchHistory()
   const [suggestionList, setSuggestionList] = useState(searchHistories)
   const [showLogo, setShowLogo] = useState(false)
-
   const [activeFeature, updateActiveFeature] = useState(1)
   const [activeFeatureImg, updateActiveFeatureImg] = useState(1)
   const firstFeatureImgNode = useRef(null)
@@ -93,6 +88,11 @@ const Home = (props: HomeProps) => {
   const thirdFeatureImgNode = useRef(null)
   const fourthFeatureImgNode = useRef(null)
 
+  const config = useSelector((store: any) => store?.config?.config?.response)
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(fetchConfigRequest())
+  },[])
   useEffect(() => {
     const timer = setTimeout(() => setShowLogo(true), 1500)
     return () => clearTimeout(timer)
@@ -140,7 +140,7 @@ const Home = (props: HomeProps) => {
       }
     }
   }, [activeFeature])
-  
+
   const updateUrl = (queryParam) => {
     const queryObject = {
       page: 1,
@@ -870,12 +870,12 @@ const Home = (props: HomeProps) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   // store actions
-  store.dispatch(fetchConfigRequest())
+ // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const config = storeState.config.config.response
+ 
   const featuredCompanies =
     storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(
       (featuredCompany) => featuredCompany.company
@@ -889,9 +889,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
   })
   return {
     props: {
-      config,
       topCompanies,
     },
+    revalidate: 10
   }
 })
 

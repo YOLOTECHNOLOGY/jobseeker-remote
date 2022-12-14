@@ -59,9 +59,13 @@ const Step3 = (props: any) => {
   const currentStepPure = quickUpladResumeType ? 2 : 3
   const router = useRouter()
   const dispatch = useDispatch()
-  const { config, userDetail, accessToken } = props
+  const { userDetail, accessToken } = props
   const isFromCreateResume = getItem('isFromCreateResume') === '1'
-
+  const config = useSelector((store: any) => store?.config?.config?.response)
+ 
+  useEffect(()=>{
+    dispatch(fetchConfigRequest())
+  },[])
   const nextBtnUrl = router.query?.redirect
     ? `/jobseeker-complete-profile/1102?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1102'
@@ -808,19 +812,19 @@ const Step3 = (props: any) => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies.accessToken ? req.cookies.accessToken : null
 
-  store.dispatch(fetchConfigRequest())
+ // store.dispatch(fetchConfigRequest())
   if (accessToken) {
     store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   }
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const config = storeState.config.config.response
+  // const config = storeState.config.config.response
   const userDetail = storeState.users.fetchUserOwnDetail.response
 
   return {
     props: {
-      config,
+     // config,
       userDetail,
       accessToken
     }

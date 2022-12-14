@@ -15,7 +15,7 @@ import {
   TimelineDot
 } from '@mui/lab'
 import dynamic from 'next/dynamic'
-
+import jobSource from 'helpers/jobSource'
 /* Components */
 import Link from 'components/Link'
 import Text from 'components/Text'
@@ -224,6 +224,8 @@ const JobDetail = ({
       }
     } else {
       setLoading(true)
+      const source = jobSource()
+      console.log({source})
       createChat(selectedJob?.id).then(result => {
         const chatId = result.data.data.id
         router.push(`/chat/${chatId}`)
@@ -231,8 +233,9 @@ const JobDetail = ({
         router.push(`/chat`)
       }).finally(() => setLoading(false))
     }
-
   }
+  // console.log({router})
+  // jobSource()
   useEffect(() => {
     if (getCookie('isReportJob') && authCookie && userCookie) {
       setIsShowReportJob(true)
