@@ -455,7 +455,7 @@ const Job = ({
       setLoading(true)
       const source = jobSource()
       createChat(jobDetail?.id,{source}).then(result => {
-        const chatId = result.data.data.chat_id
+        const chatId = result.data.data.id
         router.push(`/chat/${chatId}`)
       }).catch(e => {
         console.log('e', e)

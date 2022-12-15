@@ -94,16 +94,16 @@ const useGetStarted = () => {
   }
 
   const defaultLoginCallBack = (data: any) => {
-    const url = data.is_profile_update_required || !data.is_profile_completed
+    let url = data.is_profile_update_required || !data.is_profile_completed
       ? '/jobseeker-complete-profile/1'
       : defaultRedirectPage
         ? defaultRedirectPage
         : `/jobs-hiring/job-search`
-    // const isChatRedirect = sessionStorage.getItem('isChatRedirect')
-    // if (isChatRedirect) {
-    //   url = isChatRedirect
-    // }
-    // console.log('defaultLoginCallBack',url)
+    const isChatRedirect = sessionStorage.getItem('isChatRedirect')
+    if (isChatRedirect) {
+      url = isChatRedirect
+    }
+    console.log('defaultLoginCallBack', url)
     routes.push(url)
     setEmailOTPInputDisabled(false)
   }
@@ -123,8 +123,14 @@ const useGetStarted = () => {
   }
 
   const handleAuthenticationSendEmailMagicLink = () => {
-    let params = {}
-    if (router.pathname === '/quick-upload-resume') {
+    let params: any = {}
+    const isChatRedirect = sessionStorage.getItem('isChatRedirect')
+
+    if (isChatRedirect && userId) {
+      params.redirect = isChatRedirect
+      params.redirect_fail = router.asPath
+      sessionStorage.removeItem('isChatRedirect')
+    } else if (router.pathname === '/quick-upload-resume') {
       params = {
         redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1',
         redirect_fail: router.asPath

@@ -163,7 +163,13 @@ const useRegister = () => {
         } else {
           // noworkExperiences
           if (userId) {
-            router.push('/jobs-hiring/job-search')
+            const isChatRedirect = sessionStorage.getItem('isChatRedirect')
+            if (isChatRedirect) {
+              router.push(isChatRedirect)
+              sessionStorage.removeItem('isChatRedirect')
+            } else {
+              router.push('/jobs-hiring/job-search')
+            }
           } else {
             router.push('/jobseeker-complete-profile/1')
           }
@@ -171,7 +177,13 @@ const useRegister = () => {
       } else if (accessToken) {
         // job details login
         if (userId) {
-          window.location.reload()
+          const isChatRedirect = sessionStorage.getItem('isChatRedirect')
+          if (isChatRedirect) {
+            router.push(isChatRedirect)
+            sessionStorage.removeItem('isChatRedirect')
+          } else {
+            window.location.reload()
+          }
         } else {
           setItem('isRegisterModuleRedirect', router.asPath)
           router.push('/jobseeker-complete-profile/1')
