@@ -34,7 +34,7 @@ function* jobHiredServerSide(action) {
     }
 }
 
-export default function* fetchSimilarJobs() {
+export default function* watchJobHiredServerSide() {
     yield takeLatest('JOB_HIRED_SERVER_SIDE', jobHiredServerSide)
 }
 

@@ -214,7 +214,7 @@ const JobDetail = ({
       setOpenRegister(true)
     } else if (selectedJob?.external_apply_url) {
       addExternalJobClickService(selectedJob?.id)
-      const link = getApplyJobLink(selectedJob,userCookie)
+      const link = getApplyJobLink(selectedJob, userCookie)
       window.open(link)
     } else if (chatDetail.is_exists) {
       if (chatDetail.job_id !== selectedJob.id) {
@@ -225,8 +225,7 @@ const JobDetail = ({
     } else {
       setLoading(true)
       const source = jobSource()
-      console.log({source})
-      createChat(selectedJob?.id).then(result => {
+      createChat(selectedJob?.id, { source }).then(result => {
         const chatId = result.data.data.id
         router.push(`/chat/${chatId}`)
       }).catch(e => {
@@ -234,8 +233,6 @@ const JobDetail = ({
       }).finally(() => setLoading(false))
     }
   }
-  // console.log({router})
-  // jobSource()
   useEffect(() => {
     if (getCookie('isReportJob') && authCookie && userCookie) {
       setIsShowReportJob(true)

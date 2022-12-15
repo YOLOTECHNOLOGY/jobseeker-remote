@@ -1043,7 +1043,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const storeState = store.getState()
 
       const values = storeState?.job?.jobHiredDefaultValues
-      const { searchQuery, predefinedQuery, predefinedLocation, defaultValues } = values
+      const { searchQuery, predefinedQuery, predefinedLocation, defaultValues = {} } = values
       /* Handle job search logic */
       // store actions
       // store.dispatch(fetchJobsListRequest(initPayload, accessToken))
@@ -1060,7 +1060,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(
           (featuredCompany) => featuredCompany.company
         )
-      
+
       const topCompanies = featuredCompanies?.map?.((featuredCompany) => {
         const logoUrl = featuredCompany.logo_url
         const companyUrl = featuredCompany.company_url

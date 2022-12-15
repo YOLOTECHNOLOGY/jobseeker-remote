@@ -139,7 +139,7 @@ const IMProvider = ({ children }: any) => {
         loading,
         mobile,
         chatId
-    }}>
+    }}>{userId ? <>
         <SendResumeModal
             loading={loading}
             contextRef={contextRef}
@@ -187,6 +187,8 @@ const IMProvider = ({ children }: any) => {
             applicationId={applicationId}
             contextRef={contextRef}
         />
+    </> : null}
+
         {children}
     </Provider>
 }

@@ -6,11 +6,11 @@ export const getAuth = userId => {
 }
 export const list = params => {
     const axios = configuredAxios('jobApplication', 'protected')
-    return axios.get(`/chats/jobseekers?page=1&size=55`,{params})
+    return axios.get(`/chats/jobseekers?page=1&size=55`, { params })
 }
-export const createChat = jobId => {
+export const createChat = (jobId, params) => {
     const axios = configuredAxios('jobApplication', 'protected')
-    return axios.post(`/jobs/${jobId}/jobseekers/chat`)
+    return axios.post(`/jobs/${jobId}/jobseekers/chat`, params)
 }
 export const check = jobId => {
     const axios = configuredAxios('jobApplication', 'protected')
