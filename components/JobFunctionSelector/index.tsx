@@ -13,10 +13,10 @@ const formatMenuText = (text) => {
     if (text.length <= 16) {
         return text
     }
-    const lastIndex = text.lastIndexOf('/')+1
-    if(lastIndex!==-1){
-        const newText = text.slice(0,lastIndex) + '\n' + text.slice(lastIndex,text.length+lastIndex)
-        console.log({newText,text})
+    const lastIndex = text.lastIndexOf('/') + 1
+    if (lastIndex !== -1) {
+        const newText = text.slice(0, lastIndex) + '\n' + text.slice(lastIndex, text.length + lastIndex)
+        console.log({ newText, text })
         return newText
     }
     return text
@@ -24,12 +24,24 @@ const formatMenuText = (text) => {
 const JobFunctionSelector = (props: any) => {
     const { value, jobTitle = '', className, title, onChange, isTouched, onBlur, ...rest } = props
     const [showModal, setShowModal] = useState(false)
-    const [selectedKey, setSelectedKey] = useState<any>()
+
     const [selectedSubItem, setSelectedSubItem] = useState<any>({})
     const [expandeds, setExpandeds] = useState([])
     const jobFunctions = useSelector((store: any) => store.config.config.response?.inputs?.job_function_lists ?? [])
     const jobFunctionsKeys = useMemo(() => flatMap(jobFunctions, keys), [jobFunctions])
     const jobFunctionsObject = useMemo(() => jobFunctions?.reduce(assign, {}), [jobFunctions])
+    const [selectedKey, setSelectedKey] = useState<any>(jobFunctionsKeys?.[0])
+    const [init, setInit] = useState(false)
+    useEffect(() => {
+        if (jobFunctionsKeys.length > 0) {
+            setInit(true)
+        }
+    }, [jobFunctionsKeys])
+    useEffect(() => {
+        if (init) {
+            setSelectedKey(jobFunctionsKeys[0])
+        }
+    }, [init])
     const selectedItem = useMemo(() => {
         if (selectedKey) {
             return jobFunctionsObject[selectedKey]
