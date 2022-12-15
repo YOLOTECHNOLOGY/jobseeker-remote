@@ -1,7 +1,7 @@
 
 const jobSource = ()=>{
     const page = (path=>{
-        if(path.includes('job-hiring/')){
+        if(path.includes('jobs-hiring/')){
             return 'job-search'
         } else if(path.includes('job/')){
             return 'job-detail'
