@@ -102,6 +102,7 @@ import { createChat } from 'helpers/interpreters/services/chat'
 import { fetchSwitchJobService } from 'store/services/jobs/fetchSwitchJob'
 import { fetchChatDetailRequest } from 'store/actions/jobs/fetchJobChatDetail'
 import Modal from 'components/Modal'
+import jobSource from 'helpers/jobSource'
 
 interface IJobDetail {
   jobDetail: any
@@ -452,7 +453,8 @@ const Job = ({
       }
     } else {
       setLoading(true)
-      createChat(jobDetail?.id).then(result => {
+      const source = jobSource()
+      createChat(jobDetail?.id,{source}).then(result => {
         const chatId = result.data.data.chat_id
         router.push(`/chat/${chatId}`)
       }).catch(e => {
