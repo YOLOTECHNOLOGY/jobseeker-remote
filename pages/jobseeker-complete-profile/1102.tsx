@@ -422,7 +422,7 @@ const Step4 = (props: any) => {
                 <br />
                 <Text textStyle='base' tagName='p'>
                   {education?.location} -{' '}
-                  {getLocation(education?.location)?.[0].region_display_name}
+                  {getLocation(education?.location)?.[0]?.region_display_name}
                 </Text>
                 <Text textStyle='base' tagName='p'>
                   {education?.field_of_study}
