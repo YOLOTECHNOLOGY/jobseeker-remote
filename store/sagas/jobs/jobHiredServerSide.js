@@ -19,7 +19,7 @@ function* jobHiredServerSide(action) {
         const accessToken = getCookie('accessToken')
         const { defaultValues, payload: initPayload } = initPagePayLoad(action.payload, config)
         const { searchQuery, predefinedQuery, predefinedLocation } = checkFilterMatch(action.payload, config)
-        yield put(setJobHiredDefaultValue({ searchQuery, predefinedQuery, predefinedLocation,defaultValues } ))
+        yield put(setJobHiredDefaultValue({ searchQuery, predefinedQuery, predefinedLocation, defaultValues }))
         yield put(fetchJobsListRequest(initPayload, accessToken))
 
         if (accessToken) {
@@ -27,7 +27,7 @@ function* jobHiredServerSide(action) {
         }
         yield put(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
         // yield take(fetchFeaturedCompaniesListSuccess().type)
-       // yield put(fetchConfigSuccess(initialState.response))
+        yield put(fetchConfigSuccess(initialState.response))
     } catch (error) {
         console.log({ error })
         // yield put(fetchSimilarJobsFailed(error))

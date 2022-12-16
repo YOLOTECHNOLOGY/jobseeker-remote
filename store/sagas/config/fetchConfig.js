@@ -43,7 +43,7 @@ function* fetchConfigReq(action) {
         result = yield call(fetchConfigService, action.payload)
         cached(result)
       } else {
-        yield delay(0)
+       // yield delay(0)
       }
     }
     yield put(fetchConfigSuccess(result))

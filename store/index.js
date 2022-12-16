@@ -6,11 +6,11 @@ import Router from 'next/router'
 
 import rootReducer from 'store/reducers'
 import rootSaga from 'store/sagas'
-
+import logger from 'redux-logger'
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== 'production') {
     const { composeWithDevTools } = require('redux-devtools-extension')
-    return composeWithDevTools(applyMiddleware(...middleware))
+    return composeWithDevTools(applyMiddleware(...middleware,logger))
   }
   return applyMiddleware(...middleware)
 }

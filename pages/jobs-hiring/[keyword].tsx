@@ -254,11 +254,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
   const userCookie = getCookie('user') || null
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     dispatch(fetchConfigRequest())
-  //   }, 0)
-  // }, [])
+  useEffect(() => {
+    dispatch(fetchConfigRequest())
+  }, [])
   const config = useSelector((store: any) => store?.config?.config?.response ?? initialState.response)
   const [clientDefaultValues, setClientDefaultValues] = useState(defaultValues || {})
   const [isShowFilter, setIsShowFilter] = useState(false)
