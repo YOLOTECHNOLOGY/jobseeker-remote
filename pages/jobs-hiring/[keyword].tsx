@@ -308,7 +308,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     searchQuery: '',
     predefinedQuery: '',
     filterCount: 0,
-    predefinedLocation:''
+    predefinedLocation: ''
   })
   useEffect(() => {
     const matched = checkFilterMatch(router.query, config, isMobile)
@@ -340,6 +340,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     if (!firstRender) setDisplayQuickLinks(false)
       ; (async () => {
         const { payload } = await initPagePayLoad(router.query, config)
+        console.log({ payload, router })
         dispatch(fetchJobsListRequest(payload, accessToken))
         setMoreFilterReset(false)
       })()
@@ -909,14 +910,20 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   )
 }
 
-const initPagePayLoad = async (query, config = null) => {
+const initPagePayLoad = (query, config = null) => {
   const { page, industry, workExperience, category, jobType, salary, location, qualification, verifiedCompany } =
     query
-  if (!config) {
-    const result = await fetchConfigService()
-    config = result
+  // if (!config) {
+  //   const result = await fetchConfigService()
+  //   config = result
+  // }
+  const toArray = target => {
+    if (typeof target === 'string') {
+      return target.split(',')
+    } else {
+      return target
+    }
   }
-
   const formatLocationConfig = (locationList) => {
     const locationConfig = locationList?.map((region) => region.locations)
     return locationConfig
@@ -948,17 +955,17 @@ const initPagePayLoad = async (query, config = null) => {
     urlQuery: searchQuery,
     // if sort param exist, follow sort defined in param, otherwise if search exist, sort default to 2 'Relevance'
     sort: query?.sort ? query?.sort : searchQuery ? 2 : 1,
-    jobType: queryJobType?.split?.(',') || null,
-    salary: querySalary?.split?.(',') || null,
-    qualification: queryQualification?.split?.(',') || null,
-    location: queryLocation?.split?.(',') || null,
-    industry: queryIndustry?.split?.(',') || null,
-    workExperience: queryWorkExp?.split?.(',') || null,
-    category: queryCategory?.split?.(',') || null,
-    verifiedCompany: queryVerifiedCompany?.split?.(',') || null,
-    mainFunctions: query?.mainFunctions?.split?.(',') ?? null,
-    jobFunctions: query?.jobFunctions?.split?.(',') ?? null,
-    functionTitles: query?.functionTitles?.split?.(',') ?? null
+    jobType: toArray(queryJobType) || null,
+    salary: toArray(querySalary) || null,
+    qualification: toArray(queryQualification) || null,
+    location: toArray(queryLocation) || null,
+    industry: toArray(queryIndustry) || null,
+    workExperience: toArray(queryWorkExp) || null,
+    category: toArray(queryCategory) || null,
+    verifiedCompany: toArray(queryVerifiedCompany) || null,
+    mainFunctions: toArray(query?.mainFunctions) ?? null,
+    jobFunctions: toArray(query?.jobFunctions) ?? null,
+    functionTitles: toArray(query?.functionTitles) ?? null
   }
 
   for (const [key, value] of Object.entries(matchedConfigFromUrl)) {
@@ -974,30 +981,28 @@ const initPagePayLoad = async (query, config = null) => {
   // sanitise searchQuery
   defaultValues.urlQuery = defaultValues.urlQuery ? unslugify(searchQuery).replace('+', '-') : ''
   const sort = defaultValues?.sort
-
+  console.log({ salaryRangeList, salary })
   let payload = {
     query: defaultValues?.urlQuery,
     location: location
-      ? mapSeoValueToGetValue((location as string).split?.(','), formattedLocationList, false, true)
+      ? mapSeoValueToGetValue(toArray(location), formattedLocationList, false, true)
       : null,
-    category: category
-      ? mapSeoValueToGetValue((category as string).split?.(','), catList, true)
-      : null,
-    salary: salary ? mapSeoValueToGetValue((salary as string).split?.(','), salaryRangeList) : null,
-    jobType: jobType ? mapSeoValueToGetValue((jobType as string).split?.(','), jobTypeList) : null,
+
+    salary: salary ? mapSeoValueToGetValue(toArray(salary), salaryRangeList) : null,
+    jobType: jobType ? mapSeoValueToGetValue(toArray(jobType), jobTypeList) : null,
     industry: industry
-      ? mapSeoValueToGetValue((industry as string).split?.(','), industryList)
+      ? mapSeoValueToGetValue(toArray(industry), industryList)
       : null,
     qualification: qualification
-      ? mapSeoValueToGetValue((qualification as string).split?.(','), eduLevelList)
+      ? mapSeoValueToGetValue(toArray(qualification), eduLevelList)
       : null,
     workExperience: workExperience
-      ? mapSeoValueToGetValue((workExperience as string).split?.(','), expLvlList)
+      ? mapSeoValueToGetValue(toArray(workExperience), expLvlList)
       : null,
     verifiedCompany: Boolean(verifiedCompany),
-    mainFunctions: query?.mainFunctions?.split?.(',')?.map?.(seo => mainFunctionList.find(item => item.seo_value === seo)?.value)?.join?.(',') ?? null,
-    jobFunctions: query?.jobFunctions?.split?.(',')?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
-    functionTitles: query?.functionTitles?.split?.(',')?.map?.(seo => functionsTitleList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
+    mainFunctions: toArray(query?.main_functions)?.map?.(seo => mainFunctionList.find(item => item.seo_value === seo)?.value)?.join?.(',') ?? null,
+    jobFunctions: toArray(query?.jobFunctions)?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
+    functionTitles: toArray(query?.functionTitles)?.map?.(seo => functionsTitleList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
     sort,
     page: page ? Number(page) : 1
   }

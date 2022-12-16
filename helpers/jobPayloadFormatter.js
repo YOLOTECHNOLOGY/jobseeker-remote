@@ -25,7 +25,7 @@ const handleSalary = (salaryRanges) => {
       salaryFrom.push(200001)
       salaryTo.push(400000)
     }
-
+    console.log({salaryRanges,salaryFrom,salaryTo})
     salaryFrom = salaryFrom.join(',')
     salaryTo = salaryTo.join(',')
   }
