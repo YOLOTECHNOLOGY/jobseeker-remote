@@ -268,7 +268,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [selectedJob, setSelectedJob] = useState(null)
   const [selectedJobId, setSelectedJobId] = useState(null)
   const [searchValue, setSearchValue] = useState(defaultValues?.urlQuery || '')
-  const [isCategoryReset, setIsCategoryReset] = useState(false)
   const [jobTypes, setJobTypes] = useState(defaultValues?.jobType || [])
   const [salaries, setSalaries] = useState(defaultValues?.salary || [])
   const { keyword, ...rest } = router.query
@@ -304,11 +303,18 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
-  const { searchQuery, predefinedQuery, predefinedLocation, filterCount } = checkFilterMatch(
-    router.query,
-    config,
-    isMobile
-  )
+
+  const [matchState, setMatchState] = useState({
+    searchQuery: '',
+    predefinedQuery: '',
+    filterCount: 0,
+    predefinedLocation:''
+  })
+  useEffect(() => {
+    const matched = checkFilterMatch(router.query, config, isMobile)
+    setMatchState(matched)
+  }, [router.query, config, isMobile])
+  const { searchQuery, predefinedQuery, predefinedLocation, filterCount } = matchState
   const [selectedPage, setSelectedPage] = useState(defaultPage)
 
   useEffect(() => {
@@ -335,7 +341,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       ; (async () => {
         const { payload } = await initPagePayLoad(router.query, config)
         dispatch(fetchJobsListRequest(payload, accessToken))
-        setIsCategoryReset(false)
         setMoreFilterReset(false)
       })()
   }, [router.query])
@@ -573,7 +578,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setUrlLocation([])
     setJobTypes([])
     setSalaries([])
-    setIsCategoryReset(true)
     if (searchMatch) setSearchValue('')
     setMoreFilterReset(true)
     setClientDefaultValues({})

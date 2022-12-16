@@ -44,9 +44,9 @@ const OnBoardLayout = ({
   
   return (
     <div className={styles.OnBoardLayout}>
-      <head>
+      {/* <head>
         <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1' />
-      </head>
+      </head> */}
       <div className={styles.OnBoardLayoutHeader}>
         <Link title='Home' to='/jobs-hiring/job-search'>
           <img id={styles.logo} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
