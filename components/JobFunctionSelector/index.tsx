@@ -16,7 +16,6 @@ const formatMenuText = (text) => {
     const lastIndex = text.lastIndexOf('/') + 1
     if (lastIndex !== -1) {
         const newText = text.slice(0, lastIndex) + '\n' + text.slice(lastIndex, text.length + lastIndex)
-        console.log({ newText, text })
         return newText
     }
     return text
