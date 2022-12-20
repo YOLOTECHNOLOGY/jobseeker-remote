@@ -1,10 +1,14 @@
 /* eslint-disable new-cap */
-import { scripts,M } from 'imforbossjob'
+import { scripts, M } from 'imforbossjob'
 import { sendResume, decline, askSendResume } from './services/resume'
 const { utils, responseResumeJobseeker: { ModalActions } } = scripts
 const { RequestResult } = utils
 
 export default command => command.cata({
+    openResume: () => M(context => Promise.resolve().then(() => {
+        const state = context.getState()
+        window.open(state.resume_request?.resume?.url, '_blank')
+    })),
     modalSendResume: () => M(context => new Promise(resolve => {
         context.showSendResume({
             close: () => resolve(ModalActions.close),

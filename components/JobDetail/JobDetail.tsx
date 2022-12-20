@@ -258,7 +258,7 @@ const JobDetail = ({
       >
         <p>You are currently chatting with recruiter for the {selectedJob?.job_title ?? 'this job'} position. Are you sure you want to switch job?</p>
       </Modal>
-      <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} />
+     {openRegister? <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} />:null}
 
       <div className={styles.jobDetail}>
         <div className={classNamesCombined([styles.jobDetailContent])}>

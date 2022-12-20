@@ -185,6 +185,7 @@ const useRegister = () => {
             window.location.reload()
           }
         } else {
+          console.log('isRegisterModuleRedirect',userId)
           setItem('isRegisterModuleRedirect', router.asPath)
           router.push('/jobseeker-complete-profile/1')
         }

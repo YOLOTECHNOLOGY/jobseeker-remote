@@ -454,7 +454,7 @@ const Job = ({
     } else {
       setLoading(true)
       const source = jobSource()
-      createChat(jobDetail?.id,{source}).then(result => {
+      createChat(jobDetail?.id, { source }).then(result => {
         const chatId = result.data.data.id
         router.push(`/chat/${chatId}`)
       }).catch(e => {
@@ -645,7 +645,7 @@ const Job = ({
       >
         <p>You are currently chatting with recruiter for the {jobDetail?.job_title ?? 'this job'} position. Are you sure you want to switch job?</p>
       </Modal>
-      {width > 799 && (
+      {width > 799 && openRegister && (
         <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} />
       )}
 
