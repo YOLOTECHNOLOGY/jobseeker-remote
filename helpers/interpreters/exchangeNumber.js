@@ -1,8 +1,8 @@
 /* eslint-disable new-cap */
-import { scripts,M } from 'imforbossjob'
+import { scripts, M } from 'imforbossjob'
 import { create, accept, decline, sendOTP, verify } from './services/exchangeNumber'
 
-const { utils, exchangeNumberJobseeker: { ModalActions } } = scripts
+const { utils, exchangeNumberJobseeker: { ModalActions, ConfirmActions } } = scripts
 const { RequestResult, UserNumberValidation } = utils
 
 
@@ -15,6 +15,11 @@ export default command => command.cata({
             resolve(UserNumberValidation.notValidate)
         }
     })),
+    modalConfirm: () => M(context => new Promise(resolve =>
+        context.showExchangeConfirm({
+            close: () => resolve(ConfirmActions.close),
+            sendNumber: payload => resolve(ConfirmActions.sendNumber(payload))
+        }))),
     modalExchangeNumber: status => {
         const step = status.cata({
             init: () => ('init'),
@@ -68,7 +73,7 @@ export default command => command.cata({
         const applicationId = context.getApplicationId()
         const id = context.getState()?.contact_exchange_request?.id
         context.setLoading(true)
-        return decline(applicationId, id,{message:'no message from web side'})
+        return decline(applicationId, id, { message: 'no message from web side' })
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))

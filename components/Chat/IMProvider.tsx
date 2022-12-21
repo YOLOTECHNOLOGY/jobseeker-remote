@@ -16,6 +16,7 @@ import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetai
 import { getAuth } from 'helpers/interpreters/services/chat'
 import CommonPhrases from 'components/Chat/commonPhrases'
 import ViewJobModal from './viewJob'
+import ExchangeConfirmModal from './exchange/confirm'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
@@ -73,6 +74,7 @@ const IMProvider = ({ children }: any) => {
             contextRef.current?.closeDetail?.()
             contextRef.current?.closeNotInterest?.()
             contextRef.current?.closeExchange?.()
+            contextRef.current?.closeExchangeConfirm?.()
             contextRef.current?.closeCancelDetail?.()
             contextRef.current?.closeCancel?.()
             contextRef.current?.closeIssue?.()
@@ -155,6 +157,11 @@ const IMProvider = ({ children }: any) => {
             applicationId={applicationId}
         />
         <ExchangeModal
+            loading={loading}
+            contextRef={contextRef}
+            applicationId={applicationId}
+        />
+        <ExchangeConfirmModal
             loading={loading}
             contextRef={contextRef}
             applicationId={applicationId}
