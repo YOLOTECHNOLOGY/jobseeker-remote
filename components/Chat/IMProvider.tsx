@@ -64,7 +64,7 @@ const IMProvider = ({ children }: any) => {
     useEffect(() => {
         userDetailRef.current = userDetail
     }, [userDetail])
-
+    console.log({userDetail})
     const contextRef = useRef({
         setLoading,
         hideModals() {
@@ -97,7 +97,7 @@ const IMProvider = ({ children }: any) => {
             console.log('finish', type)
         },
         isUserNumberValidate() {
-            return userDetailRef.current?.phone_num
+            return userDetailRef.current?.is_mobile_verified
         },
         updateData(data) {
             if (+data?.data?.id === +contextRef.current.getChatId()) {

@@ -11,13 +11,13 @@ import { fetchUserDetailRequest } from 'store/actions/users/fetchUserDetail'
 import { getCookie } from 'helpers/cookies'
 const ExchangeModal = (props: any) => {
     const { contextRef, loading, applicationId } = props
-    const [countryCode, setCountryCode] = useState('')
+    const [countryCode, setCountryCode] = useState('+63')
     const [mobileNumber, setMobileNumber] = useState('')
     const [otp, setOtp] = useState('')
     const dispatch = useDispatch()
     const countryOptions = useSelector((store: any) => store.config.config.response?.inputs?.country_lists
         ?.map?.(item => ({
-            label: `${item.code}(${item.value})`,
+            label: `${item.value} (${item.code})`,
             value: item.code
         }))
     )
@@ -64,7 +64,7 @@ const ExchangeModal = (props: any) => {
         } else {
             actionsRef.current.verify?.(otp)
         }
-    }, [step,otp])
+    }, [step,otp,applicationId])
     const sendText = useMemo(() => {
         if (step === 'init') {
             return 'Send OTP'

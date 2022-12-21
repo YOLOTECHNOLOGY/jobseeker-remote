@@ -18,7 +18,6 @@ import { wrapper } from 'store'
 /* Redux Actions */
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
-import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
 import { deleteJobAlertRequest } from 'store/actions/alerts/deleteJobAlert'
@@ -61,10 +60,7 @@ import { getCookie } from 'helpers/cookies'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import useSearchHistory from 'helpers/useSearchHistory'
 import JobFunctionMultiSelector from 'components/JobFunctionMultiSelector'
-import { fetchConfigService } from 'store/services/config/fetchConfig'
 import classNames from 'classnames'
-import { fetchUserDetailRequest } from 'store/actions/users/fetchUserDetail'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { initialState } from 'store/reducers/config/fetchConfig'
 
 interface JobSearchPageProps {
@@ -277,7 +273,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [hasMoreFilters, setHasMoreFilters] = useState(false)
   const [searchHistories, addSearchHistory] = useSearchHistory()
   const [suggestionList, setSuggestionList] = useState(searchHistories)
-
   const [mainFunctions, setMainfunctions] = useState(defaultValues.mainFunctions ?? [])
   const [jobFunctions, setJobFunctions] = useState(defaultValues.jobFunctions ?? [])
   const [functionTitles, setFunctionTitles] = useState(defaultValues.functionTitles ?? [])
@@ -334,9 +329,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       functionTitles
     )
     setHasMoreFilters(hasActiveFilters)
-    if (firstRender) {
-      return
-    }
     if (!firstRender) setDisplayQuickLinks(false)
       ; (async () => {
         const { payload } = initPagePayLoad(router.query, config)
@@ -407,12 +399,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     addSearchHistory(val)
     // convert any value with '-' to '+' so that when it gets parsed from URL, we are able to map it back to '-'
     const sanitisedVal = val.replace('-', '+')
-
-    // eslint-disable-next-line
-    const { keyword } = router.query
     const sortOption = val.length > 0 ? 2 : 1
     const isClear = val.length === 0
-
     const {
       searchQuery,
       filterParamsObject = {},
@@ -864,7 +852,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       {isShowFilter && (
         <JobSearchFilters
           urlDefaultValues={clientDefaultValues}
-          // categories={categories}
           isShowFilter={isShowFilter}
           onResetFilter={handleResetFilter}
           handleShowFilter={handleShowFilter}
