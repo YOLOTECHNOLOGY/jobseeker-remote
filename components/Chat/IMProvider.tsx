@@ -15,6 +15,7 @@ import IssueModal from 'components/Chat/interview/issue'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { getAuth } from 'helpers/interpreters/services/chat'
 import CommonPhrases from 'components/Chat/commonPhrases'
+import ViewJobModal from './viewJob'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
@@ -82,6 +83,7 @@ const IMProvider = ({ children }: any) => {
             contextRef.current?.closeDeleteOneCommonPhrases?.()
             contextRef.current?.closeAttend?.()
             contextRef.current?.closeAskFailed?.()
+            contextRef.current?.closeJobDetail?.()
         },
         updateUser() {
             dispatch(fetchUserOwnDetailRequest({ accessToken }))
@@ -164,6 +166,12 @@ const IMProvider = ({ children }: any) => {
             contextRef={contextRef}
         />
         <IssueModal
+            loading={loading}
+            data={imState?.interview}
+            applicationId={applicationId}
+            contextRef={contextRef}
+        />
+        <ViewJobModal
             loading={loading}
             data={imState?.interview}
             applicationId={applicationId}

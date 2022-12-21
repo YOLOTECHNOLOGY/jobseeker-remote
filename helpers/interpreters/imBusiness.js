@@ -1,11 +1,12 @@
 /* eslint-disable new-cap */
-import { M } from 'imforbossjob'
+import { M, scripts } from 'imforbossjob'
 import { requestFirstService } from './services/imBusiness'
-
+const { utils } = scripts
+const { RequestResult } = utils
 export default command => command.cata({
     isFirstMessage: () => M(context => new Promise(resolve => {
         const imState = context.getState()
-        resolve(imState?.status === 'New' && imState?.initiated_role === 'recruiter')
+        resolve(imState?.chatStatus === 'New' && imState?.initiated_role === 'recruiter')
     })),
     requestFirst: () => M(context => {
         context.setLoading(true)
