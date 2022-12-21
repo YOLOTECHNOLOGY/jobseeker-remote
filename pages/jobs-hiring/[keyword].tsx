@@ -339,8 +339,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     }
     if (!firstRender) setDisplayQuickLinks(false)
       ; (async () => {
-        const { payload } = await initPagePayLoad(router.query, config)
-        console.log({ payload, router })
+        const { payload } = initPagePayLoad(router.query, config)
         dispatch(fetchJobsListRequest(payload, accessToken))
         setMoreFilterReset(false)
       })()
@@ -933,7 +932,6 @@ const initPagePayLoad = (query, config = null) => {
   const eduLevelList = config.filters.educations
   const locationList = config.inputs.location_lists
   const formattedLocationList = flat(formatLocationConfig(locationList))
-  const catList = config && config.inputs && config.inputs.job_category_lists
   const jobTypeList = config.inputs.job_types
   const salaryRangeList = config.filters.salary_range_filters
   const mainFunctionList = config.inputs.main_functions
@@ -981,7 +979,6 @@ const initPagePayLoad = (query, config = null) => {
   // sanitise searchQuery
   defaultValues.urlQuery = defaultValues.urlQuery ? unslugify(searchQuery).replace('+', '-') : ''
   const sort = defaultValues?.sort
-  console.log({ salaryRangeList, salary })
   let payload = {
     query: defaultValues?.urlQuery,
     location: location
@@ -1000,7 +997,7 @@ const initPagePayLoad = (query, config = null) => {
       ? mapSeoValueToGetValue(toArray(workExperience), expLvlList)
       : null,
     verifiedCompany: Boolean(verifiedCompany),
-    mainFunctions: toArray(query?.main_functions)?.map?.(seo => mainFunctionList.find(item => item.seo_value === seo)?.value)?.join?.(',') ?? null,
+    mainFunctions: toArray(query?.mainFunctions)?.map?.(seo => mainFunctionList.find(item => item.seo_value === seo)?.value)?.join?.(',') ?? null,
     jobFunctions: toArray(query?.jobFunctions)?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
     functionTitles: toArray(query?.functionTitles)?.map?.(seo => functionsTitleList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
     sort,
@@ -1051,18 +1048,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       const values = storeState?.job?.jobHiredDefaultValues
       const { searchQuery, predefinedQuery, predefinedLocation, defaultValues = {} } = values
-      /* Handle job search logic */
-      // store actions
-      // store.dispatch(fetchJobsListRequest(initPayload, accessToken))
-      // store.dispatch(fetchConfigRequest())
-      // if (accessToken) {
-      //   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
-      // }
-      // store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
-      // store.dispatch(END)
-      // await (store as any).sagaTask.toPromise()
-
-      // const config = storeState.config.config.response
       const featuredCompanies =
         storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(
           (featuredCompany) => featuredCompany.company

@@ -76,6 +76,20 @@ export default command => command.cata({
     copyNumber: () => M(context => {
         return navigator.clipboard.writeText(context.getState()?.contact_exchange_request?.recruiter_contact_num)
     }),
+    sendSms: () => M(context => {
+        return Promise.resolve().then(() => {
+            const number = context.getState()?.contact_exchange_request?.recruiter_contact_num
+            if (number) {
+                window.location.href = 'sms://' + number
+            }
+        })
+    }),
+    callPhone: () => M(context => {
+        const number = context.getState()?.contact_exchange_request?.recruiter_contact_num
+        if (number) {
+            window.location.href = 'tel://' + number
+        }
+    }),
     updateUser: () => M(context => {
         return new Promise(resolve => {
             context.updateUser()
