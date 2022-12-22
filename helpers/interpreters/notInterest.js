@@ -1,5 +1,5 @@
 /* eslint-disable new-cap */
-import { scripts,M } from 'imforbossjob'
+import { scripts, M } from 'imforbossjob'
 import { create } from './services/notInterest'
 const { utils,
     notInterestJobseeker: {
@@ -17,7 +17,15 @@ export default command => command.cata({
     })),
     requestNotInterest: payload => M(context => {
         context.setLoading(true)
-        return create(payload.applicationId,payload.params)
+        return create(payload.applicationId, payload.params)
+            .then(result => RequestResult.success(result.data))
+            .catch(error => RequestResult.error(error))
+            .finally(() => context.setLoading(false))
+    }),
+    requestUndo: () => M(context => {
+        const applicationId = context.getApplicationId()
+        context.setLoading(true)
+        return create(applicationId, {})
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
