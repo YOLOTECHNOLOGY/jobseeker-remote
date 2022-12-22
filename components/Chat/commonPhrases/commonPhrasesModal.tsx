@@ -23,7 +23,9 @@ const CommonPhrasesModal = (props: any) => {
     const rightBtnClick = useCallback(() => {
         actionsRef.current.send(selected.message)
     }, [actionsRef.current, selected])
-    const aProps: any = { disabled: list.count >= 0 }
+    const aProps: any = { disabled: list.length >= 10 }
+    const editProps: any = { disabled: !(list.length > 0) }
+    console.log({aProps,editProps,list})
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current?.close?.()}
@@ -54,13 +56,14 @@ const CommonPhrasesModal = (props: any) => {
                             label={phrase.message}
                         />
                     })} </RadioGroup>
-                <span><a onClick={
-                    () => actionsRef?.current?.modalEditList?.()
-                }>Edit or delete phrase </a>  or <a onClick={
-                    () => actionsRef?.current?.modalCreate()
-                }
-                    {...aProps}
-                >Create new phrase </a>(You can save up to 10 phrases)</span>
+                <span><a
+                    onClick={
+                        () => editProps.disabled || actionsRef?.current?.modalEditList?.()
+                    } {...editProps}>Edit or delete phrase </a>  or <a onClick={
+                        () => aProps.disabled || actionsRef?.current?.modalCreate()
+                    }
+                        {...aProps}
+                    >Create new phrase </a>(You can save up to 10 phrases)</span>
             </div>
         </div>
     </Modal>

@@ -256,7 +256,7 @@ const JobDetail = ({
         headerTitle={'Chat with ' + selectedJob?.recruiter?.full_name ?? ''}
 
       >
-        <p>You are currently chatting with recruiter for the {selectedJob?.job_title ?? 'this job'} position. Are you sure you want to switch job?</p>
+        <p>You are currently chatting with recruiter for the {chatDetail?.job?.job_title ?? chatDetail?.job?.function_job_title ?? 'this job'} position. Are you sure you want to switch job?</p>
       </Modal>
      {openRegister? <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} />:null}
 
