@@ -25,7 +25,6 @@ const CommonPhrasesModal = (props: any) => {
     }, [actionsRef.current, selected])
     const aProps: any = { disabled: list.length >= 10 }
     const editProps: any = { disabled: !(list.length > 0) }
-    console.log({aProps,editProps,list})
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current?.close?.()}

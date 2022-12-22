@@ -9,12 +9,14 @@ const CommonPhrasesCreateModal = (props: any) => {
     const [show, setShow] = useState(false)
     const actionsRef = useRef<any>()
     const [text, setText] = useState('')
+    
     const context = {
         showCreateOneCommonPhrases(actions) {
             actionsRef.current = actions
             setShow(true)
         },
         closeCreateOneCommonPhrases() {
+            setText('')
             setShow(false)
         },
     }

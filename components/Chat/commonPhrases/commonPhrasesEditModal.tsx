@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { assign } from 'lodash-es'
 import styles from './index.module.scss'
 import { TextField } from '@mui/material'
@@ -9,7 +9,12 @@ const CommonPhrasesEditModal = (props: any) => {
     const [show, setShow] = useState(false)
     const actionsRef = useRef<any>()
     const [phrase, setPhrase] = useState({} as any)
-    const [text,setText] = useState('')
+    const [text, setText] = useState('')
+    useEffect(() => {
+        if (phrase) {
+            setText(phrase.message)
+        }
+    }, [phrase])
     const context = {
         showEditOneCommonPhrases(actions) {
             actionsRef.current = actions
