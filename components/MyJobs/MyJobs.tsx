@@ -401,7 +401,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                 jobsList?.map((jobs, i) => (
                   <JobCard
                     key={i}
-                    id={jobs.job.id}
+                    id={jobs.id}
                     image={jobs.company_logo}
                     title={jobs.job.job_title}
                     company={jobs.company_name}
@@ -413,7 +413,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                     applicationStatus={jobs.status}
                     applicationUpdatedAt={jobs.updated_at}
                     handleSelectedId={() =>
-                      handleSelectedJobId(jobs.job.id, jobs.job.job_url, jobs.job.status_key)
+                      handleSelectedJobId(jobs.id, jobs.job.job_url, jobs.job.status_key)
                     }
                     isCompanyVerified={jobs.company.is_verify}
                   />
