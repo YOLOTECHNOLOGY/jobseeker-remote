@@ -402,9 +402,9 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                   <JobCard
                     key={i}
                     id={jobs.job.id}
-                    image={jobs.job.company_logo}
+                    image={jobs.company_logo}
                     title={jobs.job.job_title}
-                    company={jobs.job.company_name}
+                    company={jobs.company_name}
                     location={jobs.job.location_value}
                     salary={jobs.job.salary_range_value}
                     postedAt={jobs.job.refreshed_at}
@@ -415,7 +415,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                     handleSelectedId={() =>
                       handleSelectedJobId(jobs.job.id, jobs.job.job_url, jobs.job.status_key)
                     }
-                    isCompanyVerified={jobs.job.company.is_verify}
+                    isCompanyVerified={jobs.company.is_verify}
                   />
                 ))}
             </div>

@@ -116,7 +116,6 @@ const EditWorkExperienceModal = ({
       setIsNextDisabled(data.length > 0 ? false : true)
     }
   }, [data])
-  console.log({ country, countryList })
   useEffect(() => {
     if (data) {
       setJobTitle(data.job_title)
