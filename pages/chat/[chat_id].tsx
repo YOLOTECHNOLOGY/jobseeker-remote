@@ -11,6 +11,7 @@ import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetai
 import { END } from 'redux-saga'
 import { list } from 'helpers/interpreters/services/chat'
 import { useDispatch } from 'react-redux'
+import CustomCard from 'components/Chat/customCard'
 const JobseekerChat = dynamic<any>(import('components/Chat'), {
     ssr: false
 })
@@ -27,9 +28,9 @@ const Chat = () => {
         chatId
     } = useContext(IMContext)
     const dispatch = useDispatch()
-    useEffect(()=>{
-      dispatch(fetchConfigRequest())
-    },[])
+    useEffect(() => {
+        dispatch(fetchConfigRequest())
+    }, [])
     const [first, setFirst] = useState(true)
     const [chatList, setChatList] = useState([])
     const [chatListLoading, setChatListLoading] = useState(false)
@@ -37,7 +38,7 @@ const Chat = () => {
     const [status, setStatus] = useState('')
     const searchParams = useMemo(() => {
         return {
-            type:status,
+            type: status,
             unread: isUnreadOn ? '1' : '0'
         }
     }, [isUnreadOn, status])
@@ -74,22 +75,23 @@ const Chat = () => {
         }
     }, [chatId])
     return <Layout isHiddenFooter isHiddenHeader={mobile}>
-            <JobseekerChat
-                key='jobchat'
-                loading={loading}
-                imState={imState}
-                chatId={chatId}
-                setChatId={chatId => contextRef.current?.changeChat?.(chatId)}
-                chatListLoading={chatListLoading}
-                isUnreadOn={isUnreadOn}
-                setUnreadOn={setUnreadOn}
-                status={status}
-                setStatus={setStatus}
-                chatList={chatList}
-                contextRef={contextRef}
-                userId={userId}
-                businessInterpreters={interpreters}
-            />
+        <JobseekerChat
+            key='jobchat'
+            loading={loading}
+            imState={imState}
+            chatId={chatId}
+            setChatId={chatId => contextRef.current?.changeChat?.(chatId)}
+            chatListLoading={chatListLoading}
+            isUnreadOn={isUnreadOn}
+            setUnreadOn={setUnreadOn}
+            status={status}
+            setStatus={setStatus}
+            chatList={chatList}
+            contextRef={contextRef}
+            CustomCard={CustomCard}
+            userId={userId}
+            businessInterpreters={interpreters}
+        />
     </Layout>
 }
 export const getServerSideProps = wrapper.getServerSideProps(

@@ -3608,10 +3608,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.0.562:
-  version "0.0.562"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.562.tgz#a495c6a3aceeccf8f963f2a7186dfdb5bbb533cb"
-  integrity sha512-QelV0fyTsdqxW3RqXod468lkTPjGwhtr2U65w0sTGTOjAmYHlFPZymC6Yqw7q4jWa7lG0WGU47rsngFYGsRBgg==
+imforbossjob@^0.0.642:
+  version "0.0.642"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.642.tgz#bd31b7aad224c23c58680664c975262361680d61"
+  integrity sha512-d9m897GXkrb6YBOxsRMCwUwuPC4NOKtvdPMl8oj8Mx7yonCgNFMY+szWj5KFyezjI2idOo2pG/+Mrkvyyltq3w==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -3623,35 +3623,7 @@ imforbossjob@^0.0.562:
     buffer "^6.0.3"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
-    imsdkweb "^0.0.17"
-    lodash "^4.17.21"
-    mobx "^5.15.4"
-    mobx-react "^6.3.1"
-    moment "^2.29.4"
-    nanoid "^4.0.0"
-    react ">=16.8.6"
-    react-dom ">=16.8.6"
-    react-router-dom "^4.2.2"
-    sha1 "^1.1.1"
-    viewerjs "^1.11.0"
-
-imforbossjob@^0.0.627:
-  version "0.0.627"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.627.tgz#79995c9d22560a3b49d16c53e9b86f68eae881db"
-  integrity sha512-u3oWDh73QgwnjWYeMVhWOkMjYpq6G8vs68TSBBOCZ2jd95zedgNe+RxayibKl0asDJmeMnbkH8BbFAB2whQoGQ==
-  dependencies:
-    "@ant-design/icons" "^4.7.0"
-    "@aws-sdk/client-s3" "^3.3.0"
-    "@aws-sdk/lib-storage" "^3.18.0"
-    "@aws-sdk/s3-request-presigner" "^3.3.0"
-    ali-oss "^6.17.1"
-    antd "^4.23.3"
-    axios "^0.18.0"
-    buffer "^6.0.3"
-    crypto-js "^4.1.1"
-    dexie "^3.0.3"
-    imforbossjob "^0.0.562"
-    imsdkweb "^0.0.20"
+    imsdkweb "^0.0.22"
     lodash "^4.17.21"
     mobx "^5.15.4"
     mobx-react "^6.3.1"
@@ -3671,10 +3643,10 @@ import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
 
-imsdkweb@^0.0.17:
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.17.tgz#5201377368e97ea1702a3d4c4bee14fff4c8f734"
-  integrity sha512-yz9gvGGi4yGPogdTA+9PxNsazUJX0wXMTynMSymHLl4afi2JzWaESQ+QPcO2pljLV4C8gEBC9xGyvnRQp38Y2w==
+imsdkweb@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.22.tgz#22eebe559c712cc6eab74dc0cb41a071351d5722"
+  integrity sha512-BgvhIlxWeltxhHpXT+jL1f0ldZ+bKP5vLuDZcU5tdbwNge5x6wak9GTGznGhI1YLUQ8pDR7glqivr7SvDxW9GQ==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
@@ -3689,27 +3661,7 @@ imsdkweb@^0.0.17:
     mobx-react "^6.3.1"
     moment "^2.29.4"
     nanoid "^4.0.0"
-    sha1 "^1.1.1"
-    viewerjs "^1.11.0"
-
-imsdkweb@^0.0.20:
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.20.tgz#ac133e6df1736cc942868998cbf4b16cdedab649"
-  integrity sha512-fZ5J/xAbkPlBoGhqy6vquq+0R/e5ZrVj2Goi6B3G4GRy0hkT8dBfaf9oLIn8RB5Zk2WzzDvmVrYPBbIFm9g1tw==
-  dependencies:
-    "@aws-sdk/client-s3" "^3.3.0"
-    "@aws-sdk/lib-storage" "^3.18.0"
-    "@aws-sdk/s3-request-presigner" "^3.3.0"
-    ali-oss "^6.17.1"
-    axios "^0.18.0"
-    buffer "^6.0.3"
-    crypto-js "^4.1.1"
-    dexie "^3.0.3"
-    lodash "^4.17.21"
-    mobx "^5.15.4"
-    mobx-react "^6.3.1"
-    moment "^2.29.4"
-    nanoid "^4.0.0"
+    react-router-dom "^4.2.2"
     sha1 "^1.1.1"
     viewerjs "^1.11.0"
 

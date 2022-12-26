@@ -1,0 +1,75 @@
+.main {
+    margin: 0px 0px;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    padding: 5px 15px;
+    justify-content: space-between;
+
+    .left {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        .title {
+            font-family: 'Product Sans';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 18px;
+            letter-spacing: 0.0075em;
+            color: #353535;
+            .salary {
+                // flex: 0;
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 14px;
+                line-height: 18px;
+                letter-spacing: 0.0075em;
+                color: #2378E5;
+                width: 100px;
+                margin-top: 2px;
+            }
+        }
+
+        .tagContent {
+            display: flex;
+            flex-direction: row;
+            margin-top: 5px;
+            .tag {
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 15px;
+                letter-spacing: 0.02em;
+                color: #707070;
+                padding: 2px 5px;
+                border: 1px solid #707070;
+                border-radius: 10px;
+                margin-right: 5px;
+            }
+        }
+    }
+
+   
+
+    .right {
+        // flex: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        label{
+            font-family: 'Product Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 15px;
+            letter-spacing: 0.02em;
+            color: #707070;
+        }
+    }
+}
