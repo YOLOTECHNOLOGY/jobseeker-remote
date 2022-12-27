@@ -74,6 +74,7 @@
 
   @include msd {
     height: 100%;
+    // height: -webkit-fill-available;
   }
 }
 

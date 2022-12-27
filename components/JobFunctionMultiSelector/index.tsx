@@ -11,6 +11,7 @@ import classNames from "classnames"
 import MaterialButton from "components/MaterialButton"
 import Text from "components/Text"
 import { useRef } from "react"
+import { debounce } from 'lodash-es'
 const theme = createTheme({
     components: {
         MuiInputLabel: {
@@ -67,6 +68,8 @@ const theme = createTheme({
     },
 })
 const toSeo = value => value.replaceAll('/', '-').replaceAll(' ', '-').toLowerCase()
+
+
 const JobFunctionMultiSelector = (props: any) => {
     const { label, className, value, isTouched, onChange, ...rest } = props
     const [showModal, setShowModal] = useState(false)
@@ -85,6 +88,30 @@ const JobFunctionMultiSelector = (props: any) => {
     const [mainFunctions, setMainfunctions] = useState(value?.mainFunctions ?? [])
     const [functionIds, setFunctionIds] = useState(value?.jobFunctions ?? [])
     const [functionTitleIds, setFunctionTitleIds] = useState(value?.functionTitles ?? [])
+    const [height, setHeight] = useState(0)
+    useEffect(() => {
+        if (showModal) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = 'auto'
+        }
+        // return () => document.body.style.overflow = 'auto'
+    }, [showModal])
+    useEffect(() => {
+        const convertStyle = debounce(() => {
+            setHeight(window.innerHeight)
+        }, 50)
+        setHeight(window.innerHeight)
+        window.addEventListener("resize", convertStyle);
+        window.addEventListener("DOMContentLoaded", convertStyle);
+        return () => {
+            window.removeEventListener("resize", convertStyle)
+            window.removeEventListener("DOMContentLoaded", convertStyle)
+        }
+    }, [])
+
+
+
     useEffect(() => {
         if (!isEqual(value, {
             mainFunctions: mainFunctions,
@@ -292,7 +319,8 @@ const JobFunctionMultiSelector = (props: any) => {
     }, [activeFirst])
     return (
         <ThemeProvider theme={theme}>
-            <FormControl className={className} size='small'>
+            <FormControl className={className} size='small'
+            >
                 <MaterialTextField
                     value={textValue}
                     autoComplete="off"
@@ -302,12 +330,16 @@ const JobFunctionMultiSelector = (props: any) => {
                         e.stopPropagation()
                         setShowModal(true)
                     }}
+                    disabled={showModal}
                     onFocus={(e) => {
                         if (!isTouched) {
                             setShowModal(true)
                         }
                         rest?.onFocus?.(e)
-                    }}
+                        Promise.resolve().then(()=>{
+                            e.target.blur()
+                        })
+                     }}
                     {...rest}
                 />
                 {showModal && <div className={styles.container}
@@ -315,6 +347,7 @@ const JobFunctionMultiSelector = (props: any) => {
                         e.preventDefault()
                         e.stopPropagation()
                     }}
+
                 >
                     <div className={styles.column}>
                         {formattedJobfunctions.map(first => {
@@ -355,121 +388,123 @@ const JobFunctionMultiSelector = (props: any) => {
                         })}
                     </div>}
                 </div>}
-
-            </FormControl>
-
-            {showModal && isMobile && <div className={classNames({
-                [styles.mobile]: true,
-                [styles.showModal]: firstRender,
-                [styles.closingModal]: isClosing
-            })}
-                onClick={e => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                }}
-            >
-                <div className={styles.topContainer}>
-                    <div className={classNames({
-                        [styles.firstPage]: true,
-                        [styles.show]: !!activeFirst && !firstRender,
-                        [styles.hide]: !activeFirst && !firstRender
-                    })
-                    }>
-                        <Header title='Job Function'
-                            onClose={onClose}>
-                        </Header>
-
-                        <div className={styles.columnMain}>
-                            {formattedJobfunctions.map(first => {
-                                return <JobItem
-                                    key={first.value}
-                                    data={first}
-                                    active={activeFirst?.seo_value === first.seo_value}
-                                    checked={isFirstSelected(first)}
-                                    onArrowClick={(e) => {
-                                        e.stopPropagation()
-                                        onFirstHover(first)
-                                    }}
-                                    onClick={() => onFirstClick(first)}
-                                />
-                            })}
-                        </div>
-                    </div>
-                    <div className={
-                        classNames({
-                            [styles.secondPage]: true,
+                {showModal && isMobile && <div className={classNames({
+                    [styles.mobile]: true,
+                    [styles.showModal]: firstRender,
+                    [styles.closingModal]: isClosing
+                })}
+                    onClick={e => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                    }}
+                    style={{ height: height }}
+                >
+                    <div className={styles.topContainer}>
+                        <div className={classNames({
+                            [styles.firstPage]: true,
                             [styles.show]: !!activeFirst && !firstRender,
                             [styles.hide]: !activeFirst && !firstRender
-                        })}>
-                        <Header
-                            title={activeFirst?.value}
-                            onBack={onBack}
-                            onClose={onClose}>
+                        })
+                        }>
+                            <Header title='Job Function'
+                                onClose={onClose}>
+                            </Header>
 
-                        </Header>
-                        <div className={styles.subContainer}>
-                            <div className={styles.secondContainer}>
-                                {secondList.length > 1 && <div className={styles.columnSub}>
-                                    {secondList.map((second: any) => {
-                                        return <JobItem
-                                            key={second.id}
-                                            data={second}
-                                            active={activeSecond?.seo_value === second.seo_value}
-                                            checked={isSecondSelected(second)}
-                                            onArrowClick={e => {
-                                                e.stopPropagation()
-                                                onSecondHover(second)
-                                            }}
-                                            onClick={() => {
-                                                onSecondHover(second)
-                                                onSecondClick(second)
-                                            }}
-                                            noArrow={second.id === -1}
-                                        />
-                                    })}
-                                </div>}
+                            <div className={styles.columnMain} style={{ height: height - 56 - 76 - 10 }}>
+                                {formattedJobfunctions.map(first => {
+                                    return <JobItem
+                                        key={first.value}
+                                        data={first}
+                                        active={activeFirst?.seo_value === first.seo_value}
+                                        checked={isFirstSelected(first)}
+                                        onArrowClick={(e) => {
+                                            e.stopPropagation()
+                                            onFirstHover(first)
+                                        }}
+                                        onClick={() => onFirstClick(first)}
+                                    />
+                                })}
                             </div>
-                            <div className={styles.thirdContainer}>
-                                {thirdList.length > 1 && <div className={styles.columnSub}>
-                                    {thirdList.map(third => {
-                                        return <JobItem
-                                            key={third.id}
-                                            data={third}
-                                            checked={isThirdSelected(third)}
-                                            onClick={() => onThirdClick(third)}
-                                            noArrow
-                                        />
-                                    })}
-                                </div>}
+                        </div>
+                        <div className={
+                            classNames({
+                                [styles.secondPage]: true,
+                                [styles.show]: !!activeFirst && !firstRender,
+                                [styles.hide]: !activeFirst && !firstRender
+                            })}>
+                            <Header
+                                title={activeFirst?.value}
+                                onBack={onBack}
+                                onClose={onClose}>
+
+                            </Header>
+                            <div className={styles.subContainer}>
+                                <div className={styles.secondContainer}>
+                                    {secondList.length > 1 && <div className={styles.columnSub}>
+                                        {secondList.map((second: any) => {
+                                            return <JobItem
+                                                key={second.id}
+                                                data={second}
+                                                active={activeSecond?.seo_value === second.seo_value}
+                                                checked={isSecondSelected(second)}
+                                                onArrowClick={e => {
+                                                    e.stopPropagation()
+                                                    onSecondHover(second)
+                                                }}
+                                                onClick={() => {
+                                                    onSecondHover(second)
+                                                    onSecondClick(second)
+                                                }}
+                                                noArrow={second.id === -1}
+                                            />
+                                        })}
+                                    </div>}
+                                </div>
+                                <div className={styles.thirdContainer}>
+                                    {thirdList.length > 1 && <div className={styles.columnSub}>
+                                        {thirdList.map(third => {
+                                            return <JobItem
+                                                key={third.id}
+                                                data={third}
+                                                checked={isThirdSelected(third)}
+                                                onClick={() => onThirdClick(third)}
+                                                noArrow
+                                            />
+                                        })}
+                                    </div>}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className={styles.buttonContainer}>
-                    <MaterialButton
-                        variant='outlined'
-                        capitalize
-                        onClick={onClose}
-                        sx={{ height: '44px', width: '40%', borderRadius: 10 }}
+                    <div className={styles.buttonContainer}
                     >
-                        <Text textColor='primaryBlue' bold>
-                            Cancel
-                        </Text>
-                    </MaterialButton>
+                        <MaterialButton
+                            variant='outlined'
+                            capitalize
+                            onClick={onClose}
+                            sx={{ height: '44px', width: '40%', borderRadius: 10 }}
+                        >
+                            <Text textColor='primaryBlue' bold>
+                                Cancel
+                            </Text>
+                        </MaterialButton>
 
 
-                    <MaterialButton
-                        variant='contained'
-                        capitalize
-                        onClick={onSave}
-                        sx={{ height: '44px', width: '40%', borderRadius: 10 }}
-                    >
-                        <Text textColor='white' bold>
-                            Save
-                        </Text>
-                    </MaterialButton>
-                </div>
-            </div>}
+                        <MaterialButton
+                            variant='contained'
+                            capitalize
+                            onClick={onSave}
+                            sx={{ height: '44px', width: '40%', borderRadius: 10 }}
+                        >
+                            <Text textColor='white' bold>
+                                Save
+                            </Text>
+                        </MaterialButton>
+                    </div>
+                </div>}
+            </FormControl>
+
+
         </ThemeProvider >
     )
 }

@@ -12,6 +12,7 @@ $animationTime : 0.3s;
         transform: translateY(0);
     }
 }
+
 @keyframes close {
     0% {
         transform: translateY(0);
@@ -69,15 +70,18 @@ $animationTime : 0.3s;
 
     @include msd {
         background: #fff;
-        height: 100vh;
+        // height: 100vh;
+        height: fit-content;
         width: 100vw;
+        // width: -webkit-fill-available;
         display: flex;
         flex-direction: column;
         position: fixed;
         top: 0px;
         left: 0px;
-        z-index: 250;
-
+        z-index: 25000;
+        padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+        padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
         .buttonContainer {
             width: 100%;
             height: 76px;
@@ -92,10 +96,11 @@ $animationTime : 0.3s;
         &.showModal {
             animation: modal $animationTime ease forwards;
         }
+
         &.closingModal {
             animation: close $animationTime ease forwards;
 
-        } 
+        }
 
         .topContainer {
             position: relative;
@@ -255,8 +260,10 @@ $animationTime : 0.3s;
 
     &:hover {
         background: #F0F0F0;
+
         @include msd {
             background: #fff;
+
             &.active {
                 background: #F0F0F0;
             }
