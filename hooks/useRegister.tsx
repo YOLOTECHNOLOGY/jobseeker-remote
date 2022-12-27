@@ -163,10 +163,10 @@ const useRegister = () => {
         } else {
           // noworkExperiences
           if (userId) {
-            const isChatRedirect = sessionStorage.getItem('isChatRedirect')
+            const isChatRedirect = localStorage.getItem('isChatRedirect')
             if (isChatRedirect) {
               router.push(isChatRedirect)
-              sessionStorage.removeItem('isChatRedirect')
+              localStorage.removeItem('isChatRedirect')
             } else {
               router.push('/jobs-hiring/job-search')
             }
@@ -177,10 +177,10 @@ const useRegister = () => {
       } else if (accessToken) {
         // job details login
         if (userId) {
-          const isChatRedirect = sessionStorage.getItem('isChatRedirect')
+          const isChatRedirect = localStorage.getItem('isChatRedirect')
           if (isChatRedirect) {
             router.push(isChatRedirect)
-            sessionStorage.removeItem('isChatRedirect')
+            localStorage.removeItem('isChatRedirect')
           } else {
             window.location.reload()
           }

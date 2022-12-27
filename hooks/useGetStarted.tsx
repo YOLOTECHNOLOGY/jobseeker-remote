@@ -99,7 +99,7 @@ const useGetStarted = () => {
       : defaultRedirectPage
         ? defaultRedirectPage
         : `/jobs-hiring/job-search`
-    const isChatRedirect = sessionStorage.getItem('isChatRedirect')
+    const isChatRedirect = localStorage.getItem('isChatRedirect')
     if (isChatRedirect) {
       url = isChatRedirect
     }
@@ -124,12 +124,12 @@ const useGetStarted = () => {
 
   const handleAuthenticationSendEmailMagicLink = () => {
     let params: any = {}
-    const isChatRedirect = sessionStorage.getItem('isChatRedirect')
+    const isChatRedirect = localStorage.getItem('isChatRedirect')
     console.log({userId})
     if (isChatRedirect && userId) {
       params.redirect = isChatRedirect
       params.redirect_fail = router.asPath
-      sessionStorage.removeItem('isChatRedirect')
+      localStorage.removeItem('isChatRedirect')
     } else if (router.pathname === '/quick-upload-resume') {
       params = {
         redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1',
