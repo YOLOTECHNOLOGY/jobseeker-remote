@@ -77,10 +77,10 @@ const JobFunctionMultiSelector = (props: any) => {
     const [activeFirst, setActiveFirst] = useState<any>()
     const [activeSecond, setActiveSecond] = useState<any>()
     const secondList = useMemo(() => {
-        return [{ value: 'all', id: -1, parent: activeFirst }].concat(activeFirst?.children ?? [])
+        return [{ value: 'All', id: -1, parent: activeFirst }].concat(activeFirst?.children ?? [])
     }, [activeFirst])
     const thirdList = useMemo(() => {
-        return [{ value: 'all', id: -1, parent: activeSecond }].concat(activeSecond?.children ?? [])
+        return [{ value: 'All', id: -1, parent: activeSecond }].concat(activeSecond?.children ?? [])
     }, [activeSecond])
     const [mainFunctions, setMainfunctions] = useState(value?.mainFunctions ?? [])
     const [functionIds, setFunctionIds] = useState(value?.jobFunctions ?? [])

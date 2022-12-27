@@ -255,6 +255,12 @@ $animationTime : 0.3s;
 
     &:hover {
         background: #F0F0F0;
+        @include msd {
+            background: #fff;
+            &.active {
+                background: #F0F0F0;
+            }
+        }
     }
 
     .title {
@@ -268,9 +274,10 @@ $animationTime : 0.3s;
         flex: 0;
     }
 
-    img {
+    .icon {
         position: absolute;
-        transform: rotateZ(90deg);
-        right: 60px;
+        // transform: rotateZ(90deg);
+        right: 40px;
+        color: #2379EA;
     }
 }
