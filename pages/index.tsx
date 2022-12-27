@@ -68,12 +68,16 @@ type companyObject = {
 }
 
 interface HomeProps {
- // config: configObject
+  // config: configObject
   topCompanies: companyObject[]
 }
 
 const Home = (props: HomeProps) => {
   const { width } = useWindowDimensions()
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    setIsMobile(width < 768)
+  }, [width])
   const { topCompanies } = props
   const router = useRouter()
   const isAuthenticated = getCookie('accessToken') ? true : false
@@ -90,9 +94,9 @@ const Home = (props: HomeProps) => {
 
   const config = useSelector((store: any) => store?.config?.config?.response)
   const dispatch = useDispatch()
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(fetchConfigRequest())
-  },[])
+  }, [])
   useEffect(() => {
     const timer = setTimeout(() => setShowLogo(true), 1500)
     return () => clearTimeout(timer)
@@ -677,7 +681,7 @@ const Home = (props: HomeProps) => {
                   <img className={styles.featureContentImageBusinessInsider} src={BusinessInsider} alt='Business Insider' width='206' height='70' />
                 </LazyLoad>
               </div>
-              {width > 576 ? (
+              {isMobile ? (
                 <Link
                   to='https://markets.businessinsider.com/news/stocks/recruitment-platform-bossjob-launches-a-tool-for-headhunters-to-easily-spot-their-ideal-candidates-1028874126'
                   external
@@ -715,7 +719,7 @@ const Home = (props: HomeProps) => {
                   <img className={styles.featureContentImageTechInAsia} src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
                 </LazyLoad>
               </div>
-              {width > 576 ? (
+              {isMobile ? (
                 <Link
                   to='https://www.techinasia.com/5-ways-recruiters-tackle-tech-talent-crunch'
                   external
@@ -750,7 +754,7 @@ const Home = (props: HomeProps) => {
                   <img className={styles.featureContentImageGrabVentures} src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
                 </LazyLoad>
               </div>
-              {width > 576 ? (
+              {isMobile ? (
                 <Link
                   to='https://www.grab.com/vn/en/press/business/vigrab-chinh-thuc-khoi-dong-chuong-trinh-grab-ventures-ignite-nham-gop-phan-thuc-day-he-sinh-thai-khoi-nghiep-viet-namengrab-officially-kicks-off-grab-ventures-ignite-programme-to-propel-vie/'
                   external
@@ -786,7 +790,7 @@ const Home = (props: HomeProps) => {
                   <img className={styles.featureContentImageMoneyMax} src={MoneyMax} alt='Moneymax' width='206' height='40' />
                 </LazyLoad>
               </div>
-              {width > 576 ? (
+              {isMobile ? (
                 <Link to='https://www.moneymax.ph/lifestyle/articles/online-job-sites/' external>
                   <Text textStyle='xl' className={styles.featureContentDesc}>
                     Legit Online Job Sites to Help You Look for Work During the Pandemic
@@ -815,7 +819,7 @@ const Home = (props: HomeProps) => {
                   <img className={styles.featureContentImageKrAsia} src={KrAsia} alt='KR Asia' width='206' height='40' />
                 </LazyLoad>
               </div>
-              {width > 576 ? (
+              {isMobile ? (
                 <Link
                   to='https://kr-asia.com/grab-ventures-ignite-helps-singaporean-startups-kickstart-in-vietnam'
                   external
@@ -870,12 +874,12 @@ const Home = (props: HomeProps) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   // store actions
- // store.dispatch(fetchConfigRequest())
+  // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
- 
+
   const featuredCompanies =
     storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(
       (featuredCompany) => featuredCompany.company
@@ -891,7 +895,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
     props: {
       topCompanies,
     },
-   // revalidate: 10
+    // revalidate: 10
   }
 })
 
