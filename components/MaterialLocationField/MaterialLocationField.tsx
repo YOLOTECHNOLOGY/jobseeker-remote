@@ -16,10 +16,10 @@ const textFieldTheme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          fontSize: '14px',
-          letterSpacing: '1px',
-          backgroundColor: 'white',
-          height: '44px'
+         // fontSize: '14px',
+         letterSpacing: '1px',
+         backgroundColor: 'white',
+         height: '44px'
         },
       },
     },
