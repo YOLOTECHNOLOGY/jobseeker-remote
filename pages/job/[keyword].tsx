@@ -65,7 +65,7 @@ import { postReportRequest } from 'store/actions/reports/postReport'
 import { postSaveJobRequest } from 'store/actions/jobs/postSaveJob'
 import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
 
-import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
+// import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
 
 import { withdrawAppliedJobRequest } from 'store/actions/jobs/withdrawAppliedJob'
 
@@ -365,36 +365,36 @@ const Job = ({
     }
   }
 
-  const handleVerifyEmailClick = async () => {
-    // revalidate verify email status
-    const response = await fetchUserOwnDetailService({ accessToken: accessToken })
-    const userDetails = response?.data?.data
-    const isVerifiedEmail = userDetails?.is_email_verify
+  // const handleVerifyEmailClick = async () => {
+  //   // revalidate verify email status
+  //   const response = await fetchUserOwnDetailService({ accessToken: accessToken })
+  //   const userDetails = response?.data?.data
+  //   const isVerifiedEmail = userDetails?.is_email_verify
 
-    if (!isVerifiedEmail) {
-      // email is not verified
-      setIsShowModal(true)
-    } else {
-      // email is verified and user cookie is outdated
-      const userCookie = {
-        active_key: userDetails.active_key,
-        id: userDetails.id,
-        first_name: userDetails.first_name,
-        last_name: userDetails.last_name,
-        email: userDetails.email,
-        phone_num: userDetails.phone_num,
-        is_mobile_verified: userDetails.is_mobile_verified,
-        avatar: userDetails.avatar,
-        additional_info: userDetails.additional_info,
-        is_email_verify: true,
-        notice_period_id: userDetails.notice_period_id,
-        is_profile_completed: userDetails.is_profile_completed
-      }
+  //   if (!isVerifiedEmail) {
+  //     // email is not verified
+  //     setIsShowModal(true)
+  //   } else {
+  //     // email is verified and user cookie is outdated
+  //     const userCookie = {
+  //       active_key: userDetails.active_key,
+  //       id: userDetails.id,
+  //       first_name: userDetails.first_name,
+  //       last_name: userDetails.last_name,
+  //       email: userDetails.email,
+  //       phone_num: userDetails.phone_num,
+  //       is_mobile_verified: userDetails.is_mobile_verified,
+  //       avatar: userDetails.avatar,
+  //       additional_info: userDetails.additional_info,
+  //       is_email_verify: true,
+  //       notice_period_id: userDetails.notice_period_id,
+  //       is_profile_completed: userDetails.is_profile_completed
+  //     }
 
-      setCookie('user', userCookie)
-      router.reload()
-    }
-  }
+  //     setCookie('user', userCookie)
+  //     router.reload()
+  //   }
+  // }
 
   const handleWithdrawApplication = async ({ jobId }) => {
     const payload = {
@@ -414,21 +414,21 @@ const Job = ({
     }
   }
 
-  const handleApplyJob = () => {
-    if (!userCookie) {
-      setOpenRegister(true)
-    } else {
-      if (userCookie && !userCookie.is_email_verify) {
-        handleVerifyEmailClick()
-      }
+  // const handleApplyJob = () => {
+  //   if (!userCookie) {
+  //     setOpenRegister(true)
+  //   } else {
+  //     if (userCookie && !userCookie.is_email_verify) {
+  //       handleVerifyEmailClick()
+  //     }
 
-      if (jobDetail?.external_apply_url) {
-        addExternalJobClickService(jobDetail?.id)
-      }
+  //     if (jobDetail?.external_apply_url) {
+  //       addExternalJobClickService(jobDetail?.id)
+  //     }
 
-      window.open(applyJobLink)
-    }
-  }
+  //     window.open(applyJobLink)
+  //   }
+  // }
   useEffect(() => {
     if (jobDetail?.id) {
       const recruiterId = jobDetail?.recruiter?.id
@@ -544,12 +544,20 @@ const Job = ({
           <MaterialButton
             variant='contained'
             capitalize
-            disabled={jobDetail?.is_applied}
+            // disabled={jobDetail?.is_applied}
             className={styles.applyBtn}
-            onClick={handleApplyJob}
+            onClick={handleChat}
           >
             <Text textColor='white' bold>
-              {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
+              {(() => {
+                if (jobDetail?.external_apply_url) {
+                  return 'Apply Now'
+                } else if (chatDetail.is_exists && chatDetail.job_id === jobDetail.id) {
+                  return 'Continue Chat'
+                } else {
+                  return 'Chat Now'
+                }
+              })()}
             </Text>
           </MaterialButton>
         </div>
@@ -645,7 +653,7 @@ const Job = ({
       >
         <p>You are currently chatting with recruiter for the {chatDetail?.job?.job_title ?? chatDetail?.job?.function_job_title ?? 'this job'} position. Are you sure you want to switch job?</p>
       </Modal>
-      {width > 799 && openRegister && (
+      {openRegister && (
         <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} />
       )}
 
