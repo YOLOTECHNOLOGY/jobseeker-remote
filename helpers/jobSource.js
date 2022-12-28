@@ -2,14 +2,14 @@
 const jobSource = ()=>{
     const page = (path=>{
         if(path.includes('jobs-hiring/')){
-            return 'job-search'
+            return 'job_search'
         } else if(path.includes('job/')){
-            return 'job-detail'
+            return 'job_detail'
         } else if(path.includes('my-jobs/saved')){
-            return 'saved-job'
+            return 'saved_job'
         }
     })(window.location.pathname)
-    const medium = window.innerWidth > 768 ? 'web' : 'mobile-web'
-    return [page,medium,'chat-now'].join('-')
+    const medium = window.innerWidth > 768 ? 'web' : 'mobile_web'
+    return [page,medium,'chat_now'].join('_')
 }
 export default jobSource
