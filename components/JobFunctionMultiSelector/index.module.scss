@@ -70,8 +70,8 @@ $animationTime : 0.3s;
 
     @include msd {
         background: #fff;
-        // height: 100vh;
-        height: fit-content;
+        height: 100vh;
+        // height: fit-content;
         width: 100vw;
         // width: -webkit-fill-available;
         display: flex;
@@ -80,8 +80,11 @@ $animationTime : 0.3s;
         top: 0px;
         left: 0px;
         z-index: 25000;
-        padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
-        padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+        padding-bottom: constant(safe-area-inset-bottom);
+        /*兼容 IOS<11.2*/
+        padding-bottom: env(safe-area-inset-bottom);
+
+        /*兼容 IOS>11.2*/
         .buttonContainer {
             width: 100%;
             height: 76px;
@@ -161,6 +164,7 @@ $animationTime : 0.3s;
                         height: 100%;
                         width: 50%;
                         border-right: 0.5px solid #BCBCBC;
+                        overflow-y: auto;
 
                         .item {
                             width: 100%;
@@ -170,6 +174,7 @@ $animationTime : 0.3s;
                     .thirdContainer {
                         height: 100%;
                         width: 50%;
+                        overflow-y: auto;
 
                         .item {
                             width: 100%;
@@ -274,17 +279,23 @@ $animationTime : 0.3s;
         flex: 1;
     }
 
-    &.arrow {
-        height: 100%;
-        width: 40px;
+    .rightContainer {
         display: flex;
-        flex: 0;
+        flex-direction: row;
+        margin-right: 10px;
+        &.arrow {
+            height: 100%;
+            width: 40px;
+            display: flex;
+            flex: 0;
+        }
+
+        .icon {
+            // position: absolute;
+            // transform: rotateZ(90deg);
+            // right: 40px;
+            color: #2379EA;
+        }
     }
 
-    .icon {
-        position: absolute;
-        // transform: rotateZ(90deg);
-        right: 40px;
-        color: #2379EA;
-    }
 }

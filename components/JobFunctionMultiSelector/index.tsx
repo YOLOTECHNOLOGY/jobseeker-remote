@@ -90,13 +90,18 @@ const JobFunctionMultiSelector = (props: any) => {
     const [functionTitleIds, setFunctionTitleIds] = useState(value?.functionTitles ?? [])
     const [height, setHeight] = useState(0)
     useEffect(() => {
+        console.log({ showModal })
+        if (!isMobile) {
+            document.body.style.overflow = 'auto'
+            return
+        }
         if (showModal) {
             document.body.style.overflow = 'hidden'
         } else {
             document.body.style.overflow = 'auto'
         }
         // return () => document.body.style.overflow = 'auto'
-    }, [showModal])
+    }, [showModal, isMobile])
     useEffect(() => {
         const convertStyle = debounce(() => {
             setHeight(window.innerHeight)
@@ -336,10 +341,10 @@ const JobFunctionMultiSelector = (props: any) => {
                             setShowModal(true)
                         }
                         rest?.onFocus?.(e)
-                        Promise.resolve().then(()=>{
+                        Promise.resolve().then(() => {
                             e.target.blur()
                         })
-                     }}
+                    }}
                     {...rest}
                 />
                 {showModal && <div className={styles.container}
@@ -438,7 +443,7 @@ const JobFunctionMultiSelector = (props: any) => {
                                 onClose={onClose}>
 
                             </Header>
-                            <div className={styles.subContainer}>
+                            <div className={styles.subContainer} style={{ height: height - 59 - 75 }}>
                                 <div className={styles.secondContainer}>
                                     {secondList.length > 1 && <div className={styles.columnSub}>
                                         {secondList.map((second: any) => {

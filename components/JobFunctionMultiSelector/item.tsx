@@ -12,18 +12,18 @@ const JobItem = (props: any) => {
         })}
         {...rest}
     >
+
         <label contentEditable={false}>{data?.value}</label>
-        {!noArrow && <div className={styles.arrow} onClick={onArrowClick} style={{width:40}}>
-            <KeyboardArrowRightOutlined style={{ color: '#707070', margin: 'auto' }} />
-        </div>}
-        {checked && <CheckCircleIcon
-            style={{ display: checked,right:noArrow?10:40 }}
-            className={styles.icon}
-            // src={CarouselRightRoundedBlueButton}
-            // title='minus'
-            //  alt='minus' 
-            fill='red'
-             height='16' width='16' />}
+        <div className={styles.rightContainer} style={{ marginRight: noArrow ? 10 : 0 }}>
+            {checked && <CheckCircleIcon
+                style={{ display: checked }}
+                className={styles.icon}
+                fill='red'
+                height='16' width='16' />}
+            {!noArrow && <div className={styles.arrow} onClick={onArrowClick} style={{ width: 40 }}>
+                <KeyboardArrowRightOutlined style={{ color: '#707070', margin: 'auto' }} />
+            </div>}
+        </div>
 
     </div>
 }
