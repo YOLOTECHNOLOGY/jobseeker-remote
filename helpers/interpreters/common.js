@@ -1,6 +1,6 @@
 /* eslint-disable new-cap */
-import { scripts,M } from 'imforbossjob'
-import {  updateChat } from './services/common'
+import { scripts, M } from 'imforbossjob'
+import { updateChat } from './services/common'
 const { utils } = scripts
 const { RequestResult } = utils
 export default command => command.cata({
@@ -19,9 +19,12 @@ export default command => command.cata({
             .finally(() => context.setLoading(false))
     }),
     syncData: data => M(context => new Promise(resolve => {
-        console.log({ context })
         context.updateData(data)
-        setTimeout(resolve,0)
+        setTimeout(resolve, 0)
+    })),
+    updatePath: (path, data) => M(context => new Promise(resolve => {
+        context.updatePath(path,data)
+        setTimeout(resolve, 0)
     })),
     showToast: (type, content) => M(context => Promise.resolve().then(() => {
         context.showToast(type, content)

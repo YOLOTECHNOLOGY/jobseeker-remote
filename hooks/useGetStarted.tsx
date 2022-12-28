@@ -102,6 +102,7 @@ const useGetStarted = () => {
     const isChatRedirect = localStorage.getItem('isChatRedirect')
     if (isChatRedirect) {
       url = isChatRedirect
+      localStorage.removeItem('isChatRedirect')
     }
     console.log('defaultLoginCallBack', url)
     routes.push(url)

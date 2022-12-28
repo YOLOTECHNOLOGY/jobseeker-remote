@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 import { scripts, M } from 'imforbossjob'
 const { 
     switchJobJobseeker: { DetailModalActions }

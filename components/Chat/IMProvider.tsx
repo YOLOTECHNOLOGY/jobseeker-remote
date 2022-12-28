@@ -64,7 +64,7 @@ const IMProvider = ({ children }: any) => {
     useEffect(() => {
         userDetailRef.current = userDetail
     }, [userDetail])
-    console.log({userDetail})
+    console.log({ userDetail })
     const contextRef = useRef({
         setLoading,
         hideModals() {
@@ -108,6 +108,15 @@ const IMProvider = ({ children }: any) => {
                 }
                 contextRef.current.imState = newData
                 setImState(newData)
+            }
+        },
+        updatePath(path, data) {
+            if (path && data.data) {
+                const state = contextRef.current.getState()
+                const newState = { ...state, [path]: data.data }
+                console.log({ newState })
+                contextRef.current.imState = newState
+                setImState(newState)
             }
         },
         getChatId() {
@@ -198,7 +207,7 @@ const IMProvider = ({ children }: any) => {
         />
         <CommonPhrases
             loading={loading}
-            data={imState?.interview}
+            userId={userId}
             applicationId={applicationId}
             contextRef={contextRef}
         />

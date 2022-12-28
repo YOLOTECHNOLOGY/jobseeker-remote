@@ -18,6 +18,8 @@ const Chat = () => {
             }).catch(() => {
                 router.push(`/`)
             })
+        } else {
+            router.push(`/`)
         }
     }, [userId])
     return <Layout loading={true}/>

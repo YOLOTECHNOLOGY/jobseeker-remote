@@ -8,12 +8,12 @@ import CommonPhrasesCreateModal from './commonPhrasesCreateModal'
 import CommonPhrasesDeleteModal from './commonPhrasesDeleteModal'
 
 const CommonPhrases = (props: any) => {
-    const { contextRef, loading, applicationId } = props
+    const { contextRef, loading, applicationId, userId } = props
     const [list, setList] = useState([])
     const [listLoading, setListLoading] = useState(false)
     const [init, setInit] = useState(true)
     useEffect(() => {
-        if (init) {
+        if (init && userId) {
             console.log({ init })
             getList().then(result => {
                 setList(result.data.data)
@@ -21,7 +21,7 @@ const CommonPhrases = (props: any) => {
             setInit(false)
         }
 
-    }, [])
+    }, [userId])
     const context = {
         updateList(list) {
             setList(list)
