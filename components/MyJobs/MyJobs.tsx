@@ -82,7 +82,11 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
-  const isMobile = width < 768 ? true : false
+  const [isMobile,setIsMobile] = useState(false)
+  useEffect(()=>{
+    setIsMobile(width < 768)
+  },[width])
+  // const isMobile = width < 768 ? true : false
   const isAppliedCategory = category === 'applied'
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
@@ -403,19 +407,19 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                     key={i}
                     id={jobs.id}
                     image={jobs.company_logo}
-                    title={jobs.job.job_title}
+                    title={jobs?.job?.job_title}
                     company={jobs.company_name}
-                    location={jobs.job.location_value}
-                    salary={jobs.job.salary_range_value}
-                    postedAt={jobs.job.refreshed_at}
+                    location={jobs?.job?.location_value}
+                    salary={jobs?.job?.salary_range_value}
+                    postedAt={jobs?.job?.refreshed_at}
                     selectedId={selectedJobId}
-                    status={jobs.job.status_key}
+                    status={jobs?.job?.status_key}
                     applicationStatus={jobs.status}
                     applicationUpdatedAt={jobs.updated_at}
                     handleSelectedId={() =>
-                      handleSelectedJobId(jobs.id, jobs.job.job_url, jobs.job.status_key)
+                      handleSelectedJobId(jobs.id, jobs?.job?.job_url, jobs?.job?.status_key)
                     }
-                    isCompanyVerified={jobs.company.is_verify}
+                    isCompanyVerified={jobs?.company?.is_verify}
                   />
                 ))}
             </div>
