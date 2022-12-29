@@ -64,7 +64,7 @@
             width: 311px;
             background: #FFFFFF;
             box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.1), 2px 2px 4px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+            // border-radius: 10px;
 
             @include sm {
                 width: 100%;
@@ -203,8 +203,7 @@
                 align-items: flex-start;
                 height: 100%;
                 text-overflow: ellipsis;
-                white-space: pre-wrap;
-                height: 100%;
+                // white-space: pre-wrap;
                 vertical-align: middle;
                 overflow: hidden;
                 text-align: left;
@@ -340,7 +339,7 @@
                 flex-wrap: wrap;
                 justify-content: flex-start;
                 border: 0.5px solid #BCBCBC;
-                border-radius: 15px;
+                // border-radius: 15px;
                 padding: 10px 15px;
                 margin-top: 20px;
                 max-height: 440px;

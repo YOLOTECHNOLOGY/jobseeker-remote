@@ -9,7 +9,8 @@ import { flatMap, flatMapDeep, keys, assign, values, groupBy } from 'lodash-es'
 import { Plus, Minus } from "images";
 import Text from "components/Text";
 import classNames from "classnames";
-const formatMenuText = (text) => {
+const formatMenuText = (value) => {
+    const text = value.replaceAll('\n','')
     if (text.length <= 16) {
         return text
     }
@@ -110,7 +111,7 @@ const JobFunctionSelector = (props: any) => {
         >
             <div>
                 <Paper className={styles.webPC}>
-                    <TopBar title={title} onChange={title => onChange(title)} />
+                    <TopBar title={title} onChange={title => onChange(title)} value={value}/>
                     <div className={styles.container}>
                         <MenuList classes={{ root: styles.menu }} >
                             {jobFunctionsKeys.map(key => {

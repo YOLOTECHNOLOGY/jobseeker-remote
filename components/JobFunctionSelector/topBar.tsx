@@ -8,7 +8,7 @@ import { flatMapDeep } from 'lodash-es'
 import SearchBar from './searchBar'
 
 
-export default function PrimarySearchAppBar({ title, onChange }: any) {
+export default function PrimarySearchAppBar({ title, onChange,value:outValue }: any) {
 
   const jobFunctions = useSelector((store: any) => store.config.config.response?.inputs?.job_function_lists ?? [])
 
@@ -30,7 +30,11 @@ export default function PrimarySearchAppBar({ title, onChange }: any) {
     id: 'use-autocomplete-demo',
     options,
     getOptionLabel: (option: any) => option.value,
+    value:outValue,
+    inputValue:outValue?.value
   });
+  const inputProps = getInputProps() as any
+  console.log({value,outValue})
   useEffect(() => {
     if (value) {
       onChange?.(value)
@@ -45,8 +49,8 @@ export default function PrimarySearchAppBar({ title, onChange }: any) {
 
       </Toolbar>
       <div className={styles.searchBar}  {...getRootProps()} >
-        <SearchBar style={{background:'#00000000'}} inputProps={getInputProps()} />
-        {groupedOptions.length > 0 ? (
+        <SearchBar style={{ background: '#00000000' }} inputProps={inputProps}  />
+        {(groupedOptions.length > 0 && (inputProps as any)?.value?.length > 0) ? (
           <div className={styles.listbox}  {...(getListboxProps() as any)}>
             {(groupedOptions as any).map((option, index) => (
               <div
