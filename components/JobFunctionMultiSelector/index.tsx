@@ -99,6 +99,8 @@ const JobFunctionMultiSelector = (props: any) => {
             document.body.style.overflow = 'hidden'
         } else {
             document.body.style.overflow = 'auto'
+            setActiveFirst(null)
+            setActiveSecond(null)
         }
         // return () => document.body.style.overflow = 'auto'
     }, [showModal, isMobile])

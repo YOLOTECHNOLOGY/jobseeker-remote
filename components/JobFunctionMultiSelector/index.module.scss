@@ -283,6 +283,7 @@ $animationTime : 0.3s;
         display: flex;
         flex-direction: row;
         margin-right: 10px;
+
         &.arrow {
             height: 100%;
             width: 40px;
@@ -294,6 +295,8 @@ $animationTime : 0.3s;
             // position: absolute;
             // transform: rotateZ(90deg);
             // right: 40px;
+            height: 24px;
+            width: 24px;
             color: #2379EA;
         }
     }

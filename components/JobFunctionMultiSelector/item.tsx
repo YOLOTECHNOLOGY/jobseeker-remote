@@ -15,11 +15,11 @@ const JobItem = (props: any) => {
 
         <label contentEditable={false}>{data?.value}</label>
         <div className={styles.rightContainer} style={{ marginRight: noArrow ? 10 : 0 }}>
-            {checked && <CheckCircleIcon
+            <div className={styles.icon}>{checked && <CheckCircleIcon
                 style={{ display: checked }}
-                className={styles.icon}
+                
                 fill='red'
-                height='16' width='16' />}
+                height='16' width='16' />}</div>
             {!noArrow && <div className={styles.arrow} onClick={onArrowClick} style={{ width: 40 }}>
                 <KeyboardArrowRightOutlined style={{ color: '#707070', margin: 'auto' }} />
             </div>}
