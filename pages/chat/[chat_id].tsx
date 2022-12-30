@@ -5,10 +5,8 @@ import { useRouter } from 'next/router'
 import Layout from 'components/Layout'
 import { IMContext } from 'components/Chat/IMProvider.client'
 import dynamic from 'next/dynamic'
-import { wrapper } from 'store'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
-import { END } from 'redux-saga'
 import { list } from 'helpers/interpreters/services/chat'
 import { useDispatch } from 'react-redux'
 import CustomCard from 'components/Chat/customCard'
@@ -29,6 +27,7 @@ const Chat = () => {
     } = useContext(IMContext)
     const dispatch = useDispatch()
     useEffect(() => {
+        dispatch(fetchUserOwnDetailRequest({}))
         dispatch(fetchConfigRequest())
     }, [])
     const [first, setFirst] = useState(true)
@@ -94,22 +93,7 @@ const Chat = () => {
         />
     </Layout>
 }
-export const getServerSideProps = wrapper.getServerSideProps(
-    (store) =>
-        async ({ req,res }) => {
-            res.setHeader(
-                'Cache-Control',
-                'public, s-maxage=300, stale-while-revalidate=599'
-            )
-            const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-            // store actions
-            // store.dispatch(fetchConfigRequest())
-            if (accessToken) {
-                store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
-            }
-            store.dispatch(END)
-            await (store as any).sagaTask.toPromise()
-            return { props: {} }
-        }
-)
+export const getServerSideProps = () => {
+    return { props: {} }
+}
 export default Chat
