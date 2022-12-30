@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState, useMemo } from 'react'
 import interpreters from 'helpers/interpreters'
 import { useRouter } from 'next/router'
 import Layout from 'components/Layout'
-import { IMContext } from 'components/Chat/IMProvider'
+import { IMContext } from 'components/Chat/IMProvider.client'
 import dynamic from 'next/dynamic'
 import { wrapper } from 'store'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
@@ -96,7 +96,11 @@ const Chat = () => {
 }
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
-        async ({ req }) => {
+        async ({ req,res }) => {
+            res.setHeader(
+                'Cache-Control',
+                'public, s-maxage=300, stale-while-revalidate=599'
+            )
             const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
             // store actions
             // store.dispatch(fetchConfigRequest())

@@ -17,6 +17,10 @@ module.exports = {
     return redirectionPaths
   },
   reactStrictMode: false,
+  experimental: {
+    concurrentFeatures: true,
+    serverComponents: true,
+  },
   env: {
     ENV: process.env.ENV,
     MAINTENANCE: process.env.MAINTENANCE,

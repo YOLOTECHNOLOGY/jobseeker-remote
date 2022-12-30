@@ -329,12 +329,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       functionTitles
     )
     setHasMoreFilters(hasActiveFilters)
-    if (!firstRender) setDisplayQuickLinks(false)
-      ; (async () => {
-        const { payload } = initPagePayLoad(router.query, config)
-        dispatch(fetchJobsListRequest(payload, accessToken))
-        setMoreFilterReset(false)
-      })()
+    if (!firstRender) {
+      setDisplayQuickLinks(false)
+      const { payload } = initPagePayLoad(router.query, config)
+      dispatch(fetchJobsListRequest(payload, accessToken))
+      setMoreFilterReset(false)
+    }
   }, [router.query])
 
   useEffect(() => {

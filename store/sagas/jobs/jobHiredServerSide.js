@@ -5,9 +5,9 @@ import { take } from 'redux-saga/effects'
 import { put, takeLatest, select } from 'redux-saga/effects'
 import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
 import { fetchConfigRequest, fetchConfigSuccess } from 'store/actions/config/fetchConfig'
-import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
+import { fetchJobsListRequest, fetchJobsListSuccess } from 'store/actions/jobs/fetchJobsList'
 import { setJobHiredDefaultValue } from 'store/actions/jobs/jobHiredDefaultValues'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { fetchUserOwnDetailRequest, fetchUserOwnDetailSuccess } from 'store/actions/users/fetchUserOwnDetail'
 // import { call, put, takeLatest, select } from 'redux-saga/effects'
 
 function* jobHiredServerSide(action) {
@@ -21,12 +21,13 @@ function* jobHiredServerSide(action) {
         const { searchQuery, predefinedQuery, predefinedLocation } = checkFilterMatch(action.payload, config)
         yield put(setJobHiredDefaultValue({ searchQuery, predefinedQuery, predefinedLocation, defaultValues }))
         yield put(fetchJobsListRequest(initPayload, accessToken))
-
+        yield take(fetchJobsListSuccess().type)
         if (accessToken) {
             yield put(fetchUserOwnDetailRequest({ accessToken }))
+            yield take(fetchUserOwnDetailSuccess().type)
         }
         yield put(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
-        // yield take(fetchFeaturedCompaniesListSuccess().type)
+        yield take(fetchFeaturedCompaniesListSuccess().type)
         yield put(fetchConfigSuccess(initialState.response))
     } catch (error) {
         console.log({ error })

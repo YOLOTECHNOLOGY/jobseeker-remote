@@ -19,7 +19,7 @@ import NotificationProvider from 'components/NotificationProvider'
 // import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 // import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 // import { useDispatch } from 'react-redux'
-import IMProvider from 'components/Chat/IMProvider'
+import IMProvider from 'components/Chat/IMProvider.client'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
