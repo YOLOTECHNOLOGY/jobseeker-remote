@@ -7,22 +7,31 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import rootReducer from 'store/reducers'
 import rootSaga from 'store/sagas'
-// import logger from 'redux-logger'
+import logger from 'redux-logger'
 
 const persistConfig = {
-  key: 'root',
+  key: 'chat',
   storage,
+  writeFailHandler: error => {
+    console.log('persistFail', error)
+  },
+  whitelist: ['chat'],
+  stateReconciler: (localState, state, mergedState) => {
+    const result = { ...mergedState }
+    result.chat.defaultChatList = localState.chat?.defaultChatList
+    return result
+  }
 }
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== 'production') {
     const { composeWithDevTools } = require('redux-devtools-extension')
     return composeWithDevTools(applyMiddleware(...middleware
-     // ,logger
+      , logger
     ))
   }
   return applyMiddleware(...middleware)
 }
-
+export let persistor
 export const configureStore = (context) => {
   const routerMiddleware = createRouterMiddleware()
   const sagaMiddleware = createSagaMiddleware()
@@ -36,12 +45,12 @@ export const configureStore = (context) => {
   }
 
   const store = createStore(persistedReducer, initialState, bindMiddleware([sagaMiddleware, routerMiddleware]))
-  const persistor = persistStore(store)
   store.sagaTask = sagaMiddleware.run(rootSaga)
-  
-  return {store,persistor}
+  persistor = persistStore(store)
+  store.persistor = persistor
+  return store
 }
 
-export const wrapper = createWrapper(context => configureStore(context).store, {
+export const wrapper = createWrapper(configureStore, {
   debug: process.env.NODE_ENV === 'development'
 })

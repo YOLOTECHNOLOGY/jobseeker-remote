@@ -8,8 +8,9 @@ import dynamic from 'next/dynamic'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { list } from 'helpers/interpreters/services/chat'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import CustomCard from 'components/Chat/customCard'
+import { updateDefaultChatList } from 'store/actions/chat/defaultChatList'
 const JobseekerChat = dynamic<any>(import('components/Chat'), {
     ssr: false
 })
@@ -30,8 +31,10 @@ const Chat = () => {
         dispatch(fetchUserOwnDetailRequest({}))
         dispatch(fetchConfigRequest())
     }, [])
+    const defaultChatList = useSelector((store: any) => store?.chat?.defaultChatList ?? [])
+
     const [first, setFirst] = useState(true)
-    const [chatList, setChatList] = useState([])
+    const [chatList, setChatList] = useState(defaultChatList)
     const [chatListLoading, setChatListLoading] = useState(false)
     const [isUnreadOn, setUnreadOn] = useState(false)
     const [status, setStatus] = useState('')
@@ -46,6 +49,9 @@ const Chat = () => {
             setChatListLoading(true)
             list(searchParams).then(result => {
                 setChatList(result.data?.data?.chats)
+                if (!status && !isUnreadOn) {
+                    dispatch(updateDefaultChatList({chatList: result.data?.data?.chats ?? [] }))
+                }
             }).finally(() => setChatListLoading(false))
         }
     }, [searchParams])

@@ -6,7 +6,7 @@ import { wrapper } from 'store'
 import { getCookie } from 'helpers/cookies'
 import { CookiesProvider } from 'react-cookie'
 import { ConnectedRouter } from 'connected-next-router'
-
+import { PersistGate } from 'redux-persist/integration/react'
 import { setItem, getItem } from 'helpers/localStorage'
 import { getFromObject } from 'helpers/formatter'
 import 'styles/globals.scss'
@@ -20,8 +20,9 @@ import NotificationProvider from 'components/NotificationProvider'
 // import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 // import { useDispatch } from 'react-redux'
 import IMProvider from 'components/Chat/IMProvider.client'
-
-const App = ({ Component, pageProps }: AppProps) => {
+import { persistor } from 'store'
+const App = (props: AppProps) => {
+  const { Component, pageProps } = props
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
@@ -130,9 +131,8 @@ const App = ({ Component, pageProps }: AppProps) => {
           __html: `
             function initialize() {	
               FB.init({	
-                appId            : ${
-                  process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
-                },
+                appId            : ${process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
+            },
                 xfbml            : true,	
                 version          : 'v6.0'	
               });	
@@ -214,6 +214,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
       <ConnectedRouter>
         <CookiesProvider>
+
           {process.env.MAINTENANCE === 'true' ? (
             <MaintenancePage {...pageProps} />
           ) : isPageLoading &&
@@ -221,12 +222,16 @@ const App = ({ Component, pageProps }: AppProps) => {
             <TransitionLoader accessToken={accessToken} />
           ) : (
             <NotificationProvider>
-              <IMProvider>
-                <Component {...pageProps} />
-              </IMProvider>
+              <PersistGate loading={null} persistor={persistor}>
+                <IMProvider>
+                  <Component {...pageProps} />
+                </IMProvider>
+              </PersistGate>
             </NotificationProvider>
           )}
+
         </CookiesProvider>
+
       </ConnectedRouter>
     </>
   )

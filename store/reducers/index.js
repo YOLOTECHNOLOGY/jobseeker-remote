@@ -15,7 +15,7 @@ import authReducers from './auth'
 import recruitersReducers from './recruiters'
 import coursesReducers from './courses'
 import modalReducers from './modals'
-
+import chat from './chat/'
 // TODO: Import and List reducers here
 const combinedReducer = combineReducers({
   navbar: navigationBarReducers,
@@ -32,6 +32,7 @@ const combinedReducer = combineReducers({
   router: routerReducer,
   courses: coursesReducers,
   modal: modalReducers,
+  chat
 })
 
 /* 
