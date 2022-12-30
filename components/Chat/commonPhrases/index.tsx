@@ -14,7 +14,6 @@ const CommonPhrases = (props: any) => {
     const [init, setInit] = useState(true)
     useEffect(() => {
         if (init && userId) {
-            console.log({ init })
             getList().then(result => {
                 setList(result.data.data)
             })

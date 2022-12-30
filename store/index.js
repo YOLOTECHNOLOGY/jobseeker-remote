@@ -18,7 +18,7 @@ const persistConfig = {
   whitelist: ['chat'],
   stateReconciler: (localState, state, mergedState) => {
     const result = { ...mergedState }
-    result.chat.defaultChatList = localState.chat?.defaultChatList
+    result.chat = localState?.chat
     return result
   }
 }

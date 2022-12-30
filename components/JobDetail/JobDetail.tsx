@@ -66,6 +66,7 @@ import RegisterModal from 'components/RegisterModal'
 import { fetchChatDetailRequest } from 'store/actions/jobs/fetchJobChatDetail'
 import { useDispatch, useSelector } from 'react-redux'
 import { addExternalJobClickService } from 'store/services/jobs/addExternalJobClick'
+import { updateImState } from 'store/actions/chat/imState'
 interface IJobDetailProps {
   selectedJob: any
   setIsShowModalShare?: Function
@@ -227,6 +228,7 @@ const JobDetail = ({
       const source = jobSource()
       createChat(selectedJob?.id, { source }).then(result => {
         const chatId = result.data.data.id
+        dispatch(updateImState({ chatId, imState: result.data.data }))
         router.push(`/chat/${chatId}`)
       }).catch(e => {
         router.push(`/chat`)
@@ -258,7 +260,7 @@ const JobDetail = ({
       >
         <p>You are currently chatting with recruiter for the {chatDetail?.job?.job_title ?? chatDetail?.job?.function_job_title ?? 'this job'} position. Are you sure you want to switch job?</p>
       </Modal>
-     {openRegister? <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} />:null}
+      {openRegister ? <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} /> : null}
 
       <div className={styles.jobDetail}>
         <div className={classNamesCombined([styles.jobDetailContent])}>

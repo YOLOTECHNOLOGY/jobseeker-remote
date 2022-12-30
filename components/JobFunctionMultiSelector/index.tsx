@@ -90,7 +90,6 @@ const JobFunctionMultiSelector = (props: any) => {
     const [functionTitleIds, setFunctionTitleIds] = useState(value?.functionTitles ?? [])
     const [height, setHeight] = useState(0)
     useEffect(() => {
-        console.log({ showModal })
         if (!isMobile) {
             document.body.style.overflow = 'auto'
             return

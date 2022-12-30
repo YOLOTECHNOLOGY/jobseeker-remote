@@ -10,20 +10,23 @@ export default command => command.cata({
     end: type => M(context => Promise.resolve().then(() => {
         context.handleFinish(type)
     })),
-    requestUpdate: () => M(context => {
-        const chatId = context.getChatId()
-        context.setLoading(true)
-        return updateChat(chatId)
-            .then(result => RequestResult.success(result.data))
-            .catch(error => RequestResult.error(error))
-            .finally(() => context.setLoading(false))
-    }),
+    requestUpdate: () => M(context =>
+        Promise.resolve().then(() => {
+            const chatId = context.getChatId()
+            context.setLoading(true)
+            return updateChat(chatId)
+                .then(result => RequestResult.success(result.data))
+                .catch(error => RequestResult.error(error))
+                .finally(() => context.setLoading(false))
+        })
+
+    ),
     syncData: data => M(context => new Promise(resolve => {
         context.updateData(data)
         setTimeout(resolve, 0)
     })),
     updatePath: (path, data) => M(context => new Promise(resolve => {
-        context.updatePath(path,data)
+        context.updatePath(path, data)
         setTimeout(resolve, 0)
     })),
     showToast: (type, content) => M(context => Promise.resolve().then(() => {

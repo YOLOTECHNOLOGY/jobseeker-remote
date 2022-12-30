@@ -17,6 +17,7 @@ import { getAuth } from 'helpers/interpreters/services/chat'
 import CommonPhrases from 'components/Chat/commonPhrases'
 import ViewJobModal from './viewJob'
 import ExchangeConfirmModal from './exchange/confirm'
+import { updateImState } from 'store/actions/chat/imState'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
@@ -25,7 +26,10 @@ const IMProvider = ({ children }: any) => {
     const userDetailRef = useRef(userDetail)
     const userId = userDetail.id
     const [loading, setLoading] = useState(false)
-    const [imState, setImState] = useState({} as any)
+    const imStateMap = useSelector((store: any) => store?.chat?.imState ?? {})
+    const imState = useMemo(() => {
+        return chatId ? imStateMap?.[chatId] ?? {} : {}
+    }, [imStateMap, chatId])
     const [mobile, setMobile] = useState(false)
     useEffect(() => {
         const old: any = window.onresize
@@ -64,7 +68,6 @@ const IMProvider = ({ children }: any) => {
     useEffect(() => {
         userDetailRef.current = userDetail
     }, [userDetail])
-    console.log({ userDetail })
     const contextRef = useRef({
         setLoading,
         hideModals() {
@@ -107,16 +110,16 @@ const IMProvider = ({ children }: any) => {
                     chatStatus: data?.data?.status
                 }
                 contextRef.current.imState = newData
-                setImState(newData)
+                const chatId = chatIdRef.current
+                dispatch(updateImState({ chatId, imState: newData }))
             }
         },
         updatePath(path, data) {
             if (path && data.data) {
                 const state = contextRef.current.getState()
                 const newState = { ...state, [path]: data.data }
-                console.log({ newState })
-                contextRef.current.imState = newState
-                setImState(newState)
+                const chatId = chatIdRef.current
+                dispatch(updateImState({ chatId, imState: newState }))
             }
         },
         getChatId() {

@@ -103,6 +103,7 @@ import { fetchSwitchJobService } from 'store/services/jobs/fetchSwitchJob'
 import { fetchChatDetailRequest } from 'store/actions/jobs/fetchJobChatDetail'
 import Modal from 'components/Modal'
 import jobSource from 'helpers/jobSource'
+import { updateImState } from 'store/actions/chat/imState'
 
 interface IJobDetail {
   jobDetail: any
@@ -456,6 +457,7 @@ const Job = ({
       const source = jobSource()
       createChat(jobDetail?.id, { source }).then(result => {
         const chatId = result.data.data.id
+        dispatch(updateImState({ chatId, imState: result.data.data }))
         router.push(`/chat/${chatId}`)
       }).catch(e => {
         console.log('e', e)

@@ -131,7 +131,6 @@ const EditWorkExperienceModal = ({
             (industry) => industry.label === data.company_industry
           )[0].value
         )
-      console.log({ data })
       if (data.location && data.location.toLowerCase() === 'overseas') {
         setCountry(
           countryList.find((country) => country.value === data.country_key)

@@ -18,8 +18,8 @@ module.exports = {
   },
   reactStrictMode: false,
   experimental: {
-    concurrentFeatures: false,
-    serverComponents: false,
+    concurrentFeatures: true,
+    serverComponents: true,
   },
   env: {
     ENV: process.env.ENV,
