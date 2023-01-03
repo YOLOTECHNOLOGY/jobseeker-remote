@@ -1,37 +1,34 @@
-import { getCookie } from 'helpers/cookies'
 import { flat, unslugify } from 'helpers/formatter'
 import { checkFilterMatch, mapSeoValueToGetValue } from 'helpers/jobPayloadFormatter'
-import { take } from 'redux-saga/effects'
-import { put, takeLatest, select } from 'redux-saga/effects'
+import { put, takeLatest, select, delay,take,race } from 'redux-saga/effects'
 import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
 import { fetchConfigRequest, fetchConfigSuccess } from 'store/actions/config/fetchConfig'
-import { fetchJobsListRequest, fetchJobsListSuccess } from 'store/actions/jobs/fetchJobsList'
+import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
 import { setJobHiredDefaultValue } from 'store/actions/jobs/jobHiredDefaultValues'
-import { fetchUserOwnDetailRequest, fetchUserOwnDetailSuccess } from 'store/actions/users/fetchUserOwnDetail'
-// import { call, put, takeLatest, select } from 'redux-saga/effects'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { initialState } from 'store/reducers/config/fetchConfig'
+import { FETCH_CONFIG_SUCCESS } from 'store/types/config/fetchConfig'
 
 function* jobHiredServerSide(action) {
     try {
         yield put(fetchConfigRequest())
-        yield take(fetchConfigSuccess().type)
+        yield race({
+            config:take(FETCH_CONFIG_SUCCESS),
+            default:delay(0)
+        }) 
         const config = yield select(store => store.config.config.response)
-        // const config = yield call(fetchConfigService)
-        const accessToken = getCookie('accessToken')
+        const accessToken = action.accessToken
         const { defaultValues, payload: initPayload } = initPagePayLoad(action.payload, config)
         const { searchQuery, predefinedQuery, predefinedLocation } = checkFilterMatch(action.payload, config)
         yield put(setJobHiredDefaultValue({ searchQuery, predefinedQuery, predefinedLocation, defaultValues }))
         yield put(fetchJobsListRequest(initPayload, accessToken))
-        yield take(fetchJobsListSuccess().type)
         if (accessToken) {
             yield put(fetchUserOwnDetailRequest({ accessToken }))
-            yield take(fetchUserOwnDetailSuccess().type)
         }
         yield put(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
-        yield take(fetchFeaturedCompaniesListSuccess().type)
         yield put(fetchConfigSuccess(initialState.response))
     } catch (error) {
         console.log({ error })
-        // yield put(fetchSimilarJobsFailed(error))
     }
 }
 

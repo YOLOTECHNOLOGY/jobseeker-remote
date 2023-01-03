@@ -1,4 +1,4 @@
-import { call, put, takeLatest, delay } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 import { FETCH_CONFIG_REQUEST } from 'store/types/config/fetchConfig'
 import {
   fetchConfigSuccess,
@@ -43,7 +43,7 @@ function* fetchConfigReq(action) {
         result = yield call(fetchConfigService, action.payload)
         cached(result)
       } else {
-       // yield delay(0)
+        // yield delay(0)
       }
     }
     yield put(fetchConfigSuccess(result))

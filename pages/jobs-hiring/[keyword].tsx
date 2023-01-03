@@ -1028,7 +1028,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
 
       const { keyword, page } = query
-      store.dispatch({ type: 'JOB_HIRED_SERVER_SIDE', payload: query })
+      store.dispatch({ type: 'JOB_HIRED_SERVER_SIDE', payload: query, accessToken })
       store.dispatch(END)
       await (store as any).sagaTask.toPromise()
       const storeState = store.getState()
