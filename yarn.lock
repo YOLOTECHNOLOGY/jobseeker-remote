@@ -3608,10 +3608,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.0.665:
-  version "0.0.665"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.665.tgz#4e46152a4eb47c651cf1dbef58b2ccbd32d01dd7"
-  integrity sha512-AfQJEecCBO3bmdBfIfJ1wO/q5ocGbPAyeQXdjWpNEKm0OHoKdTACUxPvHMin0L/wovVRHtDEbK02JrKX4BtsKQ==
+imforbossjob@^0.0.668:
+  version "0.0.668"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.668.tgz#41ff7d11f2d0844727b8bc898e239310ae70d049"
+  integrity sha512-SFICeAnaeBrsfeDBfze/mnDWKcx5tj9372K2kHozIitDLm4KUzcO/aFA8a1mMAeJrixEd9mbIqfR1G4kkCviOg==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -3623,7 +3623,7 @@ imforbossjob@^0.0.665:
     buffer "^6.0.3"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
-    imsdkweb "0.0.21"
+    imsdkweb "^0.0.23"
     lodash "^4.17.21"
     mobx "^5.15.4"
     mobx-react "^6.3.1"
@@ -3643,10 +3643,10 @@ import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
 
-imsdkweb@0.0.21:
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.21.tgz#d573eec3144a8c77f3b77f3c9ff10770ab43dce1"
-  integrity sha512-AYDwT7p6MY+KbuSO/cFRkadhfoqNQKWLFLp7JwvyZSaqGfILm3suWnSDREPRhsVQcDgekpXdtpF1QP9UYuMhbA==
+imsdkweb@^0.0.23:
+  version "0.0.23"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.23.tgz#9945959478541ea8374ec62c2cbb8cf8029cc725"
+  integrity sha512-krUSJw5tiJXQdXDTVo9M97G7l0X65eMFb7AXI44W0UrVvIXkRxN2+NJHzM2QS4DKCdb/adSW0+RFmzYyj+ZSOA==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
