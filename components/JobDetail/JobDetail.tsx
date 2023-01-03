@@ -84,11 +84,13 @@ interface IJobDetailProps {
   applicationUpdatedAt?: string
   isCompanyVerified?: boolean
   chatDetail?: any
+  selectedJobId?: number
 }
 
 const JobDetail = ({
   selectedJob,
   setIsShowModalShare,
+  selectedJobId,
   setIsShowReportJob,
   setIsShowModalWithdrawApplication,
   isSticky,
@@ -188,13 +190,13 @@ const JobDetail = ({
   }
 
   useEffect(() => {
-    if (selectedJob?.id) {
+    if (selectedJobId && selectedJobId === selectedJob.id) {
       const recruiterId = selectedJob?.recruiter?.id
       if (recruiterId) {
         dispatch(fetchChatDetailRequest({ recruiterId, status: 'protected' }))
       }
     }
-  }, [selectedJob?.id])
+  }, [selectedJobId, selectedJob.id])
   const requestSwitch = useCallback(() => {
     setLoading(true)
     fetchSwitchJobService({
@@ -218,7 +220,7 @@ const JobDetail = ({
       const link = getApplyJobLink(selectedJob, userCookie)
       window.open(link)
     } else if (chatDetail.is_exists) {
-      if (chatDetail.job_id !== selectedJob.id) {
+      if (chatDetail.job_id !== selectedJobId) {
         setShowModal(true)
       } else {
         router.push(`/chat/${chatDetail.chat_id}`)

@@ -50,11 +50,25 @@ const Chat = () => {
             list(searchParams).then(result => {
                 setChatList(result.data?.data?.chats)
                 if (!status && !isUnreadOn) {
-                    dispatch(updateDefaultChatList({chatList: result.data?.data?.chats ?? [] }))
+                    dispatch(updateDefaultChatList({ chatList: result.data?.data?.chats ?? [] }))
                 }
             }).finally(() => setChatListLoading(false))
         }
     }, [searchParams])
+    useEffect(() => {
+        const chatIds = chatList?.map?.(chat => '' + (chat?.id ?? ''))?.filter?.(a => a) ?? []
+        console.log({ chatId, chatIds ,chatList})
+        if (!chatIds.includes('' + chatId) && !chatListLoading) {
+            setChatListLoading(true)
+            list(searchParams).then(result => {
+                setChatList(result.data?.data?.chats)
+                if (!status && !isUnreadOn) {
+                    dispatch(updateDefaultChatList({ chatList: result.data?.data?.chats ?? [] }))
+                }
+            }).finally(() => setChatListLoading(false))
+        }
+
+    }, [chatId])
     useEffect(() => {
         if (chat_id !== chatId) {
             if (chat_id === 'list') {

@@ -120,7 +120,6 @@ const JobListSection = ({
 
     return () => window.removeEventListener('scroll', updateScrollPosition)
   }, [])
-
   useEffect(() => {
     setSelectedPage(router.query.page ? Number(router.query.page) : 1)
     document.documentElement.scrollTop = 0
@@ -285,6 +284,7 @@ const JobListSection = ({
             {!isJobDetailFetching && selectedJob?.['id'] && (
               <JobDetail
                 selectedJob={selectedJob}
+                selectedJobId={selectedJobId}
                 setIsShowModalShare={setIsShowModalShare}
                 setIsShowReportJob={setIsShowReportJob}
                 isSticky={isSticky}
