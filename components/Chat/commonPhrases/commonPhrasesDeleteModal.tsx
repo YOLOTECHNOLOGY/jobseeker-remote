@@ -34,7 +34,7 @@ const CommonPhrasesDeleteModal = (props: any) => {
         <div className={styles.modalContainer}>
             <p className={styles.modalTitle}>Common Phrases</p>
             <div className={styles.formContainer}>
-                <p>Sure to delte this?</p>
+                <p>Sure to delete this?</p>
                 <h5>{phrase.message}</h5>
             </div>
         </div>
