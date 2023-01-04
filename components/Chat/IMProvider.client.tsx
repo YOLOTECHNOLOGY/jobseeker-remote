@@ -30,6 +30,7 @@ const IMProvider = ({ children }: any) => {
     const imState = useMemo(() => {
         return chatId ? imStateMap?.[chatId] ?? {} : {}
     }, [imStateMap, chatId])
+    console.log({ imState, chatId })
     const [mobile, setMobile] = useState(false)
     useEffect(() => {
         const old: any = window.onresize

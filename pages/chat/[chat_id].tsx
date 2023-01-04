@@ -57,7 +57,7 @@ const Chat = () => {
     }, [searchParams])
     useEffect(() => {
         const chatIds = chatList?.map?.(chat => '' + (chat?.id ?? ''))?.filter?.(a => a) ?? []
-        console.log({ chatId, chatIds ,chatList})
+        console.log({ chatId, chatIds, chatList })
         if (!chatIds.includes('' + chatId) && !chatListLoading) {
             setChatListLoading(true)
             list(searchParams).then(result => {
@@ -98,7 +98,7 @@ const Chat = () => {
             key='jobchat'
             loading={loading}
             imState={imState}
-            chatId={chatId}
+            chatId={chatId || (chat_id === 'list' ? undefined : chat_id)}
             setChatId={chatId => contextRef.current?.changeChat?.(chatId)}
             chatListLoading={chatListLoading}
             isUnreadOn={isUnreadOn}

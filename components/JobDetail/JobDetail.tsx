@@ -230,7 +230,12 @@ const JobDetail = ({
       const source = jobSource()
       createChat(selectedJob?.id, { source }).then(result => {
         const chatId = result.data.data.id
-        dispatch(updateImState({ chatId, imState: result.data.data }))
+        const newData = {
+          ...result.data?.data?.job_application,
+          initiated_role: result.data?.data?.initiated_role,
+          chatStatus: result.data?.data?.status
+        }
+        dispatch(updateImState({ chatId, imState: newData }))
         router.push(`/chat/${chatId}`)
       }).catch(e => {
         router.push(`/chat`)
