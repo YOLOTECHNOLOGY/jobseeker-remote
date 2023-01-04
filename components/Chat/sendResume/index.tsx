@@ -157,6 +157,7 @@ const SendResumeModal = (props: any) => {
                                 ref={inputRef}
                             />
                         </MaterialButton>
+                        <label className={styles.fileLabel}>Supported file type: PDF, DOC, DOCX. Max. file size: 5MB</label>
                     </>
                 } else if (onlyOne) {
                     return <p>Are you sure you want to send your resume to the recruiter?</p>
