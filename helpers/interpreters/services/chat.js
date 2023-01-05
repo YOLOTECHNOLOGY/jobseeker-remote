@@ -6,7 +6,7 @@ export const getAuth = userId => {
 }
 export const list = params => {
     const axios = configuredAxios('jobApplication', 'protected')
-    return axios.get(`/chats/jobseekers?page=1&size=110`, { params })
+    return axios.get(`/chats/jobseekers?page=1&size=1100`, { params })
 }
 export const createChat = (jobId, params) => {
     const axios = configuredAxios('jobApplication', 'protected')
