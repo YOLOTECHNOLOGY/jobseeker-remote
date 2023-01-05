@@ -170,6 +170,7 @@ const Job = ({
   const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
   const chatDetail = useSelector((store: any) => store.job.chatDetail.response)
+  const chatDetailFetching = useSelector((store: any) => store.job.chatDetail.fetching)
 
   // Loading
   const isWithdrawAppliedJobFetching = useSelector(
@@ -366,37 +367,6 @@ const Job = ({
     }
   }
 
-  // const handleVerifyEmailClick = async () => {
-  //   // revalidate verify email status
-  //   const response = await fetchUserOwnDetailService({ accessToken: accessToken })
-  //   const userDetails = response?.data?.data
-  //   const isVerifiedEmail = userDetails?.is_email_verify
-
-  //   if (!isVerifiedEmail) {
-  //     // email is not verified
-  //     setIsShowModal(true)
-  //   } else {
-  //     // email is verified and user cookie is outdated
-  //     const userCookie = {
-  //       active_key: userDetails.active_key,
-  //       id: userDetails.id,
-  //       first_name: userDetails.first_name,
-  //       last_name: userDetails.last_name,
-  //       email: userDetails.email,
-  //       phone_num: userDetails.phone_num,
-  //       is_mobile_verified: userDetails.is_mobile_verified,
-  //       avatar: userDetails.avatar,
-  //       additional_info: userDetails.additional_info,
-  //       is_email_verify: true,
-  //       notice_period_id: userDetails.notice_period_id,
-  //       is_profile_completed: userDetails.is_profile_completed
-  //     }
-
-  //     setCookie('user', userCookie)
-  //     router.reload()
-  //   }
-  // }
-
   const handleWithdrawApplication = async ({ jobId }) => {
     const payload = {
       jobId
@@ -415,21 +385,6 @@ const Job = ({
     }
   }
 
-  // const handleApplyJob = () => {
-  //   if (!userCookie) {
-  //     setOpenRegister(true)
-  //   } else {
-  //     if (userCookie && !userCookie.is_email_verify) {
-  //       handleVerifyEmailClick()
-  //     }
-
-  //     if (jobDetail?.external_apply_url) {
-  //       addExternalJobClickService(jobDetail?.id)
-  //     }
-
-  //     window.open(applyJobLink)
-  //   }
-  // }
   useEffect(() => {
     if (jobDetail?.id) {
       const recruiterId = jobDetail?.recruiter?.id
@@ -500,7 +455,7 @@ const Job = ({
                   variant='contained'
                   capitalize
                   className={styles.applyBtn}
-                  isLoading={!chatDetail}
+                  isLoading={loading||chatDetailFetching}
                   onClick={handleChat}
                 >
                   <Text textColor='white' bold>
@@ -551,7 +506,7 @@ const Job = ({
           <MaterialButton
             variant='contained'
             capitalize
-            // disabled={jobDetail?.is_applied}
+            isLoading={loading||chatDetailFetching}
             className={styles.applyBtn}
             onClick={handleChat}
           >

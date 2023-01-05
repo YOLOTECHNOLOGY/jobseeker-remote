@@ -111,7 +111,7 @@ const JobDetail = ({
   )
   const dispatch = useDispatch()
   const chatDetail = useSelector((store: any) => store.job.chatDetail.response)
-
+  const chatDetailFetching = useSelector((store: any) => store.job.chatDetail.fetching)
   const userCookie = getCookie('user') || null
   const authCookie = getCookie('accessToken') || null
   const [openRegister, setOpenRegister] = useState(false)
@@ -288,7 +288,7 @@ const JobDetail = ({
               </Link>
               <div className={styles.jobDetailButtons}>
 
-                <MaterialButton variant='contained' capitalize onClick={handleChat} isLoading={loading || !chatDetail}>
+                <MaterialButton variant='contained' capitalize onClick={handleChat} isLoading={loading || chatDetailFetching}>
                   <Text textColor='white' bold>
                     {(() => {
                       if (selectedJob?.external_apply_url) {
