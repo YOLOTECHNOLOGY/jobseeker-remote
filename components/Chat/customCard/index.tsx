@@ -4,7 +4,6 @@ import Location from '@mui/icons-material/LocationOnOutlined';
 const CustomCard = (props: any) => {
 
     const { content } = props
-    console.log({ content })
     return <div className={styles.main}>
         <div className={styles.left}>
             <div className={styles.title}>{content?.job_title}<span className={styles.salary}> {content?.salary_range_value}</span></div>
