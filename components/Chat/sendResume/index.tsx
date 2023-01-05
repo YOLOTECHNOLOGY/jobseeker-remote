@@ -162,7 +162,39 @@ const SendResumeModal = (props: any) => {
                 } else if (onlyOne) {
                     return <p>Are you sure you want to send your resume to the recruiter?</p>
                 } else {
-                    return null
+                    return <>
+                        <p className={styles.bottomText}> Or upload a new resume {
+                            resumeList.length >= 3 && '(only max. of 3 resumes can be uploaded, please delete at least 1 resume above)'
+                        }</p>
+                        <MaterialButton
+                            className={classNames({
+                                [styles.uploadButton]: true,
+                                [styles.disabled]: resumeList.length >= 3
+                            })}
+                            type='button'
+                            variant='outlined'
+                            isLoading={resumeLoading}
+                            onClick={() => {
+                                inputRef?.current?.click?.()
+                            }}
+                            disabled={resumeList.length >= 3}
+                        > <Text
+                            textStyle='base'
+                            textColor={resumeList.length >= 3 ? '#fff' : 'primaryBlue'}
+                            bold
+                        >
+                                Upload your resume
+                            </Text>
+                            <input
+                                type='file'
+                                hidden
+                                accept='.pdf, .doc, .docx'
+                                onChange={handleUploadResume}
+                                ref={inputRef}
+                            />
+                        </MaterialButton>
+                        <label className={styles.fileLabel}>Supported file type: PDF, DOC, DOCX. Max. file size: 5MB</label>
+                    </>
                 }
             })()
 

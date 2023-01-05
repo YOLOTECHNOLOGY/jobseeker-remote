@@ -96,6 +96,12 @@ const IMProvider = ({ children }: any) => {
         },
         handleError(e) {
             console.log('error', e)
+            const content = e?.response?.data?.errors?.error?.[0] ||e?.response?.data?.errors?.errors?.[0] 
+            if (content) {
+                contextRef.current?.showToast?.('error', content)
+            } else {
+                contextRef.current?.showToast?.('error', e.toString())
+            }
         },
         handleFinish(type) {
             console.log('finish', type)
