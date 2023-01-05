@@ -24,7 +24,7 @@ export const sendOTP = (params) => {
     return axios.post('/sms-otp/change-phone-number/generate',params)
 }
 
-export const verify = otp => {
+export const verify = params => {
     const axios = configuredAxios('auth', 'protected')
-    return axios.post('/verify-phone-number',{otp})
+    return axios.post('/change-phone-number',params)
 }

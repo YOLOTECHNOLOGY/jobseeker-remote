@@ -45,9 +45,9 @@ export default command => command.cata({
     startCountDown: () => M(context => {
         return Promise.resolve().then(context.startCountDown)
     }),
-    verifyRequest: otp => M(context => {
+    verifyRequest: params => M(context => {
         context.setLoading(true)
-        return verify(otp).then(result => RequestResult.success(result.data))
+        return verify(params).then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
     }),
