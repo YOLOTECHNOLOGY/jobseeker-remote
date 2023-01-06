@@ -281,8 +281,9 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                 </div>
                 <div className={styles.companyInfoWrapper}>
                   <Text textStyle='lg'>{workExp.company}</Text>
-                  <Text textStyle='lg'>{`${workExp.location}${workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
-                    }`}</Text>
+                  <Text textStyle='lg'>{`${workExp.location}${
+                    workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
+                  }`}</Text>
                 </div>
                 <Text textStyle='base' textColor='darkgrey'>
                   {workingPeriodFrom.format('MMMM yyyy')} to{' '}
@@ -293,13 +294,19 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                 </Text>
                 <div className={styles.companySecondaryInfoWrapper}>
                   {workExp?.function_job_title?.length > 0 && (
-                    <Text textStyle='base' textColor='darkgrey'>{workExp?.function_job_title}</Text>
+                    <Text textStyle='base' textColor='darkgrey'>
+                      {workExp?.function_job_title}
+                    </Text>
                   )}
                   {workExp?.company_industry && (
-                    <Text textStyle='base' textColor='darkgrey'>{workExp?.company_industry}</Text>
+                    <Text textStyle='base' textColor='darkgrey'>
+                      {workExp?.company_industry}
+                    </Text>
                   )}
                   {workExp?.salary && workExp?.salary !== '0.00' && (
-                    <Text textStyle='base' textColor='darkgrey'>{formatSalary(workExp?.salary)} per month</Text>
+                    <Text textStyle='base' textColor='darkgrey'>
+                      {formatSalary(workExp?.salary)} per month
+                    </Text>
                   )}
                 </div>
                 {workExp?.description && (
@@ -777,23 +784,24 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
   const salaryRange = minSalary + ' - ' + maxSalary
   const [showModal, setShowModal] = useState(false)
 
-
   const handleEditClick = () => {
     setShowModal(true)
   }
   const [showDelete, setShowDelete] = useState(false)
   return (
     <React.Fragment>
-
       <div className={styles.jobPreferencesSectionDetail}>
         <div style={{ right: 40 }} className={styles.iconWrapperP} onClick={handleEditClick}>
           <img src={PencilIcon} width='22' height='22' />
         </div>
-        <div style={{ right: 0 }} className={styles.iconWrapperP} onClick={() => setShowDelete(true)}>
+        <div
+          style={{ right: 0 }}
+          className={styles.iconWrapperP}
+          onClick={() => setShowDelete(true)}
+        >
           <img src={AccountSettingDeleteIconBin} width='14' height='14' />
         </div>
         <div className={styles.jobPreferencesSectionDetailList}>
-
           {preference?.job_title && (
             <div
               className={styles.jobPreferencesSectionDetailListWrapper}
@@ -802,9 +810,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
               <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
                 Desired job title:
               </Text>
-              <Text className={styles.jobPreferencesSectionDetailText}>
-                {preference.job_title}
-              </Text>
+              <Text className={styles.jobPreferencesSectionDetailText}>{preference.job_title}</Text>
             </div>
           )}
           {preference?.job_type && (
@@ -812,9 +818,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
               <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
                 Desired job type:
               </Text>
-              <Text className={styles.jobPreferencesSectionDetailText}>
-                {preference.job_type}
-              </Text>
+              <Text className={styles.jobPreferencesSectionDetailText}>{preference.job_type}</Text>
             </div>
           )}
           {preference?.country && (
@@ -822,9 +826,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
               <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
                 Desired country:
               </Text>
-              <Text className={styles.jobPreferencesSectionDetailText}>
-                {preference.country}
-              </Text>
+              <Text className={styles.jobPreferencesSectionDetailText}>{preference.country}</Text>
             </div>
           )}
           {preference?.location && (
@@ -832,9 +834,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
               <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
                 Desired city:
               </Text>
-              <Text className={styles.jobPreferencesSectionDetailText}>
-                {preference.location}
-              </Text>
+              <Text className={styles.jobPreferencesSectionDetailText}>{preference.location}</Text>
             </div>
           )}
           {preference?.salary_range_from && (
@@ -852,9 +852,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
               <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
                 Desired industry:
               </Text>
-              <Text className={styles.jobPreferencesSectionDetailText}>
-                {preference.industry}
-              </Text>
+              <Text className={styles.jobPreferencesSectionDetailText}>{preference.industry}</Text>
             </div>
           )}
 
@@ -893,7 +891,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
           handleModal={() => setShowDelete(false)}
         />
       </div>
-    </React.Fragment >
+    </React.Fragment>
   )
 }
 
@@ -1261,13 +1259,13 @@ const ManageProfilePage = () => {
     })
   }
   const handleModal = (modalName, showModal, data, callbackFunc) => {
-    setModalState({
-      ...modalState,
+    setModalState((rest) => ({
+      ...rest,
       [modalName]: {
         showModal: showModal,
         data: data
       }
-    })
+    }))
     if (callbackFunc) {
       callbackFunc()
     }
@@ -1339,63 +1337,70 @@ const ManageProfilePage = () => {
         {tabValue === 'profile' && (
           <RenderProfileView userDetail={userDetail} handleModal={handleModal} config={config} />
         )}
-        {tabValue === 'job-preferences' && <div>
-          <div className={styles.sectionContainer} style={{ paddingBottom: 0 }}>
-
-            <div className={styles.sectionHeader} >
-              <Text bold textColor='primaryBlue' textStyle='xl'>
-                Availability
-              </Text>
-            </div>
-            <div style={{ position: 'relative', width: '100%' }}>
-              <div className={styles.iconWrapperP}
-                onClick={() => handleModal('jobPreferencesAvailibility', true, null, null)}
-              >
-                <img src={PencilIcon} width='22' height='22' />
+        {tabValue === 'job-preferences' && (
+          <div>
+            <div className={styles.sectionContainer} style={{ paddingBottom: 0 }}>
+              <div className={styles.sectionHeader}>
+                <Text bold textColor='primaryBlue' textStyle='xl'>
+                  Availability
+                </Text>
               </div>
-              <Text tagName='p' textStyle='lg'>
-                {availability}
-              </Text>
-            </div>
-          </div>
-          <div className={styles.sectionContainer}>
-
-            <div className={styles.sectionHeader} style={{ position: 'relative', width: '100%' }}>
-              <div className={styles.iconWrapperP}
-                onClick={() => handleModal('createJobPreference', true, null, null)}
-              >
-                <Image src={AddIcon} width='14' height='14' color="#337f43" alt={''} />
+              <div style={{ position: 'relative', width: '100%' }}>
+                <div
+                  className={styles.iconWrapperP}
+                  onClick={() => handleModal('jobPreferencesAvailibility', true, null, null)}
+                >
+                  <img src={PencilIcon} width='22' height='22' />
+                </div>
+                <Text tagName='p' textStyle='lg'>
+                  {availability}
+                </Text>
               </div>
-              <Text bold textColor='primaryBlue' textStyle='xl'>
-                Job Preferences
-              </Text>
             </div>
-            <div>
-              <Text tagName='p' textStyle='lg'>
-                We will find jobs that are of a good match to you based on your job preferences.
+            <div className={styles.sectionContainer}>
+              <div className={styles.sectionHeader} style={{ position: 'relative', width: '100%' }}>
+                <div
+                  className={styles.iconWrapperP}
+                  onClick={() => handleModal('createJobPreference', true, null, null)}
+                >
+                  <Image src={AddIcon} width='14' height='14' color='#337f43' alt={''} />
+                </div>
+                <Text bold textColor='primaryBlue' textStyle='xl'>
+                  Job Preferences
+                </Text>
+              </div>
+              <div>
+                <Text tagName='p' textStyle='lg'>
+                  We will find jobs that are of a good match to you based on your job preferences.
+                </Text>
+              </div>{' '}
+              {(userDetail.job_preferences ?? []).map((preference) => (
+                <RenderPreferencesView
+                  key={preference.id}
+                  modalName='jobPreferences'
+                  config={config}
+                  userDetail={userDetail}
+                  handleModal={handleModal}
+                  preference={preference}
+                />
+              ))}
+            </div>
+            <div className={styles.sectionContainer}>
+              <Text
+                className={styles.openToWorkSectionTitle}
+                bold
+                textStyle='xl'
+                textColor='primaryBlue'
+              >
+                Open to work
               </Text>
-            </div> {(
-              userDetail.job_preferences ?? []).map(preference => <RenderPreferencesView
-                key={preference.id}
-                modalName='jobPreferences'
-                config={config}
-                userDetail={userDetail}
-                handleModal={handleModal}
-                preference={preference}
-              />)}
-
+              <FormControlLabel
+                control={<Switch checked={openToWork} onChange={handleVisibility} />}
+                label={<Text textStyle='lg'>Let recruiters know that you are open to work</Text>}
+              />
+            </div>
           </div>
-          <div className={styles.sectionContainer}>
-            <Text className={styles.openToWorkSectionTitle} bold textStyle='xl' textColor='primaryBlue'>
-              Open to work
-            </Text>
-            <FormControlLabel
-              control={<Switch checked={openToWork} onChange={handleVisibility} />}
-              label={<Text textStyle='lg'>Let recruiters know that you are open to work</Text>}
-            />
-          </div>
-        </div>
-        }
+        )}
         {tabValue === 'resume' && <RenderResumeView userDetail={userDetail} />}
       </ProfileLayout>
     </Layout>

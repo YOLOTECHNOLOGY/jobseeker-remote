@@ -96,7 +96,9 @@ const EditProfileModal = ({
   const updateUserProfileSuccess = useSelector(
     (store: any) => store.users.updateUserProfile.response
   )
-  const xpLevelList = useSelector((store: any) => store.config.config.response?.inputs?.xp_lvls??[])
+  const xpLevelList = useSelector(
+    (store: any) => store.config.config.response?.inputs?.xp_lvls ?? []
+  )
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
   )
@@ -325,15 +327,18 @@ const EditProfileModal = ({
             <div className={styles.profileFormGroup}>
               <div className={styles.descriptionField}>
                 <TextField
-                  {...register('summary')}
+                  {...register('summary', {
+                    maxLength: { value: 4000, message: 'Please enter text within 4000' }
+                  })}
                   className={styles.profileFormInput}
                   placeholder='Provide a career summary and briefly highlight your relevant experience, achievement and skills.'
                   name='summary'
                   variant='outlined'
                   autoComplete='off'
                   multiline
-                  rows={9}
+                  rows={6}
                 />
+                {errors.summary && errorText(errors.summary.message)}
               </div>
             </div>
           </div>

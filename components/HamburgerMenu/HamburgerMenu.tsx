@@ -77,6 +77,11 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 <Text textStyle='xl'>Companies</Text>
               </li>
             </Link>
+            <Link className={styles.defaultLink} title='Jobs' to='/chat/list'>
+              <li className={styles.menuList} onClick={handleClick}>
+                <Text textStyle='xl'>Chat</Text>
+              </li>
+            </Link>
             <Link
               className={styles.defaultLink}
               to='https://academy.bossjob.ph/courses/search-courses'
@@ -190,11 +195,6 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 >
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>Account Settings</Text>
-                  </li>
-                </Link>
-                <Link className={styles.defaultLink} title='Jobs' to='/chat/list'>
-                  <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle='xl'>Chat</Text>
                   </li>
                 </Link>
                 <Link

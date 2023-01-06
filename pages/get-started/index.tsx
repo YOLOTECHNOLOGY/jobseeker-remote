@@ -120,7 +120,11 @@ const GetStarted = () => {
               <Text tagName='p' textStyle='base' className={styles.ToEmployer_textColor}>
                 Looking to hire people? Sign up as
                 <Link
-                  to={`${process.env.OLD_PROJECT_URL}/login`}
+                  to={
+                    process.env.ENV === 'development'
+                      ? 'https://dev.hunt.bossjob.ph'
+                      : 'https://hunt.bossjob.ph'
+                  }
                   className={styles.AuthCTALink}
                   aTag
                   external
