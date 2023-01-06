@@ -40,7 +40,7 @@ const CommonPhrasesCreateModal = (props: any) => {
             <p>Add your own phrase. Please do not include your contact details here.</p>
             <TextField
                 name="phrase_text"
-                placeholder="Insert common phrases you have for talents."
+                placeholder="Insert the common phrases that you would like to send to Boss"
                 label="phrase"
                 value={text}
                 style={{width:'100%'}}
