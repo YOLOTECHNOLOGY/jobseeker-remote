@@ -2,11 +2,27 @@
 import { scripts, M } from 'imforbossjob'
 import { create, accept, decline, sendOTP, verify } from './services/exchangeNumber'
 
-const { utils, exchangeNumberJobseeker: { ModalActions, ConfirmActions } } = scripts
+const { utils, exchangeNumber: { ModalActions, ConfirmActions, DetailActions } } = scripts
 const { RequestResult, UserNumberValidation } = utils
 
 
 export default command => command.cata({
+    isExchangeFinish: () =>
+        M(context =>
+            Promise.resolve().then(() => {
+                const state = context.getState()
+                return !!state.contact_exchange_request?.recruiter_contact_num
+            })
+        ),
+    modalDetail: () => M(
+        context =>
+            new Promise(resolve =>
+                context.showExchangeDetail({
+                    close: () => resolve(DetailActions.close),
+                    copy: () => resolve(DetailActions.copy)
+                })
+            )
+    ),
     queryUserNumberValidation: () => M(context => new Promise(resolve => {
         const number = context.isUserNumberValidate()
         if (number) {

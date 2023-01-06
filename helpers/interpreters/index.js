@@ -12,7 +12,7 @@ import { cond } from 'lodash-es'
 const {
     utils,
     responseResumeJobseeker,
-    exchangeNumberJobseeker,
+    exchangeNumber:exchangeNumberJobseeker,
     interviewJobseeker,
     notInterestJobseeker,
     commonPhrases,

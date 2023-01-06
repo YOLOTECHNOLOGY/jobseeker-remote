@@ -18,6 +18,7 @@ import CommonPhrases from 'components/Chat/commonPhrases'
 import ViewJobModal from './viewJob'
 import ExchangeConfirmModal from './exchange/confirm'
 import { updateImState } from 'store/actions/chat/imState'
+import ExchangeDetailModal from './exchange/detail'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
@@ -90,13 +91,14 @@ const IMProvider = ({ children }: any) => {
             contextRef.current?.closeAttend?.()
             contextRef.current?.closeAskFailed?.()
             contextRef.current?.closeJobDetail?.()
+            contextRef.current?.closeExchangeDetail?.()
         },
         updateUser() {
             dispatch(fetchUserOwnDetailRequest({ accessToken }))
         },
         handleError(e) {
             console.log('error', e)
-            const content = e?.response?.data?.errors?.error?.[0] ||e?.response?.data?.errors?.errors?.[0] 
+            const content = e?.response?.data?.errors?.error?.[0] || e?.response?.data?.errors?.errors?.[0]
             if (content) {
                 contextRef.current?.showToast?.('error', content)
             } else {
@@ -181,6 +183,11 @@ const IMProvider = ({ children }: any) => {
             applicationId={applicationId}
         />
         <ExchangeConfirmModal
+            loading={loading}
+            contextRef={contextRef}
+            applicationId={applicationId}
+        />
+        <ExchangeDetailModal
             loading={loading}
             contextRef={contextRef}
             applicationId={applicationId}
