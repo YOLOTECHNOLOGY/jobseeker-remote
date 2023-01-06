@@ -9,7 +9,6 @@ import { ConnectedRouter } from 'connected-next-router'
 import { PersistGate } from 'redux-persist/integration/react'
 import { setItem, getItem } from 'helpers/localStorage'
 import { getFromObject } from 'helpers/formatter'
-import 'styles/globals.scss'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
 const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
@@ -20,6 +19,7 @@ import NotificationProvider from 'components/NotificationProvider'
 // import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 // import { useDispatch } from 'react-redux'
 import IMProvider from 'components/Chat/IMProvider.client'
+import 'styles/globals.scss'
 import { persistor } from 'store'
 const App = (props: AppProps) => {
   const { Component, pageProps } = props
@@ -131,8 +131,9 @@ const App = (props: AppProps) => {
           __html: `
             function initialize() {	
               FB.init({	
-                appId            : ${process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
-            },
+                appId            : ${
+                  process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
+                },
                 xfbml            : true,	
                 version          : 'v6.0'	
               });	
@@ -214,7 +215,6 @@ const App = (props: AppProps) => {
 
       <ConnectedRouter>
         <CookiesProvider>
-
           {process.env.MAINTENANCE === 'true' ? (
             <MaintenancePage {...pageProps} />
           ) : isPageLoading &&
@@ -229,9 +229,7 @@ const App = (props: AppProps) => {
               </PersistGate>
             </NotificationProvider>
           )}
-
         </CookiesProvider>
-
       </ConnectedRouter>
     </>
   )
