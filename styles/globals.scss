@@ -41,3 +41,8 @@ dl {
   margin-top: 0;
   margin-bottom: 0;
 }
+
+::selection {
+  color: currentColor !important;
+  background-color: #1890ff80 !important;
+}

@@ -15,7 +15,7 @@ import {
   twitter,
   linkedin,
   youtube,
-  tiktok,
+  tiktok
 } from 'images'
 
 import styles from './Footer.module.scss'
@@ -103,11 +103,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    className={styles.footerLink}
-                    to='/sitemap'
-                    title='Sitemap'
-                  >
+                  <Link className={styles.footerLink} to='/sitemap' title='Sitemap'>
                     <Text textStyle='sm'>Sitemap</Text>
                   </Link>
                 </li>
@@ -133,11 +129,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    className={styles.footerLink}
-                    to='/jobs-hiring'
-                    title='Create Job Alert'
-                  >
+                  <Link className={styles.footerLink} to='/jobs-hiring' title='Create Job Alert'>
                     <Text textStyle='sm'>Create job alert</Text>
                   </Link>
                 </li>
@@ -267,7 +259,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/computer-information-technology-jobs`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/information-technology-jobs?page=1`}
                     title='IT Jobs'
                     external
                   >
@@ -339,10 +331,7 @@ const Footer = () => {
                   </Link>
                 </div>
                 <div>
-                  <Link
-                    to={process.env.GOOGLE_PLAY_STORE_LINK}
-                    external
-                  >
+                  <Link to={process.env.GOOGLE_PLAY_STORE_LINK} external>
                     <LazyLoad>
                       <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
                     </LazyLoad>
@@ -493,11 +482,7 @@ const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      className={styles.footerLink}
-                      to='/sitemap'
-                      title='sitemap'
-                    >
+                    <Link className={styles.footerLink} to='/sitemap' title='sitemap'>
                       <Text textStyle='sm'>Sitemap</Text>
                     </Link>
                   </li>
@@ -635,7 +620,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/computer-information-technology-jobs`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/information-technology-jobs?page=1`}
                       title='IT Jobs'
                       external
                     >
@@ -645,7 +630,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/finance-accounting-jobs`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/finance-audit-tax-jobs?page=1`}
                       title='Finance Jobs'
                       external
                     >
@@ -655,7 +640,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/customer-service-jobs`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/customer-service-operations-jobs?page=1`}
                       title='Customer Service Jobs'
                       external
                     >
@@ -675,7 +660,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/sales-marketing-jobs`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/sales-jobs?page=1`}
                       title='Sales Jobs'
                       external
                     >
@@ -685,7 +670,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/healthcare-medical-jobs`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/healthcare-medical-jobs?page=1`}
                       title='Healthcare Jobs'
                       external
                     >
@@ -706,10 +691,7 @@ const Footer = () => {
                   </Link>
                 </div>
                 <div>
-                  <Link
-                    to={process.env.GOOGLE_PLAY_STORE_LINK}
-                    external
-                  >
+                  <Link to={process.env.GOOGLE_PLAY_STORE_LINK} external>
                     <LazyLoad>
                       <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
                     </LazyLoad>
