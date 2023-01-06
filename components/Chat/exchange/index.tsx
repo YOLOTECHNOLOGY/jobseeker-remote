@@ -62,7 +62,7 @@ const ExchangeModal = (props: any) => {
         if (step === 'verified') {
             actionsRef.current.sendNumber?.({ applicationId })
         } else {
-            actionsRef.current.verify?.({ otp, phone_num: mobileNumber })
+            actionsRef.current.verify?.({ otp, phone_num: countryCode + mobileNumber })
         }
     }, [step, otp, applicationId, mobileNumber])
     const sendText = useMemo(() => {
