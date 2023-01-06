@@ -23,7 +23,7 @@ html.modal-active body {
   /* exclude padding from the height */
   box-sizing: border-box;
   /* block hidden content to disable scroll */
-	overflow: hidden;
+  overflow: hidden;
 }
 
 a {
@@ -33,4 +33,11 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+ol,
+ul,
+dl {
+  margin-top: 0;
+  margin-bottom: 0;
 }
