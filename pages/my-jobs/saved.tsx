@@ -37,7 +37,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   }
   return {
     props: {
-      accessToken,
+      accessToken
       // config
     }
   }
