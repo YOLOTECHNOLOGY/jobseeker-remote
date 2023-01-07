@@ -72,7 +72,6 @@ const EditSkillModal = ({
   )
 
   useEffect(() => {
-    console.log(skillList, 'skillList')
     setSuggestList(
       skillList
         .filter((item) => item.value.includes(''))
