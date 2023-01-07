@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 /* Components */
 import Text from 'components/Text'
@@ -15,13 +15,13 @@ import classNames from 'classnames'
 /* Assets */
 import { TrashIcon, DocumentIcon } from 'images'
 
-
 type UploadResumeProps = {
   title: string
   resume: resumeObject
   handleDelete: Function
   handleUpload: Function
   buttonClassname?: string
+  deleteResumeLoading?: boolean
 }
 
 type resumeObject = {
@@ -29,7 +29,13 @@ type resumeObject = {
   url: string
 }
 
-const UploadResume = ({ resume, handleDelete, handleUpload, buttonClassname }: UploadResumeProps) => {
+const UploadResume = ({
+  resume,
+  handleDelete,
+  handleUpload,
+  buttonClassname,
+  deleteResumeLoading
+}: UploadResumeProps) => {
   const [error, setError] = useState(null)
 
   const handleOnFileChange = (e) => {
@@ -63,8 +69,14 @@ const UploadResume = ({ resume, handleDelete, handleUpload, buttonClassname }: U
               </Text>
             </Link>
           </div>
-          <div className={styles.trashDiv}>
+          <div
+            className={classNames([
+              styles.trashDiv,
+              deleteResumeLoading ? styles.disabledDelResume : null
+            ])}
+          >
             <img
+              className={deleteResumeLoading ? styles.disabledDelResume_icon : null}
               src={TrashIcon}
               alt='trash'
               width='14'
@@ -75,7 +87,12 @@ const UploadResume = ({ resume, handleDelete, handleUpload, buttonClassname }: U
         </div>
       ) : (
         <div>
-          <MaterialButton variant='outlined' capitalize component='label' className={classNames([styles.buttonCTA, buttonClassname])}>
+          <MaterialButton
+            variant='outlined'
+            capitalize
+            component='label'
+            className={classNames([styles.buttonCTA, buttonClassname])}
+          >
             <Text textStyle='base' textColor='primaryBlue' bold>
               Upload your resume
             </Text>
