@@ -34,23 +34,23 @@ const theme = createTheme({
           letterSpacing: '1px',
           '&.Mui-focused': {
             fontSize: '10px',
-            transform: 'translate(14px, -10px) scale(1)',
+            transform: 'translate(14px, -10px) scale(1)'
           },
           lineHeight: '18px'
         },
         shrink: {
           fontSize: '10px',
-          transform: 'translate(14px, -10px) scale(1)',
+          transform: 'translate(14px, -10px) scale(1)'
         },
         outlined: {
           '&.MuiInputLabel-shrink': {
-            fontSize: '10px',
+            fontSize: '10px'
           },
-          fontSize: '14px',
-        },
-      },
-    },
-  },
+          fontSize: '14px'
+        }
+      }
+    }
+  }
 })
 const MaterialTextFieldWithSuggestionList = ({
   id,
@@ -82,7 +82,7 @@ const MaterialTextFieldWithSuggestionList = ({
         options={options?.map((option) => option)}
         className={className}
         size={size}
-        onChange={(_, val:any, reason)=>{
+        onChange={(_, val: any, reason) => {
           if ((reason === 'selectOption' || reason === 'clear') && onSelect) {
             onSelect(val ?? '')
           }

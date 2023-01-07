@@ -1,24 +1,24 @@
-import React, { } from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
+import React from 'react'
+import { styled, alpha } from '@mui/material/styles'
+import InputBase from '@mui/material/InputBase'
+import SearchIcon from '@mui/icons-material/Search'
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   // borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.55),
   '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 1),
+    backgroundColor: alpha(theme.palette.common.white, 1)
   },
-  border:'0.5px solid #707070',
-  borderRadius:'10px',
+  border: '0.5px solid #707070',
+  borderRadius: '10px',
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
+    width: 'auto'
+  }
+}))
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -27,8 +27,8 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
-}));
+  justifyContent: 'center'
+}))
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
@@ -39,10 +39,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
+      width: '20ch'
+    }
+  }
+}))
 
 export default function SearchBar({ inputProps, ...rest }: any) {
   return (
@@ -50,10 +50,7 @@ export default function SearchBar({ inputProps, ...rest }: any) {
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
-      <StyledInputBase
-        placeholder="Search for job title"
-        {...inputProps}
-      />
+      <StyledInputBase placeholder='Search for job title' {...inputProps} />
     </Search>
   )
 }
