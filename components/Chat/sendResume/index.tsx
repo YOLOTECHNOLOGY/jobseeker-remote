@@ -163,7 +163,7 @@ const SendResumeModal = (props: any) => {
                     return <p>Are you sure you want to send your resume to the recruiter?</p>
                 } else {
                     return <>
-                        <p className={styles.bottomText}> Or upload a new resume {
+                        <p className={styles.bottomText}> upload a new resume {
                             resumeList.length >= 3 && '(only max. of 3 resumes can be uploaded, please delete at least 1 resume above)'
                         }</p>
                         <MaterialButton
