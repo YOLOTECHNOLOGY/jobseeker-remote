@@ -82,10 +82,10 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
-  const [isMobile,setIsMobile] = useState(false)
-  useEffect(()=>{
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
     setIsMobile(width < 768)
-  },[width])
+  }, [width])
   // const isMobile = width < 768 ? true : false
   const isAppliedCategory = category === 'applied'
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
@@ -183,10 +183,9 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
       setSelectedJob(appliedJobDetailResponse?.job)
       setApplicationUpdatedAt(appliedJobDetailResponse?.updated_at)
       setApplicationHistories(appliedJobDetailResponse?.application_histories)
-
     }
   }, [appliedJobDetailResponse])
-  
+
   useEffect(() => {
     setJobsList(savedJobsListResponse.data?.saved_jobs)
     setTotalPages(savedJobsListResponse.data?.total_pages)
@@ -406,10 +405,10 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                   <JobCard
                     key={i}
                     id={jobs.id}
-                    image={jobs.company_logo}
+                    image={jobs?.company?.logo_url}
                     title={jobs?.job?.job_title}
                     company={jobs.company_name}
-                    location={jobs?.job?.location_value}
+                    location={jobs?.job?.location?.value}
                     salary={jobs?.job?.salary_range_value}
                     postedAt={jobs?.job?.refreshed_at}
                     selectedId={selectedJobId}
@@ -417,7 +416,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                     applicationStatus={jobs.status}
                     applicationUpdatedAt={jobs.updated_at}
                     handleSelectedId={() =>
-                      handleSelectedJobId(jobs.id, jobs?.job?.job_url, jobs?.job?.status_key)
+                      handleSelectedJobId(jobs.job_id, jobs?.job?.job_url, jobs?.job?.status_key)
                     }
                     isCompanyVerified={jobs?.company?.is_verify}
                   />

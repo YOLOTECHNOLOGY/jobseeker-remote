@@ -7,6 +7,8 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import useEmblaCarousel from 'embla-carousel-react'
 import moment from 'moment'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 
 /* Redux actions */
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
@@ -43,6 +45,7 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { formatSalary, formatSalaryRange, getYearMonthDiffBetweenDates } from 'helpers/formatter'
 
 /* Services */
+import { fetchResumeDelete } from 'store/services/auth/fetchResumeDelete'
 
 /* Assets */
 import {
@@ -907,10 +910,12 @@ const RenderResumeView = ({ userDetail }: any) => {
     creative: false,
     corporate: false
   }
+  const [showSnackbarModal, setShowSnackbarModal] = useState(false)
   const [resume, setResume] = useState(userDetail.resume || null)
   const [isTemplateDownloadable, setIsTemplateDownloadable] = useState(initialDownloadState)
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState([])
+  const [deleteResumeLoading, setDeleteResumeLoading] = useState(false)
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -958,7 +963,19 @@ const RenderResumeView = ({ userDetail }: any) => {
   }, [emblaApi, setScrollSnaps, onSelect])
 
   const handleDeleteResume = () => {
-    setResume(null)
+    setDeleteResumeLoading(true)
+    fetchResumeDelete(resume.id)
+      .then(({ status }) => {
+        if (status === 200) {
+          setResume(null)
+        }
+      })
+      .catch(() => {
+        setShowSnackbarModal(true)
+      })
+      .finally(() => {
+        setDeleteResumeLoading(false)
+      })
   }
 
   const handleUploadResume = (file) => {
@@ -1020,6 +1037,7 @@ const RenderResumeView = ({ userDetail }: any) => {
           handleDelete={handleDeleteResume}
           handleUpload={handleUploadResume}
           buttonClassname={styles.buttonCTA}
+          deleteResumeLoading={deleteResumeLoading}
         />
       </div>
       <div className={styles.sectionContainer}>
@@ -1186,6 +1204,18 @@ const RenderResumeView = ({ userDetail }: any) => {
           </div>
         </div>
       </div>
+
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        open={showSnackbarModal}
+        onClose={() => setShowSnackbarModal(false)}
+        message='I love snacks'
+        key='resumeDelete'
+      >
+        <Alert onClose={() => setShowSnackbarModal(false)} severity='error' sx={{ width: '100%' }}>
+          Failed to delete resume
+        </Alert>
+      </Snackbar>
     </React.Fragment>
   )
 }
