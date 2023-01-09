@@ -153,7 +153,7 @@ const Job = ({
   const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
   const chatDetail = useMemo(() => {
-    return jobDetail?.chat
+    return jobDetail?.chat ?? {}
   }, [jobDetail])
 
   // Loading
@@ -379,7 +379,7 @@ const Job = ({
       if (chatDetail.job_id !== jobDetail?.id) {
         setShowModal(true)
       } else {
-        router.push(`/chat/${chatDetail.chat_id}`)
+        router.push(`/chat/${chatDetail?.chat_id}`)
       }
     } else {
       setLoading(true)
@@ -412,7 +412,7 @@ const Job = ({
       .finally(() => {
         setLoading(false)
       })
-  }, [jobDetail.id, chatDetail?.job_application_id, chatDetail.chat_id])
+  }, [jobDetail.id, chatDetail?.job_application_id, chatDetail?.chat_id])
   const renderSaveAndApplyActions = () => {
     return (
       <div
