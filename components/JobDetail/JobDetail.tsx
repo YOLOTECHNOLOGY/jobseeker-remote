@@ -110,7 +110,7 @@ const JobDetail = ({
   )
   const dispatch = useDispatch()
   const chatDetail = useMemo(() => {
-    return selectedJob?.chat
+    return selectedJob?.chat ?? {}
   }, [selectedJob])
   const userCookie = getCookie('user') || null
   const authCookie = getCookie('accessToken') || null
@@ -200,7 +200,7 @@ const JobDetail = ({
       .finally(() => {
         setLoading(false)
       })
-  }, [selectedJob.id, chatDetail?.job_application_id, chatDetail.chat_id])
+  }, [selectedJob.id, chatDetail?.job_application_id, chatDetail?.chat_id])
   console.log({ chatDetail, selectedJob })
   const handleChat = () => {
     if (!userCookie || !authCookie) {
