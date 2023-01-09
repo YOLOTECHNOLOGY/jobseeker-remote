@@ -7,15 +7,16 @@ import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
 import { setJobHiredDefaultValue } from 'store/actions/jobs/jobHiredDefaultValues'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { initialState } from 'store/reducers/config/fetchConfig'
+import { FETCH_CONFIG_SUCCESS } from 'store/types/config/fetchConfig'
 // import { FETCH_CONFIG_SUCCESS } from 'store/types/config/fetchConfig'
 
 function* jobHiredServerSide(action) {
     try {
         yield put(fetchConfigRequest())
-        // yield race({
-        //     config:take(FETCH_CONFIG_SUCCESS),
-        //     default:delay(200)
-        // }) 
+        yield race({
+            config:take(FETCH_CONFIG_SUCCESS),
+            default:delay(200)
+        }) 
         const config = yield select(store => store.config.config.response)
         const accessToken = action.accessToken
         const { defaultValues, payload: initPayload } = initPagePayLoad(action.payload, config)

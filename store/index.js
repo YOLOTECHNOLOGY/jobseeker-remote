@@ -26,7 +26,7 @@ const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== 'production') {
     const { composeWithDevTools } = require('redux-devtools-extension')
     return composeWithDevTools(applyMiddleware(...middleware
-      , logger
+      //, logger
     ))
   }
   return applyMiddleware(...middleware)

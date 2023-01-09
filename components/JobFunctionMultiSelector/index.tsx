@@ -184,7 +184,7 @@ const JobFunctionMultiSelector = (props: any) => {
             .concat(functionTitleIds.map(key => allThirds.find(item => item.seo_value === key)?.value))
             .filter(identity)
             .join(',') ?? ''
-    }, [mainFunctions, functionIds, functionTitleIds])
+    }, [mainFunctions, functionIds, functionTitleIds,allSeconds,allThirds,formattedJobfunctions])
     const isThirdSelected = useCallback(third => {
         const parentSelect = functionIds.includes(third.parent.seo_value) || mainFunctions.includes(third.parent.parent.seo_value)
         if (third.id === -1) {

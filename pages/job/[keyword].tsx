@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { isMobile } from 'react-device-detect'
 
@@ -49,34 +49,19 @@ import { getCookie, setCookie, removeCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
 import { userFilterSelectionDataParser, getApplyJobLink } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
-
-/* Action Creators */
 import { wrapper } from 'store'
-
-/* Redux Actions */
 import { fetchAppliedJobDetailRequest } from 'store/actions/jobs/fetchAppliedJobDetail'
 import { fetchSimilarJobsRequest } from 'store/actions/jobs/fetchSimilarJobs'
 import { fetchRecommendedCoursesRequest } from 'store/actions/courses/fetchRecommendedCourses'
-
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
-
 import { postReportRequest } from 'store/actions/reports/postReport'
 import { postSaveJobRequest } from 'store/actions/jobs/postSaveJob'
 import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
-
-// import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
-
 import { withdrawAppliedJobRequest } from 'store/actions/jobs/withdrawAppliedJob'
-
 import { addExternalJobClickService } from 'store/services/jobs/addExternalJobClick'
-
-
-/* Styles */
 import styles from './Job.module.scss'
 import breakpointStyles from 'styles/breakpoint.module.scss'
-
-/* Images */
 import {
   BriefcaseIcon,
   LocationIcon,
@@ -100,11 +85,9 @@ import {
 import RegisterModal from 'components/RegisterModal'
 import { createChat } from 'helpers/interpreters/services/chat'
 import { fetchSwitchJobService } from 'store/services/jobs/fetchSwitchJob'
-import { fetchChatDetailRequest } from 'store/actions/jobs/fetchJobChatDetail'
 import Modal from 'components/Modal'
 import jobSource from 'helpers/jobSource'
 import { updateImState } from 'store/actions/chat/imState'
-
 interface IJobDetail {
   jobDetail: any
   applicationHistory: any
@@ -169,8 +152,9 @@ const Job = ({
   const isSimilarJobsFetching = useSelector((store: any) => store.job.similarJobs.fetching)
   const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
-  const chatDetail = useSelector((store: any) => store.job.chatDetail.response)
-  const chatDetailFetching = useSelector((store: any) => store.job.chatDetail.fetching)
+  const chatDetail = useMemo(() => {
+    return jobDetail?.chat
+  }, [jobDetail])
 
   // Loading
   const isWithdrawAppliedJobFetching = useSelector(
@@ -254,11 +238,9 @@ const Job = ({
         dispatch(postSaveJobRequest(postSaveJobPayload))
       } else {
         setIsSavedJob(false)
-
         const deleteJobPayload = {
           jobId: jobDetail?.id
         }
-
         dispatch(deleteSaveJobRequest(deleteJobPayload))
       }
     } else {
@@ -385,14 +367,6 @@ const Job = ({
     }
   }
 
-  useEffect(() => {
-    if (jobDetail?.id) {
-      const recruiterId = jobDetail?.recruiter?.id
-      if (recruiterId) {
-        dispatch(fetchChatDetailRequest({ recruiterId, status: 'protected' }))
-      }
-    }
-  }, [jobDetail])
   const handleChat = () => {
     if (!userCookie || !authCookie) {
       localStorage.setItem('isChatRedirect', `/chat-redirect/${jobDetail?.id}`)
@@ -455,7 +429,7 @@ const Job = ({
                   variant='contained'
                   capitalize
                   className={styles.applyBtn}
-                  isLoading={loading||chatDetailFetching}
+                  isLoading={loading}
                   onClick={handleChat}
                 >
                   <Text textColor='white' bold>
@@ -506,7 +480,7 @@ const Job = ({
           <MaterialButton
             variant='contained'
             capitalize
-            isLoading={loading||chatDetailFetching}
+            isLoading={loading}
             className={styles.applyBtn}
             onClick={handleChat}
           >

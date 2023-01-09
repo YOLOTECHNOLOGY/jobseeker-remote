@@ -276,11 +276,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [mainFunctions, setMainfunctions] = useState(defaultValues.mainFunctions ?? [])
   const [jobFunctions, setJobFunctions] = useState(defaultValues.jobFunctions ?? [])
   const [functionTitles, setFunctionTitles] = useState(defaultValues.functionTitles ?? [])
-
+ 
   const jobFunctionValue = useMemo(() => {
     return { mainFunctions, jobFunctions, functionTitles }
   }, [mainFunctions, jobFunctions, functionTitles])
-
   const functionTitleList = config?.inputs?.function_titles ?? []
   const reportJobReasonList = config?.inputs?.report_job_reasons ?? []
 

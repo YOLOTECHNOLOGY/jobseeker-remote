@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback,useMemo } from 'react'
 import { useRouter } from 'next/router'
 import moment from 'moment'
 import { isMobile } from 'react-device-detect'
@@ -63,8 +63,7 @@ import { getApplyJobLink } from 'helpers/jobPayloadFormatter'
 import Modal from 'components/Modal'
 import { fetchSwitchJobService } from 'store/services/jobs/fetchSwitchJob'
 import RegisterModal from 'components/RegisterModal'
-import { fetchChatDetailRequest } from 'store/actions/jobs/fetchJobChatDetail'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addExternalJobClickService } from 'store/services/jobs/addExternalJobClick'
 import { updateImState } from 'store/actions/chat/imState'
 interface IJobDetailProps {
@@ -110,8 +109,9 @@ const JobDetail = ({
     detailHeaderRef?.current?.clientHeight || 0
   )
   const dispatch = useDispatch()
-  const chatDetail = useSelector((store: any) => store.job.chatDetail.response)
-  const chatDetailFetching = useSelector((store: any) => store.job.chatDetail.fetching)
+  const chatDetail = useMemo(() => {
+    return selectedJob?.chat
+  }, [selectedJob])
   const userCookie = getCookie('user') || null
   const authCookie = getCookie('accessToken') || null
   const [openRegister, setOpenRegister] = useState(false)
@@ -188,15 +188,6 @@ const JobDetail = ({
       router.push('/get-started?redirect=/jobs-hiring/job-search')
     }
   }
-
-  useEffect(() => {
-    if (selectedJobId && selectedJobId === selectedJob.id) {
-      const recruiterId = selectedJob?.recruiter?.id
-      if (recruiterId) {
-        dispatch(fetchChatDetailRequest({ recruiterId, status: 'protected' }))
-      }
-    }
-  }, [selectedJobId, selectedJob.id])
   const requestSwitch = useCallback(() => {
     setLoading(true)
     fetchSwitchJobService({
@@ -210,7 +201,7 @@ const JobDetail = ({
         setLoading(false)
       })
   }, [selectedJob.id, chatDetail?.job_application_id, chatDetail.chat_id])
-
+  console.log({ chatDetail, selectedJob })
   const handleChat = () => {
     if (!userCookie || !authCookie) {
       localStorage.setItem('isChatRedirect', `/chat-redirect/${selectedJob.id}`)
@@ -288,7 +279,7 @@ const JobDetail = ({
               </Link>
               <div className={styles.jobDetailButtons}>
 
-                <MaterialButton variant='contained' capitalize onClick={handleChat} isLoading={loading || chatDetailFetching}>
+                <MaterialButton variant='contained' capitalize onClick={handleChat} isLoading={loading}>
                   <Text textColor='white' bold>
                     {(() => {
                       if (selectedJob?.external_apply_url) {
