@@ -3647,6 +3647,36 @@ imforbossjob@^0.0.752:
     sha1 "^1.1.1"
     viewerjs "^1.11.0"
 
+imforbossjob@^0.0.753:
+  version "0.0.753"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.753.tgz#443982936927d0ca4ddb30804e917b8b0c27cd68"
+  integrity sha512-DETxebWKqTEOSqfy1UxsYHxe7XfPBVXGUr1rMIpDvtVC8DtMZdv7LeyiNjvHyKuqh54OGsgL6g7BIOcM5z/MnQ==
+  dependencies:
+    "@ant-design/icons" "^4.7.0"
+    "@aws-sdk/client-s3" "^3.3.0"
+    "@aws-sdk/lib-storage" "^3.18.0"
+    "@aws-sdk/s3-request-presigner" "^3.3.0"
+    ali-oss "^6.17.1"
+    antd "^4.23.3"
+    axios "^0.18.0"
+    buffer "^6.0.3"
+    crypto-js "^4.1.1"
+    dexie "^3.0.3"
+    fantasy-combinators "^0.0.1"
+    fantasy-land "^5.0.1"
+    imforbossjob "^0.0.752"
+    imsdkweb "^0.0.27"
+    lodash "^4.17.21"
+    mobx "^5.15.4"
+    mobx-react "^6.3.1"
+    moment "^2.29.4"
+    nanoid "^4.0.0"
+    react ">=16.8.6"
+    react-dom ">=16.8.6"
+    react-router-dom "^4.2.2"
+    sha1 "^1.1.1"
+    viewerjs "^1.11.0"
+
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/import-fresh/-/import-fresh-3.3.0.tgz#37162c25fcb9ebaa2e6e53d5b4d88ce17d9e0c2b"
