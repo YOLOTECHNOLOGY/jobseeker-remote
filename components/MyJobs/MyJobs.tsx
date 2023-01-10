@@ -173,7 +173,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
   }, [isAppliedJobsListFetching, isSavedJobsListFetching])
 
   useEffect(() => {
-    setJobsList(appliedJobsListResponse.data?.applied_jobs)
+    setJobsList(appliedJobsListResponse.data?.job_applications)
     setTotalPages(appliedJobsListResponse.data?.total_pages)
     setTotalNum(appliedJobsListResponse.data?.total_num)
   }, [appliedJobsListResponse])
