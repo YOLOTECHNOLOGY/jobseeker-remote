@@ -8,7 +8,14 @@ import { flatMapDeep } from 'lodash-es'
 import SearchBar from './searchBar'
 import { CloseIcon } from 'images'
 
-export default function PrimarySearchAppBar({ title, onChange, value: outValue, onClose }: any) {
+export default function PrimarySearchAppBar({
+  title,
+  onChange,
+  value: outValue,
+  onClose,
+  setSelectedSubItem,
+  setSelectedKey
+}: any) {
   const jobFunctions = useSelector(
     (store: any) => store.config.config.response?.inputs?.job_function_lists ?? []
   )
@@ -36,7 +43,19 @@ export default function PrimarySearchAppBar({ title, onChange, value: outValue, 
       getOptionLabel: (option: any) => option.value,
       value: outValue,
       // inputValue: outValue?.value,
-      onChange: (event: any, newValue: string | null) => {
+      onChange: (event: any, newValue: any | null) => {
+        jobFunctions.forEach((level1) =>
+          Object.keys(level1).forEach((level2: any) =>
+            level1[level2].forEach((level3) =>
+              level3.job_titles.forEach((item) => {
+                if (item.id === newValue.id && item['seo-value'] === newValue['seo-value']) {
+                  setSelectedKey(newValue.mainCategory)
+                  setSelectedSubItem(level3)
+                }
+              })
+            )
+          )
+        )
         onChange(newValue)
       }
     })

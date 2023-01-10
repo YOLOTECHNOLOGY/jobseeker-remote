@@ -62,6 +62,7 @@ const JobFunctionSelector = (props: any) => {
     })
     return groupedSelected?.indexOf(group) ?? -1
   }, [groupedSelected, selectedSubItem])
+
   useEffect(() => {
     if (jobTitle && !value) {
       const allTitles = flatMapDeep(values(jobFunctionsObject), (group) =>
@@ -130,6 +131,8 @@ const JobFunctionSelector = (props: any) => {
               onChange={(title) => onChange(title)}
               value={value}
               onClose={setShowModal}
+              setSelectedSubItem={setSelectedSubItem}
+              setSelectedKey={setSelectedKey}
             />
             <div className={styles.container}>
               <MenuList classes={{ root: styles.menu }}>
