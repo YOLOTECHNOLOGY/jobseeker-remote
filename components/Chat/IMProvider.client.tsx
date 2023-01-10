@@ -12,7 +12,7 @@ import ExchangeModal from 'components/Chat/exchange'
 import CancelDetailModal from 'components/Chat/interview/cancelDetail'
 import CancelModal from 'components/Chat/interview/cancel'
 import IssueModal from 'components/Chat/interview/issue'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { fetchUserOwnDetailRequest, fetchUserOwnDetailSetMobileVerified } from 'store/actions/users/fetchUserOwnDetail'
 import { getAuth } from 'helpers/interpreters/services/chat'
 import CommonPhrases from 'components/Chat/commonPhrases'
 import ViewJobModal from './viewJob'
@@ -106,7 +106,9 @@ const IMProvider = ({ children }: any) => {
             }
         },
         handleFinish(type) {
-            console.log('finish', type)
+            if (type === 'verifySuccess') {
+                dispatch(fetchUserOwnDetailSetMobileVerified())
+            }
         },
         isUserNumberValidate() {
             return userDetailRef.current?.is_mobile_verified
