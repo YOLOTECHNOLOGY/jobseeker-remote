@@ -74,7 +74,6 @@ const PublicSitemap = () => {
         })
 
       const jobTypeList =
-
         config?.inputs.job_types?.map?.((type) => {
           return {
             key: type['seo-value'],
@@ -360,7 +359,7 @@ const PublicSitemap = () => {
               <Text textStyle='base'>Register as a recruiter</Text>
             </Link>
             <Link
-              to={`${process.env.OLD_PROJECT_URL}/login/employer`}
+              to={`${process.env.BOSSHUNT_URL}/get-started-company`}
               aTag
               className={styles.item}
               external

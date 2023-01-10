@@ -6,8 +6,9 @@ import { useAutocomplete } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { flatMapDeep } from 'lodash-es'
 import SearchBar from './searchBar'
+import { CloseIcon } from 'images'
 
-export default function PrimarySearchAppBar({ title, onChange, value: outValue }: any) {
+export default function PrimarySearchAppBar({ title, onChange, value: outValue, onClose }: any) {
   const jobFunctions = useSelector(
     (store: any) => store.config.config.response?.inputs?.job_function_lists ?? []
   )
@@ -44,8 +45,23 @@ export default function PrimarySearchAppBar({ title, onChange, value: outValue }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Toolbar style={{ background: '#F9F9F9', borderBottom: '1px solid #ccc' }}>
+      <Toolbar
+        style={{
+          background: '#F9F9F9',
+          borderBottom: '1px solid #ccc',
+          justifyContent: 'space-between'
+        }}
+      >
         <span className={styles.title}>{title}</span>
+        <img
+          style={{ cursor: 'pointer' }}
+          src={CloseIcon}
+          title='close modal'
+          alt='close modal'
+          width='14'
+          height='14'
+          onClick={() => onClose(false)}
+        />
       </Toolbar>
       <div className={styles.searchBar} {...getRootProps()}>
         <SearchBar style={{ background: '#00000000' }} inputProps={inputProps} />

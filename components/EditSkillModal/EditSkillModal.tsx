@@ -72,12 +72,8 @@ const EditSkillModal = ({
   )
 
   useEffect(() => {
-    setSuggestList(
-      skillList
-        .filter((item) => item.value.includes(''))
-        .map((skill) => ({ value: skill.id, label: skill.value }))
-    )
-  }, [handleSuggestionSearch])
+    setSuggestList(skillList.map((skill) => ({ value: skill.id, label: skill.value })))
+  }, [handleSuggestionSearch, searchValue])
 
   useEffect(() => {
     if (updateProfileSuccess) {
@@ -99,8 +95,8 @@ const EditSkillModal = ({
 
   const handleAddSkill = (skill) => {
     setChoosed((prevState) => {
-      if (!prevState.includes(skill.label)) {
-        return [...prevState, skill.label]
+      if (!prevState.includes(skill)) {
+        return [...prevState, skill]
       } else {
         return [...prevState]
       }
@@ -149,14 +145,12 @@ const EditSkillModal = ({
               searchFn={handleSuggestionSearch}
               onSelect={(val: any) => {
                 if (val !== '') {
-                  handleAddSkill(val)
+                  handleAddSkill(val.label)
                   setSearchValue('')
                 }
               }}
               onKeyPress={(e: any) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
-                  setSearchValue(e.target.value)
-
                   if (e.target.value !== '') {
                     handleAddSkill(e.target.value)
                     setSearchValue('')
@@ -167,7 +161,7 @@ const EditSkillModal = ({
             />
           </div>
           <div className={styles.skillList}>
-            {choosed.map((skill, i) => {
+            {(choosed ?? []).map((skill, i) => {
               return (
                 <Chip
                   key={i}
