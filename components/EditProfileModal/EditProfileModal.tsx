@@ -331,6 +331,7 @@ const EditProfileModal = ({
                     maxLength: { value: 4000, message: 'Please enter text within 4000' }
                   })}
                   className={styles.profileFormInput}
+                  label='Provide a career summary and briefly highlight your relevant experience, achievement and skills.'
                   placeholder='Provide a career summary and briefly highlight your relevant experience, achievement and skills.'
                   name='summary'
                   variant='outlined'

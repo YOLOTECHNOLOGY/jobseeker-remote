@@ -43,20 +43,20 @@ const MaterialBasicSelect = ({
             letterSpacing: '1px',
             '&.Mui-focused': {
               fontSize: '10px',
-              transform: 'translate(14px, -10px) scale(1)',
+              transform: 'translate(14px, -10px) scale(1)'
             },
             lineHeight: '26px'
           },
           shrink: {
             fontSize: '10px',
-            transform: 'translate(14px, -10px) scale(1)',
+            transform: 'translate(14px, -10px) scale(1)'
           },
           outlined: {
             '&.MuiInputLabel-shrink': {
-              fontSize: '10px',
-            },
-          },
-        },
+              fontSize: '10px'
+            }
+          }
+        }
       },
       MuiOutlinedInput: {
         styleOverrides: {
@@ -66,16 +66,16 @@ const MaterialBasicSelect = ({
             backgroundColor: greyBg ? '#E2E2E2' : 'white',
             lineHeight: '16px',
             alignItems: 'self-end'
-          },
-        },
+          }
+        }
       },
       MuiInputBase: {
         styleOverrides: {
           input: {
             fontSize: '14px',
-            letterSpacing: '1px',
-          },
-        },
+            letterSpacing: '1px'
+          }
+        }
       },
       MuiMenuItem: {
         styleOverrides: {
@@ -83,15 +83,21 @@ const MaterialBasicSelect = ({
             fontSize: '16px',
             letterSpacing: '1px',
             padding: '10px 16px'
-          },
-        },
-      },
-    },
+          }
+        }
+      }
+    }
   })
   return (
     <ThemeProvider theme={theme}>
       <FormControl className={className} size='small' error={!!error}>
-        <InputLabel id={`${id}-select-label`}>{<span>{label} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>}</InputLabel>
+        <InputLabel id={`${id}-select-label`}>
+          {
+            <span>
+              {label} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}
+            </span>
+          }
+        </InputLabel>
         <Select
           {...fieldRef}
           labelId={`${id}-select-label`}
@@ -103,7 +109,6 @@ const MaterialBasicSelect = ({
           disabled={disabled}
           helperText={error?.message}
           {...rest}
-
         >
           {options &&
             options.map((option) => (

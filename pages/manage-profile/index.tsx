@@ -1389,12 +1389,15 @@ const ManageProfilePage = () => {
             </div>
             <div className={styles.sectionContainer}>
               <div className={styles.sectionHeader} style={{ position: 'relative', width: '100%' }}>
-                <div
-                  className={styles.iconWrapperP}
-                  onClick={() => handleModal('createJobPreference', true, null, null)}
-                >
-                  <Image src={AddIcon} width='14' height='14' color='#337f43' alt={''} />
-                </div>
+                {userDetail.job_preferences?.length < 3 && (
+                  <div
+                    className={styles.iconWrapperP}
+                    onClick={() => handleModal('createJobPreference', true, null, null)}
+                  >
+                    <Image src={AddIcon} width='14' height='14' color='#337f43' alt={''} />
+                  </div>
+                )}
+
                 <Text bold textColor='primaryBlue' textStyle='xl'>
                   Job Preferences
                 </Text>
