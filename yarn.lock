@@ -3647,10 +3647,10 @@ imforbossjob@^0.0.752:
     sha1 "^1.1.1"
     viewerjs "^1.11.0"
 
-imforbossjob@^0.0.780:
-  version "0.0.780"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.780.tgz#3c7bc8106c78c40475677ad56b86e3839e69d156"
-  integrity sha512-Tsq8PnZ0BxsA7x4mdK58bmGGyEhJv3W/Fy0o7Rab4qeS2fk7Tqz8cxoOXLxXnkFRwsl8lv9LwOXqst8cgIRtAg==
+imforbossjob@^0.0.781:
+  version "0.0.781"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.781.tgz#05686f3f9a23667e57546d7457cf3188ff53f1ce"
+  integrity sha512-L6knO0Dye63dYPMxbABUPxd2YGzFnI/JYm1QXKGaXY6YT6mF8jv1VHNNr/Y4SDAPE4CAKFiS4KcZ3Zm/2zkZmA==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -3665,7 +3665,7 @@ imforbossjob@^0.0.780:
     fantasy-combinators "^0.0.1"
     fantasy-land "^5.0.1"
     imforbossjob "^0.0.752"
-    imsdkweb "^0.0.30"
+    imsdkweb "^0.0.31"
     lodash "^4.17.21"
     mobx "^5.15.4"
     mobx-react "^6.3.1"
@@ -3706,10 +3706,10 @@ imsdkweb@^0.0.27:
     sha1 "^1.1.1"
     viewerjs "^1.11.0"
 
-imsdkweb@^0.0.30:
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.30.tgz#b3195b45989a5b93c6c220b43e9715cfae1ade54"
-  integrity sha512-lchs8m1sZzZ5iXNJKPgRCVBQFmClRSxhCHmh9mwmvwcA1rwkdpKxRV0Wb4mJvjbo3ZpVZLhv4YbcB4NFgKFRZg==
+imsdkweb@^0.0.31:
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.31.tgz#5023c3097e47e401762d0e753fd9e313826e1135"
+  integrity sha512-n4Cuj0iRT+3ZKf9lPW0d8DgKuVkouw9JG7XYhLv2wlV4TrL4bia8wXrGg5G3Ji/zEGlENOGfYCpVbNJ+EHjTTg==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"

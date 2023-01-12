@@ -37,7 +37,7 @@ const ExchangeDetailModal = (props: any) => {
     >
         <div className={styles.modalContainer}>
             <p className={styles.modalTitle}>
-                {imState?.jobseeker?.full_name ?? 'Boss'}
+                {imState?.recruiter?.full_name ?? 'Boss'}
                 {'\'s mobile number:'}
                 <span style={{ color: '#2378e5' }}>{imState?.contact_exchange_request?.recruiter_contact_num ?? ''}</span>
             </p>
