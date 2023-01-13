@@ -247,6 +247,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
+  console.log({firstRender})
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
   const userCookie = getCookie('user') || null
@@ -328,12 +329,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       functionTitles
     )
     setHasMoreFilters(hasActiveFilters)
-    if (!firstRender) {
+    // if (!firstRender) {
       setDisplayQuickLinks(false)
       const { payload } = initPagePayLoad(router.query, config)
       dispatch(fetchJobsListRequest(payload, accessToken))
       setMoreFilterReset(false)
-    }
+    // }
   }, [router.query])
 
   useEffect(() => {
