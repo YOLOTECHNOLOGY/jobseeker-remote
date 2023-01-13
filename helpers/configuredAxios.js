@@ -128,7 +128,7 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
         // when Unauthorized 401 status code is returned from API requests
         if (error?.response?.status === 401) {
           removeCookie('accessToken')
-          window.location.href = '/'
+          window.location.href = '/get-started'
         } else {
           return Promise.reject(error)
         }
