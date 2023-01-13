@@ -2,19 +2,22 @@
 @import 'styles/mixins.scss';
 
 .form {
-	margin-top: 16px;
+  margin-top: 16px;
 
-	& > * {
-		width: 100%;
-	}
+  & > * {
+    width: 100%;
+  }
 }
 
 .skillList {
-	margin-top: 16px;
-  
-	.skillChip {
-	  margin-right: 16px;
-	  margin-bottom: 16px;
-	  background-color: #1976d2;
-	}
+  margin-top: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  .skillChip {
+    margin-right: 16px;
+    margin-bottom: 16px;
+    background-color: #1976d2;
+  }
 }

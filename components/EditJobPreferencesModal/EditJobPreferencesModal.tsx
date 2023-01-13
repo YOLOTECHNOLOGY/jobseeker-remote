@@ -232,7 +232,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
-                  label='currency type'
+                  label='Currency type'
                   options={currencyLists}
                   required
                   {...fieldState}
@@ -281,7 +281,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
-                  label='Max. salary'
+                  label='Expected max. salary'
                   rules={{ required: 'max salary is required' }}
                   required
                   options={maxSalaryOptions}
