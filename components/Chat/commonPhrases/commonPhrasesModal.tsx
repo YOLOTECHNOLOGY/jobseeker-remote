@@ -41,7 +41,7 @@ const CommonPhrasesModal = (props: any) => {
     >
         <div className={styles.modalContainer}>
             <div className={styles.formContainer}>
-                <p>Please select the phrase that you want to send to Talent.</p>
+                <p>Please select the phrase that you want to send to Boss.</p>
                 <RadioGroup
                     aria-labelledby='demo-radio-buttons-group-label'
                     defaultValue={selected?.id}
