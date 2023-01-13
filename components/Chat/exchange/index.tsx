@@ -135,7 +135,12 @@ const ExchangeModal = (props: any) => {
         isFirstButtonLoading={loading}
     >
         <div className={styles.modalContainer}>
-            <p className={styles.modalTitle}>To exchange mobile number with Boss, please verify your mobile number.</p>
+            <p className={styles.modalTitle}>
+                {showSendResult
+                    ?
+                    'Are you sure you want to exchange mobile number with Boss? You will be able to view Boss’s mobile number after Boss had agreed to your request.'
+                    : 'To exchange mobile number with Boss, please verify your mobile number.'}
+            </p>
             <div className={styles.formContainer}>
                 {showSendOTP && <>
                     {/* <label>This allow easier communication with the talent. Please verify your mobile number.</label> */}
@@ -182,7 +187,7 @@ const ExchangeModal = (props: any) => {
 
                 </>}
                 {showSendResult && <>
-                    <label>This allow easier communication with the talent</label>
+                    {/* <label>This allow easier communication with the talent</label> */}
                     <div className={styles.detailItemContainer} >
                         <label>Mobile number:</label>
                         <p>{number}</p>
