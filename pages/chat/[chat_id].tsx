@@ -17,7 +17,7 @@ const JobseekerChat = dynamic<any>(import('components/Chat'), {
 // import JobseekerChat from 'components/Chat'
 const Chat = () => {
     const router = useRouter()
-    const { query: { chat_id } } = router
+    // const { query: { chat_id } } = router
     const {
         userId,
         imState,
@@ -32,7 +32,7 @@ const Chat = () => {
         dispatch(fetchConfigRequest())
     }, [])
     // const defaultChatList = useSelector((store: any) => store?.chat?.defaultChatList ?? [])
-
+    const [chat_id,setChatId] = useState(router?.query?.chat_id)
     const [first, setFirst] = useState(true)
     const [chatList, setChatList] = useState([])
     const [chatListLoading, setChatListLoading] = useState(false)
@@ -86,6 +86,7 @@ const Chat = () => {
             }
         }
     }, [chat_id])
+    console.log({chatId,chat_id,router})
     useEffect(() => {
         if (first) {
             setFirst(false)
@@ -94,13 +95,16 @@ const Chat = () => {
         if (chatId !== chat_id) {
             if (chatId) {
                 history.replaceState(null, '', `/chat/${chatId}`)
+                setChatId(chatId)
             } else if (chat_id !== 'list') {
                 history.replaceState(null, '', `/chat/${'list'}`)
+                setChatId(chatId)
             }
         }
     }, [chatId])
     console.log({ filterMode })
     return <Layout isHiddenFooter isHiddenHeader={mobile}>
+        <div style={{marginTop:50}}>
         <JobseekerChat
             key='jobchat'
             loading={loading}
@@ -120,6 +124,7 @@ const Chat = () => {
             updateChatList={updateChatList}
             businessInterpreters={interpreters}
         />
+        </div>
     </Layout>
 }
 export const getServerSideProps = () => {

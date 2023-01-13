@@ -11,10 +11,17 @@ import { fetchUserDetailRequest } from 'store/actions/users/fetchUserDetail'
 import { getCookie } from 'helpers/cookies'
 const ExchangeModal = (props: any) => {
     const { contextRef, loading, applicationId } = props
+    const dispatch = useDispatch()
     const [countryCode, setCountryCode] = useState('+63')
     const [mobileNumber, setMobileNumber] = useState('')
+    // const existNumber = useSelector((store: any) => store?.users?.fetchUserOwnDetail?.response.phone_num)
+    // useEffect(() => {
+    //     if (existNumber && countryCode) {
+    //         setMobileNumber(existNumber.replace(countryCode, ''))
+    //     }
+    // }, [existNumber, countryCode])
     const [otp, setOtp] = useState('')
-    const dispatch = useDispatch()
+
     const countryOptions = useSelector((store: any) => store.config.config.response?.inputs?.country_lists
         ?.map?.(item => ({
             label: `${item.value} (${item.code})`,

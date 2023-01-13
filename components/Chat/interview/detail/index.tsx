@@ -97,7 +97,7 @@ const DetailModal = (props: any) => {
                 active: !isStatusIn(['Completed']),
                 show: true,
                 actionName: data?.is_reported ? 'Isseus reported' : 'Report issues',
-                actionEnable: isStatusIn(['In Progress'])
+                actionEnable: isStatusIn(['In progress'])
                     && (data?.jobseeker_mark_jobseeker_attended || !!data.checked_in_at)
                     && !data?.is_reported,
                 action: () => actionsRef.current?.reportIssue?.({
