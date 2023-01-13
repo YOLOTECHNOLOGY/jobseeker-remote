@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
 
@@ -14,6 +14,8 @@ import Link from 'components/Link'
 import { useFirstRender } from 'helpers/useFirstRender'
 import useGetStarted from 'hooks/useGetStarted'
 import { removeItem } from 'helpers/localStorage'
+
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 import styles from './index.module.scss'
 
@@ -37,6 +39,7 @@ const GetStarted = () => {
     handleAuthenticationSendEmailMagicLink,
     emailTOPError
   } = useGetStarted()
+  const dispatch = useDispatch()
   const router = useRouter()
   const firstRender = useFirstRender()
 
@@ -65,12 +68,38 @@ const GetStarted = () => {
     }
   }, [jobseekersSocialResponse])
 
+  useEffect(() => {
+    const paramsList = getParams()
+    if (paramsList?.type == 'LoginOut') {
+      dispatch(
+        displayNotification({
+          open: true,
+          message: 'Login TimeOut',
+          severity: 'warning'
+        })
+      )
+    }
+  }, [])
+
   const errorText = (errorMessage: string) => {
     return (
       <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
         {errorMessage}
       </Text>
     )
+  }
+
+  const getParams = () => {
+    const url = location.search
+    const theRequest: { [key: string]: string } = {}
+    if (url.indexOf('?') != -1) {
+      const str = url.substr(1)
+      const strs = str.split('&')
+      for (let i = 0; i < strs.length; i++) {
+        theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
+      }
+    }
+    return theRequest
   }
 
   return (

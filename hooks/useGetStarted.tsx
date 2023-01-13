@@ -94,9 +94,10 @@ const useGetStarted = () => {
   }
 
   const defaultLoginCallBack = (data: any) => {
-    let url = data.is_profile_update_required || !data.is_profile_completed
-      ? '/jobseeker-complete-profile/1'
-      : defaultRedirectPage
+    let url =
+      data.is_profile_update_required || !data.is_profile_completed
+        ? '/jobseeker-complete-profile/1'
+        : defaultRedirectPage
         ? defaultRedirectPage
         : `/jobs-hiring/job-search`
     const isChatRedirect = localStorage.getItem('isChatRedirect')
@@ -104,7 +105,6 @@ const useGetStarted = () => {
       url = isChatRedirect
       localStorage.removeItem('isChatRedirect')
     }
-    console.log('defaultLoginCallBack', url)
     routes.push(url)
     setEmailOTPInputDisabled(false)
   }
@@ -126,7 +126,7 @@ const useGetStarted = () => {
   const handleAuthenticationSendEmailMagicLink = () => {
     let params: any = {}
     const isChatRedirect = localStorage.getItem('isChatRedirect')
-    console.log({userId})
+    console.log({ userId })
     if (isChatRedirect && userId) {
       params.redirect = isChatRedirect
       params.redirect_fail = router.asPath

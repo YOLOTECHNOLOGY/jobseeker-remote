@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import { wrapper } from 'store'
-import { getCookie } from 'helpers/cookies'
+import { getCookie, removeCookie } from 'helpers/cookies'
 import { CookiesProvider } from 'react-cookie'
 import { ConnectedRouter } from 'connected-next-router'
 import { PersistGate } from 'redux-persist/integration/react'
 import { setItem, getItem } from 'helpers/localStorage'
 import { getFromObject } from 'helpers/formatter'
+import { jobseekerTokenValidate } from 'store/services/auth/jobseekersTokenValidate'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
 const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
@@ -21,12 +22,15 @@ import NotificationProvider from 'components/NotificationProvider'
 import IMProvider from 'components/Chat/IMProvider.client'
 import 'styles/globals.scss'
 import { persistor } from 'store'
+
 const App = (props: AppProps) => {
   const { Component, pageProps } = props
   const router = useRouter()
   const accessToken = getCookie('accessToken')
+
   const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
   const [toPath, setToPath] = useState('')
+
   useEffect(() => {
     // Facebook pixel
     // This pageview only triggers the first time
@@ -73,6 +77,27 @@ const App = (props: AppProps) => {
       router.events.off('routeChangeComplete', handleRouteComplete)
     }
   }, [])
+
+  useEffect(() => {
+    const accessToken = getCookie('accessToken')
+    if (accessToken) {
+      jobseekerTokenValidate(accessToken)
+        .then(() => {
+          //
+        })
+        .catch(({ response: { data, status } }) => {
+          if (status == 400 || data?.errors?.error[0] === 'Invalid token') {
+            if (router.pathname !== '/get-started') {
+              removeCookie('accessToken')
+              window.location.href = '/get-started?type=LoginOut'
+            } else {
+              removeCookie('accessToken')
+            }
+          }
+        })
+    }
+  }, [])
+
   return (
     <>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
