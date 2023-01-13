@@ -32,7 +32,7 @@ const Chat = () => {
         dispatch(fetchConfigRequest())
     }, [])
     // const defaultChatList = useSelector((store: any) => store?.chat?.defaultChatList ?? [])
-    const [chat_id,setChatId] = useState(router?.query?.chat_id)
+    const [chat_id, setChatId] = useState(router?.query?.chat_id)
     const [first, setFirst] = useState(true)
     const [chatList, setChatList] = useState([])
     const [chatListLoading, setChatListLoading] = useState(false)
@@ -86,7 +86,7 @@ const Chat = () => {
             }
         }
     }, [chat_id])
-    console.log({chatId,chat_id,router})
+    console.log({ chatId, chat_id, router })
     useEffect(() => {
         if (first) {
             setFirst(false)
@@ -103,27 +103,27 @@ const Chat = () => {
         }
     }, [chatId])
     console.log({ filterMode })
-    return <Layout isHiddenFooter isHiddenHeader={mobile}>
-        <div style={{marginTop:50}}>
-        <JobseekerChat
-            key='jobchat'
-            loading={loading}
-            imState={imState}
-            chatId={chatId || (chat_id === 'list' ? undefined : chat_id)}
-            setChatId={chatId => contextRef.current?.changeChat?.(chatId)}
-            chatListLoading={chatListLoading}
-            isUnreadOn={isUnreadOn}
-            setUnreadOn={setUnreadOn}
-            status={status}
-            setStatus={setStatus}
-            chatList={chatList}
-            contextRef={contextRef}
-            CustomCard={CustomCard}
-            userId={userId}
-            filterMode={filterMode}
-            updateChatList={updateChatList}
-            businessInterpreters={interpreters}
-        />
+    return <Layout isHiddenFooter isHiddenHeader={false}>
+        <div style={{ marginTop: mobile ? 0 : 50 }}>
+            <JobseekerChat
+                key='jobchat'
+                loading={loading}
+                imState={imState}
+                chatId={chatId || (chat_id === 'list' ? undefined : chat_id)}
+                setChatId={chatId => contextRef.current?.changeChat?.(chatId)}
+                chatListLoading={chatListLoading}
+                isUnreadOn={isUnreadOn}
+                setUnreadOn={setUnreadOn}
+                status={status}
+                setStatus={setStatus}
+                chatList={chatList}
+                contextRef={contextRef}
+                CustomCard={CustomCard}
+                userId={userId}
+                filterMode={filterMode}
+                updateChatList={updateChatList}
+                businessInterpreters={interpreters}
+            />
         </div>
     </Layout>
 }
