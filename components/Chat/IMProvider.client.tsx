@@ -14,6 +14,7 @@ import CancelModal from 'components/Chat/interview/cancel'
 import IssueModal from 'components/Chat/interview/issue'
 import { fetchUserOwnDetailRequest, fetchUserOwnDetailSetMobileVerified } from 'store/actions/users/fetchUserOwnDetail'
 import { getAuth } from 'helpers/interpreters/services/chat'
+import { userInfo } from 'helpers/interpreters/services/userInfo'
 import CommonPhrases from 'components/Chat/commonPhrases'
 import ViewJobModal from './viewJob'
 import ExchangeConfirmModal from './exchange/confirm'
@@ -31,7 +32,6 @@ const IMProvider = ({ children }: any) => {
     const imState = useMemo(() => {
         return chatId ? imStateMap?.[chatId] ?? {} : {}
     }, [imStateMap, chatId])
-    console.log({ imState, chatId })
     const [mobile, setMobile] = useState(false)
     useEffect(() => {
         const old: any = window.onresize
@@ -42,7 +42,6 @@ const IMProvider = ({ children }: any) => {
         }
         return () => window.onresize = old
     }, [])
-
     const accessToken = getCookie('accessToken')
     const applicationId = useMemo(() => {
         return imState?.id ? `${imState.id}` : ''
@@ -53,9 +52,39 @@ const IMProvider = ({ children }: any) => {
     const chatIdRef = useRef(chatId)
     useEffect(() => {
         if (userId) {
-            IMManager.accessUser('' + userId, userId => getAuth(userId).then(result => {
-                return result.data?.data?.authcode
-            }))
+            IMManager.accessUser(
+                '' + userId + '_j',
+                auid => getAuth(auid).then(result => {
+                    return result.data?.data?.authcode
+                }),
+                auids => {
+                    const userIds = auids
+                        .filter(auid => auid && auid !== 'undefined')
+                        .map(auid => auid.replace('_r', ''))
+                    const jobseekerAuid = auids.find(auid => auid.includes('_j'))
+                    if (jobseekerAuid) {
+                        throw new Error(`Wrong auid found jobseeker id in the recruiter side: auid:${jobseekerAuid}`)
+                    }
+                    return Promise.resolve().then(() => {
+                        if (auids.length) {
+                            return userInfo(userIds).then(userInfosData => {
+                                console.log({ userInfosData, auids })
+                                const userInfos = userInfosData?.data?.data ?? []
+                                return userInfos.map(userInfo => ({
+                                    auid: '' + userInfo.id + '_r',
+                                    item: {
+                                        avatar: userInfo.avatar,
+                                        name: userInfo.full_name
+                                    }
+                                }))
+                            })
+                        } else {
+                            return []
+                        }
+                    })
+
+                }
+            )
         }
     }, [userId])
     useEffect(() => {

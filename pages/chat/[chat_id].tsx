@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useContext, useEffect, useState, useMemo } from 'react'
+import React, { useContext, useEffect, useState, useMemo, useCallback } from 'react'
 import interpreters from 'helpers/interpreters'
 import { useRouter } from 'next/router'
 import Layout from 'components/Layout'
@@ -8,9 +8,9 @@ import dynamic from 'next/dynamic'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { list } from 'helpers/interpreters/services/chat'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import CustomCard from 'components/Chat/customCard'
-import { updateDefaultChatList } from 'store/actions/chat/defaultChatList'
+// import { updateDefaultChatList } from 'store/actions/chat/defaultChatList'
 const JobseekerChat = dynamic<any>(import('components/Chat'), {
     ssr: false
 })
@@ -31,44 +31,50 @@ const Chat = () => {
         dispatch(fetchUserOwnDetailRequest({}))
         dispatch(fetchConfigRequest())
     }, [])
-    const defaultChatList = useSelector((store: any) => store?.chat?.defaultChatList ?? [])
+    // const defaultChatList = useSelector((store: any) => store?.chat?.defaultChatList ?? [])
 
     const [first, setFirst] = useState(true)
-    const [chatList, setChatList] = useState(defaultChatList)
+    const [chatList, setChatList] = useState([])
     const [chatListLoading, setChatListLoading] = useState(false)
     const [isUnreadOn, setUnreadOn] = useState(false)
-    const [status, setStatus] = useState('')
+    const [status, setStatus] = useState()
     const searchParams = useMemo(() => {
         return {
             type: status,
             unread: isUnreadOn ? '1' : '0'
         }
     }, [isUnreadOn, status])
+    const updateChatList = useCallback(() => {
+        list(searchParams).then(result => result.data?.data ?? [])
+    }, [searchParams, list])
+
+    const filterMode = useMemo(() => {
+        return !(!isUnreadOn && !status)
+    }, [isUnreadOn, status])
     useEffect(() => {
-        if (!chatListLoading) {
+        if (!chatListLoading && filterMode) {
             setChatListLoading(true)
             list(searchParams).then(result => {
-                setChatList(result.data?.data?.chats)
-                if (!status && !isUnreadOn) {
-                    dispatch(updateDefaultChatList({ chatList: result.data?.data?.chats ?? [] }))
-                }
+                setChatList(result.data?.data ?? [])
+                // if (!status && !isUnreadOn) {
+                //     dispatch(updateDefaultChatList({ chatList: result.data?.data?.chats ?? [] }))
+                // }
             }).finally(() => setChatListLoading(false))
         }
     }, [searchParams])
+    console.log({ chatList })
     useEffect(() => {
-        const chatIds = chatList?.map?.(chat => '' + (chat?.id ?? ''))?.filter?.(a => a) ?? []
-        console.log({ chatId, chatIds, chatList })
-        if (!chatIds.includes('' + chatId) && !chatListLoading) {
+        if (filterMode) {
             setChatListLoading(true)
             list(searchParams).then(result => {
-                setChatList(result.data?.data?.chats)
-                if (!status && !isUnreadOn) {
-                    dispatch(updateDefaultChatList({ chatList: result.data?.data?.chats ?? [] }))
-                }
+                setChatList(result.data?.data)
+                // if (!status && !isUnreadOn) {
+                //     dispatch(updateDefaultChatList({ chatList: result.data?.data?.chats ?? [] }))
+                // }
             }).finally(() => setChatListLoading(false))
         }
 
-    }, [chatId])
+    }, [searchParams, filterMode])
     useEffect(() => {
         if (chat_id !== chatId) {
             if (chat_id === 'list') {
@@ -93,6 +99,7 @@ const Chat = () => {
             }
         }
     }, [chatId])
+    console.log({ filterMode })
     return <Layout isHiddenFooter isHiddenHeader={mobile}>
         <JobseekerChat
             key='jobchat'
@@ -109,6 +116,8 @@ const Chat = () => {
             contextRef={contextRef}
             CustomCard={CustomCard}
             userId={userId}
+            filterMode={filterMode}
+            updateChatList={updateChatList}
             businessInterpreters={interpreters}
         />
     </Layout>
