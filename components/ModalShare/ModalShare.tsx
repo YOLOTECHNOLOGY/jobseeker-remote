@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 /* Vendors */
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share'
@@ -7,28 +7,47 @@ import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 're
 import Modal from 'components/Modal'
 import Text from 'components/Text'
 
+/* Service */
+import { fetchUserShare } from 'store/services/users/share'
+
+/* Active */
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+
 /* Styles */
 import styles from './ModalShare.module.scss'
 
 /* Images */
-import {
-  FacebookIcon,
-  LinkedinIcon,
-  TwitterIcon,
-  CopyIcon
-} from 'images'
+import { FacebookIcon, LinkedinIcon, TwitterIcon, CopyIcon } from 'images'
+import { useDispatch, useSelector } from 'react-redux'
 
 interface ModalShareProps {
   jobDetailUrl?: string
   isShowModalShare?: boolean
   handleShowModalShare?: Function
+  selectedJob?: any
 }
 
-const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: ModalShareProps) => {
-  const [isDoneCopy, setIsDoneCopy] = useState(false)
+const ModalShare = ({
+  jobDetailUrl,
+  isShowModalShare,
+  handleShowModalShare,
+  selectedJob
+}: ModalShareProps) => {
   const jobLinkRef = useRef(null)
+  const dispatch = useDispatch()
+  const [isDoneCopy, setIsDoneCopy] = useState(false)
+
+  const meInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
 
   jobDetailUrl = `${process.env.NEW_PROJECT_URL}${jobDetailUrl}`
+
+  useEffect(() => {
+    if (meInfo.id) {
+      return
+    }
+
+    dispatch(fetchUserOwnDetailRequest({}))
+  }, [])
 
   const handleCopyLink = (link) => {
     navigator.clipboard.writeText(link)
@@ -36,6 +55,25 @@ const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: Mo
     setTimeout(() => {
       setIsDoneCopy(false)
     }, 5000)
+  }
+
+  const tokenData = () => {
+    const data = {
+      jobseeker_id: meInfo.id,
+      recruiter_id: selectedJob.recruiter.id,
+      company_id: selectedJob.company.id,
+      job_id: selectedJob.id
+    }
+
+    fetchUserShare(data)
+      .then(({ status }: any) => {
+        if (status === 200) {
+          //
+        }
+      })
+      .catch(() => {
+        //
+      })
   }
 
   return (
@@ -46,7 +84,7 @@ const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: Mo
     >
       <div className={styles.ModalShare}>
         <div className={styles.ModalShareList}>
-          <div className={styles.ModalShareItem}>
+          <div className={styles.ModalShareItem} onClick={tokenData}>
             <FacebookShareButton url={jobDetailUrl} className={styles.ModalShareItemLink}>
               <img
                 src={FacebookIcon}
@@ -58,7 +96,7 @@ const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: Mo
               <Text textStyle='base'>Facebook</Text>
             </FacebookShareButton>
           </div>
-          <div className={styles.ModalShareItem}>
+          <div className={styles.ModalShareItem} onClick={tokenData}>
             <TwitterShareButton url={jobDetailUrl} className={styles.ModalShareItemLink}>
               <img
                 src={TwitterIcon}
@@ -72,7 +110,7 @@ const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: Mo
               </Text>
             </TwitterShareButton>
           </div>
-          <div className={styles.ModalShareItem}>
+          <div className={styles.ModalShareItem} onClick={tokenData}>
             <LinkedinShareButton url={jobDetailUrl} className={styles.ModalShareItemLink}>
               <img
                 src={LinkedinIcon}
@@ -87,7 +125,7 @@ const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: Mo
             </LinkedinShareButton>
           </div>
         </div>
-        <div className={styles.ModalShareFooter}>
+        <div className={styles.ModalShareFooter} onClick={tokenData}>
           <Text textStyle='lg'>Page Link</Text>
           {isDoneCopy ? (
             <div className={styles.ModalShareFooterTooltip}>
@@ -104,7 +142,10 @@ const ModalShare = ({ jobDetailUrl, isShowModalShare, handleShowModalShare }: Mo
               className={styles.ModalShareFooterLinkText}
               readOnly
             />
-            <div onClick={() => handleCopyLink(jobDetailUrl)} className={styles.ModalShareFooterCopy}>
+            <div
+              onClick={() => handleCopyLink(jobDetailUrl)}
+              className={styles.ModalShareFooterCopy}
+            >
               <img src={CopyIcon} alt='close' height='18px' width='18px' />
             </div>
           </div>

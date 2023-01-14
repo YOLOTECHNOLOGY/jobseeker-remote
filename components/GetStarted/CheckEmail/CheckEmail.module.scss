@@ -14,6 +14,14 @@
     &_content {
       color: #707070;
       font-size: 14px;
+
+      a,
+      a:hover,
+      a:active {
+        color: #2379ea;
+        text-decoration-color: #2379ea;
+        text-decoration: underline;
+      }
     }
   }
 

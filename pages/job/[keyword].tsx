@@ -80,7 +80,7 @@ import {
   LocationPinIcon,
   BlueTickIcon,
   DefaultAvatar,
-  CarIcon,
+  CarIcon
 } from 'images'
 import RegisterModal from 'components/RegisterModal'
 import { createChat } from 'helpers/interpreters/services/chat'
@@ -107,7 +107,6 @@ const Job = ({
   seoMetaDescription,
   seoCanonicalUrl
 }: IJobDetail) => {
-
   const dispatch = useDispatch()
   const config = useSelector((store: any) => store?.config?.config?.response)
   useEffect(() => {
@@ -384,21 +383,23 @@ const Job = ({
     } else {
       setLoading(true)
       const source = jobSource()
-      createChat(jobDetail?.id, { source }).then(result => {
-        const chatId = result.data.data.id
-        const newData = {
-          ...result.data?.data?.job_application,
-          initiated_role: result.data?.data?.initiated_role,
-          chatStatus: result.data?.data?.status
-        }
-        dispatch(updateImState({ chatId, imState: newData }))
-        router.push(`/chat/${chatId}`)
-      }).catch(e => {
-        console.log('e', e)
-        router.push(`/chat`)
-      }).finally(() => setLoading(false))
+      createChat(jobDetail?.id, { source })
+        .then((result) => {
+          const chatId = result.data.data.id
+          const newData = {
+            ...result.data?.data?.job_application,
+            initiated_role: result.data?.data?.initiated_role,
+            chatStatus: result.data?.data?.status
+          }
+          dispatch(updateImState({ chatId, imState: newData }))
+          router.push(`/chat/${chatId}`)
+        })
+        .catch((e) => {
+          console.log('e', e)
+          router.push(`/chat`)
+        })
+        .finally(() => setLoading(false))
     }
-
   }
   const requestSwitch = useCallback(() => {
     setLoading(true)
@@ -406,9 +407,10 @@ const Job = ({
       status: 'protected',
       job_id: jobDetail.id,
       applicationId: chatDetail.job_application_id
-    }).then(() => {
-      router.push(`/chat/${chatDetail.chat_id}`)
     })
+      .then(() => {
+        router.push(`/chat/${chatDetail.chat_id}`)
+      })
       .finally(() => {
         setLoading(false)
       })
@@ -585,9 +587,12 @@ const Job = ({
         firstButtonText='Cancel'
         secondButtonText='Proceed'
         headerTitle={'Chat with ' + jobDetail?.recruiter?.full_name ?? ''}
-
       >
-        <p>You are currently chatting with recruiter for the {chatDetail?.job?.job_title ?? chatDetail?.job?.function_job_title ?? 'this job'} position. Are you sure you want to switch job?</p>
+        <p>
+          You are currently chatting with recruiter for the{' '}
+          {chatDetail?.job?.job_title ?? chatDetail?.job?.function_job_title ?? 'this job'}{' '}
+          position. Are you sure you want to switch job?
+        </p>
       </Modal>
       {openRegister && (
         <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} />
@@ -1153,6 +1158,7 @@ const Job = ({
           jobDetailUrl={jobDetailUrl}
           isShowModalShare={isShowModalShare}
           handleShowModalShare={setIsShowModalShare}
+          selectedJob={jobDetail}
         />
       )}
       {isShowModal && (
@@ -1231,7 +1237,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     categoryMetaText += ' - related job opportunities'
     const seoMetaTitle = `${name} is hiring ${jobTitle} - ${jobId} | Bossjob`
     const seoMetaDescription = encodeURI(
-      `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${location.value
+      `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${
+        location.value
       }, ${fullAddress.split(',').pop()} on Bossjob now!`
     )
 
