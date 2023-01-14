@@ -65,8 +65,8 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/legal`}
-                    title='Legal'
+                    to={`${process.env.BLOG_BOSSJOB}/terms-and-conditions/  `}
+                    title='Blog Bossjob'
                     external
                   >
                     <Text textStyle='sm'>Terms & Conditions</Text>
@@ -75,7 +75,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/legal`}
+                    to={`${process.env.BLOG_BOSSJOB}/terms-and-conditions/  `}
                     title='Legal'
                     external
                   >
@@ -444,8 +444,8 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/legal`}
-                      title='Terms & Conditions'
+                      to={`${process.env.BLOG_BOSSJOB}/terms-and-conditions/  `}
+                      title='Blog Bossjob'
                       external
                     >
                       <Text textStyle='sm'>Terms & Conditions</Text>
@@ -454,7 +454,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/legal`}
+                      to={`${process.env.BLOG_BOSSJOB}/terms-and-conditions/  `}
                       title='Legal'
                       external
                     >
