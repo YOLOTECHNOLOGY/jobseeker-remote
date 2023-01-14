@@ -96,7 +96,7 @@ const App = (props: AppProps) => {
           }
         })
     }
-  }, [])
+  }, []) // [router.route]
 
   return (
     <>

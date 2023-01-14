@@ -63,7 +63,7 @@ interface JobListSectionProps {
   accessToken: string
   postReportResponse?: any
   isPostingReport?: boolean
-  config: any,
+  config: any
 }
 
 const JobListSection = ({
@@ -149,12 +149,11 @@ const JobListSection = ({
       xp_lvl_values: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
       degree_values: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',
       main_functions: filterJobPayload?.mainFunctions ?? 'all',
-      job_functions:filterJobPayload?.jobFunctions ?? 'all',
-      function_titles:filterJobPayload?.functionTitles ?? 'all',
+      job_functions: filterJobPayload?.jobFunctions ?? 'all',
+      function_titles: filterJobPayload?.functionTitles ?? 'all',
       is_company_verified: 'all',
       frequency_id: 1
     }
-    console.log({createJobAlertPayload})
     createJobAlert(createJobAlertPayload)
   }
 
@@ -353,6 +352,7 @@ const JobListSection = ({
 
       {isShowModalShare && (
         <ModalShare
+          selectedJob={selectedJob}
           jobDetailUrl={selectedJob?.['job_url']}
           isShowModalShare={isShowModalShare}
           handleShowModalShare={setIsShowModalShare}

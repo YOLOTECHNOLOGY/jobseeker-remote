@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Link from '@mui/material/Link'
 
 import Text from 'components/Text'
 import MaterialTextField from 'components/MaterialTextField'
@@ -7,12 +8,12 @@ import MaterialButton from 'components/MaterialButton'
 import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
-import styles from './CheckEmail.module.scss'
-
 /* Redux Actions */
 import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+
+import styles from './CheckEmail.module.scss'
 
 const CheckEmail = ({
   errorText,
@@ -130,7 +131,22 @@ const CheckEmail = ({
 
       <div className={styles.emailLoginContainer_tip}>
         <Text className={styles.emailLoginContainer_tip_content}>
-          By signing up, I have read and agreed to Terms of Use and Privacy Policy
+          By signing up, I have read and agreed to{' '}
+          <Link
+            target='_blank'
+            href='https://blog.bossjob.ph/terms-and-conditions/'
+            //  className={styles.emailLoginContainer_link}
+          >
+            Terms of Use
+          </Link>
+          &nbsp; and &nbsp;
+          <Link
+            target='_blank'
+            href='https://blog.bossjob.ph/terms-and-conditions/'
+            //  className={styles.emailLoginContainer_link}
+          >
+            Privacy Policy
+          </Link>
         </Text>
       </div>
 
