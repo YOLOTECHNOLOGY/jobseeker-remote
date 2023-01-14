@@ -2,7 +2,8 @@ import {
   FETCH_USER_OWN_DETAIL_REQUEST,
   FETCH_USER_OWN_DETAIL_SUCCESS,
   FETCH_USER_OWN_DETAIL_FAILED,
-  FETCH_USER_OWN_SET_MOBILE_VERIFIED
+  FETCH_USER_OWN_SET_MOBILE_VERIFIED,
+  FETCH_USER_OWN_CLEAR
 } from 'store/types/users/fetchUserOwnDetail'
 
 const initialState = {
@@ -17,6 +18,11 @@ export default function fetchUserOwnDetail(state = initialState, action) {
       return {
         ...state,
         fetching: true,
+      }
+    case FETCH_USER_OWN_CLEAR:
+      return {
+        ...state,
+        response: {},
       }
     case FETCH_USER_OWN_DETAIL_SUCCESS:
       return {
