@@ -33,13 +33,13 @@ const DetailModal = (props: any) => {
         return status.includes(data?.jobseeker_display_status)
     }, [data?.jobseeker_display_status])
     // const dispatch = useDispatch()
-    const  canCheckedIn = useMemo(() => {
+    const canCheckedIn = useMemo(() => {
         const hours = (() => {
             const hours = dayjs(data?.interviewed_at).diff(dayjs(), 'hours')
             const minutes = dayjs(data?.interviewed_at).diff(dayjs(), 'minutes')
             return hours + minutes / 60
         })()
-        return  hours < 2 && hours >= -0.5
+        return hours < 2 && hours >= -0.5
     }, [data?.interviewed_at])
     const context = {
         showDetail(actions) {
@@ -82,7 +82,7 @@ const DetailModal = (props: any) => {
                         return 'You cannot check in now.'
                     }
                 })(),
-                active: canCheckedIn && isStatusIn(['Accepted','Upcoming']),
+                active: canCheckedIn && isStatusIn(['Accepted', 'Upcoming']),
                 show: true,
                 actionEnable: !data?.checked_in_at && canCheckedIn,
                 action: () => actionsRef.current?.checkIn?.({
@@ -93,7 +93,8 @@ const DetailModal = (props: any) => {
             {
                 title: 'In-progress',
                 label: 'You can report any issue during this stage',
-                isFinish: data?.data?.is_reported,
+                isFinish: isStatusIn(['Completed']),
+                // isFinish: data?.data?.is_reported,
                 active: !isStatusIn(['Completed']),
                 show: true,
                 actionName: data?.is_reported ? 'Isseus reported' : 'Report issues',
@@ -111,7 +112,9 @@ const DetailModal = (props: any) => {
                 isFinish: isStatusIn(['Completed']),
                 active: true,
                 show: true,
-                actionName: data?.requested_result_at ? 'Requested for results' : 'Request for results',
+                actionName: data?.requested_result_at ?
+                    (data?.interview_result ? data?.interview_result : 'Requested for results')
+                    : 'Request for results',
                 actionEnable: !data?.requested_result_at,
                 action: () => actionsRef.current?.askResult?.()
             }
