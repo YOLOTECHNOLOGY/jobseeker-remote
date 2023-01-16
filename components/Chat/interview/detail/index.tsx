@@ -115,7 +115,7 @@ const DetailModal = (props: any) => {
                 show: true,
                 actionName: checkInTimeover?(data?.requested_result_at ?
                     (data?.interview_result ? data?.interview_result : 'Requested for results')
-                    : 'Request for results') : `You can request interview result after ${moment(data?.interviewed_at).format('MM-DD HH:mm')}`,
+                    : 'Request for results') : `You can request interview result after ${moment(data?.interviewed_at).add(30,'minutes').format('MM-DD HH:mm')}`,
                 actionEnable: !data?.requested_result_at && checkInTimeover,
                 action: () => actionsRef.current?.askResult?.()
             }
