@@ -12,6 +12,7 @@ import { getFromObject } from 'helpers/formatter'
 import { jobseekerTokenValidate } from 'store/services/auth/jobseekersTokenValidate'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
+import Head from 'next/head'
 const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
 const MaintenancePage = dynamic(() => import('./maintenance'))
 import * as fbq from 'lib/fpixel'
@@ -100,6 +101,9 @@ const App = (props: AppProps) => {
 
   return (
     <>
+    <Head>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no'/>
+        </Head>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
       <Script
