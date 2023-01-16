@@ -407,7 +407,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                     id={jobs.id}
                     image={jobs?.company?.logo_url}
                     title={jobs?.job?.job_title}
-                    company={jobs.company_name}
+                    company={jobs?.company?.name}
                     location={jobs?.job?.location?.value}
                     salary={jobs?.job?.salary_range_value}
                     postedAt={jobs?.job?.refreshed_at}
