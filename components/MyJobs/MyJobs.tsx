@@ -477,6 +477,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
           jobDetailUrl={selectedJob?.['job_url']}
           isShowModalShare={isShowModalShare}
           handleShowModalShare={setIsShowModalShare}
+          selectedJob={selectedJob}
         />
       )}
 
