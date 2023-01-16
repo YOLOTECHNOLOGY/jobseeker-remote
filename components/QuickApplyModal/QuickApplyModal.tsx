@@ -24,7 +24,7 @@ import { quickApplyJobRequest } from 'store/actions/jobs/quickApplyJob'
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 import Checkbox from '@mui/material/Checkbox'
 import { handleNumericInput } from 'helpers/handleInput'
-import useWindowDimensions from 'helpers/useWindowDimensions'
+// import useWindowDimensions from 'helpers/useWindowDimensions'
 interface QuickApplyModalProps {
   jobDetails: any
   modalShow?: boolean
@@ -39,8 +39,8 @@ const QuickApplyModal = ({
   config
 }: QuickApplyModalProps) => {
   const dispatch = useDispatch()
-  const { width } = useWindowDimensions()
-  const isMobile = width < 768 ? true : false
+  // const { width } = useWindowDimensions()
+  // const isMobile = width < 768 ? true : false
   const {
     register,
     handleSubmit,
@@ -129,7 +129,7 @@ const QuickApplyModal = ({
       jobId: jobDetails.id,
       jobUrl: jobDetails.job_url,
       externalApplyUrl: externalApplyUrl,
-      source: isMobile ? 'mobile_web' : 'web'
+      source: 'web'
     }
 
     clearErrors()

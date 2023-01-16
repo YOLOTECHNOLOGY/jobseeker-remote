@@ -203,7 +203,7 @@ const useRegister = () => {
       social_user_token: payload.accessToken,
       social_type: payload.socialType,
       social_user_id: payload.userId,
-      source: width > 576 ? 'web' : 'mobile_web'
+      source:  'web'
     }
     if (payload.pictureUrl) {
       data.avatar = payload.pictureUrl

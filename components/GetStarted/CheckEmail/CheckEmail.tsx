@@ -6,7 +6,7 @@ import Text from 'components/Text'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
-import useWindowDimensions from 'helpers/useWindowDimensions'
+// import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Redux Actions */
 import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
@@ -23,7 +23,7 @@ const CheckEmail = ({
   isLoading,
   router
 }: any) => {
-  const { width } = useWindowDimensions()
+  // const { width } = useWindowDimensions()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
   const [emailError, setEmailError] = useState(false)
@@ -80,7 +80,7 @@ const CheckEmail = ({
       social_user_token: payload.accessToken,
       social_type: payload.socialType,
       social_user_id: payload.userId,
-      source: width > 576 ? 'web' : 'mobile_web'
+      source: 'web'
     }
     if (payload.pictureUrl) {
       data.avatar = payload.pictureUrl

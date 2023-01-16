@@ -6,7 +6,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
 
 // tools
-import useWindowDimensions from 'helpers/useWindowDimensions'
+// import useWindowDimensions from 'helpers/useWindowDimensions'
 import { setCookie, setCookieWithExpiry } from 'helpers/cookies'
 
 // components
@@ -20,7 +20,7 @@ const Verify = ({ query }: any) => {
   const router = useRouter()
   const routerQuery = router.query
   const dispatch = useDispatch()
-  const { width } = useWindowDimensions()
+  // const { width } = useWindowDimensions()
 
   const [isShowAppRedirectModal, setIsShowAppRedirectModal] = useState(false)
 
@@ -90,7 +90,7 @@ const Verify = ({ query }: any) => {
     const data = {
       email,
       otp,
-      source: width > 576 ? 'web' : 'mobile_web'
+      source: 'web'
     }
     dispatch(jobbseekersLoginRequest(data))
   }

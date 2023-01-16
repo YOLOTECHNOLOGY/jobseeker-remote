@@ -86,7 +86,7 @@ const useGetStarted = () => {
     const data = {
       email,
       otp: emailTOP,
-      source: width > 576 ? 'web' : 'mobile_web',
+      source: 'web' ,
       ...router.query,
       userId
     }
@@ -153,7 +153,7 @@ const useGetStarted = () => {
         redirect_fail: '/get-started'
       }
     }
-    params = { email, source: width > 576 ? 'web' : 'mobile_web', ...params }
+    params = { email, source: 'web', ...params }
     authenticationSendEmailMagicLink(params)
       .then(({ data }) => {
         if (data.data) {
