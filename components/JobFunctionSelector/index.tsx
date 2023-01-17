@@ -1,7 +1,7 @@
 import { FormControl, MenuList, Paper } from '@mui/material'
 import MaterialTextField from 'components/MaterialTextField'
 import Modal from '@mui/material/Modal'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styles from './index.module.scss'
 import TopBar from './topBar'
 import { useSelector } from 'react-redux'
@@ -23,8 +23,9 @@ const formatMenuText = (value) => {
 }
 const JobFunctionSelector = (props: any) => {
   const { value, jobTitle = '', className, title, onChange, isTouched, onBlur, ...rest } = props
-  const [showModal, setShowModal] = useState(false)
+  const menuRef = useRef(null)
 
+  const [showModal, setShowModal] = useState(false)
   const [selectedSubItem, setSelectedSubItem] = useState<any>({})
   const [expandeds, setExpandeds] = useState([])
   const jobFunctions = useSelector(
@@ -34,16 +35,29 @@ const JobFunctionSelector = (props: any) => {
   const jobFunctionsObject = useMemo(() => jobFunctions?.reduce(assign, {}), [jobFunctions])
   const [selectedKey, setSelectedKey] = useState<any>(jobFunctionsKeys?.[0])
   const [init, setInit] = useState(false)
+
+  useEffect(() => {
+    if (jobTitle && !value) {
+      const allTitles = flatMapDeep(values(jobFunctionsObject), (group) =>
+        group.map((item) => item.job_titles)
+      )
+      const title = allTitles.find((item) => item.value === jobTitle)
+      onChange(title)
+    }
+  }, [])
+
   useEffect(() => {
     if (jobFunctionsKeys.length > 0) {
       setInit(true)
     }
   }, [jobFunctionsKeys])
+
   useEffect(() => {
     if (init) {
       setSelectedKey(jobFunctionsKeys[0])
     }
   }, [init])
+
   const selectedItem = useMemo(() => {
     if (selectedKey) {
       return jobFunctionsObject[selectedKey]
@@ -64,27 +78,36 @@ const JobFunctionSelector = (props: any) => {
   }, [groupedSelected, selectedSubItem])
 
   useEffect(() => {
-    if (jobTitle && !value) {
-      const allTitles = flatMapDeep(values(jobFunctionsObject), (group) =>
-        group.map((item) => item.job_titles)
-      )
-      const title = allTitles.find((item) => item.value === jobTitle)
-      onChange(title)
-    }
-  }, [])
-
-  useEffect(() => {
     if (value) {
       onChange(value)
       setShowModal(false)
     }
+
+    if (value?.value) {
+      initDefaultJobFunctionSelect()
+    }
   }, [value])
+
+  useEffect(() => {
+    ;(async () => {
+      if (showModal) {
+        const t = await setTimeout(() => {
+          clearTimeout(t)
+        })
+
+        const selectTabNode = menuRef.current.querySelector(`[name="${selectedKey}"]`)
+        menuRef.current.scrollTop = selectTabNode.offsetTop - 75
+      }
+    })()
+  }, [showModal]) // menuRef.current,
+
   const isExpanded = useCallback(
     (id) => {
       return expandeds.includes(id)
     },
     [expandeds]
   )
+
   const expand = useCallback(
     (id) => {
       if (!expandeds.includes(id)) {
@@ -101,6 +124,31 @@ const JobFunctionSelector = (props: any) => {
     },
     [expandeds]
   )
+
+  const initDefaultJobFunctionSelect = () => {
+    if (jobFunctions?.length) {
+      jobFunctions.forEach((jobFunction) =>
+        //
+        Object.keys(jobFunction).forEach((key: any) =>
+          //
+          jobFunction[key].forEach((job) =>
+            //
+            job.job_titles.forEach((item) => {
+              //
+              if (item?.value === value.value) {
+                const key = Object.keys(jobFunction)[0]
+                //
+                onChange(item)
+                setSelectedKey(key)
+                setSelectedSubItem(job)
+              }
+            })
+          )
+        )
+      )
+    }
+  }
+
   return (
     <FormControl className={className} size='small'>
       <MaterialTextField
@@ -131,16 +179,16 @@ const JobFunctionSelector = (props: any) => {
               onChange={(title) => onChange(title)}
               value={value}
               onClose={setShowModal}
-              setSelectedSubItem={setSelectedSubItem}
-              setSelectedKey={setSelectedKey}
             />
             <div className={styles.container}>
-              <MenuList classes={{ root: styles.menu }}>
+              <MenuList classes={{ root: styles.menu }} id='menuParentNode' ref={menuRef}>
                 {jobFunctionsKeys.map((key) => {
                   return (
                     <div
                       role='cell'
                       key={key}
+                      // @ts-ignore
+                      name={key}
                       className={classNames({
                         [styles.menuItem]: true,
                         [styles.selected]: key === selectedKey
