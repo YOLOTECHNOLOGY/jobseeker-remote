@@ -39,7 +39,15 @@
         color: #353535;
         margin-bottom: 0px;
     }
-
+    .action {
+        color: #2379ea;
+        cursor: pointer;
+        text-decoration-line: underline;
+        &.disabled {
+            color: lightgray;
+            cursor: not-allowed;
+        }
+    }
     &.isFinished {
         label {
             color: #707070;

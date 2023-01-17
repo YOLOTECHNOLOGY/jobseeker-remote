@@ -55,7 +55,10 @@ const IMProvider = ({ children }: any) => {
             IMManager.accessUser(
                 '' + userId + '_j',
                 auid => getAuth(auid).then(result => {
-                    return result.data?.data?.authcode
+                    if(!getCookie('accessToken')){
+                        return Promise.reject(new Error('not login!'))
+                    }
+                    return result?.data?.data?.authcode
                 }),
                 auids => {
                     const userIds = auids

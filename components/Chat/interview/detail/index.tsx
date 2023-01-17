@@ -10,6 +10,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import dayjs from 'dayjs'
 import InterviewDetail from '../interviewDetail'
 import classNames from 'classnames'
+import moment from 'moment'
 /**
 1	Pending interview approval
 2	Interview accepted
@@ -33,13 +34,13 @@ const DetailModal = (props: any) => {
         return status.includes(data?.jobseeker_display_status)
     }, [data?.jobseeker_display_status])
     // const dispatch = useDispatch()
-    const canCheckedIn = useMemo(() => {
+    const [canCheckedIn,checkInTimeover] = useMemo(() => {
         const hours = (() => {
             const hours = dayjs(data?.interviewed_at).diff(dayjs(), 'hours')
             const minutes = dayjs(data?.interviewed_at).diff(dayjs(), 'minutes')
             return hours + minutes / 60
         })()
-        return hours < 2 && hours >= -0.5
+        return [hours < 2 && hours >= -0.5,hours < -0.5]
     }, [data?.interviewed_at])
     const context = {
         showDetail(actions) {
@@ -112,10 +113,10 @@ const DetailModal = (props: any) => {
                 isFinish: isStatusIn(['Completed']),
                 active: true,
                 show: true,
-                actionName: data?.requested_result_at ?
+                actionName: checkInTimeover?(data?.requested_result_at ?
                     (data?.interview_result ? data?.interview_result : 'Requested for results')
-                    : 'Request for results',
-                actionEnable: !data?.requested_result_at,
+                    : 'Request for results') : `You can request interview result after ${moment(data?.interviewed_at).add(30,'minutes').format('MM-DD HH:mm')}`,
+                actionEnable: !data?.requested_result_at && checkInTimeover,
                 action: () => actionsRef.current?.askResult?.()
             }
         ].filter(item => item.show)
@@ -163,9 +164,9 @@ const DetailModal = (props: any) => {
                                 <label >{item.title}</label>
                                 <p>{item.label}</p>
                                 {item.actionName &&
-                                    <a {...aProps}>
+                                    <div className={classNames({[styles.action]:true,[styles.disabled]:aProps.disabled})} {...aProps}>
                                         {item.actionName}
-                                    </a>}
+                                    </div>}
                             </div>
                         </TimelineContent>
                     </TimelineItem>
