@@ -3677,10 +3677,10 @@ imforbossjob@^0.0.902:
     sha1 "^1.1.1"
     viewerjs "^1.11.0"
 
-imforbossjob@^0.0.906:
-  version "0.0.906"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.906.tgz#7fd4e20cfd25079bca23e3b32893571c9585ae09"
-  integrity sha512-XTbxfjPNuSH08KCQp0yV2xVcwxypEDT+LhaYcC4g0S1rPnL5COWF6/my6u7Jx/Tc0JhS7bh8IctOZo3Go0BfKA==
+imforbossjob@^0.0.907:
+  version "0.0.907"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.907.tgz#9f55b7e1209ea0b0743799ae1764af8138d5a22b"
+  integrity sha512-AAc0T7z3BzPcNDdnX6N5EPYAN+0utlJ154uN/KTe2OGZVVVeGwNPjnbr56GKyNQdjbBc1ZTjsjyuzr99hgy2xQ==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -3695,7 +3695,7 @@ imforbossjob@^0.0.906:
     fantasy-combinators "^0.0.1"
     fantasy-land "^5.0.1"
     imforbossjob "^0.0.902"
-    imsdkweb "^0.0.32"
+    imsdkweb "0.0.31"
     lodash "^4.17.21"
     mobx "^5.15.4"
     mobx-react "^6.3.1"
@@ -3715,31 +3715,10 @@ import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
 
-imsdkweb@^0.0.31:
+imsdkweb@0.0.31, imsdkweb@^0.0.31:
   version "0.0.31"
   resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.31.tgz#5023c3097e47e401762d0e753fd9e313826e1135"
   integrity sha512-n4Cuj0iRT+3ZKf9lPW0d8DgKuVkouw9JG7XYhLv2wlV4TrL4bia8wXrGg5G3Ji/zEGlENOGfYCpVbNJ+EHjTTg==
-  dependencies:
-    "@aws-sdk/client-s3" "^3.3.0"
-    "@aws-sdk/lib-storage" "^3.18.0"
-    "@aws-sdk/s3-request-presigner" "^3.3.0"
-    ali-oss "^6.17.1"
-    axios "^0.18.0"
-    buffer "^6.0.3"
-    crypto-js "^4.1.1"
-    dexie "^3.0.3"
-    lodash "^4.17.21"
-    mobx "^5.15.4"
-    mobx-react "^6.3.1"
-    moment "^2.29.4"
-    nanoid "^4.0.0"
-    sha1 "^1.1.1"
-    viewerjs "^1.11.0"
-
-imsdkweb@^0.0.32:
-  version "0.0.32"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.32.tgz#17e301bc56e8bc94f09407b26237ba88f708b025"
-  integrity sha512-s6QBHAtnohofLg2gg2ZuKR/f0BeaeDj7Eho7a5sUG8qERQ5KzhyCuoAKwGM9/0ffvks2k01kbuCAhMRLrNtiwA==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
