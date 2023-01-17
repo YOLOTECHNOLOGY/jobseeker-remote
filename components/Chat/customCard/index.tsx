@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './index.module.scss'
 import Location from '@mui/icons-material/LocationOnOutlined';
+import moment from 'moment';
 const CustomCard = (props: any) => {
 
     const { content } = props
@@ -18,8 +19,11 @@ const CustomCard = (props: any) => {
             {content?.is_urgent ? <div className={styles.tag}>Urgent</div> : null}
         </div>
         <div className={styles.location}><Location fontSize="small" style={{ height: 14, width: 14, top: 2, right: 5, position: 'relative' }} />
-            {content?.full_address}</div>
-        <label>{content?.recruiter?.last_active_at}</label>
+            {content?.full_address}
+        </div>
+        <label>
+            {'  '}{moment(content?.recruiter?.last_active_at).format('YY/MM/DD HH:mm')}
+        </label>
 
     </div>
 }
