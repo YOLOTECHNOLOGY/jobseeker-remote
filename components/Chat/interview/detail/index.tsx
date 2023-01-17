@@ -164,9 +164,9 @@ const DetailModal = (props: any) => {
                                 <label >{item.title}</label>
                                 <p>{item.label}</p>
                                 {item.actionName &&
-                                    <a {...aProps}>
+                                    <div className={classNames({[styles.action]:true,[styles.disabled]:aProps.disabled})} {...aProps}>
                                         {item.actionName}
-                                    </a>}
+                                    </div>}
                             </div>
                         </TimelineContent>
                     </TimelineItem>
