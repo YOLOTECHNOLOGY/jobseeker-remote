@@ -3618,10 +3618,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.0.900:
-  version "0.0.900"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.900.tgz#41ddce0c3ca468017b2c8119b8fa55b2cc526266"
-  integrity sha512-j1pkXXeItHH8mIVfJwOIzqMadW1EpXRREbJlxwG6s0XK16BCoZLdblw7xvGwT2AOgnY1A2ce4EaWKl+01s1o7A==
+imforbossjob@^0.0.914:
+  version "0.0.914"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.914.tgz#37f81e2fd1b8fc0a047f77cb529ae144a4f10a3a"
+  integrity sha512-nG9RLDtQWa0gTzgNf94j9v5krWbIg4vqfNqs1XtToMB7ZmWmnsIwSMDPZXHASPuQMlnZVlQA7oF2PMJnyto+Kw==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -3635,67 +3635,7 @@ imforbossjob@^0.0.900:
     dexie "^3.0.3"
     fantasy-combinators "^0.0.1"
     fantasy-land "^5.0.1"
-    imsdkweb "^0.0.31"
-    lodash "^4.17.21"
-    mobx "^5.15.4"
-    mobx-react "^6.3.1"
-    moment "^2.29.4"
-    nanoid "^4.0.0"
-    react ">=16.8.6"
-    react-dom ">=16.8.6"
-    react-router-dom "^4.2.2"
-    sha1 "^1.1.1"
-    viewerjs "^1.11.0"
-
-imforbossjob@^0.0.902:
-  version "0.0.902"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.902.tgz#1b611fb50097eaf8230b5881ef6863c476c2c03f"
-  integrity sha512-+E6ce0iQOAevkl7GW34KxA7RXY0WdqAnHQFuD8F4BWeo4v+aubmV+BiRff8bmHOma4rKojyxHX2ZyLxaxa5z2w==
-  dependencies:
-    "@ant-design/icons" "^4.7.0"
-    "@aws-sdk/client-s3" "^3.3.0"
-    "@aws-sdk/lib-storage" "^3.18.0"
-    "@aws-sdk/s3-request-presigner" "^3.3.0"
-    ali-oss "^6.17.1"
-    antd "^4.23.3"
-    axios "^0.18.0"
-    buffer "^6.0.3"
-    crypto-js "^4.1.1"
-    dexie "^3.0.3"
-    fantasy-combinators "^0.0.1"
-    fantasy-land "^5.0.1"
-    imforbossjob "^0.0.900"
-    imsdkweb "^0.0.31"
-    lodash "^4.17.21"
-    mobx "^5.15.4"
-    mobx-react "^6.3.1"
-    moment "^2.29.4"
-    nanoid "^4.0.0"
-    react ">=16.8.6"
-    react-dom ">=16.8.6"
-    react-router-dom "^4.2.2"
-    sha1 "^1.1.1"
-    viewerjs "^1.11.0"
-
-imforbossjob@^0.0.907:
-  version "0.0.907"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.907.tgz#9f55b7e1209ea0b0743799ae1764af8138d5a22b"
-  integrity sha512-AAc0T7z3BzPcNDdnX6N5EPYAN+0utlJ154uN/KTe2OGZVVVeGwNPjnbr56GKyNQdjbBc1ZTjsjyuzr99hgy2xQ==
-  dependencies:
-    "@ant-design/icons" "^4.7.0"
-    "@aws-sdk/client-s3" "^3.3.0"
-    "@aws-sdk/lib-storage" "^3.18.0"
-    "@aws-sdk/s3-request-presigner" "^3.3.0"
-    ali-oss "^6.17.1"
-    antd "^4.23.3"
-    axios "^0.18.0"
-    buffer "^6.0.3"
-    crypto-js "^4.1.1"
-    dexie "^3.0.3"
-    fantasy-combinators "^0.0.1"
-    fantasy-land "^5.0.1"
-    imforbossjob "^0.0.902"
-    imsdkweb "0.0.31"
+    imsdkweb "^0.0.33"
     lodash "^4.17.21"
     mobx "^5.15.4"
     mobx-react "^6.3.1"
@@ -3715,10 +3655,10 @@ import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
 
-imsdkweb@0.0.31, imsdkweb@^0.0.31:
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.31.tgz#5023c3097e47e401762d0e753fd9e313826e1135"
-  integrity sha512-n4Cuj0iRT+3ZKf9lPW0d8DgKuVkouw9JG7XYhLv2wlV4TrL4bia8wXrGg5G3Ji/zEGlENOGfYCpVbNJ+EHjTTg==
+imsdkweb@^0.0.33:
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.33.tgz#45e272d7e24917a057545a65d3ef9d3e8b7942d1"
+  integrity sha512-oeYrqaJX8l+2YoQcKXF+Vup2RkKxFuVOjJz9/kG1PdpCQtMMH9/ox/EBgPlAK6afzAwzBJpqlsZGAvaI3/WLkw==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"

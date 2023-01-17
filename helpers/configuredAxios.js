@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { getCookie, removeCookie } from 'helpers/cookies'
-import accessToken from 'pages/api/handlers/linkedinHandlers/accessToken'
+// import accessToken from 'pages/api/handlers/linkedinHandlers/accessToken'
 // import { configureStore } from 'store'
 // import { logout } from 'shared/helpers/authentication'
-
+import { IMManager } from 'imforbossjob'
 const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken) => {
   // let remoteAddress = ''
   // let isMobile = ''
@@ -118,7 +118,7 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     headers: headers
   })
 
-  if (type === 'protected' && getCookie('accessToken')) {
+  if (type === 'protected') {
     configuredAxios.interceptors.response.use(
       (response) => {
         return response
@@ -129,6 +129,7 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
         if (error?.response?.status === 401) {
           removeCookie('accessToken')
           window.location.href = '/get-started'
+          IMManager?.logout?.()
         } else {
           return Promise.reject(error)
         }
