@@ -592,8 +592,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const handleSelectedJobId = (jobId, jobUrl = '/') => {
     // Open new tab in mobile
     if (isMobile && typeof window !== 'undefined') {
-      window.open(jobUrl)
-
+      // window.open(jobUrl)
+      router.push(jobUrl)
       return
     }
 
