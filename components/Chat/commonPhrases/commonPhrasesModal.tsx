@@ -4,7 +4,6 @@ import styles from './index.module.scss'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import ContentLoader from 'react-content-loader'
 import Modal from 'components/Modal'
-
 const CommonPhrasesModal = (props: any) => {
     const { contextRef, loading, listLoading, list } = props
     const [show, setShow] = useState(false)

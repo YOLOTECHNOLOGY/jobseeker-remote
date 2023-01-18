@@ -102,9 +102,8 @@ const Chat = () => {
             }
         }
     }, [chatId])
-    console.log({ filterMode })
     return <Layout isHiddenFooter isHiddenHeader={false}>
-        <div style={{ marginTop: mobile ? 0 : 50 }}>
+        <div style={{ marginTop: mobile ? 0 : 24 }}>
             <JobseekerChat
                 key='jobchat'
                 loading={loading}

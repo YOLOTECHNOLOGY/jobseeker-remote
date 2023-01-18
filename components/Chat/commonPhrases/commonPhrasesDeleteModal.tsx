@@ -32,7 +32,7 @@ const CommonPhrasesDeleteModal = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}>
         <div className={styles.modalContainer}>
-            <p className={styles.modalTitle}>Common Phrases</p>
+            {/* <p className={styles.modalTitle}>Common Phrases</p> */}
             <div className={styles.formContainer}>
                 <p>Sure to delete this?</p>
                 <h5>{phrase.message}</h5>

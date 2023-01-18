@@ -41,7 +41,7 @@ const CommonPhrasesCreateModal = (props: any) => {
             <TextField
                 name="phrase_text"
                 placeholder="Insert the common phrases that you would like to send to Boss"
-                label="phrase"
+                label="Phrase"
                 value={text}
                 style={{width:'100%'}}
                 onChange={e => setText(e.target.value)}

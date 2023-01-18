@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react'
 import { assign } from 'lodash-es'
 import styles from './index.module.scss'
-import { Edit, Delete } from '@mui/icons-material'
 import Modal from 'components/Modal'
 import ContentLoader from 'react-content-loader'
+import { TrashIcon, PencilIcon } from 'images'
+
 const CommonPhrasesEditListModal = (props: any) => {
     const { contextRef, loading, listLoading, list } = props
     const [show, setShow] = useState(false)
@@ -42,14 +43,19 @@ const CommonPhrasesEditListModal = (props: any) => {
                                     actionsRef.current?.editOne(phrase)
                                 }}
                             >
-                                <Edit />
+                                 <img src={PencilIcon} width='24' height='24' />
                             </div>
                             <div
                                 className={styles.icon}
                                 onClick={() => {
                                     actionsRef.current?.deleteOne(phrase)
                                 }}>
-                                <Delete />
+                                <img
+                                    src={TrashIcon}
+                                    alt='trash'
+                                    width='14'
+                                    height='14'
+                                />
                             </div>
                         </div>
                     </div>
