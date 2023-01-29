@@ -52,7 +52,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import { wrapper } from 'store'
 import { fetchAppliedJobDetailRequest } from 'store/actions/jobs/fetchAppliedJobDetail'
 import { fetchSimilarJobsRequest } from 'store/actions/jobs/fetchSimilarJobs'
-import { fetchRecommendedCoursesRequest } from 'store/actions/courses/fetchRecommendedCourses'
+// import { fetchRecommendedCoursesRequest } from 'store/actions/courses/fetchRecommendedCourses'
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { postReportRequest } from 'store/actions/reports/postReport'
@@ -183,7 +183,7 @@ const Job = ({
   }, [])
 
   useEffect(() => {
-    handleFetchRecommendedCourses()
+    // handleFetchRecommendedCourses()
     handleFetchSimilarJobs()
   }, [jobDetail])
 
@@ -257,22 +257,22 @@ const Job = ({
     }
   }
 
-  const getJobDetailCategoryIds = () => {
-    const jobCategoryIds = []
-    jobDetail?.categories?.map((cat) => {
-      jobCategoryIds.push(cat.id)
-    })
-    return jobCategoryIds?.length > 0 ? jobCategoryIds.join(',') : null
-  }
+  // const getJobDetailCategoryIds = () => {
+  //   const jobCategoryIds = []
+  //   jobDetail?.categories?.map((cat) => {
+  //     jobCategoryIds.push(cat.id)
+  //   })
+  //   return jobCategoryIds?.length > 0 ? jobCategoryIds.join(',') : null
+  // }
 
-  const handleFetchRecommendedCourses = () => {
-    const payload = {
-      size: 3,
-      job_category_ids: getJobDetailCategoryIds(),
-      xp_lvl_key: jobDetail?.xp_lvl.key
-    }
-    dispatch(fetchRecommendedCoursesRequest(payload))
-  }
+  // const handleFetchRecommendedCourses = () => {
+  //   const payload = {
+  //     size: 3,
+  //     job_category_ids: getJobDetailCategoryIds(),
+  //     xp_lvl_key: jobDetail?.xp_lvl.key
+  //   }
+  //   dispatch(fetchRecommendedCoursesRequest(payload))
+  // }
 
   const handleFetchSimilarJobs = () => dispatch(fetchSimilarJobsRequest({ jobId: jobDetail.id }))
 
@@ -865,7 +865,7 @@ const Job = ({
             <Text textStyle='lg' className={styles.jobDetailSectionSubBody}>
               {jobDetail?.full_address}
             </Text>
-            <Text textStyle='lg' tagName='h2' bold className={styles.jobDetailSectionSubTitle}>
+            {/* <Text textStyle='lg' tagName='h2' bold className={styles.jobDetailSectionSubTitle}>
               Specialization
             </Text>
             {jobDetail?.categories?.map((category, i) => (
@@ -882,7 +882,7 @@ const Job = ({
                   </Text>
                 </Link>
               </span>
-            ))}
+            ))} */}
           </div>
           {jobDetail?.recruiter && (
             <div className={styles.jobDetailRecruiter}>
@@ -1223,18 +1223,19 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       id: jobId,
       job_title: jobTitle,
       company: { name },
-      categories,
+      // categories,
       full_address: fullAddress,
       location,
       job_url: jobUrl
     } = jobDetail
 
-    let categoryMetaText = ''
-    categories.forEach((el) => {
-      categoryMetaText += `${el.value}, `
-    })
-    categoryMetaText = categoryMetaText.slice(0, categoryMetaText.length - 2)
-    categoryMetaText += ' - related job opportunities'
+    // let categoryMetaText = ''
+    // categories.forEach((el) => {
+    //   categoryMetaText += `${el.value}, `
+    // })
+    // categoryMetaText = categoryMetaText.slice(0, categoryMetaText.length - 2)
+    // categoryMetaText += ' - related job opportunities'
+    const categoryMetaText = "jobs"
     const seoMetaTitle = `${name} is hiring ${jobTitle} - ${jobId} | Bossjob`
     const seoMetaDescription = encodeURI(
       `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${

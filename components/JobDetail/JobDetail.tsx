@@ -538,7 +538,7 @@ const JobDetail = ({
               <Text textStyle='lg' className={styles.jobDetailSectionSubBody}>
                 {`${selectedJob?.full_address}`}
               </Text>
-              {selectedJob?.categories.length > 0 && (
+              {/* {selectedJob?.categories.length > 0 && (
                 <>
                   <Text textStyle='lg' bold className={styles.jobDetailSectionSubTitle}>
                     Specialization
@@ -558,7 +558,7 @@ const JobDetail = ({
                     </span>
                   ))}
                 </>
-              )}
+              )} */}
             </div>
             {selectedJob?.recruiter && (
               <div className={styles.jobDetailRecruiter}>
