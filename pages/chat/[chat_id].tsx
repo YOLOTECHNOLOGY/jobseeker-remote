@@ -86,7 +86,6 @@ const Chat = () => {
             }
         }
     }, [chat_id])
-    console.log({ chatId, chat_id, router })
     useEffect(() => {
         if (first) {
             setFirst(false)
