@@ -2,6 +2,7 @@
 @import 'styles/variable.scss';
 
 .OnBoardLayout {
+
   height: 100vh;
   width: 100%;
   overflow-y: scroll;
@@ -23,7 +24,7 @@
   &Body {
     @extend .GlobalContainer;
     margin-top: 50px;
-
+    
     @include msd {
       padding: 0 20px;
     }
@@ -60,6 +61,7 @@
     @include msd {
       width: 100%;
       padding: 32px 30px;
+      margin: 0px 0px;
     }
   }
 

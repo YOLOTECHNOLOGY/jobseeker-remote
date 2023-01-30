@@ -713,6 +713,10 @@
   transform: translate(-50%, -50%);
 
   box-shadow: 24px;
+  @include sm {
+    width: 100%;
+    transform: translate(-50%,-50%);
+  }
   .forModuleFooterText {
     position: absolute;
     bottom: 35px;
