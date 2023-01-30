@@ -194,6 +194,7 @@ const Job = ({
 
   useEffect(() => {
     if (similarJobsResponse) setSimilarJobs(similarJobsResponse)
+    console.log(similarJobsResponse, 'similarJobsResponse')
   }, [similarJobsResponse])
 
   const handleBenefitIcon = (benefit) => {
@@ -982,13 +983,13 @@ const Job = ({
                   </Text>
                 </div>
                 <div className={styles.jobDetailSidebarCardList}>
-                  {similarJobs.map((job) => (
+                  {similarJobs?.map((job) => (
                     <div key={job.id} className={styles.jobDetailSidebarCard}>
                       <Link to={`${process.env.HOST_PATH}${job.job_url}`} external>
                         <img
-                          src={job?.company_logo}
+                          src={job?.company?.logo}
                           className={styles.jobDetailSidebarCardImage}
-                          alt={`${job?.company_name} logo`}
+                          alt={`${job?.company?.name} logo`}
                         />
                       </Link>
                       <Link to={`${process.env.HOST_PATH}${job.job_url}`} aTag external>
@@ -1235,7 +1236,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     // })
     // categoryMetaText = categoryMetaText.slice(0, categoryMetaText.length - 2)
     // categoryMetaText += ' - related job opportunities'
-    const categoryMetaText = "jobs"
+    const categoryMetaText = 'jobs'
     const seoMetaTitle = `${name} is hiring ${jobTitle} - ${jobId} | Bossjob`
     const seoMetaDescription = encodeURI(
       `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${
