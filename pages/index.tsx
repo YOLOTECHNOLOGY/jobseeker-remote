@@ -163,14 +163,23 @@ const Home = (props: HomeProps) => {
 
   const onLocationSearch = (event, value) => {
     addSearchHistory(searchValue)
+    const sanitisedVal = searchValue.replace('-', '+')
+    const { searchQuery:searchValueQuery } = userFilterSelectionDataParser(
+      'query',
+      sanitisedVal,
+      router.query ?? '',
+      config
+    )
+    
     const isClear = !value
     const { searchQuery } = userFilterSelectionDataParser(
       'location',
       value,
-      router.query,
+      {keyword:searchValueQuery},
       config,
       isClear
     )
+    console.log({searchValueQuery,searchQuery})
     updateUrl(searchQuery)
   }
 
@@ -298,7 +307,7 @@ const Home = (props: HomeProps) => {
       </div>
     )
   }
-
+  console.log({searchValue})
   return (
     <div className={styles.container}>
       <Layout>
@@ -322,6 +331,7 @@ const Home = (props: HomeProps) => {
                   size='small'
                   className={styles.searchField}
                   searchFn={handleSuggestionSearch}
+                  // onChange={e=>setSearchValue(e.target.value)}
                   updateSearchValue={setSearchValue}
                   onSelect={(val: any) => {
                     setSearchValue(val)
