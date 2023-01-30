@@ -194,7 +194,6 @@ const Job = ({
 
   useEffect(() => {
     if (similarJobsResponse) setSimilarJobs(similarJobsResponse)
-    console.log(similarJobsResponse, 'similarJobsResponse')
   }, [similarJobsResponse])
 
   const handleBenefitIcon = (benefit) => {
@@ -396,7 +395,6 @@ const Job = ({
           router.push(`/chat/${chatId}`)
         })
         .catch((e) => {
-          console.log('e', e)
           router.push(`/chat`)
         })
         .finally(() => setLoading(false))
