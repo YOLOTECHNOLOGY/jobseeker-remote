@@ -141,7 +141,7 @@ const getPredefinedParamsFromUrl = (routerQuery, catList, locList, clearAllFilte
     if (queryParser.length > 0) {
       queryParser.forEach((value, index) => {
         matchedLocation = locList.filter((loc) => {
-          return loc?.value.toLowerCase() === unslugify(value)
+          return loc?.value?.toLowerCase?.() === unslugify(value)
         })
         matchedCategory = catList.filter((cat) => {
           return cat.key === value

@@ -58,6 +58,7 @@ export const checkFilterMatch = memoizeWith((routerQuery, config, isMobile = fal
 }, checkFilterMatchFunc)
 
 export const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear) => {
+    console.log({ routerQuery })
     return converge(mergeLeft, [
         pipe(
             parseFullParams(config),
@@ -103,7 +104,7 @@ export const userFilterSelectionDataParser = (field, optionValue, routerQuery, c
             when(() => is(Array)(isClear), omit(isClear)),
             buildMatchedConfigsQuery(config)(field, optionValue),
         )
-    ])(routerQuery)
+    ])(isEmpty(routerQuery) ? { keyword: '' } : routerQuery)
 }
 
 export const parseParamsFromUrl = (url, config) => parseFullParams(config)(url)
@@ -157,7 +158,7 @@ const buildQueryParams = cond([
 
 const matchConfig = config => keyword => ifElse(either(isEmpty, isNil), always({}), pipe(
     () => configItems(config),
-    map(items => items.filter(item => item.value.toLowerCase() === keyword?.toLowerCase?.())),
+    map(items => items.filter(item => item.value?.toLowerCase?.() === keyword?.toLowerCase?.())),
     filter(complement(either(isEmpty, isNil))),
     filter(identity)
 ))(keyword)
