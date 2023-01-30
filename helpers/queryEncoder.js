@@ -216,6 +216,7 @@ const itemFilter = config => keys => pipe(
 )(config)
 
 const configKeys = pipe(configItems, map(map(ifElse(has('seo-value'), prop('seo-value'), ifElse(has('function_title_value'), prop('function_title_value'), prop('seo_value'))))))
+
 const keywordMatches = pipe(
     configKeys,
     toPairs,
@@ -223,6 +224,7 @@ const keywordMatches = pipe(
     append([T, applySpec({ query: identity })]),
     cond
 )
+
 const parseKeywordParams = config =>
     pipe(
         prop('keyword'),
@@ -230,6 +232,7 @@ const parseKeywordParams = config =>
         map(keywordMatches(config)),
         reduce(mergeLeft, {})
     )
+
 const keywordParser = pipe(toLower, cond([
     [test(/((\B|\b)-jobs-in-\b)/g), split('-jobs-in-')],
     [test(/((\B|\b)-jobs\b)/g), pipe(split('-jobs'), dropLast(1))],

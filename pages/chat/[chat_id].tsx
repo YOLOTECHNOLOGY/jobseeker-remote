@@ -62,7 +62,6 @@ const Chat = () => {
             }).finally(() => setChatListLoading(false))
         }
     }, [searchParams])
-    console.log({ chatList })
     useEffect(() => {
         if (filterMode) {
             setChatListLoading(true)

@@ -130,7 +130,12 @@ const IMProvider = ({ children }: any) => {
         },
         handleError(e) {
             console.log('error', e)
-            const content = e?.response?.data?.errors?.error?.[0] || e?.response?.data?.errors?.errors?.[0]
+            const content = 
+            e?.response?.data?.errors?.error?.[0] 
+            || 
+            e?.response?.data?.errors?.errors?.[0]
+            ||
+            e?.response?.data?.errors?.phone_num?.[0]
             if (content) {
                 contextRef.current?.showToast?.('error', content)
             } else {
