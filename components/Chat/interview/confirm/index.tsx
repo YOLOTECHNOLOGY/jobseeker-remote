@@ -16,10 +16,12 @@ const ConfirmModal = (props: any) => {
         }
     }
     contextRef.current = assign(contextRef.current, context)
+    const imState = contextRef.current?.getState()
+
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
-        headerTitle={'interview invited confirm modal'}
+        headerTitle={`Interview Invitation from ${imState?.company?.name ?? 'company'}`}
         firstButtonText='Back'
         secondButtonText='Accept'
         firstButtonIsClose={false}
