@@ -388,6 +388,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const updateUrl = (queryParam, queryObject) => {
     queryObject['page'] = '1'
     setSelectedPage(Number(queryObject['page']))
+    console.log({queryParam})
     const pushObject = {
       pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
       query: queryObject
@@ -572,7 +573,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setJobFunctions([])
     setFunctionTitles([])
     // if query matches filter, on reset, remove it from query
-    if ((searchMatch && locationMatch) || (searchMatch && !locationMatch)) {
+    if (searchMatch ) {
       updateUrl(null, queryObject)
     } else if (!searchMatch && locationMatch) {
       if (searchQuery === predefinedLocation) {

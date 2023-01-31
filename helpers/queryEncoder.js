@@ -173,7 +173,7 @@ const buildMatchedConfigsQuery = config => (field, optionValue) => applySpec({
 })
 
 const buildMatchedConfigs = config => applySpec({
-    matchedConfigFromUrl: pipe(prop('keyword'), keywordParser, itemFilter(config)),
+    matchedConfigFromUrl: pipe(prop('keyword'), keywordParser, noFunctionTitleitemFilter(config)),
     matchedConfigFromUserSelection: pipe(allKeysIn(userSelectKeys), itemFilter(config))
 })
 
@@ -210,6 +210,11 @@ const configItems = applySpec({
     functionTitles: pipe(path(['inputs', 'function_titles'])),
 })
 
+const noFunctionTitleitemFilter = config => keys => pipe(
+    configItems,
+    map(items => items.filter(item => keys.includes(item['seo-value']) || keys.includes((item['seo_value'])))),
+    filter(pipe(prop('length'), lt(0)))
+)(config)
 const itemFilter = config => keys => pipe(
     configItems,
     map(items => items.filter(item => keys.includes(item['seo-value']) || keys.includes((item['seo_value'])) || keys.includes((item['function_title_value'])))),
@@ -220,6 +225,7 @@ const configKeys = pipe(configItems, map(map(ifElse(has('seo-value'), prop('seo-
 
 const keywordMatches = pipe(
     configKeys,
+    dissoc('functionTitles'),
     toPairs,
     map(([key, list]) => [flip(includes)(list), applySpec({ [key]: identity })]),
     append([T, applySpec({ query: identity })]),
