@@ -81,7 +81,7 @@
     width: 50%;
     margin-right: 20px;
 
-    &>* {
+    & > * {
       width: 100%;
     }
   }
@@ -138,7 +138,6 @@
     }
 
     p {
-
       font-family: 'Product Sans';
       font-style: normal;
       font-weight: 400;
@@ -220,7 +219,6 @@
     width: 100%;
     justify-content: flex-start;
 
-
     @media (max-width: 768px) {
       display: block;
     }
@@ -244,7 +242,7 @@
     }
 
     @media (max-width: 768px) {
-      width: 100%;
+      width: 100% !important;
       margin-top: 16px;
     }
   }
@@ -326,7 +324,7 @@
       padding: 0;
     }
 
-    &>* {
+    & > * {
       padding: 0;
 
       @include msd {
