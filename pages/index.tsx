@@ -307,7 +307,7 @@ const Home = (props: HomeProps) => {
         <section className={styles.searchAndQuickLinkSection}>
           <div className={styles.commonContainer}>
             <Text textStyle='xxxl' textColor='primaryBlue' bold>
-              Find Jobs for Professionals in Philippines (Bossjob 3.0)
+              Find Jobs for Professionals in Philippines
             </Text>
             <MetaText tagName='h1'>Career Platform for Professionals in Philippines</MetaText>
             <div className={styles.searchSection}>
