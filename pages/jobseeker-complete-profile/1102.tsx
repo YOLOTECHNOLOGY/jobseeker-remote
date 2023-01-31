@@ -137,7 +137,7 @@ const Step4 = (props: any) => {
           // !experience.degree ||
           !experience.location ||
           !experience.study_period_from ||
-          !degreeList.filter((degree) => degree.label === experience.degree_key)[0]?.value
+          !degreeList.filter((degree) => degree.value === experience.degree_key)[0]?.value
 
         if (experience.is_currently_studying && requireFields) {
           handleSelectEducation(experience)
@@ -262,7 +262,7 @@ const Step4 = (props: any) => {
     setShowForm(!showForm)
     setEducationId(education.id)
     setSchool(education.school)
-    setDegree(degreeList.filter((degree) => degree.label === education.degree_key)[0]?.value)
+    setDegree(degreeList.filter((degree) => degree.value === education.degree_key)[0]?.value)
     setLocation(education.location ? getLocation(education.location)[0] : null)
     if (education.location && education.location.toLowerCase() === 'overseas') {
       setCountry(countryList.filter((country) => country.key === education.country_key)[0].value)

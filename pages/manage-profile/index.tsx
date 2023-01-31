@@ -136,7 +136,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
 
   useEffect(() => {
     let count = 0
-    if (workExperiences.length === 0) {
+    if (workExperiences?.length === 0) {
       count += 1
     }
     if (educations.length === 0) {
@@ -583,7 +583,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           <div className={styles.emblaHighlight}>
             <div className={styles.emblaViewport} ref={emblaRef}>
               <div className={styles.emblaContainer}>
-                {workExperiences.length === 0 && (
+                {workExperiences?.length === 0 && (
                   <div className={styles.emblaSlideHighlight}>
                     <div className={styles.highlightCard}>
                       <div className={styles.highlightCardHeader}>

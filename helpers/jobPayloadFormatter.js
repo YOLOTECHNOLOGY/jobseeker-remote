@@ -324,7 +324,7 @@ const getDegreeList = (config) => {
   return degreeList.map((degree) => {
     return {
       label: degree.value,
-      value: degree.value,
+      value: degree.key,
       key: degree.key
     }
   })
