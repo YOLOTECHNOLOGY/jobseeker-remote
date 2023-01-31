@@ -461,7 +461,7 @@
         &BuildResume {
           left: -15% !important;
         }
-        
+
         &ChatDirectly {
           left: -21% !important;
         }
@@ -579,7 +579,7 @@
         @include sm {
           position: relative;
           left: -20px;
-        
+
           &BusinessInsider {
             position: relative;
             left: -22px;
@@ -620,7 +620,7 @@
         text-align: center;
         flex-direction: column;
 
-        @include sm { 
+        @include sm {
           text-align: left;
         }
       }
@@ -648,5 +648,12 @@
   &Text {
     display: flex;
     justify-content: center;
+  }
+}
+
+.footerImg {
+  img {
+    width: 100%;
+    height: auto;
   }
 }

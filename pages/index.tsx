@@ -48,7 +48,7 @@ import {
   TechInAsia,
   RHBannerDesktop,
   RHBannerMobile,
-  RHBannerTablet,
+  RHBannerTablet
 } from 'images'
 
 /* styles */
@@ -110,12 +110,12 @@ const Home = (props: HomeProps) => {
         activeFeature === 1
           ? firstFeatureImgNode
           : activeFeature === 2
-            ? secondFeatureImgNode
-            : activeFeature === 3
-              ? thirdFeatureImgNode
-              : activeFeature === 4
-                ? fourthFeatureImgNode
-                : null
+          ? secondFeatureImgNode
+          : activeFeature === 3
+          ? thirdFeatureImgNode
+          : activeFeature === 4
+          ? fourthFeatureImgNode
+          : null
 
       let paragraphHeight = 0
       paragraphHeight = activeNode.current.querySelector('p').offsetHeight
@@ -131,12 +131,12 @@ const Home = (props: HomeProps) => {
         activeFeature === 1
           ? firstFeatureImgNode
           : activeFeature === 2
-            ? secondFeatureImgNode
-            : activeFeature === 3
-              ? thirdFeatureImgNode
-              : activeFeature === 4
-                ? fourthFeatureImgNode
-                : null
+          ? secondFeatureImgNode
+          : activeFeature === 3
+          ? thirdFeatureImgNode
+          : activeFeature === 4
+          ? fourthFeatureImgNode
+          : null
 
       if (activeNode.current.style.height <= 50) {
         const paragraphHeight = activeNode.current.querySelector('p').offsetHeight
@@ -148,13 +148,13 @@ const Home = (props: HomeProps) => {
   const updateUrl = (queryParam) => {
     const queryObject = {
       page: 1,
-      sort: 2,
+      sort: 2
     }
 
     router.push(
       {
         pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
-        query: queryObject,
+        query: queryObject
       },
       undefined,
       { shallow: true }
@@ -164,22 +164,22 @@ const Home = (props: HomeProps) => {
   const onLocationSearch = (event, value) => {
     addSearchHistory(searchValue)
     const sanitisedVal = searchValue.replace('-', '+')
-    const { searchQuery:searchValueQuery } = userFilterSelectionDataParser(
+    const { searchQuery: searchValueQuery } = userFilterSelectionDataParser(
       'query',
       sanitisedVal,
       router.query ?? '',
       config
     )
-    
+
     const isClear = !value
     const { searchQuery } = userFilterSelectionDataParser(
       'location',
       value,
-      {keyword:searchValueQuery},
+      { keyword: searchValueQuery },
       config,
       isClear
     )
-    console.log({searchValueQuery,searchQuery})
+    console.log({ searchValueQuery, searchQuery })
     updateUrl(searchQuery)
   }
 
@@ -263,11 +263,7 @@ const Home = (props: HomeProps) => {
             Customer Service jobs
           </Text>
         </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/hr-recruitment-jobs`}
-          title='HR jobs'
-        >
+        <Link className={styles.link} to={`${jobsPageLink}/hr-recruitment-jobs`} title='HR jobs'>
           <Text textStyle='base' textColor='primaryBlue'>
             HR jobs
           </Text>
@@ -281,20 +277,12 @@ const Home = (props: HomeProps) => {
             BPO Team Lead
           </Text>
         </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/homebased-jobs`}
-          title='WFH'
-        >
+        <Link className={styles.link} to={`${jobsPageLink}/homebased-jobs`} title='WFH'>
           <Text textStyle='base' textColor='primaryBlue'>
             WFH
           </Text>
         </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/manager-jobs`}
-          title='Manager'
-        >
+        <Link className={styles.link} to={`${jobsPageLink}/manager-jobs`} title='Manager'>
           <Text textStyle='base' textColor='primaryBlue'>
             Manager
           </Text>
@@ -307,7 +295,7 @@ const Home = (props: HomeProps) => {
       </div>
     )
   }
-  console.log({searchValue})
+  console.log({ searchValue })
   return (
     <div className={styles.container}>
       <Layout>
@@ -572,7 +560,10 @@ const Home = (props: HomeProps) => {
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
-                          className={classNames([styles.flatDisplayImage, styles.flatDisplayImageBuildResume])}
+                          className={classNames([
+                            styles.flatDisplayImage,
+                            styles.flatDisplayImageBuildResume
+                          ])}
                           src={BuildProfessionalResume}
                           alt='Build Professional Resume'
                           width='645'
@@ -597,7 +588,10 @@ const Home = (props: HomeProps) => {
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
-                          className={classNames([styles.flatDisplayImage, styles.flatDisplayImageChatDirectly])}
+                          className={classNames([
+                            styles.flatDisplayImage,
+                            styles.flatDisplayImageChatDirectly
+                          ])}
                           src={ChatDirectlyWithBoss}
                           alt='Chat Directly'
                           width='645'
@@ -620,7 +614,10 @@ const Home = (props: HomeProps) => {
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
-                          className={classNames([styles.flatDisplayImage, styles.flatDisplayImageGetHeadhunted])}
+                          className={classNames([
+                            styles.flatDisplayImage,
+                            styles.flatDisplayImageGetHeadhunted
+                          ])}
                           src={GetHeadhunted}
                           alt='Get Headhunted'
                           width='645'
@@ -643,7 +640,10 @@ const Home = (props: HomeProps) => {
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
-                          className={classNames([styles.flatDisplayImage, styles.flatDisplayImageLevelupCareer])}
+                          className={classNames([
+                            styles.flatDisplayImage,
+                            styles.flatDisplayImageLevelupCareer
+                          ])}
                           src={LevelUpCareer}
                           alt='Level Up Your Career'
                           width='645'
@@ -688,7 +688,13 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img className={styles.featureContentImageBusinessInsider} src={BusinessInsider} alt='Business Insider' width='206' height='70' />
+                  <img
+                    className={styles.featureContentImageBusinessInsider}
+                    src={BusinessInsider}
+                    alt='Business Insider'
+                    width='206'
+                    height='70'
+                  />
                 </LazyLoad>
               </div>
               {isMobile ? (
@@ -726,7 +732,13 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img className={styles.featureContentImageTechInAsia} src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
+                  <img
+                    className={styles.featureContentImageTechInAsia}
+                    src={TechInAsia}
+                    alt='Tech In Asia'
+                    width='206'
+                    height='55'
+                  />
                 </LazyLoad>
               </div>
               {isMobile ? (
@@ -761,7 +773,13 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img className={styles.featureContentImageGrabVentures} src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
+                  <img
+                    className={styles.featureContentImageGrabVentures}
+                    src={GrabVentures}
+                    alt='Grab Ventures'
+                    width='206'
+                    height='20'
+                  />
                 </LazyLoad>
               </div>
               {isMobile ? (
@@ -777,7 +795,8 @@ const Home = (props: HomeProps) => {
               ) : (
                 <div className={styles.featureContentMobile}>
                   <Text textStyle='xl' className={styles.featureContentDesc}>
-                    Grab officially kicks off Grab Ventures Ignite programme to propel Vietnam’s startup ecosystem forward
+                    Grab officially kicks off Grab Ventures Ignite programme to propel Vietnam’s
+                    startup ecosystem forward
                   </Text>
                   <Link
                     to='https://www.grab.com/vn/en/press/business/vigrab-chinh-thuc-khoi-dong-chuong-trinh-grab-ventures-ignite-nham-gop-phan-thuc-day-he-sinh-thai-khoi-nghiep-viet-namengrab-officially-kicks-off-grab-ventures-ignite-programme-to-propel-vie/'
@@ -797,7 +816,13 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img className={styles.featureContentImageMoneyMax} src={MoneyMax} alt='Moneymax' width='206' height='40' />
+                  <img
+                    className={styles.featureContentImageMoneyMax}
+                    src={MoneyMax}
+                    alt='Moneymax'
+                    width='206'
+                    height='40'
+                  />
                 </LazyLoad>
               </div>
               {isMobile ? (
@@ -826,7 +851,13 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img className={styles.featureContentImageKrAsia} src={KrAsia} alt='KR Asia' width='206' height='40' />
+                  <img
+                    className={styles.featureContentImageKrAsia}
+                    src={KrAsia}
+                    alt='KR Asia'
+                    width='206'
+                    height='40'
+                  />
                 </LazyLoad>
               </div>
               {isMobile ? (
@@ -863,14 +894,33 @@ const Home = (props: HomeProps) => {
         <LazyLoad>
           <div className={styles.bannerSection}>
             <div className={styles.commonContainer}>
-              <Link to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`} external>
-                <div className={breakpointStyles.hideOnMobileAndTablet}>
+              <Link
+                to={
+                  isAuthenticated
+                    ? authPathToOldProject(null, '/dashboard/headhunt-me')
+                    : `${process.env.OLD_PROJECT_URL}/headhunt-me`
+                }
+                external
+              >
+                <div
+                  className={classNames([breakpointStyles.hideOnMobileAndTablet, styles.footerImg])}
+                >
                   <Image src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
                 </div>
-                <div className={breakpointStyles.hideOnMobileAndDesktop}>
+                <div
+                  className={classNames([
+                    breakpointStyles.hideOnMobileAndDesktop,
+                    styles.footerImg
+                  ])}
+                >
                   <Image src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
                 </div>
-                <div className={breakpointStyles.hideOnTabletAndDesktop}>
+                <div
+                  className={classNames([
+                    breakpointStyles.hideOnTabletAndDesktop,
+                    styles.footerImg
+                  ])}
+                >
                   <Image src={RHBannerMobile} alt='rh-banner-mobile' width='427' height='214' />
                 </div>
               </Link>
@@ -903,8 +953,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
   })
   return {
     props: {
-      topCompanies,
-    },
+      topCompanies
+    }
     // revalidate: 10
   }
 })
