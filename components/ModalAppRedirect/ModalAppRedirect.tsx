@@ -66,7 +66,7 @@ const ModalAppRedirect = ({
     if (window && typeof window !== undefined) {
       const windowPath = router.asPath
       const baseSchema = 'BOSSJOBPH'
-      let pathSchema = ''
+      let pathSchema = 'register'
 
       // Mobile app deep link mapping
       if (windowPath.includes('/get-started')) {
@@ -89,9 +89,11 @@ const ModalAppRedirect = ({
         IOS schema: BOSSJOBPH://register
         Android schema: intent://register/#Intent;scheme=BOSSJOBPH;package=com.poseidon.bossjobapp;end
       */
-      const schema = userAgent?.isIos
-        ? `${baseSchema}://${pathSchema}`
-        : `intent://${pathSchema}/#Intent;scheme=${baseSchema};package=com.poseidon.bossjobapp;end`
+      // const schema = userAgent?.isIos
+      //   ? `${baseSchema}://${pathSchema}`
+      //   : `intent://${pathSchema}/#Intent;scheme=${baseSchema};package=com.poseidon.bossjobapp;end`
+      const schema = `${baseSchema}://${pathSchema}`
+
       const appStoreLink = userAgent?.isIos
         ? process.env.APP_STORE_LINK
         : process.env.GOOGLE_PLAY_STORE_LINK
