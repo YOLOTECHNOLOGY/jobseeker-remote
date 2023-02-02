@@ -120,7 +120,7 @@ const AuthLayout = ({
         <div className={styles.AuthCTA}>{displayCTA()}</div>
       </div>
 
-      <ModalAppRedirect isShowModal={isShowAppRedirectModal} handleModal={handleAppRedirectModal} />
+      {/* <ModalAppRedirect isShowModal={isShowAppRedirectModal} handleModal={handleAppRedirectModal} /> */}
     </div>
   )
 }

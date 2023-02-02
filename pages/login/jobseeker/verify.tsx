@@ -140,11 +140,11 @@ const Verify = ({ query }: any) => {
 
   return (
     <div>
-      <ModalAppRedirect
+      {/* <ModalAppRedirect
         isShowModal={isShowAppRedirectModal}
         handleModal={handleAppRedirectModal}
         handleOpenAppCallBack={headerOpenApp}
-      />
+      /> */}
     </div>
   )
 }

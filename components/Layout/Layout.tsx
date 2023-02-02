@@ -114,7 +114,7 @@ const Layout = ({ children, className, isHiddenFooter,isHiddenHeader }: LayoutPr
         isShowModal={isShowModal}
         handleModal={handleVerifyEmailModal}
       />
-      <ModalAppRedirect isShowModal={isShowAppRedirectModal} handleModal={handleAppRedirectModal} />
+      {/* <ModalAppRedirect isShowModal={isShowAppRedirectModal} handleModal={handleAppRedirectModal} /> */}
     </div>
   )
 }
