@@ -15,7 +15,6 @@ const firstKeyIn = keys => pipe(allKeysIn(keys), prop(0))
 const lastKeyIn = keys => pipe(allKeysIn(keys), last)
 
 const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
-    console.log("checkFilterMatchFunc invoked!!!!")
     const result = pipe(ap([
         pipe(buildMatchedConfigs(config), dissoc('matchedConfig')),
         pipe(parseKeywordParams(config), converge(mergeLeft, [
@@ -58,7 +57,6 @@ export const checkFilterMatch = memoizeWith((routerQuery, config, isMobile = fal
 }, checkFilterMatchFunc)
 
 export const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear) => {
-    console.log({ routerQuery })
     return converge(mergeLeft, [
         pipe(
             parseFullParams(config),
@@ -72,13 +70,11 @@ export const userFilterSelectionDataParser = (field, optionValue, routerQuery, c
                     const heads = [...dropId]
                     const tail = heads.pop()
                     if (test(/^[1-9]\d*$/, tail)) {
-                        console.log({ tail })
                         newQuery.query = heads.join('-')
                     } else {
                         newQuery.query = newQuery.functionTitles
                     }
                     delete newQuery['functionTitles']
-                    console.log({ newQuery })
                     return newQuery
                 },
                 identity,

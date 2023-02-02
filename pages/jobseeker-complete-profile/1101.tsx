@@ -447,7 +447,6 @@ const Step3 = (props: any) => {
       inline: 'nearest'
     })
   }
-  console.log({ workExperience })
   return (
     <OnBoardLayout
       headingText={

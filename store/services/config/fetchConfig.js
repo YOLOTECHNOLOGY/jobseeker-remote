@@ -19,7 +19,7 @@ const fetchConfigService = () => {
           children: value
         }
       })
-      result.inputs.job_functions = flatMap(result.inputs.main_functions, item => item.children.map(item => {
+      result.inputs.job_functions = flatMap(result.inputs.main_functions, item => item.children?.map?.(item => {
         return {
           key: toSeo(item.value),
           seo_value: toSeo(item.value),
@@ -27,8 +27,8 @@ const fetchConfigService = () => {
           value: item.value,
           id: item.id
         }
-      }))
-      result.inputs.function_titles = flatMap(result.inputs.job_functions, item => item.children.map(item => {
+      })??[])
+      result.inputs.function_titles = flatMap(result.inputs.job_functions, item => item.children?.map?.(item => {
         return {
           key: toSeo(item.value) + '-' + item.id,
           seo_value: toSeo(item.value) + '-' + item.id,
@@ -36,7 +36,7 @@ const fetchConfigService = () => {
           value: item.value,
           id: item.id
         }
-      }))
+      })??[])
       return result
     })
 }

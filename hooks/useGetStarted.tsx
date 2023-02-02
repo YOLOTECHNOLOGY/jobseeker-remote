@@ -126,7 +126,6 @@ const useGetStarted = () => {
   const handleAuthenticationSendEmailMagicLink = () => {
     let params: any = {}
     const isChatRedirect = localStorage.getItem('isChatRedirect')
-    console.log({ userId })
     if (isChatRedirect && userId) {
       params.redirect = isChatRedirect
       params.redirect_fail = router.asPath

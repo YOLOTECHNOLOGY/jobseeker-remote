@@ -5,7 +5,6 @@ import moment from 'moment';
 const CustomCard = (props: any) => {
 
     const { content } = props
-    console.log(props)
     return <div className={styles.main}>
 
         <div className={styles.title}>

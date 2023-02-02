@@ -71,7 +71,6 @@ const IMProvider = ({ children }: any) => {
                     return Promise.resolve().then(() => {
                         if (auids.length) {
                             return userInfo(userIds).then(userInfosData => {
-                                console.log({ userInfosData, auids })
                                 const userInfos = userInfosData?.data?.data ?? []
                                 return userInfos.map(userInfo => ({
                                     auid: '' + userInfo.id + '_r',
