@@ -15,8 +15,7 @@ import styles from './styles.module.scss'
 const QuickUploadResume = () => {
   const UseHooksRegister = useRegister()
   const useHooksFakeUploadResume = useFakeUploadResume()
-  const { isRegisteringJobseeker, isLoading, isShowRegisterInfo, userWorkExperiences } =
-    UseHooksRegister
+  const { isLoading, isShowRegisterInfo, userWorkExperiences } = UseHooksRegister
 
   return (
     <QuickLayout>
@@ -32,15 +31,42 @@ const QuickUploadResume = () => {
                   className={styles.AuthWrapperImageTitleLineBg}
                   style={{ backgroundImage: 'url(' + increaseUserConversionBrush + ')' }}
                 >
-                  <Text textColor='white' textStyle='xxxl' block bold>
-                    Chat with Boss
+                  <Text
+                    textColor='white'
+                    textStyle='xxxl'
+                    block
+                    bold
+                    className={styles.AuthWrapperImageTitle_context}
+                  >
+                    Chat with
                   </Text>
                 </div>
-                <Text textColor='white' textStyle='xxxl' block bold>
-                  to get your
+                <Text
+                  textColor='white'
+                  textStyle='xxxl'
+                  block
+                  bold
+                  className={styles.AuthWrapperImageTitle_context}
+                >
+                  Boss to get
                 </Text>
-                <Text textColor='white' textStyle='xxxl' block bold>
-                  next offer!
+                <Text
+                  textColor='white'
+                  textStyle='xxxl'
+                  block
+                  bold
+                  className={styles.AuthWrapperImageTitle_context}
+                >
+                  your next
+                </Text>
+                <Text
+                  textColor='white'
+                  textStyle='xxxl'
+                  block
+                  bold
+                  className={styles.AuthWrapperImageTitle_context}
+                >
+                  offer!
                 </Text>
               </div>
               <div className={styles.AuthWrapperImageContext}>
@@ -48,7 +74,7 @@ const QuickUploadResume = () => {
               </div>
             </div>
             <div className={styles.AuthWrapperInfo}>
-              {isLoading | isRegisteringJobseeker ? (
+              {isLoading ? (
                 <div className={styles.AuthWrapperLoading}>
                   <div className={styles.loadingLogo}>
                     <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
@@ -65,7 +91,7 @@ const QuickUploadResume = () => {
               ) : null}
 
               {isShowRegisterInfo() ? (
-                <RegisterInfo {...UseHooksRegister} />
+                <RegisterInfo {...UseHooksRegister} hideSocialMediaAuth />
               ) : (
                 <UploadResume {...useHooksFakeUploadResume} />
               )}

@@ -24,7 +24,7 @@ import { quickApplyJobRequest } from 'store/actions/jobs/quickApplyJob'
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 import Checkbox from '@mui/material/Checkbox'
 import { handleNumericInput } from 'helpers/handleInput'
-import useWindowDimensions from 'helpers/useWindowDimensions'
+// import useWindowDimensions from 'helpers/useWindowDimensions'
 interface QuickApplyModalProps {
   jobDetails: any
   modalShow?: boolean
@@ -36,18 +36,18 @@ const QuickApplyModal = ({
   jobDetails,
   modalShow,
   handleModalShow,
-  config,
+  config
 }: QuickApplyModalProps) => {
   const dispatch = useDispatch()
-  const { width } = useWindowDimensions()
-  const isMobile = width < 768 ? true : false
+  // const { width } = useWindowDimensions()
+  // const isMobile = width < 768 ? true : false
   const {
     register,
     handleSubmit,
     setValue,
     setError,
     clearErrors,
-    formState: { errors },
+    formState: { errors }
   } = useForm()
 
   const applyJobURL = `${jobDetails?.job_url}/apply`
@@ -59,7 +59,7 @@ const QuickApplyModal = ({
   const [emailError, setEmailError] = useState(null)
   const [firstMessage, setFirstMessage] = useState('')
   const screeningQuestions = jobDetails?.screening_questions || []
-  const redirectLoginLink = `/login/jobseeker?redirect=${applyJobURL}`
+  const redirectLoginLink = `/get-started?redirect=${applyJobURL}`
 
   const registerJobseekerState = useSelector((store: any) => store.auth.registerJobseeker)
   const isQuickApplyJobFetching = useSelector((store: any) => store.job.quickApplyJob.fetching)
@@ -107,7 +107,11 @@ const QuickApplyModal = ({
 
     let externalApplyUrl = jobDetails.external_apply_url
 
-    if (externalApplyUrl !== '' && externalApplyUrl !== null && !/^(f|ht)tps?:\/\//i.test(externalApplyUrl)) {
+    if (
+      externalApplyUrl !== '' &&
+      externalApplyUrl !== null &&
+      !/^(f|ht)tps?:\/\//i.test(externalApplyUrl)
+    ) {
       externalApplyUrl = 'https://' + externalApplyUrl
     }
 
@@ -125,7 +129,7 @@ const QuickApplyModal = ({
       jobId: jobDetails.id,
       jobUrl: jobDetails.job_url,
       externalApplyUrl: externalApplyUrl,
-      source: isMobile ? 'mobile_web' : 'web'
+      source: 'web'
     }
 
     clearErrors()
@@ -196,9 +200,9 @@ const QuickApplyModal = ({
                 ...register('firstName', {
                   required: {
                     value: true,
-                    message: 'Please enter your first name.',
-                  },
-                }),
+                    message: 'Please enter your first name.'
+                  }
+                })
               }}
               label='First name'
               size='small'
@@ -215,9 +219,9 @@ const QuickApplyModal = ({
                 ...register('lastName', {
                   required: {
                     value: true,
-                    message: 'Please enter your last name.',
-                  },
-                }),
+                    message: 'Please enter your last name.'
+                  }
+                })
               }}
               label='Last name'
               size='small'
@@ -235,14 +239,14 @@ const QuickApplyModal = ({
               ...register('email', {
                 required: {
                   value: true,
-                  message: 'Please enter your email address.',
+                  message: 'Please enter your email address.'
                 },
                 pattern: {
                   value:
                     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  message: 'Please enter a valid email address.',
-                },
-              }),
+                  message: 'Please enter a valid email address.'
+                }
+              })
             }}
             label='Email address'
             size='small'
@@ -270,9 +274,9 @@ const QuickApplyModal = ({
               ...register('contactNumber', {
                 required: {
                   value: true,
-                  message: 'Please enter your contact number.',
-                },
-              }),
+                  message: 'Please enter your contact number.'
+                }
+              })
             }}
             label='Contact number'
             size='small'
@@ -292,17 +296,17 @@ const QuickApplyModal = ({
               ...register('password', {
                 required: {
                   value: true,
-                  message: 'Please enter your password.',
+                  message: 'Please enter your password.'
                 },
                 minLength: {
                   value: 8,
-                  message: 'Please enter a longer password (minimum of 8 characters)',
+                  message: 'Please enter a longer password (minimum of 8 characters)'
                 },
                 maxLength: {
                   value: 16,
-                  message: 'Please enter a shorter password (maximum of 16 characters)',
-                },
-              }),
+                  message: 'Please enter a shorter password (maximum of 16 characters)'
+                }
+              })
             }}
             label='Password (minimum 8 characters)'
             type='password'
@@ -314,7 +318,7 @@ const QuickApplyModal = ({
 
           {errors.password && errorText(errors.password.message)}
         </div>
-        
+
         <div className={styles.quickApplyFormField}>
           <UploadResume
             title='resume'
@@ -325,7 +329,7 @@ const QuickApplyModal = ({
 
           {errors.resume && errorText(errors.resume.message)}
         </div>
-        
+
         {!jobDetails.external_apply_url && (
           <div className={styles.quickApplyFormField}>
             {screeningQuestions.length > 0 && (
@@ -346,9 +350,9 @@ const QuickApplyModal = ({
                         ...register(`screening_answer_${i}`, {
                           required: {
                             value: true,
-                            message: 'Please enter a valid answer.',
-                          },
-                        }),
+                            message: 'Please enter a valid answer.'
+                          }
+                        })
                       }}
                       className={styles.answer}
                       label='Answer'
@@ -375,9 +379,9 @@ const QuickApplyModal = ({
                     ...register('firstMessage', {
                       required: {
                         value: true,
-                        message: 'Please enter a valid answer.',
-                      },
-                    }),
+                        message: 'Please enter a valid answer.'
+                      }
+                    })
                   }}
                   className={styles.answer}
                   label='Answer'

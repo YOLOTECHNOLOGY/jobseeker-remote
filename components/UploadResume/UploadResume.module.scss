@@ -40,10 +40,10 @@
 
     > .leftResume {
       display: flex;
-      width:95%;
+      width: 95%;
 
-      @include msd{
-        width:93%;
+      @include msd {
+        width: 93%;
       }
 
       > .documentDiv {
@@ -62,6 +62,14 @@
     > .trashDiv {
       width: auto;
       cursor: pointer;
+    }
+
+    .disabledDelResume {
+      cursor: progress;
+
+      &_icon {
+        pointer-events: none;
+      }
     }
   }
 

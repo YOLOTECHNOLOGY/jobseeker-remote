@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
 
 /* Style */
@@ -15,49 +16,102 @@ import MaterialButton from 'components/MaterialButton'
 import { BossjobLogo } from 'images'
 
 const PublicHeader = () => {
+  const router = useRouter()
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/'}>
-            <img className={styles.headerLogoImage} src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+            <img
+              className={styles.headerLogoImage}
+              src={BossjobLogo}
+              title='Bossjob logo'
+              alt='Bossjob logo'
+            />
           </Link>
         </div>
         <div className={styles.headerLinksWrapper}>
           <ul className={styles.headerLinksList}>
             <React.Fragment>
               <li className={styles.headerLink}>
-                <Link title='Jobs' to='/jobs-hiring/job-search'>
+                {/* <Link title='Jobs' to='/jobs-hiring/job-search'>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Jobs
                   </Text>
-                </Link>
+                </Link> */}
+                {/* {router.route !== '/chat/[chat_id]' ? (
+                  <Link title='Chats' to='/chat/list'>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      Chats
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    textColor='darkGrey'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
+                    Chats
+                  </Text>
+                )} */}
+                {router.route !== '/jobs-hiring/[keyword]' ? (
+                  <Link title='Jobs' to='/jobs-hiring/job-search'>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      Jobs
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    textColor='darkGrey'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
+                    Jobs
+                  </Text>
+                )}
               </li>
-              <li className={styles.headerLink}>
+              {/* <li className={styles.headerLink}>
                 <Link title='Headhunt Me' to={`${process.env.OLD_PROJECT_URL}/headhunt-me`} aTag>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Headhunt Me
                   </Text>
                 </Link>
-              </li>
+              </li> */}
               <li className={styles.headerLink}>
-                <Link title='Companies' to='/companies'>
+                {/* <Link title='Companies' to='/companies'>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Companies
                   </Text>
-                </Link>
+                </Link> */}
+                {router.route !== '/companies' ? (
+                  <Link title='Companies' to='/companies'>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      Companies
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    textColor='darkGrey'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
+                    Companies
+                  </Text>
+                )}
               </li>
               <li className={styles.headerLink}>
                 <Link title='Courses' to='https://academy.bossjob.ph/courses/search-courses' aTag>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Courses
-                  </Text>
-                </Link>
-              </li>
-              <li className={styles.headerLink}>
-                <Link title='Career Guide' to='https://blog.bossjob.ph/' external>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Career Guide
                   </Text>
                 </Link>
               </li>
@@ -71,31 +125,41 @@ const PublicHeader = () => {
                   </Text>
                 </Link>
               </li> */}
+              <li className={styles.headerLink}>
+                <Link title='Career Guide' to='https://blog.bossjob.ph/' external>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    Career Guide
+                  </Text>
+                </Link>
+              </li>
             </React.Fragment>
           </ul>
         </div>
         <ul className={styles.headerLinksList}>
           <React.Fragment>
             <li className={styles.headerLink}>
-              <Link title='Employer' to={`${process.env.OLD_PROJECT_URL}/employer`} aTag>
+              <Link title='Employer' to={process.env.BOSSHUNT_URL} aTag>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                   Employer
                 </Text>
               </Link>
             </li>
-            <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
-              <Link title='Log In' to='/login/jobseeker'>
-                <MaterialButton variant='text' size='medium' capitalize>
-                  <Text textStyle='base' textColor='primaryBlue' bold>Log in</Text>
-                </MaterialButton>
-              </Link>
-            </li>
             <li className={styles.headerLink}>
-              <Link title='Sign Up' to='/register/jobseeker'>
+              {router.route !== '/get-started' ? (
+                <Link to='/get-started' title='Get Started'>
+                  <MaterialButton variant='outlined' size='medium' capitalize>
+                    <Text textStyle='base' textColor='primaryBlue' bold>
+                      Get Started
+                    </Text>
+                  </MaterialButton>
+                </Link>
+              ) : (
                 <MaterialButton variant='outlined' size='medium' capitalize>
-                  <Text textStyle='base' textColor='primaryBlue' bold>Sign up</Text>
+                  <Text textStyle='base' textColor='primaryBlue' bold>
+                    Get Started
+                  </Text>
                 </MaterialButton>
-              </Link>
+              )}
             </li>
           </React.Fragment>
         </ul>

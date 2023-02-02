@@ -1,0 +1,47 @@
+.resumeName {
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    color: #353535;
+}
+
+.uploadButton {
+    width: 100%;
+    // border: 1px solid #136FD3;
+    // border-radius: 10px;
+
+    &.disabled {
+        background: #fff;
+        color: white;
+    }
+}
+
+.fileLabel {
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: 0.0075em;
+    color: #707070;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .label {
+        height: 30px;
+
+        padding: 0px 5px;
+    }
+}
+
+.bottomText {
+    margin-top: 30px;
+}

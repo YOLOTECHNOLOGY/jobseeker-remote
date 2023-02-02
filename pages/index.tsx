@@ -48,7 +48,7 @@ import {
   TechInAsia,
   RHBannerDesktop,
   RHBannerMobile,
-  RHBannerTablet,
+  RHBannerTablet
 } from 'images'
 
 /* styles */
@@ -57,12 +57,8 @@ import breakpointStyles from 'styles/breakpoint.module.scss'
 import MetaText from '../components/MetaText'
 import useSearchHistory from 'helpers/useSearchHistory'
 import classNames from 'classnames/bind'
+import { useDispatch, useSelector } from 'react-redux'
 // import classNamesCombined from 'classnames'
-
-type configObject = {
-  inputs: any
-  filters: any
-}
 
 type companyObject = {
   id: number
@@ -72,20 +68,23 @@ type companyObject = {
 }
 
 interface HomeProps {
-  config: configObject
+  // config: configObject
   topCompanies: companyObject[]
 }
 
 const Home = (props: HomeProps) => {
   const { width } = useWindowDimensions()
-  const { config, topCompanies } = props
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    setIsMobile(width < 768)
+  }, [width])
+  const { topCompanies } = props
   const router = useRouter()
   const isAuthenticated = getCookie('accessToken') ? true : false
   const [searchValue, setSearchValue] = useState('')
-  const [searchHistories,addSearchHistory] = useSearchHistory()
+  const [searchHistories, addSearchHistory] = useSearchHistory()
   const [suggestionList, setSuggestionList] = useState(searchHistories)
   const [showLogo, setShowLogo] = useState(false)
-
   const [activeFeature, updateActiveFeature] = useState(1)
   const [activeFeatureImg, updateActiveFeatureImg] = useState(1)
   const firstFeatureImgNode = useRef(null)
@@ -93,6 +92,11 @@ const Home = (props: HomeProps) => {
   const thirdFeatureImgNode = useRef(null)
   const fourthFeatureImgNode = useRef(null)
 
+  const config = useSelector((store: any) => store?.config?.config?.response)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchConfigRequest())
+  }, [])
   useEffect(() => {
     const timer = setTimeout(() => setShowLogo(true), 1500)
     return () => clearTimeout(timer)
@@ -106,12 +110,12 @@ const Home = (props: HomeProps) => {
         activeFeature === 1
           ? firstFeatureImgNode
           : activeFeature === 2
-            ? secondFeatureImgNode
-            : activeFeature === 3
-              ? thirdFeatureImgNode
-              : activeFeature === 4
-                ? fourthFeatureImgNode
-                : null
+          ? secondFeatureImgNode
+          : activeFeature === 3
+          ? thirdFeatureImgNode
+          : activeFeature === 4
+          ? fourthFeatureImgNode
+          : null
 
       let paragraphHeight = 0
       paragraphHeight = activeNode.current.querySelector('p').offsetHeight
@@ -127,12 +131,12 @@ const Home = (props: HomeProps) => {
         activeFeature === 1
           ? firstFeatureImgNode
           : activeFeature === 2
-            ? secondFeatureImgNode
-            : activeFeature === 3
-              ? thirdFeatureImgNode
-              : activeFeature === 4
-                ? fourthFeatureImgNode
-                : null
+          ? secondFeatureImgNode
+          : activeFeature === 3
+          ? thirdFeatureImgNode
+          : activeFeature === 4
+          ? fourthFeatureImgNode
+          : null
 
       if (activeNode.current.style.height <= 50) {
         const paragraphHeight = activeNode.current.querySelector('p').offsetHeight
@@ -140,17 +144,17 @@ const Home = (props: HomeProps) => {
       }
     }
   }, [activeFeature])
-  
+
   const updateUrl = (queryParam) => {
     const queryObject = {
       page: 1,
-      sort: 2,
+      sort: 2
     }
 
     router.push(
       {
         pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
-        query: queryObject,
+        query: queryObject
       },
       undefined,
       { shallow: true }
@@ -159,14 +163,23 @@ const Home = (props: HomeProps) => {
 
   const onLocationSearch = (event, value) => {
     addSearchHistory(searchValue)
+    const sanitisedVal = searchValue.replace('-', '+')
+    const { searchQuery: searchValueQuery } = userFilterSelectionDataParser(
+      'query',
+      sanitisedVal,
+      router.query ?? '',
+      config
+    )
+
     const isClear = !value
     const { searchQuery } = userFilterSelectionDataParser(
       'location',
       value,
-      router.query,
+      { keyword: searchValueQuery },
       config,
       isClear
     )
+    console.log({ searchValueQuery, searchQuery })
     updateUrl(searchQuery)
   }
 
@@ -250,11 +263,7 @@ const Home = (props: HomeProps) => {
             Customer Service jobs
           </Text>
         </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/hr-recruitment-jobs`}
-          title='HR jobs'
-        >
+        <Link className={styles.link} to={`${jobsPageLink}/hr-recruitment-jobs`} title='HR jobs'>
           <Text textStyle='base' textColor='primaryBlue'>
             HR jobs
           </Text>
@@ -268,20 +277,12 @@ const Home = (props: HomeProps) => {
             BPO Team Lead
           </Text>
         </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/homebased-jobs`}
-          title='WFH'
-        >
+        <Link className={styles.link} to={`${jobsPageLink}/homebased-jobs`} title='WFH'>
           <Text textStyle='base' textColor='primaryBlue'>
             WFH
           </Text>
         </Link>
-        <Link
-          className={styles.link}
-          to={`${jobsPageLink}/manager-jobs`}
-          title='Manager'
-        >
+        <Link className={styles.link} to={`${jobsPageLink}/manager-jobs`} title='Manager'>
           <Text textStyle='base' textColor='primaryBlue'>
             Manager
           </Text>
@@ -294,7 +295,7 @@ const Home = (props: HomeProps) => {
       </div>
     )
   }
-
+  console.log({ searchValue })
   return (
     <div className={styles.container}>
       <Layout>
@@ -318,6 +319,7 @@ const Home = (props: HomeProps) => {
                   size='small'
                   className={styles.searchField}
                   searchFn={handleSuggestionSearch}
+                  // onChange={e=>setSearchValue(e.target.value)}
                   updateSearchValue={setSearchValue}
                   onSelect={(val: any) => {
                     setSearchValue(val)
@@ -558,7 +560,10 @@ const Home = (props: HomeProps) => {
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
-                          className={classNames([styles.flatDisplayImage, styles.flatDisplayImageBuildResume])}
+                          className={classNames([
+                            styles.flatDisplayImage,
+                            styles.flatDisplayImageBuildResume
+                          ])}
                           src={BuildProfessionalResume}
                           alt='Build Professional Resume'
                           width='645'
@@ -583,7 +588,10 @@ const Home = (props: HomeProps) => {
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
-                          className={classNames([styles.flatDisplayImage, styles.flatDisplayImageChatDirectly])}
+                          className={classNames([
+                            styles.flatDisplayImage,
+                            styles.flatDisplayImageChatDirectly
+                          ])}
                           src={ChatDirectlyWithBoss}
                           alt='Chat Directly'
                           width='645'
@@ -606,7 +614,10 @@ const Home = (props: HomeProps) => {
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
-                          className={classNames([styles.flatDisplayImage, styles.flatDisplayImageGetHeadhunted])}
+                          className={classNames([
+                            styles.flatDisplayImage,
+                            styles.flatDisplayImageGetHeadhunted
+                          ])}
                           src={GetHeadhunted}
                           alt='Get Headhunted'
                           width='645'
@@ -629,7 +640,10 @@ const Home = (props: HomeProps) => {
                     <div className={styles.flatDisplayContent}>
                       <div className={styles.featureContainer}>
                         <Image
-                          className={classNames([styles.flatDisplayImage, styles.flatDisplayImageLevelupCareer])}
+                          className={classNames([
+                            styles.flatDisplayImage,
+                            styles.flatDisplayImageLevelupCareer
+                          ])}
                           src={LevelUpCareer}
                           alt='Level Up Your Career'
                           width='645'
@@ -674,10 +688,16 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img className={styles.featureContentImageBusinessInsider} src={BusinessInsider} alt='Business Insider' width='206' height='70' />
+                  <img
+                    className={styles.featureContentImageBusinessInsider}
+                    src={BusinessInsider}
+                    alt='Business Insider'
+                    width='206'
+                    height='70'
+                  />
                 </LazyLoad>
               </div>
-              {width > 576 ? (
+              {isMobile ? (
                 <Link
                   to='https://markets.businessinsider.com/news/stocks/recruitment-platform-bossjob-launches-a-tool-for-headhunters-to-easily-spot-their-ideal-candidates-1028874126'
                   external
@@ -712,10 +732,16 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img className={styles.featureContentImageTechInAsia} src={TechInAsia} alt='Tech In Asia' width='206' height='55' />
+                  <img
+                    className={styles.featureContentImageTechInAsia}
+                    src={TechInAsia}
+                    alt='Tech In Asia'
+                    width='206'
+                    height='55'
+                  />
                 </LazyLoad>
               </div>
-              {width > 576 ? (
+              {isMobile ? (
                 <Link
                   to='https://www.techinasia.com/5-ways-recruiters-tackle-tech-talent-crunch'
                   external
@@ -747,10 +773,16 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img className={styles.featureContentImageGrabVentures} src={GrabVentures} alt='Grab Ventures' width='206' height='20' />
+                  <img
+                    className={styles.featureContentImageGrabVentures}
+                    src={GrabVentures}
+                    alt='Grab Ventures'
+                    width='206'
+                    height='20'
+                  />
                 </LazyLoad>
               </div>
-              {width > 576 ? (
+              {isMobile ? (
                 <Link
                   to='https://www.grab.com/vn/en/press/business/vigrab-chinh-thuc-khoi-dong-chuong-trinh-grab-ventures-ignite-nham-gop-phan-thuc-day-he-sinh-thai-khoi-nghiep-viet-namengrab-officially-kicks-off-grab-ventures-ignite-programme-to-propel-vie/'
                   external
@@ -763,7 +795,8 @@ const Home = (props: HomeProps) => {
               ) : (
                 <div className={styles.featureContentMobile}>
                   <Text textStyle='xl' className={styles.featureContentDesc}>
-                    Grab officially kicks off Grab Ventures Ignite programme to propel Vietnam’s startup ecosystem forward
+                    Grab officially kicks off Grab Ventures Ignite programme to propel Vietnam’s
+                    startup ecosystem forward
                   </Text>
                   <Link
                     to='https://www.grab.com/vn/en/press/business/vigrab-chinh-thuc-khoi-dong-chuong-trinh-grab-ventures-ignite-nham-gop-phan-thuc-day-he-sinh-thai-khoi-nghiep-viet-namengrab-officially-kicks-off-grab-ventures-ignite-programme-to-propel-vie/'
@@ -783,10 +816,16 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img className={styles.featureContentImageMoneyMax} src={MoneyMax} alt='Moneymax' width='206' height='40' />
+                  <img
+                    className={styles.featureContentImageMoneyMax}
+                    src={MoneyMax}
+                    alt='Moneymax'
+                    width='206'
+                    height='40'
+                  />
                 </LazyLoad>
               </div>
-              {width > 576 ? (
+              {isMobile ? (
                 <Link to='https://www.moneymax.ph/lifestyle/articles/online-job-sites/' external>
                   <Text textStyle='xl' className={styles.featureContentDesc}>
                     Legit Online Job Sites to Help You Look for Work During the Pandemic
@@ -812,10 +851,16 @@ const Home = (props: HomeProps) => {
             <div className={styles.featureContent}>
               <div className={styles.featureContentImage}>
                 <LazyLoad>
-                  <img className={styles.featureContentImageKrAsia} src={KrAsia} alt='KR Asia' width='206' height='40' />
+                  <img
+                    className={styles.featureContentImageKrAsia}
+                    src={KrAsia}
+                    alt='KR Asia'
+                    width='206'
+                    height='40'
+                  />
                 </LazyLoad>
               </div>
-              {width > 576 ? (
+              {isMobile ? (
                 <Link
                   to='https://kr-asia.com/grab-ventures-ignite-helps-singaporean-startups-kickstart-in-vietnam'
                   external
@@ -849,14 +894,33 @@ const Home = (props: HomeProps) => {
         <LazyLoad>
           <div className={styles.bannerSection}>
             <div className={styles.commonContainer}>
-              <Link to={isAuthenticated ? authPathToOldProject(null, '/dashboard/headhunt-me') : `${process.env.OLD_PROJECT_URL}/headhunt-me`} external>
-                <div className={breakpointStyles.hideOnMobileAndTablet}>
+              <Link
+                to={
+                  isAuthenticated
+                    ? authPathToOldProject(null, '/dashboard/headhunt-me')
+                    : `${process.env.OLD_PROJECT_URL}/headhunt-me`
+                }
+                external
+              >
+                <div
+                  className={classNames([breakpointStyles.hideOnMobileAndTablet, styles.footerImg])}
+                >
                   <Image src={RHBannerDesktop} alt='rh-banner-desktop' width='2346' height='550' />
                 </div>
-                <div className={breakpointStyles.hideOnMobileAndDesktop}>
+                <div
+                  className={classNames([
+                    breakpointStyles.hideOnMobileAndDesktop,
+                    styles.footerImg
+                  ])}
+                >
                   <Image src={RHBannerTablet} alt='rh-banner-tablet' width='717' height='359' />
                 </div>
-                <div className={breakpointStyles.hideOnTabletAndDesktop}>
+                <div
+                  className={classNames([
+                    breakpointStyles.hideOnTabletAndDesktop,
+                    styles.footerImg
+                  ])}
+                >
                   <Image src={RHBannerMobile} alt='rh-banner-mobile' width='427' height='214' />
                 </div>
               </Link>
@@ -870,12 +934,12 @@ const Home = (props: HomeProps) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   // store actions
-  store.dispatch(fetchConfigRequest())
+  // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesListRequest({ size: 21, page: 1 }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const config = storeState.config.config.response
+
   const featuredCompanies =
     storeState.companies.fetchFeaturedCompaniesList.response?.featured_companies?.map(
       (featuredCompany) => featuredCompany.company
@@ -889,9 +953,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
   })
   return {
     props: {
-      config,
-      topCompanies,
-    },
+      topCompanies
+    }
+    // revalidate: 10
   }
 })
 

@@ -10,17 +10,19 @@ import withdrawAppliedJobReducer from './withdrawAppliedJob'
 
 import fetchSavedJobsListReducer from './fetchSavedJobsList'
 import fetchSavedJobDetailReducer from './fetchSavedJobDetail'
+import fetchChatDetailReducer from './fetchChatDetail'
 import postSaveJobReducer from './postSaveJob'
 import deleteSaveJobReducer from './deleteSaveJob'
-
+import jobHiredDefaultValues from './jobHiredDefaultValues'
 import quickApplyJobReducer from './quickApplyJob'
 import applyJobReducer from './applyJob'
 
 const jobsReducers = combineReducers({
   jobList: fetchJobsListReducer,
   jobDetail: fetchJobDetailReducer,
+  chatDetail: fetchChatDetailReducer,
   similarJobs: fetchSimilarJobsReducer,
-
+  jobHiredDefaultValues,
   appliedJobsList: fetchAppliedJobsListReducer,
   appliedJobDetail: fetchAppliedJobDetailReducer,
   withdrawAppliedJob: withdrawAppliedJobReducer,

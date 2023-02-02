@@ -43,7 +43,10 @@ const CompanyDetail = (props: any) => {
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
   const [totalPages, setTotalPages] = useState(null)
   const [jobLocation, setJobLocation] = useState(null)
-
+ 
+  useEffect(()=>{
+    dispatch(fetchConfigRequest())
+  },[])
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     loop: false,
@@ -504,7 +507,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
   store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
   store.dispatch(fetchCompanyDetailRequest(companyId))
-  store.dispatch(fetchConfigRequest())
+  // store.dispatch(fetchConfigRequest())
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()

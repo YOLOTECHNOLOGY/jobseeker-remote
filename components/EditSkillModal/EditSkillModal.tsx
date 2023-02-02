@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo, useCallback } from 'react'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,17 +9,17 @@ import { useForm } from 'react-hook-form'
 
 /* Components */
 import { Chip } from '@mui/material'
-import ClearIcon from '@mui/icons-material/Clear';
+import ClearIcon from '@mui/icons-material/Clear'
 import Text from 'components/Text'
 import Modal from 'components/Modal'
-import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 
 /* Helpers */
 import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
-
+import { keys, flatMap } from 'lodash-es'
 /* Styles */
 import styles from './EditSkillModal.module.scss'
+import JobFunctionSelector from 'components/JobFunctionSelector'
 
 type EditSkillModalProps = {
   modalName: string
@@ -34,68 +34,70 @@ const EditSkillModal = ({
   showModal,
   categoryList,
   skills,
-  handleModal,
+  handleModal
 }: EditSkillModalProps) => {
   const dispatch = useDispatch()
-  const {
-    handleSubmit
-  } = useForm()
+  const { handleSubmit } = useForm()
 
-  const [skillList, setSkillList] = useState(skills || [])
+  const [choosed, setChoosed] = useState(skills)
   const [searchValue, setSearchValue] = useState('')
-  const [suggestionList, setSuggestionList] = useState([])
-  const [categoryId, setCategoryId] = useState(null)
-
+  const [functionTitle, setFunctionTitle] = useState({ value: '', id: undefined })
+  const [suggestList, setSuggestList] = useState([])
   const isUpdatingUserProfile = useSelector((store: any) => store.users.updateUserProfile.fetching)
-  const updateProfileSuccess = useSelector(
-    (store: any) => store.users.updateUserProfile.response
+  const updateProfileSuccess = useSelector((store: any) => store.users.updateUserProfile.response)
+  const jobFunctionLists = useSelector(
+    (store: any) => store.config?.config?.response?.inputs?.job_function_lists ?? []
   )
 
-  const handleSuggestionSearch = (val) => {
-    let URL = `${process.env.CONFIG_URL}/search/skill-lists?size=5&query=${val}`
-
-    if (categoryId) {
-      URL = URL + '&job_category_ids=' + categoryId
-    }
-    
-    fetch(URL)
-      .then((resp) => resp.json())
-      .then((data) => {
-        const items = data.data.skills.map((skill) => {
-          return skill.value
-        })
-
-        setSuggestionList(items)
+  const skillList = useMemo(() => {
+    const jobFunction = flatMap(jobFunctionLists, (item) => {
+      const key = keys(item)?.[0]
+      return item[key] ?? []
+    }).find((item) => {
+      return item.job_titles.find((title) => title.id === functionTitle?.id)
     })
-  }
+    return jobFunction?.skills ?? []
+  }, [functionTitle, jobFunctionLists])
+
+  const handleSuggestionSearch = useCallback(
+    (value) => {
+      const reg = new RegExp(value, 'gi')
+      setSuggestList(
+        skillList
+          .filter((item) => reg.test(item.value))
+          .map((skill) => ({ value: skill.id, label: skill.value }))
+      )
+    },
+    [skillList]
+  )
 
   useEffect(() => {
-    if (updateProfileSuccess){
+    setSuggestList(skillList.map((skill) => ({ value: skill.id, label: skill.value })))
+  }, [handleSuggestionSearch, searchValue])
+
+  useEffect(() => {
+    if (updateProfileSuccess) {
       handleCloseModal()
     }
   }, [updateProfileSuccess])
 
-  useEffect(() => {
-    handleSuggestionSearch(searchValue)
-  }, [categoryId])
-
   const onSubmit = () => {
     const payload = {
-      skills: skillList.join(',')
+      skills: choosed.join(',')
     }
 
     dispatch(updateUserProfileRequest(payload))
   }
 
   const handleDeleteSkill = (skill) => {
-    setSkillList(skillList.filter(item => item !== skill))
+    setChoosed(choosed.filter((item) => item !== skill))
   }
 
   const handleAddSkill = (skill) => {
-    setSkillList(prevState => {
-      if (!prevState.includes(skill)){
+    setChoosed((prevState) => {
+      if (!prevState.includes(skill)) {
         return [...prevState, skill]
-      }else{
+      } else {
         return [...prevState]
       }
     })
@@ -121,16 +123,14 @@ const EditSkillModal = ({
         <div>
           <Text>We will suggest skill for you according to your latest job function:</Text>
           <div className={styles.form}>
-            <MaterialBasicSelect
+            <JobFunctionSelector
               id='jobFunction'
               label='Job Function'
               options={categoryList}
               className={styles.sortField}
-              value={categoryId}
-              onChange={(e) => {
-                setCategoryId(e.target.value)
-                setSearchValue('')
-              }}
+              isTouched={true}
+              value={functionTitle}
+              onChange={setFunctionTitle}
             />
           </div>
           <div className={styles.form}>
@@ -145,26 +145,23 @@ const EditSkillModal = ({
               searchFn={handleSuggestionSearch}
               onSelect={(val: any) => {
                 if (val !== '') {
-                  handleAddSkill(val)
+                  handleAddSkill(val.label)
                   setSearchValue('')
                 }
               }}
               onKeyPress={(e: any) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
-                  setSearchValue(e.target.value)
-                  setSuggestionList([])
-
                   if (e.target.value !== '') {
                     handleAddSkill(e.target.value)
                     setSearchValue('')
                   }
                 }
               }}
-              options={suggestionList}
+              options={suggestList}
             />
           </div>
           <div className={styles.skillList}>
-            {skillList.map((skill, i) => {
+            {(choosed ?? []).map((skill, i) => {
               return (
                 <Chip
                   key={i}
@@ -176,7 +173,7 @@ const EditSkillModal = ({
                   onClick={() => {
                     handleDeleteSkill(skill)
                   }}
-                  icon={<ClearIcon />} 
+                  icon={<ClearIcon />}
                 />
               )
             })}

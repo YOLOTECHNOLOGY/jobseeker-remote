@@ -14,7 +14,9 @@ import { Button } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 
 // api
-import { sendEmaillOtp, changeEmail, verifyEmail } from 'store/services/auth/changeEmail'
+import { changeEmail } from 'store/services/auth/changeEmail'
+import { verifyEmail } from 'store/services/auth/verifyEmail'
+import { emailOTPChangeEmailGenerate } from 'store/services/auth/emailOTPChangeEmailGenerate'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
@@ -128,34 +130,23 @@ const VerifyMailAndBindEmail = ({
     setIsShowCountDownSwitch(true)
     setIsShowemailVerify(true)
     setEmail(email)
-    sendEmaillOtp({ email })
-      .then(() => {
-        // if (data.success) {
-        //   dispatch(
-        //     displayNotification({
-        //       open: true,
-        //       message: 'The verification code has been sent to your email, please check it',
-        //       severity: 'success'
-        //     })
-        //   )
-        // }
-      })
-      .catch((error) => {
-        if (error.response) {
-          const { data } = error.response
-          if (data.error) {
-            dispatch(
-              displayNotification({
-                open: true,
-                message:
-                  'Request was throttled. Expected available in ' +
-                  data.error.retry_after +
-                  ' seconds.',
-                severity: 'warning'
-              })
-            )
-          }
+    emailOTPChangeEmailGenerate({ email })
+      .then()
+      .catch((exceptionHandler) => {
+        const { data } = exceptionHandler.response
+        let errorMessage
+        if (data?.data) {
+          errorMessage = data?.data?.detail
+        } else {
+          errorMessage = data?.errors?.email[0]
         }
+        dispatch(
+          displayNotification({
+            open: true,
+            message: errorMessage,
+            severity: 'warning'
+          })
+        )
       })
   }
 

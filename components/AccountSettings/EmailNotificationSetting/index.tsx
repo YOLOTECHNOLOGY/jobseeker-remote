@@ -5,7 +5,7 @@ import Text from 'components/Text'
 import { useFirstRender } from 'helpers/useFirstRender'
 
 // api
-import { emailNotificationUpdate } from 'store/services/auth/changeEmail'
+import { emailNotificationSettingUpdate } from 'store/services/auth/emailNotificationSettingUpdate.js'
 
 // ui
 import Switch from '@mui/material/Switch'
@@ -28,7 +28,7 @@ const EmailNotificationsetting = ({ label, setEdit, edit, emailNotificationSetti
       chat_email: chatEmail ? 1 : 0,
       newsletter_email: newsletterEmail ? 1 : 0
     }
-    emailNotificationUpdate(data)
+    emailNotificationSettingUpdate(data)
   }, [systemEmail, chatEmail, newsletterEmail])
 
   return (

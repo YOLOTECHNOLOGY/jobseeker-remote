@@ -37,14 +37,14 @@ import { getCookie } from 'helpers/cookies'
 import { getItem } from 'helpers/localStorage'
 
 // Images
-import { DeleteFilledIcon, CreateFilledIcon, AddOutlineIcon } from 'images'
+import { AddOutlineIcon, PencilIcon, AccountSettingDeleteIconBin } from 'images'
 
 // Styles
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
 
 const Step4 = (props: any) => {
-  const { config, userDetail, accessToken } = props
+  const { userDetail, accessToken } = props
 
   const quickUpladResumeType = getItem('quickUpladResume')
   const currentStep = 4
@@ -54,8 +54,12 @@ const Step4 = (props: any) => {
   const backBtnUrl = router.query?.redirect
     ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1101'
+  const config = useSelector((store: any) => store?.config?.config?.response)
 
-  const degreeList = getDegreeList(config)
+  useEffect(() => {
+    dispatch(fetchConfigRequest())
+  }, [])
+  const degreeList = getDegreeList(config)?.filter?.(item => item.key !== "not_required")
   const countryList = getCountryList(config)
   const locList = getLocationList(config)
 
@@ -133,7 +137,7 @@ const Step4 = (props: any) => {
           // !experience.degree ||
           !experience.location ||
           !experience.study_period_from ||
-          !degreeList.filter((degree) => degree.label === experience.degree_key)[0]?.value
+          !degreeList.filter((degree) => degree.value === experience.degree_key)[0]?.value
 
         if (experience.is_currently_studying && requireFields) {
           handleSelectEducation(experience)
@@ -237,7 +241,7 @@ const Step4 = (props: any) => {
 
   const getLocation = (location) => {
     if (!location) return
-    return locList.filter((loc) => loc.value.toLowerCase() === location.toLowerCase())
+    return locList.filter((loc) => loc?.value.toLowerCase() === location.toLowerCase())
   }
 
   const onLocationSearch = (_, value) => {
@@ -258,7 +262,7 @@ const Step4 = (props: any) => {
     setShowForm(!showForm)
     setEducationId(education.id)
     setSchool(education.school)
-    setDegree(degreeList.filter((degree) => degree.label === education.degree_key)[0]?.value)
+    setDegree(degreeList.filter((degree) => degree.value === education.degree_key)[0]?.value)
     setLocation(education.location ? getLocation(education.location)[0] : null)
     if (education.location && education.location.toLowerCase() === 'overseas') {
       setCountry(countryList.filter((country) => country.key === education.country_key)[0].value)
@@ -288,7 +292,7 @@ const Step4 = (props: any) => {
 
   const handleCancelForm = () => {
     setShowForm(false)
-    setIsNextDisabled(userEducations.length > 1 ? false : true)
+    setIsNextDisabled(userEducations.length >= 1 ? false : true)
 
     if (selectedEducation) {
       handleResetForm()
@@ -341,16 +345,23 @@ const Step4 = (props: any) => {
     const isCreateFreeResume =
       (getItem('isCreateFreeResume') || getItem('isFromCreateResume') === '1') ?? false
     const isRegisterModuleRedirect = getItem('isRegisterModuleRedirect')
-
+    const isChatRedirect = localStorage.getItem('isChatRedirect')
     let redirect = router.query?.redirect ? router.query?.redirect : null
 
     if (isRegisterModuleRedirect && !quickUpladResumeType) {
       redirect = isRegisterModuleRedirect
     }
+    if (isChatRedirect) {
+      redirect = isChatRedirect
+      localStorage.removeItem('isChatRedirect')
+    }
     if (isCreateFreeResume || quickUpladResumeType === 'onLine') {
       dispatch(generateUserResumeRequest({ redirect, accessToken }))
     }
 
+    if (quickUpladResumeType === 'onLine') {
+      return
+    }
     if (!isCreateFreeResume) {
       dispatch(updateUserOnboardingInfoRequest({ currentStep: 5, redirect, accessToken }))
     }
@@ -411,7 +422,7 @@ const Step4 = (props: any) => {
                 <br />
                 <Text textStyle='base' tagName='p'>
                   {education?.location} -{' '}
-                  {getLocation(education?.location)?.[0].region_display_name}
+                  {getLocation(education?.location)?.[0]?.region_display_name}
                 </Text>
                 <Text textStyle='base' tagName='p'>
                   {education?.field_of_study}
@@ -424,13 +435,13 @@ const Step4 = (props: any) => {
                     handleSelectEducation(education)
                   }}
                 >
-                  <img src={CreateFilledIcon} width='18' height='18' />
+                  <img src={PencilIcon} width='22' height='22' />
                 </div>
                 <div
                   className={styles.stepDataActionItem}
                   onClick={() => handleDeleteEducation(education.id)}
                 >
-                  <img src={DeleteFilledIcon} width='18' height='18' />
+                  <img src={AccountSettingDeleteIconBin} width='14' height='14' />
                 </div>
               </div>
             </div>
@@ -676,23 +687,23 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   if (!accessToken) {
     return {
       redirect: {
-        destination: '/login/jobseeker?redirect=/jobseeker-complete-profile/1102',
+        destination: '/get-started?redirect=/jobseeker-complete-profile/1102',
         permanent: false
       }
     }
   }
 
-  store.dispatch(fetchConfigRequest())
+  // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const config = storeState.config.config.response
+  // const config = storeState.config.config.response
   const userDetail = storeState.users.fetchUserOwnDetail.response
 
   return {
     props: {
-      config,
+      // config,
       userDetail,
       accessToken
     }

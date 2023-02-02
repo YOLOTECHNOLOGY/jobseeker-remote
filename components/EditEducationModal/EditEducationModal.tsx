@@ -161,7 +161,7 @@ const EditEducationModal = ({
 
   useEffect(() => {
     if (education) {
-      const degKey = degreeList.filter((degree) => degree.label === education.degree)[0].value
+      const degKey = degreeList.filter((degree) => degree.label === education.degree)[0].key
       setSchool(education.school)
       setDegreeKey(degKey)
       setIsCurrentlyStudying(education.is_currently_studying)

@@ -29,30 +29,23 @@ function* generateUserResumeReq({ payload }) {
   }
 }
 
-function* completeUserProfileSaga(redirect, accessToken) {
+function* completeUserProfileSaga(redirect, token) {
   const isFromCreateResume = getItem('isFromCreateResume')
 
   try {
+    const accessToken = token || getCookie('accessToken')
     const { data } = yield call(completeUserProfileService, { accessToken })
     yield put(completeUserProfileSuccess(data.data))
-
     const userCookie = getCookie('user')
-    const accessToken = getCookie('accessToken')
-
     userCookie.is_profile_completed = true
-
     yield call(setCookie, 'user', userCookie)
-
     let url = '/jobs-hiring/job-search'
-
     if (redirect) {
       url = redirect
     }
-
     if (isFromCreateResume && isFromCreateResume === '1') {
       url = `${process.env.OLD_PROJECT_URL}/dashboard/profile/jobseeker`
     }
-
     removeItem('isFromCreateResume')
     removeItem('isCreateFreeResume')
     removeItem('quickUpladResume')

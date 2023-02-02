@@ -10,7 +10,6 @@ function* postSaveJobReq(action) {
     const { data } = yield call(postSaveJobService, { job_id: jobId, user_id, accessToken })
     yield put(postSaveJobSuccess(data.data))
   } catch (error) {
-    console.log('error', error)
     yield put(postSaveJobFailed(error))
   }
 }

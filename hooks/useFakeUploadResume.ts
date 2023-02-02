@@ -12,7 +12,7 @@ const Step2 = () => {
   const redirect = router.query?.redirect
     ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1101'
-
+  
   const [resume, setResume] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [isCreatingResume, setIsCreatingResume] = useState(false)

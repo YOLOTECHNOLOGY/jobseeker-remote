@@ -1,0 +1,3 @@
+import EditJobPreferencesDeleteModal from './EditJobPreferencesDeleteModal'
+
+export default EditJobPreferencesDeleteModal

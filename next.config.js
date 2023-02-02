@@ -9,14 +9,18 @@ module.exports = {
         {
           source: '/((?!maintenance).*)',
           destination: '/maintenance',
-          permanent: false,
-        },
+          permanent: false
+        }
       ]
     }
 
     return redirectionPaths
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
+  experimental: {
+    concurrentFeatures: true,
+    serverComponents: true
+  },
   env: {
     ENV: process.env.ENV,
     MAINTENANCE: process.env.MAINTENANCE,
@@ -29,6 +33,7 @@ module.exports = {
     JOB_BOSSJOB_URL: process.env.JOB_BOSSJOB_URL,
     SEARCH_BOSSJOB_URL: process.env.SEARCH_BOSSJOB_URL,
     CHAT_BOSSJOB_URL: process.env.CHAT_BOSSJOB_URL,
+    JOB_APPLICATION_URL: process.env.JOB_APPLICATION_URL,
     JOBSEEKER_URL: process.env.JOBSEEKER_URL,
     DOCUMENT_GENERATOR_URL: process.env.DOCUMENT_GENERATOR_URL,
     RECO_URL: process.env.RECO_URL,
@@ -47,18 +52,19 @@ module.exports = {
     LINKEDIN_CLIENT_ID: process.env.LINKEDIN_CLIENT_ID,
     LINKEDIN_CLIENT_SECRET: process.env.LINKEDIN_CLIENT_SECRET,
     APP_STORE_LINK: 'https://apps.apple.com/sg/app/bossjob/id1592073585',
-    GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'
+    GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp',
+    BLOG_BOSSJOB: 'https://blog.bossjob.ph'
   },
   sassOptions: {
-    includePaths: [path.join(__dirname, 'node_modules')],
+    includePaths: [path.join(__dirname, 'node_modules')]
   },
   images: {
-    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl'],
+    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl']
   },
   webpack(config, { isServer }) {
     if (isServer) {
       generateRobotsTxt()
     }
     return config
-  },
+  }
 }

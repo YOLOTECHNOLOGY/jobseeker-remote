@@ -7,7 +7,7 @@ import watchFetchConfig from 'store/sagas/config/fetchConfig'
 import watchFetchJobsList from 'store/sagas/jobs/fetchJobsList'
 import watchFetchJobDetail from 'store/sagas/jobs/fetchJobDetail'
 import watchFetchSimilarJobs from 'store/sagas/jobs/fetchSimilarJobs'
-
+import watchFetchChatDetail from 'store/sagas/jobs/fetchChatDetail'
 import watchFetchAppliedJobsList from 'store/sagas/jobs/fetchAppliedJobsList'
 import watchFetchAppliedJobDetail from 'store/sagas/jobs/fetchAppliedJobDetail'
 import watchWithdrawAppliedJob from 'store/sagas/jobs/withdrawAppliedJob'
@@ -53,7 +53,7 @@ import watchManageUserWorkExperiences from 'store/sagas/users/manageUserWorkExpe
 import watchManageUserEducations from 'store/sagas/users/manageUserEducations'
 import watchManageUserLicensesAndCertifications from 'store/sagas/users/manageUserLicensesAndCertifications'
 import watchManageUserLinks from 'store/sagas/users/manageUserLinks'
-
+import watchJobHiredServerSide from 'store/sagas/jobs/jobHiredServerSide'
 // Courses
 import watchFetchRecommendedCourses from 'store/sagas/courses/fetchRecommendedCourses'
 
@@ -65,6 +65,8 @@ import watchSendResetPasswordCode from 'store/sagas/auth/sendResetPasswordCode'
 
 import watchResetPassword from 'store/sagas/auth/resetPassword'
 import watchRegisterJobseeker from 'store/sagas/auth/registerJobseeker'
+import jobseekersLoginSaga from 'store/sagas/auth/jobseekersLogin'
+import jobseekersSocialLoginSaga from 'store/sagas/auth/jobseekersSocialLogin'
 
 import watchLogout from 'store/sagas/auth/logout'
 
@@ -77,7 +79,7 @@ function* rootSaga() {
     watchFetchJobsList(),
     watchFetchJobDetail(),
     watchFetchSimilarJobs(),
-
+    watchFetchChatDetail(),
     watchFetchCompanyDetail(),
     watchFetchFeaturedCompaniesList(),
     watchFetchSimilarCompany(),
@@ -94,7 +96,7 @@ function* rootSaga() {
     watchDeleteSaveJob(),
     watchQuickApplyJob(),
     watchApplyJob(),
-
+    watchJobHiredServerSide(),
     watchPostReport(),
 
     watchFetchJobAlertsList(),
@@ -131,7 +133,10 @@ function* rootSaga() {
 
     watchRegisterJobseeker(),
 
-    watchFetchRecommendedCourses()
+    watchFetchRecommendedCourses(),
+
+    jobseekersLoginSaga(),
+    jobseekersSocialLoginSaga()
   ])
 }
 

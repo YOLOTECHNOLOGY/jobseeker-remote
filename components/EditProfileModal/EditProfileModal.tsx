@@ -49,7 +49,7 @@ for (let i = date.getFullYear(); i >= date.getFullYear() - 100; --i) {
 const formatLocationConfig = (locationList) => {
   const locationConfig = locationList?.map((region) => region.locations)
   // const formattedConfig = locationConfig.map((loc) => {
-  //   return { ...loc, label: loc.value, value: loc.key }
+  //   return { ...loc, label: loc?.value, value: loc.key }
   // })
   return locationConfig
 }
@@ -96,12 +96,14 @@ const EditProfileModal = ({
   const updateUserProfileSuccess = useSelector(
     (store: any) => store.users.updateUserProfile.response
   )
-  const xpLevelList = useSelector((store: any) => store.config.config.response?.inputs?.xp_lvls)
+  const xpLevelList = useSelector(
+    (store: any) => store.config.config.response?.inputs?.xp_lvls ?? []
+  )
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
   )
 
-  const formattedXpLevelList = xpLevelList.map((xp) => {
+  const formattedXpLevelList = xpLevelList?.map?.((xp) => {
     return { ...xp, label: xp.value, value: xp.key }
   })
 
@@ -110,7 +112,7 @@ const EditProfileModal = ({
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
   const matchedLocation = formattedLocationList.find((loc) => {
-    return loc.value == userLocation
+    return loc?.value == userLocation
   })
   const [location, setLocation] = useState(matchedLocation)
 
@@ -143,7 +145,7 @@ const EditProfileModal = ({
     if (userDetail && userDetail.location) {
       if (userDetail.location) {
         const matchedLocation = formattedLocationList.find((loc) => {
-          return loc.value == userLocation
+          return loc?.value == userLocation
         })
         // setLocation(matchedLocation)
         setValue('location', matchedLocation?.value)
@@ -152,7 +154,7 @@ const EditProfileModal = ({
   }, [userDetail])
 
   useEffect(() => {
-    if (updateUserProfileSuccess){
+    if (updateUserProfileSuccess) {
       handleCloseModal()
     }
   }, [userDetail])
@@ -164,7 +166,7 @@ const EditProfileModal = ({
   const onSubmit = (data) => {
     const { firstName, lastName, summary, yearsOfExperience, location } = data
     const matchedLocation = formattedLocationList.find((loc) => {
-      return loc.value == location
+      return loc?.value == location
     })
 
     const payload = {
@@ -325,15 +327,19 @@ const EditProfileModal = ({
             <div className={styles.profileFormGroup}>
               <div className={styles.descriptionField}>
                 <TextField
-                  {...register('summary')}
+                  {...register('summary', {
+                    maxLength: { value: 4000, message: 'Please enter text within 4000' }
+                  })}
                   className={styles.profileFormInput}
+                  label='Provide a career summary and briefly highlight your relevant experience, achievement and skills.'
                   placeholder='Provide a career summary and briefly highlight your relevant experience, achievement and skills.'
                   name='summary'
                   variant='outlined'
                   autoComplete='off'
                   multiline
-                  rows={9}
+                  rows={6}
                 />
+                {errors.summary && errorText(errors.summary.message)}
               </div>
             </div>
           </div>

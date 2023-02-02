@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { isMobile } from 'react-device-detect'
 
@@ -18,8 +18,6 @@ import {
   TimelineDot
 } from '@mui/lab'
 import classNames from 'classnames/bind'
-import Modal from '@mui/material/Modal'
-import LinearProgress from '@mui/material/LinearProgress'
 import classNamesCombined from 'classnames'
 import dynamic from 'next/dynamic'
 
@@ -37,14 +35,11 @@ import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
 import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 import UploadResumeButton from 'components/LncreaseUserConversion/UploadResumeButton/UploadResumeButton'
-import RegisterInfo from 'components/IncreaseUserConversion/RegisterInfo'
-import SocialMediaAuth from 'components/SocialMediaAuth/SocialMediaAuth'
 const ModalVerifyEmail = dynamic(() => import('components/ModalVerifyEmail'))
 // import AdSlot from 'components/AdSlot'
 
 const ModalShare = dynamic(() => import('components/ModalShare'))
 const ModalReportJob = dynamic(() => import('components/ModalReportJob'))
-const QuickApplyModal = dynamic(() => import('components/QuickApplyModal'))
 import Dropdown from '../../components/Dropdown'
 import AdSlot from '../../components/AdSlot'
 const ModalWithdrawApplication = dynamic(() => import('components/ModalWithdrawApplication'))
@@ -54,36 +49,19 @@ import { getCookie, setCookie, removeCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
 import { userFilterSelectionDataParser, getApplyJobLink } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
-
-/* Action Creators */
 import { wrapper } from 'store'
-
-/* Redux Actions */
 import { fetchAppliedJobDetailRequest } from 'store/actions/jobs/fetchAppliedJobDetail'
 import { fetchSimilarJobsRequest } from 'store/actions/jobs/fetchSimilarJobs'
-import { fetchRecommendedCoursesRequest } from 'store/actions/courses/fetchRecommendedCourses'
-
+// import { fetchRecommendedCoursesRequest } from 'store/actions/courses/fetchRecommendedCourses'
 import { fetchJobDetailRequest } from 'store/actions/jobs/fetchJobDetail'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
-
 import { postReportRequest } from 'store/actions/reports/postReport'
 import { postSaveJobRequest } from 'store/actions/jobs/postSaveJob'
 import { deleteSaveJobRequest } from 'store/actions/jobs/deleteSaveJob'
-
-import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
-
 import { withdrawAppliedJobRequest } from 'store/actions/jobs/withdrawAppliedJob'
-
 import { addExternalJobClickService } from 'store/services/jobs/addExternalJobClick'
-
-import useRegister from 'hooks/useRegister'
-
-/* Styles */
 import styles from './Job.module.scss'
 import breakpointStyles from 'styles/breakpoint.module.scss'
-import quickStyles from 'pages/quick-upload-resume/styles.module.scss'
-
-/* Images */
 import {
   BriefcaseIcon,
   LocationIcon,
@@ -102,17 +80,18 @@ import {
   LocationPinIcon,
   BlueTickIcon,
   DefaultAvatar,
-  CarIcon,
-  BossjobLogo,
-  increaseUserConversionModelBg,
-  increaseUserConversionBrush,
-  CloseIcon
+  CarIcon
 } from 'images'
-import { getItem, setItem } from 'helpers/localStorage'
+import RegisterModal from 'components/RegisterModal'
+import { createChat } from 'helpers/interpreters/services/chat'
+import { fetchSwitchJobService } from 'store/services/jobs/fetchSwitchJob'
+import Modal from 'components/Modal'
+import jobSource from 'helpers/jobSource'
+import { updateImState } from 'store/actions/chat/imState'
 interface IJobDetail {
   jobDetail: any
   applicationHistory: any
-  config: any
+  // config: any
   accessToken: any
   seoMetaTitle: string
   seoMetaDescription: string
@@ -122,22 +101,23 @@ interface IJobDetail {
 const Job = ({
   jobDetail,
   applicationHistory,
-  config,
+  // config,
   accessToken,
   seoMetaTitle,
   seoMetaDescription,
   seoCanonicalUrl
 }: IJobDetail) => {
-  const UseHooksRegister = useRegister()
-  const { isRegisteringJobseeker, isLoading, callbackRequest } = UseHooksRegister
-
   const dispatch = useDispatch()
+  const config = useSelector((store: any) => store?.config?.config?.response)
+  useEffect(() => {
+    dispatch(fetchConfigRequest())
+  }, [])
   const router = useRouter()
   const { width } = useWindowDimensions()
   const prevScrollY = useRef(0)
   const userCookie = getCookie('user') || null
   const authCookie = accessToken
-  const applyJobLink = getApplyJobLink(jobDetail, userCookie, accessToken)
+  const applyJobLink = getApplyJobLink(jobDetail, userCookie)
 
   const [isSticky, setIsSticky] = useState(false)
   const [openRegister, setOpenRegister] = useState(false)
@@ -145,19 +125,15 @@ const Job = ({
   const [isShowModalShare, setIsShowModalShare] = useState(false)
   const [isShowReportJob, setIsShowReportJob] = useState(false)
   const [suggestionList, setSuggestionList] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const [isShowModal, setIsShowModal] = useState(false)
   const [isWithdrawApplicationModal, setIsWithdrawApplicationModal] = useState(false)
-  const [closeRegisterModuleTime, setCloseRegisterModuleTime] = useState(
-    getItem('notLoginShowRegisterModuleTime')
-  )
-  const time = useRef(null)
-
   const jobDetailUrl = jobDetail?.['job_url'] || '/'
   const companyUrl = jobDetail?.['company']?.['company_url'] || '/'
   const [recommendedCourses, setRecommendedCourses] = useState([])
   const [similarJobs, setSimilarJobs] = useState(null)
-  const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
 
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
@@ -175,6 +151,9 @@ const Job = ({
   const isSimilarJobsFetching = useSelector((store: any) => store.job.similarJobs.fetching)
   const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
+  const chatDetail = useMemo(() => {
+    return jobDetail?.chat ?? {}
+  }, [jobDetail])
 
   // Loading
   const isWithdrawAppliedJobFetching = useSelector(
@@ -204,7 +183,7 @@ const Job = ({
   }, [])
 
   useEffect(() => {
-    handleFetchRecommendedCourses()
+    // handleFetchRecommendedCourses()
     handleFetchSimilarJobs()
   }, [jobDetail])
 
@@ -258,15 +237,13 @@ const Job = ({
         dispatch(postSaveJobRequest(postSaveJobPayload))
       } else {
         setIsSavedJob(false)
-
         const deleteJobPayload = {
           jobId: jobDetail?.id
         }
-
         dispatch(deleteSaveJobRequest(deleteJobPayload))
       }
     } else {
-      router.push(`/login/jobseeker?redirect=${router.asPath}`)
+      router.push(`/get-started?redirect=${router.asPath}`)
     }
   }
 
@@ -280,22 +257,22 @@ const Job = ({
     }
   }
 
-  const getJobDetailCategoryIds = () => {
-    const jobCategoryIds = []
-    jobDetail?.categories?.map((cat) => {
-      jobCategoryIds.push(cat.id)
-    })
-    return jobCategoryIds?.length > 0 ? jobCategoryIds.join(',') : null
-  }
+  // const getJobDetailCategoryIds = () => {
+  //   const jobCategoryIds = []
+  //   jobDetail?.categories?.map((cat) => {
+  //     jobCategoryIds.push(cat.id)
+  //   })
+  //   return jobCategoryIds?.length > 0 ? jobCategoryIds.join(',') : null
+  // }
 
-  const handleFetchRecommendedCourses = () => {
-    const payload = {
-      size: 3,
-      job_category_ids: getJobDetailCategoryIds(),
-      xp_lvl_key: jobDetail?.xp_lvl.key
-    }
-    dispatch(fetchRecommendedCoursesRequest(payload))
-  }
+  // const handleFetchRecommendedCourses = () => {
+  //   const payload = {
+  //     size: 3,
+  //     job_category_ids: getJobDetailCategoryIds(),
+  //     xp_lvl_key: jobDetail?.xp_lvl.key
+  //   }
+  //   dispatch(fetchRecommendedCoursesRequest(payload))
+  // }
 
   const handleFetchSimilarJobs = () => dispatch(fetchSimilarJobsRequest({ jobId: jobDetail.id }))
 
@@ -371,37 +348,6 @@ const Job = ({
     }
   }
 
-  const handleVerifyEmailClick = async () => {
-    // revalidate verify email status
-    const response = await fetchUserOwnDetailService({ accessToken: accessToken })
-    const userDetails = response?.data?.data
-    const isVerifiedEmail = userDetails?.is_email_verify
-
-    if (!isVerifiedEmail) {
-      // email is not verified
-      setIsShowModal(true)
-    } else {
-      // email is verified and user cookie is outdated
-      const userCookie = {
-        active_key: userDetails.active_key,
-        id: userDetails.id,
-        first_name: userDetails.first_name,
-        last_name: userDetails.last_name,
-        email: userDetails.email,
-        phone_num: userDetails.phone_num,
-        is_mobile_verified: userDetails.is_mobile_verified,
-        avatar: userDetails.avatar,
-        additional_info: userDetails.additional_info,
-        is_email_verify: true,
-        notice_period_id: userDetails.notice_period_id,
-        is_profile_completed: userDetails.is_profile_completed
-      }
-
-      setCookie('user', userCookie)
-      router.reload()
-    }
-  }
-
   const handleWithdrawApplication = async ({ jobId }) => {
     const payload = {
       jobId
@@ -416,26 +362,58 @@ const Job = ({
     } else {
       // mobile get jobDetail is by url id
       setCookie('isMobileReportJob', true)
-      router.push('/login/jobseeker?redirect=' + jobDetail.job_url)
+      router.push('/get-started?redirect=' + jobDetail.job_url)
     }
   }
 
-  const handleApplyJob = () => {
-    if (!userCookie) {
-      setQuickApplyModalShow(true)
+  const handleChat = () => {
+    if (!userCookie || !authCookie) {
+      localStorage.setItem('isChatRedirect', `/chat-redirect/${jobDetail?.id}`)
+      setOpenRegister(true)
+    } else if (jobDetail?.external_apply_url) {
+      addExternalJobClickService(jobDetail?.id)
+      const link = getApplyJobLink(jobDetail, userCookie)
+      window.open(link)
+    } else if (chatDetail.is_exists) {
+      if (chatDetail.job_id !== jobDetail?.id) {
+        setShowModal(true)
+      } else {
+        router.push(`/chat/${chatDetail?.chat_id}`)
+      }
     } else {
-      if (userCookie && !userCookie.is_email_verify) {
-        handleVerifyEmailClick()
-      }
-
-      if (jobDetail?.external_apply_url) {
-        addExternalJobClickService(jobDetail?.id)
-      }
-
-      window.open(applyJobLink)
+      setLoading(true)
+      const source = jobSource()
+      createChat(jobDetail?.id, { source })
+        .then((result) => {
+          const chatId = result.data.data.id
+          const newData = {
+            ...result.data?.data?.job_application,
+            initiated_role: result.data?.data?.initiated_role,
+            chatStatus: result.data?.data?.status
+          }
+          dispatch(updateImState({ chatId, imState: newData }))
+          router.push(`/chat/${chatId}`)
+        })
+        .catch((e) => {
+          router.push(`/chat`)
+        })
+        .finally(() => setLoading(false))
     }
   }
-
+  const requestSwitch = useCallback(() => {
+    setLoading(true)
+    fetchSwitchJobService({
+      status: 'protected',
+      job_id: jobDetail.id,
+      applicationId: chatDetail.job_application_id
+    })
+      .then(() => {
+        router.push(`/chat/${chatDetail.chat_id}`)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [jobDetail.id, chatDetail?.job_application_id, chatDetail?.chat_id])
   const renderSaveAndApplyActions = () => {
     return (
       <div
@@ -451,12 +429,20 @@ const Job = ({
                 <MaterialButton
                   variant='contained'
                   capitalize
-                  disabled={jobDetail?.is_applied}
                   className={styles.applyBtn}
-                  onClick={handleApplyJob}
+                  isLoading={loading}
+                  onClick={handleChat}
                 >
                   <Text textColor='white' bold>
-                    {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
+                    {(() => {
+                      if (jobDetail?.external_apply_url) {
+                        return 'Apply Now'
+                      } else if (chatDetail.is_exists && chatDetail.job_id === jobDetail.id) {
+                        return 'Continue Chat'
+                      } else {
+                        return 'Chat Now'
+                      }
+                    })()}
                   </Text>
                 </MaterialButton>
                 <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
@@ -495,12 +481,20 @@ const Job = ({
           <MaterialButton
             variant='contained'
             capitalize
-            disabled={jobDetail?.is_applied}
+            isLoading={loading}
             className={styles.applyBtn}
-            onClick={handleApplyJob}
+            onClick={handleChat}
           >
             <Text textColor='white' bold>
-              {jobDetail?.is_applied ? 'Applied' : 'Apply Now'}
+              {(() => {
+                if (jobDetail?.external_apply_url) {
+                  return 'Apply Now'
+                } else if (chatDetail.is_exists && chatDetail.job_id === jobDetail.id) {
+                  return 'Continue Chat'
+                } else {
+                  return 'Chat Now'
+                }
+              })()}
             </Text>
           </MaterialButton>
         </div>
@@ -572,55 +566,6 @@ const Job = ({
     router.push('/quick-upload-resume')
   }
 
-  const useInterval = (callback?, dep = 6000) => {
-    clearInterval(time.current)
-    const isShowRegisterModule = () => {
-      const nowTime = moment().format('YYYY-MM-DD HH:mm:ss')
-      if (moment(closeRegisterModuleTime).isBefore(nowTime)) {
-        if (!quickApplyModalShow) {
-          handleOpenRegisterModule()
-          clearTimeout(time.current)
-        }
-      } else {
-        // console.log('还没有到弹出的时候')
-      }
-    }
-
-    time.current = setInterval(isShowRegisterModule, dep)
-    return () => clearInterval(time.current)
-  }
-
-  useEffect(() => {
-    if (!accessToken) {
-      const notLoginShowRegisterModule = getItem('notLoginShowRegisterModuleTime')
-      if (notLoginShowRegisterModule) {
-        // Time 1 minute show module
-        // const intTime = setTimeout(() => {
-        // }, 60000)
-        return useInterval()
-      } else {
-        const callBack = () => {
-          if (!quickApplyModalShow) {
-            handleOpenRegisterModule()
-            clearTimeout(time)
-          }
-        }
-        const time = setInterval(callBack, 3000)
-        return () => {
-          clearTimeout(time)
-        }
-      }
-    }
-  }, [closeRegisterModuleTime, quickApplyModalShow])
-
-  const handleOpenRegisterModule = () => setOpenRegister(true)
-  const handleCloseRegisterModule = () => {
-    setOpenRegister(false)
-    const closeTime = moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss')
-    setItem('notLoginShowRegisterModuleTime', closeTime)
-    setCloseRegisterModuleTime(closeTime)
-  }
-
   return (
     <Layout>
       <SEO
@@ -631,118 +576,26 @@ const Job = ({
         imageUrl={jobDetail?.company?.logo}
       />
 
-      {width > 799 && (
-        <Modal
-          open={openRegister}
-          onClose={handleCloseRegisterModule}
-          aria-labelledby='modal-modal-title'
-          aria-describedby='modal-modal-description'
-          keepMounted
-          // hideBackdrop
-          disableAutoFocus
-        >
-          <div className={styles.forShowRegisterModal}>
-            <div className={styles.modalHeader}>
-              <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
-                Join Bossjob, kick-start your career!
-              </Text>
-              <div className={styles.modalCloseButton}>
-                <Text onClick={handleCloseRegisterModule}>
-                  <img
-                    src={CloseIcon}
-                    title='close modal'
-                    alt='close modal'
-                    width='14'
-                    height='14'
-                  />
-                </Text>
-              </div>
-            </div>
-            <div className={quickStyles.AuthWrapper}>
-              <div className={quickStyles.AuthWrapperImage}>
-                <div className={quickStyles.AuthWrapperImageTitle}>
-                  <div
-                    className={quickStyles.AuthWrapperImageTitleLineBg}
-                    style={{ backgroundImage: 'url(' + increaseUserConversionBrush + ')' }}
-                  >
-                    <Text textColor='white' textStyle='xxxl' block bold>
-                      Chat with Boss
-                    </Text>
-                  </div>
-                  <Text textColor='white' textStyle='xxxl' block bold>
-                    to get your
-                  </Text>
-                  <Text textColor='white' textStyle='xxxl' block bold>
-                    next offer!
-                  </Text>
-                </div>
-                <div className={quickStyles.AuthWrapperImageContext}>
-                  <img src={increaseUserConversionModelBg} />
-                  {/* <img
-                  src={increaseUserConversionBrush}
-                  className={quickStyles.AuthWrapperImageBrush}
-                /> */}
-                </div>
-              </div>
-              <div
-                className={classNames([
-                  quickStyles.AuthWrapperInfo,
-                  styles.AuthWrapperInfoModuleReg
-                ])}
-              >
-                {isLoading | isRegisteringJobseeker ? (
-                  <div className={quickStyles.AuthWrapperLoading}>
-                    <div className={quickStyles.loadingLogo}>
-                      <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
-                    </div>
-                    <div className={quickStyles.loadingIndicator}>
-                      <LinearProgress />
-                    </div>
-                    <Text textStyle='lg'>'Please hold on while we are parsing your resume'</Text>
-                  </div>
-                ) : null}
-
-                <div className={styles.Register}>
-                  <SocialMediaAuth callbackRequest={callbackRequest} />
-                  <div className={styles.RegisterDivider}>
-                    <Text textStyle='lg' className={styles.RegisterDividerText}>
-                      Or
-                    </Text>
-                  </div>
-                </div>
-
-                <RegisterInfo register4Step isRegisterModuleRedirect {...UseHooksRegister} />
-
-                <div className={styles.forModuleFooterText}>
-                  <Text tagName='p' textStyle='base'>
-                    Already on Bossjob?
-                    <Link
-                      to={`/login/jobseeker?redirect=${router.asPath}`}
-                      className={styles.AuthCTALink}
-                    >
-                      <Text textColor='primaryBlue' underline>
-                        {' '}
-                        Log in
-                      </Text>
-                    </Link>
-                  </Text>
-
-                  <Text tagName='p' textStyle='base'>
-                    Looking to hire people? Sign up as
-                    <Link
-                      to={`${process.env.OLD_PROJECT_URL}/login`}
-                      className={styles.AuthCTALink}
-                      aTag
-                      external
-                    >
-                      <Text textColor='primaryBlue'> Employer</Text>
-                    </Link>
-                  </Text>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Modal>
+      <Modal
+        showModal={showModal}
+        handleModal={() => setShowModal(false)}
+        firstButtonIsClose={false}
+        handleFirstButton={() => setShowModal(false)}
+        handleSecondButton={requestSwitch}
+        isFirstButtonLoading={loading}
+        isSecondButtonLoading={loading}
+        firstButtonText='Cancel'
+        secondButtonText='Proceed'
+        headerTitle={'Chat with ' + jobDetail?.recruiter?.full_name ?? ''}
+      >
+        <p>
+          You are currently chatting with recruiter for the{' '}
+          {chatDetail?.job?.job_title ?? chatDetail?.job?.function_job_title ?? 'this job'}{' '}
+          position. Are you sure you want to switch job?
+        </p>
+      </Modal>
+      {openRegister && (
+        <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} />
       )}
 
       <div className={styles.searchAndLocationContainer}>
@@ -825,21 +678,7 @@ const Job = ({
                 {renderSaveAndApplyActions()}
               </div>
             )}
-            {/* {width > 799 ? (
-              <div
-                className={classNamesCombined([styles.jobDetailPrimaryInfoWrapper, isStickyClass])}
-              >
-                <div className={styles.jobDetailPrimaryInfoWrapperContainer}>
-                  {renderJobDetailPrimarySection()}
-                  {renderSaveAndApplyActions()}
-                </div>
-              </div>
-            ) : (
-              <div className={styles.jobDetailPrimaryInfoWrapper}>
-                {renderJobDetailPrimarySection()}
-                {renderSaveAndApplyActions()}
-              </div>
-            )} */}
+
             <div className={styles.jobDetailPrimarySub}>
               {jobDetail?.is_featured && <JobTag tag='Featured' tagType='featured' />}
               {jobDetail?.is_urgent && <JobTag tag='Urgent' tagType='urgent' />}
@@ -1026,7 +865,7 @@ const Job = ({
             <Text textStyle='lg' className={styles.jobDetailSectionSubBody}>
               {jobDetail?.full_address}
             </Text>
-            <Text textStyle='lg' tagName='h2' bold className={styles.jobDetailSectionSubTitle}>
+            {/* <Text textStyle='lg' tagName='h2' bold className={styles.jobDetailSectionSubTitle}>
               Specialization
             </Text>
             {jobDetail?.categories?.map((category, i) => (
@@ -1043,7 +882,7 @@ const Job = ({
                   </Text>
                 </Link>
               </span>
-            ))}
+            ))} */}
           </div>
           {jobDetail?.recruiter && (
             <div className={styles.jobDetailRecruiter}>
@@ -1143,13 +982,13 @@ const Job = ({
                   </Text>
                 </div>
                 <div className={styles.jobDetailSidebarCardList}>
-                  {similarJobs.map((job) => (
+                  {similarJobs?.map((job) => (
                     <div key={job.id} className={styles.jobDetailSidebarCard}>
                       <Link to={`${process.env.HOST_PATH}${job.job_url}`} external>
                         <img
-                          src={job?.company_logo}
+                          src={job?.company?.logo}
                           className={styles.jobDetailSidebarCardImage}
-                          alt={`${job?.company_name} logo`}
+                          alt={`${job?.company?.name} logo`}
                         />
                       </Link>
                       <Link to={`${process.env.HOST_PATH}${job.job_url}`} aTag external>
@@ -1319,18 +1158,9 @@ const Job = ({
           jobDetailUrl={jobDetailUrl}
           isShowModalShare={isShowModalShare}
           handleShowModalShare={setIsShowModalShare}
+          selectedJob={jobDetail}
         />
       )}
-
-      {quickApplyModalShow && (
-        <QuickApplyModal
-          jobDetails={jobDetail}
-          modalShow={quickApplyModalShow}
-          handleModalShow={setQuickApplyModalShow}
-          config={config}
-        />
-      )}
-
       {isShowModal && (
         <ModalVerifyEmail
           email={userCookie ? userCookie.email : ''}
@@ -1347,42 +1177,6 @@ const Job = ({
           handleWithdrawApplication={handleWithdrawApplication}
           isWithdrawAppliedJobFetching={isWithdrawAppliedJobFetching}
           isWithdrawApplicationResult={isUnBingwithdrawAppliedStateSuccess}
-        />
-      )}
-      {isShowReportJob && (
-        <ModalReportJob
-          isShowReportJob={isShowReportJob}
-          handleShowReportJob={setIsShowReportJob}
-          reportJobReasonList={reportJobReasonList}
-          selectedJobId={jobDetail.id}
-          handlePostReportJob={handlePostReportJob}
-          isPostingReport={isPostingReport}
-          postReportResponse={postReportResponse}
-        />
-      )}
-
-      {isShowModalShare && (
-        <ModalShare
-          jobDetailUrl={jobDetailUrl}
-          isShowModalShare={isShowModalShare}
-          handleShowModalShare={setIsShowModalShare}
-        />
-      )}
-
-      {quickApplyModalShow && (
-        <QuickApplyModal
-          jobDetails={jobDetail}
-          modalShow={quickApplyModalShow}
-          handleModalShow={setQuickApplyModalShow}
-          config={config}
-        />
-      )}
-
-      {isShowModal && (
-        <ModalVerifyEmail
-          email={userCookie ? userCookie.email : ''}
-          isShowModal={isShowModal}
-          handleModal={handleCloseModal}
         />
       )}
     </Layout>
@@ -1413,14 +1207,14 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     }
   }
 
-  store.dispatch(fetchConfigRequest())
+  // store.dispatch(fetchConfigRequest())
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   let jobDetail = storeState.job.jobDetail.response
   const appliedJobDetail = storeState.job.appliedJobDetail.response
-  const config = storeState.config.config.response
+  // const config = storeState.config.config.response
 
   if (Object.keys(jobDetail).length > 0 || Object.keys(appliedJobDetail).length > 0) {
     jobDetail = jobDetail?.id ? jobDetail : appliedJobDetail?.job
@@ -1429,18 +1223,19 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       id: jobId,
       job_title: jobTitle,
       company: { name },
-      categories,
+      // categories,
       full_address: fullAddress,
       location,
       job_url: jobUrl
     } = jobDetail
 
-    let categoryMetaText = ''
-    categories.forEach((el) => {
-      categoryMetaText += `${el.value}, `
-    })
-    categoryMetaText = categoryMetaText.slice(0, categoryMetaText.length - 2)
-    categoryMetaText += ' - related job opportunities'
+    // let categoryMetaText = ''
+    // categories.forEach((el) => {
+    //   categoryMetaText += `${el.value}, `
+    // })
+    // categoryMetaText = categoryMetaText.slice(0, categoryMetaText.length - 2)
+    // categoryMetaText += ' - related job opportunities'
+    const categoryMetaText = 'jobs'
     const seoMetaTitle = `${name} is hiring ${jobTitle} - ${jobId} | Bossjob`
     const seoMetaDescription = encodeURI(
       `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${
@@ -1450,7 +1245,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
 
     return {
       props: {
-        config,
         jobDetail: jobDetail?.id ? jobDetail : appliedJobDetail?.job,
         applicationHistory: appliedJobDetail?.application_histories || null,
         accessToken,

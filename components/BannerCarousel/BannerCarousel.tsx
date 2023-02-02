@@ -13,7 +13,7 @@ interface BannerCarouselProps {
 }
 
 const BannerCarousel = ({
-  slides
+  slides=[]
 }: BannerCarouselProps) => {
   const autoplay = useRef(
     // eslint-disable-next-line

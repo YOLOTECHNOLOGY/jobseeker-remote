@@ -15,6 +15,7 @@ type MaterialTextFieldProps = {
   variant?: 'outlined' | 'filled' | 'standard'
   isLoading?: boolean
   disabled?: boolean
+  required?:boolean
   color?: string
   error?: any
   InputProps?: any
@@ -25,6 +26,8 @@ type MaterialTextFieldProps = {
   maxLength?: Number
   isSubmitOnEnter?: boolean
   onSubmit?: any
+  helperText?:string
+  ref?:any
 } & Omit<Input, 'size'>
 
 const theme = createTheme({
@@ -64,9 +67,8 @@ const theme = createTheme({
     }
   },
 })
-const MaterialTextField = ({ id, label, variant, error, refs, size, color, className, defaultValue, multiline=false, rows=1, maxLength=255, isSubmitOnEnter, onSubmit, ...rest} : MaterialTextFieldProps) => {
+const MaterialTextField = ({ id, label,helperText, required, variant, error, refs, size, color, className, defaultValue, multiline=false, rows=1, maxLength=255, isSubmitOnEnter, onSubmit, ...rest} : MaterialTextFieldProps) => {
   const [value, setValue] = useState(defaultValue)
-
   useEffect(()=>{
     setValue(defaultValue)
   },[defaultValue])
@@ -82,7 +84,7 @@ const MaterialTextField = ({ id, label, variant, error, refs, size, color, class
         }: null} 
         {...refs}
         id={id} 
-        label={label} 
+        label={<span>{label} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>} 
         color={color as any} 
         value={value} 
         onChange={handleChange} 
@@ -92,6 +94,7 @@ const MaterialTextField = ({ id, label, variant, error, refs, size, color, class
         error={error}
         multiline={multiline}
         rows={rows}
+        helperText={helperText}
         {...rest}
         inputProps={{
           maxLength,

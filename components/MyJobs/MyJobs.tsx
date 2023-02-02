@@ -82,7 +82,11 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
-  const isMobile = width < 768 ? true : false
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    setIsMobile(width < 768)
+  }, [width])
+  // const isMobile = width < 768 ? true : false
   const isAppliedCategory = category === 'applied'
   const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
 
@@ -122,7 +126,6 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
   const isAppliedJobDetailFetching = useSelector(
     (store: any) => store.job.appliedJobDetail.fetching
   )
-
   const savedJobsListResponse = useSelector((store: any) => store.job.savedJobsList.response)
   const isSavedJobsListFetching = useSelector((store: any) => store.job.savedJobsList.fetching)
 
@@ -170,7 +173,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
   }, [isAppliedJobsListFetching, isSavedJobsListFetching])
 
   useEffect(() => {
-    setJobsList(appliedJobsListResponse.data?.applied_jobs)
+    setJobsList(appliedJobsListResponse.data?.job_applications)
     setTotalPages(appliedJobsListResponse.data?.total_pages)
     setTotalNum(appliedJobsListResponse.data?.total_num)
   }, [appliedJobsListResponse])
@@ -401,21 +404,21 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                 jobsList?.map((jobs, i) => (
                   <JobCard
                     key={i}
-                    id={jobs.job.id}
-                    image={jobs.job.company_logo}
-                    title={jobs.job.job_title}
-                    company={jobs.job.company_name}
-                    location={jobs.job.location_value}
-                    salary={jobs.job.salary_range_value}
-                    postedAt={jobs.job.refreshed_at}
+                    id={jobs.id}
+                    image={jobs?.company?.logo_url}
+                    title={jobs?.job?.job_title}
+                    company={jobs?.company?.name}
+                    location={jobs?.job?.location?.value}
+                    salary={jobs?.job?.salary_range_value}
+                    postedAt={jobs?.job?.refreshed_at}
                     selectedId={selectedJobId}
-                    status={jobs.job.status_key}
+                    status={jobs?.job?.status_key}
                     applicationStatus={jobs.status}
                     applicationUpdatedAt={jobs.updated_at}
                     handleSelectedId={() =>
-                      handleSelectedJobId(jobs.job.id, jobs.job.job_url, jobs.job.status_key)
+                      handleSelectedJobId(jobs.job_id, jobs?.job?.job_url, jobs?.job?.status_key)
                     }
-                    isCompanyVerified={jobs.job.company.is_verify}
+                    isCompanyVerified={jobs?.company?.is_verify}
                   />
                 ))}
             </div>
@@ -474,6 +477,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
           jobDetailUrl={selectedJob?.['job_url']}
           isShowModalShare={isShowModalShare}
           handleShowModalShare={setIsShowModalShare}
+          selectedJob={selectedJob}
         />
       )}
 
