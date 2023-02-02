@@ -21,10 +21,7 @@
     "project": "./tsconfig.json"
     // "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "require-jsdoc": "off",
     "prefer-const": "error",
@@ -34,6 +31,10 @@
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/camelcase": ["off"],
+
+    // bossjob 3.0
+    "@typescript-eslint/no-unused-vars": "warn",
+    "no-unused-vars": "warn",
     // "no-console": [
     //   "error",
     //   { "allow": [
@@ -65,17 +66,9 @@
     "react/no-unescaped-entities": "off",
     "import/extensions": "off"
   },
-  "ignorePatterns": [
-    "next-env.d.ts",
-    "lib/redirection.js"
-  ],
+  "ignorePatterns": ["next-env.d.ts", "lib/redirection.js"],
   "settings": {
-    "import/extensions": [
-      ".js",
-      ".jsx",
-      ".ts",
-      ".tsx"
-    ],
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
     "react": {
       "pragma": "React",
       "version": "detect"
