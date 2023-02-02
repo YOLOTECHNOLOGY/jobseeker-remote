@@ -24,6 +24,7 @@ function* logoutReq() {
   yield put(fetchUserOwnDetailClear())
   try {
     IMManager?.logout?.()
+    localStorage.clear()
   } catch (e) {
     console.log('logoutError', e)
     // return Promise.reject(e)
