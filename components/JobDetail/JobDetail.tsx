@@ -201,7 +201,6 @@ const JobDetail = ({
         setLoading(false)
       })
   }, [selectedJob.id, chatDetail?.job_application_id, chatDetail?.chat_id])
-  console.log({ chatDetail, selectedJob })
   const handleChat = () => {
     if (!userCookie || !authCookie) {
       localStorage.setItem('isChatRedirect', `/chat-redirect/${selectedJob.id}`)

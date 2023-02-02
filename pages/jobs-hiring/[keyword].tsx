@@ -247,7 +247,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
-  console.log({firstRender})
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
   const userCookie = getCookie('user') || null
@@ -388,7 +387,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const updateUrl = (queryParam, queryObject) => {
     queryObject['page'] = '1'
     setSelectedPage(Number(queryObject['page']))
-    console.log({queryParam})
     const pushObject = {
       pathname: `/jobs-hiring/${queryParam ? slugify(queryParam) : 'job-search'}`,
       query: queryObject

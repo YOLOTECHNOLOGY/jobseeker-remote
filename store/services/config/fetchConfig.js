@@ -6,7 +6,6 @@ const fetchConfigService = () => {
   const axios = configuredAxios('config', 'public')
   return axios.get(`/list`)
     .then(data => {
-      console.log({configData:data})
       const result = data.data.data
       const jobFunctions = result.inputs.job_function_lists
       result.inputs.main_functions = jobFunctions.map((item, index) => {
