@@ -23,10 +23,11 @@ import { useUserAgent } from 'next-useragent'
 interface LayoutProps {
   children: React.ReactNode
   className?: string
-  isHiddenFooter?: Boolean
+  isHiddenFooter?: boolean
+  isHiddenHeader?: boolean
 }
 
-const Layout = ({ children, className, isHiddenFooter }: LayoutProps) => {
+const Layout = ({ children, className, isHiddenFooter,isHiddenHeader }: LayoutProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isEmailVerified, setIsEmailVerified] = useState(false)
   const [isShowModal, setIsShowModal] = useState(false)
@@ -103,8 +104,8 @@ const Layout = ({ children, className, isHiddenFooter }: LayoutProps) => {
           </Text>
         </MaterialAlert>
       )}
-      <Header />
-      <HamburgerMenu />
+      {!isHiddenHeader && <><Header />
+        <HamburgerMenu /></>}
       {children}
       {!isHiddenFooter && <Footer />}
 
@@ -113,7 +114,7 @@ const Layout = ({ children, className, isHiddenFooter }: LayoutProps) => {
         isShowModal={isShowModal}
         handleModal={handleVerifyEmailModal}
       />
-      <ModalAppRedirect isShowModal={isShowAppRedirectModal} handleModal={handleAppRedirectModal} />
+      {/* <ModalAppRedirect isShowModal={isShowAppRedirectModal} handleModal={handleAppRedirectModal} /> */}
     </div>
   )
 }

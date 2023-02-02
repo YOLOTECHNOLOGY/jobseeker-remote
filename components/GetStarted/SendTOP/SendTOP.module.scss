@@ -1,0 +1,101 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+
+.SendTOPContainer {
+  &_title,
+  &_desc {
+    text-align: center;
+
+    &_text {
+      color: #353535;
+      max-width: 570px;
+      width: 100%;
+      margin: 0 auto !important;
+      text-align: left;
+      padding: 24px 0;
+
+      @include sm {
+        width: 100%;
+        text-align: left;
+        margin: 0 !important;
+      }
+    }
+  }
+
+  &_main {
+    max-width: 570px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+
+    @include sm {
+      width: 100%;
+    }
+
+    &_field {
+      width: 400px;
+      height: 44px;
+
+      @include sm {
+        width: 100% !important;
+      }
+    }
+
+    &_submit {
+      width: 158px;
+      height: 44px;
+      margin-left: 10px !important;
+      text-transform: capitalize;
+      padding: 0 !important;
+
+      @include sm {
+        width: 100%;
+        margin-left: 0px !important;
+        margin-top: 25px !important;
+      }
+    }
+  }
+
+  &_sendMagicLinkContariner {
+    margin-top: 25px;
+    opacity: 0;
+  }
+
+  &_sendMagicLink {
+    width: 566px;
+    margin: 0 auto;
+
+    &_pNode {
+      margin: 0 !important;
+    }
+
+    &_magicLink {
+      color: #2379ea;
+      border-bottom: 1px solid #2379ea;
+      cursor: default;
+    }
+
+    @include sm {
+      width: 100%;
+    }
+  }
+
+  &_sendMagicLinkVisibility {
+    opacity: 1;
+
+    &_magicLink {
+      cursor: pointer !important;
+    }
+  }
+}
+
+.fieldError {
+  margin-top: 0;
+  text-align: left;
+  width: 560px;
+  margin: 0 auto !important;
+
+  @include sm {
+    width: 100%;
+  }
+}

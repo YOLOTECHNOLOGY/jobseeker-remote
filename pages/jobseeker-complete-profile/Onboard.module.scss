@@ -14,7 +14,7 @@
     button {
       width: 100px;
     }
-    
+
     @media (max-width: 768px) {
       button {
         width: 100%;
@@ -58,7 +58,7 @@
     display: block;
     width: 90%;
     line-height: 20px;
-    color:rgb(13, 60, 97);
+    color: rgb(13, 60, 97);
   }
 }
 
@@ -95,7 +95,7 @@
   }
 
   &Country {
-    margin-bottom: 30px;
+    margin-bottom: 0px;
   }
 }
 
@@ -107,14 +107,25 @@
     align-items: flex-start;
     border-bottom: 1px solid $lightgrey;
     padding-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
 
     p {
       margin: 0;
     }
   }
 
-  &Description{
-    ul, ol {
+  &Info {
+    width: 100%;
+  }
+
+  &Description {
+    white-space: normal;
+    overflow: hidden;
+    word-wrap: break-word;
+
+    ul,
+    ol {
       display: block;
       margin-left: 20px;
 
@@ -127,10 +138,12 @@
     }
 
     p {
-      font-size: 14px;
-      color: $black;
-      font-weight: 300;
-      line-height: 20px;
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #353535;
     }
   }
 
@@ -156,6 +169,24 @@
       display: block;
     }
   }
+
+  &Names {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+
+    &First {
+      flex: 1;
+      margin-right: 5px;
+    }
+
+    &Last {
+      flex: 1;
+      margin-left: 5px;
+    }
+  }
+
   &ContactCountry {
     width: 100%;
     margin-right: 10px !important;
@@ -185,7 +216,8 @@
   &SalaryRanges {
     margin-top: 16px;
     display: flex;
-    justify-content: space-between;
+    width: 100%;
+    justify-content: flex-start;
 
     @media (max-width: 768px) {
       display: block;
@@ -193,10 +225,24 @@
   }
 
   &SalaryRange {
-    width: 48%;
+    width: 100%;
+
+    &:nth-child(1) {
+      width: 20%;
+      margin-right: 10px;
+    }
+
+    &:nth-child(2) {
+      width: 40%;
+      margin-right: 10px;
+    }
+
+    &:nth-child(3) {
+      width: 40%;
+    }
 
     @media (max-width: 768px) {
-      width: 100%;
+      width: 100% !important;
       margin-top: 16px;
     }
   }
@@ -258,14 +304,14 @@
 }
 
 .step3 {
-  &Form
-   {
+  &Form {
     .step3Form:not(:last-child) {
       padding-bottom: 20px;
       border-bottom: 1px dotted rgba($lightgrey, 0.5);
       margin-bottom: 20px;
     }
   }
+
   &Form {
     padding-top: 10px;
     margin-top: 0;
@@ -277,7 +323,7 @@
     div[class*='TextEditor_textEditor'] {
       padding: 0;
     }
-    
+
     & > * {
       padding: 0;
 
@@ -297,13 +343,13 @@
 }
 
 .divider {
-  margin-top: 20px !important; 
+  margin-top: 20px !important;
   margin-bottom: 20px !important;
 }
 
 .disclaimerIcon {
   vertical-align: -webkit-baseline-middle;
-  margin-left: 5px; 
+  margin-left: 5px;
   margin-top: 14px;
   cursor: pointer;
   display: flex;

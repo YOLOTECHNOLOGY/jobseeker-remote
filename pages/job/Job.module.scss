@@ -16,7 +16,7 @@
     display: flex;
     flex-direction: row;
     // flex-direction: column;
-    
+
     &Name {
       margin-top: 8px;
       display: block;
@@ -92,7 +92,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width:100%;
+    width: 100%;
 
     &.isSticky {
       top: 0;
@@ -106,7 +106,7 @@
       justify-content: center;
     }
 
-    &Container{
+    &Container {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -114,8 +114,8 @@
 
       &.isSticky {
         // max width - padding
-        width:calc(1166px - 48px);
-      }  
+        width: calc(1166px - 48px);
+      }
     }
   }
 
@@ -135,7 +135,7 @@
       flex-direction: column;
     }
 
-    &.isSticky{
+    &.isSticky {
       justify-content: center;
     }
   }
@@ -144,8 +144,8 @@
     margin: 16px 24px 0 0;
     line-height: 27px;
 
-    &.isSticky{
-      margin:0;
+    &.isSticky {
+      margin: 0;
     }
   }
 
@@ -711,10 +711,14 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400;
+
   box-shadow: 24px;
   .forModuleFooterText {
+    position: absolute;
+    bottom: 35px;
+    left: 0;
     text-align: center;
+    width: 100%;
     p {
       margin: 10px 0;
       font-weight: 400;
@@ -722,6 +726,7 @@
       color: #707070;
     }
   }
+
   .modalHeader {
     display: flex;
     padding: 16px 24px;

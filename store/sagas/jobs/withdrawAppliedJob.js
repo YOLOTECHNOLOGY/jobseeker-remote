@@ -10,7 +10,6 @@ function* withdrawAppliedJobReq(action) {
     const { data } = yield call(withdrawAppliedJobService, jobId)
     yield put(withdrawAppliedJobSuccess(data.data))
   } catch (error) {
-    console.log('error', error)
     yield put(withdrawAppliedJobFailed(error))
   }
 }

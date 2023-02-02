@@ -10,7 +10,6 @@ function* deleteSaveJobReq(action) {
     const { data } = yield call(deleteSaveJobService, jobId)
     yield put(deleteSaveJobSuccess(data.data))
   } catch (error) {
-    console.log('error', error)
     yield put(deleteSaveJobFailed(error))
   }
 }

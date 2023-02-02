@@ -16,11 +16,9 @@ import { Button } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 
 // api
-import {
-  sendPhoneNumberOTP,
-  verifyPhoneNumber,
-  changePhoneNumber
-} from 'store/services/auth/changeEmail'
+import { smsOTPChangePhoneNumverGenerate } from 'store/services/auth/smsOTPChangePhoneNumberGenerate'
+import { verifyPhoneNumber } from 'store/services/auth/verifyPhoneNumber'
+import { changePhoneNumber } from 'store/services/auth/changePhoneNumber'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
@@ -155,34 +153,23 @@ const VerifyPhoneNumber = ({
     setIsShowCountDownSwitch(true)
     setIsShowPhoneVerify(true)
     setPhoneNum(phoneNum)
-    sendPhoneNumberOTP({ phone_number: smsCode + phoneNum })
-      .then(() => {
-        // if (data.success) {
-        //   dispatch(
-        //     displayNotification({
-        //       open: true,
-        //       message: 'The verification code has been sent, please check it',
-        //       severity: 'success'
-        //     })
-        //   )
-        // }
-      })
-      .catch((error) => {
-        if (error.response) {
-          const { data } = error.response
-          if (data.error) {
-            dispatch(
-              displayNotification({
-                open: true,
-                message:
-                  'Request was throttled. Expected available in ' +
-                  data.error.retry_after +
-                  ' seconds.',
-                severity: 'warning'
-              })
-            )
-          }
+    smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNum })
+      .then()
+      .catch((exceptionHandler) => {
+        const { data } = exceptionHandler.response
+        let errorMessage
+        if (data?.data) {
+          errorMessage = data?.data?.detail
+        } else {
+          errorMessage = data?.errors?.phone_num[0]
         }
+        dispatch(
+          displayNotification({
+            open: true,
+            message: errorMessage,
+            severity: 'warning'
+          })
+        )
       })
   }
 
@@ -197,24 +184,20 @@ const VerifyPhoneNumber = ({
     setEdit(null)
   }
 
-  const verifiError = () => {
-    setOtpError('OTP is incorrect. Please try again.')
+  const verifiError = (errorMessage?: string) => {
+    if (errorMessage == 'Invalid otp') {
+      errorMessage = 'OTP is incorrect. Please try again.'
+    }
+    setOtpError(errorMessage)
   }
 
   const verifyEmailOrChangeEmail = () => {
-    const sms = getSmsCountryCode(defaultPhone, smsCountryList)
-
-    let phone
-    if (sms) {
-      phone = sms + Number(phoneNum)
-    } else {
-      phone = phoneNum
-    }
+    const phone = smsCode + phoneNum
     if (defaultPhone === phone) {
       // verify
       verifyPhoneNumber({ otp: Number(otp) })
         .then(({ data }) => {
-          if (data.success) {
+          if (data.data?.message == 'success') {
             dispatch(
               displayNotification({
                 open: true,
@@ -225,14 +208,16 @@ const VerifyPhoneNumber = ({
             verifiSuccess()
           }
         })
-        .catch(() => {
-          verifiError()
+        .catch((error) => {
+          const response = error.response
+          const resultError = response.data?.errors
+          verifiError(resultError?.error[0])
         })
     } else {
       // change
       changePhoneNumber({ otp: Number(otp), phone_num: smsCode + Number(phoneNum) })
         .then(({ data }) => {
-          if (data.success) {
+          if (data.data?.message == 'success') {
             dispatch(
               displayNotification({
                 open: true,
@@ -243,8 +228,10 @@ const VerifyPhoneNumber = ({
             verifiSuccess()
           }
         })
-        .catch(() => {
-          verifiError()
+        .catch((error) => {
+          const response = error.response
+          const resultError = response?.data?.errors
+          verifiError(resultError?.error[0])
         })
     }
   }

@@ -15,7 +15,7 @@ import {
   twitter,
   linkedin,
   youtube,
-  tiktok,
+  tiktok
 } from 'images'
 
 import styles from './Footer.module.scss'
@@ -65,8 +65,8 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/legal`}
-                    title='Legal'
+                    to={`${process.env.BLOG_BOSSJOB}/terms-and-conditions/  `}
+                    title='Blog Bossjob'
                     external
                   >
                     <Text textStyle='sm'>Terms & Conditions</Text>
@@ -75,7 +75,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/legal`}
+                    to={`${process.env.BLOG_BOSSJOB}/terms-and-conditions/  `}
                     title='Legal'
                     external
                   >
@@ -103,11 +103,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    className={styles.footerLink}
-                    to='/sitemap'
-                    title='Sitemap'
-                  >
+                  <Link className={styles.footerLink} to='/sitemap' title='Sitemap'>
                     <Text textStyle='sm'>Sitemap</Text>
                   </Link>
                 </li>
@@ -133,11 +129,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    className={styles.footerLink}
-                    to='/jobs-hiring'
-                    title='Create Job Alert'
-                  >
+                  <Link className={styles.footerLink} to='/jobs-hiring' title='Create Job Alert'>
                     <Text textStyle='sm'>Create job alert</Text>
                   </Link>
                 </li>
@@ -267,7 +259,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/computer-information-technology-jobs`}
+                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/information-technology-jobs?page=1`}
                     title='IT Jobs'
                     external
                   >
@@ -339,10 +331,7 @@ const Footer = () => {
                   </Link>
                 </div>
                 <div>
-                  <Link
-                    to={process.env.GOOGLE_PLAY_STORE_LINK}
-                    external
-                  >
+                  <Link to={process.env.GOOGLE_PLAY_STORE_LINK} external>
                     <LazyLoad>
                       <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
                     </LazyLoad>
@@ -357,7 +346,7 @@ const Footer = () => {
               <div className={styles.footerMobileSocialLinks}>
                 <Link
                   className={styles.socialLink}
-                  to='//www.facebook.com/Bossjobph'
+                  to='www.facebook.com/Bossjobph'
                   external
                   title='Bossjob Facebook'
                 >
@@ -367,7 +356,7 @@ const Footer = () => {
                 </Link>
                 <Link
                   className={styles.socialLink}
-                  to='//www.linkedin.com/company/bossjob-yolo-technology/'
+                  to='www.linkedin.com/company/bossjob-yolo-technology/'
                   external
                   title='Bossjob LinkedIn'
                 >
@@ -377,7 +366,7 @@ const Footer = () => {
                 </Link>
                 <Link
                   className={styles.socialLink}
-                  to='//www.instagram.com/Bossjobph'
+                  to='www.instagram.com/Bossjobph'
                   external
                   title='Bossjob Instagram'
                 >
@@ -387,7 +376,7 @@ const Footer = () => {
                 </Link>
                 <Link
                   className={styles.socialLink}
-                  to='//www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'
+                  to='www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'
                   external
                   title='Bossjob Youtube'
                 >
@@ -397,7 +386,7 @@ const Footer = () => {
                 </Link>
                 <Link
                   className={styles.socialLink}
-                  to='//twitter.com/Bossjobph'
+                  to='twitter.com/Bossjobph'
                   external
                   title='Bossjob Twitter'
                 >
@@ -407,7 +396,7 @@ const Footer = () => {
                 </Link>
                 <Link
                   className={styles.socialLink}
-                  to='//tiktok.com/@bossjobph'
+                  to='tiktok.com/@bossjobph'
                   external
                   title='Bossjob Tiktok'
                 >
@@ -455,8 +444,8 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/legal`}
-                      title='Terms & Conditions'
+                      to={`${process.env.BLOG_BOSSJOB}/terms-and-conditions/  `}
+                      title='Blog Bossjob'
                       external
                     >
                       <Text textStyle='sm'>Terms & Conditions</Text>
@@ -465,7 +454,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/legal`}
+                      to={`${process.env.BLOG_BOSSJOB}/terms-and-conditions/  `}
                       title='Legal'
                       external
                     >
@@ -493,11 +482,7 @@ const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      className={styles.footerLink}
-                      to='/sitemap'
-                      title='sitemap'
-                    >
+                    <Link className={styles.footerLink} to='/sitemap' title='sitemap'>
                       <Text textStyle='sm'>Sitemap</Text>
                     </Link>
                   </li>
@@ -635,7 +620,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/computer-information-technology-jobs`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/information-technology-jobs?page=1`}
                       title='IT Jobs'
                       external
                     >
@@ -645,7 +630,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/finance-accounting-jobs`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/finance-audit-tax-jobs?page=1`}
                       title='Finance Jobs'
                       external
                     >
@@ -655,7 +640,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/customer-service-jobs`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/customer-service-operations-jobs?page=1`}
                       title='Customer Service Jobs'
                       external
                     >
@@ -675,7 +660,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/sales-marketing-jobs`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/sales-jobs?page=1`}
                       title='Sales Jobs'
                       external
                     >
@@ -685,7 +670,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/healthcare-medical-jobs`}
+                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/healthcare-medical-jobs?page=1`}
                       title='Healthcare Jobs'
                       external
                     >
@@ -706,10 +691,7 @@ const Footer = () => {
                   </Link>
                 </div>
                 <div>
-                  <Link
-                    to={process.env.GOOGLE_PLAY_STORE_LINK}
-                    external
-                  >
+                  <Link to={process.env.GOOGLE_PLAY_STORE_LINK} external>
                     <LazyLoad>
                       <img src={DownloadOnGooglePlay} alt='GooglePlay' width='112' height='35' />
                     </LazyLoad>
@@ -725,7 +707,7 @@ const Footer = () => {
                     <div className={styles.footerDesktopSocialLinks}>
                       <Link
                         className={styles.socialLink}
-                        to='//www.facebook.com/Bossjobph'
+                        to='www.facebook.com/Bossjobph'
                         external
                         title='Bossjob Facebook'
                       >
@@ -735,7 +717,7 @@ const Footer = () => {
                       </Link>
                       <Link
                         className={styles.socialLink}
-                        to='//www.linkedin.com/company/bossjob-yolo-technology/'
+                        to='www.linkedin.com/company/bossjob-yolo-technology/'
                         external
                         title='Bossjob LinkedIn'
                       >
@@ -745,7 +727,7 @@ const Footer = () => {
                       </Link>
                       <Link
                         className={styles.socialLink}
-                        to='//www.instagram.com/Bossjobph'
+                        to='www.instagram.com/Bossjobph'
                         external
                         title='Bossjob Instagram'
                       >
@@ -755,7 +737,7 @@ const Footer = () => {
                       </Link>
                       <Link
                         className={styles.socialLink}
-                        to='//www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'
+                        to='www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'
                         external
                         title='Bossjob Youtube'
                       >
@@ -765,7 +747,7 @@ const Footer = () => {
                       </Link>
                       <Link
                         className={styles.socialLink}
-                        to='//twitter.com/Bossjobph'
+                        to='twitter.com/Bossjobph'
                         external
                         title='Bossjob Twitter'
                       >
@@ -775,7 +757,7 @@ const Footer = () => {
                       </Link>
                       <Link
                         className={styles.socialLink}
-                        to='//tiktok.com/@bossjobph'
+                        to='tiktok.com/@bossjobph'
                         external
                         title='Bossjob Tiktok'
                       >

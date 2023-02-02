@@ -35,7 +35,7 @@ const AuthLayout = ({
   headingText,
   isBackToLogin,
   ctaSignup,
-  isLogin,
+  isLogin
 }: AuthLayoutProps) => {
   const [isShowAppRedirectModal, setIsShowAppRedirectModal] = useState(false)
 
@@ -45,7 +45,7 @@ const AuthLayout = ({
       setIsShowAppRedirectModal(true)
     }
   }, [])
-  
+
   const handleAppRedirectModal = () => {
     setIsShowAppRedirectModal(false)
     setCookieWithExpiry('isAppRedirectModalClosed', true, 1800) // cookie expires to renable auto show modal after 30 minutes
@@ -57,10 +57,10 @@ const AuthLayout = ({
         <>
           {isBackToLogin && (
             <Text tagName='p' textStyle='base'>
-              <Link to={'/login/jobseeker'} className={styles.AuthCTALink}>
+              <Link to={'/get-started'} className={styles.AuthCTALink}>
                 <Text textColor='primaryBlue' underline>
                   {' '}
-                  Back to Login
+                  Back to Get started
                 </Text>
               </Link>
             </Text>
@@ -69,10 +69,10 @@ const AuthLayout = ({
             <>
               <Text tagName='p' textStyle='base'>
                 New to Bossjob?
-                <Link to='/register/jobseeker' className={styles.AuthCTALink}>
+                <Link to='/get-started' className={styles.AuthCTALink}>
                   <Text textColor='primaryBlue' underline>
                     {' '}
-                    Sign up now
+                    Get started
                   </Text>
                 </Link>
               </Text>
@@ -83,10 +83,10 @@ const AuthLayout = ({
             <>
               <Text tagName='p' textStyle='base'>
                 Already on Bossjob?
-                <Link to='/login/jobseeker' className={styles.AuthCTALink}>
+                <Link to='/get-started' className={styles.AuthCTALink}>
                   <Text textColor='primaryBlue' underline>
                     {' '}
-                    Log in
+                    Get started
                   </Text>
                 </Link>
               </Text>
@@ -120,10 +120,7 @@ const AuthLayout = ({
         <div className={styles.AuthCTA}>{displayCTA()}</div>
       </div>
 
-      <ModalAppRedirect
-        isShowModal={isShowAppRedirectModal}
-        handleModal={handleAppRedirectModal}
-      />
+      {/* <ModalAppRedirect isShowModal={isShowAppRedirectModal} handleModal={handleAppRedirectModal} /> */}
     </div>
   )
 }

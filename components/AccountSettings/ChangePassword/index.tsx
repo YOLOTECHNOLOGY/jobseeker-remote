@@ -12,7 +12,7 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { Button } from '@mui/material'
 
 // api
-import { changePassword } from 'store/services/auth/changeEmail'
+import { changePassword } from 'store/services/auth/changePassword'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'

@@ -77,6 +77,15 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 <Text textStyle='xl'>Companies</Text>
               </li>
             </Link>
+
+            {isAuthenticated && (
+              <Link className={styles.defaultLink} title='Jobs' to='/chat/list'>
+                <li className={styles.menuList} onClick={handleClick}>
+                  <Text textStyle='xl'>Chat</Text>
+                </li>
+              </Link>
+            )}
+
             <Link
               className={styles.defaultLink}
               to='https://academy.bossjob.ph/courses/search-courses'
@@ -116,7 +125,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 </Link>
                 <Link
                   className={styles.defaultLink}
-                  to={`${process.env.OLD_PROJECT_URL}/employer`}
+                  to={`${process.env.BOSSHUNT_URL}`}
                   aTag
                   title='Employers'
                 >
@@ -124,15 +133,10 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>Employers</Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} to='/login/jobseeker' title='Log In'>
-                  <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle='xl'>Log In</Text>
-                  </li>
-                </Link>
-                <Link className={styles.defaultLink} to='/register/jobseeker' title='Sign Up'>
+                <Link className={styles.defaultLink} to='/get-started' title='Get Started'>
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl' className={styles.activeLink}>
-                      Sign Up
+                      Get Started
                     </Text>
                   </li>
                 </Link>

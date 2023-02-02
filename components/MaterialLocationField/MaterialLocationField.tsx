@@ -16,10 +16,10 @@ const textFieldTheme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          fontSize: '14px',
-          letterSpacing: '1px',
-          backgroundColor: 'white',
-          height: '44px'
+         // fontSize: '14px',
+         letterSpacing: '1px',
+         backgroundColor: 'white',
+         height: '44px'
         },
       },
     },
@@ -70,7 +70,7 @@ const formatLocationConfig = (locationList) => {
   return locationConfig
 }
 
-const MaterialLocationField = ({ className, label, defaultValue, fieldRef, error, ...rest }: any) => {
+const MaterialLocationField = ({ className, label, defaultValue,required, fieldRef, error, ...rest }: any) => {
   // const [selectedLocation, setSelectedLocation] = useState(defValue.value)
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
@@ -78,19 +78,25 @@ const MaterialLocationField = ({ className, label, defaultValue, fieldRef, error
   const formattedLocationList = flat(formatLocationConfig(locationList))
   return (
     <ThemeProvider theme={autocompleteTheme}>
-      <head>
+      {/* <head>
         <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1' />
-      </head>
+      </head> */}
       <Autocomplete
         id='location-autocomplete'
         options={formattedLocationList}
         groupBy={(option: any) => option.region_display_name}
         getOptionLabel={(option: any) => option.value || ''}
         size='small'
+        
         className={className}
         renderInput={(params) => (
           <ThemeProvider theme={textFieldTheme}>
-            <TextField id='location' {...fieldRef} error={error} label={label ? label : 'Location'} variant='outlined' size='small' {...params} />
+            <TextField id='location'
+             {...fieldRef}
+              error={!!error} 
+              required={rest.required}
+              helperText={error?.message}
+              label={<span>{label ? label : 'Location'} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>} variant='outlined' size='small' {...params} />
           </ThemeProvider>
         )}
         defaultValue={defaultValue}

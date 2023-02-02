@@ -32,7 +32,10 @@ const CompanyJobsProfile = (props: any) => {
   const dispatch = useDispatch()
   const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs } = props
   const company = companyDetail
-
+  
+  useEffect(()=>{
+    dispatch(fetchConfigRequest())
+  },[])
   const [jobQuery, setJobQuery] = useState('')
   const [jobLocation, setJobLocation] = useState(null)
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
@@ -212,7 +215,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   }
 
   store.dispatch(fetchJobsListRequest({...jobFilterpayload}, accessToken))
-  store.dispatch(fetchConfigRequest())
+ // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchCompanyDetailRequest(companyId))
   store.dispatch(END)
 

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { HYDRATE } from 'next-redux-wrapper'
 import { routerReducer } from 'connected-next-router'
-
+import { mergeDeepLeft } from 'ramda'
 import navigationBarReducers from './navigationBar'
 import notificationBarReducers from './notificationBar'
 import configReducers from './config'
@@ -15,7 +15,7 @@ import authReducers from './auth'
 import recruitersReducers from './recruiters'
 import coursesReducers from './courses'
 import modalReducers from './modals'
-
+import chat from './chat/'
 // TODO: Import and List reducers here
 const combinedReducer = combineReducers({
   navbar: navigationBarReducers,
@@ -32,6 +32,7 @@ const combinedReducer = combineReducers({
   router: routerReducer,
   courses: coursesReducers,
   modal: modalReducers,
+  chat
 })
 
 /* 
@@ -43,10 +44,12 @@ const combinedReducer = combineReducers({
 const rootReducer = (state, action) => {
   if (action.type === HYDRATE) {
     // Attention! This will overwrite client state!
-    const nextState = {
-      ...state, // use previous state
-      ...action.payload, // apply delta from hydration
-    }
+    // const nextState = {
+    //   ...state, // use previous state
+    //   ...action.payload, // apply delta from hydration
+    //   config:state.config
+    // }
+    const nextState = {...mergeDeepLeft(action.payload, state),config:state.config}
     if (typeof window !== 'undefined' && state?.router) {
       // preserve router value on client side navigation
       nextState.router = state.router

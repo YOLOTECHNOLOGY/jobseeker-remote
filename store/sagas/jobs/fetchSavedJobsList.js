@@ -24,7 +24,6 @@ function* fetchSavedJobsListReq(action) {
       yield put(fetchSavedJobsListSuccess(response.data))
     }
   } catch (error) {
-    console.log('error', error)
     yield put(fetchSavedJobsListFailed(error))
   }
 }

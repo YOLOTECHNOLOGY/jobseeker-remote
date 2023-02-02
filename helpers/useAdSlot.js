@@ -15,9 +15,9 @@ function useAdSlot({ mapping, sizes, id, adUnit, isTransitioning }) {
             const builtMapping = adMapping.build()
 
             googletag
-            .defineSlot(`/21858999436/${adUnit}`, sizes, `div-gpt-ad-${id}`)
-            .defineSizeMapping(builtMapping)
-            .addService(googletag.pubads())
+            ?.defineSlot(`/21858999436/${adUnit}`, sizes, `div-gpt-ad-${id}`)
+            ?.defineSizeMapping?.(builtMapping)
+            ?.addService(googletag.pubads())
             
             googletag.enableServices()
           })

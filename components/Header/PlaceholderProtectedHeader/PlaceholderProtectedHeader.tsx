@@ -1,14 +1,15 @@
 import React from 'react'
-import classNames from 'classnames/bind'
+import classNames from 'classnames'
 
 /* components */
 import Text from 'components/Text'
+import Link from 'components/Link'
 // import Button from 'components/Button'
 import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogo, DefaultAvatar, ChatIcon } from 'images'
+import { BossjobLogo, DefaultAvatar } from 'images'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -23,10 +24,8 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
     <>
       {isShowEmailAlert && (
         <MaterialAlert open={true} severity='info'>
-          <Text>
-            Please verify your email address.{' '}
-          </Text>
-          <a style={{ color:"#1976d2", textDecoration: 'underline rgba(25, 118, 210, 0.4)'}}>
+          <Text>Please verify your email address. </Text>
+          <a style={{ color: '#1976d2', textDecoration: 'underline rgba(25, 118, 210, 0.4)' }}>
             Verify now.
           </a>
         </MaterialAlert>
@@ -49,13 +48,13 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                     Jobs
                   </Text>
                 </li>
-                <li className={styles.headerLink}>
+                {/* <li className={styles.headerLink}>
                   <a title='Headhunt Me'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                       Headhunt Me
                     </Text>
                   </a>
-                </li>
+                </li> */}
                 <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Companies
@@ -63,28 +62,35 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                 </li>
                 <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Courses
+                    Chat
                   </Text>
                 </li>
-                <li className={styles.headerLink}>
+
+                <li className={styles.headerLink} style={{ position: 'relative' }}>
+                  <Link title='Career Guide' to='https://blog.bossjob.ph' external>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      Career Guide
+                    </Text>
+                  </Link>
+                </li>
+
+                {/* <li className={styles.headerLink}>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    Courses
+                  </Text>
+                </li> */}
+                {/* <li className={styles.headerLink}>
                   <a className={styles.headerLinkIcon} title='Chats'>
                     <img src={ChatIcon} width='20' height='20' />
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                       Chats
                     </Text>
                   </a>
-                </li>
-                <li className={styles.headerLink}>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Career Guide
-                  </Text>
-                </li>
-                {/* <li className={styles.headerLink} style={{ position:'relative' }}>
+                </li> */}
+                {/* <li className={styles.headerLink} style={{ position: 'relative' }}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Virtual Career Fair
-                    <span className={styles.hotTag}>
-                      Hot!
-                    </span>
+                    <span className={styles.hotTag}>Hot!</span>
                   </Text>
                 </li> */}
               </React.Fragment>

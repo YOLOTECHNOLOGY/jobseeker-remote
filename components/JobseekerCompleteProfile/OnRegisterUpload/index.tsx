@@ -78,10 +78,13 @@ const Step2 = (props: any) => {
           {existingResume && (
             <Text textColor='darkgrey' textStyle='xsm' bold tagName='p'>
               (Resume:{resume?.name}
-              <Link to={existingResume.url}>
-                <a target='_blank' rel='noreferrer' style={{ textDecoration: 'underline' }}>
-                  {existingResume.filename}
-                </a>
+              <Link
+                to={existingResume.url}
+                target='_blank'
+                rel='noreferrer'
+                style={{ textDecoration: 'underline' }}
+              >
+                {existingResume.filename}
               </Link>
               )
             </Text>

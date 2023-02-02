@@ -1,0 +1,1 @@
+export const UPDATE_IM_STATE = 'UPDATE_IM_STATE'

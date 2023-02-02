@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback,useMemo } from 'react'
 import { useRouter } from 'next/router'
 import moment from 'moment'
 import { isMobile } from 'react-device-detect'
-
+import { createChat } from 'helpers/interpreters/services/chat'
 /* Vendors */
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
@@ -15,7 +15,7 @@ import {
   TimelineDot
 } from '@mui/lab'
 import dynamic from 'next/dynamic'
-
+import jobSource from 'helpers/jobSource'
 /* Components */
 import Link from 'components/Link'
 import Text from 'components/Text'
@@ -23,7 +23,6 @@ import JobTag from 'components/JobTag'
 import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
 import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 import ReadMore from 'components/ReadMore'
-const QuickApplyModal = dynamic(() => import('components/QuickApplyModal'))
 const ModalVerifyEmail = dynamic(() => import('../ModalVerifyEmail'))
 
 /* Material Components */
@@ -61,9 +60,12 @@ import {
 
 /* Helpers */
 import { getApplyJobLink } from 'helpers/jobPayloadFormatter'
-import { fetchUserOwnDetailService } from '../../store/services/users/fetchUserOwnDetail'
-
+import Modal from 'components/Modal'
+import { fetchSwitchJobService } from 'store/services/jobs/fetchSwitchJob'
+import RegisterModal from 'components/RegisterModal'
+import { useDispatch } from 'react-redux'
 import { addExternalJobClickService } from 'store/services/jobs/addExternalJobClick'
+import { updateImState } from 'store/actions/chat/imState'
 interface IJobDetailProps {
   selectedJob: any
   setIsShowModalShare?: Function
@@ -80,11 +82,14 @@ interface IJobDetailProps {
   config: any
   applicationUpdatedAt?: string
   isCompanyVerified?: boolean
+  chatDetail?: any
+  selectedJobId?: number
 }
 
 const JobDetail = ({
   selectedJob,
   setIsShowModalShare,
+  selectedJobId,
   setIsShowReportJob,
   setIsShowModalWithdrawApplication,
   isSticky,
@@ -94,21 +99,26 @@ const JobDetail = ({
   handlePostSaveJob,
   handleDeleteSavedJob,
   applicationHistory,
-  config,
   applicationUpdatedAt,
-  isCompanyVerified
+  isCompanyVerified,
+
 }: IJobDetailProps) => {
   const router = useRouter()
   const detailHeaderRef = useRef(null)
   const [detailHeaderHeight, setDetailHeaderHeight] = useState(
     detailHeaderRef?.current?.clientHeight || 0
   )
-
+  const dispatch = useDispatch()
+  const chatDetail = useMemo(() => {
+    return selectedJob?.chat ?? {}
+  }, [selectedJob])
   const userCookie = getCookie('user') || null
   const authCookie = getCookie('accessToken') || null
+  const [openRegister, setOpenRegister] = useState(false)
 
   const [isSaveClicked, setIsSaveClicked] = useState(false)
-  const [quickApplyModalShow, setQuickApplyModalShow] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [isSavedJob, setIsSavedJob] = useState(false)
   const [isShowModal, setIsShowModal] = useState(false)
   const applyJobLink = getApplyJobLink(selectedJob, userCookie)
@@ -149,52 +159,6 @@ const JobDetail = ({
     }
   }
 
-  const handleVerifyEmailClick = async () => {
-    // revalidate verify email status
-    const response = await fetchUserOwnDetailService({ accessToken: authCookie })
-    const userDetails = response?.data?.data
-    const isVerifiedEmail = userDetails?.is_email_verify
-    if (!isVerifiedEmail) {
-      // email is not verified
-      setIsShowModal(true)
-    } else {
-      // email is verified and user cookie is outdated
-      const userCookie = {
-        active_key: userDetails.active_key,
-        id: userDetails.id,
-        first_name: userDetails.first_name,
-        last_name: userDetails.last_name,
-        email: userDetails.email,
-        phone_num: userDetails.phone_num,
-        is_mobile_verified: userDetails.is_mobile_verified,
-        avatar: userDetails.avatar,
-        additional_info: userDetails.additional_info,
-        is_email_verify: true,
-        notice_period_id: userDetails.notice_period_id,
-        is_profile_completed: userDetails.is_profile_completed
-      }
-
-      setCookie('user', userCookie)
-      router.reload()
-    }
-  }
-
-  const handleApplyJob = () => {
-    if (!userCookie) {
-      setQuickApplyModalShow(true)
-    } else {
-      if (userCookie && !userCookie.is_email_verify) {
-        handleVerifyEmailClick()
-      }
-
-      if (selectedJob?.external_apply_url) {
-        addExternalJobClickService(selectedJob?.id)
-      }
-
-      window.open(applyJobLink)
-    }
-  }
-
   const handleCloseModal = (isOTPVerified) => {
     setIsShowModal(false)
     if (isOTPVerified) {
@@ -221,10 +185,53 @@ const JobDetail = ({
     } else {
       setCookie('isReportJob', true)
       setCookie('reportJobId', selectedJob.id)
-      router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
+      router.push('/get-started?redirect=/jobs-hiring/job-search')
     }
   }
-
+  const requestSwitch = useCallback(() => {
+    setLoading(true)
+    fetchSwitchJobService({
+      status: 'protected',
+      job_id: selectedJob.id,
+      applicationId: chatDetail.job_application_id
+    }).then(() => {
+      router.push(`/chat/${chatDetail.chat_id}`)
+    })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [selectedJob.id, chatDetail?.job_application_id, chatDetail?.chat_id])
+  const handleChat = () => {
+    if (!userCookie || !authCookie) {
+      localStorage.setItem('isChatRedirect', `/chat-redirect/${selectedJob.id}`)
+      setOpenRegister(true)
+    } else if (selectedJob?.external_apply_url) {
+      addExternalJobClickService(selectedJob?.id)
+      const link = getApplyJobLink(selectedJob, userCookie)
+      window.open(link)
+    } else if (chatDetail.is_exists) {
+      if (chatDetail.job_id !== selectedJobId) {
+        setShowModal(true)
+      } else {
+        router.push(`/chat/${chatDetail.chat_id}`)
+      }
+    } else {
+      setLoading(true)
+      const source = jobSource()
+      createChat(selectedJob?.id, { source }).then(result => {
+        const chatId = result.data.data.id
+        const newData = {
+          ...result.data?.data?.job_application,
+          initiated_role: result.data?.data?.initiated_role,
+          chatStatus: result.data?.data?.status
+        }
+        dispatch(updateImState({ chatId, imState: newData }))
+        router.push(`/chat/${chatId}`)
+      }).catch(e => {
+        router.push(`/chat`)
+      }).finally(() => setLoading(false))
+    }
+  }
   useEffect(() => {
     if (getCookie('isReportJob') && authCookie && userCookie) {
       setIsShowReportJob(true)
@@ -235,6 +242,23 @@ const JobDetail = ({
 
   return (
     <React.Fragment>
+      <Modal
+        showModal={showModal}
+        handleModal={() => setShowModal(false)}
+        firstButtonIsClose={false}
+        handleFirstButton={() => setShowModal(false)}
+        handleSecondButton={requestSwitch}
+        isFirstButtonLoading={loading}
+        isSecondButtonLoading={loading}
+        firstButtonText='Cancel'
+        secondButtonText='Proceed'
+        headerTitle={'Chat with ' + selectedJob?.recruiter?.full_name ?? ''}
+
+      >
+        <p>You are currently chatting with recruiter for the {chatDetail?.job?.job_title ?? chatDetail?.job?.function_job_title ?? 'this job'} position. Are you sure you want to switch job?</p>
+      </Modal>
+      {openRegister ? <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} /> : null}
+
       <div className={styles.jobDetail}>
         <div className={classNamesCombined([styles.jobDetailContent])}>
           <div
@@ -244,58 +268,58 @@ const JobDetail = ({
             <div className={classNamesCombined([isStickyClass, styles.jobDetailOptions])}>
               <Link to={publicJobUrl} external className={styles.jobDetailOptionNewTab}>
                 <img src={OpenInNewTabIcon} width='10' height='10' />
-                <Text textStyle='base' textColor='primaryBlue' className={styles.jobDetailOptionNewTab}>
+                <Text
+                  textStyle='base'
+                  textColor='primaryBlue'
+                  className={styles.jobDetailOptionNewTab}
+                >
                   View in a new tab
                 </Text>
               </Link>
-              {!isCategoryApplied && (
-                <div className={styles.jobDetailButtons}>
-                  {selectedJob?.status_key === 'active' && (
-                    <>
-                      {!selectedJob?.is_applied ? (
-                        <MaterialButton variant='contained' capitalize onClick={handleApplyJob}>
-                          <Text textColor='white' bold>
-                            Apply Now
-                          </Text>
-                        </MaterialButton>
-                      ) : (
-                        <MaterialButton variant='contained' capitalize disabled>
-                          <Text textColor='white' bold>
-                            Applied
-                          </Text>
-                        </MaterialButton>
-                      )}
-                    </>
-                  )}
-                  <MaterialButton
-                    variant='outlined'
-                    capitalize
-                    isLoading={!userCookie && isSaveClicked}
-                    onClick={() => {
-                      if (userCookie) {
-                        if (!isCategorySaved && !isSavedJob) {
-                          handlePostSaveJob({ jobId: selectedJob?.id })
-                          setIsSavedJob(true)
-                        }
+              <div className={styles.jobDetailButtons}>
 
-                        if (isSavedJob) {
-                          handleDeleteSavedJob({ jobId: selectedJob?.id })
-                          setIsSavedJob(false)
-                        }
+                <MaterialButton variant='contained' capitalize onClick={handleChat} isLoading={loading}>
+                  <Text textColor='white' bold>
+                    {(() => {
+                      if (selectedJob?.external_apply_url) {
+                        return 'Apply Now'
+                      } else if (chatDetail.is_exists && chatDetail.job_id === selectedJob.id) {
+                        return 'Continue Chat'
+                      } else {
+                        return 'Chat Now'
+                      }
+                    })()}
+                  </Text>
+                </MaterialButton>
+                <MaterialButton
+                  variant='outlined'
+                  capitalize
+                  isLoading={(!userCookie && isSaveClicked) || loading}
+                  onClick={() => {
+                    if (userCookie) {
+                      if (!isCategorySaved && !isSavedJob) {
+                        handlePostSaveJob({ jobId: selectedJob?.id })
+                        setIsSavedJob(true)
                       }
 
-                      if (!userCookie) {
-                        setIsSaveClicked(true)
-                        router.push('/login/jobseeker?redirect=/jobs-hiring/job-search')
+                      if (isSavedJob) {
+                        handleDeleteSavedJob({ jobId: selectedJob?.id })
+                        setIsSavedJob(false)
                       }
-                    }}
-                  >
-                    <Text textColor='primaryBlue' bold>
-                      {isSavedJob || isCategorySaved ? 'Saved' : 'Save'}
-                    </Text>
-                  </MaterialButton>
-                </div>
-              )}
+                    }
+
+                    if (!userCookie) {
+                      setIsSaveClicked(true)
+                      router.push('/get-started?redirect=/jobs-hiring/job-search')
+                    }
+                  }}
+                >
+                  <Text textColor='primaryBlue' bold>
+                    {isSavedJob || isCategorySaved ? 'Saved' : 'Save'}
+                  </Text>
+                </MaterialButton>
+              </div>
+
               <div className={styles.jobDetailOptionImage}>
                 <Dropdown>
                   <div
@@ -313,19 +337,17 @@ const JobDetail = ({
                     </div>
                   )}
                   {selectedJob?.status_key === 'active' && (
-                    <>
-                      <div className={styles.jobDetailOptionItem} onClick={handleShowReportJob}>
-                        <Text textStyle='lg'>Report job</Text>
-                      </div>
-                    </>
+                    <div className={styles.jobDetailOptionItem} onClick={handleShowReportJob}>
+                      <Text textStyle='lg'>Report job</Text>
+                    </div>
                   )}
                 </Dropdown>
               </div>
             </div>
           </div>
           <div
-           className={classNamesCombined([styles.jobDetailBody, isStickyClass])}
-            style={{ top: isSticky ? detailHeaderHeight : ''}}
+            className={classNamesCombined([styles.jobDetailBody, isStickyClass])}
+            style={{ top: isSticky ? detailHeaderHeight : '' }}
           >
             <div className={styles.jobDetailImageInfoWrapper}>
               <div
@@ -342,22 +364,25 @@ const JobDetail = ({
                   <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
                     {selectedJob?.company?.name}
                   </Link>
-                  {isCompanyVerified && (isMobile ? (
-                    <MaterialMobileTooltip
-                      icon={BlueTickIcon}
-                      className={styles.jobDetailCompanyTooltip}
-                      title='Verified'
-                    />
-                  ) : (
-                    <MaterialDesktopTooltip
-                      icon={BlueTickIcon}
-                      className={styles.jobDetailCompanyTooltip}
-                      title='Verified'
-                    />
-                  ))}
+                  {isCompanyVerified &&
+                    (isMobile ? (
+                      <MaterialMobileTooltip
+                        icon={BlueTickIcon}
+                        className={styles.jobDetailCompanyTooltip}
+                        title='Verified'
+                      />
+                    ) : (
+                      <MaterialDesktopTooltip
+                        icon={BlueTickIcon}
+                        className={styles.jobDetailCompanyTooltip}
+                        title='Verified'
+                      />
+                    ))}
                 </Text>
                 <Text textStyle='sm' textColor='darkgrey' className={styles.jobDetailPostedAt}>
-                  {applicationUpdatedAt ? `Last updated on ${applicationUpdatedAt}` : `Posted on ${selectedJob?.refreshed_at}`}
+                  {applicationUpdatedAt
+                    ? `Last updated on ${applicationUpdatedAt}`
+                    : `Posted on ${selectedJob?.refreshed_at}`}
                 </Text>
                 <div style={{ height: '16px' }}></div>
                 {selectedJob?.is_featured && <JobTag tag='Featured' tagType='featured' />}
@@ -512,7 +537,7 @@ const JobDetail = ({
               <Text textStyle='lg' className={styles.jobDetailSectionSubBody}>
                 {`${selectedJob?.full_address}`}
               </Text>
-              {selectedJob?.categories.length > 0 && (
+              {/* {selectedJob?.categories.length > 0 && (
                 <>
                   <Text textStyle='lg' bold className={styles.jobDetailSectionSubTitle}>
                     Specialization
@@ -532,7 +557,7 @@ const JobDetail = ({
                     </span>
                   ))}
                 </>
-              )}
+              )} */}
             </div>
             {selectedJob?.recruiter && (
               <div className={styles.jobDetailRecruiter}>
@@ -578,19 +603,20 @@ const JobDetail = ({
               <Link to={companyUrl} className={styles.aboutCompanyTitle}>
                 <Text bold textStyle='lg' textColor='primaryBlue'>
                   {selectedJob?.company?.name}
-                  {isCompanyVerified && (isMobile ? (
-                    <MaterialMobileTooltip
-                      icon={BlueTickIcon}
-                      className={styles.jobDetailCompanyTooltip}
-                      title='Verified'
-                    />
-                  ) : (
-                    <MaterialDesktopTooltip
-                      icon={BlueTickIcon}
-                      className={styles.jobDetailCompanyTooltip}
-                      title='Verified'
-                    />
-                  ))}
+                  {isCompanyVerified &&
+                    (isMobile ? (
+                      <MaterialMobileTooltip
+                        icon={BlueTickIcon}
+                        className={styles.jobDetailCompanyTooltip}
+                        title='Verified'
+                      />
+                    ) : (
+                      <MaterialDesktopTooltip
+                        icon={BlueTickIcon}
+                        className={styles.jobDetailCompanyTooltip}
+                        title='Verified'
+                      />
+                    ))}
                 </Text>
               </Link>
               <div className={styles.aboutCompanyDetail}>
@@ -603,14 +629,7 @@ const JobDetail = ({
         </div>
       </div>
 
-      {quickApplyModalShow && (
-        <QuickApplyModal
-          jobDetails={selectedJob}
-          modalShow={quickApplyModalShow}
-          handleModalShow={setQuickApplyModalShow}
-          config={config}
-        />
-      )}
+
 
       {isShowModal && (
         <ModalVerifyEmail

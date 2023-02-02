@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -32,26 +32,25 @@ import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import TextEditor from 'components/TextEditor/TextEditor'
 import MaterialDatePicker from 'components/MaterialDatePicker'
-import MaterialSelectCheckmarks from 'components/MaterialSelectCheckmarks'
 
 // Images
-import { InfoIcon, DeleteFilledIcon, CreateFilledIcon, AddOutlineIcon } from 'images'
+import { InfoIcon, AddOutlineIcon, PencilIcon, AccountSettingDeleteIconBin } from 'images'
 
 /* Helpers */
 import {
-  getJobCategoryList,
   getLocationList,
   getIndustryList,
-  getCountryList,
-  getJobCategoryIds
+  getCountryList
 } from 'helpers/jobPayloadFormatter'
-import { formatSalary, removeEmptyOrNullValues } from 'helpers/formatter'
+import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { getItem } from 'helpers/localStorage'
 
 // Styles
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
 import { handleNumericInput } from '../../helpers/handleInput'
+import JobFunctionSelector from 'components/JobFunctionSelector'
+import ReadMore from 'components/ReadMore'
 
 const Step3 = (props: any) => {
   const quickUpladResumeType = getItem('quickUpladResume')
@@ -60,16 +59,19 @@ const Step3 = (props: any) => {
   const currentStepPure = quickUpladResumeType ? 2 : 3
   const router = useRouter()
   const dispatch = useDispatch()
-  const { config, userDetail, accessToken } = props
+  const { userDetail, accessToken } = props
   const isFromCreateResume = getItem('isFromCreateResume') === '1'
-
+  const config = useSelector((store: any) => store?.config?.config?.response)
+ 
+  useEffect(()=>{
+    dispatch(fetchConfigRequest())
+  },[])
   const nextBtnUrl = router.query?.redirect
     ? `/jobseeker-complete-profile/1102?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1102'
   let backBtnUrl = router.query?.redirect
-    ? `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}?redirect=${
-        router.query.redirect
-      }`
+    ? `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}?redirect=${router.query.redirect
+    }`
     : `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}`
 
   if (quickUpladResumeType && quickUpladResumeType === 'upFile') {
@@ -83,9 +85,8 @@ const Step3 = (props: any) => {
   }
 
   const locList = getLocationList(config)
-  const jobCategoryList = getJobCategoryList(config)
   const industryList = getIndustryList(config)
-  const countryList = getCountryList(config)
+  const countryList = getCountryList(config).map(country => ({ label: country.label, value: country.key }))
 
   const [jobTitle, setJobTitle] = useState('')
   const [companyName, setCompanyName] = useState('')
@@ -95,7 +96,7 @@ const Step3 = (props: any) => {
   const [isCurrentJob, setIsCurrentJob] = useState(false)
   const [workPeriodFrom, setWorkPeriodFrom] = useState(null)
   const [workPeriodTo, setWorkPeriodTo] = useState(null)
-  const [jobFunction, setJobFunction] = useState([])
+  const [jobFunction, setJobFunction] = useState({ id: undefined, value: '' })
   const [industry, setIndustry] = useState('')
   const [salary, setSalary] = useState('')
   const [description, setDescription] = useState('')
@@ -130,7 +131,9 @@ const Step3 = (props: any) => {
   const isUpdatingUserProfile = useSelector(
     (store: any) => store.users.updateUserOnboardingInfo.fetching
   )
-
+  const countryLabel = useMemo(() => {
+    return countryList.find(item => item.value === country)?.label
+  }, [country, countryList])
   useEffect(() => {
     if (!isQuickUpladResume) {
       dispatch(fetchUserWorkExperienceRequest({ accessToken }))
@@ -189,13 +192,11 @@ const Step3 = (props: any) => {
           )[0].value
         )
       if (selectedExperience.location && selectedExperience.location.toLowerCase() === 'overseas') {
-        setCountry(
-          countryList.filter((country) => country.key === selectedExperience.country_key)[0].value
-        )
+        setCountry(selectedExperience.country_key)
         setIsShowCountry(true)
       }
       setDescription(selectedExperience.description)
-      setJobFunction(selectedExperience.job_categories)
+      setJobFunction({ id: selectedExperience.function_job_title_id, value: selectedExperience.function_job_title })
     }
   }, [selectedExperience])
 
@@ -290,7 +291,7 @@ const Step3 = (props: any) => {
 
   const getLocation = (location) => {
     if (!location) return
-    return locList.filter((loc) => loc.value.toLowerCase() === location.toLowerCase())
+    return locList.filter((loc) => loc?.value.toLowerCase() === location.toLowerCase())
   }
 
   const handleResetForm = () => {
@@ -306,7 +307,7 @@ const Step3 = (props: any) => {
     setCountry('')
     setIsShowCountry(false)
     setDescription('')
-    setJobFunction([])
+    setJobFunction({ value: '', id: undefined })
     setHasErrorOnFromPeriod(false)
     setHasErrorOnToPeriod(false)
     setIsUpdating(false)
@@ -353,14 +354,13 @@ const Step3 = (props: any) => {
       country_key: country || 'ph',
       company_industry_key: matchedIndustry?.[0]?.key || null,
       is_currently_work_here: isCurrentJob,
-      job_category_ids:
-        jobFunction?.length > 0 ? getJobCategoryIds(config, jobFunction).join(',') : '',
       salary: Number(salary),
       working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
       working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
       description: description ? description : '',
       location_key: location?.key || '',
-
+      function_job_title_id: jobFunction.id,
+      function_job_title: jobFunction.value,
       // isQuickUpladResume
       job_categories: null,
       industry: null,
@@ -381,10 +381,11 @@ const Step3 = (props: any) => {
     if (!isQuickUpladResume) {
       dispatch(updateUserOnboardingInfoRequest(workExperiencesPayload))
     } else {
-      workExperienceData.job_categories = jobFunction
-      ;(workExperienceData.industry = matchedIndustry?.[0]?.key || null),
-        (workExperienceData.country = country || 'ph'),
-        (workExperienceData.location = location?.key || '')
+      workExperienceData.function_job_title_id = jobFunction.id
+      workExperienceData.function_job_title = jobFunction.value
+      workExperienceData.industry = matchedIndustry?.[0]?.key || null
+      workExperienceData.country = countryLabel
+      workExperienceData.location = location?.key || ''
       workExperienceData.id = Math.round(Math.random() * 1000)
 
       if (Object.keys(userWorkExperiences).length) {
@@ -409,12 +410,12 @@ const Step3 = (props: any) => {
 
   const handleCancelForm = () => {
     setShowForm(false)
-
     if (selectedExperience) {
       handleResetForm()
     }
 
     setSelectedExperience(null)
+    setIsNextDisabled(!workExperience?.length && !hasNoWorkExperience)
   }
 
   const handleNextBtn = () => {
@@ -446,7 +447,6 @@ const Step3 = (props: any) => {
       inline: 'nearest'
     })
   }
-
   return (
     <OnBoardLayout
       headingText={
@@ -478,47 +478,58 @@ const Step3 = (props: any) => {
                 <Text bold textStyle='base' tagName='p'>
                   {experience?.job_title}
                 </Text>
+                {/* <br /> */}
+                <Text textStyle='base' tagName='p'>
+                  {experience?.company
+                    +
+                    ' | '
+                    + (location?.value ? location?.value + ',' : '')
+                    + (experience?.country || 'Philippines')}
+                </Text>
+
+                <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
+                  {((from, to) => {
+                    const years = to.diff(from, 'year')
+                    const month = to.diff(from, 'month') - years * 12
+                    return `${from?.format?.('MMMM yyyy')}-${experience?.is_currently_work_here
+                      ? 'Present'
+                      : to?.format
+                        ?.('MMMM yyyy')
+                      } (${years || ''}${years ? `year${years !== 1 ? 's' : ''}` : ''}${month ? ' ' + month : ''}${month ? `month${month !== 1 ? 's' : ''}` : ''})`
+                  })(moment(
+                    experience?.working_period_from),
+                    experience?.is_currently_work_here ? moment() : moment(experience.working_period_to
+                    ))}
+                </Text>
+
                 <br />
-                <Text textStyle='base' tagName='p'>
-                  {experience?.company}
-                </Text>
-                <Text textStyle='base' tagName='p'>
-                  {experience?.location} -{' '}
-                  {getLocation(experience?.location)?.[0]?.region_display_name}
-                </Text>
-                <Text textStyle='base' tagName='p'>
-                  {moment(experience?.working_period_from).format('MMMM yyyy')} to{' '}
-                  {experience?.is_currently_work_here
-                    ? 'Present'
-                    : moment(experience.working_period_to).format('MMMM yyyy')}
-                </Text>
-                <br />
-                {experience?.job_categories?.length > 0 && (
-                  <Text textStyle='base' tagName='p'>
-                    {experience?.job_categories.join(', ')}
-                  </Text>
-                )}
+                {(experience?.function_job_title ?? null) && <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
+                  Job function: {experience?.function_job_title}
+                </Text>}
+
                 {experience?.company_industry && (
-                  <Text textStyle='base' tagName='p'>
-                    {experience?.company_industry}
+                  <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
+                    Industry: {experience?.company_industry}
                   </Text>
                 )}
-                {experience?.salary && (
+                {/* {experience?.salary && (
                   <Text textStyle='base' tagName='p'>
                     {formatSalary(experience?.salary)} per month
                   </Text>
-                )}
-                <br />
+                )} */}
+
                 {experience?.description && (
-                  <>
-                    <Text textStyle='base' tagName='p'>
-                      Description:{' '}
-                    </Text>
-                    <div
+                  <> <br />
+                    <div className={styles.stepDataDescription} >
+                      <Text textStyle='base' tagName='p'>
+                        Description:{' '}
+                      </Text>
+                      <ReadMore size={350} text={experience.description} />
+                      {/* <div
                       className={styles.stepDataDescription}
                       dangerouslySetInnerHTML={{ __html: experience.description }}
-                    />
-                  </>
+                    /> */}
+                    </div></>
                 )}
               </div>
               <div className={styles.stepDataActions}>
@@ -531,7 +542,7 @@ const Step3 = (props: any) => {
                     setSelectedExperience(experience)
                   }}
                 >
-                  <img src={CreateFilledIcon} width='18' height='18' />
+                  <img src={PencilIcon} width='22' height='22' />
                 </div>
                 <div
                   className={styles.stepDataActionItem}
@@ -539,7 +550,7 @@ const Step3 = (props: any) => {
                     handleDeleteExperience(experience.id, index)
                   }}
                 >
-                  <img src={DeleteFilledIcon} width='18' height='18' />
+                  <img src={AccountSettingDeleteIconBin} width='14' height='14' />
                 </div>
               </div>
             </div>
@@ -669,15 +680,15 @@ const Step3 = (props: any) => {
                 )}
               </div>
             )}
-
             <div id='jobFunction' className={styles.stepField}>
-              <MaterialSelectCheckmarks
+              <JobFunctionSelector
                 className={styles.stepFullwidth}
-                label={'Job Functions'}
-                name='jobCategory'
+                label={'Job Function'}
+                title='Job function'
+                name='jobFunction'
+                isTouched
                 value={jobFunction}
-                onSelect={(e) => setJobFunction(e)}
-                options={jobCategoryList}
+                onChange={(value) => setJobFunction(value)}
               />
             </div>
 
@@ -800,19 +811,19 @@ const Step3 = (props: any) => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies.accessToken ? req.cookies.accessToken : null
 
-  store.dispatch(fetchConfigRequest())
+ // store.dispatch(fetchConfigRequest())
   if (accessToken) {
     store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   }
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  const config = storeState.config.config.response
+  // const config = storeState.config.config.response
   const userDetail = storeState.users.fetchUserOwnDetail.response
 
   return {
     props: {
-      config,
+     // config,
       userDetail,
       accessToken
     }

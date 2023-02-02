@@ -11,7 +11,6 @@ function* fetchAppliedJobDetailReq(action) {
     const { data } = yield call(fetchAppliedJobDetailService, jobId, accessToken)
     yield put(fetchAppliedJobDetailSuccess(data.data))
   } catch (error) {
-    console.log('error', error)
     yield put(fetchAppliedJobDetailFailed(error))
   }
 }

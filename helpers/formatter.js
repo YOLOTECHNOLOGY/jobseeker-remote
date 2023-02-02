@@ -20,7 +20,7 @@ export const unslugify = (string, capitalize = false) => {
 }
 
 export const unslugifyTwo = (string) => {
-  return string.split('-').join('_').toLowerCase()
+  return string.split('-').join('_')?.toLowerCase?.()
 }
 
 export const thousandsToNumber = (string) => {

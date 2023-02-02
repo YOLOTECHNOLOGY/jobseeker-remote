@@ -14,7 +14,7 @@ import { openManageJobAlertsModal } from 'store/actions/modals/manageJobAlertsMo
 import Text from 'components/Text'
 import JobCard from 'components/JobCard'
 import JobDetail from 'components/JobDetail'
-import AdSlot from 'components/AdSlot'
+// import AdSlot from 'components/AdSlot'
 import UploadResumeButton from 'components/LncreaseUserConversion/UploadResumeButton/UploadResumeButton'
 
 import JobCardLoader from 'components/Loader/JobCard'
@@ -120,7 +120,6 @@ const JobListSection = ({
 
     return () => window.removeEventListener('scroll', updateScrollPosition)
   }, [])
-
   useEffect(() => {
     setSelectedPage(router.query.page ? Number(router.query.page) : 1)
     document.documentElement.scrollTop = 0
@@ -145,14 +144,16 @@ const JobListSection = ({
       location_values: filterJobPayload?.location ? filterJobPayload.location : 'all',
       job_type_values: filterJobPayload?.jobType ? filterJobPayload.jobType : 'all',
       salary_range_values: filterJobPayload?.salary ? filterJobPayload.salary : 'all',
-      job_category_values: filterJobPayload?.category ? filterJobPayload.category : 'all',
+      // job_category_values: filterJobPayload?.category ? filterJobPayload.category : 'all',
       industry_values: filterJobPayload?.industry ? filterJobPayload.industry : 'all',
       xp_lvl_values: filterJobPayload?.workExperience ? filterJobPayload.workExperience : 'all',
       degree_values: filterJobPayload?.qualification ? filterJobPayload.qualification : 'all',
+      main_functions: filterJobPayload?.mainFunctions ?? 'all',
+      job_functions: filterJobPayload?.jobFunctions ?? 'all',
+      function_titles: filterJobPayload?.functionTitles ?? 'all',
       is_company_verified: 'all',
       frequency_id: 1
     }
-
     createJobAlert(createJobAlertPayload)
   }
 
@@ -203,7 +204,7 @@ const JobListSection = ({
                         if (lastSearch) {
                           sessionStorage.setItem('should-show-alert', '1')
                         }
-                        router.push('/register/jobseeker?redirect=/jobs-hiring/job-search')
+                        router.push('/get-started?redirect=/jobs-hiring/job-search')
                       }
                     }}
                   >
@@ -282,6 +283,7 @@ const JobListSection = ({
             {!isJobDetailFetching && selectedJob?.['id'] && (
               <JobDetail
                 selectedJob={selectedJob}
+                selectedJobId={selectedJobId}
                 setIsShowModalShare={setIsShowModalShare}
                 setIsShowReportJob={setIsShowReportJob}
                 isSticky={isSticky}
@@ -308,7 +310,7 @@ const JobListSection = ({
               </div>
             )}
 
-            <div className={styles.skyscraperBanner}>
+            {/* <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'jobs-search/skyscraper-1'} />
             </div>
             <div className={styles.skyscraperBanner}>
@@ -316,7 +318,7 @@ const JobListSection = ({
             </div>
             <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'jobs-search/skyscraper-3'} />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -350,6 +352,7 @@ const JobListSection = ({
 
       {isShowModalShare && (
         <ModalShare
+          selectedJob={selectedJob}
           jobDetailUrl={selectedJob?.['job_url']}
           isShowModalShare={isShowModalShare}
           handleShowModalShare={setIsShowModalShare}

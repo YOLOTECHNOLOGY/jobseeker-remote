@@ -16,9 +16,9 @@ export const getPublicSitemapXML = (response) => {
           .map(region =>
             region.locations.map(loc => ({
               ...loc,
-              value: loc.value,
+              value: loc?.value,
               // loc value all lower case
-              valueLowerCase: loc.value.toLowerCase()
+              valueLowerCase: loc?.value.toLowerCase()
             }))
           )
           .reduce((a, c) => a.concat(c), [])
@@ -147,7 +147,7 @@ export const getPublicSitemapXML = (response) => {
       ${generatePath('/jobs-hiring/job-search', 1.0)}
       ${
         locationList &&
-        locationList.map((loc) => generateJobFilterPath(loc.value, 0.8)).join('')
+        locationList.map((loc) => generateJobFilterPath(loc?.value, 0.8)).join('')
       }
       ${
         categoryList &&

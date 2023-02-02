@@ -7,15 +7,15 @@ import styles from '../SocialMediaAuth.module.scss'
 import { FacebookLogo } from 'images'
 
 interface IFacebook {
-  className?: string,
-  activeKey?: number,
-  isLogin?: boolean,
-  callBackMethod?: Function,
-  redirect?: string | string[],
+  className?: string
+  activeKey?: number
+  isLogin?: boolean
+  callBackMethod?: Function
+  redirect?: string | string[]
   loading?: boolean
 }
 
-declare const window: any;
+declare const window: any
 
 const Facebook = ({
   className,
@@ -29,13 +29,11 @@ const Facebook = ({
     let accessToken
 
     window.FB.login(
-      function(response) {
+      function (response) {
         if (response.authResponse) {
           accessToken = response.authResponse.accessToken
 
-          window.FB.api('/me?fields=id,first_name,last_name,email', function(
-            response
-          ) {
+          window.FB.api('/me?fields=id,first_name,last_name,email', function (response) {
             const payload = {
               userId: response.id,
               firstName: response.first_name,
@@ -51,7 +49,6 @@ const Facebook = ({
 
             callBackMethod(payload)
             // eslint-disable-next-line no-console
-            console.log('after callback facebook')
           })
         } else {
           // User cancelled login or did not fully authorize
@@ -74,10 +71,10 @@ const Facebook = ({
     >
       <img
         src={FacebookLogo}
-          width={9}
-          height={16}
-        title="Login via Facebook"
-        alt="Login via Facebook"
+        width={9}
+        height={16}
+        title='Login via Facebook'
+        alt='Login via Facebook'
       />
     </div>
   )

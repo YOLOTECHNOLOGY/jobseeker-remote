@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
-import classNames from 'classnames/bind'
+import classNames from 'classnames'
 
 import { logoutRequest } from 'store/actions/auth/logout'
 
@@ -12,7 +12,7 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogo, DefaultAvatar, ChatIcon } from 'images'
+import { BossjobLogo, DefaultAvatar } from 'images'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
@@ -71,58 +71,65 @@ const ProtectedHeader = () => {
           <ul className={styles.headerLinksList}>
             <React.Fragment>
               <li className={styles.headerLink}>
-                <Link title='Jobs' to='/jobs-hiring/job-search'>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                {router.route !== '/jobs-hiring/[keyword]' ? (
+                  <Link title='Jobs' to='/jobs-hiring/job-search'>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      Jobs
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    textColor='darkGrey'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
                     Jobs
                   </Text>
-                </Link>
+                )}
               </li>
               <li className={styles.headerLink}>
-                <a
-                  title='Headhunt Me'
-                  onClick={(e) => handleRedirectAuthentication(e, '/dashboard/headhunt-me')}
-                  href='/dashboard/headhunt-me'
-                >
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Headhunt Me
-                  </Text>
-                </a>
-              </li>
-              <li className={styles.headerLink}>
-                <Link title='Companies' to='/companies'>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                {router.route !== '/companies' ? (
+                  <Link title='Companies' to='/companies'>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      Companies
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    textColor='darkGrey'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
                     Companies
                   </Text>
-                </Link>
+                )}
               </li>
               <li className={styles.headerLink}>
-                <Link title='Courses' to='https://academy.bossjob.ph/courses/search-courses' aTag external>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Courses
+                {router.route !== '/chat/[chat_id]' ? (
+                  <Link title='Jobs' to='/chat/list'>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      Chat
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    textColor='darkGrey'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
+                    Chat
                   </Text>
-                </Link>
+                )}
               </li>
-              <li className={styles.headerLink}>
-                <a
-                  className={styles.headerLinkIcon}
-                  title='Chats'
-                  onClick={(e) => handleRedirectAuthentication(e, '/dashboard/chat')}
-                  href='/dashboard/chat'
-                >
-                  <img src={ChatIcon} width='20' height='20' />
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Chats
-                  </Text>
-                </a>
-              </li>
-              {/* <li className={styles.headerLink} style={{ position: 'relative' }}>
-                <Link title='Virtual Career Fair' to={process.env.VCF_CLIENT_URL} aTag>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Virtual Career Fair
-                    <span className={styles.hotTag}>Hot!</span>
-                  </Text>
-                </Link>
-              </li> */}
               <li className={styles.headerLink} style={{ position: 'relative' }}>
                 <Link title='Career Guide' to='https://blog.bossjob.ph' external>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
@@ -136,21 +143,29 @@ const ProtectedHeader = () => {
         <ul className={styles.headerLinksList}>
           <React.Fragment>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
-              <a
-                title='Manage Resume'
-                onClick={() => {
-                  currentUser?.is_profile_completed
-                    ? router.push('/manage-profile')
-                    : router.push('/jobseeker-complete-profile/1')
-                  // currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
-                }}
-              >
+              {router.route !== '/manage-profile' ? (
+                <a
+                  title='Manage Resume'
+                  onClick={() => {
+                    currentUser?.is_profile_completed
+                      ? router.push('/manage-profile')
+                      : router.push('/jobseeker-complete-profile/1')
+                    // currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
+                  }}
+                >
+                  <MaterialButton variant='contained' capitalize>
+                    <Text textColor='white' textStyle='base' bold>
+                      Manage Resume
+                    </Text>
+                  </MaterialButton>
+                </a>
+              ) : (
                 <MaterialButton variant='contained' capitalize>
                   <Text textColor='white' textStyle='base' bold>
                     Manage Resume
                   </Text>
                 </MaterialButton>
-              </a>
+              )}
             </li>
             <li className={styles.headerLink}>
               <div
@@ -161,6 +176,9 @@ const ProtectedHeader = () => {
                   src={currentUser?.avatar || DefaultAvatar}
                   className={styles.profilePlaceHolder}
                   alt='avatar'
+                  onError={(e) => {
+                    ;(e.target as HTMLInputElement).src = DefaultAvatar
+                  }}
                 />
                 <div className={styles.profileCaret} />
               </div>
@@ -195,9 +213,14 @@ const ProtectedHeader = () => {
                   <Text textStyle='base'>BossPoints</Text>
                 </a>
               </li>
-              <li className={styles.headerMenuItem}>
+              {/* <li className={styles.headerMenuItem}>
                 <Link to='https://blog.bossjob.ph/' aTag external className={styles.headerMenuLink}>
                   <Text textStyle='base'>Career Guide</Text>
+                </Link>
+              </li> */}
+              <li className={styles.headerMenuItem}>
+                <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
+                  <Text textStyle='base'>For Employer</Text>
                 </Link>
               </li>
               <li className={styles.headerMenuItem}>

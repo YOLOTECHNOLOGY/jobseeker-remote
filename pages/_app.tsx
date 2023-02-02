@@ -6,21 +6,31 @@ import { wrapper } from 'store'
 import { getCookie, removeCookie } from 'helpers/cookies'
 import { CookiesProvider } from 'react-cookie'
 import { ConnectedRouter } from 'connected-next-router'
-
+import { PersistGate } from 'redux-persist/integration/react'
 import { setItem, getItem } from 'helpers/localStorage'
 import { getFromObject } from 'helpers/formatter'
-import 'styles/globals.scss'
+import { jobseekerTokenValidate } from 'store/services/auth/jobseekersTokenValidate'
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
+import Head from 'next/head'
 const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
 const MaintenancePage = dynamic(() => import('./maintenance'))
 import * as fbq from 'lib/fpixel'
 import NotificationProvider from 'components/NotificationProvider'
+// import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+// import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+// import { useDispatch } from 'react-redux'
+import IMProvider from 'components/Chat/IMProvider.client'
+import 'styles/globals.scss'
+import { persistor } from 'store'
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = (props: AppProps) => {
+  const { Component, pageProps } = props
   const router = useRouter()
   const accessToken = getCookie('accessToken')
+
   const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
+  const [toPath, setToPath] = useState('')
 
   useEffect(() => {
     // Facebook pixel
@@ -40,28 +50,6 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [router.events])
 
   useEffect(() => {
-    // Validate token on every protected page navigation
-    if (accessToken) {
-      fetch(`${process.env.AUTH_BOSSJOB_URL}/token/validate`, {
-        method: 'POST',
-        headers: new Headers({
-          Authorization: 'Bearer ' + getCookie('accessToken')
-        })
-      }).then((resp) => {
-        if (resp.status !== 200) {
-          removeCookie('user')
-          removeCookie('accessToken')
-          removeCookie('splan')
-
-          if (typeof window !== 'undefined') {
-            window.location.href = '/'
-          }
-        }
-      })
-    }
-  }, [router])
-
-  useEffect(() => {
     if (!getItem('utmCampaign')) {
       // Save utm keys if found
       const campaignKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content']
@@ -72,9 +60,11 @@ const App = ({ Component, pageProps }: AppProps) => {
       }
     }
     const handleRouteComplete = () => {
+      setToPath('')
       setIsPageLoading(false)
     }
-    const handleStart = () => {
+    const handleStart = (toPath) => {
+      setToPath(toPath)
       setIsPageLoading(true)
     }
 
@@ -89,8 +79,31 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
   }, [])
 
+  useEffect(() => {
+    const accessToken = getCookie('accessToken')
+    if (accessToken) {
+      jobseekerTokenValidate(accessToken)
+        .then(() => {
+          //
+        })
+        .catch(({ response: { data, status } }) => {
+          if (status == 400 || data?.errors?.error[0] === 'Invalid token') {
+            if (router.pathname !== '/get-started') {
+              removeCookie('accessToken')
+              window.location.href = '/get-started?type=LoginOut'
+            } else {
+              removeCookie('accessToken')
+            }
+          }
+        })
+    }
+  }, []) // [router.route]
+
   return (
     <>
+    <Head>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no'/>
+        </Head>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
       <Script
@@ -153,35 +166,6 @@ const App = ({ Component, pageProps }: AppProps) => {
                 xfbml            : true,	
                 version          : 'v6.0'	
               });	
-
-              FB.Event.subscribe('messenger_checkbox', function(e) {
-                console.log("messenger_checkbox event");
-                console.log(e);
-                if (e.event == 'rendered') {
-                  console.log("Plugin was rendered");
-                } else if (e.event == 'checkbox') {
-                  var checkboxState = e.state;
-                  console.log("Checkbox state: " + checkboxState);
-                  if (checkboxState === 'checked') {
-                    const refStr = e.user_ref.split('_')
-                    FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
-                      app_id: ${
-                        process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
-                      },
-                      page_id:${
-                        process.env.ENV === 'production' ? '307776753021449' : '638091659945858'
-                      },
-                      ref: refStr[1],
-                      user_ref: e.user_ref
-                    })
-                    setTimeout(() => {window.location.reload()}, 2000)
-                  }
-                } else if (e.event == 'not_you') {
-                  console.log("User clicked 'not you'");
-                } else if (e.event == 'hidden') {
-                  console.log("Plugin was hidden");
-                }
-              });
             };	
 
             if(window.FB === undefined) {	
@@ -211,6 +195,20 @@ const App = ({ Component, pageProps }: AppProps) => {
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', ${fbq.FB_PIXEL_ID});
             `
+        }}
+      />
+      {/* TikTok */}
+      <Script
+        dangerouslySetInnerHTML={{
+          __html: `
+          !function (w, d, t) {
+            w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++
+      )ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=i+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+          
+            ttq.load('CEDEUCRC77UA21H9TRE0');
+            ttq.page();
+          }(window, document, 'ttq');
+          `
         }}
       />
 
@@ -263,11 +261,16 @@ const App = ({ Component, pageProps }: AppProps) => {
         <CookiesProvider>
           {process.env.MAINTENANCE === 'true' ? (
             <MaintenancePage {...pageProps} />
-          ) : isPageLoading && !router.pathname.includes('jobs-hiring') ? (
+          ) : isPageLoading &&
+            !(router.pathname.includes('jobs-hiring') && toPath.includes('jobs-hiring')) ? (
             <TransitionLoader accessToken={accessToken} />
           ) : (
             <NotificationProvider>
-              <Component {...pageProps} />
+              <PersistGate loading={null} persistor={persistor}>
+                <IMProvider>
+                  <Component {...pageProps} />
+                </IMProvider>
+              </PersistGate>
             </NotificationProvider>
           )}
         </CookiesProvider>
