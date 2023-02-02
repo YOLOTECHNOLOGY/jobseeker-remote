@@ -64,15 +64,15 @@ const Verify = ({ query }: any) => {
 
   const headerOpenApp = () => {
     const userAgent = useUserAgent(window.navigator.userAgent)
-    const { email, otp, redirect } = query
-    let redirectUrl: string
-    if (Array.isArray(redirect)) {
-      redirectUrl = redirect[0]
-    } else {
-      redirectUrl = redirect
-    }
-    const schema = `bossjob://jobseeker/verify?email=${email}&otp=${otp}&redirect=${redirectUrl}`
-    window.location.replace(schema)
+    const { email, otp } = query
+    // let redirectUrl: string
+    // if (Array.isArray(redirect)) {
+    //   redirectUrl = redirect[0]
+    // } else {
+    //   redirectUrl = redirect
+    // }
+    const schema = `bossjob://bossjob.ph/verify?email=${email}&otp=${otp}`
+    window.location.href = schema
 
     const appStoreLink = userAgent?.isIos
       ? process.env.APP_STORE_LINK
