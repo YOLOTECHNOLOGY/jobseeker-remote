@@ -82,7 +82,7 @@ const Footer = () => {
                     <Text textStyle='sm'>Legal</Text>
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     className={styles.footerLink}
                     to={`${process.env.OLD_PROJECT_URL}/bosspoints`}
@@ -91,7 +91,7 @@ const Footer = () => {
                   >
                     <Text textStyle='sm'>BossPoints</Text>
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link
                     className={styles.footerLink}
@@ -461,7 +461,7 @@ const Footer = () => {
                       <Text textStyle='sm'>Legal</Text>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.OLD_PROJECT_URL}/bosspoints`}
@@ -470,7 +470,7 @@ const Footer = () => {
                     >
                       <Text textStyle='sm'>BossPoints</Text>
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link
                       className={styles.footerLink}

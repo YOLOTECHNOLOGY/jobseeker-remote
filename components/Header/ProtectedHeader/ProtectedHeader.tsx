@@ -204,7 +204,7 @@ const ProtectedHeader = () => {
                   <Text textStyle='base'>Account Settings</Text>
                 </Link>
               </li>
-              <li className={styles.headerMenuItem}>
+              {/* <li className={styles.headerMenuItem}>
                 <a
                   onClick={(e) => handleRedirectAuthentication(e, '/dashboard/bosspoint')}
                   href='/dashboard/bosspoint'
@@ -212,7 +212,7 @@ const ProtectedHeader = () => {
                 >
                   <Text textStyle='base'>BossPoints</Text>
                 </a>
-              </li>
+              </li> */}
               {/* <li className={styles.headerMenuItem}>
                 <Link to='https://blog.bossjob.ph/' aTag external className={styles.headerMenuLink}>
                   <Text textStyle='base'>Career Guide</Text>
