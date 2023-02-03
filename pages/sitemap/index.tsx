@@ -271,14 +271,14 @@ const PublicSitemap = () => {
             >
               Other Resources
             </Text>
-            <Link
+            {/* <Link
               className={styles.item}
               to={`${process.env.OLD_PROJECT_URL}/headhunt-me`}
-              title="Headhunt Me"
+              title='Headhunt Me'
               external
             >
-              <Text textStyle="base">Headhunt Me</Text>
-            </Link>
+              <Text textStyle='base'>Headhunt Me</Text>
+            </Link> */}
             <Link
               className={styles.item}
               aTag
@@ -313,14 +313,14 @@ const PublicSitemap = () => {
             >
               <Text textStyle='base'>Career Guide</Text>
             </Link>
-            <Link
+            {/* <Link
               className={styles.item}
               to={`${process.env.OLD_PROJECT_URL}/bosspoints`}
               title='BossPoints'
               external
             >
               <Text textStyle='base'>BossPoints</Text>
-            </Link>
+            </Link> */}
             <Link
               className={styles.item}
               to={`${process.env.BLOG_BOSSJOB}/terms-and-conditions/  `}
