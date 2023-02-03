@@ -27,7 +27,7 @@ interface LayoutProps {
   isHiddenHeader?: boolean
 }
 
-const Layout = ({ children, className, isHiddenFooter,isHiddenHeader }: LayoutProps) => {
+const Layout = ({ children, className, isHiddenFooter, isHiddenHeader }: LayoutProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isEmailVerified, setIsEmailVerified] = useState(false)
   const [isShowModal, setIsShowModal] = useState(false)
@@ -104,8 +104,12 @@ const Layout = ({ children, className, isHiddenFooter,isHiddenHeader }: LayoutPr
           </Text>
         </MaterialAlert>
       )}
-      {!isHiddenHeader && <><Header />
-        <HamburgerMenu /></>}
+      {!isHiddenHeader && (
+        <>
+          <Header />
+          <HamburgerMenu />
+        </>
+      )}
       {children}
       {!isHiddenFooter && <Footer />}
 
@@ -114,7 +118,7 @@ const Layout = ({ children, className, isHiddenFooter,isHiddenHeader }: LayoutPr
         isShowModal={isShowModal}
         handleModal={handleVerifyEmailModal}
       />
-      {/* <ModalAppRedirect isShowModal={isShowAppRedirectModal} handleModal={handleAppRedirectModal} /> */}
+      <ModalAppRedirect isShowModal={isShowAppRedirectModal} handleModal={handleAppRedirectModal} />
     </div>
   )
 }
