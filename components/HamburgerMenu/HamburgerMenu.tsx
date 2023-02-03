@@ -201,7 +201,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>Account Settings</Text>
                   </li>
                 </Link>
-                <Link
+                {/* <Link
                   className={styles.defaultLink}
                   to={authPathToOldProject(null, '/dashboard/bosspoint')}
                   aTag
@@ -210,7 +210,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl'>BossPoints</Text>
                   </li>
-                </Link>
+                </Link> */}
                 <Link
                   className={styles.defaultLink}
                   to='https://blog.bossjob.ph/'
