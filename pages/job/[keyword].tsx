@@ -370,7 +370,6 @@ const Job = ({
     if (!userCookie || !authCookie) {
       const source = jobSource()
       localStorage.setItem('isChatRedirect', `/chat-redirect/${jobDetail?.id}?source=${source}`)
-      localStorage
       setOpenRegister(true)
     } else if (jobDetail?.external_apply_url) {
       addExternalJobClickService(jobDetail?.id)
