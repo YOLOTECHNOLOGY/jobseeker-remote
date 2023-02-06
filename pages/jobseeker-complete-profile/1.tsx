@@ -22,7 +22,7 @@ import {
   getSmsCountryList,
   getSalaryOptions,
   getCountryList,
-  getJobTypeList,
+  getJobTypeList
 } from 'helpers/jobPayloadFormatter'
 import styles from './Onboard.module.scss'
 import { DisclaimerIcon } from 'images'
@@ -34,25 +34,25 @@ const Step1 = (props: any) => {
   const currentStep = 1
   const quickUpladResumeType = getItem('quickUpladResume')
   const totalStep = quickUpladResumeType === 'upFile' || quickUpladResumeType === 'onLine' ? 3 : 4
-  const {  userDetail, accessToken } = props
+  const { userDetail, accessToken } = props
   const preference = userDetail?.job_preferences?.[0]
   const config = useSelector((store: any) => store?.config?.config?.response)
   const dispatch = useDispatch()
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(fetchConfigRequest())
-  },[])
+  }, [])
   const rhTooltipTitle =
     'Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.'
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
   )
-  const formattedLocationList = flatMap(locationList, l => l.locations)
+  const formattedLocationList = flatMap(locationList, (l) => l.locations)
   const desiredLoaction = useMemo(() => {
-    return formattedLocationList.find(l => l.key === preference?.location_key)
+    return formattedLocationList.find((l) => l.key === preference?.location_key)
   }, [formattedLocationList, preference?.location_key])
 
   const location = useMemo(() => {
-    return formattedLocationList.find(l => l.value === userDetail?.location)
+    return formattedLocationList.find((l) => l.value === userDetail?.location)
   }, [formattedLocationList, userDetail?.location])
 
   const noticeList = getNoticePeriodList(config)
@@ -67,12 +67,17 @@ const Step1 = (props: any) => {
     return matchedCountryCode ? matchedCountryCode[0]?.value : null
   }
   const [isShowCountry, setIsShowCountry] = useState(userDetail?.location === 'Overseas')
-  const [isShowDesiredCountry, setIsShowDesiredCountry] = useState(preference?.location_key === 'overseas')
+  const [isShowDesiredCountry, setIsShowDesiredCountry] = useState(
+    preference?.location_key === 'overseas'
+  )
 
   const defaultValues = useMemo(() => {
     const countryCode = getSmsCountryCode(userDetail?.phone_num, smsCountryList) || '+63'
     return {
-      jobTitle: { id: preference?.function_job_title_id, value: preference?.function_job_title ?? '' },
+      jobTitle: {
+        id: preference?.function_job_title_id,
+        value: preference?.function_job_title ?? ''
+      },
       jobType: preference?.job_type_key,
       minSalary: Number(preference?.salary_range_from) ?? undefined,
       maxSalary: Number(preference?.salary_range_to) ?? undefined,
@@ -92,15 +97,15 @@ const Step1 = (props: any) => {
   const minSalaryOptions = getSalaryOptions(config)
   const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
   const industryOptions = useMemo(() => {
-    return config?.inputs?.industry_lists?.map(industry => ({ label: industry.value, value: industry.key })) ?? []
+    return (
+      config?.inputs?.industry_lists?.map((industry) => ({
+        label: industry.value,
+        value: industry.key
+      })) ?? []
+    )
   }, [config?.inputs?.industry_lists])
 
-  const {
-    handleSubmit,
-    setValue,
-    getValues,
-    control,
-  } = useForm({ defaultValues })
+  const { handleSubmit, setValue, getValues, control } = useForm({ defaultValues })
   const [minSalary, setMinSalary] = useState(getValues().minSalary)
   const router = useRouter()
   const getMaxSalaryOptions = (minSalary) => {
@@ -184,14 +189,15 @@ const Step1 = (props: any) => {
               name={'firstName'}
               rules={{ required: 'This field is required.' }}
               render={({ field, fieldState }) => {
-                return <MaterialTextField
-                  className={styles.stepFullwidth}
-                  label='First Name'
-                  required
-                  {...fieldState}
-                  {...field}
-
-                />
+                return (
+                  <MaterialTextField
+                    className={styles.stepFullwidth}
+                    label='First Name'
+                    required
+                    {...fieldState}
+                    {...field}
+                  />
+                )
               }}
             />
           </div>
@@ -201,14 +207,15 @@ const Step1 = (props: any) => {
               name={'lastName'}
               rules={{ required: 'This field is required.' }}
               render={({ field, fieldState }) => {
-                return <MaterialTextField
-                  className={styles.stepFullwidth}
-                  label='Last Name'
-                  required
-                  {...fieldState}
-                  {...field}
-
-                />
+                return (
+                  <MaterialTextField
+                    className={styles.stepFullwidth}
+                    label='Last Name'
+                    required
+                    {...fieldState}
+                    {...field}
+                  />
+                )
               }}
             />
           </div>
@@ -220,17 +227,19 @@ const Step1 = (props: any) => {
             rules={{ required: 'This field is required.' }}
             render={({ field, fieldState }) => {
               const { onChange } = field
-              return <MaterialLocationField
-                className={styles.stepFullwidth}
-                label='Current location'
-                required
-                {...fieldState}
-                {...field}
-                onChange={(_, location) => {
-                  setIsShowCountry(location?.key === 'overseas')
-                  onChange(location)
-                }}
-              />
+              return (
+                <MaterialLocationField
+                  className={styles.stepFullwidth}
+                  label='Current location'
+                  required
+                  {...fieldState}
+                  {...field}
+                  onChange={(_, location) => {
+                    setIsShowCountry(location?.key === 'overseas')
+                    onChange(location)
+                  }}
+                />
+              )
             }}
           />
           {isShowCountry && (
@@ -238,19 +247,20 @@ const Step1 = (props: any) => {
               <Controller
                 control={control}
                 name={'country'}
-                rules={{ validate: value => !!value || 'This field is required.' }}
+                rules={{ validate: (value) => !!value || 'This field is required.' }}
                 render={({ field, fieldState }) => {
-                  return <MaterialBasicSelect
-                    className={styles.stepFullwidth}
-                    label='Country'
-                    options={countryList}
-                    required
-                    {...fieldState}
-                    {...field}
-                  />
+                  return (
+                    <MaterialBasicSelect
+                      className={styles.stepFullwidth}
+                      label='Country'
+                      options={countryList}
+                      required
+                      {...fieldState}
+                      {...field}
+                    />
+                  )
                 }}
               />
-
             </div>
           )}
         </div>
@@ -258,17 +268,19 @@ const Step1 = (props: any) => {
           <Controller
             control={control}
             name={'countryCode'}
-            rules={{ validate: value => !!value || 'This field is required.' }}
+            rules={{ validate: (value) => !!value || 'This field is required.' }}
             render={({ field, fieldState }) => {
-              return <MaterialBasicSelect
-                className={styles.step1ContactCountry}
-                label='Country code'
-                options={smsCountryList}
-                required
-                {...fieldState}
-                {...field}
-                ref={undefined}
-              />
+              return (
+                <MaterialBasicSelect
+                  className={styles.step1ContactCountry}
+                  label='Country code'
+                  options={smsCountryList}
+                  required
+                  {...fieldState}
+                  {...field}
+                  ref={undefined}
+                />
+              )
             }}
           />
 
@@ -278,15 +290,19 @@ const Step1 = (props: any) => {
               name={'contactNumber'}
               rules={{ required: 'This field is required.' }}
               render={({ field, fieldState }) => {
-                return <MaterialTextField
-                  className={styles.step1ContactNumberField}
-                  label='Contact Number'
-                  size='small'
-                  required
-                  {...fieldState}
-                  {...field}
-                  ref={undefined}
-                />
+                return (
+                  <MaterialTextField
+                    className={styles.step1ContactNumberField}
+                    label='Contact Number'
+                    size='small'
+                    type='tel'
+                    maxLength={20}
+                    required
+                    {...fieldState}
+                    {...field}
+                    ref={undefined}
+                  />
+                )
               }}
             />
           </div>
@@ -295,22 +311,24 @@ const Step1 = (props: any) => {
           <Controller
             control={control}
             name={'jobTitle'}
-            rules={{ validate: value => value.id ? undefined : 'This field is required.' }}
+            rules={{ validate: (value) => (value.id ? undefined : 'This field is required.') }}
             render={({ field, fieldState }) => {
-              return <JobFunctionSelector
-                className={styles.stepFullwidth}
-                control={control}
-                label='Desired job title'
-                variant='outlined'
-                autoComplete='off'
-                jobTitle={preference?.function_job_title}
-                title='Job Title'
-                helperText={fieldState?.error?.message}
-                required
-                {...fieldState}
-                {...field}
-                ref={undefined}
-              />
+              return (
+                <JobFunctionSelector
+                  className={styles.stepFullwidth}
+                  control={control}
+                  label='Desired job title'
+                  variant='outlined'
+                  autoComplete='off'
+                  jobTitle={preference?.function_job_title}
+                  title='Job Title'
+                  helperText={fieldState?.error?.message}
+                  required
+                  {...fieldState}
+                  {...field}
+                  ref={undefined}
+                />
+              )
             }}
           />
         </div>
@@ -320,15 +338,17 @@ const Step1 = (props: any) => {
             name={'jobType'}
             rules={{ required: 'This field is required.' }}
             render={({ field, fieldState }) => {
-              return <MaterialBasicSelect
-                className={styles.stepFullwidth}
-                label='Desired job type'
-                options={jobTypeList}
-                required
-                {...fieldState}
-                {...field}
-                ref={undefined}
-              />
+              return (
+                <MaterialBasicSelect
+                  className={styles.stepFullwidth}
+                  label='Desired job type'
+                  options={jobTypeList}
+                  required
+                  {...fieldState}
+                  {...field}
+                  ref={undefined}
+                />
+              )
             }}
           />
         </div>
@@ -339,18 +359,20 @@ const Step1 = (props: any) => {
             rules={{ required: 'This field is required.' }}
             render={({ field, fieldState }) => {
               const { onChange } = field
-              return <MaterialLocationField
-                className={styles.stepFullwidth}
-                label='Desired working location'
-                required
-                {...fieldState}
-                {...field}
-                onChange={(_, location) => {
-                  setIsShowDesiredCountry(location?.key === 'overseas')
-                  onChange(location)
-                }}
-                ref={undefined}
-              />
+              return (
+                <MaterialLocationField
+                  className={styles.stepFullwidth}
+                  label='Desired working location'
+                  required
+                  {...fieldState}
+                  {...field}
+                  onChange={(_, location) => {
+                    setIsShowDesiredCountry(location?.key === 'overseas')
+                    onChange(location)
+                  }}
+                  ref={undefined}
+                />
+              )
             }}
           />
           {isShowDesiredCountry && (
@@ -358,19 +380,20 @@ const Step1 = (props: any) => {
               <Controller
                 control={control}
                 name={'desiredCountry'}
-                rules={{ validate: value => !!value || 'This field is required.' }}
+                rules={{ validate: (value) => !!value || 'This field is required.' }}
                 render={({ field, fieldState }) => {
-                  return <MaterialBasicSelect
-                    className={styles.stepFullwidth}
-                    label='Country'
-                    options={countryList}
-                    required
-                    {...fieldState}
-                    {...field}
-                  />
+                  return (
+                    <MaterialBasicSelect
+                      className={styles.stepFullwidth}
+                      label='Country'
+                      options={countryList}
+                      required
+                      {...fieldState}
+                      {...field}
+                    />
+                  )
                 }}
               />
-
             </div>
           )}
         </div>
@@ -382,40 +405,43 @@ const Step1 = (props: any) => {
                 name='currency'
                 rules={{ required: 'This field is required.' }}
                 render={({ field, fieldState }) => {
-                  return <MaterialBasicSelect
-                    className={styles.stepFullwidth}
-                    label='Desired salary currency'
-                    options={[{ value: 'php', label: 'PHP' }]}
-                    required
-                    {...fieldState}
-                    {...field}
-                    ref={undefined}
-                  />
+                  return (
+                    <MaterialBasicSelect
+                      className={styles.stepFullwidth}
+                      label='Desired salary currency'
+                      options={[{ value: 'php', label: 'PHP' }]}
+                      required
+                      {...fieldState}
+                      {...field}
+                      ref={undefined}
+                    />
+                  )
                 }}
               />
             </div>
             <div className={styles.step1SalaryRange}>
-
               <Controller
                 control={control}
                 name={'minSalary'}
-                rules={{ validate: value => !!value || 'This field is required.' }}
+                rules={{ validate: (value) => !!value || 'This field is required.' }}
                 render={({ field, fieldState }) => {
                   const { value, onChange } = field
-                  return <MaterialBasicSelect
-                    className={styles.stepFullwidth}
-                    label='Min. salary'
-                    options={minSalaryOptions}
-                    required
-                    {...fieldState}
-                    {...field}
-                    value={value || undefined}
-                    onChange={e => {
-                      setMinSalary(e.target.value)
-                      onChange(e)
-                    }}
-                    ref={undefined}
-                  />
+                  return (
+                    <MaterialBasicSelect
+                      className={styles.stepFullwidth}
+                      label='Min. salary'
+                      options={minSalaryOptions}
+                      required
+                      {...fieldState}
+                      {...field}
+                      value={value || undefined}
+                      onChange={(e) => {
+                        setMinSalary(e.target.value)
+                        onChange(e)
+                      }}
+                      ref={undefined}
+                    />
+                  )
                 }}
               />
             </div>
@@ -423,20 +449,22 @@ const Step1 = (props: any) => {
               <Controller
                 control={control}
                 name={'maxSalary'}
-                rules={{ validate: value => !!value || 'This field is required.' }}
+                rules={{ validate: (value) => !!value || 'This field is required.' }}
                 render={({ field, fieldState }) => {
                   const { value } = field
-                  return <MaterialBasicSelect
-                    className={styles.stepFullwidth}
-                    label='Max. salary'
-                    rules={{ required: 'This field is required.' }}
-                    required
-                    options={maxSalaryOptions}
-                    {...fieldState}
-                    {...field}
-                    value={value || undefined}
-                    ref={undefined}
-                  />
+                  return (
+                    <MaterialBasicSelect
+                      className={styles.stepFullwidth}
+                      label='Max. salary'
+                      rules={{ required: 'This field is required.' }}
+                      required
+                      options={maxSalaryOptions}
+                      {...fieldState}
+                      {...field}
+                      value={value || undefined}
+                      ref={undefined}
+                    />
+                  )
                 }}
               />
             </div>
@@ -448,15 +476,17 @@ const Step1 = (props: any) => {
             name={'industry'}
             rules={{ required: 'This field is required.' }}
             render={({ field, fieldState }) => {
-              return <MaterialBasicSelect
-                className={styles.stepFullwidth}
-                label='Desired Industry'
-                required
-                options={industryOptions}
-                {...fieldState}
-                {...field}
-                ref={undefined}
-              />
+              return (
+                <MaterialBasicSelect
+                  className={styles.stepFullwidth}
+                  label='Desired Industry'
+                  required
+                  options={industryOptions}
+                  {...fieldState}
+                  {...field}
+                  ref={undefined}
+                />
+              )
             }}
           />
         </div>
@@ -466,15 +496,17 @@ const Step1 = (props: any) => {
             name={'noticePeriod'}
             rules={{ required: 'This field is required.' }}
             render={({ field, fieldState }) => {
-              return <MaterialBasicSelect
-                className={styles.stepFullwidth}
-                label='Availability'
-                required
-                options={noticeList}
-                {...fieldState}
-                {...field}
-                ref={undefined}
-              />
+              return (
+                <MaterialBasicSelect
+                  className={styles.stepFullwidth}
+                  label='Availability'
+                  required
+                  options={noticeList}
+                  {...fieldState}
+                  {...field}
+                  ref={undefined}
+                />
+              )
             }}
           />
         </div>
@@ -520,17 +552,17 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     }
   }
 
- // store.dispatch(fetchConfigRequest())
+  // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-//  const config = storeState.config.config.response
+  //  const config = storeState.config.config.response
   const userDetail = storeState.users.fetchUserOwnDetail.response
 
   return {
     props: {
-    //  config,
+      //  config,
       userDetail,
       accessToken
     }
