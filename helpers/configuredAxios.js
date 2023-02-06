@@ -130,7 +130,7 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
           removeCookie('accessToken')
           window.location.href = '/get-started'
           IMManager?.logout?.()
-          localStorage.clear()
+          localStorage?.clear?.()
         } else {
           return Promise.reject(error)
         }

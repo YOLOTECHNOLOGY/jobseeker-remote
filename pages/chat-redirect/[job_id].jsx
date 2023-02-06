@@ -4,14 +4,18 @@ import { useRouter } from 'next/router'
 import Layout from 'components/Layout'
 import { createChat } from 'helpers/interpreters/services/chat'
 import { useSelector } from 'react-redux'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { wrapper } from 'store'
+import { END } from '@redux-saga/core'
 
 const Chat = () => {
     const router = useRouter()
     const { query: { job_id } } = router
     const userDetail = useSelector(store => store.users.fetchUserOwnDetail?.response ?? {})
+    console.log({ userDetail })
     const userId = userDetail.id
     useEffect(() => {
-        if(userId){
+        if (userId) {
             createChat(job_id).then(result => {
                 const chatId = result.data.data.id
                 router.push(`/chat/${chatId}`)
@@ -22,11 +26,15 @@ const Chat = () => {
             router.push(`/`)
         }
     }, [userId])
-    return <Layout loading={true}/>
+    return <Layout loading={true} />
 }
-export const getServerSideProps = () => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+    const accessToken = req.cookies?.accessToken ?? null
+    store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
+    store.dispatch(END)
+    await store .sagaTask.toPromise()
     return {
         props: {}
     }
-}
+})
 export default Chat
