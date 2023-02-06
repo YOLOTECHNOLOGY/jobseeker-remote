@@ -10,13 +10,13 @@ import { END } from '@redux-saga/core'
 
 const Chat = () => {
     const router = useRouter()
-    const { query: { job_id } } = router
+    const { query: { job_id, source } } = router
+    console.log({ router })
     const userDetail = useSelector(store => store.users.fetchUserOwnDetail?.response ?? {})
-    console.log({ userDetail })
     const userId = userDetail.id
     useEffect(() => {
         if (userId) {
-            createChat(job_id).then(result => {
+            createChat(job_id, { source }).then(result => {
                 const chatId = result.data.data.id
                 router.push(`/chat/${chatId}`)
             }).catch(() => {
@@ -32,7 +32,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     const accessToken = req.cookies?.accessToken ?? null
     store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
     store.dispatch(END)
-    await store .sagaTask.toPromise()
+    await store.sagaTask.toPromise()
     return {
         props: {}
     }
