@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback,useMemo } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import moment from 'moment'
 import { isMobile } from 'react-device-detect'
@@ -100,8 +100,7 @@ const JobDetail = ({
   handleDeleteSavedJob,
   applicationHistory,
   applicationUpdatedAt,
-  isCompanyVerified,
-
+  isCompanyVerified
 }: IJobDetailProps) => {
   const router = useRouter()
   const detailHeaderRef = useRef(null)
@@ -194,9 +193,10 @@ const JobDetail = ({
       status: 'protected',
       job_id: selectedJob.id,
       applicationId: chatDetail.job_application_id
-    }).then(() => {
-      router.push(`/chat/${chatDetail.chat_id}`)
     })
+      .then(() => {
+        router.push(`/chat/${chatDetail.chat_id}`)
+      })
       .finally(() => {
         setLoading(false)
       })
@@ -219,18 +219,21 @@ const JobDetail = ({
     } else {
       setLoading(true)
       const source = jobSource()
-      createChat(selectedJob?.id, { source }).then(result => {
-        const chatId = result.data.data.id
-        const newData = {
-          ...result.data?.data?.job_application,
-          initiated_role: result.data?.data?.initiated_role,
-          chatStatus: result.data?.data?.status
-        }
-        dispatch(updateImState({ chatId, imState: newData }))
-        router.push(`/chat/${chatId}`)
-      }).catch(e => {
-        router.push(`/chat`)
-      }).finally(() => setLoading(false))
+      createChat(selectedJob?.id, { source })
+        .then((result) => {
+          const chatId = result.data.data.id
+          const newData = {
+            ...result.data?.data?.job_application,
+            initiated_role: result.data?.data?.initiated_role,
+            chatStatus: result.data?.data?.status
+          }
+          dispatch(updateImState({ chatId, imState: newData }))
+          router.push(`/chat/${chatId}`)
+        })
+        .catch((e) => {
+          router.push(`/chat`)
+        })
+        .finally(() => setLoading(false))
     }
   }
   useEffect(() => {
@@ -254,11 +257,16 @@ const JobDetail = ({
         firstButtonText='Cancel'
         secondButtonText='Proceed'
         headerTitle={'Chat with ' + selectedJob?.recruiter?.full_name ?? ''}
-
       >
-        <p>You are currently chatting with recruiter for the {chatDetail?.job?.job_title ?? chatDetail?.job?.function_job_title ?? 'this job'} position. Are you sure you want to switch job?</p>
+        <p>
+          You are currently chatting with recruiter for the{' '}
+          {chatDetail?.job?.job_title ?? chatDetail?.job?.function_job_title ?? 'this job'}{' '}
+          position. Are you sure you want to switch job?
+        </p>
       </Modal>
-      {openRegister ? <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} /> : null}
+      {openRegister ? (
+        <RegisterModal openRegister={openRegister} setOpenRegister={setOpenRegister} />
+      ) : null}
 
       <div className={styles.jobDetail}>
         <div className={classNamesCombined([styles.jobDetailContent])}>
@@ -278,8 +286,12 @@ const JobDetail = ({
                 </Text>
               </Link>
               <div className={styles.jobDetailButtons}>
-
-                <MaterialButton variant='contained' capitalize onClick={handleChat} isLoading={loading}>
+                <MaterialButton
+                  variant='contained'
+                  capitalize
+                  onClick={handleChat}
+                  isLoading={loading}
+                >
                   <Text textColor='white' bold>
                     {(() => {
                       if (selectedJob?.external_apply_url) {
@@ -629,8 +641,6 @@ const JobDetail = ({
           </div>
         </div>
       </div>
-
-
 
       {isShowModal && (
         <ModalVerifyEmail

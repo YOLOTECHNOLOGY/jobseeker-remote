@@ -162,9 +162,10 @@
     }
 
     &Tooltip {
-      vertical-align: text-top;
+      vertical-align: text-bottom;
       margin-left: 5px;
       cursor: pointer;
+      margin-top: 7px;
     }
   }
 

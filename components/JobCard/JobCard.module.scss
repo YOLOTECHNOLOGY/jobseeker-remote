@@ -10,7 +10,7 @@
   padding: 28px 0;
   margin-bottom: 16px;
   padding: 24px;
-  
+
   &.isSelected {
     border: 2px solid $primaryBlue;
 
@@ -18,7 +18,7 @@
       margin-top: 50px;
     }
   }
-  
+
   &:hover {
     border: 2px solid $primaryBlue;
     cursor: pointer;
@@ -75,17 +75,17 @@
 
     img {
       z-index: -1;
-      margin-top: 5px;
+      // margin-top: 5px;
     }
 
     &Tooltip {
-      vertical-align: middle;
+      vertical-align: text-bottom;
       cursor: pointer;
     }
   }
 
   &Status {
-    color: #F30000;
+    color: #f30000;
     margin-right: 20px;
     margin-bottom: 10px;
     display: flex;
