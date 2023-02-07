@@ -169,7 +169,7 @@ const JobListSection = ({
   }
 
   const handleQuickUploadResumeClick = () => {
-    router.push('/quick-upload-resume')
+    router.push({ pathname: '/quick-upload-resume', query: router?.query })
   }
 
   const emptyResult = () => {
