@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
+import SEO from 'components/SEO'
 import { wrapper } from 'store'
 import { getCookie, removeCookie } from 'helpers/cookies'
 import { CookiesProvider } from 'react-cookie'
@@ -99,9 +100,15 @@ const App = (props: AppProps) => {
         })
     }
   }, []) // [router.route]
-
+  // console.log('renderProps', props.pageProps)
   return (
     <>
+      <SEO
+        title={props?.pageProps?.seoMetaTitle}
+        description={props?.pageProps?.seoMetaDescription}
+        canonical={props?.pageProps?.canonicalUrl}
+        imageUrl={props?.pageProps?.imageUrl}
+      />
       <Head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no' />
       </Head>
