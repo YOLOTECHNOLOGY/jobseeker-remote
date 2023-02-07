@@ -103,4 +103,14 @@ const QuickUploadResume = () => {
   )
 }
 
+export const getServerSideProps = () => {
+
+  return {
+    props: {
+      seoMetaTitle: 'Sign Up | Bossjob',
+      canonicalUrl: '/register/jobseeker',
+      seoMetaDescription: 'Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.',
+    }
+  }
+}
 export default QuickUploadResume

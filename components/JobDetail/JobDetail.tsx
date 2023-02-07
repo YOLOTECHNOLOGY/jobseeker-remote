@@ -275,14 +275,14 @@ const JobDetail = ({
             ref={detailHeaderRef}
           >
             <div className={classNamesCombined([isStickyClass, styles.jobDetailOptions])}>
-              <Link to={publicJobUrl} external className={styles.jobDetailOptionNewTab}>
+              <Link to={publicJobUrl}  className={styles.jobDetailOptionNewTab}>
                 <img src={OpenInNewTabIcon} width='10' height='10' />
                 <Text
                   textStyle='base'
                   textColor='primaryBlue'
                   className={styles.jobDetailOptionNewTab}
                 >
-                  View in a new tab
+                  View details
                 </Text>
               </Link>
               <div className={styles.jobDetailButtons}>

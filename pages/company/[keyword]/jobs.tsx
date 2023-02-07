@@ -32,10 +32,10 @@ const CompanyJobsProfile = (props: any) => {
   const dispatch = useDispatch()
   const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs } = props
   const company = companyDetail
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     dispatch(fetchConfigRequest())
-  },[])
+  }, [])
   const [jobQuery, setJobQuery] = useState('')
   const [jobLocation, setJobLocation] = useState(null)
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
@@ -56,7 +56,7 @@ const CompanyJobsProfile = (props: any) => {
       location: jobLocation?.value || '',
     }
 
-    dispatch(fetchJobsListRequest({...payload}, accessToken))
+    dispatch(fetchJobsListRequest({ ...payload }, accessToken))
   }
 
   useEffect(() => {
@@ -80,9 +80,8 @@ const CompanyJobsProfile = (props: any) => {
   }
 
   const handleJobsDisplayCount = () => {
-    return `${size * ((page as any) || 1) - size + 1} - ${
-      totalJobs < size ? totalJobs : size * ((page as any) || 1)
-    }`
+    return `${size * ((page as any) || 1) - size + 1} - ${totalJobs < size ? totalJobs : size * ((page as any) || 1)
+      }`
   }
 
   const onLocationSearch = (_, value) => {
@@ -109,7 +108,7 @@ const CompanyJobsProfile = (props: any) => {
               Jobs
             </Text>
             <MetaText tagName='h1'>{`Jobs at ${company.name} ${company.id}`}</MetaText>
-            
+
             {totalActiveJobs > 0 && (
               <div className={styles.companyJobsSearch}>
                 <div className={styles.companyJobsSearchLeft}>
@@ -147,7 +146,7 @@ const CompanyJobsProfile = (props: any) => {
             )}
 
             {isJobsListFetching && [...Array(size)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
-            
+
             {companyJobs?.length > 0 ? (
               <React.Fragment>
                 {!isJobsListFetching && (
@@ -192,7 +191,7 @@ const CompanyJobsProfile = (props: any) => {
           {totalActiveJobs == 0 && (<div>
             <Text>
               {company.name} does not have any job openings now. Please come back again.
-            </Text>    
+            </Text>
           </div>)}
         </div>
       </div>
@@ -214,15 +213,15 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     page: 1
   }
 
-  store.dispatch(fetchJobsListRequest({...jobFilterpayload}, accessToken))
- // store.dispatch(fetchConfigRequest())
+  store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
+  // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchCompanyDetailRequest(companyId))
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const companyDetail = storeState.companies.companyDetail.response.data
-  
+
   if (!companyDetail) {
     return {
       notFound: true
@@ -235,13 +234,17 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `${companyName} Careers in Philippines, Job Opportunities | Bossjob`
   const seoMetaDescription = encodeURI(`View all current job opportunities at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`)
-  
+  const additionalCanonicalText = '/jobs'
+  const companyUrl = companyDetail.company_url
+  const canonicalUrl = companyUrl + additionalCanonicalText
   return {
     props: {
       config,
       companyDetail,
       accessToken,
       seoMetaTitle,
+      canonicalUrl,
+      imageUrl: companyDetail?.logo_url,
       seoMetaDescription,
       totalActiveJobs
     },

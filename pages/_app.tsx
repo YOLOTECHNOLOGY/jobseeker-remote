@@ -108,6 +108,7 @@ const App = (props: AppProps) => {
         description={props?.pageProps?.seoMetaDescription}
         canonical={props?.pageProps?.canonicalUrl}
         imageUrl={props?.pageProps?.imageUrl}
+        jobDetail={props?.pageProps?.jobDetail}
       />
       <Head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no' />

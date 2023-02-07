@@ -16,7 +16,7 @@ import styles from '../Company.module.scss'
 const CompanyLifeProfile = (props: any) => {
   const { companyDetail, seoMetaTitle, seoMetaDescription, totalActiveJobs } = props
   const company = companyDetail
-
+  
   return (
     <CompanyProfileLayout
       company={company}
@@ -123,12 +123,16 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `Culture & Life at ${companyName} | Bossjob`
   const seoMetaDescription = encodeURI(`Discover company culture & life at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`)
-  
+  const additionalCanonicalText = '/life'
+  const companyUrl = companyDetail.company_url
+  const canonicalUrl = companyUrl + additionalCanonicalText
   return {
     props: {
       companyDetail,
       accessToken,
       seoMetaTitle,
+      canonicalUrl,
+      imageUrl: companyDetail?.logo_url,
       seoMetaDescription,
       totalActiveJobs
     },

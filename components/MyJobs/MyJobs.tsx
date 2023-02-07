@@ -24,7 +24,6 @@ import { postReportRequest } from 'store/actions/reports/postReport'
 
 /* Components */
 import Layout from 'components/Layout'
-import SEO from 'components/SEO'
 import Text from 'components/Text'
 // import AdSlot from 'components/AdSlot'
 import Link from 'components/Link'
@@ -40,7 +39,6 @@ import JobCardLoader from 'components/Loader/JobCard'
 import JobDetailLoader from 'components/Loader/JobDetail'
 
 /* Helpers */
-import { titleCase } from 'helpers/formatter'
 import { getCookie } from 'helpers/cookies'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
@@ -329,10 +327,10 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
 
   return (
     <Layout>
-      <SEO
+      {/* <SEO
         title={`${titleCase(category)} Jobs - Career Platform for Professionals in Philippines`}
         description={'Bossjob - Career Platform for Professionals in Philippines'}
-      />
+      /> */}
       <div className={styles.myJobsMenuContent}>
         <div className={styles.container}>
           <ThemeProvider theme={theme}>

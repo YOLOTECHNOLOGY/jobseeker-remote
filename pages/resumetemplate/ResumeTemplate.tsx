@@ -9,7 +9,7 @@ import useGetStarted from 'hooks/useGetStarted'
 
 // Components
 import Layout from 'components/Layout'
-import SEO from 'components/SEO'
+// import SEO from 'components/SEO'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
@@ -148,11 +148,11 @@ const ResumeTemplate = () => {
 
   return (
     <Layout>
-      <SEO
+      {/* <SEO
         title='Free Resume Template to Edit & Download | Bossjob.ph'
         description='Free resume template & sample for you to edit and download on Bossjob. Customize your resume and add career objectives, work experiences and job skills!'
         canonical='/resumetemplate'
-      />
+      /> */}
       <div
         className={classNames([
           styles.resumeTemplate,
@@ -382,7 +382,13 @@ export async function getServerSideProps({ req }) {
       }
     }
   }
-  return { props: {} }
+  return {
+    props: {
+      seoMetaTitle: 'Free Resume Template to Edit & Download | Bossjob.ph',
+      seoMetaDescription: 'Free resume template & sample for you to edit and download on Bossjob. Customize your resume and add career objectives, work experiences and job skills!',
+      canonicalUrl: '/resumetemplate'
+    }
+  }
 }
 
 export default ResumeTemplate

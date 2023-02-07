@@ -13,7 +13,7 @@ import { resetPasswordRequest } from 'store/actions/auth/resetPassword'
 
 /* Components */
 import MaterialButton from 'components/MaterialButton'
-import SEO from 'components/SEO'
+// import SEO from 'components/SEO'
 import AuthLayout from 'components/AuthLayout'
 import Text from 'components/Text'
 import MaterialTextField from 'components/MaterialTextField'
@@ -79,11 +79,11 @@ const ChangePassword = () => {
       ctaSignup
       isBackToLogin
     >
-      <SEO
+      {/* <SEO
         title='Change Password - Bossjob'
         description='Bossjob - Career Platform for Professionals in Philippines'
         canonical='/change-password'
-      />
+      /> */}
       <div className={styles.ChangePasswordSubHeading}>
         <Text textStyle='xsm' tagName='p'>
           Thank you for verifying.
@@ -95,20 +95,22 @@ const ChangePassword = () => {
 
       <form className={styles.ChangePasswordForm} onSubmit={handleSubmit(handleResetPassword)}>
         <MaterialTextField
-          refs={{...register('password', {
-            required: {
-              value: true,
-              message: 'Please enter your password.',
-            },
-            minLength: {
-              value: 8,
-              message: 'Please enter a longer password(minimum of 8 characters)',
-            },
-            maxLength: {
-              value: 16,
-              message: 'Please enter a shorter password(maximum of 16 characters)',
-            },
-          })}}
+          refs={{
+            ...register('password', {
+              required: {
+                value: true,
+                message: 'Please enter your password.',
+              },
+              minLength: {
+                value: 8,
+                message: 'Please enter a longer password(minimum of 8 characters)',
+              },
+              maxLength: {
+                value: 16,
+                message: 'Please enter a shorter password(maximum of 16 characters)',
+              },
+            })
+          }}
           className={styles.ChangePasswordFormInput}
           id='password'
           name='password'
@@ -142,12 +144,14 @@ const ChangePassword = () => {
         </div>
 
         <MaterialTextField
-          refs={{...register('confirmPassword', {
-            required: {
-              value: true,
-              message: 'Please enter your password.',
-            },
-          })}}
+          refs={{
+            ...register('confirmPassword', {
+              required: {
+                value: true,
+                message: 'Please enter your password.',
+              },
+            })
+          }}
           className={styles.ChangePasswordFormInput}
           id='confirmPassword'
           name='confirmPassword'

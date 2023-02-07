@@ -43,10 +43,10 @@ const CompanyDetail = (props: any) => {
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
   const [totalPages, setTotalPages] = useState(null)
   const [jobLocation, setJobLocation] = useState(null)
- 
-  useEffect(()=>{
+
+  useEffect(() => {
     dispatch(fetchConfigRequest())
-  },[])
+  }, [])
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     loop: false,
@@ -528,11 +528,15 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     `Discover career opportunities at ${companyName}, learn more about ${companyName} by reading employee reviews, benefits and culture on Bossjob!`
   )
 
+  const companyUrl = companyDetail.company_url
+  const canonicalUrl = companyUrl
   return {
     props: {
       companyDetail,
       accessToken,
       seoMetaTitle,
+      canonicalUrl,
+      imageUrl: companyDetail?.logo_url,
       seoMetaDescription,
       totalActiveJobs
     }
