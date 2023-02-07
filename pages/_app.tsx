@@ -140,7 +140,7 @@ const App = (props: AppProps) => {
               }
             });
             function handleGoogleOneTapLoginResponse(CredentialResponse) {
-              console.log('handleGoogleOneTapLoginResponse', CredentialResponse)
+              // console.log('handleGoogleOneTapLoginResponse', CredentialResponse)
               const accessTokenGoogle = CredentialResponse.credential;
               let activeKey = 1;
               if (window.location.pathname.includes('/employer')) {
