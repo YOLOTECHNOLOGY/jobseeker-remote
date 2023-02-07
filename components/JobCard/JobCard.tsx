@@ -52,7 +52,7 @@ const JobCard = ({
   selectedId,
   applicationStatus,
   applicationUpdatedAt,
-  isCompanyVerified,
+  isCompanyVerified
 }: JobCardProps) => {
   const cx = classNames.bind(styles)
   const isSelectedClass = cx({ isSelected: selectedId == id })
@@ -121,7 +121,11 @@ const JobCard = ({
           </Text>
         )}
 
-        <Text textStyle='sm'>{applicationUpdatedAt ? `Last updated on ${applicationUpdatedAt}` : `Posted on ${postedAt}`}</Text>
+        <Text textStyle='sm'>
+          {applicationUpdatedAt
+            ? `Last updated on ${applicationUpdatedAt}`
+            : `Posted on ${postedAt}`}
+        </Text>
       </div>
     </div>
   )

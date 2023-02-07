@@ -540,14 +540,14 @@ const Job = ({
                 icon={BlueTickIcon}
                 className={styles.companyIsVerifiedToolTip}
                 title='Verified'
-                style={{ marginTop: '10px' }}
+                style={{ marginTop: '7px' }}
               />
             ) : (
               <MaterialDesktopTooltip
                 icon={BlueTickIcon}
                 className={styles.companyIsVerifiedToolTip}
                 title='Verified'
-                style={{ marginTop: '10px' }}
+                style={{ marginTop: '7px' }}
               />
             ))}
         </div>
@@ -999,29 +999,30 @@ const Job = ({
                           bold
                         >
                           {job.truncated_job_title || job.job_title}
+                          <Text
+                            className={styles.jobDetailSidebarCardCompanyName}
+                            textStyle='lg'
+                            tagName='span'
+                          >
+                            {job.company_name}
+                            {jobDetail?.company?.is_verify &&
+                              (isMobile ? (
+                                <MaterialMobileTooltip
+                                  icon={BlueTickIcon}
+                                  className={styles.jobDetailSidebarCardTooltip}
+                                  title='Verified'
+                                />
+                              ) : (
+                                <MaterialDesktopTooltip
+                                  icon={BlueTickIcon}
+                                  className={styles.jobDetailSidebarCardTooltip}
+                                  title='Verified'
+                                />
+                              ))}
+                          </Text>
                         </Text>
                       </Link>
-                      <Text
-                        className={styles.jobDetailSidebarCardCompanyName}
-                        textStyle='lg'
-                        tagName='p'
-                      >
-                        {job.company_name}
-                        {jobDetail?.company?.is_verify &&
-                          (isMobile ? (
-                            <MaterialMobileTooltip
-                              icon={BlueTickIcon}
-                              className={styles.jobDetailSidebarCardTooltip}
-                              title='Verified'
-                            />
-                          ) : (
-                            <MaterialDesktopTooltip
-                              icon={BlueTickIcon}
-                              className={styles.jobDetailSidebarCardTooltip}
-                              title='Verified'
-                            />
-                          ))}
-                      </Text>
+
                       <Text textStyle='lg' tagName='p'>
                         {job.location_value}
                       </Text>
