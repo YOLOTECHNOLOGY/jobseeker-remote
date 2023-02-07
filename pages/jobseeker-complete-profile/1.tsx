@@ -295,8 +295,7 @@ const Step1 = (props: any) => {
                     className={styles.step1ContactNumberField}
                     label='Contact Number'
                     size='small'
-                    type='tel'
-                    maxLength={20}
+                    type='number'
                     required
                     {...fieldState}
                     {...field}
@@ -511,13 +510,13 @@ const Step1 = (props: any) => {
           />
         </div>
         <div className={styles.step1Subscribe}>
-          {isMobile && (
+          {/* {isMobile && (
             <MaterialMobileTooltip
               icon={DisclaimerIcon}
               className={styles.disclaimerIcon}
               title={rhTooltipTitle}
             />
-          )}
+          )} */}
         </div>
       </div>
       {isMobile && (
