@@ -1,6 +1,5 @@
-/* eslint-disable camelcase */
-import React, { createContext, useEffect, useMemo, useRef, useState } from 'react'
-import { IMManager } from 'imforbossjob'
+import React, { createContext, useEffect, useMemo, useRef, useState,useCallback } from 'react'
+import { IMManager,hooks } from 'imforbossjob'
 import 'imforbossjob/dist/style.css'
 import SendResumeModal from 'components/Chat/sendResume'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,7 +18,10 @@ import CommonPhrases from 'components/Chat/commonPhrases'
 import ViewJobModal from './viewJob'
 import ExchangeConfirmModal from './exchange/confirm'
 import { updateImState } from 'store/actions/chat/imState'
+import { list } from 'helpers/interpreters/services/chat'
+
 import ExchangeDetailModal from './exchange/detail'
+import interpreters from 'helpers/interpreters'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
@@ -33,6 +35,7 @@ const IMProvider = ({ children }: any) => {
         return chatId ? imStateMap?.[chatId] ?? {} : {}
     }, [imStateMap, chatId])
     const [mobile, setMobile] = useState(false)
+    const [totalUnread, setTotalUnread] = useState(0)
     useEffect(() => {
         const old: any = window.onresize
         setMobile(document.body.clientWidth < 576)
@@ -50,12 +53,54 @@ const IMProvider = ({ children }: any) => {
     const applcationIdRef = useRef(applicationId)
     const stateRef = useRef(imState)
     const chatIdRef = useRef(chatId)
+
+    const [chatList, setChatList] = useState([])
+    const [chatListLoading, setChatListLoading] = useState(false)
+    const [isUnreadOn, setUnreadOn] = useState(false)
+    const [status, setStatus] = useState()
+
+    const searchParams = useMemo(() => {
+        return {
+            type: status,
+            unread: isUnreadOn ? '1' : '0'
+        }
+    }, [isUnreadOn, status])
+    const updateChatList = useCallback(() => {
+        list(searchParams).then(result => result.data?.data ?? [])
+    }, [searchParams, list])
+
+    const filterMode = useMemo(() => {
+        return !(!isUnreadOn && !status)
+    }, [isUnreadOn, status])
+    useEffect(() => {
+        if (!chatListLoading && filterMode) {
+            setChatListLoading(true)
+            list(searchParams).then(result => {
+                setChatList(result.data?.data ?? [])
+                // if (!status && !isUnreadOn) {
+                //     dispatch(updateDefaultChatList({ chatList: result.data?.data?.chats ?? [] }))
+                // }
+            }).finally(() => setChatListLoading(false))
+        }
+    }, [searchParams])
+    useEffect(() => {
+        if (filterMode) {
+            setChatListLoading(true)
+            list(searchParams).then(result => {
+                setChatList(result.data?.data)
+                // if (!status && !isUnreadOn) {
+                //     dispatch(updateDefaultChatList({ chatList: result.data?.data?.chats ?? [] }))
+                // }
+            }).finally(() => setChatListLoading(false))
+        }
+
+    }, [searchParams, filterMode])
     useEffect(() => {
         if (userId) {
             IMManager.accessUser(
                 '' + userId + '_j',
                 auid => getAuth(auid).then(result => {
-                    if(!getCookie('accessToken')){
+                    if (!getCookie('accessToken')) {
                         return Promise.reject(new Error('not login!'))
                     }
                     return result?.data?.data?.authcode
@@ -129,12 +174,12 @@ const IMProvider = ({ children }: any) => {
         },
         handleError(e) {
             console.log('error', e)
-            const content = 
-            e?.response?.data?.errors?.error?.[0] 
-            || 
-            e?.response?.data?.errors?.errors?.[0]
-            ||
-            e?.response?.data?.errors?.phone_num?.[0]
+            const content =
+                e?.response?.data?.errors?.error?.[0]
+                ||
+                e?.response?.data?.errors?.errors?.[0]
+                ||
+                e?.response?.data?.errors?.phone_num?.[0]
             if (content) {
                 contextRef.current?.showToast?.('error', content)
             } else {
@@ -190,9 +235,14 @@ const IMProvider = ({ children }: any) => {
                 })
             )
         },
+        updateTotalUnreadNumber(totalUnreadNumber) {
+            console.log({ totalUnreadNumber })
+            setTotalUnread(totalUnreadNumber)
+        },
         self_role: 'jobseeker'
     } as any)
-
+     const interpreter = hooks.useInterpreter(interpreters, contextRef)
+     const imStatus = hooks.useInitChat(interpreter, imState, chatId, filterMode, chatList, updateChatList)
     return <Provider value={{
         userDetail,
         userId,
@@ -201,7 +251,18 @@ const IMProvider = ({ children }: any) => {
         contextRef,
         loading,
         mobile,
-        chatId
+        chatId,
+        totalUnread,
+        chatListLoading,
+        isUnreadOn,
+        setUnreadOn,
+        chatList,
+        filterMode,
+        updateChatList,
+        interpreter,
+        imStatus,
+        status,
+        setStatus
     }}>{userId ? <>
         <SendResumeModal
             loading={loading}

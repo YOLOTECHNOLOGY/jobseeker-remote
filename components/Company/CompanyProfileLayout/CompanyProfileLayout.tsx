@@ -66,8 +66,6 @@ const CompanyProfileLayout = ({
   company,
   currentTab,
   totalJobs,
-  seoMetaTitle,
-  seoMetaDescription,
   accessToken
 }: ICompanyProfileLayout) => {
   const dispatch = useDispatch()
