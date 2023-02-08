@@ -40,7 +40,6 @@ const googleLoginHandler = ({
   const dispatch = useDispatch()
   useEffect(() => {
     ;(async () => {
-      console.log('==========')
       dispatch(setRemoteIp(remoteIp))
       dispatch(
         setUserDevice({
@@ -65,7 +64,9 @@ const googleLoginHandler = ({
             avatar: data.picture,
             token: accessToken,
             social_type: 'google',
-            source: `google-one-tap-${userAgent.isMobile ? 'mobile' : 'web'}`,
+            source: userAgent.isMobile ? 'mobile' : 'web',
+            social_user_token: accessToken,
+            social_user_id: data.sub,
             active_key: activeKey
           }
 
@@ -89,6 +90,7 @@ const googleLoginHandler = ({
                   is_profile_completed: response.data.data.is_profile_completed
                 }
 
+                setCookie('accessToken', response.data.data?.token)
                 setCookie('user', userCookie)
 
                 if (typeof window !== 'undefined') {
@@ -97,12 +99,12 @@ const googleLoginHandler = ({
               }
             })
           } catch (err) {
-            console.log(err, 'error')
+            // console.log(err, 'error')
             dispatch(socialLoginFailed(err))
           }
         })
         .catch((error) => {
-          console.log(error, 'error1')
+          // console.log(error, 'error1')
         })
     })()
   }, [])
