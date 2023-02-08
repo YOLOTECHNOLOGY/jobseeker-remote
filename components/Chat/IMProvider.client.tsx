@@ -236,7 +236,6 @@ const IMProvider = ({ children }: any) => {
             )
         },
         updateTotalUnreadNumber(totalUnreadNumber) {
-            console.log({ totalUnreadNumber })
             setTotalUnread(totalUnreadNumber)
         },
         self_role: 'jobseeker'

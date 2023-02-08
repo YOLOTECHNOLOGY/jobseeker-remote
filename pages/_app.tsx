@@ -29,8 +29,6 @@ const App = (props: AppProps) => {
   const { Component, pageProps } = props
   const router = useRouter()
   const accessToken = getCookie('accessToken')
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-  console.log('process.env.ENV', process.env.ENV)
   const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
   const [toPath, setToPath] = useState('')
 
