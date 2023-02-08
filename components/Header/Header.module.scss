@@ -40,6 +40,21 @@
   position: relative;
 }
 
+.unread {
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: 0.0075em;
+  color: #FFFFFF;
+  background: #D2030F;
+  border-radius: 15px;
+  padding: 2px 5px;
+  margin-left: 5px;
+}
+
 .headerLogo {
   display: flex;
   flex-direction: column;
@@ -230,6 +245,7 @@
 
   .icon {
     margin: 0 15px;
+
     &:hover {
       cursor: pointer;
     }
