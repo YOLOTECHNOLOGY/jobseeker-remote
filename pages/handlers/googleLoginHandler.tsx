@@ -21,6 +21,8 @@ import Text from 'components/Text'
 import { setCookie } from 'helpers/cookies'
 import { useDispatch } from 'react-redux'
 
+import { message } from 'antd'
+
 interface IGoogleLoginHandler {
   accessToken: string
   userCookie: any
@@ -36,11 +38,10 @@ const googleLoginHandler = ({
   userAgent,
   remoteIp
 }: IGoogleLoginHandler) => {
-  console.log(accessToken, userCookie, activeKey, userAgent, remoteIp)
   const dispatch = useDispatch()
+
   useEffect(() => {
     ;(async () => {
-      console.log('==========')
       dispatch(setRemoteIp(remoteIp))
       dispatch(
         setUserDevice({
@@ -56,7 +57,6 @@ const googleLoginHandler = ({
       await axios
         .get('https://oauth2.googleapis.com/tokeninfo?id_token=' + accessToken)
         .then(async ({ data }) => {
-          console.log(data, 'success')
           const payload = {
             user_id: data.sub,
             email: data.email,
@@ -65,7 +65,9 @@ const googleLoginHandler = ({
             avatar: data.picture,
             token: accessToken,
             social_type: 'google',
-            source: `google-one-tap-${userAgent.isMobile ? 'mobile' : 'web'}`,
+            source: userAgent.isMobile ? 'mobile' : 'web',
+            social_user_token: accessToken,
+            social_user_id: data.sub,
             active_key: activeKey
           }
 
@@ -89,6 +91,7 @@ const googleLoginHandler = ({
                   is_profile_completed: response.data.data.is_profile_completed
                 }
 
+                setCookie('accessToken', response.data.data?.token)
                 setCookie('user', userCookie)
 
                 if (typeof window !== 'undefined') {
@@ -97,12 +100,14 @@ const googleLoginHandler = ({
               }
             })
           } catch (err) {
-            console.log(err, 'error')
+            message.error('Login failed')
             dispatch(socialLoginFailed(err))
+            console.log(err)
           }
         })
         .catch((error) => {
-          console.log(error, 'error1')
+          message.error('Login failed')
+          console.log(error)
         })
     })()
   }, [])
@@ -124,7 +129,6 @@ const googleLoginHandler = ({
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   const { query, req } = ctx
 
-  const userCookie = null
   const accessToken = query.access_token
   const activeKey = query.active_key
   const userAgent = useUserAgent(req.headers['user-agent'])
