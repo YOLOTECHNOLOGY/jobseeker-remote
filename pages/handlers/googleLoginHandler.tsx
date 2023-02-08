@@ -88,6 +88,12 @@ const googleLoginHandler = ({
                   notice_period_id: response.data.data.notice_period_id,
                   is_profile_completed: response.data.data.is_profile_completed
                 }
+
+                setCookie('user', userCookie)
+
+                if (typeof window !== 'undefined') {
+                  window.location.href = '/'
+                }
               }
             })
           } catch (err) {
