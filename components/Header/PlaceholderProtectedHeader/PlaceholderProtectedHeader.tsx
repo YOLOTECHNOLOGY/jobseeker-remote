@@ -97,7 +97,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
           </div>
           <ul className={styles.headerLinksList}>
             <React.Fragment>
-              <li className={styles.headerLink}>
+              <li className={styles.headerLink} style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                   Chat
                 </Text>

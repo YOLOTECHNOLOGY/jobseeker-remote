@@ -297,20 +297,22 @@ const App = (props: AppProps) => {
 
       <ConnectedRouter>
         <CookiesProvider>
-          {process.env.MAINTENANCE === 'true' ? (
-            <MaintenancePage {...pageProps} />
-          ) : isPageLoading &&
-            !(router.pathname.includes('jobs-hiring') && toPath.includes('jobs-hiring')) ? (
-            <TransitionLoader accessToken={accessToken} />
-          ) : (
-            <NotificationProvider>
-              <PersistGate loading={null} persistor={persistor}>
-                <IMProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <IMProvider>
+              {process.env.MAINTENANCE === 'true' ? (
+                <MaintenancePage {...pageProps} />
+              ) : isPageLoading &&
+                !(router.pathname.includes('jobs-hiring') && toPath.includes('jobs-hiring')) ? (
+                <TransitionLoader accessToken={accessToken} />
+              ) : (
+                <NotificationProvider>
+
                   <Component {...pageProps} />
-                </IMProvider>
-              </PersistGate>
-            </NotificationProvider>
-          )}
+
+                </NotificationProvider>
+              )}
+            </IMProvider>
+          </PersistGate>
         </CookiesProvider>
       </ConnectedRouter>
     </>
