@@ -142,9 +142,6 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
 
   useEffect(() => {
     window.addEventListener('scroll', updateScrollPosition)
-
-    handleFetchMyJobsList()
-
     return () => window.removeEventListener('scroll', updateScrollPosition)
   }, [])
 
