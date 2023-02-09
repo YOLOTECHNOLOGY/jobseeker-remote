@@ -38,5 +38,8 @@ export default command => command.cata({
     changeChatRoom: chatId => M(context => Promise.resolve().then(() => {
         context.changeChat?.(chatId)
     })),
+    updateTotalUnreadNumber: totalUnreadNumber => M(context => Promise.resolve().then(() => {
+        context.updateTotalUnreadNumber?.(totalUnreadNumber)
+    })),
 })
 

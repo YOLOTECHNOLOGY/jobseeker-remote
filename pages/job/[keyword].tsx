@@ -26,7 +26,7 @@ import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
 import MaterialButton from 'components/MaterialButton'
-import SEO from 'components/SEO'
+// import SEO from 'components/SEO'
 import JobTag from 'components/JobTag'
 import ReadMore from 'components/ReadMore'
 import JobDetailSidebarCard from 'components/Loader/JobDetailSidebarCard'
@@ -93,9 +93,9 @@ interface IJobDetail {
   applicationHistory: any
   // config: any
   accessToken: any
-  seoMetaTitle: string
-  seoMetaDescription: string
-  seoCanonicalUrl: string
+  // seoMetaTitle: string
+  // seoMetaDescription: string
+  // seoCanonicalUrl: string
 }
 
 const Job = ({
@@ -103,9 +103,9 @@ const Job = ({
   applicationHistory,
   // config,
   accessToken,
-  seoMetaTitle,
-  seoMetaDescription,
-  seoCanonicalUrl
+  // seoMetaTitle,
+  // seoMetaDescription,
+  // seoCanonicalUrl
 }: IJobDetail) => {
   const dispatch = useDispatch()
   const config = useSelector((store: any) => store?.config?.config?.response)
@@ -368,7 +368,8 @@ const Job = ({
 
   const handleChat = () => {
     if (!userCookie || !authCookie) {
-      localStorage.setItem('isChatRedirect', `/chat-redirect/${jobDetail?.id}`)
+      const source = jobSource()
+      localStorage.setItem('isChatRedirect', `/chat-redirect/${jobDetail?.id}?source=${source}`)
       setOpenRegister(true)
     } else if (jobDetail?.external_apply_url) {
       addExternalJobClickService(jobDetail?.id)
@@ -540,14 +541,14 @@ const Job = ({
                 icon={BlueTickIcon}
                 className={styles.companyIsVerifiedToolTip}
                 title='Verified'
-                style={{ marginTop: '10px' }}
+                style={{ marginTop: '7px' }}
               />
             ) : (
               <MaterialDesktopTooltip
                 icon={BlueTickIcon}
                 className={styles.companyIsVerifiedToolTip}
                 title='Verified'
-                style={{ marginTop: '10px' }}
+                style={{ marginTop: '7px' }}
               />
             ))}
         </div>
@@ -568,13 +569,13 @@ const Job = ({
 
   return (
     <Layout>
-      <SEO
+      {/* <SEO
         title={seoMetaTitle}
         description={seoMetaDescription}
         canonical={seoCanonicalUrl}
         jobDetail={jobDetail}
         imageUrl={jobDetail?.company?.logo}
-      />
+      /> */}
 
       <Modal
         showModal={showModal}
@@ -999,29 +1000,30 @@ const Job = ({
                           bold
                         >
                           {job.truncated_job_title || job.job_title}
+                          <Text
+                            className={styles.jobDetailSidebarCardCompanyName}
+                            textStyle='lg'
+                            tagName='span'
+                          >
+                            {job.company_name}
+                            {jobDetail?.company?.is_verify &&
+                              (isMobile ? (
+                                <MaterialMobileTooltip
+                                  icon={BlueTickIcon}
+                                  className={styles.jobDetailSidebarCardTooltip}
+                                  title='Verified'
+                                />
+                              ) : (
+                                <MaterialDesktopTooltip
+                                  icon={BlueTickIcon}
+                                  className={styles.jobDetailSidebarCardTooltip}
+                                  title='Verified'
+                                />
+                              ))}
+                          </Text>
                         </Text>
                       </Link>
-                      <Text
-                        className={styles.jobDetailSidebarCardCompanyName}
-                        textStyle='lg'
-                        tagName='p'
-                      >
-                        {job.company_name}
-                        {jobDetail?.company?.is_verify &&
-                          (isMobile ? (
-                            <MaterialMobileTooltip
-                              icon={BlueTickIcon}
-                              className={styles.jobDetailSidebarCardTooltip}
-                              title='Verified'
-                            />
-                          ) : (
-                            <MaterialDesktopTooltip
-                              icon={BlueTickIcon}
-                              className={styles.jobDetailSidebarCardTooltip}
-                              title='Verified'
-                            />
-                          ))}
-                      </Text>
+
                       <Text textStyle='lg' tagName='p'>
                         {job.location_value}
                       </Text>
@@ -1242,7 +1244,13 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         location.value
       }, ${fullAddress.split(',').pop()} on Bossjob now!`
     )
-
+  //   <SEO
+  //   title={seoMetaTitle}
+  //   description={seoMetaDescription}
+  //   canonical={seoCanonicalUrl}
+  //   jobDetail={jobDetail}
+  //   imageUrl={jobDetail?.company?.logo}
+  // />
     return {
       props: {
         jobDetail: jobDetail?.id ? jobDetail : appliedJobDetail?.job,
@@ -1250,7 +1258,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         accessToken,
         seoMetaTitle,
         seoMetaDescription,
-        seoCanonicalUrl: jobUrl
+        canonicalUrl: jobUrl,
+        imageUrl:jobDetail?.company?.logo
       }
     }
   } else {

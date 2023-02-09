@@ -16,7 +16,7 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
 
 /* Components */
-import SEO from 'components/SEO'
+// import SEO from 'components/SEO'
 import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
@@ -295,15 +295,14 @@ const Home = (props: HomeProps) => {
       </div>
     )
   }
-  console.log({ searchValue })
   return (
     <div className={styles.container}>
       <Layout>
-        <SEO
+        {/* <SEO
           title='Career Platform for Professionals in Philippines | Bossjob'
           description='Discover job opportunities in Philippines on Bossjob! Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers'
           canonical='/'
-        />
+        /> */}
         <section className={styles.searchAndQuickLinkSection}>
           <div className={styles.commonContainer}>
             <Text textStyle='xxxl' textColor='primaryBlue' bold>
@@ -951,9 +950,13 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
     delete featuredCompany.companyUrl
     return { ...featuredCompany, logoUrl, companyUrl }
   })
+ 
   return {
     props: {
-      topCompanies
+      topCompanies,
+      seoMetaTitle:'Career Platform for Professionals in Philippines | Bossjob',
+      seoMetaDescription:'Discover job opportunities in Philippines on Bossjob! Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers',
+      canonicalUrl:'/'
     }
     // revalidate: 10
   }

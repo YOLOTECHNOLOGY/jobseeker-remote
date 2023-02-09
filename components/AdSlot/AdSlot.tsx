@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Script from 'next/script'
 import useAdSlot from 'helpers/useAdSlot'
 import useTransitionState from 'helpers/useTransitionState'
@@ -15,25 +15,21 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
 
   // if (process.env.ENV === 'production') {
   // if (process.env.ENV === 'development') {
-    useAdSlot({
-      mapping: ad.mapping ? ad.mapping : {},
-      id: ad.id,
-      adUnit: ad.adUnit,
-      sizes: ad.sizes,
-      isTransitioning,
-    })
+  useAdSlot({
+    mapping: ad.mapping ? ad.mapping : {},
+    id: ad.id,
+    adUnit: ad.adUnit,
+    sizes: ad.sizes,
+    isTransitioning
+  })
   // }
 
   return (
     <div>
       {/* Google Adsense and Ad Manager scripts */}
-      <Script
-        strategy='beforeInteractive'
-        src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'
-      />
+      <Script src='https://securepubads.g.doubleclick.net/tag/js/gpt.js' />
       <Script
         data-ad-client='ca-pub-4245733463545444'
-        strategy='beforeInteractive'
         src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
       />
       <div id={`div-gpt-ad-${ad.id}`} />

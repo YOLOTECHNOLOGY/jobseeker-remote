@@ -9,27 +9,20 @@ import { wrapper } from 'store'
 import MyJobs from 'components/MyJobs'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { titleCase } from 'helpers/formatter'
 
 const Applied = (props: any) => {
   const { accessToken } = props
   const config = useSelector((store: any) => store?.config?.config?.response)
   const dispatch = useDispatch()
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(fetchConfigRequest())
-  },[])
+  }, [])
   return <MyJobs category='applied' config={config} accessToken={accessToken} />
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
   const accessToken = req.cookies.accessToken
-
-  // store.dispatch(fetchConfigRequest())
-  // store.dispatch(END)
-
-  // await (store as any).sagaTask.toPromise()
-  // const storeState = store.getState()
-  // const config = storeState.config.config.response
-
   if (!accessToken) {
     return {
       redirect: {
@@ -38,10 +31,13 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       }
     }
   }
+  const seoMetaTitle = `${titleCase('applied')} Jobs - Career Platform for Professionals in Philippines`
+  const seoMetaDescription = 'Bossjob - Career Platform for Professionals in Philippines'
   return {
     props: {
       accessToken,
-      // config
+      seoMetaTitle,
+      seoMetaDescription,
     }
   }
 })

@@ -13,7 +13,7 @@ import { END } from 'redux-saga'
 import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
-import SEO from 'components/SEO'
+// import SEO from 'components/SEO'
 import CompanyCardList from 'components/Company/CompanyCardList'
 import SearchCompanyField from 'components/SearchCompanyField'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
@@ -81,11 +81,11 @@ const Companies = () => {
 
   return (
     <Layout>
-      <SEO
+      {/* <SEO
         title='Find Companies Hiring in Philippines | Bossjob'
         description='Discover great companies to work for in Philippines! Learn more about the company and apply to job openings on Bossjob!'
         canonical='/companies'
-      />
+      /> */}
       <div className={styles.companies}>
         <div className={styles.searchCompany}>
           <Text
@@ -225,9 +225,12 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
-
   return {
-    props: {}
+    props: {
+      seoMetaTitle:'Find Companies Hiring in Philippines | Bossjob',
+      seoMetaDescription:'Discover great companies to work for in Philippines! Learn more about the company and apply to job openings on Bossjob!',
+      canonicalUrl:'/companies'
+    }
   }
 })
 

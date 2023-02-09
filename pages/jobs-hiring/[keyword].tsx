@@ -39,7 +39,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
-import SEO from 'components/SEO'
+// import SEO from 'components/SEO'
 const JobSearchFilters = dynamic(() => import('components/JobSearchFilters'))
 import JobListSection from 'components/JobListSection'
 import LazyLoad from '../../components/LazyLoad'
@@ -276,7 +276,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const [mainFunctions, setMainfunctions] = useState(defaultValues.mainFunctions ?? [])
   const [jobFunctions, setJobFunctions] = useState(defaultValues.jobFunctions ?? [])
   const [functionTitles, setFunctionTitles] = useState(defaultValues.functionTitles ?? [])
- 
+
   const jobFunctionValue = useMemo(() => {
     return { mainFunctions, jobFunctions, functionTitles }
   }, [mainFunctions, jobFunctions, functionTitles])
@@ -329,10 +329,10 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     )
     setHasMoreFilters(hasActiveFilters)
     // if (!firstRender) {
-      setDisplayQuickLinks(false)
-      const { payload } = initPagePayLoad(router.query, config)
-      dispatch(fetchJobsListRequest(payload, accessToken))
-      setMoreFilterReset(false)
+    setDisplayQuickLinks(false)
+    const { payload } = initPagePayLoad(router.query, config)
+    dispatch(fetchJobsListRequest(payload, accessToken))
+    setMoreFilterReset(false)
     // }
   }, [router.query])
 
@@ -491,13 +491,16 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     //   onKeywordSearch(value)
     //   return
     // }
-    const { searchQuery, filterParamsObject = {} } = userFilterSelectionDataParser(
+    const parsedData = userFilterSelectionDataParser(
       'jobFunctions',
       data,
       router.query,
       config,
     )
+    
+    const { searchQuery, filterParamsObject = {} } = parsedData
     updateUrl(searchQuery, filterParamsObject)
+
 
   }, [router.query, functionTitleList, config])
   // console.log({ jobFunctionValue })
@@ -558,7 +561,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       config,
       isMobile
     )
-
+    const functionTitleKeywords = functionTitles
+      .map(title => {
+        const subParts = title.split('-')
+        subParts.pop()
+        return subParts.join('-')
+      })
     const queryObject = []
 
     setUrlLocation([])
@@ -571,7 +579,9 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setJobFunctions([])
     setFunctionTitles([])
     // if query matches filter, on reset, remove it from query
-    if (searchMatch ) {
+    if (searchMatch) {
+      updateUrl(null, queryObject)
+    } else if (!searchValue?.length && functionTitleKeywords.includes(searchQuery)) {
       updateUrl(null, queryObject)
     } else if (!searchMatch && locationMatch) {
       if (searchQuery === predefinedLocation) {
@@ -657,7 +667,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
 
   return (
     <Layout>
-      <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonical} />
+      {/* <SEO title={seoMetaTitle} description={seoMetaDescription} canonical={seoCanonical} /> */}
       <div
         className={classNamesCombined([
           displayQuickLinks ? styles.searchSectionExpanded : styles.searchSection
@@ -1105,7 +1115,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           accessToken,
           seoMetaTitle,
           seoMetaDescription: encodeURI(seoMetaDescription),
-          seoCanonical
+          seoCanonical,
+          canonicalUrl: seoCanonical
         }
       }
     }

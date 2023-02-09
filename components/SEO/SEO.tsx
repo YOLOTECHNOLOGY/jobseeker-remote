@@ -2,20 +2,20 @@ import React from 'react'
 import Head from 'next/head'
 import moment from 'moment'
 
- const getEmploymentType = type => {
+const getEmploymentType = type => {
   switch (type) {
-  case 'Internship':
-    return 'INTERN'
-  case 'Contract':
-    return 'CONTRACTOR'
-  case 'Temporary':
-    return 'TEMPORARY'
-  case 'Full-time':
-    return 'FULL_TIME'
-  case 'Part-time':
-    return 'PART_TIME'
-  default:
-    return 'OTHER'
+    case 'Internship':
+      return 'INTERN'
+    case 'Contract':
+      return 'CONTRACTOR'
+    case 'Temporary':
+      return 'TEMPORARY'
+    case 'Full-time':
+      return 'FULL_TIME'
+    case 'Part-time':
+      return 'PART_TIME'
+    default:
+      return 'OTHER'
   }
 }
 
@@ -96,11 +96,11 @@ interface SEOProps {
   jobDetail?: any
 }
 
-const SEO = ({ title, description, imageUrl, canonical, jobDetail=null }: SEOProps) => {
+const SEO = ({ title, description, imageUrl, canonical, jobDetail = null }: SEOProps) => {
   const canonicalPath = process.env.HOST_PATH + canonical
 
   return (
-    <Head>
+    <Head key={title + description + canonical}>
       <title>{title}</title>
       <meta name='description' content={decodeURI(description)} />
       <meta

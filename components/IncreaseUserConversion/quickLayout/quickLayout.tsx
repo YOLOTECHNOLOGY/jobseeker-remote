@@ -1,5 +1,5 @@
 import Layout from 'components/Layout'
-import SEO from 'components/SEO'
+// import SEO from 'components/SEO'
 interface PropsType {
   children: React.ReactNode
 }
@@ -7,11 +7,11 @@ interface PropsType {
 const QuickLayout = ({ children }: PropsType) => {
   return (
     <Layout isHiddenFooter>
-      <SEO
+      {/* <SEO
         title='Sign Up | Bossjob'
         description='Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.'
         canonical='/register/jobseeker'
-      />
+      /> */}
       {children}
     </Layout>
   )

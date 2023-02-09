@@ -28,7 +28,7 @@
     margin-bottom: -10px;
     // 45px of ellipsis image width
     width: calc(100% - 45px);
-    justify-content:space-between;
+    justify-content: space-between;
   }
 
   &OptionImage {
@@ -45,7 +45,7 @@
       cursor: pointer;
     }
   }
-  
+
   &OptionItem {
     padding: 12px 20px;
     display: block;
@@ -53,7 +53,7 @@
     img {
       margin-right: 5px;
     }
-    
+
     &:hover {
       cursor: pointer;
       background-color: $white-1;
@@ -62,7 +62,7 @@
 
   &OptionNewTab {
     padding: 12px 20px 12px 0;
-    display:inline-block;
+    display: inline-block;
 
     img {
       margin-right: 5px;
@@ -92,7 +92,7 @@
     padding: 0 24px;
     height: 100%;
     overflow-y: scroll;
-    width:533px;
+    width: 533px;
     height: calc(100vh - 107px);
 
     &::-webkit-scrollbar {
@@ -100,17 +100,17 @@
     }
 
     &::-webkit-scrollbar-track {
-      background: $white-3; 
+      background: $white-3;
       border-radius: 10px;
     }
-    
+
     &::-webkit-scrollbar-thumb {
-      background: $lightgrey; 
+      background: $lightgrey;
       border-radius: 10px;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background: $lightgrey; 
+      background: $lightgrey;
     }
 
     &.isSticky {
@@ -120,8 +120,8 @@
     }
   }
 
-  &ImageInfoWrapper{
-    display:flex;
+  &ImageInfoWrapper {
+    display: flex;
     flex-direction: row;
   }
 
@@ -162,9 +162,10 @@
     }
 
     &Tooltip {
-      vertical-align: text-top;
+      vertical-align: text-bottom;
       margin-left: 5px;
       cursor: pointer;
+      margin-top: 7px;
     }
   }
 
@@ -183,13 +184,13 @@
   }
 
   &Status {
-    color: #F30000;
+    color: #f30000;
     margin-right: 20px;
     margin: 48px 20px 48px 0;
     display: flex;
     align-items: center;
     margin-top: 16px;
-    
+
     div {
       margin-right: 10px;
     }
@@ -230,7 +231,7 @@
   &Text {
     margin-top: 4px;
     span {
-      display: block
+      display: block;
     }
   }
 
@@ -327,7 +328,7 @@
     span {
       margin-right: 26px;
       position: relative;
-      
+
       &:not(:last-child) {
         &::after {
           position: absolute;
@@ -390,12 +391,13 @@
 .jobDetailDescriptionSectionBody *,
 .jobDetailRequirementSectionBody * {
   font-size: 16px !important;
-  font-family: 'Product Sans' !important;
+  // font-family: 'Product Sans' !important;
 }
 
 .jobDetailDescriptionSectionBody,
 .jobDetailRequirementSectionBody {
-  > ol, ul {
+  > ol,
+  ul {
     padding-inline: inherit;
     margin-left: 40px;
   }
@@ -417,7 +419,7 @@
     img {
       margin-right: 4px !important;
     }
-    
+
     span {
       display: block;
       margin-top: 8px;

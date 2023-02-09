@@ -1,13 +1,12 @@
 /* eslint-disable camelcase */
-import React, { useContext, useEffect, useState, useMemo, useCallback } from 'react'
-import interpreters from 'helpers/interpreters'
+import React, { useContext, useEffect, useState } from 'react'
+
 import { useRouter } from 'next/router'
 import Layout from 'components/Layout'
 import { IMContext } from 'components/Chat/IMProvider.client'
 import dynamic from 'next/dynamic'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
-import { list } from 'helpers/interpreters/services/chat'
 import { useDispatch } from 'react-redux'
 import CustomCard from 'components/Chat/customCard'
 // import { updateDefaultChatList } from 'store/actions/chat/defaultChatList'
@@ -24,7 +23,17 @@ const Chat = () => {
         contextRef,
         loading,
         mobile,
-        chatId
+        chatId,
+        chatListLoading,
+        isUnreadOn,
+        setUnreadOn,
+        chatList,
+        filterMode,
+        updateChatList,
+        imStatus,
+        interpreter,
+        status,
+        setStatus
     } = useContext(IMContext)
     const dispatch = useDispatch()
     useEffect(() => {
@@ -34,46 +43,8 @@ const Chat = () => {
     // const defaultChatList = useSelector((store: any) => store?.chat?.defaultChatList ?? [])
     const [chat_id, setChatId] = useState(router?.query?.chat_id)
     const [first, setFirst] = useState(true)
-    const [chatList, setChatList] = useState([])
-    const [chatListLoading, setChatListLoading] = useState(false)
-    const [isUnreadOn, setUnreadOn] = useState(false)
-    const [status, setStatus] = useState()
-    const searchParams = useMemo(() => {
-        return {
-            type: status,
-            unread: isUnreadOn ? '1' : '0'
-        }
-    }, [isUnreadOn, status])
-    const updateChatList = useCallback(() => {
-        list(searchParams).then(result => result.data?.data ?? [])
-    }, [searchParams, list])
 
-    const filterMode = useMemo(() => {
-        return !(!isUnreadOn && !status)
-    }, [isUnreadOn, status])
-    useEffect(() => {
-        if (!chatListLoading && filterMode) {
-            setChatListLoading(true)
-            list(searchParams).then(result => {
-                setChatList(result.data?.data ?? [])
-                // if (!status && !isUnreadOn) {
-                //     dispatch(updateDefaultChatList({ chatList: result.data?.data?.chats ?? [] }))
-                // }
-            }).finally(() => setChatListLoading(false))
-        }
-    }, [searchParams])
-    useEffect(() => {
-        if (filterMode) {
-            setChatListLoading(true)
-            list(searchParams).then(result => {
-                setChatList(result.data?.data)
-                // if (!status && !isUnreadOn) {
-                //     dispatch(updateDefaultChatList({ chatList: result.data?.data?.chats ?? [] }))
-                // }
-            }).finally(() => setChatListLoading(false))
-        }
 
-    }, [searchParams, filterMode])
     useEffect(() => {
         if (chat_id !== chatId) {
             if (chat_id === 'list') {
@@ -100,6 +71,8 @@ const Chat = () => {
             }
         }
     }, [chatId])
+
+
     return <Layout isHiddenFooter isHiddenHeader={false}>
         <div style={{ marginTop: mobile ? 0 : 24 }}>
             <JobseekerChat
@@ -119,7 +92,9 @@ const Chat = () => {
                 userId={userId}
                 filterMode={filterMode}
                 updateChatList={updateChatList}
-                businessInterpreters={interpreters}
+                imStatus={imStatus}
+                interpreter={interpreter}
+            // businessInterpreters={interpreters}
             />
         </div>
     </Layout>

@@ -10,7 +10,7 @@ import { fetchSimilarCompanyRequest } from 'store/actions/companies/fetchSimilar
 
 // Components
 import Layout from 'components/Layout'
-import SEO from 'components/SEO'
+// import SEO from 'components/SEO'
 import Text from 'components/Text'
 import Link from 'components/Link'
 import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
@@ -66,8 +66,6 @@ const CompanyProfileLayout = ({
   company,
   currentTab,
   totalJobs,
-  seoMetaTitle,
-  seoMetaDescription,
   accessToken
 }: ICompanyProfileLayout) => {
   const dispatch = useDispatch()
@@ -97,19 +95,19 @@ const CompanyProfileLayout = ({
     router.push('/quick-upload-resume')
   }
 
-  const additionalCanonicalText =
-    currentTab == 'jobs' ? '/jobs' : currentTab == 'life' ? '/life' : ''
+  // const additionalCanonicalText =
+  //   currentTab == 'jobs' ? '/jobs' : currentTab == 'life' ? '/life' : ''
   const companyUrl = company.company_url
-  const canonicalUrl = companyUrl + additionalCanonicalText
+  // const canonicalUrl = companyUrl + additionalCanonicalText
 
   return (
     <Layout>
-      <SEO
+      {/* <SEO
         title={seoMetaTitle}
         description={seoMetaDescription}
         canonical={canonicalUrl}
         imageUrl={company.logo_url}
-      />
+      /> */}
       <div className={styles.company}>
         <div className={styles.companyContent}>
           <div className={styles.companyHeader}>

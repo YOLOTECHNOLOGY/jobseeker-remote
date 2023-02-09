@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
+import SEO from 'components/SEO'
 import { wrapper } from 'store'
 import { getCookie, removeCookie } from 'helpers/cookies'
 import { CookiesProvider } from 'react-cookie'
@@ -28,8 +29,6 @@ const App = (props: AppProps) => {
   const { Component, pageProps } = props
   const router = useRouter()
   const accessToken = getCookie('accessToken')
-  console.log('process.env.NODE_ENV',process.env.NODE_ENV)
-  console.log('process.env.ENV',process.env.ENV)
   const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
   const [toPath, setToPath] = useState('')
 
@@ -99,12 +98,19 @@ const App = (props: AppProps) => {
         })
     }
   }, []) // [router.route]
-
+  // console.log('renderProps', props.pageProps)
   return (
     <>
-    <Head>
-            <meta name='viewport' content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no'/>
-        </Head>
+      <SEO
+        title={props?.pageProps?.seoMetaTitle}
+        description={props?.pageProps?.seoMetaDescription}
+        canonical={props?.pageProps?.canonicalUrl}
+        imageUrl={props?.pageProps?.imageUrl}
+        jobDetail={props?.pageProps?.jobDetail}
+      />
+      <Head>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no' />
+      </Head>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
       <Script
@@ -122,12 +128,42 @@ const App = (props: AppProps) => {
       />
 
       {/* Google One Tap Sign in */}
-      <Script src='https://accounts.google.com/gsi/client' />
-      {!accessToken && (
+      <Script src='https://accounts.google.com/gsi/client'
+        onReady={() => {
+          if (!accessToken) {
+            const google = (window as any)?.google
+            // console.log('loginGoogle', google)
+            google.accounts.id.initialize({
+              client_id: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
+              callback: handleGoogleOneTapLoginResponse,
+              cancel_on_tap_outside: false,
+              itp_support: true,
+              skip_prompt_cookie: 'accessToken'
+            });
+            google.accounts.id.prompt((notification) => {
+              if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                console.log(notification.getNotDisplayedReason())
+              }
+            });
+            function handleGoogleOneTapLoginResponse(CredentialResponse) {
+              // console.log('handleGoogleOneTapLoginResponse', CredentialResponse)
+              const accessTokenGoogle = CredentialResponse.credential;
+              let activeKey = 1;
+              if (window.location.pathname.includes('/employer')) {
+                activeKey = 2;
+              }
+              window.location.replace("/handlers/googleLoginHandler?access_token=" + accessTokenGoogle + "&active_key=" + activeKey);
+            }
+          }
+
+        }}
+      />
+      {/* {!accessToken && (
         <Script
           dangerouslySetInnerHTML={{
             __html: `
               window.onload = function () {
+                console.log('loginGoogle', google)
                 google.accounts.id.initialize({
                   client_id: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
                   callback: handleGoogleOneTapLoginResponse,
@@ -153,7 +189,7 @@ const App = (props: AppProps) => {
             `
           }}
         />
-      )}
+      )} */}
 
       {/* Facebook  */}
       <Script
@@ -161,9 +197,8 @@ const App = (props: AppProps) => {
           __html: `
             function initialize() {	
               FB.init({	
-                appId            : ${
-                  process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
-                },
+                appId            : ${process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
+            },
                 xfbml            : true,	
                 version          : 'v6.0'	
               });	
@@ -260,20 +295,22 @@ const App = (props: AppProps) => {
 
       <ConnectedRouter>
         <CookiesProvider>
-          {process.env.MAINTENANCE === 'true' ? (
-            <MaintenancePage {...pageProps} />
-          ) : isPageLoading &&
-            !(router.pathname.includes('jobs-hiring') && toPath.includes('jobs-hiring')) ? (
-            <TransitionLoader accessToken={accessToken} />
-          ) : (
-            <NotificationProvider>
-              <PersistGate loading={null} persistor={persistor}>
-                <IMProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <IMProvider>
+              {process.env.MAINTENANCE === 'true' ? (
+                <MaintenancePage {...pageProps} />
+              ) : isPageLoading &&
+                !(router.pathname.includes('jobs-hiring') && toPath.includes('jobs-hiring')) ? (
+                <TransitionLoader accessToken={accessToken} />
+              ) : (
+                <NotificationProvider>
+
                   <Component {...pageProps} />
-                </IMProvider>
-              </PersistGate>
-            </NotificationProvider>
-          )}
+
+                </NotificationProvider>
+              )}
+            </IMProvider>
+          </PersistGate>
         </CookiesProvider>
       </ConnectedRouter>
     </>

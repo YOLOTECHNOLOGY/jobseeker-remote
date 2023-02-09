@@ -1,3 +1,4 @@
+import slugify from "slugify"
 
 const jobSource = ()=>{
     const page = (path=>{
@@ -7,6 +8,8 @@ const jobSource = ()=>{
             return 'job_detail'
         } else if(path.includes('my-jobs/saved')){
             return 'saved_job'
+        } else {
+            return slugify(path)
         }
     })(window.location.pathname)
     const medium = window.innerWidth > 768 ? 'web' : 'mobile_web'

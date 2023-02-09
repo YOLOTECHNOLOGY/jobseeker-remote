@@ -341,7 +341,7 @@
   &DescriptionSectionBody *,
   &RequirementSectionBody * {
     font-size: 16px !important;
-    font-family: 'Product Sans' !important;
+    // font-family: 'Product Sans' !important;
   }
 
   &DescriptionSectionBody,
@@ -715,7 +715,7 @@
   box-shadow: 24px;
   @include sm {
     width: 100%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
   }
   .forModuleFooterText {
     position: absolute;

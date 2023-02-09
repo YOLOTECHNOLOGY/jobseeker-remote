@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 /* Components */
 import MaterialButton from 'components/MaterialButton'
 import MaterialTextField from 'components/MaterialTextField'
-import SEO from 'components/SEO'
+// import SEO from 'components/SEO'
 import AuthLayout from 'components/AuthLayout'
 import Text from 'components/Text'
 
@@ -98,11 +98,11 @@ const ResetPassword = () => {
       ctaSignup
       isBackToLogin
     >
-      <SEO
+      {/* <SEO
         title='Reset Password - Bossjob'
         description='Bossjob - Career Platform for Professionals in Philippines'
         canonical='/reset-password'
-      />
+      /> */}
       <div className={styles.ResetPasswordSubHeading}>
         <Text textStyle='xsm' tagName='p'>Please enter your registered email</Text>
         <Text textStyle='xsm' tagName='p'>A verification code will be sent to you shortly.</Text>

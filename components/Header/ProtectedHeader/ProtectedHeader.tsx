@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
-
+import { ChatCircleDots } from 'images'
 import { logoutRequest } from 'store/actions/auth/logout'
 
 /* components */
@@ -17,9 +17,9 @@ import { BossjobLogo, DefaultAvatar } from 'images'
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
 import { authPathToOldProject } from 'helpers/authenticationTransition'
-
 /* Style */
 import styles from '../Header.module.scss'
+import { IMContext } from 'components/Chat/IMProvider.client'
 
 const ProtectedHeader = () => {
   const router = useRouter()
@@ -27,7 +27,8 @@ const ProtectedHeader = () => {
   const dispatch = useDispatch()
   const ref = useRef(null)
   const [isShowHeaderMenu, setIsShowHeaderMenu] = useState(false)
-
+  const { totalUnread } = useContext(IMContext)
+  // const totalUnread = 999
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       setIsShowHeaderMenu(false)
@@ -110,26 +111,7 @@ const ProtectedHeader = () => {
                   </Text>
                 )}
               </li>
-              <li className={styles.headerLink}>
-                {router.route !== '/chat/[chat_id]' ? (
-                  <Link title='Jobs' to='/chat/list'>
-                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                      Chat
-                    </Text>
-                  </Link>
-                ) : (
-                  <Text
-                    textStyle='base'
-                    textColor='darkGrey'
-                    className={classNames([
-                      styles.headerLinkText,
-                      styles.headerLinkTextCurrentPage
-                    ])}
-                  >
-                    Chat
-                  </Text>
-                )}
-              </li>
+
               <li className={styles.headerLink} style={{ position: 'relative' }}>
                 <Link title='Career Guide' to='https://blog.bossjob.ph' external>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
@@ -142,6 +124,28 @@ const ProtectedHeader = () => {
         </div>
         <ul className={styles.headerLinksList}>
           <React.Fragment>
+            <li className={styles.headerLink} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {router.route !== '/chat/[chat_id]' ? (
+                <Link title='Jobs' to='/chat/list'>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    Chat
+                  </Text>
+                </Link>
+              ) : (
+                <Text
+                  textStyle='base'
+                  textColor='darkGrey'
+                  className={classNames([
+                    styles.headerLinkText,
+                    styles.headerLinkTextCurrentPage
+                  ])}
+                >
+                  Chat
+                </Text>
+
+              )}
+              {totalUnread ? <span className={styles.unread}>{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
+            </li>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
               {router.route !== '/manage-profile' ? (
                 <a
@@ -177,7 +181,7 @@ const ProtectedHeader = () => {
                   className={styles.profilePlaceHolder}
                   alt='avatar'
                   onError={(e) => {
-                    ;(e.target as HTMLInputElement).src = DefaultAvatar
+                    ; (e.target as HTMLInputElement).src = DefaultAvatar
                   }}
                 />
                 <div className={styles.profileCaret} />
@@ -186,6 +190,22 @@ const ProtectedHeader = () => {
           </React.Fragment>
         </ul>
         <div className={styles.mobileIconWrapper}>
+          {router.route !== '/chat/[chat_id]' ? (<li className={styles.headerLink}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              position: 'relative',
+              left: 20
+              // top: 5
+            }}>
+            <Link title='Jobs' to='/chat/list'>
+              <img src={ChatCircleDots} alt='Chat logo' />
+              {totalUnread ? <span
+                className={styles.unread}
+                style={{ position: 'absolute', bottom: '50%', right: '50%' }}
+              >{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
+            </Link>
+          </li>) : null}
           <div className={styles.icon}>
             <Hamburger />
           </div>

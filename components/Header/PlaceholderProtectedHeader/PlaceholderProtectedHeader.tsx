@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import classNames from 'classnames'
 
 /* components */
@@ -9,17 +9,19 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogo, DefaultAvatar } from 'images'
+import { BossjobLogo, ChatCircleDots, DefaultAvatar } from 'images'
 
 /* Style */
 import styles from '../Header.module.scss'
 import MaterialAlert from '../../MaterialAlert/ index'
+import { IMContext } from 'components/Chat/IMProvider.client'
 
 type PlaceholderProtectedHeaderProps = {
   isShowEmailAlert: boolean
 }
 
 const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHeaderProps) => {
+  const { totalUnread } = useContext(IMContext)
   return (
     <>
       {isShowEmailAlert && (
@@ -60,11 +62,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                     Companies
                   </Text>
                 </li>
-                <li className={styles.headerLink}>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Chat
-                  </Text>
-                </li>
+
 
                 <li className={styles.headerLink} style={{ position: 'relative' }}>
                   <Link title='Career Guide' to='https://blog.bossjob.ph' external>
@@ -98,6 +96,12 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
           </div>
           <ul className={styles.headerLinksList}>
             <React.Fragment>
+              <li className={styles.headerLink} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                  Chat
+                </Text>
+                {totalUnread ? <span className={styles.unread}>{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
+              </li>
               <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
                 <a title='Manage Resume'>
                   <MaterialButton variant='contained' capitalize>
@@ -115,7 +119,25 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
               </li>
             </React.Fragment>
           </ul>
+
           <div className={styles.mobileIconWrapper}>
+            <li className={styles.headerLink}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                position: 'relative',
+                left: 20
+              }}>
+              <>
+                <img src={ChatCircleDots} alt='Chat logo' />
+
+                {/* <SmsIcon color='primary' fontSize='large' /> */}
+                {totalUnread ? <span
+                  className={styles.unread}
+                  style={{ position: 'absolute', bottom: '50%', right: '50%' }}
+                >{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
+              </>
+            </li>
             <div className={styles.icon}>
               <Hamburger disabled={true} />
             </div>

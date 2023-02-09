@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import classNames from 'classnames'
 
 import Layout from 'components/Layout'
-import SEO from 'components/SEO'
+// import SEO from 'components/SEO'
 import CheckEmail from 'components/GetStarted/CheckEmail/CheckEmail'
 import SendTOP from 'components/GetStarted/SendTOP/SendTOP'
 import MagicLink from 'components/GetStarted/MagicLink/MagicLink'
@@ -104,11 +104,11 @@ const GetStarted = () => {
 
   return (
     <Layout isHiddenFooter>
-      <SEO
+      {/* <SEO
         title='Get started | Bossjob'
         description='Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.'
         canonical='/get-started'
-      />
+      /> */}
       <div className={classNames([styles.Container, step === 3 ? styles.ContainerMagic : ''])}>
         <div>
           <div className={styles.getStartedContainer}>
@@ -169,4 +169,13 @@ const GetStarted = () => {
   )
 }
 
+export const getServerSideProps = () => {
+  return {
+    props: {
+      seoMetaTitle: 'Get started | Bossjob',
+      seoMetaDescription:'Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.',
+      canonicalUrl: '/get-started'
+    }
+  }
+}
 export default GetStarted

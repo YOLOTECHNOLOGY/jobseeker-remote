@@ -11,7 +11,7 @@ import { fetchCompanyFilterRequest } from 'store/actions/companies/fetchCompanyF
 // Components
 import Layout from 'components/Layout'
 import Text from 'components/Text'
-import SEO from 'components/SEO'
+// import SEO from 'components/SEO'
 import CompanyCardList from 'components/Company/CompanyCardList'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 import SearchCompanyField from 'components/SearchCompanyField/SearchCompanyField'
@@ -86,11 +86,11 @@ const Search = ({ defaultQuery }: SearchProps) => {
 
   return (
     <Layout>
-      <SEO
+      {/* <SEO
         title='Find Companies Hiring in Philippines | Bossjob'
         description='Discover great companies to work for in Philippines! Learn more about the company and apply to job openings on Bossjob!'
         canonical='/companies/search'
-      />
+      /> */}
       <div className={styles.companies}>
         <div className={styles.searchCompany}>
           <Text textStyle='xxxl' tagName='h1' bold className={styles.searchCompanyTitle}>
@@ -132,6 +132,9 @@ export const getServerSideProps = wrapper.getServerSideProps(() => async ({ quer
   return {
     props: {
       defaultQuery: query.query || null,
+      seoMetaTitle:'Find Companies Hiring in Philippines | Bossjob',
+      seoMetaDescription:'Discover great companies to work for in Philippines! Learn more about the company and apply to job openings on Bossjob!',
+      canonicalUrl:'/companies/search'
     },
   }
 })

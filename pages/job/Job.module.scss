@@ -341,7 +341,7 @@
   &DescriptionSectionBody *,
   &RequirementSectionBody * {
     font-size: 16px !important;
-    font-family: 'Product Sans' !important;
+    // font-family: 'Product Sans' !important;
   }
 
   &DescriptionSectionBody,
@@ -646,7 +646,7 @@
   }
 
   &Tooltip {
-    vertical-align: middle;
+    vertical-align: top;
     margin-left: 5px;
     cursor: pointer;
   }
