@@ -7,10 +7,9 @@ import Link from 'components/Link'
 // import Button from 'components/Button'
 import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
-import SmsIcon from '@mui/icons-material/Sms';
 
 /* Images */
-import { BossjobLogo, DefaultAvatar } from 'images'
+import { BossjobLogo, ChatCircleDots, DefaultAvatar } from 'images'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -127,13 +126,17 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                 flexDirection: 'row',
                 alignItems: 'center',
                 position: 'relative',
-                top: 5
+                left: 20
               }}>
-              <SmsIcon color='primary' fontSize='large' />
-              {totalUnread ? <span
-                className={styles.unread}
-                style={{ position: 'absolute', bottom: '60%', right: '60%' }}
-              >{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
+              <>
+                <img src={ChatCircleDots} alt='Chat logo' />
+
+                {/* <SmsIcon color='primary' fontSize='large' /> */}
+                {totalUnread ? <span
+                  className={styles.unread}
+                  style={{ position: 'absolute', bottom: '50%', right: '50%' }}
+                >{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
+              </>
             </li>
             <div className={styles.icon}>
               <Hamburger disabled={true} />

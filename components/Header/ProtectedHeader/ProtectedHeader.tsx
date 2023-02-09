@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
-
+import { ChatCircleDots } from 'images'
 import { logoutRequest } from 'store/actions/auth/logout'
 
 /* components */
@@ -17,7 +17,6 @@ import { BossjobLogo, DefaultAvatar } from 'images'
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
 import { authPathToOldProject } from 'helpers/authenticationTransition'
-import SmsIcon from '@mui/icons-material/Sms';
 /* Style */
 import styles from '../Header.module.scss'
 import { IMContext } from 'components/Chat/IMProvider.client'
@@ -195,20 +194,17 @@ const ProtectedHeader = () => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              position:'relative',
-              top:5
+              position: 'relative',
+              left: 20
+              // top: 5
             }}>
             <Link title='Jobs' to='/chat/list'>
-              <SmsIcon color='primary' fontSize='large' />
-              {/* <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                  Chat
-                </Text> */}
+              <img src={ChatCircleDots} alt='Chat logo' />
+              {totalUnread ? <span
+                className={styles.unread}
+                style={{ position: 'absolute', bottom: '50%', right: '50%' }}
+              >{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
             </Link>
-
-            {totalUnread ? <span
-              className={styles.unread}
-              style={{ position: 'absolute', bottom: '60%', right: '60%' }}
-            >{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
           </li>) : null}
           <div className={styles.icon}>
             <Hamburger />
