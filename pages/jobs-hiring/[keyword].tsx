@@ -491,13 +491,16 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     //   onKeywordSearch(value)
     //   return
     // }
-    const { searchQuery, filterParamsObject = {} } = userFilterSelectionDataParser(
+    const parsedData = userFilterSelectionDataParser(
       'jobFunctions',
       data,
       router.query,
       config,
     )
+    
+    const { searchQuery, filterParamsObject = {} } = parsedData
     updateUrl(searchQuery, filterParamsObject)
+
 
   }, [router.query, functionTitleList, config])
   // console.log({ jobFunctionValue })
@@ -558,7 +561,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       config,
       isMobile
     )
-
+    const functionTitleKeywords = functionTitles
+      .map(title => {
+        const subParts = title.split('-')
+        subParts.pop()
+        return subParts.join('-')
+      })
     const queryObject = []
 
     setUrlLocation([])
@@ -572,6 +580,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     setFunctionTitles([])
     // if query matches filter, on reset, remove it from query
     if (searchMatch) {
+      updateUrl(null, queryObject)
+    } else if (!searchValue?.length && functionTitleKeywords.includes(searchQuery)) {
       updateUrl(null, queryObject)
     } else if (!searchMatch && locationMatch) {
       if (searchQuery === predefinedLocation) {
