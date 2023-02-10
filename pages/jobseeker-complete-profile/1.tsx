@@ -14,7 +14,7 @@ import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
-import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
+// import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 import MaterialButton from 'components/MaterialButton'
 import Divider from '@mui/material/Divider'
 import {
@@ -25,7 +25,7 @@ import {
   getJobTypeList
 } from 'helpers/jobPayloadFormatter'
 import styles from './Onboard.module.scss'
-import { DisclaimerIcon } from 'images'
+// import { DisclaimerIcon } from 'images'
 import { getItem } from 'helpers/localStorage'
 import JobFunctionSelector from 'components/JobFunctionSelector'
 import { flatMap } from 'lodash-es'
@@ -41,8 +41,8 @@ const Step1 = (props: any) => {
   useEffect(() => {
     dispatch(fetchConfigRequest())
   }, [])
-  const rhTooltipTitle =
-    'Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.'
+  // const rhTooltipTitle =
+  ;('Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.')
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
   )
