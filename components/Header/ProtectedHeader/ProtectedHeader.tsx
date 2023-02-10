@@ -16,7 +16,7 @@ import { BossjobLogo, DefaultAvatar } from 'images'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
-import { authPathToOldProject } from 'helpers/authenticationTransition'
+// import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -47,12 +47,12 @@ const ProtectedHeader = () => {
     router.push('/')
   }
 
-  const handleRedirectAuthentication = (e, path) => {
-    e.preventDefault()
+  // const handleRedirectAuthentication = (e, path) => {
+  //   e.preventDefault()
 
-    const authPath = authPathToOldProject(null, path)
-    router.push(authPath)
-  }
+  //   const authPath = authPathToOldProject(null, path)
+  //   router.push(authPath)
+  // }
 
   return (
     <div className={styles.header}>

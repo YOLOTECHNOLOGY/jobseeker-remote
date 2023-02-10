@@ -15,7 +15,7 @@ import styles from './HamburgerMenu.module.scss'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
-import { authPathToOldProject } from 'helpers/authenticationTransition'
+// import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 interface HamburgerMenuProps {
   openState: boolean
