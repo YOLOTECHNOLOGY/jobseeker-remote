@@ -16,7 +16,8 @@ import { BossjobLogo, DefaultAvatar } from 'images'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
-import { authPathToOldProject } from 'helpers/authenticationTransition'
+// import { authPathToOldProject } from 'helpers/authenticationTransition'
+
 /* Style */
 import styles from '../Header.module.scss'
 import { IMContext } from 'components/Chat/IMProvider.client'
@@ -48,12 +49,12 @@ const ProtectedHeader = () => {
     router.push('/')
   }
 
-  const handleRedirectAuthentication = (e, path) => {
-    e.preventDefault()
+  // const handleRedirectAuthentication = (e, path) => {
+  //   e.preventDefault()
 
-    const authPath = authPathToOldProject(null, path)
-    router.push(authPath)
-  }
+  //   const authPath = authPathToOldProject(null, path)
+  //   router.push(authPath)
+  // }
 
   return (
     <div className={styles.header}>
@@ -124,7 +125,10 @@ const ProtectedHeader = () => {
         </div>
         <ul className={styles.headerLinksList}>
           <React.Fragment>
-            <li className={styles.headerLink} style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <li
+              className={styles.headerLink}
+              style={{ flexDirection: 'row', alignItems: 'center' }}
+            >
               {router.route !== '/chat/[chat_id]' ? (
                 <Link title='Jobs' to='/chat/list'>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
@@ -135,16 +139,16 @@ const ProtectedHeader = () => {
                 <Text
                   textStyle='base'
                   textColor='darkGrey'
-                  className={classNames([
-                    styles.headerLinkText,
-                    styles.headerLinkTextCurrentPage
-                  ])}
+                  className={classNames([styles.headerLinkText, styles.headerLinkTextCurrentPage])}
                 >
                   Chat
                 </Text>
-
               )}
-              {totalUnread ? <span className={styles.unread}>{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
+              {totalUnread ? (
+                <span className={styles.unread}>
+                  {Number(totalUnread) > 999 ? '999+' : totalUnread}
+                </span>
+              ) : null}
             </li>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
               {router.route !== '/manage-profile' ? (
@@ -181,7 +185,7 @@ const ProtectedHeader = () => {
                   className={styles.profilePlaceHolder}
                   alt='avatar'
                   onError={(e) => {
-                    ; (e.target as HTMLInputElement).src = DefaultAvatar
+                    ;(e.target as HTMLInputElement).src = DefaultAvatar
                   }}
                 />
                 <div className={styles.profileCaret} />
@@ -190,22 +194,30 @@ const ProtectedHeader = () => {
           </React.Fragment>
         </ul>
         <div className={styles.mobileIconWrapper}>
-          {router.route !== '/chat/[chat_id]' ? (<li className={styles.headerLink}
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              position: 'relative',
-              left: 20
-              // top: 5
-            }}>
-            <Link title='Jobs' to='/chat/list'>
-              <img src={ChatCircleDots} alt='Chat logo' />
-              {totalUnread ? <span
-                className={styles.unread}
-                style={{ position: 'absolute', bottom: '50%', right: '50%' }}
-              >{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
-            </Link>
-          </li>) : null}
+          {router.route !== '/chat/[chat_id]' ? (
+            <li
+              className={styles.headerLink}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                position: 'relative',
+                left: 20
+                // top: 5
+              }}
+            >
+              <Link title='Jobs' to='/chat/list'>
+                <img src={ChatCircleDots} alt='Chat logo' />
+                {totalUnread ? (
+                  <span
+                    className={styles.unread}
+                    style={{ position: 'absolute', bottom: '50%', right: '50%' }}
+                  >
+                    {Number(totalUnread) > 999 ? '999+' : totalUnread}
+                  </span>
+                ) : null}
+              </Link>
+            </li>
+          ) : null}
           <div className={styles.icon}>
             <Hamburger />
           </div>
