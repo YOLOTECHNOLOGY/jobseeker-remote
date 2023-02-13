@@ -63,7 +63,7 @@ const Verify = ({ query }: any) => {
   }, [error])
 
   const headerOpenApp = () => {
-    const userAgent = useUserAgent(window.navigator.userAgent)
+    // const userAgent = useUserAgent(window.navigator.userAgent)
     const { email, otp } = query
     // let redirectUrl: string
     // if (Array.isArray(redirect)) {
@@ -74,14 +74,14 @@ const Verify = ({ query }: any) => {
     const schema = `bossjob://bossjob.ph/verify?email=${email}&otp=${otp}`
     window.location.href = schema
 
-    const appStoreLink = userAgent?.isIos
-      ? process.env.APP_STORE_LINK
-      : process.env.GOOGLE_PLAY_STORE_LINK
+    // const appStoreLink = userAgent?.isIos
+    //   ? process.env.APP_STORE_LINK
+    //   : process.env.GOOGLE_PLAY_STORE_LINK
 
     // Wait 2s and redirect to App Store/Google Play Store if app was not opened
-    setTimeout(() => {
-      window.location.replace(appStoreLink)
-    }, 2000)
+    // setTimeout(() => {
+    //   window.location.replace(appStoreLink)
+    // }, 2000)
   }
 
   const headerAuthLogin = () => {
