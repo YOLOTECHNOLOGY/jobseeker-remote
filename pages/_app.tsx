@@ -24,6 +24,7 @@ import NotificationProvider from 'components/NotificationProvider'
 import IMProvider from 'components/Chat/IMProvider.client'
 import 'styles/globals.scss'
 import { persistor } from 'store'
+import { initFireBase } from 'helpers/fireBaseManager'
 
 const App = (props: AppProps) => {
   const { Component, pageProps } = props
@@ -31,7 +32,9 @@ const App = (props: AppProps) => {
   const accessToken = getCookie('accessToken')
   const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
   const [toPath, setToPath] = useState('')
-
+  useEffect(() => {
+    initFireBase()
+  }, [])
   useEffect(() => {
     // Facebook pixel
     // This pageview only triggers the first time
