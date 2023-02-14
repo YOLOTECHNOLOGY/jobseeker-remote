@@ -36,7 +36,7 @@ const useGetStarted = () => {
     } else {
       setDefaultRedirectPage(redirect)
     }
-  }, [])
+  }, [routes])
 
   // useEffect(() => {
   //   if (!Object.keys(userInfo).length) {
@@ -86,7 +86,7 @@ const useGetStarted = () => {
     const data = {
       email,
       otp: emailTOP,
-      source: 'web' ,
+      source: 'web',
       ...router.query,
       userId
     }

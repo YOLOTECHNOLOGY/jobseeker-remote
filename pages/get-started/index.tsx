@@ -14,6 +14,9 @@ import Link from 'components/Link'
 import { useFirstRender } from 'helpers/useFirstRender'
 import useGetStarted from 'hooks/useGetStarted'
 import { removeItem } from 'helpers/localStorage'
+import { getCookie, removeCookie } from 'helpers/cookies'
+
+import { jobseekerTokenValidate } from 'store/services/auth/jobseekersTokenValidate'
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
@@ -42,6 +45,7 @@ const GetStarted = () => {
   const dispatch = useDispatch()
   const router = useRouter()
   const firstRender = useFirstRender()
+  const accessToken = getCookie('accessToken')
 
   const jobseekersSocialResponse = useSelector(
     (store: any) => store.auth.jobseekersSocialLogin?.response
@@ -49,12 +53,40 @@ const GetStarted = () => {
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
 
   useEffect(() => {
+    if (accessToken) {
+      jobseekerTokenValidate(accessToken)
+        .then(() => {
+          const { redirect } = router?.query
+          if (redirect) {
+            let redirectUrl: string
+            if (Array.isArray(redirect)) {
+              redirectUrl = redirect[0]
+            } else {
+              redirectUrl = redirect
+            }
+            router.push(redirectUrl)
+          } else {
+            router.push('/')
+          }
+        })
+        .catch(({ response: { data, status } }) => {
+          if (status == 400 || data?.errors?.error[0] === 'Invalid token') {
+            removeCookie('accessToken')
+            window.location.reload()
+          }
+        })
+    }
+  }, [router])
+
+  useEffect(() => {
     if (firstRender) {
       return
     }
+
     if (!Object.keys(userInfo).length) {
       return
     }
+
     const { data } = userInfo
     removeItem('quickUpladResume')
     defaultLoginCallBack(data)
