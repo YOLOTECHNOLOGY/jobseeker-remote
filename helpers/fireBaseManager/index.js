@@ -16,13 +16,14 @@ export const initFireBase = () => {
         console.log({ app })
         const messaging = getMessaging(app)
         console.log({ messaging })
-        onMessage(messaging, (payload) => {
-            console.log('Message received. ', payload);
-            // ...
-        });
+        
         getToken(messaging, { vapidKey })
             .then(token => {
                 console.log({ token })
+                onMessage(messaging, (payload) => {
+                    console.log('Message received. ', payload);
+                    // ...
+                });
             }).catch(e => {
                 console.log('getTokenError', e)
             });
