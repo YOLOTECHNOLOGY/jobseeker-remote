@@ -35,5 +35,4 @@ export const initFireBase = () => {
     } catch (e) {
         console.log({ firebaseError: e })
     }
-
 }
