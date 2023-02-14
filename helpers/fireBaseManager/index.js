@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getMessaging, onMessage } from "firebase/messaging";
+import { getMessaging, onMessage, getToken } from "firebase/messaging";
 const vapidkey = 'BPSNbeeP647k3y02pPIWBgh8qiEUywYXa0aY9WbZ_yGO6beOY8oah_CyL9Q1mojbtzdX4NJpVI83w149n0yyh7Y'
 export const initFireBase = () => {
     try {
@@ -20,9 +20,14 @@ export const initFireBase = () => {
             console.log('Message received. ', payload);
             // ...
         });
-        getToken(messaging, {vapidKey: "BKagOny0KF_2pCJQ3m....moL0ewzQ8rZu"});
+        getToken(messaging, { vapidKey: "BKagOny0KF_2pCJQ3m....moL0ewzQ8rZu" })
+            .then(token => {
+                console.log({ token })
+            }).catch(e => {
+                console.log('getTokenError', e)
+            });
         Notification.requestPermission().then((permission) => {
-            console.log({permission})
+            console.log({ permission })
             if (permission === 'granted') {
                 console.log('Notification permission granted.');
             }
