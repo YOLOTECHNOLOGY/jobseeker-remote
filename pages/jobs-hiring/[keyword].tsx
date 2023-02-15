@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import React, { useState, useEffect, useMemo, useCallback, useLayoutEffect } from 'react'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
@@ -232,7 +232,7 @@ const useJobAlert = () => {
   }, [])
   return setLastSearch
 }
-
+const isConfigEmpty = config => !(config?.inputs?.job_types?.length > 0)
 const JobSearchPage = (props: JobSearchPageProps) => {
   const {
     accessToken,
@@ -252,7 +252,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const userCookie = getCookie('user') || null
   useEffect(() => {
     dispatch(fetchConfigRequest())
-  }, [])
+  }, [firstRender])
+  
   const config = useSelector((store: any) => store?.config?.config?.response ?? initialState.response)
   const [clientDefaultValues, setClientDefaultValues] = useState(defaultValues || {})
   const [isShowFilter, setIsShowFilter] = useState(false)
@@ -310,8 +311,11 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }, [router.query, config, isMobile])
   const { searchQuery, predefinedQuery, predefinedLocation, filterCount } = matchState
   const [selectedPage, setSelectedPage] = useState(defaultPage)
-
-  useEffect(() => {
+  
+  useLayoutEffect(() => {
+    if (isConfigEmpty(config)) {
+      return
+    }
     const { industry, workExperience, category, jobType, salary, qualification, verifiedCompany, mainFunctions, functionTitles } = router.query
     const hasActiveFilters = !!(
       industry ||
@@ -334,7 +338,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     dispatch(fetchJobsListRequest(payload, accessToken))
     setMoreFilterReset(false)
     // }
-  }, [router.query])
+  }, [router.query, isConfigEmpty(config)])
 
   useEffect(() => {
     if (jobAlertListResponse) setJobAlertList(jobAlertListResponse)
@@ -497,7 +501,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       router.query,
       config,
     )
-    
+
     const { searchQuery, filterParamsObject = {} } = parsedData
     updateUrl(searchQuery, filterParamsObject)
 
