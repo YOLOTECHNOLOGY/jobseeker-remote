@@ -21,7 +21,7 @@ const MaterialBasicSelect = ({
   error,
   ...rest
 }: any) => {
-  const [value, setValue] = useState(defaultValue || '')
+  const [value, setValue] = useState(defaultValue || '1')
 
   useEffect(() => {
     setValue(defaultValue)
