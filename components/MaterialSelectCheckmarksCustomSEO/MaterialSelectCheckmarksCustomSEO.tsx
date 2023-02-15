@@ -57,7 +57,7 @@ const MaterialSelectCheckmarksCustomSEO = ({
   useEffect(() => {
     setSelectedOptions(value)
     setDisplayValue(mapValueToGetDisplayValue(value))
-  }, [value])
+  }, [value,options])
 
   const handleChange = (event: SelectChangeEvent) => {
     const {
