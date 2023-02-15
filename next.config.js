@@ -52,6 +52,7 @@ module.exports = {
     LINKEDIN_CLIENT_ID: process.env.LINKEDIN_CLIENT_ID,
     LINKEDIN_CLIENT_SECRET: process.env.LINKEDIN_CLIENT_SECRET,
     BOSSHUNT_URL: process.env.BOSSHUNT_URL,
+    BOSS_BLOG_URL: process.env.BOSS_BLOG_URL,
     APP_STORE_LINK: 'https://apps.apple.com/sg/app/bossjob/id1592073585',
     GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp',
     BLOG_BOSSJOB: 'https://blog.bossjob.ph'
