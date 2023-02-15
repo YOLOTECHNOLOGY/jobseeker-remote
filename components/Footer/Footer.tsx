@@ -95,7 +95,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/faq`}
+                    to={`${process.env.BOSS_BLOG_URL}/category/faq/`}
                     title='FAQs'
                     external
                   >
@@ -474,7 +474,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/faq`}
+                      to={`${process.env.BOSS_BLOG_URL}/category/faq/`}
                       title='faq'
                       external
                     >

@@ -331,7 +331,7 @@ const PublicSitemap = () => {
             </Link>
             <Link
               className={styles.item}
-              to={`${process.env.OLD_PROJECT_URL}/faq`}
+              to={`${process.env.BOSS_BLOG_URL}/category/faq/`}
               title='FAQ'
               external
             >
