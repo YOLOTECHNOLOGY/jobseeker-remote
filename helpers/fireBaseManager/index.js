@@ -4,7 +4,7 @@ const vapidKey = 'BPSNbeeP647k3y02pPIWBgh8qiEUywYXa0aY9WbZ_yGO6beOY8oah_CyL9Q1mo
 export const initFireBase = () => {
     isSupported().then(supported => {
         if (!supported) {
-            alert('Notifications from bossjob is not supported on this browser!')
+            // alert('Notifications from bossjob is not supported on this browser!')
             return
         }
         try {
@@ -18,13 +18,11 @@ export const initFireBase = () => {
                 measurementId: "G-V6JBNRJMFL"
             };
             const app = initializeApp(firebaseConfig)
-            console.log({ app })
             const messaging = getMessaging(app)
-            console.log({ messaging })
-
             getToken(messaging, { vapidKey })
                 .then(token => {
-                    console.log({ token })
+                    sessionStorage.setItem('firebase-messaging-token',token)
+                    window.firebaseMessagingToken = token
                     onMessage(messaging, (payload) => {
                         console.log('Message received. ', payload);
                         // ...
@@ -33,7 +31,6 @@ export const initFireBase = () => {
                     console.log('getTokenError', e)
                 });
             Notification.requestPermission().then((permission) => {
-                console.log({ permission })
                 if (permission === 'granted') {
                     console.log('Notification permission granted.');
                 }
