@@ -560,11 +560,14 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   }
 
   const handleResetFilter = () => {
-    const { searchMatch, locationMatch, searchQuery, predefinedLocation } = checkFilterMatch(
+    const match = checkFilterMatch(
       router.query,
       config,
       isMobile
     )
+    console.log({match})
+
+    const { searchMatch, locationMatch, searchQuery, predefinedLocation } = match
     const functionTitleKeywords = functionTitles
       .map(title => {
         const subParts = title.split('-')

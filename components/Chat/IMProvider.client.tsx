@@ -1,5 +1,5 @@
-import React, { createContext, useEffect, useMemo, useRef, useState,useCallback } from 'react'
-import { IMManager,hooks } from 'imforbossjob'
+import React, { createContext, useEffect, useMemo, useRef, useState, useCallback } from 'react'
+import { IMManager, hooks } from 'imforbossjob'
 import 'imforbossjob/dist/style.css'
 import SendResumeModal from 'components/Chat/sendResume'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,7 +19,7 @@ import ViewJobModal from './viewJob'
 import ExchangeConfirmModal from './exchange/confirm'
 import { updateImState } from 'store/actions/chat/imState'
 import { list } from 'helpers/interpreters/services/chat'
-
+import NotificationContainer, { usePushNotification } from './notificationContainer'
 import ExchangeDetailModal from './exchange/detail'
 import interpreters from 'helpers/interpreters'
 export const IMContext = createContext<any>({})
@@ -240,8 +240,23 @@ const IMProvider = ({ children }: any) => {
         },
         self_role: 'jobseeker'
     } as any)
-     const interpreter = hooks.useInterpreter(interpreters, contextRef)
-     const imStatus = hooks.useInitChat(interpreter, imState, chatId, filterMode, chatList, updateChatList)
+    const interpreter = hooks.useInterpreter(interpreters, contextRef)
+    const imStatus = hooks.useInitChat(interpreter, imState, chatId, filterMode, chatList, updateChatList)
+    const onNoteiticationClick = useCallback(note => {
+        console.log('onClick', note)
+    }, [])
+    const { postNote, props: notificationProps } = usePushNotification(onNoteiticationClick)
+    // const idRef = useRef(0)
+    // useEffect(() => {
+    //     setInterval(() => {
+    //         postNote({
+    //             id: '' + idRef.current,
+    //             title: 'New message John Doe',
+    //             content: 'John Doe: Jorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consectetur adipiscing elit. '
+    //         })
+    //         idRef.current = idRef.current + 1
+    //     }, 5000)
+    // }, [])
     return <Provider value={{
         userDetail,
         userId,
@@ -261,7 +276,8 @@ const IMProvider = ({ children }: any) => {
         interpreter,
         imStatus,
         status,
-        setStatus
+        setStatus,
+        postNote
     }}>{userId ? <>
         <SendResumeModal
             loading={loading}
@@ -329,6 +345,7 @@ const IMProvider = ({ children }: any) => {
     </> : null}
 
         {children}
+        <NotificationContainer {...notificationProps} />
     </Provider>
 }
 
