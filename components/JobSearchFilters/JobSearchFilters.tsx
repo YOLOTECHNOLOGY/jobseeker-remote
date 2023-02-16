@@ -105,7 +105,7 @@ const NavSearchFilter = ({
   onResetFilter,
   moreFilterReset = false,
   isShowingEmailAlert,
-  setClientDefaultValues,
+  setClientDefaultValues
 }: NavSearchFilterProps) => {
   if (!isShowFilter) return null
   const router = useRouter()
@@ -120,7 +120,7 @@ const NavSearchFilter = ({
 
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     ...range,
-    value: range.value === '10K - 30K' ? 'Below 30K' : range.value,
+    value: range.value === '10K - 30K' ? 'Below 30K' : range.value
   }))
 
   const { width } = useWindowDimensions()
@@ -131,7 +131,7 @@ const NavSearchFilter = ({
 
   const cx = classNames.bind(styles)
   const isShowFilterClass = cx({
-    isShowingEmailAlert: isShowingEmailAlert,
+    isShowingEmailAlert: isShowingEmailAlert
   })
   const [displayMobileFilters, setDisplayMobileFilters] = useState(false)
 
@@ -189,7 +189,7 @@ const NavSearchFilter = ({
     onCloseFilter()
     const updatedData = {
       ...data,
-      sort: [data.sort || router.query.sort],
+      sort: [data.sort || router.query.sort]
     }
     // sanitize category data -> only pass main options as value to parser if all sub options are selected
     // if (data && data.category) {
@@ -239,8 +239,8 @@ const NavSearchFilter = ({
       {
         pathname: `/jobs-hiring/${searchQuery ? searchQuery : 'job-search'}`,
         query: {
-          ...filterParamsObject,
-        },
+          ...filterParamsObject
+        }
       },
       undefined,
       { shallow: true }
@@ -273,9 +273,9 @@ const NavSearchFilter = ({
   //     }
   //     return newList
   //   })
-   
+
   //   const [listOptions, onMainSelection, onSubSelection] = useOptionDataSelect(initialListOptions, form)
-   
+
   //   return (
   //     <div className={styles.searchFilterSection}>
   //       <Accordian
@@ -343,7 +343,7 @@ const NavSearchFilter = ({
     defaultOpenState,
     isNotCollapsible,
     isColumn,
-    isRadioButton,
+    isRadioButton
   }: SearchFilters) => {
     const isFilterColumnClass = cx({ searchFilterOptionsColumn: isColumn })
 
@@ -367,7 +367,12 @@ const NavSearchFilter = ({
                 if (isRadioButton) {
                   return (
                     <label key={i} className={styles.searchFilterOption}>
-                      <input type='radio' value={option['value']} {...register(fieldName)} />
+                      <input
+                        defaultChecked={option.value == '1' ? true : false}
+                        type='radio'
+                        value={option['value']}
+                        {...register(fieldName)}
+                      />
                       <Text textStyle='lg'>{option.label}</Text>
                     </label>
                   )
@@ -429,7 +434,7 @@ const NavSearchFilter = ({
                     options={[
                       { value: '1', label: 'Newest' },
                       { value: '2', label: 'Relevance' },
-                      { value: '3', label: 'Highest Salary' },
+                      { value: '3', label: 'Highest Salary' }
                     ]}
                     defaultOpenState={true}
                     isNotCollapsible={true}
@@ -478,12 +483,14 @@ const NavSearchFilter = ({
               <SearchFilters
                 title='Verified Company'
                 fieldName='verifiedCompany'
-                options={[{
-                  key: 'verified-companies',
-                  ['seo-value']: 'verified-companies',
-                  value: 'View verified companies',
-                  label: 'View verified companies'
-                }]}
+                options={[
+                  {
+                    key: 'verified-companies',
+                    ['seo-value']: 'verified-companies',
+                    value: 'View verified companies',
+                    label: 'View verified companies'
+                  }
+                ]}
                 defaultOpenState={true}
                 isNotCollapsible={true}
               />
