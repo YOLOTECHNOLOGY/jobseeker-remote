@@ -1,6 +1,6 @@
 import { flat, unslugify } from 'helpers/formatter'
 import { checkFilterMatch, mapSeoValueToGetValue } from 'helpers/jobPayloadFormatter'
-import { put, takeLatest, select, delay,take,race } from 'redux-saga/effects'
+import { put, takeLatest, select, delay, take, race } from 'redux-saga/effects'
 import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
 import { fetchConfigRequest, fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import { fetchJobsListRequest } from 'store/actions/jobs/fetchJobsList'
@@ -14,9 +14,9 @@ function* jobHiredServerSide(action) {
     try {
         yield put(fetchConfigRequest())
         yield race({
-            config:take(FETCH_CONFIG_SUCCESS),
-            default:delay(200)
-        }) 
+            config: take(FETCH_CONFIG_SUCCESS),
+            default: delay(200)
+        })
         const config = yield select(store => store.config.config.response)
         const accessToken = action.accessToken
         const { defaultValues, payload: initPayload } = initPagePayLoad(action.payload, config)
@@ -74,16 +74,16 @@ export const initPagePayLoad = (query, config) => {
         // if sort param exist, follow sort defined in param, otherwise if search exist, sort default to 2 'Relevance'
         sort: query?.sort ? query?.sort : searchQuery ? 2 : 1,
         jobType: queryJobType?.split?.(',') || null,
-        salary: querySalary?.split?.(',') || null,
-        qualification: queryQualification?.split?.(',') || null,
+        salary: querySalary?.map? querySalary : querySalary?.split?.(',') || null,
+        qualification: queryQualification?.map? queryQualification : queryQualification?.split?.(',') || null,
         location: queryLocation?.split?.(',') || null,
-        industry: queryIndustry?.split?.(',') || null,
-        workExperience: queryWorkExp?.split?.(',') || null,
-        category: queryCategory?.split?.(',') || null,
-        verifiedCompany: queryVerifiedCompany?.split?.(',') || null,
-        mainFunctions: query?.mainFunctions?.split?.(',') ?? null,
-        jobFunctions: query?.jobFunctions?.split?.(',') ?? null,
-        functionTitles: query?.functionTitles?.split?.(',') ?? null
+        industry:queryIndustry?.map? queryIndustry : queryIndustry?.split?.(',') || null,
+        workExperience:queryWorkExp?.map? queryWorkExp : queryWorkExp?.split?.(',') || null,
+        category: queryCategory?.map? queryCategory : queryCategory?.split?.(',') || null,
+        verifiedCompany: queryVerifiedCompany?.map? queryVerifiedCompany : queryVerifiedCompany?.split?.(',') || null,
+        mainFunctions: query?.mainFunctions?.map? query?.mainFunctions : query?.mainFunctions?.split?.(',') ?? null,
+        jobFunctions:query?.jobFunctions?.map? query?.jobFunctions : query?.jobFunctions?.split?.(',') ?? null,
+        functionTitles: query?.functionTitles?.map? query?.functionTitles : query?.functionTitles?.split?.(',') ?? null
     }
 
     for (const [key, value] of Object.entries(matchedConfigFromUrl)) {

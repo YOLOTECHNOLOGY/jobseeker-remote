@@ -253,7 +253,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   useEffect(() => {
     dispatch(fetchConfigRequest())
   }, [firstRender])
-  
+
   const config = useSelector((store: any) => store?.config?.config?.response ?? initialState.response)
   const [clientDefaultValues, setClientDefaultValues] = useState(defaultValues || {})
   const [isShowFilter, setIsShowFilter] = useState(false)
@@ -306,12 +306,13 @@ const JobSearchPage = (props: JobSearchPageProps) => {
     predefinedLocation: ''
   })
   useEffect(() => {
+    if (isConfigEmpty(config)) return
     const matched = checkFilterMatch(router.query, config, isMobile)
     setMatchState(matched)
   }, [router.query, config, isMobile])
   const { searchQuery, predefinedQuery, predefinedLocation, filterCount } = matchState
   const [selectedPage, setSelectedPage] = useState(defaultPage)
-  
+
   useLayoutEffect(() => {
     if (isConfigEmpty(config)) {
       return
@@ -332,12 +333,12 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       functionTitles
     )
     setHasMoreFilters(hasActiveFilters)
-    // if (!firstRender) {
-    setDisplayQuickLinks(false)
-    const { payload } = initPagePayLoad(router.query, config)
-    dispatch(fetchJobsListRequest(payload, accessToken))
-    setMoreFilterReset(false)
-    // }
+    if (!firstRender) {
+      setDisplayQuickLinks(false)
+      const { payload } = initPagePayLoad(router.query, config)
+      dispatch(fetchJobsListRequest(payload, accessToken))
+      setMoreFilterReset(false)
+    }
   }, [router.query, isConfigEmpty(config)])
 
   useEffect(() => {
@@ -565,7 +566,6 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       config,
       isMobile
     )
-    console.log({match})
 
     const { searchMatch, locationMatch, searchQuery, predefinedLocation } = match
     const functionTitleKeywords = functionTitles
