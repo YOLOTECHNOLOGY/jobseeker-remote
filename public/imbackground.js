@@ -1,15 +1,13 @@
-
-
 const ports = []
 self.onconnect = e => {
     const port = e.ports[0]
-    ports.push(e.ports[0])
+    ports.push(port)
     port.onmessage = e => {
         console.log('worker on message ', e)
-        ports.forEach(port => {
-            port.postMessage('refreshMessage')
+        ports.forEach(otherPort => {
+            if (otherPort !== port) {
+                port.postMessage('refreshMessage')
+            }
         })
     }
-    
 }
-
