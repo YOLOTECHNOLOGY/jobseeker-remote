@@ -28,6 +28,7 @@ const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
     useEffect(() => {
         (window as any).imSharedWorker.port.onmessage = () => {
+            console.log('refreshMessage')
              IMManager.refreshMessages()
         }
     }, [])
@@ -254,28 +255,29 @@ const IMProvider = ({ children }: any) => {
             )
         },
         postPageNotification(message) {
-            if (message.type === 1) {
-                postNoteRef.current?.({
-                    id: message.amid,
-                    title: 'New Message',
-                    content: message?.content?.text,
-                    link: `/chat/${message?.aChatId}`
-                })
-            }
+            console.log('postLocalNotification', message)
+            // if (message.type === 1) {
+            //     postNoteRef.current?.({
+            //         id: message.amid,
+            //         title: 'New Message',
+            //         content: message?.content?.text,
+            //         link: `/chat/${message?.aChatId}`
+            //     })
+            // }
         },
         postLocalNotification(message) {
             console.log('postLocalNotification', message)
-            if(message.type === 1) {
-                const note = new Notification(message.content.text)
-                note.addEventListener('click',()=>{
-                    router.push(`/chat/${message?.aChatId}`)
-                })
-            } else if(message.type === 2) {
-                const note = new Notification('[image]')
-                note.addEventListener('click',()=>{
-                    router.push(`/chat/${message?.aChatId}`)
-                })
-            }
+            // if(message.type === 1) {
+            //     const note = new Notification(message.content.text)
+            //     note.addEventListener('click',()=>{
+            //         router.push(`/chat/${message?.aChatId}`)
+            //     })
+            // } else if(message.type === 2) {
+            //     const note = new Notification('[image]')
+            //     note.addEventListener('click',()=>{
+            //         router.push(`/chat/${message?.aChatId}`)
+            //     })
+            // }
             
         },
         updateTotalUnreadNumber(totalUnreadNumber) {
