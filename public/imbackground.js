@@ -4,7 +4,7 @@ self.onconnect = e => {
     ports.push(port)
     port.onmessage = e => {
         console.log('worker on message ', e)
-        ports.forEach(otherPort => {
+        otherPort.forEach(otherPort => {
             if (otherPort !== port) {
                 port.postMessage('refreshMessage')
             }
