@@ -36,6 +36,35 @@
     color: blue;
     justify-content: space-between;
     display: flex;
-    align-items: center;
+    align-items: self-start;
+  }
+
+  .accessSettingsContainer {
+    &_notification {
+      width: 85%;
+
+      span {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #000000;
+      }
+
+      p {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        margin-bottom: 25px;
+        /* or 129% */
+
+        letter-spacing: 0.0075em;
+
+        /* General/Dark Grey */
+
+        color: #707070;
+      }
+    }
   }
 }
