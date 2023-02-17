@@ -15,8 +15,8 @@ const JobseekerChat = dynamic<any>(import('components/Chat'), {
 })
 // import JobseekerChat from 'components/Chat'
 const Chat = () => {
+    
     const router = useRouter()
-    // const { query: { chat_id } } = router
     const {
         userId,
         imState,

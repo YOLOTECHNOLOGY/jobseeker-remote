@@ -33,6 +33,11 @@ const App = (props: AppProps) => {
   const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
   const [toPath, setToPath] = useState('')
   useEffect(() => {
+    if (!(window as any)?.imSharedWorker) {
+      (window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
+    }
+  }, [])
+  useEffect(() => {
     initFireBase()
   }, [])
   useEffect(() => {

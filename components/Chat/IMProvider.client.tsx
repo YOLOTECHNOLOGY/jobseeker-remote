@@ -26,6 +26,11 @@ import { useRouter } from 'next/router'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
+    useEffect(() => {
+        (window as any).imSharedWorker.port.onmessage = () => {
+             IMManager.refreshMessages()
+        }
+    }, [])
     const [chatId, setChatId] = useState()
     const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
     const userDetailRef = useRef(userDetail)
