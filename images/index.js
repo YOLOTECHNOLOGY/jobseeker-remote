@@ -137,3 +137,6 @@ export const Maintenance = `${S3BucketJobseeker}/maintenance.png`
 /* Resume preview */
 export const CreativeResumePreview = `${S3BucketJobseeker}/creative_resume_preview.pdf`
 export const CorporateResumePreview = `${S3BucketJobseeker}/corporate_resume_preview.pdf`
+
+/* App Down */
+export const AppDownQRCode = `${S3BucketJobseeker}/AppDownQRCode.png`

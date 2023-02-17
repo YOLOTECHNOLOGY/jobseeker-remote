@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useUserAgent } from 'next-useragent'
 
 /* Vendors */
 import { useRouter } from 'next/router'
@@ -34,7 +35,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import styles from './JobListSection.module.scss'
 
 /* Images */
-import { BellIcon } from 'images'
+import { BellIcon, AppDownQRCode } from 'images'
 
 interface JobListSectionProps {
   page: number
@@ -108,6 +109,12 @@ const JobListSection = ({
   const [isShowReportJob, setIsShowReportJob] = useState(false)
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
   const [selectedPage, setSelectedPage] = useState(page)
+
+  const [userAgent] = useState(() => useUserAgent(window.navigator.userAgent))
+
+  useEffect(() => {
+    console.log(userAgent, 'userAgent')
+  }, [userAgent])
 
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
@@ -319,6 +326,24 @@ const JobListSection = ({
             <div className={styles.skyscraperBanner}>
               <AdSlot adSlot={'jobs-search/skyscraper-3'} />
             </div> */}
+
+            <div
+              className={styles.jobAds_downApp}
+              onClick={() => {
+                // app store
+                window.location.href = userAgent.isMac
+                  ? process.env.APP_STORE_LINK
+                  : process.env.GOOGLE_PLAY_STORE_LINK
+              }}
+            >
+              <img src={AppDownQRCode} alt='app down' />
+              <div className={styles.jobAds_downApp_desc}>
+                <span>Chat</span>
+                <span>directly</span>
+                <span>with</span>
+                <span>Boss</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

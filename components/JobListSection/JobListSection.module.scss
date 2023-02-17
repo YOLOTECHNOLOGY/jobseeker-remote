@@ -121,7 +121,7 @@
 
   &_quickCreateResume {
     width: 160px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
   }
 
   .skyscraperBanner {
@@ -145,6 +145,37 @@
 
   @include msd {
     display: none;
+  }
+
+  &_downApp {
+    background-color: #136fd3;
+    padding: 10px 8px;
+    padding-right: 10px;
+    width: 160px;
+    height: 107px;
+    background: #136fd3;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+
+    img {
+      width: 85px;
+      height: 88px;
+    }
+
+    &_desc {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
+
+      span {
+        display: block;
+        font-size: 14px;
+        color: #fff;
+        line-height: 18px;
+      }
+    }
   }
 }
 
