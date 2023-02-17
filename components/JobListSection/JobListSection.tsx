@@ -338,10 +338,10 @@ const JobListSection = ({
             >
               <img src={AppDownQRCode} alt='app down' />
               <div className={styles.jobAds_downApp_desc}>
-                <span>Chat</span>
-                <span>directly</span>
-                <span>with</span>
                 <span>Boss</span>
+                <span>with</span>
+                <span>directly</span>
+                <span>Chat</span>
               </div>
             </div>
           </div>
