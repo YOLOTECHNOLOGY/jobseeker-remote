@@ -35,11 +35,24 @@ const EmailNotificationsetting = ({ label, setEdit, edit, emailNotificationSetti
     <div className={styles.VerifyMailAndBindEmail}>
       <FieldFormWrapper label={label} edit={edit} setEdit={setEdit}>
         <div className={styles.accessSettingsContainer_swtich}>
-          <Text>Receive system notifications:</Text>
+          <div className={styles.accessSettingsContainer_notification}>
+            <Text>Receive new chat messages or resume request from recruiters:</Text>
+            <p>
+              This is to notify you of new chat messages or resume request. You will only receive
+              email notification for this when you are offline
+            </p>
+          </div>
+
           <Switch checked={systemEmail} onChange={() => setSystemEmail(!systemEmail)} />
         </div>
         <div className={styles.accessSettingsContainer_swtich}>
-          <Text>Receive new chat notifications:</Text>
+          <div className={styles.accessSettingsContainer_notification}>
+            <Text>Receive system notification:</Text>
+            <p>
+              This is to notify you of the system information concerning you such as jobs that you
+              might be interested in based on your job preference and job alert
+            </p>
+          </div>
           <Switch
             checked={chatEmail}
             // onChange={(ev) => {}}
@@ -47,7 +60,10 @@ const EmailNotificationsetting = ({ label, setEdit, edit, emailNotificationSetti
           />
         </div>
         <div className={styles.accessSettingsContainer_swtich}>
-          <Text>Receive career and hiring tips newsletter:</Text>
+          <div className={styles.accessSettingsContainer_notification}>
+            <Text>Receive career and hiring tips newsletter:</Text>
+            <p>This is to share insights and tips that will help you with your job search.</p>
+          </div>
           <Switch
             checked={newsletterEmail}
             onChange={() => setNewsletterEmail(!newsletterEmail)}
