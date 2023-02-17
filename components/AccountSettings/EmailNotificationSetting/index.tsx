@@ -49,8 +49,8 @@ const EmailNotificationsetting = ({ label, setEdit, edit, emailNotificationSetti
           <div className={styles.accessSettingsContainer_notification}>
             <Text>Receive system notification:</Text>
             <p>
-              This is to notify you of the system information concerning you such as jobs that you
-              might be interested in based on your job preference and job alert
+              This is to inform you of important notification such as jobs that you might be
+              interested in and your interviews details.
             </p>
           </div>
           <Switch
