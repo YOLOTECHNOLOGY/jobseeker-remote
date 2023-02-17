@@ -265,10 +265,18 @@ const IMProvider = ({ children }: any) => {
         },
         postLocalNotification(message) {
             console.log('postLocalNotification', message)
-            const note = new Notification(message.content.text)
-            note.addEventListener('click',()=>{
-                router.push(`/chat/${message?.aChatId}`)
-            })
+            if(message.type === 1) {
+                const note = new Notification(message.content.text)
+                note.addEventListener('click',()=>{
+                    router.push(`/chat/${message?.aChatId}`)
+                })
+            } else if(message.type === 2) {
+                const note = new Notification('[image]')
+                note.addEventListener('click',()=>{
+                    router.push(`/chat/${message?.aChatId}`)
+                })
+            }
+            
         },
         updateTotalUnreadNumber(totalUnreadNumber) {
             setTotalUnread(totalUnreadNumber)
