@@ -81,7 +81,7 @@ const NotificationContainer = props => {
                     <img src={CloseIcon} alt='logo' width='13' height='13' />
                 </div>
                 <div className={styles.title}>
-                    {note.id + note.title}
+                    {note.title}
                 </div>
                 <div className={styles.content}>
                     {note.content}

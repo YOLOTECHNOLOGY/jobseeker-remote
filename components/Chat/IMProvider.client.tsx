@@ -22,6 +22,7 @@ import { list } from 'helpers/interpreters/services/chat'
 import NotificationContainer, { usePushNotification } from './notificationContainer'
 import ExchangeDetailModal from './exchange/detail'
 import interpreters from 'helpers/interpreters'
+import { useRouter } from 'next/router'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
@@ -53,7 +54,7 @@ const IMProvider = ({ children }: any) => {
     const applcationIdRef = useRef(applicationId)
     const stateRef = useRef(imState)
     const chatIdRef = useRef(chatId)
-
+    const router = useRouter()
     const [chatList, setChatList] = useState([])
     const [chatListLoading, setChatListLoading] = useState(false)
     const [isUnreadOn, setUnreadOn] = useState(false)
@@ -72,6 +73,16 @@ const IMProvider = ({ children }: any) => {
     const filterMode = useMemo(() => {
         return !(!isUnreadOn && !status)
     }, [isUnreadOn, status])
+
+    const onNoteiticationClick = useCallback(note => {
+        console.log('onClick', note)
+        router.push(note.link)
+    }, [])
+    const { postNote, props: notificationProps } = usePushNotification(onNoteiticationClick)
+    const postNoteRef = useRef(postNote)
+    useEffect(() => {
+        postNoteRef.current = postNote
+    }, [postNote])
     useEffect(() => {
         if (!chatListLoading && filterMode) {
             setChatListLoading(true)
@@ -146,6 +157,8 @@ const IMProvider = ({ children }: any) => {
     useEffect(() => {
         userDetailRef.current = userDetail
     }, [userDetail])
+
+
     const contextRef = useRef({
         setLoading,
         hideModals() {
@@ -235,6 +248,23 @@ const IMProvider = ({ children }: any) => {
                 })
             )
         },
+        postPageNotification(message) {
+            if (message.type === 1) {
+                postNoteRef.current?.({
+                    id: message.amid,
+                    title: 'New Message',
+                    content: message?.content?.text,
+                    link: `/chat/${message?.aChatId}`
+                })
+            }
+        },
+        postLocalNotification(message) {
+            console.log('postLocalNotification', message)
+            const note = new Notification(message.content.text)
+            note.addEventListener('click',()=>{
+                router.push(`/chat/${message?.aChatId}`)
+            })
+        },
         updateTotalUnreadNumber(totalUnreadNumber) {
             setTotalUnread(totalUnreadNumber)
         },
@@ -242,21 +272,7 @@ const IMProvider = ({ children }: any) => {
     } as any)
     const interpreter = hooks.useInterpreter(interpreters, contextRef)
     const imStatus = hooks.useInitChat(interpreter, imState, chatId, filterMode, chatList, updateChatList)
-    const onNoteiticationClick = useCallback(note => {
-        console.log('onClick', note)
-    }, [])
-    const { postNote, props: notificationProps } = usePushNotification(onNoteiticationClick)
-    // const idRef = useRef(0)
-    // useEffect(() => {
-    //     setInterval(() => {
-    //         postNote({
-    //             id: '' + idRef.current,
-    //             title: 'New message John Doe',
-    //             content: 'John Doe: Jorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consectetur adipiscing elit. '
-    //         })
-    //         idRef.current = idRef.current + 1
-    //     }, 5000)
-    // }, [])
+
     return <Provider value={{
         userDetail,
         userId,

@@ -4151,10 +4151,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.0.994:
-  version "0.0.994"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.994.tgz#412ce3c24c31122e456b8d42e7f281fcbb2f7b74"
-  integrity sha512-0RKuqDCsJQJ/Mc6h+yNjc7jSSdlR1n2pWO60modb/jHKnjSa3IA9aEh8IWlvJZz07HxALDdeiwYJh2S4hutjzA==
+imforbossjob@^0.0.1003:
+  version "0.0.1003"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.1003.tgz#bc7b84876247a9b3b1eecdb3c747188869c2cd0a"
+  integrity sha512-FMwKVjPiggg+zCsk1Fg31szm9HLkrkC69cxdKLcIBkcquI7ZbrUMoYUL/yF6tn4uIGs8mxoSkOM4qOZgqh8ugQ==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -4168,7 +4168,7 @@ imforbossjob@^0.0.994:
     dexie "^3.0.3"
     fantasy-combinators "^0.0.1"
     fantasy-land "^5.0.1"
-    imsdkweb "^0.0.46"
+    imsdkweb "^0.0.48"
     lodash "^4.17.21"
     mobx "^5.15.4"
     mobx-react "^6.3.1"
@@ -4188,10 +4188,10 @@ import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
 
-imsdkweb@^0.0.46:
-  version "0.0.46"
-  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.46.tgz#99acfa79a9df81d4a911f1f80ca1438e4982377e"
-  integrity sha512-7zVfOAnoruVeZXdNcQGsIgpoHtOQ+tTXaMFHti+saqjFjjvXgQKBeVKBIOtIn33Fiyv43hPR7lTXFdLJBcuDKQ==
+imsdkweb@^0.0.48:
+  version "0.0.48"
+  resolved "https://registry.yarnpkg.com/imsdkweb/-/imsdkweb-0.0.48.tgz#99d84a4b06d05aebadccd823d6eaa183d5c76322"
+  integrity sha512-Pxeq611ZWZJ6+0yLP/gn4K0UxaZixzEvjKfDKmYMs1y6NsmZj39CrLqaAjYpChWN65UKfVAXELfS7yD6YzDsKw==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
