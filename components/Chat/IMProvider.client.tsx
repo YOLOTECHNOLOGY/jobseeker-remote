@@ -23,7 +23,6 @@ import NotificationContainer, { usePushNotification } from './notificationContai
 import ExchangeDetailModal from './exchange/detail'
 import interpreters from 'helpers/interpreters'
 import { useRouter } from 'next/router'
-// import UserGuide from './userGuide'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
@@ -321,11 +320,7 @@ const IMProvider = ({ children }: any) => {
             data={imState.resume_request}
             applicationId={applicationId}
         />
-        {/* <UserGuide
-            loading={loading}
-            contextRef={contextRef}
-            applicationId={applicationId}
-        /> */}
+        
         <Interview
             loading={loading}
             contextRef={contextRef}
