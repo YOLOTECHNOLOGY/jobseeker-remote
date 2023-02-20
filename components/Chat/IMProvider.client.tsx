@@ -23,13 +23,16 @@ import NotificationContainer, { usePushNotification } from './notificationContai
 import ExchangeDetailModal from './exchange/detail'
 import interpreters from 'helpers/interpreters'
 import { useRouter } from 'next/router'
+import UserGuide from './userGuide'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
     useEffect(() => {
-        (window as any).imSharedWorker.port.onmessage = () => {
-            console.log('refreshMessage')
-             IMManager.refreshMessages()
+        if(window.SharedWorker){
+            (window as any).imSharedWorker.port.onmessage = () => {
+                console.log('refreshMessage')
+                IMManager.refreshMessages()
+            }
         }
     }, [])
     const [chatId, setChatId] = useState()
@@ -44,13 +47,15 @@ const IMProvider = ({ children }: any) => {
     const [mobile, setMobile] = useState(false)
     const [totalUnread, setTotalUnread] = useState(0)
     useEffect(() => {
-        const old: any = window.onresize
-        setMobile(document.body.clientWidth < 576)
-        window.onresize = (...args) => {
-            old?.(...args)
+        const updateMobile = () => {
             setMobile(document.body.clientWidth < 576)
         }
-        return () => window.onresize = old
+        updateMobile()
+        window.addEventListener("resize", updateMobile);
+
+        return () => {
+            window.removeEventListener("resize", updateMobile)
+        }
     }, [])
     const accessToken = getCookie('accessToken')
     const applicationId = useMemo(() => {
@@ -278,7 +283,7 @@ const IMProvider = ({ children }: any) => {
             //         router.push(`/chat/${message?.aChatId}`)
             //     })
             // }
-            
+
         },
         updateTotalUnreadNumber(totalUnreadNumber) {
             setTotalUnread(totalUnreadNumber)
@@ -314,6 +319,11 @@ const IMProvider = ({ children }: any) => {
             loading={loading}
             contextRef={contextRef}
             data={imState.resume_request}
+            applicationId={applicationId}
+        />
+        <UserGuide
+            loading={loading}
+            contextRef={contextRef}
             applicationId={applicationId}
         />
         <Interview
