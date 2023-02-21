@@ -80,7 +80,6 @@ const ModalAppRedirect = ({
   const handleOpenApp = useCallback(() => {
     if (window && typeof window !== undefined) {
       const userInfo = Object.keys(userDetail).length ? userDetail : getCookie('user')
-      console.log(userInfo, 'userDetail')
       const windowPath = router.asPath
       const baseSchema = 'bossjob'
       let pathSchema = null
@@ -111,7 +110,6 @@ const ModalAppRedirect = ({
         Android schema: intent://register/#Intent;scheme=BOSSJOBPH;package=com.poseidon.bossjobapp;end
       */
       const schema = `${baseSchema}://bossjob.ph/${pathSchema}?email=${userInfo?.email}&role=jobseeker&jobsId=${jobId}`
-      console.log(schema, 'schema')
       // // const schema = `${baseSchema}://${pathSchema}`
 
       const appStoreLink = userAgent?.isIos
