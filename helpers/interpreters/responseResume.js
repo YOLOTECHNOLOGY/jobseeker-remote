@@ -24,7 +24,8 @@ export default command => command.cata({
     }),
     requestAskSendResume: payload => M(context => {
         context.setLoading(true)
-        return askSendResume(payload.applicationId, payload.params)
+        console.log({ payload })
+        return askSendResume(payload.applicationId, { resume_id: payload.resume_id })
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
