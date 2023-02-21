@@ -23,6 +23,7 @@ import NotificationContainer, { usePushNotification } from './notificationContai
 import ExchangeDetailModal from './exchange/detail'
 import interpreters from 'helpers/interpreters'
 import { useRouter } from 'next/router'
+import errorParser from 'helpers/errorParser'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
@@ -196,13 +197,7 @@ const IMProvider = ({ children }: any) => {
             dispatch(fetchUserOwnDetailRequest({ accessToken }))
         },
         handleError(e) {
-            console.log('error', e)
-            const content =
-                e?.response?.data?.errors?.error?.[0]
-                ||
-                e?.response?.data?.errors?.errors?.[0]
-                ||
-                e?.response?.data?.errors?.phone_num?.[0]
+            const content = errorParser(e)
             if (content) {
                 contextRef.current?.showToast?.('error', content)
             } else {
@@ -260,28 +255,28 @@ const IMProvider = ({ children }: any) => {
         },
         postPageNotification(message) {
             console.log('postLocalNotification', message)
-            // if (message.type === 1) {
-            //     postNoteRef.current?.({
-            //         id: message.amid,
-            //         title: 'New Message',
-            //         content: message?.content?.text,
-            //         link: `/chat/${message?.aChatId}`
-            //     })
-            // }
+            if (message.type === 1) {
+                postNoteRef.current?.({
+                    id: message.amid,
+                    title: 'New Message',
+                    content: message?.content?.text,
+                    link: `/chat/${message?.aChatId}`
+                })
+            }
         },
         postLocalNotification(message) {
             console.log('postLocalNotification', message)
-            // if(message.type === 1) {
-            //     const note = new Notification(message.content.text)
-            //     note.addEventListener('click',()=>{
-            //         router.push(`/chat/${message?.aChatId}`)
-            //     })
-            // } else if(message.type === 2) {
-            //     const note = new Notification('[image]')
-            //     note.addEventListener('click',()=>{
-            //         router.push(`/chat/${message?.aChatId}`)
-            //     })
-            // }
+            if(message.type === 1) {
+                const note = new Notification(message.content.text)
+                note.addEventListener('click',()=>{
+                    router.push(`/chat/${message?.aChatId}`)
+                })
+            } else if(message.type === 2) {
+                const note = new Notification('[image]')
+                note.addEventListener('click',()=>{
+                    router.push(`/chat/${message?.aChatId}`)
+                })
+            }
 
         },
         updateTotalUnreadNumber(totalUnreadNumber) {

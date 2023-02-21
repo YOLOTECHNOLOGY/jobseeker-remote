@@ -15,9 +15,9 @@ export default command => command.cata({
             send: payload => resolve(ModalActions.send(payload))
         })
     })),
-    requestSendResume: payload => M(context => {
+    requestSendResume: ({ applicationId, id }, params) => M(context => {
         context.setLoading(true)
-        return sendResume(payload.applicationId, payload.requestResumeId, payload.params)
+        return sendResume(applicationId, id, params)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
@@ -29,11 +29,9 @@ export default command => command.cata({
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
     }),
-    requestDecline: () => M(context => {
-        const applicationId = context.getApplicationId()
-        const requestResumeId = context.getState?.()?.resume_request?.id
+    requestDecline: ({ applicationId, id }) => M(context => {
         context.setLoading(true)
-        return decline(applicationId, requestResumeId)
+        return decline(applicationId, id)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
