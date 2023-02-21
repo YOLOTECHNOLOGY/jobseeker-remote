@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-// import { useRouter } from 'next/router'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
 /* Vendors */
 import { useUserAgent } from 'next-useragent'
@@ -14,6 +15,7 @@ import styles from './ModalAppRedirect.module.scss'
 
 /* Images */
 import { BossjobFittedLogoApp, Chrome, Safari, OtherBrowser } from 'images'
+import { getCookie } from 'helpers/cookies'
 
 interface ModalAppRedirectProps {
   isShowModal?: boolean
@@ -26,10 +28,23 @@ const ModalAppRedirect = ({
   handleModal,
   handleOpenAppCallBack
 }: ModalAppRedirectProps) => {
-  // const router = useRouter()
+  const router = useRouter()
+  const goToAppTime = useRef<any>()
 
   const [userAgent, setUserAgent] = useState(null)
   const [browser, setBrowser] = useState(null)
+
+  const userDetail = useSelector(
+    (store: any) => store.users.fetchUserOwnDetail?.response ?? getCookie('user')
+  )
+
+  useEffect(() => {
+    window.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        clearTimeout(goToAppTime?.current)
+      }
+    })
+  }, [])
 
   useEffect(() => {
     setUserAgent(useUserAgent(window.navigator.userAgent))
@@ -62,35 +77,42 @@ const ModalAppRedirect = ({
     }
   }, [userAgent])
 
-  const handleOpenApp = () => {
+  const handleOpenApp = useCallback(() => {
     if (window && typeof window !== undefined) {
-      // const windowPath = router.asPath
+      const userInfo = Object.keys(userDetail).length ? userDetail : getCookie('user')
+      console.log(userInfo, 'userDetail')
+      const windowPath = router.asPath
       const baseSchema = 'bossjob'
-      const pathSchema = 'bossjob.ph'
+      let pathSchema = null
+      let jobId = null
 
       // Mobile app deep link mapping
-      // if (windowPath.includes('/get-started')) {
-      //   pathSchema = 'getStarted'
-      // } else if (windowPath.includes('/login/jobseeker')) {
-      //   pathSchema = 'login'
-      // } else if (windowPath.includes('/register/jobseeker')) {
-      //   pathSchema = 'register'
-      // } else if (windowPath.includes('/job/')) {
-      //   const jobId = windowPath?.split('-').pop()
-      //   pathSchema = 'job-detail'
-      //   if (jobId) pathSchema = `${pathSchema}/${jobId}`
-      // } else if (windowPath.includes('/company/')) {
-      //   const companyId = windowPath?.split('-').pop()
-      //   pathSchema = pathSchema + 'company'
-      //   if (companyId) pathSchema = `${pathSchema}/${companyId}`
-      // }
+      if (
+        windowPath.includes('manage-profile') ||
+        windowPath.includes('manage-profile?tab=profile')
+      ) {
+        pathSchema = 'online-resume'
+      } else if (windowPath.includes('manage-profile?tab=job-preferences')) {
+        pathSchema = 'jobs-preferences'
+      } else if (windowPath.includes('/manage-profile?tab=resume')) {
+        pathSchema = 'online-resume'
+      } else if (windowPath.includes('jobs-hiring/job-search')) {
+        pathSchema = 'home'
+      } else if (windowPath.includes('/job/')) {
+        jobId = windowPath.split('-')?.pop()
+        pathSchema = `job-details`
+      } else if (windowPath.includes('/chat/')) {
+        // chatId = windowPath.split('/')?.pop()
+        pathSchema = 'interview-detail'
+      }
 
       /* 
         IOS schema: BOSSJOBPH://register
         Android schema: intent://register/#Intent;scheme=BOSSJOBPH;package=com.poseidon.bossjobapp;end
       */
-      const schema = `${baseSchema}://${pathSchema}`
-      // const schema = `${baseSchema}://${pathSchema}`
+      const schema = `${baseSchema}://bossjob.ph/${pathSchema}?email=${userInfo?.email}&role=jobseeker&jobsId=${jobId}`
+      console.log(schema, 'schema')
+      // // const schema = `${baseSchema}://${pathSchema}`
 
       const appStoreLink = userAgent?.isIos
         ? process.env.APP_STORE_LINK
@@ -99,11 +121,11 @@ const ModalAppRedirect = ({
       window.location.replace(schema)
 
       // Wait 2s and redirect to App Store/Google Play Store if app was not opened
-      setTimeout(() => {
+      goToAppTime.current = setTimeout(() => {
         window.location.replace(appStoreLink)
-      }, 2000)
+      }, 5000)
     }
-  }
+  }, [userDetail])
 
   return (
     <Modal
