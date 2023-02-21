@@ -198,7 +198,7 @@ const IMProvider = ({ children }: any) => {
         },
         handleError(e) {
             const content = errorParser(e)
-            if (content) {
+            if (typeof content === 'string') {
                 contextRef.current?.showToast?.('error', content)
             } else {
                 contextRef.current?.showToast?.('error', e.toString())
