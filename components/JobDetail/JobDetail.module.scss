@@ -165,7 +165,11 @@
       vertical-align: text-bottom;
       margin-left: 5px;
       cursor: pointer;
-      margin-top: 7px;
+    }
+
+    &IsVerify {
+      display: flex !important;
+      align-items: center;
     }
   }
 

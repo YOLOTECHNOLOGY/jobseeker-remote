@@ -52,7 +52,6 @@ import {
   OtherAllowancesIcon,
   ExpireIcon,
   LocationPinIcon,
-  RateIcon,
   BlueTickIcon,
   OpenInNewTabIcon,
   DefaultAvatar
@@ -244,6 +243,25 @@ const JobDetail = ({
     }
   }, [])
 
+  const handleLastActiveState = useMemo(() => {
+    const lastActiveAt = moment(selectedJob?.recruiter.last_active_at)
+    const currentActiveAt = moment()
+    const minutes = currentActiveAt.diff(lastActiveAt, 'm')
+    const hours = currentActiveAt.diff(lastActiveAt, 'h')
+
+    if (minutes <= 5) {
+      return 'Online'
+    } else if (hours < 8) {
+      return 'Active recently'
+    } else if (hours < 24) {
+      return 'Active today'
+    } else if (hours < 168) {
+      return 'Active this week'
+    } else {
+      return 'Active this month'
+    }
+  }, [selectedJob?.recruiter.last_active_at])
+
   return (
     <React.Fragment>
       <Modal
@@ -275,7 +293,7 @@ const JobDetail = ({
             ref={detailHeaderRef}
           >
             <div className={classNamesCombined([isStickyClass, styles.jobDetailOptions])}>
-              <Link to={publicJobUrl}  className={styles.jobDetailOptionNewTab}>
+              <Link to={publicJobUrl} className={styles.jobDetailOptionNewTab}>
                 <img src={OpenInNewTabIcon} width='10' height='10' />
                 <Text
                   textStyle='base'
@@ -595,14 +613,8 @@ const JobDetail = ({
                     </div>
                     <div className={styles.jobDetailRecruiterContent}>
                       <Text textStyle='lg' textColor='darkgrey'>
-                        <img src={RateIcon} height='14' width='15' />
-                        {selectedJob?.recruiter.response_rate}% response rate, responds{' '}
-                        {selectedJob?.recruiter.response_time}
-                      </Text>
-                      <Text textStyle='lg' textColor='darkgrey'>
                         <img src={LocationPinIcon} height='14' width='15' />
-                        Last active on{' '}
-                        {moment(selectedJob?.recruiter.last_active_at).format('MM/DD/YYYY')}
+                        {handleLastActiveState}
                       </Text>
                     </div>
                   </div>
@@ -614,8 +626,13 @@ const JobDetail = ({
                 About the company
               </Text>
               <Link to={companyUrl} className={styles.aboutCompanyTitle}>
-                <Text bold textStyle='lg' textColor='primaryBlue'>
-                  {selectedJob?.company?.name}
+                <Text
+                  bold
+                  textStyle='lg'
+                  textColor='primaryBlue'
+                  className={styles.jobDetailCompanyIsVerify}
+                >
+                  <span>{selectedJob?.company?.name}</span>
                   {isCompanyVerified &&
                     (isMobile ? (
                       <MaterialMobileTooltip
