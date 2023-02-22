@@ -25,6 +25,7 @@ import interpreters from 'helpers/interpreters'
 import { useRouter } from 'next/router'
 import errorParser from 'helpers/errorParser'
 import { isMobile } from 'react-device-detect'
+import { pushNotification } from 'store/services/notification'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
@@ -283,23 +284,50 @@ const IMProvider = ({ children }: any) => {
         },
         postLocalNotification(message, state) {
             console.log('postLocalNotification', message)
-            if (message.type === 1) {
-                const note = new Notification(state?.recruiter?.full_name ?? 'New Message', {
-                    body: message.content.text,
-                    image: state?.recruiter?.avatar
-                })
-                note.addEventListener('click', () => {
-                    router.push(`/chat/${message?.aChatId}`)
-                })
-            } else if (message.type === 2) {
-                const note = new Notification(state?.recruiter?.full_name, {
-                    body: '[image]',
-                    image: state?.recruiter?.avatar
-                })
-                note.addEventListener('click', () => {
-                    router.push(`/chat/${message?.aChatId}`)
-                })
+            const params: any = {
+                im_amid: message?.amid,
+                im_achat_id: message?.aChatId,
+                im_title: JSON.stringify({
+                    t: 't',
+                    v: state?.recruiter?.full_name ?? 'New Message'
+                }),
+                auth_role: 'jobseeker',
+                im_sender_id: `"${userDetailRef.current?.id}_j"`,
+                im_receive_ids: `["${userDetailRef.current?.id}_j"]`,
+                im_type: '' + message.type
             }
+            if (message.type === 1) {
+                params.im_body = JSON.stringify([
+                    {
+                        t: 't',
+                        v: message.content.text
+                    }
+                ])
+                // const note = new Notification(state?.recruiter?.full_name ?? 'New Message', {
+                //     body: message.content.text,
+                //     image: state?.recruiter?.avatar
+                // })
+                // note.addEventListener('click', () => {
+                //     router.push(`/chat/${message?.aChatId}`)
+                // })
+            } else if (message.type === 2) {
+                params.im_body = JSON.stringify([
+                    {
+                        t: 't',
+                        v: '[image]'
+                    }
+                ])
+                // const note = new Notification(state?.recruiter?.full_name, {
+                //     body: '[image]',
+                //     image: state?.recruiter?.avatar
+                // })
+                // note.addEventListener('click', () => {
+                //     router.push(`/chat/${message?.aChatId}`)
+                // })
+            }
+            pushNotification(params)
+                .then(result => console.log('pushNotifictionSuccess', result))
+                .catch(e => console.log('pushNotifictionError', e))
 
         },
         updateTotalUnreadNumber(totalUnreadNumber) {

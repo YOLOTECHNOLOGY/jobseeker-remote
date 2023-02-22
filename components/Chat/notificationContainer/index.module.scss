@@ -70,6 +70,12 @@
             height: 72px;
             margin-left: 19px;
             margin-top: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp:3;
+            -webkit-box-orient: vertical;
+            white-space: pre-wrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 
