@@ -10,6 +10,27 @@ export default command => command.cata({
     end: type => M(context => Promise.resolve().then(() => {
         context.handleFinish(type)
     })),
+    just: M.of,
+    requestImState: chatId => M(() =>
+        Promise.resolve().then(() => {
+            return updateChat(chatId)
+                .then(result => RequestResult.success(result.data))
+                .catch(error => RequestResult.error(error))
+        })),
+    updateImState: (chatId, data) => M(context => new Promise(resolve => {
+        context.updateImState(chatId, data)
+        setTimeout(resolve, 0)
+    })),
+    getLocalImState:chatId =>  M(context => new Promise(resolve => {
+        const state =  context.getLocalImState(chatId)
+        resolve(state)
+    })),
+    postPageNotification: (message, state) => M(context => Promise.resolve().then(() => {
+        return context.postPageNotification(message, state)
+    })),
+    postLocalNotification: (message, state) => M(context => Promise.resolve().then(() => {
+        return context.postLocalNotification(message, state)
+    })),
     requestUpdate: () => M(context =>
         Promise.resolve().then(() => {
             const chatId = context.getChatId()

@@ -24,11 +24,12 @@ import ExchangeDetailModal from './exchange/detail'
 import interpreters from 'helpers/interpreters'
 import { useRouter } from 'next/router'
 import errorParser from 'helpers/errorParser'
+import { isMobile } from 'react-device-detect'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const IMProvider = ({ children }: any) => {
     useEffect(() => {
-        if(window.SharedWorker){
+        if (window.SharedWorker) {
             (window as any).imSharedWorker.port.onmessage = () => {
                 console.log('refreshMessage')
                 IMManager.refreshMessages()
@@ -44,6 +45,10 @@ const IMProvider = ({ children }: any) => {
     const imState = useMemo(() => {
         return chatId ? imStateMap?.[chatId] ?? {} : {}
     }, [imStateMap, chatId])
+    const imStateMapRef = useRef(imStateMap)
+    useEffect(() => {
+        imStateMapRef.current = imStateMap
+    }, [imStateMap])
     const [mobile, setMobile] = useState(false)
     const [totalUnread, setTotalUnread] = useState(0)
     useEffect(() => {
@@ -224,6 +229,18 @@ const IMProvider = ({ children }: any) => {
                 dispatch(updateImState({ chatId, imState: newData }))
             }
         },
+        getLocalImState(chatId) {
+            return imStateMapRef.current?.['' + chatId]
+        },
+        updateImState(chatId, data) {
+            const newData = {
+                ...data?.data?.job_application,
+                initiated_role: data?.data?.initiated_role,
+                chatStatus: data?.data?.status
+            }
+            dispatch(updateImState({ chatId, imState: newData }))
+        },
+
         updatePath(path, data) {
             if (path && data.data) {
                 const state = contextRef.current.getState()
@@ -253,27 +270,33 @@ const IMProvider = ({ children }: any) => {
                 })
             )
         },
-        postPageNotification(message) {
-            console.log('postLocalNotification', message)
-            if (message.type === 1) {
+        postPageNotification(message, state) {
+            console.log('postLocalNotification', state)
+            if (message.type === 1 && !isMobile) {
                 postNoteRef.current?.({
                     id: message.amid,
-                    title: 'New Message',
+                    title: state?.recruiter?.full_name ?? 'New Message',
                     content: message?.content?.text,
                     link: `/chat/${message?.aChatId}`
                 })
             }
         },
-        postLocalNotification(message) {
+        postLocalNotification(message, state) {
             console.log('postLocalNotification', message)
-            if(message.type === 1) {
-                const note = new Notification(message.content.text)
-                note.addEventListener('click',()=>{
+            if (message.type === 1) {
+                const note = new Notification(state?.recruiter?.full_name ?? 'New Message', {
+                    body: message.content.text,
+                    image: state?.recruiter?.avatar
+                })
+                note.addEventListener('click', () => {
                     router.push(`/chat/${message?.aChatId}`)
                 })
-            } else if(message.type === 2) {
-                const note = new Notification('[image]')
-                note.addEventListener('click',()=>{
+            } else if (message.type === 2) {
+                const note = new Notification(state?.recruiter?.full_name, {
+                    body: '[image]',
+                    image: state?.recruiter?.avatar
+                })
+                note.addEventListener('click', () => {
                     router.push(`/chat/${message?.aChatId}`)
                 })
             }
@@ -315,7 +338,7 @@ const IMProvider = ({ children }: any) => {
             data={imState.resume_request}
             applicationId={applicationId}
         />
-        
+
         <Interview
             loading={loading}
             contextRef={contextRef}
