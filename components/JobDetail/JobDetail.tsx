@@ -626,8 +626,13 @@ const JobDetail = ({
                 About the company
               </Text>
               <Link to={companyUrl} className={styles.aboutCompanyTitle}>
-                <Text bold textStyle='lg' textColor='primaryBlue'>
-                  {selectedJob?.company?.name}
+                <Text
+                  bold
+                  textStyle='lg'
+                  textColor='primaryBlue'
+                  className={styles.jobDetailCompanyIsVerify}
+                >
+                  <span>{selectedJob?.company?.name}</span>
                   {isCompanyVerified &&
                     (isMobile ? (
                       <MaterialMobileTooltip
