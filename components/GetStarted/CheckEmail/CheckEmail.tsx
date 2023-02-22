@@ -34,6 +34,19 @@ const CheckEmail = ({
   )
 
   useEffect(() => {
+    window.addEventListener('keydown', handleOnKeyDownEnter)
+    return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
+  }, [emailBtnDisabled, handleSendEmailTOP])
+
+  const handleOnKeyDownEnter = (e) => {
+    if (e.key === 'Enter' && e.keyCode === 13) {
+      if (!emailBtnDisabled) {
+        handleSendEmailTOP()
+      }
+    }
+  }
+
+  useEffect(() => {
     // test after delete
     if (jobseekersSocialFailed?.data) {
       const errorMessage = jobseekersSocialFailed?.data.errors?.email[0]
