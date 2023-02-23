@@ -162,8 +162,8 @@ const IMProvider = ({ children }: any) => {
 
                 }
             )
-        } else {
-            dispatch(fetchUserOwnDetailRequest({}))
+        } else if (accessToken) {
+            dispatch(fetchUserOwnDetailRequest({accessToken}))
         }
     }, [userId])
     useEffect(() => {
