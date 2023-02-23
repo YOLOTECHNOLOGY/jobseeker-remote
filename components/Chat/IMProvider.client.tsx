@@ -24,7 +24,6 @@ import ExchangeDetailModal from './exchange/detail'
 import interpreters from 'helpers/interpreters'
 import { useRouter } from 'next/router'
 import errorParser from 'helpers/errorParser'
-import { isMobile } from 'react-device-detect'
 import { pushNotification } from 'store/services/notification'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
@@ -39,8 +38,12 @@ const IMProvider = ({ children }: any) => {
     }, [])
     const [chatId, setChatId] = useState()
     const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
+
     const userDetailRef = useRef(userDetail)
-    const userId = userDetail.id
+    const userId = useMemo(() => {
+        return userDetail.id
+    }, [userDetail])
+
     const [loading, setLoading] = useState(false)
     const imStateMap = useSelector((store: any) => store?.chat?.imState ?? {})
     const imState = useMemo(() => {
@@ -92,7 +95,6 @@ const IMProvider = ({ children }: any) => {
     }, [isUnreadOn, status])
 
     const onNoteiticationClick = useCallback(note => {
-        console.log('onClick', note)
         router.push(note.link)
     }, [])
     const { postNote, props: notificationProps } = usePushNotification(onNoteiticationClick)
@@ -160,6 +162,8 @@ const IMProvider = ({ children }: any) => {
 
                 }
             )
+        } else {
+            dispatch(fetchUserOwnDetailRequest({}))
         }
     }, [userId])
     useEffect(() => {
@@ -174,7 +178,6 @@ const IMProvider = ({ children }: any) => {
     useEffect(() => {
         userDetailRef.current = userDetail
     }, [userDetail])
-
 
     const contextRef = useRef({
         setLoading,
@@ -272,8 +275,8 @@ const IMProvider = ({ children }: any) => {
             )
         },
         postPageNotification(message, state) {
-            console.log('postLocalNotification', state)
-            if (message.type === 1 && !isMobile) {
+            console.log('postPageNotification', message.content)
+            if (message.type === 1) {
                 postNoteRef.current?.({
                     id: message.amid,
                     title: state?.recruiter?.full_name ?? 'New Message',

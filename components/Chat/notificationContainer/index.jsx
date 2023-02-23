@@ -60,7 +60,6 @@ export const usePushNotification = onClick => {
 
 const NotificationContainer = props => {
     const { newAdding, noteList = [], isAnimating, remove, onClick } = props
-    console.log({ noteList, newAdding })
     return <div className={styles.container}>
         {noteList.map(note => {
             return <div key={note.id}
