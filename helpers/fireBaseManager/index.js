@@ -22,7 +22,7 @@ export const initFireBase = () => {
             navigator.serviceWorker.addEventListener('message', e => {
                 console.log({ onMessage: e })
                 if (e?.data?.link) {
-                    history.pushState(null, null, e.data.link)
+                    window.location.href = e.data.link
                 }
             })
             navigator.serviceWorker.startMessages()
