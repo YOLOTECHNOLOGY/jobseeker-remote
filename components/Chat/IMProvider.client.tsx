@@ -38,7 +38,7 @@ const msgToNote = (message, state) => {
         return {
             id: message.amid,
             title: state?.recruiter?.full_name ?? 'New Message',
-            content: '[image]',
+            content: '[Picture]',
             link: `/chat/${message?.aChatId}`
         }
     } else if (message.type === 19 && message.amid.indexOf('resume_request-recruiter_create') >= 0) {
