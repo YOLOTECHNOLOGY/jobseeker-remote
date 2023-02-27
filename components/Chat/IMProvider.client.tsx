@@ -26,6 +26,55 @@ import errorParser from 'helpers/errorParser'
 import { pushNotification } from 'store/services/notification'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
+const msgToNote = (message, state) => {
+    if (message.type === 1) {
+        return {
+            id: message.amid,
+            title: state?.recruiter?.full_name ?? 'New Message',
+            content: message?.content?.text,
+            link: `/chat/${message?.aChatId}`
+        }
+    } else if (message.type === 2) {
+        return {
+            id: message.amid,
+            title: state?.recruiter?.full_name ?? 'New Message',
+            content: '[image]',
+            link: `/chat/${message?.aChatId}`
+        }
+    } else if (message.type === 19 && message.amid.indexOf('resume_request-recruiter_create') >= 0) {
+        return {
+            id: message.amid,
+            title: state?.recruiter?.full_name ?? 'New Message',
+            content: 'Boss has requested your resume',
+            link: `/chat/${message?.aChatId}`
+        }
+    } else if (message.type === 19 && message.amid.indexOf('contact_exchange_request-create') >= 0) {
+        return {
+            id: message.amid,
+            title: state?.recruiter?.full_name ?? 'New Message',
+            content: 'Boss has requested to exchange mobile number with you',
+            link: `/chat/${message?.aChatId}`
+        }
+    }else if (message.type === 19 && message.amid.indexOf('interview-create') >= 0) {
+        return {
+            id: message.amid,
+            title: state?.recruiter?.full_name ?? 'New Message',
+            content: 'Boss has sent you an interview invite',
+            link: `/chat/${message?.aChatId}`
+        }
+    }else if (message.type === 19 && message.amid.indexOf( 'location_confirmation-create') >= 0) {
+        return {
+            id: message.amid,
+            title: state?.recruiter?.full_name ?? 'New Message',
+            content: 'Boss has shared the working location with you',
+            link: `/chat/${message?.aChatId}`
+        }
+    }
+    
+   
+    
+}
+
 const IMProvider = ({ children, IMManager, hooks }: any) => {
     useEffect(() => {
         if (window.SharedWorker) {
@@ -275,62 +324,41 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
             )
         },
         postPageNotification(message, state) {
-            console.log('postPageNotification', message.content)
-            if (message.type === 1) {
-                postNoteRef.current?.({
-                    id: message.amid,
-                    title: state?.recruiter?.full_name ?? 'New Message',
-                    content: message?.content?.text,
-                    link: `/chat/${message?.aChatId}`
-                })
+            console.log('postPageNotification', message)
+            const msg = msgToNote(message, state)
+            if (msg) {
+                postNoteRef.current?.(msg)
             }
         },
         postLocalNotification(message, state) {
             console.log('postLocalNotification', message)
-            const params: any = {
-                im_amid: message?.amid,
-                im_achat_id: message?.aChatId,
-                im_title: JSON.stringify({
-                    t: 't',
-                    v: state?.recruiter?.full_name ?? 'New Message'
-                }),
-                auth_role: 'jobseeker',
-                im_sender_id: `"${userDetailRef.current?.id}_j"`,
-                im_receive_ids: `["${userDetailRef.current?.id}_j"]`,
-                im_type: '' + message.type
-            }
-            if (message.type === 1) {
-                params.im_body = JSON.stringify([
-                    {
+            const msg: any = msgToNote(message, state)
+            if (msg) {
+                const params: any = {
+                    im_amid: message?.amid,
+                    im_achat_id: message?.aChatId,
+                    im_title: JSON.stringify({
                         t: 't',
-                        v: message.content.text
-                    }
-                ])
-                // const note = new Notification(state?.recruiter?.full_name ?? 'New Message', {
-                //     body: message.content.text,
-                //     image: state?.recruiter?.avatar
-                // })
-                // note.addEventListener('click', () => {
-                //     router.push(`/chat/${message?.aChatId}`)
-                // })
-            } else if (message.type === 2) {
-                params.im_body = JSON.stringify([
-                    {
-                        t: 't',
-                        v: '[image]'
-                    }
-                ])
-                // const note = new Notification(state?.recruiter?.full_name, {
-                //     body: '[image]',
-                //     image: state?.recruiter?.avatar
-                // })
-                // note.addEventListener('click', () => {
-                //     router.push(`/chat/${message?.aChatId}`)
-                // })
+                        v: state?.recruiter?.full_name ?? 'New Message'
+                    }),
+                    auth_role: 'jobseeker',
+                    im_sender_id: `"${userDetailRef.current?.id}_j"`,
+                    im_receive_ids: `["${userDetailRef.current?.id}_j"]`,
+                    im_type: '' + message.type,
+                    im_body: JSON.stringify([
+                        {
+                            t: 't',
+                            v: msg.content
+                        }
+                    ])
+                }
+                pushNotification(params)
+                    .then(result => console.log('pushNotifictionSuccess', result))
+                    .catch(e => console.log('pushNotifictionError', e))
             }
-            pushNotification(params)
-                .then(result => console.log('pushNotifictionSuccess', result))
-                .catch(e => console.log('pushNotifictionError', e))
+
+
+
 
         },
         updateTotalUnreadNumber(totalUnreadNumber) {
@@ -437,11 +465,15 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
 
 const wrapper = ({ children }) => {
     const IMRef = useRef(null)
+    const [ready, setReady] = useState(false)
     useEffect(() => {
         import('imforbossjob')
-            .then(im => IMRef.current = im)
+            .then(im => {
+                IMRef.current = im
+                setReady(true)
+            })
     }, [])
-    if (IMRef.current) {
+    if (ready) {
         return (<IMProvider
             IMManager={IMRef.current.IMManager}
             hooks={IMRef.current.hooks}
@@ -449,7 +481,7 @@ const wrapper = ({ children }) => {
             {children}
         </IMProvider>)
     } else {
-        return <Provider value={{ ready: false }}>{children}</Provider>
+        return <Provider value={{ ready }}>{children}</Provider>
     }
 }
 

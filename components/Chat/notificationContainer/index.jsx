@@ -5,14 +5,16 @@ import styles from './index.module.scss'
 import PropTypes from 'prop-types'
 const animationDuration = 0.5
 const removeAfter = 5
+const showNextAfter = 5
 export const usePushNotification = onClick => {
     const [noteList, setNoteList] = useState([])
     const [isAnimating, setIsAnimating] = useState(false)
+    const [canShowNext, setCanShowNext] = useState(true)
     const [newAdding, setNewAdding] = useState()
     const [showingStack, setShowingStack] = useState([])
 
     const postNote = useCallback(note => {
-        setShowingStack([note, ...showingStack])
+        setShowingStack([...showingStack, note])
     }, [showingStack])
 
     const removeNote = useCallback(note => {
@@ -26,26 +28,29 @@ export const usePushNotification = onClick => {
         removeRef.current = removeNote
     }, [removeNote])
     const showNote = useCallback(note => {
-        console.log('showNote', note)
         setNewAdding(note)
         setIsAnimating(true)
         setNoteList([note].concat(noteList))
+        setCanShowNext(false)
         setTimeout(() => {
             setIsAnimating(false)
             setNewAdding(null)
         }, animationDuration * 1000)
+        setTimeout(() => {
+            setCanShowNext(true)
+        }, showNextAfter * 1000)
         setTimeout(() => {
             removeRef.current?.(note)
         }, removeAfter * 1000)
     }, [noteList, removeNote])
 
     useEffect(() => {
-        if (showingStack.length && !isAnimating) {
+        if (showingStack.length && !isAnimating && canShowNext) {
             const [note, ...rest] = showingStack
             showNote(note)
             setShowingStack(rest)
         }
-    }, [showingStack, isAnimating, showNote])
+    }, [showingStack, isAnimating, showNote, canShowNext])
 
     return {
         postNote, props: {
