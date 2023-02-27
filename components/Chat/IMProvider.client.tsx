@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useMemo, useRef, useState, useCallback } from 'react'
-import { IMManager, hooks } from 'imforbossjob'
 import 'imforbossjob/dist/style.css'
 import SendResumeModal from 'components/Chat/sendResume'
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,11 +26,12 @@ import errorParser from 'helpers/errorParser'
 import { pushNotification } from 'store/services/notification'
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
-const IMProvider = ({ children }: any) => {
+const IMProvider = ({ children, IMManager, hooks }: any) => {
     useEffect(() => {
         if (window.SharedWorker) {
             (window as any).imSharedWorker.port.onmessage = () => {
                 console.log('refreshMessage')
+
                 IMManager.refreshMessages()
             }
         }
@@ -163,7 +163,7 @@ const IMProvider = ({ children }: any) => {
                 }
             )
         } else if (accessToken) {
-            dispatch(fetchUserOwnDetailRequest({accessToken}))
+            dispatch(fetchUserOwnDetailRequest({ accessToken }))
         }
     }, [userId])
     useEffect(() => {
@@ -342,6 +342,7 @@ const IMProvider = ({ children }: any) => {
     const imStatus = hooks.useInitChat(interpreter, imState, chatId, filterMode, chatList, updateChatList)
 
     return <Provider value={{
+        ready: true,
         userDetail,
         userId,
         imState,
@@ -434,4 +435,22 @@ const IMProvider = ({ children }: any) => {
     </Provider>
 }
 
-export default IMProvider
+const wrapper = ({ children }) => {
+    const IMRef = useRef(null)
+    useEffect(() => {
+        import('imforbossjob')
+            .then(im => IMRef.current = im)
+    }, [])
+    if (IMRef.current) {
+        return (<IMProvider
+            IMManager={IMRef.current.IMManager}
+            hooks={IMRef.current.hooks}
+        >
+            {children}
+        </IMProvider>)
+    } else {
+        return <Provider value={{ ready: false }}>{children}</Provider>
+    }
+}
+
+export default wrapper

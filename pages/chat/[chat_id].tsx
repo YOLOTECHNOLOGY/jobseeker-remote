@@ -15,7 +15,7 @@ const JobseekerChat = dynamic<any>(import('components/Chat'), {
 })
 // import JobseekerChat from 'components/Chat'
 const Chat = () => {
-    
+
     const router = useRouter()
     const {
         userId,
@@ -102,4 +102,12 @@ const Chat = () => {
 export const getServerSideProps = () => {
     return { props: {} }
 }
-export default Chat
+const Ready = () => {
+    const { ready } = useContext(IMContext)
+    if (ready) {
+        return <Chat />
+    } else {
+        return <div />
+    }
+}
+export default Ready

@@ -3,7 +3,6 @@ import { LOGOUT_REQUEST } from 'store/types/auth/logout'
 // import { logoutFailed, logoutSuccess } from 'store/actions/auth/logout'
 // import { logoutService } from 'store/services/auth/logout'
 import { removeCookie } from 'helpers/cookies'
-import { IMManager } from 'imforbossjob'
 import { fetchUserOwnDetailClear } from 'store/actions/users/fetchUserOwnDetail'
 
 function* logoutReq() {
@@ -23,13 +22,19 @@ function* logoutReq() {
   removeCookie('accessToken')
   yield put(fetchUserOwnDetailClear())
   try {
-    IMManager?.logout?.()
-    localStorage?.clear?.()
+    import('imforbossjob')
+      .then(im => {
+        console.log({ im })
+        return im
+      })
+      .then(im => im?.IMManager?.logout?.())
+      .then(() => localStorage?.clear?.())
+
   } catch (e) {
     console.log('logoutError', e)
     // return Promise.reject(e)
   } finally {
-    
+
   }
 }
 
