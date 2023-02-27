@@ -1,8 +1,10 @@
 const path = require('path')
 const redirectionPaths = require('./lib/redirection')
 const generateRobotsTxt = require('./scripts/generateRobotsTxt.js')
-
-module.exports = {
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+module.exports = withBundleAnalyzer({
   async redirects() {
     if (process.env.MAINTENANCE === 'true') {
       return [
@@ -70,4 +72,4 @@ module.exports = {
     }
     return config
   }
-}
+})

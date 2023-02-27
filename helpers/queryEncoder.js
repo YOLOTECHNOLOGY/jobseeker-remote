@@ -1,5 +1,5 @@
 import { map, T, ap, memoizeWith, toLower, last, reduce, omit, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
-const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'industry', 'qualification', 'workExperience']
+const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'qualification', 'workExperience']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
 const allKeysIn = keys => pipe(
@@ -46,7 +46,7 @@ const checkFilterMatchFunc = (routerQuery, config, isMobile = false) => {
         applySpec({
             filterCount: totalOf(isMobile ?
                 userSelectKeys.filter(key => !(['mainFunctions', 'jobFunctions', 'functionTitles'].includes(key)))
-                : ['industry', 'workExperience', 'qualification'])
+                : [ 'workExperience', 'qualification'])
         })]), reduce(mergeLeft, {}))([routerQuery])
 
     return result
@@ -199,7 +199,7 @@ const configItems = applySpec({
     jobType: pipe(path(['inputs', 'job_types'])),
     salary: pipe(path(['filters', 'salary_range_filters'])),
     workExperience: pipe(path(['inputs', 'xp_lvls'])),
-    industry: pipe(path(['inputs', 'industry_lists'])),
+    // industry: pipe(path(['inputs', 'industry_lists'])),
     qualification: pipe(path(['filters', 'educations'])),
     mainFunctions: pipe(path(['inputs', 'main_functions'])),
     jobFunctions: pipe(path(['inputs', 'job_functions'])),

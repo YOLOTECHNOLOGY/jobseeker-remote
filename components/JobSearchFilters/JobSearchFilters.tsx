@@ -111,7 +111,7 @@ const NavSearchFilter = ({
   const router = useRouter()
   const { keyword } = router.query
   const config = useSelector((state: any) => state.config.config.response)
-  const industryList = config.inputs.industry_lists
+  // const industryList = config.inputs.industry_lists
   const expLvlList = config.inputs.xp_lvls
   const eduLevelList = config.filters.educations
   const jobTypeList = config.inputs.job_types
@@ -459,13 +459,13 @@ const NavSearchFilter = ({
                   />
                 </div>
               )}
-              <SearchFilters
+              {/* <SearchFilters
                 title='Industry'
                 fieldName='industry'
                 options={industryList}
                 defaultOpenState={true}
                 isNotCollapsible={true}
-              />
+              /> */}
               <SearchFilters
                 title='Work Experience'
                 fieldName='workExperience'
