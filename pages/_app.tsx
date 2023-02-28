@@ -38,6 +38,12 @@ const App = (props: AppProps) => {
     }
   }, [])
   useEffect(() => {
+    const devTools = (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__
+    if (!!devTools && devTools['inject']) {
+      devTools['inject'] = Function.prototype
+    }
+  }, [])
+  useEffect(() => {
     initFireBase()
   }, [])
   useEffect(() => {
