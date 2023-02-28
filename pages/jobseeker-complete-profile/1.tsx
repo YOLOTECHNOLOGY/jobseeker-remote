@@ -29,6 +29,7 @@ import styles from './Onboard.module.scss'
 import { getItem } from 'helpers/localStorage'
 import JobFunctionSelector from 'components/JobFunctionSelector'
 import { flatMap } from 'lodash-es'
+import Script from 'next/script'
 
 const Step1 = (props: any) => {
   const currentStep = 1
@@ -41,8 +42,8 @@ const Step1 = (props: any) => {
   useEffect(() => {
     dispatch(fetchConfigRequest())
   }, [])
-  // const rhTooltipTitle =
-  ;('Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.')
+    // const rhTooltipTitle =
+    ; ('Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.')
   const locationList = useSelector(
     (store: any) => store.config.config.response?.inputs?.location_lists
   )
@@ -167,7 +168,37 @@ const Step1 = (props: any) => {
     dispatch(updateUserOnboardingInfoRequest(payload))
   }
 
-  return (
+  return (<>
+    {/* Google One Tap Sign in */}
+    <Script src='https://accounts.google.com/gsi/client'
+      onReady={() => {
+        if (!accessToken) {
+          const google = (window as any)?.google
+          // console.log('loginGoogle', google)
+          google.accounts.id.initialize({
+            client_id: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
+            callback: handleGoogleOneTapLoginResponse,
+            cancel_on_tap_outside: false,
+            itp_support: true,
+            skip_prompt_cookie: 'accessToken'
+          });
+          google.accounts.id.prompt((notification) => {
+            if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+              console.log(notification.getNotDisplayedReason())
+            }
+          });
+          function handleGoogleOneTapLoginResponse(CredentialResponse) {
+            // console.log('handleGoogleOneTapLoginResponse', CredentialResponse)
+            const accessTokenGoogle = CredentialResponse.credential;
+            let activeKey = 1;
+            if (window.location.pathname.includes('/employer')) {
+              activeKey = 2;
+            }
+            window.location.replace("/handlers/googleLoginHandler?access_token=" + accessTokenGoogle + "&active_key=" + activeKey);
+          }
+        }
+      }}
+    />
     <OnBoardLayout
       headingText={
         <Text bold textStyle='xxxl' tagName='h2'>
@@ -537,6 +568,7 @@ const Step1 = (props: any) => {
         </React.Fragment>
       )}
     </OnBoardLayout>
+  </>
   )
 }
 
