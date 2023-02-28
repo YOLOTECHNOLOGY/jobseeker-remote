@@ -33,7 +33,7 @@ module.exports = withBundleAnalyzer({
     DATA_BOSSHUNT_URL: process.env.DATA_BOSSHUNT_URL,
     AUTH_BOSSJOB_URL: process.env.AUTH_BOSSJOB_URL,
     JOB_BOSSJOB_URL: process.env.JOB_BOSSJOB_URL,
-    NOTIFICTION_URL:process.env.NOTIFICTION_URL,
+    NOTIFICTION_URL: process.env.NOTIFICTION_URL,
     SEARCH_BOSSJOB_URL: process.env.SEARCH_BOSSJOB_URL,
     CHAT_BOSSJOB_URL: process.env.CHAT_BOSSJOB_URL,
     JOB_APPLICATION_URL: process.env.JOB_APPLICATION_URL,

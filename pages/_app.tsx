@@ -25,7 +25,7 @@ import IMProvider from 'components/Chat/IMProvider.client'
 import 'styles/globals.scss'
 import { persistor } from 'store'
 import { initFireBase } from 'helpers/fireBaseManager'
-
+import 'moment/locale/en-sg'
 const App = (props: AppProps) => {
   const { Component, pageProps } = props
   const router = useRouter()
@@ -141,7 +141,7 @@ const App = (props: AppProps) => {
         }}
       />
 
-     
+
       {/* Facebook  */}
       <Script
         dangerouslySetInnerHTML={{

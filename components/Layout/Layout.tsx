@@ -31,7 +31,8 @@ const Layout = ({ children, className, isHiddenFooter, isHiddenHeader }: LayoutP
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isEmailVerified, setIsEmailVerified] = useState(false)
   const [isShowModal, setIsShowModal] = useState(false)
-  const [isShowAppRedirectModal, setIsShowAppRedirectModal] = useState(false)
+  const userAgent = useUserAgent(window.navigator.userAgent)
+  const [isShowAppRedirectModal, setIsShowAppRedirectModal] = useState(userAgent.isMobile && !getCookie('isAppRedirectModalClosed'))
 
   const authCookie = getCookie('accessToken')
   const userCookie = getCookie('user')
@@ -43,11 +44,9 @@ const Layout = ({ children, className, isHiddenFooter, isHiddenHeader }: LayoutP
     if (userCookie && authCookie) {
       setIsShowModal(false)
     }
-
-    const userAgent = useUserAgent(window.navigator.userAgent)
-    if (userAgent.isMobile && !getCookie('isAppRedirectModalClosed')) {
-      setIsShowAppRedirectModal(true)
-    }
+    // if (userAgent.isMobile && !getCookie('isAppRedirectModalClosed')) {
+    //   setIsShowAppRedirectModal(true)
+    // }
   }, [])
 
   const handleVerifyEmailClick = async () => {
