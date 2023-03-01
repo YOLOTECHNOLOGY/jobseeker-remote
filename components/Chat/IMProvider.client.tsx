@@ -55,14 +55,14 @@ const msgToNote = (message, state) => {
             content: 'Boss has requested to exchange mobile number with you',
             link: `/chat/${message?.aChatId}`
         }
-    }else if (message.type === 19 && message.amid.indexOf('interview-create') >= 0) {
+    } else if (message.type === 19 && message.amid.indexOf('interview-create') >= 0) {
         return {
             id: message.amid,
             title: state?.recruiter?.full_name ?? 'New Message',
             content: 'Boss has sent you an interview invite',
             link: `/chat/${message?.aChatId}`
         }
-    }else if (message.type === 19 && message.amid.indexOf( 'location_confirmation-create') >= 0) {
+    } else if (message.type === 19 && message.amid.indexOf('location_confirmation-create') >= 0) {
         return {
             id: message.amid,
             title: state?.recruiter?.full_name ?? 'New Message',
@@ -70,9 +70,9 @@ const msgToNote = (message, state) => {
             link: `/chat/${message?.aChatId}`
         }
     }
-    
-   
-    
+
+
+
 }
 
 const IMProvider = ({ children, IMManager, hooks }: any) => {
@@ -125,6 +125,10 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
     const chatIdRef = useRef(chatId)
     const router = useRouter()
     const [chatList, setChatList] = useState([])
+    const chatListRef = useRef(chatList)
+    useEffect(() => {
+        chatListRef.current = chatList
+    }, [chatList])
     const [chatListLoading, setChatListLoading] = useState(false)
     const [isUnreadOn, setUnreadOn] = useState(false)
     const [status, setStatus] = useState()
@@ -356,13 +360,12 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
                     .then(result => console.log('pushNotifictionSuccess', result))
                     .catch(e => console.log('pushNotifictionError', e))
             }
-
-
-
-
         },
         updateTotalUnreadNumber(totalUnreadNumber) {
             setTotalUnread(totalUnreadNumber)
+        },
+        getChatList() {
+            return chatListRef?.current
         },
         self_role: 'jobseeker'
     } as any)
