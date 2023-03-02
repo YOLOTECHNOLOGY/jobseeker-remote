@@ -125,6 +125,7 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
     const chatIdRef = useRef(chatId)
     const router = useRouter()
     const [chatList, setChatList] = useState([])
+    console.log({ chatList })
     const chatListRef = useRef(chatList)
     useEffect(() => {
         chatListRef.current = chatList
@@ -139,9 +140,9 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
             unread: isUnreadOn ? '1' : '0'
         }
     }, [isUnreadOn, status])
-    const updateChatList = useCallback(() => {
-        list(searchParams).then(result => result.data?.data ?? [])
-    }, [searchParams, list])
+    // const updateChatList = useCallback(() => {
+    //     list(searchParams).then(result => result.data?.data ?? [])
+    // }, [searchParams, list])
 
     const filterMode = useMemo(() => {
         return !(!isUnreadOn && !status)
@@ -155,29 +156,22 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
     useEffect(() => {
         postNoteRef.current = postNote
     }, [postNote])
-    useEffect(() => {
-        if (!chatListLoading && filterMode) {
+    const updateChatList = useCallback(() => {
+        if (!chatListLoading && accessToken) {
             setChatListLoading(true)
-            list(searchParams).then(result => {
+            const params = filterMode ? searchParams : { type: 'Not interested' }
+            list(params).then(result => {
                 setChatList(result.data?.data ?? [])
-                // if (!status && !isUnreadOn) {
-                //     dispatch(updateDefaultChatList({ chatList: result.data?.data?.chats ?? [] }))
-                // }
-            }).finally(() => setChatListLoading(false))
-        }
-    }, [searchParams])
-    useEffect(() => {
-        if (filterMode) {
-            setChatListLoading(true)
-            list(searchParams).then(result => {
-                setChatList(result.data?.data)
-                // if (!status && !isUnreadOn) {
-                //     dispatch(updateDefaultChatList({ chatList: result.data?.data?.chats ?? [] }))
-                // }
-            }).finally(() => setChatListLoading(false))
-        }
 
-    }, [searchParams, filterMode])
+            }).finally(() => setChatListLoading(false))
+        }
+    }, [searchParams, filterMode, accessToken])
+    const updateChatListRef = useRef(updateChatList)
+    useEffect(() => {
+        updateChatListRef.current = updateChatList
+        updateChatList()
+    }, [updateChatList])
+
     useEffect(() => {
         if (userId) {
             IMManager.accessUser(
@@ -317,6 +311,9 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
         },
         getState() {
             return stateRef.current
+        },
+        updateChatList(){
+            updateChatListRef.current?.()
         },
         changeChat(chatId) {
             setChatId(chatId)
