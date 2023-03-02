@@ -8,17 +8,19 @@ import phrases from './commonPhrases'
 import confirmLocation from './confirmLocation'
 import imBusiness from './imBusiness'
 import switchJob from './switchJob'
+import jobIp from './job'
 import { cond } from 'lodash-es'
 const {
     utils,
     responseResumeJobseeker,
-    exchangeNumber:exchangeNumberJobseeker,
+    exchangeNumber: exchangeNumberJobseeker,
     interviewJobseeker,
     notInterestJobseeker,
     commonPhrases,
     confirmLocationJobseeker,
     switchJobJobseeker,
-    im
+    im,
+    job
 } = scripts
 const { CommonActions } = utils
 const { Actions: ResponseResumeActions } = responseResumeJobseeker
@@ -28,8 +30,9 @@ const { Actions: NotInterestActions } = notInterestJobseeker
 const { Actions: CommonPhrasesActions } = commonPhrases
 const { Actions: ConfirmLocationActions } = confirmLocationJobseeker
 const { Actions: SwitchJobActions } = switchJobJobseeker
+const { Actions: JobActions } = job
 const { IMBusinessActions } = im
-
+console.log({job})
 
 export default cond([
     [CommonActions.is, common],
@@ -40,7 +43,9 @@ export default cond([
     [CommonPhrasesActions.is, phrases],
     [ConfirmLocationActions.is, confirmLocation],
     [IMBusinessActions.is, imBusiness],
-    [SwitchJobActions.is, switchJob]
+    [SwitchJobActions.is, switchJob],
+    [JobActions.is, jobIp]
+
 ])
 
 

@@ -274,6 +274,9 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
         isUserNumberValidate() {
             return userDetailRef.current?.is_mobile_verified
         },
+        getRouter() {
+            return router
+        },
         updateData(data) {
             if (+data?.data?.id === +contextRef.current.getChatId()) {
                 const newData = {
