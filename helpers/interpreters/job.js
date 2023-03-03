@@ -9,6 +9,4 @@ export default command => command.cata({
             // router.push(`/job/${jobId}`)
             window.open(location.host + `/job/${jobId}`)
         })),
-
-
 })
