@@ -69,6 +69,13 @@ const msgToNote = (message, state) => {
             content: 'Boss has shared the working location with you',
             link: `/chat/${message?.aChatId}`
         }
+    } else if (message.type === 19 && message.amid.indexOf('interview-update_result') >= 0) {
+        return {
+            id: message.amid,
+            title: state?.recruiter?.full_name ?? 'New Message',
+            content: 'Boss has sent you the interview result',
+            link: `/chat/${message?.aChatId}`
+        }
     }
 
 
@@ -312,7 +319,7 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
         getState() {
             return stateRef.current
         },
-        updateChatList(){
+        updateChatList() {
             updateChatListRef.current?.()
         },
         changeChat(chatId) {
