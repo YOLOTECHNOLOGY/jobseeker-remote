@@ -1,17 +1,20 @@
 import React from 'react'
 import styles from './index.module.scss'
-import Location from '@mui/icons-material/LocationOnOutlined';
-import moment from 'moment';
 const CustomCard = (props: any) => {
 
-    const { content } = props
+    const { content, jobId } = props
+    console.log({ content })
+    const jobPath = [content?.job_title, jobId].join('-')
     return <div className={styles.main}>
 
         <div className={styles.title}>
-            <div className={styles.mainTitle}>{content?.job_title}</div>
-            <div className={styles.salary}> {content?.salary_range_value}</div>
+            <div className={styles.mainTitle}>Job in discussion:</div>
+            <div
+                className={styles.salary}
+                onClick={() => window.open(location.host + `/job/${jobPath}`)}
+            > {`${content?.job_title} (${content?.job_type_value})`}</div>
         </div>
-        <div className={styles.description} dangerouslySetInnerHTML={{ __html: content?.job_description_html }} />
+        {/* <div className={styles.description} dangerouslySetInnerHTML={{ __html: content?.job_description_html }} />
         <div className={styles.tagContent}>
             {content?.is_featured ? <div className={styles.tag}>Featured</div> : null}
             <div className={styles.tag}>{content?.job_type_value}</div>
@@ -22,7 +25,7 @@ const CustomCard = (props: any) => {
         </div>
         <label>
             {'  '}{moment(content?.recruiter?.last_active_at).format('YY/MM/DD HH:mm')}
-        </label>
+        </label> */}
 
     </div>
 }
