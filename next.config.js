@@ -4,6 +4,7 @@ const generateRobotsTxt = require('./scripts/generateRobotsTxt.js')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
+
 module.exports = withBundleAnalyzer({
   async redirects() {
     if (process.env.MAINTENANCE === 'true') {
@@ -19,9 +20,15 @@ module.exports = withBundleAnalyzer({
     return redirectionPaths
   },
   reactStrictMode: false,
+
   experimental: {
     concurrentFeatures: true,
-    serverComponents: true
+    serverComponents: true,
+    appDir: true,
+    mdxRs: true,
+    typedRoutes: true,
+    esmExternals:'loose'
+
   },
   env: {
     ENV: process.env.ENV,

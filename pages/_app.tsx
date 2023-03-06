@@ -1,3 +1,4 @@
+'use client'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -25,7 +26,6 @@ import IMProvider from 'components/Chat/IMProvider.client'
 import 'styles/globals.scss'
 import { persistor } from 'store'
 import { initFireBase } from 'helpers/fireBaseManager'
-
 import 'moment/locale/en-sg'
 import 'moment/locale/zh-cn'
 import 'moment/locale/zh-hk'

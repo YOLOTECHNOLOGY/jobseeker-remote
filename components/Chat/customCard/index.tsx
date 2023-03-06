@@ -11,7 +11,7 @@ const CustomCard = (props: any) => {
             <div className={styles.mainTitle}>Job in discussion:</div>
             <div
                 className={styles.salary}
-                onClick={() => window.open(location.host + `/job/${jobPath}`)}
+                onClick={() => window.open(location.origin + `/job/${jobPath}`)}
             > {`${content?.job_title} (${content?.job_type_value})`}</div>
         </div>
         {/* <div className={styles.description} dangerouslySetInnerHTML={{ __html: content?.job_description_html }} />

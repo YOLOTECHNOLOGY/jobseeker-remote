@@ -44,7 +44,9 @@ export const configureStore = (context) => {
     }
   }
 
-  const store = createStore(persistedReducer, initialState, bindMiddleware([sagaMiddleware, routerMiddleware]))
+  const store = createStore(persistedReducer, initialState, bindMiddleware(
+    typeof window !== 'undefined' ? [sagaMiddleware] : [sagaMiddleware, routerMiddleware]
+  ))
   store.sagaTask = sagaMiddleware.run(rootSaga)
   persistor = persistStore(store)
   store.persistor = persistor
