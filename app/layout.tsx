@@ -1,3 +1,4 @@
+'use client'
 import styles from './index.module.scss'
 import Providers from './providers'
 export default function RootLayout({
@@ -17,4 +18,6 @@ export default function RootLayout({
     </html>
   )
 }
+// import App from '../pages/_app'
 
+// export default App
