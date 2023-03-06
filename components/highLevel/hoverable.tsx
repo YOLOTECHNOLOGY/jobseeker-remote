@@ -10,6 +10,19 @@ interface HoverableProps {
 interface Hoverable {
     <P extends HoverableProps>(Component: FunctionComponent<P>): FunctionComponent<Exclude<P, { isHover }>>
 }
+
+/*
+const ComA = props => {
+     const {isHover,onMouseLeave,onMouseEnter} =props
+     return <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+                ...
+            </div>
+}
+
+export default hoverable(ComA)
+
+*/
+
 export const hoverable: Hoverable = (SubComponent) => {
 
     return (props) => {
@@ -29,6 +42,18 @@ export const hoverable: Hoverable = (SubComponent) => {
         />
     }
 }
+
+/*
+<div>
+...
+ hoverableFunc(({isHover}) => (
+    <div className={isHover?hoverClass:normalClass}>
+     ...
+    </div>))
+...
+ </div>
+*/
+
 export const hoverableFunc = (hoverFunc: (isHover: boolean) => ReactElement, wrapperProps: { [key: string]: any } = {}): ReactElement => {
     const Component: FunctionComponent<{}> = hoverable((props: HoverableProps) => {
         const { isHover, onMouseEnter, onMouseLeave } = props
