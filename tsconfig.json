@@ -22,7 +22,12 @@
       "gapi",
       "gapi.auth2"
     ],
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
@@ -35,7 +40,8 @@
     "pages/**/*.tsx",
     "pages/*.jsx",
     "pages/**/*.jsx",
-    "components/Chat/interview/detail/index.tsx"
+    "components/Chat/interview/detail/index.tsx",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
