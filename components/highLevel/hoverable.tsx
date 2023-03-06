@@ -46,7 +46,7 @@ export const hoverable: Hoverable = (SubComponent) => {
 /*
 <div>
 ...
- hoverableFunc(({isHover}) => (
+ hoverableFunc((isHover) => (
     <div className={isHover?hoverClass:normalClass}>
      ...
     </div>))
