@@ -1,14 +1,11 @@
-'use client'
-import React from 'react'
-import { useDispatch, Provider } from 'react-redux'
+// 'use client'
 
-import SearchArea from './components/searchArea'
+import { serverDataScript } from '../abstractModels/FetchServierComponents'
+import { buildComponentScript } from '../abstractModels/util'
+import intepreter from './intepreter'
+import Main from './components/main'
 
-
-const Main = props => {
-    console.log({ props })
-
-    return <SearchArea />
-}
-
-export default Main
+export default intepreter(
+    serverDataScript()
+        .chain(props => buildComponentScript(props, Main))
+).run

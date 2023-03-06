@@ -1,14 +1,16 @@
-.title {
-    font-family: 'Product Sans';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 40px;
-    /* identical to box height, or 125% */
-    display: flex;
-    align-items: center;
-    letter-spacing: 0.02em;
-
-    /* Bossjob/Blue */
-    color: #136FD3;
+.main {
+    padding: 0px 10%;
+    .title {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.02em;
+        margin-top: 33px;
+        margin-bottom: 17px;
+        color: #136FD3;
+    }
 }

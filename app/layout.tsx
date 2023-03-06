@@ -1,16 +1,18 @@
-'use client'
+// 'use client'
 import styles from './index.module.scss'
-import Providers from './providers'
+import Providers from './components/providers'
+// import StaticProviders from './components/providers'
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  
   return (
     <html>
       <head />
       <body>
-        <Providers>
+        <Providers >
           <div className={styles.layoutHeader}></div>
           {children}
         </Providers>

@@ -22,11 +22,11 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: false,
 
   experimental: {
-    concurrentFeatures: true,
-    serverComponents: true,
+    // concurrentFeatures: true,
+    // serverComponents: true,
     appDir: true,
     mdxRs: true,
-    typedRoutes: true,
+    // typedRoutes: true,
     esmExternals:'loose'
 
   },

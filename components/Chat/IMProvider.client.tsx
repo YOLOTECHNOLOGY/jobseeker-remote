@@ -1,3 +1,4 @@
+'use client'
 import React, { createContext, useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import 'imforbossjob/dist/style.css'
 import SendResumeModal from 'components/Chat/sendResume'
@@ -21,7 +22,7 @@ import { list } from 'helpers/interpreters/services/chat'
 import NotificationContainer, { usePushNotification } from './notificationContainer'
 import ExchangeDetailModal from './exchange/detail'
 import interpreters from 'helpers/interpreters'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import errorParser from 'helpers/errorParser'
 import { pushNotification } from 'store/services/notification'
 export const IMContext = createContext<any>({})
@@ -84,7 +85,7 @@ const msgToNote = (message, state) => {
 
 const IMProvider = ({ children, IMManager, hooks }: any) => {
     useEffect(() => {
-        if (window.SharedWorker) {
+        if (window?.SharedWorker &&(window as any)?.imSharedWorker?.port) {
             (window as any).imSharedWorker.port.onmessage = () => {
                 console.log('refreshMessage')
 

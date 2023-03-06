@@ -5,7 +5,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <div >
+    <div className={styles.main}>
       <div className={styles.title}>Find Job. Talk to Boss.</div>
       {children}
     </div>
