@@ -19,7 +19,7 @@ export default command => command.cata({
         })),
     updateImState: (chatId, data) => M(context => new Promise(resolve => {
         context.updateImState(chatId, data)
-        setTimeout(resolve, 0)
+        setTimeout(()=>resolve({chatId,imSate:data}), 0)
     })),
     getLocalImState:chatId =>  M(context => new Promise(resolve => {
         const state =  context.getLocalImState(chatId)
