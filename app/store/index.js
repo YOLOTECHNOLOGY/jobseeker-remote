@@ -33,7 +33,7 @@ const bindMiddleware = (middleware) => {
 }
 export let persistor
 export const configureStore = (context) => {
-  const persistedReducer = persistReducer(persistConfig, rootReducer)
+  // const persistedReducer = persistReducer(persistConfig, rootReducer)
   const { asPath } = context.ctx || {}
   const sagaMiddleware = createSagaMiddleware()
 
@@ -44,7 +44,7 @@ export const configureStore = (context) => {
     }
   }
 
-  const store = createStore(persistedReducer, initialState,bindMiddleware([sagaMiddleware]))
+  const store = createStore(rootReducer, initialState,bindMiddleware([sagaMiddleware]))
   store.sagaTask = sagaMiddleware.run(rootSaga)
   persistor = persistStore(store)
 

@@ -133,7 +133,7 @@ const AccountSettings = ({ accessToken }: any) => {
     <Layout>
       <div className={styles.accessSettings}>
         <div className={styles.accessSettingsTabs}>
-          {width > 576 && (
+          {(width ?? 0)  > 576 && (
             <Text tagName='h2' bold className={styles.accessSettingsTabsTitle}>
               Account Setting
             </Text>

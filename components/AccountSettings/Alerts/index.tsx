@@ -106,7 +106,7 @@ const Alerts = ({ accessToken }: any) => {
           <div
           // className={jobAlertListResponse.length ? styles.JobAlertContainer_mobileWrapper : ''}
           >
-            {width > 576 && (
+            {(width ?? 0) > 576 && (
               <Text tagName='h2' className={styles.JobAlertTitle}>
                 Job alert
               </Text>

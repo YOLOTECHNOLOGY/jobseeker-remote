@@ -1,3 +1,4 @@
+import errorParser from 'helpers/errorParser'
 import {
   FETCH_FEATURED_COMPANIES_LIST_REQUEST,
   FETCH_FEATURED_COMPANIES_LIST_SUCCESS,
@@ -28,7 +29,7 @@ export default function fetchFeaturedCompaniesList(state = initialState, action)
       return {
         ...state,
         fetching: false,
-        error: action.error,
+        error: errorParser(action.error) ?? null,
         response: {},
       }
     default:
