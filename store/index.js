@@ -12,7 +12,7 @@ import logger from 'redux-logger'
 const persistConfig = {
   key: 'chat',
   storage,
-  writeFailHandler: error => {
+  writeFailHandler: (error) => {
     console.log('persistFail', error)
   },
   whitelist: ['chat'],
@@ -25,9 +25,12 @@ const persistConfig = {
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== 'production') {
     const { composeWithDevTools } = require('redux-devtools-extension')
-    return composeWithDevTools(applyMiddleware(...middleware
-      , process.env.ENV === 'development' && logger
-    ))
+    return composeWithDevTools(
+      applyMiddleware(
+        ...middleware
+        //  , process.env.ENV === 'development' && logger
+      )
+    )
   }
   return applyMiddleware(...middleware)
 }
@@ -44,9 +47,11 @@ export const configureStore = (context) => {
     }
   }
 
-  const store = createStore(persistedReducer, initialState, bindMiddleware(
-    [sagaMiddleware, routerMiddleware]
-  ))
+  const store = createStore(
+    persistedReducer,
+    initialState,
+    bindMiddleware([sagaMiddleware, routerMiddleware])
+  )
   store.sagaTask = sagaMiddleware.run(rootSaga)
   persistor = persistStore(store)
   store.persistor = persistor

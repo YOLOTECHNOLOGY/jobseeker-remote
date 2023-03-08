@@ -2,19 +2,14 @@
 import styles from './index.module.scss'
 import Providers from './components/providers'
 // import StaticProviders from './components/providers'
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html>
       <head />
       <body>
-        <Providers >
+        <Providers>
           <div className={styles.layoutHeader}></div>
-          {children}
+          <div className={styles.container}>{children}</div>
         </Providers>
       </body>
     </html>

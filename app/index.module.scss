@@ -1,6 +1,12 @@
+@import 'styles/variable.scss';
+
+.container {
+  @extend .GlobalContainer;
+  background-color: #f5f6fa;
+}
 
 .layoutHeader {
-    background: blue;
-    height: 53px;
-    width: 100vw;
+  background: blue;
+  height: 53px;
+  width: 100vw;
 }
