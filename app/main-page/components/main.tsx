@@ -1,10 +1,10 @@
 // 'use client'
 import React from 'react'
-import SearchArea from './searchArea'
+import TopModule from './TopModule'
 
 const Main = props => {
     console.log({ props })
-    return <SearchArea />
+    return <TopModule {...props} />
 }
 
 export default Main
