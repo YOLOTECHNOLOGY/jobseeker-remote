@@ -14,7 +14,7 @@ const ClientProviders = ({ children }: React.PropsWithChildren) => {
     return <Provider store={store}>
         <CookiesProvider>
             <LocationProvider>
-                {/* <PersistGate loading={null} persistor={persistor}> */}
+                <PersistGate loading={null} persistor={persistor}>
                     <IMProvider>
                         {process.env.MAINTENANCE === 'true' ? (
                             <MaintenancePage />
@@ -25,7 +25,7 @@ const ClientProviders = ({ children }: React.PropsWithChildren) => {
                                 </NotificationProvider>
                             )}
                     </IMProvider>
-                {/* </PersistGate> */}
+                </PersistGate>
             </LocationProvider>
         </CookiesProvider>
     </Provider>
