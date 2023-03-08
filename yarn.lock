@@ -2913,10 +2913,10 @@ builtin-status-codes@^3.0.0:
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
 
-buzzmsg@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.0.0.tgz#1c168eddc65145278ee8b63d416b348b0862b626"
-  integrity sha512-X11lAYiyqevb8JEa2m8aEUfX0WMyAStOcbwrlrDvxGLtAuEnVNNavt/8UqNtUFG8CxNmHCp+PZcPMzYBM8acxg==
+buzzmsg@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.0.2.tgz#3ae90ab26c71151fcf9cc21f251af7cc725f93b4"
+  integrity sha512-IaSp0gKfqYP6ii8m7sK7fjqGc2kfKJ0UBclSFUG+kX5s5xtM3yL+WGBcibYek8O75mD+wmfRits/Aa5nfRjG6Q==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
@@ -4400,10 +4400,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.0.1107:
-  version "0.0.1107"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.1107.tgz#d861a2f0adc81d2e5129d5a302a6183812a6b1c6"
-  integrity sha512-MXkAEgpQYAg0BExogCOusiJt52OlTrXbTExk4yGoiGNECWWLhO09PFOZ3YcM7HLq/8Rd5AY5jQndDMMvRrOWMw==
+imforbossjob@^0.0.1108:
+  version "0.0.1108"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.1108.tgz#71dde1786c12dbbe75d549c568b42bc84b1cf991"
+  integrity sha512-znJdxyVerw1ETs+7oDKPnoP0iA1fRb6I0XyIDVtgasNFH0CZJUufQn9SyNbcmWdoS8BQkjoURFTNxfULfN2Tug==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -4413,7 +4413,7 @@ imforbossjob@^0.0.1107:
     antd "^4.23.3"
     axios "^0.18.0"
     buffer "^6.0.3"
-    buzzmsg "^1.0.0"
+    buzzmsg "^1.0.2"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
     fantasy-combinators "^0.0.1"
