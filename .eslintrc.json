@@ -31,8 +31,8 @@
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/camelcase": ["off"],
-    "new-cap":["off"],
-    "no-extend-native":["off"],
+    "new-cap": ["off"],
+    "no-extend-native": ["off"],
     // "no-extend-native":["off"],
     // bossjob 3.0
     // "@typescript-eslint/no-unused-vars": "warn",
@@ -66,7 +66,9 @@
     "react-hooks/rules-of-hooks": "off",
     "react-hooks/exhaustive-deps": "off",
     "react/no-unescaped-entities": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "camelcase": "off",
+    "@typescript-eslist/camelcase": 0
   },
   "ignorePatterns": ["next-env.d.ts", "lib/redirection.js"],
   "settings": {
