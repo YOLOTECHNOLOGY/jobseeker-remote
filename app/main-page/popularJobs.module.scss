@@ -1,0 +1,177 @@
+@import 'styles/mixins.scss';
+
+.title {
+  text-align: center;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: 0.02em;
+  color: #353535;
+  padding-top: 50px;
+}
+
+.tabContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-top: 28px;
+  background: #f5f6fa;
+  width: 100%;
+
+  &_more {
+    margin-top: 80px;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.job {
+  &_detail {
+    width: calc(50% - 5px);
+    margin-bottom: 10px;
+    border-radius: 15px;
+    background-color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease-in;
+  }
+
+  &_detail:hover {
+    box-shadow: 6px 7px 7px #ccc;
+  }
+
+  &_titleWrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &_info {
+    color: rgb(255, 255, 255);
+    padding: 15px;
+
+    &_title {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+      color: #353535;
+      width: 55%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color 0.3s ease-in;
+    }
+
+    &_salary {
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+      color: #fe574a;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &_chat {
+      display: none;
+      flex-direction: row;
+      align-items: center;
+      padding: 3px 10px;
+      background: #136fd3;
+      border: 0.5px solid #136fd3;
+      border-radius: 16px;
+
+      font-weight: 400;
+      font-size: 12px;
+      letter-spacing: 0.0075em;
+      color: #ffffff;
+    }
+  }
+
+  &_info:hover > &_titleWrapper > &_info_title {
+    color: #136fd3;
+  }
+
+  &_info:hover > &_titleWrapper > &_info {
+    &_chat {
+      display: flex;
+    }
+
+    &_salary {
+      display: none;
+    }
+  }
+
+  &_tags {
+    display: flex;
+    padding: 22px 0;
+
+    div {
+      align-items: center;
+      padding: 3px 10px;
+      background: #f0f0f0;
+      border-radius: 16px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+      letter-spacing: 0.0075em;
+      color: #707070;
+      margin-right: 5px;
+    }
+  }
+
+  &_avatarWrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &_companyInfo {
+    background: #f0f0f0;
+    border-radius: 0px 0px 15px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 15px;
+
+    &_name {
+      margin-left: 10px;
+      transition: color 0.3s ease-in;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      letter-spacing: 0.0075em;
+      color: #353535;
+    }
+  }
+
+  &_companyInfo:hover &_companyInfo_name {
+    color: #136fd3;
+  }
+}
+
+.mobileTab {
+  display: none;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 15px;
+}
+
+@include sm {
+  .title {
+    text-align: left;
+    padding-top: 48px;
+  }
+}
+
+@include sm {
+  .webTab {
+    display: none;
+  }
+
+  .mobileTab {
+    display: flex;
+  }
+}

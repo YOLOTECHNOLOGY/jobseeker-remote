@@ -2,14 +2,12 @@ import React from 'react'
 import PopularJob from './popularJobs'
 import SearchArea from './searchArea'
 
-
 const TopModule = (props) => {
-    
-    return (
+  return (
     <div>
-        <SearchArea {...props}/>
-        <PopularJob />
+      <SearchArea {...props} />
+      <PopularJob />
     </div>
-    )
+  )
 }
 export default TopModule
