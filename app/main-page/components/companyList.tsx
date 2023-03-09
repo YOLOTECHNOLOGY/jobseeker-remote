@@ -25,7 +25,7 @@ const CompanyList = (props: any) => {
             {
                 featured_companies?.map(item => {
                     const { id, priority } = item || {};
-                    const { company_url, logo_url, name, industry, company_size, financing_stage, job, } = item?.company || {}
+                    const { company_url, logo_url, name, industry, company_size, financing_stage, jobs, } = item?.company || {}
                     return (
                         <div className={styles.card} key={id}>
                             <Link className={styles.header} href={company_url}>
@@ -39,7 +39,7 @@ const CompanyList = (props: any) => {
                                     {financing_stage}
                                 </p>
                             </Link>
-                            {job?.map(jobItem => {
+                            {jobs?.map(jobItem => {
                                 const { job_title, salary_range_value, job_location, xp_lvl, degree ,job_url} = jobItem || {};
                                 return (
                                     <Link  href={job_url} className={styles.list} key={jobItem.id}>

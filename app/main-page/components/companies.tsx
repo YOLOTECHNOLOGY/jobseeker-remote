@@ -19,7 +19,7 @@ export default async function Companies () {
            <CompanyCardList data={data}/>
          </div>
          {
-          []?.length ? <Link href='/companies' className={styles.moreBtn}>See more</Link>  :null
+          []?.length ? <Link href='/companies' className={styles.moreBtn}>See more</Link>  : null
          }
         </div>
     )

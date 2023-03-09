@@ -16,7 +16,7 @@
         width: 100%;
         height: auto;
         .itemBox{
-            width: 700px;   
+            width: 540px;   
             display: flex;
             flex-wrap: wrap;
         }
@@ -98,15 +98,16 @@
                 line-height: 24px;
                 display: flex;      
                 color: #353535; 
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+               
                 p{
                     width: 0;
                     flex: 1;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
                 .salary{
-                    width: 100px;
+                    width: 110px;
                     text-align: right;
                     font-size: 14px;
                     color: #136FD3;

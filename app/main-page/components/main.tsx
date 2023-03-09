@@ -2,7 +2,7 @@
 import React from 'react'
 import SearchArea from './searchArea'
 import Companies from './companies'
-//import MobileHome from './mobileHome'
+import MobileHome from './mobileHome'
 
 const Main = props => {
     console.log({ props })
@@ -10,7 +10,8 @@ const Main = props => {
      <SearchArea /> 
      {/* @ts-expect-error Async Server Component */}
      <Companies/>
-     {/* <MobileHome/> */}
+      {/* @ts-expect-error Async Server Component */}
+     <MobileHome/>
     </>)
 }
 

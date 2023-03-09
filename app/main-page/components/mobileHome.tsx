@@ -23,7 +23,7 @@ return (
                 comapny.map( item => {
                     const {id,logo_url,company_url,name,num_of_active_jobs} = item?.company || {}
                     return (
-                        <Link href={company_url} className={styles.item} key={id}>
+                        <Link href={`${company_url}/jobs`} className={styles.item} key={id}>
                         <img src={logo_url} alt="name"/>
                          <div className={styles.info}>
                             <p className={styles.name}>{name}</p>
