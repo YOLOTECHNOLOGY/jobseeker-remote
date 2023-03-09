@@ -12,6 +12,8 @@
 /.next/
 /out/
 
+# monads
+/app/abstractModels
 # production
 /build
 
