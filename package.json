@@ -62,7 +62,7 @@
     "imforbossjob": "^0.0.1108",
     "lodash-es": "^4.17.21",
     "moment": "^2.29.1",
-    "next": "^13.0.6",
+    "next": "^13.2.3",
     "next-redux-wrapper": "^8.0.0",
     "next-useragent": "^2.8.0",
     "query-string": "^7.1.0",
