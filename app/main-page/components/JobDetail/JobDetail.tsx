@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import InsertCommentIcon from '@mui/icons-material/InsertComment'
 import Avatar from '@mui/material/Avatar'
 
+import { HomePageChat } from 'images'
+
 import styles from '../../popularJobs.module.scss'
 
 const JobDetail = ({ detail }: any) => {
@@ -29,7 +31,7 @@ const JobDetail = ({ detail }: any) => {
           <div className={styles.job_info_title}>{detail?.job_title}</div>
           <div className={styles.job_info_salary}>{detail?.salary_range_value}</div>
           <div className={styles.job_info_chat} onClick={(e) => handleOpenChatNow(e)}>
-            <InsertCommentIcon fontSize='small' /> Chat now
+            <img src={HomePageChat} alt='Boss job chat now' width='18' height='18' /> Chat now
           </div>
         </div>
 

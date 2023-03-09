@@ -1,8 +1,14 @@
 const S3BucketJobseeker = process.env.S3_BUCKET_URL
 
+// Logo
 export const BossjobLogo = `${S3BucketJobseeker}/Bossjob.svg`
 export const BossjobFittedLogo = `${S3BucketJobseeker}/BossjobFittedLogo.svg`
 export const BossjobFittedLogoApp = `${S3BucketJobseeker}/bossjob-fittedlogo-app.png`
+export const BossjobLogoWhite = `${S3BucketJobseeker}/BossjobLogoWhite.svg`
+
+// Chat
+export const HomePageChat = `${S3BucketJobseeker}/HomePageChat.svg`
+
 export const ChatCircleDots = `${S3BucketJobseeker}/chat-circle-dots.svg`
 export const Chrome = `${S3BucketJobseeker}/chrome.png`
 export const Safari = `${S3BucketJobseeker}/safari.png`
