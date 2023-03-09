@@ -1,9 +1,28 @@
+@import 'styles/mixins.scss';
+
+.title {
+  text-align: center;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: 0.02em;
+  color: #353535;
+  padding-top: 50px;
+}
+
 .tabContainer {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   padding-top: 28px;
   background: #f5f6fa;
+  width: 100%;
+
+  &_more {
+    margin-top: 80px;
+    text-align: center;
+    width: 100%;
+  }
 }
 
 .job {
@@ -50,11 +69,39 @@
       font-size: 18px;
       letter-spacing: 0.02em;
       color: #fe574a;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &_chat {
+      display: none;
+      flex-direction: row;
+      align-items: center;
+      padding: 3px 10px;
+      background: #136fd3;
+      border: 0.5px solid #136fd3;
+      border-radius: 16px;
+
+      font-weight: 400;
+      font-size: 12px;
+      letter-spacing: 0.0075em;
+      color: #ffffff;
     }
   }
 
   &_info:hover > &_titleWrapper > &_info_title {
     color: #136fd3;
+  }
+
+  &_info:hover > &_titleWrapper > &_info {
+    &_chat {
+      display: flex;
+    }
+
+    &_salary {
+      display: none;
+    }
   }
 
   &_tags {
@@ -102,5 +149,29 @@
 
   &_companyInfo:hover &_companyInfo_name {
     color: #136fd3;
+  }
+}
+
+.mobileTab {
+  display: none;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 15px;
+}
+
+@include sm {
+  .title {
+    text-align: left;
+    padding-top: 48px;
+  }
+}
+
+@include sm {
+  .webTab {
+    display: none;
+  }
+
+  .mobileTab {
+    display: flex;
   }
 }
