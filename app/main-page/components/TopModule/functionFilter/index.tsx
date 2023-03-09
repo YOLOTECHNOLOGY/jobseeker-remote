@@ -1,11 +1,12 @@
 'use client'
 import React, { Attributes, FunctionComponent, useState, useEffect, useContext } from 'react'
-import { HoverableProps, hoverable, hoverableFunc } from 'components/highLevel/hoverable'
+import { HoverableProps, hoverable } from 'components/highLevel/hoverable'
 import { usePageGrouped } from './hooks'
 import { LocationContext } from 'app/components/providers/locationProvier'
 import styles from './index.module.scss'
 import { buildQuery } from 'app/main-page/helper'
 import Link from 'next/link'
+import classNames from 'classnames'
 interface MainData {
     title: string
     simpleTitle?: string
@@ -29,43 +30,59 @@ interface FunctionFilterProps {
 type MainProps = Attributes & {
     setHoverData: (data: SectionData[]) => void,
     data: MainData
+    hoverTitle: string
+    setHoverTitle: (string) => void
 }
+type SectionProps = { data: SectionData } & Attributes
+type SubItemProps = { data: SubData } & Attributes
+
 const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps & MainProps) => {
-    const { isHover, setHoverData, data, onMouseEnter, onMouseLeave } = props
+    const { isHover, setHoverData, data, onMouseEnter, onMouseLeave, setHoverTitle, hoverTitle } = props
     useEffect(() => {
         if (isHover) {
             setHoverData(data.children)
+            setHoverTitle(data.title)
         }
     }, [isHover])
-    return <div className={styles.mainItem} key={props.key} title={data.title} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-        {data.simpleTitle || data.title}
+    
+    return <div
+        className={classNames({
+            [styles.mainItem]:true,
+            [styles.isHover]:isHover || hoverTitle === data.title
+        }) }
+        key={props.key}
+        title={data.title}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}>
+        <div className={styles.mainTitle}>{data.simpleTitle || data.title}</div>
     </div>
 })
 
-type SectionProps = { data: SectionData } & Attributes
 const SectionItem = (props: SectionProps) => {
     const { data } = props
-    console.log({ data })
-    return <div key={props.key}>
+    return <div className={styles.sectionItems} key={props.key}>
         <label className={styles.sectionName}>{data.title}</label>
-        {
-            data?.children.map(item => (
-                <SubItem data={item} key={item.value} />
-            ))
-        }</div>
+        <div className={styles.subItems}>
+            {
+                data?.children.map(item => (
+                    <SubItem data={item} key={item.value} />
+                ))
+            }
+        </div>
+    </div>
 }
-type SubItemProps = { data: SubData } & Attributes
 const SubItem: FunctionComponent<SubItemProps> = hoverable((props: SubItemProps & HoverableProps) => {
     const { location } = useContext(LocationContext)
     const { data } = props
-    return <div className={styles.subItems} key={props.key}>
-        <Link className={styles.sectionName} prefetch={false} href={buildQuery(location?.value, data.value)}>{data.value}</Link>
-    </div>
+    return <Link className={styles.subItem} prefetch={false} href={buildQuery(location?.value, data.value)}>
+        <div className={styles.linkText}>{data.label}</div>
+    </Link>
+
 })
 
 const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props: FunctionFilterProps & HoverableProps) => {
     const { list, isHover, ...rest } = props
-    const [isSubHover, setIsSubHover] = useState(false)
+    const [hoverTitle, setHoverTitle] = useState('')
     const {
         currentPage,
         totalPages,
@@ -77,14 +94,20 @@ const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props:
     } = usePageGrouped(list)
     const [hoverData, setHoverData] = useState<SectionData[] | null>(null)
     useEffect(() => {
-        if (!isHover && !isSubHover && hoverData) {
+        if (!isHover && hoverData) {
             setHoverData(null)
+            setHoverTitle('')
         }
-    }, [isHover, isSubHover, hoverData])
-    console.log({ list })
+    }, [isHover,  hoverData])
     return <div className={styles.container}{...rest}>
         <div className={styles.mainItems} >{pageDatas.map(main => (
-            <MainItem key={main.title} setHoverData={setHoverData} data={main} />
+            <MainItem
+                key={main.title}
+                hoverTitle={hoverTitle}
+                setHoverData={setHoverData}
+                data={main}
+                setHoverTitle={setHoverTitle}
+            />
         ))}
 
             <div>
@@ -93,16 +116,12 @@ const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props:
                 <button disabled={!nextEnable} onClick={onNext}> {'>'}</button>
             </div>
         </div>
-        {hoverData && hoverableFunc(isHover => {
-            if (isHover !== isSubHover) {
-                setIsSubHover(isHover)
-            }
-            return <div className={styles.sectionItems}>
+        {hoverData &&<div className={styles.sectionContainer}>
                 {hoverData?.map?.(sectionData => {
                     return <SectionItem data={sectionData} key={sectionData.title} />
                 })}
             </div>
-        })}
+       }
     </div>
 })
 

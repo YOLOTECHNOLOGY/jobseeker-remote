@@ -18,7 +18,7 @@ const SearchArea = (props: any) => {
 
     const pushJobPage = useCallback((value) => {
         const query = buildQuery(location?.seo_value, value)
-        router.push(query, { forceOptimisticNavigation: false })
+        router.push(query, { forceOptimisticNavigation: true })
     }, [location, router])
 
     const [suggestionList, setSuggestionList] = useState([])

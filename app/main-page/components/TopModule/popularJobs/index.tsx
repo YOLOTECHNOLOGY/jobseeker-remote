@@ -23,7 +23,7 @@ const PopularJob =  (props: any) => {
         <label>Pupular jobs:</label>
         {tags.map((tag, index) => (
             <div key={tag} className={styles.tag}>
-                <Link prefetch={true} href={querys[index]}>{tag}</Link>
+                <Link prefetch={false} href={querys[index]}>{tag}</Link>
             </div>
         ))}
     </div>

@@ -32,5 +32,8 @@
         &:hover {
             color: #136FD3;
         }
+        &:disabled {
+            color:#fff
+        }
     }
 }
