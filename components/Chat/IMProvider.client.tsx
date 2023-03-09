@@ -85,7 +85,7 @@ const msgToNote = (message, state) => {
 
 const IMProvider = ({ children, IMManager, hooks }: any) => {
     useEffect(() => {
-        if (window?.SharedWorker &&(window as any)?.imSharedWorker?.port) {
+        if (window?.SharedWorker && (window as any)?.imSharedWorker?.port) {
             (window as any).imSharedWorker.port.onmessage = () => {
                 console.log('refreshMessage')
 
@@ -95,7 +95,6 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
     }, [])
     const [chatId, setChatId] = useState()
     const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
-
     const userDetailRef = useRef(userDetail)
     const userId = useMemo(() => {
         return userDetail.id
@@ -133,7 +132,6 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
     const chatIdRef = useRef(chatId)
     const router = useRouter()
     const [chatList, setChatList] = useState([])
-    console.log({ chatList })
     const chatListRef = useRef(chatList)
     useEffect(() => {
         chatListRef.current = chatList
@@ -195,20 +193,40 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
                         .filter(auid => auid && auid !== 'undefined')
                         .map(auid => auid.replace('_r', ''))
                     const jobseekerAuid = auids.find(auid => auid.includes('_j'))
-                    if (jobseekerAuid) {
+                    if (jobseekerAuid && jobseekerAuid !== userId + '_j') {
                         throw new Error(`Wrong auid found jobseeker id in the recruiter side: auid:${jobseekerAuid}`)
                     }
                     return Promise.resolve().then(() => {
                         if (auids.length) {
-                            return userInfo(userIds).then(userInfosData => {
+
+                            return userInfo(userIds.filter(auid => !auid.includes('_j'))).then(userInfosData => {
                                 const userInfos = userInfosData?.data?.data ?? []
-                                return userInfos.map(userInfo => ({
-                                    auid: '' + userInfo.id + '_r',
-                                    item: {
-                                        avatar: userInfo.avatar,
-                                        name: userInfo.full_name
+                                return new Promise(resolve => {
+                                    const callBackUserInfo = () => {
+                                        console.log('callBackUserInfo', userDetailRef.current)
+                                        if (userDetailRef.current?.id) {
+                                            const userInfoResult = [...userInfos.map(userInfo => ({
+                                                auid: '' + userInfo.id + '_r',
+                                                item: {
+                                                    avatar: userDetail?.avatar ?? '',
+                                                    name: userDetail.full_name
+                                                }
+                                            })), {
+                                                auid: '' + userDetailRef.current?.id + '_j',
+                                                item: {
+                                                    avatar: userDetailRef.current?.avatar ?? '',
+                                                    name: userDetailRef.current?.full_name
+                                                }
+                                            }
+                                            ]
+                                            console.log({userInfoResult})
+                                            resolve(userInfoResult)
+                                        } else {
+                                            setTimeout(() => callBackUserInfo(), 500)
+                                        }
                                     }
-                                }))
+                                    callBackUserInfo()
+                                })
                             })
                         } else {
                             return []

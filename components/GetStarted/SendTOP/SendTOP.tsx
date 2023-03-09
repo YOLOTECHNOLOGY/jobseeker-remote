@@ -155,7 +155,7 @@ const SendTOP = ({
             {!isShowCountDownSwitch && `Get OTP`}
           </Text>
         </MaterialButton>
-        {width > 576 &&
+        {(width ?? 0)  > 576 &&
           emailTOPError &&
           errorText('The OTP you have entered is wrong. Please try again.')}
       </div>

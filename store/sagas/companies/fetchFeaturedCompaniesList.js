@@ -16,7 +16,7 @@ function* fetchFeaturedCompaniesListReq(actions) {
     const { data } = yield call(fetchFeaturedCompaniesListService, payload)
     yield put(fetchFeaturedCompaniesListSuccess(data.data))
   } catch (error) {
-    yield put(fetchFeaturedCompaniesListFailed(error))
+    yield put(fetchFeaturedCompaniesListFailed(error ?? ''))
   }
 }
 

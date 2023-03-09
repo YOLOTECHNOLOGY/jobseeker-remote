@@ -7,8 +7,6 @@ import logger from 'redux-logger'
 import rootSaga from 'store/sagas'
 import createSagaMiddleware from 'redux-saga'
 
-// import { initialRouterState } from 'connected-next-router'
-
 const persistConfig = {
   key: 'chat',
   storage,
@@ -34,17 +32,12 @@ const bindMiddleware = (middleware) => {
 export let persistor
 export const configureStore = (context) => {
   const persistedReducer = persistReducer(persistConfig, rootReducer)
-  const { asPath } = context.ctx || {}
   const sagaMiddleware = createSagaMiddleware()
 
-  let initialState
-  if (asPath) {
-    initialState = {
-      //  router: initialRouterState(asPath)
-    }
-  }
+  const initialState = {}
 
-  const store = createStore(persistedReducer, initialState,bindMiddleware([sagaMiddleware]))
+
+  const store = createStore(persistedReducer, initialState, bindMiddleware([sagaMiddleware]))
   store.sagaTask = sagaMiddleware.run(rootSaga)
   persistor = persistStore(store)
 
