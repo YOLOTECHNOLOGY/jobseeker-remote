@@ -24,7 +24,7 @@ const CompanyList = (props: any) => {
         <>
             {
                 featured_companies?.map(item => {
-                    const { id, priority } = item || {};
+                    const { id } = item || {};
                     const { company_url, logo_url, name, industry, company_size, financing_stage, jobs, } = item?.company || {}
                     return (
                         <div className={styles.card} key={id}>

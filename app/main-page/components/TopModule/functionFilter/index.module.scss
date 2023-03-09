@@ -1,0 +1,33 @@
+.container {
+    width: 552px;
+    height: 247px;
+    position: relative;
+    padding-right: 10px;
+
+    .mainItems {
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+        background: yellow;
+
+        // padding: 10px 10px;
+        .mainItem {
+            width: 100%;
+            background: green;
+            height: 43px;
+            padding: 10px 10px;
+        }
+    }
+
+    .sectionItems {
+        position: absolute;
+        right: -100%  ;
+        top:0px;
+        background: red;
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        overflow-y: scroll;
+    }
+}

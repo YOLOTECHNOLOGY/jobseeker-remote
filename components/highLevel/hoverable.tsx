@@ -2,12 +2,12 @@
 /* eslint-disable react/display-name */
 import React, { FunctionComponent, useState, ReactElement, MouseEventHandler } from "react";
 import styles from './index.module.scss'
-interface HoverableProps {
+export interface HoverableProps {
     isHover: boolean
     onMouseEnter?: MouseEventHandler
     onMouseLeave?: MouseEventHandler
 }
-interface Hoverable {
+export interface Hoverable {
     <P extends HoverableProps>(Component: FunctionComponent<P>): FunctionComponent<Exclude<P, { isHover }>>
 }
 

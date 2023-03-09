@@ -10,7 +10,6 @@ import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { styled } from '@mui/material/styles'
-import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 
 import JobDetail from '../JobDetail/JobDetail'
@@ -99,7 +98,7 @@ interface StyledTabProps {
   sx: SxProps<Theme>
 }
 
-const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ theme }) => ({
+const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(() => ({
   '&.Mui-selected': {
     color: '#136FD3'
   }
@@ -142,6 +141,7 @@ const Tabs = () => {
       })
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handlePopularJobSearch = (search: string) => {
     //
   }

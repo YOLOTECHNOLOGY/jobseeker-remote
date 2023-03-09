@@ -9,7 +9,7 @@ export default async function Data() {
   const albumsData = fetchData()
 
   // Wait for the promises to resolve
-  const [artist, albums] = await Promise.all([artistData, albumsData])
+  const [artist] = await Promise.all([artistData, albumsData])
   const { company_sizes } = artist?.data?.filters
 
   return (

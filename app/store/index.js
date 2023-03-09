@@ -30,7 +30,7 @@ const bindMiddleware = (middleware) => {
   return applyMiddleware(...middleware)
 }
 export let persistor
-export const configureStore = (context) => {
+export const configureStore = () => {
   const persistedReducer = persistReducer(persistConfig, rootReducer)
   const sagaMiddleware = createSagaMiddleware()
 

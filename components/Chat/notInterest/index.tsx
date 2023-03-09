@@ -6,7 +6,7 @@ import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import styles from './index.module.scss'
 const NotInterestModal = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef, loading, data, applicationId } = props
+    const { contextRef, loading, applicationId } = props
     const [reason, setReason] = useState('')
 
     const actionsRef = useRef({} as any)

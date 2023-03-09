@@ -18,7 +18,7 @@ const Saved = (props: any) => {
   return <MyJobs category='saved' config={config} accessToken={accessToken} />
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+export const getServerSideProps = wrapper.getServerSideProps(() => async ({ req }) => {
   const accessToken = req.cookies.accessToken
   if (!accessToken) {
     return {

@@ -18,6 +18,7 @@ const JobDetail = ({ detail }: any) => {
     router.push(patch)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleOpenChatNow = (e) => {
     // e.stopPropagation()
   }

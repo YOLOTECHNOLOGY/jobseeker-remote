@@ -42,7 +42,8 @@
     "pages/*.jsx",
     "pages/**/*.jsx",
     "components/Chat/interview/detail/index.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "/Users/mao/codes/bossjob-jobseeker-client/.next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
