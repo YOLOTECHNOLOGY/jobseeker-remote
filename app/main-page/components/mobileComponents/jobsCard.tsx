@@ -125,6 +125,7 @@ const JobsCard = () => {
     return function (...args) {
       if (!timer) {
         timer = setTimeout(() => {
+          // eslint-disable-next-line no-invalid-this
           func.apply(this, args)
           timer = null
         }, delay)
