@@ -2,6 +2,27 @@ import { useEffect } from 'react'
 
 function useAdSlot({ mapping, sizes, id, adUnit, isTransitioning }) {
   useEffect(() => {
+    const { googletag } = window
+    if (!googletag) {
+      handleForGetGoogletag()
+    } else {
+      handleInitGoogleAd()
+    }
+  }, [mapping, sizes, adUnit, id, isTransitioning])
+
+  const handleForGetGoogletag = () => {
+    const t = setTimeout(() => {
+      const { googletag } = window
+      if (!googletag) {
+        handleForGetGoogletag()
+      } else {
+        handleInitGoogleAd()
+      }
+      clearTimeout(t)
+    }, 3000)
+  }
+
+  const handleInitGoogleAd = () => {
     try {
       if (!isTransitioning && typeof window !== undefined) {
         const { googletag } = window
@@ -34,7 +55,7 @@ function useAdSlot({ mapping, sizes, id, adUnit, isTransitioning }) {
     } catch (err) {
       console.error(err)
     }
-  }, [mapping, sizes, adUnit, id, isTransitioning])
+  }
 }
 
 export default useAdSlot
