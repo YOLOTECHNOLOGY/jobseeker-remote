@@ -1,9 +1,15 @@
+@import '/styles/mixins.scss';
+
 .searchArea {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 80%;
   padding: 0 10px;
+
+  @include sm {
+    width: 100%;
+  }
 
   // margin-left: 10%;
   .location {
@@ -30,9 +36,15 @@
     flex: none;
     order: 2;
     flex-grow: 0;
+
+    @include sm {
+      display: none;
+    }
+
     &:hover {
       color: #136fd3;
     }
+
     &:disabled {
       color: #fff;
     }

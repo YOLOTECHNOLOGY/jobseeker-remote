@@ -52,7 +52,9 @@ const SearchArea = (props: any) => {
         <MaterialLocationField
             className={styles.location}
             value={location}
+            isClear={false}
             defaultValue="Las Pinas"
+            disableClearable
             onChange={(e, value) => setLocation(value)}
         />
         <MaterialTextFieldWithSuggestionList

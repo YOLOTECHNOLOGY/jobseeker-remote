@@ -1,3 +1,5 @@
+@import '/styles/mixins.scss';
+
 .container {
   display: flex;
   flex-direction: row;
@@ -7,6 +9,10 @@
   justify-content: flex-start;
   margin-left: 50px;
   overflow: hidden;
+
+  @include sm {
+    display: none;
+  }
 
   label {
     font-family: 'Product Sans';
