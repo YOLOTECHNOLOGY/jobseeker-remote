@@ -110,10 +110,10 @@ const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props:
             />
         ))}
 
-            <div>
+            <div className={styles.pagination}>
                 <label>{currentPage}/{totalPages}</label>
-                <button disabled={!preEnable} onClick={onPre}> {'<'}</button>
-                <button disabled={!nextEnable} onClick={onNext}> {'>'}</button>
+                <button type='button' disabled={!preEnable} onClick={onPre}> {'<'}</button>
+                <button type='button' disabled={!nextEnable} onClick={onNext}> {'>'}</button>
             </div>
         </div>
         {hoverData &&<div className={styles.sectionContainer}>

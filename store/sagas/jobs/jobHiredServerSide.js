@@ -13,6 +13,7 @@ import { FETCH_CONFIG_SUCCESS } from 'store/types/config/fetchConfig'
 function* jobHiredServerSide(action) {
     try {
         yield put(fetchConfigRequest())
+        yield take(FETCH_CONFIG_SUCCESS)
         // yield race({
         //     config: take(FETCH_CONFIG_SUCCESS),
         //     default: delay(200)

@@ -1,6 +1,4 @@
-'use client'
 import React from 'react'
-import Head from 'next/head'
 import moment from 'moment'
 
 const getEmploymentType = type => {
@@ -101,7 +99,7 @@ const SEO = ({ title, description, imageUrl, canonical, jobDetail = null }: SEOP
   const canonicalPath = process.env.HOST_PATH + canonical
 
   return (
-    <Head key={title + description + canonical}>
+    <>
       <title>{title}</title>
       <meta name='description' content={decodeURI(description)} />
       <meta
@@ -151,7 +149,7 @@ const SEO = ({ title, description, imageUrl, canonical, jobDetail = null }: SEOP
           }}
         ></script>
       )}
-    </Head>
+    </>
   )
 }
 

@@ -9,6 +9,7 @@ const Main = (props) => {
   console.log({ props })
   return (
     <>
+      
       <TopModule {...props} />
       <Tabs />
       {/* @ts-expect-error Async Server Component */}
