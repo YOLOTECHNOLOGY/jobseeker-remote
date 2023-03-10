@@ -12,7 +12,7 @@ async function getCompanyData() {
 const mobileHome = async () => {
     const data  = await getCompanyData();
     const comapny = data?.data?.featured_companies || [];
-    console.log(comapny,8888)
+
 
 return (
     <div className={styles.mobileHome}>
@@ -38,13 +38,9 @@ return (
        
        <div className={styles.jobs}>
        <h2>Jobs for You</h2>
-        <p className={styles.tips}>Want more accurate matches?
-         <span className={styles.started}>Get Started</span>  
-        </p>
          <JobCard/>
        </div>
     </div>
-   
 )
 
 }
