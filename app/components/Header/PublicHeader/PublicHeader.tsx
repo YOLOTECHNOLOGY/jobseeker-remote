@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import classNames from 'classnames/bind'
 
 /* Style */
@@ -16,7 +16,6 @@ import MaterialButton from 'components/MaterialButton'
 import { BossjobLogoWhite as BossjobLogo } from 'images'
 
 const PublicHeader = () => {
-  const router = useRouter()
   const pathname = usePathname()
 
   return (

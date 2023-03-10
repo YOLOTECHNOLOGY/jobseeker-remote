@@ -1,4 +1,3 @@
-import Data from './components/Data.tsx/Data'
 import Tabs from './components/Tabs/Tabs'
 
 const Page = () => {

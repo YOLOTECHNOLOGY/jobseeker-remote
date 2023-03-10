@@ -2,7 +2,6 @@
 import { memo } from 'react'
 import { useRouter } from 'next/navigation'
 
-import InsertCommentIcon from '@mui/icons-material/InsertComment'
 import Avatar from '@mui/material/Avatar'
 
 import { HomePageChat } from 'images'
@@ -20,6 +19,7 @@ const JobDetail = ({ detail }: any) => {
     router.push(patch)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleOpenChatNow = (e) => {
     // e.stopPropagation()
   }

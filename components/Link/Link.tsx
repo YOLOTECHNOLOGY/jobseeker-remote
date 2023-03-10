@@ -26,7 +26,6 @@ const Link = ({
   passHref,
   external,
   aTag,
-  title,
   ...rest
 }: LinkProps) => {
   let to = propTo

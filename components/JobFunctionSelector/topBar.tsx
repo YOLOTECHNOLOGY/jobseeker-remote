@@ -8,7 +8,7 @@ import { flatMapDeep } from 'lodash-es'
 import SearchBar from './searchBar'
 import { CloseIcon } from 'images'
 
-export default function PrimarySearchAppBar({ title, onChange, value: outValue, onClose }: any) {
+export default function PrimarySearchAppBar({ title, onChange, onClose }: any) {
   const jobFunctions = useSelector(
     (store: any) => store.config.config.response?.inputs?.job_function_lists ?? []
   )

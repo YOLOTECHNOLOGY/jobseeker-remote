@@ -395,7 +395,7 @@ const Job = ({
           dispatch(updateImState({ chatId, imState: newData }))
           router.push(`/chat/${chatId}`)
         })
-        .catch((e) => {
+        .catch(() => {
           router.push(`/chat`)
         })
         .finally(() => setLoading(false))
