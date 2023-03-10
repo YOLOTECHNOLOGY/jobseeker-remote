@@ -2,70 +2,55 @@
 import React from 'react';
 import styles from './company.module.scss';
 import Link from 'next/link';
-import { Button } from '@mui/material'
-import { useRouter } from 'next/navigation';
+import { Button } from '@mui/material';
 
 const CompanyList = (props: any) => {
-    console.log(props, 999988)
-    const router = useRouter();
-    const { featured_companies } = props?.data?.data || {}
-    console.log(featured_companies, 1111)
-
-    const chatHandle = (item:string) => {
-        if(0){
-
-        }else{
-            router.push(item)
-        }
-
-    }
-
+    const { featured_companies: companies} = props?.data?.data || {}
     return (
         <>
             {
-                featured_companies?.map(item => {
-                    const { id, priority } = item || {};
-                    const { company_url, logo_url, name, industry, company_size, financing_stage, jobs, } = item?.company || {}
+                companies?.map(item => {
+                    const { id:Id, } = item || {};
+                    const { company_url:companyUrl, logo_url:logoUrl, name, industry, company_size:companySize, financing_stage: financingStage, jobs, } = item?.company || {}
                     return (
-                        <div className={styles.card} key={id}>
-                            <Link className={styles.header} href={company_url}>
-                                <img src={logo_url} alt={name}></img>
+                        <div className={styles.card} key={Id}>
+                            <Link className={styles.header} href={companyUrl}>
+                                <img src={logoUrl} alt={name}></img>
                                 <h5>{name}</h5>
                                 <p>
                                     {industry}
-                                    {industry && company_size ? ' | ' : null}
-                                    {company_size ? `${company_size} Employee` : null}
-                                    {(industry || company_size) && financing_stage ? ' | ' : null}
-                                    {financing_stage}
+                                    {industry && companySize ? ' | ' : null}
+                                    {companySize ? `${companySize} Employee` : null}
+                                    {(industry || companySize) && financingStage ? ' | ' : null}
+                                    {financingStage}
                                 </p>
                             </Link>
-                            {jobs?.map(jobItem => {
-                                const { job_title, salary_range_value, job_location, xp_lvl, degree ,job_url} = jobItem || {};
+                            {jobs?.map((jobItem,index) => {
+                                const { job_title:jobTitle, salary_range_value : salaryRangeValue, job_location : jobLocation, xp_lvl: xpLvl, degree ,job_url:jobUrl} = jobItem || {};
                                 return (
-                                    <Link  href={job_url} className={styles.list} key={jobItem.id}>
+                                    <Link  href={jobUrl} className={styles.list} key={`${jobItem.id}-${index}`}>
                                         <div className={styles.jobType}>
-                                            <p>{job_title}</p>
+                                            <p>{jobTitle}</p>
                                             <div className={styles.salary}>
-                                                <span className={styles.num}>{salary_range_value}</span>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    size="small"
-                                                    className={styles.chataBtn}
-                                                    onClick={()=>chatHandle(job_url)}
-                                                >
-                                                    Chat now
-                                                </Button>
+                                                <span className={styles.num}>{salaryRangeValue}</span>
+                                                    <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        size="small"
+                                                        className={styles.chataBtn}
+                                                    >
+                                                        Chat now
+                                                    </Button>
                                             </div>
                                         </div>
-                                        <span className={styles.tag}>{job_location}</span>
-                                        <span className={styles.tag}>{xp_lvl}</span>
+                                        <span className={styles.tag}>{jobLocation}</span>
+                                        <span className={styles.tag}>{xpLvl}</span>
                                         <span className={styles.tag}>{degree}</span>
                                     </Link>
                                 )
                             })
                             }
-                            <Link href={`${company_url}/jobs`} className={styles.linkAddress}>
+                            <Link href={`${companyUrl}/jobs`} className={styles.linkAddress}>
                                 More jobs
                             </Link>
                         </div>
