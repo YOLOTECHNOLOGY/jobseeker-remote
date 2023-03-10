@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 
 /* Vendors */
-import { usePathname } from 'next/navigation'
 
 declare global {
   interface Window {
@@ -11,7 +10,6 @@ declare global {
 }
 
 function useTransitionState() {
-  const pathname = usePathname()
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   const setTransitionStarted = () => {
@@ -39,7 +37,7 @@ function useTransitionState() {
     // }
     setTransitionStarted()
     setTransitionComplete()
-  }, [pathname])
+  }, [])
 
   return isTransitioning
 }

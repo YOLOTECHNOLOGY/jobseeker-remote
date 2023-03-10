@@ -21,6 +21,7 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
     sizes: ad.sizes,
     isTransitioning
   })
+
   // }
 
   return (
