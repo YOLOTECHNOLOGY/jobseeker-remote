@@ -1,7 +1,19 @@
 @import 'styles/variable.scss';
 
 .container {
-  @extend .GlobalContainer;
+  max-width: 1166px;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  @media (max-width: 799px) {
+    max-width: 688px;
+  }
+
+  @media (max-width: 360px) {
+    max-width: 320px;
+  }
   background-color: #f5f6fa;
 }
 
