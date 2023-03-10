@@ -25,7 +25,7 @@ module.exports = withBundleAnalyzer({
     // concurrentFeatures: true,
     // serverComponents: true,
     appDir: true,
-    mdxRs: true,
+    // mdxRs: true,
     // typedRoutes: true,
     esmExternals:'loose'
 
