@@ -1,19 +1,23 @@
 'use client'
-import React, { useEffect, useState, useRef } from 'react'
-import styles from './index.module.scss'
-import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou'
+import React, { useEffect, useState, useRef } from 'react';
+import styles from './index.module.scss';
+import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou';
 import {
   fetchJobsForYouLogin,
   fetchJobsPreferences
-} from 'store/services/jobs/fetchJobsForYouLogin'
-import { useRouter } from 'next/navigation'
-import { getCookie } from 'helpers/cookies'
+} from 'store/services/jobs/fetchJobsForYouLogin';
+import { useRouter } from 'next/navigation';
+import { getCookie } from 'helpers/cookies';
+import ClearIcon from '@mui/icons-material/Clear';
+
 const pageParams = {
   size: 20,
   sort: 1,
   source: 'web',
   job_locations: 'Manila'
 }
+
+
 
 const JobsCard = () => {
   const router = useRouter()
@@ -28,6 +32,8 @@ const JobsCard = () => {
   const currentRef = useRef<number>(null)
   const dataRef = useRef<Array<any>>(null)
   const jobseekerPrefIdRef = useRef<number>(null)
+  const [visibleStarted, setVisibleStarted] = useState<boolean>(false)
+
   useEffect(() => {
     getList({ page: current, ...pageParams })
     window.addEventListener('scroll', useFn)
@@ -83,7 +89,6 @@ const JobsCard = () => {
       dataRef.current = oldData
       setJobs([...oldData] || [])
       setTotalPage(data.total_pages)
-      console.log(currentRef.current, data.total_pages, 'currentRef')
       if (currentRef.current >= data.total_pages) {
         setIsMore(false)
       } else {
@@ -98,25 +103,36 @@ const JobsCard = () => {
   }
 
   const handleLoadMore = () => {
-    console.log(loadingRef.current, isMoreRef.current)
     if (!loadingRef.current && isMoreRef.current) {
       const page = currentRef.current + 1
       setCurrent(page)
       setLoading(true)
-      const width = document.body.clientWidth
-      if (width < 750) {
-        console.log('加载下一页~')
-        getList({ page, ...pageParams })
-      }
+      console.log('next page~')
+      getList({ page, ...pageParams })
     }
   }
 
   const isTouchBottom = (handler) => {
-    const showHeight = window.innerHeight
-    const scrollTopHeight = document.body.scrollTop || document.documentElement.scrollTop
-    const allHeight = document.body.scrollHeight
-    if (allHeight <= showHeight + scrollTopHeight) {
-      handler()
+    
+    const width = document.body.clientWidth
+    if (width < 751) {
+      const showHeight = window.innerHeight
+      const scrollTopHeight = document.body.scrollTop || document.documentElement.scrollTop
+      const allHeight = document.body.scrollHeight
+      if (allHeight <= showHeight + scrollTopHeight + 200) {
+         handler()
+       }
+      
+       const dom = document.getElementById('getStartedContainer'); 
+       const domTopHeight = dom.offsetTop;
+       // 页面高度 - dom距离顶部的高度
+       const space =   scrollTopHeight - domTopHeight;
+       const iscloseStrated = sessionStorage.getItem('closeStrated')
+      if(space > -10 && !iscloseStrated){
+        setVisibleStarted(true)
+      }else{
+        setVisibleStarted(false)
+      }
     }
   }
 
@@ -144,14 +160,24 @@ const JobsCard = () => {
     router.push('/get-started')
   }
 
+  const tipsFun = <p className={styles.tips} >
+  Want more accurate matches?
+  <span className={styles.started} onClick={getStarted}>
+    Get Started
+  </span>
+</p>
+ 
+
+ const closeFun = () => {
+    sessionStorage.setItem('closeStrated','1');
+    setVisibleStarted(false);
+ }
+
   return (
     <>
-      <p className={styles.tips}>
-        Want more accurate matches?
-        <span className={styles.started} onClick={getStarted}>
-          Get Started
-        </span>
-      </p>
+      <div id="getStartedContainer">
+        {tipsFun}
+      </div> 
       {jobs?.map((item, index) => {
         const {
           id: Id,
@@ -195,8 +221,15 @@ const JobsCard = () => {
           </div>
         )
       })}
-
+      {
+        visibleStarted ? (
+          <div  className={styles.startedContainer}> 
+          {<ClearIcon className={styles.close} onClick={closeFun} style={{color:"#fff"}}/>} {tipsFun}
+       </div>
+        ) : null
+      }
       <p className={styles.load}>{loading ? 'Loading~' : current === totalPage ? 'No more' : ''}</p>
+     
     </>
   )
 }

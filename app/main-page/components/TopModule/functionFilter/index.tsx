@@ -49,7 +49,7 @@ const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps 
         className={classNames({
             [styles.mainItem]:true,
             [styles.isHover]:isHover || hoverTitle === data.title
-        }) }
+        })}
         key={props.key}
         title={data.title}
         onMouseEnter={onMouseEnter}

@@ -3,9 +3,11 @@ import React from 'react'
 import styles from './company.module.scss'
 import Link from 'next/link'
 import { Button } from '@mui/material'
+import { HomePageChat } from 'images'
 
 const CompanyList = (props: any) => {
   const { featured_companies: companies } = props?.data?.data || {}
+  console.log(companies,'companies')
   return (
     <>
       {companies?.map((item) => {
@@ -17,7 +19,6 @@ const CompanyList = (props: any) => {
           industry,
           company_size: companySize,
           financing_stage: financingStage,
-          jobs
         } = item?.company || {}
         return (
           <div className={styles.card} key={Id}>
@@ -32,7 +33,7 @@ const CompanyList = (props: any) => {
                 {financingStage}
               </p>
             </Link>
-            {jobs?.map((jobItem, index) => {
+            {(item?.company.jobs || item?.company.job)?.map((jobItem, index) => {
               const {
                 job_title: jobTitle,
                 salary_range_value: salaryRangeValue,
@@ -45,17 +46,10 @@ const CompanyList = (props: any) => {
                 <Link href={jobUrl} className={styles.list} key={`${jobItem.id}-${index}`}>
                   <div className={styles.jobType}>
                     <p>{jobTitle}</p>
-                    <div className={styles.salary}>
-                      <span className={styles.num}>{salaryRangeValue}</span>
-                      <Button
-                        variant='contained'
-                        color='primary'
-                        size='small'
-                        className={styles.chataBtn}
-                      >
-                        Chat now
-                      </Button>
-                    </div>
+                     <div className={styles.salary}>{salaryRangeValue}</div>
+                      <div className={styles.chat} >
+                        <img src={HomePageChat} alt='Boss job chat now' width='18' height='18' style={{position:"relative",top:'-1px'}}/> Chat now
+                      </div>
                   </div>
                   <span className={styles.tag}>{jobLocation}</span>
                   <span className={styles.tag}>{xpLvl}</span>
