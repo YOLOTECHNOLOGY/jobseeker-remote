@@ -122,10 +122,10 @@ const JobsCard = () => {
 
   const throttle = (func, delay) => {
     let timer = null
-    return function (...args) {
+    return function () {
       if (!timer) {
         timer = setTimeout(() => {
-          func.apply(this, args)
+          func()
           timer = null
         }, delay)
       }

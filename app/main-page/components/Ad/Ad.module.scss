@@ -1,0 +1,29 @@
+.adContainer {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  justify-content: space-between;
+
+  .mainFunction,
+  .ad {
+    width: calc(50% - 5px);
+  }
+
+  .mainFunction {
+    background-color: bisque;
+    height: 100%;
+  }
+
+  .ad {
+    display: flex;
+
+    justify-content: space-between;
+
+    &_container {
+      background-color: rosybrown;
+      width: calc(50% - 5px);
+      height: 100%;
+      overflow: hidden;
+    }
+  }
+}
