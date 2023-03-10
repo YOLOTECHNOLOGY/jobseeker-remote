@@ -8,6 +8,7 @@
   letter-spacing: 0.02em;
   color: #353535;
   padding-top: 50px;
+  padding: 0 10px;
 }
 
 .tabContainer {
@@ -166,6 +167,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
   padding-top: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 @include sm {

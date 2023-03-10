@@ -1,5 +1,10 @@
+@import 'styles/mixins.scss';
+
 .main {
-  padding: 0px 10px;
+  @include md {
+    padding: 0px 10px;
+  }
+
   .title {
     font-family: 'Product Sans';
     font-style: normal;
@@ -12,5 +17,6 @@
     margin-top: 33px;
     margin-bottom: 17px;
     color: #136fd3;
+    padding: 0 10px;
   }
 }

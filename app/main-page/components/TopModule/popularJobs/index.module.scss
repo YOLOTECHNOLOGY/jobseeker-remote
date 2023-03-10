@@ -1,56 +1,54 @@
 .container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  height: 50px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 50px;
+  overflow: hidden;
+
+  label {
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
     display: flex;
-    flex-direction: row;
-    margin-top: 20px;
-    height: 50px;
     align-items: center;
-    justify-content: flex-start;
-    margin-left: 50px;
+    letter-spacing: 0.0075em;
+    width: fit-content;
+    flex-shrink: 0;
+  }
 
-    label {
-        font-family: 'Product Sans';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 18px;
-        display: flex;
-        align-items: center;
-        letter-spacing: 0.0075em;
-        width: fit-content;
-        flex-shrink: 0;
+  // min-width: 940px;
+  .tag {
+    flex-shrink: 0;
+    width: fit-content;
+    height: 30px;
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.0075em;
+    color: #136fd3;
+    margin: 0px 10px;
+    padding: 0px 10px;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+
+    &:hover {
+      background: #136fd3;
+      color: #fff;
+
+      a {
+        color: #fff;
+      }
     }
-
-    // min-width: 940px;
-    .tag {
-        flex-shrink: 0;
-        width: fit-content;
-        height: 30px;
-        font-family: 'Product Sans';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 18px;
-        display: flex;
-        align-items: center;
-        text-align: center;
-        letter-spacing: 0.0075em;
-        color: #136FD3;
-        margin: 0px 10px;
-        padding: 0px 10px;
-        background: #fff;
-        border-radius: 15px;
-        overflow: hidden;
-
-        &:hover {
-            background: #136FD3;
-            color: #fff;
-
-            a {
-                color: #fff;
-            }
-        }
-
-
-
-    }
+  }
 }
