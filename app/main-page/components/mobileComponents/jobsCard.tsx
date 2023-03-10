@@ -122,11 +122,10 @@ const JobsCard = () => {
 
   const throttle = (func, delay) => {
     let timer = null
-    return function (...args) {
+    return function () {
       if (!timer) {
         timer = setTimeout(() => {
-          // eslint-disable-next-line no-invalid-this
-          func.apply(this, args)
+          func()
           timer = null
         }, delay)
       }
