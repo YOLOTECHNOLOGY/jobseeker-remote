@@ -49,22 +49,23 @@ const App = (props: AppProps) => {
   useEffect(() => {
     initFireBase()
   }, [])
+  const [gtagReady , setGtagReady] = useState(false)
   useEffect(() => {
     // Facebook pixel
     // This pageview only triggers the first time
+    if(!gtagReady) return
     fbq.pageview()
 
     const handleRouteComplete = (url) => {
       gtag.pageview(url)
       fbq.pageview()
     }
-
     router.events.on('routeChangeComplete', handleRouteComplete)
 
     return () => {
       router.events.off('routeChangeComplete', handleRouteComplete)
     }
-  }, [router.events])
+  }, [router.events,gtagReady])
 
   useEffect(() => {
     if (!getItem('utmCampaign')) {
@@ -129,8 +130,12 @@ const App = (props: AppProps) => {
         <meta name='viewport' content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no' />
       </Head>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
-      <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
       <Script
+        strategy='lazyOnload'
+        onLoad={()=>{
+          setGtagReady(true)
+        }}
+        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} 
         id='gtag-init'
         dangerouslySetInnerHTML={{
           __html: `
@@ -143,8 +148,6 @@ const App = (props: AppProps) => {
           `
         }}
       />
-
-
       {/* Facebook  */}
       <Script
         dangerouslySetInnerHTML={{
