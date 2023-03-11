@@ -1,6 +1,6 @@
 // 'user client'
 import { memo } from 'react'
-import Link from 'next/Link'
+import Link from 'next/link'
 import Avatar from '@mui/material/Avatar'
 import { HomePageChat } from 'images'
 import styles from '../../popularJobs.module.scss'
