@@ -1,7 +1,7 @@
 import React from "react";
-import styles from './mobileComponents/index.module.scss';
-import JobCard from "./mobileComponents/jobsCard";
-import { fetchCompanyTopService }  from '../../../store/services/companies/fetchCompanyTop';
+import styles from './index.module.scss';
+import JobCard from "./jobsCard";
+import { fetchCompanyTopService } from "store/services/companies/fetchCompanyTop";
 import Link from 'next/link';
 
 async function getCompanyData() {

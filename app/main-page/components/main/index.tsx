@@ -3,7 +3,7 @@ import React from 'react'
 import TopModule from '../TopModule'
 import Tabs from '../Tabs/Tabs'
 import Companies from '../companies'
-import MobileHome from '../mobileHome'
+import MobileHome from '../mobileComponents/mobileHome'
 import styles from './index.module.scss'
 const Main = (props) => {
   return (
