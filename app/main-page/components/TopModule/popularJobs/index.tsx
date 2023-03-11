@@ -5,10 +5,10 @@ import styles from './index.module.scss'
 import { LocationContext } from 'app/components/providers/locationProvier'
 import { buildQuery } from 'app/main-page/helper'
 
-const PopularJob =  (props: any) => {
+const PopularJob = (props: any) => {
     const { location } = useContext(LocationContext)
 
-    const tags =  [
+    const tags = [
         'Java Developer',
         'Full Stack Engineer',
         'Web Developer',
@@ -20,11 +20,11 @@ const PopularJob =  (props: any) => {
     }, [location, tags])
     return <div className={styles.container}>
         <label>Pupular jobs:</label>
-        {tags.map((tag, index) => (
+        <div className={styles.tagContainer}>{tags.map((tag, index) => (
             <div key={tag} className={styles.tag}>
                 <Link prefetch={false} href={querys[index]}>{tag}</Link>
             </div>
-        ))}
+        ))}</div>
     </div>
 }
 

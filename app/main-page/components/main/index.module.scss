@@ -1,7 +1,7 @@
 @import 'styles/mixins.scss';
 
 .main {
-  @include md {
+  @include sm {
     padding: 0px 10px;
   }
 
