@@ -9,8 +9,7 @@ const TopModule = () => {
     <div>
       <SearchArea/>
       <PopularJob />
-      <ServerFunctionFilter/>
-      <Ad />
+      <Ad ><ServerFunctionFilter/></Ad>
     </div>
   )
 }

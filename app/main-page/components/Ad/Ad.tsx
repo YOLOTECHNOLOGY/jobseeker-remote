@@ -4,10 +4,10 @@ import AdSlot from 'app/components/AdSlot/index'
 
 import styles from './Ad.module.scss'
 
-const Ad = () => {
+const Ad = ({children}:any) => {
   return (
     <div className={styles.adContainer}>
-      <div className={styles.mainFunction}></div>
+      <div className={styles.mainFunction}>{children}</div>
       <div className={styles.ad}>
         <div className={styles.ad_container}>
           <AdSlot adSlot={'homepage/rectangle-banner-1'} />

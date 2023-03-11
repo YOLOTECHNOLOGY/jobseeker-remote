@@ -15,10 +15,10 @@ const defaultSEO = {
 export const metadata: Metadata = {
     title: defaultSEO.title,
     description: defaultSEO.description,
-//     copyright: `
-//   Copyright © ${new Date().getFullYear()} Singapore: Yolo Technology Pte Ltd. All Rights Reserved.
-//   Philippines: Etos Adtech Corporation
-// `,
+    //     copyright: `
+    //   Copyright © ${new Date().getFullYear()} Singapore: Yolo Technology Pte Ltd. All Rights Reserved.
+    //   Philippines: Etos Adtech Corporation
+    // `,
     openGraph: {
         title: defaultSEO.title,
         url: defaultSEO.imageUrl,
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
             secureUrl: defaultSEO.imageUrl,
             width: '450',
             height: '290',
-            url:defaultSEO.imageUrl,
-        } ,
+            url: defaultSEO.imageUrl,
+        },
 
         description: decodeURI(defaultSEO.description),
         siteName: defaultSEO.title,
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     }
 }
 
-const Providers = dynamic(()=>import('./components/providers'),{ssr:false})
+const Providers = dynamic(() => import('./components/providers'), { ssr: false })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     const { title, imageUrl, description, canonical } = defaultSEO
@@ -112,6 +112,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </html>
     )
 }
-// import App from '../pages/_app'
 
-// export default App
