@@ -14,11 +14,18 @@
   // margin-left: 10%;
   .location {
     width: 183px;
+    @include sm {
+      width: 120px;
+    }
   }
 
   .search {
     flex: 1;
     margin: 0px 17px;
+    @include sm {
+      margin-left: 15px;
+      margin-right: 0px;
+    }
   }
 
   .searchButton {
