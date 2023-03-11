@@ -1,16 +1,15 @@
 import React from 'react'
 import PopularJob from './popularJobs'
-import SearchArea from './searchArea'
-import ServerFunctionFilter from './functionFilter/server'
 import Ad from './../Ad/Ad'
-
-const TopModule = (props: any) => {
-  const { config } = props
+import dynamic from 'next/dynamic'
+const SearchArea = dynamic(()=> import('./searchArea'))
+const ServerFunctionFilter = dynamic(() => import('./functionFilter/server'))
+const TopModule = () => {
   return (
     <div>
-      <SearchArea {...props} />
+      <SearchArea/>
       <PopularJob />
-      <ServerFunctionFilter config={config} />
+      <ServerFunctionFilter/>
       <Ad />
     </div>
   )

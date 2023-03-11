@@ -1,10 +1,11 @@
 // 'use client'
-import Providers from './components/providers'
+// import Providers from './components/providers'
 import Header from './components/Header'
 import styles from './index.module.scss'
 import './globals.scss'
 import Initial from './components/Initals'
 import { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 const defaultSEO = {
     title: 'Bossjob - Career Platform for Professionals in Philippines',
     description: 'Bossjob - Career Platform for Professionals in Philippines',
@@ -59,7 +60,7 @@ export const metadata: Metadata = {
 //     console.log('generateMetadata', { params, searchParams })
 //     return metadata
 // }
-
+const Providers = dynamic(()=>import('./components/providers'),{ssr:false})
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     const { title, imageUrl, description, canonical } = defaultSEO

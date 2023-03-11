@@ -8,9 +8,10 @@ import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import useSearchHistory from 'helpers/useSearchHistory'
 import { useRouter } from 'next/navigation'
-import { buildQuery } from '../../helper'
-import {LocationContext} from '../../../components/providers/locationProvier'
+import { buildQuery } from '../../../helper'
+import {LocationContext} from '../../../../components/providers/locationProvier'
 const SearchArea = (props: any) => {
+    console.log({props})
     const { config } = props
     const dispatch = useDispatch()
     const {location,setLocation} = useContext(LocationContext)
@@ -29,10 +30,6 @@ const SearchArea = (props: any) => {
     }, [config])
     const [searchValue, setSearchValue] = useState('')
     const [searchHistories, addSearchHistory] = useSearchHistory()
-    // useEffect(() => {
-    //     const query = buildQuery(location?.seo_value, searchValue)
-    //     router.prefetch(query)
-    // }, [location.value, searchValue])
     const [, transitionStart] = useTransition()
     const handleSuggestionSearch = useCallback((val) => {
         transitionStart(() => {

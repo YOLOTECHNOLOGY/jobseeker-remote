@@ -1,8 +1,7 @@
-'use client'
 import React from 'react'
 import styles from './company.module.scss'
 import Link from 'next/link'
-import { Button } from '@mui/material'
+import { Button } from 'app/components/MUIs'
 
 const CompanyList = (props: any) => {
   const { featured_companies: companies } = props?.data?.data || {}

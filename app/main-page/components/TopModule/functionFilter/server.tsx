@@ -1,5 +1,8 @@
 import FunctionFilter from "."
 import React from 'react'
+import interpreter from "app/main-page/intepreter"
+import { serverDataScript } from "app/abstractModels/FetchServierComponents"
+import { buildComponentScript } from "app/abstractModels/util"
 
 const getSimpleTitle = item => {
   const title = item.title
@@ -30,5 +33,8 @@ const ServerFunctionFilter = async (props: { config: any }) => {
   const filterProps: any = await Promise.resolve({ list })
   return <FunctionFilter {...filterProps} />
 }
-
-export default ServerFunctionFilter as any
+export default interpreter(
+  serverDataScript()
+      .chain(props => buildComponentScript(props, ServerFunctionFilter))
+).run
+// export default ServerFunctionFilter as any

@@ -1,36 +1,17 @@
-'user client'
+// 'user client'
 import { memo } from 'react'
-import { useRouter } from 'next/navigation'
-
+import Link from 'next/Link'
 import Avatar from '@mui/material/Avatar'
-
 import { HomePageChat } from 'images'
-
 import styles from '../../popularJobs.module.scss'
-
 const JobDetail = ({ detail }: any) => {
-  const router = useRouter()
-
-  const handleGoToJobDetail = (patch: string) => {
-    router.push(patch)
-  }
-
-  const handleGoToCompanyDetail = (patch: string) => {
-    router.push(patch)
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleOpenChatNow = (e) => {
-    // e.stopPropagation()
-  }
-
   return (
     <div className={styles.job_detail}>
-      <div className={styles.job_info} onClick={() => handleGoToJobDetail(detail.job_url)}>
+      <Link className={styles.job_info} href={detail.job_url} >
         <div className={styles.job_titleWrapper}>
           <div className={styles.job_info_title}>{detail?.job_title}</div>
           <div className={styles.job_info_salary}>{detail?.salary_range_value}</div>
-          <div className={styles.job_info_chat} onClick={(e) => handleOpenChatNow(e)}>
+          <div className={styles.job_info_chat} >
             <img src={HomePageChat} alt='Boss job chat now' width='18' height='18' /> Chat now
           </div>
         </div>
@@ -40,18 +21,18 @@ const JobDetail = ({ detail }: any) => {
           <div>{detail?.xp_lvl}</div>
           <div>{detail?.degree}</div>
         </div>
-      </div>
+      </Link>
 
-      <div
+      <Link
         className={styles.job_companyInfo}
-        onClick={() => handleGoToCompanyDetail(detail.company_url)}
+        href={detail.company_url}
       >
         <div className={styles.job_avatarWrapper}>
           <Avatar alt={detail?.job_title} src={detail?.company_logo}></Avatar>
           <div className={styles.job_companyInfo_name}>{detail?.company_name}</div>
         </div>
         <div>{detail?.company_financing_stage}</div>
-      </div>
+      </Link>
     </div>
   )
 }
