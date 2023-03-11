@@ -11,7 +11,6 @@ import { useRouter } from 'next/navigation'
 import { buildQuery } from '../../../helper'
 import {LocationContext} from '../../../../components/providers/locationProvier'
 const SearchArea = (props: any) => {
-    console.log({props})
     const { config } = props
     const dispatch = useDispatch()
     const {location,setLocation} = useContext(LocationContext)

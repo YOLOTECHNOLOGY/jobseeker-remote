@@ -83,7 +83,6 @@ const JobsCard = () => {
       dataRef.current = oldData
       setJobs([...oldData] || [])
       setTotalPage(data.total_pages)
-      console.log(currentRef.current, data.total_pages, 'currentRef')
       if (currentRef.current >= data.total_pages) {
         setIsMore(false)
       } else {
@@ -98,14 +97,12 @@ const JobsCard = () => {
   }
 
   const handleLoadMore = () => {
-    console.log(loadingRef.current, isMoreRef.current)
     if (!loadingRef.current && isMoreRef.current) {
       const page = currentRef.current + 1
       setCurrent(page)
       setLoading(true)
       const width = document.body.clientWidth
       if (width < 750) {
-        console.log('加载下一页~')
         getList({ page, ...pageParams })
       }
     }

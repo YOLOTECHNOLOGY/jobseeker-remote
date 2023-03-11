@@ -59,17 +59,38 @@
             }
 
             .mainTitle {
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight: 700;
-                font-size: 16px;
-                line-height: 100%;
-                color: #353535;
-                width: 108px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                &Sub {
+                    display: block;
+                    font-family: 'Product Sans';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 18px;
+                    letter-spacing: 0.0075em;
+                    color: #707070;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    width: 110px;
+                    margin-left: 10px;
+                }
+                &First {
+                    font-family: 'Product Sans';
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 16px;
+                    line-height: 100%;
+                    color: #353535;
+                    width: 108px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
 
+               
             }
         }
 

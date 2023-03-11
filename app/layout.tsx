@@ -56,10 +56,6 @@ export const metadata: Metadata = {
     }
 }
 
-// export async function generateMetadata({ params, searchParams }) {
-//     console.log('generateMetadata', { params, searchParams })
-//     return metadata
-// }
 const Providers = dynamic(()=>import('./components/providers'),{ssr:false})
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

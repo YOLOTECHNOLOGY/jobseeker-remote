@@ -6,7 +6,6 @@ import { LocationContext } from 'app/components/providers/locationProvier'
 import { buildQuery } from 'app/main-page/helper'
 
 const PopularJob =  (props: any) => {
-    console.log({ props })
     const { location } = useContext(LocationContext)
 
     const tags =  [

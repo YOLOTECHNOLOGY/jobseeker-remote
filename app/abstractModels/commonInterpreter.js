@@ -4,7 +4,6 @@ export default command =>
     error: error => M(() => Promise.reject(error)),
     just: M.of,
     buildComponent: (props, component) => M.do(context => {
-      console.log({ props, component })
       return component({ ...props, ...context })
     })
   })

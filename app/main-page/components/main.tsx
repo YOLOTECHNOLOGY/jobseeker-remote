@@ -6,7 +6,6 @@ import Companies from './companies'
 import MobileHome from './mobileHome'
 
 const Main = (props) => {
-  console.log({ props })
   return (
     <>
       
