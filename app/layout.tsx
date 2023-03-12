@@ -3,7 +3,6 @@
 import Header from './components/Header'
 import styles from './index.module.scss'
 import './globals.scss'
-import Initial from './components/Initals'
 import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 const defaultSEO = {
@@ -57,11 +56,11 @@ export const metadata: Metadata = {
 }
 
 const Providers = dynamic(() => import('./components/providers'), { ssr: false })
-
+const Initial = dynamic(() => import('./components/Initals'), { ssr: false })
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     const { title, imageUrl, description, canonical } = defaultSEO
     return (
-        <html>
+        <html lang='en'>
             <head key={title + description + canonical}>
                 <title>{title}</title>
                 <meta name='description' content={decodeURI(description)} />
@@ -103,11 +102,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
             </head>
             <body id='next-app'>
-                <Initial />
                 <Providers>
                     <Header />
                     <div className={styles.container}>{children}</div>
                 </Providers>
+                <Initial />
             </body>
         </html>
     )
