@@ -98,7 +98,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <meta name='twitter:image' content={imageUrl} />
                 <meta name='twitter:image:alt' content={decodeURI(description)} />
                 <meta name='twitter:creator' content='BossjobPH' />
-
+                <script
+                    // defer
+                    // async
+                    dangerouslySetInnerHTML={{
+                        __html: `
+            window.googletag = window.googletag || {cmd: []}
+          `,
+                    }}
+                ></script>
 
             </head>
             <body id='next-app'>

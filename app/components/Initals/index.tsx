@@ -1,41 +1,60 @@
 'use client'
 import { useFirstRender } from 'helpers/useFirstRender'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { initFireBase } from 'helpers/fireBaseManager'
 import Script from 'next/script'
 import * as fbq from 'lib/fpixel'
-import * as gtag from 'lib/gtag'
+import * as gTag from 'lib/gtag'
 const runInClient = () => {
   if (!(window as any)?.imSharedWorker && window.SharedWorker) {
-      (window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
+    (window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
   }
   const devTools = (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__
   if (!!devTools && devTools['inject']) {
-      devTools['inject'] = Function.prototype
+    devTools['inject'] = Function.prototype
   }
   initFireBase()
 
 }
+window.onhashchange = e => {
+  console.log('windowChange', e)
+}
 const Initial = () => {
   const firstRender = useFirstRender()
   useEffect(() => {
-      if (firstRender) {
-          runInClient()
-      }
+    if (firstRender) {
+      runInClient()
+    }
   }, [firstRender])
+  const [gtagReady, setGtagReady] = useState(false)
+  useEffect(() => {
+    // Facebook pixel
+    // This pageview only triggers the first time
+    if (gtagReady) {
+      gTag.pageview(location.href)
+    }
+    fbq.pageview()
+  }, [gtagReady])
   return <>
-
-    <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
     <Script
+      strategy='lazyOnload'
+      onLoad={() => {
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        // eslint-disable-next-line prefer-rest-params
+        function gtag(...args) { ((window as any)).dataLayer.push(args); }
+        gtag('js', new Date());
+        gtag('config', gTag.GA_TRACKING_ID, {
+          page_path: window.location.pathname,
+        });
+        (window as any).gtag = gtag
+        setGtagReady(true)
+
+      }}
+      src={`https://www.googletagmanager.com/gtag/js?id=${gTag.GA_TRACKING_ID}`}
       id='gtag-init'
       dangerouslySetInnerHTML={{
         __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${gtag.GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
+            
           `
       }}
     />
@@ -82,16 +101,37 @@ const Initial = () => {
       }}
     />
     <Script
-      dangerouslySetInnerHTML={{
-        __html: `
-          !function (w, d, t) {
-            w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++
-      )ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=i+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+      strategy='lazyOnload'
+      // dangerouslySetInnerHTML={{
+      //   __html: `
+      //     !function (w, d, t) {
+      //       w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++
+      // )ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=i+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
           
-            ttq.load('CEDEUCRC77UA21H9TRE0');
-            ttq.page();
-          }(window, document, 'ttq');
-          `
+      //       ttq.load('CEDEUCRC77UA21H9TRE0');
+      //       ttq.page();
+      //     }(window, document, 'ttq');
+      //     `
+      // }}
+      src='https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=CEDEUCRC77UA21H9TRE0&lib=ttq'
+      onLoad={() => {
+        const w = window as any
+        const t = 'ttq'
+        w.TiktokAnalyticsObject = t; const ttq = w[t] = w[t] || [];
+        const e = 'CEDEUCRC77UA21H9TRE0'
+        ttq._i = ttq._i || {}, ttq._i[e] = [], ttq._i[e]._u = i, ttq._t = ttq._t || {},
+        ttq._i = ttq._i || {}
+        ttq._t[e] = +new Date, ttq._o = ttq._o || {}, ttq._o[e] =  {}
+        // eslint-disable-next-line prefer-rest-params, no-var
+        ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie"], ttq.setAndDefer = function (t, e) { t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } }; for (var i = 0; i < ttq.methods.length; i++)ttq.setAndDefer(ttq, ttq.methods[i]); ttq.instance = function (t) {
+          for (let e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++
+          ) {
+            ttq.setAndDefer(e, ttq.methods[n]);
+            return e
+          }
+        }, 
+
+        ttq.page();
       }}
     />
 

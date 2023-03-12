@@ -27,9 +27,10 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
   return (
     <div>
       {/* Google Adsense and Ad Manager scripts */}
-      <Script src='https://securepubads.g.doubleclick.net/tag/js/gpt.js' />
+      <Script strategy='lazyOnload' src='https://securepubads.g.doubleclick.net/tag/js/gpt.js' />
       <Script
         data-ad-client='ca-pub-4245733463545444'
+        strategy='lazyOnload'
         src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
       />
       <div id={`div-gpt-ad-${ad.id}`} />
