@@ -4,13 +4,13 @@ import JobCard from "./jobsCard";
 import { fetchCompanyTopService } from "store/services/companies/fetchCompanyTop";
 import Link from 'next/link';
 import Image from 'next/image'
-async function getCompanyData() {
-    const res = await fetchCompanyTopService();
+async function getCompanyData(location) {
+    const res = await fetchCompanyTopService(location);
     return res.data;
   }
 
-const mobileHome = async () => {
-    const data  = await getCompanyData();
+const mobileHome = async ({location}) => {
+    const data  = await getCompanyData(location);
     const comapny = data?.data?.featured_companies || [];
 
 
@@ -38,7 +38,7 @@ return (
        
        <div className={styles.jobs}>
        <h2>Jobs for You</h2>
-         <JobCard/>
+         <JobCard location={location}/>
        </div>
     </div>
 )

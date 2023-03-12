@@ -101,7 +101,7 @@ const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) =>
   }
 }))
 
-const Tabs = () => {
+const Tabs = ({ location }: any) => {
   const [value, setValue] = useState<string>('Information Technology')
   const [list, setList] = useState<Array<any>>([])
   const [open, setOpen] = useState<boolean>(false)
@@ -114,14 +114,14 @@ const Tabs = () => {
 
   useEffect(() => {
     handleFetchPopularJobs()
-  }, [value])
+  }, [value,location])
 
   const handleFetchPopularJobs = () => {
     setLoading(true)
     const params = {
       size: 6,
       page: 1,
-      query_job_location: 'Manila',
+      query_job_location: location,
       main_functions: value
     }
 

@@ -87,8 +87,6 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
     useEffect(() => {
         if (window?.SharedWorker && (window as any)?.imSharedWorker?.port) {
             (window as any).imSharedWorker.port.onmessage = () => {
-                console.log('refreshMessage')
-
                 IMManager.refreshMessages()
             }
         }
@@ -203,7 +201,6 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
                                 const userInfos = userInfosData?.data?.data ?? []
                                 return new Promise(resolve => {
                                     const callBackUserInfo = () => {
-                                        console.log('callBackUserInfo', userDetailRef.current)
                                         if (userDetailRef.current?.id) {
                                             const userInfoResult = [...userInfos.map(userInfo => ({
                                                 auid: '' + userInfo.id + '_r',
@@ -354,14 +351,12 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
             )
         },
         postPageNotification(message, state) {
-            console.log('postPageNotification', message)
             const msg = msgToNote(message, state)
             if (msg) {
                 postNoteRef.current?.(msg)
             }
         },
         postLocalNotification(message, state) {
-            console.log('postLocalNotification', message)
             const msg: any = msgToNote(message, state)
             if (msg) {
                 const params: any = {

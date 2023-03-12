@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState, useTransition, useCallback,useContext } from 'react'
+import React, { useEffect, useState, useTransition, useCallback, useContext } from 'react'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 import styles from './index.module.scss'
@@ -9,13 +9,20 @@ import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import useSearchHistory from 'helpers/useSearchHistory'
 import { useRouter } from 'next/navigation'
 import { buildQuery } from '../../../helper'
-import {LocationContext} from '../../../../components/providers/locationProvier'
+import { LocationContext } from '../../../../components/providers/locationProvier'
+import { getCookie, setCookie } from 'helpers/cookies'
 const SearchArea = (props: any) => {
     const { config } = props
     const dispatch = useDispatch()
-    const {location,setLocation} = useContext(LocationContext)
+    const { location, setLocation } = useContext(LocationContext)
     const router = useRouter()
-
+    useEffect(() => {
+        const cookieLocation = getCookie('location')
+        if(cookieLocation?.value !== location.value) {
+            setCookie('location',location)
+            router.refresh()
+        }
+    }, [location.value])
     const pushJobPage = useCallback((value) => {
         const query = buildQuery(location?.seo_value, value)
         router.push(query, { forceOptimisticNavigation: true })
