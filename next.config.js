@@ -71,7 +71,7 @@ module.exports = withBundleAnalyzer({
     includePaths: [path.join(__dirname, 'node_modules')]
   },
   images: {
-    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl']
+    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl','local-assets.bossjob.com']
   },
   webpack(config, { isServer }) {
     if (isServer) {
