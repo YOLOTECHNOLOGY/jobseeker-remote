@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './company.module.scss'
 import Link from 'next/link'
 import { Button } from 'app/components/MUIs'
-
+import Image from 'next/image'
 const CompanyList = (props: any) => {
   const { featured_companies: companies } = props?.data?.data || {}
   return (
@@ -21,7 +21,7 @@ const CompanyList = (props: any) => {
         return (
           <div className={styles.card} key={Id}>
             <Link className={styles.header} href={companyUrl}>
-              <img src={logoUrl} alt={name}></img>
+              <Image className={styles.img} src={logoUrl} alt={name} width={44} height={44} quality={0}></Image>
               <h5>{name}</h5>
               <p>
                 {industry}

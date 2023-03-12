@@ -3,7 +3,7 @@ import styles from './index.module.scss';
 import JobCard from "./jobsCard";
 import { fetchCompanyTopService } from "store/services/companies/fetchCompanyTop";
 import Link from 'next/link';
-
+import Image from 'next/image'
 async function getCompanyData() {
     const res = await fetchCompanyTopService();
     return res.data;
@@ -24,7 +24,7 @@ return (
                     const {id,logo_url,company_url,name,num_of_active_jobs} = item?.company || {}
                     return (
                         <Link href={`${company_url}/jobs`} className={styles.item} key={id}>
-                        <img src={logo_url} alt="name"/>
+                        <Image src={logo_url} alt="name" width={27} height={27}/>
                          <div className={styles.info}>
                             <p className={styles.name}>{name}</p>
                             <p className={styles.num}> {num_of_active_jobs} jobs hiring</p>

@@ -8,6 +8,7 @@ import {
 } from 'store/services/jobs/fetchJobsForYouLogin'
 import { useRouter } from 'next/navigation'
 import { getCookie } from 'helpers/cookies'
+import Image from 'next/image'
 const pageParams = {
   size: 20,
   sort: 1,
@@ -180,11 +181,10 @@ const JobsCard = () => {
             <span className={styles.tag}>{degree}</span>
             <div className={styles.contact}>
               <div
-                className={`${styles.avator}  ${
-                  transTime(recruiterLastActiveAt) ? styles.avator2 : ''
-                }`}
+                className={`${styles.avator}  ${transTime(recruiterLastActiveAt) ? styles.avator2 : ''
+                  }`}
               >
-                <img src={recruiterAvatar} alt={recruiterFullName} />
+                <Image src={recruiterAvatar} alt={recruiterFullName} width={20} height={20} />
               </div>
               {recruiterFullName}
               <span className={styles.location}>{jobLocation}</span>

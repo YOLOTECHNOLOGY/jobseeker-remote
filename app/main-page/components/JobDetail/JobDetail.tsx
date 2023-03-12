@@ -1,9 +1,10 @@
 // 'user client'
 import { memo } from 'react'
 import Link from 'next/link'
-import Avatar from '@mui/material/Avatar'
+// import Avatar from '@mui/material/Avatar'
 import { HomePageChat } from 'images'
 import styles from '../../popularJobs.module.scss'
+import Image from 'next/image'
 const JobDetail = ({ detail }: any) => {
   return (
     <div className={styles.job_detail}>
@@ -12,7 +13,7 @@ const JobDetail = ({ detail }: any) => {
           <div className={styles.job_info_title}>{detail?.job_title}</div>
           <div className={styles.job_info_salary}>{detail?.salary_range_value}</div>
           <div className={styles.job_info_chat} >
-            <img src={HomePageChat} alt='Boss job chat now' width='18' height='18' /> Chat now
+            <Image src={HomePageChat} alt='Boss job chat now' width='18' height='18' quality={0} /> Chat now
           </div>
         </div>
 
@@ -28,7 +29,7 @@ const JobDetail = ({ detail }: any) => {
         href={detail.company_url}
       >
         <div className={styles.job_avatarWrapper}>
-          <Avatar alt={detail?.job_title} src={detail?.company_logo}></Avatar>
+          <Image alt={detail?.job_title} src={detail?.company_logo} width={40} height={40} quality={0}></Image>
           <div className={styles.job_companyInfo_name}>{detail?.company_name}</div>
         </div>
         <div>{detail?.company_financing_stage}</div>
