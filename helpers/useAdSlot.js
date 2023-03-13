@@ -13,7 +13,7 @@ function useAdSlot({ mapping, sizes, id, adUnit, isTransitioning }) {
   const handleForGetGoogletag = () => {
     const t = setTimeout(() => {
       const { googletag } = window
-      if (!googletag) {
+      if (!googletag?.apiReady) {
         handleForGetGoogletag()
       } else {
         handleInitGoogleAd()
