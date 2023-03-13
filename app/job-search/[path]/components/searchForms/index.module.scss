@@ -1,0 +1,59 @@
+@import '/styles/mixins.scss';
+
+.searchArea {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80%;
+  padding: 0 10px;
+
+  @include sm {
+    width: 100%;
+  }
+
+  // margin-left: 10%;
+  .location {
+    width: 183px;
+    @include sm {
+      width: 120px;
+    }
+  }
+
+  .search {
+    flex: 1;
+    margin: 0px 17px;
+    @include sm {
+      margin-left: 15px;
+      margin-right: 0px;
+    }
+  }
+
+  .searchButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px;
+    gap: 19px;
+    color: #fff;
+    width: 118.87px;
+    height: 44px;
+    background: #136fd3;
+    border-radius: 10px;
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+
+    @include sm {
+      display: none;
+    }
+
+    &:hover {
+      color: #136fd3;
+    }
+
+    &:disabled {
+      color: #fff;
+    }
+  }
+}
