@@ -159,7 +159,10 @@ const PublicHeader = () => {
                       maxWidth: '153px',
                       paddingLeft: '0',
                       paddingRight: '0',
-                      backgroundColor: '#136FD3'
+                      backgroundColor: '#136FD3',
+                      ':hover': {
+                        border: '1px solid #fff'
+                      }
                     }}
                   >
                     <Text textStyle='base' textColor='white' bold>
@@ -168,7 +171,24 @@ const PublicHeader = () => {
                   </MaterialButton>
                 </Link>
               ) : (
-                <MaterialButton variant='outlined' size='medium' capitalize>
+                <MaterialButton
+                  variant='outlined'
+                  size='medium'
+                  capitalize
+                  sx={{
+                    width: '123px',
+                    height: '35px !important',
+                    border: '1.5px solid #FFFFFF',
+                    borderRadius: '10px',
+                    maxWidth: '153px',
+                    paddingLeft: '0',
+                    paddingRight: '0',
+                    backgroundColor: '#136FD3',
+                    ':hover': {
+                      border: '1px solid #fff'
+                    }
+                  }}
+                >
                   <Text textStyle='base' textColor='white' bold>
                     Get Started
                   </Text>
