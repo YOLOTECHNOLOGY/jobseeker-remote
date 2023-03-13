@@ -5,17 +5,21 @@ const { liftFC: DO } = Free
 export const Actions = taggedSum('FilterListActions', {
     buildQuery: ['params'],
     redirect: ['query'],
-    parseUrl: ['url'],
     updateParams: ['url'],
+})
+export const UpdateActions = taggedSum('FilterLisUpdateActions', {
+    parseUrl: ['url'],
+})
+export const UpdateSearchHistoryActions = taggedSum('FilterLisUpdateSearchHistoryActions', {
+    updateSearchHistory: ['url'],
     getSearchValue: ['params'],
-    updateSearchHistory: ['searchValue']
+
 })
 
 export const onSearchScript = params => DO(Actions.buildQuery(params))
     .chain(query => DO(Actions.redirect(query)))
 
-export const onLoadScript = url => DO(Actions.parseUrl(url))
-    .chain(params => DO(Actions.updateParams(params)))
+export const onLoadScript = url => DO(UpdateActions.parseUrl(url))
 
-export const updateSearchHistoryScript = params => DO(Actions.getSearchValue(params))
-    .chain(searchValue => DO(Actions.updateSearchHistory(searchValue)))
+export const updateSearchHistoryScript = params => DO(UpdateSearchHistoryActions.getSearchValue(params))
+    .chain(searchValue => DO(UpdateSearchHistoryActions.updateSearchHistory(searchValue)))
