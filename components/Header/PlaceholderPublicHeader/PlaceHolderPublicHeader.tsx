@@ -11,7 +11,6 @@ import MaterialButton from 'components/MaterialButton'
 
 /* Images */
 import { BossjobLogoWhite } from 'images'
-import classNames from 'classnames'
 
 const PlaceHolderPublicHeader = () => {
   return (
@@ -107,7 +106,7 @@ const PlaceHolderPublicHeader = () => {
               </MaterialButton>
             </li>
 
-            <li className={styles.headerLink}>
+            {/* <li className={styles.headerLink}>
               <div className={classNames([styles.profileWrapper, styles.profileDisabled])}>
                 <Text textStyle='base' textColor='white' className={styles.profileCountry}>
                   PH
@@ -115,7 +114,7 @@ const PlaceHolderPublicHeader = () => {
 
                 <div className={styles.profileCaret} />
               </div>
-            </li>
+            </li> */}
           </React.Fragment>
         </ul>
         <div className={styles.mobileIconWrapper}>

@@ -180,7 +180,7 @@ const PublicHeader = () => {
               )}
             </li>
 
-            <li className={styles.headerLink}>
+            {/* <li className={styles.headerLink}>
               <div className={classNames([styles.profileWrapper, styles.profileDisabled])}>
                 <Text textStyle='base' textColor='white' className={styles.profileCountry}>
                   PH
@@ -188,7 +188,7 @@ const PublicHeader = () => {
 
                 <div className={styles.profileCaret} />
               </div>
-            </li>
+            </li> */}
           </React.Fragment>
         </ul>
         <div className={styles.mobileIconWrapper}>

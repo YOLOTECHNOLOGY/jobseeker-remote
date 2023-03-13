@@ -47,8 +47,11 @@ const ProtectedHeader = () => {
 
   const handleLogOut = () => {
     dispatch(logoutRequest())
-
-    router.push('/')
+    if (pathname === '/') {
+      window.location.reload()
+    } else {
+      router.push('/')
+    }
   }
 
   // const handleRedirectAuthentication = (e, path) => {
@@ -179,7 +182,7 @@ const ProtectedHeader = () => {
                     variant='contained'
                     capitalize
                     sx={{
-                      width: '123px',
+                      width: '150px',
                       height: '35px !important',
                       border: '1.5px solid #FFFFFF',
                       borderRadius: '10px',
@@ -207,7 +210,7 @@ const ProtectedHeader = () => {
             </li>
             <li className={styles.headerLink}>
               <div
-                className={styles.profileWrapper}
+                className={styles.profileProtectedWrapper}
                 onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}
               >
                 <img

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
-import { ChatCircleDots } from 'images'
+import { HomePageChat as ChatCircleDots } from 'images'
 import { logoutRequest } from 'store/actions/auth/logout'
 
 /* components */
@@ -177,7 +177,7 @@ const ProtectedHeader = () => {
                     variant='contained'
                     capitalize
                     sx={{
-                      width: '123px',
+                      width: '150px',
                       height: '35px !important',
                       border: '1.5px solid #FFFFFF',
                       borderRadius: '10px',

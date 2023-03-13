@@ -124,7 +124,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                     size='medium'
                     capitalize
                     sx={{
-                      width: '123px',
+                      width: '150px',
                       height: '35px !important',
                       border: '1.5px solid #FFFFFF',
                       borderRadius: '10px',
