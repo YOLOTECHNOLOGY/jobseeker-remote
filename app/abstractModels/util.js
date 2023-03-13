@@ -19,6 +19,7 @@ export const Result = taggedSum('Result', {
   success: ['data'],
   error: ['error']
 })
+export const buildComponentScript = (props, componrnt) => DO(CommonActions.buildComponent(props, componrnt))
 
 export const dispatchMatches = cond
 
@@ -31,7 +32,7 @@ export const registInterpreter = interpreter => {
       [T, interpreter]
     ])(command).log(command)
   // command 抽象逻辑
-  return command => Free.runFC(command, merged, ReaderTPromise)
+  return script => Free.runFC(script, merged, ReaderTPromise)
+    .catch(e => console.log('monad error', e))
 
 }
-export const buildComponentScript = (props, componrnt) => DO(CommonActions.buildComponent(props, componrnt))

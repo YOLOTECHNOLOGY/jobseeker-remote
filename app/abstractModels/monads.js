@@ -40,6 +40,9 @@ ReaderTPromise.prototype.ap = function (a) {
     return a.map(f)
   })
 }
+ReaderTPromise.prototype.catch = function (f) {
+   return ReaderTPromise(context => this.run(context).catch(f))
+}
 // const commandLogger = command => {
 //   if (process.env.NODE_ENV === 'development') {
 //     console.log(`%c${command?.['@@tag']}`, 'color: orange', command?.['@@values'] ?? '')
