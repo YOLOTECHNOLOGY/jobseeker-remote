@@ -4400,10 +4400,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.0.1109:
-  version "0.0.1109"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.1109.tgz#9e5c4639c549b6cf7f071124a7d6fd32a1dae3dc"
-  integrity sha512-c9r1iFgxGycA5fwjrSLjJaOTcTvWfCc0c5rn0EEXN6QXo5OmigbTjdCdeJR4ud2aBHZ4gQnI5g+E6MyAIyX2yg==
+imforbossjob@^0.0.1110:
+  version "0.0.1110"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.0.1110.tgz#6ab7bede09ae4785f03d8dda419ccadf2af8eaec"
+  integrity sha512-Y4CACme/WWxGo3hXy3wYc/7f+TY1yGA1ubd6+NMH4JVAoMEMbROQtiG90128/0yw74xhHTgkS0SEe++puARIjA==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
