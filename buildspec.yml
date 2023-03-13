@@ -23,7 +23,6 @@ phases:
           --build-arg ENV=$ENV \
           --build-arg MAINTENANCE=$MAINTENANCE \
           -t $REPOSITORY_URI .
-          docker build --build-arg ENV=development
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:latest
   post_build:
     commands:
