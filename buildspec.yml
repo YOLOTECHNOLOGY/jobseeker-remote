@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 14
+      nodejs: 16
     commands:
       - echo Installing Something...
   pre_build:
@@ -23,6 +23,7 @@ phases:
           --build-arg ENV=$ENV \
           --build-arg MAINTENANCE=$MAINTENANCE \
           -t $REPOSITORY_URI .
+          docker build --build-arg ENV=development
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:latest
   post_build:
     commands:
