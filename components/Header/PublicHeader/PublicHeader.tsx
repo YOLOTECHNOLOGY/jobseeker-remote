@@ -13,7 +13,7 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogo } from 'images'
+import { BossjobLogoWhite as BossjobLogo } from 'images'
 
 const PublicHeader = () => {
   const router = useRouter()
@@ -139,27 +139,51 @@ const PublicHeader = () => {
           <React.Fragment>
             <li className={styles.headerLink}>
               <Link title='Employer' to={process.env.BOSSHUNT_URL} aTag>
-                <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                  Employer
+                <Text textStyle='base' textColor='white' className={styles.headerLinkText}>
+                  I’m hiring
                 </Text>
               </Link>
             </li>
             <li className={styles.headerLink}>
               {router.route !== '/get-started' ? (
                 <Link to='/get-started' title='Get Started'>
-                  <MaterialButton variant='outlined' size='medium' capitalize>
-                    <Text textStyle='base' textColor='primaryBlue' bold>
+                  <MaterialButton
+                    variant='outlined'
+                    size='medium'
+                    capitalize
+                    sx={{
+                      width: '123px',
+                      height: '35px !important',
+                      border: '1.5px solid #FFFFFF',
+                      borderRadius: '10px',
+                      maxWidth: '153px',
+                      paddingLeft: '0',
+                      paddingRight: '0',
+                      backgroundColor: '#136FD3'
+                    }}
+                  >
+                    <Text textStyle='base' textColor='white' bold>
                       Get Started
                     </Text>
                   </MaterialButton>
                 </Link>
               ) : (
                 <MaterialButton variant='outlined' size='medium' capitalize>
-                  <Text textStyle='base' textColor='primaryBlue' bold>
+                  <Text textStyle='base' textColor='white' bold>
                     Get Started
                   </Text>
                 </MaterialButton>
               )}
+            </li>
+
+            <li className={styles.headerLink}>
+              <div className={classNames([styles.profileWrapper, styles.profileDisabled])}>
+                <Text textStyle='base' textColor='white' className={styles.profileCountry}>
+                  PH
+                </Text>
+
+                <div className={styles.profileCaret} />
+              </div>
             </li>
           </React.Fragment>
         </ul>
