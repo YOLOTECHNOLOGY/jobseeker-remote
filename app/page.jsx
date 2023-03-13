@@ -1,5 +1,5 @@
-// 'use client'
-import Main from './components/main'
+
+import Main from './main-page/page'
 const defaultSEO = {
     title: 'Bossjob - Career Platform for Professionals in Philippines',
     description: 'Bossjob - Career Platform for Professionals in Philippines',
@@ -51,8 +51,4 @@ export const metadata = {
 
 }
 
-// export default intepreter(
-//     serverDataScript()
-//         .chain(props => buildComponentScript(props, Main))
-// ).run
 export default Main

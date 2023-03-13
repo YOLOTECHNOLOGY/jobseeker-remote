@@ -1,16 +1,16 @@
 import React from "react";
-import styles from './mobileComponents/index.module.scss';
-import JobCard from "./mobileComponents/jobsCard";
-import { fetchCompanyTopService }  from '../../../store/services/companies/fetchCompanyTop';
+import styles from './index.module.scss';
+import JobCard from "./jobsCard";
+import { fetchCompanyTopService } from "store/services/companies/fetchCompanyTop";
 import Link from 'next/link';
-
-async function getCompanyData() {
-    const res = await fetchCompanyTopService();
+import Image from 'next/image'
+async function getCompanyData(location) {
+    const res = await fetchCompanyTopService(location);
     return res.data;
   }
 
-const mobileHome = async () => {
-    const data  = await getCompanyData();
+const mobileHome = async ({location}) => {
+    const data  = await getCompanyData(location);
     const comapny = data?.data?.featured_companies || [];
 
 
@@ -24,7 +24,7 @@ return (
                     const {id,logo_url,company_url,name,num_of_active_jobs} = item?.company || {}
                     return (
                         <Link href={`${company_url}/jobs`} className={styles.item} key={id}>
-                        <img src={logo_url} alt="name"/>
+                        <Image src={logo_url} alt="name" width={27} height={27}/>
                          <div className={styles.info}>
                             <p className={styles.name}>{name}</p>
                             <p className={styles.num}> {num_of_active_jobs} jobs hiring</p>
@@ -38,7 +38,7 @@ return (
        
        <div className={styles.jobs}>
        <h2>Jobs for You</h2>
-         <JobCard/>
+         <JobCard location={location}/>
        </div>
     </div>
 )

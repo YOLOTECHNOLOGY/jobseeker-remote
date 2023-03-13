@@ -1,7 +1,7 @@
 @import 'styles/variable.scss';
 
 .container {
-  max-width: 1166px;
+  max-width: 1170px;
   width: 100%;
   margin: 0 auto;
   padding-left: 10px;
@@ -21,4 +21,25 @@
   background: blue;
   height: 53px;
   width: 100vw;
+}
+.loading {
+  &Wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 200px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: $primaryBlue;
+  }
+  
+  &Logo {
+      margin-bottom: 16px;
+  }
+  
+  &Indicator {
+      width: 200px;
+  }
 }

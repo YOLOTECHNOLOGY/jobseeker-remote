@@ -1,7 +1,8 @@
+'use client'
 import React from 'react'
 import Script from 'next/script'
 import useAdSlot from 'helpers/useAdSlot'
-import useTransitionState from 'helpers/useTransitionState'
+import useTransitionState from 'app/components/AdSlot/useTransitionState'
 import ads from 'lib/config/adConfig'
 
 interface adSlotProps {
@@ -10,9 +11,7 @@ interface adSlotProps {
 
 const AdSlot = ({ adSlot }: adSlotProps) => {
   const isTransitioning = useTransitionState()
-
   const ad = ads[adSlot]
-
   // if (process.env.ENV === 'production') {
   // if (process.env.ENV === 'development') {
   useAdSlot({
@@ -22,14 +21,13 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
     sizes: ad.sizes,
     isTransitioning
   })
+
   // }
 
   return (
     <div>
       {/* Google Adsense and Ad Manager scripts */}
-      <Script 
-        strategy='lazyOnload'
-        src='https://securepubads.g.doubleclick.net/tag/js/gpt.js' />
+      <Script strategy='lazyOnload' src='https://securepubads.g.doubleclick.net/tag/js/gpt.js' />
       <Script
         data-ad-client='ca-pub-4245733463545444'
         strategy='lazyOnload'

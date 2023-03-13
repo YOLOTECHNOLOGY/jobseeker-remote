@@ -5,21 +5,19 @@ import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou';
 import {
   fetchJobsForYouLogin,
   fetchJobsPreferences
-} from 'store/services/jobs/fetchJobsForYouLogin';
-import { useRouter } from 'next/navigation';
-import { getCookie } from 'helpers/cookies';
+} from 'store/services/jobs/fetchJobsForYouLogin'
+import { useRouter } from 'next/navigation'
+import { getCookie } from 'helpers/cookies'
+import Image from 'next/image'
 import ClearIcon from '@mui/icons-material/Clear';
-
 const pageParams = {
   size: 20,
   sort: 1,
   source: 'web',
-  job_locations: 'Manila'
 }
 
-
-
-const JobsCard = () => {
+const JobsCard = ({location}:any) => {
+  
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [current, setCurrent] = useState<number>(1)
@@ -35,12 +33,13 @@ const JobsCard = () => {
   const [visibleStarted, setVisibleStarted] = useState<boolean>(false)
 
   useEffect(() => {
-    getList({ page: current, ...pageParams })
+    dataRef.current=[]
+    getList({ page: current,job_locations:location, ...pageParams })
     window.addEventListener('scroll', useFn)
     return () => {
       window.removeEventListener('scroll', useFn)
     }
-  }, [])
+  }, [location])
 
   useEffect(() => {
     currentRef.current = current
@@ -138,10 +137,10 @@ const JobsCard = () => {
 
   const throttle = (func, delay) => {
     let timer = null
-    return function (...args) {
+    return function () {
       if (!timer) {
         timer = setTimeout(() => {
-          func.apply(this, args)
+          func()
           timer = null
         }, delay)
       }
@@ -209,11 +208,10 @@ const JobsCard = () => {
             <span className={styles.tag}>{degree}</span>
             <div className={styles.contact}>
               <div
-                className={`${styles.avator}  ${
-                  transTime(recruiterLastActiveAt) ? styles.avator2 : ''
-                }`}
+                className={`${styles.avator}  ${transTime(recruiterLastActiveAt) ? styles.avator2 : ''
+                  }`}
               >
-                <img src={recruiterAvatar} alt={recruiterFullName} />
+                <Image src={recruiterAvatar} alt={recruiterFullName} width={20} height={20} />
               </div>
               {recruiterFullName}
               <span className={styles.location}>{jobLocation}</span>

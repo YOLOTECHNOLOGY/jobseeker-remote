@@ -40,31 +40,32 @@ const App = (props: AppProps) => {
       (window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
     }
   }, [])
-  useEffect(() => {
-    const devTools = (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__
-    if (!!devTools && devTools['inject']) {
-      devTools['inject'] = Function.prototype
-    }
-  }, [])
+  // useEffect(() => {
+  //   const devTools = (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__
+  //   if (!!devTools && devTools['inject']) {
+  //     devTools['inject'] = Function.prototype
+  //   }
+  // }, [])
   useEffect(() => {
     initFireBase()
   }, [])
+  const [gtagReady, setGtagReady] = useState(false)
   useEffect(() => {
     // Facebook pixel
     // This pageview only triggers the first time
+    if (!gtagReady) return
     fbq.pageview()
 
     const handleRouteComplete = (url) => {
       gtag.pageview(url)
       fbq.pageview()
     }
-
     router.events.on('routeChangeComplete', handleRouteComplete)
 
     return () => {
       router.events.off('routeChangeComplete', handleRouteComplete)
     }
-  }, [router.events])
+  }, [router.events, gtagReady])
 
   useEffect(() => {
     if (!getItem('utmCampaign')) {
@@ -129,22 +130,29 @@ const App = (props: AppProps) => {
         <meta name='viewport' content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no' />
       </Head>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
-      <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
       <Script
+        strategy='lazyOnload'
+        onLoad={() => {
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          // eslint-disable-next-line prefer-rest-params
+          function gtag(...args) { (window as any).dataLayer.push(args); }
+          gtag('js', new Date());
+          gtag('config', '${gtag.GA_TRACKING_ID}', {
+            page_path: window.location.pathname,
+          });
+
+          (window as any).gtag = gtag
+          setGtagReady(true)
+
+        }}
+        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
         id='gtag-init'
         dangerouslySetInnerHTML={{
           __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${gtag.GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
+            
           `
         }}
       />
-
-
       {/* Facebook  */}
       <Script
         dangerouslySetInnerHTML={{
