@@ -61,7 +61,7 @@ const PublicHeader = () => {
                 {pathname !== '/jobs-hiring/[keyword]' ? (
                   <Link title='Jobs' to='/jobs-hiring/job-search'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                      Jobs
+                      Find Jobs
                     </Text>
                   </Link>
                 ) : (
@@ -73,7 +73,7 @@ const PublicHeader = () => {
                       styles.headerLinkTextCurrentPage
                     ])}
                   >
-                    Jobs
+                    Find Jobs
                   </Text>
                 )}
               </li>

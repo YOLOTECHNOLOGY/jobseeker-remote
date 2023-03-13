@@ -47,7 +47,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
               <React.Fragment>
                 <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Jobs
+                    Find Jobs
                   </Text>
                 </li>
                 {/* <li className={styles.headerLink}>
@@ -63,6 +63,18 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                   </Text>
                 </li>
 
+                <li className={styles.headerLink}>
+                  <Link
+                    title='Courses'
+                    to='https://academy.bossjob.ph/courses/search-courses'
+                    external
+                  >
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      Courses
+                    </Text>
+                  </Link>
+                </li>
+
                 <li className={styles.headerLink} style={{ position: 'relative' }}>
                   <Link title='Career Guide' to='https://blog.bossjob.ph' external>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
@@ -71,11 +83,6 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                   </Link>
                 </li>
 
-                {/* <li className={styles.headerLink}>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Courses
-                  </Text>
-                </li> */}
                 {/* <li className={styles.headerLink}>
                   <a className={styles.headerLinkIcon} title='Chats'>
                     <img src={ChatIcon} width='20' height='20' />

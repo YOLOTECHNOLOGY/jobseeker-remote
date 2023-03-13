@@ -29,7 +29,7 @@ const PlaceHolderPublicHeader = () => {
             <React.Fragment>
               <li className={styles.headerLink}>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                  Jobs
+                  Find Jobs
                 </Text>
               </li>
               {/* <li className={styles.headerLink}>

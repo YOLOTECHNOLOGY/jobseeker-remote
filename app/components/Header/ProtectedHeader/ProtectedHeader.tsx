@@ -78,7 +78,7 @@ const ProtectedHeader = () => {
                 {pathname !== '/jobs-hiring/[keyword]' ? (
                   <Link title='Jobs' to='/jobs-hiring/job-search'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                      Jobs
+                      Find Jobs
                     </Text>
                   </Link>
                 ) : (
@@ -90,7 +90,7 @@ const ProtectedHeader = () => {
                       styles.headerLinkTextCurrentPage
                     ])}
                   >
-                    Jobs
+                    Find Jobs
                   </Text>
                 )}
               </li>
@@ -113,6 +113,18 @@ const ProtectedHeader = () => {
                     Companies
                   </Text>
                 )}
+              </li>
+
+              <li className={styles.headerLink} style={{ position: 'relative' }}>
+                <Link
+                  title='Courses'
+                  to='https://academy.bossjob.ph/courses/search-courses'
+                  external
+                >
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    Courses
+                  </Text>
+                </Link>
               </li>
 
               <li className={styles.headerLink} style={{ position: 'relative' }}>
