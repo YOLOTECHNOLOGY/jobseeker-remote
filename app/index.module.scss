@@ -7,8 +7,8 @@
   padding-left: 10px;
   padding-right: 10px;
   :global{
-    .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
-      border-width: 0;
+    .MuiOutlinedInput-notchedOutline{
+      border-width: 0 !important;
     }
   }
   @media (max-width: 799px) {

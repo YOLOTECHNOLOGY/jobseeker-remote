@@ -3,10 +3,12 @@ html,
   width: 100%;
   height: 100%;
   background-color: #f5f6fa;
-  font-family: product sans-serif;
+  font-family: product sans;
   cursor: default;
 }
-
+::selection {
+  background-color: #1890ff !important;
+}
 ol,
 ul,
 dl {

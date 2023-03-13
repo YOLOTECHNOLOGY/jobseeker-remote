@@ -27,6 +27,18 @@
     text-align: center;
     width: 100%;
   }
+  .moreBtn {
+    color: #136FD3;
+    width: 118px;
+    height: 44px;
+    border-radius: 10px;
+    line-height: 44px;
+    text-align: center;
+    border: 1px solid #136FD3;
+    margin: 40px auto 0;
+    display: block;
+    font-weight: 700;
+}
 }
 
 .job {
@@ -174,7 +186,31 @@
     color: #136fd3;
   }
 }
-
+.webTab{
+  position: relative;
+  .preference{
+    position: absolute;
+    top:14px;
+    right: 0;
+    p{
+      margin: 0;
+    }
+    img{
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .link{
+      color: #136FD3;
+      text-decoration: underline;
+     
+    }
+   .link2{
+    color: #136FD3;
+   }
+  }
+}
 .mobileTab {
   display: none;
   flex-wrap: wrap;

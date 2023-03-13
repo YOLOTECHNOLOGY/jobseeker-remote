@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState,useRef } from 'react'
 
 import MuiTabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
@@ -15,6 +15,13 @@ import JobDetail from '../JobDetail/JobDetail'
 import { fetchPopularJobs } from 'store/services/jobs/popularJobs'
 import styles from '../../popularJobs.module.scss'
 import { SxProps, Theme } from '@mui/system'
+import { getCookie } from 'helpers/cookies'
+import Link from 'next/link';
+import {
+  fetchJobsForYouLogin,
+  fetchJobsPreferences
+} from 'store/services/jobs/fetchJobsForYouLogin'
+import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou';
 
 const tabList = [
   {
@@ -31,6 +38,17 @@ const tabList = [
   { tab: 'Manufacturing', value: 'Manufacturing' },
   { tab: 'Banking', value: 'Healthcare/Medical' },
   { tab: 'Healthcare', value: 'Banking' }
+]
+
+const tabListLogin = [
+  {
+    tab: 'Recommended',
+    value: '2'
+  },
+  {
+    tab: 'Latest jobs',
+    value: '1'
+  },
 ]
 
 const theme = createTheme({
@@ -107,15 +125,84 @@ const Tabs = ({ location }: any) => {
   const [open, setOpen] = useState<boolean>(false)
   const [message, setMessage] = useState<String>('')
   const [loading, setLoading] = useState<boolean>(false)
-
+  const accessToken = getCookie('accessToken')
+  const user = getCookie('user')
+  const [newTabList,setNewTabList] = useState<Array<any>>([]);
+  const jobseekerPrefIdRef = useRef(null)
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }
+  
+  useEffect(()=>{
+     if(accessToken){
+      getJobseekerPref();
+     }else{
+      setNewTabList(tabList);
+      setValue('Information Technology')
+     }
+  },[accessToken])
 
   useEffect(() => {
-    handleFetchPopularJobs()
+    if(accessToken){
+      getList();
+    }else{
+      handleFetchPopularJobs()
+    }
   }, [value,location])
 
+  const getJobseekerPref = async ()=>{
+    const perData = await fetchJobsPreferences()
+    jobseekerPrefIdRef.current = perData?.data?.data?.[0];
+    if(jobseekerPrefIdRef.current){
+      setNewTabList(tabListLogin);
+      setValue('2');
+    }else{
+      setNewTabList([]);
+    }
+  }
+
+  const getList = async () => {
+      if (jobseekerPrefIdRef.current) {   
+        fetchJobsLogin()
+      } else {
+        fetchJobsLoginNoPerferse()
+      }
+  }
+  const fetchJobsLogin = () => {
+    if((value ==='1' ||  value ==='2') ){
+    setLoading(true)
+    fetchJobsForYouLogin(
+      {
+        jobseekerPrefId: jobseekerPrefIdRef.current?.id,
+        page: 1,
+        size: 6,
+        sort:value,
+      },
+      accessToken
+    ).then((res) => {
+      const data = res?.data?.data?.jobs
+      setList(data ?? [])
+    }).finally(()=>{
+      setLoading(false)
+    })
+  }
+  }
+  
+  const fetchJobsLoginNoPerferse  = ()=>{
+    setLoading(true)
+    const params = {
+      size: 6,
+      sort: 1,
+      source: 'web',
+    }
+    fetchJobsForYou(params).then((res) => {
+      const data = res?.data?.data
+      setList(data.jobs ?? [])
+    }).finally(() => {
+      setLoading(false)
+    })
+  }
+  
   const handleFetchPopularJobs = () => {
     setLoading(true)
     const params = {
@@ -142,11 +229,13 @@ const Tabs = ({ location }: any) => {
   const handlePopularJobSearch = (search: string) => {
     //
   }
-
   return (
     <div>
-      <h2 className={styles.title}>Popular Jobs</h2>
-
+      <h2 className={styles.title}>
+        {
+          accessToken ? 'Jobs for You' : 'Popular Jobs'
+        }   
+      </h2>
       <div className={styles.webTab}>
         <Box sx={{ maxWidth: '100%', bgcolor: 'background.paper' }}>
           <TabContext value='1'>
@@ -158,7 +247,7 @@ const Tabs = ({ location }: any) => {
                 aria-label='scrollable auto tabs example'
                 onChange={handleChange}
               >
-                {tabList.map((item) => (
+                {newTabList.map((item) => (
                   <StyledTab
                     key={item.value}
                     label={item.tab}
@@ -172,12 +261,32 @@ const Tabs = ({ location }: any) => {
                     }}
                   />
                 ))}
+              
               </StyledTabs>
+              {
+                accessToken ? (
+                  <div className = {styles.preference}>
+                  {
+                   jobseekerPrefIdRef.current ? 
+                   <div>
+                    {
+                      user?.avatar ?  <img src = {user?.avatar} /> : null
+                    }
+                    Based on your job preference: <Link href="/manage-profile?tab=job-preferences" className={styles.link}>
+                     {jobseekerPrefIdRef.current?.location} | {jobseekerPrefIdRef.current?.job_title} | {jobseekerPrefIdRef.current?.salary_range}
+                       </Link>
+                   </div>
+                   : <p>Improve job recommendations by updating <Link href="/manage-profile?tab=job-preferences" className={styles.link2}> job preferences</Link></p>
+                  } 
+                 </div>
+                ) : null
+              }
+             
             </ThemeProvider>
 
             <div className={styles.tabContainer}>
               {!loading ? (
-                list.map((item) => <JobDetail key={item.id} detail={item} />)
+                list?.map((item) => <JobDetail key={item.id} detail={item} />)
               ) : (
                 <Box sx={{ width: '100%' }}>
                   <Skeleton width={'100%'} height={200} sx={{ margin: '20px 0' }} />
@@ -194,24 +303,8 @@ const Tabs = ({ location }: any) => {
               )}
 
               <div className={styles.tabContainer_more}>
-                <Button
-                  variant='outlined'
-                  sx={{
-                    width: '118px',
-                    height: '44px',
-                    fontStyle: 'normal',
-                    fontWeight: '700',
-                    fontSize: '14px',
-                    lineHeight: '18px',
-                    letterSpacing: '0.0075em',
-                    color: '#136FD3',
-                    border: '1px solid #136FD3',
-                    borderRadius: '10px',
-                    textTransform: 'capitalize'
-                  }}
-                >
-                  See more
-                </Button>
+              <div className={styles.moreBtn}>See More</div>
+                
               </div>
             </div>
           </TabContext>
