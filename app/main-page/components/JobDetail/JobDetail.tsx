@@ -6,6 +6,7 @@ import { HomePageChat } from 'images'
 import styles from '../../popularJobs.module.scss'
 import Image from 'next/image'
 const JobDetail = ({ detail }: any) => {
+  console.log(detail,7777)
   return (
     <div className={styles.job_detail}>
       <Link className={styles.job_info} href={detail.job_url} >
@@ -29,10 +30,16 @@ const JobDetail = ({ detail }: any) => {
         href={detail.company_url}
       >
         <div className={styles.job_avatarWrapper}>
-          <Image alt={detail?.job_title} src={detail?.company_logo} width={40} height={40} quality={0}></Image>
+          <div className={styles.job_box}>
+          <Image alt={detail?.job_title} src={detail?.company_logo} width={24} height={24} quality={0}></Image>
           <div className={styles.job_companyInfo_name}>{detail?.company_name}</div>
+          </div>
+          <div className={styles.job_companyInfo_industry}>
+            {detail?.company_industry} 
+          {detail?.company_industry &&  detail?.company_financing_stage ? ' | ' : null} 
+          {detail?.company_financing_stage} 
+          </div>
         </div>
-        <div>{detail?.company_financing_stage}</div>
       </Link>
     </div>
   )

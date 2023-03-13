@@ -159,10 +159,15 @@ const JobsCard = ({location}:any) => {
     router.push('/get-started')
   }
 
+  const getPreference = ()=>{
+    router.push('/manage-profile?tab=job-preferences')
+   
+  }
+
   const tipsFun = <p className={styles.tips} >
    {
     accessToken ? <>
-      Based on your <span className={styles.preference}>job preference</span>
+      Based on your <span className={styles.preference} onClick={getPreference}>job preference</span>
        </> : (
        <>Want more accurate matches?
       <span className={styles.started} onClick={getStarted}>

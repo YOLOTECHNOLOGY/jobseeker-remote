@@ -6,7 +6,11 @@
   margin: 0 auto;
   padding-left: 10px;
   padding-right: 10px;
-
+  :global{
+    .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+      border-width: 0;
+    }
+  }
   @media (max-width: 799px) {
     max-width: 688px;
   }

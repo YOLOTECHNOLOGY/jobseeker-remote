@@ -17,7 +17,7 @@ export default async function Companies({ location }: any) {
         <CompanyCardList data={data} />
       </div>
       {
-        data?.data?.featured_companies?.length ? <Link href='/companies' className={styles.moreBtn}>See more</Link> : null
+        data?.data?.featured_companies?.length ? <Link href='/companies' className={styles.moreBtn}>See More</Link> : null
       }
     </div>
   )

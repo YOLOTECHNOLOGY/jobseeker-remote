@@ -4,9 +4,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 80%;
-  padding: 0 10px;
-
+  width: 100%;
   @include sm {
     width: 100%;
   }
@@ -15,7 +13,7 @@
   .location {
     width: 183px;
     @include sm {
-      width: 120px;
+      width: 140px;
     }
   }
 

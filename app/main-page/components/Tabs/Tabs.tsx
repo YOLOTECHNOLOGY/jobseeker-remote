@@ -166,7 +166,7 @@ const Tabs = ({ location }: any) => {
                     sx={{
                       fontSize: '16px',
                       textTransform: 'capitalize',
-                      width: 'calc(100% / 4)',
+                      width: 'calc(15%)',
                       color: '#707070',
                       background: '#F5F6FA'
                     }}
@@ -206,7 +206,8 @@ const Tabs = ({ location }: any) => {
                     letterSpacing: '0.0075em',
                     color: '#136FD3',
                     border: '1px solid #136FD3',
-                    borderRadius: '10px'
+                    borderRadius: '10px',
+                    textTransform: 'capitalize'
                   }}
                 >
                   See more

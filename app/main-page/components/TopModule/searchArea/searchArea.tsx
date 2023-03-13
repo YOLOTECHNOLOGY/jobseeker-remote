@@ -87,8 +87,9 @@ const SearchArea = (props: any) => {
             }}
         />
         <MaterialButton
-            className={styles.searchButton} disabled={!searchValue}
+            className={styles.searchButton}
             onClick={() => {
+                if(!searchValue) return
                 addSearchHistory(searchValue)
                 pushJobPage(searchValue)
             }}
