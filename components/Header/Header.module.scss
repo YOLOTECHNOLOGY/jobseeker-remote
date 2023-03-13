@@ -23,6 +23,7 @@
   margin-top: 0;
   border-bottom: 1px solid rgba($lightgrey, 0.5);
   position: relative;
+  background-color: $primaryBlue-3;
 
   @include msd {
     position: sticky;
@@ -48,8 +49,8 @@
   line-height: 15px;
   text-align: center;
   letter-spacing: 0.0075em;
-  color: #FFFFFF;
-  background: #D2030F;
+  color: #ffffff;
+  background: #d2030f;
   border-radius: 15px;
   padding: 2px 5px;
   margin-left: 5px;
@@ -102,6 +103,7 @@
   justify-content: center;
   position: relative;
   letter-spacing: 0.05em;
+  color: white;
 
   &Item,
   &Icon {
@@ -145,7 +147,7 @@
   }
 
   &TextCurrentPage {
-    color: #2379ea;
+    color: white;
     cursor: default;
   }
 
