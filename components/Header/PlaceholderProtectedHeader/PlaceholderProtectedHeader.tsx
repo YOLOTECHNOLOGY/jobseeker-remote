@@ -8,12 +8,14 @@ import Link from 'components/Link'
 import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
+import { getCookie } from 'helpers/cookies'
+
 /* Images */
-import { BossjobLogo, ChatCircleDots, DefaultAvatar } from 'images'
+import { BossjobLogoWhite, ChatCircleDots, DefaultAvatar } from 'images'
 
 /* Style */
 import styles from '../Header.module.scss'
-import MaterialAlert from '../../MaterialAlert/ index'
+import MaterialAlert from 'components/MaterialAlert/ index'
 import { IMContext } from 'components/Chat/IMProvider.client'
 
 type PlaceholderProtectedHeaderProps = {
@@ -21,6 +23,7 @@ type PlaceholderProtectedHeaderProps = {
 }
 
 const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHeaderProps) => {
+  const currentUser = getCookie('user')
   const { totalUnread } = useContext(IMContext)
   return (
     <>
@@ -37,7 +40,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
           <div className={styles.headerLogo}>
             <img
               className={styles.headerLogoImage}
-              src={BossjobLogo}
+              src={BossjobLogoWhite}
               title='Bossjob logo'
               alt='Bossjob logo'
             />
@@ -62,7 +65,6 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                     Companies
                   </Text>
                 </li>
-
 
                 <li className={styles.headerLink} style={{ position: 'relative' }}>
                   <Link title='Career Guide' to='https://blog.bossjob.ph' external>
@@ -96,16 +98,37 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
           </div>
           <ul className={styles.headerLinksList}>
             <React.Fragment>
-              <li className={styles.headerLink} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <li
+                className={styles.headerLink}
+                style={{ flexDirection: 'row', alignItems: 'center' }}
+              >
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                   Chat
                 </Text>
-                {totalUnread ? <span className={styles.unread}>{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
+                {totalUnread ? (
+                  <span className={styles.unread}>
+                    {Number(totalUnread) > 999 ? '999+' : totalUnread}
+                  </span>
+                ) : null}
               </li>
               <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
                 <a title='Manage Resume'>
-                  <MaterialButton variant='contained' capitalize>
-                    <Text textColor='white' textStyle='base' bold>
+                  <MaterialButton
+                    variant='outlined'
+                    size='medium'
+                    capitalize
+                    sx={{
+                      width: '123px',
+                      height: '35px !important',
+                      border: '1.5px solid #FFFFFF',
+                      borderRadius: '10px',
+                      maxWidth: '153px',
+                      paddingLeft: '0',
+                      paddingRight: '0',
+                      backgroundColor: '#136FD3'
+                    }}
+                  >
+                    <Text textStyle='base' textColor='white' bold>
                       Manage Resume
                     </Text>
                   </MaterialButton>
@@ -113,7 +136,11 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
               </li>
               <li className={styles.headerLink}>
                 <div className={styles.profileWrapper}>
-                  <img src={DefaultAvatar} className={styles.profilePlaceHolder} alt='avatar' />
+                  <img
+                    src={currentUser?.avatar || DefaultAvatar}
+                    className={styles.profilePlaceHolder}
+                    alt='avatar'
+                  />
                   <div className={styles.profileCaret} />
                 </div>
               </li>
@@ -121,21 +148,27 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
           </ul>
 
           <div className={styles.mobileIconWrapper}>
-            <li className={styles.headerLink}
+            <li
+              className={styles.headerLink}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 position: 'relative',
                 left: 20
-              }}>
+              }}
+            >
               <>
                 <img src={ChatCircleDots} alt='Chat logo' />
 
                 {/* <SmsIcon color='primary' fontSize='large' /> */}
-                {totalUnread ? <span
-                  className={styles.unread}
-                  style={{ position: 'absolute', bottom: '50%', right: '50%' }}
-                >{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
+                {totalUnread ? (
+                  <span
+                    className={styles.unread}
+                    style={{ position: 'absolute', bottom: '50%', right: '50%' }}
+                  >
+                    {Number(totalUnread) > 999 ? '999+' : totalUnread}
+                  </span>
+                ) : null}
               </>
             </li>
             <div className={styles.icon}>

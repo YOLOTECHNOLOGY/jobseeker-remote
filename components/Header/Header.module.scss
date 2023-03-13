@@ -11,7 +11,7 @@
   width: 120px;
   height: 29px;
 
-  @include md {
+  @include sm {
     width: 150px;
     height: 40px;
   }
@@ -19,10 +19,11 @@
 
 .header {
   width: 100%;
-  height: 64px;
+  height: 55px;
   margin-top: 0;
   border-bottom: 1px solid rgba($lightgrey, 0.5);
   position: relative;
+  background: #136fd3;
 
   @include msd {
     position: sticky;
@@ -48,8 +49,8 @@
   line-height: 15px;
   text-align: center;
   letter-spacing: 0.0075em;
-  color: #FFFFFF;
-  background: #D2030F;
+  color: #ffffff;
+  background: #d2030f;
   border-radius: 15px;
   padding: 2px 5px;
   margin-left: 5px;
@@ -110,7 +111,7 @@
     }
   }
 
-  @include md {
+  @include sm {
     padding: 0 15px;
   }
 
@@ -134,18 +135,20 @@
   }
 
   &Text {
+    color: white;
+
     &.isActive {
       color: $primaryBlue;
       font-weight: 500;
     }
 
     &:hover {
-      color: $primaryBlue;
+      color: white;
     }
   }
 
   &TextCurrentPage {
-    color: #2379ea;
+    color: white;
     cursor: default;
   }
 
@@ -191,6 +194,10 @@
 }
 
 .profile {
+  &ProtectedWrapper {
+    cursor: pointer;
+  }
+
   &Wrapper {
     display: flex;
     flex-direction: row;
@@ -199,8 +206,16 @@
     position: relative;
 
     &:hover {
-      cursor: pointer;
+      cursor: not-allowed;
     }
+  }
+
+  &Country {
+    margin-right: 30px;
+  }
+
+  &Disabled {
+    cursor: none;
   }
 
   &PlaceHolder {
@@ -225,7 +240,7 @@
       height: 8px;
       width: 2px;
       top: 50%;
-      background-color: $darkgrey;
+      background-color: white;
     }
 
     &::before {

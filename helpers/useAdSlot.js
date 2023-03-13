@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 function useAdSlot({ mapping, sizes, id, adUnit, isTransitioning }) {
   useEffect(() => {
     const { googletag } = window
-    if (!googletag) {
+    if (!googletag?.apiReady) {
       handleForGetGoogletag()
     } else {
       handleInitGoogleAd()

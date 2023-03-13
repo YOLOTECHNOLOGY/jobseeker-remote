@@ -2,7 +2,7 @@
 @import 'styles/mixins.scss';
 
 #hamburgerMenu {
-  background: white;
+  background: #136fd3;
   border: 0;
   touch-action: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -38,7 +38,7 @@
   margin-bottom: 3px;
   position: relative;
 
-  background: black;
+  background: white;
   border-radius: 3px;
 
   z-index: 1;

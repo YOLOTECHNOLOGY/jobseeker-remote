@@ -12,7 +12,7 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogo, DefaultAvatar } from 'images'
+import { BossjobLogoWhite as BossjobLogo, DefaultAvatar } from 'images'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
@@ -161,8 +161,21 @@ const ProtectedHeader = () => {
                     // currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
                   }}
                 >
-                  <MaterialButton variant='contained' capitalize>
-                    <Text textColor='white' textStyle='base' bold>
+                  <MaterialButton
+                    variant='contained'
+                    capitalize
+                    sx={{
+                      width: '123px',
+                      height: '35px !important',
+                      border: '1.5px solid #FFFFFF',
+                      borderRadius: '10px',
+                      maxWidth: '153px',
+                      paddingLeft: '0',
+                      paddingRight: '0',
+                      backgroundColor: '#136FD3'
+                    }}
+                  >
+                    <Text textColor='white' textStyle='base'>
                       Manage Resume
                     </Text>
                   </MaterialButton>
@@ -177,7 +190,7 @@ const ProtectedHeader = () => {
             </li>
             <li className={styles.headerLink}>
               <div
-                className={styles.profileWrapper}
+                className={styles.profileProtectedWrapper}
                 onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}
               >
                 <img

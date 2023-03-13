@@ -205,8 +205,8 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
                                             const userInfoResult = [...userInfos.map(userInfo => ({
                                                 auid: '' + userInfo.id + '_r',
                                                 item: {
-                                                    avatar: userDetail?.avatar ?? '',
-                                                    name: userDetail.full_name
+                                                    avatar: userInfo?.avatar ?? '',
+                                                    name: userInfo.full_name
                                                 }
                                             })), {
                                                 auid: '' + userDetailRef.current?.id + '_j',
