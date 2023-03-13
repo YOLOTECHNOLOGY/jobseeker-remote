@@ -125,7 +125,11 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                       maxWidth: '153px',
                       paddingLeft: '0',
                       paddingRight: '0',
-                      backgroundColor: '#136FD3'
+                      backgroundColor: '#136FD3',
+                      ':hover': {
+                        backgroundColor: '#136FD3',
+                        border: '1px solid #fff'
+                      }
                     }}
                   >
                     <Text textStyle='base' textColor='white' bold>

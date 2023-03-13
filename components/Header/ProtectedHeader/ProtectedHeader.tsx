@@ -172,7 +172,10 @@ const ProtectedHeader = () => {
                       maxWidth: '153px',
                       paddingLeft: '0',
                       paddingRight: '0',
-                      backgroundColor: '#136FD3'
+                      backgroundColor: '#136FD3',
+                      ':hover': {
+                        backgroundColor: '#136FD3'
+                      }
                     }}
                   >
                     <Text textColor='white' textStyle='base'>
@@ -181,8 +184,24 @@ const ProtectedHeader = () => {
                   </MaterialButton>
                 </a>
               ) : (
-                <MaterialButton variant='contained' capitalize>
-                  <Text textColor='white' textStyle='base' bold>
+                <MaterialButton
+                  variant='contained'
+                  capitalize
+                  sx={{
+                    width: '123px',
+                    height: '35px !important',
+                    border: '1.5px solid #FFFFFF',
+                    borderRadius: '10px',
+                    maxWidth: '153px',
+                    paddingLeft: '0',
+                    paddingRight: '0',
+                    backgroundColor: '#136FD3',
+                    ':hover': {
+                      backgroundColor: '#136FD3'
+                    }
+                  }}
+                >
+                  <Text textColor='white' textStyle='base'>
                     Manage Resume
                   </Text>
                 </MaterialButton>
