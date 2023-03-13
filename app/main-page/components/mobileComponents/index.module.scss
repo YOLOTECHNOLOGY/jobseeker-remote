@@ -68,12 +68,14 @@
         .tips{
             font-style: normal;
             font-weight: 400;
-            font-size: 14px;
-            letter-spacing: 1px;      
+            font-size: 14px; 
             color: #707070; 
             margin: 0;
             line-height: 30px;
             margin-bottom: 16px;
+        }
+        .preference{
+            color: #136FD3;
         }
         .started{
             line-height: 30px;
@@ -130,18 +132,18 @@
                 display: inline-block;
             }
             .contact{
-                padding: 14px 0 0;
+                margin: 14px 0 0;
                 font-size: 12px;
                 color: #353535;
-                line-height: 20px;
-               
+                line-height: 26px;
                 .avator{
                   width: 20px;
                   height: 20px;
                   border-radius: 50%;
                   position: relative;
-                  margin-right: 4px;
+                  margin-right: 10px;
                   display: inline-block;
+                  top: -2px;
                   img{
                     width: 20px;
                     height: 20px;
@@ -151,7 +153,7 @@
                    content: ' ';
                    display: block;
                    position: absolute;
-                   bottom: -2px;
+                   bottom: -5px;
                    right: -4px;
                    width: 10px;
                    height: 10px;
