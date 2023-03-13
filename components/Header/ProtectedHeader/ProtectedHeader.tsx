@@ -190,7 +190,7 @@ const ProtectedHeader = () => {
             </li>
             <li className={styles.headerLink}>
               <div
-                className={styles.profileWrapper}
+                className={styles.profileProtectedWrapper}
                 onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}
               >
                 <img

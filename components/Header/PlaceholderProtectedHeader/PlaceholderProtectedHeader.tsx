@@ -8,8 +8,10 @@ import Link from 'components/Link'
 import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
+import { getCookie } from 'helpers/cookies'
+
 /* Images */
-import { BossjobLogo, ChatCircleDots, DefaultAvatar } from 'images'
+import { BossjobLogoWhite, ChatCircleDots, DefaultAvatar } from 'images'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -21,6 +23,7 @@ type PlaceholderProtectedHeaderProps = {
 }
 
 const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHeaderProps) => {
+  const currentUser = getCookie('user')
   const { totalUnread } = useContext(IMContext)
   return (
     <>
@@ -37,7 +40,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
           <div className={styles.headerLogo}>
             <img
               className={styles.headerLogoImage}
-              src={BossjobLogo}
+              src={BossjobLogoWhite}
               title='Bossjob logo'
               alt='Bossjob logo'
             />
@@ -110,8 +113,22 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
               </li>
               <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
                 <a title='Manage Resume'>
-                  <MaterialButton variant='contained' capitalize>
-                    <Text textColor='white' textStyle='base' bold>
+                  <MaterialButton
+                    variant='outlined'
+                    size='medium'
+                    capitalize
+                    sx={{
+                      width: '123px',
+                      height: '35px !important',
+                      border: '1.5px solid #FFFFFF',
+                      borderRadius: '10px',
+                      maxWidth: '153px',
+                      paddingLeft: '0',
+                      paddingRight: '0',
+                      backgroundColor: '#136FD3'
+                    }}
+                  >
+                    <Text textStyle='base' textColor='white' bold>
                       Manage Resume
                     </Text>
                   </MaterialButton>
@@ -119,7 +136,11 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
               </li>
               <li className={styles.headerLink}>
                 <div className={styles.profileWrapper}>
-                  <img src={DefaultAvatar} className={styles.profilePlaceHolder} alt='avatar' />
+                  <img
+                    src={currentUser?.avatar || DefaultAvatar}
+                    className={styles.profilePlaceHolder}
+                    alt='avatar'
+                  />
                   <div className={styles.profileCaret} />
                 </div>
               </li>

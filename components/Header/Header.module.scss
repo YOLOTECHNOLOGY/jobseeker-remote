@@ -194,6 +194,10 @@
 }
 
 .profile {
+  &ProtectedWrapper {
+    cursor: pointer;
+  }
+
   &Wrapper {
     display: flex;
     flex-direction: row;
