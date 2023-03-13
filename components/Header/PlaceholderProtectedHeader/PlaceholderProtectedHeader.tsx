@@ -13,7 +13,7 @@ import { BossjobLogo, ChatCircleDots, DefaultAvatar } from 'images'
 
 /* Style */
 import styles from '../Header.module.scss'
-import MaterialAlert from '../../MaterialAlert/ index'
+import MaterialAlert from 'components/MaterialAlert/ index'
 import { IMContext } from 'components/Chat/IMProvider.client'
 
 type PlaceholderProtectedHeaderProps = {
@@ -63,7 +63,6 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                   </Text>
                 </li>
 
-
                 <li className={styles.headerLink} style={{ position: 'relative' }}>
                   <Link title='Career Guide' to='https://blog.bossjob.ph' external>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
@@ -96,11 +95,18 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
           </div>
           <ul className={styles.headerLinksList}>
             <React.Fragment>
-              <li className={styles.headerLink} style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <li
+                className={styles.headerLink}
+                style={{ flexDirection: 'row', alignItems: 'center' }}
+              >
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                   Chat
                 </Text>
-                {totalUnread ? <span className={styles.unread}>{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
+                {totalUnread ? (
+                  <span className={styles.unread}>
+                    {Number(totalUnread) > 999 ? '999+' : totalUnread}
+                  </span>
+                ) : null}
               </li>
               <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
                 <a title='Manage Resume'>
@@ -121,21 +127,27 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
           </ul>
 
           <div className={styles.mobileIconWrapper}>
-            <li className={styles.headerLink}
+            <li
+              className={styles.headerLink}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 position: 'relative',
                 left: 20
-              }}>
+              }}
+            >
               <>
                 <img src={ChatCircleDots} alt='Chat logo' />
 
                 {/* <SmsIcon color='primary' fontSize='large' /> */}
-                {totalUnread ? <span
-                  className={styles.unread}
-                  style={{ position: 'absolute', bottom: '50%', right: '50%' }}
-                >{Number(totalUnread) > 999 ? '999+' : totalUnread}</span> : null}
+                {totalUnread ? (
+                  <span
+                    className={styles.unread}
+                    style={{ position: 'absolute', bottom: '50%', right: '50%' }}
+                  >
+                    {Number(totalUnread) > 999 ? '999+' : totalUnread}
+                  </span>
+                ) : null}
               </>
             </li>
             <div className={styles.icon}>
