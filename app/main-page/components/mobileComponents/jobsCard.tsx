@@ -127,7 +127,7 @@ const JobsCard = ({location}:any) => {
        // 页面高度 - dom距离顶部的高度
        const space =   scrollTopHeight - domTopHeight;
        const iscloseStrated = sessionStorage.getItem('closeStrated')
-      if(space > -10 && !iscloseStrated){
+      if(space > -10 && !iscloseStrated && !accessToken){
         setVisibleStarted(true)
       }else{
         setVisibleStarted(false)
@@ -160,10 +160,18 @@ const JobsCard = ({location}:any) => {
   }
 
   const tipsFun = <p className={styles.tips} >
-  Want more accurate matches?
-  <span className={styles.started} onClick={getStarted}>
-    Get Started
-  </span>
+   {
+    accessToken ? <>
+      Based on your <span className={styles.preference}>job preference</span>
+       </> : (
+       <>Want more accurate matches?
+      <span className={styles.started} onClick={getStarted}>
+          Get Started
+        </span>
+    
+    </>)
+   } 
+    
 </p>
  
 
