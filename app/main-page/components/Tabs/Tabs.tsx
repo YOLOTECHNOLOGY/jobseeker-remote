@@ -23,6 +23,7 @@ import {
 } from 'store/services/jobs/fetchJobsForYouLogin'
 import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou';
 
+
 const tabList = [
   {
     tab: 'IT',
@@ -129,6 +130,7 @@ const Tabs = ({ location }: any) => {
   const user = getCookie('user')
   const [newTabList,setNewTabList] = useState<Array<any>>([]);
   const jobseekerPrefIdRef = useRef(null)
+
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }
@@ -257,7 +259,8 @@ const Tabs = ({ location }: any) => {
                       textTransform: 'capitalize',
                       width: 'calc(15%)',
                       color: '#707070',
-                      background: '#F5F6FA'
+                      background: '#F5F6FA',
+                      fontFamily:'product sans'
                     }}
                   />
                 ))}
@@ -303,8 +306,7 @@ const Tabs = ({ location }: any) => {
               )}
 
               <div className={styles.tabContainer_more}>
-              <div className={styles.moreBtn}>See More</div>
-                
+              <Link className={styles.moreBtn} href='/jobs-hiring/job-search' >See More</Link>
               </div>
             </div>
           </TabContext>

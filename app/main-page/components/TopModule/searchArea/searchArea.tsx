@@ -58,6 +58,9 @@ const SearchArea = (props: any) => {
             isClear={false}
             defaultValue="Las Pinas"
             disableClearable
+            style={{
+                fontSize:'14px'
+            }}
             onChange={(e, value) => setLocation(value)}
         />
         <MaterialTextFieldWithSuggestionList
@@ -92,6 +95,9 @@ const SearchArea = (props: any) => {
                 if(!searchValue) return
                 addSearchHistory(searchValue)
                 pushJobPage(searchValue)
+            }}
+            style={{
+                textTransform: 'capitalize'
             }}
         > Search </MaterialButton>
     </div>

@@ -44,10 +44,13 @@ const CompanyList = (props: any) => {
                 <Link href={jobUrl} className={styles.list} key={`${jobItem.id}-${index}`}>
                   <div className={styles.jobType}>
                     <p>{jobTitle}</p>
-                     <div className={styles.salary}>{salaryRangeValue}</div>
+                     <div className={styles.transBox}>
+                      <div className={styles.salary}>{salaryRangeValue}</div>
                       <div className={styles.chat} >
-                        <img src={HomePageChat} alt='Boss job chat now' width='18' height='18' style={{position:"relative",top:'-1px'}}/> Chat now
+                          <Image src={HomePageChat} alt='Boss job chat now' width='18' height='18' quality={0} style={{paddingRight:'4px'}}/> Chat now 
                       </div>
+                     </div>
+                    
                   </div>
                   <span className={styles.tag}>{jobLocation}</span>
                   <span className={styles.tag}>{xpLvl}</span>

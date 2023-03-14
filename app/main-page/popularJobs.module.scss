@@ -23,7 +23,7 @@
   width: 100%;
 
   &_more {
-    margin-top: 40px;
+    margin-top: 32px;
     text-align: center;
     width: 100%;
   }
@@ -35,9 +35,10 @@
     line-height: 44px;
     text-align: center;
     border: 1px solid #136FD3;
-    margin: 40px auto 0;
+    margin: 0 auto 10px;
     display: block;
     font-weight: 700;
+    cursor: pointer;
 }
 }
 
@@ -72,15 +73,19 @@
       font-size: 18px;
       letter-spacing: 0.02em;
       color: #353535;
-      width: 55%;
+      width: 0;
+      flex: 1;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       transition: color 0.3s ease-in;
     }
-
+    .transBox{
+      width: 194px;
+      height:30px;
+      overflow-y: hidden;
+  }
     &_salary {
-      width: 30%;
       font-style: normal;
       font-weight: 400;
       font-size: 18px;
@@ -89,10 +94,9 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      transform: translateX(92px);
+      transform: translateY(0px);
       transition: all 0.4s ease 0s;
       text-align: right;
-      min-width: 194px;
     }
 
     &_chat {
@@ -103,14 +107,15 @@
       background: #136fd3;
       border: 0.5px solid #136fd3;
       border-radius: 16px;
-
       font-weight: 400;
+      width: 98px;
       font-size: 12px;
       letter-spacing: 0.0075em;
       color: #ffffff;
-      transform: translateX(112px);
+      transform: translateY(30px);
       white-space: nowrap;
       transition: all 0.4s ease 0s;
+      float: right;
     }
   }
 
@@ -118,22 +123,21 @@
     color: #136fd3;
   }
 
-  &_info:hover>&_titleWrapper>&_info {
-    &_chat {
+  &_info:hover {
+    .job_info_salary {
       // display: flex;
-      transform: translateX(0px);
+      transform: translateY(-26px);
+      opacity: 0;
     }
 
-    &_salary {
-      // display: none;
-      transform: translateX(0px);
-      opacity: 0;
+    .job_info_chat {
+      transform: translateY(-26px);
     }
   }
 
   &_tags {
     display: flex;
-    padding: 22px 0;
+    padding: 16px 0 22px;
 
     div {
       align-items: center;
@@ -158,6 +162,9 @@
   &_box{
     display: flex;
     align-items: center;
+    img{
+      border-radius: 5px;
+    }
   }
   &_companyInfo {
     background: #f0f0f0;
