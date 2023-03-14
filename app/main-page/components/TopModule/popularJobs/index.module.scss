@@ -16,6 +16,7 @@
     align-items: flex-start;
     width: 100%;
     margin-left: 0px;
+    margin-top: 48px;
   }
 
   label {
@@ -59,7 +60,6 @@
       flex-shrink: 0;
       width: fit-content;
       height: 30px;
-
       font-family: 'Product Sans';
       font-style: normal;
       font-weight: 400;
@@ -80,9 +80,11 @@
       white-space: nowrap;
 
       @include sm {
-        width: 43%;
-        margin-top: 13px;
-        margin-left: 4%;
+        width: calc(50% - 5px);
+        margin: 10px 10px 0 0;
+        &:nth-of-type(even){
+          margin-right: 0;
+        }
       }
 
       &:hover {
