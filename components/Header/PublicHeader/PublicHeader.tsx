@@ -27,6 +27,9 @@ const PublicHeader = () => {
               src={BossjobLogo}
               title='Bossjob logo'
               alt='Bossjob logo'
+              style={{
+                marginTop:'3px'
+              }}
             />
           </Link>
         </div>
@@ -165,7 +168,7 @@ const PublicHeader = () => {
                       }
                     }}
                   >
-                    <Text textStyle='base' textColor='white' bold>
+                    <Text textStyle='base' style={{fontWeight:'400'}} textColor='white' bold>
                       Get Started
                     </Text>
                   </MaterialButton>

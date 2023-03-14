@@ -7,6 +7,9 @@ import styles from './index.module.scss'
 import { buildQuery } from 'app/main-page/helper'
 import Link from 'next/link'
 import classNames from 'classnames'
+import Tooltip from '@mui/material/Tooltip';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 interface MainData {
     title: string
     simpleTitle?: string
@@ -40,6 +43,7 @@ type SubItemProps = { data: SubData } & Attributes
 
 const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps & MainProps) => {
     const { isHover, setHoverData, data, onMouseEnter, onMouseLeave, setHoverTitle, hoverTitle, subTitles = [] } = props
+    console.log(subTitles,7777)
     useEffect(() => {
         if (isHover) {
             setHoverData(data.children)
@@ -63,6 +67,7 @@ const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps 
                     {subTitle}
                 </div>
             ))}
+           <ArrowForwardIosIcon className={styles.more}/>
         </div>
     </div>
 })
@@ -84,7 +89,9 @@ const SubItem: FunctionComponent<SubItemProps> = hoverable((props: SubItemProps 
     const { location } = useContext(LocationContext)
     const { data } = props
     return <Link className={styles.subItem} prefetch={false} href={buildQuery(location?.value, data.value)}>
-        <div className={styles.linkText}>{data.label}</div>
+        <Tooltip title={data.label} placement="top-start">
+          <div className={styles.linkText}> {data.label}</div>
+        </Tooltip>
     </Link>
 
 })
@@ -122,8 +129,12 @@ const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props:
 
             <div className={styles.pagination}>
                 <label>{currentPage}/{totalPages}</label>
-                <button type='button' disabled={!preEnable} onClick={onPre}> {'<'}</button>
-                <button type='button' disabled={!nextEnable} onClick={onNext}> {'>'}</button>
+                <button type='button' disabled={!preEnable} className={styles.prePage} onClick={onPre}> 
+                   <ArrowBackIosIcon className={styles.icon}/>
+                </button>
+                <button type='button' disabled={!nextEnable} onClick={onNext}>
+                  <ArrowForwardIosIcon className={styles.icon}/>
+                </button>
             </div>
         </div>
         {hoverData && <div className={styles.sectionContainer}>

@@ -28,13 +28,13 @@
     width: 100%;
   }
   .moreBtn {
-    color: #136FD3;
+    color: #fff;
     width: 118px;
     height: 44px;
     border-radius: 10px;
     line-height: 44px;
     text-align: center;
-    border: 1px solid #136FD3;
+    background: #136FD3;
     margin: 0 auto 10px;
     display: block;
     font-weight: 700;
@@ -95,7 +95,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       transform: translateY(0px);
-      // transition: all 0.4s ease 0s;
+      transition: all 0.4s ease 0s;
       text-align: right;
     }
 
@@ -114,7 +114,7 @@
       color: #ffffff;
       transform: translateY(30px);
       white-space: nowrap;
-      // transition: all 0.4s ease 0s;
+      transition: all 0.4s ease 0s;
       float: right;
     }
   }

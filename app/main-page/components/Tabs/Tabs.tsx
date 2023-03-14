@@ -260,7 +260,8 @@ const Tabs = ({ location }: any) => {
                       width: 'calc(15%)',
                       color: '#707070',
                       background: '#F5F6FA',
-                      fontFamily:'product sans'
+                      fontFamily:'product sans',
+                      letterSpacing:'1px'
                     }}
                   />
                 ))}

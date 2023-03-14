@@ -29,7 +29,7 @@ const JobsCard = ({location}:any) => {
   const loadingRef = useRef<boolean>(null)
   const currentRef = useRef<number>(null)
   const dataRef = useRef<Array<any>>(null)
-  const jobseekerPrefIdRef = useRef<number>(null)
+  const jobseekerPrefIdRef = useRef(null)
   const [visibleStarted, setVisibleStarted] = useState<boolean>(false)
 
   useEffect(() => {
@@ -55,23 +55,22 @@ const JobsCard = ({location}:any) => {
     if (accessToken) {
       if (!jobseekerPrefIdRef.current) {
         const perData = await fetchJobsPreferences()
-        jobseekerPrefIdRef.current = perData?.data?.data?.[0]?.id
+        jobseekerPrefIdRef.current = perData?.data?.data
         fetchJobsLogin(params)
       } else {
         fetchJobsLogin(params)
       }
     } else {
-      fetchJobsForYou(params).then((res) => {
-        const data = res?.data?.data
-        changeData(data)
-      })
+      fetchJobsForYouFun(params)
     }
   }
 
   const fetchJobsLogin = (params) => {
+  const id = jobseekerPrefIdRef.current?.[0]?.id
+   if(id){
     fetchJobsForYouLogin(
       {
-        jobseekerPrefId: jobseekerPrefIdRef.current,
+        jobseekerPrefId: id,
         page: params.page,
         size: params.size
       },
@@ -80,7 +79,18 @@ const JobsCard = ({location}:any) => {
       const data = res?.data?.data
       changeData(data)
     })
+  }else{
+    fetchJobsForYouFun(params)
   }
+  }
+
+  const fetchJobsForYouFun = (params) => {
+    fetchJobsForYou(params).then((res) => {
+      const data = res?.data?.data
+      changeData(data)
+    })
+  }
+
 
   const changeData = (data) => {
     if (data) {
