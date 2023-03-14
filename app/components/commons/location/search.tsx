@@ -1,7 +1,7 @@
 import React from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Autocomplete from '@mui/material/Autocomplete'
-import MaterialTextField from 'components/MaterialTextField'
+import {  TextField } from '@mui/material'
 
 type Input = React.InputHTMLAttributes<HTMLInputElement>
 type JobSearchBar = {
@@ -26,30 +26,35 @@ type JobSearchBar = {
 
 const theme = createTheme({
   components: {
-    MuiInputLabel: {
+    MuiAutocomplete: {
       styleOverrides: {
         root: {
-          fontSize: '14px',
-          transform: 'translate(14px, 10px) scale(1)',
-          letterSpacing: '1px',
-          '&.Mui-focused': {
-            fontSize: '10px',
-            transform: 'translate(14px, -10px) scale(1)'
-          },
-          lineHeight: '18px'
+          borderRadius: '10px',
+          overflow: 'hidden',
+          // border: '1px solod #ccc'
         },
-        shrink: {
-          fontSize: '10px',
-          transform: 'translate(14px, -10px) scale(1)'
-        },
-        outlined: {
-          '&.MuiInputLabel-shrink': {
-            fontSize: '10px'
-          },
-          fontSize: '14px'
-        }
+        // inputRoot:{
+        //   border:'none'
+        // },
+        // focused:{
+        //   border:'none'
+        // }
       }
-    }
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: '10px',
+          overflow: 'hidden',
+          border: 'none',
+          focused: {
+            border: 'none'
+          }
+        
+        },
+
+      }
+    },
   }
 })
 const MaterialTextFieldWithSuggestionList = ({
@@ -79,6 +84,7 @@ const MaterialTextFieldWithSuggestionList = ({
       <Autocomplete
         id='autocomplete-suggestion-list'
         freeSolo
+        // style={{background:'#fff',color:'#ccc'}}
         options={options?.map((option) => option)}
         className={className}
         size={size}
@@ -87,16 +93,23 @@ const MaterialTextFieldWithSuggestionList = ({
             onSelect(val ?? '')
           }
         }}
+        placeholder={label}
+
         defaultValue={defaultValue}
         inputValue={value}
         renderInput={(params) => (
-          <MaterialTextField
+          <TextField
             {...refs}
             id={id}
-            label={label}
+             style={{background:'#fff',color:'#ccc',borderRadius:'10px'}}
+
+            // label={label}
+            placeholder={label}
+            hiddenLabel
             maxLength={maxLength}
             color={color as any}
-            variant={variant as any}
+            // variant='standard'
+            // inputProps={{disableUnderline:true}}
             onChange={handleChange}
             {...rest}
             {...params}

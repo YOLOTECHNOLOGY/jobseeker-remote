@@ -22,20 +22,20 @@ const textFieldTheme = value => createTheme({
           border: 'none',
           height: '44px',
           background: !!value ? '#E7F1FB' : '#F0F0F0',
-
-        },
-        input: {
           color: '#136FD3',
         },
-        focused: {
-          background: '#E7F1FB'
-        },
+
+        // input: {
+        //   color: '#136FD3',
+        // },
+        // focused: {
+        //   background: '#E7F1FB'
+        // },
         notchedOutline: {
           '&.Mui-focused': {
             border: 'none'
           },
           border: 'none',
-
         }
       },
     },
@@ -44,41 +44,18 @@ const textFieldTheme = value => createTheme({
         root: {
           fontSize: '14px',
           letterSpacing: '1px',
-          transform: 'translate(14px, 10px) scale(1)',
-          '&.Mui-focused': {
-            fontSize: '10px',
-            transform: 'translate(14px, -10px) scale(1)',
-          },
           top: '4px',
           height: '44px',
           lineHeight: '18px'
         },
         shrink: {
           display: 'none',
-          fontSize: '10px',
-          transform: 'translate(14px, -10px) scale(1)',
         },
         outlined: {
           '&.MuiInputLabel-shrink': {
             fontSize: '10px',
           },
         },
-      },
-    },
-  },
-})
-const autocompleteTheme = createTheme({
-  components: {
-    MuiAutocomplete: {
-      styleOverrides: {
-        root: {
-          '&.MuiInputLabel-shrink': {
-            fontSize: '13px',
-          },
-          height: '44px',
-          color: '#136FD3'
-        },
-
       },
     },
   },
@@ -93,8 +70,7 @@ const MaterialLocationField = ({ className, label, locationList, disableClearabl
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
   return (
-    <ThemeProvider theme={autocompleteTheme}>
-
+    <ThemeProvider theme={textFieldTheme(value)}>
       <Autocomplete
         id='location-autocomplete'
         options={formattedLocationList}
@@ -104,14 +80,12 @@ const MaterialLocationField = ({ className, label, locationList, disableClearabl
         disableClearable={disableClearable}
         className={className}
         renderInput={(params) => (
-          <ThemeProvider theme={textFieldTheme(value)}>
-            <TextField id='location'
-              {...fieldRef}
-              error={!!error}
-              required={rest.required}
-              helperText={error?.message}
-              label={<span>{label ? label : 'Location'} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>} variant='outlined' size='small' {...params} />
-          </ThemeProvider>
+          <TextField id='location'
+            {...fieldRef}
+            error={!!error}
+            required={rest.required}
+            helperText={error?.message}
+            label={<span>{label ? label : 'Location'} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>} variant='outlined' size='small' {...params} />
         )}
         defaultValue={defaultValue}
         {...rest}
