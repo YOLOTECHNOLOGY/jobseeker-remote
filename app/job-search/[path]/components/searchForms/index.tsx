@@ -1,31 +1,57 @@
 'use client'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect, useMemo } from 'react'
 import LocationField from 'app/components/commons/location'
 import JobSearchBar from '../../../../components/commons/location/search'
 import styles from './index.module.scss'
 import MaterialButton from 'components/MaterialButton'
 import Single from 'app/components/commons/select/single'
+import Multiple from 'app/components/commons/select/multiple'
+
 import { useSuggest } from './hooks'
 import theme from 'app/components/commons/theme'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import JobFunction from 'app/components/commons/jobFunction'
-import JobFunctionMultiSelector from 'components/JobFunctionMultiSelector'
 // import { useRouter } from 'next/navigation'
 import { LocationContext } from '../../../../components/providers/locationProvier'
+import JobSearchFilters from 'app/components/commons/JobSearchFilters'
+import { getCookie } from 'helpers/cookies'
+import { useDispatch } from 'react-redux'
+import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 const sortOptions = [
     { label: 'Newest', value: '1' },
     { label: 'Relevance', value: '2' },
     { label: 'Highest Salary', value: '3' }
 ]
 const SearchArea = (props: any) => {
-    const { config } = props
+    const { config, searchValues: { params, searchParams } } = props
+    console.log({ props })
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(fetchConfigSuccess(config))
+    }), []
+    const accessToken = getCookie('accessToken')
+    const userCookie = getCookie('user')
     const { location, setLocation } = useContext(LocationContext)
-    const [jobFunctionValue,jobFunctionChange] = useState()
+    const [salaries, setSelaries] = useState()
+    const salaryOptions = config.filters?.salary_range_filters ?? []
+    const [jobFunctionValue, jobFunctionChange] = useState()
+    const [showMore, setShowMore] = useState(false)
     const [sort, setSort] = useState()
+    const [moreData, setMoreData] = useState({})
     // const router = useRouter()
     const [searchValue, setSearchValue] = useState('')
     const [suggestionList, handleSuggestionSearch, addSearchHistory] = useSuggest() as any[]
-    console.log({ sort })
+
+    const filterParams = useMemo(() => {
+        return {
+            query: searchValue,
+            salary: salaries,
+            location: location,
+            sort: sort,
+            ...moreData
+        }
+    }, [searchValue, salaries, moreData, location, sort, jobFunctionValue])
+    console.log({ filterParams, jobFunctionValue, moreData })
     return <div>
         <ThemeProvider theme={theme}>
             <div className={styles.searchArea}>
@@ -75,15 +101,48 @@ const SearchArea = (props: any) => {
                     style={{ height: 30, width: 200 }}
                     label='Sort by'
                 />
-                <JobFunction 
-                // label='Job Function'
-                id='jobFunction'
-                label='Job Function'
-                value={jobFunctionValue}
-                onChange={jobFunctionChange}
+                <JobFunction
+                    // label='Job Function'
+                    id='jobFunction'
+                    label='Job Function'
+                    value={jobFunctionValue}
+                    onChange={jobFunctionChange}
                 />
+                <Multiple
+                    label='Salary'
+                    value={salaries}
+                    options={salaryOptions}
+                    onSelect={setSelaries}
+                />
+                <MaterialButton
+                    className={styles.searchButton}
+                    onClick={() => {
+                        setShowMore(true)
+                    }}
+                > More Filters </MaterialButton>
             </div>
         </ThemeProvider>
+        {showMore && (
+            <JobSearchFilters
+                urlDefaultValues={moreData}
+                isShowFilter={showMore}
+                onResetFilter={() => {
+                    console.log('onReset')
+                }}
+
+                keyword={params.path}
+                config={config}
+                handleShowFilter={() => {
+                    console.log('onClose')
+                    setShowMore(false)
+                }}
+                moreFilterReset={false}
+                isShowingEmailAlert={accessToken && !userCookie?.is_email_verify}
+                setClientDefaultValues={data => {
+                    console.log('dataChanged', data)
+                    setMoreData(data)
+                }} />
+        )}
     </div>
 }
 export default SearchArea
