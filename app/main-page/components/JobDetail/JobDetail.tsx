@@ -12,10 +12,12 @@ const JobDetail = ({ detail }: any) => {
       <Link className={styles.job_info} href={detail.job_url} >
         <div className={styles.job_titleWrapper}>
           <div className={styles.job_info_title}>{detail?.job_title}</div>
-          <div className={styles.job_info_salary}>{detail?.salary_range_value}</div>
-          <div className={styles.job_info_chat} >
-            <Image src={HomePageChat} alt='Boss job chat now' width='18' height='18' quality={0} /> Chat now
-          </div>
+          <div className={styles.transBox}>
+            <div className={styles.job_info_salary}>{detail?.salary_range_value}</div>
+            <div className={styles.job_info_chat} >
+              <Image src={HomePageChat} alt='Boss job chat now' width='18' height='18' quality={0} style={{paddingRight:'4px'}} /> Chat now
+            </div>
+            </div>
         </div>
 
         <div className={styles.job_tags}>

@@ -10,6 +10,12 @@
     .MuiOutlinedInput-notchedOutline{
       border-width: 0 !important;
     }
+    .MuiOutlinedInput-input{
+      font-size: 14px;
+    }
+    .MuiOutlinedInput-root{
+      border-radius: 10px;
+    }
   }
   @media (max-width: 799px) {
     max-width: 688px;
