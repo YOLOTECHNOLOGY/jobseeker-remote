@@ -14,6 +14,23 @@ const totalOf = keys => pipe(allKeysIn(keys), prop('length'))
 const onlyOneIn = keys => pipe(totalOf(keys), equals(1))
 const firstKeyIn = keys => pipe(allKeysIn(keys), prop(0))
 const lastKeyIn = keys => pipe(allKeysIn(keys), last)
+const conditions = {
+    noParams: pipe(allKeysIn(['query', 'location', ...userSelectKeys]), isEmpty),
+    onlyOneFunctionTitle: both(onlyOneIn(['query', ...userSelectKeys]), onlyOneIn(['functionTitles'])),
+    onlyOne: onlyOneIn(['query', 'location', ...userSelectKeys]),
+    oneWithLocation: both(
+        onlyOneIn(['query', ...userSelectKeys]),
+        has('location')
+    ),
+    queryMany: both(
+        has('query'),
+        pipe(totalOf(['query', 'location', ...userSelectKeys]), lte(2))
+    ),
+    noQueryMany: both(
+        no('query'),
+        pipe(totalOf(['location', ...userSelectKeys]), lte(2))
+    )
+}
 const buildQueryParams = cond([
     [conditions.noParams, applySpec({
         searchQuery: always('job-search'),
@@ -23,7 +40,7 @@ const buildQueryParams = cond([
         ...params,
         fucntionTitles: [],
         query: params.fucntionTitles[0]
-    })]
+    })],
     [conditions.onlyOne, applySpec({
         searchQuery: pipe(
             firstKeyIn(['query', 'location', ...userSelectKeys]),
@@ -47,23 +64,6 @@ const buildQueryParams = cond([
         filterParamsObject: identity
     })]
 ])
-const conditions = {
 
-    noParams: pipe(allKeysIn(['query', 'location', ...userSelectKeys]), isEmpty),
-    onlyOneFunctionTitle: both(onlyOneIn(['query', ...userSelectKeys]), onlyOneIn(['functionTitles'])),
-    onlyOne: onlyOneIn(['query', 'location', ...userSelectKeys]),
-    oneWithLocation: both(
-        onlyOneIn(['query', ...userSelectKeys]),
-        has('location')
-    ),
-    queryMany: both(
-        has('query'),
-        pipe(totalOf(['query', 'location', ...userSelectKeys]), lte(2))
-    ),
-    noQueryMany: both(
-        no('query'),
-        pipe(totalOf(['location', ...userSelectKeys]), lte(2))
-    )
-}
 
 export const encode = buildQueryParams
