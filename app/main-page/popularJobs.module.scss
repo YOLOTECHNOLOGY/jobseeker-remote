@@ -5,7 +5,7 @@
   font-style: normal;
   font-weight: 700;
   font-size: 32px;
-  letter-spacing: 0.02em;
+  letter-spacing: 1px;
   color: #353535;
   padding-top: 50px;
   padding: 0 10px;
@@ -45,7 +45,7 @@
 .job {
   &_detail {
     width: calc(50% - 5px);
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     border-radius: 15px;
     background-color: rgb(255, 255, 255);
     box-sizing: border-box;
@@ -95,7 +95,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       transform: translateY(0px);
-      transition: all 0.4s ease 0s;
+      // transition: all 0.4s ease 0s;
       text-align: right;
     }
 
@@ -114,7 +114,7 @@
       color: #ffffff;
       transform: translateY(30px);
       white-space: nowrap;
-      transition: all 0.4s ease 0s;
+      // transition: all 0.4s ease 0s;
       float: right;
     }
   }
@@ -167,7 +167,7 @@
     }
   }
   &_companyInfo {
-    background: #f0f0f0;
+    background: linear-gradient(269.8deg, rgba(255, 235, 184, 0.2) 0.12%, rgba(242, 177, 202, 0.2) 43.36%, rgba(84, 142, 237, 0.2) 99.89%);
     border-radius: 0px 0px 15px 15px;
     display: flex;
     align-items: center;
