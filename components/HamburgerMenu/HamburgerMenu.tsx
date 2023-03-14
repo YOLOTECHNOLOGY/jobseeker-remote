@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 /* Redux */
 import { connect } from 'react-redux'
@@ -24,6 +24,7 @@ interface HamburgerMenuProps {
 }
 
 const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
+  const pathname = usePathname()
   const router = useRouter()
   const dispatch = useDispatch()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -39,7 +40,11 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
     document.body.style.top = ''
     dispatch(logoutRequest())
 
-    router.push('/')
+    if (pathname === '/') {
+      location.reload()
+    } else {
+      router.push('/')
+    }
   }
 
   const handleClick = () => {
