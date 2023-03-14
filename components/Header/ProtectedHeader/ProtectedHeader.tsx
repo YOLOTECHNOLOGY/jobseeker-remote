@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import { useDispatch } from 'react-redux'
-import { useRouter } from 'next/router'
+import { useRouter, usePathname } from 'next/navigation'
 import classNames from 'classnames'
 import { HomePageChat as ChatCircleDots } from 'images'
 import { logoutRequest } from 'store/actions/auth/logout'
@@ -24,6 +24,7 @@ import { IMContext } from 'components/Chat/IMProvider.client'
 
 const ProtectedHeader = () => {
   const router = useRouter()
+  const pathname = usePathname()
   const currentUser = getCookie('user')
   const dispatch = useDispatch()
   const ref = useRef(null)
@@ -73,7 +74,7 @@ const ProtectedHeader = () => {
           <ul className={styles.headerLinksList}>
             <React.Fragment>
               <li className={styles.headerLink}>
-                {router.route !== '/jobs-hiring/[keyword]' ? (
+                {!pathname?.includes('/jobs-hiring/') ? (
                   <Link title='Jobs' to='/jobs-hiring/job-search'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                       Find Jobs
@@ -93,7 +94,7 @@ const ProtectedHeader = () => {
                 )}
               </li>
               <li className={styles.headerLink}>
-                {router.route !== '/companies' ? (
+                {pathname !== '/companies' ? (
                   <Link title='Companies' to='/companies'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                       Companies
@@ -141,7 +142,7 @@ const ProtectedHeader = () => {
               className={styles.headerLink}
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
-              {router.route !== '/chat/[chat_id]' ? (
+              {pathname !== '/chat/[chat_id]' ? (
                 <Link title='Jobs' to='/chat/list'>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     Chat
@@ -163,7 +164,7 @@ const ProtectedHeader = () => {
               ) : null}
             </li>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
-              {router.route !== '/manage-profile' ? (
+              {pathname !== '/manage-profile' ? (
                 <a
                   title='Manage Resume'
                   onClick={() => {
@@ -238,7 +239,7 @@ const ProtectedHeader = () => {
           </React.Fragment>
         </ul>
         <div className={styles.mobileIconWrapper}>
-          {router.route !== '/chat/[chat_id]' ? (
+          {pathname !== '/chat/[chat_id]' ? (
             <li
               className={styles.headerLink}
               style={{

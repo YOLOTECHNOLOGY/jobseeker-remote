@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import classNames from 'classnames/bind'
 
 /* Style */
@@ -16,7 +16,7 @@ import MaterialButton from 'components/MaterialButton'
 import { BossjobLogoWhite as BossjobLogo } from 'images'
 
 const PublicHeader = () => {
-  const router = useRouter()
+  const pathname = usePathname()
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
@@ -57,7 +57,7 @@ const PublicHeader = () => {
                     Chats
                   </Text>
                 )} */}
-                {router.route !== '/jobs-hiring/[keyword]' ? (
+                {!pathname.includes('/jobs-hiring/') ? (
                   <Link title='Jobs' to='/jobs-hiring/job-search'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                       Find Jobs
@@ -89,7 +89,7 @@ const PublicHeader = () => {
                     Companies
                   </Text>
                 </Link> */}
-                {router.route !== '/companies' ? (
+                {pathname !== '/companies' ? (
                   <Link title='Companies' to='/companies'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                       Companies
@@ -145,7 +145,7 @@ const PublicHeader = () => {
               </Link>
             </li>
             <li className={styles.headerLink}>
-              {router.route !== '/get-started' ? (
+              {pathname !== '/get-started' ? (
                 <Link to='/get-started' title='Get Started'>
                   <MaterialButton
                     variant='outlined'
