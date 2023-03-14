@@ -9,7 +9,7 @@ import { cookies } from "next/headers"
 import { ReaderTPromise as M } from "app/abstractModels/monads"
 
 // eslint-disable-next-line react/display-name
-const LiftClient = Client => props => <Client {...props}/>
+const LiftClient = Client => props => <Client {...props} />
 
 const getSimpleTitle = item => {
   const title = item.title
@@ -17,7 +17,15 @@ const getSimpleTitle = item => {
     'Information Technology': 'IT',
     'Customer Service/Operations': 'CSR/Ops',
     'Finance/Audit/Tax': 'Finance',
-    'Product Management': 'PM'
+    'Product Management': 'PM',
+    'Telecommunication': 'Telecom',
+    'Human Resources/Admin/Legal': 'HR/Admin/Legal',
+    'Food and Beverages': 'F&B',
+    'Arts/Media/Communications': 'Arts/Media',
+    'Marketing/PR/Advertising': 'MKT/PR/Ads',
+    'Purchasing/Trading': 'Purchasing',
+    'Professional Services': 'Services',
+    'Agriculture/Environment': 'Agri/Env'
   }
   return { ...item, simpleTitle: map[title] || title }
 }
@@ -67,6 +75,6 @@ const ServerFunctionFilter = async (props: { config: any }) => {
 
 export default interpreter(serverDataScript())
   .chain(props => M.do(() => ServerFunctionFilter(props)))
-  .chain(props => interpreter(buildComponentScript(props,LiftClient(FunctionFilter))))
+  .chain(props => interpreter(buildComponentScript(props, LiftClient(FunctionFilter))))
   .run
 // export default ServerFunctionFilter as any

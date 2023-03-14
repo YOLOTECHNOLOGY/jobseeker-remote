@@ -62,11 +62,13 @@ const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps 
         onMouseLeave={onMouseLeave}>
         <div className={styles.mainTitle}>
             <div className={styles.mainTitleFirst}>{data.simpleTitle || data.title}</div>
+            <div className={styles.subContainer}>
             {subTitles.map(subTitle => (
                 <div key={subTitle} title={subTitle} className={styles.mainTitleSub}>
                     {subTitle}
                 </div>
             ))}
+            </div>
            <ArrowForwardIosIcon className={styles.more}/>
         </div>
     </div>

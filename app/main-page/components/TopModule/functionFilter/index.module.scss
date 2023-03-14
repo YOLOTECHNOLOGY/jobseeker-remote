@@ -15,7 +15,7 @@
     height: 250px;
     position: relative;
     padding-right: 10px;
-    
+
 
     @include sm {
         display: none;
@@ -40,12 +40,13 @@
             display: flex;
             align-items: center;
             position: relative;
+
             &.isHover {
                 border: 0.5px solid #F0F0F0;
                 box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
                 border-radius: 10px;
-                .mainTitle {
 
+                .mainTitle {
                     color: #136FD3;
                 }
             }
@@ -62,26 +63,38 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-start;
-              
-                &Sub {
-                    display: block;
-                    font-family: 'Product Sans';
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 14px;
-                    line-height: 18px;
-                    letter-spacing: 0.0075em;
-                    color: #707070;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    width: 110px;
-                    margin-left: 10px;
-                    cursor: pointer;
-                    &:hover{
-                        color: #136FD3;
+
+                .subContainer {
+                    display: flex;
+                    flex-direction: row;
+                    max-width: 358px;
+                    justify-content: flex-start;
+                    flex:1;
+                    .mainTitleSub {
+                        flex: 1;
+                        display: block;
+                        font-family: 'Product Sans';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 18px;
+                        letter-spacing: 0.0075em;
+                        color: #707070;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        width: min-content;
+                        // max-width: 110px;
+                        margin-left: 10px;
+                        // flex-grow: 1;
+                        cursor: pointer;
+
+                        &:hover {
+                            color: #136FD3;
+                        }
                     }
                 }
+
                 &First {
                     font-family: 'Product Sans';
                     font-style: normal;
@@ -92,11 +105,13 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
+
                 }
 
-               
+
             }
-            .more{
+
+            .more {
                 font-size: 12px;
                 position: absolute;
                 right: 10px;
@@ -138,16 +153,21 @@
                 margin-left: 5px;
                 text-align: center;
                 line-height: 20px;
-                color: #136FD3;;
-                &:hover{
+                color: #136FD3;
+                ;
+
+                &:hover {
                     background: #136FD3;
                     color: #fff;
                 }
+
                 &:disabled {
-                    background: #F0F0F0;;
+                    background: #F0F0F0;
+                    ;
                     color: #707070;
                 }
-                .icon{
+
+                .icon {
                     font-size: 12px;
                     margin: 0 auto;
                     display: block;
@@ -200,6 +220,7 @@
                 margin-top: 15px;
                 margin-bottom: 18px;
                 padding-left: 14px;
+
                 .subItem {
                     width: 23%;
                     margin-left: 2%;
