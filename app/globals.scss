@@ -11,11 +11,15 @@ html,
   font-family: 'Product Sans', 'ProductSans' !important;
   cursor: default;
 }
+
 ::selection {
   background-color: #1890ff !important;
 }
+
 ol,
 ul,
 dl {
   margin-bottom: 0 !important;
+  margin: 0;
+  padding: 0;
 }

@@ -46,8 +46,11 @@ const ProtectedHeader = () => {
 
   const handleLogOut = () => {
     dispatch(logoutRequest())
-
-    router.push('/')
+    if (pathname === '/') {
+      location.reload()
+    } else {
+      router.push('/')
+    }
   }
 
   // const handleRedirectAuthentication = (e, path) => {
