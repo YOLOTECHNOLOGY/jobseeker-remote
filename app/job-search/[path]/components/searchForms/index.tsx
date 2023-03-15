@@ -32,12 +32,14 @@ const SearchArea = (props: any) => {
     const accessToken = getCookie('accessToken')
     const userCookie = getCookie('user')
     const { location, setLocation } = useContext(LocationContext)
-    const [salaries, setSelaries] = useState()
+    const [salaries, setSelaries] = useState([])
     const salaryOptions = config.filters?.salary_range_filters ?? []
     const [jobFunctionValue, jobFunctionChange] = useState()
     const [showMore, setShowMore] = useState(false)
     const [sort, setSort] = useState()
     const [moreData, setMoreData] = useState({})
+    const [jobTypes,setJobtypes] = useState([])
+    const jobTypeList = config?.inputs?.job_types ?? []
     // const router = useRouter()
     const [searchValue, setSearchValue] = useState('')
     const [suggestionList, handleSuggestionSearch, addSearchHistory] = useSuggest() as any[]
@@ -51,8 +53,9 @@ const SearchArea = (props: any) => {
             ...moreData
         }
     }, [searchValue, salaries, moreData, location, sort, jobFunctionValue])
+    console.log({ filterParams })
     const result = encode(filterParams)
-    console.log({ filterParams, jobFunctionValue, moreData, result })
+    console.log({  jobFunctionValue, moreData, result, location })
     return <div>
         <ThemeProvider theme={theme}>
             <div className={styles.searchArea}>
@@ -113,6 +116,12 @@ const SearchArea = (props: any) => {
                     label='Salary'
                     value={salaries}
                     options={salaryOptions}
+                    onSelect={setSelaries}
+                />
+                 <Multiple
+                    label='Job Type'
+                    value={jobTypes}
+                    options={jobTypeList}
                     onSelect={setSelaries}
                 />
                 <MaterialButton
