@@ -36,3 +36,5 @@ yarn-error.log*
 
 # ts
 tsconfig.tsbuildinfo
+
+jsconfig.json
