@@ -82,7 +82,7 @@ const ServerFunctionFilter = async (props: { config: any }) => {
     }
   }
   const contentWidths = list.map(mainTitle => {
-    const mainWidth = mainTitle.length * 9 + 10
+    const mainWidth = mainTitle.title.length * 9 + 10
     return 482 - mainWidth
   })
   const filtered = subTitlesList.map((subTitles, index) => {
