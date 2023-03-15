@@ -39,13 +39,14 @@ type MainProps = Attributes & {
     subTitles: string[]
     setHoverTitle: (string) => void
     contentWidth: number
+
 }
 type SectionProps = { data: SectionData } & Attributes
 type SubItemProps = { data: SubData } & Attributes
 
 const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps & MainProps) => {
     const { isHover, setHoverData, data, onMouseEnter, onMouseLeave, setHoverTitle, contentWidth, hoverTitle, subTitles = [] } = props
-    console.log(subTitles, 7777)
+    const { location } = useContext(LocationContext)
     useEffect(() => {
         if (isHover) {
             setHoverData(data.children)
@@ -66,9 +67,11 @@ const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps 
             <div className={styles.mainTitleFirst}>{data.simpleTitle || data.title}</div>
             <div className={styles.subContainer}>
                 {subTitles.map(subTitle => (
-                    <div key={subTitle} title={subTitle} style={{ maxWidth: contentWidth }} className={styles.mainTitleSub}>
-                        {subTitle}
-                    </div>
+                    <Link prefetch={false} key={subTitle} href={buildQuery(location?.value, subTitle)}>
+                        <div key={subTitle} title={subTitle} style={{ maxWidth: contentWidth }} className={styles.mainTitleSub}>
+                            {subTitle}
+                        </div>
+                    </Link>
                 ))}
             </div>
             <ArrowForwardIosIcon className={styles.more} />
@@ -134,8 +137,8 @@ const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props:
 
             <div className={styles.pagination}>
                 <label>{currentPage}/{totalPages}</label>
-                <button type='button' disabled={!preEnable} className={styles.prePage} style={{paddingLeft:'6px'}} onClick={onPre}> 
-                   <ArrowBackIosIcon className={styles.icon}/>
+                <button type='button' disabled={!preEnable} className={styles.prePage} style={{ paddingLeft: '6px' }} onClick={onPre}>
+                    <ArrowBackIosIcon className={styles.icon} />
                 </button>
                 <button type='button' disabled={!nextEnable} onClick={onNext}>
                     <ArrowForwardIosIcon className={styles.icon} />
