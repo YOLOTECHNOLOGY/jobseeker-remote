@@ -1,3 +1,4 @@
+@import 'styles/mixins.scss';
 /*******************************************/
 /*                INITIAL                  */
 /*******************************************/
@@ -81,5 +82,37 @@ $mobile-font-size-xxxl: 21px;
 
   @media (max-width: 360px) {
     max-width: 320px;
+  }
+}
+
+// Next app Default page style
+.GlobalNextAppContainer {
+  max-width: 1170px;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  :global {
+    .MuiOutlinedInput-notchedOutline {
+      border-width: 0 !important;
+    }
+    .MuiOutlinedInput-input {
+      font-size: 14px;
+    }
+    .MuiOutlinedInput-root {
+      border-radius: 10px;
+    }
+  }
+  @include msd {
+    max-width: 688px;
+  }
+
+  @include xsm {
+    max-width: 320px;
+  }
+  background-color: #f5f6fa;
+
+  @include sm {
+    padding: 0px 10px;
   }
 }

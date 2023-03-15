@@ -1,6 +1,8 @@
 @import 'styles/mixins.scss';
+@import 'styles/variable.scss';
 
 .main {
+  @extend .GlobalNextAppContainer;
   @include sm {
     padding: 0px 10px;
   }
