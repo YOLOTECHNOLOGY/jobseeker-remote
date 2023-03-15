@@ -70,6 +70,9 @@ const ProtectedHeader = () => {
               src={BossjobLogo}
               title='Bossjob logo'
               alt='Bossjob logo'
+              style={{
+                marginTop:'3px'
+              }}
             />
           </Link>
         </div>
@@ -279,7 +282,7 @@ const ProtectedHeader = () => {
                   <Text textStyle='base'>My Jobs</Text>
                 </Link>
               </li>
-              <li className={styles.headerMenuItem}>
+              <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSet}`}>
                 <Link to='/dashboard/profile/settings' className={styles.headerMenuLink}>
                   <Text textStyle='base'>Account Settings</Text>
                 </Link>
@@ -298,9 +301,9 @@ const ProtectedHeader = () => {
                   <Text textStyle='base'>Career Guide</Text>
                 </Link>
               </li> */}
-              <li className={styles.headerMenuItem}>
+              <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}>
                 <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
-                  <Text textStyle='base'>For Employer</Text>
+                  <Text textStyle='base'>I’m hiring</Text>
                 </Link>
               </li>
               <li className={styles.headerMenuItem}>
