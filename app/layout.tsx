@@ -6,7 +6,6 @@ import './globals.scss'
 import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import HamburgerMenu from 'components/HamburgerMenu'
-import Footer from 'components/Footer'
 const defaultSEO = {
   title: 'Bossjob - Career Platform for Professionals in Philippines',
   description: 'Bossjob - Career Platform for Professionals in Philippines',
@@ -115,7 +114,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           <HamburgerMenu />
           <div className={styles.container}>{children}</div>
-          <Footer />
         </Providers>
         <Initial />
       </body>
