@@ -107,9 +107,9 @@ $mobile-font-size-xxxl: 21px;
     max-width: 688px;
   }
 
-  @include xsm {
-    max-width: 320px;
-  }
+  // @include xsm {
+  //   max-width: 320px;
+  // }
   background-color: #f5f6fa;
 
   @include sm {
