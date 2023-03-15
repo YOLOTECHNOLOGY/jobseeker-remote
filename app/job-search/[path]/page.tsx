@@ -8,6 +8,8 @@ import SearchForm from './components/searchForms'
 const configs = getConfigs([
     ['inputs', 'location_lists'],
     ['inputs', 'main_functions'],
+    ['inputs', 'job_functions'],
+    ['inputs', 'functions_titles'],
     ['inputs', 'xp_lvls'],
     ['filters', 'educations'],
     ['inputs', 'job_types'],
@@ -17,6 +19,7 @@ const configs = getConfigs([
 // const eduLevelList = config.filters.educations
 // const jobTypeList = config.inputs.job_types
 const Main = (props: any) => {
+    console.log({configs})
     return <div >
         <SearchForm config={props.config} searchValues={props.searchValues}/>
     </div>

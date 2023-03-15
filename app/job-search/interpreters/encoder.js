@@ -71,8 +71,55 @@ const washData = pipe(
     toLower,
     slugify,
 )
+
+const configItems = applySpec({
+    location: pipe(path(['inputs', 'location_lists']), chain(prop('locations'))),
+    jobType: pipe(path(['inputs', 'job_types'])),
+    salary: pipe(path(['filters', 'salary_range_filters'])),
+    workExperience: pipe(path(['inputs', 'xp_lvls'])),
+    // industry: pipe(path(['inputs', 'industry_lists'])),
+    qualification: pipe(path(['filters', 'educations'])),
+    mainFunctions: pipe(path(['inputs', 'main_functions'])),
+    jobFunctions: pipe(path(['inputs', 'job_functions'])),
+    functionTitles: pipe(path(['inputs', 'function_titles'])),
+})
+
+const configKeys = pipe(configItems, map(
+    map(ifElse(has('seo-value'),
+        prop('seo-value'),
+        ifElse(has('function_title_value'),
+            prop('function_title_value'),
+            prop('seo_value'))))))
+
+const keywordMatches = pipe(
+    configKeys,
+    dissoc('functionTitles'),
+    toPairs,
+    map(([key, list]) => [flip(includes)(list), applySpec({ [key]: identity })]),
+    append([T, applySpec({ query: identity })]),
+    cond
+)
+
+const parseKeywordParams = config => pipe(
+    keywordParser,
+    map(keywordMatches(config)),
+    reduce(mergeLeft, {})
+)
+
+const keywordParser = pipe(toLower, cond([
+    [test(/((\B|\b)-jobs-in-\b)/g), split('-jobs-in-')],
+    [test(/((\B|\b)-jobs\b)/g), pipe(split('-jobs'), dropLast(1))],
+    [equals('job-search'), always([])],
+    [T, always([])]
+]))
+
 export const encode = pipe(
     filter(complement(either(isNil, isEmpty))),
     map(
-    ifElse(is(Array), map(washData), washData)
-), buildQueryParams)
+        ifElse(is(Array), map(washData), washData)
+    ), buildQueryParams)
+
+export const decoder = config => (path, params) => mergeLeft(
+    parseKeywordParams(config)(path),
+    params
+)
