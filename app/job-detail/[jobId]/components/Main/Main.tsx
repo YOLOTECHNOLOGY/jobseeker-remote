@@ -5,7 +5,7 @@ const Main = () => {
   return (
     <div>
       <Desc />
-      <Benefits />
+      <Benefits benefits={[]} />
     </div>
   )
 }

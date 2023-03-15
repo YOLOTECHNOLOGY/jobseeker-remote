@@ -1,0 +1,16 @@
+@import 'styles/variable.scss';
+
+.container {
+  @extend .GlobalNextAppContainer;
+}
+
+.head {
+  width: 100%;
+  background-color: white;
+  padding: 27px 0;
+
+  &_main {
+    margin: 0 auto;
+    max-width: $NextAppMaxWidth;
+  }
+}

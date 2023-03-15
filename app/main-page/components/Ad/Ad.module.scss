@@ -19,7 +19,6 @@
 
   .ad {
     display: flex;
-
     justify-content: space-between;
 
     &_container {
@@ -28,6 +27,10 @@
       width: calc(50% - 5px);
       height: 100%;
       overflow: hidden;
+    }
+
+    @include xl {
+      width: 610px;
     }
   }
 }
