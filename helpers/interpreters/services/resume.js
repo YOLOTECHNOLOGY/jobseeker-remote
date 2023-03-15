@@ -8,6 +8,13 @@ export const sendResume = (applicationId, requestResumeId, params) => {
         params
     )
 }
+export const sendResumeDetail = (applicationId, requestResumeId) => {
+
+    const axios = configuredAxios('jobApplication', 'protected')
+    return axios.get(
+        `/${applicationId}/jobseekers/resume-requests/${requestResumeId}`
+    )
+}
 
 export const askSendResume = (applicationId, params) => {
 

@@ -1,13 +1,13 @@
 /* eslint-disable new-cap */
 import { scripts, M } from 'imforbossjob'
-import { sendResume, decline, askSendResume } from './services/resume'
+import { sendResume, decline, askSendResume, sendResumeDetail } from './services/resume'
 const { utils, responseResumeJobseeker: { ModalActions } } = scripts
 const { RequestResult } = utils
 
 export default command => command.cata({
-    openResume: data => M(context => Promise.resolve().then(() => {
-        const state = context.getState()
-        window.open(state.resume_request?.resume?.url, '_blank')
+    openResume: data => M(() => Promise.resolve().then(() => {
+        // const state = context.getState()
+        window.open(data?.resume?.url, '_blank')
     })),
     modalSendResume: () => M(context => new Promise(resolve => {
         context.showSendResume({
@@ -15,6 +15,14 @@ export default command => command.cata({
             send: payload => resolve(ModalActions.send(payload))
         })
     })),
+    requestResumeUrl: id => M(context => {
+        context.setLoading(true)
+        const applicationId = context.getApplicationId()
+        return sendResumeDetail(applicationId, id)
+            .then(result => RequestResult.success(result.data.data))
+            .catch(error => RequestResult.error(error))
+            .finally(() => context.setLoading(false))
+    }),
     requestSendResume: ({ applicationId, id }, params) => M(context => {
         context.setLoading(true)
         return sendResume(applicationId, id, params)
