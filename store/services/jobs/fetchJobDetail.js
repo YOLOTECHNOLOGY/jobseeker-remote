@@ -4,7 +4,6 @@ import configuredAxios from 'helpers/configuredAxios'
 
 const fetchJobDetailService = (payload) => {
   const axios = configuredAxios('job')
-  console.log(payload, '=======[][')
   return axios.get(`/${payload.jobId}`)
 }
 
