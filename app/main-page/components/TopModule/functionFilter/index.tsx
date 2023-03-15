@@ -29,6 +29,7 @@ interface SectionData {
 interface FunctionFilterProps {
     list: MainData[]
     subTitlesList: string[][]
+    contentWidths: number[]
 }
 
 type MainProps = Attributes & {
@@ -37,13 +38,14 @@ type MainProps = Attributes & {
     hoverTitle: string
     subTitles: string[]
     setHoverTitle: (string) => void
+    contentWidth: number
 }
 type SectionProps = { data: SectionData } & Attributes
 type SubItemProps = { data: SubData } & Attributes
 
 const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps & MainProps) => {
-    const { isHover, setHoverData, data, onMouseEnter, onMouseLeave, setHoverTitle, hoverTitle, subTitles = [] } = props
-    console.log(subTitles,7777)
+    const { isHover, setHoverData, data, onMouseEnter, onMouseLeave, setHoverTitle, contentWidth, hoverTitle, subTitles = [] } = props
+    console.log(subTitles, 7777)
     useEffect(() => {
         if (isHover) {
             setHoverData(data.children)
@@ -63,13 +65,13 @@ const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps 
         <div className={styles.mainTitle}>
             <div className={styles.mainTitleFirst}>{data.simpleTitle || data.title}</div>
             <div className={styles.subContainer}>
-            {subTitles.map(subTitle => (
-                <div key={subTitle} title={subTitle} className={styles.mainTitleSub}>
-                    {subTitle}
-                </div>
-            ))}
+                {subTitles.map(subTitle => (
+                    <div key={subTitle} title={subTitle} style={{ maxWidth: contentWidth }} className={styles.mainTitleSub}>
+                        {subTitle}
+                    </div>
+                ))}
             </div>
-           <ArrowForwardIosIcon className={styles.more}/>
+            <ArrowForwardIosIcon className={styles.more} />
         </div>
     </div>
 })
@@ -92,14 +94,14 @@ const SubItem: FunctionComponent<SubItemProps> = hoverable((props: SubItemProps 
     const { data } = props
     return <Link className={styles.subItem} prefetch={false} href={buildQuery(location?.value, data.value)}>
         <Tooltip title={data.label} placement="top-start">
-          <div className={styles.linkText}> {data.label}</div>
+            <div className={styles.linkText}> {data.label}</div>
         </Tooltip>
     </Link>
 
 })
 
 const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props: FunctionFilterProps & HoverableProps) => {
-    const { list, isHover, subTitlesList, ...rest } = props
+    const { list, isHover, subTitlesList, contentWidths, ...rest } = props
     const [hoverTitle, setHoverTitle] = useState('')
     const {
         currentPage,
@@ -126,16 +128,17 @@ const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props:
                 data={main}
                 subTitles={subTitlesList[(currentPage - 1) * 5 + index]}
                 setHoverTitle={setHoverTitle}
+                contentWidth={contentWidths[index]}
             />
         ))}
 
             <div className={styles.pagination}>
                 <label>{currentPage}/{totalPages}</label>
-                <button type='button' disabled={!preEnable} className={styles.prePage} onClick={onPre}> 
-                   <ArrowBackIosIcon className={styles.icon}/>
+                <button type='button' disabled={!preEnable} className={styles.prePage} onClick={onPre}>
+                    <ArrowBackIosIcon className={styles.icon} />
                 </button>
                 <button type='button' disabled={!nextEnable} onClick={onNext}>
-                  <ArrowForwardIosIcon className={styles.icon}/>
+                    <ArrowForwardIosIcon className={styles.icon} />
                 </button>
             </div>
         </div>

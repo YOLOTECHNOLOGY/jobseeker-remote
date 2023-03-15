@@ -276,7 +276,7 @@ const Tabs = ({ location }: any) => {
                     {
                       user?.avatar ?  <img src = {user?.avatar} /> : null
                     }
-                    Based on your job preference: <Link href="/manage-profile?tab=job-preferences" className={styles.link}>
+                    Based on your job preference: <Link prefetch={false}  href="/manage-profile?tab=job-preferences" className={styles.link}>
                      {jobseekerPrefIdRef.current?.location} | {jobseekerPrefIdRef.current?.job_title} | {jobseekerPrefIdRef.current?.salary_range}
                        </Link>
                    </div>
@@ -307,7 +307,7 @@ const Tabs = ({ location }: any) => {
               )}
 
               <div className={styles.tabContainer_more}>
-              <Link className={styles.moreBtn} href='/jobs-hiring/job-search' >See More</Link>
+              <Link prefetch={false}  className={styles.moreBtn} href='/jobs-hiring/job-search' >See More</Link>
               </div>
             </div>
           </TabContext>

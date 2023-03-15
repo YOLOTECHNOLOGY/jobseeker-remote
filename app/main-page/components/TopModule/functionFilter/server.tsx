@@ -7,7 +7,7 @@ import { flatMap } from 'lodash-es'
 import { fetchJobsPreferences } from "store/services/jobs/fetchJobsForYouLogin"
 import { cookies } from "next/headers"
 import { ReaderTPromise as M } from "app/abstractModels/monads"
-
+import { dropLast } from 'ramda'
 // eslint-disable-next-line react/display-name
 const LiftClient = Client => props => <Client {...props} />
 
@@ -69,7 +69,28 @@ const ServerFunctionFilter = async (props: { config: any }) => {
   }
   const functionTitles = getFunctionTitles(list)
   const subTitlesList = functionTitles.map(fillTo3(popularList)([]))
-  return { list, subTitlesList }
+  const shakeSub = (subTitles, mainWidth) => {
+    if (subTitles.length <= 1) {
+      return subTitles
+    } else {
+      const subWidth = subTitles.map(sub => sub.length * 7).reduce((a, b) => a + b + 10, 0)
+      if (mainWidth + subWidth >= 572) {
+        return shakeSub(dropLast(1, subTitles), mainWidth)
+      } else {
+        return subTitles
+      }
+    }
+  }
+  const contentWidths = list.map(mainTitle => {
+    const mainWidth = mainTitle.length * 9 + 10
+    return 482 - mainWidth
+  })
+  const filtered = subTitlesList.map((subTitles, index) => {
+    const mainTitle = list[index].title
+    const mainWidth = mainTitle.length * 9 + 10
+    return shakeSub(subTitles, mainWidth)
+  })
+  return { list, subTitlesList: filtered, contentWidths }
 }
 
 

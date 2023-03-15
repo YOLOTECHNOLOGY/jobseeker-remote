@@ -20,7 +20,7 @@ const CompanyList = (props: any) => {
         } = item?.company || {}
         return (
           <div className={styles.card} key={Id}>
-            <Link className={styles.header} href={companyUrl}>
+            <Link prefetch={false} className={styles.header} href={companyUrl}>
               <Image className={styles.img} src={logoUrl} alt={name} width={44} height={44} quality={0}></Image>
               <h5>{name}</h5>
               <p>

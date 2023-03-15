@@ -9,7 +9,7 @@ const JobDetail = ({ detail }: any) => {
   console.log(detail,7777)
   return (
     <div className={styles.job_detail}>
-      <Link className={styles.job_info} href={detail.job_url} >
+      <Link prefetch={false}  className={styles.job_info} href={detail.job_url} >
         <div className={styles.job_titleWrapper}>
           <div className={styles.job_info_title}>{detail?.job_title}</div>
           <div className={styles.transBox}>

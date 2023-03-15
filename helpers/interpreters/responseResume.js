@@ -5,7 +5,7 @@ const { utils, responseResumeJobseeker: { ModalActions } } = scripts
 const { RequestResult } = utils
 
 export default command => command.cata({
-    openResume: () => M(context => Promise.resolve().then(() => {
+    openResume: data => M(context => Promise.resolve().then(() => {
         const state = context.getState()
         window.open(state.resume_request?.resume?.url, '_blank')
     })),

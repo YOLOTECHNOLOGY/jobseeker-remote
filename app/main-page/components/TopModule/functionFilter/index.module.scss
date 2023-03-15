@@ -67,14 +67,15 @@
                 .subContainer {
                     display: flex;
                     flex-direction: row;
-                    max-width: 358px;
+                    // max-width: 358px;
                     justify-content: flex-start;
                     flex:1;
                     .mainTitleSub {
-                        flex: 1;
+                        // flex: 1;
                         display: block;
                         font-family: 'Product Sans';
                         font-style: normal;
+                        width: fit-content;
                         font-weight: 400;
                         font-size: 14px;
                         line-height: 18px;
@@ -86,6 +87,7 @@
                         width: min-content;
                         // max-width: 110px;
                         margin-left: 10px;
+                        // max-width: 170px;
                         // flex-grow: 1;
                         cursor: pointer;
 
