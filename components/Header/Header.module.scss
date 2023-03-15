@@ -281,12 +281,12 @@
 .headerMenu {
   position: absolute;
   width: 320px;
-  top: 85px;
-  right: 30px;
+  top: 62px;
+  right: 6px;
   background-color: $white-3;
   z-index: 9999;
   box-shadow: $box-shadow-1;
-
+  border-radius: 15px;
   @include msd {
     display: none;
   }
@@ -308,6 +308,13 @@
     &:not(:last-child) {
       border-bottom: 1px solid rgba($lightgrey, 0.5);
     }
+  }
+  &ItemSpe{
+    border-top: 8px solid #F0F0F0;;
+    border-bottom: 8px solid #F0F0F0 !important;
+  }
+  &ItemSet{
+    border-bottom:none !important;
   }
 }
 
