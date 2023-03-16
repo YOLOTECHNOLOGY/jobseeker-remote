@@ -39,7 +39,7 @@ const CompanyJobsCard = ({ title, location, salary, availability, jobUrl }: ICom
         <Link to={`${process.env.HOST_PATH}${jobUrl}`} external>
           <MaterialButton variant='outlined' capitalize className={styles.companyJobsCardApply}>
             <Text textStyle='base' textColor='primaryBlue' bold>
-              Apply Now
+              Chat Now
             </Text>
           </MaterialButton>
         </Link>
