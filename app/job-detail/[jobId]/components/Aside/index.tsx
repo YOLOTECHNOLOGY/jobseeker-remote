@@ -1,7 +1,18 @@
+import Company, { propsType } from './Company/Company'
 import SignUp from './SignUp/SignUp'
-import Company from './Company/Company'
 import SimilarJobs from './SimilarJobs/SimilarJobs'
-import Aside from './Aside'
 
-export { SignUp, Company, SimilarJobs }
-export default Aside
+import styles from '../../page.module.scss'
+
+const AsideFC = (company: propsType) => {
+  return (
+    <aside className={styles.aside}>
+      <SignUp />
+      <Company {...company} />
+      {/* @ts-expect-error Async Server Component */}
+      <SimilarJobs id={company.jobId} />
+    </aside>
+  )
+}
+
+export default AsideFC

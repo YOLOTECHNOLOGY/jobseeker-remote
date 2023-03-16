@@ -1,11 +1,10 @@
-'use client'
 import Head from './components/Head/Head'
-import Main from './components/Main/Main'
-import Aside from './components/Aside'
+import MainFC from './components/Main/'
+import AsideFC from './components/Aside/'
 
 import styles from './page.module.scss'
 
-const Index = ({ data }: any) => {
+const Index = ({ data, jobId }: any) => {
   // const descProps = {
   //   description: data.job_description_html
   //   requirements: data.job_requirements_html
@@ -25,12 +24,21 @@ const Index = ({ data }: any) => {
     salary: data.salary_range_value
   }
 
+  const companyProps = {
+    name: data.company?.name,
+    companySize: data.company?.company_size,
+    financingStage: data.company?.financing_stage,
+    logo: data.company?.logo,
+    numOfActiveJobs: data.company?.num_of_active_jobs,
+    jobId
+  }
+
   return (
     <div>
       <Head {...headProps} />
       <div className={styles.container}>
-        <Main />
-        <Aside />
+        <MainFC />
+        <AsideFC {...companyProps} />
       </div>
     </div>
   )
