@@ -1,5 +1,6 @@
 
-import { map, T, ap, memoizeWith, toLower, last, reduce, omit, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
+import { unslugify } from '../../../helpers/formatter'
+import { map, T, toLower, mergeDeepLeft, reduce, omit, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse, lt, converge } from 'ramda'
 import slugify from 'slugify'
 const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'qualification', 'workExperience', 'verifiedCompany']
 const no = propSatisfies(either(isEmpty, isNil))
@@ -95,8 +96,8 @@ const keywordMatches = pipe(
     configKeys,
     dissoc('functionTitles'),
     toPairs,
-    map(([key, list]) => [flip(includes)(list), applySpec({ [key]: identity })]),
-    append([T, applySpec({ query: identity })]),
+    map(([key, list]) => [flip(includes)(list), applySpec({ [key]: Array.of })]),
+    append([T, applySpec({ query: unslugify })]),
     cond
 )
 
@@ -119,7 +120,7 @@ export const encode = pipe(
         ifElse(is(Array), map(washData), washData)
     ), buildQueryParams)
 
-export const decoder = config => (path, params) => mergeLeft(
+export const decoder = config => (path, params) => mergeDeepLeft(
     parseKeywordParams(config)(path),
-    params
+    map(ifElse(is(String), split(','), identity))(params)
 )

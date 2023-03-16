@@ -112,7 +112,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body id='next-app'>
                 <Providers>
                     <Header />
-                    <div className={styles.container}>{children}</div>
+                    {/* <div className={styles.container}> */}
+                    {children}
+                    {/* </div> */}
                 </Providers>
                 <Initial />
             </body>

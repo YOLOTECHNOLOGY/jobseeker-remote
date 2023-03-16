@@ -43,7 +43,7 @@ const MultipleSelect = ({
       target: { value },
     } = event
     // On autofill we get a the stringified value.
-    const formattedValue = typeof value === 'string' ? value.split(',') : value
+    const formattedValue = (typeof value === 'string' ? value.split(',') : value).map(item => item.toLowerCase())
     setSelectedOptions(formattedValue)
     if (onSelect) {
       onSelect(formattedValue)
@@ -51,34 +51,34 @@ const MultipleSelect = ({
   }
   console.log({ selectValue: value })
   return (
-      <FormControl fullWidth className={className} size='small'>
-        <InputLabel id={`${id}-select-label`}>{label}</InputLabel>
-        <Select
-          {...fieldRef}
-          variant='filled'
-          error={error}
-          labelId={`${id}-select-label`}
-          id={id}
-          multiple
-          style={{ ...style, background: value?.length ? '#E7F1FB' : '#F0F0F0' }}
-          value={selectedOptions}
-          label={label}
-          onChange={handleChange}
-          input={<OutlinedInput label='Tag' />}
-          renderValue={(selected: any) => selected.join(', ')}
-        >
-          {options &&
-            options.map((option: any) => (
-              <MenuItem key={option.value} value={option.value}>
-                <Checkbox
-                  checked={selectedOptions.indexOf(option.value) > -1}
-                  size='small'
-                />
-                <ListItemText primary={option.value} />
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
+    <FormControl fullWidth className={className} size='small'>
+      <InputLabel id={`${id}-select-label`}>{label}</InputLabel>
+      <Select
+        {...fieldRef}
+        variant='filled'
+        error={error}
+        labelId={`${id}-select-label`}
+        id={id}
+        multiple
+        style={{ ...style, background: value?.length ? '#E7F1FB' : '#F0F0F0' }}
+        value={selectedOptions}
+        label={label}
+        onChange={handleChange}
+        input={<OutlinedInput label='Tag' />}
+        renderValue={(selected: any) => `${label} ${selected?.length ? `(${selected.length})` : ''}`}
+      >
+        {options &&
+          options.map((option: any) => (
+            <MenuItem key={option.value} value={option.value}>
+              <Checkbox
+                checked={selectedOptions.indexOf(option.value?.toLowerCase()) > -1}
+                size='small'
+              />
+              <ListItemText primary={option.label} />
+            </MenuItem>
+          ))}
+      </Select>
+    </FormControl>
   )
 }
 

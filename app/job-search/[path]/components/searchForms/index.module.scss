@@ -1,59 +1,72 @@
 @import '/styles/mixins.scss';
 
-.searchArea {
+.container {
+  width: 100vw;
+  height: 153px;
+  max-width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80%;
-  padding: 0 10px;
+  position: sticky;
+  top: 0px;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  padding-left: calc(50vw - 585px);
 
-  @include sm {
-    width: 100%;
-  }
-
-  // margin-left: 10%;
-  .location {
-    width: 183px;
-    @include sm {
-      width: 120px;
-    }
-  }
-
-  .search {
-    flex: 1;
-    margin: 0px 17px;
-    @include sm {
-      margin-left: 15px;
-      margin-right: 0px;
-    }
-  }
-
-  .searchButton {
+  .searchArea {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 12px 24px;
-    gap: 19px;
-    color: #fff;
-    width: 118.87px;
-    height: 44px;
-    background: #136fd3;
-    border-radius: 10px;
-    flex: none;
-    order: 2;
-    flex-grow: 0;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: fit-content;
+    width: calc(50vw + 585px);
+    height: 74px;
+    padding-left: 24px;
 
-    @include sm {
-      display: none;
+    .location {
+      width: 196px;
+      height: 44px;
     }
 
-    &:hover {
-      color: #136fd3;
+    .search {
+      width: 608px;
+      height: 44px;
+      // border: 1px solid #ccc;
+      background: #fff;
+      margin-left: 8px;
+      // label {
+      //   line-height: 100%;
+      // }
+      position: relative;
+      top: 2px;
     }
 
-    &:disabled {
+    .searchButton {
+      margin-left: 8px;
+      background: #136FD3;
       color: #fff;
+      width: 119px;
+      height: 44px;
+      border-radius: 10px;
+    }
+  }
+
+  .filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: calc(50vw + 585px);
+    height: 50px;
+    padding-top: 20px;
+    padding-left: 24px;
+
+    .filterItems {
+      height: 30px;
+      width: 196px;
+      margin-right: 8px;
+
+    }
+    .jobFunctions {
+      width: 184px;
     }
   }
 }

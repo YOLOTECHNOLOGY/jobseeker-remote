@@ -1,5 +1,6 @@
 
 import Main from './main-page/page'
+import styles from './index.module.scss'
 const defaultSEO = {
     title: 'Bossjob - Career Platform for Professionals in Philippines',
     description: 'Bossjob - Career Platform for Professionals in Philippines',
@@ -7,7 +8,7 @@ const defaultSEO = {
     canonical: ''
 }
 export const metadata = {
-    title:defaultSEO.title,
+    title: defaultSEO.title,
     description: defaultSEO.description,
     copyright: `
     Copyright © ${new Date().getFullYear()} Singapore: Yolo Technology Pte Ltd. All Rights Reserved.
@@ -51,4 +52,7 @@ export const metadata = {
 
 }
 
-export default Main
+// eslint-disable-next-line react/display-name
+export default (props) => {
+    return <div className={styles.container}><Main {...props} /></div>
+}

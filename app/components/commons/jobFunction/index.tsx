@@ -275,19 +275,23 @@ const JobFunctionMultiSelector = (props: any) => {
             setActiveSecond(undefined)
         }
     }, [activeFirst])
+    const valueText = useMemo(() => {
+        const selected = textValue.split(',').filter(a => a)
+        return `${label} ${selected?.length ? `(${selected.length})` : ''}`
+    }, [textValue])
     return (
         <FormControl className={className} size='small'
         >
             <TextField
-                value={textValue}
+                value={valueText}
                 autoComplete="off"
-                label={label}
+                label={<div style={{ position: 'relative', bottom: 7 }}>{label}</div>}
                 onClick={e => {
-                    console.log({ e })
                     e.preventDefault()
                     e.stopPropagation()
                     setShowModal(true)
                 }}
+                classes={{}}
                 disabled={showModal}
                 onFocus={(e) => {
                     e.preventDefault()

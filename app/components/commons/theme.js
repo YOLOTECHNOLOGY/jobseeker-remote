@@ -10,13 +10,14 @@ export default createTheme({
                     height: '44px',
                     lineHeight: '16px',
                     borderRadius: '10px',
-                    background: '#F0F0F0',//'#E7F1FB' 
+                    background: '#F0F0F0',// '#E7F1FB' 
                     overflow: 'hidden',
                     color: '#136FD3',
                     '&.MuiSelected': {
-                        background: '#E7F1FB',//'#E7F1FB' 
+                        background: '#E7F1FB',// '#E7F1FB' 
                     },
-                    border:'none'
+                    border: 'none',
+                    padding: '0px'
                 },
                 notchedOutline: {
                     '&.Mui-focused': {
@@ -36,7 +37,10 @@ export default createTheme({
                         backgroundColor: '#E7F1FB'
                     },
                     focused: {
-                        backgroundColor: '#E7F1FB'
+                        backgroundColor: '#E7F1FB',
+                        '&.MuiInputLabel': {
+                            display: 'none'
+                        }
                     },
                 }
             }
@@ -67,21 +71,22 @@ export default createTheme({
                 }
             }
         },
-        MuiTypography: {
-            styleOverrides: {
-                root: {
-                    fontSize: '13px',
-                    letterSpacing: '1px',
-                },
-            },
-        },
+        // MuiTypography: {
+        //     styleOverrides: {
+        //         root: {
+        //             fontSize: '13px',
+        //             letterSpacing: '1px',
+        //         },
+        //     },
+        // },
         MuiInputLabel: {
             styleOverrides: {
                 root: {
                     fontSize: '14px',
                     letterSpacing: '1px',
-                    height: '44px',
+                    // height: '100%',
                     lineHeight: '16px',
+                    overflow: 'visible'
                 },
                 shrink: {
                     display: 'none',
@@ -93,6 +98,7 @@ export default createTheme({
                 root: {
                     fontSize: '14px',
                     letterSpacing: '1px',
+                    padding: '0px'
                 }
             },
         },

@@ -8,7 +8,7 @@ export const Actions = taggedSum('FilterListActions', {
     updateParams: ['url'],
 })
 export const UpdateActions = taggedSum('FilterLisUpdateActions', {
-    parseUrl: [],
+    parseUrl: ['config'],
 })
 export const UpdateSearchHistoryActions = taggedSum('FilterLisUpdateSearchHistoryActions', {
     updateSearchHistory: ['url'],
@@ -19,7 +19,7 @@ export const UpdateSearchHistoryActions = taggedSum('FilterLisUpdateSearchHistor
 export const onSearchScript = params => DO(Actions.buildQuery(params))
     .chain(query => DO(Actions.redirect(query)))
 
-export const onLoadScript =  DO(UpdateActions.parseUrl)
+export const onLoadScript = config =>  DO(UpdateActions.parseUrl(config))
 
 export const updateSearchHistoryScript = params => DO(UpdateSearchHistoryActions.getSearchValue(params))
     .chain(searchValue => DO(UpdateSearchHistoryActions.updateSearchHistory(searchValue)))

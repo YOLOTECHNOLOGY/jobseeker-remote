@@ -1,7 +1,8 @@
 import React from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Autocomplete from '@mui/material/Autocomplete'
-import {  TextField } from '@mui/material'
+import { TextField } from '@mui/material'
+import { OutlinedFlag } from '@mui/icons-material'
 
 type Input = React.InputHTMLAttributes<HTMLInputElement>
 type JobSearchBar = {
@@ -24,15 +25,24 @@ type JobSearchBar = {
   maxLength?: Number
 } & Omit<Input, 'size'>
 
-const theme = createTheme({
+const theme = parent => createTheme(({
+  ...parent,
   components: {
     MuiAutocomplete: {
       styleOverrides: {
+        ...parent?.components?.MuiAutocomplete?.styleOverrides,
         root: {
-          borderRadius: '10px',
-          overflow: 'hidden',
-          // border: '1px solod #ccc'
+          ...parent?.components?.MuiAutocomplete?.styleOverrides,
+          // borderRadius: '10px',
+          // overflow: 'hidden',
+          // "&:Mui-focused":{
+          //   background:'none',
+          //   border:'none'
+          // },
+          height: '100%',
+          border: 'none'
         },
+
         // inputRoot:{
         //   border:'none'
         // },
@@ -49,14 +59,21 @@ const theme = createTheme({
           border: 'none',
           focused: {
             border: 'none'
+          },
+          "&:Mui-focused": {
+            background: 'none',
+            border: 'none',
+            OutlinedFlag: false
+          },
+          notchedOutline: {
+            border: 'none'
           }
-        
         },
 
       }
     },
   }
-})
+}))
 const MaterialTextFieldWithSuggestionList = ({
   id,
   label,
@@ -84,7 +101,7 @@ const MaterialTextFieldWithSuggestionList = ({
       <Autocomplete
         id='autocomplete-suggestion-list'
         freeSolo
-        // style={{background:'#fff',color:'#ccc'}}
+        style={{ background: '#fff', color: '#ccc' }}
         options={options?.map((option) => option)}
         className={className}
         size={size}
@@ -94,19 +111,20 @@ const MaterialTextFieldWithSuggestionList = ({
           }
         }}
         placeholder={label}
-
+        classes={{}}
         defaultValue={defaultValue}
         inputValue={value}
         renderInput={(params) => (
           <TextField
             {...refs}
             id={id}
-             style={{background:'#fff',color:'#ccc',borderRadius:'10px'}}
-
+            style={{ background: '#fff', color: '#ccc', borderRadius: '10px', height: 44 }}
+            classes={{}}
             // label={label}
-            placeholder={label}
+            // placeholder={label}
             hiddenLabel
             maxLength={maxLength}
+            label={label}
             color={color as any}
             // variant='standard'
             // inputProps={{disableUnderline:true}}

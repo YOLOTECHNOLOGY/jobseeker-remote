@@ -62,7 +62,7 @@ const SingleSelect = ({
             {options &&
                 options.map((option: any) => (
                     <MenuItem key={option.value} value={option.value}>
-                        <ListItemText primary={option.value} />
+                        <ListItemText primary={option.label} />
                     </MenuItem>
                 ))}
         </Select>
