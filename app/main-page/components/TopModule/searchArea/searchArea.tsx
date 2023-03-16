@@ -11,11 +11,21 @@ import { useRouter } from 'next/navigation'
 import { buildQuery } from '../../../helper'
 import { LocationContext } from '../../../../components/providers/locationProvier'
 import { getCookie, setCookie } from 'helpers/cookies'
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
+import { AppDownQRCode } from 'images'
+import Image from 'next/image'
 const SearchArea = (props: any) => {
     const { config } = props
     const dispatch = useDispatch()
     const { location, setLocation } = useContext(LocationContext)
     const router = useRouter()
+    const [isShow,setIsShow] = useState(false)
+    useEffect(() => {
+        window.addEventListener('scroll', useFn)
+        return () => {
+          window.removeEventListener('scroll', useFn)
+        }
+      }, [])
     useEffect(() => {
         const cookieLocation = getCookie('location')
         if(cookieLocation?.value !== location.value) {
@@ -51,7 +61,35 @@ const SearchArea = (props: any) => {
             }
         })
     }, [transitionStart])
-    return <div className={styles.searchArea}>
+    const throttle = (func, delay) => {
+        let timer = null
+        return function () {
+          if (!timer) {
+            timer = setTimeout(() => {
+              func()
+              timer = null
+            }, delay)
+          }
+        }
+      }
+    
+      const isTouchBottom = () => {
+        const width = document.body.clientWidth
+        if (width > 751) {
+          const scrollTopHeight = document.body.scrollTop || document.documentElement.scrollTop
+          if (scrollTopHeight > 180) {
+           return  setIsShow(true)
+           }
+        }
+        setIsShow(false)
+      }
+      const useFn = throttle(() => {
+        isTouchBottom()
+      }, 300)
+
+
+    return <div className={`${styles.searchArea} ${isShow ? styles.searchAreaFix :''}`}>
+        <div className={styles.box}>
         <MaterialLocationField
             className={styles.location}
             value={location}
@@ -99,7 +137,23 @@ const SearchArea = (props: any) => {
             style={{
                 textTransform: 'capitalize'
             }}
-        > Search </MaterialButton>
+            > Search </MaterialButton>
+            {
+              isShow && ( <div className={styles.download}  >
+                <PhoneIphoneIcon  className={styles.icon}/> 
+               <p> Download APP<br/>
+                and chat with Boss
+                </p>
+                <div className={styles.popver}>
+                 <Image src={AppDownQRCode} alt='app down' width='104' height='104'/>
+                 <p>Chat directly<br/>with Boss</p>
+                 </div> 
+              </div>)
+            }
+            
+           
+            
+        </div>
     </div>
 }
 export default SearchArea

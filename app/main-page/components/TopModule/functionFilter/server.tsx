@@ -48,7 +48,7 @@ const fillTo3 = popularList => filledList => sourceList => {
 }
 
 const ServerFunctionFilter = async (props: { config: any }) => {
-  const config = props.config
+  const config = props?.config
   const list = config?.inputs?.main_functions?.map?.(item => {
     return {
       title: item.value,
