@@ -1,6 +1,7 @@
+'use client'
 import Avatar from '@mui/material/Avatar'
 
-import styles from '../../page.module.scss'
+import styles from '../../../page.module.scss'
 
 type propsType = {
   description?: string
@@ -22,7 +23,7 @@ const Desc = ({
   lastActiveAt
 }: propsType) => {
   return (
-    <div className={styles.desc}>
+    <section className={styles.desc}>
       <div>
         <h5>Job Description</h5>
         <div>
@@ -31,7 +32,7 @@ const Desc = ({
         </div>
       </div>
 
-      {skills.map((skill) => (
+      {skills?.map((skill) => (
         <div key={skill.value}>{skill.value}</div>
       ))}
 
@@ -44,7 +45,7 @@ const Desc = ({
         <span>{chatResponseRate}</span>
         <span>{lastActiveAt}</span>
       </div>
-    </div>
+    </section>
   )
 }
 

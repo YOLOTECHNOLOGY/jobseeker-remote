@@ -10,7 +10,7 @@ type propsType = {
 
 const Head = ({ title, localhost, degree, xp_lvl, jobType, salary }: propsType) => {
   return (
-    <div className={styles.head}>
+    <section className={styles.head}>
       <div className={styles.head_main}>
         <h1>
           {title} <div className='salary'>{salary}</div>
@@ -28,7 +28,7 @@ const Head = ({ title, localhost, degree, xp_lvl, jobType, salary }: propsType) 
           <div>Upload resume</div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 
