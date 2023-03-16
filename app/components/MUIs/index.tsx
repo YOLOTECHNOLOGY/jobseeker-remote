@@ -1,2 +1,2 @@
 'use client'
-export { Button, Avatar } from '@mui/material'
+export { Button, Avatar, Stack } from '@mui/material'
