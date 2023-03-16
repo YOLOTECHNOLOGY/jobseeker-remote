@@ -30,7 +30,7 @@ const tabList = [
   },
   {
     tab: 'CSR/Ops',
-    value: 'Customer'
+    value: 'Customer Service/Operations'
   },
   { tab: 'Sales', value: 'Sales' },
   { tab: 'Finance', value: 'Finance/Audit/Tax' },
