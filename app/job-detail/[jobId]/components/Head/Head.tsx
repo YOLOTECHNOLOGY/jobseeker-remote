@@ -1,18 +1,32 @@
-const Head = () => {
-  return (
-    <div>
-      <h1>
-        Lorem ipsum dolor sit amet, consectetur lore <div className='salary'>₱75 - 80K</div>
-      </h1>
-      <div>Makati |⟩Degree | 3 to 5 years experience | Full-time</div>
-      <div>
-        <div>
-          <button>Save</button>
-          <button>Chat now</button>
-        </div>
+import styles from '../../page.module.scss'
+type propsType = {
+  title?: string
+  localhost?: string
+  degree?: string
+  xp_lvl?: string
+  jobType?: string
+  salary?: string
+}
 
-        <div>Fill up resume online</div>
-        <div>Upload resume</div>
+const Head = ({ title, localhost, degree, xp_lvl, jobType, salary }: propsType) => {
+  return (
+    <div className={styles.head}>
+      <div className={styles.head_main}>
+        <h1>
+          {title} <div className='salary'>{salary}</div>
+        </h1>
+        <div>
+          {localhost} | {degree} | {xp_lvl} | {jobType}
+        </div>
+        <div>
+          <div>
+            <button>Save</button>
+            <button>Chat now</button>
+          </div>
+
+          <div>Fill up resume online</div>
+          <div>Upload resume</div>
+        </div>
       </div>
     </div>
   )
