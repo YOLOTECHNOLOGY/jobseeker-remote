@@ -17,7 +17,7 @@ export const metadata = {
     url: defaultSEO.imageUrl,
     images: [
       {
-        secureUrl: defaultSEO.url,
+        url: defaultSEO?.imageUrl,
         width: 450,
         height: 290
       }
