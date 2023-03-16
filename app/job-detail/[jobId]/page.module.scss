@@ -1,9 +1,5 @@
 @import 'styles/variable.scss';
 
-.container {
-  @extend .GlobalNextAppContainer;
-}
-
 .head {
   width: 100%;
   background-color: white;
@@ -12,5 +8,21 @@
   &_main {
     margin: 0 auto;
     max-width: $NextAppMaxWidth;
+    display: flex;
+  }
+}
+
+.container {
+  max-width: $NextAppMaxWidth;
+  margin: 0 auto;
+  display: flex;
+
+  .main {
+    width: calc(100% - 275px);
+  }
+
+  .aside {
+    margin-left: 25px;
+    width: 250px;
   }
 }

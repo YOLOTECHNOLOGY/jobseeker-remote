@@ -1,3 +1,4 @@
+'use client'
 import Button from '@mui/material/Button'
 
 type propsType = {
@@ -6,15 +7,16 @@ type propsType = {
 
 const Benefits = ({ benefits }: propsType) => {
   return (
-    <div>
+    <section>
       <h2>Benefits</h2>
+      <Button></Button>
       <div>
-        {benefits.map((benefit) => (
+        {benefits?.map((benefit) => (
           <Button key={benefit.id}>{benefit.name}</Button>
         ))}
       </div>
       <div>See more</div>
-    </div>
+    </section>
   )
 }
 

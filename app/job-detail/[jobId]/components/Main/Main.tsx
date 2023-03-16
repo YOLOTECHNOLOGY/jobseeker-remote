@@ -1,12 +1,13 @@
-import Desc from '../Desc/Desc'
-import Benefits from '../Benefits/Benefits'
+import { Desc, Benefits } from './index'
+
+import styles from '../../page.module.scss'
 
 const Main = () => {
   return (
-    <div>
+    <main className={styles.main}>
       <Desc />
-      <Benefits benefits={[]} />
-    </div>
+      <Benefits />
+    </main>
   )
 }
 
