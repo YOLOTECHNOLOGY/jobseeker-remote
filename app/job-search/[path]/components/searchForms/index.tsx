@@ -70,7 +70,7 @@ const SearchArea = (props: any) => {
             page: page,
             ...moreData
         }
-    }, [searchValue, salaries, moreData, location, sort, jobFunctionValue])
+    }, [searchValue, salaries,jobTypes, moreData, location, sort, jobFunctionValue])
     const router = useRouter()
     const result = useMemo(() => {
         return encode(filterParams)
