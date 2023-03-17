@@ -1,5 +1,7 @@
 import Desc from './Desc/Desc'
 import Benefits from './Benefits/Benefits'
+import Map from './Map/Map'
+import Search from './Search/Search'
 
 import styles from '../../page.module.scss'
 
@@ -18,7 +20,9 @@ const MainFC = (props: propsType) => {
   return (
     <main className={styles.main}>
       <Desc {...props} />
-      <Benefits benefits={props.benefitsProps} />
+      {props.benefitsProps?.length && <Benefits benefits={props.benefitsProps} />}
+      <Map />
+      <Search />
     </main>
   )
 }
