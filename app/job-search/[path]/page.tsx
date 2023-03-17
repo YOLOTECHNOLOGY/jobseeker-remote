@@ -22,7 +22,7 @@ const configs = getConfigs([
 
 const Main = (props: any) => {
     return <div >
-        <SearchForm config={props.config} searchValues={props.searchValues} />
+        <div style={{position:'sticky',top:0}}><SearchForm config={props.config} searchValues={props.searchValues} /></div>
         <div className={styles.content}>
             <div className={styles.table}>
                 {/* <Loading/> */}

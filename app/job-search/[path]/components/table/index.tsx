@@ -8,7 +8,6 @@ import Pagination from 'app/components/commons/Pagination'
 import JobCard from '../jobCard'
 const Table = (props: any) => {
     const { jobs = [], page, totalPages } = props
-    console.log({ tableProps: props })
     return <div className={styles.container}>
         {jobs.map(job => {
             return (<div className={styles.jobContainer} key={job?.id}>
