@@ -57,6 +57,7 @@
   margin: 0 auto;
   display: flex;
   margin-bottom: 24px;
+  margin-top: 44px;
 
   .main {
     width: calc(100% - 275px);
@@ -65,7 +66,6 @@
       background: #ffffff;
       border-radius: 15px;
       padding: 24px;
-      margin-top: 44px;
 
       &_title {
         display: flex;
@@ -106,6 +106,7 @@
 
       &_context {
         margin-top: 16px;
+        overflow: hidden;
       }
 
       &_requirement {
@@ -113,6 +114,7 @@
       }
 
       &_footer {
+        margin-top: 24px;
         border-top: 0.5px solid #bcbcbc;
         display: flex;
         align-items: center;
@@ -203,5 +205,129 @@
   .aside {
     margin-left: 25px;
     width: 250px;
+
+    .signUp {
+      width: 100%;
+      width: 250px;
+      height: 213px;
+      background: #e7f1fb;
+      border-radius: 10px;
+      padding: 16px;
+
+      &_userProtocol {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        letter-spacing: 0.0075em;
+        color: #707070;
+        margin-top: 8px;
+      }
+    }
+
+    .company {
+      background: #ffffff;
+      border-radius: 15px;
+      margin-top: 24px;
+      padding: 16px;
+
+      &_title {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: 0.02em;
+      }
+
+      &_name {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        color: #353535;
+        margin: 8px 0;
+      }
+
+      &_financingStage {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        letter-spacing: 0.0075em;
+        color: #707070;
+      }
+    }
+
+    .similarJobs {
+      background: #ffffff;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-top: 24px;
+
+      h3 {
+        height: 44.22px;
+        background: #f0f0f0;
+      }
+
+      &_card {
+        margin-top: 32px;
+      }
+
+      &_container {
+        padding: 16px;
+      }
+
+      &_title {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: 0.02em;
+        color: #353535;
+        margin-bottom: 0;
+      }
+
+      &_salary {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: 0.02em;
+        color: #136fd3;
+      }
+
+      &_info {
+        display: flex;
+        margin-top: 15px;
+
+        &_jobType {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          letter-spacing: 0.0075em;
+          color: #707070;
+          line-height: 14px;
+        }
+      }
+    }
+
+    .ad {
+      &_container {
+        width: 250px;
+        height: 250px;
+        background-color: rosybrown;
+        animation: loading 2s ease infinite;
+        overflow: hidden;
+        margin-top: 24px;
+      }
+    }
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-size: 300% 100%;
+    background-image: linear-gradient(100deg, #eee 40%, #fff 50%, #eee 60%);
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-size: 300% 100%;
+    background-image: linear-gradient(100deg, #eee 40%, #fff 50%, #eee 60%);
+    background-position: 0 50%;
   }
 }
