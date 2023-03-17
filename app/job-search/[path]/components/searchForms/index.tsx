@@ -62,12 +62,14 @@ const SearchArea = (props: any) => {
 
     const filterParams = useMemo(() => {
         return {
+            
             query: searchValue,
             salary: salaries,
             location: [location?.['seo_value']].filter(a => a),
             jobType: jobTypes,
             sort: sort,
             page: page,
+            ...jobFunctionValue,
             ...moreData
         }
     }, [searchValue, salaries,jobTypes, moreData, location, sort, jobFunctionValue])
@@ -75,6 +77,7 @@ const SearchArea = (props: any) => {
     const result = useMemo(() => {
         return encode(filterParams)
     }, [filterParams])
+    console.log({result})
     // const result = encode(filterParams)
     const firstRender = useFirstRender()
     const reload = useCallback(() => {
