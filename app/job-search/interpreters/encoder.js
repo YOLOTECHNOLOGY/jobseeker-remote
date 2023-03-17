@@ -48,14 +48,14 @@ const buildQueryParams = cond([
             firstKeyIn(['query', 'location', ...userSelectKeys]),
             key => key + '-jobs'
         ),
-        params: { page: either(prop('page'), always(1)) }
+        params: { page: either(prop('page'), always(1)) ,sort: either(prop('sort'), always('1'))}
     })],
     [conditions.oneWithLocation, applySpec({
         searchQuery: pipe(
             juxt([firstKeyIn(['query', ...userSelectKeys]), prop('location')]),
             join('-jobs-in-')
         ),
-        params: { page: either(prop('page'), always(1)) }
+        params: { page: either(prop('page'), always(1)),sort: either(prop('sort'), always('1')) }
     })],
     [conditions.queryMany, applySpec({
         searchQuery: pipe(prop('query'), key => key + '-jobs'),
