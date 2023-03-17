@@ -92,7 +92,8 @@ module.exports = withBundleAnalyzer({
     }
     config.module.rules.push({
       test: /\.js|.ts|.jsx|.tsx$/,
-      include: path.resolve('src'),
+      include: path.resolve('./'),
+      exclude: path.resolve('./node_modules'),
       use: [
         'thread-loader',
         // your expensive loader (e.g babel-loader)

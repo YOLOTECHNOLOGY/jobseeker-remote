@@ -88,6 +88,7 @@
     "sass": "^1.43.4",
     "sitemap": "^7.0.0",
     "slugify": "^1.6.2",
+    "thread-loader": "^3.0.4",
     "ua-parser-js": "^1.0.2"
   },
   "devDependencies": {
