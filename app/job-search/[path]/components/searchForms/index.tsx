@@ -135,6 +135,9 @@ const SearchArea = (props: any) => {
                         className={styles.searchButton}
                         onClick={() => {
                             addSearchHistory(searchValue)
+                            addSearchHistory(searchValue)
+                            reload()
+
                         }}
                     > Search </MaterialButton>
                 </div>
