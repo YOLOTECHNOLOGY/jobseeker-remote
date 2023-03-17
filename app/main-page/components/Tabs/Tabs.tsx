@@ -234,6 +234,8 @@ const Tabs = ({ location }: any) => {
   const handlePopularJobSearch = (search: string) => {
     //
   }
+ 
+
   return (
     <div>
       <h2 className={styles.title}>{accessToken ? 'Jobs for You' : 'Popular Jobs'}</h2>
@@ -256,11 +258,13 @@ const Tabs = ({ location }: any) => {
                     sx={{
                       fontSize: '16px',
                       textTransform: 'capitalize',
-                      width: 'calc(15%)',
                       color: '#707070',
                       background: '#F5F6FA',
                       fontFamily: 'product sans',
-                      letterSpacing: '1px'
+                      letterSpacing: '1px',
+                      width:'auto',
+                      padding:'12px 0',
+                      marginRight:'78px'
                     }}
                   />
                 ))}
