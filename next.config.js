@@ -23,7 +23,7 @@ module.exports = withBundleAnalyzer({
     return redirectionPaths
   },
   reactStrictMode: false,
-  
+
   experimental: {
     // concurrentFeatures: true,
     // serverComponents: true,
@@ -31,7 +31,7 @@ module.exports = withBundleAnalyzer({
     appDir: true,
     // mdxRs: true,
     // typedRoutes: true,
-    esmExternals:'loose'
+    esmExternals: 'loose'
 
   },
   env: {
@@ -70,13 +70,13 @@ module.exports = withBundleAnalyzer({
     APP_STORE_LINK: 'https://apps.apple.com/sg/app/bossjob/id1592073585',
     GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp',
     BLOG_BOSSJOB: 'https://blog.bossjob.ph',
-    
+
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'node_modules')]
   },
   images: {
-    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl','local-assets.bossjob.com']
+    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl', 'local-assets.bossjob.com']
   },
   plugins: [
     [
@@ -90,7 +90,15 @@ module.exports = withBundleAnalyzer({
     if (isServer) {
       generateRobotsTxt()
     }
+    config.module.rules.push({
+      test: /\.js|.ts|.jsx|.tsx$/,
+      include: path.resolve('src'),
+      use: [
+        'thread-loader',
+        // your expensive loader (e.g babel-loader)
+      ],
+    })
     return config
   },
-  
+
 })
