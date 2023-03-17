@@ -14,6 +14,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import JobFunction from 'app/components/commons/jobFunction'
 // import { useRouter } from 'next/navigation'
 import { toPairs } from 'ramda'
+import { Button } from 'app/components/MUIs'
 import JobSearchFilters from 'app/components/commons/JobSearchFilters'
 import { getCookie } from 'helpers/cookies'
 import { useDispatch } from 'react-redux'
@@ -33,7 +34,7 @@ const SearchArea = (props: any) => {
     }), []
     const accessToken = getCookie('accessToken')
     const userCookie = getCookie('user')
-
+    const [page, setPage] = useState(searchValues.page ?? '1')
 
     const locations = flatMap(config.inputs.location_lists, item => item.locations)
     const [location, setLocation] = useState(locations.find(location => location.seo_value === searchValues.location?.[0]))
@@ -66,7 +67,7 @@ const SearchArea = (props: any) => {
             location: [location?.['seo_value']].filter(a => a),
             jobType: jobTypes,
             sort: sort,
-            page: searchValues.page ?? '1',
+            page: page,
             ...moreData
         }
     }, [searchValue, salaries, moreData, location, sort, jobFunctionValue])
@@ -84,6 +85,10 @@ const SearchArea = (props: any) => {
         router.push('/job-search/' + result.searchQuery + '?' + url, { forceOptimisticNavigation: true })
     }, [result])
     useEffect(reload, [location, salaries, jobTypes, moreData, sort, jobFunctionValue])
+    const moreCount = useMemo(() => {
+        return Object.values(moreData).reduce((a1, a2) => a1 + (a2?.length ?? 0), 0)
+    }, [moreData])
+    console.log({ moreData, moreCount })
     return <div>
         <ThemeProvider theme={theme}>
             <div className={styles.container}>
@@ -161,12 +166,36 @@ const SearchArea = (props: any) => {
                         onSelect={setJobtypes}
                         defaultValue={jobTypes}
                     />
-                    <MaterialButton
+                    <Button
                         className={styles.searchButton}
+                        variant='outlined'
                         onClick={() => {
                             setShowMore(true)
                         }}
-                    > More Filters </MaterialButton>
+                    > More Filters {moreCount ? `(${moreCount})` : ''} </Button>
+                    <Button
+                        className={styles.clearButton}
+                        variant='text'
+
+                        onClick={() => {
+                            setLocation(null)
+                            setSearchValue('')
+                            setSort('1')
+                            jobFunctionChange({
+                                jobFunctions: [],
+                                mainFunctions: [],
+                                functionTitles: []
+                            })
+                            setJobtypes([])
+                            setSelaries([])
+                            setMoreData({
+                                workExperience: [],
+                                qualification: [],
+                                verifiedCompany: []
+                            })
+                            setPage('1')
+                        }}
+                    > Reset Filters </Button>
                 </div>
             </div>
         </ThemeProvider>

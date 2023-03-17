@@ -25,6 +25,7 @@ const Main = (props: any) => {
         <SearchForm config={props.config} searchValues={props.searchValues} />
         <div className={styles.content}>
             <div className={styles.table}>
+                {/* <Loading/> */}
                 <Suspense fallback={<Loading />}>
                     <Table searchValues={props.searchValues} config={props.config} />
                 </Suspense>

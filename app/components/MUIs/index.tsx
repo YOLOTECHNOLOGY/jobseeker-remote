@@ -1,2 +1,2 @@
 'use client'
-export { Button,Pagination } from '@mui/material'
+export { Button, Pagination, CircularProgress } from '@mui/material'
