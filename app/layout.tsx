@@ -1,7 +1,6 @@
 // 'use client'
 // import Providers from './components/providers'
 import Header from 'components/Header'
-import styles from './index.module.scss'
 import './globals.scss'
 import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
@@ -113,7 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <Header />
           <HamburgerMenu />
-          <div className={styles.container}>{children}</div>
+          {children}
         </Providers>
         <Initial />
       </body>

@@ -4,7 +4,10 @@ const generateRobotsTxt = require('./scripts/generateRobotsTxt.js')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
-
+// const getPresets = (options = {}) => ({
+//   presets: options.presets || ['next/babel'],
+//   plugins: [['styled-components', { ssr: true }], ...(options.plugins || [])],
+// })
 module.exports = withBundleAnalyzer({
   async redirects() {
     if (process.env.MAINTENANCE === 'true') {
@@ -20,10 +23,11 @@ module.exports = withBundleAnalyzer({
     return redirectionPaths
   },
   reactStrictMode: false,
-
+  
   experimental: {
     // concurrentFeatures: true,
     // serverComponents: true,
+    forceSwcTransforms: true,
     appDir: true,
     // mdxRs: true,
     // typedRoutes: true,
@@ -65,7 +69,8 @@ module.exports = withBundleAnalyzer({
     BOSS_BLOG_URL: process.env.BOSS_BLOG_URL,
     APP_STORE_LINK: 'https://apps.apple.com/sg/app/bossjob/id1592073585',
     GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp',
-    BLOG_BOSSJOB: 'https://blog.bossjob.ph'
+    BLOG_BOSSJOB: 'https://blog.bossjob.ph',
+    
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'node_modules')]
@@ -73,10 +78,19 @@ module.exports = withBundleAnalyzer({
   images: {
     domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl','local-assets.bossjob.com']
   },
+  plugins: [
+    [
+      '@babel/plugin-proposal-decorators',
+      {
+        legacy: true,
+      },
+    ],
+  ],
   webpack(config, { isServer }) {
     if (isServer) {
       generateRobotsTxt()
     }
     return config
-  }
+  },
+  
 })

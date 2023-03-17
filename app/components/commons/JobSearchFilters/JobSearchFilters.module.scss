@@ -1,0 +1,202 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.modal {
+  &Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    /* Follow body's width and height*/
+    /* NOTE: vw/vh does not work for IOS Safari as it does not account for browser footer/header */
+    /* Instead, we use window.innerHeight. See syncHeight function inside Modal.tsx*/
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    opacity: .5;
+  }
+  &Wrapper {
+    width: 100%;
+    height: 100%;
+    /* Add padding for unsafe areas(curved devices) */
+    padding:
+      env(safe-area-inset-top)
+      env(safe-area-inset-right)
+      env(safe-area-inset-bottom)
+      env(safe-area-inset-left);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+}
+
+.searchFilter {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 64px;
+  right: 0;
+  width: 600px;
+  height: calc(100vh - 64px);
+  z-index: 12;
+  background-color: $white-3;
+  box-shadow: $box-shadow-1;
+
+  &.isShowingEmailAlert{
+    top: 114px;
+    height: calc(100vh - 114px);
+  }
+  
+  @include msd {
+    top: 0;
+    right: unset;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+  }
+
+  &Header {
+    display: flex;
+    padding: 20px 25px;
+    justify-content: space-between;
+    background-color: $white-1;
+  }
+
+  &Body {
+    padding: 0 24px;
+    height: calc(100vh - 261px);
+    flex-grow: 1;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $white-3; 
+      border-radius: 10px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: $white-2; 
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: $white-2; 
+    }
+  }
+
+  &Footer {
+    padding: 16px 25px;
+    border-top: 2px solid $lightgrey;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    background-color: $white-3;
+  }
+
+  &Close {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &Section {
+    padding: 24px 0;
+
+    &:not(:first-child) {
+      border-top: 1px solid $lightgrey;
+
+      @include msd {
+        border: none;
+      }
+    }
+  }
+
+  &Accordion {
+    span {
+      text-transform: capitalize;
+    }
+
+    img {
+      display: none;
+    }
+
+    input {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &Options {
+    padding: 16px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+
+    label {
+      width: 50%;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+
+      span {
+        margin-left: 15px;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      @include msd {
+        align-items: flex-start;
+
+        span {
+          margin-left: 10px;
+          line-height: 1.2;
+        }
+
+        input {
+          margin-top: 1px;
+        }
+      }
+
+      @include msd {
+        width: 100%;
+        
+        span {
+          padding-right: 4px;
+        }
+      }
+    }
+
+    @include msd {
+      flex-direction: column;
+    }
+
+    .searchFilterOptionSub{
+      margin-left:25px;
+    }
+  }
+
+  &OptionsColumn {
+    flex-direction: column;
+  }
+
+  &Reset {
+    margin-right: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.sortField{
+  margin-top:20px !important;
+  width:100%;
+}
