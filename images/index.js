@@ -147,3 +147,5 @@ export const CorporateResumePreview = `${S3BucketJobseeker}/corporate_resume_pre
 /* App Down */
 export const AppDownQRCode = `${S3BucketJobseeker}/AppDownQRCode.png`
 
+/* App Down */
+export const JoinUs = `${S3BucketJobseeker}/Joinus.png`
