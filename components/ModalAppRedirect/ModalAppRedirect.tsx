@@ -123,7 +123,7 @@ const ModalAppRedirect = ({
         window.location.replace(appStoreLink)
       }, 5000)
     }
-  }, [userDetail])
+  }, [userDetail, userAgent])
 
   return (
     <Modal
