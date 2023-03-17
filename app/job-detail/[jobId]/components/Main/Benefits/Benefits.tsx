@@ -1,21 +1,20 @@
-'use client'
-import Button from '@mui/material/Button'
+import styles from '../../../page.module.scss'
 
-type propsType = {
+export type propsType = {
   benefits?: Array<any>
 }
 
 const Benefits = ({ benefits }: propsType) => {
   return (
-    <section>
+    <section className={styles.benefits}>
       <h2>Benefits</h2>
-      <Button></Button>
-      <div>
+
+      <div className={styles.benefits_labels}>
         {benefits?.map((benefit) => (
-          <Button key={benefit.id}>{benefit.name}</Button>
+          <div key={benefit.id}>{benefit.name}</div>
         ))}
       </div>
-      <div>See more</div>
+      <div className={styles.benefits_more}>See more</div>
     </section>
   )
 }

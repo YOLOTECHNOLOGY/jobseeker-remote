@@ -5,16 +5,6 @@ import AsideFC from './components/Aside/'
 import styles from './page.module.scss'
 
 const Index = ({ data, jobId }: any) => {
-  // const descProps = {
-  //   description: data.job_description_html
-  //   requirements: data.job_requirements_html
-  //   skills: data.skills
-  //   logo: data.company?.logo
-  //   name: data.company?.name
-  //   chatResponseRate: data.
-  //   lastActiveAt
-  // }
-
   const headProps = {
     title: data.job_title,
     localhost: data.location?.value,
@@ -33,11 +23,22 @@ const Index = ({ data, jobId }: any) => {
     jobId
   }
 
+  const mainProps = {
+    description: data.job_description_html,
+    requirements: data.job_requirements_html,
+    skills: data.skills,
+    logo: data.company.logo,
+    name: data.company.name,
+    chatResponseRate: data.recruiter?.response_rate,
+    lastActiveAt: data.recruiter?.last_active_at,
+    benefitsProps: data.benefits
+  }
+
   return (
     <div>
       <Head {...headProps} />
       <div className={styles.container}>
-        <MainFC />
+        <MainFC {...mainProps} />
         <AsideFC {...companyProps} />
       </div>
     </div>
