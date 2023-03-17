@@ -5,8 +5,6 @@ import * as ReactDOM from 'react-dom'
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
 import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
 
 /* Components */
 import Text from 'components/Text'
@@ -14,7 +12,6 @@ import Button from 'components/Button'
 import Accordian from 'components/Accordian'
 
 /* Helpers */
-import { userFilterSelectionDataParser } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
 /* Style */
@@ -191,10 +188,10 @@ const NavSearchFilter = ({
 
   const handleApplyFilter = (data) => {
     onCloseFilter()
-    const updatedData = {
-      ...data,
-      sort: [data.sort]
-    }
+    // const updatedData = {
+    //   ...data,
+    //   sort: [data.sort]
+    // }
     // sanitize category data -> only pass main options as value to parser if all sub options are selected
     // if (data && data.category) {
     //   let category = data.category

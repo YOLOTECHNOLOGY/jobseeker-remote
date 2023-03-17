@@ -2,7 +2,7 @@ import React from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Autocomplete from '@mui/material/Autocomplete'
 import { TextField } from '@mui/material'
-import { OutlinedFlag } from '@mui/icons-material'
+
 
 type Input = React.InputHTMLAttributes<HTMLInputElement>
 type JobSearchBar = {

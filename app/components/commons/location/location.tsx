@@ -79,6 +79,7 @@ const MaterialLocationField = ({ className, label, locationList, disableClearabl
         size='small'
         disableClearable={disableClearable}
         className={className}
+        classes={{}}
         renderInput={(params) => (
           <TextField id='location'
             {...fieldRef}

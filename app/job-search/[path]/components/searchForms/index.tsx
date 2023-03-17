@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useContext, useEffect, useMemo } from 'react'
+import React, { useState, useCallback, useEffect, useMemo } from 'react'
 import { flatMap } from 'lodash-es'
 import LocationField from 'app/components/commons/location'
 import JobSearchBar from '../../../../components/commons/location/search'
@@ -13,12 +13,13 @@ import theme from 'app/components/commons/theme'
 import { ThemeProvider } from '@mui/material/styles'
 import JobFunction from 'app/components/commons/jobFunction'
 // import { useRouter } from 'next/navigation'
-import { LocationContext } from '../../../../components/providers/locationProvier'
+import { toPairs } from 'ramda'
 import JobSearchFilters from 'app/components/commons/JobSearchFilters'
 import { getCookie } from 'helpers/cookies'
 import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import { useRouter } from 'next/navigation'
+import { useFirstRender } from 'helpers/useFirstRender'
 const sortOptions = [
     { label: 'Newest', value: '1' },
     { label: 'Relevance', value: '2' },
@@ -26,13 +27,13 @@ const sortOptions = [
 ]
 const SearchArea = (props: any) => {
     const { config, searchValues } = props
-    console.log({ props })
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchConfigSuccess(config))
     }), []
     const accessToken = getCookie('accessToken')
     const userCookie = getCookie('user')
+
 
     const locations = flatMap(config.inputs.location_lists, item => item.locations)
     const [location, setLocation] = useState(locations.find(location => location.seo_value === searchValues.location?.[0]))
@@ -45,21 +46,9 @@ const SearchArea = (props: any) => {
         jobFunctions: searchValues?.jobFunctions ?? [],
         mainFunctions: searchValues?.mainFunctions ?? []
     })
-    console.log({ jobFunctionValue })
     const [showMore, setShowMore] = useState(false)
-    const [sort, setSort] = useState(searchValues?.sort?.[0] ?? '1')
-    // {
-    //     "workExperience": [
-    //         "1-yr-exp",
-    //         "3-5-yrs-exp"
-    //     ],
-    //     "qualification": [
-    //         "edu-not-required"
-    //     ],
-    //     "verifiedCompany": [
-    //         "verified-companies"
-    //     ]
-    // }
+    const [sort, setSort] = useState(searchValues?.sort?.[0] ?? '2')
+
     const [moreData, setMoreData] = useState({
         workExperience: searchValues?.workExperience ?? [],
         qualification: searchValues?.qualification ?? [],
@@ -67,7 +56,6 @@ const SearchArea = (props: any) => {
     })
     const [jobTypes, setJobtypes] = useState(searchValues?.jobType ?? [])
     const jobTypeList = config?.inputs?.job_types?.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
-    // const router = useRouter()
     const [searchValue, setSearchValue] = useState(searchValues.query)
     const [suggestionList, handleSuggestionSearch, addSearchHistory] = useSuggest() as any[]
 
@@ -78,19 +66,25 @@ const SearchArea = (props: any) => {
             location: [location?.['seo_value']].filter(a => a),
             jobType: jobTypes,
             sort: sort,
+            page: searchValues.page ?? '1',
             ...moreData
         }
     }, [searchValue, salaries, moreData, location, sort, jobFunctionValue])
     const router = useRouter()
-    useEffect(() => {
-        const url = URL.createObjectURL(filterParams);
-        console.log({ url })
-        // router.push(filterParams)
+    const result = useMemo(() => {
+        return encode(filterParams)
     }, [filterParams])
-    console.log({ filterParams })
-    const result = encode(filterParams)
-    console.log({ jobFunctionValue, moreData, result, location })
-    return <div style={{ height: 2080 }}>
+    // const result = encode(filterParams)
+    const firstRender = useFirstRender()
+    const reload = useCallback(() => {
+        if (firstRender) {
+            return
+        }
+        const url = new URLSearchParams(toPairs(result.params)).toString();
+        router.push('/job-search/' + result.searchQuery + '?' + url, { forceOptimisticNavigation: true })
+    }, [result])
+    useEffect(reload, [location, salaries, jobTypes, moreData, sort, jobFunctionValue])
+    return <div>
         <ThemeProvider theme={theme}>
             <div className={styles.container}>
                 <div className={styles.searchArea}>
@@ -100,7 +94,9 @@ const SearchArea = (props: any) => {
                         value={location}
                         isClear={true}
                         defaultValue={location}
-                        onChange={(e, value) => setLocation(value)}
+                        onChange={(e, value) => {
+                            setLocation(value)
+                        }}
                     />
                     <JobSearchBar
                         id='search'
@@ -117,12 +113,14 @@ const SearchArea = (props: any) => {
                                 e.preventDefault()
                                 setSearchValue((e.target as HTMLInputElement).value)
                                 addSearchHistory((e.target as HTMLInputElement).value)
+                                reload()
                             }
                         }}
                         options={suggestionList}
                         onSelect={(value: any) => {
                             setSearchValue(value)
                             addSearchHistory(value)
+                            reload()
                         }}
                     />
                     <MaterialButton
