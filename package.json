@@ -3,9 +3,9 @@
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect=9230' next dev  -p 3004   ",
-    "build:development": "env-cmd -f .env.devsite --use-shell MAINTENANCE=$MAINTENANCE next build",
-    "build:staging": "env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
-    "build:production": "env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
+    "build:development": "NODE_OPTIONS=--max_old_space_size=4096 env-cmd -f .env.devsite --use-shell MAINTENANCE=$MAINTENANCE next build",
+    "build:staging": "NODE_OPTIONS=--max_old_space_size=4096 env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
+    "build:production": "NODE_OPTIONS=--max_old_space_size=4096 env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
     "analyze": "ANALYZE=true yarn build:production",
     "start": "next start",
     "lint": "next lint ",
