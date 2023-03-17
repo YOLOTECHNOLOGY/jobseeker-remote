@@ -1,4 +1,4 @@
-import React, { useState,  } from 'react'
+import React, { useState, useEffect } from 'react'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
@@ -36,6 +36,9 @@ const MultipleSelect = ({
   error,
 }: MaterialSelectCheckMarksProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(value || [])
+  useEffect(() => {
+    setSelectedOptions(value)
+  }, [value])
   const handleChange = (event: SelectChangeEvent) => {
     const {
       target: { value },
