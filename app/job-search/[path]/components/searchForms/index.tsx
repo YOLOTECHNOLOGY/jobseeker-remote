@@ -1,5 +1,6 @@
 'use client'
-import React, { useState, useCallback, useEffect, useMemo } from 'react'
+import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react'
+import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
 import LocationField from 'app/components/commons/location'
 import JobSearchBar from '../../../../components/commons/location/search'
@@ -62,7 +63,7 @@ const SearchArea = (props: any) => {
 
     const filterParams = useMemo(() => {
         return {
-            
+
             query: searchValue,
             salary: salaries,
             location: [location?.['seo_value']].filter(a => a),
@@ -72,12 +73,12 @@ const SearchArea = (props: any) => {
             ...jobFunctionValue,
             ...moreData
         }
-    }, [searchValue, salaries,jobTypes, moreData, location, sort, jobFunctionValue])
+    }, [searchValue, salaries, jobTypes, moreData, location, sort, jobFunctionValue])
     const router = useRouter()
     const result = useMemo(() => {
         return encode(filterParams)
     }, [filterParams])
-    console.log({result})
+    console.log({ result ,filterParams})
     // const result = encode(filterParams)
     const firstRender = useFirstRender()
     const reload = useCallback(() => {
@@ -87,11 +88,14 @@ const SearchArea = (props: any) => {
         const url = new URLSearchParams(toPairs(result.params)).toString();
         router.push('/job-search/' + result.searchQuery + '?' + url, { forceOptimisticNavigation: true })
     }, [result])
+    const reloadRef = useRef(reload)
+    useEffect(() => {
+        reloadRef.current = reload
+    }, [reload])
     useEffect(reload, [location, salaries, jobTypes, moreData, sort, jobFunctionValue])
     const moreCount = useMemo(() => {
         return Object.values(moreData).reduce((a1, a2) => a1 + (a2?.length ?? 0), 0)
     }, [moreData])
-    console.log({ moreData, moreCount })
     return <div>
         <ThemeProvider theme={theme}>
             <div className={styles.container}>
@@ -114,29 +118,36 @@ const SearchArea = (props: any) => {
                         className={styles.search}
                         value={searchValue}
                         maxLength={255}
+
                         searchFn={handleSuggestionSearch as any}
                         updateSearchValue={setSearchValue}
                         onKeyPress={(e) => {
                             if (e.key === 'Enter' && !e.shiftKey) {
                                 e.preventDefault()
-                                setSearchValue((e.target as HTMLInputElement).value)
+                                flushSync(() => {
+                                    setSearchValue((e.target as HTMLInputElement).value)
+                                })
                                 addSearchHistory((e.target as HTMLInputElement).value)
-                                reload()
+                                reloadRef.current()
                             }
                         }}
                         options={suggestionList}
                         onSelect={(value: any) => {
-                            setSearchValue(value)
+                            flushSync(() => {
+                                setSearchValue(value)
+                            })
                             addSearchHistory(value)
-                            reload()
+                            reloadRef.current()
                         }}
                     />
                     <MaterialButton
                         className={styles.searchButton}
                         onClick={() => {
+                            flushSync(() => {
+                                setSearchValue(searchValue)
+                            })
                             addSearchHistory(searchValue)
-                            addSearchHistory(searchValue)
-                            reload()
+                            reloadRef.current()
 
                         }}
                     > Search </MaterialButton>

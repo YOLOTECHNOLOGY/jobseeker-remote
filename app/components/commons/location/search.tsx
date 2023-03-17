@@ -105,13 +105,22 @@ const MaterialTextFieldWithSuggestionList = ({
         options={options?.map((option) => option)}
         className={className}
         size={size}
+        onInputChange={(_, val: any, reason) => {
+          console.log({ val, reason })
+          if ((reason === 'clear') && onSelect) {
+            onSelect(val ?? '')
+          }
+        }}
         onChange={(_, val: any, reason) => {
+          console.log({ val, reason })
           if ((reason === 'selectOption' || reason === 'clear') && onSelect) {
             onSelect(val ?? '')
           }
         }}
+        disableClearable={false}
         placeholder={label}
-        classes={{}}
+        // classes={{}}
+        
         defaultValue={defaultValue}
         inputValue={value}
         renderInput={(params) => (
@@ -121,6 +130,7 @@ const MaterialTextFieldWithSuggestionList = ({
             style={{ background: '#fff', color: '#ccc', borderRadius: '10px', height: 44 }}
             classes={{}}
             // label={label}
+            value={value}
             // placeholder={label}
             hiddenLabel
             maxLength={maxLength}

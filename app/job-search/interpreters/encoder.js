@@ -33,6 +33,7 @@ const conditions = {
         pipe(totalOf(['location', ...userSelectKeys]), lte(2))
     )
 }
+
 const buildQueryParams = cond([
     [conditions.noParams, applySpec({
         searchQuery: always('job-search'),
@@ -40,22 +41,22 @@ const buildQueryParams = cond([
     })],
     [conditions.onlyOneFunctionTitle, params => buildQueryParams({
         ...params,
-        fucntionTitles: [],
-        query: params.functionTitles[0]
+        functionTitles: [],
+        query: dropLast(1)(params.functionTitles[0].split('-')).join('-')
     })],
     [conditions.onlyOne, applySpec({
         searchQuery: pipe(
             firstKeyIn(['query', 'location', ...userSelectKeys]),
             key => key + '-jobs'
         ),
-        params: { page: either(prop('page'), always(1)) ,sort: either(prop('sort'), always('1'))}
+        params: { page: either(prop('page'), always(1)), sort: either(prop('sort'), always('1')) }
     })],
     [conditions.oneWithLocation, applySpec({
         searchQuery: pipe(
             juxt([firstKeyIn(['query', ...userSelectKeys]), prop('location')]),
             join('-jobs-in-')
         ),
-        params: { page: either(prop('page'), always(1)),sort: either(prop('sort'), always('1')) }
+        params: { page: either(prop('page'), always(1)), sort: either(prop('sort'), always('1')) }
     })],
     [conditions.queryMany, applySpec({
         searchQuery: pipe(prop('query'), key => key + '-jobs'),
