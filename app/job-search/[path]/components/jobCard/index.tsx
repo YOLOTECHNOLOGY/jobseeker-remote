@@ -1,5 +1,10 @@
+'use client'
 import React from 'react'
 import styles from './index.module.scss'
+import { ChatCircleDots, HomePageChat } from 'images'
+import { hoverableFunc } from 'components/highLevel/hoverable'
+import Image from 'next/image'
+import classNames from 'classnames'
 const JobCard = (props: any) => {
     console.log({ props })
     const {
@@ -9,7 +14,9 @@ const JobCard = (props: any) => {
         job_type,
         job_location,
         xp_lvl,
-        degree
+        degree,
+        recruiter_full_name,
+        recruiter_job_title
     } = props
     const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
     return <div className={styles.container}>
@@ -21,6 +28,29 @@ const JobCard = (props: any) => {
             <div className={styles.labelContainer}>
                 {labels.map(label => <div key={label} className={styles.label}>{label}</div>)}
             </div>
+            {hoverableFunc(isHover => {
+                return <div style={{ height: 24, display: 'flex',flexDirection:'row' }}>
+                    <div className={styles.recruiter}>
+                        <div className={classNames({
+                            [styles.info]: true,
+                            [styles.isHover]: isHover
+                        })}>
+                            <Image src={ChatCircleDots} width={16} height={16} alt={''} />
+                            {`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
+                        </div>
+                        <div className={classNames({
+                            [styles.button]: true,
+                            [styles.isHover]: isHover
+                        })}>
+                            <Image src={HomePageChat} width={16} height={16} alt={''} />
+                            Chat Now
+                        </div>
+                    </div>
+                    <div className={styles.online}>
+                        OnLine
+                    </div>
+                </div>
+            }, { className: styles.recruiterContainer })}
         </div >
     </div>
 }
