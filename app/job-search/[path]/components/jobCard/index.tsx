@@ -16,42 +16,70 @@ const JobCard = (props: any) => {
         xp_lvl,
         degree,
         recruiter_full_name,
-        recruiter_job_title
+        recruiter_job_title,
+        recruiter_is_online,
+        job_skills,
+        company_logo,
+        company_name,
+        company_industry,
+        company_size,
+        company_financing_stage,
+        job_benefits
     } = props
     const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
+    const companyLabels = [company_industry, company_size, company_financing_stage].filter(a => a)
     return <div className={styles.container}>
         <div className={styles.topContainer}>
-            <div className={styles.titleContainer}>
-                <div className={styles.title}>{`${function_job_title} (${job_region})`}</div>
-                <div className={styles.salary}>{salary_range_value}</div>
-            </div>
-            <div className={styles.labelContainer}>
-                {labels.map(label => <div key={label} className={styles.label}>{label}</div>)}
-            </div>
-            {hoverableFunc(isHover => {
-                return <div style={{ height: 24, display: 'flex',flexDirection:'row' }}>
-                    <div className={styles.recruiter}>
-                        <div className={classNames({
-                            [styles.info]: true,
-                            [styles.isHover]: isHover
-                        })}>
-                            <Image src={ChatCircleDots} width={16} height={16} alt={''} />
-                            {`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
-                        </div>
-                        <div className={classNames({
-                            [styles.button]: true,
-                            [styles.isHover]: isHover
-                        })}>
-                            <Image src={HomePageChat} width={16} height={16} alt={''} />
-                            Chat Now
-                        </div>
-                    </div>
-                    <div className={styles.online}>
-                        OnLine
-                    </div>
+            <div className={styles.left}>
+                <div className={styles.titleContainer} title={`${function_job_title} (${job_region})`}>
+                    <div className={styles.title}>{`${function_job_title} (${job_region})`}</div>
+                    <div className={styles.salary}>{salary_range_value}</div>
                 </div>
-            }, { className: styles.recruiterContainer })}
+                <div className={styles.labelContainer}>
+                    {labels.map(label => <div key={label} className={styles.label}>{label}</div>)}
+                </div>
+                {hoverableFunc(isHover => {
+                    return <div style={{ height: 24, display: 'flex', flexDirection: 'row' }}>
+                        <div className={styles.recruiter}>
+                            <div className={classNames({
+                                [styles.info]: true,
+                                [styles.isHover]: isHover
+                            })}>
+                                <Image src={ChatCircleDots} width={16} height={16} alt={''} />
+                                {`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
+                            </div>
+                            <div className={classNames({
+                                [styles.button]: true,
+                                [styles.isHover]: isHover
+                            })}>
+                                <Image src={HomePageChat} width={16} height={16} alt={''} />
+                                Chat Now
+                            </div>
+                        </div>
+                        {!!recruiter_is_online && <div className={styles.online}>
+                            OnLine
+                        </div>}
+                    </div>
+                }, { className: styles.recruiterContainer })}
+            </div>
+            <div className={styles.right}>
+                <div className={styles.company}>
+                    <Image className={styles.logo} src={company_logo} width={24} height={24} alt='' />
+                    <span>{company_name}</span>
+                </div>
+                <div className={styles.componylabels}>
+                    {companyLabels.map(label => <div key={label} className={styles.label}>{label}</div>)}
+                </div>
+            </div>
         </div >
+        <div className={styles.bottomContainer}>
+            <div className={styles.skills} title={(job_skills ?? '').split(',').join(' | ')}>
+                {(job_skills ?? '').split(',').join(' | ')}
+            </div>
+            <div className={styles.benefits} title={job_benefits}>
+                {job_benefits}
+            </div>
+        </div>
     </div>
 }
 
