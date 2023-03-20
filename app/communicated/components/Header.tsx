@@ -1,11 +1,11 @@
 "use client"
-import styles from '../page.module.scss'
+import styles from '../index.module.scss'
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import Tab from '@mui/material/Tab';
 import MuiTabs from '@mui/material/Tabs'
 import { styled } from '@mui/material/styles'
 import { SxProps, Theme } from '@mui/system'
-
+ 
 interface StyledTabsProps {
     children?: React.ReactNode
     value: number | string
@@ -13,29 +13,37 @@ interface StyledTabsProps {
     variant?: 'standard' | 'scrollable' | 'fullWidth'
     scrollButtons: boolean | 'auto'
 }
-const tabList = [
-    {
-        tab: 'Information Technology',
-        value: 'Information Technology'
-    },
-    {
-        tab: 'CSR/Ops',
-        value: 'Customer Service/Operations'
-    },
-    { tab: 'Sales', value: 'Sales' },
-    { tab: 'Finance', value: 'Human Resources/Admin/Legal' },
-]
+
 interface StyledTabProps {
     key: string
     label: string
     value: string
     sx: SxProps<Theme>
 }
+interface headerProps{ 
+    tabValue: string, 
+    tabList: Array<any>,
+    onChange: Function
+    tabChildren: Array<any>,
+    tabValueChildren?: string, 
+    handleChangeChildren:Function,
+}
 
-const Header = ({ value = 'Information Technology' }) => {
+const Header = ({
+    tabValue,
+    tabList,
+    onChange,
+    tabChildren,
+    tabValueChildren,
+    handleChangeChildren,
+  }: headerProps) => {
 
-    const  handleChange = (e) => { 
-        console.log(e)
+    const  handleChange = (event: React.SyntheticEvent, newValue: string) => { 
+        onChange(newValue)
+    }
+
+    const  handleChangeChildrenFun = (event: React.SyntheticEvent, newValue: string) => { 
+        handleChangeChildren(newValue)
     }
 
     const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
@@ -66,13 +74,17 @@ const Header = ({ value = 'Information Technology' }) => {
             borderRadius: '5px'
         }
     })
+
+
+    
     return (
-        <div className={styles.header}>
+         <>
+          <div className={styles.header}>
             <ArrowBackIosRoundedIcon className={styles.back} style={{ fontSize: '28px' }} />
             <span className={styles.bactText}>Back</span>
             <span className={styles.line} >|</span>
             <StyledTabs
-                value={value}
+                value={tabValue}
                 variant='scrollable'
                 scrollButtons='auto'
                 aria-label='scrollable auto tabs example'
@@ -88,12 +100,48 @@ const Header = ({ value = 'Information Technology' }) => {
                             textTransform: 'capitalize',
                             color: '#707070',
                             fontFamily: 'product sans',
-                            letterSpacing: '1px'
+                            letterSpacing: '1px',
+                            padding:'12px 0',
+                            marginRight:'36px'
                         }}
                     />
                 ))}
             </StyledTabs>
         </div>
+        {
+         tabChildren?.length ? (
+            <div className={`${styles.header} ${styles.headerChild}`}>
+            <StyledTabs
+                value={tabValueChildren}
+                variant='scrollable'
+                scrollButtons='auto'
+                aria-label='scrollable auto tabs example'
+                onChange={handleChangeChildrenFun}
+            >
+                {tabChildren.map((item) => (
+                    <StyledTab
+                        key={item.value}
+                        label={item.tab}
+                        value={item.value}
+                        sx={{
+                            fontSize: '16px',
+                            textTransform: 'capitalize',
+                            color: '#707070',
+                            fontFamily: 'product sans',
+                            letterSpacing: '1px',
+                            padding:'12px 0',
+                            marginRight:'36px'
+                        }}
+                    />
+                ))}
+            </StyledTabs>
+
+        </div>
+         ):null
+        }
+       
+         </>
+       
     )
 }
 

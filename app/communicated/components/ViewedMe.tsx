@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import styles from '../page.module.scss';
+import styles from '../index.module.scss';
 import InterstedCard from "./InterstedCard";
 
 const Resume = () => {

@@ -1,73 +1,102 @@
+"use client"
 import React from 'react'
-import styles from '../page.module.scss'
+import styles from '../index.module.scss'
 import { JoinUs } from 'images'
 import Image from 'next/image'
-const Card = () => {
+
+interface cardProps {
+  data: Array<any>
+}
+
+const Card = ({data}:cardProps) => {
+
+  const isSameDay = (startTime, endTime) => {
+    if(!endTime) return true
+    const startTimeMs = new Date(startTime).setHours(0, 0, 0, 0);
+    const endTimeMs = new Date(endTime).setHours(0, 0, 0, 0);
+    return startTimeMs === endTimeMs
+  }
+ 
   return (
     <>
-    <div className={styles.noData}>
-    <Image className={styles.noDataImg} src={JoinUs} alt='暂无数据' width={362} height={247} />
-    <button className={styles.seeJob}>See job reco</button>
-    </div>
+      {
+        data?.length ? (<>
+          {
+            data?.map((e,index)=> { 
+              const { industry, 
+                company_size:companySize, 
+                financing_stage:financingStage,
+                name,
+                logo_url:logoUrl
+              } = e.company || {};
+              const { job_title: jobTitle , 
+                salary_range_value: salaryRangeValue,
+                degree:{
+                  value
+                },
+                location:{
+                  value:locationValue
+                },
+                xp_lvl:xpLvl
+              } = e.job;
+              const {
+                avatar,
+                full_name:fullName,
+                work_experience:{
+                job_title
+              }
+            } = e.recruiter;
+            const same = isSameDay(e.created_at,data[index+1]?.created_at )
+              return (       
+               <>
+               {
+               !same &&  <p className={styles.time}>{e.created_at?.substr(0,10)}</p>
+               }   
+                <div className={`${styles.detail}`} >
+                  <div className={styles.header}>
+                    <img src={avatar} className={styles.avator} />
+                    <span className={styles.name}>{fullName}
+                      <span className={styles.nameLine}> |</span>{job_title}</span>
+                    <div className={styles.chatBox}> </div>
+                  </div>
+                  <div className={styles.info}>
+                    <div className={styles.leftContent}>
+                      <div className={styles.developer}>
+                        <p className={styles.title}>{jobTitle}</p>
+                        <p className={styles.salary}>{salaryRangeValue}</p>
+                      </div>
+                      <span className={styles.tag}>{locationValue}</span>
+                      <span className={styles.tag}>{xpLvl?.value}</span>
+                      <span className={styles.tag}>{value}</span>
+                    </div>
+                    <div className={styles.rightContent}>
+                      <div className={styles.company}>
+                        <img src={logoUrl} className={styles.logo}  alt={name}/>
+                        {name}
+                      </div>
+                      <span className={styles.tag}>{industry}</span>
+                      <span className={styles.tag}>{companySize} Employees</span>
+                      {
+                        financingStage &&  <span className={styles.tag}>{financingStage}</span>
+                      }    
+                    </div>
+                  </div>
+                </div>
+                </>
+              )
+            }
 
-    <div  className={styles.detail} >
-      <div className={styles.header}>
-        <img src='https://tpc.googlesyndication.com/simgad/13322565777955859947' className={styles.avator} />
-        <span className={styles.name}>John doe  
-        <span className={styles.nameLine}> |</span>  
-          Hiring Manager</span>
-        <div className={styles.chatBox}> </div>
-      </div>
-      <div className={styles.info}>
-        <div className={styles.leftContent}>
-          <div className={styles.developer}>
-            <p className={styles.title}>Senior Java Developer Workm homeWork from m homeWork from m homeWork from  from homeWork from homeWork from homeWork from home</p>
-            <p className={styles.salary}>₱175 - 180K</p>
-          </div>
-          <span className={styles.tag}>Bonifacio Global City</span>
-          <span className={styles.tag}>3 - 5 Yrs Exp</span>
-          <span className={styles.tag}>High/ Senior High school</span>
+            )
+          }
+
+
+        </>
+        ) : <div className={styles.noData}>
+          <Image className={styles.noDataImg} src={JoinUs} alt='暂无数据' width={362} height={247} />
+          <button className={styles.seeJob}>See job reco</button>
         </div>
-        <div className={styles.rightContent}>
-          <div className={styles.company}>
-          <img src='https://tpc.googlesyndication.com/simgad/13322565777955859947' className={styles.logo} />
-          Loop Contact Solutions Inc.
-          </div>
-          <span className={styles.tag}>Accountng</span>
-          <span className={styles.tag}>500 - 999 Employees</span>
-          <span className={styles.tag}>A class</span>
-        </div>
-      </div>
-    </div>
-    <div  className={styles.detail} >
-      <div className={styles.header}>
-        <img src='https://tpc.googlesyndication.com/simgad/13322565777955859947' className={styles.avator} />
-        <span className={styles.name}>John doe  
-        <span className={styles.nameLine}> |</span>  
-          Hiring Manager</span>
-        <div className={styles.chatBox}> </div>
-      </div>
-      <div className={styles.info}>
-        <div className={styles.leftContent}>
-          <div className={styles.developer}>
-            <p className={styles.title}>Senior Java Developer Workm homeWork from m homeWork from m homeWork from  from homeWork from homeWork from homeWork from home</p>
-            <p className={styles.salary}>₱175 - 180K</p>
-          </div>
-          <span className={styles.tag}>Bonifacio Global City</span>
-          <span className={styles.tag}>3 - 5 Yrs Exp</span>
-          <span className={styles.tag}>High/ Senior High school</span>
-        </div>
-        <div className={styles.rightContent}>
-          <div className={styles.company}>
-          <img src='https://tpc.googlesyndication.com/simgad/13322565777955859947' className={styles.logo} />
-          Loop Contact Solutions Inc.
-          </div>
-          <span className={styles.tag}>Accountng</span>
-          <span className={styles.tag}>500 - 999 Employees</span>
-          <span className={styles.tag}>A class</span>
-        </div>
-      </div>
-    </div>
+      }
+
     </>
   )
 }
