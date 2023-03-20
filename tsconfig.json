@@ -2,11 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -18,10 +14,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "types": [
-      "gapi",
-      "gapi.auth2"
-    ],
+    "types": ["gapi", "gapi.auth2"],
     "incremental": true,
     "plugins": [
       {
@@ -32,6 +25,9 @@
   },
   "include": [
     "next-env.d.ts",
+    "app/*.tsx",
+    "app/*.jsx",
+    "app/*/*.jsx",
     "**/*.ts",
     "**/*.tsx",
     "store/index.js",
@@ -40,12 +36,12 @@
     "pages/*.tsx",
     "pages/**/*.tsx",
     "pages/*.jsx",
+    "app/**/*.jsx",
     "pages/**/*.jsx",
     "components/Chat/interview/detail/index.tsx",
     ".next/types/**/*.ts",
-    "/Users/mao/codes/bossjob-jobseeker-client/.next/types/**/*.ts"
-, "app/components/SEO"  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "/Users/mao/codes/bossjob-jobseeker-client/.next/types/**/*.ts",
+    "app/components/SEO"
+  ],
+  "exclude": ["node_modules"]
 }

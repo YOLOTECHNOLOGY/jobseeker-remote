@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState,useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 import MuiTabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
@@ -16,13 +16,12 @@ import { fetchPopularJobs } from 'store/services/jobs/popularJobs'
 import styles from '../../popularJobs.module.scss'
 import { SxProps, Theme } from '@mui/system'
 import { getCookie } from 'helpers/cookies'
-import Link from 'next/link';
+import Link from 'next/link'
 import {
   fetchJobsForYouLogin,
   fetchJobsPreferences
 } from 'store/services/jobs/fetchJobsForYouLogin'
-import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou';
-
+import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou'
 
 const tabList = [
   {
@@ -34,11 +33,11 @@ const tabList = [
     value: 'Customer Service/Operations'
   },
   { tab: 'Sales', value: 'Sales' },
-  { tab: 'Finance', value: 'Human Resources/Admin/Legal' },
-  { tab: 'HR', value: 'Finance/Audit/Tax' },
+  { tab: 'Finance', value: 'Finance/Audit/Tax' },
+  { tab: 'HR', value: 'Human Resources/Admin/Legal' },
   { tab: 'Manufacturing', value: 'Manufacturing' },
-  { tab: 'Banking', value: 'Healthcare/Medical' },
-  { tab: 'Healthcare', value: 'Banking' }
+  { tab: 'Banking', value: 'Banking' },
+  { tab: 'Healthcare', value: 'Healthcare/Medical' }
 ]
 
 const tabListLogin = [
@@ -49,7 +48,7 @@ const tabListLogin = [
   {
     tab: 'Latest jobs',
     value: '1'
-  },
+  }
 ]
 
 const theme = createTheme({
@@ -114,7 +113,7 @@ interface StyledTabProps {
   sx: SxProps<Theme>
 }
 
-const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
+const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => ({
   '&.Mui-selected': {
     color: '#136FD3'
   }
@@ -128,83 +127,87 @@ const Tabs = ({ location }: any) => {
   const [loading, setLoading] = useState<boolean>(false)
   const accessToken = getCookie('accessToken')
   const user = getCookie('user')
-  const [newTabList,setNewTabList] = useState<Array<any>>([]);
+  const [newTabList, setNewTabList] = useState<Array<any>>([])
   const jobseekerPrefIdRef = useRef(null)
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }
-  
-  useEffect(()=>{
-     if(accessToken){
-      getJobseekerPref();
-     }else{
-      setNewTabList(tabList);
-      setValue('Information Technology')
-     }
-  },[accessToken])
 
   useEffect(() => {
-    if(accessToken){
-      getList();
-    }else{
+    if (accessToken) {
+      getJobseekerPref()
+    } else {
+      setNewTabList(tabList)
+      setValue('Information Technology')
+    }
+  }, [accessToken])
+
+  useEffect(() => {
+    if (accessToken) {
+      getList()
+    } else {
       handleFetchPopularJobs()
     }
-  }, [value,location])
+  }, [value, location])
 
-  const getJobseekerPref = async ()=>{
+  const getJobseekerPref = async () => {
     const perData = await fetchJobsPreferences()
-    jobseekerPrefIdRef.current = perData?.data?.data?.[0];
-    if(jobseekerPrefIdRef.current){
-      setNewTabList(tabListLogin);
-      setValue('2');
-    }else{
-      setNewTabList([]);
+    jobseekerPrefIdRef.current = perData?.data?.data?.[0]
+    if (jobseekerPrefIdRef.current) {
+      setNewTabList(tabListLogin)
+      setValue('2')
+    } else {
+      setNewTabList([])
     }
   }
 
   const getList = async () => {
-      if (jobseekerPrefIdRef.current) {   
-        fetchJobsLogin()
-      } else {
-        fetchJobsLoginNoPerferse()
-      }
+    if (jobseekerPrefIdRef.current) {
+      fetchJobsLogin()
+    } else {
+      fetchJobsLoginNoPerferse()
+    }
   }
   const fetchJobsLogin = () => {
-    if((value ==='1' ||  value ==='2') ){
-    setLoading(true)
-    fetchJobsForYouLogin(
-      {
-        jobseekerPrefId: jobseekerPrefIdRef.current?.id,
-        page: 1,
-        size: 6,
-        sort:value,
-      },
-      accessToken
-    ).then((res) => {
-      const data = res?.data?.data?.jobs
-      setList(data ?? [])
-    }).finally(()=>{
-      setLoading(false)
-    })
+    if (value === '1' || value === '2') {
+      setLoading(true)
+      fetchJobsForYouLogin(
+        {
+          jobseekerPrefId: jobseekerPrefIdRef.current?.id,
+          page: 1,
+          size: 6,
+          sort: value
+        },
+        accessToken
+      )
+        .then((res) => {
+          const data = res?.data?.data?.jobs
+          setList(data ?? [])
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    }
   }
-  }
-  
-  const fetchJobsLoginNoPerferse  = ()=>{
+
+  const fetchJobsLoginNoPerferse = () => {
     setLoading(true)
     const params = {
       size: 6,
       sort: 1,
-      source: 'web',
+      source: 'web'
     }
-    fetchJobsForYou(params).then((res) => {
-      const data = res?.data?.data
-      setList(data.jobs ?? [])
-    }).finally(() => {
-      setLoading(false)
-    })
+    fetchJobsForYou(params)
+      .then((res) => {
+        const data = res?.data?.data
+        setList(data.jobs ?? [])
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
-  
+
   const handleFetchPopularJobs = () => {
     setLoading(true)
     const params = {
@@ -231,13 +234,11 @@ const Tabs = ({ location }: any) => {
   const handlePopularJobSearch = (search: string) => {
     //
   }
+ 
+
   return (
     <div>
-      <h2 className={styles.title}>
-        {
-          accessToken ? 'Jobs for You' : 'Popular Jobs'
-        }   
-      </h2>
+      <h2 className={styles.title}>{accessToken ? 'Jobs for You' : 'Popular Jobs'}</h2>
       <div className={styles.webTab}>
         <Box sx={{ maxWidth: '100%', bgcolor: 'background.paper' }}>
           <TabContext value='1'>
@@ -257,35 +258,44 @@ const Tabs = ({ location }: any) => {
                     sx={{
                       fontSize: '16px',
                       textTransform: 'capitalize',
-                      width: 'calc(15%)',
                       color: '#707070',
                       background: '#F5F6FA',
-                      fontFamily:'product sans',
-                      letterSpacing:'1px'
+                      fontFamily: 'product sans',
+                      letterSpacing: '1px',
+                      width:'auto',
+                      padding:'12px 0',
+                      marginRight:'78px'
                     }}
                   />
                 ))}
-              
               </StyledTabs>
-              {
-                accessToken ? (
-                  <div className = {styles.preference}>
-                  {
-                   jobseekerPrefIdRef.current ? 
-                   <div>
-                    {
-                      user?.avatar ?  <img src = {user?.avatar} /> : null
-                    }
-                    Based on your job preference: <Link prefetch={false}  href="/manage-profile?tab=job-preferences" className={styles.link}>
-                     {jobseekerPrefIdRef.current?.location} | {jobseekerPrefIdRef.current?.job_title} | {jobseekerPrefIdRef.current?.salary_range}
-                       </Link>
-                   </div>
-                   : <p>Improve job recommendations by updating <Link href="/manage-profile?tab=job-preferences" className={styles.link2}> job preferences</Link></p>
-                  } 
-                 </div>
-                ) : null
-              }
-             
+              {accessToken ? (
+                <div className={styles.preference}>
+                  {jobseekerPrefIdRef.current ? (
+                    <div>
+                      {user?.avatar ? <img src={user?.avatar} /> : null}
+                      Based on your job preference:{' '}
+                      <Link
+                        prefetch={false}
+                        href='/manage-profile?tab=job-preferences'
+                        className={styles.link}
+                      >
+                        {jobseekerPrefIdRef.current?.location} |{' '}
+                        {jobseekerPrefIdRef.current?.job_title} |{' '}
+                        {jobseekerPrefIdRef.current?.salary_range}
+                      </Link>
+                    </div>
+                  ) : (
+                    <p>
+                      Improve job recommendations by updating{' '}
+                      <Link href='/manage-profile?tab=job-preferences' className={styles.link2}>
+                        {' '}
+                        job preferences
+                      </Link>
+                    </p>
+                  )}
+                </div>
+              ) : null}
             </ThemeProvider>
 
             <div className={styles.tabContainer}>
@@ -307,7 +317,9 @@ const Tabs = ({ location }: any) => {
               )}
 
               <div className={styles.tabContainer_more}>
-              <Link prefetch={false}  className={styles.moreBtn} href='/jobs-hiring/job-search' >See More</Link>
+                <Link prefetch={false} className={styles.moreBtn} href='/jobs-hiring/job-search'>
+                  See More
+                </Link>
               </div>
             </div>
           </TabContext>

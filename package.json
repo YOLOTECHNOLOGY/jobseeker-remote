@@ -2,17 +2,18 @@
   "name": "next-fe-boilerplate",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--inspect=9230' next dev  -p 3004   ",
-    "build:development": "env-cmd -f .env.devsite --use-shell MAINTENANCE=$MAINTENANCE next build",
-    "build:staging": "env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
-    "build:production": "env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
+    "dev": "NODE_OPTIONS='--inspect=9230 --max_old_space_size=12000' next dev  -p 3004   ",
+    "build:development": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.devsite --use-shell MAINTENANCE=$MAINTENANCE next build",
+    "build:staging": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
+    "build:production": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
     "analyze": "ANALYZE=true yarn build:production",
     "start": "next start",
     "lint": "next lint ",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit --skipLibCheck",
     "postinstall": "husky install",
     "prepare": "husky install",
-    "commitmsg": "node node_modules/commitplease .git/COMMIT_EDITMSG"
+    "commitmsg": "node node_modules/commitplease .git/COMMIT_EDITMSG",
+    "test": "NODE_OPTIONS=--experimental-vm-modules env=test yarn jest"
   },
   "commitplease": {
     "limits": {
@@ -87,12 +88,16 @@
     "sass": "^1.43.4",
     "sitemap": "^7.0.0",
     "slugify": "^1.6.2",
+    "thread-loader": "^3.0.4",
     "ua-parser-js": "^1.0.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
     "@types/react": "^18.0.28",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
+    "babel-plugin-root-import": "^6.6.0",
     "commitplease": "^3.2.0",
     "eslint": "7.32.0",
     "eslint-config-google": "^0.14.0",

@@ -453,11 +453,12 @@ const Job = ({
                 </MaterialButton>
               </>
             ) : (
-              <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
-                <Text textColor='primary' bold>
-                  {isSavedJob ? 'Saved' : 'Save'}
-                </Text>
-              </MaterialButton>
+              // <MaterialButton variant='outlined' capitalize onClick={() => handlePostSaveJob()}>
+              //   <Text textColor='primary' bold>
+              //     {isSavedJob ? 'Saved' : 'Save'}
+              //   </Text>
+              // </MaterialButton>
+              <></>
             )}
           </div>
         )}

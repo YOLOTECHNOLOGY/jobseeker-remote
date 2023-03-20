@@ -26,7 +26,7 @@ const MaterialDesktopTooltip = ({
       <span className={className}>
         <img 
           src={icon} 
-          alt='icon' 
+          alt='Verified Employer' 
           width='14'
           height='14'
         />

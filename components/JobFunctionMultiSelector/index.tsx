@@ -1,3 +1,4 @@
+'use client'
 import { createTheme, FormControl, ThemeProvider } from "@mui/material"
 import MaterialTextField from "components/MaterialTextField"
 import { useCallback, useEffect, useMemo, useState } from "react"
@@ -491,7 +492,7 @@ const JobFunctionMultiSelector = (props: any) => {
                             sx={{ height: '44px', width: '40%', borderRadius: 10 }}
                         >
                             <Text textColor='primaryBlue' bold>
-                                Cancel
+                              Reset
                             </Text>
                         </MaterialButton>
 

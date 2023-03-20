@@ -1,3 +1,6 @@
+import Btn from './Btn/Btn'
+import { Stack } from 'app/components/MUIs'
+
 import styles from '../../page.module.scss'
 type propsType = {
   title?: string
@@ -6,29 +9,47 @@ type propsType = {
   xp_lvl?: string
   jobType?: string
   salary?: string
+  jobId: number
+  is_saved: boolean
+  chat: any
 }
 
-const Head = ({ title, localhost, degree, xp_lvl, jobType, salary }: propsType) => {
+const Head = ({
+  title,
+  localhost,
+  degree,
+  xp_lvl,
+  jobType,
+  salary,
+  jobId,
+  is_saved,
+  chat
+}: propsType) => {
   return (
-    <div className={styles.head}>
+    <section className={styles.head}>
       <div className={styles.head_main}>
         <h1>
-          {title} <div className='salary'>{salary}</div>
+          {title} <div className={styles.head_main_salary}>{salary}</div>
         </h1>
-        <div>
+
+        <div className={styles.head_main_desc}>
           {localhost} | {degree} | {xp_lvl} | {jobType}
         </div>
-        <div>
+
+        <div className={styles.head_main_change}>
           <div>
-            <button>Save</button>
-            <button>Chat now</button>
+            <Btn jobId={jobId} is_saved={is_saved} chat={chat} />
           </div>
 
-          <div>Fill up resume online</div>
-          <div>Upload resume</div>
+          <div className={styles.head_main_change_resume}>
+            <Stack spacing={2} direction='row'>
+              <div>Fill up resume online</div>
+              <div>Upload resume</div>
+            </Stack>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 
