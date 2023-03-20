@@ -3,7 +3,7 @@
 import React, { useState, useTransition } from 'react'
 import styles from './index.module.scss'
 import { HomePageChat } from 'images'
-import { useChatNow } from 'app/interpreters/chatNow'
+import useChatNow from 'app/hooks/useChatNow'
 import { hoverableFunc } from 'components/highLevel/hoverable'
 import Image from 'next/image'
 import classNames from 'classnames'

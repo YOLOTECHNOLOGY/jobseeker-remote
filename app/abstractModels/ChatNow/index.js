@@ -3,6 +3,7 @@ import { Free } from 'fantasy-frees'
 const DO = F => Free.liftFC(F)
 
 export const ToChatStatus = taggedSum('ChatStatus', {
+
     notLogin: [],
     externalLink: ['link'],
     existSameJob: [],
@@ -10,24 +11,46 @@ export const ToChatStatus = taggedSum('ChatStatus', {
     notExist: []
 })
 export const Actions = taggedSum('ChatNowActions', {
-    parseToChatStatus: [],
+    isLogin: [],
+    hasChatData: [],
+    fetchChatData: [],
+    parseToChatStatus: ['chatData'],
     redirectToLogin: [],
     redirectToExternal: ['link'],
-    modalChangeChattingJob: [],
+    modalChangeChattingJob: ['chatData'],
     redirectToChat: ['chatId'],
-    requestChangeJob: [],
+    requestChangeJob: ['chatData'],
     createNewChat: []
 })
 
-export const chatNowScript = () => DO(Actions.parseToChatStatus)
+export const chatNowScript = () => DO(Actions.isLogin)
+    .chain(login => {
+        if (!login) {
+            return DO(Actions.redirectToLogin)
+        } else {
+            return DO(Actions.hasChatData)
+                .chain(chatData => {
+                    if (chatData) {
+                        return doChatScript(chatData)
+                    } else {
+                        return DO(Actions.fetchChatData)
+                            .chain(doChatScript)
+                    }
+                })
+        }
+    })
+
+
+
+const doChatScript = chatData => DO(Actions.parseToChatStatus(chatData))
     .chain(status => status.cata({
         notLogin: () => DO(Actions.redirectToLogin),
         externalLink: link => DO(Actions.redirectToExternal(link)),
-        existSameJob: chatId => DO(Actions.redirectToChat(chatId)),
-        existDiffrentJob: () => DO(Actions.modalChangeChattingJob),
+        existSameJob: () => DO(Actions.redirectToChat(chatData.id || chatData.chat_id)),
+        existDiffrentJob: () => DO(Actions.modalChangeChattingJob(chatData)),
         notExist: () => DO(Actions.createNewChat)
-            .chain(chatId => DO(Actions.redirectToChat(chatId)))
+        // .chain(chatId => DO(Actions.redirectToChat(chatId)))
     }))
 
-export const switchJob = chatId => DO(Actions.requestChangeJob)
-    .andThen(DO(redirectToChat(chatId)))
+export const switchJobScript = chatData => DO(Actions.requestChangeJob(chatData))
+    .chain(chatId => DO(redirectToChat(chatId)))
