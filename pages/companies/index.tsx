@@ -40,10 +40,10 @@ const Companies = () => {
   const [featuredCompany, setFeaturedCompany] = useState(null)
   const [totalPage, setTotalPage] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
- 
-  useEffect(()=>{
+
+  useEffect(() => {
     dispatch(fetchConfigRequest())
-  },[])
+  }, [])
   const featuredCompaniesResponse = useSelector(
     (store: any) => store.companies.fetchFeaturedCompaniesList.response
   )
@@ -52,7 +52,7 @@ const Companies = () => {
   const isFeaturedCompaniesFetching = useSelector(
     (store: any) => store.companies.fetchFeaturedCompaniesList.fetching
   )
- 
+
   useEffect(() => {
     setCurrentPage(Number(page) || 1)
     dispatch(fetchFeaturedCompaniesListRequest({ page: Number(router.query.page) }))
@@ -62,10 +62,10 @@ const Companies = () => {
     if (featuredCompaniesResponse?.featured_companies) {
       setTotalPage(featuredCompaniesResponse.total_pages)
       const companies = featuredCompaniesResponse.featured_companies
-      if (!featuredCompany) {
-        setFeaturedCompany(companies[0].company)
-        companies.shift()
-      }
+
+      setFeaturedCompany(companies[0].company)
+      companies.shift()
+
       setFeaturedCompanies(companies)
     }
   }, [featuredCompaniesResponse])
@@ -106,68 +106,71 @@ const Companies = () => {
           Featured Employer
         </Text>
         <div className={styles.featuredEmployer}>
-          <div className={styles.featuredEmployerLeft}>
-            <div className={styles.featuredEmployerInfo}>
-              <Link to={featuredCompany?.company_url || '/'}>
-                <img
-                  src={featuredCompany?.logo_url}
-                  alt={`${featuredCompany?.name} logo`}
-                  className={styles.featuredEmployerImage}
-                />
-              </Link>
-              <div className={styles.featuredEmployerDetails}>
-                <Text textStyle='xl' bold>
-                  <Link
-                    to={featuredCompany?.company_url || '/'}
-                    className={styles.featuredEmployerName}
-                  >
-                    {featuredCompany?.name}
-                  </Link>
-                  {featuredCompany?.is_verify &&
-                    (isMobile ? (
-                      <MaterialMobileTooltip
-                        icon={BlueTickIcon}
-                        className={styles.featuredEmployerTooltip}
-                        title='Verified'
-                      />
-                    ) : (
-                      <MaterialDesktopTooltip
-                        icon={BlueTickIcon}
-                        className={styles.featuredEmployerTooltip}
-                        title='Verified'
-                      />
-                    ))}
-                </Text>
-                <div className={styles.featuredEmployerAbout}>
-                  <div className={styles.featuredEmployerAboutItem}>
-                    <Text textStyle='lg' bold>
-                      Company Size
-                    </Text>
-                    <Text textStyle='lg'>{featuredCompany?.company_size} Employees</Text>
-                  </div>
-                  <div className={styles.featuredEmployerAboutItem}>
-                    <Text textStyle='lg' bold>
-                      Industry
-                    </Text>
-                    <Text textStyle='lg'>{featuredCompany?.industry}</Text>
-                  </div>
-                </div>
-                <Text textStyle='lg' tagName='p' className={styles.featuredEmployerDescription}>
-                  {featuredCompany?.short_description}
-                </Text>
-                <Link
-                  to={`${
-                    featuredCompany?.company_url ? featuredCompany.company_url + '/jobs' : '/jobs'
-                  }`}
-                  className={styles.featuredEmployerOpenings}
-                >
-                  <Text textStyle='lg' bold>
-                    View {featuredCompany?.num_of_active_jobs} job openings
-                  </Text>
+          {featuredCompany && (
+            <div className={styles.featuredEmployerLeft}>
+              <div className={styles.featuredEmployerInfo}>
+                <Link to={featuredCompany?.company_url || '/'}>
+                  <img
+                    src={featuredCompany?.logo_url}
+                    alt={`${featuredCompany?.name} logo`}
+                    className={styles.featuredEmployerImage}
+                  />
                 </Link>
+                <div className={styles.featuredEmployerDetails}>
+                  <Text textStyle='xl' bold>
+                    <Link
+                      to={featuredCompany?.company_url || '/'}
+                      className={styles.featuredEmployerName}
+                    >
+                      {featuredCompany?.name}
+                    </Link>
+                    {featuredCompany?.is_verify &&
+                      (isMobile ? (
+                        <MaterialMobileTooltip
+                          icon={BlueTickIcon}
+                          className={styles.featuredEmployerTooltip}
+                          title='Verified'
+                        />
+                      ) : (
+                        <MaterialDesktopTooltip
+                          icon={BlueTickIcon}
+                          className={styles.featuredEmployerTooltip}
+                          title='Verified'
+                        />
+                      ))}
+                  </Text>
+                  <div className={styles.featuredEmployerAbout}>
+                    <div className={styles.featuredEmployerAboutItem}>
+                      <Text textStyle='lg' bold>
+                        Company Size
+                      </Text>
+                      <Text textStyle='lg'>{featuredCompany?.company_size} Employees</Text>
+                    </div>
+                    <div className={styles.featuredEmployerAboutItem}>
+                      <Text textStyle='lg' bold>
+                        Industry
+                      </Text>
+                      <Text textStyle='lg'>{featuredCompany?.industry}</Text>
+                    </div>
+                  </div>
+                  <Text textStyle='lg' tagName='p' className={styles.featuredEmployerDescription}>
+                    {featuredCompany?.short_description}
+                  </Text>
+                  <Link
+                    to={`${
+                      featuredCompany?.company_url ? featuredCompany.company_url + '/jobs' : '/jobs'
+                    }`}
+                    className={styles.featuredEmployerOpenings}
+                  >
+                    <Text textStyle='lg' bold>
+                      View {featuredCompany?.num_of_active_jobs} job openings
+                    </Text>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          )}
+
           <div className={styles.featuredEmployerRight}>
             <div className={styles.featuredEmployerImages}>
               <ImageList sx={{ width: 500, height: 335 }} gap={10} cols={3}>
@@ -227,9 +230,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   await (store as any).sagaTask.toPromise()
   return {
     props: {
-      seoMetaTitle:'Find Companies Hiring in Philippines | Bossjob',
-      seoMetaDescription:'Discover great companies to work for in Philippines! Learn more about the company and apply to job openings on Bossjob!',
-      canonicalUrl:'/companies'
+      seoMetaTitle: 'Find Companies Hiring in Philippines | Bossjob',
+      seoMetaDescription:
+        'Discover great companies to work for in Philippines! Learn more about the company and apply to job openings on Bossjob!',
+      canonicalUrl: '/companies'
     }
   }
 })
