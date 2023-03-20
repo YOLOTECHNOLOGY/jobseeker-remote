@@ -8,6 +8,8 @@ import { hoverableFunc } from 'components/highLevel/hoverable'
 import Image from 'next/image'
 import classNames from 'classnames'
 import MaterialButton from 'components/MaterialButton'
+// import Button from '@mui/material/Button'
+
 const JobCard = (props: any) => {
     const {
         function_job_title,
@@ -73,6 +75,7 @@ const JobCard = (props: any) => {
                                 [styles.button]: true,
                                 [styles.isHover]: isHover
                             })}
+                                style={{ height: 24 }}
                                 isLoading={loading as boolean} onClick={chatNow as any}
                             >
                                 <Image src={HomePageChat} width={16} height={16} alt={''} />
