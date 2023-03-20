@@ -23,7 +23,8 @@ const Index = ({ data, jobId }: any) => {
     financingStage: data.company?.financing_stage,
     logo: data.company?.logo,
     numOfActiveJobs: data.company?.num_of_active_jobs,
-    jobId
+    jobId,
+    companyUrl: data.company?.company_url
   }
 
   const mainProps = {

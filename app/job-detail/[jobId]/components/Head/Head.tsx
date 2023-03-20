@@ -1,6 +1,8 @@
 import Btn from './Btn/Btn'
 import { Stack } from 'app/components/MUIs'
 
+import Link from 'next/link'
+
 import styles from '../../page.module.scss'
 type propsType = {
   title?: string
@@ -43,8 +45,17 @@ const Head = ({
 
           <div className={styles.head_main_change_resume}>
             <Stack spacing={2} direction='row'>
-              <div>Fill up resume online</div>
-              <div>Upload resume</div>
+              <div>
+                <Link color='#000000' href='/get-started'>
+                  {' '}
+                  Fill up resume online
+                </Link>
+              </div>
+              <div>
+                <Link color='#000000' href='/manage-profile'>
+                  resume
+                </Link>
+              </div>
             </Stack>
           </div>
         </div>

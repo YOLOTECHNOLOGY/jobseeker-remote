@@ -1,19 +1,27 @@
 'use client'
-import { useEffect, useContext } from 'react'
+import { useContext, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
-import { LocationContext } from 'app/components/providers/locationProvier'
 import { Button } from 'app/components/MUIs'
+import { LocationContext } from 'app/components/providers/locationProvier'
 import MaterialLocationField from 'components/MaterialLocationField'
-import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
+import MaterialTextField from 'components/MaterialTextField'
+
+import { buildQuery } from 'app/main-page/helper'
 
 import styles from '../../../page.module.scss'
 
 const Search = () => {
+  const router = useRouter()
   const { location, setLocation } = useContext(LocationContext)
 
-  useEffect(() => {
-    console.log(location, 'locationslocationslocations')
-  }, [location])
+  const [searchValue, setSearchValue] = useState<string>('')
+
+  const handleUpdatePath = () => {
+    console.log(location.value, searchValue)
+    const path = buildQuery(location?.value, searchValue)
+    router.push(path)
+  }
 
   return (
     <section className={styles.search}>
@@ -29,11 +37,13 @@ const Search = () => {
         onChange={(e, value) => setLocation(value)}
       />
 
-      <MaterialTextFieldWithSuggestionList
+      <MaterialTextField
         className={styles.search_field}
         label='Job title or company'
         variant='outlined'
         size='small'
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target?.value)}
       />
 
       <Button
@@ -45,6 +55,7 @@ const Search = () => {
           background: '#136FD3',
           borderRadius: '10px'
         }}
+        onClick={handleUpdatePath}
       >
         Search
       </Button>
