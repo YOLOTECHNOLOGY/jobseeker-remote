@@ -4,6 +4,7 @@
     overflow: hidden;
     border-radius: 10px;
     background: #fff;
+    position: relative;
 
     .topContainer {
         width: 100%;
@@ -96,7 +97,9 @@
                         border-radius: 12px;
                         border: #BCBCBC solid 1px;
                         width: fit-content;
-
+                        display: flex;
+                        align-items: center;
+                        flex-direction: row;
                         font-family: 'Product Sans';
                         font-style: normal;
                         font-weight: 400;
@@ -104,6 +107,7 @@
                         line-height: 15px;
                         letter-spacing: 0.0075em;
                         color: #353535;
+                        height: 24px;
 
                         &.isHover {
                             display: none;
@@ -178,6 +182,7 @@
 
             .company {
                 height: 23px;
+
                 .logo {
                     border-radius: 3px;
                     overflow: hidden;
@@ -195,6 +200,7 @@
                     color: #707070;
                 }
             }
+
             .componylabels {
                 width: 100%;
                 display: flex;
@@ -202,6 +208,7 @@
                 flex-direction: row;
                 justify-content: flex-start;
                 margin-top: 5px;
+
                 .label {
                     display: flex;
                     align-items: center;
@@ -262,6 +269,7 @@
             white-space: nowrap;
             text-overflow: ellipsis;
         }
+
         .benefits {
             height: 15px;
             width: 322px;
@@ -277,6 +285,20 @@
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+        }
+    }
+
+    .popupDetail {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        width: 380px;
+        height: 395px;
+        background: green;
+
+        // z-index: 21;
+        &.hide {
+            display: none;
         }
     }
 }
