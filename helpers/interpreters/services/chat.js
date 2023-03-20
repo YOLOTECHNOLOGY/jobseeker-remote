@@ -12,7 +12,7 @@ export const createChat = (jobId, params) => {
     const axios = configuredAxios('jobApplication', 'protected')
     return axios.post(`/jobs/${jobId}/jobseekers/chat`, params)
 }
-export const check = recruiter_ids => {
-    const axios = configuredAxios('jobApplication', 'protected')
-    return axios.get(`/chats/check-exists/jobseekers`,{params:{recruiter_ids}})
+export const check = (recruiter_ids, accessToken) => {
+    const axios = configuredAxios('jobApplication', 'protected', null, accessToken)
+    return axios.get(`/chats/check-exists/jobseekers`, { params: { recruiter_ids } })
 }

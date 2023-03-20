@@ -38,11 +38,11 @@ const interpreter = registInterpreter(command => command.cata({
         const { id } = jobDetail
         const source = jobSource()
         localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
-        router.push('/get-started')
+        router.push('/get-started', { forceOptimisticNavigation: true })
     }),
     redirectToExternal: link => M.do(() => {
         const { router } = context
-        router.push(link)
+        router.push(link, { forceOptimisticNavigation: true })
     }),
     modalChangeChattingJob: chatDetail => M.do(context => {
         const { showModal } = context
@@ -60,7 +60,7 @@ const interpreter = registInterpreter(command => command.cata({
     }),
     redirectToChat: chatId => M.do(context => {
         const { router } = context
-        router.push('/chat/' + chatId)
+        router.push('/chat/' + chatId,{forceOptimisticNavigation:true})
     }),
     createNewChat: () => M.do(context => {
         const { jobDetail, dispatch } = context
@@ -75,7 +75,6 @@ const interpreter = registInterpreter(command => command.cata({
                     chatStatus: result.data?.data?.status
                 }
                 dispatch(updateImState({ chatId, imState: newData }))
-                // router.push(`/chat/${chatId}`)
                 return chatId
             })
     })

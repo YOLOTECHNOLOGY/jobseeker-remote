@@ -2,6 +2,8 @@
 import { registInterpreter, Result } from 'app/abstractModels/util'
 import { ReaderTPromise as M } from 'app/abstractModels/monads'
 import { fetchJobsListService } from 'store/services/jobs/fetchJobsList'
+import { check } from 'helpers/interpreters/services/chat'
+import { cookies } from 'next/headers'
 
 export const firstUpper = tmp => tmp.charAt(0).toUpperCase() + tmp.slice(1)
 export const buildValue = seo => {
@@ -46,21 +48,6 @@ export default registInterpreter(command =>
     command.cata({
         fetchData: () => M(context => {
             const { searchValues, config } = context
-            //             degrees: 
-            // function_job_title_ids: 
-            // is_company_verified: false
-            // job_functions_ids: 
-            // job_locations: Caloocan
-            // job_types: 
-            // main_functions: 
-            // page: 1
-            // query: 
-            // salary_from: 
-            // salary_to: 
-            // size: 30
-            // sort: 2
-            // source: web
-            // xp_lvls:
             const functionsTitleList = config.inputs.function_titles
             const jobFunctionList = config.inputs.job_functions
             const [salaryFrom, salaryTo] = handleSalary(searchValues.salary)
@@ -89,6 +76,21 @@ export default registInterpreter(command =>
                     page: result.data?.data?.page ?? 1,
                     totalPages: result.data?.data?.total_pages
                 }))
+                .then(data => {
+                    const token = cookies().get('accessToken')
+                    if (token?.value) {
+                        return check((data.jobs ?? []).map(job => job.recruiter_id).join(','),token.value)
+                            .then(response => {
+                                const chats = response.data.data
+                                return {
+                                    ...data,
+                                    jobs: data.jobs.map((job, index) => ({ ...job, chat: chats[index] }))
+                                }
+                            })
+                    } else {
+                        return data
+                    }
+                })
                 .then(Result.success)
                 .catch(Result.error)
         }),
