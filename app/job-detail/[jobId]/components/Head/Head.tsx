@@ -1,4 +1,5 @@
-import { Button, Stack } from 'app/components/MUIs'
+import Btn from './Btn/Btn'
+import { Stack } from 'app/components/MUIs'
 
 import styles from '../../page.module.scss'
 type propsType = {
@@ -8,9 +9,22 @@ type propsType = {
   xp_lvl?: string
   jobType?: string
   salary?: string
+  jobId: number
+  is_saved: boolean
+  chat: any
 }
 
-const Head = ({ title, localhost, degree, xp_lvl, jobType, salary }: propsType) => {
+const Head = ({
+  title,
+  localhost,
+  degree,
+  xp_lvl,
+  jobType,
+  salary,
+  jobId,
+  is_saved,
+  chat
+}: propsType) => {
   return (
     <section className={styles.head}>
       <div className={styles.head_main}>
@@ -24,32 +38,7 @@ const Head = ({ title, localhost, degree, xp_lvl, jobType, salary }: propsType) 
 
         <div className={styles.head_main_change}>
           <div>
-            <Stack spacing={2} direction='row'>
-              <Button
-                variant='outlined'
-                sx={{
-                  width: '88px',
-                  height: '44px',
-                  background: '#FFFFFF',
-                  border: '1px solid #136FD3',
-                  borderRadius: '10px'
-                }}
-              >
-                Save
-              </Button>
-              <Button
-                variant='contained'
-                sx={{
-                  width: '115px',
-                  lineHeight: '44px',
-                  height: '44px',
-                  background: '#136FD3',
-                  borderRadius: '10px'
-                }}
-              >
-                Chat now
-              </Button>
-            </Stack>
+            <Btn jobId={jobId} is_saved={is_saved} chat={chat} />
           </div>
 
           <div className={styles.head_main_change_resume}>

@@ -193,6 +193,23 @@
         border-radius: 15px;
       }
     }
+
+    // search
+    .search {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      margin-top: 44px;
+
+      &_location {
+        width: 183px;
+        height: 24px;
+      }
+
+      &_field {
+        width: calc(100% - (183px + 119px + 30px));
+      }
+    }
   }
 
   .benefits {

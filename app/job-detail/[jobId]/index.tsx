@@ -11,7 +11,10 @@ const Index = ({ data, jobId }: any) => {
     degree: data.degree?.value,
     xp_lvl: data.xp_lvl.value,
     jobType: data.job_type_value,
-    salary: data.salary_range_value
+    salary: data.salary_range_value,
+    jobId,
+    is_saved: data.is_saved,
+    chat: data.chat
   }
 
   const companyProps = {
