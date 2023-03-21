@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from '@mui/material/Link'
+import { isMobile } from 'react-device-detect'
+
 
 import Text from 'components/Text'
 import MaterialTextField from 'components/MaterialTextField'
@@ -93,7 +95,7 @@ const CheckEmail = ({
       social_user_token: payload.accessToken,
       social_type: payload.socialType,
       social_user_id: payload.userId,
-      source: 'web'
+      source: isMobile ? 'mobile_web_jobseeker' : 'web_jobseeker'
     }
     if (payload.pictureUrl) {
       data.avatar = payload.pictureUrl

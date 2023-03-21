@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import useWindowDimensions from 'helpers/useWindowDimensions'
+import { isMobile } from 'react-device-detect'
 
 // api
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
@@ -15,7 +15,6 @@ import router, { useRouter } from 'next/router'
 const useGetStarted = () => {
   const routes = useRouter()
   const dispatch = useDispatch()
-  const { width } = useWindowDimensions()
 
   const [step, setStep] = useState(1)
   const [email, setEmaile] = useState<string>('')
@@ -86,7 +85,7 @@ const useGetStarted = () => {
     const data = {
       email,
       otp: emailTOP,
-      source: 'web',
+      source: isMobile ? 'mobile_web_jobseeker' : 'web_jobseeker',
       ...router.query,
       userId
     }
