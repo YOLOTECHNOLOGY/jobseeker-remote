@@ -218,20 +218,17 @@ const SearchArea = (props: any) => {
                 urlDefaultValues={moreData}
                 isShowFilter={showMore}
                 onResetFilter={() => {
-                    console.log('onReset')
                     setMoreData({} as any)
                 }}
                 keyword={searchValues.query}
                 config={config}
                 handleShowFilter={() => {
-                    console.log('onClose')
                     setShowMore(false)
                 }}
                 moreFilterReset={false}
                 isShowingEmailAlert={accessToken && !userCookie?.is_email_verify}
 
                 setClientDefaultValues={data => {
-                    console.log('dataChanged', data)
                     setMoreData(data)
                 }} />
         )}

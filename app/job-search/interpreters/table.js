@@ -21,7 +21,6 @@ export const thousandsToNumber = (string) => {
 export const handleSalary = (salaryRanges) => {
     let salaryFrom = ''
     let salaryTo = ''
-    console.log({ salaryRanges })
     if (salaryRanges?.length) {
         salaryFrom = salaryRanges
             .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
@@ -78,16 +77,16 @@ export default registInterpreter(command =>
                 size: 15,
                 source: 'web'
             }
-            console.log({ queriyParams, searchValues, locationLists })
-            return fetchJobsListService(queriyParams)
+            const token = cookies().get('accessToken')
+            return fetchJobsListService(queriyParams, token)
                 .then(result => ({
                     jobs: result.data?.data?.jobs,
                     page: result.data?.data?.page ?? 1,
                     totalPages: result.data?.data?.total_pages
                 }))
                 .then(data => {
-                    const token = cookies().get('accessToken')
-                   
+
+
                     if (token?.value && data?.jobs?.length) {
                         return check((data.jobs ?? []).map(job => job.recruiter_id).join(','), token.value)
                             .then(response => {
