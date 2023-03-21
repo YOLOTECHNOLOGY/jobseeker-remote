@@ -14,6 +14,7 @@ type propsType = {
   chatResponseRate: number
   lastActiveAt: string
   benefitsProps: Array<any>
+  shareParams: any
 }
 
 const MainFC = (props: propsType) => {

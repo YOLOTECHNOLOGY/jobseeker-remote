@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { fetchSimilarJobsService } from 'store/services/jobs/fetchSimilarJobs'
 
 import { Avatar, Button } from 'app/components/MUIs/'
@@ -18,8 +20,6 @@ export default async function SimilarJobs({ id }: propsType) {
     .then(({ data: { data } }) => data)
     .catch(() => ({ error: true }))
 
-  console.log(data, '===============SimilarJobs')
-
   return (
     <section className={styles.similarJobs}>
       <h3>SimilarJobs</h3>
@@ -28,21 +28,28 @@ export default async function SimilarJobs({ id }: propsType) {
         {data?.map((item) => {
           return (
             <div key={item.id} className={styles.similarJobs_card}>
-              <h6 className={styles.similarJobs_title}>{item.function_job_title}</h6>
-              <div className={styles.similarJobs_salary}>{item.salary_range_value}</div>
-              <div className={styles.similarJobs_info}>
-                <div>
-                  <Avatar
-                    alt={item.company?.name}
-                    src={item.company?.logo}
-                    sx={{ borderRadius: '5px', width: '24px', height: '24px', marginRight: '6px' }}
-                  />
+              <Link href={'/job-detail/' + item.id}>
+                <h6 className={styles.similarJobs_title}>{item.function_job_title}</h6>
+                <div className={styles.similarJobs_salary}>{item.salary_range_value}</div>
+                <div className={styles.similarJobs_info}>
+                  <div>
+                    <Avatar
+                      alt={item.company?.name}
+                      src={item.company?.logo}
+                      sx={{
+                        borderRadius: '5px',
+                        width: '24px',
+                        height: '24px',
+                        marginRight: '6px'
+                      }}
+                    />
+                  </div>
+                  <div className={styles.similarJobs_info_jobType}>
+                    <div>{item.job_type}</div>
+                    <div>{item.location_value}</div>
+                  </div>
                 </div>
-                <div className={styles.similarJobs_info_jobType}>
-                  <div>{item.job_type}</div>
-                  <div>{item.location_value}</div>
-                </div>
-              </div>
+              </Link>
             </div>
           )
         })}
