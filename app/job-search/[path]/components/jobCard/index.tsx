@@ -144,8 +144,9 @@ const JobCard = (props: any) => {
     }, [showPopup, jobDetail, detailLoading])
     const [, startTransition] = useTransition()
     return <div className={styles.main}>
+        <>
         <div className={styles.container}>
-            <><div className={styles.topContainer}>
+            <div className={styles.topContainer}>
                 <div className={styles.left}>
 
                     {hoverableFunc(isHover => {
@@ -223,9 +224,8 @@ const JobCard = (props: any) => {
                         {job_benefits}
                     </div>
                 </div>
-            </>
         </div>
-        <>{hoverableFunc(isHover => {
+        {hoverableFunc(isHover => {
             setPopHover(isHover)
             return <div className={classNames({
                 [styles.popupDetail]: true,
@@ -274,11 +274,11 @@ const JobCard = (props: any) => {
                             <div className={styles.detail} dangerouslySetInnerHTML={{
                                 __html: jobDetail?.job_description_html ?? ''
                             }} />
-                        </>}
+                        </>
+                        }
                 </div>
             </div>
         }, null, popHover)}
-
         {modalChange}
         </>
     </div>
