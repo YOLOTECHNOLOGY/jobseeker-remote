@@ -14,7 +14,7 @@ const Benefits = ({ benefits }: propsType) => {
           <div key={benefit.id}>{benefit.name}</div>
         ))}
       </div>
-      <div className={styles.benefits_more}>See more</div>
+      {/* <div className={styles.benefits_more}>See more</div> */}
     </section>
   )
 }

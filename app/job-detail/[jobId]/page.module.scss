@@ -181,6 +181,7 @@
         &_btn {
           &_wrapper {
             display: flex;
+            cursor: pointer;
 
             .MuiAvatar-root {
               margin-right: 3px;
