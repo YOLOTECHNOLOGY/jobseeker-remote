@@ -22,6 +22,7 @@ import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import { useRouter } from 'next/navigation'
 import { useFirstRender } from 'helpers/useFirstRender'
+import { filter } from 'ramda'
 const sortOptions = [
     { label: 'Newest', value: '1' },
     { label: 'Relevance', value: '2' },
@@ -54,7 +55,9 @@ const SearchArea = (props: any) => {
     const [moreData, setMoreData] = useState({
         workExperience: searchValues?.workExperience ?? [],
         qualification: searchValues?.qualification ?? [],
-        verifiedCompany: searchValues?.verifiedCompany ?? []
+        verifiedCompany: searchValues?.verifiedCompany ?? [],
+        companySizes: searchValues?.companySizes ?? [],
+        financingStages: searchValues?.financingStages ?? []
     })
     const [jobTypes, setJobtypes] = useState(searchValues?.jobType ?? [])
     const jobTypeList = config?.inputs?.job_types?.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
@@ -62,8 +65,7 @@ const SearchArea = (props: any) => {
     const [suggestionList, handleSuggestionSearch, addSearchHistory] = useSuggest() as any[]
 
     const filterParams = useMemo(() => {
-        return {
-
+        return filter(a => a)({
             query: searchValue,
             salary: salaries,
             location: [location?.['seo_value']].filter(a => a),
@@ -72,7 +74,7 @@ const SearchArea = (props: any) => {
             page: page,
             ...jobFunctionValue,
             ...moreData
-        }
+        })
     }, [searchValue, salaries, jobTypes, moreData, location, sort, jobFunctionValue])
     const router = useRouter()
     const result = useMemo(() => {
@@ -203,11 +205,7 @@ const SearchArea = (props: any) => {
                             })
                             setJobtypes([])
                             setSelaries([])
-                            setMoreData({
-                                workExperience: [],
-                                qualification: [],
-                                verifiedCompany: []
-                            })
+                            setMoreData({} as any)
                             setPage('1')
                         }}
                     > Reset Filters </Button>
@@ -221,6 +219,7 @@ const SearchArea = (props: any) => {
                 isShowFilter={showMore}
                 onResetFilter={() => {
                     console.log('onReset')
+                    setMoreData({} as any)
                 }}
                 keyword={searchValues.query}
                 config={config}
@@ -230,6 +229,7 @@ const SearchArea = (props: any) => {
                 }}
                 moreFilterReset={false}
                 isShowingEmailAlert={accessToken && !userCookie?.is_email_verify}
+
                 setClientDefaultValues={data => {
                     console.log('dataChanged', data)
                     setMoreData(data)

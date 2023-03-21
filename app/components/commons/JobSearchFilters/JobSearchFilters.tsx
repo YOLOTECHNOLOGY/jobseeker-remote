@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from 'react'
 import * as ReactDOM from 'react-dom'
+import { map, is, pipe, filter } from 'ramda'
 /* Vendor */
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'
@@ -53,50 +54,6 @@ type optionsType = {
   // eslint-disable-next-line camelcase
   sub_list?: any
 }
-// const useOptionDataSelect = (initOptionData, form) => {
-//   const [optionData, setOptionData] = useState(initOptionData)
-
-//   useEffect(() => {
-//     const category = flatMap(optionData, parent => [parent, ...(parent?.sub_list ?? [])])
-//       .map(item => item.isChecked ? item['seo-value'] : undefined)
-//       .filter(a => a)
-
-//     form.setValue('category', category.length === 0 ? null : category)
-//   }, [optionData])
-
-//   const syncParent = useCallback(data => setOptionData(data.map(parent => {
-
-//     if (parent.sub_list?.length) {
-//       const parentCheck = !(parent.sub_list.filter(sub => !sub.isChecked).length > 0)
-//       return { ...parent, isChecked: parentCheck }
-//     }
-//     return parent
-//   })), [setOptionData])
-
-//   const onParentCheck = useCallback((e, checkedKey) => syncParent(optionData.map(parent => {
-//     if (parent['seo-value'] === checkedKey && parent.sub_list?.length) {
-//       const isChecked = !parent.isChecked
-//       return { ...parent, sub_list: parent.sub_list.map(sub => ({ ...sub, isChecked })) }
-//     }
-//     return parent
-//   })), [syncParent, optionData, setOptionData])
-
-//   const onSubCheck = useCallback((e, checkedKey) => syncParent(optionData.map(parent => {
-//     if (parent.sub_list?.length) {
-
-//       return {
-//         ...parent, sub_list: parent.sub_list.map(sub => {
-//           if (sub['seo-value'] === checkedKey) {
-//             return { ...sub, isChecked: !sub.isChecked }
-//           }
-//           return sub
-//         })
-//       }
-//     }
-//     return parent
-//   })), [syncParent, optionData])
-//   return [optionData, onParentCheck, onSubCheck]
-// }
 const NavSearchFilter = ({
   urlDefaultValues,
   isShowFilter,
@@ -109,16 +66,12 @@ const NavSearchFilter = ({
   config
 }: NavSearchFilterProps) => {
   if (!isShowFilter) return null
-  // const router = useRouter()
-  // const { keyword } = router.query
-  // const config = useSelector((state: any) => state.config.config.response)
-  // const industryList = config.inputs.industry_lists
   const expLvlList = config.inputs.xp_lvls
   const eduLevelList = config.filters.educations
   const jobTypeList = config.inputs.job_types
-  // const categoryList = config.inputs.job_category_lists
+  const companySizeList = config.inputs.company_sizes
+  const financingStageList = config.inputs.company_financing_stage_lists?.map?.(item => ({ ...item, ['seo-value']: item.key })) ?? []
   const scrollY = useRef(0)
-
   const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
     ...range,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value
@@ -188,154 +141,19 @@ const NavSearchFilter = ({
 
   const handleApplyFilter = (data) => {
     onCloseFilter()
-    // const updatedData = {
-    //   ...data,
-    //   sort: [data.sort]
-    // }
-    // sanitize category data -> only pass main options as value to parser if all sub options are selected
-    // if (data && data.category) {
-    //   let category = data.category
-    //   categoryList.map((mainCategory) => {
-    //     // if main option is selected, remove all sub option from data
-    //     category.map((selectedCat) => {
-    //       if (mainCategory['seo-value'] === selectedCat) {
-    //         const subOptionToBeRemoved = mainCategory.sub_list.filter((subCat) => {
-    //           return category.includes(subCat['seo-value'])
-    //         })
-    //         category = category.filter(
-    //           (cat) =>
-    //             !subOptionToBeRemoved.find((optionToRemove) => optionToRemove['seo-value'] === cat)
-    //         )
-    //       }
-    //     })
-    //   })
-    //   updatedData.category = category
-    // }
-    const clearFilter = []
-    for (const [key, value] of Object.entries<any>(data)) {
-      if (value && value.length === 0) {
-        clearFilter.push(key)
-      }
-    }
-    // urlFilterParameterBuilder(updatedData, clearFilter)
-    setClientDefaultValues(data)
+    console.log({ data })
+    const filtered = pipe(
+      map(arr => is(Array)(arr) ? arr.filter(a => a) : []),
+      filter(a => a?.length)
+    )(data)
+    setClientDefaultValues(filtered)
   }
 
   const handleResetFilter = () => {
-    onCloseFilter()
+    // onCloseFilter()
     reset({})
     onResetFilter({})
   }
-
-  // const urlFilterParameterBuilder = (data, isClear) => {
-  //   const { searchQuery, filterParamsObject } = userFilterSelectionDataParser(
-  //     'moreFilters',
-  //     data,
-  //     router.query,
-  //     config,
-  //     (isClear = isClear.length > 0 ? isClear : false)
-  //   )
-
-  //   router.push(
-  //     {
-  //       pathname: `/jobs-hiring/${searchQuery ? searchQuery : 'job-search'}`,
-  //       query: {
-  //         ...filterParamsObject
-  //       }
-  //     },
-  //     undefined,
-  //     { shallow: true }
-  //   )
-  // }
-
-  // to handle filters that have 2 tier options (main and sub and list)
-  // const MainSubFilters = ({
-  //   title,
-  //   fieldName,
-  //   options,
-  //   defaultOpenState,
-  //   isNotCollapsible,
-  //   isColumn,
-  // }: SearchFilters) => {
-  //   const isFilterColumnClass = cx({ searchFilterOptionsColumn: isColumn })
-  //   const initialListOptions = options.map((data) => {
-  //     const isArrayOrString =
-  //       Array.isArray(urlDefaultValues[fieldName]) || typeof urlDefaultValues[fieldName] === 'string'
-  //     const newSubList = data.sub_list.map((subData) => ({
-  //       ...subData,
-  //       isChecked: isArrayOrString ?
-  //         urlDefaultValues[fieldName]?.includes(subData['seo-value']) ||
-  //         urlDefaultValues[fieldName]?.includes(data['seo-value']) : false,
-  //     }))
-  //     const newList = {
-  //       ...data,
-  //       isChecked: isArrayOrString ? urlDefaultValues[fieldName]?.includes(data['seo-value']) : false,
-  //       sub_list: newSubList,
-  //     }
-  //     return newList
-  //   })
-
-  //   const [listOptions, onMainSelection, onSubSelection] = useOptionDataSelect(initialListOptions, form)
-
-  //   return (
-  //     <div className={styles.searchFilterSection}>
-  //       <Accordian
-  //         chevronIcon
-  //         paddedContent
-  //         isNotCollapsible={isNotCollapsible}
-  //         defaultOpenState={defaultOpenState}
-  //         title={
-  //           <Text textStyle='lg' bold>
-  //             {title}
-  //           </Text>
-  //         }
-  //         className={styles.searchFilterAccordion}
-  //       >
-  //         <div className={classNamesCombined([styles.searchFilterOptions, isFilterColumnClass])}>
-  //           {listOptions.map((option, i) => {
-  //             const subListOptions = option.sub_list
-  //             const allSubOptionSelected =
-  //               subListOptions?.filter((option) => !option.isChecked).length === 0
-  //             return (
-  //               <React.Fragment key={option.id}>
-  //                 {i === 0 && (
-  //                   // injecting an empty checkbox fixes weird bug where selecting the second checkbox will auto select first checkbox
-  //                   <label key='empty' style={{ display: 'none' }}>
-  //                     <input type='checkbox' value={null}/>
-  //                     <Text textStyle='lg'>Empty</Text>
-  //                   </label>
-  //                 )}
-  //                 <label className={styles.searchFilterOption}>
-  //                   <input
-  //                     type='checkbox'
-  //                     value={option['seo-value']}
-  //                     checked={option.isChecked || allSubOptionSelected}
-  //                     onClick={(e) => onMainSelection(e, option['seo-value'])}
-  //                   />
-  //                   <Text textStyle='lg'>{option.value}</Text>
-  //                 </label>
-  //                 {subListOptions.map((subOption) => {
-  //                   return (
-  //                     <label key={subOption.id} className={styles.searchFilterOptionSub}>
-  //                       <input
-  //                         type='checkbox'
-  //                         value={subOption['seo-value']}
-  //                         checked={option.isChecked || subOption.isChecked}
-  //                         onClick={(e) => onSubSelection(e, subOption['seo-value'])}
-  //                       />
-  //                       <Text textStyle='lg'>{subOption.value}</Text>
-  //                     </label>
-  //                   )
-  //                 })}
-  //               </React.Fragment>
-  //             )
-  //           })}
-  //         </div>
-  //       </Accordian>
-  //     </div>
-  //   )
-  // }
-
   // to handle filters that have 1 tier options
   const SearchFilters = ({
     title,
@@ -460,13 +278,7 @@ const NavSearchFilter = ({
                   />
                 </div>
               )}
-              {/* <SearchFilters
-                title='Industry'
-                fieldName='industry'
-                options={industryList}
-                defaultOpenState={true}
-                isNotCollapsible={true}
-              /> */}
+
               <SearchFilters
                 title='Work Experience'
                 fieldName='workExperience'
@@ -495,15 +307,21 @@ const NavSearchFilter = ({
                 defaultOpenState={true}
                 isNotCollapsible={true}
               />
-              {/* {displayMobileFilters && (
-                <MainSubFilters
-                  title='Specialization'
-                  fieldName='category'
-                  options={categoryList}
-                  defaultOpenState={true}
-                  isNotCollapsible={true}
-                />
-              )} */}
+              <SearchFilters
+                title='Company Size'
+                fieldName='companySizes'
+                options={companySizeList}
+                defaultOpenState={true}
+                isNotCollapsible={true}
+              />
+              <SearchFilters
+                title='Financing Stage'
+                fieldName='financingStages'
+                options={financingStageList}
+                defaultOpenState={true}
+                isNotCollapsible={true}
+              />
+
             </form>
           </div>
           <div className={styles.searchFilterFooter}>
