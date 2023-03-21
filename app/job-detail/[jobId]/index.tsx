@@ -56,7 +56,7 @@ const Index = ({ data, jobId }: any) => {
       <Head {...headProps} />
       <div className={styles.container}>
         <MainFC {...mainProps} />
-        <AsideFC {...companyProps} />
+        <AsideFC {...companyProps} jobDetail={data} />
       </div>
     </div>
   )
