@@ -147,5 +147,16 @@ export const CorporateResumePreview = `${S3BucketJobseeker}/corporate_resume_pre
 /* App Down */
 export const AppDownQRCode = `${S3BucketJobseeker}/AppDownQRCode.png`
 
-/* App Down */
+
 export const JoinUs = `${S3BucketJobseeker}/Joinus.png`
+/* Share */
+export const ShareIcon = `${S3BucketJobseeker}/ShareIcon.svg`
+
+/* ReportIcon */
+export const ReportIcon = `${S3BucketJobseeker}/ReportIcon.svg`
+
+/* UploadResumeIcon.svg */
+export const UploadResumeIcon = `${S3BucketJobseeker}/UploadResumeIcon.svg`
+
+/* CompleteResumeIcon.svg */
+export const CompleteResumeIcon = `${S3BucketJobseeker}/CompleteResumeIcon.svg`

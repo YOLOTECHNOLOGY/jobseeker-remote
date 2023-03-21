@@ -2,10 +2,12 @@
 import { registInterpreter, Result } from 'app/abstractModels/util'
 import { ReaderTPromise as M } from 'app/abstractModels/monads'
 import { fetchJobsListService } from 'store/services/jobs/fetchJobsList'
-
+import { check } from 'helpers/interpreters/services/chat'
+import { cookies } from 'next/headers'
+import { flatMap } from 'lodash-es'
 export const firstUpper = tmp => tmp.charAt(0).toUpperCase() + tmp.slice(1)
 export const buildValue = seo => {
-    return seo.split('-').map(firstUpper).join(' ')
+    return seo.split('_').map(firstUpper).join(' ')
 }
 export const transToValues = seos => seos ? seos.map(buildValue).join(',') : null
 export const thousandsToNumber = (string) => {
@@ -23,11 +25,11 @@ export const handleSalary = (salaryRanges) => {
     if (salaryRanges?.length) {
         salaryFrom = salaryRanges
             .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
-            .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split(' - ')[0]))
+            .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split('-')[0]))
 
         salaryTo = salaryRanges
             .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
-            .map((salaryTo) => thousandsToNumber('' + salaryTo.split(' - ')[1]))
+            .map((salaryTo) => thousandsToNumber('' + salaryTo.split('-')[1]))
 
         if (salaryRanges.includes('below-30k')) {
             salaryFrom.push(0)
@@ -46,49 +48,59 @@ export default registInterpreter(command =>
     command.cata({
         fetchData: () => M(context => {
             const { searchValues, config } = context
-            //             degrees: 
-            // function_job_title_ids: 
-            // is_company_verified: false
-            // job_functions_ids: 
-            // job_locations: Caloocan
-            // job_types: 
-            // main_functions: 
-            // page: 1
-            // query: 
-            // salary_from: 
-            // salary_to: 
-            // size: 30
-            // sort: 2
-            // source: web
-            // xp_lvls:
             const functionsTitleList = config.inputs.function_titles
             const jobFunctionList = config.inputs.job_functions
+            const companySizeList = config.inputs.company_sizes
+            const qualificationList = config.filters.educations
             const [salaryFrom, salaryTo] = handleSalary(searchValues.salary)
+            const workExperienceList = config.inputs.xp_lvls
+            const jobTypeList = config.inputs.job_types
+            const locationLists = flatMap(config.inputs.location_lists, item => item.locations)
             const queriyParams = {
                 query: searchValues.query,
                 job_locations: transToValues(searchValues.location),
+                job_locations: searchValues.location?.map?.(key => locationLists.find(item => item?.['seo_value'] === key)?.value).join(',') ?? null,
+
                 salary_from: salaryFrom,
                 salary_to: salaryTo,
-                job_types: transToValues(searchValues.jobType),
-                xp_lvls: transToValues(searchValues.workExperience),
+                job_types: searchValues.jobType?.map?.(key => jobTypeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
+                xp_lvls: searchValues.workExperience?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
+                qualification: searchValues.qualification?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
+                company_financing_stages: searchValues.financingStages?.join?.(',') ?? null,
                 is_company_verified: Boolean(searchValues.verifiedCompany),
                 job_functions_ids: searchValues?.jobFunctions?.split?.(',')?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
                 main_functions: transToValues(searchValues.mainFunctions),
-                job_functions_ids: transToValues(searchValues.jobFunctions),
+                company_sizes: searchValues.companySizes?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
                 function_job_title_ids: searchValues?.functionTitles?.split?.(',')
                     ?.map?.(seo => functionsTitleList.find(item => item.seo_value === seo)?.id)
                     ?.join?.(',') ?? null,
-                page: searchValues?.page ?? 1,
+                page: searchValues?.page?.[0] ?? 1,
                 size: 15,
                 source: 'web'
             }
-            console.log({ queriyParams })
+            console.log({ queriyParams, searchValues, locationLists })
             return fetchJobsListService(queriyParams)
                 .then(result => ({
                     jobs: result.data?.data?.jobs,
                     page: result.data?.data?.page ?? 1,
                     totalPages: result.data?.data?.total_pages
                 }))
+                .then(data => {
+                    const token = cookies().get('accessToken')
+                   
+                    if (token?.value && data?.jobs?.length) {
+                        return check((data.jobs ?? []).map(job => job.recruiter_id).join(','), token.value)
+                            .then(response => {
+                                const chats = response.data.data
+                                return {
+                                    ...data,
+                                    jobs: data.jobs.map((job, index) => ({ ...job, chat: chats[index] }))
+                                }
+                            })
+                    } else {
+                        return data
+                    }
+                })
                 .then(Result.success)
                 .catch(Result.error)
         }),

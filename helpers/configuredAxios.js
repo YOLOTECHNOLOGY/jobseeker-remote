@@ -7,7 +7,6 @@ import { getCookie, removeCookie } from 'helpers/cookies'
 const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken) => {
   // let remoteAddress = ''
   // let isMobile = ''
-
   if (typeof window !== 'undefined') {
     // const { store } = configureStore(window.__PRELOADED_STATE__, false)
     // remoteAddress = store.getState().Public.utils.setRemoteIp.ip
@@ -129,11 +128,11 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
       (error) => {
         // Remove the accessToken cookie to log the user out
         // when Unauthorized 401 status code is returned from API requests
-        if (error?.response?.status === 401 &&  typeof window !== 'undefined' ) {
+        if (error?.response?.status === 401 && typeof window !== 'undefined') {
           removeCookie('accessToken')
           window.location.href = '/get-started'
           import('imforbossjob').then(im => im?.IMManager?.logout?.())
-          .then(() => localStorage?.clear?.())
+            .then(() => localStorage?.clear?.())
         } else {
           return Promise.reject(error)
         }

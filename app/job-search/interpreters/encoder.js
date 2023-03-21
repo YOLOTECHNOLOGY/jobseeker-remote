@@ -1,8 +1,9 @@
 
 import { unslugify } from '../../../helpers/formatter'
-import { map, T, toLower, mergeDeepLeft, reduce, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse } from 'ramda'
+import { map, pick, T, toLower, mergeDeepLeft, reduce, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse } from 'ramda'
 import slugify from 'slugify'
-const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'qualification', 'workExperience', 'verifiedCompany']
+const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'qualification']
+const normalKeys = ['verifiedCompany', 'companySizes', 'workExperience', 'financing_stages']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
 const allKeysIn = keys => pipe(
@@ -102,6 +103,8 @@ const keywordMatches = pipe(
     cond
 )
 
+const normalParams = pick(normalKeys)
+
 const parseKeywordParams = config => pipe(
     keywordParser,
     map(keywordMatches(config)),
@@ -115,11 +118,17 @@ const keywordParser = pipe(toLower, cond([
     [T, always([])]
 ]))
 
-export const encode = pipe(
+export const encode = params => pipe(
     filter(complement(either(isNil, isEmpty))),
     map(
         ifElse(is(Array), map(washData), washData)
-    ), buildQueryParams)
+    ),
+    buildQueryParams,
+    result => {
+        const moreParams = normalParams(params)
+        return { ...result, params: { ...result.params, ...moreParams } }
+    }
+)(params)
 
 export const decoder = config => (path, params) => mergeDeepLeft(
     parseKeywordParams(config)(path),
