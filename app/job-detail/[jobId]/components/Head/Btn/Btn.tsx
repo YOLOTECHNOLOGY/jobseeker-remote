@@ -55,10 +55,12 @@ const Btn = ({ jobId, chat, is_saved }: propsType) => {
   }
 
   const handleUnSaveJob = () => {
+    setSaveLoading(true)
+
     deleteSaveJobService(jobId)
       .then(({ status }) => {
-        if (status === 201) {
-          setIsSave(true)
+        if (status === 200) {
+          setIsSave(false)
         }
       })
       .catch((error) => {
