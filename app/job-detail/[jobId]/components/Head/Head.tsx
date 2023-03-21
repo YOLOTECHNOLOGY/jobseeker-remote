@@ -1,7 +1,9 @@
-import Btn from './Btn/Btn'
-import { Stack } from 'app/components/MUIs'
-
 import Link from 'next/link'
+
+import Btn from './Btn/Btn'
+import { Stack, Avatar } from 'app/components/MUIs'
+
+import { UploadResumeIcon, CompleteResumeIcon } from 'images'
 
 import styles from '../../page.module.scss'
 type propsType = {
@@ -47,13 +49,26 @@ const Head = ({
             <Stack spacing={2} direction='row'>
               <div>
                 <Link color='#000000' href='/get-started'>
-                  {' '}
-                  Fill up resume online
+                  <div className={styles.head_main_change_resume_btnWrapper}>
+                    <Avatar
+                      src={CompleteResumeIcon}
+                      alt='complete resume'
+                      sx={{ width: '17px', height: '17px', marginRight: '4px' }}
+                    />
+                    <span> Fill up resume online</span>
+                  </div>
                 </Link>
               </div>
               <div>
                 <Link color='#000000' href='/manage-profile'>
-                  resume
+                  <div className={styles.head_main_change_resume_btnWrapper}>
+                    <Avatar
+                      src={UploadResumeIcon}
+                      alt='upload resume'
+                      sx={{ width: '17px', height: '17px', marginRight: '4px' }}
+                    />
+                    <span> Upload new resume</span>
+                  </div>
                 </Link>
               </div>
             </Stack>

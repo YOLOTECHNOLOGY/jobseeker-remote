@@ -35,7 +35,17 @@ const Index = ({ data, jobId }: any) => {
     name: data.company.name,
     chatResponseRate: data.recruiter?.response_rate,
     lastActiveAt: data.recruiter?.last_active_at,
-    benefitsProps: data.benefits
+    benefitsProps: data.benefits,
+    shareParams: {
+      id: data.id,
+      job_url: data.job_url,
+      recruiter: {
+        id: data.recruiter?.id
+      },
+      company: {
+        id: data.company?.id
+      }
+    }
   }
 
   return (

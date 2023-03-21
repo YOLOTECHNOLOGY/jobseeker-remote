@@ -38,7 +38,8 @@ const Company = (company: propsType) => {
             fontSize: '14px',
             lineHeight: '18px',
             letterSpacing: '0.0075em',
-            color: '#136FD3'
+            color: '#136FD3',
+            textTransform: 'capitalize'
           }}
         >
           View {company.numOfActiveJobs} jobs hiring

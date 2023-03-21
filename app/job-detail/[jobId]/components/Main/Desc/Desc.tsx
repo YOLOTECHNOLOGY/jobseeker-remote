@@ -2,7 +2,8 @@ import classNames from 'classnames/bind'
 
 import { transState } from 'helpers/utilities'
 import { DefaultAvatar } from 'images'
-import { Avatar, Stack } from 'app/components/MUIs'
+import { Avatar } from 'app/components/MUIs'
+import JobClient from './JobClient/JobClient'
 
 import styles from '../../../page.module.scss'
 
@@ -14,6 +15,7 @@ type propsType = {
   name?: string
   chatResponseRate?: number
   lastActiveAt?: number | string
+  shareParams: any
 }
 
 const Desc = ({
@@ -23,17 +25,15 @@ const Desc = ({
   logo,
   name,
   chatResponseRate,
-  lastActiveAt
+  lastActiveAt,
+  shareParams
 }: propsType) => {
   return (
     <section className={styles.desc}>
       <div className={styles.desc_title}>
         <h5>Job Description</h5>
         <div className={styles.desc_title_change}>
-          <Stack direction='row' spacing={2}>
-            <div>Share</div>
-            <div>Report</div>
-          </Stack>
+          <JobClient {...shareParams} />
         </div>
       </div>
 
@@ -54,7 +54,12 @@ const Desc = ({
         <Avatar sx={{ width: '29.94px', height: '29px' }} src={logo || DefaultAvatar}></Avatar>
         <span className={styles.desc_footer_name}>{name}</span>
         <span className={styles.desc_footer_chat}>{chatResponseRate}% &nbsp;response rate</span>
-        <span className={classNames([styles.desc_footer_lineStatus])}>
+        <span
+          className={classNames([
+            styles.desc_footer_lineStatus,
+            transState(lastActiveAt)?.text !== 'Online' ? styles.desc_footer_notLine : null
+          ])}
+        >
           {transState(lastActiveAt)?.text}
         </span>
       </div>
