@@ -53,6 +53,23 @@ const GetStarted = () => {
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
 
   useEffect(() => {
+    const { setp, email } = router.query
+    if (setp && email) {
+      if (!Array.isArray(setp)) {
+        setStep(Number(setp))
+      } else {
+        setStep(Number(setp[0]))
+      }
+
+      if (!Array.isArray(email)) {
+        setEmaile(email)
+      } else {
+        setEmaile(email[0])
+      }
+    }
+  }, [router.query])
+
+  useEffect(() => {
     if (accessToken) {
       jobseekerTokenValidate(accessToken)
         .then(() => {
@@ -205,7 +222,8 @@ export const getServerSideProps = () => {
   return {
     props: {
       seoMetaTitle: 'Get started | Bossjob',
-      seoMetaDescription:'Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.',
+      seoMetaDescription:
+        'Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.',
       canonicalUrl: '/get-started'
     }
   }

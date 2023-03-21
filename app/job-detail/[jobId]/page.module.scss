@@ -47,6 +47,15 @@
         font-weight: 400;
         font-size: 16px;
         color: #000000;
+
+        a {
+          color: #000000;
+        }
+
+        &_btnWrapper {
+          display: flex;
+          align-items: center;
+        }
       }
     }
   }
@@ -161,6 +170,22 @@
           top: 50%;
           transform: translateY(-50%);
           left: 8px;
+        }
+
+        &_notLine {
+          background: #bcbcbc;
+        }
+      }
+
+      .jobClient {
+        &_btn {
+          &_wrapper {
+            display: flex;
+
+            .MuiAvatar-root {
+              margin-right: 3px;
+            }
+          }
         }
       }
     }
@@ -309,6 +334,14 @@
       h3 {
         height: 44.22px;
         background: #f0f0f0;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 44.22px;
+        letter-spacing: 0.02em;
+        color: #353535;
+        padding-left: 15px;
+        margin-bottom: 0;
       }
 
       &_card {
@@ -317,6 +350,7 @@
 
       &_container {
         padding: 16px;
+        padding-top: 0;
       }
 
       &_title {
