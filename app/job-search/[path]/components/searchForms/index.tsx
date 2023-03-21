@@ -78,8 +78,6 @@ const SearchArea = (props: any) => {
     const result = useMemo(() => {
         return encode(filterParams)
     }, [filterParams])
-    console.log({ result ,filterParams})
-    // const result = encode(filterParams)
     const firstRender = useFirstRender()
     const reload = useCallback(() => {
         if (firstRender) {

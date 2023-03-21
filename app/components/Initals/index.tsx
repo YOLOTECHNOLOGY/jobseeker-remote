@@ -1,10 +1,10 @@
 'use client'
 import { useFirstRender } from 'helpers/useFirstRender'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { initFireBase } from 'helpers/fireBaseManager'
 import Script from 'next/script'
 import * as fbq from 'lib/fpixel'
-import * as gTag from 'lib/gtag'
+import * as gtag from 'lib/gtag'
 const tiktokfunc = () => {
   const w = window as any
   const t = 'ttq'
@@ -43,35 +43,49 @@ const Initial = () => {
       runInClient()
     }
   }, [firstRender])
-  const [gtagReady, setGtagReady] = useState(false)
+  // const [gtagReady, setGtagReady] = useState(false)
   useEffect(() => {
     // Facebook pixel
     // This pageview only triggers the first time
-    if (gtagReady) {
-      gTag.pageview(location.href)
-    }
+    // if (gtagReady) {
+    gtag.pageview(location.pathname)
+    // }
     fbq.pageview()
-  }, [gtagReady])
+  }, [])
   return <>
-    <Script
+    {/* <Script
       strategy='lazyOnload'
       onLoad={() => {
         (window as any).dataLayer = (window as any).dataLayer || [];
         // eslint-disable-next-line prefer-rest-params
         function gtag(...args) { ((window as any)).dataLayer.push(args); }
         gtag('js', new Date());
-        gtag('config', gTag.GA_TRACKING_ID, {
+        gtag('config', gtag.GA_TRACKING_ID, {
           page_path: window.location.pathname,
         });
         (window as any).gtag = gtag
         setGtagReady(true)
 
       }}
-      src={`https://www.googletagmanager.com/gtag/js?id=${gTag.GA_TRACKING_ID}`}
+      src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
       id='gtag-init'
       dangerouslySetInnerHTML={{
         __html: `
             
+          `
+      }}
+    /> */}
+    <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
+    <Script
+      id='gtag-init'
+      dangerouslySetInnerHTML={{
+        __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gtag.GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
           `
       }}
     />
