@@ -54,7 +54,9 @@ const Desc = ({
         <Avatar sx={{ width: '29.94px', height: '29px' }} src={logo || DefaultAvatar}></Avatar>
         <span className={styles.desc_footer_name}>{name}</span>
         <span className={styles.desc_footer_chat}>{chatResponseRate}% &nbsp;response rate</span>
-        <span className={styles.desc_footer_lineStatus}>{transState(lastActiveAt)?.text}</span>
+        <span className={classNames([styles.desc_footer_lineStatus])}>
+          {transState(lastActiveAt)?.text}
+        </span>
       </div>
     </section>
   )
