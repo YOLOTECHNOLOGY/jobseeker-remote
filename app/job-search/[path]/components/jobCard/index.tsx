@@ -8,6 +8,7 @@ import { hoverableFunc } from 'components/highLevel/hoverable'
 import Image from 'next/image'
 import classNames from 'classnames'
 import MaterialButton from 'components/MaterialButton'
+import Text from 'components/Text'
 // import Button from '@mui/material/Button'
 
 const JobCard = (props: any) => {
@@ -29,7 +30,9 @@ const JobCard = (props: any) => {
         company_size,
         company_financing_stage,
         job_benefits,
-        id
+        external_apply_url,
+        id,
+        chat
     } = props
     const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
     const companyLabels = [company_industry, company_size, company_financing_stage].filter(a => a)
@@ -42,7 +45,6 @@ const JobCard = (props: any) => {
             <div className={styles.left}>
 
                 {hoverableFunc(isHover => {
-                    console.log({ isHover })
                     startTransition(() => {
                         setShowPopup(isHover)
                     })
@@ -75,11 +77,23 @@ const JobCard = (props: any) => {
                                 [styles.button]: true,
                                 [styles.isHover]: isHover
                             })}
+                                capitalize={true}
+                                variant='outlined'
                                 style={{ height: 24 }}
                                 isLoading={loading as boolean} onClick={chatNow as any}
                             >
                                 <Image src={HomePageChat} width={16} height={16} alt={''} />
-                                Chat Now
+                                <Text textColor='white' bold>
+                                    {(() => {
+                                        if (external_apply_url) {
+                                            return 'Apply Now'
+                                        } else if (chat?.is_exists && chat?.job_id === id) {
+                                            return 'Continue Chat'
+                                        } else {
+                                            return 'Chat Now'
+                                        }
+                                    })()}
+                                </Text>
                             </MaterialButton>
                         </div>
                         {!!recruiter_is_online && <div className={styles.online}>
