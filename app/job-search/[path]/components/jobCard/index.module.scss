@@ -193,52 +193,60 @@
                 width: 322px;
 
                 .company {
-                    height: 23px;
+                    // height: 23px;
+                    display: flex;
+                    flex-direction: row;
 
                     .logo {
                         border-radius: 3px;
                         overflow: hidden;
                         margin-right: 10px;
+
                     }
 
-                    span {
-                        font-family: 'Product Sans';
-                        font-style: normal;
-                        font-weight: 400;
-                        font-size: 14px;
-                        line-height: 18px;
-                        align-items: center;
-                        letter-spacing: 0.0075em;
-                        color: #707070;
+                    .labelContainer {
+                        .name {
+                            font-family: 'Product Sans';
+                            font-style: normal;
+                            font-weight: 700;
+                            font-size: 18px;
+                            line-height: 23px;
+                            align-items: center;
+                            letter-spacing: 0.02em;
+                            color: #353535;
+                        }
+
+                        .componylabels {
+                            width: 100%;
+                            display: flex;
+                            flex-wrap: wrap;
+                            flex-direction: row;
+                            justify-content: flex-start;
+                            margin-top: 5px;
+
+                            .label {
+                                display: flex;
+                                align-items: center;
+                                padding: 2px 10px;
+                                background: #F0F0F0;
+                                border-radius: 16px;
+                                font-family: 'Product Sans';
+                                font-style: normal;
+                                font-weight: 400;
+                                font-size: 12px;
+                                line-height: 15px;
+                                letter-spacing: 0.0075em;
+                                color: #707070;
+                                margin-right: 8px;
+                                height: 23px;
+                                margin-bottom: 8px;
+                            }
+                        }
                     }
+
                 }
 
-                .componylabels {
-                    width: 100%;
-                    display: flex;
-                    flex-wrap: wrap;
-                    flex-direction: row;
-                    justify-content: flex-start;
-                    margin-top: 5px;
 
-                    .label {
-                        display: flex;
-                        align-items: center;
-                        padding: 2px 10px;
-                        background: #F0F0F0;
-                        border-radius: 16px;
-                        font-family: 'Product Sans';
-                        font-style: normal;
-                        font-weight: 400;
-                        font-size: 12px;
-                        line-height: 15px;
-                        letter-spacing: 0.0075em;
-                        color: #707070;
-                        margin-right: 8px;
-                        height: 23px;
-                        margin-bottom: 8px;
-                    }
-                }
             }
 
         }
@@ -311,7 +319,7 @@
         background: #fff;
         border-radius: 15px;
         overflow: hidden;
-        box-shadow: 10px 10px 10px  #ddd;
+        box-shadow: 10px 10px 10px #ddd;
 
         // box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
         z-index: 21;

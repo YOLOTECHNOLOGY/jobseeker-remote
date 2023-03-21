@@ -26,7 +26,7 @@ const useShowPop = (titleHover, popHover) => {
     }, [titleHover, popHover])
     const timerRef = useRef<any>()
     const closeTimerRef = useRef<any>()
-    
+
     useEffect(() => {
         if (titleHover && !popHover) {
             if (timerRef.current) {
@@ -219,12 +219,18 @@ const JobCard = (props: any) => {
                     </div>
                     <div className={styles.right}>
                         <div className={styles.company}>
-                            <Image className={styles.logo} src={company_logo} width={24} height={24} alt='' />
-                            <span>{company_name}</span>
+                            <Image className={styles.logo} src={company_logo} width={50} height={50} alt='' />
+                            <div className={styles.labelContainer}>
+                                <div className={styles.name}>{company_name}</div>
+                                <div className={styles.componylabels}>
+                                    {companyLabels.map(label => <div key={label} className={styles.label}>
+                                        {label}
+                                    </div>
+                                    )}
+                                </div>
+                            </div>
                         </div>
-                        <div className={styles.componylabels}>
-                            {companyLabels.map(label => <div key={label} className={styles.label}>{label}</div>)}
-                        </div>
+
                     </div>
                 </div >
                 <div className={styles.bottomContainer}>
