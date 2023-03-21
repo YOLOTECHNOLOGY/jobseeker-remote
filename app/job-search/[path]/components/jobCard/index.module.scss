@@ -10,7 +10,13 @@
         border-radius: 10px;
         background: #fff;
         position: relative;
+        transition: box-shadow 0.3s ease-in;
         cursor: pointer;
+
+        &:hover {
+            box-shadow: 6px 7px 7px #ccc;
+        }
+
         .topContainer {
             width: 100%;
             height: 130px;
@@ -305,7 +311,9 @@
         background: #fff;
         border-radius: 15px;
         overflow: hidden;
-        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+        box-shadow: 10px 10px 10px  #ddd;
+
+        // box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
         z-index: 21;
 
         &.hide {

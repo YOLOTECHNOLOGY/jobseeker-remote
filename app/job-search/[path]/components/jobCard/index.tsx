@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React, { useState, useTransition, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './index.module.scss'
 import { HomePageChat, AppDownQRCode } from 'images'
 import useChatNow from 'app/hooks/useChatNow'
@@ -26,6 +26,7 @@ const useShowPop = (titleHover, popHover) => {
     }, [titleHover, popHover])
     const timerRef = useRef<any>()
     const closeTimerRef = useRef<any>()
+    
     useEffect(() => {
         if (titleHover && !popHover) {
             if (timerRef.current) {
@@ -134,6 +135,7 @@ const JobCard = (props: any) => {
     const [loading, chatNow, modalChange] = useChatNow(props)
     const [titleHover, setTitleHover] = useState(false)
     const [popHover, setPopHover] = useState(false)
+
     const showPopup = useShowPop(titleHover, popHover)
     const accessToken = getCookie('accessToken')
     const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken)
@@ -143,27 +145,27 @@ const JobCard = (props: any) => {
             startLoading()
         }
     }, [showPopup, jobDetail, detailLoading])
-    const [, startTransition] = useTransition()
     return <div className={styles.main}>
         <>
-            <div id={'job_card_container_' + id} className={styles.container} onClick={
-                () => {
-                    router.push(job_url, { forceOptimisticNavigation: true })
-                }
-            }>
+            <div
+                id={'job_card_container_' + id}
+                className={styles.container}
+                onClick={() => router.push(job_url, { forceOptimisticNavigation: true })}
+            >
                 <div className={styles.topContainer}>
                     <div className={styles.left}>
+                        <div
+                            key={function_job_title + id}
+                            onMouseEnter={() => setTitleHover(true)}
+                            onMouseLeave={() => setTitleHover(false)}
+                            className={styles.titleContainer}
+                            title={`${function_job_title} (${job_region})`}
+                        >
+                            <div className={styles.title}>{`${function_job_title} (${job_region})`}</div>
+                            <div className={styles.salary}>{salary_range_value}</div>
+                        </div>
 
-                        {hoverableFunc(isHover => {
-                            startTransition(() => {
-                                setTitleHover(isHover)
-                            })
-                            return <div key={function_job_title + id} className={styles.titleContainer} title={`${function_job_title} (${job_region})`}>
-                                <div className={styles.title}>{`${function_job_title} (${job_region})`}</div>
-                                <div className={styles.salary}>{salary_range_value}</div>
-                            </div>
 
-                        }, null, titleHover)}
                         <div className={styles.labelContainer}>
                             {labels.map(label => <div key={label} className={styles.label}>{label}</div>)}
                         </div>
@@ -234,64 +236,65 @@ const JobCard = (props: any) => {
                     </div>
                 </div>
             </div>
-            {hoverableFunc(isHover => {
-                setPopHover(isHover)
-                return <div className={classNames({
-                    [styles.popupDetail]: true,
-                    [styles.hide]: !showPopup
-                })}>
-                    <div className={styles.popTop}>
-                        <div className={styles.popTopLeft}>
-                            <div
-                                title={`${function_job_title} (${job_region})`}
-                                className={styles.title}>
-                                {`${function_job_title} (${job_region})`}
-                            </div>
-                            <div
-                                className={styles.secondLabel}
-                                title={`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
-                            >
-                                {`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
-                            </div>
-                            <MaterialButton className={classNames({
-                                [styles.save]: true,
-                            })}
-                                capitalize={true}
-                                variant='outlined'
+            <div className={classNames({
+                [styles.popupDetail]: true,
+                [styles.hide]: !showPopup
+            })}
+                onMouseEnter={() => setPopHover(true)}
+                onMouseLeave={() => setPopHover(false)}
+            >
+                <div className={styles.popTop}>
+                    <div className={styles.popTopLeft}>
+                        <div
+                            title={`${function_job_title} (${job_region})`}
+                            className={styles.title}>
+                            {`${function_job_title} (${job_region})`}
+                        </div>
+                        <div
+                            className={styles.secondLabel}
+                            title={`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
+                        >
+                            {`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
+                        </div>
+                        <MaterialButton className={classNames({
+                            [styles.save]: true,
+                        })}
+                            capitalize={true}
+                            variant='outlined'
 
-                                style={{ textTransform: 'capitalize' }}
-                                isLoading={isSaving} onClick={e => {
-                                    e.stopPropagation()
-                                    e.preventDefault();
-                                    (save as any)()
-                                }}
-                            >
-                                <svg width="18" height="16" viewBox="0 0 18 16" fill={isSaved ? '#136FD3' : "none"} xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 14.875C9 14.875 1.1875 10.5 1.1875 5.18751C1.1875 4.24836 1.51289 3.33821 2.1083 2.61193C2.70371 1.88564 3.53236 1.38808 4.45328 1.2039C5.37419 1.01971 6.33047 1.16029 7.15943 1.6017C7.98838 2.04311 8.63879 2.7581 9 3.62501V3.62501C9.36121 2.7581 10.0116 2.04311 10.8406 1.6017C11.6695 1.16029 12.6258 1.01971 13.5467 1.2039C14.4676 1.38808 15.2963 1.88564 15.8917 2.61193C16.4871 3.33821 16.8125 4.24836 16.8125 5.18751C16.8125 10.5 9 14.875 9 14.875Z" stroke="#136FD3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <Text textColor='#136FD3' bold style={{ marginLeft: 8 }}>
-                                    {isSaved ? 'Saved' : 'Save'}
-                                </Text>
-                            </MaterialButton>
-                        </div>
-                        <div className={styles.popTopRight} >
-                            <Image style={{ margin: '0px 8px' }} src={AppDownQRCode} height={56} width={56} alt={''} />
-                            Talk to Boss anywhere
-                        </div>
+                            style={{ textTransform: 'capitalize' }}
+                            isLoading={isSaving} onClick={e => {
+                                e.stopPropagation()
+                                e.preventDefault();
+                                (save as any)()
+                            }}
+                        >
+                            <svg width="18" height="16" viewBox="0 0 18 16" fill={isSaved ? '#136FD3' : "none"} xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 14.875C9 14.875 1.1875 10.5 1.1875 5.18751C1.1875 4.24836 1.51289 3.33821 2.1083 2.61193C2.70371 1.88564 3.53236 1.38808 4.45328 1.2039C5.37419 1.01971 6.33047 1.16029 7.15943 1.6017C7.98838 2.04311 8.63879 2.7581 9 3.62501V3.62501C9.36121 2.7581 10.0116 2.04311 10.8406 1.6017C11.6695 1.16029 12.6258 1.01971 13.5467 1.2039C14.4676 1.38808 15.2963 1.88564 15.8917 2.61193C16.4871 3.33821 16.8125 4.24836 16.8125 5.18751C16.8125 10.5 9 14.875 9 14.875Z" stroke="#136FD3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <Text textColor='#136FD3' bold style={{ marginLeft: 8 }}>
+                                {isSaved ? 'Saved' : 'Save'}
+                            </Text>
+                        </MaterialButton>
                     </div>
-                    <div className={styles.popContent}>
-                        {detailLoading ?
-                            <CircularProgress color={'primary'} size={20} />
-                            : <>
-                                <div className={styles.desTitle}>Job Description</div>
-                                <div className={styles.detail} dangerouslySetInnerHTML={{
-                                    __html: jobDetail?.job_description_html ?? ''
-                                }} />
-                            </>
-                        }
+                    <div className={styles.popTopRight} >
+                        <Image style={{ margin: '0px 8px' }} src={AppDownQRCode} height={56} width={56} alt={''} />
+                        Talk to Boss anywhere
                     </div>
                 </div>
-            }, null, popHover)}
+                <div className={styles.popContent}>
+                    {detailLoading ?
+                        <CircularProgress color={'primary'} size={20} />
+                        : <>
+                            <div className={styles.desTitle}>Job Description</div>
+                            <div className={styles.detail} dangerouslySetInnerHTML={{
+                                __html: jobDetail?.job_description_html ?? ''
+                            }} />
+                        </>
+                    }
+                </div>
+            </div>
+
             {modalChange}
         </>
     </div>
