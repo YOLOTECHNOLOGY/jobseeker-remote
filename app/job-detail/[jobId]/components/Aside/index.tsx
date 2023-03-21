@@ -7,17 +7,19 @@ import AdSlot from 'app/components/AdSlot'
 
 import styles from '../../page.module.scss'
 
-const AsideFC = (company: propsType) => {
+type propsT = propsType & { jobDetail: any }
+
+const AsideFC = (props: propsT) => {
   const cookieStore = cookies()
   const token = cookieStore.get('accessToken')
   return (
     <aside className={styles.aside}>
-      {!token && <SignUp jobId={company.jobId} />}
+      {!token && <SignUp jobId={props.jobId} />}
 
-      <Company {...company} />
+      <Company {...props} />
 
       {/* @ts-expect-error Async Server Component */}
-      <SimilarJobs id={company.jobId} />
+      <SimilarJobs id={props.jobId} jobDetail={props.jobDetail} />
 
       <div className={styles.ad_container}>
         <AdSlot adSlot={'job-detail/square-banner-1'} />

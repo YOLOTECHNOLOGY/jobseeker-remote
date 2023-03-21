@@ -1,11 +1,20 @@
+import GoogleMap from 'components/GoogleMap/GoogleMap'
 import styles from '../../../page.module.scss'
 
-const Map = () => {
+export type propsType = {
+  lat: number
+  lng: number
+  full_address: string
+}
+
+const Map = ({ lat, lng, full_address }: propsType) => {
   return (
     <section className={styles.map}>
       <h5>Working Location</h5>
-      <p>111 Paseo de Roxas Building Legazpi Village, Makati City, Philippines</p>
-      <div className={styles.map_context}></div>
+      <p>{full_address}</p>
+      <div className={styles.map_context}>
+        {lat && lng && <GoogleMap lat={Number(lat)} lng={Number(lng)} />}
+      </div>
     </section>
   )
 }

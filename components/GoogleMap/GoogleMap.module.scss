@@ -1,0 +1,46 @@
+.mapWrapper {
+}
+
+.modal {
+  :global {
+    .ant-modal-content {
+      border-radius: 0;
+    }
+
+    .ant-modal-wrap {
+      background-color: red;
+    }
+
+    .ant-modal-body {
+      padding: 0;
+    }
+  }
+
+  &_footer {
+    height: 70px;
+    padding: 15px 15px;
+    text-align: right;
+
+    button {
+      width: 113px;
+      height: 38px;
+      background: #1d66ff;
+      border-radius: 10px;
+      font-weight: 400;
+      font-size: 14px;
+      color: #fff;
+      border-color: #1d66ff;
+    }
+
+    button:first-child {
+      background-color: #fff;
+      color: #1d66ff;
+      margin-right: 15px;
+    }
+  }
+}
+
+// .pac-container {
+//   .pac-item {
+//   }
+// }
