@@ -72,7 +72,7 @@
     "camelcase": "off",
     "@typescript-eslist/camelcase": 0
   },
-  "ignorePatterns": ["next-env.d.ts", "lib/redirection.js"],
+  "ignorePatterns": ["next-env.d.ts", "lib/redirection.js", "components/GoogleMap/GoogleMap.tsx"],
   "settings": {
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
     "react": {
