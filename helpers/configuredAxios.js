@@ -60,6 +60,9 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     case 'config':
       url = process.env.CONFIG_URL
       break
+      case 'general':
+        url = process.env.GENERAL_URL
+        break
     default:
       break
   }

@@ -1,25 +1,43 @@
-"use client"
+
 import React from "react";
 import styles from '../index.module.scss';
 import InterstedCard from "./InterstedCard";
-
-const Resume = () => {
-
-return (
-     <div className={styles.upload}>
-         <div className={styles.header}>
-         Who viewed me
-         </div>
-         <div className={styles.uploadContainer}>
-              <div className={styles.interstedBox}>
-              <InterstedCard/>
-              <InterstedCard/>
-              <InterstedCard/>
-              <InterstedCard/>
-              </div> 
-            <button className={styles.btn}>See More</button>
-         </div>
-    </div> 
-)
+import { fetchViewedRcruiters } from 'store/services/jobs/fetchJobsCommunicated'
+import { cookies } from 'next/headers'
+import Link from 'next/link';
+async function getViewedRcruiters(accessToken) {
+     const res = await fetchViewedRcruiters({ accessToken });
+     return res?.data?.data?.['viewed_profiles'] || [];
 }
-export default Resume;
+
+const ViewedMe = async () => {
+     const accessToken = cookies().get('accessToken')?.value
+     const data = await getViewedRcruiters(accessToken);
+
+     return (
+          <>
+               {data?.length && (
+                    <div className={styles.upload}>
+                         <div className={styles.header}>
+                              Who viewed me
+                         </div>
+                         <div className={styles.uploadContainer}>
+                              <div className={styles.interstedBox}>
+                                   {
+                                        data.map(item => {
+                                             return <InterstedCard key={item.id} item={item} />
+                                        })
+                                   }
+
+                              </div>
+                              <button className={styles.btn}>
+                                      <Link prefetch={false} href={"/communicated?type=viewedMe"} >See More </Link>
+                              </button>
+                         </div>
+                    </div>
+               )
+               }
+          </>
+     )
+}
+export default ViewedMe;

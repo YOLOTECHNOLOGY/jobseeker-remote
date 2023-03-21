@@ -11,7 +11,7 @@ import {updateNoticePeriod} from 'store/services/jobs/fetchJobsCommunicated'
 import { getCookie } from 'helpers/cookies'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-
+import Link from 'next/link';
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
@@ -29,16 +29,19 @@ const notice_period_lists = [
 ];
 
 
-const Resume = (props:any) => {
-  console.log(props,7899999)
+
+const Resume = ({
+  data,
+  resumes
+}:any) => {
   const {
     no_of_applied_jobs: noOfAppliedJobs,
     no_of_chats:noOfChats,
     no_of_interviews: noOfInterviews,
     no_of_saved_jobs: noOfSavedJobs,
     no_of_viewed_jobs: noOfViewedJobs
-  }
-     = props.data
+  } = data
+  console.log(resumes,1111111)
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
   const {
     xp_lvl: xpLvl,
@@ -51,7 +54,8 @@ const Resume = (props:any) => {
   const [noticePeriodData, setNoticePeriodData] = React.useState('');
   const [open, setOpen] = React.useState(false);
   const accessToken = getCookie('accessToken');
-  console.log(userDetail,111)
+
+
   useEffect(()=>{
     if(noticePeriodId){
       setNoticePeriodData(noticePeriodId)
@@ -76,7 +80,6 @@ const Resume = (props:any) => {
     id:noticePeriodData,
     accessToken
   }).then(res=>{
-    console.log(res,77775555) 
     if(res.data?.data){
       setOpen(true);
     }
@@ -131,7 +134,19 @@ const Resume = (props:any) => {
           Uploaded Resumes
         </div>
         <div className={styles.uploadContainer}>
-          <p className={styles.noMore}>No resume, upload now!</p>
+          {
+            resumes?.length ? (
+               <ul>
+                {
+               resumes?.map(e=> <li key={e.id}><Link href={e.url}>{e.name}</Link></li>)   
+                }
+            
+               </ul> 
+
+
+            ) :  <p className={styles.noMore}>No resume, upload now!</p>
+          }
+        
           <button className={styles.btn}>Upload resume</button>
         </div>
       </div>

@@ -4,14 +4,19 @@ import Header from "./Header"
 import JobCard from './JobCard'
 import  * as R from 'ramda';
 import { getCookie } from 'helpers/cookies'
+import { useSearchParams } from 'next/navigation'
 import {
     fetchChattedJobs,
     fetchResume,
     fetchResumeContact,
     fetchSaved,
-    fetchViewed
+    fetchViewed,
+    fetchRecruiters,
+    fetchViewedRcruiters,
+    fetchInterviews
 } from 'store/services/jobs/fetchJobsCommunicated'
-const tabList = [
+
+const initTabList = [
     {
         tab: 'Communicated',
         value: 'communicated',
@@ -39,6 +44,13 @@ const tabList = [
         ]
     },
     {
+        tab: 'Interview',
+        value: 'interview',
+        fetchFun:fetchInterviews,
+        key:'interviews',
+        children:[],
+    },
+    {
         tab: 'Saved',
         value: 'saved',
         fetchFun:fetchSaved,
@@ -54,45 +66,79 @@ const tabList = [
     },
 ]
 
-
+const tabListIntersted = [
+    {
+        tab: 'Interested in me',
+        value: 'interested',
+        fetchFun:fetchRecruiters,
+        children:[],
+        key:'saved_candidates',
+    },
+    {
+        tab: 'Who viewed me',
+        value: 'viewedMe',
+        fetchFun:fetchViewedRcruiters,
+        children:[],
+        key:'viewed_profiles',
+    },
+]
 
 
 const MainLeft = () => {
     const [tabValue,setTabValue] = useState<string>('communicated');
     const [data,setData] = useState<Array<any>>([]);
+    const [tabList,setTabList] =  useState<Array<any>>([]);
     const [tabChildren,setTabChildren] = useState<Array<any>>([]);
     const [tabValueChildren,setTabValueChidren] = useState<string>('');
-    const [page] = useState<number>(1);
+    const [page,setPage] = useState<number>(1);
+    const [total,setTotal] = useState<number>(0);
+    const searchParams = useSearchParams();
+    const searchType = searchParams.get('type');
     const accessToken = getCookie('accessToken');
+    console.log(searchType,7777999)
 
     useEffect(()=>{
-      const tab  = R.find(R.propEq('value', tabValue))(tabList);
-      tab.fetchFun &&  getData(tab)
-    },[tabValue])
+        if(tabList?.length && tabValue){
+            const tab  = R.find(R.propEq('value', tabValue))(tabList);
+            tab?.fetchFun &&  getData(tab,page)
+        }
+    },[tabValue,tabList,page])
 
    
     useEffect(()=>{
       if(tabValueChildren){
         const tab  = R.find(R.propEq('value', tabValueChildren))(tabChildren);
-        tab.fetchFun &&  getData(tab)
+        tab?.fetchFun &&  getData(tab,page)
       }
-
     },[tabValueChildren])
 
-    const getData = (tab) => { 
+     useEffect(()=>{
+      if(searchType){
+        setTabList(tabListIntersted)
+        setTabValue(searchType)
+      }else{
+        setTabList(initTabList)
+      }
+     },[searchType])
+
+
+    const getData = (tab,page) => { 
         tab.fetchFun({
             page,
             accessToken
         }).then(res=>{
          const data =  res.data.data[tab.key];
-         setData(data)
+         const total =  res.data.data.total_pages;
+         setTotal(total)
+         setData(data);
         })
     }
 
 
-    const onChangee = (e:string) => {
+    const onChange = (e:string) => {
         const children = tabList[R.findIndex(R.propEq('value', e))(tabList)]?.children; 
-        setTabValue(e)
+        setPage(1);
+        setTabValue(e);
         setTabChildren(children)
         setTabValueChidren(children?.[0]?.value || '');
     }
@@ -108,10 +154,10 @@ const MainLeft = () => {
               tabList = {tabList}
               tabChildren = {tabChildren}
               tabValueChildren = {tabValueChildren}
-              onChange = {onChangee}
+              onChange = {onChange}
               handleChangeChildren={handleChangeChildren}
              />
-            <JobCard data ={data}/>
+            <JobCard data ={data} total={total} page={page}  onChange = {(e)=>setPage(e)}/>
         </>
     )
 }

@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import MuiTabs from '@mui/material/Tabs'
 import { styled } from '@mui/material/styles'
 import { SxProps, Theme } from '@mui/system'
- 
+import Link from 'next/link';
 interface StyledTabsProps {
     children?: React.ReactNode
     value: number | string
@@ -20,13 +20,13 @@ interface StyledTabProps {
     value: string
     sx: SxProps<Theme>
 }
-interface headerProps{ 
-    tabValue: string, 
+interface headerProps {
+    tabValue: string,
     tabList: Array<any>,
     onChange: Function
     tabChildren: Array<any>,
-    tabValueChildren?: string, 
-    handleChangeChildren:Function,
+    tabValueChildren?: string,
+    handleChangeChildren: Function,
 }
 
 const Header = ({
@@ -36,20 +36,20 @@ const Header = ({
     tabChildren,
     tabValueChildren,
     handleChangeChildren,
-  }: headerProps) => {
+}: headerProps) => {
 
-    const  handleChange = (event: React.SyntheticEvent, newValue: string) => { 
+    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         onChange(newValue)
     }
 
-    const  handleChangeChildrenFun = (event: React.SyntheticEvent, newValue: string) => { 
+    const handleChangeChildrenFun = (event: React.SyntheticEvent, newValue: string) => {
         handleChangeChildren(newValue)
     }
 
     const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
         '&.Mui-selected': {
             color: '#136FD3',
-            fontWeight:'700'
+            fontWeight: '700'
         }
     }))
 
@@ -76,72 +76,77 @@ const Header = ({
     })
 
 
-    
-    return (
-         <>
-          <div className={styles.header}>
-            <ArrowBackIosRoundedIcon className={styles.back} style={{ fontSize: '28px' }} />
-            <span className={styles.bactText}>Back</span>
-            <span className={styles.line} >|</span>
-            <StyledTabs
-                value={tabValue}
-                variant='scrollable'
-                scrollButtons='auto'
-                aria-label='scrollable auto tabs example'
-                onChange={handleChange}
-            >
-                {tabList.map((item) => (
-                    <StyledTab
-                        key={item.value}
-                        label={item.tab}
-                        value={item.value}
-                        sx={{
-                            fontSize: '16px',
-                            textTransform: 'capitalize',
-                            color: '#707070',
-                            fontFamily: 'product sans',
-                            letterSpacing: '1px',
-                            padding:'12px 0',
-                            marginRight:'36px'
-                        }}
-                    />
-                ))}
-            </StyledTabs>
-        </div>
-        {
-         tabChildren?.length ? (
-            <div className={`${styles.header} ${styles.headerChild}`}>
-            <StyledTabs
-                value={tabValueChildren}
-                variant='scrollable'
-                scrollButtons='auto'
-                aria-label='scrollable auto tabs example'
-                onChange={handleChangeChildrenFun}
-            >
-                {tabChildren.map((item) => (
-                    <StyledTab
-                        key={item.value}
-                        label={item.tab}
-                        value={item.value}
-                        sx={{
-                            fontSize: '16px',
-                            textTransform: 'capitalize',
-                            color: '#707070',
-                            fontFamily: 'product sans',
-                            letterSpacing: '1px',
-                            padding:'12px 0',
-                            marginRight:'36px'
-                        }}
-                    />
-                ))}
-            </StyledTabs>
 
-        </div>
-         ):null
-        }
-       
-         </>
-       
+    return (
+        <>
+            <div className={styles.header}
+                style={{ marginBottom: (tabValue == 'interested' || tabValue == 'viewedMe') ? '14px' : '10px' }}
+            >
+                <Link prefetch={false} href={"/my-job"} className={styles.backLink}>
+                    <ArrowBackIosRoundedIcon className={styles.back} style={{ fontSize: '28px' }} />
+                    <span className={styles.bactText}>Back</span>
+                </Link>
+                <span className={styles.line} >|</span>
+
+                <StyledTabs
+                    value={tabValue}
+                    variant='scrollable'
+                    scrollButtons='auto'
+                    aria-label='scrollable auto tabs example'
+                    onChange={handleChange}
+                >
+                    {tabList.map((item) => (
+                        <StyledTab
+                            key={item.value}
+                            label={item.tab}
+                            value={item.value}
+                            sx={{
+                                fontSize: '16px',
+                                textTransform: 'capitalize',
+                                color: '#707070',
+                                fontFamily: 'product sans',
+                                letterSpacing: '1px',
+                                padding: '12px 0',
+                                marginRight: '36px'
+                            }}
+                        />
+                    ))}
+                </StyledTabs>
+            </div>
+            {
+                tabChildren?.length ? (
+                    <div className={`${styles.header} ${styles.headerChild}`}>
+                        <StyledTabs
+                            value={tabValueChildren}
+                            variant='scrollable'
+                            scrollButtons='auto'
+                            aria-label='scrollable auto tabs example'
+                            onChange={handleChangeChildrenFun}
+                        >
+                            {tabChildren.map((item) => (
+                                <StyledTab
+                                    key={item.value}
+                                    label={item.tab}
+                                    value={item.value}
+                                    sx={{
+                                        fontSize: '16px',
+                                        textTransform: 'capitalize',
+                                        color: '#707070',
+                                        fontFamily: 'product sans',
+                                        letterSpacing: '1px',
+                                        padding: '12px 0',
+                                        marginRight: '36px'
+                                    }}
+                                />
+                            ))}
+                        </StyledTabs>
+
+                    </div>
+                ) : null
+            }
+
+        </>
+
     )
 }
 

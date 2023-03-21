@@ -53,11 +53,42 @@ const fetchPersonalInfo  = (payload) => {
 const fetchRecruiters  = (payload) => {
   const {accessToken = null } = payload || {}
   const endpointType = accessToken ? 'protected' : 'public'
-  const axios = configuredAxios('recruiters', endpointType, false, accessToken)
-  return axios.get(`/recruiters/saved-me-recruiters?page=1&size=6`)
+  const axios = configuredAxios('general', endpointType, false, accessToken)
+  return axios.get(`recruiters/saved-me-recruiters?page=1&size=6`)
+}
+
+const fetchViewedRcruiters  = (payload) => {
+  const {accessToken = null } = payload || {}
+  const endpointType = accessToken ? 'protected' : 'public'
+  const axios = configuredAxios('general', endpointType, false, accessToken)
+  return axios.get(`recruiters/viewed-me-recruiters?page=1&size=6`)
+}
+
+const fetchInterviews  = (payload) => {
+  const {page,accessToken = null } = payload || {}
+  const endpointType = accessToken ? 'protected' : 'public'
+  const axios = configuredAxios('jobApplication', endpointType, false, accessToken)
+  return axios.get(`jobseekers/interviews?page=${page}&size=20`)
+}
+
+const fetchResumes = (payload) => {
+  const {accessToken = null } = payload || {}
+  const endpointType = accessToken ? 'protected' : 'public'
+  const axios = configuredAxios('jobseeker', endpointType, false, accessToken)
+  return axios.get(`/resumes`)
 }
 
 
-
-
-export { fetchChattedJobs,fetchSaved,fetchResume,fetchResumeContact ,fetchViewed,updateNoticePeriod,fetchPersonalInfo,fetchRecruiters}
+export { 
+  fetchChattedJobs,
+  fetchSaved,
+  fetchResume,
+  fetchResumeContact,
+  fetchViewed,
+  updateNoticePeriod,
+  fetchPersonalInfo,
+  fetchRecruiters,
+  fetchViewedRcruiters,
+  fetchInterviews,
+  fetchResumes
+}
