@@ -45,7 +45,10 @@ const Index = ({ data, jobId }: any) => {
       company: {
         id: data.company?.id
       }
-    }
+    },
+    lat: data.latitude,
+    lng: data.longitude,
+    full_address: data.full_address
   }
 
   return (

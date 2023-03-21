@@ -15,6 +15,9 @@ type propsType = {
   lastActiveAt: string
   benefitsProps: Array<any>
   shareParams: any
+  lat: number
+  lng: number
+  full_address: string
 }
 
 const MainFC = (props: propsType) => {
@@ -22,7 +25,7 @@ const MainFC = (props: propsType) => {
     <main className={styles.main}>
       <Desc {...props} />
       {props.benefitsProps?.length && <Benefits benefits={props.benefitsProps} />}
-      <Map />
+      <Map lat={props.lat} lng={props.lng} full_address={props.full_address} />
       <Search />
     </main>
   )
