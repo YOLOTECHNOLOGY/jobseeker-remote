@@ -44,6 +44,7 @@ const Search = () => {
         size='small'
         value={searchValue}
         onChange={(e) => setSearchValue(e.target?.value)}
+        onKeyUp={(e) => e.code == 'Enter' && handleUpdatePath()}
         maxLength={60}
       />
 
@@ -57,6 +58,7 @@ const Search = () => {
           borderRadius: '10px'
         }}
         onClick={handleUpdatePath}
+        className={styles.search_field_bingo}
       >
         Search
       </Button>

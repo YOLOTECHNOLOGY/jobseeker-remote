@@ -59,6 +59,8 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
     case 'config':
       url = process.env.CONFIG_URL
       break
+    case 'recruiters':
+      url = process.env.RECRUITERS_BOSSJOB_URL
     default:
       break
   }
@@ -128,7 +130,8 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
         if (error?.response?.status === 401 && typeof window !== 'undefined') {
           removeCookie('accessToken')
           window.location.href = '/get-started'
-          import('imforbossjob').then(im => im?.IMManager?.logout?.())
+          import('imforbossjob')
+            .then((im) => im?.IMManager?.logout?.())
             .then(() => localStorage?.clear?.())
         } else {
           return Promise.reject(error)

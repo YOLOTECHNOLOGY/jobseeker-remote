@@ -2,7 +2,7 @@ const path = require('path')
 const redirectionPaths = require('./lib/redirection')
 const generateRobotsTxt = require('./scripts/generateRobotsTxt.js')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
+  enabled: process.env.ANALYZE === 'true'
 })
 // const getPresets = (options = {}) => ({
 //   presets: options.presets || ['next/babel'],
@@ -32,7 +32,6 @@ module.exports = withBundleAnalyzer({
     // mdxRs: true,
     // typedRoutes: true,
     esmExternals: 'loose'
-
   },
   env: {
     ENV: process.env.ENV,
@@ -40,6 +39,7 @@ module.exports = withBundleAnalyzer({
     HOST_PATH: process.env.HOST_PATH,
     API_BASEPATH: process.env.API_BASEPATH,
     S3_BUCKET_URL: process.env.S3_BUCKET_URL,
+    RECRUITERS_BOSSJOB_URL: process.env.RECRUITERS_BOSSJOB_URL,
     DATA_BOSSJOB_URL: process.env.DATA_BOSSJOB_URL,
     DATA_BOSSHUNT_URL: process.env.DATA_BOSSHUNT_URL,
     AUTH_BOSSJOB_URL: process.env.AUTH_BOSSJOB_URL,
@@ -69,22 +69,26 @@ module.exports = withBundleAnalyzer({
     BOSS_BLOG_URL: process.env.BOSS_BLOG_URL,
     APP_STORE_LINK: 'https://apps.apple.com/sg/app/bossjob/id1592073585',
     GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp',
-    BLOG_BOSSJOB: 'https://blog.bossjob.ph',
-
+    BLOG_BOSSJOB: 'https://blog.bossjob.ph'
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'node_modules')]
   },
   images: {
-    domains: ['dev-assets.bossjob.com', 'assets.bossjob.com', 'fakeimg.pl', 'local-assets.bossjob.com']
+    domains: [
+      'dev-assets.bossjob.com',
+      'assets.bossjob.com',
+      'fakeimg.pl',
+      'local-assets.bossjob.com'
+    ]
   },
   plugins: [
     [
       '@babel/plugin-proposal-decorators',
       {
-        legacy: true,
-      },
-    ],
+        legacy: true
+      }
+    ]
   ],
   webpack(config, { isServer }) {
     if (isServer) {
@@ -95,11 +99,10 @@ module.exports = withBundleAnalyzer({
       include: path.resolve('./'),
       exclude: path.resolve('./node_modules'),
       use: [
-        'thread-loader',
+        'thread-loader'
         // your expensive loader (e.g babel-loader)
-      ],
+      ]
     })
     return config
-  },
-
+  }
 })
