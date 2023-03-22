@@ -26,7 +26,8 @@ const Index = ({ data, jobId }: any) => {
     logo: data.company?.logo,
     numOfActiveJobs: data.company?.num_of_active_jobs,
     jobId,
-    companyUrl: data.company?.company_url
+    companyUrl: data.company?.company_url,
+    published_at: data.published_at
   }
 
   const mainProps = {

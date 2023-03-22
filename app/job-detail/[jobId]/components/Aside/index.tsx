@@ -4,10 +4,11 @@ import Company, { propsType } from './Company/Company'
 import SignUp from './SignUp/SignUp'
 import SimilarJobs from './SimilarJobs/SimilarJobs'
 import AdSlot from 'app/components/AdSlot'
+import Search from '../Main/Search/Search'
 
 import styles from '../../page.module.scss'
 
-type propsT = propsType & { jobDetail: any }
+type propsT = propsType & { jobDetail: any } & { published_at: string }
 
 const AsideFC = (props: propsT) => {
   const cookieStore = cookies()
@@ -24,6 +25,10 @@ const AsideFC = (props: propsT) => {
       <div className={styles.ad_container}>
         <AdSlot adSlot={'job-detail/square-banner-1'} />
       </div>
+
+      <Search />
+
+      <span className={styles.published_at}>{props.published_at}</span>
     </aside>
   )
 }

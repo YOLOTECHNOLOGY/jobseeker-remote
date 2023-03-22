@@ -297,11 +297,19 @@
       letter-spacing: 0.02em;
       color: #136fd3;
     }
+
+    &_mobileCard {
+      display: none;
+    }
   }
 
   .aside {
     margin-left: 25px;
     width: 250px;
+
+    .search {
+      display: none;
+    }
 
     .signUp {
       width: 100%;
@@ -349,6 +357,10 @@
         letter-spacing: 0.0075em;
         color: #707070;
       }
+
+      &_mobileHead {
+        display: none;
+      }
     }
 
     .similarJobs {
@@ -383,9 +395,13 @@
         font-style: normal;
         font-weight: 700;
         font-size: 18px;
-        letter-spacing: 0.02em;
         color: #353535;
         margin-bottom: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        flex: 0.7;
       }
 
       &_salary {
@@ -409,6 +425,10 @@
           line-height: 14px;
         }
       }
+
+      &_mobileCard {
+        display: none;
+      }
     }
 
     .ad {
@@ -420,6 +440,10 @@
         overflow: hidden;
         margin-top: 24px;
       }
+    }
+
+    .published_at {
+      display: none;
     }
   }
 }
@@ -453,6 +477,8 @@
 
 @include msd {
   .head {
+    padding-bottom: 0;
+
     &_main {
       &_change {
         display: none;
@@ -661,6 +687,105 @@
           background: #136fd3;
           color: #ffffff;
         }
+
+        &_webCard {
+          display: none;
+        }
+
+        &_mobileCardWrapper {
+          display: flex;
+          justify-content: space-between;
+        }
+
+        &_mobileCard {
+          display: block;
+
+          &_name {
+            font-weight: 400;
+            font-size: 12px;
+            letter-spacing: 0.0075em;
+            color: #353535;
+            margin: 8px 0;
+          }
+
+          &_tags {
+            span {
+              padding: 3px 10px;
+              background: #f0f0f0;
+              border-radius: 16px;
+              font-weight: 400;
+              font-size: 12px;
+              letter-spacing: 0.0075em;
+              color: #707070;
+              margin-right: 3px;
+            }
+          }
+
+          &_loca {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            letter-spacing: 0.0075em;
+            color: #353535;
+
+            &_value {
+              color: #707070;
+            }
+          }
+        }
+
+        &_infoWrpper {
+          position: relative;
+
+          &_status {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            right: 4px;
+            bottom: 0px;
+          }
+
+          &_lineStatus {
+            border: 1px solid white;
+            background-color: #32a071;
+          }
+        }
+      }
+
+      .search {
+        display: flex;
+        padding: 0 20px;
+        justify-content: space-between;
+        margin-bottom: 40px;
+
+        &_location {
+          flex: 0.3;
+        }
+
+        &_field {
+          flex: 0.67;
+          &_bingo {
+            display: none;
+          }
+        }
+      }
+
+      .published_at {
+        display: block;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        letter-spacing: 0.0075em;
+        color: #707070;
+        padding-left: 20px;
+        margin-bottom: 40px;
       }
     }
   }
