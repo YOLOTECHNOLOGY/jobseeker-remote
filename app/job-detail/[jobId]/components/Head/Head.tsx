@@ -16,6 +16,8 @@ type propsType = {
   jobId: number
   is_saved: boolean
   chat: any
+  job_type_value: string
+  status_key: string
 }
 
 const Head = ({
@@ -27,14 +29,23 @@ const Head = ({
   salary,
   jobId,
   is_saved,
-  chat
+  chat,
+  job_type_value,
+  status_key
 }: propsType) => {
   return (
     <section className={styles.head}>
       <div className={styles.head_main}>
-        <h1>
-          {title} <div className={styles.head_main_salary}>{salary}</div>
-        </h1>
+        <div className={styles.head_main_title}>
+          <div className={styles.head_main_titleWrapper}>
+            <h1>{title}</h1>
+            <div className={styles.head_main_title_context}>
+              <span className={styles.head_main_title_context_type}>({job_type_value})</span>
+              <span className={styles.head_main_title_context_status}>{status_key}</span>
+            </div>
+          </div>
+          <div className={styles.head_main_salary}>{salary}</div>
+        </div>
 
         <div className={styles.head_main_desc}>
           {localhost} | {degree} | {xp_lvl} | {jobType}
