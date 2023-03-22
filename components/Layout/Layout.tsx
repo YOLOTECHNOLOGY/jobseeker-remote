@@ -32,7 +32,9 @@ const Layout = ({ children, className, isHiddenFooter, isHiddenHeader }: LayoutP
   const [isEmailVerified, setIsEmailVerified] = useState(false)
   const [isShowModal, setIsShowModal] = useState(false)
   const userAgent = useUserAgent(window.navigator.userAgent)
-  const [isShowAppRedirectModal, setIsShowAppRedirectModal] = useState(userAgent.isMobile && !getCookie('isAppRedirectModalClosed'))
+  const [isShowAppRedirectModal, setIsShowAppRedirectModal] = useState(
+    userAgent.isMobile && !getCookie('isAppRedirectModalClosed')
+  )
 
   const authCookie = getCookie('accessToken')
   const userCookie = getCookie('user')

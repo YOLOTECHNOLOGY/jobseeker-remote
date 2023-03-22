@@ -1,9 +1,54 @@
 .content {
+    display: flex;
+    flex-direction: row;
+
     .table {
         margin-top: 40px;
-        padding-left: calc(50vw - 585px);
+        margin-left: calc(50vw - 585px);
         background: transparent;
+        width: 894px;
     }
 
-    .rightContent {}
+    .qrCode {
+        width: 254px;
+        height: 108px;
+        margin-top: 20px;
+        background: #136FD3;
+        border-radius: 10px;
+        padding: 10px 16px;
+        display: flex;
+        flex-direction: row;
+
+        .rightContainer {
+            padding: 7px 14px;
+
+            label {
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 16px;
+                line-height: 18px;
+                letter-spacing: 0.02em;
+                color: #FFFFFF;
+            }
+
+            p {
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 15px;
+                letter-spacing: 0.02em;
+                color: #FFFFFF;
+            }
+        }
+    }
+
+    .rightContent {
+        margin-top: 40px;
+        height: 100%;
+        width: 254px;
+        margin-left: 30px;
+        height: 600px;
+    }
 }

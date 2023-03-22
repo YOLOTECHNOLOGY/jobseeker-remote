@@ -2,15 +2,17 @@ import Link from 'next/link'
 
 import { fetchSimilarJobsService } from 'store/services/jobs/fetchSimilarJobs'
 
-import { Avatar, Button } from 'app/components/MUIs/'
+import SeeMore from './SeeMore/SeeMore'
+import { Avatar } from 'app/components/MUIs/'
 
 import styles from '../../../page.module.scss'
 
 type propsType = {
   id?: number
+  jobDetail: any
 }
 
-export default async function SimilarJobs({ id }: propsType) {
+export default async function SimilarJobs({ id, jobDetail }: propsType) {
   const params = {
     jobId: id,
     size: 5
@@ -54,25 +56,7 @@ export default async function SimilarJobs({ id }: propsType) {
           )
         })}
 
-        <Button
-          variant='outlined'
-          sx={{
-            height: '44px',
-            width: '100%',
-            marginTop: '20px',
-            borderRadius: '10px',
-            border: '2px solid #136FD3',
-            fontStyle: 'normal',
-            fontWeight: 700,
-            fontSize: '14px',
-            lineHeight: '18px',
-            letterSpacing: '0.0075em',
-            color: '#136FD3',
-            textTransform: 'capitalize'
-          }}
-        >
-          See more
-        </Button>
+        <SeeMore jobDetail={jobDetail} />
       </div>
     </section>
   )

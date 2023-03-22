@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 'use client'
 import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react'
 import { flushSync } from 'react-dom'
@@ -23,6 +24,7 @@ import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import { useRouter } from 'next/navigation'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { filter } from 'ramda'
+import useUserAgent from 'helpers/useUserAgent'
 const sortOptions = [
     { label: 'Newest', value: '1' },
     { label: 'Relevance', value: '2' },
@@ -52,13 +54,13 @@ const SearchArea = (props: any) => {
     const [showMore, setShowMore] = useState(false)
     const [sort, setSort] = useState(searchValues?.sort?.[0] ?? '2')
 
-    const [moreData, setMoreData] = useState({
-        workExperience: searchValues?.workExperience ?? [],
-        qualification: searchValues?.qualification ?? [],
-        verifiedCompany: searchValues?.verifiedCompany ?? [],
-        companySizes: searchValues?.companySizes ?? [],
-        financingStages: searchValues?.financingStages ?? []
-    })
+    const [moreData, setMoreData] = useState(filter(a => a)({
+        workExperience: searchValues?.workExperience ?? null,
+        qualification: searchValues?.qualification ?? null,
+        verifiedCompany: searchValues?.verifiedCompany ?? null,
+        companySizes: searchValues?.companySizes ?? null,
+        financingStages: searchValues?.financingStages ?? null
+    }))
     const [jobTypes, setJobtypes] = useState(searchValues?.jobType ?? [])
     const jobTypeList = config?.inputs?.job_types?.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
     const [searchValue, setSearchValue] = useState(searchValues.query)
@@ -94,8 +96,10 @@ const SearchArea = (props: any) => {
     }, [reload])
     useEffect(reload, [location, salaries, jobTypes, moreData, sort, jobFunctionValue])
     const moreCount = useMemo(() => {
-        return Object.values(moreData).reduce((a1, a2) => a1 + (a2?.length ?? 0), 0)
+        return Object.values(moreData).reduce((a1, a2: any) => a1 + (a2?.length ?? 0), 0)
     }, [moreData])
+    const userAgent = useUserAgent()
+    console.log({ userAgent })
     return <div>
         <ThemeProvider theme={theme}>
             <div className={styles.container}>
@@ -142,6 +146,7 @@ const SearchArea = (props: any) => {
                     />
                     <MaterialButton
                         className={styles.searchButton}
+                        capitalize
                         onClick={() => {
                             flushSync(() => {
                                 setSearchValue(searchValue)
@@ -151,6 +156,39 @@ const SearchArea = (props: any) => {
 
                         }}
                     > Search </MaterialButton>
+                    {accessToken
+                        ?
+                        <div
+                            className={styles.downloadApp}
+                            onClick={() => {
+                                // app store
+                                window.location.href = userAgent.ua.isMac
+                                    ? process.env.APP_STORE_LINK
+                                    : process.env.GOOGLE_PLAY_STORE_LINK
+                            }}
+                        >
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.6667 2.66675H9.33341C7.86066 2.66675 6.66675 3.86066 6.66675 5.33341V26.6667C6.66675 28.1395 7.86066 29.3334 9.33341 29.3334H22.6667C24.1395 29.3334 25.3334 28.1395 25.3334 26.6667V5.33341C25.3334 3.86066 24.1395 2.66675 22.6667 2.66675Z" stroke="#136FD3" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M16 24H16.0133" stroke="#136FD3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div className={styles.text}>Download APP and chat with Boss </div>
+                        </div>
+                        :
+                        <Button
+                            className={styles.loginButton}
+                            variant='outlined'
+
+                            onClick={() => {
+                                router.push('/get-started', { forceOptimisticNavigation: true })
+                            }}
+                        >
+                            <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.84375 13.2812L11.125 10L7.84375 6.71875" stroke="#136FD3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M2.375 10H11.125" stroke="#136FD3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M11.125 3.125H15.5C15.6658 3.125 15.8247 3.19085 15.9419 3.30806C16.0592 3.42527 16.125 3.58424 16.125 3.75V16.25C16.125 16.4158 16.0592 16.5747 15.9419 16.6919C15.8247 16.8092 15.6658 16.875 15.5 16.875H11.125" stroke="#136FD3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <span> Login to see more jobs</span>
+                        </Button>}
                 </div>
                 <div className={styles.filters}>
                     <Single options={sortOptions}
@@ -184,7 +222,7 @@ const SearchArea = (props: any) => {
                         defaultValue={jobTypes}
                     />
                     <Button
-                        className={styles.searchButton}
+                        className={styles.moreButton}
                         variant='outlined'
                         onClick={() => {
                             setShowMore(true)
@@ -193,7 +231,6 @@ const SearchArea = (props: any) => {
                     <Button
                         className={styles.clearButton}
                         variant='text'
-
                         onClick={() => {
                             setLocation(null)
                             setSearchValue('')
@@ -208,7 +245,8 @@ const SearchArea = (props: any) => {
                             setMoreData({} as any)
                             setPage('1')
                         }}
-                    > Reset Filters </Button>
+                    >
+                        Reset Filters </Button>
                 </div>
             </div>
         </ThemeProvider>
@@ -218,20 +256,17 @@ const SearchArea = (props: any) => {
                 urlDefaultValues={moreData}
                 isShowFilter={showMore}
                 onResetFilter={() => {
-                    console.log('onReset')
                     setMoreData({} as any)
                 }}
                 keyword={searchValues.query}
                 config={config}
                 handleShowFilter={() => {
-                    console.log('onClose')
                     setShowMore(false)
                 }}
                 moreFilterReset={false}
                 isShowingEmailAlert={accessToken && !userCookie?.is_email_verify}
 
                 setClientDefaultValues={data => {
-                    console.log('dataChanged', data)
                     setMoreData(data)
                 }} />
         )}

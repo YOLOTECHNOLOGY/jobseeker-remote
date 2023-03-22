@@ -14,7 +14,9 @@ const Index = ({ data, jobId }: any) => {
     salary: data.salary_range_value,
     jobId,
     is_saved: data.is_saved,
-    chat: data.chat
+    chat: data.chat,
+    job_type_value: data.job_type_value,
+    status_key: data.status_key
   }
 
   const companyProps = {
@@ -45,7 +47,10 @@ const Index = ({ data, jobId }: any) => {
       company: {
         id: data.company?.id
       }
-    }
+    },
+    lat: data.latitude,
+    lng: data.longitude,
+    full_address: data.full_address
   }
 
   return (
@@ -53,7 +58,7 @@ const Index = ({ data, jobId }: any) => {
       <Head {...headProps} />
       <div className={styles.container}>
         <MainFC {...mainProps} />
-        <AsideFC {...companyProps} />
+        <AsideFC {...companyProps} jobDetail={data} />
       </div>
     </div>
   )

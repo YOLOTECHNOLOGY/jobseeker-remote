@@ -1,4 +1,5 @@
 @import '/styles/mixins.scss';
+@import '/styles/variable.scss';
 
 @keyframes wordsLoop {
     0% {
@@ -69,7 +70,8 @@
                     flex-direction: row;
                     // max-width: 358px;
                     justify-content: flex-start;
-                    flex:1;
+                    flex: 1;
+
                     .mainTitleSub {
                         // flex: 1;
                         display: block;
@@ -190,6 +192,26 @@
         padding: 18px 18px 18px 0px;
         flex-direction: column;
         overflow: scroll;
+        
+        &::-webkit-scrollbar {
+            width: 5px;
+            right: 10px;
+        }
+
+        // &::-webkit-scrollbar-track {
+        //     background: #fff;
+        //     border-radius: 10px;
+        //     margin-right: 10px;
+        // }
+
+        &::-webkit-scrollbar-thumb {
+            background: $white-2;
+            border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background: $white-2;
+        }
 
         .sectionItems {
             display: flex;

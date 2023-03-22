@@ -1,72 +1,73 @@
 .modalContainer {
-    padding: 24px 32px;
+  padding: 24px 32px;
 
-    .description {
-        margin-top: 16px;
+  .description {
+    margin-top: 16px;
+    font-weight: 400;
+    font-size: pxToRem(14px);
+    line-height: 24px;
+    letter-spacing: 0.75px;
+    color: #353535;
+    width: 100%;
+  }
+
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 16px;
+    a {
+      color: #2379ea;
+      text-decoration: underline;
+    }
+    .textInput {
+      width: 100%;
+    }
+
+    .detailItemContainer {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      margin-top: 14px;
+
+      p {
+        font-family: 'Product Sans';
+        font-style: normal;
         font-weight: 400;
-        font-size: pxToRem(14px);
-        line-height: 24px;
-        letter-spacing: 0.75px;
-        color: #353535;
-        width: 100%;
-    }
-
-    .formContainer {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
         font-size: 16px;
-        a {
-            color: #2379EA;
-            text-decoration: underline;
-        }
-        .textInput {
-            width: 100%;
-        }
-
-        .detailItemContainer {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            margin-top: 14px;
-
-            p {
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 24px;
-                letter-spacing: 0.02em;
-                color: #353535;
-            }
-        }
-
-        .editItemContainer {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            width: 100%;
-
-            .actions {
-                display: flex;
-                flex-direction: row;
-
-                .icon {
-                    margin-left: 10px;
-                    cursor: pointer;
-                }
-            }
-
-            p {
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 24px;
-                letter-spacing: 0.02em;
-                color: #353535;
-            }
-        }
-
+        line-height: 24px;
+        letter-spacing: 0.02em;
+        color: #353535;
+      }
     }
+
+    .editItemContainer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 100%;
+
+      .actions {
+        display: flex;
+        flex-direction: row;
+
+        .icon {
+          margin-left: 10px;
+          cursor: pointer;
+        }
+      }
+
+      p {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.02em;
+        color: #353535;
+        word-break: break-all;
+      }
+    }
+  }
 }

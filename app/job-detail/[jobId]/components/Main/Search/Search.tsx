@@ -44,6 +44,7 @@ const Search = () => {
         size='small'
         value={searchValue}
         onChange={(e) => setSearchValue(e.target?.value)}
+        maxLength={60}
       />
 
       <Button
