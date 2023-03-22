@@ -15,7 +15,6 @@ import searchHistoryIp from '../interpreters/searchHistory'
 import SearchHistories from './components/searchHistories'
 import Image from 'next/image'
 import { AppDownQRCode } from 'images'
-import Link from 'next/link'
 const configs = getConfigs([
     ['inputs', 'location_lists'],
     ['inputs', 'main_functions'],
@@ -56,7 +55,7 @@ const Main = (props: any) => {
                     isShowArrowIcon={false}
                     className={styles.arrowIconPostion}
                 />
-                <Link href={''} className={styles.qrCode}>
+                <div className={styles.qrCode}>
                     <Image src={AppDownQRCode} alt='app down' width='85' height='88' />
                     <div className={styles.rightContainer}>
                         <label>Chat directly with Boss</label>
@@ -75,7 +74,7 @@ const Main = (props: any) => {
                             </svg>
                             Scan QR code to download APP</p>
                     </div>
-                </Link>
+                </div>
                 <SearchHistory
                     location={location}
                     value={props?.searchValues?.query as any}
