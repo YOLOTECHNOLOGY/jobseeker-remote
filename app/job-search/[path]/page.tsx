@@ -15,6 +15,7 @@ import searchHistoryIp from '../interpreters/searchHistory'
 import SearchHistories from './components/searchHistories'
 import Image from 'next/image'
 import { AppDownQRCode } from 'images'
+import JobAlert from './components/jobAlert'
 const configs = getConfigs([
     ['inputs', 'location_lists'],
     ['inputs', 'main_functions'],
@@ -45,6 +46,7 @@ const Main = (props: any) => {
         <div className={styles.content}>
             <div className={styles.table}>
                 {/* <Loading/> */}
+                <JobAlert searchValues={props.searchValues} config={props.config} />
                 <Suspense fallback={<Loading />}>
                     <Table searchValues={props.searchValues ?? null} config={props.config} />
                 </Suspense>
