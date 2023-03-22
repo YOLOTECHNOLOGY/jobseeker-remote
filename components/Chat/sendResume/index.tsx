@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import { assign } from 'lodash-es'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
-import { useRouter } from 'next/router'
+
 import classNames from 'classnames'
 
 import { getList, deleteOne } from 'helpers/interpreters/services/resume'
@@ -24,7 +24,6 @@ const SendResumeModal = (props: any) => {
   const { contextRef, loading, data, applicationId } = props
   const actionsRef = useRef({} as any)
   const inputRef: Ref<any> = useRef()
-  const router = useRouter()
 
   const context = {
     showSendResume(actions) {
@@ -41,10 +40,10 @@ const SendResumeModal = (props: any) => {
   const [resumeList, setResumeList] = useState([])
   const [resumeId, setResumeId] = useState(0)
   const [onlyOne, setOnlyOne] = useState(false)
-
+  
   useEffect(() => {
     // Once the client access the chat page, we should request the latest resume from the server
-    if (router.asPath.includes('/chat')) {
+    if (location.pathname.includes('/chat')) {
       setResumeLoading(true)
       getList()
         .then((result) => result.data.data)
@@ -57,7 +56,7 @@ const SendResumeModal = (props: any) => {
         })
         .finally(() => setResumeLoading(false))
     }
-  }, [router.asPath])
+  }, [location.pathname])
 
   const dispatch = useDispatch()
   const deleteItem = useCallback((item) => {
