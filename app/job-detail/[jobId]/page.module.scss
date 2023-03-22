@@ -96,6 +96,10 @@
       border-radius: 15px;
       padding: 24px;
 
+      &_mobileHead {
+        display: none;
+      }
+
       &_title {
         display: flex;
         justify-content: space-between;
@@ -512,20 +516,150 @@
 
   .container {
     display: block;
-    padding: 0 15px;
+    padding: 0px;
     width: 100%;
+    margin-top: 0;
 
     .main {
       width: 100%;
+
+      .desc,
+      .benefits,
+      .map {
+        border-radius: 0;
+      }
+
+      .desc {
+        padding: 24px 0;
+
+        &_jobDescWrapper {
+          padding: 29px 20px 20px;
+        }
+
+        &_jobRequireWrapper {
+          padding: 0px 20px;
+        }
+
+        &_mobileLine {
+          height: 8px;
+          background: #f0f0f0;
+          width: 100%;
+        }
+
+        &_mobileHead {
+          display: flex;
+          align-items: center;
+          background: #e7f1fb;
+          padding: 15px 20px;
+
+          &_info {
+            display: flex;
+            flex-direction: column;
+
+            &_rate,
+            &_name,
+            &_active {
+              margin-left: 0;
+            }
+
+            &_name {
+              font-style: normal;
+              font-weight: 400;
+              font-size: 16px;
+              color: #353535;
+            }
+          }
+        }
+
+        &_title {
+          &_change {
+            display: none;
+          }
+        }
+
+        &_footer {
+          display: none;
+        }
+      }
+
+      .benefits,
+      .map {
+        margin-top: 8px;
+      }
+
+      .search {
+        display: none;
+      }
     }
 
     .aside {
       width: 100%;
       margin-left: 0;
 
+      .company {
+        border-radius: 0;
+        margin-top: 0;
+        background: #e7f1fb;
+        display: none;
+
+        &_mobileHead {
+          display: flex;
+          align-items: center;
+          background: #e7f1fb;
+          padding: 15px 20px;
+
+          &_info {
+            display: flex;
+            flex-direction: column;
+
+            &_rate,
+            &_name,
+            &_active {
+              margin-left: 0;
+            }
+
+            &_name {
+              font-style: normal;
+              font-weight: 700;
+              font-size: 16px;
+              color: #353535;
+            }
+
+            &_tag {
+              font-style: normal;
+              font-weight: 400;
+              font-size: 12px;
+              letter-spacing: 0.0075em;
+              color: #707070;
+            }
+          }
+        }
+      }
+
       .ad {
         &_container {
           margin: 24px auto 45px;
+        }
+      }
+
+      .similarJobs {
+        border-radius: 0;
+        background: transparent;
+
+        h3 {
+          background: rgb(245, 246, 250);
+        }
+
+        &_card {
+          background: #ffffff;
+          border-radius: 10px;
+          padding: 16px 13px;
+          margin-top: 7px;
+        }
+
+        &_seeMore {
+          background: #136fd3;
+          color: #ffffff;
         }
       }
     }

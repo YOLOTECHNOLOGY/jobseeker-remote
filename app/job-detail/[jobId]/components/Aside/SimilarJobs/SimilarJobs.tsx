@@ -22,6 +22,8 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
     .then(({ data: { data } }) => data)
     .catch(() => ({ error: true }))
 
+  console.log(data, '===============SimilarJobs')
+
   return (
     <section className={styles.similarJobs}>
       <h3>SimilarJobs</h3>
@@ -31,7 +33,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
           return (
             <div key={item.id} className={styles.similarJobs_card}>
               <Link href={'/job-detail/' + item.id}>
-                <h6 className={styles.similarJobs_title}>{item.function_job_title}</h6>
+                <h6 className={styles.similarJobs_title}>{item.truncated_job_title}</h6>
                 <div className={styles.similarJobs_salary}>{item.salary_range_value}</div>
                 <div className={styles.similarJobs_info}>
                   <div>

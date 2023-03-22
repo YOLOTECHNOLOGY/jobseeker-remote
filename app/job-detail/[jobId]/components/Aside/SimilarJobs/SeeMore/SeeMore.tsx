@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation'
 
 import { Button } from 'app/components/MUIs/'
 
+import styles from '../../../../page.module.scss'
+
 type propsType = {
   jobDetail: any
 }
@@ -35,6 +37,7 @@ const SeeMore = ({ jobDetail }: propsType) => {
         color: '#136FD3',
         textTransform: 'capitalize'
       }}
+      className={styles.similarJobs_seeMore}
       onClick={handleToHomePage}
     >
       See more
