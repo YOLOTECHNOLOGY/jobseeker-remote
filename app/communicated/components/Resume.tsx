@@ -7,11 +7,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useSelector } from 'react-redux'
-import {updateNoticePeriod} from 'store/services/jobs/fetchJobsCommunicated'
+import {updateNoticePeriod,fetchDeleteResumes} from 'store/services/jobs/fetchJobsCommunicated'
 import { getCookie } from 'helpers/cookies'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Link from 'next/link';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
@@ -53,9 +54,15 @@ const Resume = ({
   } = userDetail
   const [noticePeriodData, setNoticePeriodData] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const [resumeData, setResumeData] = React.useState([]);
   const accessToken = getCookie('accessToken');
-
-
+   
+  useEffect(()=>{
+     if(resumes?.length){
+      setResumeData(resumes)
+     }
+  },[resumes])
+   
   useEffect(()=>{
     if(noticePeriodId){
       setNoticePeriodData(noticePeriodId)
@@ -75,6 +82,22 @@ const Resume = ({
     }
     setOpen(false);
   };
+
+   const deleteResume = (e,index)=>{
+     console.log(e)
+     fetchDeleteResumes({
+      id:e.id,
+      accessToken
+    }).then(res=>{
+      if(res.data?.data){
+        resumeData.splice(index,1)
+        console.log(resumeData,7777)
+        setResumeData([...resumeData]);
+        setOpen(true);
+      }
+    })
+   }
+
  const changeNoticePeriod = () =>{
   updateNoticePeriod({
     id:noticePeriodData,
@@ -135,19 +158,25 @@ const Resume = ({
         </div>
         <div className={styles.uploadContainer}>
           {
-            resumes?.length ? (
+            resumeData?.length ? (
                <ul>
                 {
-               resumes?.map(e=> <li key={e.id}><Link href={e.url}>{e.name}</Link></li>)   
+               resumeData?.map((e,index) => <li key={e.id}>
+                <Link href={e.url}>{e.name}</Link>
+                {
+                  resumeData?.length > 1 ? <DeleteForeverOutlinedIcon onClick={()=>deleteResume(e,index)} className={styles.deleteIcoc}/> : null
                 }
-            
+                </li>)   
+                }  
                </ul> 
-
-
             ) :  <p className={styles.noMore}>No resume, upload now!</p>
           }
         
-          <button className={styles.btn}>Upload resume</button>
+          <button className={styles.btn}>
+           <Link href="/manage-profile?tab=resume">
+              Upload resume
+            </Link>
+            </button>
         </div>
       </div>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}

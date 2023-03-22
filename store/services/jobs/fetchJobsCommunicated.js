@@ -4,7 +4,7 @@ const fetchChattedJobs = ( payload ) => {
   const { page , accessToken=null} = payload || {}
   const endpointType = accessToken ? 'protected' : 'public'
   const axios = configuredAxios('jobApplication', endpointType, false, accessToken)
-  return axios.get(`/chats/jobseekers/chatted-jobs?page=${page}&size=20`)
+  return axios.get(`/chats/jobseekers/chatted-jobs?page=${page}&size=15`)
   
 }
 
@@ -12,7 +12,7 @@ const fetchResume = (payload) => {
   const { page ,accessToken = null } = payload || {}
   const endpointType = accessToken ? 'protected' : 'public'
   const axios = configuredAxios('jobApplication', endpointType, false, accessToken)
-  return axios.get(`/jobseekers/resume-exchanged-jobs?page=${page}&size=20`)
+  return axios.get(`/jobseekers/resume-exchanged-jobs?page=${page}&size=15`)
 }
 
 const fetchResumeContact = (payload) => {
@@ -26,14 +26,14 @@ const fetchSaved = (payload) => {
   const { page ,accessToken = null } = payload || {}
   const endpointType = accessToken ? 'protected' : 'public'
   const axios = configuredAxios('job', endpointType, false, accessToken)
-  return axios.get(`/saved-jobs?page=${page}&size=20`)
+  return axios.get(`/saved-jobs?page=${page}&size=15`)
 }
 
 const fetchViewed = (payload) => {
   const { page ,accessToken = null } = payload || {}
   const endpointType = accessToken ? 'protected' : 'public'
   const axios = configuredAxios('job', endpointType, false, accessToken)
-  return axios.get(`/viewed-jobs?page=${page}&size=20`)
+  return axios.get(`/viewed-jobs?page=${page}&size=15`)
 }
 
 const updateNoticePeriod  = (payload) => {
@@ -68,7 +68,7 @@ const fetchInterviews  = (payload) => {
   const {page,accessToken = null } = payload || {}
   const endpointType = accessToken ? 'protected' : 'public'
   const axios = configuredAxios('jobApplication', endpointType, false, accessToken)
-  return axios.get(`jobseekers/interviews?page=${page}&size=20`)
+  return axios.get(`jobseekers/interviews?page=${page}&size=15`)
 }
 
 const fetchResumes = (payload) => {
@@ -76,6 +76,20 @@ const fetchResumes = (payload) => {
   const endpointType = accessToken ? 'protected' : 'public'
   const axios = configuredAxios('jobseeker', endpointType, false, accessToken)
   return axios.get(`/resumes`)
+}
+
+const fetchDeleteResumes = (payload) => {
+  const {accessToken = null ,id} = payload || {}
+  const endpointType = accessToken ? 'protected' : 'public'
+  const axios = configuredAxios('jobseeker', endpointType, false, accessToken)
+  return axios.delete(`/resumes/${id}/delete`)
+}
+
+const fetchCheckChats = (payload) => {
+  const {accessToken = null ,ids } = payload || {}
+  const endpointType = accessToken ? 'protected' : 'public'
+  const axios = configuredAxios('jobApplication', endpointType, false, accessToken)
+  return axios.get(`chats/check-exists/jobseekers?recruiter_ids=${ids}`)
 }
 
 
@@ -90,5 +104,7 @@ export {
   fetchRecruiters,
   fetchViewedRcruiters,
   fetchInterviews,
-  fetchResumes
+  fetchResumes,
+  fetchDeleteResumes,
+  fetchCheckChats
 }

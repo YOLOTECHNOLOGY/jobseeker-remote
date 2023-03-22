@@ -75,7 +75,6 @@
         font-size: 14px;
         line-height: 18px;
         letter-spacing: 1px;
-        color: #FFFFFF;
         width: 128px;
         height: 44px;
         line-height: 44px;
@@ -88,6 +87,10 @@
         display: block;
         transition: background-color .2s;
         position: relative;
+        a{
+          display: block;
+          color: #FFFFFF;
+        }
         &:before {
           content: "";
           position: absolute;
@@ -104,7 +107,7 @@
       }
     }
     .detail {
-      min-height: 148px;
+      min-height: 134px;
       width: 100%;
       margin-bottom: 16px;
       font-size: 14px;
@@ -112,6 +115,10 @@
       color: #353535;
       font-size: 14px;
       background: #fff;
+      border-radius: 10px;
+      &:hover{
+        box-shadow: 5px 5px 7px #ccc;
+      }
       .header {
         background: linear-gradient(269.8deg, rgba(255, 235, 184, 0.2) 0.12%, rgba(242, 177, 202, 0.2) 43.36%, rgba(84, 142, 237, 0.2) 99.89%);
         border-radius: 10px 10px 0px 0px;
@@ -119,8 +126,12 @@
         height: 47px;
         box-sizing: content-box;
         display: flex;
-        align-items: center;
-        position: relative;
+        justify-content: space-between;
+        .headerInfo{
+          display: flex;
+          align-items: center;
+          
+        }
         .name {
           vertical-align: middle;
           padding-left: 8px;
@@ -138,19 +149,55 @@
            height: 24px;
            border-radius: 50%;
         }
-        .chatBox{
-          padding: 0 24px;
-          height: 33px;
-          line-height: 33px;
-          background: #136FD3;
-          border-radius: 10px;
-          font-weight: 700;
-          font-size: 12px;
-          color: #fff;
-          position: absolute;
-          right: 15px;
-          top: 6px;
-          cursor: pointer;
+        .operator{
+          padding: 6px 15px 0 0;
+          display: flex;
+          overflow: hidden;
+          .chatBox{
+            transform: translateY(120px);
+            width: 105px;
+            height: 33px;
+            line-height: 33px;
+            background: #136FD3;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 12px;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            padding: 0;
+            transition: .3s;
+            :global{
+              .css-6krx5u-MuiCircularProgress-root{
+                color: #fff;
+              }
+            }
+            .saveIcon{
+              font-size: 24px;
+              color: #fff;
+              padding-right:4px;
+            }
+          }
+        
+          .chatIng{
+             width: 68px;
+          }
+          .closedTip{
+            line-height: 33px;
+            font-size: 16px;
+            align-items: center;
+            letter-spacing: 1px;
+            color: #353535;
+          }
+        }
+        &:hover{
+          .chatBox{
+            transform: translateY(0);
+            transition: .3s;
+          }
         }
       }
     
@@ -175,7 +222,7 @@
           display: inline-block;
           background: #F0F0F0;
           border-radius: 16px;
-          margin: 10px 9px 0 0;
+          margin: 5px 9px 0 0;
         }
         .leftContent {
           flex: 1;
@@ -204,25 +251,104 @@
         }
        
         .rightContent {
-          width: 330px; 
+          width: 400px; 
           margin-left: 30px;
+          display: flex;
+          .logo{
+            width: 45px;
+            height: 45px;
+            border-radius: 5px;
+            margin-right: 10px;
+            margin-top: 10px;
+          }
+          .companyInfo{
+            flex: 1;
+          }
           .company{
             display: flex;
             align-items: center;
             font-weight: 400;
             font-size: 14px;
-            color: #707070;
+            color: #353535;
             height: 28px;
-            .logo{
-              width: 24px;
-              height: 24px;
-              border-radius: 5px;
-              margin-right: 8px;
-            }
           }
         }
       }
+      
     }
+    .interested{
+      >.header{
+        .name,.nameLine{
+          font-size: 14px;
+          text-align: center;
+          color: #707070;
+        }
+        .jobrStatus{
+            padding: 0 12px;
+            height: 21px;
+            background: #FFFFFF;
+            border-radius: 16px;
+            font-size: 12px;
+            line-height: 21px;
+            letter-spacing: 1px;
+            color: #136FD3;
+            margin-left: 13px;
+        }
+      }
+      .info{
+      .leftContent{
+        display: flex;
+        .logo{
+          width: 45px;
+          height: 45px;
+          border-radius: 5px;
+          margin-right: 10px;
+          margin-top: 3px;
+        }
+        .box{
+          flex: 1;
+          .developer{
+            .title{
+              line-height: 23px;
+            }
+          }
+        }
+        .companyName{
+          font-size: 14px;
+          line-height: 18px;      
+          letter-spacing: 1;
+          color: #353535;
+        }
+      }
+      .rightContent{
+        margin-left: 60px;
+        width: 370px;
+        display: block;
+        .time{
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 18px;
+          letter-spacing: 1px;
+          color:rgba(53, 53, 53, 1);
+          margin:0;
+          padding:0 0 10px 0 ;
+          @extend .row;
+          width: 354px;
+          display: block;
+          span{
+            color: rgba(112, 112, 112, 1);
+          }
+          &:last-child{
+            padding: 0;
+          }
+        }
+      }
+      }
+    }
+    .jobClosed{
+      opacity: 0.5;
+    }
+    
   }
   .aside{
     width: 250px;
@@ -292,22 +418,41 @@
       padding: 0 0 16px 0;
       background: #FFFFFF;
       border-radius:  0px 0px 10px 10px;
-      ul>li{
-        display: flex;
-        list-style: none;
-        padding: 16px 0 0 16px;
-        a{
-          flex: 1;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
-          color: #353535;
+      ul{
+        padding: 10px 16px 0 16px;
+        li{
+          display: flex;
+          list-style: none;
+          height: 26px;
+          line-height: 26px;
+          a{
+            flex: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            color: #353535;
+            display: block;
+          }
+          .deleteIcoc{
+            cursor: pointer;
+             width: 20px;
+             color: #646161;
+             display: none;
+            
+          }
           &:hover{
-            color: #136FD3;
-            text-decoration: underline;
+            a{
+              color: #136FD3;
+              text-decoration: underline;
+            }
+            .deleteIcoc{
+              display: block;
+              color: #136FD3;
+            }
           }
         }
       }
+     
       .noMore{
         line-height: 18px;
         color: #353535;
