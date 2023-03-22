@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/router'
+import { NextRouter, useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
 /* Vendors */
@@ -21,14 +21,21 @@ interface ModalAppRedirectProps {
   isShowModal?: boolean
   handleModal?: Function
   handleOpenAppCallBack?: Function
+  // currentRouter can only be used in AutoShowModalAppRedirect component. we simulate the router and make it work
+  currentRouter?: { asPath: string; [key: string]: any } | NextRouter
+}
+
+const useCurrentRouter = (router?: any) => {
+  return router || useRouter()
 }
 
 const ModalAppRedirect = ({
   isShowModal,
   handleModal,
-  handleOpenAppCallBack
+  handleOpenAppCallBack,
+  currentRouter
 }: ModalAppRedirectProps) => {
-  const router = useRouter()
+  const router = useCurrentRouter(currentRouter)
   const goToAppTime = useRef<any>()
 
   const [userAgent, setUserAgent] = useState(null)
