@@ -1,9 +1,20 @@
 .content {
+    display: flex;
+    flex-direction: row;
+
     .table {
         margin-top: 40px;
-        padding-left: calc(50vw - 585px);
+        margin-left: calc(50vw - 585px);
         background: transparent;
+        width: 894px;
     }
 
-    .rightContent {}
+    .rightContent {
+        margin-top: 40px;
+        height: 100%;
+        width: 254px;
+        margin-left: 30px;
+        background: green;
+        height: 600px;
+    }
 }

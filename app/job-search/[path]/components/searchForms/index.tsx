@@ -53,13 +53,13 @@ const SearchArea = (props: any) => {
     const [showMore, setShowMore] = useState(false)
     const [sort, setSort] = useState(searchValues?.sort?.[0] ?? '2')
 
-    const [moreData, setMoreData] = useState({
-        workExperience: searchValues?.workExperience ?? [],
-        qualification: searchValues?.qualification ?? [],
-        verifiedCompany: searchValues?.verifiedCompany ?? [],
-        companySizes: searchValues?.companySizes ?? [],
-        financingStages: searchValues?.financingStages ?? []
-    })
+    const [moreData, setMoreData] = useState(filter(a => a)({
+        workExperience: searchValues?.workExperience ?? null,
+        qualification: searchValues?.qualification ?? null,
+        verifiedCompany: searchValues?.verifiedCompany ?? null,
+        companySizes: searchValues?.companySizes ?? null,
+        financingStages: searchValues?.financingStages ?? null
+    }))
     const [jobTypes, setJobtypes] = useState(searchValues?.jobType ?? [])
     const jobTypeList = config?.inputs?.job_types?.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
     const [searchValue, setSearchValue] = useState(searchValues.query)
@@ -95,7 +95,7 @@ const SearchArea = (props: any) => {
     }, [reload])
     useEffect(reload, [location, salaries, jobTypes, moreData, sort, jobFunctionValue])
     const moreCount = useMemo(() => {
-        return Object.values(moreData).reduce((a1, a2) => a1 + (a2?.length ?? 0), 0)
+        return Object.values(moreData).reduce((a1, a2:any) => a1 + (a2?.length ?? 0), 0)
     }, [moreData])
     return <div>
         <ThemeProvider theme={theme}>

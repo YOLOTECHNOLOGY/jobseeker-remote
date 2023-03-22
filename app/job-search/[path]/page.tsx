@@ -8,6 +8,8 @@ import SearchForm from './components/searchForms'
 import styles from './index.module.scss'
 import Table from '../[path]/components/table'
 import Loading from '../[path]/components/table/loading'
+import UploadResumeButton from './components/UploadResumeButton'
+import { cookies } from 'next/headers'
 const configs = getConfigs([
     ['inputs', 'location_lists'],
     ['inputs', 'main_functions'],
@@ -23,6 +25,7 @@ const configs = getConfigs([
 ])
 
 const Main = (props: any) => {
+    const accessToken = cookies().get('accessToken')?.value
     return <div >
         <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
             <SearchForm config={props.config} searchValues={props.searchValues ?? null} />
@@ -34,7 +37,15 @@ const Main = (props: any) => {
                     <Table searchValues={props.searchValues ?? null} config={props.config} />
                 </Suspense>
             </div>
-            <div className={styles.rightContent}></div>
+            <div className={styles.rightContent}>
+                <UploadResumeButton
+                    isShowBtn={!accessToken}
+                    // handleClick={handleQuickUploadResumeClick}
+                    isShowArrowIcon={false}
+                    className={styles.arrowIconPostion}
+                />
+
+            </div>
         </div>
     </div>
 }
