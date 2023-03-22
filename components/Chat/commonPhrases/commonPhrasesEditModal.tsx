@@ -5,57 +5,64 @@ import { TextField } from '@mui/material'
 import Modal from 'components/Modal'
 
 const CommonPhrasesEditModal = (props: any) => {
-    const { contextRef, loading } = props
-    const [show, setShow] = useState(false)
-    const actionsRef = useRef<any>()
-    const [phrase, setPhrase] = useState({} as any)
-    const [text, setText] = useState('')
-    useEffect(() => {
-        if (phrase) {
-            setText(phrase.message)
-        }
-    }, [phrase])
-    const context = {
-        showEditOneCommonPhrases(actions) {
-            actionsRef.current = actions
-            setPhrase(actions.payload)
-            setShow(true)
-        },
-        closeEditOneCommonPhrases() {
-            setShow(false)
-        },
-
+  const { contextRef, loading } = props
+  const [show, setShow] = useState(false)
+  const actionsRef = useRef<any>()
+  const [phrase, setPhrase] = useState({} as any)
+  const [text, setText] = useState('')
+  useEffect(() => {
+    if (phrase) {
+      setText(phrase.message)
     }
-    contextRef.current = assign(contextRef.current, context)
+  }, [phrase])
+  const context = {
+    showEditOneCommonPhrases(actions) {
+      actionsRef.current = actions
+      setPhrase(actions.payload)
+      setShow(true)
+    },
+    closeEditOneCommonPhrases() {
+      setShow(false)
+    }
+  }
+  contextRef.current = assign(contextRef.current, context)
 
-    return <Modal
-        showModal={show}
-        handleModal={() => actionsRef.current?.back?.()}
-        headerTitle={'Common Phrases'}
-        firstButtonText='Back'
-        secondButtonText='Save'
-        firstButtonIsClose={false}
-        secondButtonIsClose={false}
-        isSecondButtonDisabled={!text}
-        handleFirstButton={() => actionsRef.current?.back?.()}
-        handleSecondButton={() => actionsRef.current.save?.({ id: phrase.id, params: { message: text } })}
-        isSecondButtonLoading={loading}
-        isFirstButtonLoading={loading}
+  return (
+    <Modal
+      showModal={show}
+      handleModal={() => actionsRef.current?.back?.()}
+      headerTitle={'Common Phrases'}
+      firstButtonText='Back'
+      secondButtonText='Save'
+      firstButtonIsClose={false}
+      secondButtonIsClose={false}
+      isSecondButtonDisabled={!text}
+      handleFirstButton={() => actionsRef.current?.back?.()}
+      handleSecondButton={() =>
+        actionsRef.current.save?.({ id: phrase.id, params: { message: text } })
+      }
+      isSecondButtonLoading={loading}
+      isFirstButtonLoading={loading}
     >
-        <div className={styles.formContainer}>
-            <p>Add your own phrase. Please do not include your contact details here.</p>
-            <TextField
-                name="phrase_text"
-                placeholder="Insert the common phrases that you would like to send to Boss"
-                label="phrase"
-                value={text}
-                style={{ width: '100%' }}
-                onChange={e => setText(e.target.value)}
-                className={styles.textInput}
-            />
-        </div>
+      <div className={styles.formContainer}>
+        <p>Add your own phrase. Please do not include your contact details here.</p>
+        <TextField
+          name='phrase_text'
+          placeholder='Insert the common phrases that you would like to send to Boss'
+          label='phrase'
+          value={text}
+          autoFocus
+          style={{ width: '100%' }}
+          onChange={(e) => {
+            const { value } = e.target
+            if (value.length < 500) {
+              setText(value)
+            }
+          }}
+          className={styles.textInput}
+        />
+      </div>
     </Modal>
-
-
+  )
 }
 export default CommonPhrasesEditModal
