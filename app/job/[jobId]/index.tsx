@@ -1,6 +1,6 @@
 import Head from './components/Head/Head'
-import MainFC from './components/Main/'
-import AsideFC from './components/Aside/'
+import MainFC from './components/Main'
+import AsideFC from './components/Aside'
 
 import styles from './page.module.scss'
 
