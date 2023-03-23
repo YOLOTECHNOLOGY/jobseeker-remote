@@ -20,7 +20,6 @@ export default createTheme({
                     padding: '0px',
                     '&.Mui-focused': {
                         background: '#F0F0F0', // '#E7F1FB' 
-                        display: 'none'
                     }
                 },
                 notchedOutline: {
