@@ -39,7 +39,7 @@ const fetchViewed = (payload) => {
 const updateNoticePeriod  = (payload) => {
   const { id ,accessToken = null } = payload || {}
   const endpointType = accessToken ? 'protected' : 'public'
-  const axios = configuredAxios('jobseekers', endpointType, false, accessToken)
+  const axios = configuredAxios('jobseeker', endpointType, false, accessToken)
   return axios.patch(`/me`,{notice_period_id:id})
 }
 
