@@ -72,8 +72,14 @@ const SignUp = ({ jobId }: propsType) => {
         </Stack>
       </div>
       <p className={styles.signUp_userProtocol}>
-        By signing up, I have read and agreed to the <a href=''>Terms of Use</a> &
-        <a href=''>Privacy Policy</a>
+        By signing up, I have read and agreed to the{' '}
+        <a href='https://blog.bossjob.ph/terms-and-conditions/' target='_blank' rel='noreferrer'>
+          Terms of Use
+        </a>{' '}
+        &nbsp; & &nbsp;
+        <a href='https://blog.bossjob.ph/terms-and-conditions/' target='_blank' rel='noreferrer'>
+          Privacy Policy
+        </a>
       </p>
     </section>
   )
