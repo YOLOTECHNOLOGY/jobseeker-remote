@@ -61,6 +61,9 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
       break
     case 'recruiters':
       url = process.env.RECRUITERS_BOSSJOB_URL
+      case 'general':
+        url = process.env.GENERAL_URL
+        break
     default:
       break
   }
