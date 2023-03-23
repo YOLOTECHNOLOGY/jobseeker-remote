@@ -1,0 +1,300 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.searchSectionContainer {
+  @extend .GlobalContainer;
+}
+
+.jobSearchFilterBackdrop {
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  position: absolute;
+  top: 0;
+  background: black;
+  opacity: 0.4;
+}
+
+.searchSection {
+  position: relative;
+  background-color: $white-1;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 0;
+  z-index: 10;
+
+  @include msd {
+    height: 300px;
+  }
+
+  @include sm {
+    height: 300px;
+  }
+
+  .searchAndLocationContainer {
+    @extend .GlobalContainer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    @include msd {
+      flex-direction: column;
+    }
+  }
+
+  .filtersContainer {
+    @extend .GlobalContainer;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 20px;
+
+    &>* {
+      margin-right: 16px;
+    }
+
+    @include msd {
+      display: none;
+    }
+  }
+
+  &.isSticky {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: $white-1;
+    z-index: 1;
+  }
+}
+
+.searchSectionExpanded {
+  @extend .searchSection;
+  height: 280px;
+  z-index: 10;
+
+  @include msd {
+    height: 100%;
+    // height: -webkit-fill-available;
+  }
+}
+
+.searchField {
+  // height: 40px;
+  width: 750px;
+
+  @include msd {
+    width: 100%;
+    margin-bottom: 20px !important;
+  }
+}
+
+.locationField {
+  // height: 40px;
+  width: 230px;
+  margin-left: 16px;
+
+  @include msd {
+    width: 100%;
+    margin-bottom: 20px;
+    margin-left: 0;
+  }
+}
+
+.searchButton {
+  margin-left: 16px !important;
+  width: 115px;
+
+  @include msd {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+}
+
+.jobFunctionFilters {
+ 
+  display: none;
+ 
+ 
+  @include msd {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 20px !important;
+    .filtersButton {
+      width: 48%;
+      flex: 1;
+    }
+  
+    .jobFunction {
+      flex:1;
+      width: 47%;
+      margin-right: 2%;
+    }
+  } 
+}
+
+.sortField {
+  width: 160px;
+}
+
+.specializationField {
+  width: 158px;
+}
+
+.quickLinkSection {
+  display: none;
+}
+
+.quickLinkSectionExpanded {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 0;
+
+  @include sm {
+    display: none;
+  }
+}
+
+.quickLinkTitle {
+  display: flex;
+  letter-spacing: 1px;
+  margin-right: 20px;
+  width: max-content;
+
+  @include msd {
+    white-space: pre;
+  }
+}
+
+.popularSearchContainer {
+  @extend .GlobalContainer;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 24px;
+
+  @include msd {
+    align-items: flex-start;
+  }
+
+  .popularSearch {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+
+    .link {
+
+      &>span {
+        letter-spacing: 1px;
+      }
+
+      &:hover {
+        cursor: pointer;
+        color: $primaryBlue;
+        text-decoration: underline;
+
+        &>* {
+          color: $primaryBlue;
+          // font-weight: bold;
+          transition: 100ms all ease-in-out;
+        }
+      }
+
+      @include msd {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.moreFiltersSection {
+  height: 50px;
+  width: 100%;
+  border-bottom: 1px solid $white-2;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  .moreFiltersText {
+    margin: 0 10px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.topCompaniesContainer {
+  @extend .GlobalContainer;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+
+  @include msd {
+    align-items: flex-start;
+  }
+
+  .topCompanies {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .topCompaniesLogo {
+    display: flex;
+    margin-right: 32px;
+    box-shadow: $box-shadow-1;
+    width: 30px;
+    height: 30px;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+      transition: 100ms all ease-in-out;
+    }
+  }
+}
+
+.moreFiltersBtn {
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+
+.resetFilterBtnMobile {
+  text-align: center;
+  background-color: $white-1;
+}
+
+.jobListSection {
+  margin-top: 24px;
+
+  @include sm {
+    margin-top: 24px;
+  }
+}
+
+.toolTip {
+  display: flex;
+}
+
+.moreFilters {
+  display: flex;
+}
+
+.searchFilterCount {
+  background-color: $primaryBlue;
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  display: block;
+  letter-spacing: 0;
+  font-weight: 500;
+  border-radius: 50%;
+  margin-left: 5px;
+}
