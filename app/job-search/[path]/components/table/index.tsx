@@ -8,6 +8,7 @@ import JobCard from '../jobCard'
 import MobileTable from './mobile'
 const Table = (props: any) => {
     const { jobs = [], page, totalPages } = props
+    // jobs = [], page, totalPages, searchValues, config
     return <>
         <div className={styles.container}>
             {jobs.map(job => {
