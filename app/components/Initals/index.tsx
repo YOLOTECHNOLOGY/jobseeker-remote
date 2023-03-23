@@ -90,7 +90,7 @@ const Initial = () => {
       }}
     />
     {/* Facebook  */}
-    {/* <Script
+    <Script
       dangerouslySetInnerHTML={{
         __html: `
             function initialize() {	
@@ -130,7 +130,7 @@ const Initial = () => {
             fbq('init', ${fbq.FB_PIXEL_ID});
             `
       }}
-    /> */}
+    />
     <Script
       strategy='lazyOnload'
       // dangerouslySetInnerHTML={{
