@@ -1,8 +1,8 @@
 "use client"
 import React, { useState, useEffect } from "react"
 import Header from "./Header"
-import HeaderMobile from './mobile/Header'
-import MainMobile from './mobile/Main'
+// import HeaderMobile from './mobile/Header'
+// import MainMobile from './mobile/Main'
 import JobCard from './JobCard'
 import * as R from 'ramda';
 import { getCookie } from 'helpers/cookies'
@@ -246,7 +246,7 @@ const MainLeft = () => {
            </div>
 
            <div className={styles.mobile}>
-                <HeaderMobile
+                {/* <HeaderMobile
                   tabValue={tabValue}
                   tabList={tabList}
                   tabChildren={tabChildren}
@@ -254,7 +254,7 @@ const MainLeft = () => {
                   onChange={onChange}
                   handleChangeChildren={handleChangeChildren}
                 />
-                <MainMobile/> 
+                <MainMobile/>  */}
            </div>
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}
                 anchorOrigin={{
