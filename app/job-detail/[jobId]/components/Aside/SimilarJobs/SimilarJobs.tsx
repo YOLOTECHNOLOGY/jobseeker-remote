@@ -22,7 +22,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
     size: 5
   }
 
-  let recruiterLineStatus: Array<number | string>
+  let recruiterLineStatus = []
   const data = await fetchSimilarJobsService(params)
     .then(({ data: { data } }) => data)
     .catch(() => ({ error: true }))
@@ -30,15 +30,12 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
   if (!data.error) {
     const ids = data.map((item) => item.recruiter?.id)
     if (ids.length) {
-      const {
-        data: { data }
-      } = await fetchRecruiterLastActiveService(ids.join(','))
-      console.log(data, '=================statusLine')
-      recruiterLineStatus = data
+      const lines = await fetchRecruiterLastActiveService(ids.join(','))
+        .then(({ data: { data } }) => data)
+        .catch(() => ({ error: true }))
+      recruiterLineStatus = lines
     }
   }
-
-  console.log(data, '===============SimilarJobs')
 
   return (
     <section className={styles.similarJobs}>
@@ -78,9 +75,10 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
 
         <div className={styles.similarJobs_mobileCard}>
           {data?.map((item) => {
-            const lastActiveAt: any = recruiterLineStatus.find(
-              (line: any) => line.id == item.recruiter.id
-            )
+            const lastActiveAt: any =
+              recruiterLineStatus?.length &&
+              recruiterLineStatus?.find((line: any) => line.id == item.recruiter?.id)
+
             return (
               <div key={item.id} className={styles.similarJobs_card}>
                 <Link href={'/job-detail/' + item.id}>
