@@ -3,7 +3,7 @@
 .container {
   @extend .GlobalNextAppContainer;
   display: flex;
-  padding: 24px;
+  padding: 24px 24px 50px;
   p{
     margin: 0;
   }

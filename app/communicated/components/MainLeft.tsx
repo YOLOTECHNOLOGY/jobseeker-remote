@@ -110,6 +110,7 @@ const MainLeft = () => {
     const [open, setOpen] = useState<boolean>(false);
     
     const [loadingChat, setLoadingChat] = useState<boolean>(false);
+    const [lodingList, setLodingList] = useState<boolean>(true);
 
     useEffect(() => {
         if (tabList?.length && tabValue) {
@@ -137,6 +138,7 @@ const MainLeft = () => {
 
 
     const getData = (tab, page) => {
+        setLodingList(true)
         tab.fetchFun({
             page,
             accessToken
@@ -157,8 +159,7 @@ const MainLeft = () => {
             ids: idList?.join()
         }).then(res => {
             const chatList = res.data?.data
-            if (chatList?.length) {
-            
+            if (chatList?.length) {      
                 for (let index = 0; index < data.length; index++) {
                     chatList.map(k => {
                         if (data[index].recruiter_id === k.recruiter_id) {
@@ -170,7 +171,7 @@ const MainLeft = () => {
             setTotal(total)
             setData(data);
             console.log(res, data, 1234);
-        })
+        }).finally(()=> setLodingList(false))
     }
 
     const onChange = (e: string) => {
@@ -238,6 +239,7 @@ const MainLeft = () => {
                 onChange={(e) => setPage(e)}
                 handelSave={handelSave}
                 loadingChat={loadingChat}
+                loadingList={lodingList}
             />
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}
                 anchorOrigin={{
