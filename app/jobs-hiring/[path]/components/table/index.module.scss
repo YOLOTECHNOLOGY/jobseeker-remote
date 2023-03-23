@@ -6,7 +6,7 @@
     border-radius: 10px;
     background: transparent;
     padding-left: 24px;
-
+    width: fit-content;
     @include sm {
         display: none;
     }
