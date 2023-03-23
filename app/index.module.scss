@@ -1,5 +1,17 @@
 @import 'styles/variable.scss';
 
+.errorMain {
+  text-align: center;
+  margin: 100px 0;
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  &_loadingLogo {
+    margin-bottom: 20px;
+  }
+}
+
 .container {
   // max-width: 1170px;
   width: 100%;

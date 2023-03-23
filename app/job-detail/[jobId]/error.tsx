@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { BossjobLogo } from 'images'
 
 import { Button } from 'app/components/MUIs'
 
@@ -16,6 +17,9 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
 
   return (
     <section className={styles.errorMain}>
+      <div className={styles.errorMain_loadingLogo}>
+        <img src={BossjobLogo} title='Bossjob logo' alt='Bossjob logo' />
+      </div>
       <h2>Something went wrong!</h2>
       <Button
         variant='outlined'
