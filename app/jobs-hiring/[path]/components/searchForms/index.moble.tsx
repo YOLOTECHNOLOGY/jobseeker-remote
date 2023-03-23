@@ -93,7 +93,7 @@ const SearchArea = (props: any) => {
             return
         }
         const url = new URLSearchParams(toPairs(result.params)).toString();
-        router.push('/job-search/' + result.searchQuery + '?' + url, { forceOptimisticNavigation: false })
+        router.push('/jobs-hiring/' + result.searchQuery + '?' + url, { forceOptimisticNavigation: false })
     }, [result])
     const reloadRef = useRef(reload)
     useEffect(() => {

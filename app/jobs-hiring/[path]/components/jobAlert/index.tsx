@@ -10,7 +10,7 @@ import { createJobAlertRequest } from 'store/actions/alerts/createJobAlert'
 import Text from 'components/Text'
 import styles from './index.module.scss'
 import { useRouter } from 'next/navigation'
-import { buildParams } from 'app/job-search/interpreters/encoder'
+import { buildParams } from 'app/jobs-hiring/interpreters/encoder'
 import { BellIcon } from 'images'
 import { openManageJobAlertsModal } from 'store/actions/modals/manageJobAlertsModal'
 

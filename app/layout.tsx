@@ -2,7 +2,7 @@
 // import Providers from './components/providers'
 import Header from 'components/Header'
 import './globals.scss'
-import { Metadata } from 'next'
+// import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import HamburgerMenu from 'components/HamburgerMenu'
 const defaultSEO = {
@@ -11,49 +11,49 @@ const defaultSEO = {
   imageUrl: 'https://assets.bossjob.com/website/OGTagImage.png',
   canonical: ''
 }
-export const metadata: Metadata = {
-  title: defaultSEO.title,
-  description: defaultSEO.description,
-  //     copyright: `
-  //   Copyright © ${new Date().getFullYear()} Singapore: Yolo Technology Pte Ltd. All Rights Reserved.
-  //   Philippines: Etos Adtech Corporation
-  // `,
-  openGraph: {
-    title: defaultSEO.title,
-    url: defaultSEO.imageUrl,
-    images: {
-      secureUrl: defaultSEO.imageUrl,
-      width: '450',
-      height: '290',
-      url: defaultSEO.imageUrl
-    },
+// export const metadata: Metadata = {
+//   title: defaultSEO.title,
+//   description: defaultSEO.description,
+//   //     copyright: `
+//   //   Copyright © ${new Date().getFullYear()} Singapore: Yolo Technology Pte Ltd. All Rights Reserved.
+//   //   Philippines: Etos Adtech Corporation
+//   // `,
+//   openGraph: {
+//     title: defaultSEO.title,
+//     url: defaultSEO.imageUrl,
+//     images: {
+//       secureUrl: defaultSEO.imageUrl,
+//       width: '450',
+//       height: '290',
+//       url: defaultSEO.imageUrl
+//     },
 
-    description: decodeURI(defaultSEO.description),
-    siteName: defaultSEO.title,
-    locale: 'enPH'
-  },
+//     description: decodeURI(defaultSEO.description),
+//     siteName: defaultSEO.title,
+//     locale: 'enPH'
+//   },
 
-  twitter: {
-    card: 'summary_large_image',
-    site: 'BossjobPH',
-    title: defaultSEO.title,
-    description: decodeURI(defaultSEO.description),
-    creator: 'BossjobPH'
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1.0,
-    maximumScale: 1.0,
-    userScalable: false
-  },
-  robots: {
-    index: true
-  },
-  other: {
-    name: defaultSEO.title,
-    image: defaultSEO.imageUrl
-  }
-}
+//   twitter: {
+//     card: 'summary_large_image',
+//     site: 'BossjobPH',
+//     title: defaultSEO.title,
+//     description: decodeURI(defaultSEO.description),
+//     creator: 'BossjobPH'
+//   },
+//   viewport: {
+//     width: 'device-width',
+//     initialScale: 1.0,
+//     maximumScale: 1.0,
+//     userScalable: false
+//   },
+//   robots: {
+//     index: true
+//   },
+//   other: {
+//     name: defaultSEO.title,
+//     image: defaultSEO.imageUrl
+//   }
+// }
 
 const Providers = dynamic(() => import('./components/providers'), { ssr: true })
 const Initial = dynamic(() => import('./components/Initals'), { ssr: false })

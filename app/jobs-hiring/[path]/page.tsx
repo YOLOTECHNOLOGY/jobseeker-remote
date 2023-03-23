@@ -7,8 +7,8 @@ import { buildComponentScript } from 'app/abstractModels/util'
 import { serverDataScript } from 'app/abstractModels/FetchServierComponents'
 import SearchForm from './components/searchForms'
 import styles from './index.module.scss'
-import Table from '../[path]/components/table'
-import Loading from '../[path]/components/table/loading'
+import Table from './components/table'
+import Loading from './components/table/loading'
 import UploadResumeButton from './components/UploadResumeButton'
 import { cookies } from 'next/headers'
 import searchHistoryIp from '../interpreters/searchHistory'
@@ -16,6 +16,11 @@ import SearchHistories from './components/searchHistories'
 import Image from 'next/image'
 import { AppDownQRCode } from 'images'
 import JobAlert from './components/jobAlert'
+import { getCurrentMonthYear, unslugify } from 'helpers/formatter'
+import { decoder } from '../interpreters/encoder'
+import { Metadata } from 'next'
+import { toPairs } from 'ramda'
+
 const configs = getConfigs([
     ['inputs', 'location_lists'],
     ['inputs', 'main_functions'],
@@ -31,11 +36,107 @@ const configs = getConfigs([
     ['filters', 'salary_range_filters']
 ])
 
+// or dynamic metadata
+export async function generateMetadata(props: any) {
+    /* Handle SEO Meta Tags*/
+    const { month, year } = getCurrentMonthYear()
+    const { params, searchParams } = props
+    const { config } = await configs(serverDataScript()).run(props)
+    const searchValues = decoder(config)(params.path, searchParams)
+    let seoMetaTitle = `Professional Jobs in Philippines - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
+    let seoMetaDescription =
+        'New Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers'
+    const searchQuery = (searchValues.query ?? null) as string | null
+    const location = (searchValues.location?.[0] ?? null) as string | null
+    const url = new URLSearchParams(toPairs(searchParams)).toString();
+    const seoCanonical = '/jobs-hiring/' +  params.path + '?' + url
+    // const seoCanonical = resolvedUrl
+
+    if (searchQuery && !location) {
+        seoMetaTitle = `${unslugify(
+            searchQuery,
+            true
+        )} Jobs in Philippines, Job Opportunities - ${month} ${year} | Bossjob`
+        seoMetaDescription = `New ${unslugify(
+            searchQuery,
+            true
+        )} Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    }
+    else if (searchQuery && location) {
+        seoMetaTitle = `${unslugify(
+            searchQuery,
+            true
+        )} Jobs in Philippines, Apply Job Opportunities - ${month} ${year} | Bossjob`
+        seoMetaDescription = `New ${unslugify(searchQuery, true)} Jobs in ${unslugify(
+            location,
+            true
+        )}, Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    } else {
+        seoMetaTitle = `Professional Jobs in Philippines - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
+        seoMetaDescription = `New Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    }
+    const description = encodeURI(seoMetaDescription) as string
+    const imageUrl = 'https://assets.bossjob.com/website/OGTagImage.png'
+    console.log({ searchQuery, location, searchParams, description, seoMetaTitle })
+
+    const metadata: Metadata = {
+        title: seoMetaTitle,
+        description: description,
+        // copyright: `
+        //   Copyright © ${new Date().getFullYear()} Singapore: Yolo Technology Pte Ltd. All Rights Reserved.
+        //   Philippines: Etos Adtech Corporation
+        // `,
+
+        openGraph: {
+            title: seoMetaTitle,
+            url: imageUrl,
+            images: [
+                {
+                    url: imageUrl,
+                    width: 450,
+                    height: 290
+                }
+            ],
+            description: description,
+            siteName: seoMetaTitle,
+            locale: 'enPH'
+        },
+
+        twitter: {
+            card: 'summary_large_image',
+            site: 'BossjobPH',
+            title: seoMetaTitle,
+            description: description,
+            creator: 'BossjobPH'
+        },
+        viewport: {
+            width: 'device-width',
+            initialScale: 1.0,
+            maximumScale: 1.0,
+            // userScalable: 'no' as string
+        },
+        alternates: {
+            canonical: seoCanonical
+        },
+        other: {
+            name: seoMetaTitle,
+            image: imageUrl
+        }
+    }
+    return metadata
+    // return {
+    //     seoMetaTitle,
+    //     seoMetaDescription: encodeURI(seoMetaDescription),
+    //     seoCanonical,
+    //     canonicalUrl: seoCanonical
+    // }
+}
+
+
 const SearchHistory = searchHistoryIp(
     serverDataScript()
         .chain(list => buildComponentScript({ list }, SearchHistories))
-)
-    .run
+).run
 
 const Main = (props: any) => {
     const accessToken = cookies().get('accessToken')?.value
