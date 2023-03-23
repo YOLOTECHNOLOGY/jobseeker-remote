@@ -42,7 +42,6 @@ const Resume = ({
     no_of_saved_jobs: noOfSavedJobs,
     no_of_viewed_jobs: noOfViewedJobs
   } = data
-  console.log(resumes,1111111)
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
   const {
     xp_lvl: xpLvl,
@@ -84,14 +83,12 @@ const Resume = ({
   };
 
    const deleteResume = (e,index)=>{
-     console.log(e)
      fetchDeleteResumes({
       id:e.id,
       accessToken
     }).then(res=>{
       if(res.data?.data){
         resumeData.splice(index,1)
-        console.log(resumeData,7777)
         setResumeData([...resumeData]);
         setOpen(true);
       }
