@@ -1,6 +1,6 @@
 
 import { describe, test, expect } from '@jest/globals';
-import { encode, decoder } from '../../app/job-search/interpreters/encoder'
+import { encode, decoder } from '../../app/jobs-hiring/interpreters/encoder'
 import config from './mockConfig'
 
 describe('job search url-encoder test', () => {

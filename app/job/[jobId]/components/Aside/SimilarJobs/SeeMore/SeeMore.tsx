@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import { toPairs } from 'ramda'
 
 import { Button } from 'app/components/MUIs/'
-import { encode } from 'app/job-search/interpreters/encoder'
+import { encode } from 'app/jobs-hiring/interpreters/encoder'
 
 import styles from '../../../../page.module.scss'
 

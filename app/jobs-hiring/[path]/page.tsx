@@ -77,7 +77,6 @@ export async function generateMetadata(props: any) {
     }
     const description = encodeURI(seoMetaDescription) as string
     const imageUrl = 'https://assets.bossjob.com/website/OGTagImage.png'
-    console.log({ searchQuery, location, searchParams, description, seoMetaTitle })
 
     const metadata: Metadata = {
         title: seoMetaTitle,

@@ -94,10 +94,7 @@ const SearchArea = (props: any) => {
   }, [searchValue, salaries, jobTypes, moreData, location, sort, jobFunctionValue])
   const router = useRouter()
   const result = useMemo(() => {
-    console.log(
-      filterParams,
-      'filterParamsfilterParamsfilterParamsfilterParamsfilterParamsfilterParamsfilterParamsfilterParamsfilterParamsfilterParams'
-    )
+   
     return encode(filterParams)
   }, [filterParams])
   const firstRender = useFirstRender()

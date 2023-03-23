@@ -13,7 +13,6 @@ const MobileTable = (props: any) => {
     const [loading, setLoading] = useState(false)
     const [jobList, setJobList] = useState(jobs)
     const [latestPage, setLatestPage] = useState(page)
-    console.log({ page, totalPages })
     useEffect(() => {
         setJobList([])
         setTimeout(() => {
@@ -40,7 +39,6 @@ const MobileTable = (props: any) => {
             setLatestPage(page)
         })
             .finally(() => setLoading(false))
-        console.log('loading more...', newSearchValues, searchValues,latestPage)
     }, [noMore, loading, searchValues,latestPage])
     return <div className={styles.mobileContainer}>
         {jobList.map(job => {
