@@ -1,8 +1,9 @@
 'use client'
-import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { toPairs } from 'ramda'
 
 import { Button } from 'app/components/MUIs/'
+import { encode } from 'app/job-search/interpreters/encoder'
 
 import styles from '../../../../page.module.scss'
 
@@ -11,13 +12,20 @@ type propsType = {
 }
 
 const SeeMore = ({ jobDetail }: propsType) => {
-  useEffect(() => {
-    console.log(jobDetail, '===========jobdetailjobdetailjobdetail')
-  }, [jobDetail])
-
   const router = useRouter()
+
   const handleToHomePage = () => {
-    router.push('/jobs-hiring/job-search')
+    const searchQuery: any = {
+      location: [jobDetail.location.value],
+      mainFunctions: [jobDetail.function?.main_function],
+      jobFunctions: [jobDetail.function?.sub_function],
+      workExperience: [jobDetail.xp_lvl?.key]
+    }
+    const result = encode(searchQuery)
+    const url = new URLSearchParams(toPairs(result.params)).toString()
+    router.push('/job-search/' + result.searchQuery + '?' + url, {
+      forceOptimisticNavigation: true
+    })
   }
 
   return (
