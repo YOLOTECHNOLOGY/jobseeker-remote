@@ -25,6 +25,7 @@ const configs = getConfigs([
     ['inputs', 'xp_lvls'],
     ['inputs', 'job_types'],
     ['inputs', 'company_sizes'],
+    ['inputs', 'industry_lists'],
     ['inputs', 'company_financing_stage_lists'],
     ['filters', 'educations'],
     ['filters', 'salary_range_filters']

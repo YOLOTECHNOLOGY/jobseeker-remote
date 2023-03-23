@@ -4,7 +4,7 @@ import { map, pick, T, toLower, mergeDeepLeft, reduce, toPairs, append, flip, in
 import { flatMap } from 'lodash-es'
 import slugify from 'slugify'
 const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'qualification']
-const normalKeys = ['verifiedCompany', 'companySizes', 'workExperience', 'financing_stages']
+const normalKeys = ['verifiedCompany', 'companySizes', 'workExperience', 'financing_stages', 'industry']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
 const allKeysIn = keys => pipe(
@@ -174,6 +174,7 @@ export const handleSalary = (salaryRanges) => {
     return [salaryFrom, salaryTo]
 }
 export const buildParams = (config, searchValues) => {
+    const industryList = config.inputs.industry_lists
     const functionsTitleList = config.inputs.function_titles
     const jobFunctionList = config.inputs.job_functions
     const companySizeList = config.inputs.company_sizes
@@ -184,7 +185,8 @@ export const buildParams = (config, searchValues) => {
     const locationLists = flatMap(config.inputs.location_lists, item => item.locations)
     return {
         query: searchValues.query,
-        job_locations: transToValues(searchValues.location),
+        company_industries: searchValues.industry?.map?.(key => industryList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
+        // job_locations: transToValues(searchValues.location),
         job_locations: searchValues.location?.map?.(key => locationLists.find(item => item?.['seo_value'] === key)?.value).join(',') ?? null,
         salary_from: salaryFrom,
         salary_to: salaryTo,

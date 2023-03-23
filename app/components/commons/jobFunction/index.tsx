@@ -292,6 +292,14 @@ const JobFunctionMultiSelector = (props: any) => {
                     setShowModal(true)
                 }}
                 classes={{}}
+                style={{ background: textValue.split(',').filter(a => a)?.length ? '#E7F1FB' : '#F0F0F0' }}
+                inputProps={{
+                    style: {
+                        color: textValue.split(',').filter(a => a)?.length ? '#136FD3' : 'rgba(0, 0, 0, 0.6)',
+
+                        background: textValue.split(',').filter(a => a)?.length ? '#E7F1FB' : '#F0F0F0'
+                    }
+                }}
                 disabled={showModal}
                 onFocus={(e) => {
                     e.preventDefault()

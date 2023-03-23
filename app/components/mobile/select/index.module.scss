@@ -1,0 +1,23 @@
+.section {
+
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #353535;
+    margin-left: 18px;
+    margin-top: 9px;
+    margin-bottom: 9px;
+    text-transform: capitalize;
+    word-spacing: 1cap;
+    .item {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #353535;
+        margin-left: 30px;
+    }
+}

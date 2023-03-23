@@ -3,6 +3,28 @@ import { createTheme } from '@mui/material/styles'
 
 export default createTheme({
     components: {
+        MuiPaper: {
+            styleOverrides: {
+                root: {
+                    width:'100vw',
+                    height:'100vh',
+                    padding: '0px',
+                    top:'0px',
+                    left:'0px'
+                },
+                
+            },
+        },
+        MuiList: {
+            styleOverrides: {
+                root: {
+                    width:'100vw',
+                    height:'100vh',
+                    padding: '0px'
+                },
+                
+            },
+        },
         MuiOutlinedInput: {
             styleOverrides: {
                 root: {
@@ -10,18 +32,14 @@ export default createTheme({
                     height: '44px',
                     lineHeight: '16px',
                     borderRadius: '10px',
-                    background: '#F0F0F0', // '#E7F1FB' 
+                    background: '#F0F0F0',// '#E7F1FB' 
                     overflow: 'hidden',
                     color: '#136FD3',
                     '&.MuiSelected': {
-                        background: '#E7F1FB', // '#E7F1FB' 
+                        background: '#E7F1FB',// '#E7F1FB' 
                     },
                     border: 'none',
-                    padding: '0px',
-                    '&.Mui-focused': {
-                        background: '#F0F0F0', // '#E7F1FB' 
-                        display: 'none'
-                    }
+                    padding: '0px'
                 },
                 notchedOutline: {
                     '&.Mui-focused': {
@@ -46,14 +64,6 @@ export default createTheme({
                             display: 'none'
                         }
                     },
-                },
-                select: {
-                    focused: {
-                        background: '#F0F0F0'
-                    }
-                },
-                focused: {
-                    background: '#F0F0F0'
                 }
             }
         },

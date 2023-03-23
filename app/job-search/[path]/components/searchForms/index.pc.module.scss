@@ -12,6 +12,10 @@
   background: #fff;
   padding-left: calc(50vw - 585px);
 
+  @include sm {
+    display: none;
+  }
+
   .searchArea {
     display: flex;
     flex-direction: row;
@@ -58,6 +62,7 @@
       align-items: center;
       margin-left: 30px;
       margin-bottom: 3px;
+
       .text {
         width: 116px;
         font-family: 'Product Sans';
