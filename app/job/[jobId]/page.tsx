@@ -4,8 +4,12 @@ import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 const Page = async ({ params }: any) => {
   const cookieStore = cookies()
   const accessToken = cookieStore.getAll('accessToken')
+  const jobId = params.jobId?.split('-').pop()
+  console.log(params, jobId)
   const querys = {
-    ...params
+    jobId,
+    status: 'public',
+    serverAccessToken: null
   }
 
   if (accessToken[0]) {
@@ -35,7 +39,7 @@ const Page = async ({ params }: any) => {
 
   return (
     <>
-      <Index data={data} jobId={params?.jobId} />
+      <Index data={data} jobId={jobId} />
     </>
   )
 }

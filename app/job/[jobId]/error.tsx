@@ -6,7 +6,7 @@ import { BossjobLogo } from 'images'
 
 import { Button } from 'app/components/MUIs'
 
-import styles from './index.module.scss'
+import styles from './page.module.scss'
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter()

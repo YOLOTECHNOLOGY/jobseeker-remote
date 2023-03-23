@@ -1,6 +1,18 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
+.errorMain {
+  text-align: center;
+  margin: 100px 0;
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  &_loadingLogo {
+    margin-bottom: 20px;
+  }
+}
+
 .head {
   width: 100%;
   background-color: white;

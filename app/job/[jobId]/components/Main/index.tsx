@@ -24,7 +24,7 @@ const MainFC = (props: propsType) => {
   return (
     <main className={styles.main}>
       <Desc {...props} />
-      {props.benefitsProps?.length && <Benefits benefits={props.benefitsProps} />}
+      {props.benefitsProps?.length ? <Benefits benefits={props.benefitsProps} /> : null}
       <Map lat={props.lat} lng={props.lng} full_address={props.full_address} />
       <Search />
     </main>
