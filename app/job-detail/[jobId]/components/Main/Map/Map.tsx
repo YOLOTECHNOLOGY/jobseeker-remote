@@ -12,9 +12,12 @@ const Map = ({ lat, lng, full_address }: propsType) => {
     <section className={styles.map}>
       <h5>Working Location</h5>
       <p>{full_address}</p>
-      <div className={styles.map_context}>
-        {lat && lng && <GoogleMap lat={Number(lat)} lng={Number(lng)} />}
-      </div>
+
+      {lat && lng && (
+        <div className={styles.map_context}>
+          <GoogleMap lat={Number(lat)} lng={Number(lng)} />
+        </div>
+      )}
     </section>
   )
 }
