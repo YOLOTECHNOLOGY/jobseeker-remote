@@ -59,7 +59,7 @@ const Head = ({
           <div className={styles.head_main_change_resume}>
             <Stack spacing={2} direction='row'>
               <div>
-                <Link color='#000000' href='/get-started'>
+                <Link color='#000000' href='/manage-profile'>
                   <div className={styles.head_main_change_resume_btnWrapper}>
                     <Avatar
                       src={CompleteResumeIcon}
@@ -71,7 +71,7 @@ const Head = ({
                 </Link>
               </div>
               <div>
-                <Link color='#000000' href='/manage-profile'>
+                <Link color='#000000' href='/manage-profile?tab=resume'>
                   <div className={styles.head_main_change_resume_btnWrapper}>
                     <Avatar
                       src={UploadResumeIcon}

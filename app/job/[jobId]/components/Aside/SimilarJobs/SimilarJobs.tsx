@@ -46,7 +46,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
           {data?.map((item) => {
             return (
               <div key={item.id} className={styles.similarJobs_card}>
-                <Link href={'/job-detail/' + item.id}>
+                <Link href={item.job_url}>
                   <h6 className={styles.similarJobs_title}>{item.truncated_job_title}</h6>
                   <div className={styles.similarJobs_salary}>{item.salary_range_value}</div>
                   <div className={styles.similarJobs_info}>
