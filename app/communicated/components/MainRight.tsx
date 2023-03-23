@@ -25,10 +25,10 @@ export default async function  Page () {
   return (
       <>
          <Resume  data={data} resumes={resumes}/>
-          {/* @ts-expect-error Async Server Component */}
+            {/* @ts-expect-error Async Server Component */}
          <InterestedMe/>
-          {/* @ts-expect-error Async Server Component */}
-         <ViewedMe/>
+         {/* @ts-expect-error Async Server Component */}
+          <ViewedMe/>
       </>
     )
   }

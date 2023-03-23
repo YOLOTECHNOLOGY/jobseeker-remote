@@ -16,7 +16,7 @@ const ViewedMe = async () => {
 
      return (
           <>
-               {data?.length && (
+               {data?.length ? (
                     <div className={styles.upload}>
                          <div className={styles.header}>
                               Who viewed me
@@ -35,7 +35,7 @@ const ViewedMe = async () => {
                               </button>
                          </div>
                     </div>
-               )
+               ):null
                }
           </>
      )

@@ -32,7 +32,6 @@ const Card = ({
   loadingList,
 }: cardProps) => {
 
-  console.log(tabValue, 'tabValue')
   const isSameDay = (startTime, endTime) => {
     if (!endTime) return false
     const startTimeMs = new Date(startTime).setHours(0, 0, 0, 0);
@@ -45,7 +44,6 @@ const Card = ({
   };
 
   const normalCard = () => {
-    console.log(data, 7777)
     return data?.map((e, index) => {
       const same = isSameDay(e.created_at, data[index - 1]?.created_at)
       return (
@@ -61,7 +59,6 @@ const Card = ({
   }
 
   const InterviewCard = () => {
-    console.log(data, 111111)
     return data?.map((e, index) => {
 
       const same = isSameDay(e.interviewed_at, data[index - 1]?.interviewed_at)
@@ -76,7 +73,6 @@ const Card = ({
     }
     )
   }
-  console.log(loadingList, 'loadingList')
   return (
     <>
       {

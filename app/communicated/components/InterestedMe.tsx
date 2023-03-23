@@ -16,7 +16,7 @@ const Interested = async () => {
      return (
           <>
                {
-                    data?.length && (
+                    data?.length ? (
                          <div className={styles.upload}>
                               <div className={styles.header}>
                                    Interested in me
@@ -36,7 +36,7 @@ const Interested = async () => {
                                  
                               </div>
                          </div>
-                    )
+                    ):null
                }
                  </>
        )

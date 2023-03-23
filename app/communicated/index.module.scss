@@ -577,15 +577,44 @@
 
       }
     }
-    @include msd {
-      .pcContainer, .aside{
-        display: none;
-      }
-      .mobile{
-        display: block;
-      }
-    }
+ 
 
 }
 
 
+@include msd {
+  .container{
+    padding: 0;
+    .pcContainer, .aside{
+      display: none;
+    }
+    .mobile{
+      display: block;
+      min-height: 50vh;
+      .headerTop{
+        border-radius: 0;
+        :global{
+          .css-1n1ppiu-MuiTabs-root .MuiTabs-scrollButtons{
+            display: block;
+          }
+          .css-ptiqhd-MuiSvgIcon-root{
+            background: #FFFFFF;
+           border: 0.5px solid #BCBCBC;
+           width: 24px;
+           height: 24px;
+           display: block;
+           border-radius: 50%;
+           margin-top: 12px;
+          }
+        }
+        .line{
+          padding-right: 4px;
+        }
+        .bactText{
+          padding-right:26px ;
+        }
+      }
+    }
+  }
+  
+}
