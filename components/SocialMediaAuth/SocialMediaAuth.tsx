@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 /* Components */
 import Google from './Google'
-// import Facebook from './Facebook'
+import Facebook from './Facebook'
 import Linkedin from './Linkedin'
 
 /* Styles */
@@ -13,7 +13,9 @@ interface ISocialMediaAuth {
   callbackRequest: Function
 }
 
-const SocialMediaAuth = ({ callbackRequest }: ISocialMediaAuth) => {
+const SocialMediaAuth = ({
+  callbackRequest,
+}: ISocialMediaAuth) => {
   const router = useRouter()
 
   return (
@@ -30,12 +32,12 @@ const SocialMediaAuth = ({ callbackRequest }: ISocialMediaAuth) => {
         redirect={router.query.redirect}
         isLogin
       />
-      {/* <Facebook
+      <Facebook
         className={styles.SocialButton}
         callBackMethod={callbackRequest}
         redirect={router.query.redirect}
         isLogin
-      /> */}
+      />
     </div>
   )
 }

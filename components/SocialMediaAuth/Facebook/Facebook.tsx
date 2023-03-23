@@ -17,10 +17,6 @@ interface IFacebook {
 
 declare const window: any
 
-// eslint-disable-next-line valid-jsdoc
-/**
- * @deprecated  We are going to remove Facebook entrance. if we are surely it is no longer needed. we can search global with 'window.FB' and then remove
- */
 const Facebook = ({
   className,
   activeKey,
