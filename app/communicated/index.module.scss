@@ -1,0 +1,579 @@
+@import 'styles/variable.scss';
+
+.container {
+  @extend .GlobalNextAppContainer;
+  display: flex;
+  padding: 24px 24px 50px;
+  p{
+    margin: 0;
+  }
+  .row{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .main{
+    flex: 1;
+    p{
+      margin: 0;
+    }
+    >.header{
+      height: 50px;
+      background: #FFFFFF;
+      border: 0.5px solid #BCBCBC;
+      border-radius: 15px;
+      line-height: 50px;
+      display: flex;
+      padding: 0 0 0 15px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .headerChild{
+      margin-top: 2px;
+    }
+    .backLink{
+      display: flex;
+      color: #707070;
+    }
+    .back{
+      padding-right: 11px;
+      margin-top: 12px;
+      font-weight: bold;
+      color: #707070;
+      cursor: pointer;
+    }
+    .bactText{
+      cursor: pointer;
+      padding-right:36px ;
+    }
+    .line{
+      color: rgba(188, 188, 188, 1);
+      padding: 0 40px 0 0px;
+    }
+    .time{
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 1px;
+      color: #707070;
+      padding: 8px 0 18px;
+    }
+    .noData{
+      padding-top: 135px;
+      min-height: calc(100vh - 260px);
+      background: #FFFFFF;
+      border: 0.5px solid #BCBCBC;
+      border-radius: 15px;
+      .noDataImg{
+        margin: 0 auto;
+        display: block;
+      }
+      .seeJob{
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 1px;
+        width: 128px;
+        height: 44px;
+        line-height: 44px;
+        background: #136FD3;
+        border-radius: 10px;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        margin: 28px auto;
+        display: block;
+        transition: background-color .2s;
+        position: relative;
+        a{
+          display: block;
+          color: #FFFFFF;
+        }
+        &:before {
+          content: "";
+          position: absolute;
+          width: 50px;
+          height: 200%;
+          background-color: rgba(255, 255, 255, .6);
+          transform: skew(45deg) translate3d(-200px,0,0);
+      }
+      &:hover::before {
+        transition: ease-in-out .5s;
+        transform: skew(45deg) translate3d(200px,0,0);
+    }
+      
+      }
+    }
+    .detail {
+      min-height: 134px;
+      width: 100%;
+      margin-bottom: 16px;
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: #353535;
+      font-size: 14px;
+      background: #fff;
+      border-radius: 10px;
+      &:hover{
+        box-shadow: 5px 5px 7px #ccc;
+      }
+      .header {
+        background: linear-gradient(269.8deg, rgba(255, 235, 184, 0.2) 0.12%, rgba(242, 177, 202, 0.2) 43.36%, rgba(84, 142, 237, 0.2) 99.89%);
+        border-radius: 10px 10px 0px 0px;
+        padding: 0 0 0 24px;
+        height: 47px;
+        box-sizing: content-box;
+        display: flex;
+        justify-content: space-between;
+        .headerInfo{
+          display: flex;
+          align-items: center;
+          
+        }
+        .name {
+          vertical-align: middle;
+          padding-left: 8px;
+          font-size: 14px;
+          letter-spacing: 1px;
+          color: #353535;
+        }
+        .nameLine{
+          color: rgba(188, 188, 188, 1);
+          padding: 0 10px;
+          display: inline-block;
+        }
+        .avator{
+           width: 24px;
+           height: 24px;
+           border-radius: 50%;
+        }
+        .operator{
+          padding: 6px 15px 0 0;
+          display: flex;
+          overflow: hidden;
+          .chatBox{
+            transform: translateY(120px);
+            width: 105px;
+            height: 33px;
+            line-height: 33px;
+            background: #136FD3;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 12px;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            padding: 0;
+            transition: .3s;
+            :global{
+              .css-6krx5u-MuiCircularProgress-root{
+                color: #fff;
+              }
+            }
+            .saveIcon{
+              font-size: 24px;
+              color: #fff;
+              padding-right:4px;
+            }
+          }
+        
+          .chatIng{
+             width: 68px;
+          }
+          .closedTip{
+            line-height: 33px;
+            font-size: 16px;
+            align-items: center;
+            letter-spacing: 1px;
+            color: #353535;
+          }
+        }
+        &:hover{
+          .chatBox{
+            transform: translateY(0);
+            transition: .3s;
+          }
+        }
+      }
+    
+      .info {
+        background: #fff;
+        min-height: 86px;
+        border-radius: 0px 0px 10px 10px;
+        padding: 15px 0 16px 24px;
+        font-weight: 400;
+        font-size: 14px;
+        display: flex;
+        letter-spacing: 1px;
+        color: #353535;
+        p {
+          margin: 0;
+        }
+        .tag{
+          font-weight: 400;
+          font-size: 12px;
+          padding: 2px 10px;
+          color: #707070;
+          display: inline-block;
+          background: #F0F0F0;
+          border-radius: 16px;
+          margin: 5px 9px 0 0;
+        }
+        .leftContent {
+          flex: 1;
+          .developer{
+            display: flex;
+            .title{
+              flex: 1;
+              width: 0;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+              font-weight: 700;
+              font-size: 18px;
+              color: #353535;
+            }
+            .salary{
+              width: fit-content;
+              font-weight: 700;
+              font-size: 18px;
+              display: flex;
+              letter-spacing: 1px;
+              color: #FE574A;
+              margin-left: 6px;
+            }
+          }
+        }
+       
+        .rightContent {
+          width: 400px; 
+          margin-left: 30px;
+          display: flex;
+          .logo{
+            width: 45px;
+            height: 45px;
+            border-radius: 5px;
+            margin-right: 10px;
+            margin-top: 10px;
+          }
+          .companyInfo{
+            flex: 1;
+          }
+          .company{
+            display: flex;
+            align-items: center;
+            font-weight: 400;
+            font-size: 14px;
+            color: #353535;
+            height: 28px;
+          }
+        }
+      }
+      
+    }
+    .interested{
+      >.header{
+        .name,.nameLine{
+          font-size: 14px;
+          text-align: center;
+          color: #707070;
+        }
+        .jobrStatus{
+            padding: 0 12px;
+            height: 21px;
+            background: #FFFFFF;
+            border-radius: 16px;
+            font-size: 12px;
+            line-height: 21px;
+            letter-spacing: 1px;
+            color: #136FD3;
+            margin-left: 13px;
+        }
+      }
+      .info{
+      .leftContent{
+        display: flex;
+        .logo{
+          width: 45px;
+          height: 45px;
+          border-radius: 5px;
+          margin-right: 10px;
+          margin-top: 3px;
+        }
+        .box{
+          flex: 1;
+          .developer{
+            .title{
+              line-height: 23px;
+            }
+          }
+        }
+        .companyName{
+          font-size: 14px;
+          line-height: 18px;      
+          letter-spacing: 1;
+          color: #353535;
+        }
+      }
+      .rightContent{
+        margin-left: 60px;
+        width: 370px;
+        display: block;
+        .time{
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 18px;
+          letter-spacing: 1px;
+          color:rgba(53, 53, 53, 1);
+          margin:0;
+          padding:0 0 10px 0 ;
+          @extend .row;
+          width: 354px;
+          display: block;
+          span{
+            color: rgba(112, 112, 112, 1);
+          }
+          &:last-child{
+            padding: 0;
+          }
+        }
+      }
+      }
+    }
+    .jobClosed{
+      opacity: 0.5;
+    }
+    
+  }
+  .aside{
+    width: 250px;
+    margin-left: 24px;
+    .resume{
+      background: #fff;
+      padding: 16px;
+      border-radius: 10px 10px 0 0;
+      .user{
+        display: flex;
+        img{
+          width: 29px;
+          height: 29px;
+          margin-right: 6px;
+          border-radius: 50%;
+        }
+        .info{
+          flex: 1;
+          margin-bottom: 12px;
+          p{
+            font-size: 18px;
+            line-height: 23px;
+            color: #353535;
+            margin: 0;
+          }
+          span{
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 15px;
+            color: #707070;
+            display: inline-block;
+          }
+          i{
+            font-style: normal;
+            display: inline-block;
+            padding: 0 8px;
+            color: rgba(188, 188, 188, 1);
+          }
+        }
+      }
+      :global {
+        .MuiOutlinedInput-notchedOutline {
+          border-width: 0.5px ;
+        }
+    }
+  
+  }
+  .type{
+    background: #E7F1FB;
+    border-radius:  0 0 10px 10px;
+    padding: 16px 16px 8px;
+    >li{
+      list-style: none;
+      margin-bottom: 16px;
+      font-size: 16px;
+      line-height: 24px;
+      color: #353535;
+      font-weight: 400;
+      &:hover{
+        color: #136FD3;
+      }
+    }
+  }
+  .upload{
+     margin-top: 24px;
+     .uploadContainer{
+      padding: 0 0 16px 0;
+      background: #FFFFFF;
+      border-radius:  0px 0px 10px 10px;
+      ul{
+        padding: 10px 16px 0 16px;
+        li{
+          display: flex;
+          list-style: none;
+          height: 26px;
+          line-height: 26px;
+          a{
+            flex: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            color: #353535;
+            display: block;
+          }
+          .deleteIcoc{
+            cursor: pointer;
+             width: 20px;
+             color: #646161;
+             display: none;
+            
+          }
+          &:hover{
+            a{
+              color: #136FD3;
+              text-decoration: underline;
+            }
+            .deleteIcoc{
+              display: block;
+              color: #136FD3;
+            }
+          }
+        }
+      }
+     
+      .noMore{
+        line-height: 18px;
+        color: #353535;
+        font-weight: 400;
+        font-size: 14px;
+        padding: 12px 0 0 16px;
+        margin: 0;
+      }
+     }
+  }
+
+  .header{
+    background: #E7F1FB;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 42px;
+    letter-spacing: 1px;
+    color: #353535;
+    padding-left: 16px;
+    border-radius: 10px 10px 0px 0px;
+  }
+  .interstedBox{
+    padding-top: 11px;
+  }
+  .cardList{
+    padding: 14px 16px 13px;
+    &:hover{
+      background: #F0F0F0;
+    }
+    &:last-child{
+      margin-bottom: 10px;
+    }
+    .name{
+     display: flex;
+     img{
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      border-radius: 50%;
+     }
+     p{
+      flex: 1;
+      width: 0;
+      font-weight: 700;
+      @extend .row
+     }
+     .jobType{
+      font-size: 12px;
+      line-height: 15px;
+      color: #353535;
+      font-weight: 400;
+     }
+     .salary{
+      width: fit-content;
+      font-size: 12px;
+      text-align: right;
+      letter-spacing: 1px;
+      color: #FC5555;
+      margin-left: 10px;
+      line-height: 15px;
+     }
+    }
+    .recruite{
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+      display: flex;
+      align-items: flex-end;
+      letter-spacing: 1px;
+      color: #707070;
+      margin: 4px 0 12px 0;
+    }
+  }
+  }
+  .btn{
+    width: 216px;
+    border: 2px solid #136FD3;;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    color: #136FD3;
+    text-align: center;
+    display: block;
+    margin: 16px auto 0;
+    height: 44px;
+    line-height: 44px;
+    outline: none;
+    background: #fff;
+    letter-spacing: 1px;
+    transition: .3s;
+    cursor: pointer;
+    overflow: hidden;
+    a{
+      display: block;
+    }
+    a:hover{
+      background: #136FD3;
+      color: white;
+      transition: .2s;
+    }
+    }
+    .page{
+      display: flex;
+      justify-content: center;
+      :global{
+        .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root{
+          background-color: #fff;
+          border: none;
+          width: 40px;
+          font-size: 16px;
+          height: 40px;
+          color: rgba(0, 0, 0, 0.87);
+        }
+        .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected{
+          background: #136FD3;
+          color: white;
+        }
+
+      }
+    }
+}
+
+
