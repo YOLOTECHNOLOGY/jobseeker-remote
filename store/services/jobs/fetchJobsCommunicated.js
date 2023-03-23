@@ -53,15 +53,15 @@ const fetchPersonalInfo  = (payload) => {
 const fetchRecruiters  = (payload) => {
   const {accessToken = null } = payload || {}
   const endpointType = accessToken ? 'protected' : 'public'
-  const axios = configuredAxios('general', endpointType, false, accessToken)
-  return axios.get(`recruiters/saved-me-recruiters?page=1&size=6`)
+  const axios = configuredAxios('recruiters', endpointType, false, accessToken)
+  return axios.get(`/saved-me-recruiters?page=1&size=6`)
 }
 
 const fetchViewedRcruiters  = (payload) => {
   const {accessToken = null } = payload || {}
   const endpointType = accessToken ? 'protected' : 'public'
-  const axios = configuredAxios('general', endpointType, false, accessToken)
-  return axios.get(`recruiters/viewed-me-recruiters?page=1&size=6`)
+  const axios = configuredAxios('recruiters', endpointType, false, accessToken)
+  return axios.get(`/viewed-me-recruiters?page=1&size=6`)
 }
 
 const fetchInterviews  = (payload) => {

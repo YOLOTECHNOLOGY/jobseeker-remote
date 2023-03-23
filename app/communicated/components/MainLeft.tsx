@@ -20,7 +20,7 @@ import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-
+import styles from '../index.module.scss';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -223,6 +223,7 @@ const MainLeft = () => {
 
     return (
         <>
+           <div className={styles.pcContainer}>  
             <Header
                 tabValue={tabValue}
                 tabList={tabList}
@@ -241,6 +242,12 @@ const MainLeft = () => {
                 loadingChat={loadingChat}
                 loadingList={lodingList}
             />
+           </div>
+
+           <div className={styles.mobile}>
+
+
+           </div>
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}
                 anchorOrigin={{
                     vertical: 'top',

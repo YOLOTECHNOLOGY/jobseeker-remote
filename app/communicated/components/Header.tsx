@@ -79,7 +79,7 @@ const Header = ({
 
     return (
         <>
-            <div className={styles.header}
+            <div className={styles.headerTop}
                 style={{ marginBottom: (tabValue == 'interested' || tabValue == 'viewedMe') ? '14px' : '10px' }}
             >
                 <Link prefetch={false} href={"/my-job"} className={styles.backLink}>

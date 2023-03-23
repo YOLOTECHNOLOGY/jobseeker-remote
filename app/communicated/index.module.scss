@@ -12,12 +12,15 @@
     overflow: hidden;
     white-space: nowrap;
   }
+  .mobile{
+    display: none;
+  }
   .main{
     flex: 1;
     p{
       margin: 0;
     }
-    >.header{
+    .headerTop{
       height: 50px;
       background: #FFFFFF;
       border: 0.5px solid #BCBCBC;
@@ -574,6 +577,15 @@
 
       }
     }
+    @include msd {
+      .pcContainer, .aside{
+        display: none;
+      }
+      .mobile{
+        display: block;
+      }
+    }
+
 }
 
 
