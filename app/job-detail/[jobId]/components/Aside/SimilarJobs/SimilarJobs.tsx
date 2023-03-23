@@ -115,7 +115,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
                       <span
                         className={classNames([
                           styles.similarJobs_infoWrpper_status,
-                          transState(lastActiveAt.last_active_at)?.state
+                          transState(lastActiveAt?.last_active_at)?.state
                             ? styles.similarJobs_infoWrpper_lineStatus
                             : null
                         ])}

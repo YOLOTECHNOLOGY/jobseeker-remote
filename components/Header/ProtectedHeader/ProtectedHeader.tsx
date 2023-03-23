@@ -22,6 +22,7 @@ import { getCookie } from 'helpers/cookies'
 import styles from '../Header.module.scss'
 import { IMContext } from 'components/Chat/IMProvider.client'
 
+// this header will be used when user is logged in
 const ProtectedHeader = () => {
   const router = useRouter()
   const pathname = usePathname()
@@ -165,7 +166,7 @@ const ProtectedHeader = () => {
               )}
               {totalUnread ? (
                 <span className={styles.unread}>
-                  {Number(totalUnread) > 999 ? '999+' : totalUnread}
+                  {Number(totalUnread) > 99 ? '99+' : totalUnread}
                 </span>
               ) : null}
             </li>
@@ -263,7 +264,7 @@ const ProtectedHeader = () => {
                     className={styles.unread}
                     style={{ position: 'absolute', bottom: '50%', right: '50%' }}
                   >
-                    {Number(totalUnread) > 999 ? '999+' : totalUnread}
+                    {Number(totalUnread) > 99 ? '99+' : totalUnread}
                   </span>
                 ) : null}
               </Link>

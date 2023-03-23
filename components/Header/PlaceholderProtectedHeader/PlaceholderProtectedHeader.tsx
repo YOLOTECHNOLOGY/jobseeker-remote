@@ -113,7 +113,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                 </Text>
                 {totalUnread ? (
                   <span className={styles.unread}>
-                    {Number(totalUnread) > 999 ? '999+' : totalUnread}
+                    {Number(totalUnread) > 99 ? '99+' : totalUnread}
                   </span>
                 ) : null}
               </li>
@@ -176,7 +176,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                     className={styles.unread}
                     style={{ position: 'absolute', bottom: '50%', right: '50%' }}
                   >
-                    {Number(totalUnread) > 999 ? '999+' : totalUnread}
+                    {Number(totalUnread) > 99 ? '99+' : totalUnread}
                   </span>
                 ) : null}
               </>

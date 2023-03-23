@@ -12,6 +12,7 @@ import MaterialButton from 'components/MaterialButton'
 /* Images */
 import { BossjobLogoWhite } from 'images'
 
+// this Header will be used when user is not logged in
 const PlaceHolderPublicHeader = () => {
   return (
     <div className={styles.header}>
