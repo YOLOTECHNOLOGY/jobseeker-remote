@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 .content {
     display: flex;
     flex-direction: row;
@@ -7,6 +9,11 @@
         margin-left: calc(50vw - 585px);
         background: transparent;
         width: 894px;
+
+        @include sm {
+            margin-left: 0px;
+            width: 100%;
+        }
     }
 
     .qrCode {
@@ -50,5 +57,9 @@
         width: 254px;
         margin-left: 30px;
         height: 600px;
+
+        @include sm {
+            display: none;
+        }
     }
 }

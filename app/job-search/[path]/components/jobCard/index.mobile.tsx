@@ -1,109 +1,10 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React, { useState, useEffect, useRef, useCallback } from 'react'
-import styles from './index.module.scss'
-import { HomePageChat, AppDownQRCode } from 'images'
-import useChatNow from 'app/hooks/useChatNow'
-import { hoverableFunc } from 'components/highLevel/hoverable'
+import React from 'react'
+import styles from './index.mobile.module.scss'
 import Image from 'next/image'
-import classNames from 'classnames'
-import MaterialButton from 'components/MaterialButton'
-import Text from 'components/Text'
-import { postSaveJobService } from 'store/services/jobs/postSaveJob'
-import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
-import { getCookie } from 'helpers/cookies'
-import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
-import { CircularProgress } from 'app/components/MUIs'
 import { useRouter } from 'next/navigation'
-const useShowPop = (titleHover, popHover) => {
 
-    const [showPopup, setShowPopup] = useState(false)
-    const titleHoverRef = useRef(titleHover)
-    const popHoverRef = useRef(popHover)
-    useEffect(() => {
-        titleHoverRef.current = titleHover
-        popHoverRef.current = popHover
-    }, [titleHover, popHover])
-    const timerRef = useRef<any>()
-    const closeTimerRef = useRef<any>()
-
-    useEffect(() => {
-        if (titleHover && !popHover) {
-            if (timerRef.current) {
-                clearTimeout(timerRef.current)
-                timerRef.current = null
-            }
-            timerRef.current = setTimeout(() => {
-                if (titleHoverRef.current) {
-                    setShowPopup(true)
-                }
-                clearTimeout(timerRef.current)
-                timerRef.current = null
-            }, 500)
-        } else if (!titleHover && !popHover) {
-            if (timerRef.current) {
-                clearTimeout(timerRef.current)
-                timerRef.current = null
-            }
-            if (closeTimerRef.current) {
-                clearTimeout(closeTimerRef.current)
-                closeTimerRef.current = null
-            }
-            closeTimerRef.current = setTimeout(() => {
-                if (!titleHoverRef.current && !popHoverRef.current) {
-                    setShowPopup(false)
-                }
-                clearTimeout(closeTimerRef.current)
-                closeTimerRef.current = null
-            }, 500)
-        }
-
-    }, [titleHover, popHover])
-    return showPopup
-}
-
-const useSaveJob = (jobId, defaultSaved, accessToken) => {
-    const [isSaved, setIsSaved] = useState(defaultSaved)
-    const [isSaving, setIsSaving] = useState(false)
-    const router = useRouter()
-    const save = useCallback(() => {
-        if (isSaving) {
-            return
-        }
-        if (!accessToken) {
-            router.push('/get-started', { forceOptimisticNavigation: true })
-            return
-        }
-        if (!isSaved) {
-            setIsSaving(true)
-            postSaveJobService({ job_id: jobId, accessToken })
-                .then(() => setIsSaved(true))
-                .finally(() => setIsSaving(false))
-        } else {
-            setIsSaving(true)
-            deleteSaveJobService(jobId)
-                .then(() => setIsSaved(false))
-                .finally(() => setIsSaving(false))
-        }
-    }, [isSaved, jobId, accessToken, isSaving])
-
-    return [isSaved, isSaving, save]
-}
-
-const useJobDetail = (jobId) => {
-    const [detailLoading, setDetailLoading] = useState(false)
-    const [jobDetail, setJobDetail] = useState(null)
-    const startLoading = useCallback(() => {
-        if (!detailLoading && !jobDetail) {
-            setDetailLoading(true)
-            fetchJobDetailService({ jobId })
-                .then(response => setJobDetail(response.data.data))
-                .finally(() => setDetailLoading(false))
-        }
-    }, [detailLoading, jobDetail])
-    return [jobDetail, detailLoading, startLoading]
-}
 
 const JobCard = (props: any) => {
     const {
@@ -116,74 +17,52 @@ const JobCard = (props: any) => {
         degree,
         recruiter_full_name,
         recruiter_job_title,
-        recruiter_is_online,
-        job_skills,
         company_logo,
         company_name,
-        company_industry,
-        company_size,
-        company_financing_stage,
-        job_benefits,
-        external_apply_url,
         id,
-        chat,
-        is_saved,
         job_url
     } = props
     const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
-    const companyLabels = [company_industry, company_size, company_financing_stage].filter(a => a)
     const router = useRouter()
-    const [loading, chatNow, modalChange] = useChatNow(props)
-    const [titleHover, setTitleHover] = useState(false)
-    const [popHover, setPopHover] = useState(false)
-
-    const showPopup = useShowPop(titleHover, popHover)
-    const accessToken = getCookie('accessToken')
-    const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken)
-    const [jobDetail, detailLoading, startLoading] = useJobDetail(id)
-    useEffect(() => {
-        if (showPopup && !jobDetail && !detailLoading) {
-            startLoading()
-        }
-    }, [showPopup, jobDetail, detailLoading])
     return <div className={styles.main}>
-        <>
+        <div
+            id={'job_card_container_' + id}
+            className={styles.container}
+            onClick={e => {
+                e.stopPropagation()
+                router.push(job_url, { forceOptimisticNavigation: true })
+            }}
+        >
             <div
-                id={'job_card_container_' + id}
-                className={styles.container}
-                onClick={() => router.push(job_url, { forceOptimisticNavigation: true })}
+                key={function_job_title + id}
+                className={styles.titleContainer}
+                title={`${function_job_title} (${job_region})`}
             >
-                <div className={styles.topContainer}>
-                    
-                    <div className={styles.right}>
-                        <div className={styles.company}>
-                            <Image className={styles.logo} src={company_logo} width={50} height={50} alt='' />
-                            <div className={styles.labelContainer}>
-                                <div className={styles.name}>{company_name}</div>
-                                <div className={styles.componylabels}>
-                                    {companyLabels.map(label => <div key={label} className={styles.label}>
-                                        {label}
-                                    </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div >
-                <div className={styles.bottomContainer}>
-                    <div className={styles.skills} title={(job_skills ?? '').split(',').join(' | ')}>
-                        {(job_skills ?? '').split(',').join(' | ')}
-                    </div>
-                    <div className={styles.benefits} title={job_benefits}>
-                        {job_benefits}
+                <div className={styles.title}>{`${function_job_title} (${job_region})`}</div>
+                <div className={styles.salary}>{salary_range_value}</div>
+            </div>
+            <div
+                className={styles.companyName}
+                
+            >{company_name}</div>
+            <div className={styles.labelContainer}>
+                {labels.map(label => <div key={label} className={styles.label}>{label}</div>)}
+            </div>
+            <div className={styles.recruiterContainer}>
+                <div className={styles.info}>
+                    <Image className={styles.image} src={company_logo} height={17} width={17} alt={''} />
+                    <div
+                        className={styles.hrTitle}
+                        title={`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
+                    >
+                        {`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
                     </div>
                 </div>
+                <div className={styles.fullName}>
+                    {recruiter_full_name}
+                </div>
             </div>
-         
-
-            {modalChange}
-        </>
+        </div>
     </div>
 }
 

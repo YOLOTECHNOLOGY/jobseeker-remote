@@ -127,7 +127,8 @@ const JobCard = (props: any) => {
         id,
         chat,
         is_saved,
-        job_url
+        job_url,
+        company_url
     } = props
     const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
     const companyLabels = [company_industry, company_size, company_financing_stage].filter(a => a)
@@ -150,10 +151,10 @@ const JobCard = (props: any) => {
             <div
                 id={'job_card_container_' + id}
                 className={styles.container}
-                onClick={() => router.push(job_url, { forceOptimisticNavigation: true })}
+                
             >
                 <div className={styles.topContainer}>
-                    <div className={styles.left}>
+                    <div className={styles.left} onClick={() => router.push(job_url, { forceOptimisticNavigation: true })}>
                         <div
                             key={function_job_title + id}
                             onMouseEnter={() => setTitleHover(true)}
@@ -217,7 +218,12 @@ const JobCard = (props: any) => {
                             </div>
                         }, { className: styles.recruiterContainer }, false)}
                     </div>
-                    <div className={styles.right}>
+                    <div className={styles.right}
+                        onClick={e => {
+                            e.stopPropagation()
+                            router.push(company_url, { forceOptimisticNavigation: true })
+                        }}
+                    >
                         <div className={styles.company}>
                             <Image className={styles.logo} src={company_logo} width={50} height={50} alt='' />
                             <div className={styles.labelContainer}>
