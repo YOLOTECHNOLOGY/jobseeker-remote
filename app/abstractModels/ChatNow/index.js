@@ -49,8 +49,8 @@ const doChatScript = chatData => DO(Actions.parseToChatStatus(chatData))
         existSameJob: () => DO(Actions.redirectToChat(chatData.id || chatData.chat_id)),
         existDiffrentJob: () => DO(Actions.modalChangeChattingJob(chatData)),
         notExist: () => DO(Actions.createNewChat)
-        // .chain(chatId => DO(Actions.redirectToChat(chatId)))
+            .chain(chatId => DO(Actions.redirectToChat(chatId)))
     }))
 
 export const switchJobScript = chatData => DO(Actions.requestChangeJob(chatData))
-    .chain(chatId => DO(redirectToChat(chatId)))
+    .chain(chatId => DO(Actions.redirectToChat(chatId)))

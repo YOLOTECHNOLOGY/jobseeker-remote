@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 
 const JobCard = (props: any) => {
     const {
-        function_job_title,
+       job_title,
         job_region,
         salary_range_value,
         job_type,
@@ -34,11 +34,11 @@ const JobCard = (props: any) => {
             }}
         >
             <div
-                key={function_job_title + id}
+                key={job_title + id}
                 className={styles.titleContainer}
-                title={`${function_job_title} (${job_region})`}
+                title={`${job_title} (${job_region})`}
             >
-                <div className={styles.title}>{`${function_job_title} (${job_region})`}</div>
+                <div className={styles.title}>{`${job_title} (${job_region})`}</div>
                 <div className={styles.salary}>{salary_range_value}</div>
             </div>
             <div
