@@ -48,18 +48,20 @@ const Company = (company: propsType) => {
         </Link>
       </section>
 
-      <section className={styles.company_mobileHead}>
-        <Avatar
-          sx={{ width: '32px', height: '32px', borderRadius: '5px', marginRight: '8px' }}
-          src={company.logo}
-        ></Avatar>
-        <div className={styles.company_mobileHead_info}>
-          <span className={styles.company_mobileHead_info_name}>{company.name}</span>
-          <span className={styles.company_mobileHead_info_tag}>
-            {company.financingStage} &nbsp;|&nbsp; {company.companySize} Employees
-          </span>
-        </div>
-      </section>
+      <Link href={company.companyUrl}>
+        <section className={styles.company_mobileHead}>
+          <Avatar
+            sx={{ width: '32px', height: '32px', borderRadius: '5px', marginRight: '8px' }}
+            src={company.logo}
+          ></Avatar>
+          <div className={styles.company_mobileHead_info}>
+            <span className={styles.company_mobileHead_info_name}>{company.name}</span>
+            <span className={styles.company_mobileHead_info_tag}>
+              {company.financingStage} &nbsp;|&nbsp; {company.companySize} Employees
+            </span>
+          </div>
+        </section>
+      </Link>
     </>
   )
 }
