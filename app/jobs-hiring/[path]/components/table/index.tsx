@@ -18,10 +18,13 @@ const Table = (props: any) => {
                     <JobCard {...job} />
                 </div>)
             })}
-            <Pagination
+            {
+                totalPages  > 1 ?  <Pagination
                 count={+totalPages}
                 page={+page}
-            />
+            /> :null 
+            }
+          
         </div>
         <MobileTable {...props} />
     </Loader>
