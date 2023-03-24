@@ -19,6 +19,7 @@ type propsType = {
   chat: any
   job_type_value: string
   status_key: string
+  jobDetail?: any
 }
 
 const Head = ({
@@ -32,7 +33,8 @@ const Head = ({
   is_saved,
   chat,
   job_type_value,
-  status_key
+  status_key,
+  jobDetail
 }: propsType) => {
   return (
     <section className={classNames([styles.head, styles.headSticky])}>
@@ -54,7 +56,7 @@ const Head = ({
 
         <div className={styles.head_main_change}>
           <div>
-            <Btn jobId={jobId} is_saved={is_saved} chat={chat} />
+            <Btn jobId={jobId} is_saved={is_saved} chat={chat} jobDetail={jobDetail} />
           </div>
 
           <div className={styles.head_main_change_resume}>

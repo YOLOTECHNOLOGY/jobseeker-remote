@@ -2,9 +2,11 @@
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { Stack } from 'app/components/MUIs'
 import MaterialButton from 'components/MaterialButton'
-import { Button, Stack } from 'app/components/MUIs'
 import { FavoriteBorderIcon, FavoriteIcon } from 'app/components/MuiIcons'
+
+import useChatNow from 'app/hooks/useChatNow'
 
 import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
@@ -16,9 +18,11 @@ type propsType = {
   chat: any
   jobId: number
   className?: string
+  jobDetail: any
 }
 
-const Btn = ({ jobId, chat, is_saved, className }: propsType) => {
+const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
+  const [loading, chatNow, changeJobModal] = useChatNow(jobDetail)
   const dispatch = useDispatch()
   const [saveLoading, setSaveLoading] = useState<boolean>(false)
   // const [chatLoading, setChatLoading] = useState<boolean>(false)
@@ -111,20 +115,23 @@ const Btn = ({ jobId, chat, is_saved, className }: propsType) => {
 
           {/* <FavoriteBorderIcon sx={{ color: '#136FD3' }} /> */}
         </MaterialButton>
-        <Button
+        <MaterialButton
           variant='contained'
           sx={{
             width: '115px',
             lineHeight: '44px',
             height: '44px',
             background: '#136FD3',
-            borderRadius: '10px',
-            textTransform: 'capitalize'
+            borderRadius: '10px'
           }}
+          isLoading={loading as boolean}
+          onClick={() => (chatNow as any)(jobDetail)}
         >
-          Chat now
-        </Button>
+          <span style={{ textTransform: 'capitalize' }}>Chat now</span>
+        </MaterialButton>
       </Stack>
+
+      {changeJobModal}
     </>
   )
 }

@@ -16,7 +16,8 @@ const Index = ({ data, jobId }: any) => {
     is_saved: data.is_saved,
     chat: data.chat,
     job_type_value: data.job_type_value,
-    status_key: data.status_key
+    status_key: data.status_key,
+    jobDetail: data
   }
 
   const companyProps = {
