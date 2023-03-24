@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 
-const getEmploymentType = type => {
+const getEmploymentType = (type) => {
   switch (type) {
     case 'Internship':
       return 'INTERN'
@@ -18,7 +18,7 @@ const getEmploymentType = type => {
   }
 }
 
-const getGoogleJobJSON = jobDetail => {
+export const getGoogleJobJSON = (jobDetail) => {
   // Hardcoded active jobs to be expired in 2 years
   const postedDate = new Date(jobDetail.published_at)
 
@@ -65,10 +65,7 @@ const getGoogleJobJSON = jobDetail => {
     }
   }
 
-  if (
-    !isNaN(jobDetail.salary_range_from) &&
-    !isNaN(jobDetail.salary_range_to)
-  ) {
+  if (!isNaN(jobDetail.salary_range_from) && !isNaN(jobDetail.salary_range_to)) {
     jobJSON = {
       ...jobJSON,
       baseSalary: {
@@ -143,9 +140,9 @@ const SEO = ({ title, description, imageUrl, canonical, jobDetail = null }: SEOP
         <script
           defer
           async
-          type="application/ld+json"
+          type='application/ld+json'
           dangerouslySetInnerHTML={{
-            __html: `${getGoogleJobJSON(jobDetail)}`,
+            __html: `${getGoogleJobJSON(jobDetail)}`
           }}
         ></script>
       )}
@@ -157,7 +154,7 @@ SEO.defaultProps = {
   title: 'Bossjob - Career Platform for Professionals in Philippines',
   description: 'Bossjob - Career Platform for Professionals in Philippines',
   imageUrl: 'https://assets.bossjob.com/website/OGTagImage.png',
-  canonical: '',
+  canonical: ''
 }
 
 export default SEO
