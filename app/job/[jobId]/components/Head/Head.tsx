@@ -74,7 +74,7 @@ const Head = ({
                 </Link>
               </div>
               <div>
-                <Link color='#000000' href='/manage-profile?tab=resume'>
+                <Link color='#000000' href='/quick-upload-resume'>
                   <div className={styles.head_main_change_resume_btnWrapper}>
                     <Avatar
                       src={UploadResumeIcon}
