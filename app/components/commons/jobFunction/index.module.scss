@@ -228,6 +228,7 @@ $animationTime : 0.3s;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    overflow: scroll;
 
     @include msd {
         display: none;
@@ -239,10 +240,10 @@ $animationTime : 0.3s;
         // display: flex;
         // flex-direction: column;
         // width: inherit;
-        overflow: auto;
+        // overflow: auto;
         border-right: 1px solid #F0F0F0;
-        overflow: auto;
-
+        overflow: scroll;
+        height: calc(100% + 1px);
         :nth-child(3) {
             border: none;
         }

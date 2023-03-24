@@ -161,7 +161,9 @@ const JobCard = (props: any) => {
                 className={styles.container}
 
             >
-                <div className={styles.topContainer}>
+                <div 
+                    
+                className={styles.topContainer}>
                     <div className={styles.left} onClick={() => router.push(job_url, { forceOptimisticNavigation: true })}>
                         <div
                             key={job_title + id}

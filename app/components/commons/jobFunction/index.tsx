@@ -280,8 +280,7 @@ const JobFunctionMultiSelector = (props: any) => {
         return `${label} ${selected?.length ? `(${selected.length})` : ''}`
     }, [textValue])
     return (
-        <FormControl className={className} size='small'
-        >
+        <FormControl className={className} size='small'>
             <TextField
                 value={valueText}
                 autoComplete="off"
@@ -319,9 +318,15 @@ const JobFunctionMultiSelector = (props: any) => {
                     e.preventDefault()
                     e.stopPropagation()
                 }}
-
+                onScroll={e => {
+                    e.stopPropagation()
+                    e.preventDefault()
+                }}
             >
-                <div className={styles.column}>
+                <div className={styles.column} onScroll={e => {
+                    e.stopPropagation()
+                    e.preventDefault()
+                }}>
                     {formattedJobfunctions.map(first => {
                         return <JobItem
                             key={first.value}
@@ -333,7 +338,12 @@ const JobFunctionMultiSelector = (props: any) => {
                         />
                     })}
                 </div>
-                {secondList.length > 1 && <div className={styles.column}>
+                {secondList.length > 1 && <div className={styles.column}
+                    onScroll={e => {
+                        e.stopPropagation()
+                        e.preventDefault()
+                    }}
+                >
                     {secondList.map((second: any) => {
                         return <JobItem
                             key={second.id}
@@ -348,7 +358,12 @@ const JobFunctionMultiSelector = (props: any) => {
                         />
                     })}
                 </div>}
-                {thirdList.length > 1 && <div className={styles.column}>
+                {thirdList.length > 1 && <div className={styles.column}
+                    onScroll={e => {
+                        e.stopPropagation()
+                        e.preventDefault()
+                    }}
+                >
                     {thirdList.map(third => {
                         return <JobItem
                             key={third.id}
