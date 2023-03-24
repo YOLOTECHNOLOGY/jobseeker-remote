@@ -16,7 +16,8 @@ const interpreter = registInterpreter(command => command.cata({
     }),
     hasChatData: () => M.do(context => context?.jobDetail?.chat),
     fetchChatData: () => M.do(context => {
-        const { jobDetail: { recruiter_id } } = context
+        // const { jobDetail: { recruiter_id } } = context
+        const recruiter_id = context?.jobDetail?.recruiter_id || context?.jobDetail?.recruiter?.id
         return check(recruiter_id).then(respones => respones.data.data?.[0])
     }),
     parseToChatStatus: chatDetail => M.do(context => {
@@ -60,7 +61,7 @@ const interpreter = registInterpreter(command => command.cata({
     }),
     redirectToChat: chatId => M.do(context => {
         const { router } = context
-        router.push('/chat/' + chatId,{forceOptimisticNavigation:true})
+        router.push('/chat/' + chatId, { forceOptimisticNavigation: true })
     }),
     createNewChat: () => M.do(context => {
         const { jobDetail, dispatch } = context
