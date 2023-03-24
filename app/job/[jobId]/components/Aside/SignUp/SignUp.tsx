@@ -15,9 +15,10 @@ import styles from '../../../page.module.scss'
 
 type propsType = {
   jobId: number
+  job_url: string
 }
 
-const SignUp = ({ jobId }: propsType) => {
+const SignUp = ({ jobId, job_url }: propsType) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false)
@@ -28,7 +29,7 @@ const SignUp = ({ jobId }: propsType) => {
     authenticationSendEmaillOtp({ email })
       .then(({ status }) => {
         if (status === 200) {
-          router.push('/get-started?setp=2&&email=' + email + '&&redirect=/job-detail/' + jobId)
+          router.push('/get-started?setp=2&&email=' + email + '&&redirect=' + job_url)
         }
       })
       .catch((error) => {
