@@ -23,7 +23,9 @@
     .textInput {
       width: 100%;
     }
-
+    .messageLabel {
+      word-break: break-all;
+    }
     .detailItemContainer {
       display: flex;
       flex-direction: row;
