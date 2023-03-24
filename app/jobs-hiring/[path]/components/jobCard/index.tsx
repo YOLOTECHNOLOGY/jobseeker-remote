@@ -298,7 +298,7 @@ const JobCard = (props: any) => {
                         </MaterialButton>
                     </div>
                     <div className={styles.popTopRight} >
-                        <Image style={{ margin: '0px 8px' }} src={AppDownQRCode} height={56} width={56} alt={''} />
+                        <Image style={{ margin: '0px 6px' }} src={AppDownQRCode} height={60} width={60} alt={''} />
                         Talk to Boss anywhere
                     </div>
                 </div>

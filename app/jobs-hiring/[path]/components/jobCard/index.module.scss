@@ -48,7 +48,7 @@
                         font-family: 'Product Sans';
                         font-style: normal;
                         font-weight: 700;
-                        font-size: 18px;
+                        font-size: 16px;
                         line-height: 23px;
                         align-items: center;
                         letter-spacing: 0.02em;
@@ -63,7 +63,7 @@
                         font-family: 'Product Sans';
                         font-style: normal;
                         font-weight: 700;
-                        font-size: 18px;
+                        font-size: 16px;
                         line-height: 23px;
                         align-items: center;
                         letter-spacing: 0.02em;
@@ -80,7 +80,7 @@
                     margin-top: 5px;
                     width: 100%;
                     display: flex;
-                    justify-content: space-between;
+                   // justify-content: space-between;
                     flex-direction: row;
 
                     .label {
@@ -97,6 +97,7 @@
                         line-height: 15px;
                         letter-spacing: 0.0075em;
                         color: #707070;
+                        margin-right: 8px;
                     }
                 }
 
