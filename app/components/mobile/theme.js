@@ -7,7 +7,7 @@ export default createTheme({
             styleOverrides: {
                 root: {
                     width:'100vw',
-                    height:'100vh',
+                    height:'100%',
                     padding: '0px',
                     top:'0px',
                     left:'0px'
@@ -19,7 +19,7 @@ export default createTheme({
             styleOverrides: {
                 root: {
                     width:'100vw',
-                    height:'100vh',
+                    height:'100%',
                     padding: '0px'
                 },
                 
