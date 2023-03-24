@@ -3,11 +3,12 @@
 .content {
     display: flex;
     flex-direction: row;
+
     .table {
         margin-top: 40px;
         margin-left: calc(50vw - 585px);
         background: transparent;
-        width: 930px;
+        // width: 894px;
 
         @include sm {
             margin-left: 0px;

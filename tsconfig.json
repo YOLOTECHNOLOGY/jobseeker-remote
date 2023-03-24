@@ -37,6 +37,7 @@
     "pages/**/*.tsx",
     "pages/*.jsx",
     "app/**/*.jsx",
+    "app/**/*.js",
     "pages/**/*.jsx",
     "components/Chat/interview/detail/index.tsx",
     ".next/types/**/*.ts",

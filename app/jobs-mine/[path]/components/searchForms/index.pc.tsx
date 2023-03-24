@@ -9,7 +9,7 @@ import styles from './index.pc.module.scss'
 import MaterialButton from 'components/MaterialButton'
 import Single from 'app/components/commons/select/single'
 import Multiple from 'app/components/commons/select/multiple'
-import { encode } from '../../../interpreters/encoder'
+import { encode } from 'app/jobs-hiring/interpreters/encoder'
 import { useSuggest } from './hooks'
 import theme from 'app/components/commons/theme'
 import { ThemeProvider } from '@mui/material/styles'
@@ -103,7 +103,7 @@ const SearchArea = (props: any) => {
       return
     }
     const url = new URLSearchParams(toPairs(result.params)).toString()
-    router.push('/jobs-hiring/' + result.searchQuery + '?' + url, {
+    router.push('/job-search/' + result.searchQuery + '?' + url, {
       forceOptimisticNavigation: true
     })
   }, [result])

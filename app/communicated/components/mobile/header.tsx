@@ -115,8 +115,6 @@ const Header = ({
                 </StyledTabs>
                 </Box>
             </div>
-       
-
         </>
 
     )

@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux'
 
 import { assign } from 'lodash-es'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
-
 import classNames from 'classnames'
 
 import { getList, deleteOne } from 'helpers/interpreters/services/resume'
@@ -19,11 +18,44 @@ import { TrashIcon } from 'images'
 
 import styles from './index.module.scss'
 
+type UploadButtonProps = {
+  disabled?: boolean
+  onChange: (event: React.ChangeEvent) => void
+}
+
+const UploadButton = ({ disabled = false, onChange }: UploadButtonProps) => {
+  const inputRef: Ref<HTMLInputElement> = useRef()
+
+  return (
+    <>
+      <MaterialButton
+        className={classNames({
+          [styles.uploadButton]: true,
+          [styles.disabled]: disabled
+        })}
+        type='button'
+        variant='outlined'
+        onClick={() => {
+          inputRef?.current?.click?.()
+        }}
+        disabled={disabled}
+      >
+        <Text textStyle='base' textColor={disabled ? '#fff' : 'primaryBlue'} bold>
+          Upload your resume
+        </Text>
+        <input type='file' hidden accept='.pdf, .doc, .docx' onChange={onChange} ref={inputRef} />
+      </MaterialButton>
+      <label className={styles.fileLabel}>
+        Supported file type: PDF, DOC, DOCX. Max. file size: 5MB
+      </label>
+    </>
+  )
+}
+
 const SendResumeModal = (props: any) => {
   const [show, setShow] = useState(false)
   const { contextRef, loading, data, applicationId } = props
   const actionsRef = useRef({} as any)
-  const inputRef: Ref<any> = useRef()
 
   const context = {
     showSendResume(actions) {
@@ -36,37 +68,27 @@ const SendResumeModal = (props: any) => {
     }
   }
   contextRef.current = assign(contextRef.current, context)
+
   const [resumeLoading, setResumeLoading] = useState(false)
   const [resumeList, setResumeList] = useState([])
-  const [resumeId, setResumeId] = useState(0)
-  const [onlyOne, setOnlyOne] = useState(false)
-  
-  useEffect(() => {
-    // Once the client access the chat page, we should request the latest resume from the server
-    if (location.pathname.includes('/chat')) {
-      setResumeLoading(true)
-      getList()
-        .then((result) => result.data.data)
-        .then((list) => {
-          setResumeList(list)
-          if (list?.length === 1) {
-            setOnlyOne(true)
-            setResumeId(list?.[0]?.id)
-          }
-        })
-        .finally(() => setResumeLoading(false))
-    }
-  }, [location.pathname])
-
+  const [resumeId, setResumeId] = useState(0) // the selected resume's id, 0 indicate nothing selected
   const dispatch = useDispatch()
-  const deleteItem = useCallback((item) => {
+  const getResumes = useCallback((prePromise: Promise<any> = Promise.resolve()) => {
     setResumeLoading(true)
-    deleteOne(item.id)
+    return prePromise
       .then(getList)
       .then((result) => result.data.data)
-      .then(setResumeList)
+      .then((list) => {
+        setResumeList(list)
+        setResumeId(list?.[0]?.id || 0)
+      })
       .finally(() => setResumeLoading(false))
   }, [])
+
+  const deleteItem = useCallback((item) => {
+    getResumes(deleteOne(item.id))
+  }, [])
+
   const handleUploadResume = useCallback((e) => {
     const file = e.target.files[0]
     if (!maxFileSize(file, 5)) {
@@ -79,23 +101,24 @@ const SendResumeModal = (props: any) => {
       )
       return
     }
-    setResumeLoading(true)
-    uploadUserResumeService(file)
-      .then(getList)
-      .then((result) => result.data.data)
-      .then(setResumeList)
-      .finally(() => setResumeLoading(false))
-      .catch((error) => {
-        dispatch(
-          displayNotification({
-            open: true,
-            severity: 'error',
-            message: `Failed to upload resume with error: ${error.message}. 
+    getResumes(uploadUserResumeService(file)).catch((error) => {
+      dispatch(
+        displayNotification({
+          open: true,
+          severity: 'error',
+          message: `Failed to upload resume with error: ${error.message}. 
             Please contact support@bossjob.com for assistance.`
-          })
-        )
-      })
+        })
+      )
+    })
   }, [])
+
+  useEffect(() => {
+    // Once the client access the chat page, we should request the latest resume from the server
+    if (location.pathname.includes('/chat')) {
+      getResumes()
+    }
+  }, [location.pathname])
 
   return (
     <Modal
@@ -122,12 +145,12 @@ const SendResumeModal = (props: any) => {
         {(() => {
           if (resumeLoading) {
             return <Loader style={{ width: '100%', height: '100%' }}></Loader>
-          } else if (resumeList.length && !onlyOne) {
+          }
+          if (resumeList.length) {
             return (
               <>
                 <p>Please select the resume that you would like to share with recruiter.</p>
                 <RadioGroup
-                  aria-labelledby='demo-radio-buttons-group-label'
                   name='radio-buttons-group'
                   onChange={(e) => setResumeId(+e.target.value)}
                 >
@@ -140,7 +163,15 @@ const SendResumeModal = (props: any) => {
                         control={<Radio />}
                         label={<div className={styles.resumeName}>{item.name}</div>}
                       />
-                      <img src={TrashIcon} onClick={() => deleteItem(item)} />
+                      <img
+                        src={TrashIcon}
+                        onClick={() => {
+                          if (item.id === resumeId) {
+                            setResumeId(0) // the selected resume will be removed
+                          }
+                          deleteItem(item)
+                        }}
+                      />
                     </div>
                   ))}
                 </RadioGroup>
@@ -149,86 +180,20 @@ const SendResumeModal = (props: any) => {
                   {resumeList.length >= 3 &&
                     '(only max. of 3 resumes can be uploaded, please delete at least 1 resume above)'}
                 </p>
-                <MaterialButton
-                  className={classNames({
-                    [styles.uploadButton]: true,
-                    [styles.disabled]: resumeList.length >= 3
-                  })}
-                  type='button'
-                  variant='outlined'
-                  isLoading={resumeLoading}
-                  onClick={() => {
-                    inputRef?.current?.click?.()
-                  }}
-                  disabled={resumeList.length >= 3}
-                >
-                  <Text
-                    textStyle='base'
-                    textColor={resumeList.length >= 3 ? '#fff' : 'primaryBlue'}
-                    bold
-                  >
-                    Upload your resume
-                  </Text>
-                  <input
-                    type='file'
-                    hidden
-                    accept='.pdf, .doc, .docx'
-                    onChange={handleUploadResume}
-                    ref={inputRef}
-                  />
-                </MaterialButton>
-                <label className={styles.fileLabel}>
-                  Supported file type: PDF, DOC, DOCX. Max. file size: 5MB
-                </label>
-              </>
-            )
-          } else if (onlyOne) {
-            return <p>Are you sure you want to send your resume to the recruiter?</p>
-          } else {
-            return (
-              <>
-                <p>
-                  Upload a new resume
-                  {resumeList.length >= 3 &&
-                    '(only max. of 3 resumes can be uploaded, please delete at least 1 resume above)'}
-                </p>
-                <MaterialButton
-                  className={classNames({
-                    [styles.uploadButton]: true,
-                    [styles.disabled]: resumeList.length >= 3
-                  })}
-                  type='button'
-                  variant='outlined'
-                  isLoading={resumeLoading}
-                  onClick={() => {
-                    inputRef?.current?.click?.()
-                  }}
-                  disabled={resumeList.length >= 3}
-                >
-                  <Text
-                    textStyle='base'
-                    textColor={resumeList.length >= 3 ? '#fff' : 'primaryBlue'}
-                    bold
-                  >
-                    Upload your resume
-                  </Text>
-                  <input
-                    type='file'
-                    hidden
-                    accept='.pdf, .doc, .docx'
-                    onChange={handleUploadResume}
-                    ref={inputRef}
-                  />
-                </MaterialButton>
-                <label className={styles.fileLabel}>
-                  Supported file type: PDF, DOC, DOCX. Max. file size: 5MB
-                </label>
+                <UploadButton onChange={handleUploadResume} disabled={resumeList.length >= 3} />
               </>
             )
           }
+          return (
+            <>
+              <p>Upload a new resume</p>
+              <UploadButton onChange={handleUploadResume} />
+            </>
+          )
         })()}
       </div>
     </Modal>
   )
 }
+
 export default SendResumeModal
