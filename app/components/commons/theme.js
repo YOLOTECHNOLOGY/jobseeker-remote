@@ -49,7 +49,8 @@ export default createTheme({
                 select: {
                     focused: {
                         background: '#F0F0F0'
-                    }
+                    },
+                    padding:'0px'
                 },
                 focused: {
                     background: '#F0F0F0'
@@ -93,6 +94,7 @@ export default createTheme({
         MuiInputLabel: {
             styleOverrides: {
                 root: {
+                    display: 'none',
                     fontSize: '14px',
                     letterSpacing: '1px',
                     // height: '100%',
@@ -100,7 +102,7 @@ export default createTheme({
                     overflow: 'visible'
                 },
                 shrink: {
-                    display: 'none',
+                    display: 'none'
                 },
             },
         },
