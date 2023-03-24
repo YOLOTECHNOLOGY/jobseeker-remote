@@ -20,7 +20,7 @@ import { getCurrentMonthYear, unslugify } from 'helpers/formatter'
 import { decoder } from '../interpreters/encoder'
 import { Metadata } from 'next'
 import { toPairs } from 'ramda'
-
+import LoadingProvider from 'app/components/providers/loadingProvider'
 const configs = getConfigs([
     ['inputs', 'location_lists'],
     ['inputs', 'main_functions'],
@@ -140,7 +140,7 @@ const SearchHistory = searchHistoryIp(
 const Main = (props: any) => {
     const accessToken = cookies().get('accessToken')?.value
     const location = props.searchValues?.location?.[0]
-    return <div >
+    return <LoadingProvider >
         <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
             <SearchForm config={props.config} searchValues={props.searchValues ?? null} />
         </div>
@@ -185,7 +185,7 @@ const Main = (props: any) => {
                 />
             </div>
         </div>
-    </div>
+    </LoadingProvider>
 }
 
 export default configs(serverDataScript())
