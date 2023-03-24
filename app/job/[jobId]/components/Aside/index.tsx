@@ -17,7 +17,7 @@ const AsideFC = (props: propsT) => {
   const { id, is_saved, chat } = props.jobDetail
   return (
     <aside className={styles.aside}>
-      {!token && <SignUp jobId={props.jobId} />}
+      {!token && <SignUp jobId={props.jobId} job_url={props.jobDetail?.job_url} />}
 
       <Company {...props} />
 
