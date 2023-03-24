@@ -84,6 +84,7 @@ const MaterialTextFieldWithSuggestionList = ({
   defaultValue,
   value,
   options,
+  isLoading,
   onSelect,
   searchFn,
   updateSearchValue,
@@ -105,6 +106,7 @@ const MaterialTextFieldWithSuggestionList = ({
         options={options?.map((option) => option)}
         className={className}
         size={size}
+        loading={isLoading}
         onInputChange={(_, val: any, reason) => {
           console.log({ val, reason })
           if ((reason === 'clear') && onSelect) {
@@ -136,6 +138,7 @@ const MaterialTextFieldWithSuggestionList = ({
             maxLength={maxLength}
             label={label}
             color={color as any}
+            onFocus={handleChange}
             // variant='standard'
             // inputProps={{disableUnderline:true}}
             onChange={handleChange}

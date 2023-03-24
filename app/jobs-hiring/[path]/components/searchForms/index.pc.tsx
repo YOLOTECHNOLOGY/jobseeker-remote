@@ -80,7 +80,7 @@ const SearchArea = (props: any) => {
       label: item.value
     })) ?? []
   const [searchValue, setSearchValue] = useState(searchValues.query)
-  const [suggestionList, handleSuggestionSearch, addSearchHistory] = useSuggest() as any[]
+  const [suggestionList, handleSuggestionSearch, addSearchHistory,searchLoading] = useSuggest() as any[]
 
   const filterParams = useMemo(() => {
     return filter((a) => a)({
@@ -139,6 +139,7 @@ const SearchArea = (props: any) => {
               className={styles.search}
               value={searchValue}
               maxLength={255}
+              isLoading={searchLoading}
               searchFn={handleSuggestionSearch as any}
               updateSearchValue={setSearchValue}
               onKeyPress={(e) => {
