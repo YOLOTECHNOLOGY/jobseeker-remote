@@ -1,0 +1,24 @@
+@import 'styles/mixins.scss';
+
+.container {
+
+    overflow: hidden;
+    border-radius: 10px;
+    background: transparent;
+    padding-left: 24px;
+    width: fit-content;
+    @include sm {
+        display: none;
+    }
+
+    .jobContainer {
+        margin-bottom: 15px;
+    }
+}
+.mobileContainer {
+    display: none;
+    @include sm {
+        display: flex;
+        flex-direction: column;
+    }
+}

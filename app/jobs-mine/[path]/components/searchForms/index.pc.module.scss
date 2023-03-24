@@ -1,0 +1,140 @@
+@import '/styles/mixins.scss';
+
+.container {
+  width: 100vw;
+  height: 153px;
+  max-width: 100%;
+  display: flex;
+  // position: sticky;
+  top: 0px;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  padding-left: calc(50vw - 585px);
+
+  @include sm {
+    display: none;
+  }
+
+  .searchArea {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: fit-content;
+    width: calc(50vw + 585px);
+    height: 74px;
+    padding-left: 24px;
+
+    .location {
+      width: 196px;
+      height: 44px;
+    }
+
+    .search {
+      width: 608px;
+      height: 44px;
+      // border: 1px solid #ccc;
+      background: #fff;
+      margin-left: 8px;
+      // label {
+      //   line-height: 100%;
+      // }
+      position: relative;
+      top: 2px;
+    }
+
+    .searchButton {
+      margin-left: 8px;
+      text-transform: capitalize !important;
+      background: #136FD3;
+      color: #fff;
+      width: 119px;
+      height: 44px;
+      border-radius: 10px;
+    }
+
+    .downloadApp {
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      height: 36px;
+      align-items: center;
+      margin-left: 30px;
+      margin-bottom: 3px;
+
+      .text {
+        width: 116px;
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 0.0075em;
+        color: #136FD3;
+        margin-left: 10px;
+      }
+    }
+
+    .loginButton {
+      text-transform: capitalize !important;
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 18px;
+      align-items: center;
+      letter-spacing: 0.0075em;
+      color: #136FD3;
+      width: 216px;
+      height: 44px;
+      border: 2px solid #136FD3;
+      border-radius: 10px;
+      margin-left: 9px;
+
+      span {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: calc(50vw + 585px);
+    height: 50px;
+    padding-top: 20px;
+    padding-left: 24px;
+
+    .filterItems {
+      height: 30px;
+      width: 196px;
+      margin-right: 8px;
+
+    }
+
+    .jobFunctions {
+      width: 184px;
+    }
+
+    .moreButton {
+      text-transform: capitalize !important;
+      border-radius: 10px;
+      width: 145px;
+    }
+
+    .clearButton {
+      text-transform: capitalize !important;
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+      align-items: center;
+      letter-spacing: 0.0075em;
+      color: #707070;
+
+    }
+  }
+}
