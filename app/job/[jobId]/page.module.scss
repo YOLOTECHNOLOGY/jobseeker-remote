@@ -13,6 +13,12 @@
   }
 }
 
+.headSticky {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
 .head {
   width: 100%;
   background-color: white;
@@ -468,6 +474,25 @@
     .published_at {
       display: none;
     }
+
+    &_mobilesticky_btnGroup {
+      display: none;
+      width: 100%;
+      padding: 8px 20px;
+      background-color: white;
+      position: fixed;
+      bottom: 0px;
+      z-index: 10;
+
+      &_change {
+        button {
+          flex: 1;
+        }
+        button:first-child {
+          justify-content: center;
+        }
+      }
+    }
   }
 }
 
@@ -485,6 +510,7 @@
   }
 }
 
+// TODO Mobile styles
 // < 1170px
 @media (max-width: $NextAppMaxWidth) {
   .head {
@@ -521,6 +547,10 @@
 }
 
 @include msd {
+  .headSticky {
+    position: unset;
+  }
+
   .head {
     padding-bottom: 0;
 
@@ -835,6 +865,10 @@
         color: #707070;
         padding-left: 20px;
         margin-bottom: 40px;
+      }
+
+      &_mobilesticky_btnGroup {
+        display: block;
       }
     }
   }

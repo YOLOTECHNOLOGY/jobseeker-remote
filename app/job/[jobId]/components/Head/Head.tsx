@@ -6,6 +6,7 @@ import { Stack, Avatar } from 'app/components/MUIs'
 import { UploadResumeIcon, CompleteResumeIcon } from 'images'
 
 import styles from '../../page.module.scss'
+import classNames from 'classnames'
 type propsType = {
   title?: string
   localhost?: string
@@ -34,7 +35,7 @@ const Head = ({
   status_key
 }: propsType) => {
   return (
-    <section className={styles.head}>
+    <section className={classNames([styles.head, styles.headSticky])}>
       <div className={styles.head_main}>
         <div className={styles.head_main_title}>
           <div className={styles.head_main_titleWrapper}>
