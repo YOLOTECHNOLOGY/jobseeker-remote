@@ -6,10 +6,12 @@ import { buildComponentScript } from 'app/abstractModels/util'
 import Pagination from 'app/components/commons/Pagination'
 import JobCard from '../jobCard'
 import MobileTable from './mobile'
+import Loader from './loader'
 const Table = (props: any) => {
     const { jobs = [], page, totalPages } = props
     // jobs = [], page, totalPages, searchValues, config
-    return <>
+
+    return <Loader>
         <div className={styles.container}>
             {jobs.map(job => {
                 return (<div className={styles.jobContainer} key={job?.id}>
@@ -22,7 +24,7 @@ const Table = (props: any) => {
             />
         </div>
         <MobileTable {...props} />
-    </>
+    </Loader>
 }
 
 export default tableIp(serverDataScript()
