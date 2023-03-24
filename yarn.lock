@@ -5522,10 +5522,10 @@ imforbossjob@^0.0.1117:
     sha1 "^1.1.1"
     viewerjs "^1.11.0"
 
-imforbossjob@^0.0.1128:
-  version "0.0.1128"
-  resolved "https://registry.npmjs.org/imforbossjob/-/imforbossjob-0.0.1128.tgz#af13072ef629ea9f25e36c546ff5ef0129ebdd6d"
-  integrity sha512-cHGZ1grFmo5CoIyvyw3x4nmB5QdcSOeFqRosI94dkeiXhLprj173fNV+7n40jU8Mxqj9Q8Nfa4eQrAgvxSC1qw==
+imforbossjob@^0.0.1129:
+  version "0.0.1129"
+  resolved "https://registry.npmjs.org/imforbossjob/-/imforbossjob-0.0.1129.tgz#985f3879d56e8f7284fdca798297686c4b85c944"
+  integrity sha512-wJJeVY8oJ0hL6dkKKD8qrem+UtS71VlJlI4khoVhNkLbEyp0yLV/tuQFY3zMtXKAdHqXHPnHO7MxLlRfmjtAog==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"

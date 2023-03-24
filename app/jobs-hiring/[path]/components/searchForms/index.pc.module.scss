@@ -80,7 +80,7 @@
       text-transform: capitalize !important;
       font-family: 'Product Sans';
       font-style: normal;
-      font-weight: 900;
+      font-weight: 700;
       font-size: 14px;
       line-height: 18px;
       align-items: center;
@@ -88,10 +88,9 @@
       color: #136FD3;
       width: 216px;
       height: 44px;
-      border: 2px solid #136FD3;
+      border: 1.5px solid #136FD3;
       border-radius: 10px;
       margin-left: 9px;
-
       span {
         margin-left: 5px;
       }
@@ -122,6 +121,9 @@
       text-transform: capitalize !important;
       border-radius: 10px;
       width: 145px;
+      border: 1.5px solid #136FD3;
+      font-weight: 700;
+      font-size: 14px;
     }
 
     .clearButton {
@@ -134,7 +136,8 @@
       align-items: center;
       letter-spacing: 0.0075em;
       color: #707070;
-
+      font-size: 14px;
+      margin-left: 4px;
     }
   }
 }

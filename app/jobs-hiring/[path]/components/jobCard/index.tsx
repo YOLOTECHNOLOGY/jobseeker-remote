@@ -106,7 +106,7 @@ const useJobDetail = (jobId) => {
 
 const JobCard = (props: any) => {
     const {
-        function_job_title,
+        job_title,
         job_region,
         salary_range_value,
         job_type,
@@ -161,16 +161,18 @@ const JobCard = (props: any) => {
                 className={styles.container}
 
             >
-                <div className={styles.topContainer}>
+                <div 
+                    
+                className={styles.topContainer}>
                     <div className={styles.left} onClick={() => router.push(job_url, { forceOptimisticNavigation: true })}>
                         <div
-                            key={function_job_title + id}
+                            key={job_title + id}
                             onMouseEnter={() => setTitleHover(true)}
                             onMouseLeave={() => setTitleHover(false)}
                             className={styles.titleContainer}
-                            title={`${function_job_title} (${job_region})`}
+                            title={`${job_title} (${job_region})`}
                         >
-                            <div className={styles.title}>{`${function_job_title} (${job_region})`}</div>
+                            <div className={styles.title}>{`${job_title} (${job_region})`}</div>
                             <div className={styles.salary}>{salary_range_value}</div>
                         </div>
 
@@ -266,9 +268,9 @@ const JobCard = (props: any) => {
                 <div className={styles.popTop}>
                     <div className={styles.popTopLeft}>
                         <div
-                            title={`${function_job_title} (${job_region})`}
+                            title={`${job_title} (${job_region})`}
                             className={styles.title}>
-                            {`${function_job_title} (${job_region})`}
+                            {`${job_title} (${job_region})`}
                         </div>
                         <div
                             className={styles.secondLabel}
@@ -298,7 +300,7 @@ const JobCard = (props: any) => {
                         </MaterialButton>
                     </div>
                     <div className={styles.popTopRight} >
-                        <Image style={{ margin: '0px 8px' }} src={AppDownQRCode} height={56} width={56} alt={''} />
+                        <Image style={{ margin: '0px 6px' }} src={AppDownQRCode} height={60} width={60} alt={''} />
                         Talk to Boss anywhere
                     </div>
                 </div>

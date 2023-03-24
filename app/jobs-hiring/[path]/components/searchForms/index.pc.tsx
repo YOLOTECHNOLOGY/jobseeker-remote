@@ -80,11 +80,11 @@ const SearchArea = (props: any) => {
       label: item.value
     })) ?? []
   const [searchValue, setSearchValue] = useState(searchValues.query)
-  const [suggestionList, handleSuggestionSearch, addSearchHistory] = useSuggest() as any[]
+  const [suggestionList, handleSuggestionSearch, addSearchHistory, searchLoading] = useSuggest() as any[]
 
   const filterParams = useMemo(() => {
     return filter((a) => a)({
-      query: searchValue,
+      query: searchValue?.trim?.(),
       salary: salaries,
       location: [location?.['seo_value']].filter((a) => a),
       jobType: jobTypes,
@@ -95,6 +95,7 @@ const SearchArea = (props: any) => {
     })
   }, [searchValue, salaries, jobTypes, moreData, location, sort, jobFunctionValue])
   const router = useRouter()
+  console.log({ filterParams })
   const result = useMemo(() => {
 
     return encode(filterParams)
@@ -106,7 +107,7 @@ const SearchArea = (props: any) => {
     }
     const url = new URLSearchParams(toPairs(result.params)).toString()
     push('/jobs-hiring/' + result.searchQuery + '?' + url)
-  }, [result,push])
+  }, [result, push])
   const reloadRef = useRef(reload)
   useEffect(() => {
     reloadRef.current = reload
@@ -139,6 +140,7 @@ const SearchArea = (props: any) => {
               className={styles.search}
               value={searchValue}
               maxLength={255}
+              isLoading={searchLoading}
               searchFn={handleSuggestionSearch as any}
               updateSearchValue={setSearchValue}
               onKeyPress={(e) => {

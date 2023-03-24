@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React from 'react'
+import React, {  } from 'react'
 import styles from './index.mobile.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 
 const JobCard = (props: any) => {
     const {
-        function_job_title,
+        job_title,
         job_region,
         salary_range_value,
         job_type,
@@ -24,6 +24,7 @@ const JobCard = (props: any) => {
     } = props
     const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
     const router = useRouter()
+   
     return <div className={styles.main}>
         <div
             id={'job_card_container_' + id}
@@ -34,16 +35,16 @@ const JobCard = (props: any) => {
             }}
         >
             <div
-                key={function_job_title + id}
+                key={job_title + id}
                 className={styles.titleContainer}
-                title={`${function_job_title} (${job_region})`}
+                title={`${job_title} (${job_region})`}
             >
-                <div className={styles.title}>{`${function_job_title} (${job_region})`}</div>
+                <div className={styles.title}>{`${job_title} (${job_region})`}</div>
                 <div className={styles.salary}>{salary_range_value}</div>
             </div>
             <div
                 className={styles.companyName}
-                
+
             >{company_name}</div>
             <div className={styles.labelContainer}>
                 {labels.map(label => <div key={label} className={styles.label}>{label}</div>)}
