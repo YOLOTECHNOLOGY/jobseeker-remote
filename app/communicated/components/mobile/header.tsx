@@ -88,7 +88,7 @@ const Header = ({
                     <span className={styles.bactText}>Back</span>
                 </Link>
                 <span className={styles.line} >|</span>
-                <Box sx={{ width: 'calc(100vw - 120px)', bgcolor: 'background.paper' }}>
+                <Box sx={{ width: 'calc(100vw - 106px)', bgcolor: 'background.paper' }}>
                 <StyledTabs
                     value={tabValue}
                     variant='scrollable'

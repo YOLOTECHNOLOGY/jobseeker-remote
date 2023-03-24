@@ -28,3 +28,10 @@ export const transState = (time: string | number) => {
     }
   }
 }
+ 
+export const isSameDay = (startTime?:string, endTime?:string) => {
+  if (!endTime) return false
+  const startTimeMs = new Date(startTime).setHours(0, 0, 0, 0);
+  const endTimeMs = new Date(endTime).setHours(0, 0, 0, 0);
+  return startTimeMs === endTimeMs
+}

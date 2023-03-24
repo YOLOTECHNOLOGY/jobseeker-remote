@@ -92,7 +92,7 @@ const JobCardInterview = (props: any) => {
           </div>
           <div className={styles.rightContent}>
             <p className={styles.time}><span>Interview Time</span>: {interviewedAt}</p>
-            <Tooltip title={fullAddress} placement="top">
+            <Tooltip title={fullAddress || ''} placement="top">
               <p className={styles.time}><span>Address</span>: {fullAddress} </p>
             </Tooltip>
           </div>

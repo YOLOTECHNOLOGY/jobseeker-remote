@@ -10,6 +10,7 @@ import Link from 'next/link';
 import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
 import CardHeader from '@mui/material/CardHeader';
+import {isSameDay} from 'helpers/utilities'
 interface cardProps {
   data: Array<any>,
   onChange: Function,
@@ -32,12 +33,7 @@ const Card = ({
   loadingList,
 }: cardProps) => {
 
-  const isSameDay = (startTime, endTime) => {
-    if (!endTime) return false
-    const startTimeMs = new Date(startTime).setHours(0, 0, 0, 0);
-    const endTimeMs = new Date(endTime).setHours(0, 0, 0, 0);
-    return startTimeMs === endTimeMs
-  }
+
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     onChange(value)
