@@ -15,9 +15,10 @@ type propsType = {
   is_saved: boolean
   chat: any
   jobId: number
+  className?: string
 }
 
-const Btn = ({ jobId, chat, is_saved }: propsType) => {
+const Btn = ({ jobId, chat, is_saved, className }: propsType) => {
   const dispatch = useDispatch()
   const [saveLoading, setSaveLoading] = useState<boolean>(false)
   // const [chatLoading, setChatLoading] = useState<boolean>(false)
@@ -79,7 +80,7 @@ const Btn = ({ jobId, chat, is_saved }: propsType) => {
 
   return (
     <>
-      <Stack spacing={2} direction='row'>
+      <Stack spacing={2} direction='row' className={className}>
         <MaterialButton
           variant='outlined'
           sx={{
