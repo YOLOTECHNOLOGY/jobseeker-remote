@@ -38,6 +38,7 @@ const AsideFC = (props: propsT) => {
           is_saved={is_saved}
           chat={chat}
           className={styles.aside_mobilesticky_btnGroup_change}
+          jobDetail={props.jobDetail}
         />
       </div>
     </aside>
