@@ -75,7 +75,7 @@ export async function generateMetadata(props: any) {
         seoMetaTitle = `Professional Jobs in Philippines - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
         seoMetaDescription = `New Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
     }
-    const description = encodeURI(seoMetaDescription) as string
+    const description = seoMetaDescription
     const imageUrl = 'https://assets.bossjob.com/website/OGTagImage.png'
 
     const metadata: Metadata = {

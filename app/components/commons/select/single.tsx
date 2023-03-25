@@ -57,7 +57,22 @@ const SingleSelect = ({
             label={label}
             onChange={handleChange}
             input={<OutlinedInput label='Tag' />}
-        // renderValue={(value: any) => empty(value) ? <InputLabel id={`${id}-select-label`}>{label}</InputLabel> : value}
+            renderValue={(value: any) => {
+
+                if (!value) {
+                    return <div style={{
+                        color: 'rgba(0, 0, 0, 0.6)', position: 'relative',
+                        left: 5,
+                        top: 2,
+                    }}>{label}</div>
+                } else {
+                    return <div style={{
+                        position: 'relative',
+                        left: 5,
+                        top: 2,
+                    }}>{options.find(option => option.value === value).label}</div>
+                }
+            }}
         >
             {options &&
                 options.map((option: any) => (
