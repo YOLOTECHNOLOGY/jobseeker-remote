@@ -13,6 +13,7 @@ import { getCurrentMonthYear, unslugify } from 'helpers/formatter'
 import { decoder } from 'app/jobs-hiring/interpreters/encoder'
 import { Metadata } from 'next'
 import { toPairs } from 'ramda'
+import LoadingProvider from 'app/components/providers/loadingProvider'
 
 const configs = getConfigs([
     ['inputs', 'location_lists'],
@@ -122,7 +123,7 @@ export async function generateMetadata(props: any) {
 
 
 const Main = (props: any) => {
-    return <div >
+    return <LoadingProvider >
         <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
             <SearchForm config={props.config} searchValues={props.searchValues ?? null} />
         </div>
@@ -133,7 +134,7 @@ const Main = (props: any) => {
                 </Suspense>
             </div>
         </div>
-    </div>
+    </LoadingProvider>
 }
 
 export default configs(serverDataScript())

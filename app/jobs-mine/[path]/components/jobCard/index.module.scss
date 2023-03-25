@@ -1,7 +1,14 @@
 .main {
-    width: 894px;
+    width: 918px;
     height: 170px;
     position: relative;
+    padding-right: 24px;
+    .urgent {
+        position: absolute;
+        top: -1px;
+        left: 0px;
+        z-index: 30;
+    }
 
     .container {
         width: 100%;
@@ -39,26 +46,32 @@
                     width: 100%;
 
                     .title {
+                        --color: #353535;
                         flex-shrink: 1;
                         font-family: 'Product Sans';
                         font-style: normal;
                         font-weight: 700;
-                        font-size: 18px;
+                        font-size: 16px;
                         line-height: 23px;
                         align-items: center;
                         letter-spacing: 0.02em;
-                        color: #353535;
+                        color: var(--color);
                         width: 350px;
                         white-space: nowrap;
                         overflow: hidden;
+                        transition: color 0.3s;
                         text-overflow: ellipsis;
+
+                        &:hover {
+                            --color: #136FD3;
+                        }
                     }
 
                     .salary {
                         font-family: 'Product Sans';
                         font-style: normal;
                         font-weight: 700;
-                        font-size: 18px;
+                        font-size: 16px;
                         line-height: 23px;
                         align-items: center;
                         letter-spacing: 0.02em;
@@ -75,7 +88,7 @@
                     margin-top: 5px;
                     width: 100%;
                     display: flex;
-                    justify-content: space-between;
+                    // justify-content: space-between;
                     flex-direction: row;
 
                     .label {
@@ -92,6 +105,7 @@
                         line-height: 15px;
                         letter-spacing: 0.0075em;
                         color: #707070;
+                        margin-right: 8px;
                     }
                 }
 
@@ -206,6 +220,7 @@
 
                     .labelContainer {
                         .name {
+                            --color: #353535;
                             font-family: 'Product Sans';
                             font-style: normal;
                             font-weight: 700;
@@ -213,7 +228,12 @@
                             line-height: 23px;
                             align-items: center;
                             letter-spacing: 0.02em;
-                            color: #353535;
+                            transition: color 0.3s;
+                            color: var(--color);
+
+                            &:hover {
+                                --color: #136FD3;
+                            }
                         }
 
                         .componylabels {
@@ -313,7 +333,7 @@
     .popupDetail {
         position: absolute;
         top: 0px;
-        right: 0px;
+        right: 30px;
         width: 380px;
         // height: 395px;
         background: #fff;

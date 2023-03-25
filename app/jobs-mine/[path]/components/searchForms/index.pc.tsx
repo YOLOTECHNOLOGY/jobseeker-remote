@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react'
+import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
 import LocationField from 'app/components/commons/location'
@@ -25,6 +25,8 @@ import { useRouter } from 'next/navigation'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { filter } from 'ramda'
 import useUserAgent from 'helpers/useUserAgent'
+import { LoadingContext } from 'app/components/providers/loadingProvider'
+
 const sortOptions = [
   { label: 'Newest', value: '1' },
   { label: 'Relevance', value: '2' },
@@ -40,7 +42,7 @@ const SearchArea = (props: any) => {
   const accessToken = getCookie('accessToken')
   const userCookie = getCookie('user')
   const [page, setPage] = useState(searchValues.page ?? '1')
-
+  const { push } = useContext(LoadingContext)
   const locations = flatMap(config.inputs.location_lists, (item) => item.locations)
   const [location, setLocation] = useState(
     locations.find((location) => location.seo_value === searchValues.location?.[0])
@@ -78,11 +80,11 @@ const SearchArea = (props: any) => {
       label: item.value
     })) ?? []
   const [searchValue, setSearchValue] = useState(searchValues.query)
-  const [suggestionList, handleSuggestionSearch, addSearchHistory] = useSuggest() as any[]
+  const [suggestionList, handleSuggestionSearch, addSearchHistory, searchLoading] = useSuggest() as any[]
 
   const filterParams = useMemo(() => {
     return filter((a) => a)({
-      query: searchValue,
+      query: searchValue?.trim?.(),
       salary: salaries,
       location: [location?.['seo_value']].filter((a) => a),
       jobType: jobTypes,
@@ -93,8 +95,9 @@ const SearchArea = (props: any) => {
     })
   }, [searchValue, salaries, jobTypes, moreData, location, sort, jobFunctionValue])
   const router = useRouter()
+  console.log({ filterParams })
   const result = useMemo(() => {
-   
+
     return encode(filterParams)
   }, [filterParams])
   const firstRender = useFirstRender()
@@ -103,10 +106,8 @@ const SearchArea = (props: any) => {
       return
     }
     const url = new URLSearchParams(toPairs(result.params)).toString()
-    router.push('/job-search/' + result.searchQuery + '?' + url, {
-      forceOptimisticNavigation: true
-    })
-  }, [result])
+    push('/jobs-hiring/' + result.searchQuery + '?' + url)
+  }, [result, push])
   const reloadRef = useRef(reload)
   useEffect(() => {
     reloadRef.current = reload
@@ -139,6 +140,7 @@ const SearchArea = (props: any) => {
               className={styles.search}
               value={searchValue}
               maxLength={255}
+              isLoading={searchLoading}
               searchFn={handleSuggestionSearch as any}
               updateSearchValue={setSearchValue}
               onKeyPress={(e) => {

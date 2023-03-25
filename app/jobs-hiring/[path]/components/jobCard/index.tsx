@@ -39,7 +39,7 @@ const useShowPop = (titleHover, popHover) => {
                 }
                 clearTimeout(timerRef.current)
                 timerRef.current = null
-            }, 500)
+            }, 300)
         } else if (!titleHover && !popHover) {
             if (timerRef.current) {
                 clearTimeout(timerRef.current)
