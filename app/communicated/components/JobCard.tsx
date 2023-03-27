@@ -10,7 +10,7 @@ import Link from 'next/link';
 import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
 import CardHeader from '@mui/material/CardHeader';
-import {isSameDay} from 'helpers/utilities'
+import {isSameDay,transDate} from 'helpers/utilities'
 interface cardProps {
   data: Array<any>,
   onChange: Function,
@@ -45,7 +45,7 @@ const Card = ({
       return (
         <div key={e.id}>
           {
-            !same && e.created_at && <p className={styles.time}>{e.created_at?.substr(0, 10)}</p>
+            !same && e.created_at && <p className={styles.time}>{transDate(e.created_at?.substr(0, 10))}</p>
           }
           <JobCardNormal data={e} handelSave={handelSave} loadingChat={loadingChat} />
         </div>

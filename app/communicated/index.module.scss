@@ -123,7 +123,7 @@
       &:hover{
         box-shadow: 5px 5px 7px #ccc;
         .chatBox{
-          transform: translateY(0);
+          transform: translateY(0) !important;
           transition: .3s;
         }
       }
@@ -535,7 +535,6 @@
     border-radius: 10px;
     font-weight: 700;
     font-size: 14px;
-    line-height: 18px;
     color: #136FD3;
     text-align: center;
     display: block;
@@ -550,6 +549,8 @@
     overflow: hidden;
     a{
       display: block;
+      line-height: 44px;
+      color: #136FD3;
     }
     a:hover{
       background: #136FD3;
