@@ -107,7 +107,7 @@ const SearchArea = (props: any) => {
                         className={styles.location}
                         locationList={config.inputs.location_lists}
                         value={location}
-                        disableClearable={false}
+                        disableClearable={true}
                         isClear={true}
                         defaultValue={location}
                         onChange={(e, value) => {
