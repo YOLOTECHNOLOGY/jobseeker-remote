@@ -1,5 +1,4 @@
 import { ReaderTPromise as M } from './monads'
-import { NextResponse } from 'next/server';
 import { redirect } from 'next/navigation';
 export default command =>
   command.cata({

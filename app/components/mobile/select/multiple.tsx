@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React, { useState, useEffect , useRef} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
@@ -64,12 +64,26 @@ const MultipleSelect = ({
         open={open}
         autoFocus={false}
         onOpen={() => setOpen(true)}
-        style={{ ...style, background: value?.length ? '#E7F1FB' : '#F0F0F0' }}
-        value={selectedOptions}
+        style={{ ...style, background: selectedOptions?.length ? '#E7F1FB' : '#F0F0F0' }}
+        value={selectedOptions.length ? selectedOptions : [label]}
         label={label}
-        onChange={handleChange}
+        // onChange={handleChange}
         input={<OutlinedInput label='Tag' />}
-        renderValue={(selected: any) => `${label} ${selected?.length ? `(${selected.length})` : ''}`}
+        renderValue={(selected: any) => {
+          if (selectedOptions?.length) {
+            return <div style={{
+              position: 'relative',
+              top: 2,
+            }}>{`${label} (${selected.length})`}
+            </div>
+          } else {
+            return <div style={{
+              color: 'rgba(0, 0, 0, 0.6)',
+              position: 'relative',
+              top: 2,
+            }}>{label}</div>
+          }
+        }}
       >
         <PopContainer
           name={label}

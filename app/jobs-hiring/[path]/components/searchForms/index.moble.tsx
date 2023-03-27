@@ -4,7 +4,7 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
-import LocationField from 'app/components/commons/location'
+import LocationField from 'app/components/mobile/location'
 import JobSearchBar from '../../../../components/commons/location/search'
 import styles from './index.mobile.module.scss'
 import Single from 'app/components/mobile/select/single'
@@ -107,7 +107,7 @@ const SearchArea = (props: any) => {
                         className={styles.location}
                         locationList={config.inputs.location_lists}
                         value={location}
-                        disableClearable={false}
+                        disableClearable={true}
                         isClear={true}
                         defaultValue={location}
                         onChange={(e, value) => {

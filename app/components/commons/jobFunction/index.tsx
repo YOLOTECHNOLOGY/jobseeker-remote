@@ -22,7 +22,10 @@ const JobFunctionMultiSelector = (props: any) => {
     const [firstRender, setFirstRender] = useState(true)
     const [isClosing, setIsClosing] = useState(false)
     const { width } = useWindowDimensions()
-    const isMobile = width < 768 ? true : false
+    const isMobile = useMemo(() => {
+        return window.screen.width < 768
+    }, [width])
+    // const isMobile = width < 768 ? true : false
     const [activeFirst, setActiveFirst] = useState<any>()
     const [activeSecond, setActiveSecond] = useState<any>()
     const secondList = useMemo(() => {
@@ -47,6 +50,7 @@ const JobFunctionMultiSelector = (props: any) => {
             setActiveFirst(null)
             setActiveSecond(null)
         }
+     
         // return () => document.body.style.overflow = 'auto'
     }, [showModal, isMobile])
     useEffect(() => {

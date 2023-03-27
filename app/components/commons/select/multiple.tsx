@@ -52,7 +52,6 @@ const MultipleSelect = ({
       onSelect(formattedValue)
     }
   }
-  console.log({ selectValue: value })
   return (
     <FormControl fullWidth className={className} size='small'>
       <InputLabel id={`${id}-select-label`}>{label}</InputLabel>

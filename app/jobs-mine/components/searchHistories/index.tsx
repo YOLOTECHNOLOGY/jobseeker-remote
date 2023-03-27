@@ -4,6 +4,12 @@ import styles from './index.module.scss'
 import Link from 'next/link'
 const SearchHistories = (props: any) => {
     const { list = [], location } = props
+    if (!list?.length) {
+        return null
+    }
+    if (list.length > 10) {
+        list.length = 10
+    }
     return <div className={styles.container}>
         <div className={styles.title}>Related Search</div>
         {list.map(item => {
