@@ -44,7 +44,9 @@ const MultipleSelect = ({
       target: { value },
     } = event
     // On autofill we get a the stringified value.
-    const formattedValue = (typeof value === 'string' ? value.split(',') : value).map(item => item.toLowerCase())
+    const formattedValue = (typeof value === 'string' ? value.split(',') : value)
+      .filter(item => item !== 'emptyValue')
+      .map(item => item.toLowerCase())
     setSelectedOptions(formattedValue)
     if (onSelect) {
       onSelect(formattedValue)
@@ -62,11 +64,28 @@ const MultipleSelect = ({
         id={id}
         multiple
         style={{ ...style, background: value?.length ? '#E7F1FB' : '#F0F0F0' }}
-        value={selectedOptions}
+        value={selectedOptions.length ? selectedOptions : ['emptyValue']}
         label={label}
         onChange={handleChange}
         input={<OutlinedInput label='Tag' />}
-        renderValue={(selected: any) => `${label} ${selected?.length ? `(${selected.length})` : ''}`}
+        placeholder={label}
+        renderValue={(selected: any) => {
+
+          if (selected?.[0] === 'emptyValue') {
+            return <div style={{
+              color: 'rgba(0, 0, 0, 0.6)', position: 'relative',
+              left: 5,
+              top: 2,
+            }}>{label}</div>
+          } else {
+            return <div style={{
+              position: 'relative',
+              left: 5,
+              top: 2,
+
+            }}>{`${label} ${selected?.length ? `(${selected.length})` : label}`}</div>
+          }
+        }}
       >
         {options &&
           options.map((option: any) => (

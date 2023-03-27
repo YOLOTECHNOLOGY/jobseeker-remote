@@ -8,6 +8,7 @@ const interpreter = registInterpreter(command =>
     command.cata({
         parseUrl: config => M.do(context => {
             // return context
+            console.log({ context })
             return decoder(config)(context.params.path, context.searchParams)
         }),
     }))

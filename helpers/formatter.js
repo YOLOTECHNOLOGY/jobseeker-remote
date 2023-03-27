@@ -9,23 +9,27 @@ export const numberToThousands = (number) => {
 }
 
 export const unslugify = (string, capitalize = false) => {
+  console.log({ string })
+  if (typeof string !== 'string') {
+    return string
+  }
   if (string) {
     if (!capitalize) {
-      return string.split('-').join(' ')
+      return string.split?.('-')?.join(' ')
     }
-    let strings = string.split('-')
+    let strings = string?.split?.('-')
     strings = strings.map((str) => str.charAt(0).toUpperCase() + str.slice(1))
     return strings.join(' ')
   }
 }
 
 export const unslugifyTwo = (string) => {
-  return string.split('-').join('_')?.toLowerCase?.()
+  return string.split?.('-')?.join('_')?.toLowerCase?.()
 }
 
 export const thousandsToNumber = (string) => {
   if (string !== 'Above 100K') {
-    const number = parseInt(string.split('K')[0], 10)
+    const number = parseInt(string?.split?.('K')?.[0], 10)
     return number * 1000
   } else {
     return 100001
@@ -176,26 +180,26 @@ export const getCurrentMonthYear = () => {
   }
 }
 
-export const getYearMonthDiffBetweenDates = (from, to) =>{
-    const a = moment(from)
-    const b = moment(to)
-    const monthDiff = b.diff(a, 'months')
-    const yearDiff = b.diff(a, 'years')
-    const remainingMonthDiff = monthDiff - yearDiff * 12
-    let dateDiffString = ''
+export const getYearMonthDiffBetweenDates = (from, to) => {
+  const a = moment(from)
+  const b = moment(to)
+  const monthDiff = b.diff(a, 'months')
+  const yearDiff = b.diff(a, 'years')
+  const remainingMonthDiff = monthDiff - yearDiff * 12
+  let dateDiffString = ''
 
-    if (monthDiff < 12 && monthDiff !== 0) {
-      dateDiffString = `${monthDiff} month${monthDiff > 1 ? 's' : ''}`
+  if (monthDiff < 12 && monthDiff !== 0) {
+    dateDiffString = `${monthDiff} month${monthDiff > 1 ? 's' : ''}`
+  }
+
+  if (yearDiff > 0) {
+    dateDiffString = `${yearDiff} year${yearDiff > 1 ? 's' : ''}`
+    if (remainingMonthDiff > 0) {
+      dateDiffString += ` ${remainingMonthDiff} month${remainingMonthDiff > 1 ? 's' : ''}`
     }
+  }
 
-    if (yearDiff > 0){
-      dateDiffString =  `${yearDiff} year${yearDiff > 1 ? 's' : ''}`
-      if (remainingMonthDiff > 0) {
-        dateDiffString += ` ${remainingMonthDiff} month${remainingMonthDiff > 1 ? 's' : ''}`
-      }
-    }
-
-    return dateDiffString
+  return dateDiffString
 }
 
 export const getFromObject = (obj, allowedAttributes) => {

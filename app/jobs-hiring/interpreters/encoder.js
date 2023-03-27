@@ -142,7 +142,7 @@ export const buildValue = seo => {
 export const transToValues = seos => seos ? seos.map(buildValue).join(',') : null
 export const thousandsToNumber = (string) => {
     if (string !== 'Above 100K') {
-        const number = parseInt(string.split('K')[0], 10)
+        const number = parseInt(string?.split?.('K')?.[0], 10)
         return number * 1000
     } else {
         return 100001

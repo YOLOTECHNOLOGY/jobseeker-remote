@@ -3,7 +3,7 @@ import { useState, useTransition, useCallback } from 'react'
 import useSearchHistory from 'helpers/useSearchHistory'
 
 export const useSuggest = () => {
-    const [, transitionStart] = useTransition()
+    const [loading, transitionStart] = useTransition()
     const [suggestionList, setSuggestionList] = useState([])
     const [searchHistories, addSearchHistory] = useSearchHistory()
 
@@ -22,5 +22,5 @@ export const useSuggest = () => {
         })
     }, [transitionStart])
 
-    return [suggestionList, handleSuggestionSearch,addSearchHistory]
+    return [suggestionList, handleSuggestionSearch, addSearchHistory, loading]
 }

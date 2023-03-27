@@ -55,9 +55,9 @@ const urlQueryParser = (string) => {
     const hasSingleQueryPattern = string.match(singleQueryPattern)
 
     if (hasDoubleQueryPattern) {
-      array = string.split('-jobs-in-')
+      array = string?.split?.('-jobs-in-')
     } else if (hasSingleQueryPattern) {
-      array = string.split('-jobs')
+      array = string?.split?.('-jobs')
       array = array.slice(0, -1)
     }
   }
