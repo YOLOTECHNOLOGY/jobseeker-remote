@@ -5,6 +5,7 @@ import Index from './index'
 import { getGoogleJobJSON } from 'app/components/SEO'
 
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
+import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
 
 const handleFetchJobDetail = async (params: any) => {
   const cookieStore = cookies()
@@ -24,6 +25,8 @@ const handleFetchJobDetail = async (params: any) => {
   const data = await fetchJobDetailService(querys)
     .then(({ data: { data } }) => data)
     .catch(() => ({ error: true }))
+
+  fetchAddJobViewService(querys)
 
   return { data, jobId }
 }

@@ -7,11 +7,13 @@ import MaterialButton from 'components/MaterialButton'
 import { FavoriteBorderIcon, FavoriteIcon } from 'app/components/MuiIcons'
 
 import useChatNow from 'app/hooks/useChatNow'
+import { getApplyJobLink } from 'helpers/jobPayloadFormatter'
 
 import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { getCookie } from 'helpers/cookies'
 
 type propsType = {
   is_saved: boolean
@@ -82,6 +84,16 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
       })
   }
 
+  const handleBtnEvent = () => {
+    if (jobDetail?.external_apply_url) {
+      const userCookie = getCookie('user') || null
+      const link = getApplyJobLink(jobDetail, userCookie)
+      window.open(link)
+    } else {
+      ;(chatNow as any)(jobDetail)
+    }
+  }
+
   return (
     <>
       <Stack spacing={2} direction='row' className={className}>
@@ -125,9 +137,19 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
             borderRadius: '10px'
           }}
           isLoading={loading as boolean}
-          onClick={() => (chatNow as any)(jobDetail)}
+          onClick={() => handleBtnEvent()}
         >
-          <span style={{ textTransform: 'capitalize' }}>Chat now</span>
+          <span style={{ textTransform: 'capitalize' }}>
+            {(() => {
+              if (jobDetail.external_apply_url) {
+                return 'Apply Now'
+              } else if (chat?.is_exists && chat?.job_id === jobId) {
+                return 'Continue Chat'
+              } else {
+                return 'Chat Now'
+              }
+            })()}
+          </span>
         </MaterialButton>
       </Stack>
 

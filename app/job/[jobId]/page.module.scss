@@ -540,6 +540,13 @@
   }
 }
 
+.workLocal {
+  width: 739px;
+  height: 421px;
+  background: #ffffff;
+  border-radius: 15px;
+}
+
 // TODO Mobile styles
 // < 1170px
 @media (max-width: $NextAppMaxWidth) {

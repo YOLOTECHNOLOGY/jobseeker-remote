@@ -19,10 +19,10 @@ interface Props {
   lng?: number
   width?: string
   height?: string
+  id?: string
 }
 
-const GoogleMap = ({ width, height, defaultAddress, lat, lng }: Props) => {
-  console.log(lat, lng)
+const GoogleMap = ({ width, height, defaultAddress, lat, lng, id }: Props) => {
   let maerker
   const search = useRef<any>()
   const searchCart = useRef<HTMLElement>()
@@ -34,7 +34,15 @@ const GoogleMap = ({ width, height, defaultAddress, lat, lng }: Props) => {
   useEffect(() => {
     loader.load().then(() => {
       // @ts-ignore
-      const map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+      let mapWrapperNode: HTMLElement
+      if (id) {
+        mapWrapperNode = document.getElementById(id)
+      } else {
+        mapWrapperNode = document.getElementById('map')
+      }
+
+      // @ts-ignore
+      const map = new google.maps.Map(mapWrapperNode, {
         center: { lat: lat ? lat : 14.59889, lng: lng ? lng : 120.98417 },
         zoom: 16,
         disableDefaultUI: true,
