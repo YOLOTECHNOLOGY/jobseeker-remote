@@ -121,8 +121,6 @@ const MaterialTextFieldWithSuggestionList = ({
         }}
         disableClearable={false}
         placeholder={label}
-        // classes={{}}
-
         defaultValue={defaultValue}
         inputValue={value}
         renderInput={(params) => (
@@ -131,16 +129,13 @@ const MaterialTextFieldWithSuggestionList = ({
             id={id}
             style={{ background: '#fff', color: '#ccc', borderRadius: '10px', height: 44 }}
             classes={{}}
-            // label={label}
             value={value}
-            // placeholder={label}
             hiddenLabel
             enterKeyHint='search'
             maxLength={maxLength}
             label={label}
             color={color as any}
             onFocus={handleChange}
-            // variant='standard'
             onChange={handleChange}
             {...rest}
             {...params}

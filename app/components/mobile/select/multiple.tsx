@@ -83,7 +83,7 @@ const MultipleSelect = ({
             valueRef.current = selectedOptions
             setOpen(false)
           }}
-          onReset={() => setSelectedOptions(valueRef.current)}
+          onReset={() => setSelectedOptions([])}
         >
           {options &&
             options.map((option: any) => (

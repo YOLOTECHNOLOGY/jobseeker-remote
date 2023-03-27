@@ -90,7 +90,7 @@ const GroupedMultipleSelect = ({
             valueRef.current = selectedOptions
             setOpen(false)
           }}
-          onReset={() => setSelectedOptions(valueRef.current)}
+          onReset={() => setSelectedOptions([])}
         >
           {keys(options).map((key, index) => {
             const value: any = options[key]
