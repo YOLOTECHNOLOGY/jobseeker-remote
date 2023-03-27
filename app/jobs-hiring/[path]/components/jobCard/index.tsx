@@ -223,7 +223,7 @@ const JobCard = (props: any) => {
                                     </MaterialButton>
                                 </div>
                                 {!!recruiter_is_online && <div className={styles.online}>
-                                    OnLine
+                                    Online
                                 </div>}
                             </div>
                         }, { className: styles.recruiterContainer }, false)}
@@ -254,7 +254,7 @@ const JobCard = (props: any) => {
                         {(job_skills ?? '').split(',').join(' | ')}
                     </div>
                     <div className={styles.benefits} title={job_benefits}>
-                        {job_benefits}
+                       { job_benefits}
                     </div>
                 </div>
             </div>

@@ -74,13 +74,13 @@ const MultipleSelect = ({
           if (selected?.[0] === 'emptyValue') {
             return <div style={{
               color: 'rgba(0, 0, 0, 0.6)', position: 'relative',
-              left: 5,
+              left: 13,
               top: 2,
             }}>{label}</div>
           } else {
             return <div style={{
               position: 'relative',
-              left: 5,
+              left: 13,
               top: 2,
 
             }}>{`${label} ${selected?.length ? `(${selected.length})` : label}`}</div>

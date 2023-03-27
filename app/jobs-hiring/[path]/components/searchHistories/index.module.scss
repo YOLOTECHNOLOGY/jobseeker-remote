@@ -14,15 +14,17 @@
         height: 40.93px;
         background: #F0F0F0;
     }
-
+    a{
+        display: block;
+    }
     .item {
         width: 100%;
         height: 39px;
-        left: 0px;
-        top: 0px;
-        display: flex;
-        align-items: center;
         padding-left: 7px;
         background: #FFFFFF;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: keep-all;
+        line-height: 39px;
     }
 }
