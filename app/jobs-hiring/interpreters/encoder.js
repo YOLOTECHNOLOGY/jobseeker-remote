@@ -193,7 +193,7 @@ export const buildParams = (config, searchValues) => {
         salary_to: salaryTo,
         job_types: searchValues.jobType?.map?.(key => jobTypeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
         xp_lvls: searchValues.workExperience?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-        qualification: searchValues.qualification?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
+        degrees: searchValues.qualification?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
         company_financing_stages: searchValues.financingStages?.join?.(',') ?? null,
         is_company_verified: Boolean(searchValues.verifiedCompany),
         job_functions_ids: searchValues?.jobFunctions?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
