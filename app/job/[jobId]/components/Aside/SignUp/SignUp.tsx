@@ -55,6 +55,7 @@ const SignUp = ({ jobId, job_url }: propsType) => {
             label='Email address'
             size='small'
             onChange={(e) => setEmail(e.target?.value)}
+            onKeyUp={(e) => e.code == 'Enter' && handleSendEmailTOP()}
           />
           <MaterialButton
             variant='contained'

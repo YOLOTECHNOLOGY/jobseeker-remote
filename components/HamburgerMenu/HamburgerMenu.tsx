@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useRouter, usePathname } from 'next/navigation'
 
 /* Redux */
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import { logoutRequest } from 'store/actions/auth/logout'
 import { toggleMenu } from 'store/actions/navigationBar/toggleMenu'
 
@@ -30,9 +30,11 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const userCookie = getCookie('user')
 
+  const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
+
   useEffect(() => {
     setIsAuthenticated(getCookie('accessToken') ? true : false)
-  }, [])
+  }, [userDetail])
 
   const handleLogOut = () => {
     // enable body scroll again
@@ -86,7 +88,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
 
             {isAuthenticated && (
               <>
-                  <Link
+                <Link
                   className={styles.defaultLink}
                   to={
                     userCookie?.is_profile_completed
@@ -118,16 +120,13 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>Account Settings</Text>
                   </li>
                 </Link>
-              <Link className={styles.defaultLink} title='Jobs' to='/chat/list'>
-                <li className={styles.menuList} onClick={handleClick}>
-                  <Text textStyle='xl'>Chat</Text>
-                </li>
-              </Link>
+                <Link className={styles.defaultLink} title='Jobs' to='/chat/list'>
+                  <li className={styles.menuList} onClick={handleClick}>
+                    <Text textStyle='xl'>Chat</Text>
+                  </li>
+                </Link>
               </>
-             ) }
-
-
-
+            )}
 
             <Link
               className={`${styles.defaultLink} ${styles.defaultLink2}`}
@@ -167,7 +166,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   </li>
                 </Link>
                 <Link
-                 className={`${styles.defaultLink} ${styles.defaultLink2}`}
+                  className={`${styles.defaultLink} ${styles.defaultLink2}`}
                   to={`${process.env.BOSSHUNT_URL}`}
                   aTag
                   title='Employers'
@@ -176,7 +175,11 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <Text textStyle='xl'>I’m hiring</Text>
                   </li>
                 </Link>
-                <Link   className={`${styles.defaultLink} ${styles.defaultLink2}`} to='/get-started' title='Get Started'>
+                <Link
+                  className={`${styles.defaultLink} ${styles.defaultLink2}`}
+                  to='/get-started'
+                  title='Get Started'
+                >
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle='xl' className={styles.activeLink}>
                       Get Started
@@ -212,7 +215,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     <span className={styles.hotTag}>Hot!</span>
                   </li>
                 </Link> */}
-                
+
                 {/* <Link
                   className={styles.defaultLink}
                   to={authPathToOldProject(null, '/dashboard/bosspoint')}
@@ -234,7 +237,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   </li>
                 </Link>
 
-                <div   className={`${styles.defaultLink} ${styles.defaultLink2}`}>
+                <div className={`${styles.defaultLink} ${styles.defaultLink2}`}>
                   <li className={styles.menuList} onClick={() => handleLogOut()}>
                     <Text textStyle='xl'>Log Out</Text>
                   </li>

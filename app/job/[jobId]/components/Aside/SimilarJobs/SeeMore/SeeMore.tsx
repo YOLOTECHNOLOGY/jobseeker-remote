@@ -23,7 +23,7 @@ const SeeMore = ({ jobDetail }: propsType) => {
     }
     const result = encode(searchQuery)
     const url = new URLSearchParams(toPairs(result.params)).toString()
-    router.push('/job-search/' + result.searchQuery + '?' + url, {
+    router.push('/jobs-hiring/' + result.searchQuery + '?' + url, {
       forceOptimisticNavigation: true
     })
   }

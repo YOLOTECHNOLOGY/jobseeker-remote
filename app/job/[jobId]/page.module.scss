@@ -22,7 +22,7 @@
 .head {
   width: 100%;
   background-color: white;
-  padding: 27px 0;
+  padding: 20px 0;
 
   &_main {
     margin: 0 auto;
@@ -72,6 +72,17 @@
       letter-spacing: 0.0075em;
       color: #707070;
       margin-top: 15px;
+      display: flex;
+      align-items: center;
+      line-height: 14px;
+
+      i {
+        display: inline-block;
+        width: 2px;
+        height: 14px;
+        background-color: #bcbcbc;
+        margin: 0 8px;
+      }
     }
 
     &_change {
@@ -93,6 +104,15 @@
         &_btnWrapper {
           display: flex;
           align-items: center;
+        }
+
+        span {
+          letter-spacing: 0.02em;
+        }
+
+        span:hover {
+          color: #136fd3;
+          transition: color 0.3s ease;
         }
       }
     }
@@ -200,7 +220,7 @@
         }
 
         &_lineStatus {
-          padding: 0 8px;
+          padding: 1px 10px;
           background: #0ebd5c;
           border-radius: 15px;
           font-style: normal;
@@ -289,6 +309,16 @@
       &_field {
         width: calc(100% - (183px + 119px + 30px));
       }
+    }
+
+    .published_at {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+      letter-spacing: 0.0075em;
+      color: #707070;
+      margin-top: 24px;
+      display: block;
     }
   }
 
@@ -598,7 +628,7 @@
           }
 
           &_status {
-            padding: 4px 10px;
+            padding: 0px 10px;
             background: #d2030f;
             border-radius: 16px;
             font-style: normal;
@@ -608,7 +638,6 @@
             color: #f0f0f0;
             display: inline-block;
             margin-left: 4px;
-            line-height: 12px;
           }
         }
       }
@@ -689,6 +718,10 @@
       }
 
       .search {
+        display: none;
+      }
+
+      .published_at {
         display: none;
       }
     }
