@@ -12,6 +12,7 @@ export default registInterpreter(command =>
         fetchData: () => M(context => {
             const { searchValues, config } = context
             const queriyParams = buildParams(config, searchValues)
+            console.log({queriyParams})
             const token = cookies().get('accessToken')
             return fetchJobsListService(queriyParams, token?.value)
                 .then(result => ({

@@ -177,6 +177,7 @@ export const buildParams = (config, searchValues) => {
     const industryList = config.inputs.industry_lists
     const functionsTitleList = config.inputs.function_titles
     const jobFunctionList = config.inputs.job_functions
+    const mainFunctionList = config.inputs.main_functions
     const companySizeList = config.inputs.company_sizes
     const qualificationList = config.filters.educations
     const [salaryFrom, salaryTo] = handleSalary(searchValues.salary)
@@ -195,11 +196,10 @@ export const buildParams = (config, searchValues) => {
         qualification: searchValues.qualification?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
         company_financing_stages: searchValues.financingStages?.join?.(',') ?? null,
         is_company_verified: Boolean(searchValues.verifiedCompany),
-        job_functions_ids: searchValues?.jobFunctions?.split?.(',')?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
-        main_functions: transToValues(searchValues.mainFunctions),
+        job_functions_ids: searchValues?.jobFunctions?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
+        main_functions: searchValues?.mainFunctions?.map?.(seo => mainFunctionList.find(item => item.seo_value === seo)?.value)?.join?.(',') ?? null,
         company_sizes: searchValues.companySizes?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-        function_job_title_ids: searchValues?.functionTitles?.split?.(',')
-            ?.map?.(seo => functionsTitleList.find(item => item.seo_value === seo)?.id)
+        function_job_title_ids: searchValues?.functionTitles?.map?.(seo => functionsTitleList.find(item => item.seo_value === seo)?.id)
             ?.join?.(',') ?? null,
         page: searchValues?.page?.[0] ?? 1,
         size: 15,
