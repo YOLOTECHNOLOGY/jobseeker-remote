@@ -62,7 +62,12 @@
       align-items: center;
       margin-left: 30px;
       margin-bottom: 3px;
-
+      position: relative;
+      &:hover{
+        .popver{
+          display: block;
+        }
+      }
       .text {
         width: 116px;
         font-family: 'Product Sans';
@@ -74,6 +79,39 @@
         color: #136FD3;
         margin-left: 10px;
       }
+      .popver{
+        position: absolute;
+        left: -12px;
+        top: 50px;
+        background: #FFFFFF;
+        border: 0.5px solid #BCBCBC;
+        border-radius: 10px;
+        padding: 14px 20px;
+        z-index: 100;
+        display: none;
+        box-shadow: 0px 0px 14px #BCBCBC;
+        &::after{
+          content: ' ';
+          position: absolute;
+          left: 20px;
+          top: -16px;
+          width: 0;
+          height: 0;
+          border-width: 8px;
+          border-style: solid;
+          border-color:transparent transparent #fff  transparent;
+        }
+      img{
+        width: 104px;
+        height: 104px;
+      }
+      p{
+       padding: 6px 0 0 0;
+       text-align: center;
+       line-height: 20px;
+       margin: 0;
+      }
+    }
     }
 
     .loginButton {
