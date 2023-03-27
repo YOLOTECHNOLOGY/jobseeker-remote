@@ -43,7 +43,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { formatSalary, formatSalaryRange, getYearMonthDiffBetweenDates } from 'helpers/formatter'
-
+moment.locale('en')
 /* Services */
 import { fetchResumeDelete } from 'store/services/auth/fetchResumeDelete'
 
@@ -284,9 +284,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                 </div>
                 <div className={styles.companyInfoWrapper}>
                   <Text textStyle='lg'>{workExp.company}</Text>
-                  <Text textStyle='lg'>{`${workExp.location}${
-                    workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
-                  }`}</Text>
+                  <Text textStyle='lg'>{`${workExp.location}${workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
+                    }`}</Text>
                 </div>
                 <Text textStyle='base' textColor='darkgrey'>
                   {workingPeriodFrom.format('MMMM yyyy')} to{' '}
@@ -341,7 +340,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         <div className={styles.sectionContent}>
           {educations.map((education) => {
             let studyPeriod = ''
-
+            console.log({ education })
             if (education?.study_period_from) {
               studyPeriod += moment(education?.study_period_from).format('MMM yyyy')
 
