@@ -18,7 +18,7 @@ const Company = (company: propsType) => {
     <>
       <section className={styles.company}>
         <Link href={company.companyUrl}>
-          <div className={styles.company_title}>company</div>
+          <div className={styles.company_title}>Company</div>
           <Avatar src={company.logo} sx={{ borderRadius: '5px', margin: '8px 0' }} />
           <h5 className={styles.company_name}>{company.name}</h5>
           <div className={styles.company_financingStage}>{company.financingStage}</div>

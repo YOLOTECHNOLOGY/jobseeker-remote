@@ -46,15 +46,17 @@ const Desc = ({
           <span className={classNames([styles.desc_footer_chat, styles.desc_mobileHead_info_rate])}>
             {chatResponseRate}% &nbsp;response rate
           </span>
-          <span
-            className={classNames([
-              styles.desc_footer_lineStatus,
-              styles.desc_mobileHead_info_active,
-              transState(lastActiveAt)?.text !== 'Online' ? styles.desc_footer_notLine : null
-            ])}
-          >
-            {transState(lastActiveAt)?.text}
-          </span>
+          <div>
+            <span
+              className={classNames([
+                styles.desc_footer_lineStatus,
+                styles.desc_mobileHead_info_active,
+                transState(lastActiveAt)?.text !== 'Online' ? styles.desc_footer_notLine : null
+              ])}
+            >
+              {transState(lastActiveAt)?.text}
+            </span>
+          </div>
         </div>
       </div>
 
