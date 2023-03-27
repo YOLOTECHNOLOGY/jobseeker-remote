@@ -23,7 +23,7 @@ const JobFunctionMultiSelector = (props: any) => {
     const [isClosing, setIsClosing] = useState(false)
     const { width } = useWindowDimensions()
     const isMobile = useMemo(() => {
-        return window.innerWidth < 768
+        return window.screen.width < 768
     }, [width])
     // const isMobile = width < 768 ? true : false
     const [activeFirst, setActiveFirst] = useState<any>()
