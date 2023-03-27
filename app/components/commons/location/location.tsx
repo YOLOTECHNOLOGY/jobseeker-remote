@@ -90,6 +90,7 @@ const MaterialLocationField = ({ className, label, locationList, disableClearabl
         groupBy={(option: any) => option.region_display_name}
         getOptionLabel={(option: any) => option.value || ''}
         size='small'
+      
         disableClearable={disableClearable}
         className={className}
         classes={{}}
@@ -97,6 +98,7 @@ const MaterialLocationField = ({ className, label, locationList, disableClearabl
           <TextField id='location'
             {...fieldRef}
             error={!!error}
+            
             required={rest.required}
             helperText={error?.message}
             label={<span>{label ? label : 'Location'} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>} variant='outlined' size='small' {...params} />

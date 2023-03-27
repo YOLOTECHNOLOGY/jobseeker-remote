@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React, { useState, useCallback, useEffect, useMemo, useRef ,useContext} from 'react'
+import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
 import LocationField from 'app/components/commons/location'
@@ -107,7 +107,7 @@ const SearchArea = (props: any) => {
                         className={styles.location}
                         locationList={config.inputs.location_lists}
                         value={location}
-                        disableClearable
+                        disableClearable={false}
                         isClear={true}
                         defaultValue={location}
                         onChange={(e, value) => {
