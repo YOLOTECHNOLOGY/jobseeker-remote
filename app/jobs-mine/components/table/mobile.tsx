@@ -6,7 +6,7 @@ import MobileCard from '../jobCard/index.mobile'
 import LoadMore from '../loadMore'
 import { lensProp, set } from 'ramda'
 import { serverDataScript } from 'app/abstractModels/FetchServierComponents'
-import tableIp from '../../../interpreters/talbeMoble'
+import tableIp from '../../interpreters/talbeMoble'
 
 const MobileTable = (props: any) => {
     const { jobs = [], page, totalPages, searchValues, config } = props

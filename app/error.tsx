@@ -9,6 +9,7 @@ import { Button } from 'app/components/MUIs'
 import styles from './index.module.scss'
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
+  console.log({ errorerror: error })
   const router = useRouter()
   useEffect(() => {
     // Log the error to an error reporting service

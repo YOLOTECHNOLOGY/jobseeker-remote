@@ -8,7 +8,9 @@ import NotificationProvider from 'components/NotificationProvider'
 import { persistor, wrapper } from '../../store'
 import MaintenancePage from 'pages/maintenance'
 import LocationProvider from './locationProvier'
-const ClientProviders = ({ children }: React.PropsWithChildren) => {
+const ClientProviders = (props:any) => {
+    console.log({ props })
+    const { children }: React.PropsWithChildren = props
     const { store } = wrapper.useWrappedStore({})
 
     return <Provider store={store}>

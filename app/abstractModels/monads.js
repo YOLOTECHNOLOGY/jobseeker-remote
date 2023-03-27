@@ -1,3 +1,4 @@
+import Redirect from 'app/components/Redirect'
 import { ap, map } from 'fantasy-land'
 import { ReaderT } from 'fantasy-readers'
 //derived promise to monad
@@ -41,7 +42,7 @@ ReaderTPromise.prototype.ap = function (a) {
   })
 }
 ReaderTPromise.prototype.catch = function (f) {
-   return ReaderTPromise(context => this.run(context).catch(f))
+  return ReaderTPromise(context => this.run(context).catch(f))
 }
 // const commandLogger = command => {
 //   if (process.env.NODE_ENV === 'development') {
@@ -60,6 +61,16 @@ ReaderTPromise.prototype.log = function (command) {
         })
         .catch(error => {
           console.log(`%c${'error:'}`, 'color: red', error)
+          if (error.message === 'NEXT_REDIRECT') {
+            const redirectUrl = error.digest?.split?.(';')?.[1]
+            if (redirectUrl) {
+              return <Redirect url={redirectUrl} />
+            }
+          }
+          if (error?.response?.status === 401) {
+            return <Redirect url='/get-started' />
+          }
+
           return Promise.reject(error)
         })
     })

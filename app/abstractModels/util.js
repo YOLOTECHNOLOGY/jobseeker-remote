@@ -7,7 +7,9 @@ const { liftFC: DO } = Free
 export const CommonActions = taggedSum('CommonActions', {
   error: ['error'],
   just: ['just'],
-  buildComponent: ['props', 'component']
+  buildComponent: ['props', 'component'],
+  getAccesstoken: [],
+  redirectLogin: []
 })
 
 export const DataSource = taggedSum('DataSource', {
@@ -19,6 +21,16 @@ export const Result = taggedSum('Result', {
   success: ['data'],
   error: ['error']
 })
+
+export const needLogin = businessScript => DO(CommonActions.getAccesstoken)
+  .chain(accessToken => {
+    if (accessToken) {
+      return businessScript
+    } else {
+      return DO(CommonActions.redirectLogin)
+    }
+  })
+
 export const buildComponentScript = (props, componrnt) => DO(CommonActions.buildComponent(props, componrnt))
 
 export const dispatchMatches = cond

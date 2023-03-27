@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 import { registInterpreter, Result } from 'app/abstractModels/util'
 import { ReaderTPromise as M } from 'app/abstractModels/monads'
@@ -11,7 +12,7 @@ export default registInterpreter(command =>
     command.cata({
         fetchData: () => M(context => {
             const { searchValues, config } = context
-            const queriyParams = buildParams(config, searchValues)
+            const queriyParams = {}
             const token = cookies().get('accessToken')
             return fetchJobsListService(queriyParams, token?.value)
                 .then(result => ({

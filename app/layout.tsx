@@ -57,7 +57,9 @@ const defaultSEO = {
 
 const Providers = dynamic(() => import('./components/providers'), { ssr: true })
 const Initial = dynamic(() => import('./components/Initals'), { ssr: false })
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout(props: any) {
+  console.log({ RootLayoutProps: props })
+  const { children }: React.PropsWithChildren = props
   const { title, imageUrl, description, canonical } = defaultSEO
   return (
     <html lang='en'>

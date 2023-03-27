@@ -5,7 +5,7 @@ import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react'
 import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
 import LocationField from 'app/components/commons/location'
-import JobSearchBar from '../../../../components/commons/location/search'
+import JobSearchBar from '../../../components/commons/location/search'
 import styles from './index.mobile.module.scss'
 import Single from 'app/components/mobile/select/single'
 import Multiple from 'app/components/mobile/select/multiple'
@@ -22,28 +22,30 @@ import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import { useRouter } from 'next/navigation'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { filter } from 'ramda'
+import { useSearchParams } from 'next/navigation'
 const sortOptions = [
     { label: 'Newest', value: '1' },
     { label: 'Relevance', value: '2' },
     { label: 'Highest Salary', value: '3' }
 ]
 const SearchArea = (props: any) => {
-    const { config, searchValues } = props
+    const { config } = props
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchConfigSuccess(config))
     }), []
-    const [page, setPage] = useState(searchValues.page ?? '1')
+    const searchParams:any = useSearchParams() ?? {}
+    const [page, setPage] = useState(searchParams.page ?? '1')
 
     const locations = flatMap(config.inputs.location_lists, item => item.locations)
-    const [location, setLocation] = useState(locations.find(location => location.seo_value === searchValues.location?.[0]))
-    const [industry, setIndustry] = useState(searchValues.industry ?? [])
+    const [location, setLocation] = useState(locations.find(location => location.seo_value === searchParams.location?.[0]))
+    const [industry, setIndustry] = useState(searchParams.industry ?? [])
     const industryList = config.inputs.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
 
     const [jobFunctionValue, jobFunctionChange] = useState({
-        functionTitles: searchValues?.functionTitles ?? [],
-        jobFunctions: searchValues?.jobFunctions ?? [],
-        mainFunctions: searchValues?.mainFunctions ?? []
+        functionTitles: searchParams?.functionTitles ?? [],
+        jobFunctions: searchParams?.jobFunctions ?? [],
+        mainFunctions: searchParams?.mainFunctions ?? []
     })
     const moreDataOptions = useMemo(() => {
         const workExperience = config.inputs.xp_lvls.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
@@ -57,18 +59,18 @@ const SearchArea = (props: any) => {
         }
     }, [config])
     const labels = ['Work Experience', 'Qualification', 'Salary', 'Job Type', 'Company Sizes', 'Financing Stages']
-    const [sort, setSort] = useState(searchValues?.sort?.[0] ?? '2')
+    const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
 
     const [moreData, setMoreData] = useState(filter(a => a)({
-        workExperience: searchValues?.workExperience ?? null,
-        qualification: searchValues?.qualification ?? null,
-        salaries: searchValues?.salary ?? null,
-        jobTypes: searchValues?.jobType ?? null,
-        verifiedCompany: searchValues?.verifiedCompany ?? null,
-        companySizes: searchValues?.companySizes ?? null,
-        financingStages: searchValues?.financingStages ?? null
+        workExperience: searchParams?.workExperience ?? null,
+        qualification: searchParams?.qualification ?? null,
+        salaries: searchParams?.salary ?? null,
+        jobTypes: searchParams?.jobType ?? null,
+        verifiedCompany: searchParams?.verifiedCompany ?? null,
+        companySizes: searchParams?.companySizes ?? null,
+        financingStages: searchParams?.financingStages ?? null
     }))
-    const [searchValue, setSearchValue] = useState(searchValues.query)
+    const [searchValue, setSearchValue] = useState(searchParams.query)
     const [suggestionList, handleSuggestionSearch, addSearchHistory] = useSuggest() as any[]
 
     const filterParams = useMemo(() => {

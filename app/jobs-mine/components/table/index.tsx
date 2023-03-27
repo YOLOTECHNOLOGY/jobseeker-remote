@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './index.module.scss'
-import tableIp from '../../../interpreters/table'
+import tableIp from '../../interpreters/table'
 import { serverDataScript } from 'app/abstractModels/FetchServierComponents'
 import { buildComponentScript } from 'app/abstractModels/util'
 import Pagination from '../Pagination'
