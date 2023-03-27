@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
-import HeaderMobile from './mobile/Header'
+import HeaderMobile from './mobile/header'
 import MainMobile from './mobile/Main'
 import JobCard from './JobCard'
 import * as R from 'ramda'
@@ -111,7 +111,7 @@ const MainLeft = () => {
   const accessToken = getCookie('accessToken')
   const [open, setOpen] = useState<boolean>(false)
   const [loadingChat, setLoadingChat] = useState<boolean>(false)
-  const [lodingList, setLodingList] = useState<boolean>(true)
+  const [loadingList, setLoadingList] = useState<boolean>(true)
 
   useEffect(() => {
     if (tabList?.length && tabValue) {
@@ -139,7 +139,7 @@ const MainLeft = () => {
 
 
   const getData = (tab, page) => {
-    setLodingList(true)
+    setLoadingList(true)
     tab.fetchFun({
       page,
       accessToken
@@ -150,7 +150,14 @@ const MainLeft = () => {
       data.map(e => {
         idList.push(e.recruiter_id)
       })
-      checkChates(data, total, idList)
+      if(data.length){
+        checkChates(data, total, idList)
+      }else{
+        setTotal(total)
+        setData(data)
+        setLoadingList(false)
+      }
+   
     })
   }
 
@@ -170,13 +177,13 @@ const MainLeft = () => {
         }
       }
       setTotal(total)
-
+      console.log(dataPar,'dataPar')
       if (page > 1) {
         setData([...data, ...dataPar])
       } else {
         setData(dataPar)
       }
-    }).finally(() => setLodingList(false))
+    }).finally(() => setLoadingList(false))
   }
   console.log(data)
   const onChange = (e: string) => {
@@ -245,7 +252,7 @@ const MainLeft = () => {
           onChange={(e) => setPage(e)}
           handelSave={handelSave}
           loadingChat={loadingChat}
-          loadingList={lodingList}
+          loadingList={loadingList}
 
         />
       </div>
@@ -257,6 +264,7 @@ const MainLeft = () => {
           tabChildren={tabChildren}
           tabValueChildren={tabValueChildren}
           onChange={onChange}
+          loadingList={loadingList}
           handleChangeChildren={handleChangeChildren}
         />
         <MainMobile
@@ -264,7 +272,7 @@ const MainLeft = () => {
           data={data}
           page={page}
           totalPage={total}
-          loadingList={lodingList}
+          loadingList={loadingList}
           onChange={(e) => setPage(e)}
         />
       </div>

@@ -117,7 +117,6 @@ const JobsCard = ({
             }
             <div
               className={`${styles.jobCard}`}
-
               onClick={() => goToJobDetail('')}
             >
               {

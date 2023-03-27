@@ -594,7 +594,7 @@
       .headerTop{
         border-radius: 0;
         width: 100vw;
-        overflow: hidden;
+        position: relative;
         :global{
           .css-1n1ppiu-MuiTabs-root .MuiTabs-scrollButtons{
             display: block;
@@ -614,6 +614,40 @@
         }
         .bactText{
           padding-right:26px ;
+        }
+      }
+      .mobileHeaderChild{
+        background: #E7F1FB;
+        border-radius: 15px;
+        padding: 0 16px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        color: #136FD3;
+        position: absolute;
+        right: 17px;
+        top: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        .arrow{
+          font-size: 30px;
+          color: #BCBCBC;
+        }
+      }
+      .resumeBox{
+        .title{
+          height: 54px;
+          background: #F0F0F0;
+          border-radius: 10px 10px 0px 0px;
+        }
+        .item >li{
+          height: 42px;
+          line-height: 42px;
+          &:hover{
+            color: #136FD3;
+          }
         }
       }
     }

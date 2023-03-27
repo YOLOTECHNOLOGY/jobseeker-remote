@@ -1,6 +1,7 @@
 "use client"
 import styles from './components/index.module.scss';
 import JobsCard from './components/JobsCard';
+import InterviewCard from './components/InterviewCard'
 import Image from 'next/image'
 import { JoinUs } from 'images'
 import Link from 'next/link';
@@ -15,7 +16,9 @@ const MainMobile = (props: any) => {
             !loadingList ? (<>
                 {
                     data?.length ? <>
-                        {tabValue === 'interview' ? '' : (
+                        {tabValue === 'interview' ? <div className={`${styles.communicated} ${styles.interviewCard}`}>
+                                <InterviewCard {...props} />
+                            </div> : (
                             <div className={styles.communicated}>
                                 <JobsCard {...props} />
                             </div>

@@ -61,7 +61,7 @@ const Card = ({
       return (
         <div key={e.id}>
           {
-            !same && e.interviewed_at && <p className={styles.time}>{e.interviewed_at?.substr(0, 10)}</p>
+            !same && e.interviewed_at && <p className={styles.time}>{transDate(e.interviewed_at?.substr(0, 10))}</p>
           }
           <JobCardInterview data={e} />
         </div>
