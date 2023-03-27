@@ -41,7 +41,7 @@ const interpreter = registInterpreter(command => command.cata({
         localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
         router.push('/get-started', { forceOptimisticNavigation: true })
     }),
-    redirectToExternal: link => M.do(() => {
+    redirectToExternal: link => M.do(context => {
         const { router } = context
         router.push(link, { forceOptimisticNavigation: true })
     }),
