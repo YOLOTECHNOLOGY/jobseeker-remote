@@ -12,6 +12,19 @@ import { flat } from 'helpers/formatter'
 
 const textFieldTheme = value => createTheme({
   components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          width: '90vw',
+          height: '100%',
+          padding: '0px',
+          top: '0px',
+          left: '0px'
+        },
+
+      },
+    },
+   
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
