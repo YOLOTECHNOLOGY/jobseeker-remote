@@ -70,12 +70,27 @@ const GroupedMultipleSelect = ({
         autoFocus={false}
         onOpen={() => setOpen(true)}
         style={{ ...style, background: flatMap(values(selectedOptions), a => a || [])?.length ? '#E7F1FB' : '#F0F0F0' }}
-        value={flatMap(values(selectedOptions), a => a || [])}
+        value={flatMap(values(selectedOptions), a => a)?.length ? flatMap(values(selectedOptions), a => a) : [label]}
         label={label}
         input={<OutlinedInput label='Tag' />}
         renderValue={() => {
           const total: number = values(selectedOptions).filter(a => a).reduce((num, arr) => num + arr.length, 0)
-          return `${label} ${total > 0 ? `(${total})` : ''}`
+          if (!flatMap(values(selectedOptions), a => a || [])?.length) {
+            return <div style={{
+              color: 'rgba(0, 0, 0, 0.6)', 
+              position: 'relative',
+              // left: 13,
+              top: 2,
+            }}>{label}</div>
+          } else {
+            return <div style={{
+              // color: 'rgba(0, 0, 0, 0.6)', 
+              position: 'relative',
+              // left: 13,
+              top: 2,
+            }}>{`${label} ${total > 0 ? `(${total})` : ''}`}</div>
+
+          }
         }}
       >
         <PopContainer
