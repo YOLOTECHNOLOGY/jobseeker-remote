@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React, {  } from 'react'
+import React, { } from 'react'
 import styles from './index.mobile.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -22,9 +22,9 @@ const JobCard = (props: any) => {
         id,
         job_url
     } = props
-    const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
+    const labels = [job_type, xp_lvl, degree].filter(a => a)
     const router = useRouter()
-   
+
     return <div className={styles.main}>
         <div
             id={'job_card_container_' + id}
@@ -60,7 +60,7 @@ const JobCard = (props: any) => {
                     </div>
                 </div>
                 <div className={styles.fullName}>
-                    {recruiter_full_name}
+                    {job_location}
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
-import HeaderMobile from './mobile/Header'
+import HeaderMobile from './mobile/header'
 import MainMobile from './mobile/Main'
 import JobCard from './JobCard'
 import * as R from 'ramda'
