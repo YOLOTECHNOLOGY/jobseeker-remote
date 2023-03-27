@@ -26,7 +26,8 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { filter } from 'ramda'
 import useUserAgent from 'helpers/useUserAgent'
 import { LoadingContext } from 'app/components/providers/loadingProvider'
-
+import { AppDownQRCode } from 'images'
+import Image from 'next/image'
 const sortOptions = [
   { label: 'Newest', value: '1' },
   { label: 'Relevance', value: '2' },
@@ -207,6 +208,10 @@ const SearchArea = (props: any) => {
                   />
                 </svg>
                 <div className={styles.text}>Download APP and chat with Boss </div>
+                <div className={styles.popver}>
+                 <Image src={AppDownQRCode} alt='app down' width='104' height='104'/>
+                 <p>Chat directly<br/>with Boss</p>
+                 </div> 
               </div>
             ) : (
               <Button
