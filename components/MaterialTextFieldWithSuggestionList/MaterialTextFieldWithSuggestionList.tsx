@@ -94,6 +94,7 @@ const MaterialTextFieldWithSuggestionList = ({
             {...refs}
             id={id}
             label={label}
+            enterKeyHint='search'
             maxLength={maxLength}
             color={color as any}
             variant={variant as any}

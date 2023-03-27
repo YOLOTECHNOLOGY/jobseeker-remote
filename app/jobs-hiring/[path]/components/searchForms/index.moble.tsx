@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react'
+import React, { useState, useCallback, useEffect, useMemo, useRef ,useContext} from 'react'
 import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
 import LocationField from 'app/components/commons/location'
@@ -17,12 +17,11 @@ import { ThemeProvider } from '@mui/material/styles'
 import JobFunction from 'app/components/commons/jobFunction'
 // import { useRouter } from 'next/navigation'
 import { toPairs } from 'ramda'
-import { getCookie } from 'helpers/cookies'
 import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
-import { useRouter } from 'next/navigation'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { filter } from 'ramda'
+import { LoadingContext } from 'app/components/providers/loadingProvider'
 const sortOptions = [
     { label: 'Newest', value: '1' },
     { label: 'Relevance', value: '2' },
@@ -83,17 +82,17 @@ const SearchArea = (props: any) => {
             ...moreData
         })
     }, [searchValue, industry, moreData, location, sort, jobFunctionValue])
-    const router = useRouter()
     const result = useMemo(() => {
         return encode(filterParams)
     }, [filterParams])
     const firstRender = useFirstRender()
+    const { push } = useContext(LoadingContext)
     const reload = useCallback(() => {
         if (firstRender) {
             return
         }
         const url = new URLSearchParams(toPairs(result.params)).toString();
-        router.push('/jobs-hiring/' + result.searchQuery + '?' + url, { forceOptimisticNavigation: false })
+        push('/jobs-hiring/' + result.searchQuery + '?' + url)
     }, [result])
     const reloadRef = useRef(reload)
     useEffect(() => {
@@ -126,14 +125,18 @@ const SearchArea = (props: any) => {
 
                         searchFn={handleSuggestionSearch as any}
                         updateSearchValue={setSearchValue}
+                        enterKeyHint='search'
+
                         onKeyPress={(e) => {
                             if (e.key === 'Enter' && !e.shiftKey) {
                                 e.preventDefault()
                                 flushSync(() => {
                                     setSearchValue((e.target as HTMLInputElement).value)
                                 })
-                                addSearchHistory((e.target as HTMLInputElement).value)
-                                reloadRef.current()
+                                addSearchHistory?.((e.target as HTMLInputElement).value);
+
+                                ((e.target ?? {}) as any)?.blur?.()
+                                reloadRef?.current?.()
                             }
                         }}
                         options={suggestionList}
