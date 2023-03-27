@@ -76,7 +76,7 @@ const JobCardNormal = (props:any) => {
                              }}
                            isLoading={loadingChat}
                        > 
-                             <FavoriteOutlinedIcon className={styles.saveIcon} />
+                             {!isSaved ? <FavoriteOutlinedIcon className={styles.saveIcon} /> : null }
                              {isSaved ? ' Undo Save' : ' Save'}              
                        </MaterialButton>
                </>

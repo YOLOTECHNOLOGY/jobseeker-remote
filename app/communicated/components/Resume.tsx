@@ -115,9 +115,9 @@ const Resume = ({
           <div className={styles.info}>
             <p>{fullName}</p>
             <span>{ageFun(birthdate)} years old</span>
-            <i>|</i>
+            {birthdate && xpLvl ? <i>|</i> : null}
             <span> {xpLvl}</span>
-            <i>|</i>
+            {(xpLvl || birthdate) && educations ? <i>|</i> : null}
             <span> {educations?.[0]?.field_of_study}</span>
           </div>
         </div>
