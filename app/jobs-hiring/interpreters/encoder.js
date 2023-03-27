@@ -180,6 +180,7 @@ export const buildParams = (config, searchValues) => {
     const mainFunctionList = config.inputs.main_functions
     const companySizeList = config.inputs.company_sizes
     const qualificationList = config.filters.educations
+    const financingStagesList = config.inputs.company_financing_stage_lists
     const [salaryFrom, salaryTo] = handleSalary(searchValues.salary)
     const workExperienceList = config.inputs.xp_lvls
     const jobTypeList = config.inputs.job_types
@@ -194,7 +195,7 @@ export const buildParams = (config, searchValues) => {
         job_types: searchValues.jobType?.map?.(key => jobTypeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
         xp_lvls: searchValues.workExperience?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
         degrees: searchValues.qualification?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-        company_financing_stages: searchValues.financingStages?.join?.(',') ?? null,
+        company_financing_stages: searchValues.financingStages?.map?.(key => financingStagesList.find(item => item?.key === key)?.value).join(',') ?? null,
         is_company_verified: Boolean(searchValues.verifiedCompany),
         job_functions_ids: searchValues?.jobFunctions?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
         main_functions: searchValues?.mainFunctions?.map?.(seo => mainFunctionList.find(item => item.seo_value === seo)?.value)?.join?.(',') ?? null,
