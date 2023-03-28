@@ -16,8 +16,8 @@ const Map = ({ lat, lng, full_address }: propsType) => {
   const [open, setOpen] = useState(false)
 
   const handleMapLayer = () => {
-    setOpen(true)
-    console.log('onclick')
+    // setOpen(true)
+    // console.log('onclick')
   }
 
   return (

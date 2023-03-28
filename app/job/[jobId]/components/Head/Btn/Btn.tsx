@@ -130,7 +130,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
         <MaterialButton
           variant='contained'
           sx={{
-            width: '115px',
+            maxWidth: '140px',
             lineHeight: '44px',
             height: '44px',
             background: '#136FD3',
@@ -143,7 +143,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
             {(() => {
               if (jobDetail.external_apply_url) {
                 return 'Apply Now'
-              } else if (chat?.is_exists && chat?.job_id === jobId) {
+              } else if (chat?.is_exists && chat?.job_id == jobId) {
                 return 'Continue Chat'
               } else {
                 return 'Chat Now'

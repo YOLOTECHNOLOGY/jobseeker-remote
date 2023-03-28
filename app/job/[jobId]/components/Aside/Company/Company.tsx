@@ -15,7 +15,6 @@ export type propsType = {
 }
 
 const Company = (company: propsType) => {
-  console.log(company, '================company')
   const { jobDetail } = company
   return (
     <>
@@ -24,8 +23,8 @@ const Company = (company: propsType) => {
           <div className={styles.company_title}>Company</div>
           <Avatar src={company.logo} sx={{ borderRadius: '5px', margin: '8px 0' }} />
           <h5 className={styles.company_name}>{company.name}</h5>
-          <div className={styles.company_financingStage}>{company.financingStage}</div>
-          <div className={styles.company_financingStage}>{company.companySize}</div>
+          <div className={styles.company_financingStage}>{jobDetail.company.industry}</div>
+          <div className={styles.company_financingStage}>{company.companySize} Employees</div>
         </Link>
 
         <Link href={company.companyUrl + '/jobs'}>
