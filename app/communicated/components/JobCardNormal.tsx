@@ -5,9 +5,9 @@ import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import useChatNow from 'app/hooks/useChatNow'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
-
+import Link from 'next/link';
 const JobCardNormal = (props:any) => {
-    const {handelSave,data,loadingChat} = props
+    const {handelSave,data,loadingChat,tabValue,index} = props
     const {
         industry,
         company_size: companySize,
@@ -19,17 +19,16 @@ const JobCardNormal = (props:any) => {
         job_title: jobTitle,
         salary_range_value: salaryRangeValue,
         xp_lvl: xpLvl,
-        is_saved: isSaved,
         status_key: status,
         external_apply_url:externalApplyUrl,
-        is_exists:isExists
+        is_exists:isExists,
+        job_url:jobUrl
       } = data.job || {};
       const { value } = data.job?.degree || {};
       const { value: locationValue } = data.job?.location || {};
       const { avatar, full_name: fullName, } = data.recruiter || {};
       const { job_title: workJobTitle } = data.recruiter?.work_experience || {};
       
-
   const [loading, chatNow, modalChange] = useChatNow(props?.data || {})
 
   return (
@@ -67,18 +66,23 @@ const JobCardNormal = (props:any) => {
                                })()}
                            </Text>
                        </MaterialButton>
-                       <MaterialButton onClick={()=>handelSave(data)} className={`${styles.chatBox} ${!isExists ? styles.chatIng : null}`}
-                           capitalize={true}
-                           variant='outlined'
-                           style={{
-                              height: 33,
-                              textTransform: 'capitalize'
-                             }}
-                           isLoading={loadingChat}
-                       > 
-                             {!isSaved ? <FavoriteOutlinedIcon className={styles.saveIcon} /> : null }
-                             {isSaved ? ' Undo Save' : ' Save'}              
-                       </MaterialButton>
+
+                      {
+                        tabValue === 'saved' ? <MaterialButton onClick={()=>handelSave(data,index)} className={`${styles.chatBox} ${!isExists ? styles.chatIng : null}`}
+                        capitalize={true}
+                        variant='outlined'
+                        style={{
+                           height: 33,
+                           textTransform: 'capitalize'
+                          }}
+                        isLoading={loadingChat}
+                    > 
+                        <FavoriteOutlinedIcon className={styles.saveIcon} />
+                          Undo Save
+                    </MaterialButton> : null
+                      }
+                       
+
                </>
              )
            }
@@ -87,7 +91,7 @@ const JobCardNormal = (props:any) => {
        <div className={styles.info}>
          <div className={styles.leftContent}>
            <div className={styles.developer}>
-             <p className={styles.title}>{jobTitle}</p>
+             <Link  href={jobUrl || ''} className={styles.title}>{jobTitle}</Link>
              <p className={styles.salary}>{salaryRangeValue}</p>
            </div>
            <span className={styles.tag}>{locationValue}</span>

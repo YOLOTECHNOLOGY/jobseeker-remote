@@ -18,7 +18,6 @@ import {
   fetchInterviews,
   fetchCheckChats
 } from 'store/services/jobs/fetchJobsCommunicated'
-import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
@@ -197,33 +196,32 @@ const MainLeft = () => {
   const handleChangeChildren = (e: string) => {
     setTabValueChidren(e)
   }
-  const handelSave = (item) => {
+  const handelSave = (item,index) => {
     setLoadingChat(true)
-    const { is_saved: saved, id } = item.job || {}
-    if (saved) {
-      deleteSaveJobService(id).then(res => {
-        checkSavedData(res, id, false)
-      }).finally(() => setLoadingChat(false))
-    } else {
-      postSaveJobService({ job_id: id }).then(res => {
-        checkSavedData(res, id, true)
-      }).finally(() => setLoadingChat(false))
-    }
+    const { id } = item.job || {}
+    deleteSaveJobService(id).then(res => {
+      checkSavedData(res,index)
+    })
+    // if (saved) {
+    //   deleteSaveJobService(id).then(res => {
+    //     checkSavedData(res, id, false)
+    //   }).finally(() => setLoadingChat(false))
+    // } else {
+    //   postSaveJobService({ job_id: id }).then(res => {
+    //     checkSavedData(res, id, true)
+    //   }).finally(() => setLoadingChat(false))
+    // }
   }
 
-  const checkSavedData = (res, id, state) => {
+  const checkSavedData = (res,index) => {
     const jobData = res?.data?.data
     console.log(jobData, 'jobData')
     if (jobData) {
-      const newData = data.map(e => {
-        if (e.job.id === id) {
-          e.job.is_saved = state
-        }
-        return e
-      })
-      setData([...newData])
+      data.splice(index,1)
+      setData([...data])
       setOpen(true)
     }
+    setLoadingChat(false)
   }
 
   const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
