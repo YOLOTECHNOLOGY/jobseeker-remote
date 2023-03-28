@@ -132,7 +132,7 @@ export const encode = params => pipe(
 )(params)
 
 export const decoder = config => (path, params) => mergeDeepLeft(
-    parseKeywordParams(config)(path),
+    parseKeywordParams(config)(unescape(path)),
     map(ifElse(is(String), split(','), identity))(params)
 )
 export const firstUpper = tmp => tmp.charAt(0).toUpperCase() + tmp.slice(1)
@@ -188,7 +188,6 @@ export const buildParams = (config, searchValues) => {
     return {
         query: searchValues.query,
         company_industries: searchValues.industry?.map?.(key => industryList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-        // job_locations: transToValues(searchValues.location),
         job_locations: searchValues.location?.map?.(key => locationLists.find(item => item?.['seo_value'] === key)?.value).join(',') ?? null,
         salary_from: salaryFrom,
         salary_to: salaryTo,
