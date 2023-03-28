@@ -44,8 +44,8 @@ const Head = ({
             <h1>{title}</h1>
             <div className={styles.head_main_title_context}>
               <span className={styles.head_main_title_context_type}>({job_type_value})</span>
-              {status_key == 'urgent' ? (
-                <span className={styles.head_main_title_context_status}>{status_key}</span>
+              {jobDetail.is_urgent ? (
+                <span className={styles.head_main_title_context_status}>Urgent</span>
               ) : null}
             </div>
           </div>
