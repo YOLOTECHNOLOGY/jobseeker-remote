@@ -27,7 +27,8 @@ const Table = (props: any) => {
             }
 
         </div>
-        <MobileTable {...props} />
+        {jobs?.length ? <MobileTable {...props} /> : <Empty />}
+
     </Loader>
 }
 

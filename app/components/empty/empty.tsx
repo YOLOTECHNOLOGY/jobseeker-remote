@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 import React from 'react'
 import styles from './index.module.scss'
 const defaultDescription = <>
@@ -15,7 +14,7 @@ const Empty = ({
             <path d="M10.9037 105.086C21.2431 99.7385 31.9985 107.315 36.0838 111.771L47.5596 122.579C55.4587 133.832 54.7726 134.709 52.3505 147.425C50.2113 158.655 54.2817 168.594 56.5843 172.159L53.6875 179.067C47.3739 176.244 34.0783 169.797 31.4043 166.588C28.0618 162.577 29.176 155.669 28.9532 150.767C28.7303 145.865 24.0508 142.968 18.4801 138.957C12.9093 134.946 10.1639 135.478 5.55576 128.261C4.37468 126.411 -2.02053 111.771 10.9037 105.086Z" fill="#00D3D2" />
             <path d="M65.3704 156.412C62.3398 158.284 62.3993 165.066 62.8078 168.223C68.1187 170.265 80.0773 172.768 85.4253 166.44C92.1102 158.53 95.1185 149.839 96.5669 146.719C98.0153 143.6 96.0098 136.246 90.6618 134.352C85.3139 132.458 81.4143 137.026 79.4088 142.263C77.4033 147.499 76.4006 150.285 74.6179 152.736C72.8353 155.187 69.1585 154.073 65.3704 156.412Z" fill="#00D5D1" />
             <mask id="mask0_3914_23310"
-                // style="mask-type:alpha" 
+                style={{ maskType: 'alpha' }}
                 maskUnits="userSpaceOnUse" x="24" y="0" width="263" height="285">
                 <path d="M138.124 284.429C59.3308 282.29 29.2336 242.24 24.0342 222.482L38.7411 165.882L60.3558 94.3534C54.1908 84.2517 41.2368 62.1765 38.7411 54.6893C35.6215 45.3304 38.9639 32.629 44.5347 26.1668C50.1055 19.7047 67.4864 4.10651 111.83 0.764036C156.174 -2.57844 171.549 5.88919 182.468 9.90016C193.386 13.9111 219.235 29.955 226.811 45.7761C234.388 61.5971 229.04 79.6465 224.806 86.7771C220.572 93.9077 215.447 100.37 215.001 116.859C214.556 133.349 242.409 142.262 249.763 144.936C257.116 147.61 264.693 151.844 274.052 164.1C295.221 197.525 283.856 228.275 274.052 238.971C264.247 249.667 236.616 287.103 138.124 284.429Z" fill="url(#paint2_linear_3914_23310)" />
                 <path d="M236.839 102.153C240.582 86.2869 247.869 81.4291 251.434 80.315C258.863 77.9935 267.701 83.7689 271.489 92.3479C273.237 96.3058 276.837 101.707 275.5 112.96C273.706 128.058 256.336 130.118 251.434 129.004C246.47 127.875 232.159 121.985 236.839 102.153Z" fill="url(#paint3_linear_3914_23310)" />
@@ -46,31 +45,32 @@ const Empty = ({
             <path d="M115.34 191.119C110.527 185.325 101.302 181.351 97.2905 180.089C101.153 179.272 111.062 177.437 119.797 176.635C124.253 177.638 137.623 188.556 142.525 193.236C139.406 197.068 126.073 198.249 119.797 198.361C120.317 198.361 120.153 196.912 115.34 191.119Z" fill="white" />
             <defs>
                 <linearGradient id="paint0_linear_3914_23310" x1="-59.7278" y1="128.784" x2="316.931" y2="81.5982" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#F9FAFE" />
-                    <stop offset="1" stop-color="#DBDFEE" />
+                    <stop stopColor="#F9FAFE" />
+                    <stop offset="1" stopColor="#DBDFEE" />
                 </linearGradient>
                 <linearGradient id="paint1_linear_3914_23310" x1="-59.7278" y1="128.784" x2="316.931" y2="81.5982" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#F9FAFE" />
-                    <stop offset="1" stop-color="#DBDFEE" />
+                    <stop stopColor="#F9FAFE" />
+                    <stop offset="1" stopColor="#DBDFEE" />
                 </linearGradient>
                 <linearGradient id="paint2_linear_3914_23310" x1="-59.7283" y1="128.784" x2="316.931" y2="81.5977" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#F9FAFE" />
-                    <stop offset="1" stop-color="#DBDFEE" />
+                    <stop stopColor="#F9FAFE" />
+                    <stop offset="1" stopColor="#DBDFEE" />
                 </linearGradient>
                 <linearGradient id="paint3_linear_3914_23310" x1="-59.7283" y1="128.784" x2="316.931" y2="81.5977" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#F9FAFE" />
-                    <stop offset="1" stop-color="#DBDFEE" />
+                    <stop stopColor="#F9FAFE" />
+                    <stop offset="1" stopColor="#DBDFEE" />
                 </linearGradient>
                 <linearGradient id="paint4_linear_3914_23310" x1="-76.5429" y1="270.605" x2="251.686" y2="181.185" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#D9DCED" />
-                    <stop offset="1" stop-color="#D6DAEC" />
+                    <stop stopColor="#D9DCED" />
+                    <stop offset="1" stopColor="#D6DAEC" />
                 </linearGradient>
                 <linearGradient id="paint5_linear_3914_23310" x1="106.204" y1="190.253" x2="120.688" y2="184.984" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#97A8DB" />
-                    <stop offset="1" stop-color="#97A8DB" stop-opacity="0" />
+                    <stop stopColor="#97A8DB" />
+                    <stop offset="1" stopColor="#97A8DB" stopOpacity="0" />
                 </linearGradient>
             </defs>
         </svg>
+
         <div className={styles.description}>
             {description}
         </div>
