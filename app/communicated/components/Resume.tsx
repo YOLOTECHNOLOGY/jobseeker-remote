@@ -152,7 +152,7 @@ const Resume = ({
             <span>{ageFun(birthdate)} years old</span>
             {birthdate && xpLvl ? <i>|</i> : null}
             <span> {xpLvl}</span>
-            {(xpLvl || birthdate) && educations ? <i>|</i> : null}
+            {(xpLvl || birthdate) && educations?.[0]?.field_of_study ? <i>|</i> : null}
             <span> {educations?.[0]?.field_of_study}</span>
           </div>
         </div>
@@ -188,9 +188,7 @@ const Resume = ({
 
       <div className={styles.upload}>
         <div className={styles.header}>
-          <Link href='/manage-profile?tab=resume'>
-             Uploaded Resumes
-          </Link>
+           Uploaded Resumes
         </div>
         <div className={styles.uploadContainer}>
           {
