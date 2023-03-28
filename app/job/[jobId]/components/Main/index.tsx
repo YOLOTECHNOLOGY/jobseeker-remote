@@ -30,7 +30,7 @@ const MainFC = (props: propsType) => {
       <Map lat={props.lat} lng={props.lng} full_address={props.full_address} />
       <Search />
 
-      <span className={styles.published_at}>Posted on{props.published_at}</span>
+      <span className={styles.published_at}>Posted on {props.published_at}</span>
     </main>
   )
 }
