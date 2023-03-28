@@ -193,7 +193,7 @@
           }
         
           .chatIng{
-             width: 68px;
+             width: 100px;
           }
           .closedTip{
             line-height: 33px;
@@ -416,9 +416,6 @@
       line-height: 24px;
       color: #353535;
       font-weight: 400;
-      &:hover{
-        color: #136FD3;
-      }
     }
   }
   .upload{
@@ -569,7 +566,7 @@
       display: flex;
       justify-content: center;
       :global{
-        .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root{
+        .MuiButtonBase-root{
           background-color: #fff;
           border: none;
           width: 40px;
@@ -577,7 +574,7 @@
           height: 40px;
           color: rgba(0, 0, 0, 0.87);
         }
-        .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected{
+        .MuiButtonBase-root.Mui-selected{
           background: #136FD3;
           color: white;
         }

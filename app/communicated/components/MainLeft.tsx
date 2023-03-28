@@ -22,7 +22,7 @@ import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import styles from '../index.module.scss'
-
+import { useRouter } from 'next/navigation'
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
@@ -111,7 +111,7 @@ const MainLeft = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [loadingChat, setLoadingChat] = useState<boolean>(false)
   const [loadingList, setLoadingList] = useState<boolean>(true)
-
+  const router = useRouter()
   useEffect(() => {
     if (tabList?.length && tabValue) {
       const tab = R.find(R.propEq('value', tabValue))(tabList)
@@ -200,7 +200,7 @@ const MainLeft = () => {
     setLoadingChat(true)
     const { id } = item.job || {}
     deleteSaveJobService(id).then(res => {
-      checkSavedData(res,index)
+      checkSavedData(res,index,id)
     })
     // if (saved) {
     //   deleteSaveJobService(id).then(res => {
@@ -213,10 +213,11 @@ const MainLeft = () => {
     // }
   }
 
-  const checkSavedData = (res,index) => {
+  const checkSavedData = (res,index,id) => {
     const jobData = res?.data?.data
     console.log(jobData, 'jobData')
     if (jobData) {
+      router.push(`/communicated?unsaveId=${id}`)
       data.splice(index,1)
       setData([...data])
       setOpen(true)
