@@ -3,8 +3,10 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
 
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import TextField from '@mui/material/TextField'
 import { Stack } from 'app/components/MUIs'
-import MaterialTextField from 'components/MaterialTextField'
+
 import MaterialButton from 'components/MaterialButton'
 
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
@@ -17,6 +19,48 @@ type propsType = {
   jobId: number
   job_url: string
 }
+
+const theme = createTheme({
+  components: {
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: '14px',
+          transform: 'translate(14px, 10px) scale(1)',
+          letterSpacing: '1px',
+          '&.Mui-focused': {
+            fontSize: '10px',
+            transform: 'translate(14px, -10px) scale(1)'
+          },
+          top: '4px',
+          lineHeight: '16px'
+        },
+        shrink: {
+          fontSize: '10px',
+          transform: 'translate(14px, -10px) scale(1)'
+        },
+        outlined: {
+          '&.MuiInputLabel-shrink': {
+            fontSize: '10px'
+          }
+        }
+      }
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          height: '44px',
+          fontSize: '16px',
+          backgroundColor: 'white',
+          borderRadius: '10px',
+          '>.MuiOutlinedInput-notchedOutline': {
+            borderColor: 'transparent'
+          }
+        }
+      }
+    }
+  }
+})
 
 const SignUp = ({ jobId, job_url }: propsType) => {
   const dispatch = useDispatch()
@@ -51,12 +95,15 @@ const SignUp = ({ jobId, job_url }: propsType) => {
       <h3>Join Bossjob</h3>
       <div>
         <Stack spacing={2}>
-          <MaterialTextField
-            label='Email address'
-            size='small'
-            onChange={(e) => setEmail(e.target?.value)}
-            onKeyUp={(e) => e.code == 'Enter' && handleSendEmailTOP()}
-          />
+          <ThemeProvider theme={theme}>
+            <TextField
+              label='Email address'
+              size='small'
+              onChange={(e) => setEmail(e.target?.value)}
+              onKeyUp={(e) => e.code == 'Enter' && handleSendEmailTOP()}
+            />
+          </ThemeProvider>
+
           <MaterialButton
             variant='contained'
             sx={{
@@ -73,6 +120,7 @@ const SignUp = ({ jobId, job_url }: propsType) => {
           </MaterialButton>
         </Stack>
       </div>
+
       <p className={styles.signUp_userProtocol}>
         By signing up, I have read and agreed to the{' '}
         <a href='https://blog.bossjob.ph/terms-and-conditions/' target='_blank' rel='noreferrer'>

@@ -110,9 +110,18 @@
           letter-spacing: 0.02em;
         }
 
-        span:hover {
+        // span:hover {
+        //   color: #136fd3;
+        //   transition: color 0.3s ease;
+        // }
+        &_btnWrapper:hover {
           color: #136fd3;
           transition: color 0.3s ease;
+
+          img {
+            filter: drop-shadow(#136fd3 100px 0);
+            transform: translateX(-100px);
+          }
         }
       }
     }
@@ -399,6 +408,7 @@
         font-weight: 700;
         font-size: 18px;
         letter-spacing: 0.02em;
+        color: #353535;
       }
 
       &_name {

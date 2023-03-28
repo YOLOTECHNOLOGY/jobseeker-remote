@@ -11,9 +11,12 @@ export type propsType = {
   numOfActiveJobs: number
   jobId: number
   companyUrl: string
+  jobDetail: any
 }
 
 const Company = (company: propsType) => {
+  console.log(company, '================company')
+  const { jobDetail } = company
   return (
     <>
       <section className={styles.company}>
@@ -57,7 +60,7 @@ const Company = (company: propsType) => {
           <div className={styles.company_mobileHead_info}>
             <span className={styles.company_mobileHead_info_name}>{company.name}</span>
             <span className={styles.company_mobileHead_info_tag}>
-              {company.financingStage} &nbsp;|&nbsp; {company.companySize} Employees
+              {jobDetail.company.industry} &nbsp;|&nbsp; {company.companySize} Employees
             </span>
           </div>
         </section>
