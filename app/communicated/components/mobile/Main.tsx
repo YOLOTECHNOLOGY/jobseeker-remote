@@ -9,18 +9,12 @@ import Skeleton from '@mui/material/Skeleton'
 import CardHeader from '@mui/material/CardHeader';
 const MainMobile = (props: any) => {
     console.log(props, 'props')
-    const { loadingList, data, tabValue } = props
+    const { loadingList, data} = props
     return <div>
         {
             !loadingList ? (<>
                 {
-                    data?.length ? <>
-                        {tabValue === 'interview' ? '' : (
-                            <div className={styles.communicated}>
-                                <JobsCard {...props} />
-                            </div>
-                        )}
-                    </>
+                    data?.length ?  <div className={styles.communicated}>  <JobsCard {...props} /></div>
                         : <div className={styles.noData}>
                             <Image className={styles.noDataImg} src={JoinUs} alt='暂无数据' width={362} height={247} />
                             <button className={styles.seeJob}>

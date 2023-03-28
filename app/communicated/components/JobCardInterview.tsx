@@ -5,7 +5,7 @@ import useChatNow from 'app/hooks/useChatNow'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 import Tooltip from '@mui/material/Tooltip';
-
+import Link from 'next/link';
 const JobCardInterview = (props: any) => {
   const {data } = props
   const {
@@ -22,7 +22,8 @@ const JobCardInterview = (props: any) => {
     salary_range_value: salaryRangeValue,
     status_key: status,
     external_apply_url: externalApplyUrl,
-    is_exists: isExists
+    is_exists: isExists,
+    job_url:jobUrl
   } = data.job || {};
   const {
     avatar,
@@ -84,7 +85,7 @@ const JobCardInterview = (props: any) => {
             <img src={logoUrl} className={styles.logo} alt={name} />
             <div className={styles.box}>
               <div className={styles.developer}>
-                <p className={styles.title}>{jobTitle}</p>
+                <Link  href={jobUrl || ''} className={styles.title}>{jobTitle}</Link>
                 <p className={styles.salary}>{salaryRangeValue}</p>
               </div>
               <p className={styles.companyName}>{name}</p>

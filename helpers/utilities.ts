@@ -42,7 +42,5 @@ export const transDate = (date)=>{
    const chinaDate = newDate.toDateString(); 
    const gobalDate = newDate.toUTCString();
    const chinaDateArray = chinaDate.split(' ');
-  console.log(chinaDateArray,777);
-  
   return  `${chinaDateArray[2]} ${chinaDateArray[1]}  ${chinaDateArray[3]}`
 }
