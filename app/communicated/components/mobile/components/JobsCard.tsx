@@ -3,15 +3,16 @@ import React, { useEffect, useRef } from 'react';
 import styles from './index.module.scss';
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { isSameDay } from 'helpers/utilities'
+import { isSameDay, transDate } from 'helpers/utilities'
 import CircularProgress from '@mui/material/CircularProgress';
-
+import Link from 'next/link';
 interface cardProps {
   data: Array<any>,
   onChange: Function,
   page: number,
   loadingList: boolean,
-  totalPage: number
+  totalPage: number,
+  tabValue: string
 }
 
 const JobsCard = ({
@@ -20,8 +21,8 @@ const JobsCard = ({
   page,
   loadingList,
   totalPage,
+  tabValue,
 }: cardProps) => {
-
   const loading = useRef(null)
   const pageRef = useRef(null)
   const totalPageRef = useRef(null)
@@ -82,71 +83,124 @@ const JobsCard = ({
   }, 300)
 
   const goToJobDetail = (url: string) => {
-     router.push(url)
+    router.push(url)
   }
 
+  const card = (data) => {
+    return data?.map((item, index) => {
+      const {
+        name,
+        industry
+      } = item.company || {};
+      const {
+        job_title: jobTitle,
+        salary_range_value: salaryRangeValue,
+        job_type_value: jobType,
+        status_key: status,
+        job_url:jobUrl
+      } = item.job || {};
+      const { value: xpLvl } = item.job?.xp_lvl || {};
+      const { value: location } = item.job?.location || {};
+      const { value: degree } = item.job?.degree || {};
+      const {
+        avatar,
+        full_name: fullName,
+        last_active_at: lastActiveAt
+      } = item.recruiter || {};
+      const same = isSameDay(item.created_at, data[index - 1]?.created_at)
+      return (
+        <div key={`${item.id}`}>
+          {
+            !same && item.created_at && <p className={styles.time}>{transDate(item.created_at?.substr(0, 10))}</p>
+          }
+          <div
+            className={`${styles.jobCard}`}
 
+            onClick={() => goToJobDetail('')}
+          >
+            {
+              status === 'closed' ? <div className={styles.closed}></div> : null
+            }
+
+            <div className={styles.name}>
+            <Link  href={jobUrl || ''} >{jobTitle}</Link>
+              <span className={styles.salary}>{salaryRangeValue}</span>
+            </div>
+            <p className={styles.company}>{name}. {industry}</p>
+            <span className={styles.tag}>{jobType}</span>
+            <span className={styles.tag}>{xpLvl}</span>
+            <span className={styles.tag}>{degree}</span>
+            <div className={styles.contact}>
+              <div
+                className={`${styles.avator}  ${transTime(lastActiveAt) ? styles.avator2 : ''
+                  }`}
+              >
+                <Image src={avatar} alt={fullName} width={20} height={20} />
+              </div>
+              {fullName}
+              <span className={styles.location}>{location}</span>
+            </div>
+          </div>
+        </div>
+      )
+    })
+  }
+
+  const interviewCard = (data) => {
+    return data?.map((item, index) => {
+      const {jobseeker_display_status:status} = item
+      const {
+        name,
+        logo_url:logoUrl
+      } = item.company || {};
+      const {
+        salary_range_value: salaryRangeValue,
+        status_key: statusJob,
+        job_url:jobUrl,
+        job_title:jobTitle
+      } = item.job || {};
+      const same = isSameDay(item.interviewed_at, data[index - 1]?.interviewed_at)
+      return (
+        <div key={`${item.id}`} className={styles.interviewed}>
+          {
+            !same && item.interviewed_at && <p className={styles.time}>{transDate(item.interviewed_at?.substr(0, 10))}</p>
+          }
+          <div
+            className={`${styles.jobCard}`}
+            onClick={() => goToJobDetail('')}
+          >
+            {
+              statusJob === 'closed' ? <div className={styles.closed}></div> : null
+            }
+            <div className={styles.content}>
+              <div className={styles.left}>
+                <div className={styles.company}>
+                <Image src={logoUrl} alt={name} width={24} height={24} />
+                <span className={styles.name}>{name}</span>
+                <span className={styles.status}>{status}</span>
+                </div>
+               <p className={styles.developer}>
+                 <div className={styles.info}>
+                 <Link  href={jobUrl || ''}  className={styles.job}>{jobTitle}</Link>
+                 <span className={styles.salary}> {salaryRangeValue} </span>
+                </div>
+                <span  className={styles.times}>{item.interviewed_at?.substr(11, 5)}</span>
+               </p>            
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    })
+  }
 
 
   return (
     <>
-      {data?.map((item, index) => {
-        const {
-          name,
-          industry
-        } = item.company || {};
-        const {
-          job_title: jobTitle,
-          salary_range_value: salaryRangeValue,
-          job_type_value: jobType,
-          status_key: status,
-        } = item.job || {};
-        const { value: xpLvl } = item.job?.xp_lvl || {};
-        const { value: location } = item.job?.location || {};
-        const { value: degree } = item.job?.degree || {};
-        const {
-          avatar,
-          full_name: fullName,
-          last_active_at: lastActiveAt
-        } = item.recruiter || {};
-        const same = isSameDay(item.created_at, data[index - 1]?.created_at)
-        return (
-          <div key={`${item.id}`}>
-            {
-              !same && item.created_at && <p className={styles.time}>{item.created_at?.substr(0, 10)}</p>
-            }
-            <div
-              className={`${styles.jobCard}`}
-
-              onClick={() => goToJobDetail('')}
-            >
-              {
-                 status === 'closed' ?    <div className={styles.closed}></div>  : null
-              }
-           
-              <div className={styles.name}>
-                <p>{jobTitle}</p>
-                <span className={styles.salary}>{salaryRangeValue}</span>
-              </div>
-              <p className={styles.company}>{name}. {industry}</p>
-              <span className={styles.tag}>{jobType}</span>
-              <span className={styles.tag}>{xpLvl}</span>
-              <span className={styles.tag}>{degree}</span>
-              <div className={styles.contact}>
-                <div
-                  className={`${styles.avator}  ${transTime(lastActiveAt) ? styles.avator2 : ''
-                    }`}
-                >
-                  <Image src={avatar} alt={fullName} width={20} height={20} />
-                </div>
-                {fullName}
-                <span className={styles.location}>{location}</span>
-              </div>
-            </div>
-          </div>
-        )
-      })}
-      <p className={styles.load}>{loadingList ? <CircularProgress /> : page === totalPage ? 'No more' : ''}</p>
+      {
+        tabValue === 'interview' ? interviewCard(data) : card(data)
+      }
+      <p className={styles.load}>{loadingList ? <CircularProgress  style={{margin:'10px 0'}}/> : page === totalPage ? 'No more' : ''}</p>
 
     </>
   )

@@ -72,6 +72,13 @@ const theme = parent => createTheme(({
 
       }
     },
+    MuiInputLabel:{
+      styleOverrides: {
+        root: {
+          fontSize: '14px',
+        }
+      }
+    }
   }
 }))
 const MaterialTextFieldWithSuggestionList = ({
@@ -102,7 +109,7 @@ const MaterialTextFieldWithSuggestionList = ({
       <Autocomplete
         id='autocomplete-suggestion-list'
         freeSolo
-        style={{ background: '#fff', color: '#ccc' }}
+        style={{ background: '#fff', color: '#ccc' ,}}
         options={options?.map((option) => option)}
         className={className}
         size={size}

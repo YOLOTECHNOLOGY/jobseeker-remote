@@ -14,11 +14,12 @@ const SearchHistories = (props: any) => {
         <div className={styles.title}>Related Search</div>
         {list.map(item => {
             return <Link
+            className={styles.item}
                 key={item}
                 href={buildQuery(location, item)}
                 prefetch={true}
             >
-                <div className={styles.item}>{item}</div>
+               {item}
             </Link>
         })}
     </div>

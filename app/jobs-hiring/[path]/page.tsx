@@ -21,6 +21,7 @@ import { decoder } from '../interpreters/encoder'
 import { Metadata } from 'next'
 import { toPairs } from 'ramda'
 import LoadingProvider from 'app/components/providers/loadingProvider'
+import Footer from 'components/Footer'
 const configs = getConfigs([
     ['inputs', 'location_lists'],
     ['inputs', 'main_functions'],
@@ -187,6 +188,7 @@ const Main = (props: any) => {
                 </div>
             </div>
         </div>
+        <Footer />
     </LoadingProvider>
 }
 

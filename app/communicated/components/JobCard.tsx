@@ -47,7 +47,7 @@ const Card = ({
           {
             !same && e.created_at && <p className={styles.time}>{transDate(e.created_at?.substr(0, 10))}</p>
           }
-          <JobCardNormal data={e} handelSave={handelSave} loadingChat={loadingChat} />
+          <JobCardNormal data={e} index={index} tabValue={tabValue} handelSave={handelSave} loadingChat={loadingChat} />
         </div>
       )
     }
@@ -61,7 +61,7 @@ const Card = ({
       return (
         <div key={e.id}>
           {
-            !same && e.interviewed_at && <p className={styles.time}>{e.interviewed_at?.substr(0, 10)}</p>
+            !same && e.interviewed_at && <p className={styles.time}>{transDate(e.interviewed_at?.substr(0, 10))}</p>
           }
           <JobCardInterview data={e} />
         </div>

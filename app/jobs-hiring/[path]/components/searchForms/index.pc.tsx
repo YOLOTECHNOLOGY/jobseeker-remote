@@ -28,6 +28,7 @@ import useUserAgent from 'helpers/useUserAgent'
 import { LoadingContext } from 'app/components/providers/loadingProvider'
 import { AppDownQRCode } from 'images'
 import Image from 'next/image'
+import classNames from 'classnames'
 const sortOptions = [
   { label: 'Newest', value: '1' },
   { label: 'Relevance', value: '2' },
@@ -48,6 +49,15 @@ const SearchArea = (props: any) => {
   const [location, setLocation] = useState(
     locations.find((location) => location.seo_value === searchValues.location?.[0])
   )
+  const [isFixed, setIsfixed] = useState(false)
+  useEffect(() => {
+    const listener = () => {
+      const scrollTop = document.documentElement.scrollTop
+      setIsfixed(scrollTop > 58)
+    }
+    window.addEventListener('scroll', listener, true)
+    return window.removeEventListener('scroll', listener)
+  }, [])
 
   const [salaries, setSelaries] = useState(searchValues?.salary ?? [])
   const salaryOptions =
@@ -96,7 +106,6 @@ const SearchArea = (props: any) => {
     })
   }, [searchValue, salaries, jobTypes, moreData, location, sort, jobFunctionValue])
   const router = useRouter()
-  console.log({ filterParams })
   const result = useMemo(() => {
 
     return encode(filterParams)
@@ -121,7 +130,10 @@ const SearchArea = (props: any) => {
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <div className={styles.container}>
+        <div className={classNames({
+          [styles.container]: true,
+          [styles.isFixed]: isFixed
+        })}>
           <div className={styles.searchArea}>
             <LocationField
               className={styles.location}
@@ -210,9 +222,9 @@ const SearchArea = (props: any) => {
                 </svg>
                 <div className={styles.text}>Download APP and chat with Boss </div>
                 <div className={styles.popver}>
-                 <Image src={AppDownQRCode} alt='app down' width='104' height='104'/>
-                 <p>Chat directly<br/>with Boss</p>
-                 </div> 
+                  <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
+                  <p>Chat directly<br />with Boss</p>
+                </div>
               </div>
             ) : (
               <Button

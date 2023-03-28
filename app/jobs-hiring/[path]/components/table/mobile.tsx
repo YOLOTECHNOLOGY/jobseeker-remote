@@ -39,7 +39,7 @@ const MobileTable = (props: any) => {
             setLatestPage(page)
         })
             .finally(() => setLoading(false))
-    }, [noMore, loading, searchValues,latestPage])
+    }, [noMore, loading, searchValues, latestPage])
     return <div className={styles.mobileContainer}>
         {jobList.map(job => {
             return (<div className={styles.jobContainer} key={job?.id}>
