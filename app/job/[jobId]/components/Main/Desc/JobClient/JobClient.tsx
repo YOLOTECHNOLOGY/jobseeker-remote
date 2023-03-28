@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { Stack } from 'app/components/MUIs'
@@ -29,11 +29,17 @@ export type sharePropsType = {
 
 const JobClient = (props: sharePropsType) => {
   const dispatch = useDispatch()
+  const [reportJobReasonList, setReportJobReasonList] = useState<Array<any>>(null)
 
   const config = useSelector(
     (store: any) => store?.config?.config?.response ?? initialState.response
   )
-  const reportJobReasonList = config?.inputs?.report_job_reasons ?? []
+
+  useEffect(() => {
+    setReportJobReasonList(
+      config?.inputs?.report_job_reasons ?? initialState.response.inputs.report_job_reasons
+    )
+  }, [config])
 
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
   const postReportResponse = useSelector((store: any) => store.reports.postReport.response)
@@ -53,24 +59,26 @@ const JobClient = (props: sharePropsType) => {
 
   return (
     <>
-      <Stack direction='row' spacing={2}>
-        <div onClick={() => setIsShowSearch(true)} className={styles.jobClient_btn_wrapper}>
-          <Avatar
-            src={ShareIcon}
-            alt='share'
-            sx={{ width: '17px', height: '17px', marginRight: '4px' }}
-          />{' '}
-          Share
-        </div>
-        <div onClick={() => setIsShowReportJob(true)} className={styles.jobClient_btn_wrapper}>
-          <Avatar
-            src={ReportIcon}
-            alt='report'
-            sx={{ width: '17px', height: '17px', marginRight: '4px' }}
-          />{' '}
-          Report
-        </div>
-      </Stack>
+      {reportJobReasonList?.length ? (
+        <Stack direction='row' spacing={2}>
+          <div onClick={() => setIsShowSearch(true)} className={styles.jobClient_btn_wrapper}>
+            <Avatar
+              src={ShareIcon}
+              alt='share'
+              sx={{ width: '17px', height: '17px', marginRight: '4px' }}
+            />{' '}
+            Share
+          </div>
+          <div onClick={() => setIsShowReportJob(true)} className={styles.jobClient_btn_wrapper}>
+            <Avatar
+              src={ReportIcon}
+              alt='report'
+              sx={{ width: '17px', height: '17px', marginRight: '4px' }}
+            />{' '}
+            Report
+          </div>
+        </Stack>
+      ) : null}
 
       <ModalShare
         selectedJob={props}
@@ -79,7 +87,7 @@ const JobClient = (props: sharePropsType) => {
         handleShowModalShare={setIsShowSearch}
       />
 
-      {isShowReportJob && (
+      {isShowReportJob && reportJobReasonList.length && (
         <ModalReportJob
           isShowReportJob={isShowReportJob}
           handleShowReportJob={setIsShowReportJob}
