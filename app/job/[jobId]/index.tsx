@@ -53,7 +53,8 @@ const Index = ({ data, jobId }: any) => {
     lat: data.latitude,
     lng: data.longitude,
     full_address: data.full_address,
-    published_at: data.published_at
+    published_at: data.published_at,
+    recruiter: data.recruiter
   }
 
   return (
