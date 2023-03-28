@@ -7,6 +7,7 @@ import LoadMore from '../loadMore'
 import { lensProp, set } from 'ramda'
 import { serverDataScript } from 'app/abstractModels/FetchServierComponents'
 import tableIp from '../../../interpreters/talbeMoble'
+import Empty from 'app/components/empty/empty'
 
 const MobileTable = (props: any) => {
     const { jobs = [], page, totalPages, searchValues, config } = props
@@ -39,13 +40,13 @@ const MobileTable = (props: any) => {
             setLatestPage(page)
         })
             .finally(() => setLoading(false))
-    }, [noMore, loading, searchValues,latestPage])
+    }, [noMore, loading, searchValues, latestPage])
     return <div className={styles.mobileContainer}>
-        {jobList.map(job => {
+        {jobList.length ? jobList.map(job => {
             return (<div className={styles.jobContainer} key={job?.id}>
                 <MobileCard {...job} />
             </div>)
-        })}
+        }) : <Empty/>}
         <LoadMore loading={loading} shouldLoad={shouldLoadMore} noMore={noMore} />
     </div>
 }

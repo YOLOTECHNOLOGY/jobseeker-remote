@@ -7,7 +7,7 @@ import Pagination from '../Pagination'
 import JobCard from '../jobCard'
 import MobileTable from './mobile'
 import Loader from './loader'
-import Empty from '../../../../components/empty/empty'
+import Empty from 'app/components/empty/empty'
 const Table = (props: any) => {
     const { jobs = [], page, totalPages } = props
     // jobs = [], page, totalPages, searchValues, config
