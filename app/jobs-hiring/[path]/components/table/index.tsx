@@ -9,28 +9,28 @@ import MobileTable from './mobile'
 import Loader from './loader'
 import Empty from 'app/components/empty/empty'
 const Table = (props: any) => {
-    const { jobs = [], page, totalPages } = props
-    // jobs = [], page, totalPages, searchValues, config
-    console.log({ jobs })
-    return <Loader>
-        <div className={styles.container}>
-            {jobs?.length ? jobs.map(job => {
-                return (<div className={styles.jobContainer} key={job?.id}>
-                    <JobCard {...job} />
-                </div>)
-            }) : <Empty />}
-            {
-                totalPages > 1 ? <Pagination
-                    count={+totalPages}
-                    page={+page}
-                /> : null
-            }
-
-        </div>
-        {jobs?.length ? <MobileTable {...props} /> : <Empty />}
-
+  const { jobs = [], page, totalPages } = props
+  // jobs = [], page, totalPages, searchValues, config
+  console.log({ jobs })
+  return (
+    <Loader>
+      <div className={styles.container}>
+        {jobs?.length ? (
+          jobs.map((job) => {
+            return (
+              <div className={styles.jobContainer} key={job?.id}>
+                <JobCard {...job} />
+              </div>
+            )
+          })
+        ) : (
+          <Empty />
+        )}
+        {totalPages > 1 ? <Pagination count={+totalPages} page={+page} /> : null}
+      </div>
+      {jobs?.length ? <MobileTable {...props} /> : null}
     </Loader>
+  )
 }
 
-export default tableIp(serverDataScript()
-    .chain(props => buildComponentScript(props, Table))).run
+export default tableIp(serverDataScript().chain((props) => buildComponentScript(props, Table))).run
