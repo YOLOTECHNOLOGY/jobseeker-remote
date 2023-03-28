@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { isSameDay, transDate } from 'helpers/utilities'
 import CircularProgress from '@mui/material/CircularProgress';
-
+import Link from 'next/link';
 interface cardProps {
   data: Array<any>,
   onChange: Function,
@@ -98,6 +98,7 @@ const JobsCard = ({
         salary_range_value: salaryRangeValue,
         job_type_value: jobType,
         status_key: status,
+        job_url:jobUrl
       } = item.job || {};
       const { value: xpLvl } = item.job?.xp_lvl || {};
       const { value: location } = item.job?.location || {};
@@ -109,7 +110,7 @@ const JobsCard = ({
       } = item.recruiter || {};
       const same = isSameDay(item.created_at, data[index - 1]?.created_at)
       return (
-        <div key={`${item.id}`} className={styles.communicated}>
+        <div key={`${item.id}`}>
           {
             !same && item.created_at && <p className={styles.time}>{transDate(item.created_at?.substr(0, 10))}</p>
           }
@@ -123,7 +124,7 @@ const JobsCard = ({
             }
 
             <div className={styles.name}>
-              <p>{jobTitle}</p>
+            <Link  href={jobUrl || ''} >{jobTitle}</Link>
               <span className={styles.salary}>{salaryRangeValue}</span>
             </div>
             <p className={styles.company}>{name}. {industry}</p>
@@ -156,6 +157,8 @@ const JobsCard = ({
       const {
         salary_range_value: salaryRangeValue,
         status_key: statusJob,
+        job_url:jobUrl,
+        job_title:jobTitle
       } = item.job || {};
       const same = isSameDay(item.interviewed_at, data[index - 1]?.interviewed_at)
       return (
@@ -179,8 +182,8 @@ const JobsCard = ({
                 </div>
                <p className={styles.developer}>
                  <div className={styles.info}>
-                 <span className={styles.job}>Java Developer (work from home)...Java Developer (work from home)...</span>
-                <span className={styles.salary}> {salaryRangeValue} </span>
+                 <Link  href={jobUrl || ''}  className={styles.job}>{jobTitle}</Link>
+                 <span className={styles.salary}> {salaryRangeValue} </span>
                 </div>
                 <span  className={styles.times}>{item.interviewed_at?.substr(11, 5)}</span>
                </p>

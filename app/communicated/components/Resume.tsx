@@ -173,7 +173,9 @@ const Resume = ({
           </FormControl>
         </Box>
         <button className={styles.btn} >
+          <Link href="/manage-profile?tab=resume">
           Edit online resume
+          </Link>
         </button>
       </div>
       <ul className={styles.type}>
@@ -187,7 +189,7 @@ const Resume = ({
       <div className={styles.upload}>
         <div className={styles.header}>
           <Link href='/manage-profile?tab=resume'>
-          Uploaded Resumes
+             Uploaded Resumes
           </Link>
         </div>
         <div className={styles.uploadContainer}>

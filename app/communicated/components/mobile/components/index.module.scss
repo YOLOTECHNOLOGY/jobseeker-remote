@@ -22,22 +22,23 @@
              font-weight: 700;
              font-size: 16px;
              line-height: 24px;
-             display: flex;
-             color: #353535;
-
-             p {
+             display: flex;         
+             a{
                  width: 0;
                  flex: 1;
                  overflow: hidden;
                  text-overflow: ellipsis;
                  white-space: nowrap;
+                 display: block;
+                 color: #353535;
              }
 
              .salary {
-                 width: 152px;
+                 width: fit-content;
                  text-align: right;
                  font-size: 14px;
                  color: #136FD3;
+                 margin-left: 12px;
              }
          }
 
@@ -172,9 +173,10 @@
                      .job{
                         overflow: hidden;
                         text-overflow: ellipsis;
-                        word-break: keep-all; 
-                        flex: 1;
-                        width: 0;
+                        white-space: nowrap; 
+                        color: #707070;
+                        max-width: calc(100vw - 200px);
+                        
                      } 
                      .salary{
                         width: fit-content;
@@ -184,11 +186,13 @@
                         font-weight: 700;
                         font-size: 14px;
                         display: flex;
-                       margin-left: 20px;
+                        margin-left: 20px;
                         text-align: right;
                         letter-spacing: 1px;
                         color: #353535;
                         font-weight: 700;
+                        width: fit-content;
+                        margin-left: 10px;
                      }
                  }
              }

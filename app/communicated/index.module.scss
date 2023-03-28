@@ -544,7 +544,7 @@
     display: block;
     margin: 16px auto 0;
     height: 44px;
-    line-height: 44px;
+    line-height: 41px;
     outline: none;
     background: #fff;
     letter-spacing: 1px;
@@ -595,6 +595,7 @@
     .mobile{
       display: block;
       min-height: 50vh;
+      overflow: hidden;
       .headerTop{
         border-radius: 0;
         width: 100vw;
