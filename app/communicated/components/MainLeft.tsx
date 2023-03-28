@@ -18,7 +18,6 @@ import {
   fetchInterviews,
   fetchCheckChats
 } from 'store/services/jobs/fetchJobsCommunicated'
-import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
@@ -99,7 +98,7 @@ const tabListIntersted = [
 
 
 const MainLeft = () => {
-  const [tabValue, setTabValue] = useState<string>('communicated')
+  const [tabValue, setTabValue] = useState<string>('interview')
   const [data, setData] = useState<Array<any>>([])
   const [tabList, setTabList] = useState<Array<any>>([])
   const [tabChildren, setTabChildren] = useState<Array<any>>([])
@@ -111,7 +110,7 @@ const MainLeft = () => {
   const accessToken = getCookie('accessToken')
   const [open, setOpen] = useState<boolean>(false)
   const [loadingChat, setLoadingChat] = useState<boolean>(false)
-  const [lodingList, setLodingList] = useState<boolean>(true)
+  const [loadingList, setLoadingList] = useState<boolean>(true)
 
   useEffect(() => {
     if (tabList?.length && tabValue) {
@@ -139,7 +138,7 @@ const MainLeft = () => {
 
 
   const getData = (tab, page) => {
-    setLodingList(true)
+    setLoadingList(true)
     tab.fetchFun({
       page,
       accessToken
@@ -150,7 +149,14 @@ const MainLeft = () => {
       data.map(e => {
         idList.push(e.recruiter_id)
       })
-      checkChates(data, total, idList)
+      if(data.length){
+        checkChates(data, total, idList)
+      }else{
+        setTotal(total)
+        setData(data)
+        setLoadingList(false)
+      }
+   
     })
   }
 
@@ -170,13 +176,13 @@ const MainLeft = () => {
         }
       }
       setTotal(total)
-
+      console.log(dataPar,'dataPar')
       if (page > 1) {
         setData([...data, ...dataPar])
       } else {
         setData(dataPar)
       }
-    }).finally(() => setLodingList(false))
+    }).finally(() => setLoadingList(false))
   }
   console.log(data)
   const onChange = (e: string) => {
@@ -190,33 +196,32 @@ const MainLeft = () => {
   const handleChangeChildren = (e: string) => {
     setTabValueChidren(e)
   }
-  const handelSave = (item) => {
+  const handelSave = (item,index) => {
     setLoadingChat(true)
-    const { is_saved: saved, id } = item.job || {}
-    if (saved) {
-      deleteSaveJobService(id).then(res => {
-        checkSavedData(res, id, false)
-      }).finally(() => setLoadingChat(false))
-    } else {
-      postSaveJobService({ job_id: id }).then(res => {
-        checkSavedData(res, id, true)
-      }).finally(() => setLoadingChat(false))
-    }
+    const { id } = item.job || {}
+    deleteSaveJobService(id).then(res => {
+      checkSavedData(res,index)
+    })
+    // if (saved) {
+    //   deleteSaveJobService(id).then(res => {
+    //     checkSavedData(res, id, false)
+    //   }).finally(() => setLoadingChat(false))
+    // } else {
+    //   postSaveJobService({ job_id: id }).then(res => {
+    //     checkSavedData(res, id, true)
+    //   }).finally(() => setLoadingChat(false))
+    // }
   }
 
-  const checkSavedData = (res, id, state) => {
+  const checkSavedData = (res,index) => {
     const jobData = res?.data?.data
     console.log(jobData, 'jobData')
     if (jobData) {
-      const newData = data.map(e => {
-        if (e.job.id === id) {
-          e.job.is_saved = state
-        }
-        return e
-      })
-      setData([...newData])
+      data.splice(index,1)
+      setData([...data])
       setOpen(true)
     }
+    setLoadingChat(false)
   }
 
   const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
@@ -245,7 +250,7 @@ const MainLeft = () => {
           onChange={(e) => setPage(e)}
           handelSave={handelSave}
           loadingChat={loadingChat}
-          loadingList={lodingList}
+          loadingList={loadingList}
 
         />
       </div>
@@ -257,6 +262,7 @@ const MainLeft = () => {
           tabChildren={tabChildren}
           tabValueChildren={tabValueChildren}
           onChange={onChange}
+          loadingList={loadingList}
           handleChangeChildren={handleChangeChildren}
         />
         <MainMobile
@@ -264,7 +270,7 @@ const MainLeft = () => {
           data={data}
           page={page}
           totalPage={total}
-          loadingList={lodingList}
+          loadingList={loadingList}
           onChange={(e) => setPage(e)}
         />
       </div>

@@ -31,8 +31,18 @@ const Search = () => {
         isClear={false}
         defaultValue='Las Pinas'
         disableClearable
-        style={{
-          fontSize: '14px'
+        sx={{
+          fontSize: '14px',
+          '> .MuiFormControl-root': {
+            '> .MuiOutlinedInput-root': {
+              borderRadius: '10px',
+
+              '> .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#BCBCBC',
+                borderWidth: '0.5px'
+              }
+            }
+          }
         }}
         onChange={(e, value) => setLocation(value)}
       />
@@ -46,6 +56,16 @@ const Search = () => {
         onChange={(e) => setSearchValue(e.target?.value)}
         onKeyUp={(e) => e.code == 'Enter' && handleUpdatePath()}
         maxLength={60}
+        sx={{
+          '> .MuiOutlinedInput-root': {
+            borderRadius: '10px',
+
+            '> .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#BCBCBC',
+              borderWidth: '0.5px'
+            }
+          }
+        }}
       />
 
       <Button

@@ -1,4 +1,5 @@
 "use client"
+import React from 'react';
 import styles from '../../index.module.scss'
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import Tab from '@mui/material/Tab';
@@ -7,6 +8,8 @@ import { styled } from '@mui/material/styles'
 import { SxProps, Theme } from '@mui/system'
 import Link from 'next/link';
 import Box from '@mui/material/Box';
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
+import ModalDialog from 'components/ModalDialog';
 interface StyledTabsProps {
     children?: React.ReactNode
     value: number | string
@@ -28,6 +31,7 @@ interface headerProps {
     tabChildren: Array<any>,
     tabValueChildren?: string,
     handleChangeChildren: Function,
+    loadingList:boolean
 }
 
 const Header = ({
@@ -37,16 +41,17 @@ const Header = ({
     tabChildren,
     tabValueChildren,
     handleChangeChildren,
+    loadingList,
 }: headerProps) => {
-    console.log(tabChildren,tabValueChildren)
+    console.log(tabChildren, tabValueChildren, loadingList,77777)
+
+    const [open, setOpen] = React.useState(false)
+
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         onChange(newValue)
     }
 
-    // const handleChangeChildrenFun = (event: React.SyntheticEvent, newValue: string) => {
-    //     handleChangeChildren(newValue)
-    // }
-
+ 
     const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
         '&.Mui-selected': {
             color: '#136FD3',
@@ -75,9 +80,7 @@ const Header = ({
             borderRadius: '5px'
         }
     })
-
-
-
+  
     return (
         <>
             <div className={styles.headerTop}
@@ -89,31 +92,52 @@ const Header = ({
                 </Link>
                 <span className={styles.line} >|</span>
                 <Box sx={{ width: 'calc(100vw - 106px)', bgcolor: 'background.paper' }}>
-                <StyledTabs
-                    value={tabValue}
-                    variant='scrollable'
-                    scrollButtons='auto'
-                    aria-label='scrollable auto tabs example'
-                    onChange={handleChange}
-                >
-                    {tabList.map((item) => (
-                        <StyledTab
-                            key={item.value}
-                            label={item.tab}
-                            value={item.value}
-                            sx={{
-                                fontSize: '16px',
-                                textTransform: 'capitalize',
-                                color: '#707070',
-                                fontFamily: 'product sans',
-                                letterSpacing: '1px',
-                                padding: '12px 0',
-                                marginRight: '30px'
-                            }}
-                        />
-                    ))}
-                </StyledTabs>
+                    <StyledTabs
+                        value={tabValue}
+                        variant='scrollable'
+                        scrollButtons='auto'
+                        aria-label='scrollable auto tabs example'
+                        onChange={handleChange}
+                    >
+                        {tabList.map((item) => (
+                            <StyledTab
+                                key={item.value}
+                                label={item.tab}
+                                value={item.value}
+                                sx={{
+                                    fontSize: '16px',
+                                    textTransform: 'capitalize',
+                                    color: '#707070',
+                                    fontFamily: 'product sans',
+                                    letterSpacing: '1px',
+                                    padding: '12px 0',
+                                    marginRight: '30px'
+                                }}
+                            />
+                        ))}
+                    </StyledTabs>
                 </Box>
+       
+
+                <ModalDialog
+                  headerTitle={'Please Select'}
+                  open={open}
+                  onClose={()=>setOpen(false)}   
+                >
+                 <>
+                 {tabChildren.map((item) => <div onClick={()=> {
+                   setOpen(false)
+                   handleChangeChildren(item.value)
+                 }} style={{lineHeight:'40px'}} key={item.key}> {item.tab} </div> )}
+                </>
+                </ModalDialog>
+                {
+                    tabChildren?.length && !loadingList ? (
+                         <div className={styles.mobileHeaderChild} onClick={()=>setOpen(true)}>
+                         {tabValueChildren} {loadingList}  <ArrowDropDownOutlinedIcon className={styles.arrow} />
+                    </div>
+                    ) : null
+                }
             </div>
         </>
 

@@ -65,7 +65,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
                           />
                         </div>
                         <div className={styles.similarJobs_info_jobType}>
-                          <div>{item.job_type}</div>
+                          <div>{item.company?.name}</div>
                           <div>{item.location_value}</div>
                         </div>
                       </div>

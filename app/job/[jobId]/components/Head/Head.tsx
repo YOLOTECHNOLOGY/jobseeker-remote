@@ -70,7 +70,9 @@ const Head = ({
                       src={CompleteResumeIcon}
                       alt='complete resume'
                       sx={{ width: '17px', height: '17px', marginRight: '4px' }}
+                      className={styles.head_main_change_resume_btnWrapper_icon}
                     />
+
                     <span> Fill up resume online</span>
                   </div>
                 </Link>
@@ -82,6 +84,7 @@ const Head = ({
                       src={UploadResumeIcon}
                       alt='upload resume'
                       sx={{ width: '17px', height: '17px', marginRight: '4px' }}
+                      className={styles.head_main_change_resume_btnWrapper_icon}
                     />
                     <span> Upload new resume</span>
                   </div>
