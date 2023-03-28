@@ -19,6 +19,7 @@ type propsType = {
   lng: number
   full_address: string
   published_at: string
+  recruiter: any
 }
 
 const MainFC = (props: propsType) => {
