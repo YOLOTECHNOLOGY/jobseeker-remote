@@ -34,7 +34,7 @@
 
   li {
     list-style: none;
-    padding: 15px 0;
+    padding: 14px 0;
   }
 }
 
@@ -42,9 +42,13 @@
   display: block;
   padding: 0 0 10px;
 
-  &:hover{
-    color:$primaryBlue;
+  &:hover {
+    color: $primaryBlue;
     font-weight: bold;
+  }
+
+  .downLoadApp {
+    color: #136fd3;
   }
 }
 
@@ -61,17 +65,17 @@
   padding: 0 14px;
   border-top: 1px solid $lightgrey;
 
-  &:first-child{
+  &:first-child {
     border-top: none;
   }
 
-  &:hover{
-    cursor:pointer;
-    color:$primaryBlue;
+  &:hover {
+    cursor: pointer;
+    color: $primaryBlue;
   }
 }
-.defaultLink2{
-  border-top: 8px solid #F0F0F0;
+.divider {
+  border-top: 8px solid #f0f0f0;
 }
 .activeLink {
   width: auto;
@@ -79,16 +83,16 @@
   font-weight: bold;
 }
 
-.hotTag{
-  display:flex;
-  top:2px;
-  right:-49px;
-  background:#D2030F;
+.hotTag {
+  display: flex;
+  top: 2px;
+  right: -49px;
+  background: #d2030f;
   border-radius: 8px;
-  font-size:12px;
-  color:white;
+  font-size: 12px;
+  color: white;
   line-height: 15px;
-  font-weight:400;
-  padding:1px 5px;
-  margin:0 10px;
+  font-weight: 400;
+  padding: 1px 5px;
+  margin: 0 10px;
 }

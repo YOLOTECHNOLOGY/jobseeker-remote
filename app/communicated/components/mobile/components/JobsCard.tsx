@@ -23,7 +23,6 @@ const JobsCard = ({
   totalPage,
   tabValue,
 }: cardProps) => {
-  console.log(data, 77777888)
   const loading = useRef(null)
   const pageRef = useRef(null)
   const totalPageRef = useRef(null)
@@ -186,8 +185,7 @@ const JobsCard = ({
                  <span className={styles.salary}> {salaryRangeValue} </span>
                 </div>
                 <span  className={styles.times}>{item.interviewed_at?.substr(11, 5)}</span>
-               </p>
-                 
+               </p>            
               </div>
             </div>
           </div>
@@ -202,7 +200,7 @@ const JobsCard = ({
       {
         tabValue === 'interview' ? interviewCard(data) : card(data)
       }
-      <p className={styles.load}>{loadingList ? <CircularProgress /> : page === totalPage ? 'No more' : ''}</p>
+      <p className={styles.load}>{loadingList ? <CircularProgress  style={{margin:'10px 0'}}/> : page === totalPage ? 'No more' : ''}</p>
 
     </>
   )

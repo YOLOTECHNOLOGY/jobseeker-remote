@@ -37,7 +37,7 @@ const JobCardInterview = (props: any) => {
 
   return (
     <>
-      <div className={`${styles.detail} ${styles.interested} ${isExists === 'closed' ? styles.jobClosed : null}`} >
+      <div className={`${styles.detail} ${styles.interested} ${status === 'closed' ? styles.jobClosed : null}`} >
         <div className={styles.header}>
           <div className={styles.headerInfo}>
             <img src={avatar} className={styles.avator} />
