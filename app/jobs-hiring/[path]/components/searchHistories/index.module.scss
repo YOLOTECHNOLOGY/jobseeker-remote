@@ -24,7 +24,7 @@
         background: #FFFFFF;
         overflow: hidden;
         text-overflow: ellipsis;
-        word-break: keep-all;
+        white-space: nowrap;
         line-height: 39px;
     }
 }
