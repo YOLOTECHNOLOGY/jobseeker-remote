@@ -30,7 +30,7 @@ const AsideFC = (props: propsT) => {
 
       <Search />
 
-      <span className={styles.published_at}>{props.published_at}</span>
+      <span className={styles.published_at}>Posted on {props.published_at}</span>
 
       <div className={styles.aside_mobilesticky_btnGroup}>
         <Btn
