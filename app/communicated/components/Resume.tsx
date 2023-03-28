@@ -141,7 +141,7 @@ const Resume = ({
     no_of_saved_jobs: noOfSavedJobs,
     no_of_viewed_jobs: noOfViewedJobs
   } = jobData || {}
-  console.log(jobData,'data',44444444)
+
   return (
     <>
       <div className={styles.resume}>

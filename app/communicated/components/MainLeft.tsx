@@ -176,7 +176,6 @@ const MainLeft = () => {
         }
       }
       setTotal(total)
-      console.log(dataPar,'dataPar')
       if (page > 1) {
         setData([...data, ...dataPar])
       } else {
@@ -184,7 +183,6 @@ const MainLeft = () => {
       }
     }).finally(() => setLoadingList(false))
   }
-  console.log(data)
   const onChange = (e: string) => {
     const children = tabList[R.findIndex(R.propEq('value', e))(tabList)]?.children
     setPage(1)
@@ -215,7 +213,6 @@ const MainLeft = () => {
 
   const checkSavedData = (res,index,id) => {
     const jobData = res?.data?.data
-    console.log(jobData, 'jobData')
     if (jobData) {
       router.push(`/communicated?unsaveId=${id}`)
       data.splice(index,1)

@@ -43,8 +43,7 @@ const Header = ({
     handleChangeChildren,
     loadingList,
 }: headerProps) => {
-    console.log(tabChildren, tabValueChildren, loadingList,77777)
-
+   
     const [open, setOpen] = React.useState(false)
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
