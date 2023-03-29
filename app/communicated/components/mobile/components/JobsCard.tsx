@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useRef } from 'react';
 import styles from './index.module.scss';
-import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { isSameDay, transDate } from 'helpers/utilities'
 import CircularProgress from '@mui/material/CircularProgress';
@@ -26,7 +25,6 @@ const JobsCard = ({
   const loading = useRef(null)
   const pageRef = useRef(null)
   const totalPageRef = useRef(null)
-  const router = useRouter()
   useEffect(() => {
     loading.current = loadingList;
     pageRef.current = page;
@@ -82,9 +80,6 @@ const JobsCard = ({
     isTouchBottom(handleLoadMore)
   }, 300)
 
-  const goToJobDetail = (url: string) => {
-    router.push(url)
-  }
 
   const card = (data) => {
     return data?.map((item, index) => {
@@ -107,6 +102,7 @@ const JobsCard = ({
         full_name: fullName,
         last_active_at: lastActiveAt
       } = item.recruiter || {};
+      const { job_title: workJobTitle } = item.recruiter?.work_experience || {};
       const same = isSameDay(item.created_at, data[index - 1]?.created_at)
       return (
         <div key={`${item.id}`}>
@@ -114,16 +110,15 @@ const JobsCard = ({
             !same && item.created_at && <p className={styles.time}>{transDate(item.created_at?.substr(0, 10))}</p>
           }
           <div
-            className={`${styles.jobCard}`}
-
-            onClick={() => goToJobDetail('')}
-          >
+            className={`${styles.jobCard}`} >
             {
               status === 'closed' ? <div className={styles.closed}></div> : null
             }
 
             <div className={styles.name}>
-            <Link  href={jobUrl || ''} >{jobTitle}</Link>
+             {
+               status === 'closed'  ? <a href ="javascript:;" >{jobTitle}</a> :  <Link  href={jobUrl || ''} >{jobTitle}</Link>
+             }
               <span className={styles.salary}>{salaryRangeValue}</span>
             </div>
             <p className={styles.company}>{name}. {industry}</p>
@@ -137,7 +132,7 @@ const JobsCard = ({
               >
                 <Image src={avatar} alt={fullName} width={20} height={20} />
               </div>
-              {fullName}
+              {fullName}.  {workJobTitle}
               <span className={styles.location}>{location}</span>
             </div>
           </div>
@@ -167,7 +162,6 @@ const JobsCard = ({
           }
           <div
             className={`${styles.jobCard}`}
-            onClick={() => goToJobDetail('')}
           >
             {
               statusJob === 'closed' ? <div className={styles.closed}></div> : null
@@ -181,7 +175,9 @@ const JobsCard = ({
                 </div>
                <p className={styles.developer}>
                  <div className={styles.info}>
-                 <Link  href={jobUrl || ''}  className={styles.job}>{jobTitle}</Link>
+                 {
+                   status === 'closed'  ? <a href ="javascript:;" >{jobTitle}</a> :  <Link  href={jobUrl || ''} >{jobTitle}</Link>
+                 }
                  <span className={styles.salary}> {salaryRangeValue} </span>
                 </div>
                 <span  className={styles.times}>{item.interviewed_at?.substr(11, 5)}</span>
