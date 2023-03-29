@@ -39,8 +39,7 @@ const SearchArea = (props: any) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchConfigSuccess(config))
-  }),
-    []
+  },[])
   const accessToken = getCookie('accessToken')
   const userCookie = getCookie('user')
   const [page, setPage] = useState(searchValues.page ?? '1')
