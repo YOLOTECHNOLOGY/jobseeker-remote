@@ -1,6 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { toPairs } from 'ramda'
+import { useSelector } from 'react-redux'
 
 import { Button } from 'app/components/MUIs/'
 import { encode } from 'app/jobs-hiring/interpreters/encoder'
@@ -13,14 +14,21 @@ type propsType = {
 
 const SeeMore = ({ jobDetail }: propsType) => {
   const router = useRouter()
+  const xp_lvls = useSelector((store: any) => store.config.config.response?.inputs?.xp_lvls ?? [])
 
   const handleToHomePage = () => {
+    const xp_lvl = xp_lvls.find((item) => jobDetail.xp_lvl?.key == item.key)
     const searchQuery: any = {
       location: [jobDetail.location.value],
       mainFunctions: [jobDetail.function?.main_function],
-      jobFunctions: [jobDetail.function?.sub_function],
-      workExperience: [jobDetail.xp_lvl?.key]
+      jobFunctions: [jobDetail.function?.sub_function]
+      // workExperience: [xp_lvl['seo-value']]
     }
+
+    if (xp_lvl?.['seo-value']) {
+      searchQuery.workExperience = xp_lvl['seo-value']
+    }
+
     const result = encode(searchQuery)
     const url = new URLSearchParams(toPairs(result.params)).toString()
     router.push('/jobs-hiring/' + result.searchQuery + '?' + url, {
