@@ -50,7 +50,7 @@ const initTabList = [
       },
       {
         tab: 'Mobile Number',
-        value: 'mobileNumber',
+        value: 'Mobile number',
         fetchFun: fetchResumeContact,
         key: 'contact_exchanged_jobs'
       }

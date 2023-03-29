@@ -43,9 +43,11 @@ const JobCardInterview = (props: any) => {
             <img src={avatar} className={styles.avator} />
             <span className={styles.name}>
               {fullName}
-              <span className={styles.nameLine}> |</span>
+              {fullName && workJobTitle ?  <span className={styles.nameLine}> |</span> : null}  
               {workJobTitle}
-              <span className={styles.nameLine}> |</span>
+              {
+                (workJobTitle || fullName) && phoneNum ? <span className={styles.nameLine}> |</span> : null
+              }
               {phoneNum}
             </span>
             <span className={styles.jobrStatus}>{jobseekerDisplayStatus}</span>

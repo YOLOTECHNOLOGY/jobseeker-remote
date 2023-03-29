@@ -79,7 +79,7 @@ const Header = ({
             borderRadius: '5px'
         }
     })
-  
+
     return (
         <>
             <div className={styles.headerTop}
@@ -90,7 +90,7 @@ const Header = ({
                     <span className={styles.bactText}>Back</span>
                 </Link>
                 <span className={styles.line} >|</span>
-                <Box sx={{ width: 'calc(100vw - 106px)', bgcolor: 'background.paper' }}>
+                <Box sx={{ width: 'calc(100vw - 114px)', bgcolor: 'background.paper' }}>
                     <StyledTabs
                         value={tabValue}
                         variant='scrollable'
@@ -127,11 +127,11 @@ const Header = ({
                  {tabChildren.map((item) => <div onClick={()=> {
                    setOpen(false)
                    handleChangeChildren(item.value)
-                 }} style={{lineHeight:'40px'}} key={item.key}> {item.tab} </div> )}
+                 }} style={{lineHeight:'40px',fontSize:'14px'}} key={item.key}> {item.tab} </div> )}
                 </>
                 </ModalDialog>
                 {
-                    tabChildren?.length && !loadingList ? (
+                    tabChildren?.length && (!loadingList || tabValue ===  'exchanged') ? (
                          <div className={styles.mobileHeaderChild} onClick={()=>setOpen(true)}>
                          {tabValueChildren} {loadingList}  <ArrowDropDownOutlinedIcon className={styles.arrow} />
                     </div>
