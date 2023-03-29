@@ -9,21 +9,21 @@
   padding-bottom: 50px;
   width: 100%;
   height: 100%;
-  // @include sm {
-  //     display: none;
-  // }
   @include sm {
-    display: flex;
-    flex-direction: column;
-    height: auto;
+      display: none;
   }
+//   @include sm {
+//     display: flex;
+//     flex-direction: column;
+//     height: auto;
+//   }
 
   .jobContainer {
     margin-bottom: 15px;
   }
 }
 .mobileContainer {
-  // display: none;
+  display: none;
   @include sm {
     display: flex;
     flex-direction: column;

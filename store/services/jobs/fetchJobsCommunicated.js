@@ -46,8 +46,8 @@ const updateNoticePeriod  = (payload) => {
 const fetchPersonalInfo  = (payload) => {
   const {accessToken = null } = payload || {}
   const endpointType = 'protected'
-  const axios = configuredAxios('jobseeker', endpointType, false, accessToken)
-  return axios.get(`/personal-info`)
+  const axios = configuredAxios('jobseeker', endpointType, false, accessToken,true)
+  return axios.get(`/personal-info?interview_filter=all`)
 }
 
 const fetchRecruiters  = (payload) => {
@@ -74,7 +74,7 @@ const fetchInterviews  = (payload) => {
 const fetchResumes = (payload) => {
   const {accessToken = null } = payload || {}
   const endpointType = 'protected'
-  const axios = configuredAxios('jobseeker', endpointType, false, accessToken)
+  const axios = configuredAxios('jobseeker', endpointType, false, accessToken,true)
   return axios.get(`/resumes`)
 }
 
