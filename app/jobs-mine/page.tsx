@@ -17,11 +17,14 @@ const configs = getConfigs([
     ['inputs', 'job_functions'],
     ['inputs', 'function_titles'],
     ['inputs', 'job_function_lists'],
+    ['inputs', 'country_lists'],
     ['inputs', 'xp_lvls'],
     ['inputs', 'job_types'],
     ['inputs', 'company_sizes'],
     ['inputs', 'industry_lists'],
+    ['inputs', 'currency_lists'],
     ['inputs', 'company_financing_stage_lists'],
+    ['inputs', 'salary_ranges'],
     ['filters', 'educations'],
     ['filters', 'salary_range_filters']
 ])
@@ -31,16 +34,16 @@ const configs = getConfigs([
 
 const Main = (props: any) => {
     console.log({ props })
-    const { preferences, searchParams } = props
+    const { preferences, searchParams, config } = props
     const preferenceId = searchParams.preferenceId || preferences?.[0]?.id
     return <LoadingProvider >
         <div>
             <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
                 <SearchForm
-                    config={props.config}
-                    searchValues={props.searchParams ?? null}
+                    searchParams={props.searchParams ?? null}
                     preferenceId={preferenceId}
                     preferences={preferences}
+                    config={config}
                 />
             </div>
             <div className={styles.content}>

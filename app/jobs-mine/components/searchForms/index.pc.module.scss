@@ -1,8 +1,9 @@
 @import '/styles/mixins.scss';
 
 .container {
+  --box-shadow:none;
   width: 894px;
-  height: 153px;
+  height: 175px;
   max-width: 100%;
   display: flex;
   // position: sticky;
@@ -12,8 +13,16 @@
   background: #fff;
   margin-left: calc(50vw - 585px + 24px);
   border-radius: 15px;
+  z-index: 231;
+  transition: box-shadow ease-in 0.5s;
+  box-shadow: var(--box-shadow);
   @include sm {
     display: none;
+  }
+
+  &.isFixed {
+    --box-shadow: 0px 0px 20px #BCBCBC;
+
   }
 
   .searchArea {
@@ -72,6 +81,7 @@
     .jobFunctions {
       width: 184px;
     }
+
     .clearButton {
       text-transform: capitalize !important;
       font-family: 'Product Sans';

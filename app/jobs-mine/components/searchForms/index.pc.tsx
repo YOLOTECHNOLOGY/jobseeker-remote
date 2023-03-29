@@ -2,13 +2,11 @@
 'use client'
 import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import { flushSync } from 'react-dom'
-import { flatMap } from 'lodash-es'
 import LocationField from 'app/components/commons/location'
 import JobSearchBar from '../../../components/commons/location/search'
 import styles from './index.pc.module.scss'
 import MaterialButton from 'components/MaterialButton'
 import Multiple from 'app/components/commons/select/multiple'
-import { encode } from 'app/jobs-hiring/interpreters/encoder'
 import { useSuggest } from './hooks'
 import theme from 'app/components/commons/theme'
 import { ThemeProvider } from '@mui/material/styles'
@@ -22,6 +20,9 @@ import { filter } from 'ramda'
 import { LoadingContext } from 'app/components/providers/loadingProvider'
 import { useSearchParams } from 'next/navigation'
 import PreferenceSelector from '../preferenceSelector'
+import classNames from 'classnames'
+import { encode } from 'app/jobs-hiring/interpreters/encoder'
+import { useRouter } from 'next/navigation'
 const SearchArea = (props: any) => {
   const { config, preferences, preferenceId } = props
   const dispatch = useDispatch()
@@ -30,81 +31,102 @@ const SearchArea = (props: any) => {
     dispatch(fetchConfigSuccess(config))
   }),
     []
-  const [page, setPage] = useState(searchParams?.page ?? '1')
   const { push } = useContext(LoadingContext)
-  const locations = flatMap(config.inputs.location_lists, (item) => item.locations)
-  const [location, setLocation] = useState(
-    locations.find((location) => location.seo_value === searchParams.location?.[0])
+  const [location, setLocation] = useState<any>()
+  const [searchValue, setSearchValue] = useState<any>()
+  const router = useRouter()
+  const pushJobSearch = useCallback(() => {
+    if (firstRender) {
+      return
+    }
+    const params = {
+      query: searchValue?.trim?.(),
+      location: [location?.['seo_value']].filter((a) => a),
+    }
+    const result = encode(params)
+    const url = new URLSearchParams(toPairs(result.params)).toString()
+    router.push('/jobs-hiring/' + result.searchQuery + '?' + url, { forceOptimisticNavigation: true })
+  }, [searchValue, location])
+  const pushJobSearchRef = useRef(pushJobSearch)
+  useEffect(() => {
+    pushJobSearchRef.current = pushJobSearch
+  }, [pushJobSearch])
+
+  const [page, setPage] = useState(searchParams?.page ?? '1')
+
+  const [qualification, setQualification] = useState(
+    searchParams.get('qualification')?.split?.(',') ?? []
   )
-  const [qualification, setQualification] = useState(searchParams.qualification ?? [])
   const qualificationList = config.filters.educations.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
-  const [workExperience, setWorkExperience] = useState(searchParams.workExperience ?? [])
+  const [workExperience, setWorkExperience] = useState(
+    searchParams.get('workExperience')?.split?.(',') ?? []
+  )
   const workExperienceList = config.inputs.xp_lvls.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
   const [industry, setIndustry] = useState(searchParams.industry ?? [])
   const industryList = config.inputs.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
-  const [verifiedCompany, setVerifiedCompany] = useState(searchParams.verifiedCompany ? [searchParams.verifiedCompany] : [])
-  const [salaries, setSelaries] = useState(searchParams?.salary ?? [])
+  const [verifiedCompany, setVerifiedCompany] = useState(
+    searchParams.get('verifiedCompany') ? [searchParams.verifiedCompany] : []
+  )
+  const [salaries, setSelaries] = useState(searchParams.get('salary')?.split(',') ?? [])
   const salaryOptions =
     config.filters?.salary_range_filters?.map?.((item) => ({
       value: item?.['seo-value'],
       label: item.value
     })) ?? []
-
+  const [isFixed, setIsfixed] = useState(false)
+  useEffect(() => {
+    const listener = () => {
+      const scrollTop = document.documentElement.scrollTop
+      setIsfixed(scrollTop > 58)
+    }
+    window.addEventListener('scroll', listener, true)
+    return window.removeEventListener('scroll', listener)
+  }, [])
 
   const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
-
-  const [moreData, setMoreData] = useState(
-    filter((a) => a)({
-      workExperience: searchParams?.workExperience ?? null,
-      qualification: searchParams?.qualification ?? null,
-      verifiedCompany: searchParams?.verifiedCompany ?? null,
-      companySizes: searchParams?.companySizes ?? null,
-      financingStages: searchParams?.financingStages ?? null,
-      industry: searchParams?.industry ?? null
-    })
-  )
   const [jobTypes, setJobtypes] = useState(searchParams?.jobType ?? [])
   const jobTypeList =
     config?.inputs?.job_types?.map?.((item) => ({
       value: item?.['seo-value'],
       label: item.value
     })) ?? []
-  const [searchValue, setSearchValue] = useState(searchParams.query)
   const [suggestionList, handleSuggestionSearch, addSearchHistory, searchLoading] = useSuggest() as any[]
 
   const filterParams = useMemo(() => {
-    return filter((a) => a)({
-      query: searchValue?.trim?.(),
+    return filter((a) => a?.length)({
+      qualification,
       salary: salaries,
-      location: [location?.['seo_value']].filter((a) => a),
+      workExperience,
       jobType: jobTypes,
-      sort: sort,
-      page: page,
+      industry,
+      verifiedCompany,
+      sort,
+      page,
     })
-  }, [searchValue, salaries, jobTypes, moreData, location, sort])
+  }, [qualification, workExperience, verifiedCompany, industry, salaries, jobTypes, sort])
   console.log({ filterParams })
-  const result = useMemo(() => {
 
-    return encode(filterParams)
-  }, [filterParams])
   const firstRender = useFirstRender()
   const reload = useCallback(() => {
     if (firstRender) {
       return
     }
-    const url = new URLSearchParams(toPairs(result.params)).toString()
-    push('/jobs-hiring/' + result.searchQuery + '?' + url)
-  }, [result, push])
+    const url = new URLSearchParams(toPairs(filterParams)).toString()
+    push(window.location.pathname + '?' + url)
+  }, [filterParams, push])
   const reloadRef = useRef(reload)
   useEffect(() => {
     reloadRef.current = reload
   }, [reload])
-  useEffect(reload, [location, salaries, jobTypes, moreData, sort])
+  useEffect(reload, [filterParams])
 
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <div className={styles.container}>
+        <div className={classNames({
+          [styles.container]: true,
+          [styles.isFixed]: isFixed
+        })}>
           <div className={styles.searchArea}>
             <LocationField
               className={styles.location}
@@ -131,10 +153,10 @@ const SearchArea = (props: any) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault()
                   flushSync(() => {
-                    setSearchValue((e.target as HTMLInputElement).value)
+                    setSearchValue((e.target as any).value)
                   })
-                  addSearchHistory((e.target as HTMLInputElement).value)
-                  reloadRef.current()
+                  addSearchHistory((e.target as any).value)
+                  pushJobSearchRef.current()
                 }
               }}
               options={suggestionList}
@@ -142,26 +164,22 @@ const SearchArea = (props: any) => {
                 flushSync(() => {
                   setSearchValue(value)
                 })
-                addSearchHistory(value)
-                reloadRef.current()
               }}
             />
             <MaterialButton
               className={styles.searchButton}
               capitalize
               onClick={() => {
-                flushSync(() => {
-                  setSearchValue(searchValue)
-                })
+
                 addSearchHistory(searchValue)
-                reloadRef.current()
+                pushJobSearchRef.current()
               }}
             >
               {' '}
               Search{' '}
             </MaterialButton>
           </div>
-          <PreferenceSelector preferences={preferences} preferenceId={preferenceId} />
+          <PreferenceSelector preferences={preferences} preferenceId={preferenceId} config={config}/>
           <div className={styles.filters}>
             <Multiple
               label='Qualification'
@@ -221,8 +239,12 @@ const SearchArea = (props: any) => {
                 setSort('1')
                 setJobtypes([])
                 setSelaries([])
-                setMoreData({} as any)
                 setPage('1')
+                setQualification([])
+                setWorkExperience([])
+                setVerifiedCompany([])
+                setJobtypes([])
+                setIndustry([])
               }}
             >
               Reset Filters{' '}
@@ -230,6 +252,7 @@ const SearchArea = (props: any) => {
           </div>
         </div>
       </ThemeProvider>
+      
     </div>
   )
 }

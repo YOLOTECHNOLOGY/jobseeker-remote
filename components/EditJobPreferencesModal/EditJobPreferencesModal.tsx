@@ -133,15 +133,15 @@ const EditJobPreferencesModal = ({
     }
 
     dispatch(updateUserPreferencesRequest(payload))
-    setTimeout(handleCloseModal, 500)
+    setTimeout(() => handleCloseModal(true), 500)
   }
 
   useEffect(() => {
     handleCloseModal()
   }, [userDetail])
 
-  const handleCloseModal = () => {
-    handleModal(modalName, false)
+  const handleCloseModal = (refresh = false) => {
+    handleModal(modalName, false, refresh)
     reset()
   }
 
@@ -167,7 +167,7 @@ const EditJobPreferencesModal = ({
                   required
                   {...fieldState}
                   {...field}
-                  // onChange={(value)=>setValue('jobTitle',value)}
+                // onChange={(value)=>setValue('jobTitle',value)}
                 />
               )
             }}
