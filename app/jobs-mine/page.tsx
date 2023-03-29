@@ -10,7 +10,6 @@ import Loading from './components/table/loading'
 
 import LoadingProvider from 'app/components/providers/loadingProvider'
 import preferences from './interpreters/preferences'
-import NoPreference from './components/noPreference'
 
 const configs = getConfigs([
     ['inputs', 'location_lists'],
@@ -32,15 +31,27 @@ const configs = getConfigs([
 
 const Main = (props: any) => {
     console.log({ props })
+    const { preferences, searchParams } = props
+    const preferenceId = searchParams.preferenceId || preferences?.[0]?.id
     return <LoadingProvider >
         <div>
             <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
-                <SearchForm config={props.config} searchValues={props.searchValues ?? null} />
+                <SearchForm
+                    config={props.config}
+                    searchValues={props.searchParams ?? null}
+                    preferenceId={preferenceId}
+                    preferences={preferences}
+                />
             </div>
             <div className={styles.content}>
                 <div className={styles.table}>
                     <Suspense fallback={<Loading />}>
-                        <Table searchValues={props.searchValues ?? null} config={props.config} />
+                        <Table
+                            searchParams={searchParams ?? {}}
+                            preferenceId={preferenceId}
+                            preferences={preferences}
+                            config={props.config}
+                        />
                     </Suspense>
                 </div>
             </div>
@@ -52,12 +63,6 @@ export default configs(serverDataScript())
     .chain(configs => preferences(
         needLogin(
             serverDataScript()
-                .chain(preferences => {
-                    if (false) {
-                        return buildComponentScript({ ...configs, preferences }, Main)
-                    } else {
-                        return buildComponentScript({}, NoPreference)
-                    }
-                })
+                .chain(preferences => buildComponentScript({ ...configs, preferences }, Main))
         )))
     .run
