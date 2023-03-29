@@ -6,15 +6,22 @@ import { fetchJobsListService } from 'store/services/jobs/fetchJobsList'
 import { check } from 'helpers/interpreters/services/chat'
 import { cookies } from 'next/headers'
 import { buildParams } from 'app/jobs-hiring/interpreters/encoder'
+import { fetchJobsForYouLogin } from 'store/services/jobs/fetchJobsForYouLogin'
 
 
 export default registInterpreter(command =>
     command.cata({
         fetchData: () => M(context => {
-            const { searchValues, config } = context
-            const queriyParams = {}
+            const { searchParams, config, preferences, preferenceId } = context
+            console.log({ context })
+            const queriyParams = {
+                jobseekerPrefId: preferenceId,
+                page: searchParams.page ?? 1,
+                size: searchParams.size ?? 15,
+                sort: searchParams.sort ?? 2
+            }
             const token = cookies().get('accessToken')
-            return fetchJobsListService(queriyParams, token?.value)
+            return fetchJobsForYouLogin(queriyParams, token.value)
                 .then(result => ({
                     jobs: result.data?.data?.jobs,
                     page: result.data?.data?.page ?? 1,
@@ -27,7 +34,8 @@ export default registInterpreter(command =>
                                 const chats = response.data.data
                                 return {
                                     ...data,
-                                    jobs: data.jobs.map((job, index) => ({ ...job, chat: chats[index] }))
+                                    jobs: data.jobs.map((job, index) => ({ ...job, chat: chats[index] })),
+                                    preferences
                                 }
                             })
                     } else {
