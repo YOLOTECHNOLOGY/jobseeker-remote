@@ -32,8 +32,24 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
   const [isSave, setIsSave] = useState<boolean>(is_saved)
 
   useEffect(() => {
+    document.addEventListener('scroll', handleAddHeadBoxShadow)
+
+    return () => document.removeEventListener('scroll', handleAddHeadBoxShadow)
+  }, [])
+
+  useEffect(() => {
     setIsSave(is_saved)
   }, [is_saved])
+
+  const handleAddHeadBoxShadow = (e) => {
+    const scrollTopHeight = document.body.scrollTop || document.documentElement.scrollTop
+    const headNode = document.querySelector('#jobDetaiPagelHead')
+    if (scrollTopHeight > 55) {
+      ;(headNode as HTMLElement).style.boxShadow = '10px 5px 5px rgba(217,217,217, 0.6)'
+    } else {
+      ;(headNode as HTMLElement).style.boxShadow = 'unset'
+    }
+  }
 
   const handleSaveJob = () => {
     setSaveLoading(true)
