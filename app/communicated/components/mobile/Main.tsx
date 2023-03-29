@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { JoinUs } from 'images'
 import Link from 'next/link';
 const MainMobile = (props: any) => {
-    console.log(props, 'props')
     const {data } = props
     return <div>
         {
