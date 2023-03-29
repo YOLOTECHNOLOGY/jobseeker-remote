@@ -1,10 +1,42 @@
+import { memo } from 'react'
+import { isMobile } from 'react-device-detect'
+import { cookies } from 'next/headers'
+
 import Head from './components/Head/Head'
 import MainFC from './components/Main'
 import AsideFC from './components/Aside'
 
+import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
+
 import styles from './page.module.scss'
 
 const Index = ({ data, jobId }: any) => {
+  const cookieStore = cookies()
+
+  const accessToken = cookieStore.getAll('accessToken')
+
+  const querys = {
+    jobId,
+    status: 'public',
+    serverAccessToken: null
+  }
+
+  if (accessToken[0]) {
+    querys.status = accessToken[0].value ? 'protected' : 'public'
+    querys.serverAccessToken = accessToken[0].value ?? null
+  }
+
+  const tokenData = {
+    source: 'job-detail',
+    device: isMobile ? 'mobile_web' : 'web'
+  }
+
+  const params = Object.assign(querys, tokenData)
+
+  console.log(params, '==================params')
+
+  fetchAddJobViewService(params)
+
   const headProps = {
     title: data.job_title,
     localhost: data.location?.value,
@@ -68,4 +100,4 @@ const Index = ({ data, jobId }: any) => {
   )
 }
 
-export default Index
+export default memo(Index)
