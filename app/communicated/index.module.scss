@@ -319,7 +319,7 @@
               line-height: 23px;
             }
             .salary{
-              line-height: 23px;
+              line-height: 24px;
               padding-bottom: 4px;
             }
           }
@@ -607,6 +607,31 @@
         }
         .bactText{
           padding-right:26px ;
+        }
+        .headerBox{
+          display: flex;
+          overflow-y: scroll;
+          li{
+            padding: 0  12px;
+            list-style: none;
+            color: #353535;;
+            position: relative;
+            margin-right: 8px;
+            cursor: pointer;
+            &.active{
+              &::after{
+                content: ' ';
+                position: absolute;
+                width: 60px;
+                height: 3px;
+                background-color: #136FD3;
+                left: 0;
+                bottom: 0px;
+                left: 50%;
+                transform: translateX(-50%);
+              }
+            }
+          }
         }
       }
       .mobileHeaderChild{
