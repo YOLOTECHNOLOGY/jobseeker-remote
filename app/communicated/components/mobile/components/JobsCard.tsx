@@ -5,6 +5,13 @@ import Image from 'next/image'
 import { isSameDay, transDate } from 'helpers/utilities'
 import CircularProgress from '@mui/material/CircularProgress';
 import Link from 'next/link';
+const  jobseekerDisplayStatusObject = {
+  "Pending":'#0EBD5C;',
+  "Accepted":'#136FD3',
+  "Upcoming":'#136FD3',
+  "Declined":'#D2030F',
+  "Cancelled":'#707070',
+};
 interface cardProps {
   data: Array<any>,
   onChange: Function,
@@ -132,7 +139,7 @@ const JobsCard = ({
               >
                 <Image src={avatar} alt={fullName} width={20} height={20} />
               </div>
-              {fullName}.  {workJobTitle}
+              {fullName} · {workJobTitle}
               <span className={styles.location}>{location}</span>
             </div>
           </div>
@@ -171,7 +178,7 @@ const JobsCard = ({
                 <div className={styles.company}>
                 <Image src={logoUrl} alt={name} width={24} height={24} />
                 <span className={styles.name}>{name}</span>
-                <span className={styles.status}>{status}</span>
+                <span className={styles.status} style={{color : jobseekerDisplayStatusObject[status] || '#136FD3'}}>{status}</span>
                 </div>
                <p className={styles.developer}>
                  <div className={styles.info}>

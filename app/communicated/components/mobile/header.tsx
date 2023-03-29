@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React ,{useEffect}from 'react';
 import styles from '../../index.module.scss'
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import Tab from '@mui/material/Tab';
@@ -44,6 +44,10 @@ const Header = ({
     loadingList,
 }: headerProps) => {
    
+   useEffect(()=>{
+     console.log(tabList,4444)
+   },[])
+
     const [open, setOpen] = React.useState(false)
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -90,11 +94,11 @@ const Header = ({
                     <span className={styles.bactText}>Back</span>
                 </Link>
                 <span className={styles.line} >|</span>
-                <Box sx={{ width: 'calc(100vw - 114px)', bgcolor: 'background.paper' }}>
+                <Box sx={{ width: 'calc(100vw - 114px)', bgcolor: 'background.paper' }}>        
                     <StyledTabs
                         value={tabValue}
-                        variant='scrollable'
-                        scrollButtons='auto'
+                        variant="scrollable"
+                        scrollButtons={false}
                         aria-label='scrollable auto tabs example'
                         onChange={handleChange}
                     >
