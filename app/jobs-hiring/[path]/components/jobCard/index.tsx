@@ -15,6 +15,7 @@ import { getCookie } from 'helpers/cookies'
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 import { CircularProgress } from 'app/components/MUIs'
 import { useRouter } from 'next/navigation'
+import { addJobViewService } from 'store/services/jobs/addJobView'
 const useShowPop = (titleHover, popHover) => {
 
     const [showPopup, setShowPopup] = useState(false)
@@ -129,7 +130,7 @@ const JobCard = (props: any) => {
         is_saved,
         job_url,
         company_url,
-        is_urgent
+        is_urgent,
     } = props
     const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
     const companyLabels = [company_industry, company_size, company_financing_stage].filter(a => a)
@@ -147,6 +148,16 @@ const JobCard = (props: any) => {
             startLoading()
         }
     }, [showPopup, jobDetail, detailLoading])
+    useEffect(() => {
+        if (showPopup) {
+            addJobViewService({
+                jobId: id,
+                source: 'job-search-hover',
+                status: accessToken ? 'protected' : 'public',
+                device: 'web'
+            })
+        }
+    }, [showPopup])
     return <div className={styles.main}>
         {is_urgent ? <div className={styles.urgent}>
             {<svg width="71" height="22" viewBox="0 0 71 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -161,9 +172,9 @@ const JobCard = (props: any) => {
                 className={styles.container}
 
             >
-                <div 
-                    
-                className={styles.topContainer}>
+                <div
+
+                    className={styles.topContainer}>
                     <div className={styles.left} onClick={() => router.push(job_url, { forceOptimisticNavigation: true })}>
                         <div
                             key={job_title + id}
@@ -254,7 +265,7 @@ const JobCard = (props: any) => {
                         {(job_skills ?? '').split(',').join(' | ')}
                     </div>
                     <div className={styles.benefits} title={job_benefits}>
-                       { job_benefits}
+                        {job_benefits}
                     </div>
                 </div>
             </div>

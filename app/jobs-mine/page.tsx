@@ -10,6 +10,7 @@ import Loading from './components/table/loading'
 
 import LoadingProvider from 'app/components/providers/loadingProvider'
 import preferences from './interpreters/preferences'
+import NoPreference from './components/noPreference'
 
 const configs = getConfigs([
     ['inputs', 'location_lists'],
@@ -30,7 +31,7 @@ const configs = getConfigs([
 
 
 const Main = (props: any) => {
-    console.log({props})
+    console.log({ props })
     return <LoadingProvider >
         <div>
             <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
@@ -51,6 +52,12 @@ export default configs(serverDataScript())
     .chain(configs => preferences(
         needLogin(
             serverDataScript()
-                .chain(preferences => buildComponentScript({ ...configs, preferences }, Main))
+                .chain(preferences => {
+                    if (false) {
+                        return buildComponentScript({ ...configs, preferences }, Main)
+                    } else {
+                        return buildComponentScript({}, NoPreference)
+                    }
+                })
         )))
     .run
