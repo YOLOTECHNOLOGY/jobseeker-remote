@@ -23,7 +23,7 @@ import { LoadingContext } from 'app/components/providers/loadingProvider'
 import { useSearchParams } from 'next/navigation'
 import PreferenceSelector from '../preferenceSelector'
 const SearchArea = (props: any) => {
-  const { config, preferences } = props
+  const { config, preferences, preferenceId } = props
   const dispatch = useDispatch()
   const searchParams: any = useSearchParams() ?? {}
   useEffect(() => {
@@ -161,7 +161,7 @@ const SearchArea = (props: any) => {
               Search{' '}
             </MaterialButton>
           </div>
-          <PreferenceSelector preferences={preferences} />
+          <PreferenceSelector preferences={preferences} preferenceId={preferenceId} />
           <div className={styles.filters}>
             <Multiple
               label='Qualification'

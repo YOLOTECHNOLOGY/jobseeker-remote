@@ -49,6 +49,7 @@ const Main = (props: any) => {
                         <Table
                             searchParams={searchParams ?? {}}
                             preferenceId={preferenceId}
+                            preferences={preferences}
                             config={props.config}
                         />
                     </Suspense>
