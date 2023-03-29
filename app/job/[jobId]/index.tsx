@@ -33,8 +33,6 @@ const Index = ({ data, jobId }: any) => {
 
   const params = Object.assign(querys, tokenData)
 
-  console.log(params, '==================params')
-
   fetchAddJobViewService(params)
 
   const headProps = {
