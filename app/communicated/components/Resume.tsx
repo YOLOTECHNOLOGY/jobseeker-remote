@@ -14,8 +14,6 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Link from 'next/link';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
-
-
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
@@ -35,7 +33,6 @@ const notice_period_lists = [
 
 
 const Resume = ({
-  data,
   resumes
 }:any) => {
 
@@ -63,12 +60,6 @@ const Resume = ({
  useEffect(()=>{
   getPersonalInfo();
  },[])
-
-  useEffect(()=>{
-    if(data){
-      setJobTotal(data);
-    }
- },[data])
 
   useEffect(()=>{
      if(resumes?.length){
