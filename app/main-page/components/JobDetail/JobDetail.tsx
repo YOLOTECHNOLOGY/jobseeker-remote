@@ -6,7 +6,6 @@ import { HomePageChat } from 'images'
 import styles from '../../popularJobs.module.scss'
 import Image from 'next/image'
 const JobDetail = ({ detail }: any) => {
-  console.log(detail,7777)
   return (
     <div className={styles.job_detail}>
       <Link prefetch={false}  className={styles.job_info} href={detail.job_url} >

@@ -176,7 +176,8 @@ const MainLeft = () => {
         }
       }
       setTotal(total)
-      if (page > 1) {
+      const width = document.body.clientWidth;
+      if (page > 1 && width < 750) {
         setData([...data, ...dataPar])
       } else {
         setData(dataPar)
