@@ -6,6 +6,16 @@ import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 import Tooltip from '@mui/material/Tooltip';
 import Link from 'next/link';
+
+const  jobseekerDisplayStatusObject = {
+  "Pending":'#0EBD5C;',
+  "Accepted":'#136FD3',
+  "Upcoming":'#136FD3',
+  "Declined":'#D2030F',
+  "Cancelled":'#707070',
+};
+
+
 const JobCardInterview = (props: any) => {
   const {data } = props
   const {
@@ -43,12 +53,14 @@ const JobCardInterview = (props: any) => {
             <img src={avatar} className={styles.avator} />
             <span className={styles.name}>
               {fullName}
-              <span className={styles.nameLine}> |</span>
+              {fullName && workJobTitle ?  <span className={styles.nameLine}> |</span> : null}  
               {workJobTitle}
-              <span className={styles.nameLine}> |</span>
+              {
+                (workJobTitle || fullName) && phoneNum ? <span className={styles.nameLine}> |</span> : null
+              }
               {phoneNum}
             </span>
-            <span className={styles.jobrStatus}>{jobseekerDisplayStatus}</span>
+            <span className={styles.jobrStatus} style={{color : jobseekerDisplayStatusObject[jobseekerDisplayStatus] || '#136FD3'}}>{jobseekerDisplayStatus}</span>
           </div>
           <div className={styles.operator}>
             {

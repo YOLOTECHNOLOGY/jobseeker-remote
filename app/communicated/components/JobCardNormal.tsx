@@ -29,7 +29,7 @@ const JobCardNormal = (props:any) => {
       const { avatar, full_name: fullName, } = data.recruiter || {};
       const { job_title: workJobTitle } = data.recruiter?.work_experience || {};
       
-  const [loading, chatNow, modalChange] = useChatNow(props?.data || {})
+  const [loading, chatNow, modalChange] = useChatNow(data?.job || {})
 
   return (
     <>

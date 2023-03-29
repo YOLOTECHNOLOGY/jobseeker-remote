@@ -50,7 +50,7 @@ const initTabList = [
       },
       {
         tab: 'Mobile Number',
-        value: 'mobileNumber',
+        value: 'Mobile number',
         fetchFun: fetchResumeContact,
         key: 'contact_exchanged_jobs'
       }
@@ -176,7 +176,8 @@ const MainLeft = () => {
         }
       }
       setTotal(total)
-      if (page > 1) {
+      const width = document.body.clientWidth;
+      if (page > 1 && width < 750) {
         setData([...data, ...dataPar])
       } else {
         setData(dataPar)

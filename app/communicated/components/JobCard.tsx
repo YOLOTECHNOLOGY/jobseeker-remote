@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React,{useEffect} from 'react'
 import styles from '../index.module.scss'
 import { JoinUs } from 'images'
 import Image from 'next/image'
@@ -33,6 +33,24 @@ const Card = ({
   loadingList,
 }: cardProps) => {
 
+  useEffect(()=>{
+    if(loadingList){
+      const width = document.body.clientWidth
+      let timer = null;
+      if(width > 750){
+        cancelAnimationFrame(timer);
+        timer = requestAnimationFrame(function fn(){
+        const oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if(oTop > 0){
+        scrollBy(0,-50);
+        timer = requestAnimationFrame(fn);
+        }else{
+        cancelAnimationFrame(timer);
+        } 
+      })
+    }
+    }
+  },[loadingList]) 
 
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {

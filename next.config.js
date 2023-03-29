@@ -23,7 +23,9 @@ module.exports = withBundleAnalyzer({
     return redirectionPaths
   },
   reactStrictMode: false,
-
+  compiler: {
+    removeConsole: false
+  },
   experimental: {
     // concurrentFeatures: true,
     // serverComponents: true,
@@ -31,6 +33,7 @@ module.exports = withBundleAnalyzer({
     appDir: true,
     // mdxRs: true,
     // typedRoutes: true,
+    cpus: 8,
     esmExternals: 'loose'
   },
   env: {

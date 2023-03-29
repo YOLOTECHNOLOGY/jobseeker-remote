@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    padding-left: 22px;
+    margin-top: 16px;
+    align-items: center;
+
+    .title {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 19px;
+        align-items: center;
+        letter-spacing: 0.02em;
+        color: #000000;
+    }
+
+    .preferences {
+       
+
+        .preference {
+            font-family: 'Product Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            display: flex;
+            align-items: center;
+            color: #353535;
+            margin: 0px 19px;
+            &.selected {
+                color: #136FD3;
+            }
+        }
+    }
+}

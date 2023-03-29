@@ -13,8 +13,6 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Link from 'next/link';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import { useSearchParams } from 'next/navigation'
-
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -35,16 +33,9 @@ const notice_period_lists = [
 
 
 const Resume = ({
-  data,
   resumes
 }:any) => {
-  // const {
-  //   no_of_applied_jobs: noOfAppliedJobs,
-  //   no_of_chats:noOfChats,
-  //   no_of_interviews: noOfInterviews,
-  //   no_of_saved_jobs: noOfSavedJobs,
-  //   no_of_viewed_jobs: noOfViewedJobs
-  // } = data
+
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
   const {
     xp_lvl: xpLvl,
@@ -64,15 +55,11 @@ const Resume = ({
     no_of_saved_jobs: 0,
     no_of_viewed_jobs:0});
   const accessToken = getCookie('accessToken');
-  const searchParams = useSearchParams()
-  const searchType = searchParams.get('unsaveId')
-
  
-  useEffect(()=>{
-    if(data){
-      setJobTotal(data);
-    }
- },[data])
+
+ useEffect(()=>{
+  getPersonalInfo();
+ },[])
 
   useEffect(()=>{
      if(resumes?.length){
@@ -86,14 +73,13 @@ const Resume = ({
     }
   },[noticePeriodId])
 
-  useEffect(() => {
-    if (searchType) {
-      fetchPersonalInfo({accessToken}).then(res=>{
-        const  data = res?.data?.data || {};
-        setJobTotal(data)
-      })
-    }
-  }, [searchType])
+
+  const getPersonalInfo =()=>{
+    fetchPersonalInfo({accessToken}).then(res=>{
+      const  data = res?.data?.data || {};
+      setJobTotal(data)
+    })
+  }
 
   const handleChange = (event: SelectChangeEvent) => {
     setNoticePeriodData(event.target.value as string);
@@ -149,10 +135,10 @@ const Resume = ({
           <img src={avatar} />
           <div className={styles.info}>
             <p>{fullName}</p>
-            <span>{ageFun(birthdate)} years old</span>
+            {birthdate ? <span>{ageFun(birthdate)} years old</span> : null} 
             {birthdate && xpLvl ? <i>|</i> : null}
             <span> {xpLvl}</span>
-            {(xpLvl || birthdate) && educations ? <i>|</i> : null}
+            {(xpLvl || birthdate) && educations?.[0]?.field_of_study ? <i>|</i> : null}
             <span> {educations?.[0]?.field_of_study}</span>
           </div>
         </div>
@@ -188,9 +174,7 @@ const Resume = ({
 
       <div className={styles.upload}>
         <div className={styles.header}>
-          <Link href='/manage-profile?tab=resume'>
-             Uploaded Resumes
-          </Link>
+           Uploaded Resumes
         </div>
         <div className={styles.uploadContainer}>
           {

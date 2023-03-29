@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { getCookie, removeCookie } from 'helpers/cookies'
+import { redirect } from 'next/navigation';
 // import accessToken from 'pages/api/handlers/linkedinHandlers/accessToken'
 // import { configureStore } from 'store'
 // import { logout } from 'shared/helpers/authentication'
 // import { IMManager } from 'imforbossjob'
-const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken) => {
+const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken, server = false) => {
   // let remoteAddress = ''
   // let isMobile = ''
   if (typeof window !== 'undefined') {
@@ -127,6 +128,12 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
       (error) => {
         // Remove the accessToken cookie to log the user out
         // when Unauthorized 401 status code is returned from API requests
+
+        //serverComponent 
+        if(error?.response?.status === 401 && server){
+          redirect(process.env.HOST_PATH + '/get-started')
+        }
+       
         if (error?.response?.status === 401 && typeof window !== 'undefined') {
           removeCookie('accessToken')
           window.location.href = '/get-started'

@@ -37,7 +37,7 @@ const Head = ({
   jobDetail
 }: propsType) => {
   return (
-    <section className={classNames([styles.head, styles.headSticky])}>
+    <section id='jobDetaiPagelHead' className={classNames([styles.head, styles.headSticky])}>
       <div className={styles.head_main}>
         <div className={styles.head_main_title}>
           <div className={styles.head_main_titleWrapper}>

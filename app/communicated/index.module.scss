@@ -118,7 +118,6 @@
       color: #353535;
       font-size: 14px;
       background: #fff;
-      cursor: pointer;
       border-radius: 10px;
       transition: .3s;
       &:hover{
@@ -233,8 +232,6 @@
           .developer{
             display: flex;
             .title{
-              flex: 1;
-              width: 0;
               text-overflow: ellipsis;
               overflow: hidden;
               white-space: nowrap;
@@ -242,7 +239,7 @@
               font-size: 18px;
               display: block;
               color: #353535;
-              line-height: normal;
+              max-width: 260px;
               &:hover{
                 color: #136FD3;
               }
@@ -254,7 +251,7 @@
               display: flex;
               letter-spacing: 1px;
               color: #FE574A;
-              margin-left: 6px;
+              margin-left: 10px;
             }
           }
         }
@@ -318,7 +315,12 @@
           flex: 1;
           .developer{
             .title{
+              max-width: 200px;
               line-height: 23px;
+            }
+            .salary{
+              line-height: 23px;
+              padding-bottom: 4px;
             }
           }
         }
@@ -600,22 +602,8 @@
         border-radius: 0;
         width: 100vw;
         position: relative;
-        :global{
-          .css-1n1ppiu-MuiTabs-root .MuiTabs-scrollButtons{
-            display: block;
-          }
-          .css-ptiqhd-MuiSvgIcon-root{
-            background: #FFFFFF;
-           border: 0.5px solid #BCBCBC;
-           width: 24px;
-           height: 24px;
-           display: block;
-           border-radius: 50%;
-           margin-top: 12px;
-          }
-        }
         .line{
-          padding-right: 4px;
+          padding-right: 10px;
         }
         .bactText{
           padding-right:26px ;
