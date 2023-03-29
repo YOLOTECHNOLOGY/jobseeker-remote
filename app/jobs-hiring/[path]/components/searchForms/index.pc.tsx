@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
-import LocationField from 'app/components/commons/location'
+import MaterialLocationField from 'components/MaterialLocationField'
 import JobSearchBar from '../../../../components/commons/location/search'
 import styles from './index.pc.module.scss'
 import MaterialButton from 'components/MaterialButton'
@@ -91,7 +91,8 @@ const SearchArea = (props: any) => {
       label: item.value
     })) ?? []
   const [searchValue, setSearchValue] = useState(searchValues.query)
-  const [suggestionList, handleSuggestionSearch, addSearchHistory, searchLoading] = useSuggest() as any[]
+  const [suggestionList, handleSuggestionSearch, addSearchHistory, searchLoading] =
+    useSuggest() as any[]
 
   const filterParams = useMemo(() => {
     return filter((a) => a)({
@@ -107,7 +108,6 @@ const SearchArea = (props: any) => {
   }, [searchValue, salaries, jobTypes, moreData, location, sort, jobFunctionValue])
   const router = useRouter()
   const result = useMemo(() => {
-
     return encode(filterParams)
   }, [filterParams])
   const firstRender = useFirstRender()
@@ -130,12 +130,14 @@ const SearchArea = (props: any) => {
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <div className={classNames({
-          [styles.container]: true,
-          [styles.isFixed]: isFixed
-        })}>
+        <div
+          className={classNames({
+            [styles.container]: true,
+            [styles.isFixed]: isFixed
+          })}
+        >
           <div className={styles.searchArea}>
-            <LocationField
+            <MaterialLocationField
               className={styles.location}
               locationList={config.inputs.location_lists}
               value={location}
@@ -143,6 +145,15 @@ const SearchArea = (props: any) => {
               defaultValue={location}
               onChange={(e, value) => {
                 setLocation(value)
+              }}
+              sx={{
+                '> .MuiFormControl-root': {
+                  '> .MuiOutlinedInput-root': {
+                    borderRadius: '10px',
+                    height: '40px',
+                    marginTop: '4px'
+                  }
+                }
               }}
             />
             <JobSearchBar
@@ -223,7 +234,11 @@ const SearchArea = (props: any) => {
                 <div className={styles.text}>Download APP and chat with Boss </div>
                 <div className={styles.popver}>
                   <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
-                  <p>Chat directly<br />with Boss</p>
+                  <p>
+                    Chat directly
+                    <br />
+                    with Boss
+                  </p>
                 </div>
               </div>
             ) : (
