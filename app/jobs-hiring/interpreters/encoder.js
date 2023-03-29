@@ -4,7 +4,7 @@ import { map, pick, T, toLower, mergeDeepLeft, reduce, toPairs, append, flip, in
 import { flatMap } from 'lodash-es'
 import slugify from 'slugify'
 const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'qualification']
-const normalKeys = ['verifiedCompany', 'companySizes', 'workExperience', 'financing_stages', 'industry']
+const normalKeys = ['verifiedCompany', 'companySizes', 'workExperience', 'financingStages', 'industry']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
 const allKeysIn = keys => pipe(
