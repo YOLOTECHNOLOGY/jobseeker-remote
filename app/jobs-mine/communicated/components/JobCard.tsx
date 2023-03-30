@@ -111,9 +111,9 @@ const Card = ({
         </>) : (
           <Box sx={{ width: '100%' }}>
             {
-          [1,2,3,4,5,6].map(() => {
+          [1,2,3,4,5,6].map((e) => {
             return (
-              <>
+              <div key={e}>
               <CardHeader
               avatar={<Skeleton animation="wave" variant="circular" width={30} height={30} />}
               title={<Skeleton animation="wave" height={16} width="80%" />}
@@ -121,7 +121,7 @@ const Card = ({
             />
             <Skeleton animation="wave" height={20} style={{ marginBottom: 6 }} />
             <Skeleton animation="wave" height={20} style={{ marginBottom: 6 }} />
-              </>
+              </div>
             )
           })
             }            

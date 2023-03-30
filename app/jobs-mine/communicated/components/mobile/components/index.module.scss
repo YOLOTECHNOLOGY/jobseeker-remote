@@ -1,0 +1,227 @@
+ .communicated {
+     padding: 0 10px 40px 10px;
+     .time {
+         font-size: 16px;
+         line-height: 24px;
+         display: flex;
+         align-items: center;
+         letter-spacing: 1px;
+         color: #707070;
+         padding: 8px 0 11px 0;
+     }
+
+     .jobCard {
+         background: #FFFFFF;
+         border-radius: 10px;
+         padding: 16px 12px 18px 12px;
+         margin-bottom: 8px;
+         position: relative;
+
+         .name {
+             font-weight: 700;
+             font-size: 16px;
+             line-height: 24px;
+             display: flex;         
+             a{
+                 width: 0;
+                 flex: 1;
+                 overflow: hidden;
+                 text-overflow: ellipsis;
+                 white-space: nowrap;
+                 display: block;
+                 color: #353535;
+             }
+
+             .salary {
+                 width: fit-content;
+                 text-align: right;
+                 font-size: 14px;
+                 color: #136FD3;
+                 margin-left: 12px;
+             }
+         }
+
+         .company {
+             font-size: 12px;
+             letter-spacing: 1px;
+             color: #353535;
+             padding: 8px 0 12px;
+         }
+
+         .tag {
+             font-weight: 400;
+             font-size: 12px;
+             color: #707070;
+             padding: 0 10px;
+             margin-right: 6px;
+             background: #F0F0F0;
+             border-radius: 16px;
+             display: inline-block;
+         }
+
+         .contact {
+             margin: 14px 0 0;
+             font-size: 12px;
+             color: #353535;
+             line-height: 26px;
+
+             .avator {
+                 width: 20px;
+                 height: 20px;
+                 border-radius: 50%;
+                 position: relative;
+                 margin-right: 10px;
+                 display: inline-block;
+                 top: -2px;
+
+                 img {
+                     width: 20px;
+                     height: 20px;
+                     border-radius: 50%;
+                 }
+
+                 &::after {
+                     content: ' ';
+                     display: block;
+                     position: absolute;
+                     bottom: -5px;
+                     right: -4px;
+                     width: 10px;
+                     height: 10px;
+                     border-radius: 50%;
+                     background-color: #32A071;
+                     border: 2px solid #fff;
+                 }
+             }
+
+             .avator2 {
+                 &::after {
+                     background: #ccc;
+                 }
+             }
+
+             .location {
+                 float: right;
+                 color: #707070;
+             }
+         }
+     }
+
+     .closed {
+         position: absolute;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         z-index: 100;
+         border-radius: 10px;
+         background: rgba(188, 188, 188, 0.6);
+
+     }
+ }
+
+ .load {
+     text-align: center;
+     height: 60px;
+     line-height: 40px;
+     color: #999;
+     text-align: center;
+ }
+
+ .interviewed {
+     .jobCard {
+         .content {
+             margin: 0;
+             .left {
+                   width: 100%; 
+                 .company {
+                     display: flex;
+                     padding-bottom: 8px;
+                     img{
+                        border-radius: 5px;
+                     }
+                     .name {
+                         flex: 1;
+                         padding-left: 8px;
+                         font-weight: 700;
+                         font-size: 14px;
+                         display: flex;
+                         align-items: center;
+                         letter-spacing: 1px;
+                         color: #353535;
+                     }
+                     .status{
+                        width: 100px;
+                        text-align: right;
+                        color: #136FD3;
+                        font-size: 12px;
+                     }
+                 }
+
+                 .developer {
+                     font-weight: 400;
+                     font-size: 12px;
+                     display: flex;
+                     align-items: center;
+                     letter-spacing: 1px;
+                     color: #707070;
+                     .info{
+                        flex: 1;
+                        display: flex;
+                     } 
+                     .job{
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap; 
+                        color: #707070;
+                        max-width: calc(100vw - 200px);
+                        
+                     } 
+                     .salary{
+                        width: fit-content;
+                        padding-left: 10px;
+                     }
+                     .times{
+                        font-weight: 700;
+                        font-size: 14px;
+                        display: flex;
+                        margin-left: 20px;
+                        text-align: right;
+                        letter-spacing: 1px;
+                        color: #353535;
+                        font-weight: 700;
+                        width: fit-content;
+                        margin-left: 10px;
+                     }
+                 }
+             }
+         }
+     }
+
+ }
+ .noDataImg{
+    margin:  60px auto;
+    display: block;
+ }
+ .seeJob{
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 1px;
+    width: 128px;
+    height: 44px;
+    line-height: 44px;
+    background: #136FD3;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin: 28px auto 60px;
+    display: block;
+    transition: background-color .2s;
+    position: relative;
+    a{
+      display: block;
+      color: #FFFFFF;
+    }
+  }
