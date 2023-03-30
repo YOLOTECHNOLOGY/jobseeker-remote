@@ -7,7 +7,7 @@ import {
   fetchResumes,
 } from 'store/services/jobs/fetchJobsCommunicated'
 import { cookies } from 'next/headers'
-
+import styles from './index.module.scss'
 async function getResumes(accessToken) {
   const res = await fetchResumes({accessToken});
   return res?.data?.data || {};
@@ -19,13 +19,13 @@ export default async function  Page () {
   const [resumes] = await Promise.all([resumesData]);
 
   return (
-      <>
+      <div className={styles.aside}>
          <Resume resumes={resumes} />
             {/* @ts-expect-error Async Server Component */}
          <InterestedMe />
          {/* @ts-expect-error Async Server Component */}
           <ViewedMe/>
-      </>
+      </div>
     )
   }
   

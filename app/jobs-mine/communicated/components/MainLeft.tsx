@@ -138,12 +138,8 @@ const MainLeft = (props:any) => {
   }, [tabValueChildren])
 
   useEffect(() => {
-    if (type) {
-       if(tabListInterstedArr.includes(type)){
-        setTabList(tabListIntersted)
-       }else{
-        setTabList(initTabList)   
-       }
+    if (type && tabListInterstedArr.includes(type)) {
+       setTabList(tabListIntersted)
        setTabValue(type)
     }else{
       setTabList(initTabList);
