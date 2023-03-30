@@ -1,8 +1,23 @@
 @font-face {
-  font-family: 'ProductSans';
+  font-family: "Product Sans";
   src: url(../styles/font/product-sans/ProductSansRegular.ttf);
 }
-
+@font-face {
+  font-family: "Product Sans";
+  src: url(../styles/font/product-sans/ProductSansBoldItalic.ttf);
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Product Sans";
+  src: url(../styles/font/product-sans/ProductSansBold.ttf);
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Product Sans";
+  src: url(../styles/font/product-sans/ProductSansItalic.ttf);
+  font-style: italic;
+}
 html,
 #next-app {
   width: 100%;
@@ -21,7 +36,7 @@ body,
   padding: 0;
   margin: 0;
   // font-family: 'Product Sans';
-  font-family: 'Product Sans', 'ProductSans' !important;
+  font-family: "Product Sans", "ProductSans" !important;
 }
 
 ol,
