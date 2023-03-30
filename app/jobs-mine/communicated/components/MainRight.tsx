@@ -7,7 +7,7 @@ import {
   fetchResumes,
 } from 'store/services/jobs/fetchJobsCommunicated'
 import { cookies } from 'next/headers'
-import styles from './index.module.scss'
+import styles from '../index.module.scss'
 async function getResumes(accessToken) {
   const res = await fetchResumes({accessToken});
   return res?.data?.data || {};
