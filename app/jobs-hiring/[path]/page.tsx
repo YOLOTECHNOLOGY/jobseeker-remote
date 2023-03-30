@@ -174,32 +174,32 @@ const Main = (props: any) => {
                     <path
                       d='M11 2.5H13.5V5'
                       stroke='white'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
                     />
                     <path
                       d='M5 13.5H2.5V11'
                       stroke='white'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
                     />
                     <path
                       d='M13.5 11V13.5H11'
                       stroke='white'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
                     />
                     <path
                       d='M2.5 5V2.5H5'
                       stroke='white'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
                     />
                     <path
                       d='M10.5 5H5.5C5.22386 5 5 5.22386 5 5.5V10.5C5 10.7761 5.22386 11 5.5 11H10.5C10.7761 11 11 10.7761 11 10.5V5.5C11 5.22386 10.7761 5 10.5 5Z'
                       stroke='white'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
                     />
                   </svg>
                   Scan QR code to download APP

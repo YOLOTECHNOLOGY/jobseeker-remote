@@ -166,7 +166,7 @@ const VerifyPhoneNumber = ({
         dispatch(
           displayNotification({
             open: true,
-            message: errorMessage,
+            message: exceptionHandler.message ?? errorMessage,
             severity: 'warning'
           })
         )
@@ -211,7 +211,7 @@ const VerifyPhoneNumber = ({
         .catch((error) => {
           const response = error.response
           const resultError = response.data?.errors
-          verifiError(resultError?.error[0])
+          verifiError(error.message ?? resultError?.error[0])
         })
     } else {
       // change
@@ -231,7 +231,7 @@ const VerifyPhoneNumber = ({
         .catch((error) => {
           const response = error.response
           const resultError = response?.data?.errors
-          verifiError(resultError?.error[0])
+          verifiError(error.message ?? resultError?.error[0])
         })
     }
   }
