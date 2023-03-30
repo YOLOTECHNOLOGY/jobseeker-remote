@@ -71,7 +71,7 @@ const useGetStarted = () => {
         dispatch(
           displayNotification({
             open: true,
-            message: errorMessage,
+            message: error.message ?? errorMessage,
             severity: 'error'
           })
         )
@@ -164,7 +164,7 @@ const useGetStarted = () => {
         dispatch(
           displayNotification({
             open: true,
-            message: data?.detail,
+            message: error.message ?? data?.detail,
             severity: 'error'
           })
         )
