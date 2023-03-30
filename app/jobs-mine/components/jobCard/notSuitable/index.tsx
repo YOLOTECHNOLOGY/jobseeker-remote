@@ -1,7 +1,8 @@
-import React from 'react'
-// import styles from './index.module.scss'
+'use client'
+import React, { useState } from 'react'
+import styles from './index.module.scss'
 import Modal from 'components/Modal'
-import { TextField } from 'app/components/MUIs'
+import {  TextareaAutosize } from 'app/components/MUIs'
 const NotSuitableModal = (props: any) => {
 
     const {
@@ -22,6 +23,7 @@ const NotSuitableModal = (props: any) => {
         'Industry mismatch',
         'Not interested in this company',
     ]
+    const [other, setOther] = useState('')
     return <>
         <Modal
             showModal={showSelectionModal}
@@ -30,18 +32,35 @@ const NotSuitableModal = (props: any) => {
             closeModalOnOutsideClick={true}
 
         >
+            <div className={styles.description}>Please select a reason why this job is not what you are looking for. We will optimise your job recommendations.</div>
             {reasons.map(reason => {
-                return <div key={reason} onClick={() => request(reason)}>{reason}</div>
+                return <div className={styles.item} key={reason} onClick={() => request(reason)}>{reason}</div>
             })}
-            <div onClick={showText}>Others</div>
+            <div onClick={showText} className={styles.others}>Others</div>
         </Modal>
         <Modal
             showModal={showTextModal}
             handleModal={hideText}
             headerTitle={'Others'}
-            closeModalOnOutsideClick={true}
+            closeModalOnOutsideClick={false}
+            firstButtonIsClose={true}
+            handleFirstButton={hideText}
+            handleSecondButton={() => request(other)}
+            firstButtonText='Cancel'
+            secondButtonText='Submit'
+            isSecondButtonDisabled={!other.length}
         >
-            <TextField></TextField>
+            <TextareaAutosize
+                placeholder='Please let us know why this job is not suitable.'
+                style={{
+                    width: '100%',
+                    minHeight: 100,
+                    padding: 5,
+                    borderColor: 'ddd',
+                    borderWidth: 1
+                }}
+                onChange={e => setOther(e.target.value)}
+            />
         </Modal>
     </>
 }
