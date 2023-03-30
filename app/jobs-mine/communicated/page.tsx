@@ -10,10 +10,8 @@ const Page = (props) => {
       <div className={styles.main}>
         <MainLeft {...props}/>
       </div>
-      <div className={styles.aside}>
         {/* @ts-expect-error Async Server Component */}
         <MainRight />
-      </div>
     </div>
   )
 }
