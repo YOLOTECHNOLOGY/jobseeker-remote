@@ -1,6 +1,6 @@
 'use client'
 import classNames from 'classnames'
-import React, { useContext, useState, useEffect, useRef, useTransition } from 'react'
+import React, { useContext, useState, useEffect, useRef, useTransition, useMemo } from 'react'
 import styles from './index.module.scss'
 import { LoadingContext } from 'app/components/providers/loadingProvider'
 import EditJobPreferencesModal from 'components/EditJobPreferencesModal'
@@ -15,6 +15,7 @@ const PreferenceSelector = (props: any) => {
     const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
     const searchParams = useSearchParams()
     const router = useRouter()
+    const [editingPreference, setEditingPreference] = useState()
     const [loading, startTransition] = useTransition()
     useEffect(() => {
         if (preferences.length > preferencesRef.current?.length) {
@@ -29,12 +30,15 @@ const PreferenceSelector = (props: any) => {
     useEffect(() => {
         setShowPreferenceId(preferenceId)
     }, [preferenceId])
-    const { push } = useContext(LoadingContext)
+    const { push, loading: pushing } = useContext(LoadingContext)
+    const busy = useMemo(() => {
+        return loading || pushing
+    }, [loading, pushing])
     const [showModal, setShowModal] = useState(false)
     return <div className={styles.container}>
         <div className={styles.title}>Desired Job Title:</div>
         <div className={styles.preferences}>
-            {loading && <CircularProgress size={10} style={{ marginLeft: 10 }} />}
+            {/* {loading && <CircularProgress size={10} style={{ marginLeft: 10 }} />} */}
             {preferences.map(preference => {
                 return <div
                     key={preference.id}
@@ -52,24 +56,36 @@ const PreferenceSelector = (props: any) => {
                     }}
                     className={classNames({
                         [styles.preference]: true,
-                        [styles.selected]: +showPreferenceId === preference.id
+                        [styles.selected]: +showPreferenceId === preference.id,
+                        [styles.disabled]: busy && (+showPreferenceId !== preference.id),
                     })}>
                     {preference.function_job_title}
                 </div>
             })}
         </div>
         <div className={styles.seperator} />
-        <div className={styles.action} onClick={() => {
-            setShowModal(true)
-        }}>
-            Add New
-        </div>
-        <EditJobPreferencesModal
+        {busy ?
+            <CircularProgress size={20} style={{ marginLeft: 10 }} />
+            : <div className={styles.action} onClick={() => {
+                if (preferences.length === 3) {
+                    const selected = preferences.find(preference => +preference.id === +preferenceId)
+                    console.log({ selected })
+                    setEditingPreference(selected)
+                } else {
+                    setEditingPreference(undefined)
+                }
+                setShowModal(true)
+            }}>
+                {preferences.length === 3 ? 'Edit' : 'Add New'}
+            </div>}
+        {showModal && <EditJobPreferencesModal
             modalName={'jobPreference'}
             showModal={showModal}
             config={config}
+            preference={editingPreference}
             userDetail={userDetail}
             handleModal={(name, show, refresh) => {
+                console.log('handleModal', show)
                 setShowModal(show)
                 if (refresh) {
                     startTransition(() => {
@@ -77,7 +93,7 @@ const PreferenceSelector = (props: any) => {
                     })
                 }
             }}
-        />
+        />}
     </div>
 }
 

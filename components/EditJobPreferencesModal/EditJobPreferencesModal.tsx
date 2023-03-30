@@ -136,9 +136,9 @@ const EditJobPreferencesModal = ({
     setTimeout(() => handleCloseModal(true), 500)
   }
 
-  useEffect(() => {
-    handleCloseModal()
-  }, [userDetail])
+  // useEffect(() => {
+  //   handleCloseModal()
+  // }, [userDetail])
 
   const handleCloseModal = (refresh = false) => {
     handleModal(modalName, false, refresh)
