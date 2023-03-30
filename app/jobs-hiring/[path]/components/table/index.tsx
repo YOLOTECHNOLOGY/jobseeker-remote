@@ -12,7 +12,6 @@ const Table = (props: any) => {
     const { jobs = [], page, totalPages } = props
     return (
         <Loader>
-
             {jobs?.length ? (
                 <div className={styles.container}>
                     {jobs.map((job) => {
