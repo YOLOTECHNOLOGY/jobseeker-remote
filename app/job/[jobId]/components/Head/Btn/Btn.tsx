@@ -25,6 +25,7 @@ type propsType = {
 
 const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
   const [loading, chatNow, changeJobModal] = useChatNow(jobDetail)
+  const { status_key } = jobDetail
   const dispatch = useDispatch()
   const [saveLoading, setSaveLoading] = useState<boolean>(false)
   // const [chatLoading, setChatLoading] = useState<boolean>(false)
@@ -63,11 +64,11 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
           setIsSave(true)
         }
       })
-      .catch((error) => {
+      .catch(({ response: { data } }) => {
         dispatch(
           displayNotification({
             open: true,
-            message: error.message ? error.message : 'Save job fail',
+            message: data.message ? data.message : 'Save job fail',
             severity: 'error'
           })
         )
@@ -112,62 +113,64 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
 
   return (
     <>
-      <Stack spacing={2} direction='row' className={className}>
-        <MaterialButton
-          variant='outlined'
-          sx={{
-            height: '44px',
-            background: '#FFFFFF',
-            border: '1px solid #136FD3',
-            borderRadius: '10px',
-            paddingLeft: '13px',
-            paddingRight: '13px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            textTransform: 'capitalize'
-          }}
-          onClick={!isSave ? handleSaveJob : handleUnSaveJob}
-          isLoading={saveLoading}
-        >
-          {isSave ? (
-            <>
-              <FavoriteIcon sx={{ color: '#136FD3' }} />
-              <span style={{ textTransform: 'capitalize', marginLeft: '8px' }}>Undo saved</span>
-            </>
-          ) : (
-            <>
-              <FavoriteBorderIcon sx={{ color: '#136FD3' }} />
-              <span style={{ textTransform: 'capitalize', marginLeft: '8px' }}> Save</span>
-            </>
-          )}
+      {status_key != 'expired' ? (
+        <Stack spacing={2} direction='row' className={className}>
+          <MaterialButton
+            variant='outlined'
+            sx={{
+              height: '44px',
+              background: '#FFFFFF',
+              border: '1px solid #136FD3',
+              borderRadius: '10px',
+              paddingLeft: '13px',
+              paddingRight: '13px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              textTransform: 'capitalize'
+            }}
+            onClick={!isSave ? handleSaveJob : handleUnSaveJob}
+            isLoading={saveLoading}
+          >
+            {isSave ? (
+              <>
+                <FavoriteIcon sx={{ color: '#136FD3' }} />
+                <span style={{ textTransform: 'capitalize', marginLeft: '8px' }}>Undo saved</span>
+              </>
+            ) : (
+              <>
+                <FavoriteBorderIcon sx={{ color: '#136FD3' }} />
+                <span style={{ textTransform: 'capitalize', marginLeft: '8px' }}> Save</span>
+              </>
+            )}
 
-          {/* <FavoriteBorderIcon sx={{ color: '#136FD3' }} /> */}
-        </MaterialButton>
-        <MaterialButton
-          variant='contained'
-          sx={{
-            maxWidth: '140px',
-            lineHeight: '44px',
-            height: '44px',
-            background: '#136FD3',
-            borderRadius: '10px'
-          }}
-          isLoading={loading as boolean}
-          onClick={() => handleBtnEvent()}
-        >
-          <span style={{ textTransform: 'capitalize' }}>
-            {(() => {
-              if (jobDetail.external_apply_url) {
-                return 'Apply Now'
-              } else if (chat?.is_exists && chat?.job_id == jobId) {
-                return 'Continue Chat'
-              } else {
-                return 'Chat Now'
-              }
-            })()}
-          </span>
-        </MaterialButton>
-      </Stack>
+            {/* <FavoriteBorderIcon sx={{ color: '#136FD3' }} /> */}
+          </MaterialButton>
+          <MaterialButton
+            variant='contained'
+            sx={{
+              maxWidth: '140px',
+              lineHeight: '44px',
+              height: '44px',
+              background: '#136FD3',
+              borderRadius: '10px'
+            }}
+            isLoading={loading as boolean}
+            onClick={() => handleBtnEvent()}
+          >
+            <span style={{ textTransform: 'capitalize' }}>
+              {(() => {
+                if (jobDetail.external_apply_url) {
+                  return 'Apply Now'
+                } else if (chat?.is_exists && chat?.job_id == jobId) {
+                  return 'Continue Chat'
+                } else {
+                  return 'Chat Now'
+                }
+              })()}
+            </span>
+          </MaterialButton>
+        </Stack>
+      ) : null}
 
       {changeJobModal}
     </>

@@ -6,13 +6,18 @@ import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 import Tooltip from '@mui/material/Tooltip';
 import Link from 'next/link';
+import {transDate} from 'helpers/utilities'
 
 const  jobseekerDisplayStatusObject = {
-  "Pending":'#0EBD5C;',
+  "Pending":'#D2030F',
   "Accepted":'#136FD3',
   "Upcoming":'#136FD3',
+  "In progress":'#136FD3',
   "Declined":'#D2030F',
   "Cancelled":'#707070',
+  "Not accepted":'#707070',
+  "Completed": "#0EBD5C",
+  "Not checked in":'##D2030F',
 };
 
 
@@ -44,7 +49,7 @@ const JobCardInterview = (props: any) => {
   const { job_title: workJobTitle } = data.recruiter?.work_experience || {};
 
   const [loading, chatNow, modalChange] = useChatNow(props?.data || {})
-
+ 
   return (
     <>
       <div className={`${styles.detail} ${styles.interested} ${status === 'closed' ? styles.jobClosed : null}`} >
@@ -104,9 +109,9 @@ const JobCardInterview = (props: any) => {
             </div>
           </div>
           <div className={styles.rightContent}>
-            <p className={styles.time}><span>Interview Time</span>: {interviewedAt}</p>
+            <p className={styles.time}><span>Interview Time</span>: {transDate(interviewedAt,'all')}</p>
             <Tooltip title={fullAddress || ''} placement="top">
-              <p className={styles.time}><span>Address</span>: {fullAddress} </p>
+              <p className={`${styles.time} ${styles.address}`}><span>Address</span>: {fullAddress} </p>
             </Tooltip>
           </div>
         </div>

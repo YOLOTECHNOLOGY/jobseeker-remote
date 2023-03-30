@@ -36,11 +36,14 @@ export const isSameDay = (startTime?:string, endTime?:string) => {
   return startTimeMs === endTimeMs
 }
 
-export const transDate = (date)=>{
+export const transDate = (date,allTime=null)=>{
   if(!date) return ''
    const newDate = new Date(date.replace(/-/g,'/'));
    const chinaDate = newDate.toDateString(); 
-   const gobalDate = newDate.toUTCString();
    const chinaDateArray = chinaDate.split(' ');
-  return  `${chinaDateArray[2]} ${chinaDateArray[1]}  ${chinaDateArray[3]}`
+   const englishTime =   `${chinaDateArray[2]} ${chinaDateArray[1]}  ${chinaDateArray[3]}`
+   if(allTime){
+    return  `${englishTime}, ${chinaDateArray[0]}, ${date.substr(11,5)}`
+   }
+  return englishTime
 }

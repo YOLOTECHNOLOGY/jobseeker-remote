@@ -1,6 +1,7 @@
 
+
 import Resume from "./Resume"
-import InterestedMe from ".//InterestedMe"
+import InterestedMe from "./InterestedMe"
 import ViewedMe from './ViewedMe'
 import {
   fetchResumes,
@@ -12,16 +13,16 @@ async function getResumes(accessToken) {
   return res?.data?.data || {};
 }
 
-
 export default async function  Page () {
   const accessToken = cookies().get('accessToken')?.value
   const resumesData = await getResumes(accessToken);
   const [resumes] = await Promise.all([resumesData]);
+
   return (
       <>
-         <Resume resumes={resumes}/>
+         <Resume resumes={resumes} />
             {/* @ts-expect-error Async Server Component */}
-         <InterestedMe/>
+         <InterestedMe />
          {/* @ts-expect-error Async Server Component */}
           <ViewedMe/>
       </>

@@ -336,7 +336,7 @@
         width: 370px;
         display: block;
         .time{
-          font-weight: 400;
+          font-weight: 700;
           font-size: 14px;
           line-height: 18px;
           letter-spacing: 1px;
@@ -347,11 +347,15 @@
           width: 354px;
           display: block;
           span{
+            font-weight: 400;
             color: rgba(112, 112, 112, 1);
           }
           &:last-child{
             padding: 0;
           }
+        }
+        .address{
+          font-weight: 400;
         }
       }
       }
@@ -608,9 +612,15 @@
         .bactText{
           padding-right:26px ;
         }
+        .tabBox{
+          width: calc(100vw - 114px);
+          overflow: hidden;
+          height: 50px;
+        }
         .headerBox{
           display: flex;
-          overflow-y: scroll;
+          overflow-x: scroll;
+          height: 66px;
           li{
             padding: 0  12px;
             list-style: none;
