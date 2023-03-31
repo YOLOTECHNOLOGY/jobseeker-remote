@@ -13,7 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Link from 'next/link';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-
+import { useSearchParams } from 'next/navigation'
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
@@ -55,11 +55,12 @@ const Resume = ({
     no_of_saved_jobs: 0,
     no_of_viewed_jobs:0});
   const accessToken = getCookie('accessToken');
- 
+  const searchParams = useSearchParams()
+  const searchType = searchParams.get('unsaveId') || ''
 
  useEffect(()=>{
   getPersonalInfo();
- },[])
+ },[searchType])
 
   useEffect(()=>{
      if(resumes?.length){

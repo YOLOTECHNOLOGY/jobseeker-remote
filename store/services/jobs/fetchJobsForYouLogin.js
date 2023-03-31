@@ -8,6 +8,13 @@ const fetchJobsForYouLogin = (payload, accessToken = null) => {
 
 }
 
+const fetchJobsForYouDelete = (payload, accessToken = null) => {
+  const { preferenceId, jobId } = payload || {}
+  const axios = configuredAxios('job', 'protected', false, accessToken)
+  return axios.delete(`/job-preferences/${preferenceId}/reco-jobs/${jobId}/delete`, { params: payload })
+
+}
+
 const fetchJobsPreferences = (payload, accessToken = null) => {
   const endpointType = 'protected'
   const axios = configuredAxios('jobseeker', endpointType, false, accessToken)
@@ -17,4 +24,4 @@ const fetchJobsPreferences = (payload, accessToken = null) => {
 
 
 
-export { fetchJobsForYouLogin, fetchJobsPreferences }
+export { fetchJobsForYouLogin, fetchJobsPreferences, fetchJobsForYouDelete }

@@ -2,7 +2,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styles from './index.module.scss'
-import { HomePageChat, AppDownQRCode } from 'images'
+import { HomePageChat, AppDownQRCode, CloseIcon } from 'images'
 import useChatNow from 'app/hooks/useChatNow'
 import { hoverableFunc } from 'components/highLevel/hoverable'
 import Image from 'next/image'
@@ -15,6 +15,8 @@ import { getCookie } from 'helpers/cookies'
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 import { CircularProgress } from 'app/components/MUIs'
 import { useRouter } from 'next/navigation'
+import useNotSuitable from './hooks'
+import NotSuitableModal from './notSuitable'
 const useShowPop = (titleHover, popHover) => {
 
     const [showPopup, setShowPopup] = useState(false)
@@ -105,6 +107,7 @@ const useJobDetail = (jobId) => {
 }
 
 const JobCard = (props: any) => {
+    const { job, preference } = props
     const {
         job_title,
         job_region,
@@ -130,7 +133,7 @@ const JobCard = (props: any) => {
         job_url,
         company_url,
         is_urgent
-    } = props
+    } = job
     const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
     const companyLabels = [company_industry, company_size, company_financing_stage].filter(a => a)
     const router = useRouter()
@@ -147,7 +150,13 @@ const JobCard = (props: any) => {
             startLoading()
         }
     }, [showPopup, jobDetail, detailLoading])
-    return <div className={styles.main}>
+
+    const modalProps = useNotSuitable(preference.id, id)
+    const { showSelection, refreshing } = modalProps
+    return <div className={classNames({
+        [styles.main]: true,
+        [styles.aboutDisappear]: refreshing
+    })}>
         {is_urgent ? <div className={styles.urgent}>
             {<svg width="71" height="22" viewBox="0 0 71 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M64.5 0H70.5V3H64.5V0Z" fill="#66060B" />
@@ -159,8 +168,10 @@ const JobCard = (props: any) => {
             <div
                 id={'job_card_container_' + id}
                 className={styles.container}
-
             >
+                <div className={styles.closeButton} onClick={showSelection}>
+                    <Image src={CloseIcon} alt='logo' width={13} height={13} />
+                </div>
                 <div
 
                     className={styles.topContainer}>
@@ -320,7 +331,10 @@ const JobCard = (props: any) => {
             </div>
 
             {modalChange}
+
         </>
+        <NotSuitableModal {...modalProps} />
+
     </div>
 }
 

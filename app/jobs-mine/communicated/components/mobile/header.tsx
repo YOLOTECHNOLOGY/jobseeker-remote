@@ -1,29 +1,29 @@
 "use client"
-import React ,{useEffect}from 'react';
+import React from 'react';
 import styles from '../../index.module.scss'
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
-// import Tab from '@mui/material/Tab';
-// import MuiTabs from '@mui/material/Tabs'
-// import { styled } from '@mui/material/styles'
-// import { SxProps, Theme } from '@mui/system'
+import Tab from '@mui/material/Tab';
+import MuiTabs from '@mui/material/Tabs'
+import { styled } from '@mui/material/styles'
+import { SxProps, Theme } from '@mui/system'
 import Link from 'next/link';
 import Box from '@mui/material/Box';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import ModalDialog from 'components/ModalDialog';
-// interface StyledTabsProps {
-//     children?: React.ReactNode
-//     value: number | string
-//     onChange: (event: React.SyntheticEvent, newValue: number | string) => void
-//     variant?: 'standard' | 'scrollable' | 'fullWidth'
-//     scrollButtons: boolean | 'auto'
-// }
+interface StyledTabsProps {
+    children?: React.ReactNode
+    value: number | string
+    onChange: (event: React.SyntheticEvent, newValue: number | string) => void
+    variant?: 'standard' | 'scrollable' | 'fullWidth'
+    scrollButtons: boolean | 'auto'
+}
 
-// interface StyledTabProps {
-//     key: string
-//     label: string
-//     value: string
-//     sx: SxProps<Theme>
-// }
+interface StyledTabProps {
+    key: string
+    label: string
+    value: string
+    sx: SxProps<Theme>
+}
 interface headerProps {
     tabValue: string,
     tabList: Array<any>,
@@ -44,45 +44,43 @@ const Header = ({
     loadingList,
 }: headerProps) => {
    
-   useEffect(()=>{
-     console.log(tabList,4444)
-   },[])
+  
 
     const [open, setOpen] = React.useState(false)
 
-    const handleChange = (newValue: string) => {
+    const handleChange = (e,newValue) => {
         onChange(newValue)
     }
 
  
-    // const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
-    //     '&.Mui-selected': {
-    //         color: '#136FD3',
-    //         fontWeight: '700'
-    //     }
-    // }))
+    const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
+        '&.Mui-selected': {
+            color: '#136FD3',
+            fontWeight: '700'
+        }
+    }))
 
-    // const StyledTabs = styled((props: StyledTabsProps) => (
-    //     <MuiTabs
-    //         {...props}
-    //         TabIndicatorProps={{ children: <span className='MuiTabs-indicatorSpan' /> }}
-    //     />
-    // ))({
-    //     '&.MuiBox-root': {
-    //         width: '100%'
-    //     },
-    //     '& .MuiTabs-indicator': {
-    //         display: 'flex',
-    //         justifyContent: 'center',
-    //         backgroundColor: 'transparent'
-    //     },
-    //     '& .MuiTabs-indicatorSpan': {
-    //         maxWidth: '87.3px',
-    //         width: '100%',
-    //         backgroundColor: '#136FD3',
-    //         borderRadius: '5px'
-    //     }
-    // })
+    const StyledTabs = styled((props: StyledTabsProps) => (
+        <MuiTabs
+            {...props}
+            TabIndicatorProps={{ children: <span className='MuiTabs-indicatorSpan' /> }}
+        />
+    ))({
+        '&.MuiBox-root': {
+            width: '100%'
+        },
+        '& .MuiTabs-indicator': {
+            display: 'flex',
+            justifyContent: 'center',
+            backgroundColor: 'transparent'
+        },
+        '& .MuiTabs-indicatorSpan': {
+            maxWidth: '87.3px',
+            width: '100%',
+            backgroundColor: '#136FD3',
+            borderRadius: '5px'
+        }
+    })
 
     return (
         <>
@@ -95,10 +93,10 @@ const Header = ({
                 </Link>
                 <span className={styles.line} >|</span>
                 <Box sx={{ width: 'calc(100vw - 114px)', bgcolor: 'background.paper' }}>     
-                  <ul className={styles.headerBox}>
-                  {tabList.map((item) => <li  onClick={()=>handleChange(item.value)}  className={ `${item.value === tabValue ? styles.active : '' }`} key={item.value}>{item.tab}</li>)}
-                  </ul>  
-                    {/* <StyledTabs
+                  {/* <ul className={styles.headerBox} id="headerBox" >
+                    {tabList.map((item) => <li  onClick={(e)=>handleChange(e,item.value)}  className={ `${item.value === tabValue ? styles.active : '' }`} key={item.value}>{item.tab}</li>)}
+                    </ul>   */}
+                    <StyledTabs
                         value={tabValue}
                         variant="scrollable"
                         scrollButtons={false}
@@ -121,7 +119,7 @@ const Header = ({
                                 }}
                             />
                         ))}
-                    </StyledTabs> */}
+                    </StyledTabs>
                 </Box>
        
 

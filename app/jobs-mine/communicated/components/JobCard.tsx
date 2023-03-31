@@ -93,14 +93,10 @@ const Card = ({
         !loadingList ? (<>
           {
             data?.length ? <>
-              {tabValue === 'interview' ? InterviewCard() : normalCard()}
-              {
-                total > 1 && (
+              {tabValue === 'interview' ? InterviewCard() : normalCard()} 
                   <div className={styles.page}>
                     <Pagination count={total} page={page} variant="outlined" shape="rounded" onChange={handleChange} />
                   </div>
-                )
-              }
             </>
               : <div className={styles.noData}>
                 <Image className={styles.noDataImg} src={JoinUs} alt='暂无数据' width={362} height={247} />
@@ -115,9 +111,9 @@ const Card = ({
         </>) : (
           <Box sx={{ width: '100%' }}>
             {
-          [1,2,3,4,5,6].map(() => {
+          [1,2,3,4,5,6].map((e) => {
             return (
-              <>
+              <div key={e}>
               <CardHeader
               avatar={<Skeleton animation="wave" variant="circular" width={30} height={30} />}
               title={<Skeleton animation="wave" height={16} width="80%" />}
@@ -125,7 +121,7 @@ const Card = ({
             />
             <Skeleton animation="wave" height={20} style={{ marginBottom: 6 }} />
             <Skeleton animation="wave" height={20} style={{ marginBottom: 6 }} />
-              </>
+              </div>
             )
           })
             }            

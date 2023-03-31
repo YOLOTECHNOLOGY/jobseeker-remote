@@ -31,7 +31,7 @@ const ViewedMe = async () => {
 
                               </div>
                               <button className={styles.btn}>
-                                      <Link prefetch={false} href={"/communicated?type=viewedMe"} >See More </Link>
+                                      <Link prefetch={false} href={"/jobs-mine/communicated?type=viewedMe"} >See More </Link>
                               </button>
                          </div>
                     </div>

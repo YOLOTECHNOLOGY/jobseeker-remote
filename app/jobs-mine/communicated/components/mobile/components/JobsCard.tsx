@@ -6,11 +6,15 @@ import { isSameDay, transDate } from 'helpers/utilities'
 import CircularProgress from '@mui/material/CircularProgress';
 import Link from 'next/link';
 const  jobseekerDisplayStatusObject = {
-  "Pending":'#0EBD5C;',
+  "Pending":'#D2030F',
   "Accepted":'#136FD3',
   "Upcoming":'#136FD3',
+  "In progress":'#136FD3',
   "Declined":'#D2030F',
   "Cancelled":'#707070',
+  "Not accepted":'#707070',
+  "Completed": "#0EBD5C",
+  "Not checked in":'##D2030F',
 };
 interface cardProps {
   data: Array<any>,
@@ -124,7 +128,7 @@ const JobsCard = ({
 
             <div className={styles.name}>
              {
-               status === 'closed'  ? <a href ="javascript:;" >{jobTitle}</a> :  <Link  href={jobUrl || ''} >{jobTitle}</Link>
+               status === 'closed'  ? <a onClick={(e) => e.preventDefault()} >{jobTitle}</a> :  <Link  href={jobUrl || ''} >{jobTitle}</Link>
              }
               <span className={styles.salary}>{salaryRangeValue}</span>
             </div>
@@ -183,7 +187,7 @@ const JobsCard = ({
                <p className={styles.developer}>
                  <div className={styles.info}>
                  {
-                   status === 'closed'  ? <a href ="javascript:;" >{jobTitle}</a> :  <Link  href={jobUrl || ''} >{jobTitle}</Link>
+                   status === 'closed'  ? <a onClick={(e) => e.preventDefault()} >{jobTitle}</a> :  <Link  href={jobUrl || ''} >{jobTitle}</Link>
                  }
                  <span className={styles.salary}> {salaryRangeValue} </span>
                 </div>

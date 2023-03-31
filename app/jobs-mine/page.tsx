@@ -7,7 +7,7 @@ import SearchForm from './components/searchForms'
 import styles from './index.module.scss'
 import Table from './components/table'
 import Loading from './components/table/loading'
-
+import MainRight from './communicated/components/MainRight'
 import LoadingProvider from 'app/components/providers/loadingProvider'
 import preferences from './interpreters/preferences'
 
@@ -37,27 +37,31 @@ const Main = (props: any) => {
     const { preferences, searchParams, config } = props
     const preferenceId = searchParams.preferenceId || preferences?.[0]?.id
     return <LoadingProvider >
-        <div>
-            <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
-                <SearchForm
-                    searchParams={props.searchParams ?? null}
-                    preferenceId={preferenceId}
-                    preferences={preferences}
-                    config={config}
-                />
-            </div>
-            <div className={styles.content}>
-                <div className={styles.table}>
-                    <Suspense fallback={<Loading />}>
-                        <Table
-                            searchParams={searchParams ?? {}}
-                            preferenceId={preferenceId}
-                            preferences={preferences}
-                            config={props.config}
-                        />
-                    </Suspense>
+        <div className={styles.main}>
+            <div>
+                <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
+                    <SearchForm
+                        searchParams={props.searchParams ?? null}
+                        preferenceId={preferenceId}
+                        preferences={preferences}
+                        config={config}
+                    />
+                </div>
+                <div className={styles.content}>
+                    <div className={styles.table}>
+                        <Suspense fallback={<Loading />}>
+                            <Table
+                                searchParams={searchParams ?? {}}
+                                preferenceId={preferenceId}
+                                preferences={preferences}
+                                config={props.config}
+                            />
+                        </Suspense>
+                    </div>
                 </div>
             </div>
+            {/* @ts-expect-error Async Server Component */}
+            <div className={styles.aside}><MainRight /></div>
         </div>
     </LoadingProvider>
 }

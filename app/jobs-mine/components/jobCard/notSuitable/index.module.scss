@@ -1,0 +1,47 @@
+.description {
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.02em;
+    color: #353535;
+    margin-top: 13px;
+}
+
+.item {
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.02em;
+    color: #353535;
+    width: 100%;
+    height: 46px;
+    cursor: pointer;
+    border-bottom: solid 1px #BCBCBC;
+    margin-top: 20px;
+
+    &:hover {
+        color: #136FD3
+    }
+}
+
+.others {
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.02em;
+    color: #353535;
+    width: 100%;
+    height: 46px;
+    cursor: pointer;
+    margin-top: 20px;
+
+    &:hover {
+        color: #136FD3
+    }
+}

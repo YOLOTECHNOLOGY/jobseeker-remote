@@ -9,6 +9,7 @@
         margin-left: calc(50vw - 585px);
         background: transparent;
         width: 954px;
+
         @include sm {
             margin-left: 0px;
             width: 100%;
@@ -61,4 +62,9 @@
             display: none;
         }
     }
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
 }

@@ -1,12 +1,11 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect ,Suspense} from 'react'
 import Header from './Header'
 import HeaderMobile from './mobile/header'
 import MainMobile from './mobile/Main'
 import JobCard from './JobCard'
 import * as R from 'ramda'
 import { getCookie } from 'helpers/cookies'
-import { useSearchParams } from 'next/navigation'
 import {
   fetchChattedJobs,
   fetchResume,
@@ -22,7 +21,9 @@ import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import styles from '../index.module.scss'
-import { useRouter } from 'next/navigation'
+import { useRouter ,usePathname,useSearchParams} from 'next/navigation'
+
+
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
@@ -96,8 +97,12 @@ const tabListIntersted = [
   }
 ]
 
+const tabListInterstedArr = ['interested','viewedMe']
 
-const MainLeft = () => {
+
+const MainLeft = (props:any) => {
+  const {type} = props.searchParams
+  console.log(props,777)
   const [tabValue, setTabValue] = useState<string>('communicated')
   const [data, setData] = useState<Array<any>>([])
   const [tabList, setTabList] = useState<Array<any>>([])
@@ -105,17 +110,22 @@ const MainLeft = () => {
   const [tabValueChildren, setTabValueChidren] = useState<string>('')
   const [page, setPage] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
-  const searchParams = useSearchParams()
-  const searchType = searchParams.get('type')
   const accessToken = getCookie('accessToken')
   const [open, setOpen] = useState<boolean>(false)
   const [loadingChat, setLoadingChat] = useState<boolean>(false)
   const [loadingList, setLoadingList] = useState<boolean>(true)
+  const pathname = usePathname()
   const router = useRouter()
+  const searchParams = useSearchParams()
   useEffect(() => {
     if (tabList?.length && tabValue) {
       const tab = R.find(R.propEq('value', tabValue))(tabList)
-      tab?.fetchFun && getData(tab, page)
+      if(tab?.fetchFun){
+        getData(tab, page)
+      }else{
+        setTabChildren(tab.children)
+        setTabValueChidren(tab.children?.[0]?.value || '')
+      }
     }
   }, [tabValue, tabList, page])
 
@@ -128,13 +138,13 @@ const MainLeft = () => {
   }, [tabValueChildren])
 
   useEffect(() => {
-    if (searchType) {
-      setTabList(tabListIntersted)
-      setTabValue(searchType)
-    } else {
-      setTabList(initTabList)
+    if (type && tabListInterstedArr.includes(type)) {
+       setTabList(tabListIntersted)
+       setTabValue(type)
+    }else{
+      setTabList(initTabList);
     }
-  }, [searchType])
+  }, [type])
 
 
   const getData = (tab, page) => {
@@ -211,11 +221,14 @@ const MainLeft = () => {
     //   }).finally(() => setLoadingChat(false))
     // }
   }
+ 
 
   const checkSavedData = (res,index,id) => {
     const jobData = res?.data?.data
     if (jobData) {
-      router.push(`/communicated?unsaveId=${id}`)
+     const newSearchParams = new URLSearchParams(searchParams.toString())
+      newSearchParams.set('unsaveId', id)
+      router.push(pathname + '?' + newSearchParams.toString(), { forceOptimisticNavigation: true })
       data.splice(index,1)
       setData([...data])
       setOpen(true)
@@ -264,14 +277,16 @@ const MainLeft = () => {
           loadingList={loadingList}
           handleChangeChildren={handleChangeChildren}
         />
-        <MainMobile
-          tabValue={tabValue}
-          data={data}
-          page={page}
-          totalPage={total}
-          loadingList={loadingList}
-          onChange={(e) => setPage(e)}
-        />
+        <Suspense fallback={<h1>Loading Bar...</h1>}>
+            <MainMobile
+              tabValue={tabValue}
+              data={data}
+              page={page}
+              totalPage={total}
+              loadingList={loadingList}
+              onChange={(e) => setPage(e)}
+            />
+        </Suspense>
       </div>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}
                 anchorOrigin={{

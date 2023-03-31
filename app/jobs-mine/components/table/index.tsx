@@ -11,12 +11,13 @@ import NoPreference from '../noPreference'
 const Table = (props: any) => {
     const { jobs = [], page, totalPages, preferences, preferenceId } = props
     // jobs = [], page, totalPages, searchValues, config
-    const preference = preferences?.find?.(item => item.id === preferenceId)
+    const preference = preferences?.find?.(item => item.id === +preferenceId)
+
     return <Loader>
         <div className={styles.container}>
             {jobs.map(job => {
                 return (<div className={styles.jobContainer} key={job?.id}>
-                    <JobCard {...job} preference={preference} />
+                    <JobCard job={job} preference={preference} />
                 </div>)
             })}
             {

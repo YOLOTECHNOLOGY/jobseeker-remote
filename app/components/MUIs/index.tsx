@@ -6,5 +6,6 @@ export {
   TextField,
   Pagination,
   CircularProgress,
-  Skeleton
+  Skeleton,
+  TextareaAutosize
 } from '@mui/material'
