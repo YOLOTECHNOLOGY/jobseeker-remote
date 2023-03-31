@@ -115,11 +115,11 @@ const CheckEmail = ({
         <MaterialTextField
           className={styles.formInput}
           name='Enter your email address'
-          // placeholder='Enter your email address'
           label='Enter your email address'
           variant='outlined'
           value={email}
           size='small'
+          autoFocus
           autoComplete='off'
           onChange={(e) => setEmaile(e.target.value)}
           error={emailError ? true : false}

@@ -48,7 +48,8 @@ const theme = createTheme({
         },
         shrink: {
           fontSize: '10px',
-          transform: 'translate(14px, -10px) scale(1)'
+          transform: 'translate(14px, -10px) scale(1)',
+          letterSpacing:'0.00938em'
         },
         outlined: {
           '&.MuiInputLabel-shrink': {
