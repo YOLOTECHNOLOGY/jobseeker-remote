@@ -23,7 +23,10 @@ import PreferenceSelector from '../preferenceSelector'
 import classNames from 'classnames'
 import { encode } from 'app/jobs-hiring/interpreters/encoder'
 import { useRouter } from 'next/navigation'
+import {SortContext} from './SortProvider'
+
 const SearchArea = (props: any) => {
+  const  {sort, setSort} = useContext(SortContext)
   const { config, preferences, preferenceId } = props
   const dispatch = useDispatch()
   const searchParams: any = useSearchParams() ?? {}
@@ -83,7 +86,7 @@ const SearchArea = (props: any) => {
     return window.removeEventListener('scroll', listener)
   }, [])
 
-  const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
+  // const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
   const [jobTypes, setJobtypes] = useState(searchParams?.jobType ?? [])
   const jobTypeList =
     config?.inputs?.job_types?.map?.((item) => ({

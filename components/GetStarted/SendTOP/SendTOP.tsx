@@ -128,6 +128,7 @@ const SendTOP = ({
           id='email'
           label='Enter 6-digit OTP'
           variant='outlined'
+          autoFocus
           size='small'
           value={emailTOP || ''}
           autoComplete='off'

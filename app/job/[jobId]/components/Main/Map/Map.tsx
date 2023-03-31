@@ -1,10 +1,19 @@
 'use client'
 
 import { useState } from 'react'
-import Dialog from '@mui/material/Dialog'
+import Modal from '@mui/material/Modal'
+import Box from '@mui/material/Box'
 
 import GoogleMap from 'components/GoogleMap/GoogleMap'
 import styles from '../../../page.module.scss'
+
+const style = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '739px'
+}
 
 export type propsType = {
   lat: number
@@ -16,8 +25,7 @@ const Map = ({ lat, lng, full_address }: propsType) => {
   const [open, setOpen] = useState(false)
 
   const handleMapLayer = () => {
-    // setOpen(true)
-    // console.log('onclick')
+    setOpen(true)
   }
 
   return (
@@ -27,15 +35,39 @@ const Map = ({ lat, lng, full_address }: propsType) => {
 
       {lat && lng && (
         <div className={styles.map_context} onClick={handleMapLayer}>
-          <GoogleMap lat={Number(lat)} lng={Number(lng)} />
+          <GoogleMap
+            lat={Number(lat)}
+            lng={Number(lng)}
+            gestureHandling='none'
+            zoomControl={false}
+            fullscreenControl={false}
+            streetViewControl={false}
+            clickable={false}
+          />
         </div>
       )}
 
-      <Dialog open={open} onClose={() => setOpen(false)} fullWidth={true}>
-        <div className={styles.workLocal} id='googleMapSoaWAErd4'>
-          <GoogleMap lat={Number(lat)} lng={Number(lng)} id='googleMapSoaWAErd4' />
-        </div>
-      </Dialog>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={style}>
+          <div className={styles.workLocal} id='googleMapSoaWAErd4'>
+            <GoogleMap
+              id='googleMapSoaWAErd4'
+              lat={Number(lat)}
+              lng={Number(lng)}
+              gestureHandling='auto'
+              zoomControl={true}
+              fullscreenControl={true}
+              streetViewControl={true}
+              clickable={true}
+            />
+          </div>
+        </Box>
+      </Modal>
     </section>
   )
 }

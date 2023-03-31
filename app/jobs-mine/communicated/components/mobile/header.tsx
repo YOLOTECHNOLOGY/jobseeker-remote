@@ -87,7 +87,7 @@ const Header = ({
             <div className={styles.headerTop}
                 style={{ marginBottom: (tabValue == 'interested' || tabValue == 'viewedMe') ? '14px' : '10px' }}
             >
-                <Link prefetch={false} href={"/my-job"} className={styles.backLink}>
+                <Link prefetch={false} href={"/jobs-mine"} className={styles.backLink}>
                     <ArrowBackIosRoundedIcon className={styles.back} style={{ fontSize: '28px' }} />
                     <span className={styles.bactText}>Back</span>
                 </Link>
@@ -132,7 +132,7 @@ const Header = ({
                  {tabChildren.map((item) => <div onClick={()=> {
                    setOpen(false)
                    handleChangeChildren(item.value)
-                 }} style={{lineHeight:'40px',fontSize:'14px'}} key={item.key}> {item.tab} </div> )}
+                 }} style={{lineHeight:'40px',fontSize:'16px'}} key={item.key}> {item.tab} </div> )}
                 </>
                 </ModalDialog>
                 {

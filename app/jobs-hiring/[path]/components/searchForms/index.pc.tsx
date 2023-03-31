@@ -39,7 +39,7 @@ const SearchArea = (props: any) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchConfigSuccess(config))
-  },[])
+  }, [])
   const accessToken = getCookie('accessToken')
   const userCookie = getCookie('user')
   const [page, setPage] = useState(searchValues.page ?? '1')
@@ -219,15 +219,17 @@ const SearchArea = (props: any) => {
                   <path
                     d='M22.6667 2.66675H9.33341C7.86066 2.66675 6.66675 3.86066 6.66675 5.33341V26.6667C6.66675 28.1395 7.86066 29.3334 9.33341 29.3334H22.6667C24.1395 29.3334 25.3334 28.1395 25.3334 26.6667V5.33341C25.3334 3.86066 24.1395 2.66675 22.6667 2.66675Z'
                     stroke='#136FD3'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    className={styles.downloadApp_phoneIconBorderPath}
                   />
                   <path
                     d='M16 24H16.0133'
                     stroke='#136FD3'
                     stroke-width='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    className={styles.downloadApp_phoneIconHomePath}
                   />
                 </svg>
                 <div className={styles.text}>Download APP and chat with Boss </div>

@@ -12,6 +12,7 @@ import LoadingProvider from 'app/components/providers/loadingProvider'
 import preferences from './interpreters/preferences'
 import MobileHeader from './components/mobileHeader'
 
+import SortProvider from './components/searchForms/SortProvider'
 const configs = getConfigs([
     ['inputs', 'location_lists'],
     ['inputs', 'main_functions'],
@@ -41,6 +42,7 @@ const Main = (props: any) => {
         <div className={styles.main}>
             <div>
                 <MobileHeader />
+            <SortProvider>
                 <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
                     <SearchForm
                         searchParams={props.searchParams ?? null}
@@ -49,6 +51,7 @@ const Main = (props: any) => {
                         config={config}
                     />
                 </div>
+                </SortProvider>
                 <div className={styles.content}>
                     <div className={styles.table}>
                         <Suspense fallback={<Loading />}>

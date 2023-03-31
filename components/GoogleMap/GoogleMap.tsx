@@ -20,9 +20,41 @@ interface Props {
   width?: string
   height?: string
   id?: string
+
+  gestureHandling: 'auto' | 'none'
+  zoomControl: boolean
+  fullscreenControl: boolean
+  streetViewControl: boolean
+  clickable?: boolean
 }
 
-const GoogleMap = ({ width, height, defaultAddress, lat, lng, id }: Props) => {
+/**
+ *
+ * @description 描述
+ * @param {string} id 自定义渲染容器
+ * @param {number} [width = '100%'] 如果传了自定义ID可省略
+ * @param {string} gestureHandling 用户手势无法平移或缩放地图
+ * @param {boolean} zoomControl 缩放控件的启用/停用状态
+ * @param {boolean} fullscreenControl 全屏控件的启用/停用状态
+ * @param {boolean} streetViewControl 是否显示小黄人
+ * @param {boolean} clickable 是否可以点击
+ *
+ * @returns
+ */
+const GoogleMap = ({
+  width,
+  height,
+  defaultAddress,
+  lat,
+  lng,
+  id,
+
+  gestureHandling,
+  zoomControl,
+  fullscreenControl,
+  streetViewControl,
+  clickable = true
+}: Props) => {
   let maerker
   const search = useRef<any>()
   const searchCart = useRef<HTMLElement>()
@@ -45,10 +77,15 @@ const GoogleMap = ({ width, height, defaultAddress, lat, lng, id }: Props) => {
       const map = new google.maps.Map(mapWrapperNode, {
         center: { lat: lat ? lat : 14.59889, lng: lng ? lng : 120.98417 },
         zoom: 16,
-        disableDefaultUI: true,
+        // disableDefaultUI: true,
         // fullscreenControl: true,
-        zoomControl: true
+        zoomControl: zoomControl,
+        gestureHandling: gestureHandling,
+        fullscreenControl,
+        streetViewControl
       })
+
+      map.setClickableIcons(clickable)
 
       // initMaerker
       if (lat && lng) {
@@ -94,10 +131,22 @@ const GoogleMap = ({ width, height, defaultAddress, lat, lng, id }: Props) => {
     if (maerker) {
       maerker.setMap(null)
     }
+
     // @ts-ignore
     maerker = new google.maps.Marker({
       position: latLng,
       map: map
+    })
+
+    // @ts-ignore
+    const infowindow = new google.maps.InfoWindow({
+      content: 'sdfsdfsdfsdf',
+      position: maerker
+    })
+
+    infowindow.open({
+      anchor: maerker,
+      map
     })
   }
 
