@@ -1,7 +1,7 @@
 @import '/styles/mixins.scss';
 
 .container {
-  --box-shadow:none;
+  --box-shadow: none;
   width: 100vw;
   height: 153px;
   max-width: 100%;
@@ -15,8 +15,7 @@
   padding-left: calc(50vw - 585px);
   transition: box-shadow ease-in 0.5s;
   &.isFixed {
-    --box-shadow: 0px 0px 20px #BCBCBC;
-
+    --box-shadow: 0px 0px 20px #bcbcbc;
   }
   @include sm {
     display: none;
@@ -53,7 +52,7 @@
     .searchButton {
       margin-left: 8px;
       text-transform: capitalize !important;
-      background: #136FD3;
+      background: #136fd3;
       color: #fff;
       width: 119px;
       height: 44px;
@@ -69,11 +68,17 @@
       margin-left: 30px;
       margin-bottom: 3px;
       position: relative;
-      &:hover{
-        .popver{
+      &:hover {
+        .popver {
           display: block;
         }
       }
+
+      &_phoneIconBorderPath,
+      &_phoneIconHomePath {
+        transition: all 0.2s ease;
+      }
+
       .text {
         width: 116px;
         font-family: 'Product Sans';
@@ -82,21 +87,21 @@
         font-size: 14px;
         line-height: 18px;
         letter-spacing: 0.0075em;
-        color: #136FD3;
+        color: #136fd3;
         margin-left: 10px;
       }
-      .popver{
+      .popver {
         position: absolute;
         left: -12px;
         top: 50px;
-        background: #FFFFFF;
-        border: 0.5px solid #BCBCBC;
+        background: #ffffff;
+        border: 0.5px solid #bcbcbc;
         border-radius: 10px;
         padding: 14px 20px;
         z-index: 100;
         display: none;
-        box-shadow: 0px 0px 14px #BCBCBC;
-        &::after{
+        box-shadow: 0px 0px 14px #bcbcbc;
+        &::after {
           content: ' ';
           position: absolute;
           left: 20px;
@@ -105,19 +110,27 @@
           height: 0;
           border-width: 8px;
           border-style: solid;
-          border-color:transparent transparent #fff  transparent;
+          border-color: transparent transparent #fff transparent;
         }
-      img{
-        width: 104px;
-        height: 104px;
-      }
-      p{
-       padding: 6px 0 0 0;
-       text-align: center;
-       line-height: 20px;
-       margin: 0;
+        img {
+          width: 104px;
+          height: 104px;
+        }
+        p {
+          padding: 6px 0 0 0;
+          text-align: center;
+          line-height: 20px;
+          margin: 0;
+        }
       }
     }
+
+    .downloadApp:hover .downloadApp_phoneIconBorderPath {
+      fill: #136fd3;
+    }
+
+    .downloadApp:hover .downloadApp_phoneIconHomePath {
+      stroke: white;
     }
 
     .loginButton {
@@ -129,10 +142,10 @@
       line-height: 18px;
       align-items: center;
       letter-spacing: 0.0075em;
-      color: #136FD3;
+      color: #136fd3;
       width: 216px;
       height: 44px;
-      border: 1.5px solid #136FD3;
+      border: 1.5px solid #136fd3;
       border-radius: 10px;
       margin-left: 9px;
       span {
@@ -154,7 +167,6 @@
       height: 30px;
       width: 196px;
       margin-right: 8px;
-
     }
 
     .jobFunctions {
@@ -165,7 +177,7 @@
       text-transform: capitalize !important;
       border-radius: 10px;
       width: 145px;
-      border: 1.5px solid #136FD3;
+      border: 1.5px solid #136fd3;
       font-weight: 700;
       font-size: 14px;
     }
