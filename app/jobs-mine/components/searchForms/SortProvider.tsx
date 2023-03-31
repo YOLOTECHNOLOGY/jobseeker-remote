@@ -71,7 +71,7 @@ const SortProvider = ({children}) => {
         }
     })
 
-    return  <Provider value={{ sort,setSort:setSort}}>
+    return  <Provider value={{ sort,setSort}}>
             {children}
             <div className={styles.sortBox}>
                 <StyledTabs

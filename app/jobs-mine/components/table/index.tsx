@@ -35,7 +35,7 @@ const Table = (props: any) => {
 export default tableIp(serverDataScript()
     .chain(props => {
         const { preferences } = props
-        if (preferences.length) {
+        if (preferences?.length) {
             return buildComponentScript(props, Table)
         } else {
             return buildComponentScript({}, NoPreference)

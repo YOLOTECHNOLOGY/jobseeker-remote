@@ -14,7 +14,7 @@ const  jobseekerDisplayStatusObject = {
   "Cancelled":'#707070',
   "Not accepted":'#707070',
   "Completed": "#0EBD5C",
-  "Not checked in":'##D2030F',
+  "Not checked in":'#D2030F;',
 };
 interface cardProps {
   data: Array<any>,
