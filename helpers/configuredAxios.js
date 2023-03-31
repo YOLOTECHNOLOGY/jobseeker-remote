@@ -182,7 +182,10 @@ const chain = (baseURL, type = 'public', passToken, serverAccessToken, server = 
                 globalPromise = refreshTokenServer().catch(error => {
                   redirectToHomeOnClient()
                 }).then(() => {
-                  globalPromise = undefined
+                  // todo: request new token logic can be optimized later
+                  // globalPromise = undefined
+                  // do not reset this globalPromise. if we set with empty. some errors will be occured that caused by network delay
+                  // e.g. refreshTokenServer maybe run many times
                 })
               }
               return globalPromise.then((res) => {
