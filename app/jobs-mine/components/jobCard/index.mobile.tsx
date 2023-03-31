@@ -27,6 +27,7 @@ const JobCard = (props: any) => {
         job_url,
         preference
     } = props
+    
     const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
     const router = useRouter()
     const modalProps = useNotSuitable(preference.id, id)

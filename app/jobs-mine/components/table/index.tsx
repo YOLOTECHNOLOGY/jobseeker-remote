@@ -8,28 +8,31 @@ import JobCard from '../jobCard'
 import MobileTable from './mobile'
 import Loader from './loader'
 import NoPreference from '../noPreference'
+import ChatInfoProvider from 'app/components/chatInfoProvider'
 const Table = (props: any) => {
     const { jobs = [], page, totalPages, preferences, preferenceId } = props
     // jobs = [], page, totalPages, searchValues, config
     const preference = preferences?.find?.(item => item.id === +preferenceId)
+    const recruiterIds =  jobs.map(job => job.recruiter_id)
+    return <ChatInfoProvider recruiterIds={recruiterIds}>
+        <Loader>
+            <div className={styles.container}>
+                {jobs.map(job => {
+                    return (<div className={styles.jobContainer} key={job?.id}>
+                        <JobCard job={job} preference={preference} />
+                    </div>)
+                })}
+                {
+                    totalPages > 1 ? <Pagination
+                        count={+totalPages}
+                        page={+page}
+                    /> : null
+                }
 
-    return <Loader>
-        <div className={styles.container}>
-            {jobs.map(job => {
-                return (<div className={styles.jobContainer} key={job?.id}>
-                    <JobCard job={job} preference={preference} />
-                </div>)
-            })}
-            {
-                totalPages > 1 ? <Pagination
-                    count={+totalPages}
-                    page={+page}
-                /> : null
-            }
-
-        </div>
-        <MobileTable {...props} preference={preference} />
-    </Loader>
+            </div>
+            <MobileTable {...props} preference={preference} />
+        </Loader>
+    </ChatInfoProvider>
 }
 
 export default tableIp(serverDataScript()

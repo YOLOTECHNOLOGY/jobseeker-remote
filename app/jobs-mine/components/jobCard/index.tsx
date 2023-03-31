@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useContext, useMemo } from 'react'
 import styles from './index.module.scss'
 import { HomePageChat, AppDownQRCode, CloseIcon } from 'images'
 import useChatNow from 'app/hooks/useChatNow'
@@ -17,6 +17,7 @@ import { CircularProgress } from 'app/components/MUIs'
 import { useRouter } from 'next/navigation'
 import useNotSuitable from './hooks'
 import NotSuitableModal from './notSuitable'
+import { ChatInfoContext } from 'app/components/chatInfoProvider'
 const useShowPop = (titleHover, popHover) => {
 
     const [showPopup, setShowPopup] = useState(false)
@@ -128,16 +129,21 @@ const JobCard = (props: any) => {
         job_benefits,
         external_apply_url,
         id,
-        chat,
+        recruiter_id,
         is_saved,
         job_url,
         company_url,
         is_urgent
     } = job
+    const { chatInfos } = useContext(ChatInfoContext)
+    const chat = useMemo(() => {
+        return chatInfos.find(chatInfo => chatInfo.recruiter_id === recruiter_id)
+    }, [chatInfos])
+
     const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
     const companyLabels = [company_industry, company_size, company_financing_stage].filter(a => a)
     const router = useRouter()
-    const [loading, chatNow, modalChange] = useChatNow(props)
+    const [loading, chatNow, modalChange] = useChatNow({ ...job, chat })
     const [titleHover, setTitleHover] = useState(false)
     const [popHover, setPopHover] = useState(false)
 
