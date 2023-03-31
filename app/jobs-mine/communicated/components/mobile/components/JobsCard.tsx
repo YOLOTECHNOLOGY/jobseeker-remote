@@ -10,7 +10,7 @@ const  jobseekerDisplayStatusObject = {
   "Accepted":'#136FD3',
   "Upcoming":'#136FD3',
   "In progress":'#136FD3',
-  "Declined":'#D2030F',
+  "Declined":'#707070',
   "Cancelled":'#707070',
   "Not accepted":'#707070',
   "Completed": "#0EBD5C",
