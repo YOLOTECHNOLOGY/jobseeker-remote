@@ -3,7 +3,7 @@
 .container {
   --box-shadow:none;
   width: 894px;
-  height: 175px;
+  height: 228px;
   max-width: 100%;
   display: flex;
   // position: sticky;
@@ -69,13 +69,12 @@
     justify-content: flex-start;
     height: 50px;
     padding-top: 20px;
-    // padding-left: 24px;
-
+    padding-left: 20px;
+    flex-wrap: wrap;
     .filterItems {
       height: 30px;
-      width: 120px;
-      margin-right: 8px;
-
+      width: 207px;
+      margin: 0 9px 13px 0;
     }
 
     .jobFunctions {
@@ -94,6 +93,19 @@
       color: #707070;
       font-size: 14px;
       margin-left: 4px;
+      height: 30px;
     }
   }
+}
+.sortBox{
+  height: 50px;
+  background: #FFFFFF;
+  border: 0.5px solid #BCBCBC;
+  border-radius: 15px;
+  line-height: 50px;
+  display: flex;
+  padding: 0 0 0 20px;
+  font-size: 16px;
+  width: 894px;
+  margin: 24px 0 0 calc(50vw - 585px + 24px);
 }
