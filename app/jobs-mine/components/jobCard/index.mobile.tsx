@@ -1,9 +1,13 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React, {  } from 'react'
+import React, { } from 'react'
 import styles from './index.mobile.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { CloseIcon } from 'images'
+import useNotSuitable from './hooks'
+import NotSuitableModal from './notSuitable'
+import classNames from 'classnames'
 
 
 const JobCard = (props: any) => {
@@ -20,20 +24,28 @@ const JobCard = (props: any) => {
         company_logo,
         company_name,
         id,
-        job_url
+        job_url,
+        preference
     } = props
     const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
     const router = useRouter()
-   
-    return <div className={styles.main}>
+    const modalProps = useNotSuitable(preference.id, id)
+    const { showSelection, refreshing } = modalProps
+    return <div className={
+        classNames({
+            [styles.main]: true,
+            [styles.aboutDisappear]: refreshing
+        })
+    }>
         <div
             id={'job_card_container_' + id}
             className={styles.container}
             onClick={e => {
-                e.stopPropagation()
+                // e.stopPropagation()
                 router.push(job_url, { forceOptimisticNavigation: true })
             }}
         >
+
             <div
                 key={job_title + id}
                 className={styles.titleContainer}
@@ -60,10 +72,17 @@ const JobCard = (props: any) => {
                     </div>
                 </div>
                 <div className={styles.fullName}>
-                    {recruiter_full_name}
+                    {job_location}
                 </div>
             </div>
+            <div className={styles.closeButton} onClick={e => {
+                e.stopPropagation()
+                showSelection()
+            }}>
+                <Image src={CloseIcon} alt='logo' width={13} height={13} />
+            </div>
         </div>
+        <NotSuitableModal {...modalProps} />
     </div>
 }
 

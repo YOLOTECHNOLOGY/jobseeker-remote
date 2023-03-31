@@ -9,7 +9,7 @@ import { serverDataScript } from 'app/abstractModels/FetchServierComponents'
 import tableIp from '../../interpreters/talbeMoble'
 
 const MobileTable = (props: any) => {
-    const { jobs = [], page, totalPages, searchValues, config } = props
+    const { jobs = [], page, totalPages, searchValues, config, preference } = props
     const [loading, setLoading] = useState(false)
     const [jobList, setJobList] = useState(jobs)
     const [latestPage, setLatestPage] = useState(page)
@@ -39,11 +39,11 @@ const MobileTable = (props: any) => {
             setLatestPage(page)
         })
             .finally(() => setLoading(false))
-    }, [noMore, loading, searchValues,latestPage])
+    }, [noMore, loading, searchValues, latestPage])
     return <div className={styles.mobileContainer}>
         {jobList.map(job => {
             return (<div className={styles.jobContainer} key={job?.id}>
-                <MobileCard {...job} />
+                <MobileCard {...job} preference={preference} />
             </div>)
         })}
         <LoadMore loading={loading} shouldLoad={shouldLoadMore} noMore={noMore} />

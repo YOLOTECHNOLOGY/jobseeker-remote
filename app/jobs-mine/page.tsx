@@ -10,6 +10,7 @@ import Loading from './components/table/loading'
 import MainRight from './communicated/components/MainRight'
 import LoadingProvider from 'app/components/providers/loadingProvider'
 import preferences from './interpreters/preferences'
+import MobileHeader from './components/mobileHeader'
 
 const configs = getConfigs([
     ['inputs', 'location_lists'],
@@ -39,6 +40,7 @@ const Main = (props: any) => {
     return <LoadingProvider >
         <div className={styles.main}>
             <div>
+                <MobileHeader />
                 <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
                     <SearchForm
                         searchParams={props.searchParams ?? null}
@@ -61,7 +63,7 @@ const Main = (props: any) => {
                 </div>
             </div>
             {/* @ts-expect-error Async Server Component */}
-            <div className={styles.aside}><MainRight /></div>
+            <div className={styles.right}><MainRight /></div>
         </div>
     </LoadingProvider>
 }

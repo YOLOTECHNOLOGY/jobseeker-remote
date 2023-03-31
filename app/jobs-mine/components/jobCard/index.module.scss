@@ -1,9 +1,10 @@
 .main {
-    --opacity:1;
+    
     width: 918px;
     height: 170px;
     position: relative;
     padding-right: 24px;
+    --opacity:1;
     opacity: var(--opacity);
     transition: var(--opacity) ease-in-out 0.5s ;
     &.aboutDisappear {

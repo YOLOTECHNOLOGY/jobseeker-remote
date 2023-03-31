@@ -67,4 +67,10 @@
 .main {
     display: flex;
     flex-direction: row;
+    
+    .right {
+        @include sm {
+            display: none;
+        }
+    }
 }
