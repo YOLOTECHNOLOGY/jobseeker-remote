@@ -1,25 +1,16 @@
 import axios from 'axios'
-import { getCookie, removeCookie } from 'helpers/cookies'
+import { getCookie, removeCookie, setCookie } from 'helpers/cookies'
 import { redirect } from 'next/navigation';
+import { accessToken, refreshToken } from './cookies';
 // import accessToken from 'pages/api/handlers/linkedinHandlers/accessToken'
 // import { configureStore } from 'store'
 // import { logout } from 'shared/helpers/authentication'
 // import { IMManager } from 'imforbossjob'
-const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken, server = false) => {
-  // let remoteAddress = ''
-  // let isMobile = ''
-  if (typeof window !== 'undefined') {
-    // const { store } = configureStore(window.__PRELOADED_STATE__, false)
-    // remoteAddress = store.getState().Public.utils.setRemoteIp.ip
-    // isMobile = store.getState().Public.utils.setUserDevice.userAgent.isMobile
-  }
 
-  let url = ''
-  let headers = {
-    // remoteAddress: remoteAddress,
-    // source: isMobile ? 'mobile-web' : 'web',
-  }
 
+// generate url by a baseUrl
+const getUrl = (baseURL) => {
+  let url = '';
   switch (baseURL) {
     case 'data':
       url = process.env.DATA_BOSSJOB_URL
@@ -65,6 +56,24 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken,
     default:
       break
   }
+  return url
+}
+
+const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken, server = false) => {
+  // let remoteAddress = ''
+  // let isMobile = ''
+  if (typeof window !== 'undefined') {
+    // const { store } = configureStore(window.__PRELOADED_STATE__, false)
+    // remoteAddress = store.getState().Public.utils.setRemoteIp.ip
+    // isMobile = store.getState().Public.utils.setUserDevice.userAgent.isMobile
+  }
+
+  const url = getUrl(baseURL)
+  let headers = {
+    // remoteAddress: remoteAddress,
+    // source: isMobile ? 'mobile-web' : 'web',
+  }
+
 
   /*  TO REFACTOR */
   // Usecase: for roboheadhunting, need to pass specifically 'Bossjob-Token'
@@ -114,40 +123,83 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken,
       Authorization: `Bearer ${getCookie('accessToken')}`
     }
   }
-
   const configuredAxios = axios.create({
     baseURL: url,
     headers: headers
-  })
-
-  if (type === 'protected') {
-    configuredAxios.interceptors.response.use(
-      (response) => {
-        return response
-      },
-      (error) => {
-        // Remove the accessToken cookie to log the user out
-        // when Unauthorized 401 status code is returned from API requests
-
-        //serverComponent 
-        if(error?.response?.status === 401 && server){
-          redirect(process.env.HOST_PATH + '/get-started')
-        }
-       
-        if (error?.response?.status === 401 && typeof window !== 'undefined') {
-          removeCookie('accessToken')
-          window.location.href = '/get-started'
-          import('imforbossjob')
-            .then((im) => im?.IMManager?.logout?.())
-            .then(() => localStorage?.clear?.())
-        } else {
-          return Promise.reject(error)
-        }
-      }
-    )
-  }
+  });
 
   return configuredAxios
 }
 
-export default configuredAxios
+
+
+const configured = Symbol();
+const refreshTokenServer = () => {
+  const axios = configuredAxios('auth', '', '', '');
+  const data = { source: 'web', refresh: getCookie(refreshToken) }
+  return axios.post('/token/refresh', data).then((res) => {
+    let { access, token_expired_at, data } = res.data.data
+    if (access) {
+      setCookie(accessToken, access, token_expired_at)
+      return
+    }
+    // if goes in this statement, the data is 'refreshtoken expiration of identity'
+    return Promise.reject(new Error(data))
+  })
+}
+const redirectToHomeOnClient = () => {
+  if (typeof window !== 'undefined') {
+    removeCookie(accessToken)
+    window.location.href = '/get-started'
+    import('imforbossjob')
+      .then((im) => im?.IMManager?.logout?.())
+      .then(() => localStorage?.clear?.())
+  }
+}
+
+let globalPromise;
+const chain = (baseURL, type = 'public', passToken, serverAccessToken, server = false) => {
+  const createAxios = () => configuredAxios(baseURL, type, passToken, serverAccessToken, server)
+  const axios = createAxios();
+  const keys = Object.keys(axios);
+  const wrapper = {};
+
+  keys.forEach(key => {
+    wrapper[key] = (...params) => {
+      if (type === 'protected') {
+        axios.interceptors.response.use(
+          (response) => response,
+          (error) => {
+            if (error?.response?.status === 401 && server) {
+              redirect(process.env.HOST_PATH + '/get-started')
+            }
+            if (error?.response?.status === 401 && typeof window !== 'undefined') {
+              if (wrapper[configured]) {
+                redirectToHomeOnClient();
+                return Promise.reject(error)
+              }
+              if (!globalPromise) {
+                globalPromise = refreshTokenServer().catch(error => {
+                  redirectToHomeOnClient()
+                }).then(() => {
+                  globalPromise = undefined
+                })
+              }
+              return globalPromise.then((res) => {
+                const chainObj = chain(baseURL, type, passToken ? getCookie(accessToken) : '', serverAccessToken ? getCookie(accessToken) : '', server)
+                chainObj[configured] = true // currentRequest is configured. so if the request accept 401 status again. we should redirect to home
+                return chainObj[key](...params)
+              })
+            } else {
+              return Promise.reject(error)
+            }
+          }
+        )
+      }
+      return axios[key](...params);
+    }
+  });
+  return wrapper
+}
+
+export default chain
