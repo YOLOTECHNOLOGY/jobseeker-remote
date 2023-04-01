@@ -67,10 +67,16 @@
 .main {
     display: flex;
     flex-direction: row;
-    
+
     .right {
         @include sm {
             display: none;
+        }
+    }
+    .left {
+        width: auto;
+        @include sm {
+            width: 100%;
         }
     }
 }

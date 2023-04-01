@@ -108,4 +108,7 @@
   font-size: 16px;
   width: 894px;
   margin: 24px 0 0 calc(50vw - 585px + 24px);
+  @include sm {
+    display: none;
+  }
 }

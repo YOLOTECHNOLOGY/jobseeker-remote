@@ -11,7 +11,7 @@ import MainRight from './communicated/components/MainRight'
 import LoadingProvider from 'app/components/providers/loadingProvider'
 import preferences from './interpreters/preferences'
 import MobileHeader from './components/mobileHeader'
-
+import SortFilter from './components/searchForms/sortFilter'
 import SortProvider from './components/searchForms/SortProvider'
 const configs = getConfigs([
     ['inputs', 'location_lists'],
@@ -40,17 +40,20 @@ const Main = (props: any) => {
     const preferenceId = searchParams.preferenceId || preferences?.[0]?.id
     return <LoadingProvider >
         <div className={styles.main}>
-            <div>
+            <div className={styles.left}>
                 <MobileHeader />
-            <SortProvider>
-                <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
-                    <SearchForm
-                        searchParams={props.searchParams ?? null}
-                        preferenceId={preferenceId}
-                        preferences={preferences}
-                        config={config}
-                    />
-                </div>
+                <SortProvider>
+                    <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
+
+                        <SearchForm
+                            searchParams={props.searchParams ?? null}
+                            preferenceId={preferenceId}
+                            preferences={preferences}
+                            config={config}
+                        />
+
+                    </div>
+                    <SortFilter />
                 </SortProvider>
                 <div className={styles.content}>
                     <div className={styles.table}>

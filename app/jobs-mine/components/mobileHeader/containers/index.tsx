@@ -3,7 +3,8 @@ import React, { useState, useMemo } from 'react'
 import styles from './index.module.scss'
 import './index.scss'
 const Containers = (props: any) => {
-    console.log({props})
+    console.log({ props })
+    const { first, second } = props
     const [inTouches, setIntouches] = useState(false)
     const [beginPosition, setBegginPosision] = useState(0)
     const [offset, setOffset] = useState(0)
@@ -88,32 +89,27 @@ const Containers = (props: any) => {
         onTouchStart={touchesBegin}
         onTouchMove={touchesMove}
         onTouchEnd={touchesEnd}
-
     >
         <div
             className={styles.left}
             style={{
                 transitionProperty: inTouches ? undefined : 'transform opcity',
-                background: 'red',
-                // transform: 'translateX(calc(0px - 50px))',
                 transform: `translateX(${inTouches ? leftTouchTransitionX : leftNormalTransitionX})`,
                 transitionTimingFunction: inTouches ? undefined : 'ease-out',
                 transitionDuration: inTouches ? undefined : `${(0.002 * Math.abs(offset))}s`,
                 opacity: inTouches ? leftTouchOpacity : leftNormalOpacity
             }}
-        ></div>
+        >{first}</div>
         <div
             className={styles.right}
             style={{
                 transitionProperty: inTouches ? undefined : 'transform opcity',
-                background: 'yellow',
-                // transform: 'translateX(calc(0px - 50px))',
                 transform: `translateX(${inTouches ? rightTouchTransitionX : rightNormalTransitionX})`,
                 transitionTimingFunction: inTouches ? undefined : 'ease-out',
                 transitionDuration: inTouches ? undefined : `${(0.002 * Math.abs(offset))}s`,
                 opacity: inTouches ? rightTouchOpacity : rightNormalOpacity
             }}
-        ></div>
+        >{second}</div>
     </div>
 }
 
