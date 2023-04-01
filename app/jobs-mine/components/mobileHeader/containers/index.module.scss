@@ -2,11 +2,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-start;
+    padding-top: 8px;
 }
 .container {
     width: 100%;
-    height: 51px;
+    height: 61px;
     position: relative;
 
     .left {
@@ -30,5 +31,24 @@
         @extend .content;
     }
 
-    
+    .indicatorContainer {
+        width: 64px;
+        height: 4px;
+        position: absolute;
+        bottom: 0px;
+        left: calc(50% - 32px);
+        background: #f0f0f0;
+        border-radius: 2px;
+        overflow: hidden;
+        .indicator {
+            width: 32px;
+            height: 4px;
+            position: absolute;
+            bottom: 0px;
+            left: calc(50% - 32px);
+            background: #136FD3;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+    }
 }
