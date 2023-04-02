@@ -150,7 +150,8 @@ const SearchArea = (props: any) => {
                     />
                 </div>
                 <div className={styles.filters}>
-                    <Single options={sortOptions}
+                    <Single
+                        options={sortOptions}
                         value={sort}
                         onSelect={setSort}
                         className={styles.filterItems}

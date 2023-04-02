@@ -1,93 +1,164 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react'
-import { flushSync } from 'react-dom'
-import { flatMap } from 'lodash-es'
-import LocationField from 'app/components/commons/location'
-import JobSearchBar from '../../../components/commons/location/search'
+import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import styles from './index.mobile.module.scss'
 import Single from 'app/components/mobile/select/single'
-import Multiple from 'app/components/mobile/select/multiple'
-import MultyGroup from 'app/components/mobile/select/groupedMulty'
-import { encode } from 'app/jobs-hiring/interpreters/encoder'
-import { useSuggest } from './hooks'
+import Grouped from 'app/components/mobile/select/groupedMulty'
 import theme from 'app/components/mobile/theme'
 import { ThemeProvider } from '@mui/material/styles'
-import JobFunction from 'app/components/commons/jobFunction'
-// import { useRouter } from 'next/navigation'
-import { toPairs } from 'ramda'
+import Image from 'next/image'
+import { Plus, Search } from 'images'
 import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import { useRouter } from 'next/navigation'
 import { useFirstRender } from 'helpers/useFirstRender'
-import { filter } from 'ramda'
-import { useSearchParams } from 'next/navigation'
+import { filter, toPairs } from 'ramda'
+import { LoadingContext } from 'app/components/providers/loadingProvider'
+const sortOptions = [
+    { label: 'Newest', value: '1' },
+    { label: 'Relevance', value: '2' },
+    { label: 'Highest Salary', value: '3' }
+]
 const SearchArea = (props: any) => {
-    const { config } = props
+    console.log({ props })
+    const { config, preferences, preferenceId, searchParams } = props
+    const preferenceOptions = useMemo(() => {
+        return preferences.map(preference => ({ value: preference.id, label: preference.job_title }))
+    }, [preferences])
+    const [selectedPreferenceId, setSelectedPreferenceId] = useState(+preferenceId)
+    useEffect(() => {
+        setSelectedPreferenceId(+preferenceId)
+    }, [preferenceId])
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchConfigSuccess(config))
     }), []
-    const searchParams:any = useSearchParams() ?? {}
-    const [page, setPage] = useState(searchParams.page ?? '1')
-
-    const locations = flatMap(config.inputs.location_lists, item => item.locations)
-    const [location, setLocation] = useState(locations.find(location => location.seo_value === searchParams.location?.[0]))
-    const [industry, setIndustry] = useState(searchParams.industry ?? [])
-    const [qualification,setQualification] = useState(searchParams.qualification) 
-
-    const [jobFunctionValue, jobFunctionChange] = useState({
-        functionTitles: searchParams?.functionTitles ?? [],
-        jobFunctions: searchParams?.jobFunctions ?? [],
-        mainFunctions: searchParams?.mainFunctions ?? []
-    })
-   
+    const moreOptions = useMemo(() => {
+        return {
+            qualification: config.filters.educations.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
+            workExperience: config.inputs.xp_lvls.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
+            industry: config.inputs.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
+            salary: config.filters?.salary_range_filters?.map?.((item) => ({
+                value: item?.['seo-value'],
+                label: item.value
+            })) ?? [],
+            jobTypes: config?.inputs?.job_types?.map?.((item) => ({
+                value: item?.['seo-value'],
+                label: item.value
+            })) ?? [],
+            verifiedCompany: [
+                {
+                    value: 'verified-companies',
+                    label: 'View verified companies'
+                }
+            ]
+        }
+    }, [config])
+    const page = searchParams.page ?? '1'
+    const { push } = useContext(LoadingContext)
+    // const locations = flatMap(config.inputs.location_lists, item => item.locations)
+    // const [location, setLocation] = useState(locations.find(location => location.seo_value === searchParams.location?.[0]))
     const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
-
     const [moreData, setMoreData] = useState(filter(a => a)({
         workExperience: searchParams?.workExperience ?? null,
         qualification: searchParams?.qualification ?? null,
-        salaries: searchParams?.salary ?? null,
+        salary: searchParams?.salary ?? null,
         jobTypes: searchParams?.jobType ?? null,
         verifiedCompany: searchParams?.verifiedCompany ?? null,
-        companySizes: searchParams?.companySizes ?? null,
-        financingStages: searchParams?.financingStages ?? null
+        industry: searchParams?.industy ?? null
     }))
-    const [searchValue, setSearchValue] = useState(searchParams.query)
 
     const filterParams = useMemo(() => {
         return filter(a => a)({
-            query: searchValue,
-            industry: industry.length ? industry : null,
-            location: [location?.['seo_value']].filter(a => a),
+            // location: [location?.['seo_value']].filter(a => a),
             sort: sort,
             page: page,
-            ...jobFunctionValue,
+            preferenceId: selectedPreferenceId,
             ...moreData
         })
-    }, [searchValue, industry, moreData, location, sort, jobFunctionValue])
+    }, [moreData, location, sort, selectedPreferenceId])
+    console.log({ filterParams, searchParams })
     const router = useRouter()
-    const result = useMemo(() => {
-        return encode(filterParams)
-    }, [filterParams])
     const firstRender = useFirstRender()
     const reload = useCallback(() => {
         if (firstRender) {
             return
         }
-        const url = new URLSearchParams(toPairs(result.params)).toString();
-        router.push('/jobs-hiring/' + result.searchQuery + '?' + url, { forceOptimisticNavigation: false })
-    }, [result])
+        const url = new URLSearchParams(toPairs(filterParams)).toString();
+        push(window.location.pathname + '?' + url)
+    }, [filterParams, push])
     const reloadRef = useRef(reload)
     useEffect(() => {
         reloadRef.current = reload
     }, [reload])
-    useEffect(reload, [location, industry, moreData, sort, jobFunctionValue])
+    useEffect(reload, [location, moreData, sort, selectedPreferenceId])
     return <div>
         <ThemeProvider theme={theme}>
             <div className={styles.container}>
-                
+                <div className={styles.top}>
+                    <Single
+                        options={preferenceOptions}
+                        value={selectedPreferenceId}
+                        className={styles.preference}
+                        onSelect={value => {
+                            setSelectedPreferenceId(value)
+                        }}
+                        label='Job Preference'
+                    />
+                    <div className={styles.iconContainer}>
+                        <div
+                            className={styles.icon}
+                            onClick={() => {
+                                router.push('/manage-profile?tab=job-preferences', { forceOptimisticNavigation: true })
+                            }}
+                        >
+                            <Image src={Plus} width={18} height={18} alt='' />
+                        </div>
+                        <div
+                            className={styles.icon}
+                            onClick={() => {
+                                router.push('/jobs-hiring/job-search', { forceOptimisticNavigation: true })
+                            }}
+                        >
+                            <Image src={Search} width={18} height={18} alt='' />
+                        </div>
+
+                    </div>
+                </div>
+                <div className={styles.bottom}>
+                    <div className={styles.selector}>
+                        <Single
+                            style={{ width: '100%', height: '30px', marginRight: 4 }}
+                            options={sortOptions}
+                            value={sort}
+                            onSelect={setSort}
+                            className={styles.filterItems}
+                            label='Sort by'
+                        />
+                    </div>
+                    {/* <div className={styles.selector}>
+                        <LocationField
+                            height='30px'
+                            labelTop='0px'
+                            style={{ width: '100%', height: '30px', marginLeft: 2 }}
+                            options={locations}
+                        />
+                    </div> */}
+                    <div className={styles.selector}>
+                        <Grouped
+                            value={moreData}
+                            options={moreOptions}
+                            style={{ width: '100%', height: '30px', marginLeft: 4 }}
+                            labels={[]}
+                            label='Filters'
+                            onSelect={setMoreData}
+                        />
+                    </div>
+
+
+
+                </div>
             </div>
         </ThemeProvider>
     </div>

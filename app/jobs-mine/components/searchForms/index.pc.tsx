@@ -23,10 +23,10 @@ import PreferenceSelector from '../preferenceSelector'
 import classNames from 'classnames'
 import { encode } from 'app/jobs-hiring/interpreters/encoder'
 import { useRouter } from 'next/navigation'
-import {SortContext} from './SortProvider'
+import { SortContext } from './SortProvider'
 
 const SearchArea = (props: any) => {
-  const  {sort, setSort} = useContext(SortContext)
+  const { sort, setSort } = useContext(SortContext)
   const { config, preferences, preferenceId } = props
   const dispatch = useDispatch()
   const searchParams: any = useSearchParams() ?? {}
@@ -71,11 +71,10 @@ const SearchArea = (props: any) => {
     searchParams.get('verifiedCompany') ? [searchParams.verifiedCompany] : []
   )
   const [salaries, setSelaries] = useState(searchParams.get('salary')?.split(',') ?? [])
-  const salaryOptions =
-    config.filters?.salary_range_filters?.map?.((item) => ({
-      value: item?.['seo-value'],
-      label: item.value
-    })) ?? []
+  const salaryOptions = config.filters?.salary_range_filters?.map?.((item) => ({
+    value: item?.['seo-value'],
+    label: item.value
+  })) ?? []
   const [isFixed, setIsfixed] = useState(false)
   useEffect(() => {
     const listener = () => {
@@ -88,11 +87,10 @@ const SearchArea = (props: any) => {
 
   // const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
   const [jobTypes, setJobtypes] = useState(searchParams?.jobType ?? [])
-  const jobTypeList =
-    config?.inputs?.job_types?.map?.((item) => ({
-      value: item?.['seo-value'],
-      label: item.value
-    })) ?? []
+  const jobTypeList = config?.inputs?.job_types?.map?.((item) => ({
+    value: item?.['seo-value'],
+    label: item.value
+  })) ?? []
   const [suggestionList, handleSuggestionSearch, addSearchHistory, searchLoading] = useSuggest() as any[]
 
   const filterParams = useMemo(() => {
@@ -182,7 +180,7 @@ const SearchArea = (props: any) => {
               Search{' '}
             </MaterialButton>
           </div>
-          <PreferenceSelector preferences={preferences} preferenceId={preferenceId} config={config}/>
+          <PreferenceSelector preferences={preferences} preferenceId={preferenceId} config={config} />
           <div className={styles.filters}>
             <Multiple
               label='Qualification'
@@ -255,7 +253,7 @@ const SearchArea = (props: any) => {
           </div>
         </div>
       </ThemeProvider>
-      
+
     </div>
   )
 }

@@ -13,6 +13,7 @@ import preferences from './interpreters/preferences'
 import MobileHeader from './components/mobileHeader'
 import SortFilter from './components/searchForms/sortFilter'
 import SortProvider from './components/searchForms/SortProvider'
+import Footer from 'components/Footer'
 const configs = getConfigs([
     ['inputs', 'location_lists'],
     ['inputs', 'main_functions'],
@@ -44,14 +45,12 @@ const Main = (props: any) => {
                 <MobileHeader />
                 <SortProvider>
                     <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
-
                         <SearchForm
                             searchParams={props.searchParams ?? null}
                             preferenceId={preferenceId}
                             preferences={preferences}
                             config={config}
                         />
-
                     </div>
                     <SortFilter />
                 </SortProvider>
@@ -71,6 +70,7 @@ const Main = (props: any) => {
             {/* @ts-expect-error Async Server Component */}
             <div className={styles.right}><MainRight /></div>
         </div>
+        <Footer />
     </LoadingProvider>
 }
 

@@ -13,7 +13,7 @@ const Table = (props: any) => {
     const { jobs = [], page, totalPages, preferences, preferenceId } = props
     // jobs = [], page, totalPages, searchValues, config
     const preference = preferences?.find?.(item => item.id === +preferenceId)
-    const recruiterIds =  jobs.map(job => job.recruiter_id)
+    const recruiterIds = jobs.map(job => job.recruiter_id)
     return <ChatInfoProvider recruiterIds={recruiterIds}>
         <Loader>
             <div className={styles.container}>
@@ -35,13 +35,13 @@ const Table = (props: any) => {
     </ChatInfoProvider>
 }
 
-export default tableIp(serverDataScript()
-    .chain(props => {
-        const { preferences } = props
-        if (preferences?.length) {
-            return buildComponentScript(props, Table)
-        } else {
-            return buildComponentScript({}, NoPreference)
-        }
-    })).run
-    // .chain(props => buildComponentScript(props, Table))).run
+
+export default props => {
+    const { preferences } = props
+    if (preferences?.length) {
+        return tableIp(serverDataScript()
+            .chain(props => buildComponentScript(props, Table))).run(props)
+    } else {
+        return tableIp(buildComponentScript({}, NoPreference)).run(props)
+    }
+}
