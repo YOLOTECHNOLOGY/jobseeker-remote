@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 const Item = (props: any) => {
     const { title, content, type } = props
-    return <Link prefetch={false} href={'jobs-mine/communicated?type=' + type} className={styles.item}>
+    return <Link prefetch={false} href={'my-jobs/communicated?type=' + type} className={styles.item}>
         <div className={styles.itemContent}>{content}</div>
         <div className={styles.itemTitle}>{title}</div>
     </Link>

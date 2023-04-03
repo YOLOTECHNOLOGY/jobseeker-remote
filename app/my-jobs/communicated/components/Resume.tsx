@@ -166,11 +166,11 @@ const Resume = ({
         </button>
       </div>
       <ul className={styles.type}>
-        <li><Link href={'jobs-mine/communicated'}> Communicated ( {noOfChats} )</Link></li>
-        <li><Link href={'jobs-mine/communicated?type=exchanged'}> Exchanged ( {noOfAppliedJobs} )</Link></li>
-        <li><Link href={'jobs-mine/communicated?type=interview'}> Saved ( {noOfSavedJobs} )</Link></li>
-        <li><Link href={'jobs-mine/communicated?type=saved'}> Interview ( {noOfInterviews} )</Link></li>
-        <li><Link href={'jobs-mine/communicated?type=viewed'}> Viewed ( {noOfViewedJobs} )</Link></li>
+        <li><Link href={'my-jobs/communicated'}> Communicated ( {noOfChats} )</Link></li>
+        <li><Link href={'my-jobs/communicated?type=exchanged'}> Exchanged ( {noOfAppliedJobs} )</Link></li>
+        <li><Link href={'my-jobs/communicated?type=interview'}> Saved ( {noOfSavedJobs} )</Link></li>
+        <li><Link href={'my-jobs/communicated?type=saved'}> Interview ( {noOfInterviews} )</Link></li>
+        <li><Link href={'my-jobs/communicated?type=viewed'}> Viewed ( {noOfViewedJobs} )</Link></li>
       </ul>
 
       <div className={styles.upload}>

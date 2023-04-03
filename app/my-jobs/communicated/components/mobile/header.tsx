@@ -87,7 +87,7 @@ const Header = ({
             <div className={styles.headerTop}
                 style={{ marginBottom: (tabValue == 'interested' || tabValue == 'viewedMe') ? '14px' : '10px' }}
             >
-                <Link prefetch={false} href={"/jobs-mine"} className={styles.backLink}>
+                <Link prefetch={false} href={"/my-jobs"} className={styles.backLink}>
                     <ArrowBackIosRoundedIcon className={styles.back} style={{ fontSize: '28px' }} />
                     <span className={styles.bactText}>Back</span>
                 </Link>
