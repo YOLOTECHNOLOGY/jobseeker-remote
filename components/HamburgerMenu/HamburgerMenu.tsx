@@ -122,7 +122,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     </Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} to='/my-jobs/saved?page=1' title='My Jobs'>
+                <Link className={styles.defaultLink} to='/my-jobs?page=1' title='My Jobs'>
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle={textStyle}>My Jobs</Text>
                   </li>

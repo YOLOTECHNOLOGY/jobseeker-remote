@@ -337,7 +337,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                 value='saved'
                 label={
                   <Link
-                    to={'/my-jobs/saved?page=1&size=10'}
+                    to={'/old-my-jobs/saved?page=1&size=10'}
                     className={classNamesCombined([styles.myJobsMenuLink, isSavedCategoryActive])}
                   >
                     <Text bold textStyle='lg'>

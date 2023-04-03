@@ -279,7 +279,7 @@ const ProtectedHeader = () => {
           <div className={styles.headerMenu} ref={ref}>
             <ul className={styles.headerMenuList}>
               <li className={styles.headerMenuItem}>
-                <Link to='/my-jobs/saved?page=1' className={styles.headerMenuLink}>
+                <Link to='/my-jobs?page=1' className={styles.headerMenuLink}>
                   <Text textStyle='base'>My Jobs</Text>
                 </Link>
               </li>
