@@ -18,11 +18,11 @@ interface StyledTabsProps {
 const tab = [
     {
         tab: 'Recommended',
-        value: '1',
+        value: '2',
     },
     {
         tab: 'Latest job',
-        value: '2',
+        value: '1',
     }
 ]
 
