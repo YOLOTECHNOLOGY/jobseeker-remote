@@ -103,7 +103,7 @@ const tabListInterstedArr = ['interested','viewedMe']
 const MainLeft = (props:any) => {
   const {type} = props.searchParams
   console.log(props,777)
-  const [tabValue, setTabValue] = useState<string>('communicated')
+  const [tabValue, setTabValue] = useState<string>('')
   const [data, setData] = useState<Array<any>>([])
   const [tabList, setTabList] = useState<Array<any>>([])
   const [tabChildren, setTabChildren] = useState<Array<any>>([])
@@ -142,6 +142,7 @@ const MainLeft = (props:any) => {
        setTabList(tabListIntersted)
        setTabValue(type)
     }else{
+      setTabValue(type || 'communicated')
       setTabList(initTabList);
     }
   }, [type])

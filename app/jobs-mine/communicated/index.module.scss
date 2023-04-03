@@ -549,6 +549,13 @@
       line-height: 24px;
       color: #353535;
       font-weight: 400;
+      a{
+        display: block;
+        color: #353535;
+        &:hover{
+          color: #136FD3;
+        }
+      }
     }
   }
 
@@ -627,6 +634,7 @@
   }
 
   .cardList {
+    display: block;
     padding: 14px 16px 13px;
 
     &:hover {

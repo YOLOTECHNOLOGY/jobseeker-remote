@@ -1,4 +1,4 @@
-"use client"
+
 import React from "react";
 import styles from '../index.module.scss';
 
@@ -9,11 +9,12 @@ const InterstedCard = ({item}:any) => {
     const  { name } = item?.company || {};
     const {
       job_title: jobTitle,
-      salary_range_value: salaryRangeValue
+      salary_range_value: salaryRangeValue,
+      job_url:jobUrl
      }  = item?.job || {}
 
     return (
-       <div className={styles.cardList}>
+       <a href={jobUrl} className={styles.cardList}>
           <div className={styles.name}>
           <img src={avatar} />
           <p>{userName}</p>
@@ -23,7 +24,7 @@ const InterstedCard = ({item}:any) => {
           <p className={styles.jobType}>{jobTitle}</p>
           <span className={styles.salary}>{salaryRangeValue}</span>
           </div>
-       </div>
+       </a>
     )
 
 }
