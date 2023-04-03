@@ -86,7 +86,8 @@ const GetStarted = () => {
             router.push('/')
           }
         })
-        .catch(({ response: { data, status } }) => {
+        .catch(result => {
+          const { data, status } = result.response ?? {}
           if (status == 400 || data?.errors?.error[0] === 'Invalid token') {
             removeCookie('accessToken')
             window.location.reload()

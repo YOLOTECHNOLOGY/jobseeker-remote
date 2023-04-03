@@ -104,7 +104,8 @@ const App = (props: AppProps) => {
         .then(() => {
           //
         })
-        .catch(({ response: { data, status } }) => {
+        .catch((result) => {
+          const { data, status }  = result.response ?? {}
           if (status == 400 || data?.errors?.error[0] === 'Invalid token') {
             if (router.pathname !== '/get-started') {
               removeCookie('accessToken')
