@@ -9,7 +9,6 @@ import useNotSuitable from './hooks'
 import NotSuitableModal from './notSuitable'
 import classNames from 'classnames'
 
-
 const JobCard = (props: any) => {
     const {
         job_title,
