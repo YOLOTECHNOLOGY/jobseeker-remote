@@ -107,9 +107,9 @@ const SearchArea = (props: any) => {
       companySizes,
       sort,
       page,
+      preferenceId,
     })
-  }, [qualification, workExperience, companySizes, industry, salaries, jobTypes, sort])
-  console.log({ filterParams })
+  }, [qualification, workExperience, companySizes, industry, salaries, jobTypes, sort, preferenceId])
 
   const firstRender = useFirstRender()
   const reload = useCallback(() => {
@@ -123,7 +123,7 @@ const SearchArea = (props: any) => {
   useEffect(() => {
     reloadRef.current = reload
   }, [reload])
-  useEffect(reload, [filterParams])
+  useEffect(reload, [qualification, workExperience, companySizes, industry, salaries, jobTypes, sort,push])
 
   return (
     <div>

@@ -28,7 +28,9 @@ const SearchArea = (props: any) => {
     }, [preferences])
     const [selectedPreferenceId, setSelectedPreferenceId] = useState(+preferenceId)
     useEffect(() => {
-        setSelectedPreferenceId(+preferenceId)
+        if(preferenceId){
+            setSelectedPreferenceId(+preferenceId)
+        }
     }, [preferenceId])
     const dispatch = useDispatch()
     useEffect(() => {
