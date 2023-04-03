@@ -23,7 +23,9 @@ const ServerContainer = async () => {
         no_of_chats,
         no_of_interviews,
         no_of_saved_jobs,
-        no_of_viewed_jobs,
+        // no_of_viewed_jobs,
+        no_of_saved_me_recruiters,
+        no_of_viewed_me_recruiters
     } = numbers
 
     const firstList = [
@@ -33,8 +35,8 @@ const ServerContainer = async () => {
         { title: 'Interview', content: no_of_interviews, type: 'interview' },
     ]
     const secondList = [
-        { title: 'Interested in me', content: '- -', type: 'interested' },
-        { title: 'Who viewed me', content: no_of_viewed_jobs, type: 'viewed' },
+        { title: 'Interested in me', content: no_of_saved_me_recruiters, type: 'interested' },
+        { title: 'Who viewed me', content: no_of_viewed_me_recruiters, type: 'viewed' },
     ]
     return <Containers
         first={firstList.map(data => <Item {...data} key={data.title} />)}
