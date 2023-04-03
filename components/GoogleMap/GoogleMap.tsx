@@ -26,6 +26,8 @@ interface Props {
   fullscreenControl: boolean
   streetViewControl: boolean
   clickable?: boolean
+  infoWindow?: string
+  zoom?: number
 }
 
 /**
@@ -38,6 +40,7 @@ interface Props {
  * @param {boolean} fullscreenControl 全屏控件的启用/停用状态
  * @param {boolean} streetViewControl 是否显示小黄人
  * @param {boolean} clickable 是否可以点击
+ * @param {string} infoWindow 标点上面显示的信息,传值就等于open
  *
  * @returns
  */
@@ -53,7 +56,9 @@ const GoogleMap = ({
   zoomControl,
   fullscreenControl,
   streetViewControl,
-  clickable = true
+  clickable = true,
+  infoWindow,
+  zoom = 16
 }: Props) => {
   let maerker
   const search = useRef<any>()
@@ -75,14 +80,15 @@ const GoogleMap = ({
 
       // @ts-ignore
       const map = new google.maps.Map(mapWrapperNode, {
-        center: { lat: lat ? lat : 14.59889, lng: lng ? lng : 120.98417 },
-        zoom: 16,
+        center: { lat: lat ? Number(lat) : 14.59889, lng: lng ? Number(lng) : 120.98417 },
+        zoom,
         // disableDefaultUI: true,
         // fullscreenControl: true,
         zoomControl: zoomControl,
         gestureHandling: gestureHandling,
         fullscreenControl,
-        streetViewControl
+        streetViewControl,
+        controlSize: 25
       })
 
       map.setClickableIcons(clickable)
@@ -138,16 +144,18 @@ const GoogleMap = ({
       map: map
     })
 
-    // @ts-ignore
-    const infowindow = new google.maps.InfoWindow({
-      content: 'sdfsdfsdfsdf',
-      position: maerker
-    })
+    if (infoWindow) {
+      // @ts-ignore
+      const infowindow = new google.maps.InfoWindow({
+        content: infoWindow,
+        position: maerker
+      })
 
-    infowindow.open({
-      anchor: maerker,
-      map
-    })
+      infowindow.open({
+        anchor: maerker,
+        map
+      })
+    }
   }
 
   const searchPlace = (ev: any, map: any) => {
