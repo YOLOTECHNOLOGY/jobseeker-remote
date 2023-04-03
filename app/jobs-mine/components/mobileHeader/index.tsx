@@ -4,13 +4,14 @@ import Image from 'next/image'
 import { cookies } from 'next/headers'
 import Containers from './containers'
 import { fetchPersonalInfo } from 'store/services/jobs/fetchJobsCommunicated'
+import Link from 'next/link'
 
 const Item = (props: any) => {
-    const { title, content } = props
-    return <div className={styles.item}>
+    const { title, content, type } = props
+    return <Link prefetch={false} href={'jobs-mine/communicated?type=' + type} className={styles.item}>
         <div className={styles.itemContent}>{content}</div>
         <div className={styles.itemTitle}>{title}</div>
-    </div>
+    </Link>
 }
 
 const ServerContainer = async () => {
@@ -26,14 +27,14 @@ const ServerContainer = async () => {
     } = numbers
 
     const firstList = [
-        { title: 'Communicated', content: no_of_chats },
-        { title: 'Exchanged', content: no_of_applied_jobs },
-        { title: 'Saved', content: no_of_saved_jobs },
-        { title: 'Interview', content: no_of_interviews },
+        { title: 'Communicated', content: no_of_chats, type: 'communicated' },
+        { title: 'Exchanged', content: no_of_applied_jobs, type: 'exchanged' },
+        { title: 'Saved', content: no_of_saved_jobs, type: 'saved' },
+        { title: 'Interview', content: no_of_interviews, type: 'interview' },
     ]
     const secondList = [
-        { title: 'Interested in me', content: '- -' },
-        { title: 'Who viewed me', content: no_of_viewed_jobs },
+        { title: 'Interested in me', content: '- -', type: 'interested' },
+        { title: 'Who viewed me', content: no_of_viewed_jobs, type: 'viewed' },
     ]
     return <Containers
         first={firstList.map(data => <Item {...data} key={data.title} />)}
