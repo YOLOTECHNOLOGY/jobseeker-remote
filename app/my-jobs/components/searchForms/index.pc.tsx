@@ -65,11 +65,15 @@ const SearchArea = (props: any) => {
     searchParams.get('workExperience')?.split?.(',') ?? []
   )
   const workExperienceList = config.inputs.xp_lvls.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
-  const [industry, setIndustry] = useState(searchParams.industry ?? [])
-  const industryList = config.inputs.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
-  const [verifiedCompany, setVerifiedCompany] = useState(
-    searchParams.get('verifiedCompany') ? [searchParams.verifiedCompany] : []
+  const [industry, setIndustry] = useState(
+    searchParams.get('industry')?.split?.(',') ?? []
   )
+  const industryList = config.inputs.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+  const [companySizes, setCompanySizes] = useState(
+    searchParams.get('companySizes')?.split?.(',') ?? []
+  )
+  const companySizeList = config.inputs.company_sizes.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+
   const [salaries, setSelaries] = useState(searchParams.get('salary')?.split(',') ?? [])
   const salaryOptions = config.filters?.salary_range_filters?.map?.((item) => ({
     value: item?.['seo-value'],
@@ -100,11 +104,11 @@ const SearchArea = (props: any) => {
       workExperience,
       jobType: jobTypes,
       industry,
-      verifiedCompany,
+      companySizes,
       sort,
       page,
     })
-  }, [qualification, workExperience, verifiedCompany, industry, salaries, jobTypes, sort])
+  }, [qualification, workExperience, companySizes, industry, salaries, jobTypes, sort])
   console.log({ filterParams })
 
   const firstRender = useFirstRender()
@@ -220,16 +224,11 @@ const SearchArea = (props: any) => {
             />
             <Multiple
               label='Company'
-              value={verifiedCompany}
-              options={[
-                {
-                  value: 'verified-companies',
-                  label: 'View verified companies'
-                }
-              ]}
+              value={companySizes}
+              options={companySizeList}
               className={styles.filterItems}
-              onSelect={setVerifiedCompany}
-              defaultValue={verifiedCompany}
+              onSelect={setCompanySizes}
+              defaultValue={companySizes}
             />
             <Button
               className={styles.clearButton}
@@ -243,7 +242,7 @@ const SearchArea = (props: any) => {
                 setPage('1')
                 setQualification([])
                 setWorkExperience([])
-                setVerifiedCompany([])
+                setCompanySizes([])
                 setJobtypes([])
                 setIndustry([])
               }}

@@ -48,6 +48,8 @@ export default registInterpreter(command =>
             const [salaryFrom, salaryTo] = handleSalary(searchParams.salary?.split?.(',') ?? [])
             const workExperienceList = config.inputs.xp_lvls
             const jobTypeList = config.inputs.job_types
+            const companySizeList = config.inputs.company_sizes
+
             const queriyParams = {
                 jobseekerPrefId: preferenceId,
                 page: searchParams.page ?? 1,
@@ -59,10 +61,10 @@ export default registInterpreter(command =>
                 job_types: searchParams.jobType?.split?.(',')?.map?.(key => jobTypeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
                 xp_lvls: searchParams.workExperience?.split?.(',')?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
                 degrees: searchParams.qualification?.split?.(',')?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-                is_company_verified: Boolean(searchParams.verifiedCompany),
+                // is_company_verified: Boolean(searchParams.verifiedCompany),
+                company_sizes: searchParams.companySizes?.split?.(',')?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
             }
             console.log({ queriyParams, context })
-
             const token = cookies().get('accessToken')
             return fetchJobsForYouLogin(queriyParams, token.value)
                 .then(result => ({

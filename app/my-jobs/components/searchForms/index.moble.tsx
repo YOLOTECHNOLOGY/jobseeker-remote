@@ -47,12 +47,7 @@ const SearchArea = (props: any) => {
                 value: item?.['seo-value'],
                 label: item.value
             })) ?? [],
-            verifiedCompany: [
-                {
-                    value: 'verified-companies',
-                    label: 'View verified companies'
-                }
-            ]
+            companySizes: config.inputs.company_sizes.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
         }
     }, [config])
     const page = searchParams.page ?? '1'
@@ -65,12 +60,12 @@ const SearchArea = (props: any) => {
         qualification: searchParams?.qualification ?? null,
         salary: searchParams?.salary ?? null,
         jobTypes: searchParams?.jobType ?? null,
-        verifiedCompany: searchParams?.verifiedCompany ?? null,
+        companySizes: searchParams?.companySizes ?? null,
         industry: searchParams?.industy ?? null
     }))
 
     const filterParams = useMemo(() => {
-        return filter(a => a)({
+        return filter(a => a?.length)({
             // location: [location?.['seo_value']].filter(a => a),
             sort: sort,
             page: page,
@@ -78,7 +73,6 @@ const SearchArea = (props: any) => {
             ...moreData
         })
     }, [moreData, location, sort, selectedPreferenceId])
-    console.log({ filterParams, searchParams })
     const router = useRouter()
     const firstRender = useFirstRender()
     const reload = useCallback(() => {
