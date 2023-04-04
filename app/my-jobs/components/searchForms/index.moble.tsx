@@ -146,7 +146,7 @@ const SearchArea = (props: any) => {
                             value={moreData}
                             options={moreOptions}
                             style={{ width: '100%', height: '30px', marginLeft: 4 }}
-                            labels={[]}
+                            labels={['Qualification', 'Work Exprerience', 'Industry', 'Salary', 'Job Type', 'Company Sizes']}
                             label='Filters'
                             onSelect={setMoreData}
                         />

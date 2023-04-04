@@ -58,7 +58,7 @@ export default registInterpreter(command =>
                 salary_from: salaryFrom,
                 salary_to: salaryTo,
                 company_industries: searchParams.industry?.split?.(',')?.map?.(key => industryList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-                job_types: searchParams.jobType?.split?.(',')?.map?.(key => jobTypeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
+                job_types: searchParams.jobTypes?.split?.(',')?.map?.(key => jobTypeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
                 xp_lvls: searchParams.workExperience?.split?.(',')?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
                 degrees: searchParams.qualification?.split?.(',')?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
                 // is_company_verified: Boolean(searchParams.verifiedCompany),
