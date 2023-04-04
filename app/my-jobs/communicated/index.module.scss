@@ -457,7 +457,6 @@
   .btn {
     width: 216px;
     border: 2px solid #136FD3;
-    ;
     border-radius: 10px;
     font-weight: 700;
     font-size: 14px;
@@ -473,10 +472,9 @@
     transition: .3s;
     cursor: pointer;
     overflow: hidden;
-
     a {
       display: block;
-      line-height: 44px;
+      line-height: 42px;
       color: #136FD3;
     }
 

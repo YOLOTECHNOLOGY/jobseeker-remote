@@ -174,8 +174,8 @@ const Resume = ({
       <ul className={styles.type}>
         <li><Link href={'my-jobs/communicated'}> Communicated ( {noOfChats} )</Link></li>
         <li><Link href={'my-jobs/communicated?type=exchanged'}> Exchanged ( {noOfAppliedJobs} )</Link></li>
-        <li><Link href={'my-jobs/communicated?type=interview'}> Saved ( {noOfSavedJobs} )</Link></li>
-        <li><Link href={'my-jobs/communicated?type=saved'}> Interview ( {noOfInterviews} )</Link></li>
+        <li><Link href={'my-jobs/communicated?type=saved'}> Saved ( {noOfSavedJobs} )</Link></li>
+        <li><Link href={'my-jobs/communicated?type=interview'}> Interview ( {noOfInterviews} )</Link></li>
         <li><Link href={'my-jobs/communicated?type=viewed'}> Viewed ( {noOfViewedJobs} )</Link></li>
       </ul>
 
