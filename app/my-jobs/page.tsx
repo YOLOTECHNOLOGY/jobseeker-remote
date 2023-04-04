@@ -36,7 +36,6 @@ const configs = getConfigs([
 
 
 const Main = (props: any) => {
-    console.log({ props })
     const { preferences, searchParams, config } = props
     const preferenceId = searchParams.preferenceId || preferences?.[0]?.id
     return <LoadingProvider >

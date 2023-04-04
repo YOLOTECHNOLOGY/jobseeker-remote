@@ -67,7 +67,7 @@
 .main {
     display: flex;
     flex-direction: row;
-
+    margin-top: 20px;
     .right {
         @include sm {
             display: none;
