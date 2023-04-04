@@ -70,7 +70,7 @@ const SearchArea = (props: any) => {
             workExperience: searchParams?.workExperience ?? null,
             qualification: searchParams?.qualification ?? null,
             salary: searchParams?.salary ?? null,
-            jobTypes: searchParams?.jobType ?? null,
+            jobTypes: searchParams?.jobTypes ?? null,
             companySizes: searchParams?.companySizes ?? null,
             industry: searchParams?.industry ?? null
         }))

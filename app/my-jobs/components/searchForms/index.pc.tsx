@@ -90,7 +90,7 @@ const SearchArea = (props: any) => {
   // }, [])
 
   // const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
-  const [jobTypes, setJobtypes] = useState(searchParams?.jobType ?? [])
+  const [jobTypes, setJobtypes] = useState(searchParams?.jobTypes ?? [])
   const jobTypeList = config?.inputs?.job_types?.map?.((item) => ({
     value: item?.['seo-value'],
     label: item.value
