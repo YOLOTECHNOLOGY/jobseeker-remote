@@ -28,7 +28,7 @@ const ServerContainer = async () => {
     ]
     const secondList = [
         { title: 'Interested in me', content: no_of_saved_me_recruiters, type: 'interested' },
-        { title: 'Who viewed me', content: no_of_viewed_me_recruiters, type: 'viewed' },
+        { title: 'Who viewed me', content: no_of_viewed_me_recruiters, type: 'viewedMe' },
     ]
     return <Containers
         firstList={firstList}
