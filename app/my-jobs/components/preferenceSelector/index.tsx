@@ -32,7 +32,7 @@ const PreferenceSelector = (props: any) => {
     }, [preferenceId])
     const { push, loading: pushing } = useContext(LoadingContext)
     const busy = useMemo(() => {
-        return loading || pushing
+        return loading // || pushing
     }, [loading, pushing])
     const [showModal, setShowModal] = useState(false)
     return <div className={styles.container}>

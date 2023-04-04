@@ -6,23 +6,24 @@ import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 import Tooltip from '@mui/material/Tooltip';
 import Link from 'next/link';
-import {transDate} from 'helpers/utilities'
+import { transDate } from 'helpers/utilities'
+// import useModalInterview from 'app/hooks/modalInterview'
 
-const  jobseekerDisplayStatusObject = {
-  "Pending":'#D2030F',
-  "Accepted":'#136FD3',
-  "Upcoming":'#136FD3',
-  "In progress":'#136FD3',
-  "Declined":'#707070',
-  "Cancelled":'#707070',
-  "Not accepted":'#707070',
+const jobseekerDisplayStatusObject = {
+  "Pending": '#D2030F',
+  "Accepted": '#136FD3',
+  "Upcoming": '#136FD3',
+  "In progress": '#136FD3',
+  "Declined": '#707070',
+  "Cancelled": '#707070',
+  "Not accepted": '#707070',
   "Completed": "#0EBD5C",
-  "Not checked in":'#D2030F;',
+  "Not checked in": '#D2030F;',
 };
 
 
 const JobCardInterview = (props: any) => {
-  const {data } = props
+  const { data } = props
   const {
     interviewed_at: interviewedAt,
     full_address: fullAddress,
@@ -38,7 +39,7 @@ const JobCardInterview = (props: any) => {
     status_key: status,
     external_apply_url: externalApplyUrl,
     is_exists: isExists,
-    job_url:jobUrl
+    job_url: jobUrl
   } = data.job || {};
   const {
     avatar,
@@ -49,23 +50,29 @@ const JobCardInterview = (props: any) => {
   const { job_title: workJobTitle } = data.recruiter?.work_experience || {};
 
   const [loading, chatNow, modalChange] = useChatNow(props?.data || {})
- 
+  // const [modalInterview, interviewLoading] = useModalInterview()
+  // console.log({ data })
   return (
     <>
-      <div className={`${styles.detail} ${styles.interested} ${status === 'closed' ? styles.jobClosed : null}`} >
+      <div
+        // onClick={()=>modalInterview(data.job.chat_id)}
+        className={`${styles.detail} 
+      ${styles.interested} 
+      ${status === 'closed' ? styles.jobClosed : null}`}
+      >
         <div className={styles.header}>
           <div className={styles.headerInfo}>
             <img src={avatar} className={styles.avator} />
             <span className={styles.name}>
               {fullName}
-              {fullName && workJobTitle ?  <span className={styles.nameLine}> |</span> : null}  
+              {fullName && workJobTitle ? <span className={styles.nameLine}> |</span> : null}
               {workJobTitle}
               {
                 (workJobTitle || fullName) && phoneNum ? <span className={styles.nameLine}> |</span> : null
               }
               {phoneNum}
             </span>
-            <span className={styles.jobrStatus} style={{color : jobseekerDisplayStatusObject[jobseekerDisplayStatus] || '#136FD3'}}>{jobseekerDisplayStatus}</span>
+            <span className={styles.jobrStatus} style={{ color: jobseekerDisplayStatusObject[jobseekerDisplayStatus] || '#136FD3' }}>{jobseekerDisplayStatus}</span>
           </div>
           <div className={styles.operator}>
             {
@@ -102,14 +109,14 @@ const JobCardInterview = (props: any) => {
             <img src={logoUrl} className={styles.logo} alt={name} />
             <div className={styles.box}>
               <div className={styles.developer}>
-                <Link  href={jobUrl || ''} className={styles.title}>{jobTitle}</Link>
+                <Link href={jobUrl || ''} className={styles.title}>{jobTitle}</Link>
                 <p className={styles.salary}>{salaryRangeValue}</p>
               </div>
               <p className={styles.companyName}>{name}</p>
             </div>
           </div>
           <div className={styles.rightContent}>
-            <p className={styles.time}><span>Interview Time</span>: {transDate(interviewedAt,'all')}</p>
+            <p className={styles.time}><span>Interview Time</span>: {transDate(interviewedAt, 'all')}</p>
             <Tooltip title={fullAddress || ''} placement="top">
               <p className={`${styles.time} ${styles.address}`}><span>Address</span>: {fullAddress} </p>
             </Tooltip>
