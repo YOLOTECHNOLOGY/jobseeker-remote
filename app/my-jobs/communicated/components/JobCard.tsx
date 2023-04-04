@@ -101,7 +101,7 @@ const Card = ({
               : <div className={styles.noData}>
                 <Image className={styles.noDataImg} src={JoinUs} alt='暂无数据' width={362} height={247} />
                 <button className={styles.seeJob}>
-                  <Link href="/jobs-hiring/manila-jobs?page=1">
+                  <Link href="/my-jobs?page=1">
                     See job reco
                   </Link>
                 </button>
