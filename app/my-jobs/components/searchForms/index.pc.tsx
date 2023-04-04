@@ -236,7 +236,7 @@ const SearchArea = (props: any) => {
               onClick={() => {
                 setLocation(null)
                 setSearchValue('')
-                setSort('1')
+                setSort('2')
                 setJobtypes([])
                 setSelaries([])
                 setPage('1')
