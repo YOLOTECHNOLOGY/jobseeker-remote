@@ -199,11 +199,11 @@ const Resume = ({
             ) : <p className={styles.noMore}>No resume, upload now!</p>
           }
 
-          <button className={styles.btn}>
+          {!(resumeData?.length >= 3) && <button disabled={resumeData?.length >= 3} className={styles.btn}>
             <Link href="/manage-profile?tab=resume">
               Upload resume
             </Link>
-          </button>
+          </button>}
         </div>
       </div>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}
