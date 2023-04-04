@@ -5,7 +5,7 @@ const Provider = SortContext.Provider
 
 const SortProvider = ({ children }: any) => {
 
-    const [sort, setSort] = useState('1')
+    const [sort, setSort] = useState('2')
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setSort(newValue)
     }
