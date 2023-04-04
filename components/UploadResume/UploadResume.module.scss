@@ -1,5 +1,5 @@
-@import 'styles/variable.scss';
-@import 'styles/mixins.scss';
+@import "styles/variable.scss";
+@import "styles/mixins.scss";
 
 .uploadResumeField {
   width: 100%;
@@ -57,11 +57,19 @@
         text-overflow: ellipsis;
         line-height: 22px;
       }
+      .resumeTime {
+        font-weight: 400;
+        color: #707070;
+        font-size: 14px;
+        line-height: 24px;
+      }
     }
 
     > .trashDiv {
       width: auto;
-      cursor: pointer;
+      &_icon {
+        cursor: pointer;
+      }
     }
 
     .disabledDelResume {
