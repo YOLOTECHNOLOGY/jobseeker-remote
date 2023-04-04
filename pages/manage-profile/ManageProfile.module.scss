@@ -1,11 +1,11 @@
-@import 'styles/variable.scss';
-@import 'styles/mixins.scss';
+@import "styles/variable.scss";
+@import "styles/mixins.scss";
 
 .sectionContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: stretch;
   width: 100%;
   padding: 24px;
   height: max-content;
@@ -27,7 +27,7 @@
   justify-content: space-between;
   align-items: center;
 
-  &>* {
+  & > * {
     display: flex;
   }
 }
@@ -37,7 +37,7 @@
   display: flex;
   flex-direction: column;
 
-  &>* {
+  & > * {
     display: flex;
   }
 
@@ -47,7 +47,7 @@
     justify-content: space-between;
     align-items: center;
 
-    &>* {
+    & > * {
       display: flex;
     }
   }
@@ -76,7 +76,7 @@
       // align-items:stretch;
     }
 
-    &>* {
+    & > * {
       display: flex;
     }
 
@@ -84,7 +84,7 @@
       flex-direction: row;
       align-items: center;
 
-      &>img {
+      & > img {
         display: flex;
         margin-right: 8px;
       }
@@ -118,7 +118,7 @@
       &:not(:last-child) {
         &::after {
           position: absolute;
-          content: '';
+          content: "";
           height: 18px;
           width: 1px;
           background-color: $lightgrey;
@@ -165,7 +165,6 @@
   }
 }
 
-
 .jobPreferencesSection {
   &Button {
     width: 250px;
@@ -182,7 +181,7 @@
     &List {
       list-style: none;
 
-      &>* {
+      & > * {
         margin-top: 16px;
         display: flex;
       }
@@ -238,6 +237,11 @@
   display: flex;
   flex-direction: row;
 }
+.resumeTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 .resumeTemplateItem {
   width: 381px;
@@ -278,7 +282,7 @@
     top: 0px;
   }
 
-  &>* {
+  & > * {
     display: flex;
   }
 
@@ -287,7 +291,7 @@
   // }
 
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 0;

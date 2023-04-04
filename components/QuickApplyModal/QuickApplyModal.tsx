@@ -322,7 +322,7 @@ const QuickApplyModal = ({
         <div className={styles.quickApplyFormField}>
           <UploadResume
             title='resume'
-            resume={resume}
+            resumes={resume}
             handleDelete={handleDeleteResume}
             handleUpload={handleUploadResume}
           />

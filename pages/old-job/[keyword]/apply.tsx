@@ -9,13 +9,13 @@ import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 
 /* Components */
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Chip from '@mui/material/Chip';
-import DoneIcon from '@mui/icons-material/Done';
-import AddIcon from '@mui/icons-material/Add';
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Chip from '@mui/material/Chip'
+import DoneIcon from '@mui/icons-material/Done'
+import AddIcon from '@mui/icons-material/Add'
 import { Alert } from '@mui/material'
 import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
 import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
@@ -42,35 +42,39 @@ import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 import styles from './ApplyJob.module.scss'
 
 /* Images */
-import {
-  DisclaimerIcon,
-  MobileIcon,
-  MailIcon,
-  ProfileIcon
-} from 'images'
+import { DisclaimerIcon, MobileIcon, MailIcon, ProfileIcon } from 'images'
 interface IApplyJobDetail {
   jobDetail: any
   userDetail: any
 }
 
-const Job = ({
-  jobDetail,
-  userDetail,
-}: IApplyJobDetail) => {
+const Job = ({ jobDetail, userDetail }: IApplyJobDetail) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
-  const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm()
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    formState: { errors }
+  } = useForm()
 
   const [resume, setResume] = useState(userDetail?.resume || null)
   const [matchedSkills, setMatchedSkills] = useState(jobDetail?.skills || [])
-  const [firstMessage, setFirstMessage] = useState(`Hi there, I am interested to apply for the ${jobDetail?.job_title} position.`)
+  const [firstMessage, setFirstMessage] = useState(
+    `Hi there, I am interested to apply for the ${jobDetail?.job_title} position.`
+  )
   const screeningQuestions = jobDetail?.screening_questions || []
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const errorText = (errorMessage: string) => {
-    return <Text textStyle='sm' textColor='red' tagName='p' className={styles.error}>{errorMessage}</Text>
+    return (
+      <Text textStyle='sm' textColor='red' tagName='p' className={styles.error}>
+        {errorMessage}
+      </Text>
+    )
   }
 
   const handleSkillClick = (key) => {
@@ -78,7 +82,7 @@ const Job = ({
     newMatchedSkills[key].is_qualified = !newMatchedSkills[key].is_qualified
 
     setMatchedSkills(newMatchedSkills)
-  };
+  }
 
   const onError = () => {
     if (!resume) {
@@ -93,9 +97,12 @@ const Job = ({
       screeningAnswers.push(data[`screening_answer_${index}`])
     })
 
-    const userSkills = matchedSkills.filter((skill) => {
-      return skill.is_qualified
-    }).map(skill => skill.value).join(',')
+    const userSkills = matchedSkills
+      .filter((skill) => {
+        return skill.is_qualified
+      })
+      .map((skill) => skill.value)
+      .join(',')
 
     const payload = {
       screeningAnswers: screeningAnswers,
@@ -118,18 +125,20 @@ const Job = ({
 
   const handleUploadResume = (file) => {
     uploadUserResumeService(file)
-    .then((response) => {
-      setResume(response.data.data)
-      clearErrors('resume')
-    })
-    .catch(error => {
-      dispatch(displayNotification({
-        open: true,
-        severity: 'error',
-        message: `Failed to upload resume with error: ${error.message}. 
+      .then((response) => {
+        setResume(response.data.data)
+        clearErrors('resume')
+      })
+      .catch((error) => {
+        dispatch(
+          displayNotification({
+            open: true,
+            severity: 'error',
+            message: `Failed to upload resume with error: ${error.message}. 
         Please contact support@bossjob.com for assistance.`
-      }))
-    })
+          })
+        )
+      })
   }
 
   return (
@@ -137,9 +146,16 @@ const Job = ({
       <div className={styles.jobDetail}>
         <div className={styles.jobDetailSection}>
           <Text textStyle='xl' tagName='h1' bold>
-            Apply to 
-              <Text textColor='primaryBlue' bold> {jobDetail?.company?.name} </Text>
-              as a <Text textColor='primaryBlue' bold> {jobDetail?.job_title}</Text>
+            Apply to
+            <Text textColor='primaryBlue' bold>
+              {' '}
+              {jobDetail?.company?.name}{' '}
+            </Text>
+            as a{' '}
+            <Text textColor='primaryBlue' bold>
+              {' '}
+              {jobDetail?.job_title}
+            </Text>
           </Text>
         </div>
 
@@ -153,55 +169,46 @@ const Job = ({
                   className={styles.disclaimerIcon}
                   title='Recruiter will contact you if you are shortlisted for an interview.'
                 />
-                ) : (
+              ) : (
                 <MaterialDesktopTooltip
                   icon={DisclaimerIcon}
                   className={styles.disclaimerIcon}
                   title='Recruiter will contact you if you are shortlisted for an interview.'
                 />
-                )
-              }
+              )}
             </Text>
           </div>
 
           <div className={styles.jobDetailSectionBox}>
             <div className={styles.contactInfo}>
               <div>
-                <img src={ProfileIcon} height='14' width='14' /> 
+                <img src={ProfileIcon} height='14' width='14' />
                 <Text>
-                {userDetail.first_name} {userDetail.last_name}
+                  {userDetail.first_name} {userDetail.last_name}
                 </Text>
               </div>
               <div>
-                <img src={MailIcon} height='14' width='14' /> 
-                <Text>
-                  {userDetail.email}
-                </Text>
+                <img src={MailIcon} height='14' width='14' />
+                <Text>{userDetail.email}</Text>
               </div>
               <div>
-                <img src={MobileIcon} height='14' width='14' /> 
-                <Text>
-                  {userDetail.phone_num}
-                </Text>
+                <img src={MobileIcon} height='14' width='14' />
+                <Text>{userDetail.phone_num}</Text>
               </div>
             </div>
           </div>
-          
+
           <div className={styles.jobDetailSection}>
-            <Accordion 
-              disableGutters={true} 
-              className={styles.skillMatchAccordion}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-              >
+            <Accordion disableGutters={true} className={styles.skillMatchAccordion}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Text textStyle='xl' bold>
                   Your match with the job skills
                 </Text>
               </AccordionSummary>
               <AccordionDetails className={styles.skillMatchAccordionDetails}>
                 <Text>
-                  Add the skill if you have them. It is not necessary to have all the skills, but having rare skill make you unique and outstanding.
+                  Add the skill if you have them. It is not necessary to have all the skills, but
+                  having rare skill make you unique and outstanding.
                 </Text>
                 <div className={styles.skillMatch}>
                   {matchedSkills.length > 0 &&
@@ -213,14 +220,14 @@ const Job = ({
                           label={skill.value}
                           variant={skill.is_qualified ? 'filled' : 'outlined'}
                           color='success'
-                          size='small' 
+                          size='small'
                           onClick={() => {
                             handleSkillClick(i)
                           }}
-                          icon={skill.is_qualified ? <DoneIcon /> : <AddIcon />} 
+                          icon={skill.is_qualified ? <DoneIcon /> : <AddIcon />}
                         />
                       )
-                  })}
+                    })}
                 </div>
               </AccordionDetails>
             </Accordion>
@@ -230,13 +237,13 @@ const Job = ({
         <div className={styles.jobDetailSection}>
           <div className={styles.jobDetailSectionTitle}>
             <Text textStyle='xl' bold>
-              Resume <span style={{ color: 'red'}}>*</span>
+              Resume <span style={{ color: 'red' }}>*</span>
             </Text>
           </div>
           <div className={styles.jobDetailSectionBox}>
             <UploadResume
               title='resume'
-              resume={resume}
+              resumes={resume}
               handleDelete={handleDeleteResume}
               handleUpload={handleUploadResume}
             />
@@ -248,7 +255,7 @@ const Job = ({
         <div className={styles.jobDetailSection}>
           <div className={styles.jobDetailSectionTitle}>
             <Text textStyle='xl' bold>
-              Question from recruiter <span style={{ color: 'red'}}>*</span>
+              Question from recruiter <span style={{ color: 'red' }}>*</span>
             </Text>
           </div>
 
@@ -257,9 +264,9 @@ const Job = ({
               <div className={styles.info}>
                 <div className={styles.question}>
                   <Text>
-                    On Bossjob, you can message with the recruiter in real-time. Impress the recruiter
-                    by sending a message first. (Tips: the reason why you are the perfect fit for this
-                    job)
+                    On Bossjob, you can message with the recruiter in real-time. Impress the
+                    recruiter by sending a message first. (Tips: the reason why you are the perfect
+                    fit for this job)
                   </Text>
                 </div>
                 <div className={styles.answer}>
@@ -268,9 +275,9 @@ const Job = ({
                       ...register('firstMessage', {
                         required: {
                           value: true,
-                          message: 'Please enter a valid answer.',
-                        },
-                      }),
+                          message: 'Please enter a valid answer.'
+                        }
+                      })
                     }}
                     label='Answer'
                     multiline
@@ -303,9 +310,9 @@ const Job = ({
                           ...register(`screening_answer_${i}`, {
                             required: {
                               value: true,
-                              message: 'Please enter a valid answer.',
-                            },
-                          }),
+                              message: 'Please enter a valid answer.'
+                            }
+                          })
                         }}
                         label='Provide your answer here'
                         multiline
@@ -326,7 +333,9 @@ const Job = ({
         <div className={styles.jobDetailSection}>
           <div className={styles.jobDetailSectionBewareMessage}>
             <Alert sx={{ width: '100%' }} severity='info'>
-              Beware of recruitment scams! Do not make any upfront payment or share your financial details with recruiter. If you find any suspicious job ads or recruiters on Bossjob, please report to our support team immediately.
+              Beware of recruitment scams! Do not make any upfront payment or share your financial
+              details with recruiter. If you find any suspicious job ads or recruiters on Bossjob,
+              please report to our support team immediately.
             </Alert>
           </div>
         </div>
@@ -335,27 +344,30 @@ const Job = ({
       <div className={styles.jobDetailSectionFooter}>
         <div className={styles.jobDetailSectionFooterContainer}>
           <div className={styles.jobDetailSectionAction}>
-            <MaterialButton 
-              variant='outlined' 
-              capitalize 
+            <MaterialButton
+              variant='outlined'
+              capitalize
               onClick={() => {
                 router.push(jobDetail.job_url)
               }}
             >
-              <Text textColor='primaryBlue' bold>Cancel</Text>
+              <Text textColor='primaryBlue' bold>
+                Cancel
+              </Text>
             </MaterialButton>
-            <MaterialButton 
-              variant='contained' 
-              isLoading={isSubmitting} 
-              capitalize 
+            <MaterialButton
+              variant='contained'
+              isLoading={isSubmitting}
+              capitalize
               onClick={handleSubmit(onSubmit, onError)}
             >
-              <Text textColor='white' bold>Submit</Text>
+              <Text textColor='white' bold>
+                Submit
+              </Text>
             </MaterialButton>
           </div>
         </div>
       </div>
-      
     </Layout>
   )
 }
@@ -365,21 +377,22 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const { keyword } = query
   const keywordQuery: any = keyword
   const jobId = keywordQuery?.split('-').pop()
-  
-  store.dispatch(fetchJobDetailRequest({
+
+  store.dispatch(
+    fetchJobDetailRequest({
       jobId,
       status: 'protected',
-      serverAccessToken: accessToken,
+      serverAccessToken: accessToken
     })
   )
-  store.dispatch(fetchUserOwnDetailRequest({accessToken}))
+  store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)
-  
+
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
   const jobDetail = storeState.job?.jobDetail.response
   const userDetail = storeState.users?.fetchUserOwnDetail.response
-  
+
   // Redirect to job page if the job has been applied by the user
   if (jobDetail.is_applied) {
     return {
@@ -393,7 +406,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   return {
     props: {
       jobDetail: jobDetail,
-      userDetail: userDetail,
+      userDetail: userDetail
     }
   }
 })
