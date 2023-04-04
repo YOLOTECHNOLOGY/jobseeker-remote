@@ -16,7 +16,7 @@ function* loginReq(actions) {
     if (response.status >= 200 && response.status < 300) {
       yield put(jobbseekersLoginSuccess(response.data))
       const loginData = response.data.data
-      const { refresh_token } = loginData
+      const { refresh_token, token, token_expired_at } = loginData
       const userCookie = {
         active_key: loginData.active_key,
         id: loginData.id,
@@ -37,7 +37,7 @@ function* loginReq(actions) {
 
       yield call(setCookie, refreshToken, refresh_token)
       yield call(setCookie, userKey, userCookie)
-      yield call(setCookie, accessToken, loginData.token)
+      yield call(setCookie, accessToken, token, token_expired_at)
 
     }
   } catch (err) {

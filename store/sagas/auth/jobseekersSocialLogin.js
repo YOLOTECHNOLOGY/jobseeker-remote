@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { setCookie } from 'helpers/cookies'
+import { accessToken, refreshToken, setCookie, userKey } from 'helpers/cookies'
 
 import { JOBBSEEKERS_SOCIALLOGIN_REQUEST } from 'store/types/auth/jobseekersSocialLogin'
 
@@ -19,6 +19,7 @@ function* SocialLoginReq(actions) {
     if (response.status >= 200 && response.status < 300) {
       yield put(jobbseekersSocialLoginSuccess(response.data))
       const loginData = response.data.data
+      const { refresh_token, token, token_expired_at } = loginData
       const userCookie = {
         active_key: loginData.active_key,
         id: loginData.id,
@@ -36,9 +37,9 @@ function* SocialLoginReq(actions) {
         bosshunt_talent_opt_out_at: loginData.bosshunt_talent_opt_out_at,
         is_profile_completed: loginData.is_profile_completed
       }
-
-      yield call(setCookie, 'user', userCookie)
-      yield call(setCookie, 'accessToken', loginData.token)
+      yield call(setCookie, refreshToken, refresh_token)
+      yield call(setCookie, userKey, userCookie)
+      yield call(setCookie, accessToken, token, token_expired_at)
     }
   } catch (err) {
     const isServerError = checkErrorCode(err)
