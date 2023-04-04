@@ -43,7 +43,9 @@ const Main = (props: any) => {
             <div className={styles.left}>
                 <MobileHeader />
                 <SortProvider>
-                    <div style={{ position: 'sticky', top: 0, zIndex: 20 }}>
+                    <div className={styles.searchFormContainer} 
+                    // style={{ position: 'sticky', top: 0, zIndex: 20 }}
+                    >
                         <SearchForm
                             searchParams={props.searchParams ?? null}
                             preferenceId={preferenceId}

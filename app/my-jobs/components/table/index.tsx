@@ -9,13 +9,14 @@ import MobileTable from './mobile'
 import Loader from './loader'
 import NoPreference from '../noPreference'
 import ChatInfoProvider from 'app/components/chatInfoProvider'
+import NoData from '../noData'
 const Table = (props: any) => {
     const { jobs = [], page, totalPages, preferences, preferenceId } = props
     // jobs = [], page, totalPages, searchValues, config
     const preference = preferences?.find?.(item => item.id === +preferenceId)
     const recruiterIds = jobs.map(job => job.recruiter_id)
     return <ChatInfoProvider recruiterIds={recruiterIds}>
-        <Loader>
+       { jobs?.length?<Loader>
             <div className={styles.container}>
                 {jobs.map(job => {
                     return (<div className={styles.jobContainer} key={job?.id}>
@@ -31,7 +32,7 @@ const Table = (props: any) => {
 
             </div>
             <MobileTable {...props} preference={preference} />
-        </Loader>
+        </Loader>:<NoData/>}
     </ChatInfoProvider>
 }
 

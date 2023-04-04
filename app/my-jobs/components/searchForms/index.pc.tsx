@@ -79,15 +79,15 @@ const SearchArea = (props: any) => {
     value: item?.['seo-value'],
     label: item.value
   })) ?? []
-  const [isFixed, setIsfixed] = useState(false)
-  useEffect(() => {
-    const listener = () => {
-      const scrollTop = document.documentElement.scrollTop
-      setIsfixed(scrollTop > 58)
-    }
-    window.addEventListener('scroll', listener, true)
-    return window.removeEventListener('scroll', listener)
-  }, [])
+  // const [isFixed, setIsfixed] = useState(false)
+  // useEffect(() => {
+  //   const listener = () => {
+  //     const scrollTop = document.documentElement.scrollTop
+  //     setIsfixed(scrollTop > 58)
+  //   }
+  //   window.addEventListener('scroll', listener, true)
+  //   return window.removeEventListener('scroll', listener)
+  // }, [])
 
   // const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
   const [jobTypes, setJobtypes] = useState(searchParams?.jobType ?? [])
@@ -130,7 +130,7 @@ const SearchArea = (props: any) => {
       <ThemeProvider theme={theme}>
         <div className={classNames({
           [styles.container]: true,
-          [styles.isFixed]: isFixed
+          // [styles.isFixed]: isFixed
         })}>
           <div className={styles.searchArea}>
             <LocationField

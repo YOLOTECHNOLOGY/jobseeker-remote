@@ -68,15 +68,27 @@
     display: flex;
     flex-direction: row;
     margin-top: 20px;
+
     .right {
         @include sm {
             display: none;
         }
     }
+
     .left {
         width: auto;
+
         @include sm {
             width: 100%;
+        }
+
+        .searchFormContainer {
+            z-index: 20;
+            position: relative;
+
+            @include sm {
+                position: sticky !important;
+            }
         }
     }
 }
