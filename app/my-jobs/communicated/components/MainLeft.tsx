@@ -58,19 +58,20 @@ const initTabList = [
     ]
   },
   {
-    tab: 'Interview',
-    value: 'interview',
-    fetchFun: fetchInterviews,
-    key: 'interviews',
-    children: []
-  },
-  {
     tab: 'Saved',
     value: 'saved',
     fetchFun: fetchSaved,
     key: 'saved_jobs',
     children: []
   },
+  {
+    tab: 'Interview',
+    value: 'interview',
+    fetchFun: fetchInterviews,
+    key: 'interviews',
+    children: []
+  },
+ 
   {
     tab: 'Viewed',
     value: 'viewed',
