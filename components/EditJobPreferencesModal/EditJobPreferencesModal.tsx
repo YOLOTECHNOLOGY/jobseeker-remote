@@ -139,7 +139,7 @@ const EditJobPreferencesModal = ({
 
   useEffect(() => {
     if (!isUpdating && isUpdatingRef.current) {
-      handleCloseModal()
+      handleCloseModal(true)
     }
     isUpdatingRef.current = isUpdating
   }, [isUpdating])
