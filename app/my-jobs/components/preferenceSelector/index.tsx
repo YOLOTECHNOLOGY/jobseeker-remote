@@ -69,7 +69,6 @@ const PreferenceSelector = (props: any) => {
             : <div className={styles.action} onClick={() => {
                 if (preferences.length === 3) {
                     const selected = preferences.find(preference => +preference.id === +preferenceId)
-                    console.log({ selected })
                     setEditingPreference(selected)
                 } else {
                     setEditingPreference(undefined)

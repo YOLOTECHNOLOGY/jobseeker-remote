@@ -2,21 +2,24 @@
 import React, { useState, useMemo } from 'react'
 import styles from './index.module.scss'
 import './index.scss'
-import Link from 'next/link'
-
+import { useRouter } from 'next/navigation'
 const Item = (props: any) => {
     const { title, content, type, disabled } = props
-    if (disabled) {
-        return <div className={styles.item}>
-            <div className={styles.itemContent}>{content}</div>
-            <div className={styles.itemTitle}>{title}</div>
-        </div>
-    } else {
-        return <Link prefetch={false} href={'my-jobs/communicated?type=' + type} className={styles.item}>
-            <div className={styles.itemContent}>{content}</div>
-            <div className={styles.itemTitle}>{title}</div>
-        </Link>
-    }
+    const router = useRouter()
+    return <div
+        className={styles.item}
+        style={{}}
+        onClick={() => {
+            console.log('onClick', { type, disabled })
+            if (!disabled) {
+                router.push('my-jobs/communicated?type=' + type, { forceOptimisticNavigation: true })
+            }
+        }}
+    >
+        <div className={styles.itemContent}>{content}</div>
+        <div className={styles.itemTitle}>{title}</div>
+    </div>
+
 
 }
 const timeAccelerate = 0.0015;
@@ -121,7 +124,8 @@ const Containers = (props: any) => {
                 transform: `translateX(${inTouches ? leftTouchTransitionX : leftNormalTransitionX})`,
                 transitionTimingFunction: inTouches ? undefined : 'ease-out',
                 transitionDuration: inTouches ? undefined : `${(timeAccelerate * Math.abs(offset))}s`,
-                opacity: inTouches ? leftTouchOpacity : leftNormalOpacity
+                opacity: inTouches ? leftTouchOpacity : leftNormalOpacity,
+                zIndex: tab !== 1 ? 0 : 20
             }}
         >{firstList.map(data => <Item disabled={tab !== 1} {...data} key={data.title} />)}
         </div>
@@ -143,6 +147,7 @@ const Containers = (props: any) => {
                     transform: `translateX(${inTouches ? indicatorTouchTransitionX : indicatorNormalTransitionX})`,
                     transitionTimingFunction: inTouches ? undefined : 'ease-out',
                     transitionDuration: inTouches ? undefined : `${(timeAccelerate * Math.abs(offset))}s`,
+                    zIndex: tab === 1 ? 0 : 20
                 }}
             />
         </div>
