@@ -27,11 +27,11 @@ const SearchArea = (props: any) => {
         return preferences.map(preference => ({ value: preference.id, label: preference.job_title }))
     }, [preferences])
     const [selectedPreferenceId, setSelectedPreferenceId] = useState(+preferenceId)
-    useEffect(() => {
-        if(preferenceId){
-            setSelectedPreferenceId(+preferenceId)
-        }
-    }, [preferenceId])
+    // useEffect(() => {
+    //     if(preferenceId){
+    //         setSelectedPreferenceId(+preferenceId)
+    //     }
+    // }, [preferenceId])
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchConfigSuccess(config))

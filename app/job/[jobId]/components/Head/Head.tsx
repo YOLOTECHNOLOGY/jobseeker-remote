@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import Btn from './Btn/Btn'
 import { Stack, Avatar } from 'app/components/MUIs'
-
+import { cookies } from 'next/headers'
 import { UploadResumeIcon, CompleteResumeIcon } from 'images'
 
 import styles from '../../page.module.scss'
@@ -33,9 +33,11 @@ const Head = ({
   is_saved,
   chat,
   job_type_value,
-  status_key,
   jobDetail
 }: propsType) => {
+  const accessToken = cookies().get('accessToken')?.value
+  const user = cookies().get('user')?.value
+  const isLogin = !!accessToken && !!user
   return (
     <section id='jobDetaiPagelHead' className={classNames([styles.head, styles.headSticky])}>
       <div className={styles.head_main}>
@@ -63,7 +65,7 @@ const Head = ({
 
           <div className={styles.head_main_change_resume}>
             <Stack spacing={2} direction='row'>
-              <div>
+              {isLogin && <div>
                 <Link color='#000000' href='/manage-profile'>
                   <div className={styles.head_main_change_resume_btnWrapper}>
                     <Avatar
@@ -76,9 +78,9 @@ const Head = ({
                     <span> Fill up resume online</span>
                   </div>
                 </Link>
-              </div>
+              </div>}
               <div>
-                <Link color='#000000' href='/quick-upload-resume'>
+                <Link color='#000000' href={isLogin ? '/quick-upload-resume' : '/get-started?redirect=quick-upload-resume'}>
                   <div className={styles.head_main_change_resume_btnWrapper}>
                     <Avatar
                       src={UploadResumeIcon}
