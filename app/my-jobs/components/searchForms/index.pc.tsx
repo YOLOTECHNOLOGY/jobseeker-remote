@@ -223,7 +223,7 @@ const SearchArea = (props: any) => {
               defaultValue={jobTypes}
             />
             <Multiple
-              label='Company'
+              label='Company Sizes'
               value={companySizes}
               options={companySizeList}
               className={styles.filterItems}
