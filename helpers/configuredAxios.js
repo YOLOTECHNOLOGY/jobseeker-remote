@@ -7,6 +7,16 @@ import { accessToken, refreshToken } from './cookies';
 // import { logout } from 'shared/helpers/authentication'
 // import { IMManager } from 'imforbossjob'
 
+let timer = 0;
+let clearTime = () => clearTimeout(timer)
+const autoRefreshToken = () => {
+  timer = setTimeout(() => {
+    clearTime()
+    refreshTokenServer();
+    autoRefreshToken();
+    // Refresh every 25 minutes
+  }, 1000 * 60 * 25);
+}
 
 // generate url by a baseUrl
 const getUrl = (baseURL) => {
@@ -133,13 +143,14 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken,
 
 
 
-const configured = Symbol();
 const refreshTokenServer = () => {
   const axios = configuredAxios('auth', '', '', '');
   const data = { source: 'web', refresh: getCookie(refreshToken) }
   return axios.post('/token/refresh', data).then((res) => {
     let { access, token_expired_at, data } = res.data.data
     if (access) {
+      clearTime()
+      autoRefreshToken()
       setCookie(accessToken, access, token_expired_at)
       return
     }
@@ -158,7 +169,7 @@ const redirectToHomeOnClient = () => {
 }
 
 let globalPromise;
-const chain = (baseURL, type = 'public', passToken, serverAccessToken, server = false) => {
+const chain = configured => (baseURL, type = 'public', passToken, serverAccessToken, server = false) => {
   const createAxios = () => configuredAxios(baseURL, type, passToken, serverAccessToken, server)
   const axios = createAxios();
   const keys = Object.keys(axios);
@@ -174,23 +185,21 @@ const chain = (baseURL, type = 'public', passToken, serverAccessToken, server = 
               redirect(process.env.HOST_PATH + '/get-started')
             }
             if (error?.response?.status === 401 && typeof window !== 'undefined') {
-              if (wrapper[configured]) {
+              if (configured) {
                 redirectToHomeOnClient();
                 return Promise.reject(error)
               }
               if (!globalPromise) {
                 globalPromise = refreshTokenServer().catch(error => {
                   redirectToHomeOnClient()
-                }).then(() => {
-                  // todo: request new token logic can be optimized later
-                  // globalPromise = undefined
-                  // do not reset this globalPromise. if we set with empty. some errors will be occured that caused by network delay
-                  // e.g. refreshTokenServer maybe run many times
+                }).finally(() => {
+                  setTimeout(() => {
+                    globalPromise = undefined;
+                  }, 1000 * 60 * 2);
                 })
               }
               return globalPromise.then((res) => {
-                const chainObj = chain(baseURL, type, passToken ? getCookie(accessToken) : '', serverAccessToken ? getCookie(accessToken) : '', server)
-                chainObj[configured] = true // currentRequest is configured. so if the request accept 401 status again. we should redirect to home
+                const chainObj = chain(true)(baseURL, type, passToken ? getCookie(accessToken) : '', serverAccessToken ? getCookie(accessToken) : '', server)
                 return chainObj[key](...params)
               })
             } else {
@@ -205,4 +214,4 @@ const chain = (baseURL, type = 'public', passToken, serverAccessToken, server = 
   return wrapper
 }
 
-export default chain
+export default chain()
