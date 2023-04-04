@@ -4,15 +4,7 @@ import Image from 'next/image'
 import { cookies } from 'next/headers'
 import Containers from './containers'
 import { fetchPersonalInfo } from 'store/services/jobs/fetchJobsCommunicated'
-import Link from 'next/link'
 
-const Item = (props: any) => {
-    const { title, content, type } = props
-    return <Link prefetch={false} href={'my-jobs/communicated?type=' + type} className={styles.item}>
-        <div className={styles.itemContent}>{content}</div>
-        <div className={styles.itemTitle}>{title}</div>
-    </Link>
-}
 
 const ServerContainer = async () => {
     const accessToken = cookies().get('accessToken')?.value
@@ -39,8 +31,9 @@ const ServerContainer = async () => {
         { title: 'Who viewed me', content: no_of_viewed_me_recruiters, type: 'viewed' },
     ]
     return <Containers
-        first={firstList.map(data => <Item {...data} key={data.title} />)}
-        second={secondList.map(data => <Item {...data} key={data.title} />)}
+        firstList={firstList}
+        secondList={secondList}
+        
     />
 }
 

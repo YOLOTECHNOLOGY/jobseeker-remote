@@ -2,9 +2,26 @@
 import React, { useState, useMemo } from 'react'
 import styles from './index.module.scss'
 import './index.scss'
+import Link from 'next/link'
+
+const Item = (props: any) => {
+    const { title, content, type, disabled } = props
+    if (disabled) {
+        return <div className={styles.item}>
+            <div className={styles.itemContent}>{content}</div>
+            <div className={styles.itemTitle}>{title}</div>
+        </div>
+    } else {
+        return <Link prefetch={false} href={'my-jobs/communicated?type=' + type} className={styles.item}>
+            <div className={styles.itemContent}>{content}</div>
+            <div className={styles.itemTitle}>{title}</div>
+        </Link>
+    }
+
+}
 const timeAccelerate = 0.0015;
 const Containers = (props: any) => {
-    const { first, second } = props
+    const { firstList, secondList } = props
     const [inTouches, setIntouches] = useState(false)
     const [beginPosition, setBegginPosision] = useState(0)
     const [offset, setOffset] = useState(0)
@@ -28,7 +45,7 @@ const Containers = (props: any) => {
     }, [tab])
     const indicatorTouchTransitionX = useMemo(() => {
         const start = tab === 1 ? '0px' : '100%'
-        return `calc(${start} ${offset > 0 ? '-' : '+'} ${Math.abs((offset/window.innerWidth) * 64)}px)`
+        return `calc(${start} ${offset > 0 ? '-' : '+'} ${Math.abs((offset / window.innerWidth) * 64)}px)`
     }, [tab, offset])
     const opacityRange = 300
     const leftTouchOpacity = useMemo(() => {
@@ -106,7 +123,8 @@ const Containers = (props: any) => {
                 transitionDuration: inTouches ? undefined : `${(timeAccelerate * Math.abs(offset))}s`,
                 opacity: inTouches ? leftTouchOpacity : leftNormalOpacity
             }}
-        >{first}</div>
+        >{firstList.map(data => <Item disabled={tab !== 1} {...data} key={data.title} />)}
+        </div>
         <div
             className={styles.right}
             style={{
@@ -116,7 +134,7 @@ const Containers = (props: any) => {
                 transitionDuration: inTouches ? undefined : `${(timeAccelerate * Math.abs(offset))}s`,
                 opacity: inTouches ? rightTouchOpacity : rightNormalOpacity
             }}
-        >{second}</div>
+        >{secondList.map(data => <Item disabled={tab === 1} {...data} key={data.title} />)}</div>
         <div className={styles.indicatorContainer}>
             <div
                 className={styles.indicator}
