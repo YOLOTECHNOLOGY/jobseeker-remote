@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import { useRouter } from 'next/navigation'
 import { useFirstRender } from 'helpers/useFirstRender'
-import { filter, toPairs } from 'ramda'
+import { filter, toPairs, pipe, is, split, map } from 'ramda'
 import { LoadingContext } from 'app/components/providers/loadingProvider'
 const sortOptions = [
     { label: 'Newest', value: '1' },
@@ -57,14 +57,23 @@ const SearchArea = (props: any) => {
     // const locations = flatMap(config.inputs.location_lists, item => item.locations)
     // const [location, setLocation] = useState(locations.find(location => location.seo_value === searchParams.location?.[0]))
     const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
-    const [moreData, setMoreData] = useState(filter(a => a)({
-        workExperience: searchParams?.workExperience ?? null,
-        qualification: searchParams?.qualification ?? null,
-        salary: searchParams?.salary ?? null,
-        jobTypes: searchParams?.jobType ?? null,
-        companySizes: searchParams?.companySizes ?? null,
-        industry: searchParams?.industy ?? null
-    }))
+    const [moreData, setMoreData] = useState(
+        pipe(map(item => {
+            if (is(String)(item)) {
+                return item.split(',')
+            } else if (is(Array)(item)) {
+                return item
+            } else {
+                return null
+            }
+        }), filter(a => a))({
+            workExperience: searchParams?.workExperience ?? null,
+            qualification: searchParams?.qualification ?? null,
+            salary: searchParams?.salary ?? null,
+            jobTypes: searchParams?.jobType ?? null,
+            companySizes: searchParams?.companySizes ?? null,
+            industry: searchParams?.industy ?? null
+        }))
 
     const filterParams = useMemo(() => {
         return filter(a => a?.length)({
