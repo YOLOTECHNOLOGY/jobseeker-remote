@@ -72,7 +72,7 @@ const SearchArea = (props: any) => {
             salary: searchParams?.salary ?? null,
             jobTypes: searchParams?.jobType ?? null,
             companySizes: searchParams?.companySizes ?? null,
-            industry: searchParams?.industy ?? null
+            industry: searchParams?.industry ?? null
         }))
 
     const filterParams = useMemo(() => {

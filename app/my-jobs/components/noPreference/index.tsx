@@ -7,7 +7,7 @@ const NoPreference = () => {
     return <div className={styles.container}>
         <Image src={JoinUs} width={362} height={247} alt='' />
         <div className={styles.description}>
-            <Button>Add job Preference </Button>
+            <Button variant='contained' style={{textTransform:'capitalize'}}>Add job Preference </Button>
         </div>
     </div>
 }

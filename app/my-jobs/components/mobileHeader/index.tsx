@@ -16,8 +16,8 @@ const ServerContainer = async () => {
         no_of_interviews,
         no_of_saved_jobs,
         // no_of_viewed_jobs,
-        no_of_saved_me_recruiters,
-        no_of_viewed_me_recruiters
+        no_of_saved_me_recruiters = '- -',
+        no_of_viewed_me_recruiters = '- -'
     } = numbers
 
     const firstList = [
