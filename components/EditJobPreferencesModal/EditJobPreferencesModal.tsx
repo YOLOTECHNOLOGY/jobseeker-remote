@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useRef } from 'react'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
@@ -133,15 +133,19 @@ const EditJobPreferencesModal = ({
     }
 
     dispatch(updateUserPreferencesRequest(payload))
-    setTimeout(handleCloseModal, 500)
+    // setTimeout(() => handleCloseModal(true), 500)
   }
+  const isUpdatingRef = useRef(isUpdating)
 
   useEffect(() => {
-    handleCloseModal()
-  }, [userDetail])
+    if (!isUpdating && isUpdatingRef.current) {
+      handleCloseModal(true)
+    }
+    isUpdatingRef.current = isUpdating
+  }, [isUpdating])
 
-  const handleCloseModal = () => {
-    handleModal(modalName, false)
+  const handleCloseModal = (refresh = false) => {
+    handleModal(modalName, false, refresh)
     reset()
   }
 
@@ -167,7 +171,7 @@ const EditJobPreferencesModal = ({
                   required
                   {...fieldState}
                   {...field}
-                  // onChange={(value)=>setValue('jobTitle',value)}
+                // onChange={(value)=>setValue('jobTitle',value)}
                 />
               )
             }}

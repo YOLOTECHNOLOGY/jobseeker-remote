@@ -1,0 +1,114 @@
+@import '/styles/mixins.scss';
+
+.container {
+  --box-shadow:none;
+  width: 894px;
+  height: 228px;
+  max-width: 100%;
+  display: flex;
+  // position: sticky;
+  top: 0px;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  margin-left: calc(50vw - 585px + 24px);
+  border-radius: 15px;
+  z-index: 231;
+  transition: box-shadow ease-in 0.5s;
+  box-shadow: var(--box-shadow);
+  @include sm {
+    display: none;
+  }
+
+  &.isFixed {
+    --box-shadow: 0px 0px 20px #BCBCBC;
+
+  }
+
+  .searchArea {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: fit-content;
+    height: 74px;
+    padding-left: 0px;
+
+    .location {
+      width: 137px;
+      height: 44px;
+    }
+
+    .search {
+      width: 586px;
+      height: 44px;
+      // border: 1px solid #ccc;
+      background: #fff;
+      margin-left: 8px;
+      // label {
+      //   line-height: 100%;
+      // }
+      position: relative;
+      top: 2px;
+    }
+
+    .searchButton {
+      margin-left: 8px;
+      text-transform: capitalize !important;
+      background: #136FD3;
+      color: #fff;
+      width: 118px;
+      height: 44px;
+      border-radius: 10px;
+    }
+  }
+
+  .filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 50px;
+    padding-top: 20px;
+    padding-left: 20px;
+    flex-wrap: wrap;
+    .filterItems {
+      height: 30px;
+      width: 207px;
+      margin: 0 9px 13px 0;
+    }
+
+    .jobFunctions {
+      width: 184px;
+    }
+
+    .clearButton {
+      text-transform: capitalize !important;
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+      align-items: center;
+      letter-spacing: 0.0075em;
+      color: #707070;
+      font-size: 14px;
+      margin-left: 4px;
+      height: 30px;
+    }
+  }
+}
+.sortBox{
+  height: 50px;
+  background: #FFFFFF;
+  border: 0.5px solid #BCBCBC;
+  border-radius: 15px;
+  line-height: 50px;
+  display: flex;
+  padding: 0 0 0 20px;
+  font-size: 16px;
+  width: 894px;
+  margin: 24px 0 0 calc(50vw - 585px + 24px);
+  @include sm {
+    display: none;
+  }
+}

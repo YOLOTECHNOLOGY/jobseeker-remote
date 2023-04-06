@@ -143,7 +143,7 @@ const VerifyMailAndBindEmail = ({
         dispatch(
           displayNotification({
             open: true,
-            message: errorMessage,
+            message: exceptionHandler.message ?? errorMessage,
             severity: 'warning'
           })
         )

@@ -25,6 +25,7 @@
     }
     .messageLabel {
       word-break: break-all;
+      white-space: pre-wrap;
     }
     .detailItemContainer {
       display: flex;
@@ -33,7 +34,7 @@
       margin-top: 14px;
 
       p {
-        font-family: 'Product Sans';
+        font-family: "Product Sans";
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -49,6 +50,7 @@
       justify-content: space-between;
       align-items: flex-start;
       width: 100%;
+      white-space: pre-wrap;
 
       .actions {
         display: flex;
@@ -61,7 +63,7 @@
       }
 
       p {
-        font-family: 'Product Sans';
+        font-family: "Product Sans";
         font-style: normal;
         font-weight: 400;
         font-size: 16px;

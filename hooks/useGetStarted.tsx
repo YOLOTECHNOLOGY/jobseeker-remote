@@ -71,7 +71,7 @@ const useGetStarted = () => {
         dispatch(
           displayNotification({
             open: true,
-            message: errorMessage,
+            message: error.message ?? errorMessage,
             severity: 'error'
           })
         )
@@ -99,7 +99,7 @@ const useGetStarted = () => {
         ? '/jobseeker-complete-profile/1'
         : defaultRedirectPage
         ? defaultRedirectPage
-        : `/jobs-hiring/job-search`
+        : '/'
     const isChatRedirect = localStorage.getItem('isChatRedirect')
     if (isChatRedirect) {
       url = isChatRedirect
@@ -164,7 +164,7 @@ const useGetStarted = () => {
         dispatch(
           displayNotification({
             open: true,
-            message: data?.detail,
+            message: error.message ?? data?.detail,
             severity: 'error'
           })
         )

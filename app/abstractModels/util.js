@@ -3,6 +3,7 @@ import { cond, T } from 'ramda'
 import { Free } from 'fantasy-frees'
 import commonInterpreter from './commonInterpreter'
 import { ReaderTPromise } from './monads'
+import Redirect from 'app/components/Redirect'
 const { liftFC: DO } = Free
 export const CommonActions = taggedSum('CommonActions', {
   error: ['error'],
@@ -45,6 +46,19 @@ export const registInterpreter = interpreter => {
     ])(command).log(command)
   // command 抽象逻辑
   return script => Free.runFC(script, merged, ReaderTPromise)
+    .catch(error => {
+      if (error.message === 'NEXT_REDIRECT') {
+        const redirectUrl = error.digest?.split?.(';')?.[1]
+        if (redirectUrl) {
+          return <Redirect url={redirectUrl} />
+        }
+      }
+      if (error?.response?.status === 401) {
+        return <Redirect url='/get-started' />
+      }
+
+      return Promise.reject(error)
+    })
     .catch(e => console.log('monad error', e))
 
 }

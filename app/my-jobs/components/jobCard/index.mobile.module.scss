@@ -1,0 +1,242 @@
+.main {
+    width: calc(100vw - 20px);
+    margin: 0px 10px;
+    position: relative;
+    margin-bottom: 10px;
+    --opacity:1;
+    opacity: var(--opacity);
+    transition: var(--opacity) ease-in-out 0.5s ;
+    &.aboutDisappear {
+        --opacity: 0.3;
+    }
+    .container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+        background: #fff;
+        position: relative;
+        transition: box-shadow 0.3s ease-in;
+        padding: 16px 13px;
+        cursor: pointer;
+        .closeButton {
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            width: 40px;
+            height: 56px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        &:hover {
+            box-shadow: 6px 7px 7px #ccc;
+        }
+
+        .titleContainer {
+            width: 100%;
+            height: 23px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            width: 100%;
+
+            .title {
+                flex-shrink: 1;
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 23px;
+                align-items: center;
+                letter-spacing: 0.02em;
+                color: #353535;
+                width: 350px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .salary {
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 23px;
+                align-items: center;
+                letter-spacing: 0.02em;
+                color: #FE574A;
+                white-space: nowrap;
+                // overflow: hidden;
+                // text-overflow: ellipsis;
+                width: fit-content;
+            }
+        }
+
+        .companyName {
+            font-family: 'Product Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 15px;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.0075em;
+            color: #353535;
+            margin-top: 8px;
+            margin-bottom: 12px;
+        }
+
+        .labelContainer {
+            margin-top: 5px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+
+            .label {
+                display: flex;
+                align-items: center;
+                padding: 2px 10px;
+                /* General/White 1 */
+                background: #F0F0F0;
+                border-radius: 16px;
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 15px;
+                letter-spacing: 0.0075em;
+                color: #707070;
+                margin: 0 6px 6px 0;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        .recruiterContainer {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 4px;
+            width: 100%;
+
+            .info {
+                padding: 2px 0px;
+                width: fit-content;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                flex-direction: row;
+                justify-content: flex-start;
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 100%;
+                letter-spacing: 0.0075em;
+                color: #353535;
+                height: 24px;
+                line-height: 100%;
+                flex: 1;
+                width: 0;
+
+                .image {
+                    border-radius: 8.5px;
+                    margin-right: 10px;
+                }
+
+                .hrTitle {
+                    max-width: 300px;
+                    overflow: hidden;
+                    display: block;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+            }
+
+            .fullName {
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 15px;
+                letter-spacing: 0.0075em;
+                color: #707070;
+                display: block;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: fit-content;
+                margin-left: 10px;
+                text-align: right;
+                margin-right: 30px;
+
+            }
+
+            .button {
+                padding: 4px 9px;
+                border-radius: 12px;
+                width: fit-content;
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 15px;
+                height: 24px;
+                letter-spacing: 0.0075em;
+                color: #fff;
+                background: #136FD3;
+                display: none;
+                height: 24px;
+
+                &.isHover {
+                    display: flex;
+                    height: 24px;
+                    cursor: pointer;
+                }
+            }
+
+            // height: 21px;
+
+
+            .online {
+                background: #0EBD5C;
+                border-radius: 15px;
+                padding: 5px 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 24px;
+                color: #fff;
+                margin-left: 2px;
+
+                &:before {
+                    content: '';
+                    background: #fff;
+                    border-radius: 4px;
+                    border: 1px solid #FFFFFF;
+                    width: 8px;
+                    height: 8px;
+                    margin-right: 3px;
+                }
+
+                :first-child {
+                    font-family: 'Product Sans';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 15px;
+                    display: flex;
+                    align-items: center;
+                    letter-spacing: 0.0075em;
+                    color: #FFFFFF;
+                }
+            }
+        }
+    }
+}

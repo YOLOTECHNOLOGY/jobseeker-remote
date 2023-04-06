@@ -45,6 +45,7 @@ const CommonPhrasesCreateModal = (props: any) => {
           label='Phrase'
           value={text}
           style={{ width: '100%' }}
+          autoFocus
           onChange={(e) => {
             const { value } = e.target
             if (value.length < 500) {

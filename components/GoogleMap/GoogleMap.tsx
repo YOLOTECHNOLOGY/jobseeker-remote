@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { Loader } from '@googlemaps/js-api-loader'
 
 import './GoogleMap.css'
@@ -20,9 +20,62 @@ interface Props {
   width?: string
   height?: string
   id?: string
+
+  gestureHandling: 'auto' | 'none'
+  zoomControl: boolean
+  fullscreenControl: boolean
+  streetViewControl: boolean
+  clickable?: boolean
+  infoWindow?: string
+  zoom?: number
+  openSearch?: boolean
+
+  openMarker?: boolean
+  openMarkerSearch?: boolean
+  callBackFunction?: (maerker: object) => void
+  children?: JSX.Element
 }
 
-const GoogleMap = ({ width, height, defaultAddress, lat, lng, id }: Props) => {
+/**
+ * @author Lee
+ * @description googleMap
+ * @param {string} id 自定义渲染容器
+ * @param {number} [width = '100%'] 如果传了自定义ID可省略
+ * @param {string} gestureHandling 用户手势无法平移或缩放地图
+ * @param {boolean} zoomControl 缩放控件的启用/停用状态
+ * @param {boolean} fullscreenControl 全屏控件的启用/停用状态
+ * @param {boolean} streetViewControl 是否显示小黄人
+ * @param {boolean} clickable 是否可以点击
+ * @param {string} infoWindow 标点上面显示的信息,传值就等于open
+ * @param {boolean} openSearch 开启搜索功能
+ *
+ * @param {boolean} openMarker 是否开启任意标点
+ * @param {boolean} openMarkerSearch 是否开启标点后自动搜索对应的位置，此功能需要openSearch为true
+ * @callback callBackFunction 当坐标发送变化时会把坐标return回去
+ *
+ * @returns
+ */
+const GoogleMap = ({
+  width,
+  height,
+  defaultAddress,
+  lat,
+  lng,
+  id,
+
+  gestureHandling,
+  zoomControl,
+  fullscreenControl,
+  streetViewControl,
+  clickable = true,
+  infoWindow,
+  zoom = 16,
+  openSearch = false,
+  openMarker = false,
+  openMarkerSearch = false,
+  callBackFunction,
+  children
+}: Props) => {
   let maerker
   const search = useRef<any>()
   const searchCart = useRef<HTMLElement>()
@@ -30,6 +83,14 @@ const GoogleMap = ({ width, height, defaultAddress, lat, lng, id }: Props) => {
 
   // eslint-disable-next-line
   const [address, setAddress] = useState<object | null>(null)
+
+  console.log(children, '====childrenchildren')
+
+  useEffect(() => {
+    if (callBackFunction) {
+      callBackFunction(address)
+    }
+  }, [address])
 
   useEffect(() => {
     loader.load().then(() => {
@@ -43,21 +104,28 @@ const GoogleMap = ({ width, height, defaultAddress, lat, lng, id }: Props) => {
 
       // @ts-ignore
       const map = new google.maps.Map(mapWrapperNode, {
-        center: { lat: lat ? lat : 14.59889, lng: lng ? lng : 120.98417 },
-        zoom: 16,
-        disableDefaultUI: true,
+        center: { lat: lat ? Number(lat) : 14.59889, lng: lng ? Number(lng) : 120.98417 },
+        zoom,
+        // disableDefaultUI: true,
         // fullscreenControl: true,
-        zoomControl: true
+        zoomControl: zoomControl,
+        gestureHandling: gestureHandling,
+        fullscreenControl,
+        streetViewControl,
+        controlSize: 25
       })
+
+      map.setClickableIcons(clickable)
 
       // initMaerker
       if (lat && lng) {
-        placeMarkerAndPanTo({ lat, lng }, map)
+        placeMarkerAndPanTo({ lat, lng }, map, infoWindow)
       }
 
-      // TODO
-      // initInput(map)
-      // initSearchCart(map)
+      if (openSearch) {
+        initInput(map)
+        initSearchCart(map)
+      }
 
       // const input = inputDom as HTMLInputElement
 
@@ -78,28 +146,47 @@ const GoogleMap = ({ width, height, defaultAddress, lat, lng, id }: Props) => {
       // @ts-ignore
       search.current = new google.maps.places.PlacesService(map)
 
-      // map.addListener('click', (ev) => {
-      //   placeMarkerAndPanTo(ev.latLng, map)
-      //   // if (ev.placeId) {
-      //   //   searchPlaceDetail(ev.placeId, map)
-      //   // } else {
-      //   //   searchPlaceList(ev.latLng, map)
-      //   // }
-      // })
+      if (openMarker) {
+        map.addListener('click', (ev) => {
+          placeMarkerAndPanTo(ev.latLng, map)
+          if (ev.placeId && openMarkerSearch) {
+            searchPlaceDetail(ev.placeId, map)
+          } else {
+            searchPlaceList(ev.latLng, map)
+          }
+        })
+      }
     })
   }, [])
 
-  // @ts-ignore
-  const placeMarkerAndPanTo = (latLng: google.maps.LatLng, map: google.maps.Map) => {
-    if (maerker) {
-      maerker.setMap(null)
-    }
+  const placeMarkerAndPanTo = useCallback(
     // @ts-ignore
-    maerker = new google.maps.Marker({
-      position: latLng,
-      map: map
-    })
-  }
+    (latLng: google.maps.LatLng, map: google.maps.Map, infoWindow?) => {
+      if (maerker) {
+        maerker.setMap(null)
+      }
+
+      // @ts-ignore
+      maerker = new google.maps.Marker({
+        position: latLng,
+        map: map
+      })
+
+      if (infoWindow) {
+        // @ts-ignore
+        const infowindow = new google.maps.InfoWindow({
+          content: infoWindow,
+          position: maerker
+        })
+
+        infowindow.open({
+          anchor: maerker,
+          map
+        })
+      }
+    },
+    []
+  )
 
   const searchPlace = (ev: any, map: any) => {
     if (ev.target?.value) {
@@ -174,9 +261,10 @@ const GoogleMap = ({ width, height, defaultAddress, lat, lng, id }: Props) => {
     mapInput.current.placeholder = 'Search map'
     mapInput.current.value = defaultAddress ? defaultAddress : ''
     mapInput.current.id = 'pac-input'
-    mapInput.current.style.marginTop = '29px'
+    mapInput.current.style.marginTop = '38px'
     mapInput.current.style.marginLeft = '37px'
     mapInput.current.style.paddingLeft = '15px'
+    mapInput.current.style.top = '15px'
     mapInput.current.style.width = '312px'
     mapInput.current.style.height = '38px'
     mapInput.current.style.fontSize = '14px'
@@ -186,7 +274,7 @@ const GoogleMap = ({ width, height, defaultAddress, lat, lng, id }: Props) => {
     })
     mapInput.current.addEventListener('input', (ev) => searchPlace(ev, map))
     // @ts-ignore
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(mapInput.current)
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(mapInput.current)
   }
 
   // eslint-disable-next-line
@@ -256,6 +344,8 @@ const GoogleMap = ({ width, height, defaultAddress, lat, lng, id }: Props) => {
         id='map'
         style={{ width: width ? width : '100%', height: height ? height : '230px' }}
       ></div>
+
+      {children}
     </div>
   )
 }
