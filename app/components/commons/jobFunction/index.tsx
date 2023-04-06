@@ -274,7 +274,6 @@ const JobFunctionMultiSelector = (props: any) => {
   }, [])
   useEffect(() => {
     if (!isMobile) {
-      console.log({ showModal })
       if (showModal) {
         setTimeout(() => {
           document.addEventListener('click', listener)
@@ -304,7 +303,7 @@ const JobFunctionMultiSelector = (props: any) => {
   }, [])
   const onClose = useCallback(() => {
     clear()
-    //  animtionClose()
+    animtionClose()
   }, [clear, animtionClose])
 
   const onSave = useCallback(() => {
@@ -553,7 +552,7 @@ const JobFunctionMultiSelector = (props: any) => {
             <MaterialButton
               variant='outlined'
               capitalize
-              onClick={onClose}
+              onClick={clear}
               sx={{ height: '44px', width: '40%', borderRadius: 10 }}
             >
               <Text textColor='primaryBlue' bold>
