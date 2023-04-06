@@ -122,6 +122,8 @@ const MainLeft = (props:any) => {
     if (tabList?.length && tabValue) {
       const tab = R.find(R.propEq('value', tabValue))(tabList)
       if(tab?.fetchFun){
+        setTabChildren([])
+        setTabValueChidren('')
         getData(tab, page)
       }else{
         setTabChildren(tab.children)
@@ -144,7 +146,7 @@ const MainLeft = (props:any) => {
        setTabValue(type)
     }else{
       setTabValue(type || 'communicated')
-      setTabList(initTabList);
+      setTabList(initTabList);  
     }
   }, [type])
 
