@@ -29,6 +29,9 @@ import { initFireBase } from 'helpers/fireBaseManager'
 import 'moment/locale/en-sg'
 import 'moment/locale/zh-cn'
 import 'moment/locale/zh-hk'
+import moment from 'moment'
+moment.locale('en-sg')
+
 const App = (props: AppProps) => {
   const { Component, pageProps } = props
   const router = useRouter()
@@ -105,7 +108,7 @@ const App = (props: AppProps) => {
           //
         })
         .catch((result) => {
-          const { data, status }  = result.response ?? {}
+          const { data, status } = result.response ?? {}
           if (status == 400 || data?.errors?.error[0] === 'Invalid token') {
             if (router.pathname !== '/get-started') {
               removeCookie('accessToken')
