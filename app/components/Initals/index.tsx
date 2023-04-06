@@ -22,6 +22,19 @@ const tiktokfunc = () => {
     }
   }
 }
+// const win = globalThis as any
+// (globalThis as any).gtag_report_conversion = (url) => {
+//   const callback = function () {
+//     if (typeof(url) != 'undefined') {
+//       win.location = url;
+//     }
+//   };
+//   win.gtag('event', 'conversion', {
+//       'send_to': 'AW-844310282/-rRMCKjts6sBEIrOzJID',
+//       'event_callback': callback
+//   });
+//   return false;
+// }
 const runInClient = () => {
   if (!(window as any)?.imSharedWorker && window.SharedWorker) {
     (window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
@@ -89,6 +102,7 @@ const Initial = () => {
           `
       }}
     />
+
     {/* Facebook  */}
     <Script
       dangerouslySetInnerHTML={{

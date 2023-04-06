@@ -24,9 +24,8 @@ const Table = (props: any) => {
                     {totalPages > 1 ? <Pagination count={+totalPages} page={+page} /> : null}
                 </div>
             ) : (
-                null
+                <Empty />
             )}
-            {!jobs?.length && <Empty />}
             <div>{jobs?.length ? <MobileTable {...props} /> : null}</div>
         </Loader>
     )
