@@ -166,7 +166,7 @@ const Resume = ({
           </FormControl>
         </Box>
         <button className={styles.btn} >
-          <Link href="/manage-profile?tab=resume">
+          <Link href="/manage-profile?tab=profile" prefetch={false}>
             Edit online resume
           </Link>
         </button>
