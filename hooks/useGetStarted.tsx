@@ -99,7 +99,7 @@ const useGetStarted = () => {
         ? '/jobseeker-complete-profile/1'
         : defaultRedirectPage
         ? defaultRedirectPage
-        : `/jobs-hiring/job-search`
+        : '/'
     const isChatRedirect = localStorage.getItem('isChatRedirect')
     if (isChatRedirect) {
       url = isChatRedirect
