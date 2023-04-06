@@ -242,7 +242,7 @@ const JobCard = (props: any) => {
                                     </MaterialButton>
                                 </div>
                                 {!!recruiter_is_online && <div className={styles.online}>
-                                    OnLine
+                                    Online
                                 </div>}
                             </div>
                         }, { className: styles.recruiterContainer }, false)}
