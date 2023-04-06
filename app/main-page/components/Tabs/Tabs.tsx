@@ -317,7 +317,7 @@ const Tabs = ({ location }: any) => {
               )}
 
               <div className={styles.tabContainer_more}>
-                <Link prefetch={false} className={styles.moreBtn} href='/jobs-hiring/job-search'>
+                <Link prefetch={false} className={styles.moreBtn} href='/my-jobs'>
                   See More
                 </Link>
               </div>
