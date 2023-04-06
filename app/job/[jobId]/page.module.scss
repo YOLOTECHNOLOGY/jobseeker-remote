@@ -4,6 +4,7 @@
 .errorMain {
   text-align: center;
   margin: 100px 0;
+
   h2 {
     margin-bottom: 20px;
   }
@@ -288,7 +289,7 @@
         color: #353535;
       }
 
-      h5 + p {
+      h5+p {
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -537,6 +538,7 @@
         button {
           width: 50%;
         }
+
         button:first-child {
           justify-content: center;
         }
@@ -569,6 +571,17 @@
   background-color: white;
   border-radius: 15px;
   overflow: hidden;
+
+  @include sm {
+    top: unset;
+    left: 0px;
+    bottom: 0px;
+    transform: unset;
+    width: 100%;
+    height: unset;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
 
   &_map {
     padding: 19px 21px 25px 26px;
@@ -962,6 +975,7 @@
 
         &_field {
           flex: 0.67;
+
           &_bingo {
             display: none;
           }
