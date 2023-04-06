@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect ,Suspense} from 'react'
+import React, { useState, useEffect, Suspense, useMemo } from 'react'
 import Header from './Header'
 import HeaderMobile from './mobile/header'
 import MainMobile from './mobile/Main'
@@ -21,7 +21,7 @@ import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import styles from '../index.module.scss'
-import { useRouter ,usePathname,useSearchParams} from 'next/navigation'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -71,7 +71,7 @@ const initTabList = [
     key: 'interviews',
     children: []
   },
- 
+
   {
     tab: 'Viewed',
     value: 'viewed',
@@ -98,16 +98,16 @@ const tabListIntersted = [
   }
 ]
 
-const tabListInterstedArr = ['interested','viewedMe']
+const tabListInterstedArr = ['interested', 'viewedMe']
 
 
-const MainLeft = (props:any) => {
-  const {type} = props.searchParams
-  console.log(props,777)
+const MainLeft = (props: any) => {
+  const { type } = props.searchParams
+  console.log(props, 777)
   const [tabValue, setTabValue] = useState<string>('')
   const [data, setData] = useState<Array<any>>([])
   const [tabList, setTabList] = useState<Array<any>>([])
-  const [tabChildren, setTabChildren] = useState<Array<any>>([])
+  // const [tabChildren, setTabChildren] = useState<Array<any>>([])
   const [tabValueChildren, setTabValueChidren] = useState<string>('')
   const [page, setPage] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
@@ -121,17 +121,19 @@ const MainLeft = (props:any) => {
   useEffect(() => {
     if (tabList?.length && tabValue) {
       const tab = R.find(R.propEq('value', tabValue))(tabList)
-      if(tab?.fetchFun){
-        setTabChildren([])
+      if (tab?.fetchFun) {
+        // setTabChildren([])
         setTabValueChidren('')
         getData(tab, page)
-      }else{
-        setTabChildren(tab.children)
+      } else {
+        // setTabChildren(tab.children)
         setTabValueChidren(tab.children?.[0]?.value || '')
       }
     }
   }, [tabValue, tabList, page])
-
+  const tabChildren = useMemo(() => {
+    return tabList[R.findIndex(R.propEq('value', tabValue))(tabList)]?.children ?? []
+  }, [tabList,tabValue])
 
   useEffect(() => {
     if (tabValueChildren) {
@@ -142,11 +144,11 @@ const MainLeft = (props:any) => {
 
   useEffect(() => {
     if (type && tabListInterstedArr.includes(type)) {
-       setTabList(tabListIntersted)
-       setTabValue(type)
-    }else{
+      setTabList(tabListIntersted)
+      setTabValue(type)
+    } else {
       setTabValue(type || 'communicated')
-      setTabList(initTabList);  
+      setTabList(initTabList);
     }
   }, [type])
 
@@ -163,14 +165,14 @@ const MainLeft = (props:any) => {
       data.map(e => {
         idList.push(e.recruiter_id)
       })
-      if(data.length){
+      if (data.length) {
         checkChates(data, total, idList)
-      }else{
+      } else {
         setTotal(total)
         setData(data)
         setLoadingList(false)
       }
-   
+
     })
   }
 
@@ -199,21 +201,21 @@ const MainLeft = (props:any) => {
     }).finally(() => setLoadingList(false))
   }
   const onChange = (e: string) => {
-    const children = tabList[R.findIndex(R.propEq('value', e))(tabList)]?.children
+    // const children = tabList[R.findIndex(R.propEq('value', e))(tabList)]?.children
     setPage(1)
     setTabValue(e)
-    setTabChildren(children)
-    setTabValueChidren(children?.[0]?.value || '')
+    // setTabChildren(children)
+    setTabValueChidren(tabChildren?.[0]?.value || '')
   }
 
   const handleChangeChildren = (e: string) => {
     setTabValueChidren(e)
   }
-  const handelSave = (item,index) => {
+  const handelSave = (item, index) => {
     setLoadingChat(true)
     const { id } = item.job || {}
     deleteSaveJobService(id).then(res => {
-      checkSavedData(res,index,id)
+      checkSavedData(res, index, id)
     })
     // if (saved) {
     //   deleteSaveJobService(id).then(res => {
@@ -225,15 +227,15 @@ const MainLeft = (props:any) => {
     //   }).finally(() => setLoadingChat(false))
     // }
   }
- 
 
-  const checkSavedData = (res,index,id) => {
+
+  const checkSavedData = (res, index, id) => {
     const jobData = res?.data?.data
     if (jobData) {
-     const newSearchParams = new URLSearchParams(searchParams.toString())
+      const newSearchParams = new URLSearchParams(searchParams.toString())
       newSearchParams.set('unsaveId', id)
       router.push(pathname + '?' + newSearchParams.toString(), { forceOptimisticNavigation: true })
-      data.splice(index,1)
+      data.splice(index, 1)
       setData([...data])
       setOpen(true)
     }
@@ -282,21 +284,21 @@ const MainLeft = (props:any) => {
           handleChangeChildren={handleChangeChildren}
         />
         <Suspense fallback={<h1>Loading Bar...</h1>}>
-            <MainMobile
-              tabValue={tabValue}
-              data={data}
-              page={page}
-              totalPage={total}
-              loadingList={loadingList}
-              onChange={(e) => setPage(e)}
-            />
+          <MainMobile
+            tabValue={tabValue}
+            data={data}
+            page={page}
+            totalPage={total}
+            loadingList={loadingList}
+            onChange={(e) => setPage(e)}
+          />
         </Suspense>
       </div>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
       >
         <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
           success!
