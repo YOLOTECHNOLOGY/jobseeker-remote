@@ -102,7 +102,7 @@ const SearchArea = (props: any) => {
       qualification,
       salary: salaries,
       workExperience,
-      jobType: jobTypes,
+      jobTypes,
       industry,
       companySizes,
       sort,
