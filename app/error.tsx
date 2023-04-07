@@ -5,24 +5,43 @@ import { useRouter } from 'next/navigation'
 import { BossjobLogo } from 'images'
 import { Button } from 'app/components/MUIs'
 import styles from './index.module.scss'
+import configuredAxios from 'helpers/configuredAxios'
+import { getCookie, setCookie } from 'helpers/cookies'
+import Loading from './loading'
 
 export default function Error({ error, reset }: { error: any; reset: () => void }) {
   const router = useRouter()
   useEffect(() => {
-    // Log the error to an error reporting service
     console.error(error)
   }, [error])
-  useEffect(() => {
-    if (error.message === 'NEXT_REDIRECT') {
-      const redirectUrl = error.digest?.split?.(';')?.[1]
-      if (redirectUrl) {
-        router.push(redirectUrl, { forceOptimisticNavigation: true })
-      }
+  if (error?.message?.includes('status code 401')) {
+
+    if (globalThis.globalPromise) {
+      globalThis.globalPromise.then(() => {
+        window.location.reload()
+      })
+    } else {
+
+      const axios = configuredAxios('auth', '', '', '');
+      const data = { source: 'web', refresh: getCookie('refreshToken') }
+      globalThis.globalPromise = axios.post('/token/refresh', data).then((res: any) => {
+        const { access, token_expired_at } = res?.data?.data ?? {}
+        if (access) {
+          setCookie('accessToken', access, token_expired_at)
+          window.location.reload()
+
+        } else {
+          router.push('/get-started', { forceOptimisticNavigation: true })
+        }
+      }).catch((e) => {
+        router.push('/get-started', { forceOptimisticNavigation: true })
+      })
     }
-    if (error?.response?.status === 401) {
-      router.push('/get-started', { forceOptimisticNavigation: true })
-    }
-}, [error])
+
+
+    return <Loading />
+  }
+
   return (
     <section className={styles.errorMain}>
       <div className={styles.errorMain_loadingLogo}>

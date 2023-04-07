@@ -168,8 +168,9 @@ const redirectToHomeOnClient = () => {
   }
 }
 
-let globalPromise;
-const chain = configured => (baseURL, type = 'public', passToken, serverAccessToken, server = false) => {
+// let globalPromise;
+globalThis.globalPromise = null
+const chain = configured => (baseURL, type = 'public', passToken, serverAccessToken, server = typeof window === 'undefined') => {
   const createAxios = () => configuredAxios(baseURL, type, passToken, serverAccessToken, server)
   const axios = createAxios();
   const keys = Object.keys(axios);
@@ -181,16 +182,18 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
         axios.interceptors.response.use(
           (response) => response,
           (error) => {
-            if (error?.response?.status === 401 && server) {
-              redirect(process.env.HOST_PATH + '/get-started')
-            }
+
+            // if (error?.response?.status === 401 && server) {
+            //   console.log('server401', error,  error.request)
+            //   redirect(process.env.HOST_PATH + '/refresh-token')
+            // }
             if (error?.response?.status === 401 && typeof window !== 'undefined') {
               if (configured) {
                 redirectToHomeOnClient();
                 return Promise.reject(error)
               }
               if (!globalPromise) {
-                globalPromise = refreshTokenServer().catch(error => {
+                globalThis.globalPromise = refreshTokenServer().catch(error => {
                   redirectToHomeOnClient()
                 }).finally(() => {
                   setTimeout(() => {
