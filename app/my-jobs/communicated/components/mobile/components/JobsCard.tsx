@@ -113,7 +113,7 @@ const JobsCard = ({
         full_name: fullName,
         last_active_at: lastActiveAt
       } = item.recruiter || {};
-      const { job_title: workJobTitle } = item.recruiter?.work_experience || {};
+      const workJobTitle = item.recruiter?.work_experience?.job_title ;
       const same = isSameDay(item.created_at, data[index - 1]?.created_at)
       return (
         <div key={`${item.id}`}>
