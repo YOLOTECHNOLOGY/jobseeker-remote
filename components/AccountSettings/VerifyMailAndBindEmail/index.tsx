@@ -63,7 +63,7 @@ const VerifyMailAndBindEmail = ({
       const eventCallBack = () => {
         if (countDownVerify <= 1) {
           setIsShowCountDownSwitch(false)
-          clearInterval()
+          clearInterval(refCountDownTimeName.current)
         } else {
           countDownVerify = countDownVerify - 1
           setCountDown(countDownVerify)
