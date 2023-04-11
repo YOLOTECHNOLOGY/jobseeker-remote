@@ -14,6 +14,6 @@ export default command =>
     }),
 
     redirectLogin: () => M.do(() => {
-      redirect(process.env.HOST_PATH + '/get-started')
+      redirect('/get-started')
     })
   })

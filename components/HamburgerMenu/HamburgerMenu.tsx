@@ -109,8 +109,8 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   className={styles.defaultLink}
                   to={
                     userCookie?.is_profile_completed
-                      ? `${process.env.HOST_PATH}/manage-profile`
-                      : `${process.env.HOST_PATH}/jobseeker-complete-profile/1`
+                      ? `/manage-profile`
+                      : `/jobseeker-complete-profile/1`
                   }
                   // to={userCookie?.is_profile_completed ? authPathToOldProject(null, '/dashboard/profile/jobseeker') : '/jobseeker-complete-profile/1'}
                   aTag

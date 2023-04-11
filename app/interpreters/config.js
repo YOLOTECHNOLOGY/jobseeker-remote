@@ -3,7 +3,7 @@ import { ReaderTPromise as M } from 'app/abstractModels/monads'
 import { fetchConfigService } from "store/services/config/fetchConfig";
 import { registInterpreter, Result } from 'app/abstractModels/util';
 import { cache } from 'react'
-import { pick, mergeDeepLeft } from 'ramda'
+import { mergeDeepLeft } from 'ramda'
 const cachedConfig = cache(fetchConfigService)
 
 export default usedConfigProps => {
@@ -11,9 +11,10 @@ export default usedConfigProps => {
         if (!keypath.length) {
             return data
         } else {
-            const [head, ...tail] = keypath
+            const [key] = keypath
+            console.log({ keypath })
             const result = {
-                [head]: valueForKeyPath(pick([head])(data)[head])(tail)
+                [key]: data[key]
             }
             return result
         }
