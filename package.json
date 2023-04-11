@@ -2,7 +2,7 @@
   "name": "next-fe-boilerplate",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--max_old_space_size=12000 --inspect=9230' HOST_PATH='http://localhost:3004' COUNTRY_KEY='ph' next dev  -p 3004   ",
+    "dev": "NODE_OPTIONS='--max_old_space_size=12000 --inspect=9230' HOST_PATH='http://localhost:3004' next dev  -p 3004   ",
     "build:development": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.devsite --use-shell MAINTENANCE=$MAINTENANCE next build",
     "build:staging": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
     "build:production": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
