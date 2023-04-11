@@ -1,5 +1,6 @@
 export const getCountryKey = () => {
-        if(process.env.HOST_PATH.includes('.sg')){
+        const path = typeof window === 'undefined'? process.env.HOST_PATH : window.location.href
+        if(path.includes('.sg')){
             return 'sg'
         } else {
             return 'ph'
