@@ -18,7 +18,7 @@ const jobseekerDisplayStatusObject = {
   "Cancelled": '#707070',
   "Not accepted": '#707070',
   "Completed": "#0EBD5C",
-  "Not checked in": '#D2030F;',
+  "Not checked in": '#D2030F',
 };
 
 
@@ -70,7 +70,7 @@ const JobCardInterview = (props: any) => {
               }
               {phoneNum}
             </span>
-            <span className={styles.jobrStatus} style={{ color: jobseekerDisplayStatusObject[jobseekerDisplayStatus] || '#136FD3' }}>{jobseekerDisplayStatus}</span>
+            <span className={styles.jobrStatus} style={{ color: jobseekerDisplayStatusObject[jobseekerDisplayStatus] || '#136FD3' }}> {jobseekerDisplayStatus}</span>
           </div>
           <div className={styles.operator}>
             {

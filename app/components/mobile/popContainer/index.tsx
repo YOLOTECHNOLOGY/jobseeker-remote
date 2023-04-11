@@ -1,9 +1,10 @@
 'use client'
 import React,{} from 'react'
 import styles from './index.module.scss'
-import { CloseIcon } from 'images'
-import Image from 'next/image'
+// import { CloseIcon } from 'images'
+// import Image from 'next/image'
 import Button from '@mui/material/Button'
+import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 const PopContainer = (props: any) => {
     // const syncHeight = () => {
     //     document.documentElement.style.setProperty('--window-inner-height', `${window.innerHeight}px`)
@@ -19,7 +20,8 @@ const PopContainer = (props: any) => {
     return <div className={styles.main}>
         <div className={styles.topbar}>
             <label>{name}</label>
-            <Image src={CloseIcon} width={15} height={15} alt={''} onClick={onClose} />
+            {/* <Image src={CloseIcon} width={15} height={15} alt={''} onClick={onClose} /> */}
+            <CloseSharpIcon onClick={onClose} style={{color:'#BCBCBC'}}/>
         </div>
         <div className={styles.content}>{children}</div>
         {multiple && <div className={styles.buttonContent}>
