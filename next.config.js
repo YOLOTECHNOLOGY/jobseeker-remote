@@ -24,7 +24,7 @@ module.exports = withBundleAnalyzer({
   },
   reactStrictMode: false,
   compiler: {
-    removeConsole: false
+    removeConsole: true
   },
   experimental: {
     // concurrentFeatures: true,

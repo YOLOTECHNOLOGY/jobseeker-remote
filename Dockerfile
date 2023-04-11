@@ -23,4 +23,4 @@ RUN MAINTENANCE=$MAINTENANCE HOST_PATH=$HOST_PATH yarn build:$ENV
 EXPOSE 3004
 
 # Start the app.
-CMD yarn start
+CMD HOST_PATH=$HOST_PATH yarn start
