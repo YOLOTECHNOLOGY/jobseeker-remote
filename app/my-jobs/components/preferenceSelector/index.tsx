@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { CircularProgress } from 'app/components/MUIs'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
+import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp';
 const PreferenceSelector = (props: any) => {
     const { preferences, preferenceId, config } = props
     const preferencesRef = useRef(preferences)
@@ -75,7 +76,7 @@ const PreferenceSelector = (props: any) => {
                 }
                 setShowModal(true)
             }}>
-                {preferences.length === 3 ? 'Edit' : 'Add New'}
+                {preferences.length === 3 ? 'Edit' : 'Add New'} <ArrowRightSharpIcon style={{color:'#BCBCBC',verticalAlign:'top'}}/>
             </div>}
         {showModal && <EditJobPreferencesModal
             modalName={'jobPreference'}

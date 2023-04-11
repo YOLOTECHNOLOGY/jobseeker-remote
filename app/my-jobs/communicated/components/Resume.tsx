@@ -157,6 +157,11 @@ const Resume = ({
               id="demo-simple-select"
               value={noticePeriodData}
               label="Availability"
+              sx={{
+                '> .MuiSelect-select': {
+                 padding:'10px 14px'
+                }
+              }}
               onChange={handleChange}
             >
               {

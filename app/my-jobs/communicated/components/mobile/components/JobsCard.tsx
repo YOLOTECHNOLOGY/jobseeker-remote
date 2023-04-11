@@ -14,7 +14,7 @@ const  jobseekerDisplayStatusObject = {
   "Cancelled":'#707070',
   "Not accepted":'#707070',
   "Completed": "#0EBD5C",
-  "Not checked in":'#D2030F;',
+  "Not checked in":'#D2030F',
 };
 interface cardProps {
   data: Array<any>,
@@ -143,8 +143,10 @@ const JobsCard = ({
               >
                 <Image src={avatar} alt={fullName} width={20} height={20} />
               </div>
-              {fullName} · {workJobTitle}
+              <div className={styles.bottmBox}>
+              <span className={styles.workJob}> {fullName} · {workJobTitle}</span>
               <span className={styles.location}>{location}</span>
+              </div>
             </div>
           </div>
         </div>

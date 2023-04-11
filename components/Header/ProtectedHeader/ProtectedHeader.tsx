@@ -32,6 +32,13 @@ const ProtectedHeader = () => {
   const [isShowHeaderMenu, setIsShowHeaderMenu] = useState(false)
   const { totalUnread } = useContext(IMContext)
   // const totalUnread = 999
+
+ useEffect(()=>{
+   if(pathname && isShowHeaderMenu){
+    setIsShowHeaderMenu(false)
+   }
+ },[pathname])
+
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       setIsShowHeaderMenu(false)
