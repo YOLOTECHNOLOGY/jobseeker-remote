@@ -14,7 +14,7 @@ type propsType = {
 
 const SeeMore = ({ jobDetail }: propsType) => {
   const router = useRouter()
-  const xp_lvls = useSelector((store: any) => store.config.config.response?.inputs?.xp_lvls ?? [])
+  const xp_lvls = useSelector((store: any) => store.config.config.response?.xp_lvls ?? [])
 
   const handleToHomePage = () => {
     const xp_lvl = xp_lvls.find((item) => jobDetail.xp_lvl?.key == item.key)

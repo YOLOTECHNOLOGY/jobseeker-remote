@@ -86,14 +86,14 @@ module.exports = withBundleAnalyzer({
       'local-assets.bossjob.com'
     ]
   },
-  plugins: [
-    [
-      '@babel/plugin-proposal-decorators',
-      {
-        legacy: true
-      }
-    ]
-  ],
+  // plugins: [
+  //   [
+  //     '@babel/plugin-proposal-decorators',
+  //     {
+  //       legacy: true
+  //     }
+  //   ]
+  // ],
   webpack(config, { isServer }) {
     if (isServer) {
       generateRobotsTxt()

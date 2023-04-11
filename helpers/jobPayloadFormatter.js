@@ -181,7 +181,7 @@ const getPredefinedParamsFromUrl = (routerQuery, catList, locList, clearAllFilte
 }
 
 const getJobTypeList = (config) => {
-  return config?.inputs.job_types.map((jobType) => ({
+  return config.job_types.map((jobType) => ({
     ...jobType,
     label: jobType.value,
     value: jobType.key
@@ -193,8 +193,8 @@ const getLocationList = (config) => {
 
   const locList =
     config &&
-    config.inputs &&
-    config.inputs.location_lists
+    config &&
+    config.location_lists
       .map((region) =>
         region.locations.map((loc) => ({
           ...loc,
@@ -211,7 +211,7 @@ const getSmsCountryList = (config) => {
   if (!config) return []
 
   const smsCountryList = []
-  const countryList = config?.inputs?.country_lists ?? []
+  const countryList = config?.country_lists ?? []
   countryList.forEach((country) => {
     if (country.is_sms_allowed) {
       const smsCountry = {
@@ -231,7 +231,7 @@ const getJobCategoryList = (config) => {
 
   const categories = []
 
-  config?.inputs?.job_category_lists.forEach((mainCategory) => {
+  config?.job_category_lists.forEach((mainCategory) => {
     mainCategory.sub_list.forEach((subList) => {
       subList['label'] = subList['value']
       categories.push(subList)
@@ -244,7 +244,7 @@ const getJobCategoryList = (config) => {
 const getJobCategoryIds = (config, categories) => {
   if (!config) return []
 
-  const categoryLists = config?.inputs?.job_category_lists
+  const categoryLists = config?.job_category_lists
   const categoryIds = []
 
   categoryLists.forEach((mainCategory) => {
@@ -259,7 +259,7 @@ const getJobCategoryIds = (config, categories) => {
 }
 
 const getNoticePeriodList = (config) => {
-  return config?.inputs?.notice_period_lists.map((notice) => ({
+  return config?.notice_period_lists.map((notice) => ({
     ...notice,
     label: notice.value,
     value: notice.id
@@ -268,7 +268,7 @@ const getNoticePeriodList = (config) => {
 
 const getSalaryOptions = (config, salaryFrom, hasComparedTo) => {
   if (!config) return null
-  const salaryConfig = config?.inputs?.salary_ranges
+  const salaryConfig = config?.salary_ranges
   if (salaryConfig && salaryConfig.length === 0) return salaryConfig
 
   const _salaryTo = hasComparedTo ? salaryFrom * salaryConfig.upper_bound_scale : salaryConfig.to
@@ -283,7 +283,7 @@ const getSalaryOptions = (config, salaryFrom, hasComparedTo) => {
 const getCountryList = (config) => {
   if (!config) return []
 
-  const countryLists = config?.inputs?.country_lists ?? []
+  const countryLists = config?.country_lists ?? []
   if (countryLists && countryLists.length === 0) return countryLists
 
   let countryOptions = countryLists.map((country) => {
@@ -302,7 +302,7 @@ const getCountryList = (config) => {
 const getIndustryList = (config) => {
   if (!config) return []
 
-  const industryList = config?.inputs?.industry_lists
+  const industryList = config?.industry_lists
   if (industryList && industryList.length === 0) return industryList
 
   return industryList.map((industry) => {
@@ -317,7 +317,7 @@ const getIndustryList = (config) => {
 const getDegreeList = (config) => {
   if (!config) return []
 
-  const degreeList = config?.inputs?.degrees
+  const degreeList = config?.degrees
   if (degreeList && degreeList.length === 0) return degreeList
 
   return degreeList.map((degree) => {

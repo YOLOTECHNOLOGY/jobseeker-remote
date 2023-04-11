@@ -19,7 +19,7 @@ const JobAlert = (props: any) => {
     const userCookie = getCookie('user')
     const router = useRouter()
     const { searchValues, config } = props
-    const salaryList = config.filters.salary_range_filters ?? []
+    const salaryList = config.salary_range_filters ?? []
     const salaryValues = (searchValues.salary ?? []).map(item => salaryList.find(salary => salary['seo-value'] === item).value).join(',')
     const params = buildParams(config, searchValues)
     const { query, location } = params

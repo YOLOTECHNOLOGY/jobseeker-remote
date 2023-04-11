@@ -111,14 +111,14 @@ const NavSearchFilter = ({
   const router = useRouter()
   const { keyword } = router.query
   const config = useSelector((state: any) => state.config.config.response)
-  // const industryList = config.inputs.industry_lists
-  const expLvlList = config.inputs.xp_lvls
-  const eduLevelList = config.filters.educations
-  const jobTypeList = config.inputs.job_types
-  // const categoryList = config.inputs.job_category_lists
+  // const industryList = config.industry_lists
+  const expLvlList = config.xp_lvls
+  const eduLevelList = config.educations
+  const jobTypeList = config.job_types
+  // const categoryList = config.job_category_lists
   const scrollY = useRef(0)
 
-  const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
+  const salaryRangeList = config.salary_range_filters.map((range) => ({
     ...range,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value
   }))

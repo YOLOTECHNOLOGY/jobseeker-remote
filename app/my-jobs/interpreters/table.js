@@ -43,12 +43,12 @@ export default registInterpreter(command =>
     command.cata({
         fetchData: () => M(context => {
             const { searchParams, config, preferences, preferenceId } = context
-            const industryList = config.inputs.industry_lists
-            const qualificationList = config.filters.educations
+            const industryList = config.industry_lists
+            const qualificationList = config.educations
             const [salaryFrom, salaryTo] = handleSalary(searchParams.salary?.split?.(',') ?? [])
-            const workExperienceList = config.inputs.xp_lvls
-            const jobTypeList = config.inputs.job_types
-            const companySizeList = config.inputs.company_sizes
+            const workExperienceList = config.xp_lvls
+            const jobTypeList = config.job_types
+            const companySizeList = config.company_sizes
 
             const queriyParams = {
                 jobseekerPrefId: preferenceId,

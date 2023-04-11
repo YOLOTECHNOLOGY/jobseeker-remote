@@ -60,22 +60,22 @@ const SearchArea = (props: any) => {
   const [qualification, setQualification] = useState(
     searchParams.get('qualification')?.split?.(',') ?? []
   )
-  const qualificationList = config.filters.educations.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+  const qualificationList = config.educations.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
   const [workExperience, setWorkExperience] = useState(
     searchParams.get('workExperience')?.split?.(',') ?? []
   )
-  const workExperienceList = config.inputs.xp_lvls.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+  const workExperienceList = config.xp_lvls.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
   const [industry, setIndustry] = useState(
     searchParams.get('industry')?.split?.(',') ?? []
   )
-  const industryList = config.inputs.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+  const industryList = config.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
   const [companySizes, setCompanySizes] = useState(
     searchParams.get('companySizes')?.split?.(',') ?? []
   )
-  const companySizeList = config.inputs.company_sizes.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+  const companySizeList = config.company_sizes.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
 
   const [salaries, setSelaries] = useState(searchParams.get('salary')?.split(',') ?? [])
-  const salaryOptions = config.filters?.salary_range_filters?.map?.((item) => ({
+  const salaryOptions = config?.salary_range_filters?.map?.((item) => ({
     value: item?.['seo-value'],
     label: item.value
   })) ?? []
@@ -91,7 +91,7 @@ const SearchArea = (props: any) => {
 
   // const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
   const [jobTypes, setJobtypes] = useState(searchParams?.jobTypes ?? [])
-  const jobTypeList = config?.inputs?.job_types?.map?.((item) => ({
+  const jobTypeList = config?.job_types?.map?.((item) => ({
     value: item?.['seo-value'],
     label: item.value
   })) ?? []
@@ -135,7 +135,7 @@ const SearchArea = (props: any) => {
           <div className={styles.searchArea}>
             <LocationField
               className={styles.location}
-              locationList={config.inputs.location_lists}
+              locationList={config.location_lists}
               value={location}
               isClear={true}
               defaultValue={location}

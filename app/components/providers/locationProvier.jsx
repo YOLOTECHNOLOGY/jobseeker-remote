@@ -13,17 +13,13 @@ import { useRouter } from 'next/navigation'
 export const LocationContext = createContext()
 const Provider = LocationContext.Provider
 
-// queryLatLon: [],
-// fetchLocation: ['latLon'],
-// updateLocation: ['location'],
-// refreshPage: []
 // eslint-disable-next-line react/prop-types
 const LocationProvider = ({ children }) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchConfigRequest())
     }, [])
-    const locations = useSelector(store => store.config?.config?.response?.inputs.location_lists)
+    const locations = useSelector(store => store.config?.config?.response?.location_lists)
     const router = useRouter()
     const flatLocations = useMemo(() => {
         if (!locations?.length) {

@@ -29,7 +29,7 @@ const JobFunctionSelector = (props: any) => {
   const [selectedSubItem, setSelectedSubItem] = useState<any>({})
   const [expandeds, setExpandeds] = useState([])
   const jobFunctions = useSelector(
-    (store: any) => store.config.config.response?.inputs?.job_function_lists ?? []
+    (store: any) => store.config.config.response?.job_function_lists ?? []
   )
   const jobFunctionsKeys = useMemo(() => flatMap(jobFunctions, keys), [jobFunctions])
   const jobFunctionsObject = useMemo(() => jobFunctions?.reduce(assign, {}), [jobFunctions])

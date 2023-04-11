@@ -37,7 +37,7 @@ const JobClient = (props: sharePropsType) => {
 
   useEffect(() => {
     setReportJobReasonList(
-      config?.inputs?.report_job_reasons ?? initialState.response.inputs.report_job_reasons
+      config?.report_job_reasons ?? initialState.response.report_job_reasons
     )
   }, [config])
 

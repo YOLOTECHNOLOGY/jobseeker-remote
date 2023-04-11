@@ -15,8 +15,9 @@ COPY . .
 # Define Argument variables
 ARG ENV="development"
 ARG MAINTENANCE="false"
+ARG HOST_PATH="https://bossjob.ph"
 
-RUN MAINTENANCE=$MAINTENANCE yarn build:$ENV
+RUN MAINTENANCE=$MAINTENANCE HOST_PATH=$HOST_PATH yarn build:$ENV
 
 # Expose the port of the app thats running in the container.
 EXPOSE 3004

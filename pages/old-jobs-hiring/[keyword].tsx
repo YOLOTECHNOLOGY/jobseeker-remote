@@ -232,7 +232,7 @@ const useJobAlert = () => {
   }, [])
   return setLastSearch
 }
-const isConfigEmpty = config => !(config?.inputs?.job_types?.length > 0)
+const isConfigEmpty = config => !(config?.job_types?.length > 0)
 const JobSearchPage = (props: JobSearchPageProps) => {
   const {
     accessToken,
@@ -281,8 +281,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
   const jobFunctionValue = useMemo(() => {
     return { mainFunctions, jobFunctions, functionTitles }
   }, [mainFunctions, jobFunctions, functionTitles])
-  const functionTitleList = config?.inputs?.function_titles ?? []
-  const reportJobReasonList = config?.inputs?.report_job_reasons ?? []
+  const functionTitleList = config?.function_titles ?? []
+  const reportJobReasonList = config?.report_job_reasons ?? []
 
   const jobListResponse = useSelector((store: any) => store.job.jobList.response)
   const isJobListFetching = useSelector((store: any) => store.job.jobList.fetching)
@@ -386,8 +386,8 @@ const JobSearchPage = (props: JobSearchPageProps) => {
       searchParams: { pathname: router.pathname, query: router.query }
     }))
   }, [filterJobPayload, router.pathname, router.query])
-  const jobTypeList = config?.inputs?.job_types ?? []
-  const salaryRangeList = config?.filters?.salary_range_filters ?? []
+  const jobTypeList = config?.job_types ?? []
+  const salaryRangeList = config?.salary_range_filters ?? []
 
   const updateUrl = (queryParam, queryObject) => {
     queryObject['page'] = '1'
@@ -929,16 +929,16 @@ const initPagePayLoad = (query, config = null) => {
     const locationConfig = locationList?.map((region) => region.locations)
     return locationConfig
   }
-  const industryList = config.inputs.industry_lists
-  const expLvlList = config.inputs.xp_lvls
-  const eduLevelList = config.filters.educations
-  const locationList = config.inputs.location_lists
+  const industryList = config.industry_lists
+  const expLvlList = config.xp_lvls
+  const eduLevelList = config.educations
+  const locationList = config.location_lists
   const formattedLocationList = flat(formatLocationConfig(locationList))
-  const jobTypeList = config.inputs.job_types
-  const salaryRangeList = config.filters.salary_range_filters
-  const mainFunctionList = config.inputs.main_functions
-  const jobFunctionList = config.inputs.job_functions
-  const functionsTitleList = config.inputs.function_titles
+  const jobTypeList = config.job_types
+  const salaryRangeList = config.salary_range_filters
+  const mainFunctionList = config.main_functions
+  const jobFunctionList = config.job_functions
+  const functionsTitleList = config.function_titles
   // query parameters
   const queryJobType: any = query?.jobType
   const querySalary: any = query?.salary

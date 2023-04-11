@@ -21,11 +21,14 @@ export default usedConfigProps => {
     const interpreter = registInterpreter(command =>
         command.cata({
             fetchData: () => M(() =>
-                cachedConfig().then(data => Result.success({
-                    config: usedConfigProps
-                        .map(valueForKeyPath(data))
-                        .reduce(mergeDeepLeft)
-                })
+                cachedConfig().then(data => {
+                    console.log({ data })
+                    return Result.success({
+                        config: usedConfigProps
+                            .map(valueForKeyPath(data))
+                            .reduce(mergeDeepLeft)
+                    })
+                }
                 )).catch(Result.error),
             prepareProps: M.of,
         }))

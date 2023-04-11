@@ -10,7 +10,7 @@ import { CloseIcon } from 'images'
 
 export default function PrimarySearchAppBar({ title, onChange, onClose }: any) {
   const jobFunctions = useSelector(
-    (store: any) => store.config.config.response?.inputs?.job_function_lists ?? []
+    (store: any) => store.config.config.response?.job_function_lists ?? []
   )
 
   const options = useMemo(

@@ -28,7 +28,7 @@ const PublicSitemap = () => {
     if (config) {
       const locationList =
         config &&
-        config.inputs.location_lists
+        config.location_lists
           .map((region) =>
             region.locations.map((loc) => ({
               ...loc,
@@ -41,11 +41,11 @@ const PublicSitemap = () => {
           .sort((a, b) => a.value.localeCompare(b.value))
 
       const categoryList =
-        config && config.inputs.job_category_lists && config.inputs.job_category_lists
+        config && config.job_category_lists && config.job_category_lists
 
       const industryList =
         config &&
-        config.inputs.industry_lists.map((industry) => ({
+        config.industry_lists.map((industry) => ({
           key: industry['seo-value'],
           label: industry.value,
           value: industry.value.replace(/&/gi, '%26')
@@ -53,8 +53,8 @@ const PublicSitemap = () => {
 
       const qualificationList =
         config &&
-        config.filters.educations &&
-        config.filters.educations.map((degree) => {
+        config.educations &&
+        config.educations.map((degree) => {
           return {
             key: degree['seo-value'],
             label: degree.value,
@@ -64,8 +64,8 @@ const PublicSitemap = () => {
 
       const experienceList =
         config &&
-        config.filters.work_xps &&
-        config.filters.work_xps.map((level) => {
+        config.work_xps &&
+        config.work_xps.map((level) => {
           return {
             key: level['seo-value'],
             label: level.value,
@@ -74,7 +74,7 @@ const PublicSitemap = () => {
         })
 
       const jobTypeList =
-        config?.inputs.job_types?.map?.((type) => {
+        config.job_types?.map?.((type) => {
           return {
             key: type['seo-value'],
             label: type.value,
@@ -84,8 +84,8 @@ const PublicSitemap = () => {
 
       const salaryList =
         config &&
-        config.filters.salary_range_filters &&
-        config.filters.salary_range_filters.map((salary) => {
+        config.salary_range_filters &&
+        config.salary_range_filters.map((salary) => {
           return {
             key: salary['seo-value'],
             label: salary.value,

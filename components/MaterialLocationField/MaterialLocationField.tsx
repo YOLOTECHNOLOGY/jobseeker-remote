@@ -73,7 +73,7 @@ const formatLocationConfig = (locationList) => {
 const MaterialLocationField = ({ className, label, disableClearable = false, defaultValue, required, fieldRef, error, ...rest }: any) => {
   // const [selectedLocation, setSelectedLocation] = useState(defValue.value)
   const locationList = useSelector(
-    (store: any) => store.config.config.response?.inputs?.location_lists
+    (store: any) => store.config.config.response?.location_lists
   )
   const formattedLocationList = flat(formatLocationConfig(locationList))
   return (

@@ -77,15 +77,15 @@ const washData = pipe(
 )
 
 const configItems = applySpec({
-    location: pipe(path(['inputs', 'location_lists']), chain(prop('locations'))),
-    jobType: pipe(path(['inputs', 'job_types'])),
-    salary: pipe(path(['filters', 'salary_range_filters'])),
-    workExperience: pipe(path(['inputs', 'xp_lvls'])),
+    location: pipe(path(['location_lists']), chain(prop('locations'))),
+    jobType: pipe(path(['job_types'])),
+    salary: pipe(path(['salary_range_filters'])),
+    workExperience: pipe(path(['xp_lvls'])),
     // industry: pipe(path(['inputs', 'industry_lists'])),
-    qualification: pipe(path(['filters', 'educations'])),
-    mainFunctions: pipe(path(['inputs', 'main_functions'])),
-    jobFunctions: pipe(path(['inputs', 'job_functions'])),
-    functionTitles: pipe(path(['inputs', 'function_titles'])),
+    qualification: pipe(path(['educations'])),
+    mainFunctions: pipe(path(['main_functions'])),
+    jobFunctions: pipe(path(['job_functions'])),
+    functionTitles: pipe(path(['function_titles'])),
 })
 
 const configKeys = pipe(configItems, map(
@@ -174,17 +174,17 @@ export const handleSalary = (salaryRanges) => {
     return [salaryFrom, salaryTo]
 }
 export const buildParams = (config, searchValues) => {
-    const industryList = config.inputs.industry_lists
-    const functionsTitleList = config.inputs.function_titles
-    const jobFunctionList = config.inputs.job_functions
-    const mainFunctionList = config.inputs.main_functions
-    const companySizeList = config.inputs.company_sizes
-    const qualificationList = config.filters.educations
-    const financingStagesList = config.inputs.company_financing_stage_lists
+    const industryList = config.industry_lists
+    const functionsTitleList = config.function_titles
+    const jobFunctionList = config.job_functions
+    const mainFunctionList = config.main_functions
+    const companySizeList = config.company_sizes
+    const qualificationList = config.educations
+    const financingStagesList = config.company_financing_stage_lists
     const [salaryFrom, salaryTo] = handleSalary(searchValues.salary)
-    const workExperienceList = config.inputs.xp_lvls
-    const jobTypeList = config.inputs.job_types
-    const locationLists = flatMap(config.inputs.location_lists, item => item.locations)
+    const workExperienceList = config.xp_lvls
+    const jobTypeList = config.job_types
+    const locationLists = flatMap(config.location_lists, item => item.locations)
     return {
         query: searchValues.query,
         company_industries: searchValues.industry?.map?.(key => industryList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,

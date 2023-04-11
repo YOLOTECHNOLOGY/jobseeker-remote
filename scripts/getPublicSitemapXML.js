@@ -12,7 +12,7 @@ export const getPublicSitemapXML = (response) => {
   if (config) {
     locationList =
         config &&
-        config.inputs.location_lists
+        config.location_lists
           .map(region =>
             region.locations.map(loc => ({
               ...loc,
@@ -26,8 +26,8 @@ export const getPublicSitemapXML = (response) => {
 
     categoryList =
       config &&
-      config.inputs.job_category_lists &&
-      config.inputs.job_category_lists.map((category) => {
+      config.job_category_lists &&
+      config.job_category_lists.map((category) => {
         return {
           key: category.key,
           label: category.value,
@@ -44,7 +44,7 @@ export const getPublicSitemapXML = (response) => {
 
     industryList =
       config &&
-      config.inputs.industry_lists.map((industry) => ({
+      config.industry_lists.map((industry) => ({
         key: industry['seo-value'],
         label: Object.values(industry)[0],
         value: Object.values(industry)[0],
@@ -52,8 +52,8 @@ export const getPublicSitemapXML = (response) => {
 
     qualificationList =
       config &&
-      config.filters.educations &&
-      Object.values(config.filters.educations).map((degree) => {
+      config.educations &&
+      Object.values(config.educations).map((degree) => {
         return {
           key: degree['seo-value'],
           label: Object.values(degree)[0],
@@ -63,8 +63,8 @@ export const getPublicSitemapXML = (response) => {
 
     experienceList =
       config &&
-      config.filters.work_xps &&
-      Object.values(config.filters.work_xps).map((level) => {
+      config.work_xps &&
+      Object.values(config.work_xps).map((level) => {
         return {
           key: level['seo-value'],
           label: Object.values(level)[0],
@@ -74,8 +74,8 @@ export const getPublicSitemapXML = (response) => {
 
     jobTypeList =
       config &&
-      config.inputs.job_types &&
-      Object.values(config.inputs.job_types).map((type) => {
+      config.job_types &&
+      Object.values(config.job_types).map((type) => {
         return {
           key: type['seo-value'],
           label: Object.values(type)[0],
@@ -85,8 +85,8 @@ export const getPublicSitemapXML = (response) => {
 
     salaryList =
       config &&
-      config.filters.salary_range_filters &&
-      Object.values(config.filters.salary_range_filters).map((salary) => {
+      config.salary_range_filters &&
+      Object.values(config.salary_range_filters).map((salary) => {
         return {
           key: salary['seo-value'],
           label: Object.values(salary)[0] === '10K - 30K' ? 'Below 30K' : Object.values(salary)[0],

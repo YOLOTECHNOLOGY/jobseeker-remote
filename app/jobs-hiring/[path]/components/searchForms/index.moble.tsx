@@ -35,10 +35,10 @@ const SearchArea = (props: any) => {
     }), []
     const [page, setPage] = useState(searchValues.page ?? '1')
 
-    const locations = flatMap(config.inputs.location_lists, item => item.locations)
+    const locations = flatMap(config.location_lists, item => item.locations)
     const [location, setLocation] = useState(locations.find(location => location.seo_value === searchValues.location?.[0]))
     const [industry, setIndustry] = useState(searchValues.industry ?? [])
-    const industryList = config.inputs.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+    const industryList = config.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
 
     const [jobFunctionValue, jobFunctionChange] = useState({
         functionTitles: searchValues?.functionTitles ?? [],
@@ -46,12 +46,12 @@ const SearchArea = (props: any) => {
         mainFunctions: searchValues?.mainFunctions ?? []
     })
     const moreDataOptions = useMemo(() => {
-        const workExperience = config.inputs.xp_lvls.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
-        const qualification = config.filters.educations.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
-        const salary = config.filters?.salary_range_filters?.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
-        const jobType = config.inputs.job_types.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
-        const companySizes = config.inputs.company_sizes.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
-        const financingStages = config.inputs.company_financing_stage_lists?.map?.(item => ({ value: item?.key, label: item.value })) ?? []
+        const workExperience = config.xp_lvls.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+        const qualification = config.educations.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+        const salary = config?.salary_range_filters?.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+        const jobType = config.job_types.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+        const companySizes = config.company_sizes.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+        const financingStages = config.company_financing_stage_lists?.map?.(item => ({ value: item?.key, label: item.value })) ?? []
         return {
             workExperience, qualification, salary, jobType, companySizes, financingStages
         }
@@ -105,7 +105,7 @@ const SearchArea = (props: any) => {
                 <div className={styles.searchArea}>
                     <LocationField
                         className={styles.location}
-                        locationList={config.inputs.location_lists}
+                        locationList={config.location_lists}
                         value={location}
                         disableClearable={true}
                         isClear={true}

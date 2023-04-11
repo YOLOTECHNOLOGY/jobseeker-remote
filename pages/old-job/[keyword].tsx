@@ -138,7 +138,7 @@ const Job = ({
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
 
-  const reportJobReasonList = config && config.inputs && config.inputs.report_job_reasons
+  const reportJobReasonList = config && config && config.report_job_reasons
 
   const recommendedCoursesResponse = useSelector(
     (store: any) => store.courses.recommendedCourses.response

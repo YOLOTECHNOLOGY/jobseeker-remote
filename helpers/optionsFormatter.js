@@ -4,7 +4,7 @@
 const getDegreeOptions = (config) => {
     if (!config) return []
 
-    const degreeOptions = config?.inputs?.degrees
+    const degreeOptions = config?.degrees
     if (degreeOptions && degreeOptions.length === 0) return degreeOptions
   
     return degreeOptions.map((degree) => {
@@ -19,7 +19,7 @@ const getDegreeOptions = (config) => {
   const getCountryOptions = (config) => {
     if (!config) return []
 
-    const countryOptions = config?.inputs?.country_lists
+    const countryOptions = config?.country_lists
     if (countryOptions && countryOptions.length === 0) return countryOptions
   
     return countryOptions.map((country) => {

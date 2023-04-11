@@ -6,26 +6,27 @@ import {
 } from 'store/actions/config/fetchConfig'
 import { fetchConfigService } from 'store/services/config/fetchConfig'
 import dayjs from 'dayjs'
-
+import { getCountryKey } from 'helpers/country'
+const countryKey = getCountryKey()
 const cached = (data) => {
   if (typeof window !== 'undefined') {
-    localStorage.setItem('cachedConfig', JSON.stringify(data))
-    localStorage.setItem('configRefreshTime', dayjs().format('YYYY-MM-DD'))
+    localStorage.setItem('cachedConfig-' + countryKey, JSON.stringify(data))
+    localStorage.setItem('configRefreshTime-' + countryKey, dayjs().format('YYYY-MM-DD'))
   } else {
-    globalThis.cachedConfig = data
-    globalThis.configRefreshTime = dayjs().format('YYYY-MM-DD')
+    globalThis['cachedConfig-' + countryKey] = data
+    globalThis['configRefreshTime-' + countryKey] = dayjs().format('YYYY-MM-DD')
   }
 }
 
 const load = () => {
   if (typeof window !== 'undefined') {
-    const data = JSON.parse(localStorage.getItem('cachedConfig'))
-    const time = localStorage.getItem('configRefreshTime')
+    const data = JSON.parse(localStorage.getItem('cachedConfig-' + countryKey))
+    const time = localStorage.getItem('configRefreshTime-' + countryKey)
     return { data, time }
   } else {
     return {
-      data: globalThis.cachedConfig,
-      time: globalThis.configRefreshTime
+      data: globalThis['cachedConfig-' + countryKey],
+      time: globalThis['configRefreshTime-' + countryKey]
     }
   }
 }

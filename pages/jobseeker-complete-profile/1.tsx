@@ -45,7 +45,7 @@ const Step1 = (props: any) => {
     // const rhTooltipTitle =
     ; ('Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.')
   const locationList = useSelector(
-    (store: any) => store.config.config.response?.inputs?.location_lists
+    (store: any) => store.config.config.response?.location_lists
   )
   const formattedLocationList = flatMap(locationList, (l) => l.locations)
   const desiredLoaction = useMemo(() => {
@@ -99,12 +99,12 @@ const Step1 = (props: any) => {
   const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
   const industryOptions = useMemo(() => {
     return (
-      config?.inputs?.industry_lists?.map((industry) => ({
+      config?.industry_lists?.map((industry) => ({
         label: industry.value,
         value: industry.key
       })) ?? []
     )
-  }, [config?.inputs?.industry_lists])
+  }, [config?.industry_lists])
 
   const { handleSubmit, setValue, getValues, control } = useForm({ defaultValues })
   const [minSalary, setMinSalary] = useState(getValues().minSalary)

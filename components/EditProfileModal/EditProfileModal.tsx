@@ -97,10 +97,10 @@ const EditProfileModal = ({
     (store: any) => store.users.updateUserProfile.response
   )
   const xpLevelList = useSelector(
-    (store: any) => store.config.config.response?.inputs?.xp_lvls ?? []
+    (store: any) => store.config.config.response?.xp_lvls ?? []
   )
   const locationList = useSelector(
-    (store: any) => store.config.config.response?.inputs?.location_lists
+    (store: any) => store.config.config.response?.location_lists
   )
 
   const formattedXpLevelList = xpLevelList?.map?.((xp) => {

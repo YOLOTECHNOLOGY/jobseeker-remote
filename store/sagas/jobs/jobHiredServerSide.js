@@ -47,17 +47,17 @@ export const initPagePayLoad = (query, config) => {
         const locationConfig = locationList?.map((region) => region.locations)
         return locationConfig
     }
-    const industryList = config.inputs.industry_lists
-    const expLvlList = config.inputs.xp_lvls
-    const eduLevelList = config.filters.educations
-    const locationList = config.inputs.location_lists
+    const industryList = config.industry_lists
+    const expLvlList = config.xp_lvls
+    const eduLevelList = config.educations
+    const locationList = config.location_lists
     const formattedLocationList = flat(formatLocationConfig(locationList))
-    const catList = config && config.inputs && config.inputs.job_category_lists
-    const jobTypeList = config.inputs.job_types
-    const salaryRangeList = config.filters.salary_range_filters
-    const mainFunctionList = config.inputs.main_functions
-    const jobFunctionList = config.inputs.job_functions
-    const functionsTitleList = config.inputs.function_titles
+    const catList = config && config && config.job_category_lists
+    const jobTypeList = config.job_types
+    const salaryRangeList = config.salary_range_filters
+    const mainFunctionList = config.main_functions
+    const jobFunctionList = config.job_functions
+    const functionsTitleList = config.function_titles
     // query parameters
     const queryJobType = query?.jobType
     const querySalary = query?.salary

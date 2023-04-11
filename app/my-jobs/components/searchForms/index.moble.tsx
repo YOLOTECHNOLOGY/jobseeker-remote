@@ -38,23 +38,23 @@ const SearchArea = (props: any) => {
     }), []
     const moreOptions = useMemo(() => {
         return {
-            qualification: config.filters.educations.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
-            workExperience: config.inputs.xp_lvls.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
-            industry: config.inputs.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
-            salary: config.filters?.salary_range_filters?.map?.((item) => ({
+            qualification: config.educations.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
+            workExperience: config.xp_lvls.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
+            industry: config.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
+            salary: config?.salary_range_filters?.map?.((item) => ({
                 value: item?.['seo-value'],
                 label: item.value
             })) ?? [],
-            jobTypes: config?.inputs?.job_types?.map?.((item) => ({
+            jobTypes: config?.job_types?.map?.((item) => ({
                 value: item?.['seo-value'],
                 label: item.value
             })) ?? [],
-            companySizes: config.inputs.company_sizes.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+            companySizes: config.company_sizes.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
         }
     }, [config])
     const page = searchParams.page ?? '1'
     const { push } = useContext(LoadingContext)
-    // const locations = flatMap(config.inputs.location_lists, item => item.locations)
+    // const locations = flatMap(config.location_lists, item => item.locations)
     // const [location, setLocation] = useState(locations.find(location => location.seo_value === searchParams.location?.[0]))
     const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
     const [moreData, setMoreData] = useState(

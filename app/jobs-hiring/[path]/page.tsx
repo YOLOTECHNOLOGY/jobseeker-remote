@@ -23,18 +23,18 @@ import { toPairs } from 'ramda'
 import LoadingProvider from 'app/components/providers/loadingProvider'
 import Footer from 'components/Footer'
 const configs = getConfigs([
-  ['inputs', 'location_lists'],
-  ['inputs', 'main_functions'],
-  ['inputs', 'job_functions'],
-  ['inputs', 'function_titles'],
-  ['inputs', 'job_function_lists'],
-  ['inputs', 'xp_lvls'],
-  ['inputs', 'job_types'],
-  ['inputs', 'company_sizes'],
-  ['inputs', 'industry_lists'],
-  ['inputs', 'company_financing_stage_lists'],
-  ['filters', 'educations'],
-  ['filters', 'salary_range_filters']
+  ['location_lists'],
+  ['main_functions'],
+  ['job_functions'],
+  ['function_titles'],
+  ['job_function_lists'],
+  ['xp_lvls'],
+  ['job_types'],
+  ['company_sizes'],
+  ['industry_lists'],
+  ['company_financing_stage_lists'],
+  ['educations'],
+  ['salary_range_filters']
 ])
 
 // or dynamic metadata

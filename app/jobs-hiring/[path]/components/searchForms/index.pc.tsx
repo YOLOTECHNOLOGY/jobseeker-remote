@@ -44,7 +44,7 @@ const SearchArea = (props: any) => {
   const userCookie = getCookie('user')
   const [page, setPage] = useState(searchValues.page ?? '1')
   const { push } = useContext(LoadingContext)
-  const locations = flatMap(config.inputs.location_lists, (item) => item.locations)
+  const locations = flatMap(config.location_lists, (item) => item.locations)
   const [location, setLocation] = useState(
     locations.find((location) => location.seo_value === searchValues.location?.[0])
   )
@@ -60,7 +60,7 @@ const SearchArea = (props: any) => {
 
   const [salaries, setSelaries] = useState(searchValues?.salary ?? [])
   const salaryOptions =
-    config.filters?.salary_range_filters?.map?.((item) => ({
+    config?.salary_range_filters?.map?.((item) => ({
       value: item?.['seo-value'],
       label: item.value
     })) ?? []
@@ -85,7 +85,7 @@ const SearchArea = (props: any) => {
   )
   const [jobTypes, setJobtypes] = useState(searchValues?.jobType ?? [])
   const jobTypeList =
-    config?.inputs?.job_types?.map?.((item) => ({
+    config?.job_types?.map?.((item) => ({
       value: item?.['seo-value'],
       label: item.value
     })) ?? []
@@ -138,7 +138,7 @@ const SearchArea = (props: any) => {
           <div className={styles.searchArea}>
             <MaterialLocationField
               className={styles.location}
-              locationList={config.inputs.location_lists}
+              locationList={config.location_lists}
               value={location}
               isClear={true}
               defaultValue={location}

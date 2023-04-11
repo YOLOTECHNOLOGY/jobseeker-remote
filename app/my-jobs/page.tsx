@@ -15,21 +15,21 @@ import SortFilter from './components/searchForms/sortFilter'
 import SortProvider from './components/searchForms/SortProvider'
 import Footer from 'components/Footer'
 const configs = getConfigs([
-    ['inputs', 'location_lists'],
-    ['inputs', 'main_functions'],
-    ['inputs', 'job_functions'],
-    ['inputs', 'function_titles'],
-    ['inputs', 'job_function_lists'],
-    ['inputs', 'country_lists'],
-    ['inputs', 'xp_lvls'],
-    ['inputs', 'job_types'],
-    ['inputs', 'company_sizes'],
-    ['inputs', 'industry_lists'],
-    ['inputs', 'currency_lists'],
-    ['inputs', 'company_financing_stage_lists'],
-    ['inputs', 'salary_ranges'],
-    ['filters', 'educations'],
-    ['filters', 'salary_range_filters']
+    ['location_lists'],
+    ['main_functions'],
+    ['job_functions'],
+    ['function_titles'],
+    ['job_function_lists'],
+    ['country_lists'],
+    ['xp_lvls'],
+    ['job_types'],
+    ['company_sizes'],
+    ['industry_lists'],
+    ['currency_lists'],
+    ['company_financing_stage_lists'],
+    ['salary_ranges'],
+    ['educations'],
+    ['salary_range_filters']
 ])
 
 // or dynamic metadata
@@ -43,7 +43,7 @@ const Main = (props: any) => {
             <div className={styles.left}>
                 <MobileHeader />
                 <SortProvider>
-                    <div className={styles.searchFormContainer} 
+                    <div className={styles.searchFormContainer}
                     // style={{ position: 'sticky', top: 0, zIndex: 20 }}
                     >
                         <SearchForm

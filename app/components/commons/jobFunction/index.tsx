@@ -90,7 +90,7 @@ const JobFunctionMultiSelector = (props: any) => {
     preShowModal.current = showModal
   }, [showModal])
   const jobFunctions = useSelector(
-    (store: any) => store.config.config.response?.inputs?.job_function_lists ?? []
+    (store: any) => store.config.config.response?.job_function_lists ?? []
   )
 
   const formattedJobfunctions = useMemo(() => {

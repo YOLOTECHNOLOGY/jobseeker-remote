@@ -22,7 +22,7 @@ const ExchangeModal = (props: any) => {
     // }, [existNumber, countryCode])
     const [otp, setOtp] = useState('')
 
-    const countryOptions = useSelector((store: any) => store.config.config.response?.inputs?.country_lists
+    const countryOptions = useSelector((store: any) => store.config.config.response?.country_lists
         ?.map?.(item => ({
             label: `${item.value} (${item.code})`,
             value: item.code

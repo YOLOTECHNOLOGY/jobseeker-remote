@@ -66,14 +66,14 @@ const NavSearchFilter = ({
   config
 }: NavSearchFilterProps) => {
   if (!isShowFilter) return null
-  const expLvlList = config.inputs.xp_lvls
-  const eduLevelList = config.filters.educations
-  const jobTypeList = config.inputs.job_types
-  const companySizeList = config.inputs.company_sizes
-  const industryList = config.inputs.industry_lists
-  const financingStageList = config.inputs.company_financing_stage_lists?.map?.(item => ({ ...item, ['seo-value']: item.key })) ?? []
+  const expLvlList = config.xp_lvls
+  const eduLevelList = config.educations
+  const jobTypeList = config.job_types
+  const companySizeList = config.company_sizes
+  const industryList = config.industry_lists
+  const financingStageList = config.company_financing_stage_lists?.map?.(item => ({ ...item, ['seo-value']: item.key })) ?? []
   const scrollY = useRef(0)
-  const salaryRangeList = config.filters.salary_range_filters.map((range) => ({
+  const salaryRangeList = config.salary_range_filters.map((range) => ({
     ...range,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value
   }))

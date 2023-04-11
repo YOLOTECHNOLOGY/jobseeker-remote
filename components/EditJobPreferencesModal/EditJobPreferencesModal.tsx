@@ -42,10 +42,10 @@ const EditJobPreferencesModal = ({
   preference
 }: EditJobPreferencesModalProps) => {
   const locationList = useSelector(
-    (store: any) => store.config.config.response?.inputs?.location_lists
+    (store: any) => store.config.config.response?.location_lists
   )
   const currencyLists = useSelector((store: any) =>
-    (store.config.config.response?.inputs?.currency_lists ?? []).map((item) => ({
+    (store.config.config.response?.currency_lists ?? []).map((item) => ({
       label: item.value,
       value: item.key
     }))
@@ -97,12 +97,12 @@ const EditJobPreferencesModal = ({
   }, [response])
   const industryOptions = useMemo(() => {
     return (
-      config?.inputs?.industry_lists?.map((industry) => ({
+      config?.industry_lists?.map((industry) => ({
         label: industry.value,
         value: industry.key
       })) ?? []
     )
-  }, [config?.inputs?.industry_lists])
+  }, [config?.industry_lists])
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
     // setMaxSalary(maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : null)
