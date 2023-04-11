@@ -40,6 +40,7 @@ const ModalAppRedirect = ({
 
   const [userAgent, setUserAgent] = useState(null)
   const [browser, setBrowser] = useState(null)
+  const [openAppIsLoading, setOpenAppIsLoading] = useState(false)
 
   const userDetail = useSelector(
     (store: any) => store.users.fetchUserOwnDetail?.response ?? getCookie('user')
@@ -49,6 +50,7 @@ const ModalAppRedirect = ({
     window.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         clearTimeout(goToAppTime?.current)
+        setOpenAppIsLoading(false)
       }
     })
   }, [])
@@ -128,9 +130,14 @@ const ModalAppRedirect = ({
       // Wait 2s and redirect to App Store/Google Play Store if app was not opened
       goToAppTime.current = setTimeout(() => {
         window.location.replace(appStoreLink)
-      }, 5000)
+      }, 3000)
     }
   }, [userDetail, userAgent])
+
+  const handleOpenAppEvent = () => {
+    handleOpenAppCallBack ? handleOpenAppCallBack() : handleOpenApp()
+    setOpenAppIsLoading(true)
+  }
 
   return (
     <Modal
@@ -153,7 +160,8 @@ const ModalAppRedirect = ({
             <MaterialButton
               variant='contained'
               capitalize
-              onClick={() => (handleOpenAppCallBack ? handleOpenAppCallBack() : handleOpenApp())}
+              onClick={handleOpenAppEvent}
+              isLoading={openAppIsLoading}
             >
               <Text textStyle='base' bold textColor='white'>
                 Open

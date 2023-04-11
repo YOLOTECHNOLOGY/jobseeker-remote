@@ -5,6 +5,7 @@ import './globals.scss'
 // import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import HamburgerMenu from 'components/HamburgerMenu'
+import AutoShowModalAppRedirect from 'app/main-page/components/AutoShowModalAppRedirect'
 const defaultSEO = {
   title: 'Bossjob - Career Platform for Professionals in Philippines',
   description: 'Bossjob - Career Platform for Professionals in Philippines',
@@ -115,6 +116,7 @@ export default function RootLayout(props: any) {
           <Header />
           <HamburgerMenu />
           {children}
+          <AutoShowModalAppRedirect />
         </Providers>
         <Initial />
       </body>
