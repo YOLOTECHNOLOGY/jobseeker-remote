@@ -8,28 +8,30 @@ import NotificationProvider from 'components/NotificationProvider'
 import { persistor, wrapper } from '../../store'
 import MaintenancePage from 'pages/maintenance'
 import LocationProvider from './locationProvier'
-const ClientProviders = (props:any) => {
-    console.log({ props })
+import CountryProvider from './countryProvider'
+const ClientProviders = (props: any) => {
     const { children }: React.PropsWithChildren = props
     const { store } = wrapper.useWrappedStore({})
 
     return <Provider store={store}>
-        <CookiesProvider>
-            <LocationProvider>
-                <PersistGate loading={null} persistor={persistor}>
-                    <IMProvider>
-                        {process.env.MAINTENANCE === 'true' ? (
-                            <MaintenancePage />
-                        )
-                            : (
-                                <NotificationProvider>
-                                    {children}
-                                </NotificationProvider>
-                            )}
-                    </IMProvider>
-                </PersistGate>
-            </LocationProvider>
-        </CookiesProvider>
+        <CountryProvider>
+            <CookiesProvider>
+                <LocationProvider>
+                    <PersistGate loading={null} persistor={persistor}>
+                        <IMProvider>
+                            {process.env.MAINTENANCE === 'true' ? (
+                                <MaintenancePage />
+                            )
+                                : (
+                                    <NotificationProvider>
+                                        {children}
+                                    </NotificationProvider>
+                                )}
+                        </IMProvider>
+                    </PersistGate>
+                </LocationProvider>
+            </CookiesProvider>
+        </CountryProvider>
     </Provider>
 }
 
