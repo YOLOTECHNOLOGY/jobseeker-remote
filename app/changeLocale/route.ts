@@ -9,7 +9,20 @@ export async function POST(request, params) {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Credentials": 'true',
             "Access-Control-Allow-Methods": "PUT,POST,GET,DELETE,OPTIONS",
-            "Access-Control-Allow-Headers": "X-Requested-With"
+            "Access-Control-Allow-Headers": "Set-Cookie"
+
+        },
+
+    })
+}
+export async function OPTIONS() {
+    return new Response('Hello, Next.js!', {
+        status: 204,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": 'true',
+            "Access-Control-Allow-Methods": "PUT,POST,GET,DELETE,OPTIONS",
+            "Access-Control-Allow-Headers": "Set-Cookie"
 
         },
 
