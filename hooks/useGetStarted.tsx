@@ -94,18 +94,30 @@ const useGetStarted = () => {
   }
 
   const defaultLoginCallBack = (data: any) => {
-    let url =
-      data.is_profile_update_required || !data.is_profile_completed
-        ? '/jobseeker-complete-profile/1'
-        : defaultRedirectPage
-        ? defaultRedirectPage
-        : '/'
     const isChatRedirect = localStorage.getItem('isChatRedirect')
-    if (isChatRedirect) {
-      url = isChatRedirect
+    if (data.is_profile_update_required || !data.is_profile_completed) {
+      routes.push('/jobseeker-complete-profile/1')
+    } else if (isChatRedirect) {
       localStorage.removeItem('isChatRedirect')
+      routes.push(isChatRedirect)
+    } else if (defaultRedirectPage) {
+      routes.push(defaultRedirectPage)
+    } else {
+      routes.push('/')
     }
-    routes.push(url)
+    // let url =
+    //   data.is_profile_update_required || !data.is_profile_completed
+    //     ? '/jobseeker-complete-profile/1'
+    //     : defaultRedirectPage
+    //     ? defaultRedirectPage
+    //     : '/'
+
+    // const isChatRedirect = localStorage.getItem('isChatRedirect')
+    // if (isChatRedirect) {
+    //   url = isChatRedirect
+    //   localStorage.removeItem('isChatRedirect')
+    // }
+    // routes.push(url)
     setEmailOTPInputDisabled(false)
   }
 
