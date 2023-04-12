@@ -54,5 +54,7 @@ export const metadata = {
 
 // eslint-disable-next-line react/display-name
 export default (props) => {
-    return <div className={styles.container}>process.env.NEXT_PUBLIC_HOST_PATH: {process.env.NEXT_PUBLIC_HOST_PATH} <Main {...props} /></div>
+    return <div className={styles.container}>
+        <Main {...props} />
+    </div>
 }
