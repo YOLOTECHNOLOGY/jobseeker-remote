@@ -24,7 +24,7 @@ module.exports = withBundleAnalyzer({
   },
   reactStrictMode: false,
   compiler: {
-    removeConsole: true
+    removeConsole: process.env.ENV === 'production'
   },
   experimental: {
     // concurrentFeatures: true,
