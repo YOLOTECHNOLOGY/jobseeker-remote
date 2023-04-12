@@ -1,7 +1,7 @@
 
 export async function GET(request) {
-    const accessToken = request.cookies.get('accessToken')?.value
-    console.log({accessToken,request,path:process.env.NEXT_PUBLIC_HOST_PATH, })
+    const accessToken = request.nextUrl?.searchParams?.get('accessToken')
+    console.log({accessToken,request })
 
     return new Response(null, {
         status: 301,

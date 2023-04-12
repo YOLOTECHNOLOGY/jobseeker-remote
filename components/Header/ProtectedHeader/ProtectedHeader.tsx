@@ -22,7 +22,6 @@ import { getCookie } from 'helpers/cookies'
 import styles from '../Header.module.scss'
 import { IMContext } from 'components/Chat/IMProvider.client'
 import { getCountryKey } from 'helpers/country'
-import axios from 'axios'
 
 // this header will be used when user is logged in
 const ProtectedHeader = () => {
@@ -257,15 +256,14 @@ const ProtectedHeader = () => {
         <select
           onChange={(e) => {
             const value = e.target.value
-            console.log({ onChange: e.target.value })
+            // console.log({ onChange: e.target.value })
             const countryKey = getCountryKey()
             if (value === countryKey) {
               return
             }
-            // const accessToken = getCookie('accessToken')
-            const url = 'https://dev.bossjob.' + value + '/changeLocale'
-            // const path = window.location.pathname
-            axios.get(url)
+            const accessToken = getCookie('accessToken')
+            const url = 'https://dev.bossjob.' + value + '/changeLocale' + accessToken
+            window.location.href = url
           }}
           value={undefined}
         >
