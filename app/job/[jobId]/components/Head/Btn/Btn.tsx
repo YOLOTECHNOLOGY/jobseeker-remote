@@ -143,7 +143,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
 
   return (
     <>
-      {status_key != 'expired' ? (
+      {status_key == 'active' ? (
         <Stack spacing={2} direction='row' className={className}>
           <MaterialButton
             variant='outlined'

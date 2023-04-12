@@ -22,7 +22,7 @@ const getDegreeOptions = (config) => {
     const countryOptions = config?.country_lists
     if (countryOptions && countryOptions.length === 0) return countryOptions
   
-    return countryOptions.map((country) => {
+    return countryOptions?.map((country) => {
       return {
         key: country.key,
         label: country.value,

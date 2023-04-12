@@ -181,7 +181,7 @@ const getPredefinedParamsFromUrl = (routerQuery, catList, locList, clearAllFilte
 }
 
 const getJobTypeList = (config) => {
-  return config.job_types.map((jobType) => ({
+  return config?.job_types?.map((jobType) => ({
     ...jobType,
     label: jobType.value,
     value: jobType.key
@@ -195,7 +195,7 @@ const getLocationList = (config) => {
     config &&
     config &&
     config.location_lists
-      .map((region) =>
+      ?.map((region) =>
         region.locations.map((loc) => ({
           ...loc,
           // loc value all lower case
@@ -259,7 +259,7 @@ const getJobCategoryIds = (config, categories) => {
 }
 
 const getNoticePeriodList = (config) => {
-  return config?.notice_period_lists.map((notice) => ({
+  return config?.notice_period_lists?.map((notice) => ({
     ...notice,
     label: notice.value,
     value: notice.id
@@ -271,8 +271,8 @@ const getSalaryOptions = (config, salaryFrom, hasComparedTo) => {
   const salaryConfig = config?.salary_ranges ?? {}
   if (salaryConfig && salaryConfig.length === 0) return salaryConfig
 
-  const _salaryTo = hasComparedTo ? salaryFrom * salaryConfig.upper_bound_scale : salaryConfig.to
-  const _salaryFrom = salaryFrom ? salaryFrom + salaryConfig.interval : salaryConfig.from
+  const _salaryTo = hasComparedTo ? salaryFrom * salaryConfig?.upper_bound_scale : salaryConfig?.to
+  const _salaryFrom = salaryFrom ? salaryFrom + salaryConfig?.interval : salaryConfig?.from
 
   const salaryOptions = []
   for (let salary = _salaryFrom; salary <= _salaryTo; salary += salaryConfig.interval)
@@ -305,7 +305,7 @@ const getIndustryList = (config) => {
   const industryList = config?.industry_lists
   if (industryList && industryList.length === 0) return industryList
 
-  return industryList.map((industry) => {
+  return industryList?.map((industry) => {
     return {
       label: industry.value,
       value: industry.value,
@@ -319,14 +319,13 @@ const getDegreeList = (config) => {
 
   const degreeList = config?.degrees
   if (degreeList && degreeList.length === 0) return degreeList
-
-  return degreeList.map((degree) => {
+  return degreeList?.map((degree) => {
     return {
       label: degree.value,
       value: degree.key,
       key: degree.key
     }
-  })
+  })?.filter(e=>e.label !== 'Edu not required')
 }
 
 const getApplyJobLink = (job, user) => {
