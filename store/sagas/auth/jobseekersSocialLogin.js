@@ -12,6 +12,8 @@ import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersSoc
 import { checkErrorCode } from 'helpers/errorHandlers'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
+import * as fbq from 'lib/fpixel'
+
 function* SocialLoginReq(actions) {
   try {
     const response = yield call(authenticationJobseekersLogin, actions.payload)
@@ -40,6 +42,11 @@ function* SocialLoginReq(actions) {
       yield call(setCookie, refreshToken, refresh_token)
       yield call(setCookie, userKey, userCookie)
       yield call(setCookie, accessToken, token, token_expired_at)
+
+      // Send register event to FB Pixel (First time login user)
+      if (loginData.is_new_account && window !== 'undefined' && window.fbq) {
+        yield fbq.event('WebCompleteRegistration', { source: 'web' })
+      }
     }
   } catch (err) {
     const isServerError = checkErrorCode(err)
