@@ -22,7 +22,10 @@ const interpreter = registInterpreter(command => command.cata({
     }),
     parseToChatStatus: chatDetail => M.do(context => {
         const { jobDetail } = context
-
+        const userCookie = getCookie('user')
+        if(!userCookie.is_profile_completed) {
+            return ToChatStatus.notCompleteFile
+        }
         const { external_apply_url, id } = jobDetail
         if (external_apply_url) {
             return ToChatStatus.externalLink(external_apply_url)
@@ -62,6 +65,13 @@ const interpreter = registInterpreter(command => command.cata({
     redirectToChat: chatId => M.do(context => {
         const { router } = context
         router.push('/chat/' + chatId, { forceOptimisticNavigation: true })
+    }),
+    redirectToCompleteFile: () => M.do(context => {
+        const { jobDetail, router } = context
+        const { id } = jobDetail
+        const source = jobSource()
+        localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
+        router.push('/jobseeker-complete-profile/1')
     }),
     createNewChat: () => M.do(context => {
         const { jobDetail, dispatch } = context

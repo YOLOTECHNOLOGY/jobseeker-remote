@@ -12,7 +12,6 @@ export default usedConfigProps => {
             return data
         } else {
             const [key] = keypath
-            console.log({ keypath })
             const result = {
                 [key]: data[key]
             }
@@ -23,7 +22,6 @@ export default usedConfigProps => {
         command.cata({
             fetchData: () => M(() =>
                 cachedConfig().then(data => {
-                    console.log({ data })
                     return Result.success({
                         config: usedConfigProps
                             .map(valueForKeyPath(data))
