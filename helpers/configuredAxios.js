@@ -2,6 +2,7 @@ import axios from 'axios'
 import { getCookie, removeCookie, setCookie } from 'helpers/cookies'
 import { redirect } from 'next/navigation';
 import { accessToken, refreshToken } from './cookies';
+import { getCountryId } from './country';
 // import accessToken from 'pages/api/handlers/linkedinHandlers/accessToken'
 // import { configureStore } from 'store'
 // import { logout } from 'shared/helpers/authentication'
@@ -82,6 +83,7 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken,
   let headers = {
     // remoteAddress: remoteAddress,
     // source: isMobile ? 'mobile-web' : 'web',
+    'Country-Id': getCountryId()
   }
 
 
