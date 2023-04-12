@@ -262,10 +262,10 @@ const ProtectedHeader = () => {
             if (value === countryKey) {
               return
             }
-            const accessToken = getCookie('accessToken')
+            // const accessToken = getCookie('accessToken')
             const url = 'https://dev.bossjob.' + value + '/changeLocale'
-            const path = window.location.pathname
-            axios.post(url, { accessToken, path })
+            // const path = window.location.pathname
+            axios.get(url)
           }}
           value={undefined}
         >
