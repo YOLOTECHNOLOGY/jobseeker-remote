@@ -21,6 +21,8 @@ import { getCookie } from 'helpers/cookies'
 /* Style */
 import styles from '../Header.module.scss'
 import { IMContext } from 'components/Chat/IMProvider.client'
+import { getCountryKey } from 'helpers/country'
+import axios from 'axios'
 
 // this header will be used when user is logged in
 const ProtectedHeader = () => {
@@ -33,11 +35,11 @@ const ProtectedHeader = () => {
   const { totalUnread } = useContext(IMContext)
   // const totalUnread = 999
 
- useEffect(()=>{
-   if(pathname && isShowHeaderMenu){
-    setIsShowHeaderMenu(false)
-   }
- },[pathname])
+  useEffect(() => {
+    if (pathname && isShowHeaderMenu) {
+      setIsShowHeaderMenu(false)
+    }
+  }, [pathname])
 
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
@@ -79,7 +81,7 @@ const ProtectedHeader = () => {
               title='Bossjob logo'
               alt='Bossjob logo'
               style={{
-                marginTop:'3px'
+                marginTop: '3px'
               }}
             />
           </Link>
@@ -244,7 +246,7 @@ const ProtectedHeader = () => {
                   className={styles.profilePlaceHolder}
                   alt='avatar'
                   onError={(e) => {
-                    ;(e.target as HTMLInputElement).src = DefaultAvatar
+                    ; (e.target as HTMLInputElement).src = DefaultAvatar
                   }}
                 />
                 <div className={styles.profileCaret} />
@@ -252,6 +254,24 @@ const ProtectedHeader = () => {
             </li>
           </React.Fragment>
         </ul>
+        <select
+          onChange={(e) => {
+            const value = e.target.value
+            console.log({ onChange: e.target.value })
+            const countryKey = getCountryKey()
+            if (value === countryKey) {
+              return
+            }
+            const accessToken = getCookie('accessToken')
+            const url = 'https://dev.bossjob.' + value + '/changeLocale'
+            const path = window.location.pathname
+            axios.post(url, { accessToken, path })
+          }}
+          value={undefined}
+        >
+          <option value='ph' label='PH' />
+          <option value='sg' label='SGP' />
+        </select>
         <div className={styles.mobileIconWrapper}>
           {pathname !== '/chat/[chat_id]' ? (
             <li
@@ -280,6 +300,7 @@ const ProtectedHeader = () => {
           <div className={styles.icon}>
             <Hamburger />
           </div>
+
         </div>
 
         {isShowHeaderMenu && (

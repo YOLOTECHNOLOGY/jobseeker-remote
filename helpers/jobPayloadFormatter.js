@@ -231,12 +231,12 @@ const getJobCategoryList = (config) => {
 
   const categories = []
 
-  config?.job_category_lists.forEach((mainCategory) => {
+  config?.job_category_lists?.forEach?.((mainCategory) => {
     mainCategory.sub_list.forEach((subList) => {
       subList['label'] = subList['value']
       categories.push(subList)
     })
-  })
+  }) ?? []
 
   return categories
 }
@@ -268,7 +268,7 @@ const getNoticePeriodList = (config) => {
 
 const getSalaryOptions = (config, salaryFrom, hasComparedTo) => {
   if (!config) return null
-  const salaryConfig = config?.salary_ranges
+  const salaryConfig = config?.salary_ranges ?? {}
   if (salaryConfig && salaryConfig.length === 0) return salaryConfig
 
   const _salaryTo = hasComparedTo ? salaryFrom * salaryConfig.upper_bound_scale : salaryConfig.to

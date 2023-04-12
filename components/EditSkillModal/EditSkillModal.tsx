@@ -68,9 +68,8 @@ const EditSkillModal = ({
           .map((skill) => ({ value: skill.id, label: skill.value }))
       )
     },
-    [skillList]
+    [skillList.toString()]
   )
-
   useEffect(() => {
     setSuggestList(skillList.map((skill) => ({ value: skill.id, label: skill.value })))
   }, [handleSuggestionSearch, searchValue])
