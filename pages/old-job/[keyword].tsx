@@ -531,7 +531,7 @@ const Job = ({
           {jobDetail?.job_title}
         </Text>
         <div className={classNamesCombined([styles.jobDetailCompany, isStickyClass])}>
-          <Link to={`${process.env.HOST_PATH}${companyUrl}`} external>
+          <Link to={`${companyUrl}`} external>
             <Text textStyle='lg' className={styles.jobDetailCompanyName}>
               {jobDetail?.company?.name}
             </Text>
@@ -867,24 +867,6 @@ const Job = ({
             <Text textStyle='lg' className={styles.jobDetailSectionSubBody}>
               {jobDetail?.full_address}
             </Text>
-            {/* <Text textStyle='lg' tagName='h2' bold className={styles.jobDetailSectionSubTitle}>
-              Specialization
-            </Text>
-            {jobDetail?.categories?.map((category, i) => (
-              <span key={i}>
-                <Link
-                  to={`${process.env.HOST_PATH}/jobs-hiring/${category.key}-jobs`}
-                  className={styles.jobDetailSectionSubBody}
-                  external
-                >
-                  <Text textStyle='lg' className={styles.jobDetailSectionSubBodyLink}>
-                    {' '}
-                    {category.value}
-                    {jobDetail.categories.length === i + 1 ? '' : ','}
-                  </Text>
-                </Link>
-              </span>
-            ))} */}
           </div>
           {jobDetail?.recruiter && (
             <div className={styles.jobDetailRecruiter}>
@@ -928,7 +910,7 @@ const Job = ({
               About the company
             </Text>
             <Link
-              to={`${process.env.HOST_PATH}${companyUrl}`}
+              to={`${companyUrl}`}
               external
               className={styles.aboutCompanyTitle}
             >
@@ -986,14 +968,14 @@ const Job = ({
                 <div className={styles.jobDetailSidebarCardList}>
                   {similarJobs?.map((job) => (
                     <div key={job.id} className={styles.jobDetailSidebarCard}>
-                      <Link to={`${process.env.HOST_PATH}${job.job_url}`} external>
+                      <Link to={`${job.job_url}`} external>
                         <img
                           src={job?.company?.logo}
                           className={styles.jobDetailSidebarCardImage}
                           alt={`${job?.company?.name} logo`}
                         />
                       </Link>
-                      <Link to={`${process.env.HOST_PATH}${job.job_url}`} aTag external>
+                      <Link to={`${job.job_url}`} aTag external>
                         <Text
                           className={styles.jobDetailSidebarCardTitle}
                           textStyle='lg'
@@ -1241,17 +1223,16 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     const categoryMetaText = 'jobs'
     const seoMetaTitle = `${name} is hiring ${jobTitle} - ${jobId} | Bossjob`
     const seoMetaDescription = encodeURI(
-      `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${
-        location.value
+      `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${location.value
       }, ${fullAddress.split(',').pop()} on Bossjob now!`
     )
-  //   <SEO
-  //   title={seoMetaTitle}
-  //   description={seoMetaDescription}
-  //   canonical={seoCanonicalUrl}
-  //   jobDetail={jobDetail}
-  //   imageUrl={jobDetail?.company?.logo}
-  // />
+    //   <SEO
+    //   title={seoMetaTitle}
+    //   description={seoMetaDescription}
+    //   canonical={seoCanonicalUrl}
+    //   jobDetail={jobDetail}
+    //   imageUrl={jobDetail?.company?.logo}
+    // />
     return {
       props: {
         jobDetail: jobDetail?.id ? jobDetail : appliedJobDetail?.job,
@@ -1260,7 +1241,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
         seoMetaTitle,
         seoMetaDescription,
         canonicalUrl: jobUrl,
-        imageUrl:jobDetail?.company?.logo
+        imageUrl: jobDetail?.company?.logo
       }
     }
   } else {

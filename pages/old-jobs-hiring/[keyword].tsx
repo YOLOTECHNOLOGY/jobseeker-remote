@@ -836,7 +836,7 @@ const JobSearchPage = (props: JobSearchPageProps) => {
                       <Link
                         key={company.id}
                         className={styles.topCompaniesLogo}
-                        to={`${process.env.HOST_PATH}${company?.companyUrl}/jobs`}
+                        to={`${company?.companyUrl}/jobs`}
                         external
                       >
                         <Tooltip

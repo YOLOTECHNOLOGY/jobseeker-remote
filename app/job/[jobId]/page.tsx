@@ -65,7 +65,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
         ]
       },
       alternates: {
-        canonical: process.env.HOST_PATH + jobUrl
+        canonical: (process.env.NEXT_PUBLIC_HOST_PATH ?? '') + jobUrl
       }
     }
 

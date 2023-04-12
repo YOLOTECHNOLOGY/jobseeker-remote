@@ -98,7 +98,7 @@ interface SEOProps {
 }
 
 const SEO = ({ title, description, imageUrl, canonical, jobDetail = null }: SEOProps) => {
-  const canonicalPath = process.env.HOST_PATH + canonical
+  const canonicalPath = process.env.NEXT_PUBLIC_HOST_PATH + canonical
 
   return (
     <Head key={title + description + canonical}>

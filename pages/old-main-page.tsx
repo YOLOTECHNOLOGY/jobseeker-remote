@@ -369,7 +369,7 @@ const Home = (props: HomeProps) => {
                       <Link
                         key={company.id}
                         className={styles.topCompaniesLogo}
-                        to={`${process.env.HOST_PATH}${company.companyUrl}/jobs`}
+                        to={`${company.companyUrl}/jobs`}
                         external
                       >
                         <Image
@@ -398,7 +398,7 @@ const Home = (props: HomeProps) => {
                       <Link
                         key={company.id}
                         className={styles.topCompaniesLogo}
-                        to={`${process.env.HOST_PATH}${company.companyUrl}/jobs`}
+                        to={`${company.companyUrl}/jobs`}
                         external
                       >
                         <Image src={company.logoUrl} alt={company.name} width='60' height='60' />

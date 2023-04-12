@@ -332,11 +332,11 @@ const getDegreeList = (config) => {
 const getApplyJobLink = (job, user) => {
   // jobUrl => /job/xxxx
   // Apply job url format: /apply-job/xxx
-  const applyJobUrl = `${process.env.HOST_PATH}${job?.job_url}/apply`
+  const applyJobUrl = `${job?.job_url}/apply`
 
   if (user) {
     if (!user?.is_profile_completed) {
-      return `${process.env.HOST_PATH}/jobseeker-complete-profile/1?redirect=${applyJobUrl}`
+      return `/jobseeker-complete-profile/1?redirect=${applyJobUrl}`
     }
 
     if (job?.external_apply_url) {
@@ -356,7 +356,7 @@ const getApplyJobLink = (job, user) => {
     return applyJobUrl
   }
 
-  return `${process.env.HOST_PATH}/get-started?redirect=${applyJobUrl}`
+  return `/get-started?redirect=${applyJobUrl}`
 }
 
 // TODO: remove isLocation param after backend as renamed the field

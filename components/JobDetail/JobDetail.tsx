@@ -167,8 +167,8 @@ const JobDetail = ({
   const isCategoryApplied = category === 'applied'
   const isCategorySaved = category === 'saved'
   const publicJobUrl = isCategoryApplied
-    ? `${process.env.HOST_PATH}${jobDetailUrl}?isApplied=true`
-    : `${process.env.HOST_PATH}${jobDetailUrl}`
+    ? `${jobDetailUrl}?isApplied=true`
+    : `${jobDetailUrl}`
 
   const checkHasApplicationWithdrawn = () => {
     if (isCategoryApplied && applicationHistory?.length > 0) {
