@@ -20,17 +20,24 @@ const JobCard = (props: any) => {
         degree,
         recruiter_full_name,
         recruiter_job_title,
-        company_logo,
+        // company_logo,
         company_name,
         id,
         job_url,
-        preference
+        preference,
+        recruiter_avatar,
+        recruiter_last_active_at
     } = props
-    
+   
     const labels = [job_type, job_location, xp_lvl, degree].filter(a => a)
     const router = useRouter()
     const modalProps = useNotSuitable(preference.id, id)
     const { showSelection, refreshing } = modalProps
+
+    const transTime = (time: string) => {
+        return new Date().getTime() - new Date(time).getTime() > 1000 * 60 * 60 * 1
+      }
+    
     return <div className={
         classNames({
             [styles.main]: true,
@@ -63,7 +70,11 @@ const JobCard = (props: any) => {
             </div>
             <div className={styles.recruiterContainer}>
                 <div className={styles.info}>
-                    <Image className={styles.image} src={company_logo} height={17} width={17} alt={''} />
+                    <div className={`${styles.avator}  ${transTime(recruiter_last_active_at) ? styles.avator2 : ''
+                  }`}>
+                     <Image className={styles.image} src={recruiter_avatar} height={17} width={17} alt={''} />
+                    </div>
+                   
                     <div
                         className={styles.hrTitle}
                         title={`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
