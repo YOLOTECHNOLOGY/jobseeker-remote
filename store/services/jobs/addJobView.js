@@ -9,4 +9,10 @@ const addJobViewService = (payload) => {
   })
 }
 
-export { addJobViewService }
+const getShreCard = (id) => {
+  const axios = configuredAxios('job', 'public', false,'')
+  return axios.get(`/manage-jobs/shared-jobs/${id}`)
+}
+
+
+export { addJobViewService,getShreCard }

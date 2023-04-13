@@ -5,6 +5,7 @@ import Index from './index'
 import { getGoogleJobJSON } from 'app/components/SEO'
 
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
+import { getShreCard } from 'store/services/jobs/addJobView'
 
 const handleFetchJobDetail = async (params: any) => {
   const cookieStore = cookies()
@@ -26,12 +27,23 @@ const handleFetchJobDetail = async (params: any) => {
   const data = await fetchJobDetailService(querys)
     .then(({ data: { data } }) => data)
     .catch(() => ({ error: true }))
-
   return { data, jobId }
 }
 
-export async function generateMetadata({ params }): Promise<Metadata> {
+
+const handleShareInfo = async (params: any) => {
+  const shareId = params.jobId?.split('-').shift();
+  const res = await getShreCard(shareId)
+  return  res.data.data 
+}
+
+export async function generateMetadata({ params,searchParams}): Promise<Metadata> {
   const { data: jobDetail } = await handleFetchJobDetail(params)
+  let shareInfo = null
+  if(searchParams?.share){
+     shareInfo = await handleShareInfo(params)
+  }
+
 
   if (Object.keys(jobDetail).length > 0 && jobDetail?.id) {
     const {
@@ -44,6 +56,12 @@ export async function generateMetadata({ params }): Promise<Metadata> {
       job_url: jobUrl
     } = jobDetail
 
+   const {
+    wide:width,
+    high:height,
+    job_card:cardUrl,
+  } = shareInfo || {}
+  console.log(shareInfo,'shareInfo')
     const categoryMetaText = 'jobs'
     const seoMetaTitle = `${name} is hiring ${jobTitle} - ${jobId} | Bossjob`
     const seoMetaDescription = `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${
@@ -52,7 +70,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 
     console.log(jobDetail, seoMetaDescription)
 
-    const seoParams: Metadata = {
+    const seoParams: Metadata = !shareInfo ? {
       title: seoMetaTitle,
       description: seoMetaDescription,
       openGraph: {
@@ -67,8 +85,27 @@ export async function generateMetadata({ params }): Promise<Metadata> {
       alternates: {
         canonical: (process.env.NEXT_PUBLIC_HOST_PATH ?? '') + jobUrl
       }
-    }
+    } : {
+      title: seoMetaTitle,
+      description: seoMetaDescription,
+      openGraph: {
+        images: [
+          {
+            url: cardUrl,
+            width: width,
+            height: height
+          }
+        ]
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: seoMetaTitle,
+        description: seoMetaDescription,
+        images: [ cardUrl],
+      },
 
+    }
+   console.log(seoParams,'seoParams')
     return seoParams
   }
 }
