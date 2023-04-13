@@ -262,7 +262,7 @@ const ProtectedHeader = () => {
               return
             }
             const accessToken = getCookie('accessToken')
-            const url = 'https://dev.bossjob.' + value + '/changeLocale' + accessToken
+            const url = 'https://dev.bossjob.' + value + '/changeLocale?accessToken=' + accessToken
             window.location.href = url
           }}
           value={undefined}

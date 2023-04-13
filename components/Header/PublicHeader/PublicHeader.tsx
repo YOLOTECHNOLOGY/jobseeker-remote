@@ -14,6 +14,7 @@ import MaterialButton from 'components/MaterialButton'
 
 /* Images */
 import { BossjobLogoWhite as BossjobLogo } from 'images'
+import { getCountryKey } from 'helpers/country'
 
 const PublicHeader = () => {
   const pathname = usePathname()
@@ -28,7 +29,7 @@ const PublicHeader = () => {
               title='Bossjob logo'
               alt='Bossjob logo'
               style={{
-                marginTop:'3px'
+                marginTop: '3px'
               }}
             />
           </Link>
@@ -168,7 +169,7 @@ const PublicHeader = () => {
                       }
                     }}
                   >
-                    <Text textStyle='base' style={{fontWeight:'400'}} textColor='white' bold>
+                    <Text textStyle='base' style={{ fontWeight: '400' }} textColor='white' bold>
                       Get Started
                     </Text>
                   </MaterialButton>
@@ -198,7 +199,23 @@ const PublicHeader = () => {
                 </MaterialButton>
               )}
             </li>
-
+            <select
+              onChange={(e) => {
+                const value = e.target.value
+                // console.log({ onChange: e.target.value })
+                const countryKey = getCountryKey()
+                if (value === countryKey) {
+                  return
+                }
+                // const accessToken = getCookie('accessToken')
+                const url = 'https://dev.bossjob.' + value 
+                window.location.href = url
+              }}
+              value={undefined}
+            >
+              <option value='ph' label='PH' />
+              <option value='sg' label='SGP' />
+            </select>
             {/* <li className={styles.headerLink}>
               <div className={classNames([styles.profileWrapper, styles.profileDisabled])}>
                 <Text textStyle='base' textColor='white' className={styles.profileCountry}>
