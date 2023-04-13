@@ -56,6 +56,7 @@ const defaultSEO = {
 //   }
 // }
 
+
 const Providers = dynamic(() => import('./components/providers'), { ssr: true })
 const Initial = dynamic(() => import('./components/Initals'), { ssr: false })
 export default function RootLayout(props: any) {
@@ -66,7 +67,7 @@ export default function RootLayout(props: any) {
     <html lang='en'>
       <head key={title + description + canonical}>
         <title>{title}</title>
-        {/* <meta name='description' content={decodeURI(description)} />
+        <meta name='description' content={decodeURI(description)} />
         <meta
           name='copyright'
           content={`
@@ -86,7 +87,7 @@ export default function RootLayout(props: any) {
         <meta
           property='og:site_name'
           content='Bossjob - Career Platform for Professionals in Philippines'
-        /> */}
+        />
 
         {/* Schema.org markup for Google+ */}
         <meta itemProp='name' content={title} />
@@ -94,13 +95,13 @@ export default function RootLayout(props: any) {
         {/* <link rel='canonical' href={canonicalPath} /> */}
 
         {/* Twitter Card */}
-        {/* <meta name='twitter:card' content='summary_large_image' />
+        <meta name='twitter:card' content='summary_large_image' />
         <meta name='twitter:site' content='BossjobPH' />
         <meta name='twitter:title' content={title} />
         <meta name='twitter:description' content={decodeURI(description)} />
         <meta name='twitter:image' content={imageUrl} />
         <meta name='twitter:image:alt' content={decodeURI(description)} />
-        <meta name='twitter:creator' content='BossjobPH' /> */}
+        <meta name='twitter:creator' content='BossjobPH' />
         <script
           // defer
           // async
