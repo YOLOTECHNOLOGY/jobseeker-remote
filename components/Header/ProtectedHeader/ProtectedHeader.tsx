@@ -68,7 +68,7 @@ const ProtectedHeader = () => {
   //   const authPath = authPathToOldProject(null, path)
   //   router.push(authPath)
   // }
-
+  const countryKey = getCountryKey()
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
@@ -257,7 +257,6 @@ const ProtectedHeader = () => {
           onChange={(e) => {
             const value = e.target.value
             // console.log({ onChange: e.target.value })
-            const countryKey = getCountryKey()
             if (value === countryKey) {
               return
             }
@@ -265,7 +264,7 @@ const ProtectedHeader = () => {
             const url = 'https://dev.bossjob.' + value + '/changeLocale?accessToken=' + accessToken
             window.location.href = url
           }}
-          value={undefined}
+          value={countryKey}
         >
           <option value='ph' label='PH' />
           <option value='sg' label='SGP' />
