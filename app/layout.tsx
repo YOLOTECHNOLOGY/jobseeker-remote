@@ -56,6 +56,7 @@ const defaultSEO = {
 //   }
 // }
 
+
 const Providers = dynamic(() => import('./components/providers'), { ssr: true })
 const Initial = dynamic(() => import('./components/Initals'), { ssr: false })
 export default function RootLayout(props: any) {
