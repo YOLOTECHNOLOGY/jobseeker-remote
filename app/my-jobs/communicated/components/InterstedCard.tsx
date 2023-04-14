@@ -8,7 +8,7 @@ const InterstedCard = ({ item }: any) => {
    const { name } = item?.company || {};
    const {
       job_title: jobTitle,
-      salary_range_value: salaryRangeValue,
+      local_salary_range_value: salaryRangeValue,
       job_url: jobUrl
    } = item?.job || {}
 

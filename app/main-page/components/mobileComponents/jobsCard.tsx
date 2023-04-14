@@ -204,7 +204,7 @@ const JobsCard = ({location}:any) => {
         const {
           id: Id,
           job_title: jobTitle,
-          salary_range_value: salaryRangeValue,
+          local_salary_range_value: salaryRangeValue,
           job_location: jobLocation,
           job_url: jobUrl,
           job_type: jobType,

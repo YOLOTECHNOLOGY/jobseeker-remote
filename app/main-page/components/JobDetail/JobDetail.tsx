@@ -12,7 +12,7 @@ const JobDetail = ({ detail }: any) => {
         <div className={styles.job_titleWrapper}>
           <div className={styles.job_info_title}>{detail?.job_title}</div>
           <div className={styles.transBox}>
-            <div className={styles.job_info_salary}>{detail?.salary_range_value}</div>
+            <div className={styles.job_info_salary}>{detail?.local_salary_range_value}</div>
             <div className={styles.job_info_chat} >
               <Image src={HomePageChat} alt='Boss job chat now' width='18' height='18' quality={0} style={{paddingRight:'4px'}} /> Chat now
             </div>

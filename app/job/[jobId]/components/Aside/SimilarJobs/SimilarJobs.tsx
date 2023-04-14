@@ -89,7 +89,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
                           {item.truncated_job_title}
                         </h6>
                         <div className={classNames([styles.similarJobs_salary])}>
-                          {item.salary_range_value}
+                          {item.local_salary_range_value}
                         </div>
                       </div>
 

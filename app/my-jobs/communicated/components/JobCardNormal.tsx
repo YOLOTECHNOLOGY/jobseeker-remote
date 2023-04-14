@@ -17,7 +17,7 @@ const JobCardNormal = (props: any) => {
   } = data.company || {};
   const {
     job_title: jobTitle,
-    salary_range_value: salaryRangeValue,
+    local_salary_range_value: salaryRangeValue,
     xp_lvl: xpLvl,
     status_key: status,
     external_apply_url: externalApplyUrl,
