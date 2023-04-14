@@ -72,7 +72,7 @@ const interpreter = registInterpreter((command) =>
 
         if (typeof window !== 'undefined' && window.gtag) {
           const userInfo = getCookie('user')
-          if (userInfo && jobDetail) {
+          if (userInfo && jobDetail && !jobDetail.chat?.is_exists) {
             window.gtag('event', 'chat', {
               user_id: userInfo.id,
               email: userInfo.email,
