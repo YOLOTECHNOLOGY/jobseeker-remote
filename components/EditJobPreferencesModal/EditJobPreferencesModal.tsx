@@ -37,7 +37,6 @@ const EditJobPreferencesModal = ({
   modalName,
   showModal,
   config,
-  userDetail,
   handleModal,
   preference
 }: EditJobPreferencesModalProps) => {
@@ -51,7 +50,6 @@ const EditJobPreferencesModal = ({
       id: item.id
     }))
   )
-  console.log({ config })
   const [initial, setInital] = useState(true)
   const formattedLocationList = flat(formatLocationConfig(locationList))
   const location = useMemo(() => {

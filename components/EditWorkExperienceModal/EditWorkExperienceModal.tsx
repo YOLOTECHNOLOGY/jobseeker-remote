@@ -78,7 +78,14 @@ const EditWorkExperienceModal = ({
   const jobCategoryList = getJobCategoryList(config)
   const industryList = getIndustryList(config)
   // const countryList = getCountryList(config)?.map(item => ({ value: item.key, label: item.value }))
-
+  const currencyLists = useSelector((store: any) =>
+    (store.config.config.response?.currency_lists ?? []).map((item) => ({
+      label: item.value,
+      value: item.id,
+      key: item.key
+    }))
+  )
+  const [currency, setCurrency] = useState()
   const [jobTitle, setJobTitle] = useState('')
   const [companyName, setCompanyName] = useState('')
   // const [location, setLocation] = useState(null)
@@ -125,6 +132,7 @@ const EditWorkExperienceModal = ({
       setWorkPeriodFrom(data.working_period_from)
       setWorkPeriodTo(data.working_period_to)
       setSalary(data.salary)
+      setCurrency(data.currency_id)
       if (data.company_industry)
         setIndustry(
           industryList.filter(
@@ -155,7 +163,7 @@ const EditWorkExperienceModal = ({
   }, [workPeriodFrom, workPeriodTo])
 
   useEffect(() => {
-    const requireFields = jobTitle && companyName  && workPeriodFrom
+    const requireFields = jobTitle && companyName && workPeriodFrom
     const emptyRequiredFields = !jobTitle && !companyName && !workPeriodFrom
     const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
@@ -207,7 +215,8 @@ const EditWorkExperienceModal = ({
       is_currently_work_here: isCurrentJob,
       function_job_title: jobFunction.value,
       function_job_title_id: jobFunction.id,
-      salary: salary ? Number(salary) : null,
+      currency_id: currency,
+      salary: (currency && salary) ? Number(salary) : null,
       working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
       working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
       description: description ? description : '',
@@ -419,14 +428,23 @@ const EditWorkExperienceModal = ({
               </div>
 
               <div className={styles.field}>
-                <MaterialTextField
+                <MaterialBasicSelect
+                  className={styles.fullWidth}
+                  label='Currency'
+                  value={currency}
+                  onChange={(e) => {
+                    setCurrency(e.target.value)
+                  }}
+                  options={currencyLists}
+                />
+                {currency && <MaterialTextField
                   className={styles.fullWidth}
                   label='Monthly Salary (PHP)'
                   size='small'
                   value={salary}
                   defaultValue={salary}
                   onChange={(e) => setSalary(handleNumericInput(e.target.value))}
-                />
+                />}
               </div>
 
               <div className={styles.editor}>
