@@ -14,6 +14,16 @@ function* loginReq(actions) {
     const response = yield call(authenticationJobseekersLogin, actions.payload)
 
     if (response.status >= 200 && response.status < 300) {
+      if (typeof window !== 'undefined' && window.gtag) {
+        const data = response.data?.data
+        if (data.is_new_account) {
+          window.gtag('event', 'sign_up', {
+            user_id: data?.id,
+            email: data?.email
+          })
+        }
+      }
+
       yield put(jobbseekersLoginSuccess(response.data))
       const loginData = response.data.data
       const userCookie = {
@@ -36,7 +46,6 @@ function* loginReq(actions) {
 
       yield call(setCookie, 'user', userCookie)
       yield call(setCookie, 'accessToken', loginData.token)
-
     }
   } catch (err) {
     const isServerError = checkErrorCode(err)
