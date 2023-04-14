@@ -5,7 +5,7 @@ import Modal from 'components/Modal'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialDatePicker from 'components/MaterialDatePicker'
-import MaterialLocationField from 'components/MaterialLocationField'
+// import MaterialLocationField from 'components/MaterialLocationField'
 import Text from 'components/Text'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
@@ -14,8 +14,8 @@ import Switch from '@mui/material/Switch'
 import { manageUserEducationsRequest } from 'store/actions/users/manageUserEducations'
 
 /* Helpers*/
-import { getCountryOptions } from 'helpers/optionsFormatter'
-import { getLocationList, getDegreeList } from 'helpers/jobPayloadFormatter'
+// import { getCountryOptions } from 'helpers/optionsFormatter'
+import {  getDegreeList } from 'helpers/jobPayloadFormatter'
 
 /* Vendors */
 import { useForm } from 'react-hook-form'
@@ -44,14 +44,6 @@ const requiredLabel = (text: string) => {
   )
 }
 
-const errorText = (errorMessage: string) => {
-  return (
-    <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
-      {errorMessage}
-    </Text>
-  )
-}
-
 const EditEducationModal = ({
   modalName,
   showModal,
@@ -62,8 +54,8 @@ const EditEducationModal = ({
   const dispatch = useDispatch()
 
   // const degreeOptions = getDegreeOptions(config)
-  const countryOptions = getCountryOptions(config)
-  const locList = getLocationList(config)
+  // const countryOptions = getCountryOptions(config)
+  // const locList = getLocationList(config)
   const degreeList = getDegreeList(config)
 
   const [school, setSchool] = useState('')
@@ -72,9 +64,9 @@ const EditEducationModal = ({
   const [studyPeriodFrom, setStudyPeriodFrom] = useState(null)
   const [studyPeriodTo, setStudyPeriodTo] = useState(null)
   const [hasErrorOnToPeriod, setHasErrorOnToPeriod] = useState(false)
-  const [location, setLocation] = useState(null)
+  // const [location, setLocation] = useState(null)
   const [countryKey, setCountryKey] = useState(null)
-  const [isShowCountry, setIsShowCountry] = useState(false)
+  // const [isShowCountry, setIsShowCountry] = useState(false)
   const [fieldOfStudy, setFieldOfStudy] = useState('')
   const [hasValidationError, setHasValidationError] = useState(true)
 
@@ -83,14 +75,14 @@ const EditEducationModal = ({
     (store: any) => store.users.manageUserEducations.response
   )
 
-  const getLocation = (locationKey) => {
-    if (!locationKey) return
-    return locList.filter((loc) => loc.key === locationKey)
-  }
+  // const getLocation = (locationKey) => {
+  //   if (!locationKey) return
+  //   return locList.filter((loc) => loc.key === locationKey)
+  // }
 
   const {
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm()
 
   const handleResetForm = () => {
@@ -100,7 +92,7 @@ const EditEducationModal = ({
     setStudyPeriodFrom(null)
     setStudyPeriodTo(null)
     setHasErrorOnToPeriod(false)
-    setLocation(null)
+    // setLocation(null)
     setCountryKey(null)
     setFieldOfStudy('')
     setHasValidationError(true)
@@ -111,9 +103,9 @@ const EditEducationModal = ({
     handleResetForm()
   }
 
-  const onChangeLocation = (_, value) => {
-    setLocation(value)
-  }
+  // const onChangeLocation = (_, value) => {
+  //   setLocation(value)
+  // }
 
   const onSubmit = () => {
     const data = {
@@ -122,7 +114,7 @@ const EditEducationModal = ({
       is_currently_studying: isCurrentlyStudying,
       study_period_from: moment(new Date(studyPeriodFrom)).format('yyyy-MM-DD'),
       study_period_to: isCurrentlyStudying === true ? null : moment(new Date(studyPeriodTo)).format('yyyy-MM-DD'),
-      location_key: location?.key,
+      // location_key: location?.key,
       country_key: countryKey,
     }
 
@@ -149,9 +141,10 @@ const EditEducationModal = ({
       degreeKey !== null &&
       studyPeriodFrom !== null &&
       (isCurrentlyStudying === true || studyPeriodTo !== null) &&
-      !moment(studyPeriodFrom).isAfter(studyPeriodTo) &&
-      location !== null &&
-      (location?.key !== 'overseas' || countryKey !== null)
+      !moment(studyPeriodFrom).isAfter(studyPeriodTo)
+      // &&
+      // location !== null &&
+      // (location?.key !== 'overseas' || countryKey !== null)
     ) {
       setHasValidationError(false)
     } else {
@@ -167,7 +160,7 @@ const EditEducationModal = ({
       setIsCurrentlyStudying(education.is_currently_studying)
       setStudyPeriodFrom(education.study_period_from)
       setStudyPeriodTo(education.study_period_to)
-      setLocation(education.location ? getLocation(education.location_key)[0] : null)
+      // setLocation(education.location ? getLocation(education.location_key)[0] : null)
       setCountryKey(education.country_key)
       setFieldOfStudy(education.field_of_study)
       setHasValidationError(true)
@@ -182,9 +175,9 @@ const EditEducationModal = ({
     setHasErrorOnToPeriod(moment(periodFrom).isAfter(periodTo) ? true : false)
   }, [studyPeriodFrom, studyPeriodTo])
 
-  useEffect(() => {
-    setIsShowCountry(location?.key === 'overseas')
-  }, [location])
+  // useEffect(() => {
+  //   setIsShowCountry(location?.key === 'overseas')
+  // }, [location])
 
   useEffect(() => {
     handleCloseModal()
@@ -198,7 +191,7 @@ const EditEducationModal = ({
     studyPeriodFrom,
     studyPeriodTo,
     isCurrentlyStudying,
-    location,
+    // location,
     countryKey
   ])
 
@@ -305,7 +298,7 @@ const EditEducationModal = ({
                   )}
                 </div>
               )}
-              <div className={styles.field}>
+              {/* <div className={styles.field}>
                 <MaterialLocationField
                   className={styles.fullWidth}
                   label={requiredLabel('Location')}
@@ -326,7 +319,7 @@ const EditEducationModal = ({
                   />
                   {errors.country && errorText(errors.country.message)}
                 </div>
-              )}
+              )} */}
               <div className={styles.field}>
                 <MaterialTextField
                   className={styles.fullWidth}

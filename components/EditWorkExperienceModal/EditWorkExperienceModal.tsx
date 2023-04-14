@@ -19,16 +19,16 @@ import TextEditor from 'components/TextEditor/TextEditor'
 import Modal from 'components/Modal'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
-import MaterialLocationField from 'components/MaterialLocationField'
+// import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 
 /* Helpers */
 import { handleNumericInput } from 'helpers/handleInput'
 import {
   getJobCategoryList,
-  getLocationList,
+  // getLocationList,
   getIndustryList,
-  getCountryList,
+  // getCountryList,
 } from 'helpers/jobPayloadFormatter'
 
 /* Styles */
@@ -57,13 +57,13 @@ for (let i = date.getFullYear(); i >= date.getFullYear() - 100; --i) {
   yearList.push({ value: i, label: i })
 }
 
-const errorText = (errorMessage: string) => {
-  return (
-    <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
-      {errorMessage}
-    </Text>
-  )
-}
+// const errorText = (errorMessage: string) => {
+//   return (
+//     <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
+//       {errorMessage}
+//     </Text>
+//   )
+// }
 
 const EditWorkExperienceModal = ({
   modalName,
@@ -74,16 +74,16 @@ const EditWorkExperienceModal = ({
 }: EditWorkExperienceModalProps) => {
   const dispatch = useDispatch()
 
-  const locList = getLocationList(config)
+  // const locList = getLocationList(config)
   const jobCategoryList = getJobCategoryList(config)
   const industryList = getIndustryList(config)
-  const countryList = getCountryList(config)?.map(item => ({ value: item.key, label: item.value }))
+  // const countryList = getCountryList(config)?.map(item => ({ value: item.key, label: item.value }))
 
   const [jobTitle, setJobTitle] = useState('')
   const [companyName, setCompanyName] = useState('')
-  const [location, setLocation] = useState(null)
+  // const [location, setLocation] = useState(null)
   const [country, setCountry] = useState<any>({})
-  const [isShowCountry, setIsShowCountry] = useState(false)
+  // const [isShowCountry, setIsShowCountry] = useState(false)
   const [isCurrentJob, setIsCurrentJob] = useState(false)
   const [workPeriodFrom, setWorkPeriodFrom] = useState(null)
   const [workPeriodTo, setWorkPeriodTo] = useState(null)
@@ -104,7 +104,7 @@ const EditWorkExperienceModal = ({
 
   const {
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm()
 
   useEffect(() => {
@@ -120,7 +120,7 @@ const EditWorkExperienceModal = ({
     if (data) {
       setJobTitle(data.job_title)
       setCompanyName(data.company)
-      setLocation(data.location ? getLocation(data.location)[0] : null)
+      // setLocation(data.location ? getLocation(data.location)[0] : null)
       setIsCurrentJob(data.is_currently_work_here)
       setWorkPeriodFrom(data.working_period_from)
       setWorkPeriodTo(data.working_period_to)
@@ -131,12 +131,12 @@ const EditWorkExperienceModal = ({
             (industry) => industry.label === data.company_industry
           )[0].value
         )
-      if (data.location && data.location.toLowerCase() === 'overseas') {
-        setCountry(
-          countryList.find((country) => country.value === data.country_key)
-        )
-        setIsShowCountry(true)
-      }
+      // if (data.location && data.location.toLowerCase() === 'overseas') {
+      //   setCountry(
+      //     countryList.find((country) => country.value === data.country_key)
+      //   )
+      //   setIsShowCountry(true)
+      // }
 
       setDescription(data.description)
       setJobFunction({ id: data?.function_job_title_id, value: data?.function_job_title ?? '' })
@@ -155,8 +155,8 @@ const EditWorkExperienceModal = ({
   }, [workPeriodFrom, workPeriodTo])
 
   useEffect(() => {
-    const requireFields = jobTitle && companyName && location && workPeriodFrom
-    const emptyRequiredFields = !jobTitle && !companyName && !location && !workPeriodFrom
+    const requireFields = jobTitle && companyName  && workPeriodFrom
+    const emptyRequiredFields = !jobTitle && !companyName && !workPeriodFrom
     const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
     if (isCurrentJob) {
@@ -172,7 +172,7 @@ const EditWorkExperienceModal = ({
   }, [
     jobTitle,
     companyName,
-    location,
+    // location,
     isCurrentJob,
     workPeriodFrom,
     workPeriodTo,
@@ -211,7 +211,7 @@ const EditWorkExperienceModal = ({
       working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
       working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
       description: description ? description : '',
-      location_key: location?.key || '',
+      // location_key: location?.key || '',
     }
 
     const workExperiencesPayload = {
@@ -225,14 +225,14 @@ const EditWorkExperienceModal = ({
   const handleResetForm = () => {
     setJobTitle('')
     setCompanyName('')
-    setLocation('')
+    // setLocation('')
     setIsCurrentJob(false)
     setWorkPeriodFrom(null)
     setWorkPeriodTo(null)
     setSalary('')
     setIndustry('')
     setCountry('')
-    setIsShowCountry(false)
+    // setIsShowCountry(false)
     setDescription('')
     setJobFunction({ id: undefined, value: '' })
     setHasErrorOnFromPeriod(false)
@@ -240,15 +240,15 @@ const EditWorkExperienceModal = ({
     setShowErrorToComplete(false)
   }
 
-  const getLocation = (location) => {
-    if (!location) return
-    return locList.filter((loc) => loc?.value.toLowerCase() === location.toLowerCase())
-  }
+  // const getLocation = (location) => {
+  //   if (!location) return
+  //   return locList.filter((loc) => loc?.value.toLowerCase() === location.toLowerCase())
+  // }
 
-  const onLocationSearch = (_, value) => {
-    setIsShowCountry(value?.key === 'overseas' ? true : false)
-    setLocation(value)
-  }
+  // const onLocationSearch = (_, value) => {
+  //   setIsShowCountry(value?.key === 'overseas' ? true : false)
+  //   setLocation(value)
+  // }
 
   const handleCloseModal = () => {
     handleModal(modalName, false)
@@ -295,7 +295,7 @@ const EditWorkExperienceModal = ({
                 />
               </div>
 
-              <div className={styles.field}>
+              {/* <div className={styles.field}>
                 <MaterialLocationField
                   className={styles.fullWidth}
                   label={requiredLabel('Location')}
@@ -303,9 +303,9 @@ const EditWorkExperienceModal = ({
                   defaultValue={location}
                   onChange={onLocationSearch}
                 />
-              </div>
+              </div> */}
 
-              {isShowCountry && (
+              {/* {isShowCountry && (
                 <div className={classNames(styles.field, styles.fieldCountry)}>
                   <MaterialBasicSelect
                     className={styles.fullWidth}
@@ -317,7 +317,7 @@ const EditWorkExperienceModal = ({
                   />
                   {errors.country && errorText(errors.country.message)}
                 </div>
-              )}
+              )} */}
 
               <div className={styles.fieldGroup}>
                 <div className={styles.fieldHeader}>

@@ -47,10 +47,11 @@ const EditJobPreferencesModal = ({
   const currencyLists = useSelector((store: any) =>
     (store.config.config.response?.currency_lists ?? []).map((item) => ({
       label: item.value,
-      value: item.key
+      value: item.key,
+      id: item.id
     }))
   )
-  console.log({config})
+  console.log({ config })
   const [initial, setInital] = useState(true)
   const formattedLocationList = flat(formatLocationConfig(locationList))
   const location = useMemo(() => {
@@ -127,6 +128,7 @@ const EditJobPreferencesModal = ({
           salary_range_to: Number(maxSalary),
           industry_key: industry,
           currency_key: currencyKey,
+          currency_id: currencyLists.find(item => item.value === currencyKey)?.id ?? null,
           country_key: location?.key === 'overseas' ? country : 'ph'
         }
       }
