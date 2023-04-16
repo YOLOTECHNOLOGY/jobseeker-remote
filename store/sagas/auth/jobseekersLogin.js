@@ -16,16 +16,6 @@ function* loginReq(actions) {
     const response = yield call(authenticationJobseekersLogin, actions.payload)
 
     if (response.status >= 200 && response.status < 300) {
-      if (typeof window !== 'undefined' && window.gtag) {
-        const data = response.data?.data
-        if (data.is_new_account) {
-          window.gtag('event', 'sign_up', {
-            user_id: data?.id,
-            email: data?.email
-          })
-        }
-      }
-
       yield put(jobbseekersLoginSuccess(response.data))
       const loginData = response.data.data
       const { refresh_token, token, token_expired_at } = loginData
@@ -51,9 +41,20 @@ function* loginReq(actions) {
       yield call(setCookie, userKey, userCookie)
       yield call(setCookie, accessToken, token, token_expired_at)
 
-      // Send register event to FB Pixel (First time login user)
-      if (loginData.is_new_account && window !== 'undefined' && window.fbq) {
-        yield fbq.event('WebCompleteRegistration', { source: 'web' })
+      // Send register event to FB Pixel and gogle analytic (First time login user)
+      if (process.env.ENV === 'production' && 
+        loginData.is_new_account && typeof window !== 'undefined' 
+        && window.fbq && window.gtag
+      ) {
+        yield fbq.event('sign_up', { 
+          user_id: loginData?.id,
+          email: loginData?.email 
+        })
+
+        yield window.gtag('event', 'sign_up', {
+          user_id: loginData?.id,
+          email: loginData?.email
+        })
       }
     }
   } catch (err) {
