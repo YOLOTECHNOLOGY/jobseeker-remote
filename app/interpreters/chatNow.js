@@ -71,14 +71,13 @@ const interpreter = registInterpreter((command) =>
     redirectToChat: (chatId) =>
       M.do((context) => {
         const { router, jobDetail } = context
+        const userInfo = getCookie('user')
         
         // Send new chat event to FB Pixel and gogle analytic
         if (process.env.ENV === 'production' 
           && typeof window !== 'undefined' && window.gtag && window.fbq 
           && userInfo && jobDetail && !jobDetail.chat?.is_exists
         ) {
-          const userInfo = getCookie('user')
-
           window.gtag('event', 'new_chat', {
             user_id: userInfo.id,
             email: userInfo.email,
