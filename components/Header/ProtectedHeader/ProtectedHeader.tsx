@@ -21,7 +21,7 @@ import { getCookie } from 'helpers/cookies'
 /* Style */
 import styles from '../Header.module.scss'
 import { IMContext } from 'components/Chat/IMProvider.client'
-import { getCountryKey } from 'helpers/country'
+import SwitchNation from 'components/SwitchNation/SwitchNation'
 
 // this header will be used when user is logged in
 const ProtectedHeader = () => {
@@ -31,6 +31,7 @@ const ProtectedHeader = () => {
   const dispatch = useDispatch()
   const ref = useRef(null)
   const [isShowHeaderMenu, setIsShowHeaderMenu] = useState(false)
+  const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
   const { totalUnread } = useContext(IMContext)
   // const totalUnread = 999
 
@@ -68,7 +69,6 @@ const ProtectedHeader = () => {
   //   const authPath = authPathToOldProject(null, path)
   //   router.push(authPath)
   // }
-  const countryKey = getCountryKey()
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
@@ -245,7 +245,7 @@ const ProtectedHeader = () => {
                   className={styles.profilePlaceHolder}
                   alt='avatar'
                   onError={(e) => {
-                    ; (e.target as HTMLInputElement).src = DefaultAvatar
+                    ;(e.target as HTMLInputElement).src = DefaultAvatar
                   }}
                 />
                 <div className={styles.profileCaret} />
@@ -253,7 +253,7 @@ const ProtectedHeader = () => {
             </li>
           </React.Fragment>
         </ul>
-        <select
+        {/* <select
           onChange={(e) => {
             const value = e.target.value
             // console.log({ onChange: e.target.value })
@@ -268,7 +268,7 @@ const ProtectedHeader = () => {
         >
           <option value='ph' label='PH' />
           <option value='sg' label='SGP' />
-        </select>
+        </select> */}
         <div className={styles.mobileIconWrapper}>
           {pathname !== '/chat/[chat_id]' ? (
             <li
@@ -297,7 +297,6 @@ const ProtectedHeader = () => {
           <div className={styles.icon}>
             <Hamburger />
           </div>
-
         </div>
 
         {isShowHeaderMenu && (
@@ -332,6 +331,19 @@ const ProtectedHeader = () => {
                   <Text textStyle='base'>I’m hiring</Text>
                 </Link>
               </li>
+              <li
+                className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}
+                onClick={() => {
+                  setOpenSwitchNationModal(true)
+                  setIsShowHeaderMenu(false)
+                }}
+              >
+                <div className={styles.headerMenuLink}>
+                  <Text textStyle='base'>
+                    Singapore, English - <span style={{ color: '#136FD3' }}>Change</span>
+                  </Text>
+                </div>
+              </li>
               <li className={styles.headerMenuItem}>
                 <div className={styles.headerMenuLink} onClick={() => handleLogOut()}>
                   <Text textStyle='base'>Log Out</Text>
@@ -341,6 +353,9 @@ const ProtectedHeader = () => {
           </div>
         )}
       </nav>
+
+      {/* switch nation */}
+      <SwitchNation open={openSwitchNationModal} close={() => setOpenSwitchNationModal(false)} />
     </div>
   )
 }

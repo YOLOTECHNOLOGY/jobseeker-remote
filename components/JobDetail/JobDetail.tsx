@@ -166,9 +166,7 @@ const JobDetail = ({
 
   const isCategoryApplied = category === 'applied'
   const isCategorySaved = category === 'saved'
-  const publicJobUrl = isCategoryApplied
-    ? `${jobDetailUrl}?isApplied=true`
-    : `${jobDetailUrl}`
+  const publicJobUrl = isCategoryApplied ? `${jobDetailUrl}?isApplied=true` : `${jobDetailUrl}`
 
   const checkHasApplicationWithdrawn = () => {
     if (isCategoryApplied && applicationHistory?.length > 0) {
@@ -218,7 +216,11 @@ const JobDetail = ({
     } else {
       setLoading(true)
       const source = jobSource()
-      createChat(selectedJob?.id, { source })
+      createChat(selectedJob?.id, {
+        source,
+        job_title_id: selectedJob.id,
+        device: isMobile ? 'mobile_web' : 'web'
+      })
         .then((result) => {
           const chatId = result.data.data.id
           const newData = {

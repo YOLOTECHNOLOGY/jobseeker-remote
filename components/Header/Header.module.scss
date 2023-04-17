@@ -206,7 +206,8 @@
     position: relative;
 
     &:hover {
-      cursor: not-allowed;
+      // cursor: not-allowed;
+      cursor: pointer;
     }
   }
 
@@ -309,12 +310,12 @@
       border-bottom: 1px solid rgba($lightgrey, 0.5);
     }
   }
-  &ItemSpe{
-    border-top: 8px solid #F0F0F0;;
-    border-bottom: 8px solid #F0F0F0 !important;
+  &ItemSpe {
+    border-top: 8px solid #f0f0f0;
+    border-bottom: 8px solid #f0f0f0 !important;
   }
-  &ItemSet{
-    border-bottom:none !important;
+  &ItemSet {
+    border-bottom: none !important;
   }
 }
 

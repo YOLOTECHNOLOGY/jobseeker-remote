@@ -7,6 +7,7 @@ import ListItemText from '@mui/material/ListItemText'
 import Select from '@mui/material/Select'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import PopContainer from '../popContainer'
+import styles from './index.module.scss'
 
 interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children?: React.ReactNode
@@ -76,6 +77,7 @@ const SingleSelect = ({
                         >
                             <ListItemText
                                 primary={option.label}
+                                className={styles.lineCamp}
                                 style={{
                                     color: value === option.value ? '#136FD3' : undefined
                                 }}

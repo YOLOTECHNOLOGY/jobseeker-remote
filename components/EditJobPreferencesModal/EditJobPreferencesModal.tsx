@@ -63,8 +63,8 @@ const EditJobPreferencesModal = ({
         value: preference?.function_job_title ?? ''
       },
       jobType: preference?.job_type_key,
-      minSalary: Number(preference?.salary_range_from) ?? '',
-      maxSalary: Number(preference?.salary_range_to) ?? '',
+      minSalary: preference?.salary_range_from ? Number(preference?.salary_range_from) : '',
+      maxSalary: preference?.salary_range_to ? Number(preference?.salary_range_to) : '',
       location: location,
       industry: preference?.industry_key,
       country: preference?.country_key,
@@ -105,7 +105,7 @@ const EditJobPreferencesModal = ({
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
     // setMaxSalary(maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : null)
-    setValue('maxSalary', maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : null)
+    setValue('maxSalary', maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : '')
     setMaxSalaryOptions(maxSalaryOptions)
   }
   const onSubmit = (data) => {

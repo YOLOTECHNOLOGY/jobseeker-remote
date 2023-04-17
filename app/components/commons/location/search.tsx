@@ -23,6 +23,7 @@ type JobSearchBar = {
   searchFn?: Function
   updateSearchValue?: Function
   maxLength?: Number
+  renderOption?:any
 } & Omit<Input, 'size'>
 
 const theme = parent => createTheme(({
@@ -97,6 +98,7 @@ const MaterialTextFieldWithSuggestionList = ({
   updateSearchValue,
   maxLength,
   refs,
+  renderOption,
   ...rest
 }: JobSearchBar) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,6 +113,7 @@ const MaterialTextFieldWithSuggestionList = ({
         freeSolo
         style={{ background: '#fff', color: '#ccc' ,}}
         options={options?.map((option) => option)}
+        getOptionLabel={(option: any) => option.value || option}
         className={className}
         size={size}
         loading={isLoading}
@@ -120,12 +123,14 @@ const MaterialTextFieldWithSuggestionList = ({
             onSelect(val ?? '')
           }
         }}
+
         onChange={(_, val: any, reason) => {
           console.log({ val, reason })
           if ((reason === 'selectOption' || reason === 'clear') && onSelect) {
             onSelect(val ?? '')
           }
         }}
+        renderOption={renderOption}
         disableClearable={false}
         placeholder={label}
         defaultValue={defaultValue}
