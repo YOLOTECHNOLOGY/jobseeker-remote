@@ -102,7 +102,7 @@ const interpreter = registInterpreter((command) =>
 
           // Tiktok Pixel
           if (window.ttq) {
-            yield window.ttq.track('NewChat', {
+            window.ttq.track('NewChat', {
               user_id: userInfo.id,
               email: userInfo.email,
               job_id: jobDetail.id
