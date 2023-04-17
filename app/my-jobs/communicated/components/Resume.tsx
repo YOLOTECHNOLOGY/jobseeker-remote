@@ -85,7 +85,6 @@ const Resume = ({
   }
 
   const handleChange = (event: SelectChangeEvent) => {
-    console.log('handle change', event)
     setNoticePeriodData(event.target.value as string);
     changeNoticePeriod(event.target.value)
   };
