@@ -75,41 +75,7 @@ const interpreter = registInterpreter((command) =>
       }),
     redirectToChat: (chatId) =>
       M.do((context) => {
-        const { router, jobDetail } = context
-        const userInfo = getCookie('user')
-
-        // Send new chat event to FB Pixel and google analytic
-        if (
-          // process.env.ENV === 'production' &&
-          typeof window !== 'undefined'&&
-          userInfo && jobDetail && !jobDetail.chat?.is_exists
-        ) {
-          if (window.gtag) {
-            window.gtag('event', 'new_chat', {
-              user_id: userInfo.id,
-              email: userInfo.email,
-              job_id: jobDetail.id
-            })
-          }
-          
-          if (window.fbq) {
-            fbq.event('new_chat', {
-              user_id: userInfo.id,
-              email: userInfo.email,
-              job_id: jobDetail.id
-            })
-          }
-
-          // Tiktok Pixel
-          if (window.ttq) {
-            window.ttq.track('NewChat', {
-              user_id: userInfo.id,
-              email: userInfo.email,
-              job_id: jobDetail.id
-            });
-          }
-        }
-
+        const { router } = context
         router.push('/chat/' + chatId, { forceOptimisticNavigation: true })
       }),
     redirectToCompleteFile: () =>
@@ -125,16 +91,49 @@ const interpreter = registInterpreter((command) =>
         const { jobDetail, dispatch } = context
         const { id } = jobDetail
         const source = jobSource()
-        return createChat(id, { source, job_title_id: id, device: isMobile ? 'mobile_web' : 'web' }).then((result) => {
-          const chatId = result.data.data.id
-          const newData = {
-            ...result.data?.data?.job_application,
-            initiated_role: result.data?.data?.initiated_role,
-            chatStatus: result.data?.data?.status
-          }
-          dispatch(updateImState({ chatId, imState: newData }))
-          return chatId
-        })
+        return createChat(id, { source, job_title_id: id, device: isMobile ? 'mobile_web' : 'web' })
+          .then((result) => {
+            const chatId = result.data.data.id
+            const newData = {
+              ...result.data?.data?.job_application,
+              initiated_role: result.data?.data?.initiated_role,
+              chatStatus: result.data?.data?.status
+            }
+            dispatch(updateImState({ chatId, imState: newData }))
+            const userInfo = getCookie('user')
+            // Send new chat event to FB Pixel and google analytic
+            if (
+              // process.env.ENV === 'production' &&
+              typeof window !== 'undefined' &&
+              userInfo && jobDetail && !jobDetail.chat?.is_exists
+            ) {
+              if (window.gtag) {
+                window.gtag('event', 'new_chat', {
+                  user_id: userInfo.id,
+                  email: userInfo.email,
+                  job_id: jobDetail.id
+                })
+              }
+
+              if (window.fbq) {
+                fbq.event('new_chat', {
+                  user_id: userInfo.id,
+                  email: userInfo.email,
+                  job_id: jobDetail.id
+                })
+              }
+
+              // Tiktok Pixel
+              if (window.ttq) {
+                window.ttq.track('NewChat', {
+                  user_id: userInfo.id,
+                  email: userInfo.email,
+                  job_id: jobDetail.id
+                });
+              }
+            }
+            return chatId
+          })
       })
   })
 )
