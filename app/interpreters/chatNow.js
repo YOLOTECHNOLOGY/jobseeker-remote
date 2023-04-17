@@ -70,27 +70,7 @@ const interpreter = registInterpreter((command) =>
       }),
     redirectToChat: (chatId) =>
       M.do((context) => {
-        const { router, jobDetail } = context
-        const userInfo = getCookie('user')
-        
-        // Send new chat event to FB Pixel and gogle analytic
-        if (process.env.ENV === 'production' 
-          && typeof window !== 'undefined' && window.gtag && window.fbq 
-          && userInfo && jobDetail && !jobDetail.chat?.is_exists
-        ) {
-          window.gtag('event', 'new_chat', {
-            user_id: userInfo.id,
-            email: userInfo.email,
-            job_id: jobDetail.id
-          })
-
-          fbq.event('new_chat', {
-            user_id: userInfo.id,
-            email: userInfo.email,
-            job_id: jobDetail.id
-          })
-        }
-
+        const { router } = context
         router.push('/chat/' + chatId, { forceOptimisticNavigation: true })
       }),
     createNewChat: () =>
@@ -106,6 +86,37 @@ const interpreter = registInterpreter((command) =>
             chatStatus: result.data?.data?.status
           }
           dispatch(updateImState({ chatId, imState: newData }))
+          const userInfo = getCookie('user')
+          // Send new chat event to FB Pixel and google analytic
+          if (
+            process.env.ENV === 'production' &&
+            typeof window !== 'undefined' &&
+            userInfo && jobDetail && !jobDetail.chat?.is_exists
+          ) {
+            if (window.gtag) {
+              window.gtag('event', 'new_chat', {
+                user_id: userInfo.id,
+                email: userInfo.email,
+                job_id: jobDetail.id
+              })
+            }
+
+            if (window.fbq) {
+              fbq.event('new_chat', {
+                user_id: userInfo.id,
+                email: userInfo.email,
+                job_id: jobDetail.id
+              })
+            }
+
+            if (window.ttq) {
+              window.ttq.track('SubmitForm', {
+                user_id: userInfo.id,
+                email: userInfo.email,
+                job_id: jobDetail.id
+              });
+            }
+          }
           return chatId
         })
       })
