@@ -66,7 +66,7 @@ function* SocialLoginReq(actions) {
 
         // Tiktok Pixel
         if (window.ttq) {
-          yield window.ttq.track('SignUp', {
+          yield window.ttq.track('CompleteRegistration', {
             user_id: loginData?.id,
             email: loginData?.email
           });

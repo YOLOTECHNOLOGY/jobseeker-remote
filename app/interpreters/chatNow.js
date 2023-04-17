@@ -123,9 +123,8 @@ const interpreter = registInterpreter((command) =>
                 })
               }
 
-              // Tiktok Pixel
               if (window.ttq) {
-                window.ttq.track('NewChat', {
+                window.ttq.track('SubmitForm', {
                   user_id: userInfo.id,
                   email: userInfo.email,
                   job_id: jobDetail.id
