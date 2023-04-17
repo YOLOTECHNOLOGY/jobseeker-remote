@@ -79,21 +79,35 @@ const interpreter = registInterpreter((command) =>
         const userInfo = getCookie('user')
 
         // Send new chat event to FB Pixel and google analytic
-        if (process.env.ENV === 'production'
-          && typeof window !== 'undefined' && window.gtag && window.fbq
-          && userInfo && jobDetail && !jobDetail.chat?.is_exists
+        if (
+          // process.env.ENV === 'production' &&
+          typeof window !== 'undefined'&&
+          userInfo && jobDetail && !jobDetail.chat?.is_exists
         ) {
-          window.gtag('event', 'new_chat', {
-            user_id: userInfo.id,
-            email: userInfo.email,
-            job_id: jobDetail.id
-          })
+          if (window.gtag) {
+            window.gtag('event', 'new_chat', {
+              user_id: userInfo.id,
+              email: userInfo.email,
+              job_id: jobDetail.id
+            })
+          }
+          
+          if (window.fbq) {
+            fbq.event('new_chat', {
+              user_id: userInfo.id,
+              email: userInfo.email,
+              job_id: jobDetail.id
+            })
+          }
 
-          fbq.event('new_chat', {
-            user_id: userInfo.id,
-            email: userInfo.email,
-            job_id: jobDetail.id
-          })
+          // Tiktok Pixel
+          if (window.ttq) {
+            yield window.ttq.track('NewChat', {
+              user_id: userInfo.id,
+              email: userInfo.email,
+              job_id: jobDetail.id
+            });
+          }
         }
 
         router.push('/chat/' + chatId, { forceOptimisticNavigation: true })
