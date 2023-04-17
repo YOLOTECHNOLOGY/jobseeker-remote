@@ -21,7 +21,8 @@ type MaterialTextFieldWithSuggestionListProps = {
   onSelect?: Function
   searchFn?: Function
   updateSearchValue?: Function
-  maxLength?: Number
+  maxLength?: Number,
+  renderOption?: any
 } & Omit<Input, 'size'>
 
 const theme = createTheme({
@@ -67,13 +68,13 @@ const MaterialTextFieldWithSuggestionList = ({
   updateSearchValue,
   maxLength,
   refs,
+  renderOption,
   ...rest
 }: MaterialTextFieldWithSuggestionListProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     updateSearchValue(event.target.value)
     searchFn(event.target.value)
   }
-
   return (
     <ThemeProvider theme={theme}>
       <Autocomplete
@@ -83,10 +84,14 @@ const MaterialTextFieldWithSuggestionList = ({
         className={className}
         size={size}
         onChange={(_, val: any, reason) => {
+          console.log(val,'val11')
           if ((reason === 'selectOption' || reason === 'clear') && onSelect) {
-            onSelect(val ?? '')
+            const value = val?.value ? val?.value : val || ''
+             onSelect(value)
           }
         }}
+        renderOption={renderOption}
+        getOptionLabel={(option: any) => option.value || option}
         defaultValue={defaultValue}
         inputValue={value}
         renderInput={(params) => (

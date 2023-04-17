@@ -14,6 +14,12 @@ import { getCookie, setCookie } from 'helpers/cookies'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import { AppDownQRCode } from 'images'
 import Image from 'next/image'
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import SearchIcon from '@mui/icons-material/Search';
+
+const transQs =(params:any) =>{
+    return params.map((e,index)=>`query_histories[${index}]=${e}`).join('&');
+}
 const SearchArea = (props: any) => {
     const { config } = props
     const dispatch = useDispatch()
@@ -39,6 +45,7 @@ const SearchArea = (props: any) => {
     }, [location, router])
 
     const [suggestionList, setSuggestionList] = useState([])
+    console.log(suggestionList,'1111')
     useEffect(() => {
         if (config) {
             dispatch(fetchConfigSuccess(config))
@@ -47,6 +54,7 @@ const SearchArea = (props: any) => {
     const [searchValue, setSearchValue] = useState('')
     const [searchHistories, addSearchHistory] = useSearchHistory()
     const [, transitionStart] = useTransition()
+    console.log(searchHistories,'searchHistories')
     const handleSuggestionSearch = useCallback((val) => {
         transitionStart(() => {
             const valueLength = val?.length ?? 0
@@ -55,7 +63,7 @@ const SearchArea = (props: any) => {
             } else if (valueLength === 1) {
                 setSuggestionList([])
             } else if ((val?.length ?? 0) > 1) {
-                fetch(`${process.env.JOB_BOSSJOB_URL}/suggested-search?size=5&query=${val}`)
+                fetch(`${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=5&query=${val}&${transQs(searchHistories)}`)
                     .then((resp) => resp.json())
                     .then((data) => setSuggestionList(data.data.items))
             }
@@ -86,8 +94,13 @@ const SearchArea = (props: any) => {
       const useFn = throttle(() => {
         isTouchBottom()
       }, 300)
-
-
+    
+      const styleleSelect = {
+        display:'flex',
+        alignItems:'center',
+        cursor: 'pointer'
+      }
+    
     return <div className={`${styles.searchArea} ${isShow ? styles.searchAreaFix :''}`}>
         <div className={styles.box}>
         <MaterialLocationField
@@ -107,6 +120,27 @@ const SearchArea = (props: any) => {
             variant='outlined'
             size='small'
             className={styles.search}
+            renderOption={(props, option) => {
+                const {type, is_history:isHistory,value ,logo_url:logoUrl} = option || {}
+                return (
+                    type === 'company' ?
+                     <li {...props} style={styleleSelect}>
+                         <Image src={logoUrl} alt="value" width='24' height='24'/>
+                         <span style={{paddingLeft:'10px'}}>{value}</span>
+                     </li> 
+                     : isHistory ? (
+                    <li {...props} style={{...styleleSelect,color:'#136fd3'}}>
+                        <AccessTimeIcon/>
+                        <span style={{paddingLeft:'10px'}}>{value}</span>
+                    </li>
+                    ) : 
+                     <li {...props} style={styleleSelect}> 
+                       <SearchIcon/> 
+                       <span style={{paddingLeft:'10px'}}>{value}</span>
+                    </li>
+                   
+                )
+            }}
             // defaultValue={defaultValues?.urlQuery}
             value={searchValue}
             maxLength={255}

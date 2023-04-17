@@ -24,9 +24,9 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
 
   let recruiterLineStatus = []
   const data = await fetchSimilarJobsService(params)
-    .then(({ data: { data } }) => data)
+    .then(({ data: { data } }) => data?.jobs )
     .catch(() => ({ error: true }))
-
+   console.log(data,777)
   if (!data.error) {
     const ids = data.map((item) => item.recruiter?.id)
     if (ids.length) {
@@ -54,8 +54,8 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
                       <div className={styles.similarJobs_info}>
                         <div>
                           <Avatar
-                            alt={item.company?.name}
-                            src={item.company?.logo}
+                            alt={item.company_name}
+                            src={item.company_logo}
                             sx={{
                               borderRadius: '5px',
                               width: '24px',
@@ -65,7 +65,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
                           />
                         </div>
                         <div className={styles.similarJobs_info_jobType}>
-                          <div>{item.company?.name}</div>
+                          <div>{item.company_name}</div>
                           <div>{item.location_value}</div>
                         </div>
                       </div>
@@ -93,19 +93,19 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
                         </div>
                       </div>
 
-                      <div className={styles.similarJobs_mobileCard_name}>{item.company?.name}</div>
+                      <div className={styles.similarJobs_mobileCard_name}>{item.company_name}</div>
 
                       <div className={styles.similarJobs_mobileCard_tags}>
                         <span>{item.job_type}</span>
-                        <span>{item.xp_lvl?.value}</span>
-                        <span>{item.degree.value}</span>
+                        <span>{item?.xp_lvl?.value}</span>
+                        <span>{item?.degree?.value}</span>
                       </div>
 
                       <div className={styles.similarJobs_info}>
                         <div className={styles.similarJobs_infoWrpper}>
                           <Avatar
-                            alt={item.company?.name}
-                            src={item.company?.logo}
+                            alt={item.company_name}
+                            src={item.company_logo}
                             sx={{
                               borderRadius: '50%',
                               width: '17px',
@@ -124,7 +124,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
                           ></span>
                         </div>
                         <div className={classNames([styles.similarJobs_mobileCard_loca])}>
-                          <div>{item.recruiter.full_name}</div>
+                          <div>{item.recruiter?.full_name}</div>
                           <div className={styles.similarJobs_mobileCard_loca_value}>
                             {item.location_value}
                           </div>
