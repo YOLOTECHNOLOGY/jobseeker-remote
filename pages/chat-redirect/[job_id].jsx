@@ -1,12 +1,15 @@
 /* eslint-disable camelcase */
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Layout from 'components/Layout'
-import { createChat } from 'helpers/interpreters/services/chat'
+import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { wrapper } from 'store'
 import { END } from '@redux-saga/core'
+
+
+import Layout from 'components/Layout'
+import { createChat } from 'helpers/interpreters/services/chat'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 const Chat = () => {
     const router = useRouter()
@@ -16,7 +19,7 @@ const Chat = () => {
     const userId = userDetail.id
     useEffect(() => {
         if (userId) {
-            createChat(job_id, { source }).then(result => {
+            createChat(job_id, { source, job_title_id: job_id, device: isMobile ? 'mobile_web' : 'web' }).then(result => {
                 const chatId = result.data.data.id
                 router.push(`/chat/${chatId}`)
             }).catch(() => {

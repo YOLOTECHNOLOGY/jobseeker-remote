@@ -21,3 +21,12 @@
         margin-left: 30px;
     }
 }
+
+.lineCamp {
+
+    .MuiListItemText-primary {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

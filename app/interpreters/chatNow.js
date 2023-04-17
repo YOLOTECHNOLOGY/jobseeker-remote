@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import { isMobile } from 'react-device-detect'
+
 import { ReaderTPromise as M } from 'app/abstractModels/monads'
 import jobSource from 'helpers/jobSource'
 import { createChat } from 'helpers/interpreters/services/chat'
@@ -75,10 +77,10 @@ const interpreter = registInterpreter((command) =>
       M.do((context) => {
         const { router, jobDetail } = context
         const userInfo = getCookie('user')
-        
-        // Send new chat event to FB Pixel and gogle analytic
-        if (process.env.ENV === 'production' 
-          && typeof window !== 'undefined' && window.gtag && window.fbq 
+
+        // Send new chat event to FB Pixel and google analytic
+        if (process.env.ENV === 'production'
+          && typeof window !== 'undefined' && window.gtag && window.fbq
           && userInfo && jobDetail && !jobDetail.chat?.is_exists
         ) {
           window.gtag('event', 'new_chat', {
@@ -109,7 +111,7 @@ const interpreter = registInterpreter((command) =>
         const { jobDetail, dispatch } = context
         const { id } = jobDetail
         const source = jobSource()
-        return createChat(id, { source }).then((result) => {
+        return createChat(id, { source, job_title_id: id, device: isMobile ? 'mobile_web' : 'web' }).then((result) => {
           const chatId = result.data.data.id
           const newData = {
             ...result.data?.data?.job_application,

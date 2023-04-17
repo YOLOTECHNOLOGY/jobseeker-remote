@@ -42,19 +42,30 @@ function* loginReq(actions) {
       yield call(setCookie, accessToken, token, token_expired_at)
 
       // Send register event to FB Pixel and gogle analytic (First time login user)
-      if (process.env.ENV === 'production' && 
+      if (
+        // process.env.ENV === 'production' && 
         loginData.is_new_account && typeof window !== 'undefined' 
-        && window.fbq && window.gtag
       ) {
-        yield fbq.event('sign_up', { 
-          user_id: loginData?.id,
-          email: loginData?.email 
-        })
+        if (window.fbq) {
+          yield fbq.event('sign_up', { 
+            user_id: loginData?.id,
+            email: loginData?.email 
+          })
+        }
+        
+        if (window.gtag) {
+          yield window.gtag('event', 'sign_up', {
+            user_id: loginData?.id,
+            email: loginData?.email
+          })
+        }
 
-        yield window.gtag('event', 'sign_up', {
-          user_id: loginData?.id,
-          email: loginData?.email
-        })
+        if (window.ttq) {
+          yield window.ttq.track('sign_up', {
+            user_id: loginData?.id,
+            email: loginData?.email
+          });
+        }
       }
     }
   } catch (err) {

@@ -9,7 +9,7 @@ const tiktokfunc = () => {
   const w = window as any
   const t = 'ttq'
   w.TiktokAnalyticsObject = t; const ttq = w[t] = w[t] || [];
-  const e = 'CEDEUCRC77UA21H9TRE0'
+  const e = 'CGUHCV3C77U5RBGMKBDG'
   ttq._i = ttq._i || {}, ttq._i[e] = [], ttq._i[e]._u = i, ttq._t = ttq._t || {},
     ttq._i = ttq._i || {}
   ttq._t[e] = +new Date, ttq._o = ttq._o || {}, ttq._o[e] = {}
