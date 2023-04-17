@@ -25,6 +25,8 @@ import interpreters from 'helpers/interpreters'
 import { useRouter } from 'next/navigation'
 import errorParser from 'helpers/errorParser'
 import { pushNotification } from 'store/services/notification'
+import { scripts } from 'imforbossjob'
+const { offerJobseeker: { getDataAndShowOfferDetailScript } } = scripts
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const msgToNote = (message, state) => {
@@ -216,7 +218,7 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
                                                 }
                                             }
                                             ]
-                                            console.log({userInfoResult})
+                                            console.log({ userInfoResult })
                                             resolve(userInfoResult)
                                         } else {
                                             setTimeout(() => callBackUserInfo(), 500)
@@ -392,7 +394,18 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
     } as any)
     const interpreter = hooks.useInterpreter(interpreters, contextRef)
     const imStatus = hooks.useInitChat(interpreter, imState, chatId, filterMode, chatList, updateChatList)
+    useEffect(() => {
+        const receive = e => {
 
+            const data = e.detail?.data ?? {}
+            if (data?.landing_page === 'Offer dialog') {
+                console.log('receiveImNotification', e.detail)
+                interpreter(getDataAndShowOfferDetailScript(data.applicationId, data.offerId))
+            }
+        }
+        window.addEventListener('receiveImNotification', receive)
+        return window.removeEventListener('receiveImNotification', receive)
+    }, [])
     return <Provider value={{
         ready: true,
         userDetail,
