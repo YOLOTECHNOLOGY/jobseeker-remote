@@ -11,12 +11,13 @@ import { toggleMenu } from 'store/actions/navigationBar/toggleMenu'
 /* Components */
 import Link from 'components/Link'
 import Text from 'components/Text'
-
-import styles from './HamburgerMenu.module.scss'
+import SwitchNation from 'components/SwitchNation/SwitchNation'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
 // import { authPathToOldProject } from 'helpers/authenticationTransition'
+
+import styles from './HamburgerMenu.module.scss'
 
 const Divider = () => <div className={styles.divider} />
 
@@ -30,6 +31,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
   const userCookie = getCookie('user')
 
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
@@ -201,6 +203,20 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                     </Text>
                   </li>
                 </Link>
+
+                <li
+                  className={styles.defaultLink}
+                  onClick={() => {
+                    setOpenSwitchNationModal(true)
+                  }}
+                  style={{ padding: '14px' }}
+                >
+                  <div className={styles.menuList}>
+                    <Text textStyle={textStyle}>
+                      Singapore, English - <span style={{ color: '#136FD3' }}>Change</span>
+                    </Text>
+                  </div>
+                </li>
               </>
             )}
             {isAuthenticated && (
@@ -254,14 +270,31 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 <Divider />
                 <div className={`${styles.defaultLink}`}>
                   <li className={styles.menuList} onClick={() => handleLogOut()}>
-                    <Text textStyle={textStyle}>Log Out</Text>
+                    <Text textStyle={textStyle}>Log Out123</Text>
                   </li>
                 </div>
+
+                <li
+                  className={styles.defaultLink}
+                  onClick={() => {
+                    setOpenSwitchNationModal(true)
+                  }}
+                  style={{ padding: '14px' }}
+                >
+                  <div className={styles.menuList}>
+                    <Text textStyle={textStyle}>
+                      Singapore, English - <span style={{ color: '#136FD3' }}>Change</span>
+                    </Text>
+                  </div>
+                </li>
               </>
             )}
           </React.Fragment>
         </ul>
       </div>
+
+      {/* switch nation */}
+      <SwitchNation open={openSwitchNationModal} close={() => setOpenSwitchNationModal(false)} />
     </div>
   )
 }

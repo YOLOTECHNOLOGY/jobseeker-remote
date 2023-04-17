@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { isMobile } from 'react-device-detect'
 
 import Modal from '@mui/material/Modal'
 import Autocomplete from '@mui/material/Autocomplete'
@@ -93,24 +94,35 @@ const SwitchNation = ({ open, close, save }: propsType) => {
   const [nationDefault] = useState<string>(() => getCountryKey())
   const [loading, setLoading] = useState<boolean>(false)
 
-  const handleSwitchNation = () => {
+  const handleSwitchNation = (value?) => {
     setLoading(true)
     const countryKey = getCountryKey()
     const accessToken = getCookie('accessToken')
 
-    if (nation.value === countryKey) {
+    if (nation?.value === countryKey || value === countryKey) {
       close()
       return
     }
 
     let url: string
+    let query: string
     if (accessToken) {
-      url = 'https://dev.bossjob.' + nation.value + '/changeLocale?accessToken=' + accessToken
+      query = value ? value : nation?.value + '/changeLocale?accessToken=' + accessToken
+      url = 'https://dev.bossjob.' + query
     } else {
-      url = 'https://dev.bossjob.' + nation.value
+      query = value ? value : nation?.value
+      url = 'https://dev.bossjob.' + query
     }
 
     window.location.href = url
+  }
+
+  const handleSelectNation = (event: any, newValue: any | null) => {
+    if (isMobile) {
+      handleSwitchNation(newValue.value)
+    } else {
+      setNation(newValue)
+    }
   }
 
   return (
@@ -119,6 +131,7 @@ const SwitchNation = ({ open, close, save }: propsType) => {
       onClose={close}
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'
+      // hideBackdrop={isMobile ? true : false}
     >
       <div className={styles.swtihcNation}>
         <div className={styles.swtihcNation_head}>
@@ -126,6 +139,7 @@ const SwitchNation = ({ open, close, save }: propsType) => {
           <CloseIcon
             sx={{ color: '#BCBCBC', fontSize: '26px', cursor: 'pointer' }}
             onClick={close}
+            className={styles.swtihcNation_head_close}
           />
         </div>
 
@@ -134,15 +148,17 @@ const SwitchNation = ({ open, close, save }: propsType) => {
             <Autocomplete
               disablePortal
               options={nations}
-              onChange={(event: any, newValue: any | null) => {
-                setNation(newValue)
-              }}
+              onChange={handleSelectNation}
               renderInput={(params) => (
                 <ThemeProvider theme={textFieldTheme}>
                   <TextField {...params} label='Country' />
                 </ThemeProvider>
               )}
-              sx={{ flex: 1, marginRight: '16px' }}
+              sx={{
+                flex: 1,
+                marginRight: isMobile ? 0 : '16px',
+                marginBottom: isMobile ? '16px' : 0
+              }}
               defaultValue={nations.find((nation) => nation.value == nationDefault)}
             />
           </ThemeProvider>
@@ -170,7 +186,7 @@ const SwitchNation = ({ open, close, save }: propsType) => {
           <MaterialButton
             className={styles.swtihcNation_footer_btn}
             variant='contained'
-            onClick={save ? save : handleSwitchNation}
+            onClick={() => (save ? save : handleSwitchNation())}
             disabled={!nation}
             isLoading={loading}
           >
