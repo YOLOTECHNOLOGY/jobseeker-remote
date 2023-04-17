@@ -294,7 +294,7 @@ const ProtectedHeader = () => {
               </Link>
             </li>
           ) : null}
-          <div className={styles.icon}>
+          <div className={styles.icon} onClick={() => setOpenSwitchNationModal(false)}>
             <Hamburger />
           </div>
         </div>

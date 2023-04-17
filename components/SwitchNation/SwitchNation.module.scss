@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 .swtihcNation {
   position: absolute;
   top: 50%;
@@ -66,6 +68,46 @@
     &_btn:last-child {
       color: #ffffff;
       border-color: transparent;
+    }
+  }
+
+  @include msd {
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    top: 50px;
+    left: 0%;
+    transform: translate(0%, 0%);
+    overflow: hidden;
+    background-color: white;
+    border-radius: 0;
+    position: fixed;
+    width: 100%;
+    height: calc(100% - 50px);
+
+    &_head {
+      background-color: white;
+
+      &_close {
+        display: none !important;
+      }
+
+      p {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.02em;
+        color: #353535;
+      }
+    }
+
+    &_main {
+      flex-direction: column;
+    }
+
+    &_footer {
+      display: none;
     }
   }
 }
