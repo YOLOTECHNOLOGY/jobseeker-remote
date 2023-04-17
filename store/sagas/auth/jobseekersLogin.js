@@ -41,11 +41,12 @@ function* loginReq(actions) {
       yield call(setCookie, userKey, userCookie)
       yield call(setCookie, accessToken, token, token_expired_at)
 
-      // Send register event to FB Pixel and gogle analytic (First time login user)
+      // Send register event (First time login user)
       if (
         // process.env.ENV === 'production' && 
         loginData.is_new_account && typeof window !== 'undefined' 
       ) {
+        // Facebook Pixel
         if (window.fbq) {
           yield fbq.event('sign_up', { 
             user_id: loginData?.id,
@@ -53,6 +54,7 @@ function* loginReq(actions) {
           })
         }
         
+        // Google analytic Event
         if (window.gtag) {
           yield window.gtag('event', 'sign_up', {
             user_id: loginData?.id,
@@ -60,8 +62,9 @@ function* loginReq(actions) {
           })
         }
 
+        // Tiktok Pixel
         if (window.ttq) {
-          yield window.ttq.track('sign_up', {
+          yield window.ttq.track('SignUp', {
             user_id: loginData?.id,
             email: loginData?.email
           });
