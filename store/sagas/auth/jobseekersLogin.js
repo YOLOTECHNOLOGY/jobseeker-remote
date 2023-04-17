@@ -42,7 +42,8 @@ function* loginReq(actions) {
       yield call(setCookie, accessToken, token, token_expired_at)
 
       // Send register event to FB Pixel and gogle analytic (First time login user)
-      if (process.env.ENV === 'production' && 
+      if (
+        // process.env.ENV === 'production' && 
         loginData.is_new_account && typeof window !== 'undefined' 
       ) {
         if (window.fbq) {
