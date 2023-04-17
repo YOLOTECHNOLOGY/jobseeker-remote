@@ -45,7 +45,7 @@ function* SocialLoginReq(actions) {
 
       // Send register event (First time login user)
       if (
-        // process.env.ENV === 'production' && 
+        process.env.ENV === 'production' && 
         loginData.is_new_account && typeof window !== 'undefined' 
       ) {
         // Facebook Pixel
