@@ -27,10 +27,9 @@ const Index = ({ data, jobId }: any) => {
   }
 
   const tokenData = {
-    source: 'job-detail',
+    source: 'job_detail',
     device: isMobile ? 'mobile_web' : 'web'
   }
-
   const params = Object.assign(querys, tokenData)
 
   fetchAddJobViewService(params)

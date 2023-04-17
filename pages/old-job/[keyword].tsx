@@ -102,11 +102,11 @@ const Job = ({
   jobDetail,
   applicationHistory,
   // config,
-  accessToken,
-  // seoMetaTitle,
-  // seoMetaDescription,
-  // seoCanonicalUrl
-}: IJobDetail) => {
+  accessToken
+}: // seoMetaTitle,
+// seoMetaDescription,
+// seoCanonicalUrl
+IJobDetail) => {
   const dispatch = useDispatch()
   const config = useSelector((store: any) => store?.config?.config?.response)
   useEffect(() => {
@@ -384,7 +384,11 @@ const Job = ({
     } else {
       setLoading(true)
       const source = jobSource()
-      createChat(jobDetail?.id, { source })
+      createChat(jobDetail?.id, {
+        source,
+        job_title_id: jobDetail?.id,
+        device: isMobile ? 'mobile_web' : 'web'
+      })
         .then((result) => {
           const chatId = result.data.data.id
           const newData = {
@@ -909,11 +913,7 @@ const Job = ({
             <Text bold textStyle='xl' className={styles.aboutCompanyHeader}>
               About the company
             </Text>
-            <Link
-              to={`${companyUrl}`}
-              external
-              className={styles.aboutCompanyTitle}
-            >
+            <Link to={`${companyUrl}`} external className={styles.aboutCompanyTitle}>
               <Text
                 bold
                 textStyle='lg'
@@ -1223,7 +1223,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     const categoryMetaText = 'jobs'
     const seoMetaTitle = `${name} is hiring ${jobTitle} - ${jobId} | Bossjob`
     const seoMetaDescription = encodeURI(
-      `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${location.value
+      `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${
+        location.value
       }, ${fullAddress.split(',').pop()} on Bossjob now!`
     )
     //   <SEO
