@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import { isMobile } from 'react-device-detect'
+
 import { ReaderTPromise as M } from 'app/abstractModels/monads'
 import jobSource from 'helpers/jobSource'
 import { createChat } from 'helpers/interpreters/services/chat'
@@ -8,6 +10,8 @@ import { getCookie } from 'helpers/cookies'
 import { updateImState } from 'store/actions/chat/imState'
 import { check } from 'helpers/interpreters/services/chat'
 import { fetchSwitchJobService } from 'store/services/jobs/fetchSwitchJob'
+import * as fbq from 'lib/fpixel'
+
 const interpreter = registInterpreter((command) =>
   command.cata({
     isLogin: () =>
@@ -72,16 +76,24 @@ const interpreter = registInterpreter((command) =>
     redirectToChat: (chatId) =>
       M.do((context) => {
         const { router, jobDetail } = context
+        const userInfo = getCookie('user')
 
-        if (typeof window !== 'undefined' && window.gtag) {
-          const userInfo = getCookie('user')
-          if (userInfo && jobDetail && !jobDetail.chat?.is_exists) {
-            window.gtag('event', 'chat', {
-              user_id: userInfo.id,
-              email: userInfo.email,
-              job_id: jobDetail.id
-            })
-          }
+        // Send new chat event to FB Pixel and google analytic
+        if (process.env.ENV === 'production'
+          && typeof window !== 'undefined' && window.gtag && window.fbq
+          && userInfo && jobDetail && !jobDetail.chat?.is_exists
+        ) {
+          window.gtag('event', 'new_chat', {
+            user_id: userInfo.id,
+            email: userInfo.email,
+            job_id: jobDetail.id
+          })
+
+          fbq.event('new_chat', {
+            user_id: userInfo.id,
+            email: userInfo.email,
+            job_id: jobDetail.id
+          })
         }
 
         router.push('/chat/' + chatId, { forceOptimisticNavigation: true })
@@ -99,7 +111,7 @@ const interpreter = registInterpreter((command) =>
         const { jobDetail, dispatch } = context
         const { id } = jobDetail
         const source = jobSource()
-        return createChat(id, { source }).then((result) => {
+        return createChat(id, { source, job_title_id: id, device: isMobile ? 'mobile_web' : 'web' }).then((result) => {
           const chatId = result.data.data.id
           const newData = {
             ...result.data?.data?.job_application,

@@ -55,11 +55,11 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
 
   const handleSaveJob = () => {
     setSaveLoading(true)
-    const params = {
-      job_id: jobId
-    }
 
-    postSaveJobService(params)
+    postSaveJobService({
+      job_title_id: jobId,
+      job_id: jobId
+    })
       .then(({ status }) => {
         if (status === 201) {
           setIsSave(true)

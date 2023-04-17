@@ -507,6 +507,14 @@
   }
 }
 
+.slidesLeftControlHighlight {
+  display: block !important;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 1;
+}
+
 .downloadResumeButton {
   // display: none;
   position: absolute !important;
