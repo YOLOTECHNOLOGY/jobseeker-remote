@@ -85,6 +85,7 @@ const Resume = ({
   }
 
   const handleChange = (event: SelectChangeEvent) => {
+    console.log('handle change', event)
     setNoticePeriodData(event.target.value as string);
     changeNoticePeriod(event.target.value)
   };
@@ -213,12 +214,12 @@ const Resume = ({
       </div>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
+          vertical: 'bottom',
+          horizontal: 'left'
         }}
       >
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          success!
+        Availability update successfully!
         </Alert>
       </Snackbar>
 
