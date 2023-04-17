@@ -213,7 +213,7 @@ const Tabs = ({ location }: any) => {
     const params = {
       size: 6,
       page: 1,
-      query_job_location: location,
+      job_locations: location,
       main_functions: value
     }
 

@@ -15,7 +15,7 @@ export const useSuggest = () => {
             } else if (valueLength === 1) {
                 setSuggestionList([])
             } else if ((val?.length ?? 0) > 1) {
-                fetch(`${process.env.JOB_BOSSJOB_URL}/suggested-search?size=5&query=${val}`)
+                fetch(`${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=5&query=${val}`)
                     .then((resp) => resp.json())
                     .then((data) => setSuggestionList(data.data.items))
             }

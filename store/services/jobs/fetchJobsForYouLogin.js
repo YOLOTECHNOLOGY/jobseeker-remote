@@ -1,11 +1,11 @@
 import configuredAxios from 'helpers/configuredAxios'
 
 const fetchJobsForYouLogin = (payload, accessToken = null) => {
-  const { jobseekerPrefId,...rest } = payload || {}
+   const { jobseekerPrefId }  = payload || {}
   const endpointType = accessToken ? 'protected' : 'public'
   const axios = configuredAxios('job', endpointType, false, accessToken)
-  return axios.get(`/job-preferences/${jobseekerPrefId}/reco-jobs`, { params: rest })
-
+  // return axios.get(`/job-preferences/${jobseekerPrefId}/reco-jobs`, { params: rest })
+  return axios.get(`/reco`, { params: {...payload,job_preference_id: jobseekerPrefId}})
 }
 
 const fetchJobsForYouDelete = (payload, accessToken = null) => {

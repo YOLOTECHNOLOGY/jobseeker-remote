@@ -3,7 +3,7 @@ import configuredAxios from 'helpers/configuredAxios'
 
 const fetchPopularJobs = cache((params) => {
   const axios = configuredAxios('job', 'protected')
-  return axios.get(`/popular-jobs`, { params })
+  return axios.get(`/popular`, { params })
 })
 
 export { fetchPopularJobs }

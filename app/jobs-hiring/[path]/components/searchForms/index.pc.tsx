@@ -29,6 +29,8 @@ import { LoadingContext } from 'app/components/providers/loadingProvider'
 import { AppDownQRCode } from 'images'
 import Image from 'next/image'
 import classNames from 'classnames'
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import SearchIcon from '@mui/icons-material/Search';
 const sortOptions = [
   { label: 'Newest', value: '1' },
   { label: 'Relevance', value: '2' },
@@ -126,6 +128,11 @@ const SearchArea = (props: any) => {
     return Object.values(moreData).reduce((a1, a2: any) => a1 + (a2?.length ?? 0), 0)
   }, [moreData])
   const userAgent = useUserAgent()
+  const styleleSelect = {
+    display:'flex',
+    alignItems:'center',
+    cursor: 'pointer'
+  }
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -176,12 +183,35 @@ const SearchArea = (props: any) => {
                   reloadRef.current()
                 }
               }}
+              renderOption={(props, option) => {
+                const {type, is_history:isHistory,value ,logo_url:logoUrl} = option || {}
+                return (
+                    type === 'company' ?
+                     <li {...props} style={styleleSelect}>
+                         <Image src={logoUrl} alt="value" width='24' height='24'/>
+                         <span style={{paddingLeft:'10px'}}>{value}</span>
+                     </li> 
+                     : isHistory ? (
+                    <li {...props} style={{...styleleSelect,color:'#136fd3'}}>
+                        <AccessTimeIcon/>
+                        <span style={{paddingLeft:'10px'}}>{value}</span>
+                    </li>
+                    ) : 
+                     <li {...props} style={styleleSelect}> 
+                       <SearchIcon/> 
+                       <span style={{paddingLeft:'10px'}}>{value}</span>
+                    </li>
+                   
+                )
+            }}
               options={suggestionList}
               onSelect={(value: any) => {
+                const newValue = ''
+                console.log(newValue,77888)
                 flushSync(() => {
-                  setSearchValue(value)
+                  setSearchValue(newValue)
                 })
-                addSearchHistory(value)
+                addSearchHistory(newValue)
                 reloadRef.current()
               }}
             />
