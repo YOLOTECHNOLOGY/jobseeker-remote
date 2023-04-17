@@ -100,9 +100,15 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     slidesToScroll: width < 799 ? 1 : 2
   })
 
-  const scrollPrev = useCallback(() => {
+  const scrollNext = useCallback(() => {
     if (emblaApi) {
       emblaApi.scrollNext()
+    }
+  }, [emblaApi])
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) {
+      emblaApi.scrollPrev()
     }
   }, [emblaApi])
 
@@ -569,6 +575,19 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
           <Text textStyle='xl' bold>
             Let employer find you faster!
           </Text>
+          {isSliderButtonVisible && (
+            <div className={classNames([styles.slidesLeftControlHighlight, styles.slidesControlHighlight])}>
+              <div
+                className={classNames([styles.slidesControlItem, styles.slidesLeftControlHighlight, styles.slidesLeftControlHighlight])}
+                onClick={scrollNext}
+              >
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="20" cy="20" r="19.75" fill="#2378E5" stroke="#BCBCBC" strokeWidth="0.5"/>
+                  <path d="M24 26.7973L22.4833 28.25L14 20.125L22.4833 12L24 13.4527L17.0334 20.125L24 26.7973Z" fill="white"/>
+                </svg>
+              </div>
+            </div>
+          )}          
           <div className={styles.emblaHighlight}>
             <div className={styles.emblaViewport} ref={emblaRef}>
               <div className={styles.emblaContainer}>
