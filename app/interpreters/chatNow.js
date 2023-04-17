@@ -103,7 +103,7 @@ const interpreter = registInterpreter((command) =>
             const userInfo = getCookie('user')
             // Send new chat event to FB Pixel and google analytic
             if (
-              // process.env.ENV === 'production' &&
+              process.env.ENV === 'production' &&
               typeof window !== 'undefined' &&
               userInfo && jobDetail && !jobDetail.chat?.is_exists
             ) {
