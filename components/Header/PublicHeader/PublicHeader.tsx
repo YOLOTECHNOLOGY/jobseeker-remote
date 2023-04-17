@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import classNames from 'classnames/bind'
 
@@ -11,13 +11,16 @@ import Text from 'components/Text'
 // import Button from 'components/Button'
 import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
+// nation
+import SwitchNation from 'components/SwitchNation/SwitchNation'
 
 /* Images */
 import { BossjobLogoWhite as BossjobLogo } from 'images'
-import { getCountryKey } from 'helpers/country'
 
 const PublicHeader = () => {
   const pathname = usePathname()
+  const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
+
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
@@ -199,24 +202,26 @@ const PublicHeader = () => {
                 </MaterialButton>
               )}
             </li>
-            <select
-              onChange={(e) => {
-                const value = e.target.value
-                // console.log({ onChange: e.target.value })
-                const countryKey = getCountryKey()
-                if (value === countryKey) {
-                  return
-                }
-                // const accessToken = getCookie('accessToken')
-                const url = 'https://dev.bossjob.' + value 
-                window.location.href = url
-              }}
+            {/* <select
+              // onChange={(e) => {
+              //   const value = e.target.value
+              //   // console.log({ onChange: e.target.value })
+              //   const countryKey = getCountryKey()
+              //   if (value === countryKey) {
+              //     return
+              //   }
+              //   // const accessToken = getCookie('accessToken')
+              //   const url = 'https://dev.bossjob.' + value
+              //   window.location.href = url
+              // }}
               value={undefined}
+              onClick={() => setOpenSwitchNationModal(true)}
             >
               <option value='ph' label='PH' />
               <option value='sg' label='SGP' />
-            </select>
-            {/* <li className={styles.headerLink}>
+            </select> */}
+
+            <li className={styles.headerLink} onClick={() => setOpenSwitchNationModal(true)}>
               <div className={classNames([styles.profileWrapper, styles.profileDisabled])}>
                 <Text textStyle='base' textColor='white' className={styles.profileCountry}>
                   PH
@@ -224,7 +229,7 @@ const PublicHeader = () => {
 
                 <div className={styles.profileCaret} />
               </div>
-            </li> */}
+            </li>
           </React.Fragment>
         </ul>
         <div className={styles.mobileIconWrapper}>
@@ -233,6 +238,9 @@ const PublicHeader = () => {
           </div>
         </div>
       </nav>
+
+      {/* switch nation */}
+      <SwitchNation open={openSwitchNationModal} close={() => setOpenSwitchNationModal(false)} />
     </div>
   )
 }

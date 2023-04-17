@@ -1,0 +1,71 @@
+.swtihcNation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 739px;
+  height: 239px;
+  box-shadow: 24px;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: white;
+
+  &_head {
+    padding: 16px 24px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: 0.02em;
+    color: #353535;
+    background: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    p {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 27px;
+      letter-spacing: 0.02em;
+      color: #353535;
+      margin: 0;
+    }
+  }
+
+  &_main {
+    display: flex;
+    width: 100%;
+    padding: 28px 24px 31px;
+  }
+
+  &_footer {
+    padding: 16px 24px;
+    display: flex;
+    justify-content: end;
+    border-top: 0.5px solid #bcbcbc;
+
+    &_btn {
+      width: 156px !important;
+      height: 44px !important;
+      border: 1px solid #136fd3;
+      border-radius: 10px !important;
+      text-transform: capitalize !important;
+      font-style: normal !important;
+      font-weight: 700 !important;
+      font-size: 14px !important;
+      letter-spacing: 0.0075em !important;
+      color: #136fd3;
+    }
+
+    &_btn:first-child {
+      margin-right: 8px;
+    }
+
+    &_btn:last-child {
+      color: #ffffff;
+      border-color: transparent;
+    }
+  }
+}
