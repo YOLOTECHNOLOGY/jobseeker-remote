@@ -38,7 +38,7 @@ const SingleSelect = ({
     error,
     style
 }: MaterialSelectCheckMarksProps) => {
-    console.log({ value })
+    // console.log({ value })
     const [open, setOpen] = useState(false)
     return (<FormControl fullWidth className={className} size='small'>
         <InputLabel id={`${id}-select-label`}>{label}</InputLabel>
@@ -85,7 +85,7 @@ const SingleSelect = ({
                             {value === option.value ?
                                 <div>
                                     <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M17.4545 2L7.14566 12L2 7" stroke="#136FD3" stroke-width="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M17.4545 2L7.14566 12L2 7" stroke="#136FD3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </div> : null}
                         </MenuItem>
