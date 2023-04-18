@@ -6,7 +6,7 @@ import jobSource from 'helpers/jobSource'
 import { createChat } from 'helpers/interpreters/services/chat'
 import { registInterpreter } from 'app/abstractModels/util'
 import { ToChatStatus } from '../abstractModels/ChatNow'
-import { getCookie } from 'helpers/cookies'
+import { getCookie, getSourceCookie } from 'helpers/cookies'
 import { updateImState } from 'store/actions/chat/imState'
 import { check } from 'helpers/interpreters/services/chat'
 import { fetchSwitchJobService } from 'store/services/jobs/fetchSwitchJob'
@@ -82,7 +82,7 @@ const interpreter = registInterpreter((command) =>
       M.do((context) => {
         const { jobDetail, router } = context
         const { id } = jobDetail
-        const source = jobSource()
+        const source = getSourceCookie()
         localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
         router.push('/jobseeker-complete-profile/1')
       }),
@@ -90,7 +90,7 @@ const interpreter = registInterpreter((command) =>
       M.do((context) => {
         const { jobDetail, dispatch } = context
         const { id } = jobDetail
-        const source = jobSource()
+        const source = getSourceCookie()
         return createChat(id, { source, job_title_id: id, device: isMobile ? 'mobile_web' : 'web' })
           .then((result) => {
             const chatId = result.data.data.id
@@ -103,7 +103,7 @@ const interpreter = registInterpreter((command) =>
             const userInfo = getCookie('user')
             // Send new chat event to FB Pixel and google analytic
             if (
-              // process.env.ENV === 'production' &&
+              process.env.ENV === 'production' &&
               typeof window !== 'undefined' &&
               userInfo && jobDetail && !jobDetail.chat?.is_exists
             ) {
@@ -123,9 +123,8 @@ const interpreter = registInterpreter((command) =>
                 })
               }
 
-              // Tiktok Pixel
               if (window.ttq) {
-                window.ttq.track('NewChat', {
+                window.ttq.track('SubmitForm', {
                   user_id: userInfo.id,
                   email: userInfo.email,
                   job_id: jobDetail.id

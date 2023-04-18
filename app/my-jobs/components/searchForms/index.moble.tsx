@@ -21,7 +21,7 @@ const sortOptions = [
     { label: 'Highest Salary', value: '3' }
 ]
 const SearchArea = (props: any) => {
-    console.log({ props })
+    // console.log({ props })
     const { config, preferences, preferenceId, searchParams } = props
     const preferenceOptions = useMemo(() => {
         return preferences.map(preference => ({ value: preference.id, label: preference.job_title }))
@@ -98,8 +98,12 @@ const SearchArea = (props: any) => {
         reloadRef.current = reload
     }, [reload])
     useEffect(reload, [location, moreData, sort, selectedPreferenceId])
+
+    const newTheme = {...theme}
+    newTheme.components.MuiPaper.styleOverrides.root['height'] = 'calc(100% - 64px)'
+
     return <div>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={newTheme}>
             <div className={styles.container}>
                 <div className={styles.top}>
                     <Single

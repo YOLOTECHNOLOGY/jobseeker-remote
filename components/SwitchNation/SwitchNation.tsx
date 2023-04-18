@@ -118,11 +118,12 @@ const SwitchNation = ({ open, close, save }: propsType) => {
   }
 
   const handleSelectNation = (event: any, newValue: any | null) => {
-    if (isMobile) {
-      handleSwitchNation(newValue.value)
-    } else {
-      setNation(newValue)
-    }
+    // if (isMobile) {
+    //   handleSwitchNation(newValue.value)
+    // } else {
+    //   setNation(newValue)
+    // }
+    setNation(newValue)
   }
 
   return (
@@ -131,7 +132,7 @@ const SwitchNation = ({ open, close, save }: propsType) => {
       onClose={close}
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'
-      // hideBackdrop={isMobile ? true : false}
+      hideBackdrop={isMobile ? true : false}
     >
       <div className={styles.swtihcNation}>
         <div className={styles.swtihcNation_head}>

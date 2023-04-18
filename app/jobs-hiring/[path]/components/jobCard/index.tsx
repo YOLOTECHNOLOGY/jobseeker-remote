@@ -12,7 +12,7 @@ import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
-import { getCookie } from 'helpers/cookies'
+import { getCookie, setSourceCookie } from 'helpers/cookies'
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 import { CircularProgress } from 'app/components/MUIs'
 import { addJobViewService } from 'store/services/jobs/addJobView'
@@ -153,12 +153,15 @@ const JobCard = (props: any) => {
     if (showPopup) {
       addJobViewService({
         jobId: id,
-        source: 'job_search',
+        source: 'job_search', // this is usually used in search result
         status: accessToken ? 'protected' : 'public',
         device: isMobile ? 'mobile_web' : 'web'
       })
     }
   }, [showPopup])
+  useEffect(() => {
+    setSourceCookie('job_search')
+  }, [])
   return (
     <div className={styles.main}>
       {is_urgent ? (

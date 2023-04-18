@@ -10,6 +10,7 @@ import PopContainer from '../popContainer'
 import { flatMap } from 'lodash-es'
 import { keys, mergeLeft, map, values } from 'ramda'
 import styles from './index.module.scss'
+import classNames from 'classnames'
 interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode
   style?: React.CSSProperties
@@ -113,7 +114,7 @@ const GroupedMultipleSelect = ({
               <div className={styles.section}>{labels[index] ?? key}</div>
               {value.map((option: any) => (
                 <MenuItem key={option.value} value={option.value} onClick={() => handleChange(option.value, key)}>
-                  <ListItemText className={styles.item} primary={option.label}
+                  <ListItemText className={classNames([styles.item, styles.lineCamp])} primary={option.label}
                     style={{
                       marginLeft: 30,
                       color: (selectedOptions[key] ?? []).indexOf(option.value?.toLowerCase()) > -1 ? '#136FD3' : '#353535'
@@ -121,7 +122,7 @@ const GroupedMultipleSelect = ({
                   {(selectedOptions[key] ?? []).indexOf(option.value?.toLowerCase()) > -1 ?
                     <div>
                       <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.4545 2L7.14566 12L2 7" stroke="#136FD3" stroke-width="2.5" strokeLinecap="round" stroke-linejoin="round" />
+                        <path d="M17.4545 2L7.14566 12L2 7" stroke="#136FD3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </div> : null}
                 </MenuItem>

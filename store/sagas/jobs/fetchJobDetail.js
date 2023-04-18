@@ -13,7 +13,7 @@ function* fetchJobDetailReq(actions) {
       serverAccessToken: actions.payload.serverAccessToken || null,
     }
 
-    const jobDetailResponse = yield call(fetchJobDetailService, {...payload})
+    const jobDetailResponse = yield call(fetchJobDetailService, { ...payload })
 
     if (jobDetailResponse.status >= 200 && jobDetailResponse.status < 300) {
       /*
@@ -63,7 +63,7 @@ function* fetchJobDetailReq(actions) {
       // }
       yield put(fetchJobDetailSuccess(jobDetailResponse.data.data))
 
-      yield call(addJobViewService, {...payload})
+      yield call(addJobViewService, { ...payload })
     }
   } catch (err) {
     yield put(fetchJobDetailFailed(err))

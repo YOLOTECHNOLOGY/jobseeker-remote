@@ -30,7 +30,7 @@ import MaterialButton from 'components/MaterialButton'
 import Dropdown from '../Dropdown'
 
 /* Helpers */
-import { getCookie, setCookie, removeCookie } from 'helpers/cookies'
+import { getCookie, setCookie, removeCookie, getSourceCookie } from 'helpers/cookies'
 
 /* Styles */
 import styles from './JobDetail.module.scss'
@@ -215,7 +215,7 @@ const JobDetail = ({
       }
     } else {
       setLoading(true)
-      const source = jobSource()
+      const source = getSourceCookie()
       createChat(selectedJob?.id, {
         source,
         job_title_id: selectedJob.id,

@@ -14,7 +14,6 @@ import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetai
 const Chat = () => {
     const router = useRouter()
     const { query: { job_id, source } } = router
-    console.log({ router })
     const userDetail = useSelector(store => store.users.fetchUserOwnDetail?.response ?? {})
     const userId = userDetail.id
     useEffect(() => {

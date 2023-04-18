@@ -5,6 +5,7 @@ import { cookies } from 'next/headers'
 import Head from './components/Head/Head'
 import MainFC from './components/Main'
 import AsideFC from './components/Aside'
+import { getSourceCookie } from 'helpers/cookies'
 
 import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
 
@@ -27,12 +28,33 @@ const Index = ({ data, jobId }: any) => {
   }
 
   const tokenData = {
-    source: 'job_detail',
+    source: getSourceCookie(),
     device: isMobile ? 'mobile_web' : 'web'
   }
   const params = Object.assign(querys, tokenData)
 
   fetchAddJobViewService(params)
+
+  if (process.env.ENV === 'production' && typeof window !== 'undefined') {
+    const w = window as any
+
+    // Google tag job page view event
+    const gtag = w?.gtag
+    if (gtag) {
+      gtag('event', 'job_page_view', {
+        job_id: jobId
+      })
+    }
+
+    // Facebook job page view event
+    const fbq = w?.gtag
+    if (fbq) {
+      fbq.event('job_page_view', {
+        job_id: jobId
+      })
+    }
+  }
+
   const headProps = {
     title: data.job_title,
     localhost: data.location?.value,
