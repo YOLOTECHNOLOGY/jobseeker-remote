@@ -45,7 +45,7 @@ import AdSlot from '../../components/AdSlot'
 const ModalWithdrawApplication = dynamic(() => import('components/ModalWithdrawApplication'))
 
 /* Helpers */
-import { getCookie, setCookie, removeCookie } from 'helpers/cookies'
+import { getCookie, setCookie, removeCookie, getSourceCookie } from 'helpers/cookies'
 import { numberWithCommas } from 'helpers/formatter'
 import { userFilterSelectionDataParser, getApplyJobLink } from 'helpers/jobPayloadFormatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
@@ -383,7 +383,7 @@ IJobDetail) => {
       }
     } else {
       setLoading(true)
-      const source = jobSource()
+      const source = getSourceCookie()
       createChat(jobDetail?.id, {
         source,
         job_title_id: jobDetail?.id,

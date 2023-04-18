@@ -1,9 +1,10 @@
 import moment from 'moment'
 import Cookies from 'universal-cookie'
-
+import { toLower } from 'lodash-es'
 export const userKey = 'user';
 export const refreshToken = 'refreshToken';
-export const accessToken = 'accessToken'
+export const accessToken = 'accessToken';
+export const sourceKey = 'source'; // track source
 
 const cookies = new Cookies()
 
@@ -24,4 +25,12 @@ export const removeCookie = (cookieName) => {
 
 export const setCookieWithExpiry = (cookieName, data, timeToExpiry) => {
   cookies.set(cookieName, data, { path: '/', maxAge: timeToExpiry })
+}
+
+export const setSourceCookie = (data) => {
+  setCookie(sourceKey, toLower(data))
+}
+
+export const getSourceCookie = () => {
+  return getCookie(sourceKey) || 'job_search'
 }

@@ -6,7 +6,7 @@ import jobSource from 'helpers/jobSource'
 import { createChat } from 'helpers/interpreters/services/chat'
 import { registInterpreter } from 'app/abstractModels/util'
 import { ToChatStatus } from '../abstractModels/ChatNow'
-import { getCookie } from 'helpers/cookies'
+import { getCookie, getSourceCookie } from 'helpers/cookies'
 import { updateImState } from 'store/actions/chat/imState'
 import { check } from 'helpers/interpreters/services/chat'
 import { fetchSwitchJobService } from 'store/services/jobs/fetchSwitchJob'
@@ -82,7 +82,7 @@ const interpreter = registInterpreter((command) =>
       M.do((context) => {
         const { jobDetail, router } = context
         const { id } = jobDetail
-        const source = jobSource()
+        const source = getSourceCookie()
         localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
         router.push('/jobseeker-complete-profile/1')
       }),
@@ -90,7 +90,7 @@ const interpreter = registInterpreter((command) =>
       M.do((context) => {
         const { jobDetail, dispatch } = context
         const { id } = jobDetail
-        const source = jobSource()
+        const source = getSourceCookie()
         return createChat(id, { source, job_title_id: id, device: isMobile ? 'mobile_web' : 'web' })
           .then((result) => {
             const chatId = result.data.data.id
