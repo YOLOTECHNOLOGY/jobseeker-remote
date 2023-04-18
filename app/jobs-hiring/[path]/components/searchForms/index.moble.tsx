@@ -22,6 +22,9 @@ import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { filter } from 'ramda'
 import { LoadingContext } from 'app/components/providers/loadingProvider'
+import Image from 'next/image'
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import SearchIcon from '@mui/icons-material/Search';
 const sortOptions = [
     { label: 'Newest', value: '1' },
     { label: 'Relevance', value: '2' },
@@ -39,7 +42,7 @@ const SearchArea = (props: any) => {
     const [location, setLocation] = useState(locations.find(location => location.seo_value === searchValues.location?.[0]))
     const [industry, setIndustry] = useState(searchValues.industry ?? [])
     const industryList = config.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
-
+    const [queryFields, setQueryFields] = useState(searchValues.queryFields)
     const [jobFunctionValue, jobFunctionChange] = useState({
         functionTitles: searchValues?.functionTitles ?? [],
         jobFunctions: searchValues?.jobFunctions ?? [],
@@ -74,6 +77,7 @@ const SearchArea = (props: any) => {
     const filterParams = useMemo(() => {
         return filter(a => a)({
             query: searchValue,
+            queryFields,
             industry: industry.length ? industry : null,
             location: [location?.['seo_value']].filter(a => a),
             sort: sort,
@@ -81,7 +85,7 @@ const SearchArea = (props: any) => {
             ...jobFunctionValue,
             ...moreData
         })
-    }, [searchValue, industry, moreData, location, sort, jobFunctionValue])
+    }, [searchValue, industry, moreData, location, sort, jobFunctionValue,queryFields])
     const result = useMemo(() => {
         return encode(filterParams)
     }, [filterParams])
@@ -98,7 +102,12 @@ const SearchArea = (props: any) => {
     useEffect(() => {
         reloadRef.current = reload
     }, [reload])
-    useEffect(reload, [location, industry, moreData, sort, jobFunctionValue])
+    useEffect(reload, [location, industry, moreData, sort, jobFunctionValue,queryFields])
+    const styleleSelect = {
+        display:'flex',
+        alignItems:'center',
+        cursor: 'pointer'
+      }
     return <div>
         <ThemeProvider theme={theme}>
             <div className={styles.container}>
@@ -122,7 +131,27 @@ const SearchArea = (props: any) => {
                         className={styles.search}
                         value={searchValue}
                         maxLength={255}
-
+                        renderOption={(props, option) => {
+                            const {type, is_history:isHistory,value ,logo_url:logoUrl} = option || {}
+                            return (
+                                type === 'company' ?
+                                 <li {...props} style={styleleSelect}>
+                                     <Image src={logoUrl} alt={value} width='22' height='22'/>
+                                     <span style={{paddingLeft:'10px'}}>{value}</span>
+                                 </li> 
+                                 : isHistory ? (
+                                <li {...props} style={{...styleleSelect,color:'#136fd3'}}>
+                                    <AccessTimeIcon/>
+                                    <span style={{paddingLeft:'10px'}}>{value}</span>
+                                </li>
+                                ) : 
+                                 <li {...props} style={styleleSelect}> 
+                                   <SearchIcon/> 
+                                   <span style={{paddingLeft:'10px'}}>{value || option}</span>
+                                </li>
+                               
+                            )
+                        }}
                         searchFn={handleSuggestionSearch as any}
                         updateSearchValue={setSearchValue}
                         enterKeyHint='search'
@@ -130,6 +159,7 @@ const SearchArea = (props: any) => {
                         onKeyPress={(e) => {
                             if (e.key === 'Enter' && !e.shiftKey) {
                                 e.preventDefault()
+                                setQueryFields('')
                                 flushSync(() => {
                                     setSearchValue((e.target as HTMLInputElement).value)
                                 })
@@ -141,12 +171,14 @@ const SearchArea = (props: any) => {
                         }}
                         options={suggestionList}
                         onSelect={(value: any) => {
+                            const newValue = value?.value || value || ''
+                            setQueryFields(value?.type || '')
                             flushSync(() => {
-                                setSearchValue(value)
+                               setSearchValue(newValue)
                             })
-                            addSearchHistory(value)
+                            addSearchHistory(newValue)
                             reloadRef.current()
-                        }}
+                          }}
                     />
                 </div>
                 <div className={styles.filters}>

@@ -45,7 +45,7 @@ const SearchArea = (props: any) => {
     }, [location, router])
 
     const [suggestionList, setSuggestionList] = useState([])
-    console.log(suggestionList,'1111')
+  
     useEffect(() => {
         if (config) {
             dispatch(fetchConfigSuccess(config))
@@ -54,7 +54,7 @@ const SearchArea = (props: any) => {
     const [searchValue, setSearchValue] = useState('')
     const [searchHistories, addSearchHistory] = useSearchHistory()
     const [, transitionStart] = useTransition()
-    console.log(searchHistories,'searchHistories')
+  
     const handleSuggestionSearch = useCallback((val) => {
         transitionStart(() => {
             const valueLength = val?.length ?? 0
@@ -125,7 +125,7 @@ const SearchArea = (props: any) => {
                 return (
                     type === 'company' ?
                      <li {...props} style={styleleSelect}>
-                         <Image src={logoUrl} alt="value" width='24' height='24'/>
+                         <Image src={logoUrl} alt={value} width='22' height='22'/>
                          <span style={{paddingLeft:'10px'}}>{value}</span>
                      </li> 
                      : isHistory ? (
@@ -136,7 +136,7 @@ const SearchArea = (props: any) => {
                     ) : 
                      <li {...props} style={styleleSelect}> 
                        <SearchIcon/> 
-                       <span style={{paddingLeft:'10px'}}>{value}</span>
+                       <span style={{paddingLeft:'10px'}}>{value || option}</span>
                     </li>
                    
                 )
