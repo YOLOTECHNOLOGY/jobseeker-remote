@@ -37,6 +37,10 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
 
   useEffect(() => {
+    setOpenSwitchNationModal(false)
+  }, [openState])
+
+  useEffect(() => {
     setIsAuthenticated(getCookie('accessToken') ? true : false)
   }, [userDetail])
 
@@ -54,6 +58,12 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
   }
 
   const handleClick = () => {
+    // hide switch nation modal
+    if (openSwitchNationModal) {
+      setOpenSwitchNationModal(false)
+      return
+    }
+
     // enable body scroll again
     document.body.style.position = ''
     document.body.style.top = ''
@@ -270,7 +280,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 <Divider />
                 <div className={`${styles.defaultLink}`}>
                   <li className={styles.menuList} onClick={() => handleLogOut()}>
-                    <Text textStyle={textStyle}>Log Out123</Text>
+                    <Text textStyle={textStyle}>Log Out</Text>
                   </li>
                 </div>
 
