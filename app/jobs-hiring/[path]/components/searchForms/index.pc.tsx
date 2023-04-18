@@ -92,12 +92,14 @@ const SearchArea = (props: any) => {
       label: item.value
     })) ?? []
   const [searchValue, setSearchValue] = useState(searchValues.query)
+  const [queryFields, setQueryFields] = useState(searchValues.queryFields)
   const [suggestionList, handleSuggestionSearch, addSearchHistory, searchLoading] =
     useSuggest() as any[]
 
   const filterParams = useMemo(() => {
     return filter((a) => a)({
       query: searchValue?.trim?.(),
+      queryFields,
       salary: salaries,
       location: [location?.['seo_value']].filter((a) => a),
       jobType: jobTypes,
@@ -106,7 +108,7 @@ const SearchArea = (props: any) => {
       ...jobFunctionValue,
       ...moreData
     })
-  }, [searchValue, salaries, jobTypes, moreData, location, sort, jobFunctionValue])
+  }, [searchValue, salaries, jobTypes, moreData, location, sort, jobFunctionValue,queryFields])
   const router = useRouter()
   const result = useMemo(() => {
     return encode(filterParams)
@@ -123,7 +125,8 @@ const SearchArea = (props: any) => {
   useEffect(() => {
     reloadRef.current = reload
   }, [reload])
-  useEffect(reload, [location, salaries, jobTypes, moreData, sort, jobFunctionValue])
+  useEffect(reload, [location, salaries, jobTypes, moreData, sort, jobFunctionValue,queryFields])
+
   const moreCount = useMemo(() => {
     return Object.values(moreData).reduce((a1, a2: any) => a1 + (a2?.length ?? 0), 0)
   }, [moreData])
@@ -180,6 +183,7 @@ const SearchArea = (props: any) => {
                     setSearchValue((e.target as HTMLInputElement).value)
                   })
                   addSearchHistory((e.target as HTMLInputElement).value)
+                  setQueryFields('')
                   reloadRef.current()
                 }
               }}
@@ -188,7 +192,7 @@ const SearchArea = (props: any) => {
                 return (
                     type === 'company' ?
                      <li {...props} style={styleleSelect}>
-                         <Image src={logoUrl} alt="value" width='24' height='24'/>
+                         <Image src={logoUrl} alt={value} width='22' height='22'/>
                          <span style={{paddingLeft:'10px'}}>{value}</span>
                      </li> 
                      : isHistory ? (
@@ -199,17 +203,17 @@ const SearchArea = (props: any) => {
                     ) : 
                      <li {...props} style={styleleSelect}> 
                        <SearchIcon/> 
-                       <span style={{paddingLeft:'10px'}}>{value}</span>
+                       <span style={{paddingLeft:'10px'}}>{value || option}</span>
                     </li>
                    
                 )
             }}
               options={suggestionList}
               onSelect={(value: any) => {
-                const newValue = ''
-                console.log(newValue,77888)
+                const newValue = value?.value || value || ''
+                setQueryFields(value?.type || '')
                 flushSync(() => {
-                  setSearchValue(newValue)
+                   setSearchValue(newValue)
                 })
                 addSearchHistory(newValue)
                 reloadRef.current()
@@ -224,6 +228,7 @@ const SearchArea = (props: any) => {
                 })
                 addSearchHistory(searchValue)
                 reloadRef.current()
+                setQueryFields('')
               }}
             >
               {' '}

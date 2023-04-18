@@ -3,7 +3,7 @@ import { unslugify } from '../../../helpers/formatter'
 import { map, pick, T, toLower, mergeDeepLeft, reduce, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse } from 'ramda'
 import { flatMap } from 'lodash-es'
 import slugify from 'slugify'
-const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'qualification']
+const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'qualification','queryFields']
 const normalKeys = ['verifiedCompany', 'companySizes', 'workExperience', 'financingStages', 'industry']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
@@ -185,8 +185,11 @@ export const buildParams = (config, searchValues) => {
     const workExperienceList = config.xp_lvls
     const jobTypeList = config.job_types
     const locationLists = flatMap(config.location_lists, item => item.locations)
+    console.log(searchValues,config,'config')
+    const queryFields = searchValues?.queryFields?.join(',') || "job_title,company_name"
     return {
         query: searchValues.query,
+        query_fields: queryFields === 'company' ? 'company_name' : queryFields,
         company_industries: searchValues.industry?.map?.(key => industryList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
         job_locations: searchValues.location?.map?.(key => locationLists.find(item => item?.['seo_value'] === key)?.value).join(',') ?? null,
         salary_from: salaryFrom,
