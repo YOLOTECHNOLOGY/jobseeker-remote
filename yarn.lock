@@ -3972,10 +3972,10 @@ buzzmsg@^1.2.0:
     react-intl "^5.18.1"
     viewerjs "^1.11.0"
 
-buzzmsg@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.3.1.tgz#500713f23d1747206bf8c44fc970b4a92385348b"
-  integrity sha512-TD7HegvklA2/8phS5r6D5GQtMaWRCQldmQooGHuXLOhFcAfwoeyy6HJtGjfpmgN4+e1SWwhKCkO5i0V4M++HEw==
+buzzmsg@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.3.2.tgz#8d7adf40c041b848a842fd700b148d00a5849765"
+  integrity sha512-QDLeBE/yLbmGAucRyaOLT/Xyh8sbz8WTW/r2/2BabJ6dBg88xddwGV5J67NQUKBiBYHW5LZxKQOn0mqXeLBm5Q==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
@@ -5553,10 +5553,10 @@ imforbossjob@^0.0.1117:
     sha1 "^1.1.1"
     viewerjs "^1.11.0"
 
-imforbossjob@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.1.9.tgz#e8c9517adb3201605c54d570ffaaf0749f94f8a2"
-  integrity sha512-te1/n+7R1GTiJ5DPBJiNdZXxKIgUOIBdVMhmgoetbYj4DqVVBAWuaYqU40ld8GCLjaheWmTrafODOnmxD+KIjw==
+imforbossjob@^0.1.21:
+  version "0.1.21"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.1.21.tgz#b97bbc742ee6d224cda021bc5a46224b65b0d6d8"
+  integrity sha512-kMa5EBaNyJG0XXJnQ/OmVo9jURAh9l747cFqeQtmD6pyLDV4pPVzPrr69Gkj2XwKoCG3rexq6+SRtK+No5UXqQ==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -5566,7 +5566,7 @@ imforbossjob@^0.1.9:
     antd "^4.23.3"
     axios "^0.18.0"
     buffer "^6.0.3"
-    buzzmsg "^1.3.1"
+    buzzmsg "^1.3.2"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
     fantasy-combinators "^0.0.1"
