@@ -10,6 +10,7 @@ import PopContainer from '../popContainer'
 import { flatMap } from 'lodash-es'
 import { keys, mergeLeft, map, values } from 'ramda'
 import styles from './index.module.scss'
+import classNames from 'classnames'
 interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode
   style?: React.CSSProperties
@@ -113,7 +114,7 @@ const GroupedMultipleSelect = ({
               <div className={styles.section}>{labels[index] ?? key}</div>
               {value.map((option: any) => (
                 <MenuItem key={option.value} value={option.value} onClick={() => handleChange(option.value, key)}>
-                  <ListItemText className={styles.item} primary={option.label}
+                  <ListItemText className={classNames([styles.item, styles.lineCamp])} primary={option.label}
                     style={{
                       marginLeft: 30,
                       color: (selectedOptions[key] ?? []).indexOf(option.value?.toLowerCase()) > -1 ? '#136FD3' : '#353535'

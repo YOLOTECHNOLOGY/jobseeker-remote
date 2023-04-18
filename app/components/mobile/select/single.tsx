@@ -56,7 +56,7 @@ const SingleSelect = ({
             input={<OutlinedInput label='Tag' />}
             renderValue={(value: any) =>  <InputLabel
                 id={`${id}-select-label`}
-                style={{ color: options.find(option => option.value === value) ? '#136FD3' : undefined }}
+                style={{ color: options.find(option => option.value === value) ? '#136FD3' : undefined , overflow: 'hidden' }}
             >{
                     options.find(option => option.value === value)?.label ?? label
                 }</InputLabel>}
