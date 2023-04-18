@@ -15,7 +15,10 @@ interface ICompanyJobsCard {
   jobUrl: string
 }
 
+
 const CompanyJobsCard = ({ title, location, salary, availability, jobUrl }: ICompanyJobsCard) => {
+  const host = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window?.location.host
+  console.log({ host })
   return (
     <div className={styles.companyJobsCard}>
       <div className={styles.companyJobsCardLeft}>
@@ -36,7 +39,7 @@ const CompanyJobsCard = ({ title, location, salary, availability, jobUrl }: ICom
         </div>
       </div>
       <div className={styles.companyJobsCardRight}>
-        <Link to={`${process.env.HOST_PATH}${jobUrl}`} external>
+        <Link to={`${host}${jobUrl}`} external>
           <MaterialButton variant='outlined' capitalize className={styles.companyJobsCardApply}>
             <Text textStyle='base' textColor='primaryBlue' bold>
               Chat Now
