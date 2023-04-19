@@ -174,7 +174,7 @@ const Footer = () => {
               paddedContent
               title={
                 <Text textStyle='sm' bold>
-                  Jobseekers
+                  Recruiter
                 </Text>
               }
             >
@@ -281,7 +281,7 @@ const Footer = () => {
               paddedContent
               title={
                 <Text textStyle='sm' bold>
-                  Popular jobs
+                  Popular Jobs
                 </Text>
               }
             >
@@ -291,10 +291,10 @@ const Footer = () => {
                   <Link
                     className={styles.footerLink}
                     to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/information-technology-jobs?page=1`}
-                    title='IT Jobs'
+                    title='IT jobs'
                     external
                   >
-                    <Text textStyle='sm'>IT Jobs</Text>
+                    <Text textStyle='sm'>IT jobs</Text>
                   </Link>
                 </li>
                 <li>
@@ -304,47 +304,47 @@ const Footer = () => {
                     title='Finance Jobs'
                     external
                   >
-                    <Text textStyle='sm'>Finance Jobs</Text>
+                    <Text textStyle='sm'>Finance jobs</Text>
                   </Link>
                 </li>
                 <li>
                   <Link
                     className={styles.footerLink}
                     to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/customer-service-jobs`}
-                    title='Customer Service Jobs'
+                    title='Customer Service jobs'
                     external
                   >
-                    <Text textStyle='sm'>Customer Service Jobs</Text>
+                    <Text textStyle='sm'>Customer Service jobs</Text>
                   </Link>
                 </li>
                 <li>
                   <Link
                     className={styles.footerLink}
                     to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/bpo-jobs`}
-                    title='BPO Jobs'
+                    title='BPO jobs'
                     external
                   >
-                    <Text textStyle='sm'>BPO Jobs</Text>
+                    <Text textStyle='sm'>BPO jobs</Text>
                   </Link>
                 </li>
                 <li>
                   <Link
                     className={styles.footerLink}
                     to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/sales-marketing-jobs`}
-                    title='Sales Jobs'
+                    title='Sales jobs'
                     external
                   >
-                    <Text textStyle='sm'>Sales Jobs</Text>
+                    <Text textStyle='sm'>Sales jobs</Text>
                   </Link>
                 </li>
                 <li>
                   <Link
                     className={styles.footerLink}
                     to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/healthcare-medical-jobs`}
-                    title='Healthcare Jobs'
+                    title='Healthcare jobs'
                     external
                   >
-                    <Text textStyle='sm'>Healthcare Jobs</Text>
+                    <Text textStyle='sm'>Healthcare jobs</Text>
                   </Link>
                 </li>
               </ul>
@@ -521,7 +521,7 @@ const Footer = () => {
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Jobseeker
+                  Recruiter
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
@@ -623,60 +623,60 @@ const Footer = () => {
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/information-technology-jobs?page=1`}
-                      title='IT Jobs'
+                      title='IT jobs'
                       external
                     >
-                      <Text textStyle='sm'>IT Jobs</Text>
+                      <Text textStyle='sm'>IT jobs</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/finance-audit-tax-jobs?page=1`}
-                      title='Finance Jobs'
+                      title='Finance jobs'
                       external
                     >
-                      <Text textStyle='sm'>Finance Jobs</Text>
+                      <Text textStyle='sm'>Finance jobs</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/customer-service-operations-jobs?page=1`}
-                      title='Customer Service Jobs'
+                      title='Customer Service jobs'
                       external
                     >
-                      <Text textStyle='sm'>Customer Service Jobs</Text>
+                      <Text textStyle='sm'>Customer Service jobs</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/bpo-jobs`}
-                      title='BPO Jobs'
+                      title='BPO jobs'
                       external
                     >
-                      <Text textStyle='sm'>BPO Jobs</Text>
+                      <Text textStyle='sm'>BPO jobs</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/sales-jobs?page=1`}
-                      title='Sales Jobs'
+                      title='Sales jobs'
                       external
                     >
-                      <Text textStyle='sm'>Sales Jobs</Text>
+                      <Text textStyle='sm'>Sales jobs</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/healthcare-medical-jobs?page=1`}
-                      title='Healthcare Jobs'
+                      title='Healthcare jobs'
                       external
                     >
-                      <Text textStyle='sm'>Healthcare Jobs</Text>
+                      <Text textStyle='sm'>Healthcare jobs</Text>
                     </Link>
                   </li>
                 </ul>

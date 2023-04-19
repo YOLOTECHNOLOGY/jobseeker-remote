@@ -31,6 +31,13 @@ import BannerCarousel from 'components/BannerCarousel'
 
 // Assets
 import { BlueTickIcon } from 'images'
+import { getCountryKey } from 'helpers/country'
+
+const COUNTRY_FULL_MAP = {
+  'sg': 'Singapore',
+  'ph': 'Philippines'
+}
+
 
 const Companies = () => {
   const dispatch = useDispatch()
@@ -62,8 +69,8 @@ const Companies = () => {
     if (featuredCompaniesResponse?.featured_companies) {
       setTotalPage(featuredCompaniesResponse.total_pages)
       const companies = featuredCompaniesResponse.featured_companies
-
-      setFeaturedCompany(companies[0].company)
+      if(!companies || (companies && !companies.length)) return
+      setFeaturedCompany(companies[0]?.company)
       companies.shift()
 
       setFeaturedCompanies(companies)
@@ -71,12 +78,18 @@ const Companies = () => {
   }, [featuredCompaniesResponse])
 
   const handleKeywordSearch = (keyword) => {
-    router.push(`/companies/search?query=${keyword}&size=9&page=1`)
+    const words = keyword.trim()
+    router.push(`/companies/search?query=${words}&size=9&page=1`)
   }
 
   const handlePaginationClick = (event, val) => {
     router.query.page = val
     router.push(router, undefined, { shallow: true })
+  }
+
+  const countryNames = () => {
+    const currentCountryKey = getCountryKey()
+    return COUNTRY_FULL_MAP[currentCountryKey]
   }
 
   return (
@@ -95,7 +108,7 @@ const Companies = () => {
             className={styles.searchCompanyTitle}
             textColor='primaryBlue'
           >
-            Find great companies in Philippines
+            Find great companies in {countryNames()}
           </Text>
           <SearchCompanyField onKeywordSearch={handleKeywordSearch} />
         </div>

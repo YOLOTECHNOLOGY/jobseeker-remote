@@ -129,12 +129,12 @@ export const numberWithCommas = (number) => {
   return `₱${number?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
 }
 
-export const formatSalaryRange = (salaryRange) => {
+export const formatSalaryRange = (salaryRange, currencyTag) => {
   if (salaryRange) {
     const salArr = salaryRange.split('-')
     salArr.map(
       (val, i) =>
-        (salArr[i] = `₱${Math.floor(val.trim() / 1000)}${formatDecimalSalary(val.trim())}`)
+        (salArr[i] = `${currencyTag || '₱'}${Math.floor(val.trim() / 1000)}${formatDecimalSalary(val.trim())}`)
     )
     return salArr.join(' - ')
   }

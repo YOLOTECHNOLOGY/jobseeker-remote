@@ -28,7 +28,7 @@ import Divider from '@mui/material/Divider'
 import Text from 'components/Text'
 import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialTextField from 'components/MaterialTextField'
-import MaterialLocationField from 'components/MaterialLocationField'
+// import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import TextEditor from 'components/TextEditor/TextEditor'
 import MaterialDatePicker from 'components/MaterialDatePicker'
@@ -38,7 +38,7 @@ import { InfoIcon, AddOutlineIcon, PencilIcon, AccountSettingDeleteIconBin } fro
 
 /* Helpers */
 import {
-  getLocationList,
+  // getLocationList,
   getIndustryList,
   getCountryList
 } from 'helpers/jobPayloadFormatter'
@@ -84,7 +84,7 @@ const Step3 = (props: any) => {
     }
   }
 
-  const locList = getLocationList(config)
+  // const locList = getLocationList(config)
   const industryList = getIndustryList(config)
   const countryList = getCountryList(config).map(country => ({ label: country.label, value: country.key }))
 
@@ -150,7 +150,6 @@ const Step3 = (props: any) => {
         const requireFields =
           !experience.job_title ||
           !experience.company ||
-          !experience.location ||
           !experience.working_period_from
         if (experience.is_currently_work_here && requireFields) {
           //  || experience.working_period_to
@@ -180,7 +179,7 @@ const Step3 = (props: any) => {
       setWorkExperienceId(selectedExperience.id)
       setJobTitle(selectedExperience.job_title)
       setCompanyName(selectedExperience.company)
-      setLocation(selectedExperience.location ? getLocation(selectedExperience.location)[0] : null)
+      // setLocation(selectedExperience.location ? getLocation(selectedExperience.location)[0] : null)
       setIsCurrentJob(selectedExperience.is_currently_work_here)
       setWorkPeriodFrom(selectedExperience.working_period_from)
       setWorkPeriodTo(selectedExperience.working_period_to)
@@ -216,8 +215,8 @@ const Step3 = (props: any) => {
   }, [workPeriodFrom, workPeriodTo])
 
   useEffect(() => {
-    const requireFields = jobTitle && companyName && location && workPeriodFrom
-    const emptyRequiredFields = !jobTitle && !companyName && !location && !workPeriodFrom
+    const requireFields = jobTitle && companyName  && workPeriodFrom
+    const emptyRequiredFields = !jobTitle && !companyName  && !workPeriodFrom
     const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
     if (isCurrentJob) {
@@ -284,15 +283,15 @@ const Step3 = (props: any) => {
     )
   }
 
-  const onLocationSearch = (_, value) => {
-    setIsShowCountry(value?.key === 'overseas' ? true : false)
-    setLocation(value)
-  }
+  // const onLocationSearch = (_, value) => {
+  //   setIsShowCountry(value?.key === 'overseas' ? true : false)
+  //   setLocation(value)
+  // }
 
-  const getLocation = (location) => {
-    if (!location) return
-    return locList.filter((loc) => loc?.value.toLowerCase() === location.toLowerCase())
-  }
+  // const getLocation = (location) => {
+  //   if (!location) return
+  //   return locList.filter((loc) => loc?.value.toLowerCase() === location.toLowerCase())
+  // }
 
   const handleResetForm = () => {
     setJobTitle('')
@@ -419,7 +418,7 @@ const Step3 = (props: any) => {
   }
 
   const handleNextBtn = () => {
-    if (!isNextDisabled && showForm && jobTitle && companyName && location) {
+    if (!isNextDisabled && showForm && jobTitle && companyName) {
       handleSaveForm(nextBtnUrl)
       return
     }
@@ -584,13 +583,13 @@ const Step3 = (props: any) => {
             </div>
 
             <div className={styles.stepField}>
-              <MaterialLocationField
+              {/* <MaterialLocationField
                 className={styles.stepFullwidth}
                 label={requiredLabel('Location')}
                 value={location}
                 defaultValue={location}
                 onChange={onLocationSearch}
-              />
+              /> */}
             </div>
 
             {isShowCountry && (

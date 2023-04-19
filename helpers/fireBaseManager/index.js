@@ -20,11 +20,12 @@ export const initFireBase = () => {
                 })
             await serviceWorkerRegistration.update()
             navigator.serviceWorker.addEventListener('message', e => {
+                console.log({ messageLisoner: e })
                 if (e.data.type === 'redirect') {
                     if (e?.data?.link) {
                         window.location.href = e.data.link
                     }
-                } else if (e.data.type === 'receivedMessage') {
+                } else {
                     window.dispatchEvent(new CustomEvent('receiveImNotification', { detail: e.data }))
                 }
 

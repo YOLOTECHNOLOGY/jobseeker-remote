@@ -5,6 +5,10 @@ export const BossjobLogo = `${S3BucketJobseeker}/Bossjob.svg`
 export const BossjobFittedLogo = `${S3BucketJobseeker}/BossjobFittedLogo.svg`
 export const BossjobFittedLogoApp = `${S3BucketJobseeker}/bossjob-fittedlogo-app.png`
 export const BossjobLogoWhite = `${S3BucketJobseeker}/BossjobLogoWhite.svg`
+export const Offerbottom = `${S3BucketJobseeker}/Offerbottom.svg`
+export const Offercenter = `${S3BucketJobseeker}/Offercenter.svg`
+export const Offermask = `${S3BucketJobseeker}/Offermask.svg`
+export const Offerhead = `${S3BucketJobseeker}/Offerhead.svg`
 
 // Chat
 export const HomePageChat = `${S3BucketJobseeker}/HomePageChat.svg`

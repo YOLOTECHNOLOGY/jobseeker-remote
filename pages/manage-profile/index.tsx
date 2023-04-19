@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo, Fragment } from 'react'
 
 /* Vendors */
 import { END } from 'redux-saga'
@@ -56,7 +56,7 @@ import classNames from 'classnames'
 import styles from './ManageProfile.module.scss'
 import { Chip, FormControlLabel, Switch } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
-import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
+import { getCurrencyList, getJobCategoryList } from 'helpers/jobPayloadFormatter'
 import EditJobPreferencesAvailabilityModal from 'components/EditJobPreferencesAvailabilityModal/EditJobPreferencesAvailabilityModal'
 import { updateUserVisibilityToWorkService } from 'store/services/jobs/updateUserVisibilityToWork'
 import Image from 'next/image'
@@ -576,18 +576,43 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
             Let employer find you faster!
           </Text>
           {isSliderButtonVisible && (
-            <div className={classNames([styles.slidesLeftControlHighlight, styles.slidesControlHighlight])}>
+            <div
+              className={classNames([
+                styles.slidesLeftControlHighlight,
+                styles.slidesControlHighlight
+              ])}
+            >
               <div
-                className={classNames([styles.slidesControlItem, styles.slidesLeftControlHighlight, styles.slidesLeftControlHighlight])}
+                className={classNames([
+                  styles.slidesControlItem,
+                  styles.slidesLeftControlHighlight,
+                  styles.slidesLeftControlHighlight
+                ])}
                 onClick={scrollNext}
               >
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="20" cy="20" r="19.75" fill="#2378E5" stroke="#BCBCBC" strokeWidth="0.5"/>
-                  <path d="M24 26.7973L22.4833 28.25L14 20.125L22.4833 12L24 13.4527L17.0334 20.125L24 26.7973Z" fill="white"/>
+                <svg
+                  width='40'
+                  height='40'
+                  viewBox='0 0 40 40'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <circle
+                    cx='20'
+                    cy='20'
+                    r='19.75'
+                    fill='#2378E5'
+                    stroke='#BCBCBC'
+                    strokeWidth='0.5'
+                  />
+                  <path
+                    d='M24 26.7973L22.4833 28.25L14 20.125L22.4833 12L24 13.4527L17.0334 20.125L24 26.7973Z'
+                    fill='white'
+                  />
                 </svg>
               </div>
             </div>
-          )}          
+          )}
           <div className={styles.emblaHighlight}>
             <div className={styles.emblaViewport} ref={emblaRef}>
               <div className={styles.emblaContainer}>
@@ -794,7 +819,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
   const maxSalary = preference?.salary_range_to
   const salaryRange = minSalary + ' - ' + maxSalary
   const [showModal, setShowModal] = useState(false)
-
+  const currencyList = getCurrencyList(config)
   const handleEditClick = () => {
     setShowModal(true)
   }
@@ -854,7 +879,10 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
                 Expected salary:
               </Text>
               <Text className={styles.jobPreferencesSectionDetailText}>
-                {formatSalaryRange(salaryRange)}
+                {formatSalaryRange(
+                  salaryRange,
+                  currencyList?.find((item) => preference.currency_id === item.id)?.display_symbol
+                )}
               </Text>
             </div>
           )}
@@ -925,6 +953,9 @@ const ManageProfilePage = () => {
       value: category.id
     }
   })
+  const jobData = useMemo(() => {
+    return [userDetail?.job_preferences || [], Date.now()]
+  }, [userDetail?.job_preferences])
   const availability = userDetail?.notice_period
   const [modalState, setModalState] = useState({
     profile: {
@@ -1075,7 +1106,7 @@ const ManageProfilePage = () => {
             </div>
             <div className={styles.sectionContainer}>
               <div className={styles.sectionHeader} style={{ position: 'relative', width: '100%' }}>
-                {userDetail.job_preferences?.length < 3 && (
+                {jobData[0]?.length < 3 && (
                   <div
                     className={styles.iconWrapperP}
                     onClick={() => handleModal('createJobPreference', true, null, null)}
@@ -1093,16 +1124,18 @@ const ManageProfilePage = () => {
                   We will find jobs that are of a good match to you based on your job preferences.
                 </Text>
               </div>{' '}
-              {(userDetail.job_preferences ?? []).map((preference) => (
-                <RenderPreferencesView
-                  key={preference.id}
-                  modalName='jobPreferences'
-                  config={config}
-                  userDetail={userDetail}
-                  handleModal={handleModal}
-                  preference={preference}
-                />
-              ))}
+              <Fragment key={jobData[1]}>
+                {(jobData[0] ?? []).map((preference) => (
+                  <RenderPreferencesView
+                    key={preference.id}
+                    modalName='jobPreferences'
+                    config={config}
+                    userDetail={userDetail}
+                    handleModal={handleModal}
+                    preference={preference}
+                  />
+                ))}
+              </Fragment>
             </div>
             <div className={styles.sectionContainer}>
               <Text
