@@ -5,24 +5,24 @@ const { offerJobseeker: { OfferMessageActions, OfferDetailActions }, utils } = s
 const { RequestResult } = utils
 
 export default command => command.cata({
-    modalOfferMessage: (applicationId, offerId, data) => M(context => new Promise(res => {
+    modalOfferMessage: (applicationId, offerId, data) => M(context => new Promise(resolve => {
         context.modalOfferMessage({
-            close: resolve(OfferMessageActions.close),
-            view: resolve(OfferMessageActions.view),
+            close: () => resolve(OfferMessageActions.close),
+            view: () => resolve(OfferMessageActions.view),
             data, applicationId, offerId
         })
     })),
 
-    modalOfferDetail: (applicationId, offerId, data) => M(context => new Promise(res => {
+    modalOfferDetail: (applicationId, offerId, data) => M(context => new Promise(resolve => {
         context.modalOfferDetail({
-            close: resolve(OfferDetailActions.close),
-            accept: resolve(OfferDetailActions.accept),
-            reject: resolve(OfferDetailActions.reject),
+            close: () => resolve(OfferDetailActions.close),
+            accept: () => resolve(OfferDetailActions.accept),
+            reject: () => resolve(OfferDetailActions.reject),
             data, applicationId, offerId
         })
     })),
 
-    declineRequest: (applicationId, offerId) => M(() => {
+    declineRequest: (applicationId, offerId) => M(context => {
         context.setLoading(true)
         return decline(applicationId, offerId)
             .then(result => RequestResult.success(result.data.data))
@@ -30,7 +30,7 @@ export default command => command.cata({
             .finally(() => context.setLoading(false))
     }),
 
-    acceptRequest: (applicationId, offerId) => M(() => {
+    acceptRequest: (applicationId, offerId) => M(context => {
         context.setLoading(true)
         return accept(applicationId, offerId)
             .then(result => RequestResult.success(result.data.data))
@@ -38,7 +38,7 @@ export default command => command.cata({
             .finally(() => context.setLoading(false))
     }),
 
-    requestOfferDetail: (applicationId, offerId) => M(() => {
+    requestOfferDetail: (applicationId, offerId) => M(context => {
         context.setLoading(true)
         return detail(applicationId, offerId)
             .then(result => RequestResult.success(result.data.data))
@@ -47,6 +47,6 @@ export default command => command.cata({
     }),
 
     refreshDetail: data => M(context => Promise.resolve().then(() => {
-        context.refreshOfferDetail(data)
+        context.refreshOfferDetail({data})
     }))
 })

@@ -26,7 +26,8 @@ import { useRouter } from 'next/navigation'
 import errorParser from 'helpers/errorParser'
 import { pushNotification } from 'store/services/notification'
 import { scripts } from 'imforbossjob'
-const { offerJobseeker: { getDataAndShowOfferDetailScript } } = scripts
+import OfferModal from './offer'
+const { offerJobseeker: { getDataAndShowOfferMessageScript } } = scripts
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const msgToNote = (message, state) => {
@@ -273,6 +274,8 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
             contextRef.current?.closeAskFailed?.()
             contextRef.current?.closeJobDetail?.()
             contextRef.current?.closeExchangeDetail?.()
+            contextRef.current?.closeOfferDetail?.()
+            contextRef.current?.closeOfferMessage?.()
         },
         updateUser() {
             dispatch(fetchUserOwnDetailRequest({ accessToken }))
@@ -398,13 +401,14 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
         const receive = e => {
 
             const data = e.detail?.data ?? {}
+            console.log({ data, receive: e })
             if (data?.landing_page === 'Offer dialog') {
                 console.log('receiveImNotification', e.detail)
-                interpreter(getDataAndShowOfferDetailScript(data.applicationId, data.offerId))
+                interpreter(getDataAndShowOfferMessageScript(data.application_id, data.offer_id))
             }
         }
         window.addEventListener('receiveImNotification', receive)
-        return window.removeEventListener('receiveImNotification', receive)
+        return () => window.removeEventListener('receiveImNotification', receive)
     }, [])
     return <Provider value={{
         ready: true,
@@ -440,6 +444,11 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
             loading={loading}
             contextRef={contextRef}
             data={imState.interview}
+            applicationId={applicationId}
+        />
+        <OfferModal
+            loading={loading}
+            contextRef={contextRef}
             applicationId={applicationId}
         />
         <ExchangeModal
