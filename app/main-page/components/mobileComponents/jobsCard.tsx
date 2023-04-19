@@ -71,8 +71,8 @@ const JobsCard = ({ location }: any) => {
         {
           jobseekerPrefId: id,
           page: params.page,
-          size: params.size,
-          sort: 2
+          size: params.size
+          // sort: 2
         },
         accessToken
       ).then((res) => {
