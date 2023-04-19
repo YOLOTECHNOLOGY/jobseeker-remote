@@ -78,7 +78,7 @@ const autocompleteTheme = createTheme({
 
 const nations = [
   { value: 'ph', label: 'PH' },
-  { value: 'sg', label: 'SGP' }
+  { value: 'sg', label: 'SG' }
 ]
 
 const languages = [{ value: 'english', label: 'English' }]
