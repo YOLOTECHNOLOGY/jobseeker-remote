@@ -160,6 +160,7 @@ const SwitchNation = ({ open, close, save }: propsType) => {
                 marginRight: isMobile ? 0 : '16px',
                 marginBottom: isMobile ? '16px' : 0
               }}
+              disabled
               defaultValue={nations.find((nation) => nation.value == nationDefault)}
             />
           </ThemeProvider>
