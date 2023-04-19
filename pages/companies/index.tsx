@@ -62,8 +62,8 @@ const Companies = () => {
     if (featuredCompaniesResponse?.featured_companies) {
       setTotalPage(featuredCompaniesResponse.total_pages)
       const companies = featuredCompaniesResponse.featured_companies
-
-      setFeaturedCompany(companies[0].company)
+      if(!companies || (companies && !companies.length)) return
+      setFeaturedCompany(companies[0]?.company)
       companies.shift()
 
       setFeaturedCompanies(companies)
