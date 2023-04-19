@@ -174,7 +174,7 @@ const Footer = () => {
               paddedContent
               title={
                 <Text textStyle='sm' bold>
-                  Jobseekers
+                  Recruiter
                 </Text>
               }
             >
@@ -281,7 +281,7 @@ const Footer = () => {
               paddedContent
               title={
                 <Text textStyle='sm' bold>
-                  Popular jobs
+                  Popular Jobs
                 </Text>
               }
             >
@@ -521,7 +521,7 @@ const Footer = () => {
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Jobseeker
+                  Recruiter
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
