@@ -71,7 +71,9 @@ const Companies = () => {
   }, [featuredCompaniesResponse])
 
   const handleKeywordSearch = (keyword) => {
-    router.push(`/companies/search?query=${keyword}&size=9&page=1`)
+    const words = keyword.trim()
+    if(!words) return
+    router.push(`/companies/search?query=${words}&size=9&page=1`)
   }
 
   const handlePaginationClick = (event, val) => {
