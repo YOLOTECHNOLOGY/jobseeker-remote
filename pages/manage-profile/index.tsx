@@ -56,7 +56,7 @@ import classNames from 'classnames'
 import styles from './ManageProfile.module.scss'
 import { Chip, FormControlLabel, Switch } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
-import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
+import { getCurrencyList, getJobCategoryList } from 'helpers/jobPayloadFormatter'
 import EditJobPreferencesAvailabilityModal from 'components/EditJobPreferencesAvailabilityModal/EditJobPreferencesAvailabilityModal'
 import { updateUserVisibilityToWorkService } from 'store/services/jobs/updateUserVisibilityToWork'
 import Image from 'next/image'
@@ -819,7 +819,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
   const maxSalary = preference?.salary_range_to
   const salaryRange = minSalary + ' - ' + maxSalary
   const [showModal, setShowModal] = useState(false)
-
+  const currencyList = getCurrencyList(config)
   const handleEditClick = () => {
     setShowModal(true)
   }
@@ -879,7 +879,10 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
                 Expected salary:
               </Text>
               <Text className={styles.jobPreferencesSectionDetailText}>
-                {formatSalaryRange(salaryRange)}
+                {formatSalaryRange(
+                  salaryRange,
+                  currencyList?.find((item) => preference.currency_id === item.id)?.display_symbol
+                )}
               </Text>
             </div>
           )}
