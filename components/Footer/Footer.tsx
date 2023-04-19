@@ -5,6 +5,7 @@ import React from 'react'
 import Link from 'components/Link'
 import Text from 'components/Text'
 import Accordian from 'components/Accordian'
+import { getCountryKey } from 'helpers/country'
 
 /* Images */
 import {
@@ -24,6 +25,64 @@ import classNames from 'classnames/bind'
 import LazyLoad from '../LazyLoad'
 
 const scrollToBottom = () => document.body.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
+const COUNTRY_MAP = {
+  'ph': [
+    {
+      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/manila-jobs`,
+      title: 'Jobs in Manila',
+    },
+    {
+      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/makati-jobs`,
+      title: 'Jobs in Makati'
+    },
+    {
+      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/cebu-city-jobs`,
+      title: 'Jobs in Cebu'
+    }
+  ],
+  'sg': [
+    {
+      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/downtown-core-jobs`,
+      title: 'Jobs in Downtown Core',
+    },
+    {
+      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/kallang-jobs`,
+      title: 'Jobs in Kallang'
+    },
+    {
+      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/jurong-east-jobs`,
+      title: 'Jobs in Jurong East'
+    }
+  ]
+}
+
+const CountryList = () => {
+  const countryKey = getCountryKey()
+  const currentCounties = COUNTRY_MAP[countryKey]
+
+  return (
+    <>
+      {
+        currentCounties.map((country) => {
+          return (
+            <li key={country.title}>
+              <Link
+                className={styles.footerLink}
+                to={country.to}
+                title={country.title}
+                external
+              >
+                <Text textStyle='sm'>{country.title}</Text>
+              </Link>
+            </li>
+          )
+        })
+      }
+    </>
+  )
+}
+
 
 const Footer = () => {
   return (
@@ -103,11 +162,11 @@ const Footer = () => {
                     <Text textStyle='sm'>FAQ</Text>
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link className={styles.footerLink} to='/sitemap' title='Sitemap'>
                     <Text textStyle='sm'>Sitemap</Text>
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </Accordian>
             <Accordian
@@ -227,36 +286,7 @@ const Footer = () => {
               }
             >
               <ul className={styles.footerDesktopLinkList}>
-                <li>
-                  <Link
-                    className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/manila-jobs`}
-                    title='Jobs in Manila'
-                    external
-                  >
-                    <Text textStyle='sm'>Jobs in Manila</Text>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/makati-jobs`}
-                    title='Jobs in Makati'
-                    external
-                  >
-                    <Text textStyle='sm'>Jobs in Makati</Text>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/cebu-city-jobs`}
-                    title='Jobs in Cebu'
-                    external
-                  >
-                    <Text textStyle='sm'>Jobs in Cebu</Text>
-                  </Link>
-                </li>
+                <CountryList />
                 <li>
                   <Link
                     className={styles.footerLink}
@@ -482,11 +512,11 @@ const Footer = () => {
                       <Text textStyle='sm'>FAQ</Text>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link className={styles.footerLink} to='/sitemap' title='sitemap'>
                       <Text textStyle='sm'>Sitemap</Text>
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
               <div className={styles.footerColumn}>
@@ -588,36 +618,7 @@ const Footer = () => {
                   Popular Jobs
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/manila-jobs`}
-                      title='Jobs in Manila'
-                      external
-                    >
-                      <Text textStyle='sm'>Jobs in Manila</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/makati-jobs`}
-                      title='Jobs in Makati'
-                      external
-                    >
-                      <Text textStyle='sm'>Jobs in Makati</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/cebu-city-jobs`}
-                      title='Jobs in Cebu'
-                      external
-                    >
-                      <Text textStyle='sm'>Jobs in Cebu</Text>
-                    </Link>
-                  </li>
+                  <CountryList />
                   <li>
                     <Link
                       className={styles.footerLink}
