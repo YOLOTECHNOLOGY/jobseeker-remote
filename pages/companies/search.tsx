@@ -76,7 +76,6 @@ const Search = ({ defaultQuery }: SearchProps) => {
 
   const handleKeywordSearch = (keyword) => {
     const words = keyword.trim()
-    if(!words) return
     router.push(`/companies/search?query=${words}&size=30&page=1`)
   }
 

@@ -79,7 +79,6 @@ const Companies = () => {
 
   const handleKeywordSearch = (keyword) => {
     const words = keyword.trim()
-    if(!words) return
     router.push(`/companies/search?query=${words}&size=9&page=1`)
   }
 
