@@ -131,7 +131,7 @@ const SearchArea = (props: any) => {
                     />
                     <JobSearchBar
                         id='search'
-                        label='Search for job title or company name'
+                        label='job title or company'
                         variant='outlined'
                         size='small'
                         className={styles.search}

@@ -16,14 +16,15 @@ import { AppDownQRCode } from 'images'
 import Image from 'next/image'
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import SearchIcon from '@mui/icons-material/Search';
-
 const transQs =(params:any) =>{
     return params.map((e,index)=>`query_histories[${index}]=${e}`).join('&');
 }
 const SearchArea = (props: any) => {
     const { config } = props
+    console.log(config,'config111')
     const dispatch = useDispatch()
     const { location, setLocation } = useContext(LocationContext)
+
     const router = useRouter()
     const [isShow,setIsShow] = useState(false)
     useEffect(() => {
@@ -116,7 +117,7 @@ const SearchArea = (props: any) => {
         />
         <MaterialTextFieldWithSuggestionList
             id='search'
-            label='Search for job title or company name'
+            label='job title or company'
             variant='outlined'
             size='small'
             className={styles.search}
