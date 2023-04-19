@@ -128,7 +128,8 @@ const SwitchNation = ({ open, close, save }: propsType) => {
 
   return (
     <Modal
-      open={open}
+      // open={open}
+      open={false}
       onClose={close}
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'
