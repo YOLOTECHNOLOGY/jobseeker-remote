@@ -461,7 +461,7 @@ const JobFunctionMultiSelector = (props: any) => {
             e.preventDefault()
             e.stopPropagation()
           }}
-          style={{ height: height }}
+          style={{ height: height - 50}}
         >
           <div className={styles.topContainer}>
             <div

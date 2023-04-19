@@ -15,6 +15,8 @@ import { useRouter } from 'next/navigation'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { filter, toPairs, pipe, is, split, map } from 'ramda'
 import { LoadingContext } from 'app/components/providers/loadingProvider'
+import { cloneDeep } from 'lodash-es'
+
 const sortOptions = [
     { label: 'Newest', value: '1' },
     { label: 'Relevance', value: '2' },
@@ -99,7 +101,7 @@ const SearchArea = (props: any) => {
     }, [reload])
     useEffect(reload, [location, moreData, sort, selectedPreferenceId])
 
-    const newTheme = {...theme}
+    const newTheme = cloneDeep(theme)
     newTheme.components.MuiPaper.styleOverrides.root['height'] = 'calc(100% - 64px)'
 
     return <div>

@@ -10,11 +10,33 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { flatMap } from 'lodash-es'
 import { getCookie } from 'helpers/cookies'
 import { useRouter } from 'next/navigation'
+import {getCountryKey} from 'helpers/country'
+const countryList = {
+    "ph":{
+        "id": 63,
+        "key": "manila",
+        "value": "Manila",
+        "is_popular": false,
+        "region_display_name": "National Capital Region",
+        "seo_value": "manila"
+    },
+    "sg":{
+        id: 165,
+        is_popular:  false,
+        key: "downtown_core",
+        region_display_name: "Central",
+        seo_value: "downtown-core",
+        value: "Downtown Core",
+    }
+ };
+ 
+
 export const LocationContext = createContext()
 const Provider = LocationContext.Provider
 
 // eslint-disable-next-line react/prop-types
 const LocationProvider = ({ children }) => {
+    const country = getCountryKey();
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchConfigRequest())
@@ -27,14 +49,7 @@ const LocationProvider = ({ children }) => {
         }
         return flatMap(locations, p => p.locations)
     }, [locations])
-    const defaultLocation = getCookie('location') ?? {
-        "id": 63,
-        "key": "manila",
-        "value": "Manila",
-        "is_popular": false,
-        "region_display_name": "National Capital Region",
-        "seo_value": "manila"
-    }
+    const defaultLocation = getCookie('location') ?? countryList[country]
     const [location, setLocation] = useState(defaultLocation)
     const intepreter = useCallback(command => command.cata({
         queryLatLon: () => M(() => new Promise((resolve, reject) => {

@@ -5,6 +5,7 @@ import React from 'react'
 import Link from 'components/Link'
 import Text from 'components/Text'
 import Accordian from 'components/Accordian'
+import { getCountryKey } from 'helpers/country'
 
 /* Images */
 import {
@@ -24,6 +25,64 @@ import classNames from 'classnames/bind'
 import LazyLoad from '../LazyLoad'
 
 const scrollToBottom = () => document.body.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
+const COUNTRY_MAP = {
+  'ph': [
+    {
+      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/manila-jobs`,
+      title: 'Jobs in Manila',
+    },
+    {
+      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/makati-jobs`,
+      title: 'Jobs in Makati'
+    },
+    {
+      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/cebu-city-jobs`,
+      title: 'Jobs in Cebu'
+    }
+  ],
+  'sg': [
+    {
+      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/downtown-core-jobs`,
+      title: 'Jobs in Downtown Core',
+    },
+    {
+      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/kallang-jobs`,
+      title: 'Jobs in Kallang'
+    },
+    {
+      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/jurong-east-jobs`,
+      title: 'Jobs in Jurong East'
+    }
+  ]
+}
+
+const CountryList = () => {
+  const countryKey = getCountryKey()
+  const currentCounties = COUNTRY_MAP[countryKey]
+
+  return (
+    <>
+      {
+        currentCounties.map((country) => {
+          return (
+            <li key={country.title}>
+              <Link
+                className={styles.footerLink}
+                to={country.to}
+                title={country.title}
+                external
+              >
+                <Text textStyle='sm'>{country.title}</Text>
+              </Link>
+            </li>
+          )
+        })
+      }
+    </>
+  )
+}
+
 
 const Footer = () => {
   return (
@@ -103,11 +162,11 @@ const Footer = () => {
                     <Text textStyle='sm'>FAQ</Text>
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link className={styles.footerLink} to='/sitemap' title='Sitemap'>
                     <Text textStyle='sm'>Sitemap</Text>
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </Accordian>
             <Accordian
@@ -227,44 +286,15 @@ const Footer = () => {
               }
             >
               <ul className={styles.footerDesktopLinkList}>
-                <li>
-                  <Link
-                    className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/manila-jobs`}
-                    title='Jobs in Manila'
-                    external
-                  >
-                    <Text textStyle='sm'>Jobs in Manila</Text>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/makati-jobs`}
-                    title='Jobs in Makati'
-                    external
-                  >
-                    <Text textStyle='sm'>Jobs in Makati</Text>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/cebu-city-jobs`}
-                    title='Jobs in Cebu'
-                    external
-                  >
-                    <Text textStyle='sm'>Jobs in Cebu</Text>
-                  </Link>
-                </li>
+                <CountryList />
                 <li>
                   <Link
                     className={styles.footerLink}
                     to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/information-technology-jobs?page=1`}
-                    title='IT Jobs'
+                    title='IT jobs'
                     external
                   >
-                    <Text textStyle='sm'>IT Jobs</Text>
+                    <Text textStyle='sm'>IT jobs</Text>
                   </Link>
                 </li>
                 <li>
@@ -274,47 +304,47 @@ const Footer = () => {
                     title='Finance Jobs'
                     external
                   >
-                    <Text textStyle='sm'>Finance Jobs</Text>
+                    <Text textStyle='sm'>Finance jobs</Text>
                   </Link>
                 </li>
                 <li>
                   <Link
                     className={styles.footerLink}
                     to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/customer-service-jobs`}
-                    title='Customer Service Jobs'
+                    title='Customer Service jobs'
                     external
                   >
-                    <Text textStyle='sm'>Customer Service Jobs</Text>
+                    <Text textStyle='sm'>Customer Service jobs</Text>
                   </Link>
                 </li>
                 <li>
                   <Link
                     className={styles.footerLink}
                     to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/bpo-jobs`}
-                    title='BPO Jobs'
+                    title='BPO jobs'
                     external
                   >
-                    <Text textStyle='sm'>BPO Jobs</Text>
+                    <Text textStyle='sm'>BPO jobs</Text>
                   </Link>
                 </li>
                 <li>
                   <Link
                     className={styles.footerLink}
                     to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/sales-marketing-jobs`}
-                    title='Sales Jobs'
+                    title='Sales jobs'
                     external
                   >
-                    <Text textStyle='sm'>Sales Jobs</Text>
+                    <Text textStyle='sm'>Sales jobs</Text>
                   </Link>
                 </li>
                 <li>
                   <Link
                     className={styles.footerLink}
                     to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/healthcare-medical-jobs`}
-                    title='Healthcare Jobs'
+                    title='Healthcare jobs'
                     external
                   >
-                    <Text textStyle='sm'>Healthcare Jobs</Text>
+                    <Text textStyle='sm'>Healthcare jobs</Text>
                   </Link>
                 </li>
               </ul>
@@ -482,11 +512,11 @@ const Footer = () => {
                       <Text textStyle='sm'>FAQ</Text>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link className={styles.footerLink} to='/sitemap' title='sitemap'>
                       <Text textStyle='sm'>Sitemap</Text>
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
               <div className={styles.footerColumn}>
@@ -588,94 +618,65 @@ const Footer = () => {
                   Popular Jobs
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/manila-jobs`}
-                      title='Jobs in Manila'
-                      external
-                    >
-                      <Text textStyle='sm'>Jobs in Manila</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/makati-jobs`}
-                      title='Jobs in Makati'
-                      external
-                    >
-                      <Text textStyle='sm'>Jobs in Makati</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/cebu-city-jobs`}
-                      title='Jobs in Cebu'
-                      external
-                    >
-                      <Text textStyle='sm'>Jobs in Cebu</Text>
-                    </Link>
-                  </li>
+                  <CountryList />
                   <li>
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/information-technology-jobs?page=1`}
-                      title='IT Jobs'
+                      title='IT jobs'
                       external
                     >
-                      <Text textStyle='sm'>IT Jobs</Text>
+                      <Text textStyle='sm'>IT jobs</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/finance-audit-tax-jobs?page=1`}
-                      title='Finance Jobs'
+                      title='Finance jobs'
                       external
                     >
-                      <Text textStyle='sm'>Finance Jobs</Text>
+                      <Text textStyle='sm'>Finance jobs</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/customer-service-operations-jobs?page=1`}
-                      title='Customer Service Jobs'
+                      title='Customer Service jobs'
                       external
                     >
-                      <Text textStyle='sm'>Customer Service Jobs</Text>
+                      <Text textStyle='sm'>Customer Service jobs</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/bpo-jobs`}
-                      title='BPO Jobs'
+                      title='BPO jobs'
                       external
                     >
-                      <Text textStyle='sm'>BPO Jobs</Text>
+                      <Text textStyle='sm'>BPO jobs</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/sales-jobs?page=1`}
-                      title='Sales Jobs'
+                      title='Sales jobs'
                       external
                     >
-                      <Text textStyle='sm'>Sales Jobs</Text>
+                      <Text textStyle='sm'>Sales jobs</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
                       to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/healthcare-medical-jobs?page=1`}
-                      title='Healthcare Jobs'
+                      title='Healthcare jobs'
                       external
                     >
-                      <Text textStyle='sm'>Healthcare Jobs</Text>
+                      <Text textStyle='sm'>Healthcare jobs</Text>
                     </Link>
                   </li>
                 </ul>

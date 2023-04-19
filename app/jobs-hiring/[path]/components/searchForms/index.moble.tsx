@@ -25,6 +25,8 @@ import { LoadingContext } from 'app/components/providers/loadingProvider'
 import Image from 'next/image'
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import SearchIcon from '@mui/icons-material/Search';
+import { cloneDeep } from 'lodash-es'
+
 const sortOptions = [
     { label: 'Newest', value: '1' },
     { label: 'Relevance', value: '2' },
@@ -108,8 +110,12 @@ const SearchArea = (props: any) => {
         alignItems:'center',
         cursor: 'pointer'
       }
+    
+    const newTheme = cloneDeep(theme)
+    newTheme.components.MuiPaper.styleOverrides.root['height'] = 'calc(100% - 64px)'  
+
     return <div>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={newTheme}>
             <div className={styles.container}>
                 <div className={styles.searchArea}>
                     <LocationField
@@ -125,7 +131,7 @@ const SearchArea = (props: any) => {
                     />
                     <JobSearchBar
                         id='search'
-                        label='Search for job title or company name'
+                        label='job title or company'
                         variant='outlined'
                         size='small'
                         className={styles.search}
