@@ -188,6 +188,14 @@ const getJobTypeList = (config) => {
   }))
 }
 
+const getCurrencyList = (config) => {
+  return config?.currency_lists?.map((jobType) => ({
+    ...jobType,
+    label: jobType.value,
+    value: jobType.key
+  }))
+}
+
 const getLocationList = (config) => {
   if (!config) return []
 
@@ -418,5 +426,6 @@ export {
   getApplyJobLink,
   userFilterSelectionDataParser,
   checkFilterMatch,
-  mapSeoValueToGetValue
+  mapSeoValueToGetValue,
+  getCurrencyList
 }

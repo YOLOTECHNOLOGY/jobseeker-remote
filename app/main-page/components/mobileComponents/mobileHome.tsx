@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image'
 async function getCompanyData(location) {
     const res = await fetchCompanyTopService(location);
+    console.log(res,'comapny111')
     return res.data;
   }
 
@@ -13,10 +14,12 @@ const mobileHome = async ({location}) => {
     const data  = await getCompanyData(location);
     const comapny = data?.data?.featured_companies || [];
 
-
+  
 return (
     <div className={styles.mobileHome}>
-       <h2>Top Companies Hiring</h2>
+      {
+        comapny?.length ? (<>
+         <h2>Top Companies Hiring</h2>
        <div className={styles.hiring}>
             <div className={styles.itemBox}>
              {
@@ -35,6 +38,9 @@ return (
              }
         </div>
        </div>
+        </>) : null
+      }
+      
        
        <div className={styles.jobs}>
        <h2>Jobs for You</h2>

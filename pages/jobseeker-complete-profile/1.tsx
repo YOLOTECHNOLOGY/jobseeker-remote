@@ -22,12 +22,14 @@ import {
   getSmsCountryList,
   getSalaryOptions,
   getCountryList,
-  getJobTypeList
+  getJobTypeList,
+  getCurrencyList
 } from 'helpers/jobPayloadFormatter'
 import styles from './Onboard.module.scss'
 // import { DisclaimerIcon } from 'images'
 import { getItem } from 'helpers/localStorage'
 import JobFunctionSelector from 'components/JobFunctionSelector'
+import {getCountryKey}  from 'helpers/country'
 import { flatMap } from 'lodash-es'
 import Script from 'next/script'
 
@@ -55,11 +57,12 @@ const Step1 = (props: any) => {
   const location = useMemo(() => {
     return formattedLocationList.find((l) => l.value === userDetail?.location)
   }, [formattedLocationList, userDetail?.location])
-
+  const currencyLists = getCurrencyList(config)
   const noticeList = getNoticePeriodList(config)
   const smsCountryList = getSmsCountryList(config)
   const jobTypeList = getJobTypeList(config)
   const countryList = getCountryList(config)
+  const country  = getCountryKey();
   const getSmsCountryCode = (phoneNumber, smsCountryList) => {
     if (!phoneNumber || !smsCountryList) return null
     const matchedCountryCode = smsCountryList.filter((country) => {
@@ -89,7 +92,7 @@ const Step1 = (props: any) => {
       noticePeriod: userDetail?.notice_period_id,
       contactNumber: userDetail?.phone_num?.replace(countryCode, '') || null,
       country: userDetail?.country_key,
-      currency: 'php',
+      currency: `${country}d`,
       desiredCountry: preference?.country_key,
       firstName: userDetail?.first_name,
       lastName: userDetail?.last_name
@@ -439,8 +442,8 @@ const Step1 = (props: any) => {
                     <MaterialBasicSelect
                       className={styles.stepFullwidth}
                       label='Desired salary currency'
-                      options={[{ value: 'php', label: 'PHP' }]}
-                      required
+                      options={currencyLists}
+                      disabled
                       {...fieldState}
                       {...field}
                       ref={undefined}
