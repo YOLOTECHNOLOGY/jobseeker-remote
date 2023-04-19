@@ -24,7 +24,7 @@ import {
   getCountryList,
   getJobTypeList
 } from 'helpers/jobPayloadFormatter'
-import { getCountryKey } from 'helpers/country'
+import { getCountryId } from 'helpers/country'
 import styles from './Onboard.module.scss'
 // import { DisclaimerIcon } from 'images'
 import { getItem } from 'helpers/localStorage'
@@ -154,7 +154,7 @@ const Step1 = (props: any) => {
       },
       profile: {
         notice_period_id: noticePeriod,
-        country_key: getCountryKey(),
+        country_id: getCountryId(),
         location_key: location?.key || '',
         phone_num: countryCode + contactNumber,
         first_name: firstName,
