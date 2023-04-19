@@ -10,6 +10,7 @@ const uploadUserResumeService = (resume) => {
   const formData = new FormData()
   formData.append('file', resume)
   formData.append('filename', resume.name)
+  formData.append('parse_resume', true)
 
   return axios.post(URL, formData, { headers })
 }

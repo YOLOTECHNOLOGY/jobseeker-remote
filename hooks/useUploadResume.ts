@@ -25,8 +25,9 @@ const Step2 = (props: any) => {
   const uploadUserResumeState = useSelector((store: any) => store.users.uploadUserResume)
 
   useEffect(() => {
-    if (uploadUserResumeState.error?.errors?.file[0]) {
-      setErrorMessage(uploadUserResumeState.error.errors.file[0])
+    if (uploadUserResumeState.error?.message) {
+      setErrorMessage(uploadUserResumeState.error?.message)
+      setIsDoneUpdating(false)
     }
   }, [uploadUserResumeState])
 

@@ -39,12 +39,12 @@ const JobDetail = ({ detail }: any) => {
           <div className={styles.job_box}>
             <Image
               alt={detail?.job_title}
-              src={detail?.recruiter_avatar}
+              src={detail?.company_logo}
               width={24}
               height={24}
               quality={0}
             ></Image>
-            <div className={styles.job_companyInfo_name}>{detail?.recruiter_full_name}</div>
+            <div className={styles.job_companyInfo_name}>{detail?.company_name}</div>
           </div>
           <div className={styles.job_companyInfo_industry}>
             {detail?.company_industry}
