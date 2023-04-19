@@ -15,6 +15,7 @@ import SwitchNation from 'components/SwitchNation/SwitchNation'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
+import { getCountry } from 'helpers/country'
 // import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import styles from './HamburgerMenu.module.scss'
@@ -223,7 +224,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 >
                   <div className={styles.menuList}>
                     <Text textStyle={textStyle}>
-                      Singapore, English - <span style={{ color: '#136FD3' }}>Change</span>
+                      {getCountry()}, English - <span style={{ color: '#136FD3' }}>Change</span>
                     </Text>
                   </div>
                 </li>
@@ -293,7 +294,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 >
                   <div className={styles.menuList}>
                     <Text textStyle={textStyle}>
-                      Singapore, English - <span style={{ color: '#136FD3' }}>Change</span>
+                      {getCountry()}, English - <span style={{ color: '#136FD3' }}>Change</span>
                     </Text>
                   </div>
                 </li>

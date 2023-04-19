@@ -16,6 +16,7 @@ import { BossjobLogoWhite as BossjobLogo, DefaultAvatar } from 'images'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
+import { getCountry } from 'helpers/country'
 // import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Style */
@@ -340,7 +341,7 @@ const ProtectedHeader = () => {
               >
                 <div className={styles.headerMenuLink}>
                   <Text textStyle='base'>
-                    Singapore, English - <span style={{ color: '#136FD3' }}>Change</span>
+                    {getCountry()}, English - <span style={{ color: '#136FD3' }}>Change</span>
                   </Text>
                 </div>
               </li>
