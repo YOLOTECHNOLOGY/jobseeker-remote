@@ -63,7 +63,7 @@ const OnBoardLayout = ({
                 textStyle='base' 
                 textColor='darkgrey'
               >
-                Page {currentStep} of {totalStep}
+                Setp {currentStep} of {totalStep}
               </Text>
             </div>
             <div className={styles.OnBoardContent}>

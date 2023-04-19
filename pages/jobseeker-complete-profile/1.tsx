@@ -34,6 +34,16 @@ import {getCountryKey}  from 'helpers/country'
 import { flatMap } from 'lodash-es'
 import Script from 'next/script'
 
+const  countryForCurrency = {
+  ph: 'php',
+  sg: "sgd"
+}
+
+const   countryForCountryCode ={
+  ph: '+63',
+  sg: "+65"
+}
+
 const Step1 = (props: any) => {
   const currentStep = 1
   const quickUpladResumeType = getItem('quickUpladResume')
@@ -59,9 +69,11 @@ const Step1 = (props: any) => {
   const currencyLists = getCurrencyList(config)
   const noticeList = getNoticePeriodList(config)
   const smsCountryList = getSmsCountryList(config)
+
   const jobTypeList = getJobTypeList(config)
   const countryList = getCountryList(config)
   const country  = getCountryKey();
+
   const getSmsCountryCode = (phoneNumber, smsCountryList) => {
     if (!phoneNumber || !smsCountryList) return null
     const matchedCountryCode = smsCountryList.filter((country) => {
@@ -75,7 +87,7 @@ const Step1 = (props: any) => {
   )
 
   const defaultValues = useMemo(() => {
-    const countryCode = getSmsCountryCode(userDetail?.phone_num, smsCountryList) || '+63'
+    const countryCode = getSmsCountryCode(userDetail?.phone_num, smsCountryList) || countryForCountryCode[country]
     return {
       jobTitle: {
         id: preference?.function_job_title_id,
@@ -91,7 +103,7 @@ const Step1 = (props: any) => {
       noticePeriod: userDetail?.notice_period_id,
       contactNumber: userDetail?.phone_num?.replace(countryCode, '') || null,
       country: userDetail?.country_key,
-      currency: `${country}d`,
+      currency: countryForCurrency[country],
       desiredCountry: preference?.country_key,
       firstName: userDetail?.first_name,
       lastName: userDetail?.last_name
@@ -122,7 +134,6 @@ const Step1 = (props: any) => {
   const isUpdatingUserProfile = useSelector(
     (store: any) => store.users.updateUserOnboardingInfo.fetching
   )
-  console.log(currencyLists,`${country}d`,111111)
   const handleUpdateProfile = (data) => {
     const {
       minSalary,
@@ -156,7 +167,7 @@ const Step1 = (props: any) => {
         currency_key: currency,
         country_key: desiredCountry,
         country_id: getCountryId(),
-        currency_id:currencyLists?.find(e=>e.key ==`${country}d`)?.id,
+        currency_id:currencyLists?.find(e=>e.key ==countryForCurrency[country])?.id,
       },
       profile: {
         notice_period_id: noticePeriod,
@@ -336,7 +347,7 @@ const Step1 = (props: any) => {
                   return (
                     <MaterialTextField
                       className={styles.step1ContactNumberField}
-                      label='Contact Number'
+                      label='Mobile Number'
                       size='small'
                       type='number'
                       required
