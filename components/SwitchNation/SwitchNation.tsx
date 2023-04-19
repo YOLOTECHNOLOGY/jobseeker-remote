@@ -78,7 +78,7 @@ const autocompleteTheme = createTheme({
 
 const nations = [
   { value: 'ph', label: 'PH' },
-  { value: 'sg', label: 'SGP' }
+  { value: 'sg', label: 'SG' }
 ]
 
 const languages = [{ value: 'english', label: 'English' }]
@@ -160,6 +160,7 @@ const SwitchNation = ({ open, close, save }: propsType) => {
                 marginRight: isMobile ? 0 : '16px',
                 marginBottom: isMobile ? '16px' : 0
               }}
+              disabled
               defaultValue={nations.find((nation) => nation.value == nationDefault)}
             />
           </ThemeProvider>
