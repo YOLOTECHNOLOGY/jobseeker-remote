@@ -86,7 +86,7 @@ const LocationProvider = ({ children }) => {
     const locationIp = registInterpreter(intepreter)
     const [locationUpdated, setLocationupdated] = useState(false)
     useEffect(() => {
-        if (flatLocations?.length && !locationUpdated) {
+        if (flatLocations?.length && !locationUpdated && !getCookie('location')) {
             locationIp(locationScript())
                 .run()
             setLocationupdated(true)
