@@ -25,7 +25,7 @@ import Divider from '@mui/material/Divider'
 import Text from 'components/Text'
 import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialTextField from 'components/MaterialTextField'
-import MaterialLocationField from 'components/MaterialLocationField'
+// import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 import ModalVerifyEmail from 'components/ModalVerifyEmail'
@@ -165,8 +165,8 @@ const Step4 = (props: any) => {
   }, [studyPeriodFrom, studyPeriodTo])
 
   useEffect(() => {
-    const requireFields = school && degree && location && studyPeriodFrom
-    const emptyRequiredFields = !school && !degree && !location && !studyPeriodFrom
+    const requireFields = school && degree  && studyPeriodFrom
+    const emptyRequiredFields = !school && !degree  && !studyPeriodFrom
     const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
 
     if (isCurrentStudying) {
@@ -244,10 +244,10 @@ const Step4 = (props: any) => {
     return locList.filter((loc) => loc?.value.toLowerCase() === location.toLowerCase())
   }
 
-  const onLocationSearch = (_, value) => {
-    setIsShowCountry(value?.key === 'overseas' ? true : false)
-    setLocation(value)
-  }
+  // const onLocationSearch = (_, value) => {
+  //   setIsShowCountry(value?.key === 'overseas' ? true : false)
+  //   setLocation(value)
+  // }
 
   const newEducationForm = () => {
     setShowForm(!showForm)
@@ -368,7 +368,7 @@ const Step4 = (props: any) => {
   }
 
   const handleNextBtn = () => {
-    if (!isNextDisabled && ((showForm && school && degree && location) || !showForm)) {
+    if (!isNextDisabled && ((showForm && school && degree ) || !showForm)) {
       if (!userCookie.is_email_verify) {
         setIsShowModal(true)
       } else {
@@ -420,10 +420,10 @@ const Step4 = (props: any) => {
                     : moment(education?.study_period_to).format('MMMM yyyy')}
                 </Text>
                 <br />
-                <Text textStyle='base' tagName='p'>
+                {/* <Text textStyle='base' tagName='p'>
                   {education?.location} -{' '}
                   {getLocation(education?.location)?.[0]?.region_display_name}
-                </Text>
+                </Text> */}
                 <Text textStyle='base' tagName='p'>
                   {education?.field_of_study}
                 </Text>
@@ -548,7 +548,7 @@ const Step4 = (props: any) => {
             </div>
           )}
 
-          <div className={styles.stepField}>
+          {/* <div className={styles.stepField}>
             <MaterialLocationField
               className={styles.stepFullwidth}
               label={requiredLabel('Location')}
@@ -556,7 +556,7 @@ const Step4 = (props: any) => {
               defaultValue={location}
               onChange={onLocationSearch}
             />
-          </div>
+          </div> */}
 
           {isShowCountry && (
             <div className={classNames(styles.stepField, styles.stepFieldCountry)}>

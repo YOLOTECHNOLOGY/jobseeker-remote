@@ -122,6 +122,7 @@ const Step1 = (props: any) => {
   const isUpdatingUserProfile = useSelector(
     (store: any) => store.users.updateUserOnboardingInfo.fetching
   )
+  console.log(currencyLists,`${country}d`,111111)
   const handleUpdateProfile = (data) => {
     const {
       minSalary,
@@ -153,7 +154,9 @@ const Step1 = (props: any) => {
         salary_range_to: Number(maxSalary),
         industry_key: industry,
         currency_key: currency,
-        country_key: desiredCountry
+        country_key: desiredCountry,
+        country_id: getCountryId(),
+        currency_id:currencyLists?.find(e=>e.key ==`${country}d`)?.id,
       },
       profile: {
         notice_period_id: noticePeriod,
@@ -401,7 +404,7 @@ const Step1 = (props: any) => {
                 return (
                   <MaterialLocationField
                     className={styles.stepFullwidth}
-                    label='Desired working location'
+                    label='Desired  location'
                     required
                     {...fieldState}
                     {...field}
