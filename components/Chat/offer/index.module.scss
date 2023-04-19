@@ -21,3 +21,200 @@
 .bottomText {
     margin-top: 30px;
 }
+
+.offerview {
+    margin: 10px 0px;
+    width: calc(100% - 0px);
+    border-radius: 14px;
+    box-shadow: 0px 4px 15px rgba(19, 111, 211, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-bottom: 80px;
+
+    .topInfo {
+        display: flex;
+        flex-direction: row;
+        margin-left: 20px;
+        margin-right: 20px;
+        background: #e7f1fb;
+        border-radius: 15px;
+        overflow: hidden;
+        height: 50px;
+        width: calc(100% - 40px);
+        margin-top: 20px;
+
+        .logo {
+            width: 37px;
+            height: 100%;
+            display: flex;
+            padding-left: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content {
+            font-family: 'Product Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 15px;
+            letter-spacing: 0.02em;
+            color: #136fd3;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .sent {
+        position: absolute;
+        top: 76px;
+        right: 30px;
+        width: 53px;
+        height: 53px;
+    }
+
+    .image {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-top: 16px;
+    }
+
+    .description {
+        margin-top: 16px;
+        white-space: pre-wrap;
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.02em;
+        color: #353535;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .bottomImage {
+        width: 100%;
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+    }
+
+    .bottomCenter {
+        position: absolute;
+        left: calc(50% - 172px);
+        bottom: 0px;
+    }
+}
+
+.message_background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: #00000033;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .message {
+        max-width: 552px;
+        width: calc(100vw - 50px);
+        height: 412px;
+        background: #136FD3;
+        border-radius: 15px;
+        position: relative;
+        overflow: hidden;
+
+        .content {
+            margin: 30px 20px;
+            background: #fff;
+            border-radius: 20px;
+            width: calc(100% - 40px);
+            height: calc(100% - 60px);
+            padding-top: 23px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .company_logo {
+                margin-top: 54px;
+                // background: gray;
+                border-radius: 6px;
+            }
+
+            .company_name {
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 23px;
+                text-align: center;
+                letter-spacing: 0.02em;
+                color: #2378E5;
+                margin-top: 10px;
+            }
+
+            .sender {
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 23px;
+                text-align: center;
+                letter-spacing: 0.02em;
+                color: #121212;
+                margin-top: 8px;
+            }
+
+            .viewnow {
+                color: #fff;
+                background: #136FD3;
+                width: 222px;
+                height: 44px;
+                text-transform: capitalize;
+                border-radius: 18px;
+                margin-top: 20px;
+            }
+
+            .viewlater {
+                color: #707070;
+                // background:#136FD3 ;
+                width: 222px;
+                height: 44px;
+                text-transform: capitalize;
+                border-radius: 18px;
+                margin-top: 20px;
+            }
+
+           
+        }
+        .closeIcon {
+            position: absolute;
+            top: 18px;
+            right: 0px;
+            width: 40px;
+            height: 50px;
+            cursor: pointer;
+        }
+        .background {
+            position: absolute;
+            width: 100%;
+            height: auto;
+            left: 0px;
+            bottom: 0px;
+        }
+
+        .head {
+            position: absolute;
+            width: 100%;
+            height: auto;
+            left: 0px;
+            top: 0px;
+        }
+    }
+}
