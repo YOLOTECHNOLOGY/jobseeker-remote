@@ -6,7 +6,7 @@ const fetchJobsListService = (payload, accessToken=null) => {
 
   const axios = configuredAxios('job', endpointType, false, accessToken)
   
-  return axios.get(`filter?${queryString.stringify(payload)}`)
+  return axios.get(`/search?${queryString.stringify(payload)}`)
 }
 
 export { fetchJobsListService }

@@ -15,11 +15,15 @@ export default registInterpreter(command =>
             console.log({queriyParams},'queriyParams')
             const token = cookies().get('accessToken')
             return fetchJobsListService(queriyParams, token?.value)
-                .then(result => ({
+                .then(result =>{
+                    console.log(result,'result')
+                  return ({
                     jobs: result.data?.data?.jobs,
                     page: result.data?.data?.page ?? 1,
                     totalPages: result.data?.data?.total_pages
-                }))
+                })
+                    
+                })
                 .then(data => {
                     if (token?.value && data?.jobs?.length) {
                         return check((data.jobs ?? []).map(job => job.recruiter_id).join(','), token.value)
