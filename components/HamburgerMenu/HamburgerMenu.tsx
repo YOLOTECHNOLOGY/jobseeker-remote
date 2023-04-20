@@ -125,8 +125,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                       ? `/manage-profile`
                       : `/jobseeker-complete-profile/1`
                   }
-                  // to={userCookie?.is_profile_completed ? authPathToOldProject(null, '/dashboard/profile/jobseeker') : '/jobseeker-complete-profile/1'}
-                  aTag
+                  // to={userCookie?.is_profile_completed ? authPathToOldProject(null, '/dashboard/profile/jobseeker') : '/jobseeker-complete-profile/1'}              
                   title='Manage Resume'
                 >
                   <li className={styles.menuList} onClick={handleClick}>
