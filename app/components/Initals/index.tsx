@@ -1,10 +1,12 @@
 'use client'
 import { useFirstRender } from 'helpers/useFirstRender'
 import React, { useEffect } from 'react'
+import { useSearchParams } from 'next/navigation';
 import { initFireBase } from 'helpers/fireBaseManager'
 import Script from 'next/script'
 import * as fbq from 'lib/fpixel'
 import * as gtag from 'lib/gtag'
+
 const tiktokfunc = () => {
   const w = window as any
   const t = 'ttq'
@@ -35,7 +37,7 @@ const tiktokfunc = () => {
 //   });
 //   return false;
 // }
-const runInClient = () => {
+const runInClient = (searchParams) => {
   if (!(window as any)?.imSharedWorker && window.SharedWorker) {
     (window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
   }
@@ -45,15 +47,27 @@ const runInClient = () => {
   }
   initFireBase()
   tiktokfunc()
+  invokeGAAdsEvent(searchParams)
 }
+
+const invokeGAAdsEvent = (searchParams) => {
+  const ads = searchParams.get('ads')
+  const gtag = (window as any)?.gtag
+  if (process.env.ENV === 'production' && ads && gtag) {
+    gtag('event', ads)
+  }
+}
+
 window.onhashchange = e => {
   console.log('windowChange', e)
 }
 const Initial = () => {
   const firstRender = useFirstRender()
+  const searchParams = useSearchParams()
+
   useEffect(() => {
     if (firstRender) {
-      runInClient()
+      runInClient(searchParams)
     }
   }, [firstRender])
   // const [gtagReady, setGtagReady] = useState(false)
