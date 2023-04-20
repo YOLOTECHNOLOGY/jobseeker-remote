@@ -210,6 +210,7 @@ export const buildParams = (config, searchValues) => {
             ?.join?.(',') ?? null,
         page: searchValues?.page?.[0] ?? 1,
         size: 15,
-        source: 'web'
+        source: 'web',
+        sort:searchValues?.sort?.join(),
     }
 }

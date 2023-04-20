@@ -122,10 +122,11 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   className={styles.defaultLink}
                   to={
                     userCookie?.is_profile_completed
-                      ? `/manage-profile`
-                      : `/jobseeker-complete-profile/1`
+                      ? '/manage-profile'
+                      : '/jobseeker-complete-profile/1'
                   }
-                  // to={userCookie?.is_profile_completed ? authPathToOldProject(null, '/dashboard/profile/jobseeker') : '/jobseeker-complete-profile/1'}              
+                  // to={userCookie?.is_profile_completed ? authPathToOldProject(null, '/dashboard/profile/jobseeker') : '/jobseeker-complete-profile/1'}
+                  // aTag
                   title='Manage Resume'
                 >
                   <li className={styles.menuList} onClick={handleClick}>
