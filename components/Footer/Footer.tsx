@@ -174,7 +174,7 @@ const Footer = () => {
               paddedContent
               title={
                 <Text textStyle='sm' bold>
-                  Recruiter
+                  Talents
                 </Text>
               }
             >
@@ -229,7 +229,7 @@ const Footer = () => {
               paddedContent
               title={
                 <Text textStyle='sm' bold>
-                  Employers
+                  Recruiter
                 </Text>
               }
             >
@@ -237,41 +237,11 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/employer/post-a-job`}
+                    to={`${process.env.BOSSHUNT_URL}`}
                     external
-                    title='Post a job'
+                    title='Get started'
                   >
-                    <Text textStyle='sm'>Post a job</Text>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/employer#pricing`}
-                    external
-                    title='Prices & packages'
-                  >
-                    <Text textStyle='sm'>Prices & packages</Text>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/employer#partners`}
-                    external
-                    title='Partners'
-                  >
-                    <Text textStyle='sm'>Partners</Text>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={styles.footerLink}
-                    to={'https://hunt.bossjob.ph'}
-                    external
-                    title='Bosshunt ATS'
-                  >
-                    <Text textStyle='sm'>Bosshunt ATS</Text>
+                    <Text textStyle='sm'>Get started</Text>
                   </Link>
                 </li>
               </ul>
@@ -521,7 +491,7 @@ const Footer = () => {
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Recruiter
+                  Talents
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
@@ -571,44 +541,17 @@ const Footer = () => {
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Employers
+                 Recruiter
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/employer/post-a-job`}
-                      title='Post a job'
+                      to={`${process.env.BOSSHUNT_URL}`}
+                      title='Get started'
                       external
                     >
-                      <Text textStyle='sm'>Post a job</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/employer#pricing`}
-                      title='Prices & packages'
-                    >
-                      <Text textStyle='sm'>Prices & packages</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/employer#partners`}
-                      title='Partners'
-                    >
-                      <Text textStyle='sm'>Partners</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to='https://hunt.bossjob.ph/'
-                      title='Bosshunt'
-                    >
-                      <Text textStyle='sm'>Bosshunt ATS</Text>
+                      <Text textStyle='sm'>Get started</Text>
                     </Link>
                   </li>
                 </ul>
