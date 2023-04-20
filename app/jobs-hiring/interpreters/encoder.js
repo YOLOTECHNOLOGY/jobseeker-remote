@@ -3,7 +3,7 @@ import { unslugify } from '../../../helpers/formatter'
 import { map, pick, T, toLower, mergeDeepLeft, reduce, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse } from 'ramda'
 import { flatMap } from 'lodash-es'
 import slugify from 'slugify'
-const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'qualification','queryFields']
+const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'qualification', 'queryFields']
 const normalKeys = ['verifiedCompany', 'companySizes', 'workExperience', 'financingStages', 'industry']
 const no = propSatisfies(either(isEmpty, isNil))
 const has = complement(no)
@@ -148,30 +148,34 @@ export const thousandsToNumber = (string) => {
         return 100001
     }
 }
-export const handleSalary = (salaryRanges) => {
-    let salaryFrom = ''
-    let salaryTo = ''
-    if (salaryRanges?.length) {
-        salaryFrom = salaryRanges
-            .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
-            .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split('-')[0]))
+export const handleSalary = (salaryRanges=[], salaryList) => {
+    const selected = salaryRanges.map(seo => salaryList.find(item => item['seo-value'] === seo))
+    const from = selected.map(item => item.from).join(',')
+    const to = selected.map(item => item.to).join(',')
+    return [from, to]
+    // let salaryFrom = ''
+    // let salaryTo = ''
+    // if (salaryRanges?.length) {
+    //     salaryFrom = salaryRanges
+    //         .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
+    //         .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split('-')[0]))
 
-        salaryTo = salaryRanges
-            .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
-            .map((salaryTo) => thousandsToNumber('' + salaryTo.split('-')[1]))
+    //     salaryTo = salaryRanges
+    //         .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
+    //         .map((salaryTo) => thousandsToNumber('' + salaryTo.split('-')[1]))
 
-        if (salaryRanges.includes('below-30k')) {
-            salaryFrom.push(0)
-            salaryTo.push(30000)
-        }
-        if (salaryRanges.includes('above-200k')) {
-            salaryFrom.push(200001)
-            salaryTo.push(400000)
-        }
-        salaryFrom = salaryFrom.join(',')
-        salaryTo = salaryTo.join(',')
-    }
-    return [salaryFrom, salaryTo]
+    //     if (salaryRanges.includes('below-30k')) {
+    //         salaryFrom.push(0)
+    //         salaryTo.push(30000)
+    //     }
+    //     if (salaryRanges.includes('above-200k')) {
+    //         salaryFrom.push(200001)
+    //         salaryTo.push(400000)
+    //     }
+    //     salaryFrom = salaryFrom.join(',')
+    //     salaryTo = salaryTo.join(',')
+    // }
+    // return [salaryFrom, salaryTo]
 }
 export const buildParams = (config, searchValues) => {
     const industryList = config.industry_lists
@@ -181,11 +185,11 @@ export const buildParams = (config, searchValues) => {
     const companySizeList = config.company_sizes
     const qualificationList = config.educations
     const financingStagesList = config.company_financing_stage_lists
-    const [salaryFrom, salaryTo] = handleSalary(searchValues.salary)
+    const salaryList = config.salary_range_filters
+    const [salaryFrom, salaryTo] = handleSalary(searchValues.salary, salaryList)
     const workExperienceList = config.xp_lvls
     const jobTypeList = config.job_types
     const locationLists = flatMap(config.location_lists, item => item.locations)
-    console.log(searchValues,config,'config')
     const queryFields = searchValues?.queryFields?.join(',') || "job_title,company_name"
     return {
         query: searchValues.query,
