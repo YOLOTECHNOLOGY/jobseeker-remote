@@ -7,6 +7,6 @@ export default command => command.cata({
         (() => Promise.resolve().then(() => {
             // const router = context.getRouter()
             // router.push(`/job/${jobId}`)
-            window.open(location.origin + `/job/${jobId}`)
+            window.open(location.origin + `${jobId}`)
         })),
 })
