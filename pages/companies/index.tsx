@@ -73,7 +73,7 @@ const Companies = () => {
 
   const handleKeywordSearch = (keyword) => {
     const words = keyword.trim()
-    router.push(`/companies/search?query=${words}&size=9&page=1`)
+    router.push(`/companies/search?query=${words}&size=15&page=1`)
   }
 
   const handlePaginationClick = (event, val) => {
