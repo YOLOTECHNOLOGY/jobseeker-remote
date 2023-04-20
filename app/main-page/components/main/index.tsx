@@ -9,6 +9,7 @@ import TopModule from '../TopModule'
 import Tabs from '../Tabs/Tabs'
 import Companies from '../companies'
 import MobileHome from '../mobileComponents/mobileHome'
+import Tracker from '../tracker'
 
 import styles from './index.module.scss'
 
@@ -26,6 +27,8 @@ const Main = (props) => {
         <Companies location={city} />
         {/* @ts-expect-error Async Server Component */}
         <MobileHome location={city} />
+        {/* Tracker component */}
+        <Tracker />
       </div>
       <Footer />
       <AutoShowModalAppRedirect />
