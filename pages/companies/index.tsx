@@ -31,13 +31,7 @@ import BannerCarousel from 'components/BannerCarousel'
 
 // Assets
 import { BlueTickIcon } from 'images'
-import { getCountry, getCountryKey } from 'helpers/country'
-
-const COUNTRY_FULL_MAP = {
-  'sg': 'Singapore',
-  'ph': 'Philippines'
-}
-
+import { getCountry } from 'helpers/country'
 
 const Companies = () => {
   const dispatch = useDispatch()
@@ -87,11 +81,6 @@ const Companies = () => {
     router.push(router, undefined, { shallow: true })
   }
 
-  const countryNames = () => {
-    const currentCountryKey = getCountryKey()
-    return COUNTRY_FULL_MAP[currentCountryKey]
-  }
-
   return (
     <Layout>
       
@@ -104,7 +93,7 @@ const Companies = () => {
             className={styles.searchCompanyTitle}
             textColor='primaryBlue'
           >
-            Find great companies in {countryNames()}
+            Find great companies in {getCountry()}
           </Text>
           <SearchCompanyField onKeywordSearch={handleKeywordSearch} />
         </div>
