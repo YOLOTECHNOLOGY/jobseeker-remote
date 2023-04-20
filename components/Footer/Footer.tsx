@@ -5,7 +5,7 @@ import React from 'react'
 import Link from 'components/Link'
 import Text from 'components/Text'
 import Accordian from 'components/Accordian'
-import { getCountryKey } from 'helpers/country'
+import { getCountry, getCountryKey } from 'helpers/country'
 
 /* Images */
 import {
@@ -29,29 +29,29 @@ const scrollToBottom = () => document.body.scrollIntoView({ behavior: 'smooth', 
 const COUNTRY_MAP = {
   'ph': [
     {
-      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/manila-jobs`,
+      to: `${process.env.NEXT_PUBLIC_HOST_PATH}/jobs-hiring/manila-jobs`,
       title: 'Jobs in Manila',
     },
     {
-      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/makati-jobs`,
+      to: `${process.env.NEXT_PUBLIC_HOST_PATH}/jobs-hiring/makati-jobs`,
       title: 'Jobs in Makati'
     },
     {
-      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/cebu-city-jobs`,
+      to: `${process.env.NEXT_PUBLIC_HOST_PATH}/jobs-hiring/cebu-city-jobs`,
       title: 'Jobs in Cebu'
     }
   ],
   'sg': [
     {
-      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/downtown-core-jobs`,
+      to: `${process.env.NEXT_PUBLIC_HOST_PATH}/jobs-hiring/downtown-core-jobs`,
       title: 'Jobs in Downtown Core',
     },
     {
-      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/kallang-jobs`,
+      to: `${process.env.NEXT_PUBLIC_HOST_PATH}/jobs-hiring/kallang-jobs`,
       title: 'Jobs in Kallang'
     },
     {
-      to: `${process.env.NEW_PROJECT_URL}/jobs-hiring/jurong-east-jobs`,
+      to: `${process.env.NEXT_PUBLIC_HOST_PATH}/jobs-hiring/jurong-east-jobs`,
       title: 'Jobs in Jurong East'
     }
   ]
@@ -115,7 +115,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/company/bossjob-1668`}
+                    to={`/company/bossjob-1668`}
                     external
                     title='About Bossjob'
                   >
@@ -125,7 +125,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.BLOG_BOSSJOB}/terms-and-conditions/  `}
+                    to={`/terms-and-conditions/  `}
                     title='Blog Bossjob'
                     external
                   >
@@ -135,7 +135,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.BLOG_BOSSJOB}/terms-and-conditions/  `}
+                    to={`/terms-and-conditions/  `}
                     title='Legal'
                     external
                   >
@@ -174,7 +174,7 @@ const Footer = () => {
               paddedContent
               title={
                 <Text textStyle='sm' bold>
-                  Recruiter
+                  Talents
                 </Text>
               }
             >
@@ -183,7 +183,7 @@ const Footer = () => {
                   <Link
                     className={styles.footerLink}
                     to='/jobs-hiring/job-search'
-                    title='Jobs in Philippines'
+                    title={`Jobs in ${getCountry()}`}
                   >
                     <Text textStyle='sm'>All jobs</Text>
                   </Link>
@@ -229,7 +229,7 @@ const Footer = () => {
               paddedContent
               title={
                 <Text textStyle='sm' bold>
-                  Employers
+                  Recruiter
                 </Text>
               }
             >
@@ -237,41 +237,11 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/employer/post-a-job`}
+                    to={`${process.env.BOSSHUNT_URL}`}
                     external
-                    title='Post a job'
+                    title='Get started'
                   >
-                    <Text textStyle='sm'>Post a job</Text>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/employer#pricing`}
-                    external
-                    title='Prices & packages'
-                  >
-                    <Text textStyle='sm'>Prices & packages</Text>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={styles.footerLink}
-                    to={`${process.env.OLD_PROJECT_URL}/employer#partners`}
-                    external
-                    title='Partners'
-                  >
-                    <Text textStyle='sm'>Partners</Text>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className={styles.footerLink}
-                    to={'https://hunt.bossjob.ph'}
-                    external
-                    title='Bosshunt ATS'
-                  >
-                    <Text textStyle='sm'>Bosshunt ATS</Text>
+                    <Text textStyle='sm'>Get started</Text>
                   </Link>
                 </li>
               </ul>
@@ -290,7 +260,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/information-technology-jobs?page=1`}
+                    to={`/jobs-hiring/information-technology-jobs?page=1`}
                     title='IT jobs'
                     external
                   >
@@ -300,7 +270,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/finance-accounting-jobs`}
+                    to={`/jobs-hiring/finance-accounting-jobs`}
                     title='Finance Jobs'
                     external
                   >
@@ -310,7 +280,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/customer-service-jobs`}
+                    to={`/jobs-hiring/customer-service-jobs`}
                     title='Customer Service jobs'
                     external
                   >
@@ -320,7 +290,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/bpo-jobs`}
+                    to={`/jobs-hiring/bpo-jobs`}
                     title='BPO jobs'
                     external
                   >
@@ -330,7 +300,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/sales-marketing-jobs`}
+                    to={`/jobs-hiring/sales-marketing-jobs`}
                     title='Sales jobs'
                     external
                   >
@@ -340,7 +310,7 @@ const Footer = () => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/healthcare-medical-jobs`}
+                    to={`/jobs-hiring/healthcare-medical-jobs`}
                     title='Healthcare jobs'
                     external
                   >
@@ -465,7 +435,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/company/bossjob-1668`}
+                      to={`/company/bossjob-1668`}
                       title='About Bossjob'
                       external
                     >
@@ -521,7 +491,7 @@ const Footer = () => {
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Recruiter
+                  Talents
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
@@ -571,44 +541,17 @@ const Footer = () => {
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Employers
+                 Recruiter
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/employer/post-a-job`}
-                      title='Post a job'
+                      to={`${process.env.BOSSHUNT_URL}`}
+                      title='Get started'
                       external
                     >
-                      <Text textStyle='sm'>Post a job</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/employer#pricing`}
-                      title='Prices & packages'
-                    >
-                      <Text textStyle='sm'>Prices & packages</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to={`${process.env.OLD_PROJECT_URL}/employer#partners`}
-                      title='Partners'
-                    >
-                      <Text textStyle='sm'>Partners</Text>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={styles.footerLink}
-                      to='https://hunt.bossjob.ph/'
-                      title='Bosshunt'
-                    >
-                      <Text textStyle='sm'>Bosshunt ATS</Text>
+                      <Text textStyle='sm'>Get started</Text>
                     </Link>
                   </li>
                 </ul>
@@ -622,7 +565,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/information-technology-jobs?page=1`}
+                      to={`/jobs-hiring/information-technology-jobs?page=1`}
                       title='IT jobs'
                       external
                     >
@@ -632,7 +575,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/finance-audit-tax-jobs?page=1`}
+                      to={`/jobs-hiring/finance-audit-tax-jobs?page=1`}
                       title='Finance jobs'
                       external
                     >
@@ -642,7 +585,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/customer-service-operations-jobs?page=1`}
+                      to={`/jobs-hiring/customer-service-operations-jobs?page=1`}
                       title='Customer Service jobs'
                       external
                     >
@@ -652,7 +595,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/bpo-jobs`}
+                      to={`/jobs-hiring/bpo-jobs`}
                       title='BPO jobs'
                       external
                     >
@@ -662,7 +605,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/sales-jobs?page=1`}
+                      to={`/jobs-hiring/sales-jobs?page=1`}
                       title='Sales jobs'
                       external
                     >
@@ -672,7 +615,7 @@ const Footer = () => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/healthcare-medical-jobs?page=1`}
+                      to={`/jobs-hiring/healthcare-medical-jobs?page=1`}
                       title='Healthcare jobs'
                       external
                     >

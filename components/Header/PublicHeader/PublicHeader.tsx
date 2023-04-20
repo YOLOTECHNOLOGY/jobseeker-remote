@@ -14,7 +14,6 @@ import MaterialButton from 'components/MaterialButton'
 // nation
 import SwitchNation from 'components/SwitchNation/SwitchNation'
 
-import { getCountryKey } from 'helpers/country'
 
 /* Images */
 import { BossjobLogoWhite as BossjobLogo } from 'images'
@@ -223,7 +222,7 @@ const PublicHeader = () => {
               <option value='sg' label='SGP' />
             </select> */}
 
-            <li className={styles.headerLink} onClick={() => setOpenSwitchNationModal(true)}>
+            {/* <li className={styles.headerLink} onClick={() => setOpenSwitchNationModal(true)}>
               <div className={classNames([styles.profileWrapper, styles.profileDisabled])}>
                 <Text textStyle='base' textColor='white' className={styles.profileCountry}>
                   {getCountryKey()?.toUpperCase()}
@@ -231,7 +230,7 @@ const PublicHeader = () => {
 
                 <div className={styles.profileCaret} />
               </div>
-            </li>
+            </li> */}
           </React.Fragment>
         </ul>
         <div className={styles.mobileIconWrapper}>

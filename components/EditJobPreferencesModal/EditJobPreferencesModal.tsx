@@ -19,6 +19,7 @@ import { updateUserPreferencesRequest } from 'store/actions/users/updateUserPref
 /* Styles */
 import styles from './EditJobPreferencesModal.module.scss'
 import JobFunctionSelector from 'components/JobFunctionSelector'
+import { countryForCurrency } from 'helpers/country'
 
 type EditJobPreferencesModalProps = {
   modalName: string
@@ -67,7 +68,7 @@ const EditJobPreferencesModal = ({
       location: location,
       industry: preference?.industry_key,
       country: preference?.country_key,
-      currencyKey: preference?.currency_key ?? ''
+      currencyKey: preference?.currency_key ?? countryForCurrency[getCountryKey()]
     }
   }, [preference])
   const dispatch = useDispatch()
@@ -238,6 +239,7 @@ const EditJobPreferencesModal = ({
                   label='Currency type'
                   options={currencyLists}
                   required
+                  disabled
                   {...fieldState}
                   {...field}
                   value={value}

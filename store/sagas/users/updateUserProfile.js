@@ -11,7 +11,7 @@ import { updateUserProfileService } from 'store/services/users/updateUserProfile
 import { uploadUserAvatarService } from 'store/services/users/uploadUserAvatar'
 
 /* Helpers */
-import { getCookie } from 'helpers/cookies'
+import { getCookie,setCookie } from 'helpers/cookies'
 
 function* updateUserProfileReq({ payload }) {
   try {
@@ -25,7 +25,10 @@ function* updateUserProfileReq({ payload }) {
     if (payload.avatar){
       try {
         // TODO: create uploadUserAvatarRequest, uploadUserAvatarSuccess, uploadUserAvatarFailed types, actions and reducer
-        yield call(uploadUserAvatarService, payload.avatar)
+        const {data} = yield call(uploadUserAvatarService, payload.avatar)
+        const userCookie = getCookie('user')
+        userCookie.avatar = data.data.avatar
+        yield call(setCookie, 'user', userCookie)
       }catch(error){
         console.log('ERROR UPDATING USER AVATAR', error)
       }

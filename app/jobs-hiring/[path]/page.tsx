@@ -22,6 +22,7 @@ import { Metadata } from 'next'
 import { toPairs } from 'ramda'
 import LoadingProvider from 'app/components/providers/loadingProvider'
 import Footer from 'components/Footer'
+import { getCountry } from 'helpers/country'
 const configs = getConfigs([
   ['location_lists'],
   ['main_functions'],
@@ -44,9 +45,9 @@ export async function generateMetadata(props: any) {
   const { params, searchParams } = props
   const { config } = await configs(serverDataScript()).run(props)
   const searchValues = decoder(config)(params.path, searchParams)
-  let seoMetaTitle = `Professional Jobs in Philippines - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
+  let seoMetaTitle = `Professional Jobs in ${getCountry()} - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
   let seoMetaDescription =
-    'New Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers'
+    `New Jobs in ${getCountry()}available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
   const searchQuery = (searchValues.query ?? null) as string | null
   const location = (searchValues.location?.[0] ?? null) as string | null
   const url = new URLSearchParams(toPairs(searchParams)).toString()
@@ -57,23 +58,23 @@ export async function generateMetadata(props: any) {
     seoMetaTitle = `${unslugify(
       searchQuery,
       true
-    )} Jobs in Philippines, Job Opportunities - ${month} ${year} | Bossjob`
+    )} Jobs in ${getCountry()}, Job Opportunities - ${month} ${year} | Bossjob`
     seoMetaDescription = `New ${unslugify(
       searchQuery,
       true
-    )} Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    )} Jobs in ${getCountry()} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
   } else if (searchQuery && location) {
     seoMetaTitle = `${unslugify(
       searchQuery,
       true
-    )} Jobs in Philippines, Apply Job Opportunities - ${month} ${year} | Bossjob`
+    )} Jobs in ${getCountry()}, Apply Job Opportunities - ${month} ${year} | Bossjob`
     seoMetaDescription = `New ${unslugify(searchQuery, true)} Jobs in ${unslugify(
       location,
       true
-    )}, Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    )}, ${getCountry()} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
   } else {
-    seoMetaTitle = `Professional Jobs in Philippines - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
-    seoMetaDescription = `New Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    seoMetaTitle = `Professional Jobs in ${getCountry()} - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
+    seoMetaDescription = `New Jobs in ${getCountry()} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
   }
   const description = seoMetaDescription
   const imageUrl = 'https://assets.bossjob.com/website/OGTagImage.png'
