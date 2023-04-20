@@ -706,7 +706,7 @@ const Step3 = (props: any) => {
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
-                label='Monthly Salary (PHP)'
+                label='Monthly Salary'
                 size='small'
                 value={salary}
                 defaultValue={salary}
