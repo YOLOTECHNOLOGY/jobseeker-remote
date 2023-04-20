@@ -14,9 +14,10 @@ import classNames from 'classnames'
 
 /* Assets */
 import { TrashIcon, DocumentIcon } from 'images'
-import format from 'date-fns/format'
+// import format from 'date-fns/format'
 import { SnackbarTips } from './SnackbarTips'
-
+import moment from 'moment'
+moment.locale('en')
 type resumeObject = {
   name: string
   url: string
@@ -70,7 +71,7 @@ const UploadResume = ({
   deleteResumeLoading
 }: UploadResumeProps) => {
   const [isExceedLimit, setIsExceedLimit] = useState(false)
-
+  console.log({resumes})
   const handleOnFileChange = (e) => {
     const file = e.target.files[0]
     if (!maxFileSize(file, 5)) {
@@ -103,7 +104,7 @@ const UploadResume = ({
                         </Text>
                       </Link>
                       <div className={styles.resumeTime}>
-                        Uploaded On {format(new Date(item.updated_at), 'd MMMM yyyy')}
+                        Uploaded On {moment(item.updated_at).format('DD MMM yyyy')}
                       </div>
                     </div>
                   </div>
