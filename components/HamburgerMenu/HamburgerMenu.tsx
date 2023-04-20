@@ -15,7 +15,7 @@ import SwitchNation from 'components/SwitchNation/SwitchNation'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
-import { getCountry } from 'helpers/country'
+// import { getCountry } from 'helpers/country'
 // import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import styles from './HamburgerMenu.module.scss'
@@ -215,7 +215,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   </li>
                 </Link>
 
-                <li
+                {/* <li
                   className={styles.defaultLink}
                   onClick={() => {
                     setOpenSwitchNationModal(true)
@@ -227,7 +227,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                       {getCountry()}, English - <span style={{ color: '#136FD3' }}>Change</span>
                     </Text>
                   </div>
-                </li>
+                </li> */}
               </>
             )}
             {isAuthenticated && (
@@ -285,7 +285,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   </li>
                 </div>
 
-                <li
+                {/* <li
                   className={styles.defaultLink}
                   onClick={() => {
                     setOpenSwitchNationModal(true)
@@ -297,7 +297,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                       {getCountry()}, English - <span style={{ color: '#136FD3' }}>Change</span>
                     </Text>
                   </div>
-                </li>
+                </li> */}
               </>
             )}
           </React.Fragment>

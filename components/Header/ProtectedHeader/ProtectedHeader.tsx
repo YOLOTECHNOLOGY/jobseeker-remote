@@ -16,7 +16,7 @@ import { BossjobLogoWhite as BossjobLogo, DefaultAvatar } from 'images'
 
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
-import { getCountry } from 'helpers/country'
+// import { getCountry } from 'helpers/country'
 // import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 /* Style */
@@ -332,7 +332,7 @@ const ProtectedHeader = () => {
                   <Text textStyle='base'>I’m hiring</Text>
                 </Link>
               </li>
-              <li
+              {/* <li
                 className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}
                 onClick={() => {
                   setOpenSwitchNationModal(true)
@@ -344,7 +344,7 @@ const ProtectedHeader = () => {
                     {getCountry()}, English - <span style={{ color: '#136FD3' }}>Change</span>
                   </Text>
                 </div>
-              </li>
+              </li> */}
               <li className={styles.headerMenuItem}>
                 <div className={styles.headerMenuLink} onClick={() => handleLogOut()}>
                   <Text textStyle='base'>Log Out</Text>
