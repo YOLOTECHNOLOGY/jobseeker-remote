@@ -104,7 +104,7 @@ const PublicSitemap = () => {
   }, [])
 
   const generatePath = (param, label) => {
-    const pathUrl = `${process.env.NEW_PROJECT_URL}/jobs-hiring/${param}-jobs`
+    const pathUrl = `/jobs-hiring/${param}-jobs`
 
     return (
       <Link to={pathUrl} external className={styles.item} key={param}>
@@ -137,7 +137,7 @@ const PublicSitemap = () => {
           </Text>
           <div className={styles.section}>
             <Link
-              to={`${process.env.NEW_PROJECT_URL}/get-started`}
+              to={`/get-started`}
               aTag
               className={styles.item}
               external
@@ -145,7 +145,7 @@ const PublicSitemap = () => {
               <Text textStyle='base'>Register as a jobseeker</Text>
             </Link>
             <Link
-              to={`${process.env.NEW_PROJECT_URL}/get-started`}
+              to={`/get-started`}
               aTag
               className={styles.item}
               external
@@ -282,7 +282,7 @@ const PublicSitemap = () => {
             <Link
               className={styles.item}
               aTag
-              to={`${process.env.NEW_PROJECT_URL}/resumetemplate`}
+              to={`/resumetemplate`}
               title='Create Free Resume'
               external
             >
@@ -290,7 +290,7 @@ const PublicSitemap = () => {
             </Link>
             <Link
               className={styles.item}
-              to={`${process.env.NEW_PROJECT_URL}/jobs-hiring/job-search`}
+              to={`/jobs-hiring/job-search`}
               title='Jobs in Philippines'
               external
             >
@@ -298,7 +298,7 @@ const PublicSitemap = () => {
             </Link>
             <Link
               className={styles.item}
-              to={`${process.env.NEW_PROJECT_URL}/company/bossjob-1668`}
+              to={`/company/bossjob-1668`}
               title='About Bossjob'
               external
             >
