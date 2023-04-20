@@ -51,6 +51,7 @@ import MaterialButton from 'components/MaterialButton'
 import { handleNumericInput } from '../../helpers/handleInput'
 import JobFunctionSelector from 'components/JobFunctionSelector'
 import ReadMore from 'components/ReadMore'
+import { getCountry } from 'helpers/country'
 
 const Step3 = (props: any) => {
   const quickUpladResumeType = getItem('quickUpladResume')
@@ -483,7 +484,7 @@ const Step3 = (props: any) => {
                     +
                     ' | '
                     + (location?.value ? location?.value + ',' : '')
-                    + (experience?.country || 'Philippines')}
+                    + (experience?.country || getCountry())}
                 </Text>
 
                 <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
@@ -706,7 +707,7 @@ const Step3 = (props: any) => {
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
-                label='Monthly Salary (PHP)'
+                label='Monthly Salary'
                 size='small'
                 value={salary}
                 defaultValue={salary}

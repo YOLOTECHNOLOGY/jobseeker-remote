@@ -4,6 +4,7 @@ import { thousandsToNumber, unslugify } from 'helpers/formatter'
 import { checkFilterMatch as checkFilterMatchV2, userFilterSelectionDataParser as userFilterSelectionDataParserV2 } from './queryEncoder'
 /* Vendors */
 import moment from 'moment'
+import { getCountryKey } from './country'
 
 const handleSalary = (salaryRanges) => {
   let salaryFrom = ''
@@ -87,24 +88,24 @@ const SEOJobSearchMetaBuilder = (query, location, category, path) => {
   const year = today.getFullYear()
 
   if (query && !location && !category) {
-    title = `${query} Jobs in Philippines, Job Opportunities - ${month} ${year} | Bossjob`
-    description = `New ${query} Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    title = `${query} Jobs in ${getCountry()}, Job Opportunities - ${month} ${year} | Bossjob`
+    description = `New ${query} Jobs in ${getCountry()} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
   } else if (!query && location && !category) {
-    title = `Jobs in ${location}, Philippines, Job Opportunities -  ${month} ${year} | Bossjob`
-    description = `New Jobs in ${location}, Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    title = `Jobs in ${location}, ${getCountry()}, Job Opportunities -  ${month} ${year} | Bossjob`
+    description = `New Jobs in ${location}, ${getCountry()} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
   } else if (!query && !location && category) {
-    title = `${category} Jobs in Philippines, Job Opportunities - ${month} ${year} | Bossjob`
-    description = `New ${category} Jobs in Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    title = `${category} Jobs in ${getCountry()}, Job Opportunities - ${month} ${year} | Bossjob`
+    description = `New ${category} Jobs in ${getCountry()} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
   } else if (query && location) {
-    title = `${query} Jobs in ${location}, Philippines, Job Opportunities - ${month} ${year} | Bossjob`
-    description = `New ${query} Jobs in ${location}, Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    title = `${query} Jobs in ${location}, ${getCountry()}, Job Opportunities - ${month} ${year} | Bossjob`
+    description = `New ${query} Jobs in ${location}, ${getCountry()} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
   } else if (location && category) {
-    title = `${category} Jobs in ${location}, Philippines, Job Opportunities - ${month} ${year} | Bossjob`
-    description = `New ${category} Jobs in ${location}, Philippines available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    title = `${category} Jobs in ${location}, ${getCountry()}, Job Opportunities - ${month} ${year} | Bossjob`
+    description = `New ${category} Jobs in ${location}, ${getCountry()} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
   } else {
-    title = 'Job Hiring, Job Search & Job Openings in Philippines | Bossjob.ph'
+    title = `Job Hiring, Job Search & Job Openings in ${getCountry()} | Bossjob.${getCountryKey()}`
     description =
-      'Latest job hiring in Philippines. Search job openings & career opportunities with more than 3000 employers on Bossjob!'
+      `Latest job hiring in ${getCountry()}. Search job openings & career opportunities with more than 3000 employers on Bossjob!`
   }
 
   const data = {

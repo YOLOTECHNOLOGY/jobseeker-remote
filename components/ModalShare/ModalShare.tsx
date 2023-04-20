@@ -39,7 +39,7 @@ const ModalShare = ({
 
   const meInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
 
-  jobDetailUrl = `${process.env.NEW_PROJECT_URL}${jobDetailUrl}`
+  jobDetailUrl = `${process.env.NEXT_PUBLIC_HOST_PATH}${jobDetailUrl}`
 
   useEffect(() => {
     if (meInfo.id) {

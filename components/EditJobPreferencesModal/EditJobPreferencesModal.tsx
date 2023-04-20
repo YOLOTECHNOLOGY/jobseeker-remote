@@ -12,7 +12,7 @@ import MaterialLocationField from 'components/MaterialLocationField'
 /* Helpers */
 import { getCountryList, getJobTypeList, getSalaryOptions } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
-import { getCountryId, getCountryKey } from 'helpers/country'
+import { getCountryId, getCountryKey, countryForCurrency } from 'helpers/country'
 
 import { updateUserPreferencesRequest } from 'store/actions/users/updateUserPreferences'
 
@@ -67,7 +67,7 @@ const EditJobPreferencesModal = ({
       location: location,
       industry: preference?.industry_key,
       country: preference?.country_key,
-      currencyKey: preference?.currency_key ?? ''
+      currencyKey: preference?.currency_key ?? countryForCurrency[getCountryKey()]
     }
   }, [preference])
   const dispatch = useDispatch()
@@ -238,6 +238,7 @@ const EditJobPreferencesModal = ({
                   label='Currency type'
                   options={currencyLists}
                   required
+                  disabled
                   {...fieldState}
                   {...field}
                   value={value}

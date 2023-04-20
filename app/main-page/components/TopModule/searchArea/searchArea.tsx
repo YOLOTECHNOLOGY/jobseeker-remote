@@ -21,7 +21,6 @@ const transQs =(params:any) =>{
 }
 const SearchArea = (props: any) => {
     const { config } = props
-    console.log(config,'config111')
     const dispatch = useDispatch()
     const { location, setLocation } = useContext(LocationContext)
 

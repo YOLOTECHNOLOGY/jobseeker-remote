@@ -98,11 +98,7 @@ const ResetPassword = () => {
       ctaSignup
       isBackToLogin
     >
-      {/* <SEO
-        title='Reset Password - Bossjob'
-        description='Bossjob - Career Platform for Professionals in Philippines'
-        canonical='/reset-password'
-      /> */}
+     
       <div className={styles.ResetPasswordSubHeading}>
         <Text textStyle='xsm' tagName='p'>Please enter your registered email</Text>
         <Text textStyle='xsm' tagName='p'>A verification code will be sent to you shortly.</Text>

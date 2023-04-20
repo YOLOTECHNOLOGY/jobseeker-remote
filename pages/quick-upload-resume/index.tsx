@@ -11,6 +11,7 @@ import useRegister from 'hooks/useRegister'
 import useFakeUploadResume from 'hooks/useFakeUploadResume'
 
 import styles from './styles.module.scss'
+import { getCountry } from 'helpers/country'
 
 const QuickUploadResume = () => {
   const UseHooksRegister = useRegister()
@@ -109,7 +110,7 @@ export const getServerSideProps = () => {
     props: {
       seoMetaTitle: 'Sign Up | Bossjob',
       canonicalUrl: '/register/jobseeker',
-      seoMetaDescription: 'Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.',
+      seoMetaDescription: `Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ${getCountry()}. Network of 2 million+ professionals.`,
     }
   }
 }
