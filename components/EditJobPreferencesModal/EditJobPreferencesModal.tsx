@@ -12,6 +12,7 @@ import MaterialLocationField from 'components/MaterialLocationField'
 /* Helpers */
 import { getCountryList, getJobTypeList, getSalaryOptions } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
+import { getCountryId, getCountryKey } from 'helpers/country'
 
 import { updateUserPreferencesRequest } from 'store/actions/users/updateUserPreferences'
 
@@ -40,9 +41,7 @@ const EditJobPreferencesModal = ({
   handleModal,
   preference
 }: EditJobPreferencesModalProps) => {
-  const locationList = useSelector(
-    (store: any) => store.config.config.response?.location_lists
-  )
+  const locationList = useSelector((store: any) => store.config.config.response?.location_lists)
   const currencyLists = useSelector((store: any) =>
     (store.config.config.response?.currency_lists ?? []).map((item) => ({
       label: item.value,
@@ -110,8 +109,7 @@ const EditJobPreferencesModal = ({
   }
   const onSubmit = (data) => {
     // to add workSetting
-    const { jobTitle, jobType, minSalary, maxSalary, location, industry, country, currencyKey } =
-      data // jobType is a key
+    const { jobTitle, jobType, minSalary, maxSalary, location, industry, currencyKey } = data // jobType is a key
     const payload = {
       preferences: {
         action: preference?.id ? 'update' : 'create',
@@ -126,8 +124,9 @@ const EditJobPreferencesModal = ({
           salary_range_to: Number(maxSalary),
           industry_key: industry,
           currency_key: currencyKey,
-          currency_id: currencyLists.find(item => item.value === currencyKey)?.id ?? null,
-          country_key: location?.key === 'overseas' ? country : 'ph'
+          currency_id: currencyLists.find((item) => item.value === currencyKey)?.id ?? null,
+          country_key: getCountryKey(),
+          country_id: getCountryId()
         }
       }
     }
@@ -171,7 +170,7 @@ const EditJobPreferencesModal = ({
                   required
                   {...fieldState}
                   {...field}
-                // onChange={(value)=>setValue('jobTitle',value)}
+                  // onChange={(value)=>setValue('jobTitle',value)}
                 />
               )
             }}
