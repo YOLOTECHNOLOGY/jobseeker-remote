@@ -5,7 +5,7 @@ const Tracker = () => {
     useEffect(() => {
       const gtag = (window as any)?.gtag;
 
-      if (gtag) {
+      if (process.env.ENV === 'production' && gtag) {
         gtag('event', 'home_page_view')
       }
     }, [])
