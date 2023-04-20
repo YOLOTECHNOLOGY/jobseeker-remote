@@ -1,9 +1,10 @@
 
 import Main from './main-page/page'
 import styles from './index.module.scss'
+import { getCountry } from 'helpers/country'
 const defaultSEO = {
-    title: 'Bossjob - Career Platform for Professionals in Philippines',
-    description: 'Bossjob - Career Platform for Professionals in Philippines',
+    title: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
+    description: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
     imageUrl: 'https://assets.bossjob.com/website/OGTagImage.png',
     canonical: ''
 }

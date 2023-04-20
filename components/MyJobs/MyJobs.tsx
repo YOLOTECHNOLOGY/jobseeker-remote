@@ -324,10 +324,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
 
   return (
     <Layout>
-      {/* <SEO
-        title={`${titleCase(category)} Jobs - Career Platform for Professionals in Philippines`}
-        description={'Bossjob - Career Platform for Professionals in Philippines'}
-      /> */}
+      
       <div className={styles.myJobsMenuContent}>
         <div className={styles.container}>
           <ThemeProvider theme={theme}>
