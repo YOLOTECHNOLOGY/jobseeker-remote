@@ -10,6 +10,7 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 /* Styles */
 import styles from './PublicSitemap.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
+import { getCountry } from 'helpers/country'
 
 const PublicSitemap = () => {
   const [locationList, setLocationList] = useState([])
@@ -291,7 +292,7 @@ const PublicSitemap = () => {
             <Link
               className={styles.item}
               to={`/jobs-hiring/job-search`}
-              title='Jobs in Philippines'
+              title={`Jobs in ${getCountry()}`}
               external
             >
               <Text textStyle='base'>All jobs</Text>

@@ -6,9 +6,10 @@ import './globals.scss'
 import dynamic from 'next/dynamic'
 import HamburgerMenu from 'components/HamburgerMenu'
 import AutoShowModalAppRedirect from 'app/main-page/components/AutoShowModalAppRedirect'
+import { getCountry } from 'helpers/country'
 const defaultSEO = {
-  title: 'Bossjob - Career Platform for Professionals in Philippines',
-  description: 'Bossjob - Career Platform for Professionals in Philippines',
+  title: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
+  description: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
   imageUrl: 'https://assets.bossjob.com/website/OGTagImage.png',
   canonical: ''
 }
@@ -60,7 +61,7 @@ const defaultSEO = {
 const Providers = dynamic(() => import('./components/providers'), { ssr: true })
 const Initial = dynamic(() => import('./components/Initals'), { ssr: false })
 export default function RootLayout(props: any) {
-  console.log({ RootLayoutProps: props })
+  
   const { children }: React.PropsWithChildren = props
   const { title, imageUrl, description, canonical } = defaultSEO
   return (
@@ -86,7 +87,7 @@ export default function RootLayout(props: any) {
         <meta property='og:locale' content='en_PH' />
         <meta
           property='og:site_name'
-          content='Bossjob - Career Platform for Professionals in Philippines'
+          content={`Bossjob - Career Platform for Professionals in ${getCountry()}`}
         />
 
         {/* Schema.org markup for Google+ */}

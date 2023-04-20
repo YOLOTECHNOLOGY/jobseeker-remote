@@ -21,6 +21,7 @@ import { jobseekerTokenValidate } from 'store/services/auth/jobseekersTokenValid
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 import styles from './index.module.scss'
+import { getCountry } from 'helpers/country'
 
 const COUNT_DOWN_VERIFY_DEFAULT = 60
 
@@ -154,11 +155,7 @@ const GetStarted = () => {
 
   return (
     <Layout isHiddenFooter>
-      {/* <SEO
-        title='Get started | Bossjob'
-        description='Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.'
-        canonical='/get-started'
-      /> */}
+     
       <div className={classNames([styles.Container, step === 3 ? styles.ContainerMagic : ''])}>
         <div>
           <div className={styles.getStartedContainer}>
@@ -224,7 +221,7 @@ export const getServerSideProps = () => {
     props: {
       seoMetaTitle: 'Get started | Bossjob',
       seoMetaDescription:
-        'Join Bossjob to accelerate your professional career today! Access courses and job opportunities in Philippines. Network of 2 million+ professionals.',
+        `Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ${getCountry()}. Network of 2 million+ professionals.`,
       canonicalUrl: '/get-started'
     }
   }

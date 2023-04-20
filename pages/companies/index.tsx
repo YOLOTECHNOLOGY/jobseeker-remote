@@ -31,7 +31,7 @@ import BannerCarousel from 'components/BannerCarousel'
 
 // Assets
 import { BlueTickIcon } from 'images'
-import { getCountryKey } from 'helpers/country'
+import { getCountry, getCountryKey } from 'helpers/country'
 
 const COUNTRY_FULL_MAP = {
   'sg': 'Singapore',
@@ -94,11 +94,7 @@ const Companies = () => {
 
   return (
     <Layout>
-      {/* <SEO
-        title='Find Companies Hiring in Philippines | Bossjob'
-        description='Discover great companies to work for in Philippines! Learn more about the company and apply to job openings on Bossjob!'
-        canonical='/companies'
-      /> */}
+      
       <div className={styles.companies}>
         <div className={styles.searchCompany}>
           <Text
@@ -243,9 +239,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   await (store as any).sagaTask.toPromise()
   return {
     props: {
-      seoMetaTitle: 'Find Companies Hiring in Philippines | Bossjob',
+      seoMetaTitle: `Find Companies Hiring in ${getCountry()} | Bossjob`,
       seoMetaDescription:
-        'Discover great companies to work for in Philippines! Learn more about the company and apply to job openings on Bossjob!',
+        `Discover great companies to work for in ${getCountry()}! Learn more about the company and apply to job openings on Bossjob!`,
       canonicalUrl: '/companies'
     }
   }
