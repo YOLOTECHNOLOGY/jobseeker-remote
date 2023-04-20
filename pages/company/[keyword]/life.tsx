@@ -12,6 +12,7 @@ import CompanyProfileLayout from 'components/Company/CompanyProfileLayout'
 
 // Styles
 import styles from '../Company.module.scss'
+import { getCountry } from 'helpers/country'
 
 const CompanyLifeProfile = (props: any) => {
   const { companyDetail, seoMetaTitle, seoMetaDescription, totalActiveJobs } = props
@@ -122,7 +123,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `Culture & Life at ${companyName} | Bossjob`
-  const seoMetaDescription = encodeURI(`Discover company culture & life at ${companyName} in Philippines on Bossjob - Connecting pre-screened experienced professionals to employers`)
+  const seoMetaDescription = encodeURI(`Discover company culture & life at ${companyName} in ${getCountry()} on Bossjob - Connecting pre-screened experienced professionals to employers`)
   const additionalCanonicalText = '/life'
   const companyUrl = companyDetail.company_url
   const canonicalUrl = companyUrl + additionalCanonicalText

@@ -23,6 +23,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 // Styles
 import styles from './Companies.module.scss'
 import MetaText from '../../components/MetaText'
+import { getCountry } from 'helpers/country'
 
 interface SearchProps {
   defaultQuery: string
@@ -87,17 +88,13 @@ const Search = ({ defaultQuery }: SearchProps) => {
 
   return (
     <Layout>
-      {/* <SEO
-        title='Find Companies Hiring in Philippines | Bossjob'
-        description='Discover great companies to work for in Philippines! Learn more about the company and apply to job openings on Bossjob!'
-        canonical='/companies/search'
-      /> */}
+      
       <div className={styles.companies}>
         <div className={styles.searchCompany}>
           <Text textStyle='xxxl' tagName='h1' bold className={styles.searchCompanyTitle}>
             Search Companies
           </Text>
-          <MetaText tagName='h1'>Find great companies in Philippines</MetaText>
+          <MetaText tagName='h1'>Find great companies in {getCountry()}</MetaText>
           <SearchCompanyField defaultQuery={defaultQuery} onKeywordSearch={handleKeywordSearch} />
         </div>
         <div className={styles.searchCompanyQuery}>
@@ -133,8 +130,8 @@ export const getServerSideProps = wrapper.getServerSideProps(() => async ({ quer
   return {
     props: {
       defaultQuery: query.query || null,
-      seoMetaTitle:'Find Companies Hiring in Philippines | Bossjob',
-      seoMetaDescription:'Discover great companies to work for in Philippines! Learn more about the company and apply to job openings on Bossjob!',
+      seoMetaTitle:`Find Companies Hiring in ${getCountry()} | Bossjob`,
+      seoMetaDescription:`Discover great companies to work for in ${getCountry()}! Learn more about the company and apply to job openings on Bossjob!`,
       canonicalUrl:'/companies/search'
     },
   }

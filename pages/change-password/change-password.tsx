@@ -79,11 +79,7 @@ const ChangePassword = () => {
       ctaSignup
       isBackToLogin
     >
-      {/* <SEO
-        title='Change Password - Bossjob'
-        description='Bossjob - Career Platform for Professionals in Philippines'
-        canonical='/change-password'
-      /> */}
+      
       <div className={styles.ChangePasswordSubHeading}>
         <Text textStyle='xsm' tagName='p'>
           Thank you for verifying.

@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import { getCountry } from 'helpers/country'
 
 const getEmploymentType = (type) => {
   switch (type) {
@@ -119,7 +120,7 @@ const SEO = ({ title, description, imageUrl, canonical, jobDetail = null }: SEOP
       <meta property='og:locale' content='en_PH' />
       <meta
         property='og:site_name'
-        content='Bossjob - Career Platform for Professionals in Philippines'
+        content={`Bossjob - Career Platform for Professionals in ${getCountry()}`}
       />
 
       {/* Schema.org markup for Google+ */}
@@ -151,8 +152,8 @@ const SEO = ({ title, description, imageUrl, canonical, jobDetail = null }: SEOP
 }
 
 SEO.defaultProps = {
-  title: 'Bossjob - Career Platform for Professionals in Philippines',
-  description: 'Bossjob - Career Platform for Professionals in Philippines',
+  title: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
+  description: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
   imageUrl: 'https://assets.bossjob.com/website/OGTagImage.png',
   canonical: ''
 }
