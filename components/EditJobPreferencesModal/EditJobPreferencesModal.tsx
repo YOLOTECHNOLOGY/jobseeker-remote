@@ -353,7 +353,7 @@ const EditJobPreferencesModal = ({
       handleFirstButton={handleCloseModal}
       handleSecondButton={handleSubmit(onSubmit)}
       fullScreen
-      closeModalOnOutsideClick={false}
+      closeModalOnOutsideClick={true}
       className={styles.job_preferences_modal}
     >
       {modalJobPreferenceContent}
