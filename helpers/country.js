@@ -25,3 +25,8 @@ export const getCountry = () => {
   }
   // return (process.env.COUNTRY_KEY) || (process.env.HOST_PATH).split('.').pop()
 }
+
+export const  countryForCurrency = {
+  ph: 'php',
+  sg: "sgd"
+}
