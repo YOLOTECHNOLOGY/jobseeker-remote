@@ -66,6 +66,19 @@ const RegisterInfo = (props: any) => {
   }, [fileError])
 
   useEffect(() => {
+    window.addEventListener('keydown', handleOnKeyDownEnter)
+    return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
+  }, [sendOTPBtnDisabled, handleSendEmailTOP])
+
+  const handleOnKeyDownEnter = (e) => {
+    if (e.key === 'Enter' && e.keyCode === 13) {
+      if (!sendOTPBtnDisabled) {
+        handleSendEmailTOP()
+      }
+    }
+  }
+
+  useEffect(() => {
     setQuickUpladResume(getItem('quickUpladResume'))
   }, [])
 
@@ -102,7 +115,7 @@ const RegisterInfo = (props: any) => {
               </Text>
             )}
           </div>
-          <form className={styles.RegisterForm}>
+          <div className={styles.RegisterForm}>
             <div>
               <MaterialTextField
                 className={styles.RegisterFormInput}
@@ -140,7 +153,7 @@ const RegisterInfo = (props: any) => {
               <br />
               and Privacy Policy
             </Text>
-          </form>
+          </div>
         </div>
       )}
 
