@@ -67,7 +67,7 @@ const SearchArea = (props: any) => {
     const [moreData, setMoreData] = useState(filter(a => a)({
         workExperience: searchValues?.workExperience ?? null,
         qualification: searchValues?.qualification ?? null,
-        salaries: searchValues?.salary ?? null,
+        salary: searchValues?.salary ?? null,
         jobTypes: searchValues?.jobType ?? null,
         verifiedCompany: searchValues?.verifiedCompany ?? null,
         companySizes: searchValues?.companySizes ?? null,
@@ -87,7 +87,7 @@ const SearchArea = (props: any) => {
             ...jobFunctionValue,
             ...moreData
         })
-    }, [searchValue, industry, moreData, location, sort, jobFunctionValue,queryFields])
+    }, [searchValue, industry, moreData, location, sort, jobFunctionValue, queryFields])
     const result = useMemo(() => {
         return encode(filterParams)
     }, [filterParams])
@@ -104,15 +104,15 @@ const SearchArea = (props: any) => {
     useEffect(() => {
         reloadRef.current = reload
     }, [reload])
-    useEffect(reload, [location, industry, moreData, sort, jobFunctionValue,queryFields])
+    useEffect(reload, [location, industry, moreData, sort, jobFunctionValue, queryFields])
     const styleleSelect = {
-        display:'flex',
-        alignItems:'center',
+        display: 'flex',
+        alignItems: 'center',
         cursor: 'pointer'
-      }
-    
+    }
+
     const newTheme = cloneDeep(theme)
-    newTheme.components.MuiPaper.styleOverrides.root['height'] = 'calc(100% - 64px)'  
+    newTheme.components.MuiPaper.styleOverrides.root['height'] = 'calc(100% - 64px)'
 
     return <div>
         <ThemeProvider theme={newTheme}>
@@ -138,24 +138,24 @@ const SearchArea = (props: any) => {
                         value={searchValue}
                         maxLength={255}
                         renderOption={(props, option) => {
-                            const {type, is_history:isHistory,value ,logo_url:logoUrl} = option || {}
+                            const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
                             return (
                                 type === 'company' ?
-                                 <li {...props} style={styleleSelect}>
-                                     <Image src={logoUrl} alt={value} width='22' height='22'/>
-                                     <span style={{paddingLeft:'10px'}}>{value}</span>
-                                 </li> 
-                                 : isHistory ? (
-                                <li {...props} style={{...styleleSelect,color:'#136fd3'}}>
-                                    <AccessTimeIcon/>
-                                    <span style={{paddingLeft:'10px'}}>{value}</span>
-                                </li>
-                                ) : 
-                                 <li {...props} style={styleleSelect}> 
-                                   <SearchIcon/> 
-                                   <span style={{paddingLeft:'10px'}}>{value || option}</span>
-                                </li>
-                               
+                                    <li {...props} style={styleleSelect}>
+                                        <Image src={logoUrl} alt={value} width='22' height='22' />
+                                        <span style={{ paddingLeft: '10px' }}>{value}</span>
+                                    </li>
+                                    : isHistory ? (
+                                        <li {...props} style={{ ...styleleSelect, color: '#136fd3' }}>
+                                            <AccessTimeIcon />
+                                            <span style={{ paddingLeft: '10px' }}>{value}</span>
+                                        </li>
+                                    ) :
+                                        <li {...props} style={styleleSelect}>
+                                            <SearchIcon />
+                                            <span style={{ paddingLeft: '10px' }}>{value || option}</span>
+                                        </li>
+
                             )
                         }}
                         searchFn={handleSuggestionSearch as any}
@@ -180,11 +180,11 @@ const SearchArea = (props: any) => {
                             const newValue = value?.value || value || ''
                             setQueryFields(value?.type || '')
                             flushSync(() => {
-                               setSearchValue(newValue)
+                                setSearchValue(newValue)
                             })
                             addSearchHistory(newValue)
                             reloadRef.current()
-                          }}
+                        }}
                     />
                 </div>
                 <div className={styles.filters}>
