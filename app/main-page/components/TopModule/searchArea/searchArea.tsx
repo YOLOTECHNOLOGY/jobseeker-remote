@@ -2,7 +2,8 @@
 import React, { useEffect, useState, useTransition, useCallback, useContext } from 'react'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
-import styles from './index.module.scss'
+import styles from 'app/index.module.scss'
+
 import MaterialButton from 'components/MaterialButton'
 import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'

@@ -1,7 +1,8 @@
 'use client'
 import React, { useContext, useMemo } from 'react'
 import Link from 'next/link'
-import styles from './index.module.scss'
+import styles from 'app/index.module.scss'
+
 import { LocationContext } from 'app/components/providers/locationProvier'
 import { buildQuery } from 'app/main-page/helper'
 
@@ -18,7 +19,7 @@ const PopularJob = () => {
     const querys = useMemo(() => {
         return tags.map(tag => buildQuery(location?.value, tag))
     }, [location, tags])
-    return <div className={styles.container}>
+    return <div className={styles.popularJobs}>
         <label>Popular Jobs</label>
         <div className={styles.tagContainer}>{tags.map((tag, index) => (
             <div key={tag} className={styles.tag}>

@@ -9,12 +9,7 @@ import AutoShowModalAppRedirect from 'app/main-page/components/AutoShowModalAppR
 import { getCountry } from 'helpers/country'
 import './index.module.scss'
 import 'app/main-page/popularJobs.module.scss'
-import 'app/main-page/components/TopModule/popularJobs/index.module.scss'
-import 'app/main-page/components/TopModule/searchArea/index.module.scss'
-import 'app/main-page/components/Ad/Ad.module.scss'
 import 'app/main-page/components/main/index.module.scss'
-import 'app/main-page/components/mobileComponents/index.module.scss'
-import 'app/main-page/components/TopModule/functionFilter/index.module.scss'
 import 'app/main-page/components/company.module.scss'
 
 const defaultSEO = {

@@ -3,7 +3,7 @@ import React, { Attributes, FunctionComponent, useState, useEffect, useContext }
 import { HoverableProps, hoverable } from 'components/highLevel/hoverable'
 import { usePageGrouped } from './hooks'
 import { LocationContext } from 'app/components/providers/locationProvier'
-import styles from './index.module.scss'
+import styles from 'app/index.module.scss'
 import { buildQuery } from 'app/main-page/helper'
 import Link from 'next/link'
 import classNames from 'classnames'
@@ -122,7 +122,7 @@ const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props:
             setHoverTitle('')
         }
     }, [isHover, hoverData])
-    return <div className={styles.container}{...rest}>
+    return <div className={styles.functionFilter}{...rest}>
         <div className={styles.mainItems} >{pageDatas.map((main, index) => (
             <MainItem
                 key={main.title}

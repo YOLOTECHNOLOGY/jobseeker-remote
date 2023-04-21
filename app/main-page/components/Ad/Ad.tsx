@@ -2,7 +2,7 @@
 
 import AdSlot from 'app/components/AdSlot/index'
 
-import styles from './Ad.module.scss'
+import styles from '../../../index.module.scss'
 
 const Ad = ({children}:any) => {
   return (
