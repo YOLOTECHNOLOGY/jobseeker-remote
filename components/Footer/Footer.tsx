@@ -71,7 +71,8 @@ const CountryList = () => {
                 className={styles.footerLink}
                 to={country.to}
                 title={country.title}
-                external
+                external={false}
+                aTag={false}
               >
                 <Text textStyle='sm'>{country.title}</Text>
               </Link>
@@ -116,7 +117,8 @@ const Footer = () => {
                   <Link
                     className={styles.footerLink}
                     to={`/company/bossjob-1668`}
-                    external
+                    external={false}
+                    aTag={false}
                     title='About Bossjob'
                   >
                     <Text textStyle='sm'>About Bossjob</Text>
@@ -262,7 +264,8 @@ const Footer = () => {
                     className={styles.footerLink}
                     to={`/jobs-hiring/information-technology-jobs?page=1`}
                     title='IT jobs'
-                    external
+                    external={false}
+                    aTag={false}
                   >
                     <Text textStyle='sm'>IT jobs</Text>
                   </Link>
@@ -272,7 +275,8 @@ const Footer = () => {
                     className={styles.footerLink}
                     to={`/jobs-hiring/finance-accounting-jobs`}
                     title='Finance Jobs'
-                    external
+                    external={false}
+                    aTag={false}
                   >
                     <Text textStyle='sm'>Finance jobs</Text>
                   </Link>
@@ -282,7 +286,8 @@ const Footer = () => {
                     className={styles.footerLink}
                     to={`/jobs-hiring/customer-service-jobs`}
                     title='Customer Service jobs'
-                    external
+                    external={false}
+                    aTag={false}
                   >
                     <Text textStyle='sm'>Customer Service jobs</Text>
                   </Link>
@@ -292,7 +297,8 @@ const Footer = () => {
                     className={styles.footerLink}
                     to={`/jobs-hiring/bpo-jobs`}
                     title='BPO jobs'
-                    external
+                    external={false}
+                    aTag={false}
                   >
                     <Text textStyle='sm'>BPO jobs</Text>
                   </Link>
@@ -302,7 +308,8 @@ const Footer = () => {
                     className={styles.footerLink}
                     to={`/jobs-hiring/sales-marketing-jobs`}
                     title='Sales jobs'
-                    external
+                    external={false}
+                    aTag={false}
                   >
                     <Text textStyle='sm'>Sales jobs</Text>
                   </Link>
@@ -312,7 +319,8 @@ const Footer = () => {
                     className={styles.footerLink}
                     to={`/jobs-hiring/healthcare-medical-jobs`}
                     title='Healthcare jobs'
-                    external
+                    external={false}
+                    aTag={false}
                   >
                     <Text textStyle='sm'>Healthcare jobs</Text>
                   </Link>
@@ -437,7 +445,8 @@ const Footer = () => {
                       className={styles.footerLink}
                       to={`/company/bossjob-1668`}
                       title='About Bossjob'
-                      external
+                      aTag={false}
+                      external={false}
                     >
                       <Text textStyle='sm'>About Bossjob</Text>
                     </Link>
@@ -567,7 +576,8 @@ const Footer = () => {
                       className={styles.footerLink}
                       to={`/jobs-hiring/information-technology-jobs?page=1`}
                       title='IT jobs'
-                      external
+                      external={false}
+                      aTag={false}
                     >
                       <Text textStyle='sm'>IT jobs</Text>
                     </Link>
@@ -577,7 +587,8 @@ const Footer = () => {
                       className={styles.footerLink}
                       to={`/jobs-hiring/finance-audit-tax-jobs?page=1`}
                       title='Finance jobs'
-                      external
+                      external={false}
+                      aTag={false}
                     >
                       <Text textStyle='sm'>Finance jobs</Text>
                     </Link>
@@ -587,7 +598,8 @@ const Footer = () => {
                       className={styles.footerLink}
                       to={`/jobs-hiring/customer-service-operations-jobs?page=1`}
                       title='Customer Service jobs'
-                      external
+                      external={false}
+                      aTag={false}
                     >
                       <Text textStyle='sm'>Customer Service jobs</Text>
                     </Link>
@@ -597,7 +609,8 @@ const Footer = () => {
                       className={styles.footerLink}
                       to={`/jobs-hiring/bpo-jobs`}
                       title='BPO jobs'
-                      external
+                      external={false}
+                      aTag={false}
                     >
                       <Text textStyle='sm'>BPO jobs</Text>
                     </Link>
@@ -607,7 +620,8 @@ const Footer = () => {
                       className={styles.footerLink}
                       to={`/jobs-hiring/sales-jobs?page=1`}
                       title='Sales jobs'
-                      external
+                      external={false}
+                      aTag={false}
                     >
                       <Text textStyle='sm'>Sales jobs</Text>
                     </Link>
@@ -617,7 +631,8 @@ const Footer = () => {
                       className={styles.footerLink}
                       to={`/jobs-hiring/healthcare-medical-jobs?page=1`}
                       title='Healthcare jobs'
-                      external
+                      external={false}
+                      aTag={false}
                     >
                       <Text textStyle='sm'>Healthcare jobs</Text>
                     </Link>
