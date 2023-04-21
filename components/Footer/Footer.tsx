@@ -29,29 +29,29 @@ const scrollToBottom = () => document.body.scrollIntoView({ behavior: 'smooth', 
 const COUNTRY_MAP = {
   'ph': [
     {
-      to: `${process.env.NEXT_PUBLIC_HOST_PATH}/jobs-hiring/manila-jobs`,
+      to: `/jobs-hiring/manila-jobs`,
       title: 'Jobs in Manila',
     },
     {
-      to: `${process.env.NEXT_PUBLIC_HOST_PATH}/jobs-hiring/makati-jobs`,
+      to: `/jobs-hiring/makati-jobs`,
       title: 'Jobs in Makati'
     },
     {
-      to: `${process.env.NEXT_PUBLIC_HOST_PATH}/jobs-hiring/cebu-city-jobs`,
+      to: `/jobs-hiring/cebu-city-jobs`,
       title: 'Jobs in Cebu'
     }
   ],
   'sg': [
     {
-      to: `${process.env.NEXT_PUBLIC_HOST_PATH}/jobs-hiring/downtown-core-jobs`,
+      to: `/jobs-hiring/downtown-core-jobs`,
       title: 'Jobs in Downtown Core',
     },
     {
-      to: `${process.env.NEXT_PUBLIC_HOST_PATH}/jobs-hiring/kallang-jobs`,
+      to: `/jobs-hiring/kallang-jobs`,
       title: 'Jobs in Kallang'
     },
     {
-      to: `${process.env.NEXT_PUBLIC_HOST_PATH}/jobs-hiring/jurong-east-jobs`,
+      to: `/jobs-hiring/jurong-east-jobs`,
       title: 'Jobs in Jurong East'
     }
   ]
