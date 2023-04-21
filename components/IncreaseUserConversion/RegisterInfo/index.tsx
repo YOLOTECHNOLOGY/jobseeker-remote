@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
@@ -46,10 +48,23 @@ const RegisterInfo = (props: any) => {
     emailOTPInputDisabled,
     emailTOPError,
     socialAUTHLoginCallBack,
-    hideSocialMediaAuth
+    hideSocialMediaAuth,
+    setSnackbarState
   } = props
 
+  // upFileError
+  const fileError = useSelector((store: any) => store.users.uploadUserResume.error)
+
   const [quickUpladResume, setQuickUpladResume] = useState(getItem('quickUpladResume'))
+  const [snackbarContext, setSnackbarContext] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (fileError?.message) {
+      setSnackbarContext(fileError.message)
+      setSnackbarState({ vertical: 'top', horizontal: 'center', open: true })
+    }
+  }, [fileError])
+
   useEffect(() => {
     setQuickUpladResume(getItem('quickUpladResume'))
   }, [])
@@ -151,7 +166,7 @@ const RegisterInfo = (props: any) => {
 
       <Snackbar anchorOrigin={{ vertical, horizontal }} open={open} key={vertical + horizontal}>
         <Alert onClose={handleSnackbarClose} severity='error' sx={{ width: '100%' }}>
-          Resume not uploaded
+          {snackbarContext ? snackbarContext : 'Resume not uploaded'}
         </Alert>
       </Snackbar>
     </div>
