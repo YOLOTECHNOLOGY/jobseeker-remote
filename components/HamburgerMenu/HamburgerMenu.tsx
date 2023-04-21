@@ -170,21 +170,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
             </Link>
             {!isAuthenticated && (
               <>
-                {/* <Link
-                  className={styles.defaultLink}
-                  title='Virtual Career Fair'
-                  to={process.env.VCF_CLIENT_URL}
-                  aTag
-                >
-                  <li
-                    className={styles.menuList}
-                    onClick={handleClick}
-                    style={{ display: 'flex', alignItems: 'center' }}
-                  >
-                    <Text textStyle='xl'>Virtual Career Fair</Text>
-                    <span className={styles.hotTag}>Hot!</span>
-                  </li>
-                </Link> */}
+                
                 <Link
                   className={styles.defaultLink}
                   to='https://blog.bossjob.ph/'

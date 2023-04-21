@@ -31,7 +31,7 @@ const Link = ({
   let to = propTo
   if (external || aTag) {
     // check if https is appended before the url
-    if (to !== '' && to !== null && !/^(f|ht)tps?:\/\//i.test(to)) {
+    if (to !== '' && to !== null && !/^(f|ht)tps?:\/\//i.test(to) && /^bossjob./i.test(to)) {
       to = 'https://' + to
     }
     // return (
@@ -47,7 +47,7 @@ const Link = ({
     //   </a>
     // )
   }
-  
+
   return (
     <NextLink
       href={to}
