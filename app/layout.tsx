@@ -11,6 +11,12 @@ import './index.module.scss'
 import 'app/main-page/popularJobs.module.scss'
 import 'app/main-page/components/TopModule/popularJobs/index.module.scss'
 import 'app/main-page/components/TopModule/searchArea/index.module.scss'
+import 'app/main-page/components/Ad/Ad.module.scss'
+import 'app/main-page/components/main/index.module.scss'
+import 'app/main-page/components/mobileComponents/index.module.scss'
+import 'app/main-page/components/TopModule/functionFilter/index.module.scss'
+import  'app/main-page/components/company.module.scss'
+
 const defaultSEO = {
   title: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
   description: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
