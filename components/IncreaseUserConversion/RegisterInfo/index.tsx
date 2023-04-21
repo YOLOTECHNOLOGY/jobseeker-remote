@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
@@ -46,10 +48,36 @@ const RegisterInfo = (props: any) => {
     emailOTPInputDisabled,
     emailTOPError,
     socialAUTHLoginCallBack,
-    hideSocialMediaAuth
+    hideSocialMediaAuth,
+    setSnackbarState
   } = props
 
+  // upFileError
+  const fileError = useSelector((store: any) => store.users.uploadUserResume.error)
+
   const [quickUpladResume, setQuickUpladResume] = useState(getItem('quickUpladResume'))
+  const [snackbarContext, setSnackbarContext] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (fileError?.message) {
+      setSnackbarContext(fileError.message)
+      setSnackbarState({ vertical: 'top', horizontal: 'center', open: true })
+    }
+  }, [fileError])
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleOnKeyDownEnter)
+    return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
+  }, [sendOTPBtnDisabled, handleSendEmailTOP])
+
+  const handleOnKeyDownEnter = (e) => {
+    if (e.key === 'Enter' && e.keyCode === 13) {
+      if (!sendOTPBtnDisabled) {
+        handleSendEmailTOP()
+      }
+    }
+  }
+
   useEffect(() => {
     setQuickUpladResume(getItem('quickUpladResume'))
   }, [])
@@ -87,7 +115,7 @@ const RegisterInfo = (props: any) => {
               </Text>
             )}
           </div>
-          <form className={styles.RegisterForm}>
+          <div className={styles.RegisterForm}>
             <div>
               <MaterialTextField
                 className={styles.RegisterFormInput}
@@ -125,7 +153,7 @@ const RegisterInfo = (props: any) => {
               <br />
               and Privacy Policy
             </Text>
-          </form>
+          </div>
         </div>
       )}
 
@@ -151,7 +179,7 @@ const RegisterInfo = (props: any) => {
 
       <Snackbar anchorOrigin={{ vertical, horizontal }} open={open} key={vertical + horizontal}>
         <Alert onClose={handleSnackbarClose} severity='error' sx={{ width: '100%' }}>
-          Resume not uploaded
+          {snackbarContext ? snackbarContext : 'Resume not uploaded'}
         </Alert>
       </Snackbar>
     </div>
