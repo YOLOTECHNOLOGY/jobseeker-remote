@@ -471,7 +471,7 @@ const JobFunctionMultiSelector = (props: any) => {
                 [styles.hide]: !activeFirst && !firstRender
               })}
             >
-              <Header title='Job Function' onClose={onClose}></Header>
+              <Header title='Job Function' onClose={animtionClose}></Header>
 
               <div className={styles.columnMain} style={{ height: height - 56 - 76 - 10 }}>
                 {formattedJobfunctions.map((first) => {
