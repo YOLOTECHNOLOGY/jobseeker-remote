@@ -29,11 +29,9 @@ const Link = ({
   ...rest
 }: LinkProps) => {
   let to = propTo
-  console.log(external,aTag, to)
   if (external || aTag) {
     // check if https is appended before the url
     if (to !== '' && to !== null && !/^(f|ht)tps?:\/\//i.test(to)) {
-      console.log(to,111111)
       to = 'https://' + to
     }
     // return (
