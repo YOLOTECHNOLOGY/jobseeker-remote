@@ -134,7 +134,7 @@ export const formatSalaryRange = (salaryRange, currencyTag) => {
     const salArr = salaryRange.split('-')
     salArr.map(
       (val, i) =>
-        (salArr[i] = `${currencyTag || '₱'}${Math.floor(val.trim() / 1000)}${formatDecimalSalary(val.trim())}`)
+        (salArr[i] = `${currencyTag || '₱'}${val.trim() / 1000}${formatDecimalSalary(val.trim())}`)
     )
     return salArr.join(' - ')
   }

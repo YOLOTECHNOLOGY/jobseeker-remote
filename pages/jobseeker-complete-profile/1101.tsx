@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo,useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -116,7 +116,7 @@ const Step3 = (props: any) => {
   const [isUpdating, setIsUpdating] = useState(false)
   const [selectedExperience, setSelectedExperience] = useState(null)
   const [showErrorToComplete, setShowErrorToComplete] = useState(false)
-
+  const deleteLoadingRef = useRef(false);
   // increase user conversion quick upload resume
   const [isQuickUpladResume] = useState(
     quickUpladResumeType && quickUpladResumeType === 'onLine' && !accessToken
@@ -171,6 +171,7 @@ const Step3 = (props: any) => {
       }
       setIsUpdating(false)
     }
+    deleteLoadingRef.current = false;
   }, [userWorkExperiences])
 
   useEffect(() => {
@@ -325,6 +326,8 @@ const Step3 = (props: any) => {
   }
 
   const handleDeleteExperience = (id, index?) => {
+    if(deleteLoadingRef.current) return
+    deleteLoadingRef.current = true
     const deletePayload = {
       accessToken,
       workExperienceId: id,
