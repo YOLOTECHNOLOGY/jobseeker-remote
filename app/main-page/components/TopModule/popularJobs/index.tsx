@@ -19,7 +19,7 @@ const PopularJob = () => {
         return tags.map(tag => buildQuery(location?.value, tag))
     }, [location, tags])
     return <div className={styles.container}>
-        <label>Popular jobs</label>
+        <label>Popular Jobs</label>
         <div className={styles.tagContainer}>{tags.map((tag, index) => (
             <div key={tag} className={styles.tag}>
                 <Link prefetch={false} href={querys[index]}>{tag}</Link>

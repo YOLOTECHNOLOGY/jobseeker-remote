@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect ,useRef} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import classNames from 'classnames/bind'
@@ -92,7 +92,7 @@ const Step4 = (props: any) => {
   const [showErrorToComplete, setShowErrorToComplete] = useState(false)
   const [selectedEducation, setSelectedEducation] = useState(null)
   const [missingFields, setMissingFields] = useState<Array<string>>([])
-
+  const deleteLoadingRef = useRef(false);
   const userEducations = useSelector((store: any) => store.users.fetchUserEducation.response)
   const isUpdatingUserProfile = useSelector(
     (store: any) => store.users.updateUserOnboardingInfo.fetching
@@ -155,6 +155,7 @@ const Step4 = (props: any) => {
         }
       }
     }
+    deleteLoadingRef.current = false;
   }, [userEducations])
 
   useEffect(() => {
@@ -333,6 +334,8 @@ const Step4 = (props: any) => {
   }
 
   const handleDeleteEducation = (id) => {
+    if(deleteLoadingRef.current) return
+    deleteLoadingRef.current = true;
     const deletePayload = {
       accessToken,
       educationId: id,

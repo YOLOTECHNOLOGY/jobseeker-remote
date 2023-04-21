@@ -5,6 +5,7 @@ const fetchJobsForYouLogin = (payload, accessToken = null) => {
   const endpointType = accessToken ? 'protected' : 'public'
   const axios = configuredAxios('job', endpointType, false, accessToken)
   // return axios.get(`/job-preferences/${jobseekerPrefId}/reco-jobs`, { params: rest })
+  delete payload?.jobseekerPrefId
   return axios.get(`/reco`, { params: {...payload,job_preference_id: jobseekerPrefId}})
 }
 

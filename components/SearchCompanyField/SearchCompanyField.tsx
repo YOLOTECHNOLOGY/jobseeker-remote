@@ -30,7 +30,7 @@ const SearchCompanyField = ({
   }, [searchValue])
 
   const handleSuggestionSearch = (val) => {
-    fetch(`${process.env.COMPANY_URL}/suggested-search?size=5&query=${val}`)
+    fetch(`${process.env.COMPANY_URL}/search-suggestion?size=5&query=${val}`)
       .then((resp) => resp.json())
       .then((data) => setSuggestionList(data.data.items))
   }
