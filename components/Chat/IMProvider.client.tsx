@@ -1,5 +1,6 @@
 'use client'
 import React, { createContext, useEffect, useMemo, useRef, useState, useCallback } from 'react'
+
 import 'imforbossjob/dist/style.css'
 import SendResumeModal from 'components/Chat/sendResume'
 import { useDispatch, useSelector } from 'react-redux'
@@ -399,9 +400,7 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
     const imStatus = hooks.useInitChat(interpreter, imState, chatId, filterMode, chatList, updateChatList)
     useEffect(() => {
         const receive = e => {
-
             const data = e.detail?.data ?? {}
-            console.log({ data, receive: e })
             if (data?.landing_page === 'Offer dialog') {
                 console.log('receiveImNotification', e.detail)
                 interpreter(getDataAndShowOfferMessageScript(data.application_id, data.offer_id))
