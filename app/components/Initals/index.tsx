@@ -65,6 +65,8 @@ const Initial = () => {
   const firstRender = useFirstRender()
   const searchParams = useSearchParams()
 
+  const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
+
   useEffect(() => {
     if (firstRender) {
       runInClient(searchParams)
@@ -116,7 +118,7 @@ const Initial = () => {
           `
       }}
     />
-    
+
     {/* Google Tag Manager (gtm)  https://tagmanager.google.com */}
     <Script
       dangerouslySetInnerHTML={{
@@ -125,7 +127,7 @@ const Initial = () => {
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-KSGSQDR')
+        })(window,document,'script','dataLayer', ${gtmID})
         `
       }}
     />
