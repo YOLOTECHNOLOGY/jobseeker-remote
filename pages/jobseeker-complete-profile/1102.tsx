@@ -135,7 +135,7 @@ const Step4 = (props: any) => {
         const requireFields =
           !experience.school ||
           // !experience.degree ||
-          !experience.location ||
+          // !experience.location ||
           !experience.study_period_from ||
           !degreeList.filter((degree) => degree.value === experience.degree_key)[0]?.value
 
@@ -228,6 +228,9 @@ const Step4 = (props: any) => {
   const setDisabledButton = (value) => {
     setIsSaveDisabled(!value)
     setIsNextDisabled(!value)
+    if(userEducations?.length >=1){
+      setIsNextDisabled(false)
+    }
   }
 
   const scrollToForm = () => {
@@ -311,7 +314,7 @@ const Step4 = (props: any) => {
       study_period_to: isCurrentStudying
         ? null
         : moment(new Date(studyPeriodTo)).format('yyyy-MM-DD'),
-      location_key: location?.key || '',
+     // location_key: location?.key || '',
       field_of_study: fieldStudy,
       degree_key: degree
     }
