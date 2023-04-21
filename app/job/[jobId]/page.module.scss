@@ -199,7 +199,12 @@
 
       &_context {
         margin-top: 16px;
-        padding-left: 12px;
+        overflow: hidden;
+
+        ul,ol {
+          margin-left: 14px;
+        }
+
       }
 
       &_requirement {
