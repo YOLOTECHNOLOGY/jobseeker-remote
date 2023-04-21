@@ -77,7 +77,7 @@ const Search = ({ defaultQuery }: SearchProps) => {
 
   const handleKeywordSearch = (keyword) => {
     const words = keyword.trim()
-    router.push(`/companies/search?query=${words}&size=30&page=1`)
+    router.push(`/companies/search?query=${words}&size=15&page=1`)
   }
 
   const handlePaginationClick = (_, newPage) => {

@@ -116,7 +116,7 @@ const SearchArea = (props: any) => {
         />
         <MaterialTextFieldWithSuggestionList
             id='search'
-            label='job title or company'
+            label='Job title or company'
             variant='outlined'
             size='small'
             className={styles.search}

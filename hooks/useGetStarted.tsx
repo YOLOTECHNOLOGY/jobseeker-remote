@@ -5,12 +5,16 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 // api
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { authenticationSendEmailMagicLink } from 'store/services/auth/authenticationSendEmailMagicLink'
+import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
 
+import { getCountryKey } from 'helpers/country'
+
 import router, { useRouter } from 'next/router'
+import { getCookie } from 'helpers/cookies'
 
 const useGetStarted = () => {
   const routes = useRouter()
@@ -93,7 +97,22 @@ const useGetStarted = () => {
     dispatch(jobbseekersLoginRequest(data))
   }
 
-  const defaultLoginCallBack = (data: any) => {
+  // Begin
+  // 切换国家 零时加的测试接口用于清除后端缓存。之后可以delete
+  const removeServiceCache = async () => {
+    const token = getCookie('accessToken')
+    const currentCountry = getCountryKey()
+    if (token) {
+      await fetchUserSetting({ country_id: currentCountry === 'ph' ? 167 : 193 }, token)
+        .then((response) => console.log(response))
+        .catch(({ response, request }) => console.log(response, request))
+    }
+  }
+  // End
+
+  const defaultLoginCallBack = async (data: any) => {
+    await removeServiceCache()
+
     const isChatRedirect = localStorage.getItem('isChatRedirect')
     if (data.is_profile_update_required || !data.is_profile_completed) {
       routes.push('/jobseeker-complete-profile/1')
