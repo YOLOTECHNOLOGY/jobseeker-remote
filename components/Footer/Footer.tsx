@@ -71,7 +71,8 @@ const CountryList = () => {
                 className={styles.footerLink}
                 to={country.to}
                 title={country.title}
-                external
+                external={false}
+                aTag={false}
               >
                 <Text textStyle='sm'>{country.title}</Text>
               </Link>
@@ -116,7 +117,8 @@ const Footer = () => {
                   <Link
                     className={styles.footerLink}
                     to={`/company/bossjob-1668`}
-                    external
+                    external={false}
+                    aTag={false}
                     title='About Bossjob'
                   >
                     <Text textStyle='sm'>About Bossjob</Text>
@@ -437,7 +439,8 @@ const Footer = () => {
                       className={styles.footerLink}
                       to={`/company/bossjob-1668`}
                       title='About Bossjob'
-                      external
+                      aTag={false}
+                      external={false}
                     >
                       <Text textStyle='sm'>About Bossjob</Text>
                     </Link>
