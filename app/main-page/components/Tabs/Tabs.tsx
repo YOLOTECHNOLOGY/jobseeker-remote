@@ -238,7 +238,7 @@ const Tabs = ({ location }: any) => {
 
   return (
     <div>
-      <h2 className={styles.title}>{accessToken ? 'Jobs for You' : 'Popular Jobs'}</h2>
+      <h2 className={styles.jobTitle}>{accessToken ? 'Jobs for You' : 'Popular Jobs'}</h2>
       <div className={styles.webTab}>
         <Box sx={{ maxWidth: '100%', bgcolor: 'background.paper' }}>
           <TabContext value='1'>
