@@ -12,7 +12,7 @@ const Step2 = () => {
   const redirect = router.query?.redirect
     ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1101'
-  
+
   const [resume, setResume] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [isCreatingResume, setIsCreatingResume] = useState(false)
@@ -22,8 +22,8 @@ const Step2 = () => {
   const uploadUserResumeState = useSelector((store: any) => store.users.uploadUserResume)
 
   useEffect(() => {
-    if (uploadUserResumeState.error?.errors?.file[0]) {
-      setErrorMessage(uploadUserResumeState.error.errors.file[0])
+    if (uploadUserResumeState.error?.message) {
+      setErrorMessage(uploadUserResumeState.error.message)
     }
   }, [uploadUserResumeState])
 

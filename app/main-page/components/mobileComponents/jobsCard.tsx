@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState, useRef } from 'react'
-import styles from './index.module.scss'
+import styles from 'app/index.module.scss'
 import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou'
 import {
   fetchJobsForYouLogin,

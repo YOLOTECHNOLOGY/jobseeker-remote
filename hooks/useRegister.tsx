@@ -34,7 +34,8 @@ const useRegister = () => {
     isLoading,
     uploadResumeFile,
     isShowRegisterInfo,
-    userWorkExperiences
+    userWorkExperiences,
+    setSnackbarState
   } = useRegisterInfo()
 
   const {
@@ -202,7 +203,7 @@ const useRegister = () => {
       social_user_token: payload.accessToken,
       social_type: payload.socialType,
       social_user_id: payload.userId,
-      source:  'web'
+      source: 'web'
     }
     if (payload.pictureUrl) {
       data.avatar = payload.pictureUrl
@@ -237,7 +238,8 @@ const useRegister = () => {
     emailTOP,
     setEmailTOP,
     emailOTPInputDisabled,
-    emailTOPError
+    emailTOPError,
+    setSnackbarState
   }
 }
 

@@ -3,7 +3,7 @@ import { memo } from 'react'
 import Link from 'next/link'
 // import Avatar from '@mui/material/Avatar'
 import { HomePageChat } from 'images'
-import styles from '../../popularJobs.module.scss'
+import styles from 'app/index.module.scss'
 import Image from 'next/image'
 const JobDetail = ({ detail }: any) => {
   return (
