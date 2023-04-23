@@ -620,6 +620,7 @@
                     }
 
                     .labelContainer {
+                        flex: 1;
                         .name {
                             --color: #353535;
                             font-family: "Product Sans";
@@ -631,6 +632,13 @@
                             letter-spacing: 0.02em;
                             color: var(--color);
                             transition: color 0.3s;
+
+                            text-overflow: ellipsis;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            word-break: break-all;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
 
                             &:hover {
                                 --color: #136fd3;
