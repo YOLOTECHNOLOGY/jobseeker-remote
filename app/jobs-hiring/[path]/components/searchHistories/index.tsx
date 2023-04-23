@@ -1,6 +1,6 @@
 import { buildQuery } from 'app/main-page/helper'
 import React from 'react'
-import styles from './index.module.scss'
+import styles from '../../index.module.scss'
 import Link from 'next/link'
 const SearchHistories = (props: any) => {
     const { list = [], location } = props
@@ -10,7 +10,7 @@ const SearchHistories = (props: any) => {
     if (list.length > 10) {
         list.length = 10
     }
-    return <div className={styles.container}>
+    return <div className={styles.histories}>
         <div className={styles.title}>Related Search</div>
         {list.map(item => {
             return <Link

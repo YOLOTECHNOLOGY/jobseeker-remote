@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 'use client'
 import React, { useState, useCallback, useMemo, useEffect } from 'react'
-import styles from './index.module.scss'
+import styles from '../../index.module.scss'
 import MobileCard from '../jobCard/index.mobile'
 import LoadMore from '../loadMore'
 import { lensProp, set } from 'ramda'

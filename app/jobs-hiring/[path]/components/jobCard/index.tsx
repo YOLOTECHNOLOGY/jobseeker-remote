@@ -17,7 +17,7 @@ import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 import { CircularProgress } from 'app/components/MUIs'
 import { addJobViewService } from 'store/services/jobs/addJobView'
 
-import styles from './index.module.scss'
+import styles from '../../index.module.scss'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -163,7 +163,7 @@ const JobCard = (props: any) => {
     setSourceCookie('job_search')
   }, [])
   return (
-    <div className={styles.main}>
+    <div className={styles.jobCard}>
       {is_urgent ? (
         <div className={styles.urgent}>
           {

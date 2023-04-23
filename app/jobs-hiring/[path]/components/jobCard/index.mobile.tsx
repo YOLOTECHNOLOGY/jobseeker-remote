@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
 import React, { } from 'react'
-import styles from './index.mobile.module.scss'
+import styles from '../../index.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
@@ -25,7 +25,7 @@ const JobCard = (props: any) => {
     const labels = [job_type, xp_lvl, degree].filter(a => a)
     const router = useRouter()
 
-    return <div className={styles.main}>
+    return <div className={styles.jobCardMoblie}>
         <div
             id={'job_card_container_' + id}
             className={styles.container}
