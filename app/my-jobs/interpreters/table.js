@@ -14,7 +14,11 @@ export const thousandsToNumber = (string) => {
         return 100001
     }
 }
-export const handleSalary = (salaryRanges) => {
+export const handleSalary = (salaryRanges,salaryList) => {
+    const selected = salaryRanges?.map(seo => salaryList.find(item => item['seo-value'] === seo))
+    const from = selected?.map(item => item.from).join(',')
+    const to = selected?.map(item => item.to).join(',')
+    return [from, to]
     let salaryFrom = ''
     let salaryTo = ''
     if (salaryRanges?.length) {
@@ -45,7 +49,8 @@ export default registInterpreter(command =>
             const { searchParams, config, preferences, preferenceId } = context
             const industryList = config.industry_lists
             const qualificationList = config.educations
-            const [salaryFrom, salaryTo] = handleSalary(searchParams.salary?.split?.(',') ?? [])
+            const salaryList = config.salary_range_filters
+            const [salaryFrom, salaryTo] = handleSalary(searchParams.salary?.split?.(',') ?? [],salaryList)
             const workExperienceList = config.xp_lvls
             const jobTypeList = config.job_types
             const companySizeList = config.company_sizes
@@ -64,7 +69,7 @@ export default registInterpreter(command =>
                 // is_company_verified: Boolean(searchParams.verifiedCompany),
                 company_sizes: searchParams.companySizes?.split?.(',')?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
             }
-            console.log({ queriyParams, context })
+            console.log({ queriyParams, context },'queriyParams')
             const token = cookies().get('accessToken')
             return fetchJobsForYouLogin(queriyParams, token.value)
                 .then(result => ({
