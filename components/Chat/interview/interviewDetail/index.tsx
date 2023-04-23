@@ -1,10 +1,13 @@
 import React, { useMemo } from 'react'
+import { useDispatch } from 'react-redux'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import styles from './index.module.scss'
 
-// import { CopyBlueIcon } from 'images'
+import { CopyIconHaveTextCopy } from 'images'
 
 const InterviewDetail = (props: any) => {
   const { data = {}, status } = props
+  const dispatch = useDispatch()
   console.log(data)
   const detailData = useMemo(() => {
     const base = [
@@ -25,6 +28,27 @@ const InterviewDetail = (props: any) => {
     }
     return base
   }, [data])
+
+  const handleCopyVideoViewLink = () => {
+    if (data?.video_link && navigator?.clipboard?.writeText(data?.video_link)) {
+      dispatch(
+        displayNotification({
+          open: true,
+          severity: 'success',
+          message: 'Copy successfully'
+        })
+      )
+    } else {
+      dispatch(
+        displayNotification({
+          open: true,
+          severity: 'error',
+          message: 'Copy failed'
+        })
+      )
+    }
+  }
+
   return (
     <div className={styles.modalContainer}>
       <div className={styles.formContainer}>
@@ -45,12 +69,14 @@ const InterviewDetail = (props: any) => {
                         >
                           {content}
                         </a>
-                        {/* <img
-                          src={CopyBlueIcon}
-                          alt='copy icon'
-                          style={{ cursor: 'pointer', marginLeft: '10px' }}
-                          // onClick={handleCopyVideoViewLink}
-                        /> */}
+                        <span className={styles.copyIcon}>
+                          <img
+                            src={CopyIconHaveTextCopy}
+                            alt='copy icon'
+                            onClick={handleCopyVideoViewLink}
+                            width={50}
+                          />
+                        </span>
                       </div>
                     </>
                   )}
