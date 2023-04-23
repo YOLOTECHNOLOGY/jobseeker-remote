@@ -45,7 +45,6 @@ const Index = ({ data, jobId }: any) => {
         job_id: jobId
       })
     }
-
     // Facebook job page view event
     const fbq = w?.gtag
     if (fbq) {
@@ -54,7 +53,6 @@ const Index = ({ data, jobId }: any) => {
       })
     }
   }
-
   const headProps = {
     title: data.job_title,
     localhost: data.location?.value,
