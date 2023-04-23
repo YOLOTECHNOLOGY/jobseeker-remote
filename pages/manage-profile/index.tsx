@@ -78,6 +78,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     license_certifications: licensesCertifications,
     websites
   } = userDetail
+
   const isProfileInformationFilled = !!(
     firstName &&
     lastName &&
@@ -86,19 +87,33 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     expLevel &&
     description
   )
+
+  const validProfileInformationFilled = (profile) => {
+    return !!(
+      profile.first_name &&
+      profile.last_name &&
+      profile.birthdate &&
+      profile.location &&
+      profile.xp_lvl &&
+      profile.description
+    )
+  }
+
   const [isSliderButtonVisible, setIsSliderButtonVisible] = useState(true)
   const [isHighlightSectionVisible, setIsHighlightSectionVisible] = useState(true)
 
   // Display button after a few sec to prevent weird MUI bug when it's within caoursel
   const [isCarouselButtonVisible, setIsCarouselButtonVisible] = useState(false)
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({
+  const emblaOptions = {
     align: 'start',
     loop: true,
     skipSnaps: false,
     inViewThreshold: 0.7,
     slidesToScroll: width < 799 ? 1 : 2
-  })
+  }
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions as any)
 
   const scrollNext = useCallback(() => {
     if (emblaApi) {
@@ -129,6 +144,11 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     emblaApi.reInit()
   }, [emblaApi, onSelect])
 
+  const reInitEmbla = () => {
+    if (!emblaApi) return
+    emblaApi.reInit(emblaOptions as any)
+  }
+
   useEffect(() => {
     let count = 0
     if (workExperiences?.length === 0) {
@@ -140,14 +160,18 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     if (skills.length === 0) {
       count += 1
     }
-    if (!isProfileInformationFilled) {
+
+    if (!validProfileInformationFilled(userDetail)) {
       count += 1
     }
-    if (count <= 2 && !isMobile) {
-      setIsSliderButtonVisible(false)
+
+    if (!isMobile) {
+      setIsSliderButtonVisible(() => count > 2)
+      reInitEmbla()
     }
-    if (count <= 1 && isMobile) {
-      setIsSliderButtonVisible(false)
+    if (isMobile) {
+      setIsSliderButtonVisible(() => count > 1)
+      reInitEmbla()
     }
     if (count === 0) {
       setIsHighlightSectionVisible(false)
