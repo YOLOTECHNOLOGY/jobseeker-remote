@@ -11,7 +11,7 @@ import Companies from '../companies'
 import MobileHome from '../mobileComponents/mobileHome'
 import Tracker from '../tracker'
 
-import styles from './index.module.scss'
+import styles from '../../../index.module.scss'
 
 const Main = (props) => {
   const location = cookies().get('location')?.value
