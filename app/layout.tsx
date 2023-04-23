@@ -8,7 +8,6 @@ import HamburgerMenu from 'components/HamburgerMenu'
 import AutoShowModalAppRedirect from 'app/main-page/components/AutoShowModalAppRedirect'
 import { getCountry } from 'helpers/country'
 import './index.module.scss'
-import 'app/main-page/popularJobs.module.scss'
 import 'app/main-page/components/main/index.module.scss'
 import 'app/main-page/components/company.module.scss'
 
