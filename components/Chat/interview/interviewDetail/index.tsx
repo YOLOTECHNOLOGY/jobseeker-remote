@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import styles from './index.module.scss'
 
-import { CopyBlueIcon } from 'images'
+import { CopyIconHaveTextCopy } from 'images'
 
 const InterviewDetail = (props: any) => {
   const { data = {}, status } = props
@@ -69,12 +69,14 @@ const InterviewDetail = (props: any) => {
                         >
                           {content}
                         </a>
-                        <img
-                          src={CopyBlueIcon}
-                          alt='copy icon'
-                          style={{ cursor: 'pointer', marginLeft: '10px' }}
-                          onClick={handleCopyVideoViewLink}
-                        />
+                        <span className={styles.copyIcon}>
+                          <img
+                            src={CopyIconHaveTextCopy}
+                            alt='copy icon'
+                            onClick={handleCopyVideoViewLink}
+                            width={50}
+                          />
+                        </span>
                       </div>
                     </>
                   )}
