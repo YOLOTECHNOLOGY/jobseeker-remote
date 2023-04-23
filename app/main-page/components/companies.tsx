@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './company.module.scss'
+import styles from 'app/index.module.scss'
 import CompanyCardList from './companyList'
 import { fetchCompanyTopService } from '../../../store/services/companies/fetchCompanyTop'
 import Link from 'next/link'
