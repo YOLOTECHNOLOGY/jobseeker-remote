@@ -6,7 +6,7 @@ import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
 import LocationField from 'app/components/mobile/location'
 import JobSearchBar from '../../../../components/commons/location/search'
-import styles from './index.mobile.module.scss'
+import styles from '../../index.module.scss'
 import Single from 'app/components/mobile/select/single'
 import Multiple from 'app/components/mobile/select/multiple'
 import MultyGroup from 'app/components/mobile/select/groupedMulty'
@@ -116,7 +116,7 @@ const SearchArea = (props: any) => {
 
     return <div>
         <ThemeProvider theme={newTheme}>
-            <div className={styles.container}>
+            <div className={styles.searchFormMoblie}>
                 <div className={styles.searchArea}>
                     <LocationField
                         className={styles.location}
