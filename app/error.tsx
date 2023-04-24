@@ -11,6 +11,7 @@ import Loading from './loading'
 
 export default function Error({ error, reset }: { error: any; reset: () => void }) {
   const router = useRouter()
+  console.log({ 'error.digest': error.digest })
   useEffect(() => {
     console.error(error)
   }, [error])
@@ -39,7 +40,7 @@ export default function Error({ error, reset }: { error: any; reset: () => void 
     }
     return <Loading />
   }
-  console.log({ 'error.digest': error.digest })
+  
   return (
     <section className={styles.errorMain}>
       <div className={styles.errorMain_loadingLogo}>
