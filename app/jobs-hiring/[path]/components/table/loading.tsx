@@ -5,7 +5,7 @@ import React from 'react'
 //  import { CircularProgress } from 'app/components/MUIs'
 import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
-import styles from './index.module.scss';
+import styles from '../../index.module.scss';
 
 const Loading = () => {
     // const rects = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15']

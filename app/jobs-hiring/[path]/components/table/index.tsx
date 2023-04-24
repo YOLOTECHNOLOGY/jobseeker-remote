@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './index.module.scss'
+import styles from '../../index.module.scss'
 import tableIp from '../../../interpreters/table'
 import { serverDataScript } from 'app/abstractModels/FetchServierComponents'
 import { buildComponentScript } from 'app/abstractModels/util'
@@ -13,7 +13,7 @@ const Table = (props: any) => {
     return (
         <Loader>
             {jobs?.length ? (
-                <div className={styles.container}>
+                <div className={styles.tableContainer}>
                     {jobs.map((job) => {
                         return (
                             <div className={styles.jobContainer} key={job?.id}>

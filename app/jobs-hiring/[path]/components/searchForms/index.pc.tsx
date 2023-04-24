@@ -5,7 +5,7 @@ import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
 import MaterialLocationField from 'components/MaterialLocationField'
 import JobSearchBar from '../../../../components/commons/location/search'
-import styles from './index.pc.module.scss'
+import styles from '../../index.module.scss'
 import MaterialButton from 'components/MaterialButton'
 import Single from 'app/components/commons/select/single'
 import Multiple from 'app/components/commons/select/multiple'
@@ -141,7 +141,7 @@ const SearchArea = (props: any) => {
       <ThemeProvider theme={theme}>
         <div
           className={classNames({
-            [styles.container]: true,
+            [styles.searchForm]: true,
             [styles.isFixed]: isFixed
           })}
         >

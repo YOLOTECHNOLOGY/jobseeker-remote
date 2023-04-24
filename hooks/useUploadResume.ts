@@ -15,7 +15,7 @@ const Step2 = (props: any) => {
     : '/jobseeker-complete-profile/1101'
 
   const [resume, setResume] = useState(null)
-  const existingResume = userDetail?.resume || null
+  const existingResume = userDetail?.resumes || []
   const [isDisabled, setIsDisabled] = useState(userDetail.resume ? false : true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [isCreatingResume, setIsCreatingResume] = useState(false)

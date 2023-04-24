@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 'use client'
 import React, { useState, useEffect } from 'react'
-import styles from './index.module.scss'
+import styles from '../../index.module.scss'
 import { CircularProgress } from 'app/components/MUIs'
 
 // document.documentElement.clientHeight：可见区域高度。
@@ -29,7 +29,7 @@ const LoadMore = (props: any) => {
         window.addEventListener('scroll', listener, true)
         return window.removeEventListener('scroll', listener)
     }, [])
-    return <div className={styles.container} id={id}>
+    return <div className={styles.loadMore} id={id}>
             {loading &&   <CircularProgress color={'primary'} size={20} /> }
     </div>
 }

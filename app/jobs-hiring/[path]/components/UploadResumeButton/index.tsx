@@ -1,5 +1,5 @@
 
-import styles from './index.module.scss'
+import styles from '../../index.module.scss'
 import { quickCreateResume, ncreaseUserConversionDetailsBackgroundarrowArrow } from 'images'
 import classNames from 'classnames/bind'
 import Link from 'next/link'

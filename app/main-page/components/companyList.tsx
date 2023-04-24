@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './company.module.scss'
+import styles from 'app/index.module.scss'
 import Link from 'next/link'
 import { HomePageChat } from 'images'
 import Image from 'next/image'
