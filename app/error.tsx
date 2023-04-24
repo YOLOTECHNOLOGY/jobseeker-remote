@@ -11,10 +11,11 @@ import Loading from './loading'
 
 export default function Error({ error, reset }: { error: any; reset: () => void }) {
   const router = useRouter()
+  console.log({ 'error.digest': error.digest })
   useEffect(() => {
     console.error(error)
   }, [error])
-  if (error?.message?.includes('status code 401')||error.digest==='1253504112') {
+  if (error?.message?.includes('status code 401') || error.digest === '1253504112') {
 
     if (globalThis.globalPromise) {
       globalThis.globalPromise.then(() => {
@@ -37,10 +38,9 @@ export default function Error({ error, reset }: { error: any; reset: () => void 
         router.push('/get-started', { forceOptimisticNavigation: true })
       })
     }
-
-
     return <Loading />
   }
+  
   return (
     <section className={styles.errorMain}>
       <div className={styles.errorMain_loadingLogo}>
