@@ -1,9 +1,5 @@
 {
-    "server-component": {
+    "home": {
       "welcome": "Vítejte"
-    },
-    "counter": {
-      "increment": "Přidat",
-      "decrement": "Ubrat"
     }
   }

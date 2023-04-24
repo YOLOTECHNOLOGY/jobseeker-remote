@@ -16,11 +16,19 @@ import styles from '../../../index.module.scss'
 const Main = (props) => {
   const location = cookies().get('location')?.value
   const city = location ? JSON.parse(location)?.value : 'Manila'
-
+  console.log(props,'homeIdex')
+  // eslint-disable-next-line react/prop-types
+  const { 
+    LG:{
+      home:{
+        h1
+      } 
+    }
+ } = props ||{}
   return (
     <>
       <div className={styles.main}>
-        <div className={styles.title}>Find Job. Talk to Boss.</div>
+        <div className={styles.title}>{h1}</div>
         <TopModule {...props} />
         <Tabs location={city} />
         {/* @ts-expect-error Async Server Component */}

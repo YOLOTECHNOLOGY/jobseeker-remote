@@ -12,7 +12,7 @@ import CountryProvider from './countryProvider'
 const ClientProviders = (props: any) => {
     const { children }: React.PropsWithChildren = props
     const { store } = wrapper.useWrappedStore({})
-
+   console.log(props,'propss2233')
     return <Provider store={store}>
         <CountryProvider>
             <CookiesProvider>

@@ -11,6 +11,7 @@ import useSearchHistory from 'helpers/useSearchHistory'
 import { useRouter } from 'next/navigation'
 import { buildQuery } from '../../../helper'
 import { LocationContext } from '../../../../components/providers/locationProvier'
+import {languageContext} from '../../../../components/providers/languageProvider'
 import { getCookie, setCookie } from 'helpers/cookies'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import { AppDownQRCode } from 'images'
@@ -22,9 +23,11 @@ const transQs =(params:any) =>{
 }
 const SearchArea = (props: any) => {
     const { config } = props
+
     const dispatch = useDispatch()
     const { location, setLocation } = useContext(LocationContext)
-
+    const data : any = useContext(languageContext)
+    const home = data.home
     const router = useRouter()
     const [isShow,setIsShow] = useState(false)
     useEffect(() => {
@@ -172,7 +175,7 @@ const SearchArea = (props: any) => {
             style={{
                 textTransform: 'capitalize'
             }}
-            > Search </MaterialButton>
+            > {home.searchBtn} </MaterialButton>
             {
               isShow && ( <div className={styles.download}  >
                 <PhoneIphoneIcon  className={styles.icon}/> 

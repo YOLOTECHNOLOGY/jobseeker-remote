@@ -58,10 +58,6 @@ const defaultSEO = {
 //     image: defaultSEO.imageUrl
 //   }
 // }
-export async function generateStaticParams() {
-  return [{ lang: 'en-US' }, { lang: 'de' }];
-}
-
 const Providers = dynamic(() => import('./components/providers'), { ssr: true })
 const Initial = dynamic(() => import('./components/Initals'), { ssr: false })
 export default function RootLayout(props: any) {

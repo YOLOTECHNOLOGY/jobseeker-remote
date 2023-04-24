@@ -4,6 +4,7 @@ import styles from './index.module.scss'
 import { getCountry } from 'helpers/country'
 // import { Locale } from '../../i18n-config'
 import { getDictionary } from '../../get-dictionary'
+import LanguageProvider from './components/providers/languageProvider'
 const defaultSEO = {
     title: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
     description: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
@@ -57,11 +58,12 @@ export const metadata = {
 
 // eslint-disable-next-line react/display-name
 export default async (props) => {
-    console.log(props,1111111)
     const {lang} = props.params
     const dictionary = await getDictionary(lang)
-    console.log(dictionary,7777)
+    const newProps = {...props,LG:dictionary}
     return <div className={styles.container}>
-        <Main {...props} />
+        <LanguageProvider LG={dictionary}>
+          <Main {...newProps} />
+        </LanguageProvider>
     </div>
 }

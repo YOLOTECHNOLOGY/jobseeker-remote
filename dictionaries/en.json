@@ -1,9 +1,5 @@
 {
-    "server-component": {
-      "welcome": "Vítejte"
-    },
-    "counter": {
-      "increment": "Přidat",
-      "decrement": "Ubrat"
-    }
+  "home": {
+    "h1": "Find Job. Talk to Boss."
   }
+}

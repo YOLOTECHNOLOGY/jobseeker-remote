@@ -1,6 +1,7 @@
 {
-    "server-component": {
-      "welcome": "你真棒"
+    "home": {
+      "h1": "找工作，BOSS直拒",
+      "searchBtn":"搜索"
     },
     "counter": {
       "increment": "你真棒",

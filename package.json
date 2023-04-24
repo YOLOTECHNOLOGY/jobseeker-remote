@@ -34,9 +34,9 @@
     ]
   },
   "dependencies": {
-    "@formatjs/intl-localematcher": "0.2.32",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
+    "@formatjs/intl-localematcher": "0.2.32",
     "@googlemaps/js-api-loader": "^1.15.1",
     "@mui/icons-material": "^5.3.1",
     "@mui/lab": "^5.0.0-alpha.63",
@@ -90,6 +90,7 @@
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.2.1",
     "sass": "^1.43.4",
+    "server-only": "^0.0.1",
     "sitemap": "^7.0.0",
     "slugify": "^1.6.2",
     "thread-loader": "^3.0.4",
