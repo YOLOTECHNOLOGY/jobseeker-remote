@@ -123,6 +123,14 @@ export default function RootLayout(props: any) {
           <AutoShowModalAppRedirect />
         </Providers>
         <Initial />
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe 
+            src={`https://www.googletagmanager.com/ns.html?id=${process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'}`}
+            height="0" width="0"
+            style={{ display: 'none', visibility: 'hidden'}}
+          ></iframe>
+        </noscript>
       </body>
     </html>
   )
