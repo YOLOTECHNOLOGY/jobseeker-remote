@@ -37,7 +37,10 @@ const ReadMore = (props: Iprops) => {
         <div ref={wrapEl}>
             <div
                 dangerouslySetInnerHTML={{ __html: text }} 
-                className={classNames([className, showReadMore?styles['lines_camp']:''])}
+                className={classNames([
+                    className,
+                    showMore ? (showReadMore?styles['lines_camp']:'') : ''
+                ])}
                 style={lineClampStyle as any}
                 {...rest}
             />
