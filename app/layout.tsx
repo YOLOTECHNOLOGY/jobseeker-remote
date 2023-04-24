@@ -116,6 +116,12 @@ export default function RootLayout(props: any) {
         ></script>
       </head>
       <body id='next-app'>
+        {/* Google Tag Manager (noscript) */}
+        <noscript dangerouslySetInnerHTML={{ __html: `
+          <iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'}"
+          height="0" width="0" style="display:non e;visibility:hidden"></iframe>
+        `}}>
+        </noscript>
         <Providers>
           <Header />
           <HamburgerMenu />
