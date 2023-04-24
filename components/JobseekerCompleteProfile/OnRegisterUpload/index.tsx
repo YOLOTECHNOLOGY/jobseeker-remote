@@ -25,7 +25,7 @@ const Step2 = (props: any) => {
     setResume,
     redirect,
     currentStep,
-    resume
+    // resume
   } = props
 
   return (
@@ -75,20 +75,24 @@ const Step2 = (props: any) => {
           <Text textColor='darkgrey' textStyle='xsm' className={styles.step2UploadAllowed}>
             PDF, DOC, DOCX. file, max 5MB
           </Text>
-          {existingResume && (
-            <Text textColor='darkgrey' textStyle='xsm' bold tagName='p'>
-              (Resume:{resume?.name}
-              <Link
-                to={existingResume.url}
-                target='_blank'
-                rel='noreferrer'
-                style={{ textDecoration: 'underline' }}
-              >
-                {existingResume.filename}
-              </Link>
-              )
+          {existingResume?.length ? (    
+                existingResume.map(e=>(
+                <Text key={e.id} textColor='darkgrey' textStyle='xsm' bold tagName='p'>
+                       (Resume:
+                        <Link
+                          to={e.url}
+                          target='_blank'
+                          rel='noreferrer'
+                          style={{ textDecoration: 'underline' }}
+                        >
+                          {e.filename || e.name}
+                        </Link>
+                        )
             </Text>
-          )}
+                ))
+          
+            
+          ):null}
         </div>
 
         <Text textStyle='lg' className={styles.step2UploadDivider}>
