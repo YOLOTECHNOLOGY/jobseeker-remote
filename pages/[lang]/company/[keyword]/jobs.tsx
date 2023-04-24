@@ -23,7 +23,7 @@ import CompanyJobsCardLoader from 'components/Loader/CompanyJobsCard'
 
 // Styles
 import styles from '../Company.module.scss'
-import MetaText from '../../../components/MetaText'
+import MetaText from '../../../../components/MetaText'
 import { getCountry } from 'helpers/country'
 
 const CompanyJobsProfile = (props: any) => {

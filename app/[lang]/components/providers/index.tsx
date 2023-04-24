@@ -6,7 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import IMProvider from 'components/Chat/IMProvider.client'
 import NotificationProvider from 'components/NotificationProvider'
 import { persistor, wrapper } from '../../store'
-import MaintenancePage from 'pages/maintenance'
+import MaintenancePage from 'pages/[lang]/maintenance'
 import LocationProvider from './locationProvier'
 import CountryProvider from './countryProvider'
 const ClientProviders = (props: any) => {

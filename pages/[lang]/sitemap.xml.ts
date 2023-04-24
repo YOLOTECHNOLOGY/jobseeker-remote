@@ -1,5 +1,5 @@
 import configuredAxios from 'helpers/configuredAxios'
-import { getPublicSitemapXML } from '../scripts/getPublicSitemapXML'
+import { getPublicSitemapXML } from '../../scripts/getPublicSitemapXML'
 
 const Sitemap = () => {
   return

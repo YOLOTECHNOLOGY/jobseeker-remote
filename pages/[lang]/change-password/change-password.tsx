@@ -20,7 +20,7 @@ import MaterialTextField from 'components/MaterialTextField'
 
 /* Styles */
 import styles from './ChangePassword.module.scss'
-import { closeNotification, displayNotification } from '../../store/actions/notificationBar/notificationBar'
+import { closeNotification, displayNotification } from '../../../store/actions/notificationBar/notificationBar'
 
 const ChangePassword = () => {
   const dispatch = useDispatch()

@@ -48,7 +48,7 @@ import { getItem } from 'helpers/localStorage'
 // Styles
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
-import { handleNumericInput } from '../../helpers/handleInput'
+import { handleNumericInput } from '../../../helpers/handleInput'
 import JobFunctionSelector from 'components/JobFunctionSelector'
 import ReadMore from 'components/ReadMore'
 import { getCountry } from 'helpers/country'

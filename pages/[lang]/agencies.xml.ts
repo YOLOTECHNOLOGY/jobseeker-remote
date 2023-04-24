@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 import slugify from 'slugify'
-import configuredAxios from '../helpers/configuredAxios'
+import configuredAxios from '../../helpers/configuredAxios'
 
 const AgenciesSitemap = () => {
   return

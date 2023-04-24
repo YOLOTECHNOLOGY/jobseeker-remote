@@ -22,7 +22,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Styles
 import styles from './Companies.module.scss'
-import MetaText from '../../components/MetaText'
+import MetaText from '../../../components/MetaText'
 import { getCountry } from 'helpers/country'
 
 interface SearchProps {

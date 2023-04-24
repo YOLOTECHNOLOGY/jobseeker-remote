@@ -5,9 +5,9 @@ import { END } from 'redux-saga'
 import { wrapper } from 'store'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 // Components
-import useUploadResume from '../../hooks/useUploadResume'
+import useUploadResume from '../../../hooks/useUploadResume'
 // Styles
-import OnRegisterUpload from '../../components/JobseekerCompleteProfile/OnRegisterUpload'
+import OnRegisterUpload from '../../../components/JobseekerCompleteProfile/OnRegisterUpload'
 
 const Step2 = (props: any) => {
   const hookProps = useUploadResume(props)
