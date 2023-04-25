@@ -16,7 +16,8 @@ import Script from 'next/script'
 import * as gtag from 'lib/gtag'
 import Head from 'next/head'
 const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
-const MaintenancePage = dynamic(() => import('./maintenance'))
+console.log(111)
+const MaintenancePage = dynamic(() => import('./[lang]/maintenance'))
 import * as fbq from 'lib/fpixel'
 import NotificationProvider from 'components/NotificationProvider'
 // import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
