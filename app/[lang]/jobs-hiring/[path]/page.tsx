@@ -20,7 +20,6 @@ import { getCurrentMonthYear, unslugify } from 'helpers/formatter'
 import { decoder } from '../interpreters/encoder'
 import { Metadata } from 'next'
 import { toPairs } from 'ramda'
-import LoadingProvider from 'app/[lang]/components/providers/loadingProvider'
 import Footer from 'components/Footer'
 import { getCountry } from 'helpers/country'
 const configs = getConfigs([
@@ -140,7 +139,7 @@ const Main = (props: any) => {
   const accessToken = cookies().get('accessToken')?.value
   const location = props.searchValues?.location?.[0]
   return (
-    <LoadingProvider>
+    <>
       <div>
         <div style={{ position: 'sticky', top: 0, zIndex: 90 }}>
           <SearchForm config={props.config} searchValues={props.searchValues ?? null} />
@@ -216,8 +215,7 @@ const Main = (props: any) => {
         </div>
       </div>
       <Footer />
-    </LoadingProvider>
-  )
+    </>)
 }
 
 export default configs(serverDataScript()).chain((configs) =>

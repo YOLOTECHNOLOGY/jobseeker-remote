@@ -9,10 +9,10 @@ import { persistor, wrapper } from '../../store'
 import MaintenancePage from 'pages/[lang]/maintenance'
 import LocationProvider from './locationProvier'
 import CountryProvider from './countryProvider'
+import LoadingProvider from './loadingProvider'
 const ClientProviders = (props: any) => {
     const { children }: React.PropsWithChildren = props
     const { store } = wrapper.useWrappedStore({})
-   console.log(props,'propss2233')
     return <Provider store={store}>
         <CountryProvider>
             <CookiesProvider>
@@ -24,7 +24,9 @@ const ClientProviders = (props: any) => {
                             )
                                 : (
                                     <NotificationProvider>
+                                        <LoadingProvider>
                                         {children}
+                                        </LoadingProvider>
                                     </NotificationProvider>
                                 )}
                         </IMProvider>
