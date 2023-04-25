@@ -207,7 +207,10 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
                 return chainObj[key](...params)
               })
             } else if (error?.response?.status === 401) {
-              return Promise.reject(new Error('401', { cause: 401 }))
+              // const error = new Error('401', { cause: 401 })
+              // error.digest = '440011'
+              // eslint-disable-next-line prefer-promise-reject-errors
+              return Promise.reject(401)
             } else {
               return Promise.reject(error)
             }
