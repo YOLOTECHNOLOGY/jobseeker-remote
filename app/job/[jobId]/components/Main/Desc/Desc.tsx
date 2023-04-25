@@ -5,7 +5,7 @@ import { transState } from 'helpers/utilities'
 import { DefaultAvatar } from 'images'
 import { Avatar } from 'app/components/MUIs'
 import JobClient from './JobClient/JobClient'
-import ReadMore from './ReadMore'
+// import ReadMore from './ReadMore'
 
 import styles from '../../../page.module.scss'
 
@@ -74,11 +74,11 @@ const Desc = ({
             <div key={skill.value}>{skill.value}</div>
           ))}
         </div>
-        {/* <div
+        <div
           className={styles.desc_context}
           dangerouslySetInnerHTML={{ __html: description }}
-        ></div> */}
-        <ReadMore className={styles.desc_context} text={description} lineHeight={24} line={5} />
+        ></div>
+        {/* <ReadMore className={styles.desc_context} text={description} lineHeight={24} line={5} /> */}
       </div>
 
       <div className={styles.desc_mobileLine}></div>
@@ -87,11 +87,11 @@ const Desc = ({
         <div className={classNames([styles.desc_title, styles.desc_requirement])}>
           <h5>Requirement</h5>
         </div>
-        {/* <div
+        <div
           className={styles.desc_context}
           dangerouslySetInnerHTML={{ __html: requirements }}
-        ></div> */}
-        <ReadMore className={styles.desc_context} text={requirements} lineHeight={24} line={6} />
+        ></div>
+        {/* <ReadMore className={styles.desc_context} text={requirements} lineHeight={24} line={6} /> */}
       </div>
       <div className={styles.desc_footer}>
         <Avatar
