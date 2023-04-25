@@ -15,7 +15,7 @@ export default function Error({ error, reset }: { error: any; reset: () => void 
   useEffect(() => {
     console.error(error)
   }, [error])
-  if (error?.message?.includes('status code 401') || error.digest === '1640079258') {
+  if (error?.message?.includes('status code 401') || error.digest === '1640079258' || error.digest === '2228123006') {
     if (globalThis.globalPromise) {
       globalThis.globalPromise.then(() => {
         window.location.reload()
