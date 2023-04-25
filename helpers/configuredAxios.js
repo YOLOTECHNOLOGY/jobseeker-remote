@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { getCookie, removeCookie, setCookie } from 'helpers/cookies'
-import { redirect } from 'next/navigation';
 import { accessToken, refreshToken } from './cookies';
 import { getCountryId } from './country';
 // import accessToken from 'pages/api/handlers/linkedinHandlers/accessToken'
@@ -9,7 +8,7 @@ import { getCountryId } from './country';
 // import { IMManager } from 'imforbossjob'
 
 let timer = 0;
-let clearTime = () => clearTimeout(timer)
+const clearTime = () => clearTimeout(timer)
 const autoRefreshToken = () => {
   timer = setTimeout(() => {
     clearTime()
@@ -149,7 +148,7 @@ const refreshTokenServer = () => {
   const axios = configuredAxios('auth', '', '', '');
   const data = { source: 'web', refresh: getCookie(refreshToken) }
   return axios.post('/token/refresh', data).then((res) => {
-    let { access, token_expired_at, data } = res.data.data
+    const { access, token_expired_at, data } = res.data.data
     if (access) {
       clearTime()
       autoRefreshToken()
@@ -207,6 +206,8 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
                 const chainObj = chain(true)(baseURL, type, passToken ? getCookie(accessToken) : '', serverAccessToken ? getCookie(accessToken) : '', server)
                 return chainObj[key](...params)
               })
+            } else if (error?.response?.status === 401) {
+              return Promise.reject(new Error('401', { cause: 401 }))
             } else {
               return Promise.reject(error)
             }

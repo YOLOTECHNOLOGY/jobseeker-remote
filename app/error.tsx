@@ -11,18 +11,16 @@ import Loading from './loading'
 
 export default function Error({ error, reset }: { error: any; reset: () => void }) {
   const router = useRouter()
-  console.log({ 'error.digest': error.digest })
+  console.log({ 'error.digest': error })
   useEffect(() => {
     console.error(error)
   }, [error])
-  if (error?.message?.includes('status code 401') || error.digest === '1253504112') {
-
+  if (error?.message?.includes('status code 401') || error.digest === '1640079258') {
     if (globalThis.globalPromise) {
       globalThis.globalPromise.then(() => {
         window.location.reload()
       })
     } else {
-
       const axios = configuredAxios('auth', '', '', '');
       const data = { source: 'web', refresh: getCookie('refreshToken') }
       globalThis.globalPromise = axios.post('/token/refresh', data).then((res: any) => {
@@ -40,7 +38,6 @@ export default function Error({ error, reset }: { error: any; reset: () => void 
     }
     return <Loading />
   }
-  
   return (
     <section className={styles.errorMain}>
       <div className={styles.errorMain_loadingLogo}>
