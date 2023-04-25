@@ -5,12 +5,12 @@ import React, { createContext, useTransition, useCallback } from 'react'
 export const LoadingContext = createContext({ loading: false, push: a => a, refresh: () => undefined })
 const Provider = LoadingContext.Provider
 
-const LoadingProvider = ({ children }: any) => {
+const LoadingProvider = ({ children, lang }: any) => {
     const router = useRouter()
     const [loading, startTransition] = useTransition()
     const push = useCallback((url) => {
         startTransition(() => {
-            router.push(url, { forceOptimisticNavigation: true })
+            router.push(`${'en'}` + url, { forceOptimisticNavigation: false })
         })
     }, [router, startTransition])
     const refresh = useCallback(() => {
