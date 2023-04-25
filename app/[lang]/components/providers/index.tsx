@@ -10,26 +10,30 @@ import MaintenancePage from 'pages/[lang]/maintenance'
 import LocationProvider from './locationProvier'
 import CountryProvider from './countryProvider'
 import LoadingProvider from './loadingProvider'
+import LanguageProvider from './languageProvider'
 const ClientProviders = (props: any) => {
     const { children }: React.PropsWithChildren = props
+    const { LG }: any = props
     const { store } = wrapper.useWrappedStore({})
     return <Provider store={store}>
         <CountryProvider>
             <CookiesProvider>
                 <LocationProvider>
                     <PersistGate loading={null} persistor={persistor}>
-                        <IMProvider>
-                            {process.env.MAINTENANCE === 'true' ? (
-                                <MaintenancePage />
-                            )
-                                : (
-                                    <NotificationProvider>
-                                        <LoadingProvider>
-                                        {children}
-                                        </LoadingProvider>
-                                    </NotificationProvider>
-                                )}
-                        </IMProvider>
+                        <LanguageProvider store={LG}>
+                            <IMProvider>
+                                {process.env.MAINTENANCE === 'true' ? (
+                                    <MaintenancePage />
+                                )
+                                    : (
+                                        <NotificationProvider>
+                                            <LoadingProvider>
+                                                {children}
+                                            </LoadingProvider>
+                                        </NotificationProvider>
+                                    )}
+                            </IMProvider>
+                        </LanguageProvider>
                     </PersistGate>
                 </LocationProvider>
             </CookiesProvider>
