@@ -3,6 +3,42 @@
       "h1": "找工作，BOSS直拒",
       "searchBtn":"搜索"
     },
+    "header":{
+      "findJobs": "职位",
+      "companies": "公司",
+      "courses": "课程",
+      "careerGuide": "职业生涯指导",
+      "hiring":"我要招聘",
+      "getStarted":"登陆/注册"  
+    },
+    "foot":{
+      "about":"关于",
+      "aboutBossjob":"BOSS直拒",
+      "termsConditions":"协议与规则",
+      "legal":"法律",
+      "FAQ": "FAQ",
+      "allJobs":"工作",
+      "createJobAlert":"创建工作",
+      "createFree":"免费创造",
+      "resume":"简历",
+      "careerGuide":"简历指导",
+      "courses":"课程",
+      "recruiter":"招聘人员",
+      "get":"登陆",
+      "started":"注册",
+      "JobsInManila":"马尼拉的工作",
+      "JobsInMakati":"马卡蒂的工作",
+      "JobsInCebu":"宿务的工作",
+      "ItJobs":"IT人才",
+      "financeJobs":"财务职位",
+      "customerService":"人才",
+      "jobs":"人才",
+      "BpoJobs":"人才",
+      "salesJobs":"人才",
+      "healthcareJobs":"人才",
+      "downloadBossjobApp":"人才",
+       "followUs":"跟随"
+    },
     "counter": {
       "increment": "你真棒",
       "decrement": "你真棒"

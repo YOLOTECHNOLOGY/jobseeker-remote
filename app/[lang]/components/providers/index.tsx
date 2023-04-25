@@ -9,29 +9,33 @@ import { persistor, wrapper } from '../../store'
 import MaintenancePage from 'pages/[lang]/maintenance'
 import LocationProvider from './locationProvier'
 import CountryProvider from './countryProvider'
+import LanguageProvider from './languageProvider'
 const ClientProviders = (props: any) => {
     const { children }: React.PropsWithChildren = props
+     const { LG }: any = props
     const { store } = wrapper.useWrappedStore({})
-   console.log(props,'propss2233')
-    return <Provider store={store}>
-        <CountryProvider>
-            <CookiesProvider>
-                <LocationProvider>
-                    <PersistGate loading={null} persistor={persistor}>
-                        <IMProvider>
-                            {process.env.MAINTENANCE === 'true' ? (
-                                <MaintenancePage />
-                            )
-                                : (
-                                    <NotificationProvider>
-                                        {children}
-                                    </NotificationProvider>
-                                )}
-                        </IMProvider>
-                    </PersistGate>
-                </LocationProvider>
-            </CookiesProvider>
-        </CountryProvider>
+    return <Provider store={store}>   
+            <CountryProvider>   
+                <CookiesProvider>
+                    <LocationProvider>               
+                        <PersistGate loading={null} persistor={persistor}>
+                        <LanguageProvider store={LG}>
+                            <IMProvider>
+                                {process.env.MAINTENANCE === 'true' ? (
+                                    <MaintenancePage />
+                                )
+                                    : (
+                                        <NotificationProvider>
+                                            {children}
+                                        </NotificationProvider>
+                                    )}
+                            </IMProvider>
+                            </LanguageProvider>
+                        </PersistGate>         
+                    </LocationProvider>
+                </CookiesProvider>            
+            </CountryProvider>
+       
     </Provider>
 }
 

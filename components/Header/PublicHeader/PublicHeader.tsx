@@ -18,7 +18,9 @@ import SwitchNation from 'components/SwitchNation/SwitchNation'
 /* Images */
 import { BossjobLogoWhite as BossjobLogo } from 'images'
 
-const PublicHeader = () => {
+const PublicHeader = ({LG}:any) => {
+  console.log(LG,'LG1111')
+  const {findJobs,companies,courses,careerGuide,getStarted,hiring} = LG || {}
   const pathname = usePathname()
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
 
@@ -68,7 +70,7 @@ const PublicHeader = () => {
                 {!pathname.includes('/jobs-hiring/') ? (
                   <Link title='Jobs' to='/jobs-hiring/job-search'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                      Find Jobs
+                     {findJobs}
                     </Text>
                   </Link>
                 ) : (
@@ -80,7 +82,7 @@ const PublicHeader = () => {
                       styles.headerLinkTextCurrentPage
                     ])}
                   >
-                    Find Jobs
+                   {findJobs}
                   </Text>
                 )}
               </li>
@@ -100,7 +102,7 @@ const PublicHeader = () => {
                 {pathname !== '/companies' ? (
                   <Link title='Companies' to='/companies'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                      Companies
+                      {companies}
                     </Text>
                   </Link>
                 ) : (
@@ -112,14 +114,14 @@ const PublicHeader = () => {
                       styles.headerLinkTextCurrentPage
                     ])}
                   >
-                    Companies
+                    {companies}
                   </Text>
                 )}
               </li>
               <li className={styles.headerLink}>
                 <Link title='Courses' to='https://academy.bossjob.ph/courses/search-courses' aTag>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Courses
+                    {courses}
                   </Text>
                 </Link>
               </li>
@@ -136,7 +138,7 @@ const PublicHeader = () => {
               <li className={styles.headerLink}>
                 <Link title='Career Guide' to='https://blog.bossjob.ph/' external>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Career Guide
+                    {careerGuide}
                   </Text>
                 </Link>
               </li>
@@ -148,7 +150,7 @@ const PublicHeader = () => {
             <li className={styles.headerLink}>
               <Link title='Employer' to={process.env.BOSSHUNT_URL} aTag>
                 <Text textStyle='base' textColor='white' className={styles.headerLinkText}>
-                  I’m hiring
+                 {hiring}
                 </Text>
               </Link>
             </li>
@@ -174,7 +176,7 @@ const PublicHeader = () => {
                     }}
                   >
                     <Text textStyle='base' style={{ fontWeight: '400' }} textColor='white' bold>
-                      Get Started
+                     {getStarted}
                     </Text>
                   </MaterialButton>
                 </Link>
@@ -198,7 +200,7 @@ const PublicHeader = () => {
                   }}
                 >
                   <Text textStyle='base' textColor='white' bold>
-                    Get Started
+                    {getStarted}
                   </Text>
                 </MaterialButton>
               )}

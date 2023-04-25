@@ -25,7 +25,7 @@ import { IMContext } from 'components/Chat/IMProvider.client'
 import SwitchNation from 'components/SwitchNation/SwitchNation'
 
 // this header will be used when user is logged in
-const ProtectedHeader = () => {
+const ProtectedHeader = ({LG}:any) => {
   const router = useRouter()
   const pathname = usePathname()
   const currentUser = getCookie('user')

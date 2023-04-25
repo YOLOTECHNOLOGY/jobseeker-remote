@@ -31,6 +31,7 @@ import 'moment/locale/en-sg'
 import 'moment/locale/zh-cn'
 import 'moment/locale/zh-hk'
 import moment from 'moment'
+// import { getDictionary } from '../get-dictionary'
 moment.locale('en-sg')
 
 const App = (props: AppProps) => {
@@ -280,5 +281,9 @@ const App = (props: AppProps) => {
     </>
   )
 }
-
+// App.getInitialProps = async (props) => {
+//   const dictionary = await getDictionary('zh')
+//   console.log(props,dictionary,2222)
+//   return { LG:dictionary };
+// };
 export default wrapper.withRedux(App)
