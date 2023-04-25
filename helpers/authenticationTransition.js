@@ -13,7 +13,7 @@ export const authPathToOldProject = (accessToken, redirectUrl) => {
   if (redirectArray.length === 2) {
     const queryParam = redirectArray[1]
     const encodedQueryParam = encodeURIComponent(queryParam)
-    let encodedRedirect = ''
+    const encodedRedirect = ''
     encodedRedirect.concat(redirectArray[0], delimiter, encodedQueryParam)
     redirectUrl = redirectArray[0] + delimiter + encodedQueryParam
   }
