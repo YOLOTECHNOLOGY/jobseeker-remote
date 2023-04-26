@@ -14,7 +14,8 @@
       "myJobs":"我的工作",
       "accountSettings":"账号设置",
       "logOut":"登出",
-      "Chat":"聊天"
+      "Chat":"聊天",
+      "downloadApp":"下载APP"
     },
     "foot":{
       "about":"关于",
@@ -45,6 +46,32 @@
       "followUs":"跟随",
       "technology":" Singapore: Yolo Technology Pte Ltd. All Rights Reserved。嘿嘿嘿",
        "corporation":"Philippines: Etos Adtech Corporation 嘿嘿嘿"
+    },
+    "getStatred": {
+      "JoinBossjob": "加入老板工作",
+      "kickStartYourCareer": "开启你的职业生涯！",
+      "enterYourEmailAddress": "输入你的电子邮箱地址",
+      "submit": "提交",
+      "pleaseEnterAvalidEmailAddress.": "请输入有效的电子邮件地址。",
+      "bySigningUp": "通过注册，我已经阅读并同意",
+      "termsOfUse": "使用条款",
+      "and": "和",
+      "privacyPolicy": "隐私政策",
+      "signInWith": "登陆使用",
+      "lookingToHire": "想招人？",
+      "employer": "雇主",
+      "welcomeBack": "欢迎回来！",
+      "signUpAnAccount": "注册一个帐户",
+      "pleaseEnter": "请输入我们发送给的6位一次性密码",
+      "enter6DigitOTP": "输入 6 位数的一次性密码",
+      "getOPT": "获得选择",
+      "resendOTP": "重新发送一次性密码",
+      "havingTrouble": "遇到麻烦？",
+      "requestAmagicLink": "申请魔法链接",
+      "heOTPYouHaveEnteredIsWrong":"heOTPYouHaveEnteredIsWrong",
+      "seoMetaTitle":"登陆 | Bossjob",
+      "seoMetaDescription":"Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ",
+      "seoMetaDescription2":"seoMetaDescription2"
     },
     "counter": {
       "increment": "你真棒",

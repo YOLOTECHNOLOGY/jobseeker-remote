@@ -26,13 +26,26 @@ const SendTOP = ({
   magicLink,
   emailTOPError,
   customizeSendOTPContainerMainFieldStyle,
-  hideMagicLink
+  hideMagicLink,
+  lang
 }: any) => {
   const { width } = useWindowDimensions()
   const firstRender = useFirstRender()
   const [sendBtnDisabled, setSendBtnDisabled] = useState(true)
+   
+  const {
+    welcomeBack,
+    signUpAnAccount,
+    pleaseEnter,
+    enter6DigitOTP,
+    heOTPYouHaveEnteredIsWrong,
+    resendOTP,
+    getOPT,
+    havingTrouble,
+    requestAmagicLink
+  } = lang || {}
 
-  // CountDown
+  // CountDo wn
   const refCountDownTimeName = useRef(null)
   const countDownVerify = useRef(COUNT_DOWN_VERIFY_DEFAULT)
 
@@ -105,7 +118,7 @@ const SendTOP = ({
     <div className={classNames([sendOTPstyles.SendTOPContainer])}>
       <div className={styles.SendTOPContainer_title}>
         <Text bold textStyle='xxxl' tagName='h2'>
-          {userId ? 'Welcome back! 👏' : 'Sign up an account 🎉'}
+          {userId ? `${welcomeBack} 👏` : `${signUpAnAccount} 🎉`}
         </Text>
       </div>
 
@@ -115,7 +128,7 @@ const SendTOP = ({
           textStyle='lg'
           className={classNames([styles.SendTOPContainer_desc_text])}
         >
-          Please enter the 6-digit one-time password that we sent to {email}.
+          {pleaseEnter} {email}.
         </Text>
       </div>
 
@@ -126,7 +139,7 @@ const SendTOP = ({
             customizeSendOTPContainerMainFieldStyle
           ])}
           id='email'
-          label='Enter 6-digit OTP'
+          label={enter6DigitOTP}
           variant='outlined'
           autoFocus
           size='small'
@@ -139,7 +152,7 @@ const SendTOP = ({
         />
         {width < 576 &&
           emailTOPError &&
-          errorText('The OTP you have entered is wrong. Please try again.')}
+          errorText(heOTPYouHaveEnteredIsWrong)}
 
         <MaterialButton
           capitalize
@@ -152,13 +165,13 @@ const SendTOP = ({
           onClick={sendEmailOTP}
         >
           <Text textStyle='lg' textColor='white' bold>
-            {isShowCountDownSwitch && `Resend OTP (${countDown}s)`}
-            {!isShowCountDownSwitch && `Get OTP`}
+            {isShowCountDownSwitch && `${resendOTP} (${countDown}s)`}
+            {!isShowCountDownSwitch && `${getOPT}`}
           </Text>
         </MaterialButton>
         {(width ?? 0)  > 576 &&
           emailTOPError &&
-          errorText('The OTP you have entered is wrong. Please try again.')}
+          errorText(heOTPYouHaveEnteredIsWrong)}
       </div>
 
       <div
@@ -175,7 +188,7 @@ const SendTOP = ({
               // onClick={magicLink}
               className={styles.SendTOPContainer_sendMagicLink_pNode}
             >
-              Having trouble?{' '}
+              {havingTrouble}?{' '}
               <a
                 className={classNames([
                   styles.SendTOPContainer_sendMagicLink_magicLink,
@@ -183,7 +196,7 @@ const SendTOP = ({
                 ])}
                 ref={magicLinkNode}
               >
-                Request a Magic Link
+                {requestAmagicLink}
               </a>
             </Text>
           </div>

@@ -1,4 +1,4 @@
-'use client'
+
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -31,14 +31,12 @@ import 'moment/locale/en-sg'
 import 'moment/locale/zh-cn'
 import 'moment/locale/zh-hk'
 import moment from 'moment'
-// import { getDictionary } from '../get-dictionary'
 
 moment.locale('en-sg')
 
 const App = (props: AppProps) => {
 
    const { Component, pageProps } = props
-   console.log(props.Component,'props1111')
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
@@ -269,7 +267,7 @@ const App = (props: AppProps) => {
                 <MaintenancePage {...pageProps} />
               ) : isPageLoading &&
                 !(router.pathname.includes('jobs-hiring') && toPath.includes('jobs-hiring')) ? (
-                <TransitionLoader accessToken={accessToken} />
+                <TransitionLoader accessToken={accessToken}  />
               ) : (
                 <NotificationProvider>
 

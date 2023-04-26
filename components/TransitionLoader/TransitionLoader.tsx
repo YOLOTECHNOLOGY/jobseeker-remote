@@ -6,18 +6,21 @@ import { BossjobLogo } from '../../images'
 import PlaceholderProtectedHeader from '../Header/PlaceholderProtectedHeader'
 import PlaceHolderPublicHeader from '../Header/PlaceholderPublicHeader'
 import { getCookie } from '../../helpers/cookies'
-
+import { getDictionary } from 'get-dictionary'
 type TransitionLoaderProps = {
-  accessToken?: any
+  accessToken?: any,
+  lang?:any
 }
 
-function TransitionLoader({ accessToken }: TransitionLoaderProps) {
+function TransitionLoader(props: TransitionLoaderProps) {
+  console.log(props,7778888899)
+ const { accessToken } = props
   const user = getCookie('user')
   return ReactDOM.createPortal(
     <div className={styles.wrapper}>
       <div className={styles.headerWrapper}>
-        {accessToken && <PlaceholderProtectedHeader isShowEmailAlert={accessToken && user &&!user.is_email_verify} />}
-        {!accessToken && <PlaceHolderPublicHeader />}
+        {accessToken && <PlaceholderProtectedHeader  isShowEmailAlert={accessToken && user &&!user.is_email_verify} />}
+        {!accessToken && <PlaceHolderPublicHeader/>}
       </div>
       <div className={styles.loadingWrapper}>
         <div className={styles.loadingLogo}>
@@ -30,6 +33,17 @@ function TransitionLoader({ accessToken }: TransitionLoaderProps) {
     </div>,
     document.body
   )
+}
+export const getServerSideProps =  async (props) => {
+  console.log(111111111111)
+  const { lang} : any = props.query
+  const dictionary = await getDictionary(lang)
+ console.log(dictionary,dictionary)
+  return {
+    props: {
+      lang:dictionary
+    }
+  }
 }
 
 export default TransitionLoader
