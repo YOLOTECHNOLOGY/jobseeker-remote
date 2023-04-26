@@ -132,7 +132,7 @@ export const encode = params => pipe(
 )(params)
 
 export const decoder = config => (path, params) => mergeDeepLeft(
-    parseKeywordParams(config)(unescape(path)),
+    parseKeywordParams(config)(decodeURIComponent(path)),
     map(ifElse(is(String), split(','), identity))(params)
 )
 export const firstUpper = tmp => tmp.charAt(0).toUpperCase() + tmp.slice(1)
