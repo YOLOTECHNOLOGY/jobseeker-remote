@@ -89,7 +89,7 @@ type propsType = {
   save?: () => void
 }
 
-const SwitchNation = ({ open, close, save }: propsType) => {
+const SwitchNation = ({ close, save }: propsType) => {
   const [nation, setNation] = useState<any>()
   const [nationDefault] = useState<string>(() => getCountryKey())
   const [loading, setLoading] = useState<boolean>(false)

@@ -2,7 +2,7 @@
 import { unslugify } from '../../../../helpers/formatter'
 import { map, pick, T, toLower, mergeDeepLeft, reduce, toPairs, append, flip, includes, mergeLeft, chain, always, path, split, equals, test, prop, applySpec, cond, identity, dropLast, isEmpty, propSatisfies, isNil, complement, either, both, juxt, join, filter, lte, pipe, dissoc, when, is, ifElse } from 'ramda'
 import { flatMap } from 'lodash-es'
-import slugify from 'slugify'
+// import slugify from 'slugify'
 const userSelectKeys = ['salary', 'jobType', 'mainFunctions', 'jobFunctions', 'functionTitles', 'qualification', 'queryFields']
 const normalKeys = ['verifiedCompany', 'companySizes', 'workExperience', 'financingStages', 'industry']
 const no = propSatisfies(either(isEmpty, isNil))
@@ -73,7 +73,8 @@ const buildQueryParams = cond([
 const washData = pipe(
     // filter(complement(either(isNil, isEmpty))),
     toLower,
-    slugify,
+    encodeURIComponent,
+    // slugify,
 )
 
 const configItems = applySpec({
@@ -132,7 +133,7 @@ export const encode = params => pipe(
 )(params)
 
 export const decoder = config => (path, params) => mergeDeepLeft(
-    parseKeywordParams(config)(unescape(path)),
+    parseKeywordParams(config)(decodeURIComponent(path)),
     map(ifElse(is(String), split(','), identity))(params)
 )
 export const firstUpper = tmp => tmp.charAt(0).toUpperCase() + tmp.slice(1)

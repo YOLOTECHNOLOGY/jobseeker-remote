@@ -49,7 +49,7 @@ const PreferenceSelector = (props: any) => {
                             return
                         }
                         setShowPreferenceId(preference.id)
-                        const url = new URLSearchParams([...[...searchParams.entries()].filter(([key, value]) => {
+                        const url = new URLSearchParams([...[...searchParams.entries()].filter(([key]) => {
                             return key !== 'preferenceId'
                         }), ['preferenceId', preference.id]]).toString()
                         push(location.pathname + '?' + url)

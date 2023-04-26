@@ -94,7 +94,7 @@ const Containers = (props: any) => {
         setIntouches(true)
         setBegginPosision(x)
     }
-    const touchesEnd = e => {
+    const touchesEnd = () => {
         // console.log('touchesEnd', e?.touches?.[0]?.clientX)
         if (Math.abs((offset * 3) / opacityRange) > 1) {
             setTab(tab === 1 ? 2 : 1)

@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import { useRouter } from 'next/navigation'
 import { useFirstRender } from 'helpers/useFirstRender'
-import { filter, toPairs, pipe, is, split, map } from 'ramda'
+import { filter, toPairs, pipe, is, map } from 'ramda'
 import { LoadingContext } from 'app/[lang]/components/providers/loadingProvider'
 import { cloneDeep } from 'lodash-es'
 
