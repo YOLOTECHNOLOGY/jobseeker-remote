@@ -1,6 +1,4 @@
 'use client' // Error components must be Client components
-
-import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { BossjobLogo } from 'images'
 import { Button } from 'app/[lang]/components/MUIs'
@@ -9,11 +7,10 @@ import configuredAxios from 'helpers/configuredAxios'
 import { getCookie, setCookie } from 'helpers/cookies'
 import Loading from './loading'
 
-export default function Error({ error, reset }: { error: any; reset: () => void }) {
+export default function Error(props: { error: any; reset: () => void }) {
+  const { error, reset } = props
   const router = useRouter()
-  useEffect(() => {
-    console.error(error)
-  }, [error])
+  console.log({ props, error })
   if (error?.message?.includes('status code 401')) {
 
     if (globalThis.globalPromise) {
@@ -21,7 +18,6 @@ export default function Error({ error, reset }: { error: any; reset: () => void 
         window.location.reload()
       })
     } else {
-
       const axios = configuredAxios('auth', '', '', '');
       const data = { source: 'web', refresh: getCookie('refreshToken') }
       globalThis.globalPromise = axios.post('/token/refresh', data).then((res: any) => {
@@ -37,8 +33,6 @@ export default function Error({ error, reset }: { error: any; reset: () => void 
         router.push('/get-started', { forceOptimisticNavigation: true })
       })
     }
-
-
     return <Loading />
   }
 

@@ -1,15 +1,15 @@
 import axios from 'axios'
 import { getCookie, removeCookie, setCookie } from 'helpers/cookies'
-import { redirect } from 'next/navigation';
 import { accessToken, refreshToken } from './cookies';
 import { getCountryId } from './country';
+import { NextResponse } from 'next/server';
 // import accessToken from 'pages/api/handlers/linkedinHandlers/accessToken'
 // import { configureStore } from 'store'
 // import { logout } from 'shared/helpers/authentication'
 // import { IMManager } from 'imforbossjob'
 
 let timer = 0;
-let clearTime = () => clearTimeout(timer)
+const clearTime = () => clearTimeout(timer)
 const autoRefreshToken = () => {
   timer = setTimeout(() => {
     clearTime()
@@ -70,7 +70,7 @@ const getUrl = (baseURL) => {
   return url
 }
 
-const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken, server = false) => {
+const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken) => {
   // let remoteAddress = ''
   // let isMobile = ''
   if (typeof window !== 'undefined') {
@@ -149,7 +149,8 @@ const refreshTokenServer = () => {
   const axios = configuredAxios('auth', '', '', '');
   const data = { source: 'web', refresh: getCookie(refreshToken) }
   return axios.post('/token/refresh', data).then((res) => {
-    let { access, token_expired_at, data } = res.data.data
+    const { access, token_expired_at, data } = res.data.data
+    console.log({ 'res.data.data': res.data.data })
     if (access) {
       clearTime()
       autoRefreshToken()
@@ -167,6 +168,8 @@ const redirectToHomeOnClient = () => {
     import('imforbossjob')
       .then((im) => im?.IMManager?.logout?.())
       .then(() => localStorage?.clear?.())
+  } else {
+    NextResponse.next().redirect('/get-started', 301)
   }
 }
 
@@ -207,7 +210,28 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
                 const chainObj = chain(true)(baseURL, type, passToken ? getCookie(accessToken) : '', serverAccessToken ? getCookie(accessToken) : '', server)
                 return chainObj[key](...params)
               })
+            } else if (error?.response?.status === 401 && typeof window !== 'undefined') {
+              // const response = NextResponse.next()
+              // response.cookies
+              // if (configured) {
+              //   redirectToHomeOnClient();
+              //   return Promise.reject(error)
+              // }
+              // if (!globalPromise) {
+              //   globalThis.globalPromise = refreshTokenServer().catch(() => {
+              //     redirectToHomeOnClient()
+              //   }).finally(() => {
+              //     setTimeout(() => {
+              //       globalPromise = undefined;
+              //     }, 1000 * 60 * 2);
+              //   })
+              // }
+              // return globalPromise.then(() => {
+              //   const chainObj = chain(true)(baseURL, type, passToken ? getCookie(accessToken) : '', serverAccessToken ? getCookie(accessToken) : '', server)
+              //   return chainObj[key](...params)
+              // })
             } else {
+
               return Promise.reject(error)
             }
           }

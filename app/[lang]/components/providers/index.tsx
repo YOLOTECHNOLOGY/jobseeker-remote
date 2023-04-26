@@ -9,16 +9,17 @@ import { persistor, wrapper } from '../../store'
 import MaintenancePage from 'pages/[lang]/maintenance'
 import LocationProvider from './locationProvier'
 import CountryProvider from './countryProvider'
+import LoadingProvider from './loadingProvider'
 import LanguageProvider from './languageProvider'
 const ClientProviders = (props: any) => {
     const { children }: React.PropsWithChildren = props
-     const { LG }: any = props
+    const { LG ,lang}: any = props
     const { store } = wrapper.useWrappedStore({})
-    return <Provider store={store}>   
-            <CountryProvider>   
-                <CookiesProvider>
-                    <LocationProvider>               
-                        <PersistGate loading={null} persistor={persistor}>
+    return <Provider store={store}>
+        <CountryProvider>
+            <CookiesProvider>
+                <LocationProvider>
+                    <PersistGate loading={null} persistor={persistor}>
                         <LanguageProvider store={LG}>
                             <IMProvider>
                                 {process.env.MAINTENANCE === 'true' ? (
@@ -26,16 +27,17 @@ const ClientProviders = (props: any) => {
                                 )
                                     : (
                                         <NotificationProvider>
-                                            {children}
+                                            <LoadingProvider lang={lang}>
+                                                {children}
+                                            </LoadingProvider>
                                         </NotificationProvider>
                                     )}
                             </IMProvider>
-                            </LanguageProvider>
-                        </PersistGate>         
-                    </LocationProvider>
-                </CookiesProvider>            
-            </CountryProvider>
-       
+                        </LanguageProvider>
+                    </PersistGate>
+                </LocationProvider>
+            </CookiesProvider>
+        </CountryProvider>
     </Provider>
 }
 

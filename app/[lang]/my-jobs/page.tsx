@@ -8,7 +8,6 @@ import styles from './index.module.scss'
 import Table from './components/table'
 import Loading from './components/table/loading'
 import MainRight from './communicated/components/MainRight'
-import LoadingProvider from 'app/[lang]/components/providers/loadingProvider'
 import preferences from './interpreters/preferences'
 import MobileHeader from './components/mobileHeader'
 import SortFilter from './components/searchForms/sortFilter'
@@ -38,7 +37,7 @@ const configs = getConfigs([
 const Main = (props: any) => {
     const { preferences, searchParams, config } = props
     const preferenceId = searchParams.preferenceId || preferences?.[0]?.id
-    return <LoadingProvider >
+    return <>
         <div className={styles.main}>
             <div className={styles.left}>
                 <MobileHeader />
@@ -72,7 +71,7 @@ const Main = (props: any) => {
             <div className={styles.right}><MainRight /></div>
         </div>
         <Footer />
-    </LoadingProvider>
+    </>
 }
 
 export default configs(serverDataScript())

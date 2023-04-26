@@ -120,7 +120,7 @@ export default async function RootLayout(props: any) {
         ></script>
       </head>
       <body id='next-app'>
-        <Providers LG={dictionary}>
+        <Providers LG={dictionary} lang={lang}>
           <Header />
           <HamburgerMenu />
           {children}

@@ -24,14 +24,18 @@ export function middleware(request: NextRequest) {
 
   // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
   // // If you have one
-  // if (
-  //   [
-  //     '/manifest.json',
-  //     '/favicon.ico',
-  //     // Your other files in `public`
-  //   ].includes(pathname)
-  // )
-  //   return
+  if (
+    [
+      '/manifest.json',
+      '/favicon.ico',
+      '/ads.txt',
+      '/imbackground.js',
+      '/robots.txt',
+      '/self_worker.js',
+      '/vercel.svg'
+      // Your other files in `public`
+    ].includes(pathname)
+  ) { return }
 
   // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = i18n.locales.every(
@@ -39,11 +43,12 @@ export function middleware(request: NextRequest) {
   )
 
   // Redirect if there is no locale
+  console.log({pathnameIsMissingLocale,pathname})
   if (pathnameIsMissingLocale) {
-   const locale = getLocale(request)
+    const locale = getLocale(request)
     // e.g. incoming request is /products
     // The new URL is now /en-US/products
-   return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
+    return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
   }
 }
 
@@ -52,6 +57,7 @@ export const config = {
   matcher: [
     // Skip all internal paths (_next)
     '/((?!_next).*)',
+    // '/(!self_worker)'
     // Optional: only run on root (/) URL
     // '/'
   ],
