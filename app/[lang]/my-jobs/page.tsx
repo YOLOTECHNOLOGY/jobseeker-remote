@@ -13,6 +13,7 @@ import MobileHeader from './components/mobileHeader'
 import SortFilter from './components/searchForms/sortFilter'
 import SortProvider from './components/searchForms/SortProvider'
 import Footer from 'components/Footer'
+import { getDictionary } from 'get-dictionary'
 const configs = getConfigs([
     ['location_lists'],
     ['main_functions'],
@@ -34,13 +35,15 @@ const configs = getConfigs([
 // or dynamic metadata
 
 
-const Main = (props: any) => {
+const Main = async (props: any) => {
     const { preferences, searchParams, config } = props
     const preferenceId = searchParams.preferenceId || preferences?.[0]?.id
+    const {lang} = props.params
+    const dictionary:any = await getDictionary(lang)
     return <>
         <div className={styles.main}>
             <div className={styles.left}>
-                <MobileHeader />
+                <MobileHeader lang={dictionary?.myJobs}/>
                 <SortProvider>
                     <div className={styles.searchFormContainer}
                     // style={{ position: 'sticky', top: 0, zIndex: 20 }}
@@ -50,9 +53,10 @@ const Main = (props: any) => {
                             preferenceId={preferenceId}
                             preferences={preferences}
                             config={config}
+                            lang={dictionary?.myJobs}
                         />
                     </div>
-                    <SortFilter />
+                    <SortFilter lang={dictionary?.myJobs}/>
                 </SortProvider>
                 <div className={styles.content}>
                     <div className={styles.table}>
@@ -68,7 +72,7 @@ const Main = (props: any) => {
                 </div>
             </div>
             {/* @ts-expect-error Async Server Component */}
-            <div className={styles.right}><MainRight /></div>
+            <div className={styles.right}><MainRight lang={dictionary?.myJobs}/></div>
         </div>
         <Footer />
     </>

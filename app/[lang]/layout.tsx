@@ -121,8 +121,8 @@ export default async function RootLayout(props: any) {
       </head>
       <body id='next-app'>
         <Providers LG={dictionary} lang={lang}>
-          <Header />
-          <HamburgerMenu lang={lang}/>
+          <Header lang={dictionary}/>
+          <HamburgerMenu lang={dictionary}/>
           {children}
           <AutoShowModalAppRedirect />
         </Providers>

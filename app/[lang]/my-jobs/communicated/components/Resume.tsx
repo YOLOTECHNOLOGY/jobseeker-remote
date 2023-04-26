@@ -34,7 +34,8 @@ const notice_period_lists = [
 
 
 const Resume = ({
-  resumes
+  resumes,
+  lang
 }: any) => {
 
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
@@ -134,7 +135,22 @@ const Resume = ({
     no_of_saved_jobs: noOfSavedJobs,
     no_of_viewed_jobs: noOfViewedJobs
   } = jobData || {}
-
+   
+  const {
+    yearsOld,
+    availability,
+    editOnlineResume,
+    communicated,
+    exchanged,
+    saved,
+    Interview,
+    viewed,
+    noResumeUploadNow,
+    uploadResume,
+    availabilityUpdateSuccessfully,
+    uploadedResumes
+  } = lang || {}
+ 
   return (
     <>
       <div className={styles.resume}>
@@ -142,7 +158,7 @@ const Resume = ({
           <img src={avatar} />
           <div className={styles.info}>
             <p>{fullName}</p>
-            {birthdate ? <span>{ageFun(birthdate)} years old</span> : null}
+            {birthdate ? <span>{ageFun(birthdate)} {yearsOld}</span> : null}
             {birthdate && xpLvl ? <i>|</i> : null}
             <span> {xpLvl}</span>
             {(xpLvl || birthdate) && educations?.[0]?.field_of_study ? <i>|</i> : null}
@@ -151,12 +167,12 @@ const Resume = ({
         </div>
         <Box sx={{ minWidth: 120 }}>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Availability</InputLabel>
+            <InputLabel id="demo-simple-select-label">{availability}</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={noticePeriodData}
-              label="Availability"
+              label={availability}
               sx={{
                 '> .MuiSelect-select': {
                  padding:'10px 14px'
@@ -172,21 +188,21 @@ const Resume = ({
         </Box>
         <button className={styles.btn} >
           <Link href="/manage-profile?tab=profile" prefetch={false}>
-            Edit online resume
+          {editOnlineResume}
           </Link>
         </button>
       </div>
       <ul className={styles.type}>
-        <li><Link href={'my-jobs/communicated'}> Communicated ( {noOfChats} )</Link></li>
-        <li><Link href={'my-jobs/communicated?type=exchanged'}> Exchanged ( {noOfAppliedJobs} )</Link></li>
-        <li><Link href={'my-jobs/communicated?type=saved'}> Saved ( {noOfSavedJobs} )</Link></li>
-        <li><Link href={'my-jobs/communicated?type=interview'}> Interview ( {noOfInterviews} )</Link></li>
-        <li><Link href={'my-jobs/communicated?type=viewed'}> Viewed ( {noOfViewedJobs} )</Link></li>
+        <li><Link href={'my-jobs/communicated'}> {communicated} ( {noOfChats} )</Link></li>
+        <li><Link href={'my-jobs/communicated?type=exchanged'}> {exchanged} ( {noOfAppliedJobs} )</Link></li>
+        <li><Link href={'my-jobs/communicated?type=saved'}> {saved} ( {noOfSavedJobs} )</Link></li>
+        <li><Link href={'my-jobs/communicated?type=interview'}> {Interview} ( {noOfInterviews} )</Link></li>
+        <li><Link href={'my-jobs/communicated?type=viewed'}> {viewed} ( {noOfViewedJobs} )</Link></li>
       </ul>
 
       <div className={styles.upload}>
         <div className={styles.header}>
-          Uploaded Resumes
+          {uploadedResumes}
         </div>
         <div className={styles.uploadContainer}>
           {
@@ -201,12 +217,12 @@ const Resume = ({
                   </li>)
                 }
               </ul>
-            ) : <p className={styles.noMore}>No resume, upload now!</p>
+            ) : <p className={styles.noMore}>{noResumeUploadNow}!</p>
           }
 
           {!(resumeData?.length >= 3) && <button disabled={resumeData?.length >= 3} className={styles.btn}>
             <Link href="/manage-profile?tab=resume">
-              Upload resume
+             {uploadResume}
             </Link>
           </button>}
         </div>
@@ -218,7 +234,7 @@ const Resume = ({
         }}
       >
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-        Availability update successfully!
+        {availabilityUpdateSuccessfully}!
         </Alert>
       </Snackbar>
 

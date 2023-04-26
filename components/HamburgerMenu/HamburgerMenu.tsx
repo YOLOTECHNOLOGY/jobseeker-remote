@@ -29,8 +29,7 @@ interface HamburgerMenuProps {
 }
 
 const HamburgerMenu = ({ openState, toggleMenu,lang }: HamburgerMenuProps) => {
-
-  const {header}:any= lang||{}
+  const {header}:any= lang || {}
   const {
     downloadApp, 
     findJobs,

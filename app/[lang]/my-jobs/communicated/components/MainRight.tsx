@@ -13,18 +13,18 @@ async function getResumes(accessToken) {
   return res?.data?.data || {};
 }
 
-export default async function  Page () {
+export default async function  Page (props) {
   const accessToken = cookies().get('accessToken')?.value
   const resumesData = await getResumes(accessToken);
   const [resumes] = await Promise.all([resumesData]);
 
   return (
       <div className={styles.aside}>
-         <Resume resumes={resumes} />
+         <Resume resumes={resumes} lang={props.lang}/>
             {/* @ts-expect-error Async Server Component */}
-         <InterestedMe />
+         <InterestedMe {...props}/>
          {/* @ts-expect-error Async Server Component */}
-          <ViewedMe/>
+          <ViewedMe {...props}/>
       </div>
     )
   }

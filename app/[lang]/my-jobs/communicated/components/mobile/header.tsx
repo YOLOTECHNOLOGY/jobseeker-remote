@@ -32,7 +32,8 @@ interface headerProps {
   tabChildren: Array<any>
   tabValueChildren?: string
   handleChangeChildren: Function
-  loadingList: boolean
+  loadingList: boolean,
+  back:string
 }
 
 const Header = ({
@@ -42,7 +43,8 @@ const Header = ({
   tabChildren,
   tabValueChildren,
   handleChangeChildren,
-  loadingList
+  loadingList,
+  back,
 }: headerProps) => {
   const [open, setOpen] = React.useState(false)
 
@@ -91,7 +93,7 @@ const Header = ({
       >
         <Link prefetch={false} href={'/my-jobs'} className={styles.backLink}>
           <ArrowBackIosRoundedIcon className={styles.back} style={{ fontSize: '28px' }} />
-          <span className={styles.bactText}>Back</span>
+          <span className={styles.bactText}>{back}</span>
         </Link>
         <span className={styles.line}>|</span>
         <Box sx={{ width: 'calc(100vw - 114px)', bgcolor: 'background.paper' }}>

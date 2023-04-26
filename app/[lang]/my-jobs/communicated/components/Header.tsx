@@ -30,7 +30,8 @@ interface headerProps {
   onChange: Function
   tabChildren: Array<any>
   tabValueChildren?: string
-  handleChangeChildren: Function
+  handleChangeChildren: Function,
+  back:string
 }
 
 const Header = ({
@@ -39,7 +40,8 @@ const Header = ({
   onChange,
   tabChildren,
   tabValueChildren,
-  handleChangeChildren
+  handleChangeChildren,
+  back
 }: headerProps) => {
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     onChange(newValue)
@@ -91,7 +93,7 @@ const Header = ({
       >
         <Link prefetch={false} href={'/my-jobs'} className={styles.backLink}>
           <ArrowBackIosRoundedIcon className={styles.back} style={{ fontSize: '28px' }} />
-          <span className={styles.bactText}>Back</span>
+          <span className={styles.bactText}>{back}</span>
         </Link>
         <span className={styles.line}>|</span>
 
