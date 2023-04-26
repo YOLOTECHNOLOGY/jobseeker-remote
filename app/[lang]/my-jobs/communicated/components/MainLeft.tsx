@@ -37,7 +37,6 @@ const tabListInterstedArr = ['interested', 'viewedMe']
 
 const MainLeft = (props: any) => {
   const { type } = props.searchParams
-  console.log(props, 777)
   const {lang} = props;
   const {
     communicated,

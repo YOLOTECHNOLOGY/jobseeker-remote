@@ -13,7 +13,6 @@ type TransitionLoaderProps = {
 }
 
 function TransitionLoader(props: TransitionLoaderProps) {
-  console.log(props,7778888899)
  const { accessToken } = props
   const user = getCookie('user')
   return ReactDOM.createPortal(
