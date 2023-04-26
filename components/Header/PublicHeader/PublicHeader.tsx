@@ -18,9 +18,8 @@ import SwitchNation from 'components/SwitchNation/SwitchNation'
 /* Images */
 import { BossjobLogoWhite as BossjobLogo } from 'images'
 
-const PublicHeader = ({LG}:any) => {
-  console.log(LG,'LG1111')
-  const {findJobs,companies,courses,careerGuide,getStarted,hiring} = LG || {}
+const PublicHeader = ({lang}:any) => {
+  const {findJobs,companies,courses,careerGuide,getStarted,hiring} = lang || {}
   const pathname = usePathname()
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
 

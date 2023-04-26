@@ -19,8 +19,8 @@ const Header = () => {
 
   return (
     <div>
-      {isAuthenticated && <ProtectedHeader LG={data.header}/>}
-      {!isAuthenticated && <PublicHeader LG={data.header}/>}
+      {isAuthenticated && <ProtectedHeader lang={data.header}/>}
+      {!isAuthenticated && <PublicHeader lang={data.header}/>}
     </div>
   )
 }

@@ -19,7 +19,7 @@ const Main = (props) => {
   console.log(props,'homeIdex')
   // eslint-disable-next-line react/prop-types
   const { 
-    LG:{
+    lang:{
       home:{
         h1
       } 

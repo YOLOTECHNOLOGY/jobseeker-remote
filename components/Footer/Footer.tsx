@@ -34,7 +34,7 @@ const CountryList = (data) => {
     JobsIn1,
     JobsIn2,
     JobsIn3,
-  } = data?.LG ||{}
+  } = data?.lang ||{}
   const COUNTRY_MAP = {
     'ph': [
       {
@@ -91,7 +91,7 @@ const CountryList = (data) => {
 }
 
 
-const Footer = ({LG}:any) => {
+const Footer = ({lang}:any) => {
 
   const {
     about,
@@ -118,7 +118,7 @@ const Footer = ({LG}:any) => {
     followUs,
     technology,
     corporation
-  } = LG?.foot ||{}
+  } = lang?.foot ||{}
   return (
     <footer className={styles.footer}>
       <button
@@ -291,7 +291,7 @@ const Footer = ({LG}:any) => {
               }
             >
               <ul className={styles.footerDesktopLinkList}>
-                <CountryList LG={LG?.foot ||{}}/>
+                <CountryList lang={lang?.foot ||{}}/>
                 <li>
                   <Link
                     className={styles.footerLink}
@@ -603,7 +603,7 @@ const Footer = ({LG}:any) => {
                   {popularJobs}
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
-                  <CountryList LG={LG?.foot ||{}}/>
+                  <CountryList lang={lang?.foot ||{}}/>
                   <li>
                     <Link
                       className={styles.footerLink}

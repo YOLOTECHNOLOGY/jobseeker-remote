@@ -60,7 +60,7 @@ export default async (props) => {
     console.log(props,'1111111')
     const {lang} = props.params
     const dictionary = await getDictionary(lang)
-    const newProps = {...props,LG:dictionary}
+    const newProps = {...props,lang:dictionary}
     return <div className={styles.container}>
           <Main {...newProps} />
     </div>
