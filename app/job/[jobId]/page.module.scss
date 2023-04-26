@@ -1012,16 +1012,6 @@
   }
 }
 
-.lines_camp {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: var(--line-clamp);
-  /*! autoprefixer: off */
-  -webkit-box-orient: vertical;
-  /* autoprefixer: on */
-  text-overflow: -o-ellipsis-lastline;
-}
 
 .read_more_container {
   color: #136FD3;

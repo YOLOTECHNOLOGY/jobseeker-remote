@@ -91,7 +91,7 @@ const Desc = ({
           className={styles.desc_context}
           dangerouslySetInnerHTML={{ __html: requirements }}
         ></div>
-        {/* <ReadMore className={styles.desc_context} text={requirements} lineHeight={24} line={6} /> */}
+        {/* <ReadMore className={styles.desc_context} text={requirements} lineHeight={24} line={5} /> */}
       </div>
       <div className={styles.desc_footer}>
         <Avatar
