@@ -18,7 +18,7 @@ const LoadMore = (props: any) => {
         }
     }, [isVisible])
     useEffect(() => {
-        const listener = e => {
+        const listener = () => {
             const loadMoreEle = document.getElementById(id)
             const offsetTop = loadMoreEle?.offsetTop
             const screenHeight = window.screen?.height

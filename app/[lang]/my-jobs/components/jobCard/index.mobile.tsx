@@ -47,7 +47,7 @@ const JobCard = (props: any) => {
         <div
             id={'job_card_container_' + id}
             className={styles.container}
-            onClick={e => {
+            onClick={() => {
                 // e.stopPropagation()
                 router.push(job_url, { forceOptimisticNavigation: true })
             }}
