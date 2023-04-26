@@ -16,7 +16,7 @@ import Script from 'next/script'
 import * as gtag from 'lib/gtag'
 import Head from 'next/head'
 const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
-console.log(111)
+
 const MaintenancePage = dynamic(() => import('./[lang]/maintenance'))
 import * as fbq from 'lib/fpixel'
 import NotificationProvider from 'components/NotificationProvider'
@@ -32,10 +32,13 @@ import 'moment/locale/zh-cn'
 import 'moment/locale/zh-hk'
 import moment from 'moment'
 // import { getDictionary } from '../get-dictionary'
+
 moment.locale('en-sg')
 
 const App = (props: AppProps) => {
-  const { Component, pageProps } = props
+
+   const { Component, pageProps } = props
+   console.log(props.Component,'props1111')
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
@@ -281,9 +284,5 @@ const App = (props: AppProps) => {
     </>
   )
 }
-// App.getInitialProps = async (props) => {
-//   const dictionary = await getDictionary('zh')
-//   console.log(props,dictionary,2222)
-//   return { LG:dictionary };
-// };
+
 export default wrapper.withRedux(App)

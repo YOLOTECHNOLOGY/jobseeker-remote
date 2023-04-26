@@ -38,7 +38,7 @@ const Main = (props) => {
         {/* Tracker component */}
         <Tracker />
       </div>
-      <Footer />
+      <Footer {...props}/>
       <AutoShowModalAppRedirect />
     </>
   )

@@ -20,7 +20,7 @@ import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
 import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
 import { ImageList, ImageListItem } from '@mui/material'
-
+import { getDictionary } from 'get-dictionary'
 // Redux Actions
 import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
@@ -218,9 +218,12 @@ const Companies = () => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
-  const { page } = query
-
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (props) => {
+  const { page ,lang} : any = props.query
+  console.log(props,'query')
+  console.log(lang,7777)
+  const dictionary = await getDictionary(lang)
+  console.log(dictionary)
   // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesListRequest({ page: Number(page) || 1 }))
   store.dispatch(END)

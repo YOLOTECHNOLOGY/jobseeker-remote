@@ -26,6 +26,19 @@ import SwitchNation from 'components/SwitchNation/SwitchNation'
 
 // this header will be used when user is logged in
 const ProtectedHeader = ({LG}:any) => {
+  console.log(LG,77777)
+  const {
+    careerGuide,
+    companies,
+    courses,
+    findJobs,
+    hiring,
+    manageResume,
+    myJobs,
+    accountSettings,
+    logOut,
+    Chat
+  } = LG || {}
   const router = useRouter()
   const pathname = usePathname()
   const currentUser = getCookie('user')
@@ -93,7 +106,7 @@ const ProtectedHeader = ({LG}:any) => {
                 {!pathname?.includes('/jobs-hiring/') ? (
                   <Link title='Jobs' to='/jobs-hiring/job-search'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                      Find Jobs
+                     {findJobs}
                     </Text>
                   </Link>
                 ) : (
@@ -105,7 +118,7 @@ const ProtectedHeader = ({LG}:any) => {
                       styles.headerLinkTextCurrentPage
                     ])}
                   >
-                    Find Jobs
+                   {findJobs}
                   </Text>
                 )}
               </li>
@@ -113,7 +126,7 @@ const ProtectedHeader = ({LG}:any) => {
                 {pathname !== '/companies' ? (
                   <Link title='Companies' to='/companies'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                      Companies
+                     {companies}
                     </Text>
                   </Link>
                 ) : (
@@ -125,7 +138,7 @@ const ProtectedHeader = ({LG}:any) => {
                       styles.headerLinkTextCurrentPage
                     ])}
                   >
-                    Companies
+                   {companies}
                   </Text>
                 )}
               </li>
@@ -137,7 +150,7 @@ const ProtectedHeader = ({LG}:any) => {
                   external
                 >
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Courses
+                    {courses}
                   </Text>
                 </Link>
               </li>
@@ -145,7 +158,7 @@ const ProtectedHeader = ({LG}:any) => {
               <li className={styles.headerLink} style={{ position: 'relative' }}>
                 <Link title='Career Guide' to='https://blog.bossjob.ph' external>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Career Guide
+                   {careerGuide}
                   </Text>
                 </Link>
               </li>
@@ -161,7 +174,7 @@ const ProtectedHeader = ({LG}:any) => {
               {pathname !== '/chat/[chat_id]' ? (
                 <Link title='Jobs' to='/chat/list'>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Chat
+                    {Chat}
                   </Text>
                 </Link>
               ) : (
@@ -170,7 +183,7 @@ const ProtectedHeader = ({LG}:any) => {
                   textColor='darkGrey'
                   className={classNames([styles.headerLinkText, styles.headerLinkTextCurrentPage])}
                 >
-                  Chat
+                  {Chat}
                 </Text>
               )}
               {totalUnread ? (
@@ -208,7 +221,7 @@ const ProtectedHeader = ({LG}:any) => {
                     }}
                   >
                     <Text textColor='white' textStyle='base'>
-                      Manage Resume
+                    {manageResume}
                     </Text>
                   </MaterialButton>
                 </a>
@@ -231,7 +244,7 @@ const ProtectedHeader = ({LG}:any) => {
                   }}
                 >
                   <Text textColor='white' textStyle='base'>
-                    Manage Resume
+                   {manageResume}
                   </Text>
                 </MaterialButton>
               )}
@@ -305,12 +318,12 @@ const ProtectedHeader = ({LG}:any) => {
             <ul className={styles.headerMenuList}>
               <li className={styles.headerMenuItem}>
                 <Link to='/my-jobs?page=1' className={styles.headerMenuLink}>
-                  <Text textStyle='base'>My Jobs</Text>
+                  <Text textStyle='base'>{myJobs}</Text>
                 </Link>
               </li>
               <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSet}`}>
                 <Link to='/dashboard/profile/settings' className={styles.headerMenuLink}>
-                  <Text textStyle='base'>Account Settings</Text>
+                  <Text textStyle='base'>{accountSettings}</Text>
                 </Link>
               </li>
               {/* <li className={styles.headerMenuItem}>
@@ -329,7 +342,7 @@ const ProtectedHeader = ({LG}:any) => {
               </li> */}
               <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}>
                 <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
-                  <Text textStyle='base'>I’m hiring</Text>
+                  <Text textStyle='base'>{hiring}</Text>
                 </Link>
               </li>
               {/* <li
@@ -347,7 +360,7 @@ const ProtectedHeader = ({LG}:any) => {
               </li> */}
               <li className={styles.headerMenuItem}>
                 <div className={styles.headerMenuLink} onClick={() => handleLogOut()}>
-                  <Text textStyle='base'>Log Out</Text>
+                  <Text textStyle='base'>{logOut}</Text>
                 </div>
               </li>
             </ul>
