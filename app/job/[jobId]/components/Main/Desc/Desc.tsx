@@ -39,7 +39,7 @@ const Desc = ({
       <div className={styles.desc_mobileHead}>
         <Avatar
           sx={{ width: '50px', height: '50px', marginRight: '17px' }}
-          src={recruiter.avatar || DefaultAvatar}
+          src={recruiter?.avatar || DefaultAvatar}
         ></Avatar>
         <div className={styles.desc_mobileHead_info}>
           <span className={classNames([styles.desc_footer_name, styles.desc_mobileHead_info_name])}>
@@ -94,7 +94,7 @@ const Desc = ({
       <div className={styles.desc_footer}>
         <Avatar
           sx={{ width: '29.94px', height: '29px' }}
-          src={recruiter.avatar || DefaultAvatar}
+          src={recruiter?.avatar || DefaultAvatar}
         ></Avatar>
         <span className={styles.desc_footer_name}>{recruiter.full_name}</span>
         <span className={styles.desc_footer_chat}>{chatResponseRate}% &nbsp;response rate</span>
