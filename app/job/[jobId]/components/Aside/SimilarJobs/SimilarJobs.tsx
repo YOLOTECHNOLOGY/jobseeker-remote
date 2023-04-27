@@ -24,12 +24,12 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
 
   let recruiterLineStatus = []
   const data = await fetchSimilarJobsService(params)
-    .then(({ data: { data } }) => data?.jobs )
+    .then(({ data: { data } }) => data?.jobs)
     .catch(() => ({ error: true }))
   if (!data.error) {
     const ids = data.map((item) => item.recruiter?.id)
     if (ids.length) {
-      const lines = await fetchRecruiterLastActiveService(ids.join(','))
+      const lines = await fetchRecruiterLastActiveService(ids.filter(a => a).join(','))
         .then(({ data: { data } }) => data)
         .catch(() => ({ error: true }))
       recruiterLineStatus = lines
