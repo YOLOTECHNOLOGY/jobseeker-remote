@@ -19,15 +19,15 @@ const Company = (company: propsType) => {
   return (
     <>
       <section className={styles.company}>
-        <Link href={company.companyUrl}>
+        <Link href={company?.companyUrl}>
           <div className={styles.company_title}>Company</div>
-          <Avatar src={company.logo} sx={{ borderRadius: '5px', margin: '8px 0' }} />
-          <h5 className={styles.company_name}>{company.name}</h5>
-          <div className={styles.company_financingStage}>{jobDetail.company.industry}</div>
-          <div className={styles.company_financingStage}>{company.companySize} Employees</div>
+          <Avatar src={company?.logo} sx={{ borderRadius: '5px', margin: '8px 0' }} />
+          <h5 className={styles.company_name}>{company?.name}</h5>
+          <div className={styles.company_financingStage}>{jobDetail.company?.industry}</div>
+          <div className={styles.company_financingStage}>{company?.companySize} Employees</div>
         </Link>
 
-        <Link href={company.companyUrl + '/jobs'}>
+        <Link href={company?.companyUrl + '/jobs'}>
           <Button
             variant='outlined'
             sx={{
@@ -45,21 +45,21 @@ const Company = (company: propsType) => {
               textTransform: 'capitalize'
             }}
           >
-            View {company.numOfActiveJobs} jobs hiring
+            View {company?.numOfActiveJobs} jobs hiring
           </Button>
         </Link>
       </section>
 
-      <Link href={company.companyUrl}>
+      <Link href={company?.companyUrl}>
         <section className={styles.company_mobileHead}>
           <Avatar
             sx={{ width: '32px', height: '32px', borderRadius: '5px', marginRight: '8px' }}
-            src={company.logo}
+            src={company?.logo}
           ></Avatar>
           <div className={styles.company_mobileHead_info}>
-            <span className={styles.company_mobileHead_info_name}>{company.name}</span>
+            <span className={styles.company_mobileHead_info_name}>{company?.name}</span>
             <span className={styles.company_mobileHead_info_tag}>
-              {jobDetail.company.industry} &nbsp;|&nbsp; {company.companySize} Employees
+              {jobDetail.company?.industry} &nbsp;|&nbsp; {company?.companySize} Employees
             </span>
           </div>
         </section>
