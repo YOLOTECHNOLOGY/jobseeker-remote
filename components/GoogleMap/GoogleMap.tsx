@@ -83,9 +83,6 @@ const GoogleMap = ({
 
   // eslint-disable-next-line
   const [address, setAddress] = useState<object | null>(null)
-
-  console.log(children, '====childrenchildren')
-
   useEffect(() => {
     if (callBackFunction) {
       callBackFunction(address)

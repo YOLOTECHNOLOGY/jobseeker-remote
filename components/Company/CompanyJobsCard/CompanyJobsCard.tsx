@@ -18,7 +18,6 @@ interface ICompanyJobsCard {
 
 const CompanyJobsCard = ({ title, location, salary, availability, jobUrl }: ICompanyJobsCard) => {
   const host = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window?.location.host
-  console.log({ host })
   return (
     <div className={styles.companyJobsCard}>
       <div className={styles.companyJobsCardLeft}>

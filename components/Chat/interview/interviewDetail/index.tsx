@@ -8,7 +8,6 @@ import { CopyIconHaveTextCopy } from 'images'
 const InterviewDetail = (props: any) => {
   const { data = {}, status } = props
   const dispatch = useDispatch()
-  console.log(data)
   const detailData = useMemo(() => {
     const base = [
       ...[

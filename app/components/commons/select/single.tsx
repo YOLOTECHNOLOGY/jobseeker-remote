@@ -43,7 +43,6 @@ const SingleSelect = ({
             onSelect(value)
         }
     }
-    console.log({ value }, value?.length)
     return (<FormControl fullWidth className={className} size='small'>
         <InputLabel id={`${id}-select-label`}>{label}</InputLabel>
         <Select

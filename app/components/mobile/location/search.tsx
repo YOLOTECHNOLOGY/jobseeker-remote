@@ -108,13 +108,11 @@ const MaterialTextFieldWithSuggestionList = ({
         size={size}
         loading={isLoading}
         onInputChange={(_, val: any, reason) => {
-          console.log({ val, reason })
           if ((reason === 'clear') && onSelect) {
             onSelect(val ?? '')
           }
         }}
         onChange={(_, val: any, reason) => {
-          console.log({ val, reason })
           if ((reason === 'selectOption' || reason === 'clear') && onSelect) {
             onSelect(val ?? '')
           }

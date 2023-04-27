@@ -58,9 +58,9 @@ const invokeGAAdsEvent = (searchParams) => {
   }
 }
 
-window.onhashchange = e => {
-  console.log('windowChange', e)
-}
+// window.onhashchange = e => {
+//   console.log('windowChange', e)
+// }
 const Initial = () => {
   const firstRender = useFirstRender()
   const searchParams = useSearchParams()

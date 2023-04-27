@@ -55,9 +55,7 @@ const JobsCard = ({
   }
 
   const handleLoadMore = () => {
-    console.log(loading.current, pageRef.current, totalPageRef, 99999)
     if (!loading.current && pageRef.current < totalPageRef.current) {
-      console.log('next page~')
       onChange(pageRef.current + 1)
     }
   }

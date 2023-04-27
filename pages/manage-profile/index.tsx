@@ -360,7 +360,6 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         <div className={styles.sectionContent}>
           {educations.map((education) => {
             let studyPeriod = ''
-            console.log({ education })
             if (education?.study_period_from) {
               studyPeriod += moment(education?.study_period_from).format('MMM yyyy')
 

@@ -26,7 +26,6 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
   const data = await fetchSimilarJobsService(params)
     .then(({ data: { data } }) => data?.jobs )
     .catch(() => ({ error: true }))
-   console.log(data,777)
   if (!data.error) {
     const ids = data.map((item) => item.recruiter?.id)
     if (ids.length) {

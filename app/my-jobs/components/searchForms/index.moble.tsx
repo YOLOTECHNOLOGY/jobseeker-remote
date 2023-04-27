@@ -23,17 +23,12 @@ const sortOptions = [
     { label: 'Highest Salary', value: '3' }
 ]
 const SearchArea = (props: any) => {
-    // console.log({ props })
     const { config, preferences, preferenceId, searchParams } = props
     const preferenceOptions = useMemo(() => {
         return preferences.map(preference => ({ value: preference.id, label: preference.job_title }))
     }, [preferences])
     const [selectedPreferenceId, setSelectedPreferenceId] = useState(+preferenceId)
-    // useEffect(() => {
-    //     if(preferenceId){
-    //         setSelectedPreferenceId(+preferenceId)
-    //     }
-    // }, [preferenceId])
+    
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchConfigSuccess(config))

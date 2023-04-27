@@ -116,7 +116,6 @@ const JobsCard = ({ location }: any) => {
       const page = currentRef.current + 1
       setCurrent(page)
       setLoading(true)
-      console.log('next page~')
       getList({ page, ...pageParams })
     }
   }

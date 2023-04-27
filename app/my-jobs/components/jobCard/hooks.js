@@ -20,7 +20,6 @@ const useNotSuitable = (preferenceId, jobId) => {
         setShowSelectionModal(false)
     }, [])
     const request = useCallback(reason => {
-        console.log('request', { reason, jobId })
         return fetchJobsForYouDelete({ preferenceId, jobId }, accessToken)
             .then(dispatch(
                 displayNotification({

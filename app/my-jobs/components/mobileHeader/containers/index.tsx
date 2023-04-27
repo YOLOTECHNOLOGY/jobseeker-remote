@@ -10,7 +10,6 @@ const Item = (props: any) => {
         className={styles.item}
         style={{}}
         onClick={() => {
-            console.log('onClick', { type, disabled })
             if (!disabled) {
                 router.push('my-jobs/communicated?type=' + type, { forceOptimisticNavigation: true })
             }
@@ -88,21 +87,18 @@ const Containers = (props: any) => {
         return tab !== 1 ? 1 : 0
     }, [tab])
     const touchesBegin = e => {
-        console.log('touchesBegin', e?.touches?.[0])
         const x = e?.touches?.[0]?.clientX
         setOffset(0)
         setIntouches(true)
         setBegginPosision(x)
     }
     const touchesEnd = e => {
-        // console.log('touchesEnd', e?.touches?.[0]?.clientX)
         if (Math.abs((offset * 3) / opacityRange) > 1) {
             setTab(tab === 1 ? 2 : 1)
         }
         setIntouches(false)
     }
     const touchesMove = (e) => {
-        // console.log('touchesMove', e?.touches?.[0]?.clientX)
         const x = e?.touches?.[0]?.clientX - beginPosition
         if (tab === 1 && (x > 0 || x < -opacityRange)) {
             return 0

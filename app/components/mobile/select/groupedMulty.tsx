@@ -56,7 +56,6 @@ const GroupedMultipleSelect = ({
       setSelectedOptions({ ...selectedOptions, [key]: [...(selectedOptions[key] ?? []), formattedValue] })
     }
   }
-  console.log({ selectedOptions, options })
   return (
     <FormControl fullWidth className={className} size='small'>
       <InputLabel id={`${id}-select-label`}>{label}</InputLabel>

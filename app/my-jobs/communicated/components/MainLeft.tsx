@@ -103,7 +103,6 @@ const tabListInterstedArr = ['interested', 'viewedMe']
 
 const MainLeft = (props: any) => {
   const { type } = props.searchParams
-  console.log(props, 777)
   const [tabValue, setTabValue] = useState<string>('')
   const [data, setData] = useState<Array<any>>([])
   const [tabList, setTabList] = useState<Array<any>>([])

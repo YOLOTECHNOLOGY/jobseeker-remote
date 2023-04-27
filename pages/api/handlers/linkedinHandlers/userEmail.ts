@@ -7,8 +7,7 @@ export default function userEmail(req, res) {
     .then((response) => {
       res.send(response.data)
     })
-    .catch(error => {
-      console.error(error)
+    .catch(() => {
 
       res.status(401).json({ message: 'Invalid token' })
     })

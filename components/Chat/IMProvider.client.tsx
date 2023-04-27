@@ -220,7 +220,6 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
                                                 }
                                             }
                                             ]
-                                            console.log({ userInfoResult })
                                             resolve(userInfoResult)
                                         } else {
                                             setTimeout(() => callBackUserInfo(), 500)
@@ -402,7 +401,6 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
         const receive = e => {
             const data = e.detail?.data ?? {}
             if (data?.landing_page === 'Offer dialog') {
-                console.log('receiveImNotification', e.detail)
                 interpreter(getDataAndShowOfferMessageScript(data.application_id, data.offer_id))
             }
         }
