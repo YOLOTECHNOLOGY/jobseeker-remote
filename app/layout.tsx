@@ -71,6 +71,7 @@ export default function RootLayout(props: any) {
       <head key={title + description + canonical}>
         <title>{title}</title>
         <meta name='description' content={decodeURI(description)} />
+        <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1' />
         <meta
           name='copyright'
           content={`
@@ -117,7 +118,8 @@ export default function RootLayout(props: any) {
       </head>
       <body id='next-app'>
         {/* Google Tag Manager (noscript) */}
-        <noscript dangerouslySetInnerHTML={{ __html: `
+        <noscript dangerouslySetInnerHTML={{
+          __html: `
           <iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'}"
           height="0" width="0" style="display:non e;visibility:hidden"></iframe>
         `}}>
