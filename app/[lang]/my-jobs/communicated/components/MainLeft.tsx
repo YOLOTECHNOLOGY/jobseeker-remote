@@ -30,80 +30,95 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 ) {
   return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
 })
-const initTabList = [
-  {
-    tab: 'Communicated',
-    value: 'communicated',
-    fetchFun: fetchChattedJobs,
-    children: [],
-    key: 'chatted_jobs'
-  },
-  {
-    tab: 'Exchanged',
-    value: 'exchanged',
-    fetchFun: '',
-    children: [
-      {
-        tab: 'Resume',
-        value: 'Resume',
-        fetchFun: fetchResume,
-        key: 'resume_exchanged_jobs'
-      },
-      {
-        tab: 'Mobile Number',
-        value: 'Mobile number',
-        fetchFun: fetchResumeContact,
-        key: 'contact_exchanged_jobs'
-      }
-    ]
-  },
-  {
-    tab: 'Saved',
-    value: 'saved',
-    fetchFun: fetchSaved,
-    key: 'saved_jobs',
-    children: []
-  },
-  {
-    tab: 'Interview',
-    value: 'interview',
-    fetchFun: fetchInterviews,
-    key: 'interviews',
-    children: []
-  },
 
-  {
-    tab: 'Viewed',
-    value: 'viewed',
-    fetchFun: fetchViewed,
-    children: [],
-    key: 'viewed_jobs'
-  }
-]
-
-const tabListIntersted = [
-  {
-    tab: 'Interested in me',
-    value: 'interested',
-    fetchFun: fetchRecruiters,
-    children: [],
-    key: 'saved_candidates'
-  },
-  {
-    tab: 'Who viewed me',
-    value: 'viewedMe',
-    fetchFun: fetchViewedRcruiters,
-    children: [],
-    key: 'viewed_profiles'
-  }
-]
 
 const tabListInterstedArr = ['interested', 'viewedMe']
 
 
 const MainLeft = (props: any) => {
   const { type } = props.searchParams
-  console.log(props, 777)
+  const {lang} = props;
+  const {
+    communicated,
+    exchanged,
+    saved,
+    Interview,
+    viewed,
+    InterestedInMe,
+    whoViewedMe,
+    resume,
+    mobileNumber,
+    back,
+  } = lang || {}
+
+
+  const initTabList = [
+    {
+      tab: communicated,
+      value: 'communicated',
+      fetchFun: fetchChattedJobs,
+      children: [],
+      key: 'chatted_jobs'
+    },
+    {
+      tab: exchanged,
+      value: 'exchanged',
+      fetchFun: '',
+      children: [
+        {
+          tab: resume,
+          value: 'Resume',
+          fetchFun: fetchResume,
+          key: 'resume_exchanged_jobs'
+        },
+        {
+          tab: mobileNumber,
+          value: 'Mobile number',
+          fetchFun: fetchResumeContact,
+          key: 'contact_exchanged_jobs'
+        }
+      ]
+    },
+    {
+      tab: saved,
+      value: 'saved',
+      fetchFun: fetchSaved,
+      key: 'saved_jobs',
+      children: []
+    },
+    {
+      tab: Interview,
+      value: 'interview',
+      fetchFun: fetchInterviews,
+      key: 'interviews',
+      children: []
+    },
+  
+    {
+      tab: viewed,
+      value: 'viewed',
+      fetchFun: fetchViewed,
+      children: [],
+      key: 'viewed_jobs'
+    }
+  ]
+  
+  const tabListIntersted = [
+    {
+      tab: InterestedInMe,
+      value: 'interested',
+      fetchFun: fetchRecruiters,
+      children: [],
+      key: 'saved_candidates'
+    },
+    {
+      tab: whoViewedMe,
+      value: 'viewedMe',
+      fetchFun: fetchViewedRcruiters,
+      children: [],
+      key: 'viewed_profiles'
+    }
+  ]
   const [tabValue, setTabValue] = useState<string>('')
   const [data, setData] = useState<Array<any>>([])
   const [tabList, setTabList] = useState<Array<any>>([])
@@ -258,6 +273,7 @@ const MainLeft = (props: any) => {
           tabChildren={tabChildren}
           tabValueChildren={tabValueChildren}
           onChange={onChange}
+          back={back}
           handleChangeChildren={handleChangeChildren}
         />
         <JobCard
@@ -281,6 +297,7 @@ const MainLeft = (props: any) => {
           tabValueChildren={tabValueChildren}
           onChange={onChange}
           loadingList={loadingList}
+          back={back}
           handleChangeChildren={handleChangeChildren}
         />
         <Suspense fallback={<h1>Loading Bar...</h1>}>

@@ -22,10 +22,12 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 
 import styles from './index.module.scss'
 import { getCountry } from 'helpers/country'
-
+import { getDictionary } from 'get-dictionary'
 const COUNT_DOWN_VERIFY_DEFAULT = 60
 
-const GetStarted = () => {
+const GetStarted = (props:any) => {
+  console.log(props,111)
+  const lang = props.lang
   const {
     step,
     setStep,
@@ -43,6 +45,11 @@ const GetStarted = () => {
     handleAuthenticationSendEmailMagicLink,
     emailTOPError
   } = useGetStarted()
+  const {
+    lookingToHire,
+    employer,
+
+  } =  lang || {}
   const dispatch = useDispatch()
   const router = useRouter()
   const firstRender = useFirstRender()
@@ -154,7 +161,7 @@ const GetStarted = () => {
   }
 
   return (
-    <Layout isHiddenFooter>
+    <Layout isHiddenFooter lang={props?.dictionary}>
      
       <div className={classNames([styles.Container, step === 3 ? styles.ContainerMagic : ''])}>
         <div>
@@ -169,6 +176,7 @@ const GetStarted = () => {
                 handleSendEmailTOP={handleSendEmailTOP}
                 isLoading={isLoading}
                 router={router}
+                lang={lang}
               />
             )}
 
@@ -185,6 +193,7 @@ const GetStarted = () => {
                 login={handleAuthenticationJobseekersLogin}
                 magicLink={handleAuthenticationSendEmailMagicLink}
                 emailTOPError={emailTOPError}
+                lang={lang}
               />
             )}
 
@@ -194,7 +203,7 @@ const GetStarted = () => {
           <div className={styles.ToEmployer}>
             {step == 1 && (
               <Text tagName='p' textStyle='base' className={styles.ToEmployer_textColor}>
-                Looking to hire people? Sign up as
+                {lookingToHire}
                 <Link
                   to={
                     process.env.ENV === 'development'
@@ -205,7 +214,7 @@ const GetStarted = () => {
                   aTag
                   external
                 >
-                  <Text textColor='primaryBlue'> Employer</Text>
+                  <Text textColor='primaryBlue'> {employer}</Text>
                 </Link>
               </Text>
             )}
@@ -216,13 +225,17 @@ const GetStarted = () => {
   )
 }
 
-export const getServerSideProps = () => {
+export const getServerSideProps = async (props) => {
+  const {lang} : any = props.query
+  const dictionary:any = await getDictionary(lang)
+  const getStatred = dictionary?.getStatred || {}
   return {
     props: {
-      seoMetaTitle: 'Get started | Bossjob',
-      seoMetaDescription:
-        `Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ${getCountry()}. Network of 2 million+ professionals.`,
-      canonicalUrl: '/get-started'
+      seoMetaTitle: getStatred.seoMetaTitle,
+      seoMetaDescription:`${getStatred.seoMetaDescription} ${getCountry()}. ${getStatred.seoMetaDescription2}`,
+      canonicalUrl: '/get-started',
+      lang:getStatred,
+      dictionary:dictionary
     }
   }
 }

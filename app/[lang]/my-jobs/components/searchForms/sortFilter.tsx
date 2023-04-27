@@ -6,7 +6,6 @@ import MuiTabs from '@mui/material/Tabs'
 import { styled } from '@mui/material/styles'
 import { SxProps, Theme } from '@mui/system'
 import { SortContext } from './SortProvider'
-
 interface StyledTabsProps {
     children?: React.ReactNode
     value: number | string
@@ -15,17 +14,6 @@ interface StyledTabsProps {
     scrollButtons: boolean | 'auto'
 }
 
-const tab = [
-    {
-        tab: 'Recommended',
-        value: '2',
-    },
-    {
-        tab: 'Latest job',
-        value: '1',
-    }
-]
-
 interface StyledTabProps {
     key: string
     label: string
@@ -33,8 +21,22 @@ interface StyledTabProps {
     sx: SxProps<Theme>
 }
 
+type sortProps ={
+    lang:any
+}
 
-const SortFilter = () => {
+const SortFilter = ({lang}:sortProps) => {
+
+    const tab = [
+        {
+            tab: lang.recommended,
+            value: '2',
+        },
+        {
+            tab:  lang.latestJob,
+            value: '1',
+        }
+    ]
     const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
         '&.Mui-selected': {
             color: '#136FD3',

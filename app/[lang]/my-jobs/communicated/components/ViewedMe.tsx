@@ -10,7 +10,7 @@ async function getViewedRcruiters(accessToken) {
      return res?.data?.data?.['viewed_profiles'] || [];
 }
 
-const ViewedMe = async () => {
+const ViewedMe = async ({lang}) => {
      const accessToken = cookies().get('accessToken')?.value
      const data = await getViewedRcruiters(accessToken);
 
@@ -19,7 +19,7 @@ const ViewedMe = async () => {
                {data?.length ? (
                     <div className={styles.upload}>
                          <div className={styles.header}>
-                              Who viewed me
+                             {lang?.whoViewedMe}
                          </div>
                          <div className={styles.uploadContainer}>
                               <div className={styles.interstedBox}>
@@ -31,7 +31,7 @@ const ViewedMe = async () => {
 
                               </div>
                               <button className={styles.btn}>
-                                      <Link prefetch={false} href={"/my-jobs/communicated?type=viewedMe"} >See More </Link>
+                                      <Link prefetch={false} href={"/my-jobs/communicated?type=viewedMe"} >{lang?.seeMore}</Link>
                               </button>
                          </div>
                     </div>

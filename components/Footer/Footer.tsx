@@ -1,12 +1,12 @@
 'use client'
-import React from 'react'
+import React,{useContext}from 'react'
 
 /* Components */
 import Link from 'components/Link'
 import Text from 'components/Text'
 import Accordian from 'components/Accordian'
 import { getCountry, getCountryKey } from 'helpers/country'
-
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 /* Images */
 import {
   ChevronUpIcon,
@@ -92,7 +92,7 @@ const CountryList = (data) => {
 
 
 const Footer = ({lang}:any) => {
-
+  const data = lang ?? useContext(languageContext)
   const {
     about,
     aboutBossjob,
@@ -118,7 +118,7 @@ const Footer = ({lang}:any) => {
     followUs,
     technology,
     corporation
-  } = lang?.foot ||{}
+  } = data?.foot ||{}
   return (
     <footer className={styles.footer}>
       <button

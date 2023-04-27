@@ -17,14 +17,17 @@ import { filter, toPairs, pipe, is, map } from 'ramda'
 import { LoadingContext } from 'app/[lang]/components/providers/loadingProvider'
 import { cloneDeep } from 'lodash-es'
 
-const sortOptions = [
-    { label: 'Newest', value: '1' },
-    { label: 'Relevance', value: '2' },
-    { label: 'Highest Salary', value: '3' }
-]
+
 const SearchArea = (props: any) => {
     // console.log({ props })
-    const { config, preferences, preferenceId, searchParams } = props
+    const { config, preferences, preferenceId, searchParams ,lang} = props
+     const {newest,relevance,highestSalary,JobPreference,sortBy,filters,qualification, workExprerience, Industry, salary, JobType, companySizes} = lang ||{}
+    const sortOptions = [
+        { label: newest, value: '1' },
+        { label: relevance, value: '2' },
+        { label: highestSalary, value: '3' }
+    ]
+
     const preferenceOptions = useMemo(() => {
         return preferences.map(preference => ({ value: preference.id, label: preference.job_title }))
     }, [preferences])
@@ -115,7 +118,7 @@ const SearchArea = (props: any) => {
                         onSelect={value => {
                             setSelectedPreferenceId(value)
                         }}
-                        label='Job Preference'
+                        label={JobPreference}
                     />
                     <div className={styles.iconContainer}>
                         <div
@@ -145,7 +148,7 @@ const SearchArea = (props: any) => {
                             value={sort}
                             onSelect={setSort}
                             className={styles.filterItems}
-                            label='Sort by'
+                            label={sortBy}
                         />
                     </div>
                     {/* <div className={styles.selector}>
@@ -161,8 +164,8 @@ const SearchArea = (props: any) => {
                             value={moreData}
                             options={moreOptions}
                             style={{ width: '100%', height: '30px', marginLeft: 4 }}
-                            labels={['Qualification', 'Work Exprerience', 'Industry', 'Salary', 'Job Type', 'Company Sizes']}
-                            label='Filters'
+                            labels={[qualification, workExprerience, Industry, salary, JobType, companySizes]}
+                            label={filters}
                             onSelect={setMoreData}
                         />
                     </div>

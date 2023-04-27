@@ -10,7 +10,7 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp';
 const PreferenceSelector = (props: any) => {
-    const { preferences, preferenceId, config } = props
+    const { preferences, preferenceId, config,lang } = props
     const preferencesRef = useRef(preferences)
     const [showPreferenceId, setShowPreferenceId] = useState(preferenceId)
     const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
@@ -37,7 +37,7 @@ const PreferenceSelector = (props: any) => {
     }, [loading, pushing])
     const [showModal, setShowModal] = useState(false)
     return <div className={styles.container}>
-        <div className={styles.title}>Desired Job Title:</div>
+        <div className={styles.title}>{lang?.desiredJobTitle}:</div>
         <div className={styles.preferences}>
             {/* {loading && <CircularProgress size={10} style={{ marginLeft: 10 }} />} */}
             {preferences.map(preference => {
@@ -76,7 +76,7 @@ const PreferenceSelector = (props: any) => {
                 }
                 setShowModal(true)
             }}>
-                {preferences.length === 3 ? 'Edit' : 'Add New'} <ArrowRightSharpIcon style={{color:'#BCBCBC',verticalAlign:'top'}}/>
+                {preferences.length === 3 ? lang?.edit : lang?.addNew} <ArrowRightSharpIcon style={{color:'#BCBCBC',verticalAlign:'top'}}/>
             </div>}
         {showModal && <EditJobPreferencesModal
             modalName={'jobPreference'}

@@ -21,9 +21,22 @@ const CheckEmail = ({
   setEmaile,
   handleSendEmailTOP,
   isLoading,
-  router
+  router,
+  lang
 }: any) => {
   // const { width } = useWindowDimensions()
+  const {
+    JoinBossjob,
+    kickStartYourCareer,
+    enterYourEmailAddress,
+    bySigningUp,
+    termsOfUse,
+    and,
+    privacyPolicy,
+    signInWith,
+    submit,
+    pleaseEnterAvalidEmailAddress
+  } = lang || {}
   const dispatch = useDispatch()
   const firstRender = useFirstRender()
   const [emailError, setEmailError] = useState(false)
@@ -67,7 +80,7 @@ const CheckEmail = ({
 
     let errorText = null
     if (!email.length || !/\S+@\S+\.\S+/.test(email)) {
-      errorText = 'Please enter a valid email address.'
+      errorText = pleaseEnterAvalidEmailAddress
     }
     setEmailError(errorText)
   }, [email])
@@ -106,16 +119,16 @@ const CheckEmail = ({
       <div className={styles.emailLoginContainer_title}>
         <Text bold textStyle='xxxl' tagName='h2'>
           {' '}
-          Join Bossjob, <br />
-          kick-start your career!
+          {JoinBossjob}, <br />
+          {kickStartYourCareer}
         </Text>
       </div>
 
       <div className={styles.emailLoginContainer_from}>
         <MaterialTextField
           className={styles.formInput}
-          name='Enter your email address'
-          label='Enter your email address'
+          name={enterYourEmailAddress}
+          label={enterYourEmailAddress}
           variant='outlined'
           value={email}
           size='small'
@@ -137,28 +150,28 @@ const CheckEmail = ({
           isLoading={isLoading}
         >
           <Text textStyle='xl' textColor='white' bold>
-            Submit
+           {submit}
           </Text>
         </MaterialButton>
       </div>
 
       <div className={styles.emailLoginContainer_tip}>
         <Text className={styles.emailLoginContainer_tip_content}>
-          By signing up, I have read and agreed to{' '}
+        {bySigningUp}{' '}
           <Link
             target='_blank'
             href='https://blog.bossjob.ph/terms-and-conditions/'
             //  className={styles.emailLoginContainer_link}
           >
-            Terms of Use
+           {termsOfUse}
           </Link>
-          &nbsp; and &nbsp;
+          &nbsp; {and} &nbsp;
           <Link
             target='_blank'
             href='https://blog.bossjob.ph/terms-and-conditions/'
             //  className={styles.emailLoginContainer_link}
           >
-            Privacy Policy
+          {privacyPolicy}
           </Link>
         </Text>
       </div>
@@ -166,7 +179,7 @@ const CheckEmail = ({
       <div className={styles.emailLoginContainer_quickLogin}>
         <div className={styles.RegisterDivider}>
           <Text textStyle='lg' className={styles.RegisterDividerText}>
-            Sign in with
+           {signInWith}
           </Text>
         </div>
         <SocialMediaAuth callbackRequest={callbackRequest} />

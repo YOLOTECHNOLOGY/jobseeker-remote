@@ -58,7 +58,8 @@ interface ICompanyProfileLayout {
   totalJobs: number
   seoMetaTitle: string
   seoMetaDescription: string
-  accessToken?: boolean
+  accessToken?: boolean,
+  lang?:any
 }
 
 const CompanyProfileLayout = ({
@@ -66,7 +67,8 @@ const CompanyProfileLayout = ({
   company,
   currentTab,
   totalJobs,
-  accessToken
+  accessToken,
+  lang,
 }: ICompanyProfileLayout) => {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -101,7 +103,7 @@ const CompanyProfileLayout = ({
   // const canonicalUrl = companyUrl + additionalCanonicalText
 
   return (
-    <Layout>
+    <Layout lang={lang}>
       {/* <SEO
         title={seoMetaTitle}
         description={seoMetaDescription}

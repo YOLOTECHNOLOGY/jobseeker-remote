@@ -33,7 +33,7 @@ import BannerCarousel from 'components/BannerCarousel'
 import { BlueTickIcon } from 'images'
 import { getCountry } from 'helpers/country'
 
-const Companies = () => {
+const Companies = (props) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const { page } = router.query
@@ -82,7 +82,7 @@ const Companies = () => {
   }
 
   return (
-    <Layout>
+    <Layout {...props}>
       
       <div className={styles.companies}>
         <div className={styles.searchCompany}>
@@ -220,21 +220,18 @@ const Companies = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (props) => {
   const { page ,lang} : any = props.query
-  console.log(props,'query')
-  console.log(lang,7777)
   const dictionary = await getDictionary(lang)
-  console.log(dictionary)
   // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesListRequest({ page: Number(page) || 1 }))
   store.dispatch(END)
-
   await (store as any).sagaTask.toPromise()
   return {
     props: {
       seoMetaTitle: `Find Companies Hiring in ${getCountry()} | Bossjob`,
       seoMetaDescription:
         `Discover great companies to work for in ${getCountry()}! Learn more about the company and apply to job openings on Bossjob!`,
-      canonicalUrl: '/companies'
+      canonicalUrl: '/companies',
+      lang:dictionary
     }
   }
 })

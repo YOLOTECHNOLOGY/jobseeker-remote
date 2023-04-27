@@ -23,7 +23,7 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialButton from 'components/MaterialButton'
 import CompanyJobsCardLoader from 'components/Loader/CompanyJobsCard'
-
+import { getDictionary } from 'get-dictionary'
 // Images
 import { FacebookOutline, LinkedinOutline, InstagramOutline, YoutubeOutline } from 'images'
 
@@ -37,7 +37,7 @@ const CompanyDetail = (props: any) => {
   const { page } = router.query
   const [jobQuery, setJobQuery] = useState('')
 
-  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs } = props
+  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs,lang } = props
   const company = companyDetail
   const [companyJobs, setCompanyJobs] = useState(null)
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
@@ -120,6 +120,7 @@ const CompanyDetail = (props: any) => {
       seoMetaTitle={seoMetaTitle}
       seoMetaDescription={seoMetaDescription}
       accessToken={accessToken}
+      lang={lang}
     >
       <div className={styles.companyTabsContent}>
         <div className={styles.companySection}>
@@ -487,10 +488,13 @@ const CompanyDetail = (props: any) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (props) => {
+ const {req,} = props || {}
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
   const companyPageUrl = req.url.split('/')
   const companyPath = companyPageUrl[companyPageUrl.length - 1].split('-')
+  const { lang} : any = props.query
+  const dictionary = await getDictionary(lang)
 
   let companyId
   if (companyPath[companyPath.length - 1].includes('?page=')) {
@@ -538,7 +542,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       canonicalUrl,
       imageUrl: companyDetail?.logo_url,
       seoMetaDescription,
-      totalActiveJobs
+      totalActiveJobs,
+      lang:dictionary
     }
   }
 })

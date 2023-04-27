@@ -10,7 +10,7 @@ async function getRecurites(accessToken) {
      const res = await fetchRecruiters({ accessToken });
      return res?.data?.data?.['saved_candidates'] || [];
 }
-const Interested = async () => {
+const Interested = async ({lang}) => {
      const accessToken = cookies().get('accessToken')?.value
      const data = await getRecurites(accessToken);
      return (
@@ -19,7 +19,7 @@ const Interested = async () => {
                     data?.length ? (
                          <div className={styles.upload}>
                               <div className={styles.header}>
-                                   Interested in me
+                                  {lang?.InterestedInMe}
                               </div>
                               <div className={styles.uploadContainer}>
                                    <div className={styles.interstedBox}>
@@ -31,7 +31,7 @@ const Interested = async () => {
                                    </div>
                                   
                                       <button className={styles.btn}>
-                                      <Link prefetch={false} href={"/my-jobs/communicated?type=interested"} >See More </Link>
+                                      <Link prefetch={false} href={"/my-jobs/communicated?type=interested"} >{lang?.seeMore}</Link>
                                       </button>
                                  
                               </div>

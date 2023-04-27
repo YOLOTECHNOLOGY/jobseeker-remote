@@ -6,7 +6,7 @@ import Containers from './containers'
 import { fetchPersonalInfo } from 'store/services/jobs/fetchJobsCommunicated'
 
 
-const ServerContainer = async () => {
+const ServerContainer = async (props:any) => {
     const accessToken = cookies().get('accessToken')?.value
     const numbers = await fetchPersonalInfo({ accessToken })
         .then(res => res?.data?.data || {})
@@ -19,16 +19,23 @@ const ServerContainer = async () => {
         no_of_saved_me_recruiters = '- -',
         no_of_viewed_me_recruiters = '- -'
     } = numbers
-
+    const {
+        communicated,
+        exchanged,
+        saved,
+        Interview,
+        InterestedInMe,
+        whoViewedMe,
+    } = props.lang || {}
     const firstList = [
-        { title: 'Communicated', content: no_of_chats, type: 'communicated' },
-        { title: 'Exchanged', content: no_of_applied_jobs, type: 'exchanged' },
-        { title: 'Saved', content: no_of_saved_jobs, type: 'saved' },
-        { title: 'Interview', content: no_of_interviews, type: 'interview' },
+        { title: communicated, content: no_of_chats, type: 'communicated' },
+        { title: exchanged, content: no_of_applied_jobs, type: 'exchanged' },
+        { title: saved, content: no_of_saved_jobs, type: 'saved' },
+        { title: Interview, content: no_of_interviews, type: 'interview' },
     ]
     const secondList = [
-        { title: 'Interested in me', content: no_of_saved_me_recruiters, type: 'interested' },
-        { title: 'Who viewed me', content: no_of_viewed_me_recruiters, type: 'viewedMe' },
+        { title: InterestedInMe, content: no_of_saved_me_recruiters, type: 'interested' },
+        { title: whoViewedMe, content: no_of_viewed_me_recruiters, type: 'viewedMe' },
     ]
     return <Containers
         firstList={firstList}
@@ -37,7 +44,7 @@ const ServerContainer = async () => {
     />
 }
 
-const MobileHeader = () => {
+const MobileHeader = (props:any) => {
     const userInfo = JSON.parse(cookies().get('user')?.value)
 
     return <div className={styles.container}>
@@ -49,7 +56,7 @@ const MobileHeader = () => {
         </div>
         <Suspense fallback={null}>
             {/* @ts-expect-error Async Server Component */}
-            <ServerContainer />
+            <ServerContainer {...props}/>
         </Suspense>
     </div>
 }

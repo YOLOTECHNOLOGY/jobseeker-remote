@@ -27,7 +27,15 @@ import { SortContext } from './SortProvider'
 
 const SearchArea = (props: any) => {
   const { sort, setSort } = useContext(SortContext)
-  const { config, preferences, preferenceId } = props
+  const { config, preferences, preferenceId,lang } = props
+  const {
+    searchForJobTitleOrCompanyName,
+    salary,
+    experience,
+    Industry,
+    JobType,
+    resetFilters,
+  } = lang || {}
   const dispatch = useDispatch()
   const searchParams: any = useSearchParams() ?? {}
   useEffect(() => {
@@ -145,7 +153,7 @@ const SearchArea = (props: any) => {
             />
             <JobSearchBar
               id='search'
-              label='Search for job title or company name'
+              label={searchForJobTitleOrCompanyName}
               variant='outlined'
               size='small'
               className={styles.search}
@@ -181,41 +189,41 @@ const SearchArea = (props: any) => {
               }}
             >
               {' '}
-              Search{' '}
+              {lang.search}{' '}
             </MaterialButton>
           </div>
-          <PreferenceSelector preferences={preferences} preferenceId={preferenceId} config={config} />
+          <PreferenceSelector lang={lang} preferences={preferences} preferenceId={preferenceId} config={config} />
           <div className={styles.filters}>
             <Multiple
-              label='Qualification'
+              label={lang.qualification}
               value={qualification}
               options={qualificationList}
               className={styles.filterItems}
               onSelect={setQualification}
             />
             <Multiple
-              label='Salary'
+              label={salary}
               value={salaries}
               options={salaryOptions}
               className={styles.filterItems}
               onSelect={setSelaries}
             />
             <Multiple
-              label='Experience'
+              label={experience}
               value={workExperience}
               options={workExperienceList}
               className={styles.filterItems}
               onSelect={setWorkExperience}
             />
             <Multiple
-              label='Industry'
+              label={Industry}
               value={industry}
               options={industryList}
               className={styles.filterItems}
               onSelect={setIndustry}
             />
             <Multiple
-              label='Job Type'
+              label={JobType}
               value={jobTypes}
               options={jobTypeList}
               className={styles.filterItems}
@@ -223,7 +231,7 @@ const SearchArea = (props: any) => {
               defaultValue={jobTypes}
             />
             <Multiple
-              label='Company Sizes'
+              label={lang.companySizes}
               value={companySizes}
               options={companySizeList}
               className={styles.filterItems}
@@ -247,7 +255,7 @@ const SearchArea = (props: any) => {
                 setIndustry([])
               }}
             >
-              Reset Filters{' '}
+             {resetFilters}{' '}
             </Button>
           </div>
         </div>
