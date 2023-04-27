@@ -26,7 +26,6 @@ import { getDictionary } from 'get-dictionary'
 const COUNT_DOWN_VERIFY_DEFAULT = 60
 
 const GetStarted = (props:any) => {
-  console.log(props,111)
   const lang = props.lang
   const {
     step,

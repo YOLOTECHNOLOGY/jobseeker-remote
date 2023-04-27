@@ -4,7 +4,7 @@ import { JoinUs } from 'images'
 import Image from 'next/image'
 import { Button } from 'app/[lang]/components/MUIs'
 import Link from 'next/link'
-const NoPreference = () => {
+const NoPreference = (props:any) => {
     return <div className={styles.container}>
         <Image src={JoinUs} width={362} height={247} alt='' />
         <Link
@@ -15,7 +15,7 @@ const NoPreference = () => {
             <Button
                 variant='contained'
                 style={{ textTransform: 'capitalize', borderRadius: 10 }}
-            >Add Job Preference </Button>
+            >{props?.lang?.addJobPreference} </Button>
         </Link>
     </div>
 }

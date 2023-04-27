@@ -34,7 +34,6 @@ function TransitionLoader(props: TransitionLoaderProps) {
   )
 }
 export const getServerSideProps =  async (props) => {
-  console.log(111111111111)
   const { lang} : any = props.query
   const dictionary = await getDictionary(lang)
  console.log(dictionary,dictionary)

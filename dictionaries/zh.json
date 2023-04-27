@@ -117,7 +117,8 @@
       "yearsOld":"年龄",
       "resume":"简历",
       "mobileNumber":"电话号码",
-      "back":"返回"
+      "back":"返回",
+      "addJobPreference":"新增工作偏好"
     },
     "counter": {
       "increment": "你真棒",

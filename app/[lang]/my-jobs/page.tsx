@@ -66,6 +66,7 @@ const Main = async (props: any) => {
                                 preferenceId={preferenceId}
                                 preferences={preferences}
                                 config={props.config}
+                                lang={dictionary?.myJobs}
                             />
                         </Suspense>
                     </div>
