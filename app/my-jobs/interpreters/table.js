@@ -69,7 +69,6 @@ export default registInterpreter(command =>
                 // is_company_verified: Boolean(searchParams.verifiedCompany),
                 company_sizes: searchParams.companySizes?.split?.(',')?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
             }
-            console.log({ queriyParams, context },'queriyParams')
             const token = cookies().get('accessToken')
             return fetchJobsForYouLogin(queriyParams, token.value)
                 .then(result => ({

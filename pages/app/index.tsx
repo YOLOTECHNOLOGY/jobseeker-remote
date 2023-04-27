@@ -9,7 +9,6 @@ const iOSUrl = 'https://apps.apple.com/sg/app/bossjob/id1592073585'
 const AppRedirect = () => {
     const { ua: userAgent } = useUserAgent()
     const accessToken = getCookie('accessToken')
-    console.log({ userAgent })
     const router = useRouter()
     const timeoutRef = useRef(setTimeout(() => {
         router.push('/')

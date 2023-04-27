@@ -142,7 +142,6 @@ const NavSearchFilter = ({
 
   const handleApplyFilter = (data) => {
     onCloseFilter()
-    console.log({ data })
     const filtered = pipe(
       map(arr => is(Array)(arr) ? arr.filter(a => a) : []),
       filter(a => a?.length)

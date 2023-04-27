@@ -192,7 +192,6 @@ const Step1 = (props: any) => {
         onReady={() => {
           if (!accessToken) {
             const google = (window as any)?.google
-            // console.log('loginGoogle', google)
             google.accounts.id.initialize({
               client_id: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
               callback: handleGoogleOneTapLoginResponse,
@@ -206,7 +205,6 @@ const Step1 = (props: any) => {
               }
             })
             function handleGoogleOneTapLoginResponse(CredentialResponse) {
-              // console.log('handleGoogleOneTapLoginResponse', CredentialResponse)
               const accessTokenGoogle = CredentialResponse.credential
               let activeKey = 1
               if (window.location.pathname.includes('/employer')) {

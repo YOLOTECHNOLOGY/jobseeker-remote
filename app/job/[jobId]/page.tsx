@@ -61,14 +61,11 @@ export async function generateMetadata({ params,searchParams}): Promise<Metadata
     high:height,
     job_card:cardUrl,
   } = shareInfo || {}
-  console.log(shareInfo,'shareInfo')
     const categoryMetaText = 'jobs'
     const seoMetaTitle = `${name} is hiring ${jobTitle} - ${jobId} | Bossjob`
     const seoMetaDescription = `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${
       location.value
     }, ${fullAddress.split(',').pop()} on Bossjob now!`
-
-    console.log(jobDetail, seoMetaDescription)
 
     const seoParams: Metadata = !shareInfo ? {
       title: seoMetaTitle,
@@ -105,7 +102,6 @@ export async function generateMetadata({ params,searchParams}): Promise<Metadata
       },
 
     }
-   console.log(seoParams,'seoParams')
     return seoParams
   }
 }

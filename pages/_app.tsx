@@ -120,7 +120,6 @@ const App = (props: AppProps) => {
         })
     }
   }, []) // [router.route]
-  // console.log('renderProps', props.pageProps)
   return (
     <>
       <SEO

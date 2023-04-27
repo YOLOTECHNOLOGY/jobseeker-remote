@@ -18,7 +18,6 @@ const Search = () => {
   const [searchValue, setSearchValue] = useState<string>('')
 
   const handleUpdatePath = () => {
-    console.log(location.value, searchValue)
     const path = buildQuery(location?.value, searchValue)
     router.push(path)
   }

@@ -19,11 +19,9 @@ const OfferDetail = (props: any) => {
             setShow(false)
         },
         refreshOfferDetail(data) {
-            console.log({ refreshOfferDetail: data })
             setData(data)
         }
     }
-    console.log({ offerData: data })
     contextRef.current = assign(contextRef.current, context)
     return <Modal
         showModal={show}

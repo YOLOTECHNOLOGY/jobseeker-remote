@@ -5,7 +5,6 @@ import { HomePageChat } from 'images'
 import Image from 'next/image'
 const CompanyList = (props: any) => {
   const { featured_companies: companies } = props?.data?.data || {}
-  console.log(companies,'companies')
   return (
     <>
       {companies?.map((item) => {

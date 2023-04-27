@@ -1,6 +1,4 @@
 'use client' // Error components must be Client components
-
-import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { BossjobLogo } from 'images'
 import { Button } from 'app/components/MUIs'
@@ -12,10 +10,7 @@ import Loading from './loading'
 export default function Error(props: { error: any; reset: () => void }) {
   const { error, reset } = props
   const router = useRouter()
-  console.log({ 'error.digest': error.digest, props })
-  useEffect(() => {
-    console.error(error)
-  }, [error])
+  
   if (error?.message?.includes('status code 401') || error.digest === '193452068' || error.digest === '2228123006') {
     if (globalThis.globalPromise) {
       globalThis.globalPromise.then(() => {

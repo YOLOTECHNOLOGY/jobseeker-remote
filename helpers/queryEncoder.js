@@ -82,16 +82,6 @@ export const userFilterSelectionDataParser = (field, optionValue, routerQuery, c
 
             dissoc('keyword'),
             when(() => is(Array)(isClear), omit(isClear)),
-            // a => {
-            //     console.log({ a })
-            //     console.log('noParams',conditions.noParams(a))
-            //     console.log('onlyOne',conditions.onlyOne(a))
-            //     console.log('oneWithLocation',conditions.oneWithLocation(a))
-            //     console.log('queryMany',conditions.queryMany(a))
-            //     console.log('noQueryMany',conditions.noQueryMany(a))
-
-            //     return a
-            // },
             buildQueryParams,
 
         ),
