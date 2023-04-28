@@ -1,6 +1,13 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
+.invalidLink {
+  text-align: center;
+  margin: 90px 0;
+  font-size: 20px;
+  color: #ff5555;
+}
+
 .errorMain {
   text-align: center;
   margin: 100px 0;
@@ -201,10 +208,10 @@
         margin-top: 16px;
         overflow: hidden;
 
-        ul,ol {
+        ul,
+        ol {
           margin-left: 14px;
         }
-
       }
 
       &_requirement {
@@ -294,7 +301,7 @@
         color: #353535;
       }
 
-      h5+p {
+      h5 + p {
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -1012,8 +1019,7 @@
   }
 }
 
-
 .read_more_container {
-  color: #136FD3;
+  color: #136fd3;
   cursor: pointer;
 }
