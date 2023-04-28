@@ -112,7 +112,7 @@ const Page = async ({ params }: any) => {
 
   return (
     <>
-      {!jobDetail.error && !jobDetail.message ? (
+      {!jobDetail?.error && !jobDetail?.message ? (
         <Index data={data} jobId={jobId} />
       ) : (
         <Error jobDetail={jobDetail} />
