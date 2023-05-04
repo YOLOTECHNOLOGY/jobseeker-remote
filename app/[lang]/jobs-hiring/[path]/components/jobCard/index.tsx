@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useContext } from 'react'
 import { HomePageChat, AppDownQRCode } from 'images'
 import { isMobile } from 'react-device-detect'
 import Image from 'next/image'
@@ -18,6 +18,7 @@ import { CircularProgress } from 'app/[lang]/components/MUIs'
 import { addJobViewService } from 'store/services/jobs/addJobView'
 
 import styles from '../../index.module.scss'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -133,6 +134,7 @@ const JobCard = (props: any) => {
     company_url,
     is_urgent
   } = props
+  const { search } = useContext(languageContext) as any
   const labels = [job_type, job_location, xp_lvl, degree].filter((a) => a)
   const companyLabels = [company_industry, company_size, company_financing_stage].filter((a) => a)
   const router = useRouter()
@@ -282,17 +284,19 @@ const JobCard = (props: any) => {
                           <Text textColor='white' bold>
                             {(() => {
                               if (external_apply_url) {
-                                return 'Apply Now'
+                                return search.jobCard.apply
                               } else if (chat?.is_exists && chat?.job_id === id) {
-                                return 'Continue Chat'
+                                return search.jobCard.continue
                               } else {
-                                return 'Chat Now'
+                                return search.jobCard.chat
                               }
                             })()}
                           </Text>
                         </MaterialButton>
                       </div>
-                      {!!recruiter_is_online && <div className={styles.online}>Online</div>}
+                      {!!recruiter_is_online && (
+                        <div className={styles.online}>{search.jobCard.online}</div>
+                      )}
                     </div>
                   )
                 },
@@ -380,7 +384,7 @@ const JobCard = (props: any) => {
                   />
                 </svg>
                 <Text textColor='#136FD3' bold style={{ marginLeft: 8 }}>
-                  {isSaved ? 'Saved' : 'Save'}
+                  {isSaved ? search.jobCard.saved : search.jobCard.save}
                 </Text>
               </MaterialButton>
             </div>
@@ -392,7 +396,7 @@ const JobCard = (props: any) => {
                 width={60}
                 alt={''}
               />
-              Talk to Boss anywhere
+              {search.jobCard.talkToBoss}
             </div>
           </div>
           <div className={styles.popContent}>
@@ -400,7 +404,7 @@ const JobCard = (props: any) => {
               <CircularProgress color={'primary'} size={20} />
             ) : (
               <>
-                <div className={styles.desTitle}>Job Description</div>
+                <div className={styles.desTitle}>{search.jobCard.JD}</div>
                 <div
                   className={styles.detail}
                   dangerouslySetInnerHTML={{

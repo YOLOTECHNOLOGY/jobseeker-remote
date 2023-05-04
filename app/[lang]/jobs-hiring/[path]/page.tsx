@@ -22,6 +22,7 @@ import { Metadata } from 'next'
 import { toPairs } from 'ramda'
 import Footer from 'components/Footer'
 import { getCountry } from 'helpers/country'
+import { getDictionary } from 'get-dictionary'
 const configs = getConfigs([
   ['location_lists'],
   ['main_functions'],
@@ -37,6 +38,27 @@ const configs = getConfigs([
   ['salary_range_filters']
 ])
 
+const QRCode = () => (
+  <svg
+    width='16'
+    height='16'
+    viewBox='0 0 16 16'
+    transform='translate(-2,3)'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <path d='M11 2.5H13.5V5' stroke='white' strokeLinecap='round' strokeLinejoin='round' />
+    <path d='M5 13.5H2.5V11' stroke='white' strokeLinecap='round' strokeLinejoin='round' />
+    <path d='M13.5 11V13.5H11' stroke='white' strokeLinecap='round' strokeLinejoin='round' />
+    <path d='M2.5 5V2.5H5' stroke='white' strokeLinecap='round' strokeLinejoin='round' />
+    <path
+      d='M10.5 5H5.5C5.22386 5 5 5.22386 5 5.5V10.5C5 10.7761 5.22386 11 5.5 11H10.5C10.7761 11 11 10.7761 11 10.5V5.5C11 5.22386 10.7761 5 10.5 5Z'
+      stroke='white'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+  </svg>
+)
 // or dynamic metadata
 export async function generateMetadata(props: any) {
   /* Handle SEO Meta Tags*/
@@ -45,8 +67,7 @@ export async function generateMetadata(props: any) {
   const { config } = await configs(serverDataScript()).run(props)
   const searchValues = decoder(config)(params.path, searchParams)
   let seoMetaTitle = `Professional Jobs in ${getCountry()} - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
-  let seoMetaDescription =
-    `New Jobs in ${getCountry()}available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+  let seoMetaDescription = `New Jobs in ${getCountry()}available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
   const searchQuery = (searchValues.query ?? null) as string | null
   const location = (searchValues.location?.[0] ?? null) as string | null
   const url = new URLSearchParams(toPairs(searchParams)).toString()
@@ -135,14 +156,18 @@ const SearchHistory = searchHistoryIp(
   serverDataScript().chain((list) => buildComponentScript({ list }, SearchHistories))
 ).run
 
-const Main = (props: any) => {
+const Main = async (props: any) => {
+  const { lang } = props.params
+  const { search } = (await getDictionary(lang)) as any
+
   const accessToken = cookies().get('accessToken')?.value
   const location = props.searchValues?.location?.[0]
+
   return (
     <>
       <div>
         <div style={{ position: 'sticky', top: 0, zIndex: 90 }}>
-          <SearchForm config={props.config} searchValues={props.searchValues ?? null} />
+          <SearchForm config={props.config} lang={lang} searchValues={props.searchValues ?? null} />
         </div>
         <div className={styles.content}>
           <div className={styles.table}>
@@ -154,6 +179,7 @@ const Main = (props: any) => {
           </div>
           <div className={styles.rightContent}>
             <UploadResumeButton
+              text={search.uploadResume}
               isShowBtn={!accessToken}
               isShowArrowIcon={false}
               className={styles.arrowIconPostion}
@@ -161,48 +187,10 @@ const Main = (props: any) => {
             <div className={styles.qrCode}>
               <Image src={AppDownQRCode} alt='app down' width='85' height='88' />
               <div className={styles.rightContainer}>
-                <label>Chat directly with Boss</label>
+                <label>{search.chatBoss}</label>
                 <p>
-                  <svg
-                    width='16'
-                    height='16'
-                    viewBox='0 0 16 16'
-                    transform='translate(-2,3)'
-                    fill='none'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <path
-                      d='M11 2.5H13.5V5'
-                      stroke='white'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                    <path
-                      d='M5 13.5H2.5V11'
-                      stroke='white'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                    <path
-                      d='M13.5 11V13.5H11'
-                      stroke='white'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                    <path
-                      d='M2.5 5V2.5H5'
-                      stroke='white'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                    <path
-                      d='M10.5 5H5.5C5.22386 5 5 5.22386 5 5.5V10.5C5 10.7761 5.22386 11 5.5 11H10.5C10.7761 11 11 10.7761 11 10.5V5.5C11 5.22386 10.7761 5 10.5 5Z'
-                      stroke='white'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                  </svg>
-                  Scan QR code to download APP
+                  <QRCode />
+                  {search.QRCode}
                 </p>
               </div>
             </div>
@@ -215,7 +203,8 @@ const Main = (props: any) => {
         </div>
       </div>
       <Footer />
-    </>)
+    </>
+  )
 }
 
 export default configs(serverDataScript()).chain((configs) =>

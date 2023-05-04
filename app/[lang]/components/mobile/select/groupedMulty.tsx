@@ -40,9 +40,11 @@ const GroupedMultipleSelect = ({
   value,
   labels,
   fieldRef,
-  error,
+  error
 }: MaterialSelectCheckMarksProps) => {
-  const [selectedOptions, setSelectedOptions] = useState<any>(mergeLeft(value)(map(() => [])(options)))
+  const [selectedOptions, setSelectedOptions] = useState<any>(
+    mergeLeft(value)(map(() => [])(options))
+  )
   const valueRef = useRef(value)
   useEffect(() => {
     setSelectedOptions(value)
@@ -51,12 +53,17 @@ const GroupedMultipleSelect = ({
   const handleChange = (value: string, key) => {
     const formattedValue = value.toLowerCase()
     if ((selectedOptions[key] ?? []).includes(formattedValue)) {
-      setSelectedOptions({ ...selectedOptions, [key]: (selectedOptions[key] ?? []).filter(option => option !== formattedValue) })
+      setSelectedOptions({
+        ...selectedOptions,
+        [key]: (selectedOptions[key] ?? []).filter((option) => option !== formattedValue)
+      })
     } else {
-      setSelectedOptions({ ...selectedOptions, [key]: [...(selectedOptions[key] ?? []), formattedValue] })
+      setSelectedOptions({
+        ...selectedOptions,
+        [key]: [...(selectedOptions[key] ?? []), formattedValue]
+      })
     }
   }
-  console.log({ selectedOptions, options })
   return (
     <FormControl fullWidth className={className} size='small'>
       <InputLabel id={`${id}-select-label`}>{label}</InputLabel>
@@ -70,27 +77,47 @@ const GroupedMultipleSelect = ({
         open={open}
         autoFocus={false}
         onOpen={() => setOpen(true)}
-        style={{ ...style, background: flatMap(values(selectedOptions), a => a || [])?.length ? '#E7F1FB' : '#F0F0F0' }}
-        value={flatMap(values(selectedOptions), a => a)?.length ? flatMap(values(selectedOptions), a => a) : [label]}
+        style={{
+          ...style,
+          background: flatMap(values(selectedOptions), (a) => a || [])?.length
+            ? '#E7F1FB'
+            : '#F0F0F0'
+        }}
+        value={
+          flatMap(values(selectedOptions), (a) => a)?.length
+            ? flatMap(values(selectedOptions), (a) => a)
+            : [label]
+        }
         label={label}
         input={<OutlinedInput label='Tag' />}
         renderValue={() => {
-          const total: number = values(selectedOptions).filter(a => a).reduce((num, arr) => num + arr.length, 0)
-          if (!flatMap(values(selectedOptions), a => a || [])?.length) {
-            return <div style={{
-              color: 'rgba(0, 0, 0, 0.6)', 
-              position: 'relative',
-              // left: 13,
-              top: 2,
-            }}>{label}</div>
+          const total: number = values(selectedOptions)
+            .filter((a) => a)
+            .reduce((num, arr) => num + arr.length, 0)
+          if (!flatMap(values(selectedOptions), (a) => a || [])?.length) {
+            return (
+              <div
+                style={{
+                  color: 'rgba(0, 0, 0, 0.6)',
+                  position: 'relative',
+                  // left: 13,
+                  top: 2
+                }}
+              >
+                {label}
+              </div>
+            )
           } else {
-            return <div style={{
-              // color: 'rgba(0, 0, 0, 0.6)', 
-              position: 'relative',
-              // left: 13,
-              top: 2,
-            }}>{`${label} ${total > 0 ? `(${total})` : ''}`}</div>
-
+            return (
+              <div
+                style={{
+                  // color: 'rgba(0, 0, 0, 0.6)',
+                  position: 'relative',
+                  // left: 13,
+                  top: 2
+                }}
+              >{`${label} ${total > 0 ? `(${total})` : ''}`}</div>
+            )
           }
         }}
       >
@@ -110,26 +137,50 @@ const GroupedMultipleSelect = ({
         >
           {keys(options).map((key, index) => {
             const value: any = options[key]
-            return (<div key={key}>
-              <div className={styles.section}>{labels[index] ?? key}</div>
-              {value.map((option: any) => (
-                <MenuItem key={option.value} value={option.value} onClick={() => handleChange(option.value, key)}>
-                  <ListItemText className={classNames([styles.item, styles.lineCamp])} primary={option.label}
-                    style={{
-                      marginLeft: 30,
-                      color: (selectedOptions[key] ?? []).indexOf(option.value?.toLowerCase()) > -1 ? '#136FD3' : '#353535'
-                    }} />
-                  {(selectedOptions[key] ?? []).indexOf(option.value?.toLowerCase()) > -1 ?
-                    <div>
-                      <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.4545 2L7.14566 12L2 7" stroke="#136FD3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div> : null}
-                </MenuItem>
-              ))}
-            </div>)
+            return (
+              <div key={key}>
+                <div className={styles.section}>{labels[index] ?? key}</div>
+                {value.map((option: any) => (
+                  <MenuItem
+                    key={option.value}
+                    value={option.value}
+                    onClick={() => handleChange(option.value, key)}
+                  >
+                    <ListItemText
+                      className={classNames([styles.item, styles.lineCamp])}
+                      primary={option.label}
+                      style={{
+                        marginLeft: 30,
+                        color:
+                          (selectedOptions[key] ?? []).indexOf(option.value?.toLowerCase()) > -1
+                            ? '#136FD3'
+                            : '#353535'
+                      }}
+                    />
+                    {(selectedOptions[key] ?? []).indexOf(option.value?.toLowerCase()) > -1 ? (
+                      <div>
+                        <svg
+                          width='19'
+                          height='14'
+                          viewBox='0 0 19 14'
+                          fill='none'
+                          xmlns='http://www.w3.org/2000/svg'
+                        >
+                          <path
+                            d='M17.4545 2L7.14566 12L2 7'
+                            stroke='#136FD3'
+                            strokeWidth='2.5'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                          />
+                        </svg>
+                      </div>
+                    ) : null}
+                  </MenuItem>
+                ))}
+              </div>
+            )
           })}
-
         </PopContainer>
       </Select>
     </FormControl>

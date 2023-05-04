@@ -210,7 +210,7 @@
       "sales": "销售顾问"
     },
     "tab": {
-      "IT": "IT",
+      "IT": "信息技术",
       "CSR/Ops": "客户服务/操作员",
       "Sales": "销售",
       "Finance": "财务/审计/税务",
@@ -371,7 +371,7 @@
       "text1": "Job alert for",
       "text2": "in",
       "text3": "enabled",
-      "manage": "通知管理",
+      "manage": "管理通知",
       "noKey": "未选择任何关键词",
       "undo": "这个操作无法撤销。",
       "btn1": "保留",

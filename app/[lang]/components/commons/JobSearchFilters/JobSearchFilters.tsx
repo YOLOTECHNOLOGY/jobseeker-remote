@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import * as ReactDOM from 'react-dom'
 import { map, is, pipe, filter } from 'ramda'
 /* Vendor */
@@ -20,6 +20,7 @@ import styles from './JobSearchFilters.module.scss'
 
 /* Images */
 import { CloseIcon } from 'images'
+import { languageContext } from '../../providers/languageProvider'
 
 interface NavSearchFilterProps {
   urlDefaultValues: any
@@ -66,12 +67,18 @@ const NavSearchFilter = ({
   config
 }: NavSearchFilterProps) => {
   if (!isShowFilter) return null
+
+  const {
+    search: { searchModal }
+  } = useContext(languageContext) as any
   const expLvlList = config.xp_lvls
   const eduLevelList = config.educations
   const jobTypeList = config.job_types
   const companySizeList = config.company_sizes
   const industryList = config.industry_lists
-  const financingStageList = config.company_financing_stage_lists?.map?.(item => ({ ...item, ['seo-value']: item.key })) ?? []
+  const financingStageList =
+    config.company_financing_stage_lists?.map?.((item) => ({ ...item, ['seo-value']: item.key })) ??
+    []
   const scrollY = useRef(0)
   const salaryRangeList = config.salary_range_filters.map((range) => ({
     ...range,
@@ -144,8 +151,8 @@ const NavSearchFilter = ({
     onCloseFilter()
     console.log({ data })
     const filtered = pipe(
-      map(arr => is(Array)(arr) ? arr.filter(a => a) : []),
-      filter(a => a?.length)
+      map((arr) => (is(Array)(arr) ? arr.filter((a) => a) : [])),
+      filter((a) => a?.length)
     )(data)
     setClientDefaultValues(filtered)
   }
@@ -238,7 +245,7 @@ const NavSearchFilter = ({
         >
           <div className={styles.searchFilterHeader}>
             <Text textStyle='lg' bold>
-              Filters
+              {searchModal.header}
             </Text>
             <div className={styles.searchFilterClose} onClick={() => onCloseFilter()}>
               <img src={CloseIcon} alt='logo' width='13' height='13' />
@@ -281,28 +288,28 @@ const NavSearchFilter = ({
               )}
 
               <SearchFilters
-                title='Work Experience'
+                title={searchModal.exp}
                 fieldName='workExperience'
                 options={expLvlList}
                 defaultOpenState={true}
                 isNotCollapsible={true}
               />
               <SearchFilters
-                title='Qualification'
+                title={searchModal.edu}
                 fieldName='qualification'
                 options={eduLevelList}
                 defaultOpenState={true}
                 isNotCollapsible={true}
               />
               <SearchFilters
-                title='Industry'
+                title={searchModal.industry}
                 fieldName='industry'
                 options={industryList}
                 defaultOpenState={true}
                 isNotCollapsible={true}
               />
               <SearchFilters
-                title='Verified Company'
+                title={searchModal.companyVerified}
                 fieldName='verifiedCompany'
                 options={[
                   {
@@ -316,27 +323,26 @@ const NavSearchFilter = ({
                 isNotCollapsible={true}
               />
               <SearchFilters
-                title='Company Size'
+                title={searchModal.companySize}
                 fieldName='companySizes'
                 options={companySizeList}
                 defaultOpenState={true}
                 isNotCollapsible={true}
               />
               <SearchFilters
-                title='Financing Stage'
+                title={searchModal.finance}
                 fieldName='financingStages'
                 options={financingStageList}
                 defaultOpenState={true}
                 isNotCollapsible={true}
               />
-
             </form>
           </div>
           <div className={styles.searchFilterFooter}>
             <div className={styles.searchFilterReset} onClick={handleResetFilter}>
               <Button>
                 <Text textStyle='base' textColor='primary' bold>
-                  Reset Filter
+                  {searchModal.reset}
                 </Text>
               </Button>
             </div>
@@ -346,7 +352,7 @@ const NavSearchFilter = ({
               primary
             >
               <Text textStyle='base' textColor='white' bold>
-                Apply Filter
+                {searchModal.apply}
               </Text>
             </Button>
           </div>

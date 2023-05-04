@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 /* Vendor */
@@ -11,10 +11,19 @@ import TextField from '@mui/material/TextField'
 import { titleCase } from 'helpers/formatter'
 
 /* Redux Actions */
-import { openManageJobAlertsModal, closeManageJobAlertsModal } from 'store/actions/modals/manageJobAlertsModal'
+import {
+  openManageJobAlertsModal,
+  closeManageJobAlertsModal
+} from 'store/actions/modals/manageJobAlertsModal'
 import { closeCreateJobAlertModal } from 'store/actions/modals/createJobAlertModal'
-import { openUpdateJobAlertModal, closeUpdateJobAlertModal } from 'store/actions/modals/updateJobAlertModal'
-import { openDeleteJobAlertModal, closeDeleteJobAlertModal } from 'store/actions/modals/deleteJobAlertModal'
+import {
+  openUpdateJobAlertModal,
+  closeUpdateJobAlertModal
+} from 'store/actions/modals/updateJobAlertModal'
+import {
+  openDeleteJobAlertModal,
+  closeDeleteJobAlertModal
+} from 'store/actions/modals/deleteJobAlertModal'
 
 /* Components */
 import Text from 'components/Text'
@@ -26,6 +35,7 @@ import { CreateIcon, DeleteIcon } from 'images'
 
 /* Styles */
 import styles from './ModalJobAlerts.module.scss'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 interface ModalJobAlertsProps {
   query?: any
@@ -54,9 +64,13 @@ const ModalJobAlerts = ({
   isCreatingJobAlert,
   isPublicPostReportJob,
   location,
-  query,
+  query
 }: ModalJobAlertsProps) => {
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm()
 
   const dispatch = useDispatch()
 
@@ -66,8 +80,12 @@ const ModalJobAlerts = ({
   const [jobAlertResponse, setJobAlertResponse] = useState(null)
   const [formEmail, setFormEmail] = useState('')
   const [jobAlertError, setJobAlertError] = useState(null)
+  const { search } = useContext(languageContext) as any
+  const { alertModal, updateAlertModal, deleteAlertModal, enableAlertModal } = search
 
-  const showManageJobAlertsModal = useSelector((store: any) => store.modal.manageJobAlertsModal.show)
+  const showManageJobAlertsModal = useSelector(
+    (store: any) => store.modal.manageJobAlertsModal.show
+  )
   const showCreateJobAlertModal = useSelector((store: any) => store.modal.createJobAlertModal.show)
   const showUpdateJobAlertModal = useSelector((store: any) => store.modal.updateJobAlertModal.show)
   const showDeleteJobAlertModal = useSelector((store: any) => store.modal.deleteJobAlertModal.show)
@@ -84,7 +102,7 @@ const ModalJobAlerts = ({
     if (createdJobAlert) setJobAlertResponse(createdJobAlert?.response)
   }, [createdJobAlert])
 
-  const onSubmit = ({email}) => {
+  const onSubmit = ({ email }) => {
     handleCreateJobAlert(email)
     setJobAlertResponse(null)
   }
@@ -108,54 +126,61 @@ const ModalJobAlerts = ({
   const ModalJobAlertsList = () => {
     return (
       <Modal
-        headerTitle='Job Alerts'
+        headerTitle={alertModal.title}
         showModal={showManageJobAlertsModal}
         handleModal={() => dispatch(closeManageJobAlertsModal())}
-        firstButtonText='Done'
+        firstButtonText={alertModal.btn}
         firstButtonIsClose={true}
         handleFirstButton={() => dispatch(closeManageJobAlertsModal())}
       >
         <div className={classNames(styles.ModalJobAlertBody, styles.ModalJobAlertsListBody)}>
           <ul className={styles.ModalJobAlertsList}>
-            {jobAlertsList?.length > 0 && jobAlertsList.map((alert)  => (
-              <li key={alert.id} className={styles.ModalJobAlertsItem}>
-                <div className={styles.ModalJobAlertsItemHeader}>
-                  <Text textStyle='xl' bold>
-                    {titleCase(alert.keyword_value)}
-                  </Text>
-                  <div className={styles.ModalJobAlertsItemAction}>
-                    <img
-                      src={CreateIcon}
-                      width='18'
-                      height='18'
-                      onClick={() => {
-                        dispatch(closeManageJobAlertsModal())
-                        dispatch(openUpdateJobAlertModal())
-                        setSelectedJobAlert(alert)
-                        setFrequency(alert.frequency_value === 'Daily' ? 1 : 2)
-                      }}
-                      className={styles.ModalJobAlertsItemButton}
-                    />
-                    <img
-                      src={DeleteIcon}
-                      width='18'
-                      height='18'
-                      onClick={() => {
-                        dispatch(closeManageJobAlertsModal())
-                        dispatch(openDeleteJobAlertModal())
-                        setSelectedJobAlert(alert)
-                      }}
-                      className={styles.ModalJobAlertsItemButton}
-                    />
+            {jobAlertsList?.length > 0 &&
+              jobAlertsList.map((alert) => (
+                <li key={alert.id} className={styles.ModalJobAlertsItem}>
+                  <div className={styles.ModalJobAlertsItemHeader}>
+                    <Text textStyle='xl' bold>
+                      {titleCase(alert.keyword_value)}
+                    </Text>
+                    <div className={styles.ModalJobAlertsItemAction}>
+                      <img
+                        src={CreateIcon}
+                        width='18'
+                        height='18'
+                        onClick={() => {
+                          dispatch(closeManageJobAlertsModal())
+                          dispatch(openUpdateJobAlertModal())
+                          setSelectedJobAlert(alert)
+                          setFrequency(alert.frequency_value === 'Daily' ? 1 : 2)
+                        }}
+                        className={styles.ModalJobAlertsItemButton}
+                      />
+                      <img
+                        src={DeleteIcon}
+                        width='18'
+                        height='18'
+                        onClick={() => {
+                          dispatch(closeManageJobAlertsModal())
+                          dispatch(openDeleteJobAlertModal())
+                          setSelectedJobAlert(alert)
+                        }}
+                        className={styles.ModalJobAlertsItemButton}
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className={styles.ModalJobAlertsItemBody}>
-                  <Text textStyle='base' bold>{formatLocationKeyDisplay(alert.location_value)}</Text>
-                  <Text textStyle='base'>Filters: {alert.filters} </Text>
-                  <Text textStyle='base'>Frequency: via {alert.frequency_value}</Text>
-                </div>
-              </li>
-            ))}
+                  <div className={styles.ModalJobAlertsItemBody}>
+                    <Text textStyle='base' bold>
+                      {formatLocationKeyDisplay(alert.location_value)}
+                    </Text>
+                    <Text textStyle='base'>
+                      {alertModal.filters}: {alert.filters}{' '}
+                    </Text>
+                    <Text textStyle='base'>
+                      {alertModal.frequency} {alert.frequency_value}
+                    </Text>
+                  </div>
+                </li>
+              ))}
           </ul>
         </div>
       </Modal>
@@ -174,15 +199,15 @@ const ModalJobAlerts = ({
 
     return (
       <Modal
-        headerTitle='Manage Job Alert'
+        headerTitle={updateAlertModal.title}
         showModal={showUpdateJobAlertModal}
         handleModal={() => dispatch(closeUpdateJobAlertModal())}
-        firstButtonText='Back'
+        firstButtonText={updateAlertModal.btn1}
         handleFirstButton={() => {
           dispatch(closeUpdateJobAlertModal())
           dispatch(openManageJobAlertsModal())
         }}
-        secondButtonText='Done'
+        secondButtonText={updateAlertModal.btn2}
         handleSecondButton={() => {
           dispatch(closeUpdateJobAlertModal())
           dispatch(openManageJobAlertsModal())
@@ -195,7 +220,9 @@ const ModalJobAlerts = ({
         <div className={styles.ModalJobAlertBody}>
           <div className={styles.ModalUpdateJobAlert}>
             <div className={styles.ModalUpdateJobAlertHeader}>
-              <Text textStyle='xl' bold>{titleCase(selectedJobAlert?.keyword_value)}</Text>
+              <Text textStyle='xl' bold>
+                {titleCase(selectedJobAlert?.keyword_value)}
+              </Text>
               <img
                 src={DeleteIcon}
                 width='18'
@@ -208,14 +235,18 @@ const ModalJobAlerts = ({
               />
             </div>
             <div className={styles.ModalUpdateJobAlertSub}>
-              <Text textStyle='base' bold>{selectedJobAlert?.location_value}</Text>
-              <Text textStyle='base'>Filters: {selectedJobAlert?.filters}</Text>
+              <Text textStyle='base' bold>
+                {selectedJobAlert?.location_value}
+              </Text>
+              <Text textStyle='base'>
+                {updateAlertModal.filters}: {selectedJobAlert?.filters}
+              </Text>
             </div>
 
             <div className={styles.ModalUpdateJobAlertBody}>
               <div className={styles.ModalUpdateJobAlertGroup}>
                 <Text textStyle='base' bold className={styles.ModalUpdateJobAlertGroupHeader}>
-                  Alert Frequency
+                  {updateAlertModal.subTitle}
                 </Text>
                 <RadioGroup
                   aria-label='frequency'
@@ -226,12 +257,12 @@ const ModalJobAlerts = ({
                   <FormControlLabel
                     value='1'
                     control={<Radio />}
-                    label={<Text textStyle='base'>Daily</Text>}
+                    label={<Text textStyle='base'>{updateAlertModal.daily}</Text>}
                   />
                   <FormControlLabel
                     value='2'
                     control={<Radio />}
-                    label={<Text textStyle='base'>Weekly</Text>}
+                    label={<Text textStyle='base'>{updateAlertModal.week}</Text>}
                   />
                 </RadioGroup>
               </div>
@@ -246,15 +277,15 @@ const ModalJobAlerts = ({
   const ModalDeleteJobAlert = () => {
     return (
       <Modal
-        headerTitle='Delete Job Alert'
+        headerTitle={deleteAlertModal.title}
         showModal={showDeleteJobAlertModal}
         handleModal={() => dispatch(closeDeleteJobAlertModal())}
-        firstButtonText='Keep'
+        firstButtonText={deleteAlertModal.btn1}
         handleFirstButton={() => {
           dispatch(closeDeleteJobAlertModal())
           dispatch(openManageJobAlertsModal())
         }}
-        secondButtonText='Delete'
+        secondButtonText={deleteAlertModal.btn2}
         handleSecondButton={() => {
           dispatch(closeDeleteJobAlertModal())
           dispatch(openManageJobAlertsModal())
@@ -264,9 +295,13 @@ const ModalJobAlerts = ({
         <div className={styles.ModalJobAlertBody}>
           <Text textStyle='base'>
             {selectedJobAlert && (
-              <span>You are about to delete the job alert for <strong>{titleCase(selectedJobAlert?.keyword_value)}</strong> in <strong>{selectedJobAlert?.location_value}</strong>.</span>
+              <span>
+                {deleteAlertModal.text1}{' '}
+                <strong>{titleCase(selectedJobAlert?.keyword_value)}</strong>{' '}
+                {deleteAlertModal.text2} <strong>{selectedJobAlert?.location_value}</strong>.
+              </span>
             )}
-            <br /> This cannot be undone.
+            <br /> {deleteAlertModal.undo}
           </Text>
         </div>
       </Modal>
@@ -275,7 +310,7 @@ const ModalJobAlerts = ({
 
   // Public Job Alerts
   if (isPublicPostReportJob) {
-    if (!jobAlertResponse?.id){      
+    if (!jobAlertResponse?.id) {
       return (
         <Modal
           headerTitle='Enable Job Alert'
@@ -289,37 +324,53 @@ const ModalJobAlerts = ({
         >
           <div className={styles.ModalJobAlertBody}>
             <Text textStyle='lg'>
-              Get email updtes for {' '}
-              <Text textStyle='base' bold>{query ? query : 'all'}</Text> 
+              Get email updtes for{' '}
+              <Text textStyle='base' bold>
+                {query ? query : 'all'}
+              </Text>
               {location && location.length !== 0 && (
                 <>
-                  {' '} jobs in {' '}
-                  <Text textStyle='base' bold>{location.value}</Text>
+                  {' '}
+                  jobs in{' '}
+                  <Text textStyle='base' bold>
+                    {location.value}
+                  </Text>
                 </>
-              )}.
+              )}
+              .
             </Text>
             <div>
-              <TextField 
-                {...register('email', { required: true })} 
+              <TextField
+                {...register('email', { required: true })}
                 className={styles.ModalJobAlertBodyInput}
-                id='outlined-basic' 
-                label='Email' 
+                id='outlined-basic'
+                label='Email'
                 variant='outlined'
                 value={formEmail}
                 onChange={(e) => setFormEmail(e.target.value)}
               />
-              {errors.email && <Text textStyle='sm' textColor='red'>This field is required</Text>}
-              {jobAlertError && <Text textStyle='sm' textColor='red'>{jobAlertError}</Text>}
+              {errors.email && (
+                <Text textStyle='sm' textColor='red'>
+                  This field is required
+                </Text>
+              )}
+              {jobAlertError && (
+                <Text textStyle='sm' textColor='red'>
+                  {jobAlertError}
+                </Text>
+              )}
             </div>
-            <Text textStyle='xsm' tagName='p'>By creating this job alert, you agree to the Bossjob {' '}
+            <Text textStyle='xsm' tagName='p'>
+              By creating this job alert, you agree to the Bossjob{' '}
               <Link to={'/'}>
                 <Text textColor='primaryBlue'>Term of Use</Text>
-              </Link>
-              {' '} and {' '} 
+              </Link>{' '}
+              and{' '}
               <Link to={'/'}>
                 <Text textColor='primaryBlue'>Privacy Policy</Text>.
-              </Link>
-              {' '} You can unsubscribe from these emails at any time.</Text>
+              </Link>{' '}
+              You can unsubscribe from these emails at any time.
+            </Text>
           </div>
         </Modal>
       )
@@ -340,8 +391,12 @@ const ModalJobAlerts = ({
         }}
       >
         <div className={styles.ModalJobAlertBody}>
-          <Text textStyle='xxl' bold tagName='p' className={styles.ModalJobAlertBodyEnabled}>Job alert is enabled.</Text>
-          <Text textStyle='lg' tagName='p' className={styles.ModalJobAlertBodyEnabled}>Please check your email to verify your account. </Text>
+          <Text textStyle='xxl' bold tagName='p' className={styles.ModalJobAlertBodyEnabled}>
+            Job alert is enabled.
+          </Text>
+          <Text textStyle='lg' tagName='p' className={styles.ModalJobAlertBodyEnabled}>
+            Please check your email to verify your account.{' '}
+          </Text>
         </div>
       </Modal>
     )
@@ -364,7 +419,7 @@ const ModalJobAlerts = ({
       <Modal
         showModal={showCreateJobAlertModal}
         handleModal={() => dispatch(closeCreateJobAlertModal())}
-        headerTitle='Enable job alert'
+        headerTitle={enableAlertModal.title}
         handleFirstButton={() => {
           dispatch(closeCreateJobAlertModal())
           dispatch(openManageJobAlertsModal())
@@ -374,14 +429,19 @@ const ModalJobAlerts = ({
           setSelectedJobAlert(jobAlertResponse)
           dispatch(openDeleteJobAlertModal())
         }}
-        firstButtonText='Keep'
-        secondButtonText='Delete'
+        firstButtonText={enableAlertModal.btn1}
+        secondButtonText={enableAlertModal.btn2}
       >
         <div className={styles.ModalJobAlertBody}>
           <Text textStyle='base'>
             {jobAlertResponse && (
               <React.Fragment>
-                <span>Job alert for <strong>{titleCase(jobAlertResponse.keyword_value)}</strong> in <strong>{jobAlertResponse.location_value}</strong> enabled.</span>
+                <span>
+                  {enableAlertModal.text1}{' '}
+                  <strong>{titleCase(jobAlertResponse.keyword_value)}</strong>{' '}
+                  {enableAlertModal.text2} <strong>{jobAlertResponse.location_value}</strong>{' '}
+                  {enableAlertModal.text3}
+                </span>
                 <Text
                   className={styles.ModalEnableJobAlertText}
                   textColor='primaryBlue'
@@ -393,13 +453,11 @@ const ModalJobAlerts = ({
                   }}
                 >
                   {' '}
-                  Manage alert.
+                  {enableAlertModal.manage}.
                 </Text>
               </React.Fragment>
             )}
-            {!jobAlertResponse && (
-              <span>No selected keyword.</span>
-            )}
+            {!jobAlertResponse && <span>{enableAlertModal.noKey}.</span>}
           </Text>
         </div>
       </Modal>

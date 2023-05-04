@@ -29,8 +29,9 @@ import { LoadingContext } from 'app/[lang]/components/providers/loadingProvider'
 import { AppDownQRCode } from 'images'
 import Image from 'next/image'
 import classNames from 'classnames'
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import SearchIcon from '@mui/icons-material/Search';
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import SearchIcon from '@mui/icons-material/Search'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 const sortOptions = [
   { label: 'Newest', value: '1' },
   { label: 'Relevance', value: '2' },
@@ -38,6 +39,8 @@ const sortOptions = [
 ]
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
+  const { search } = useContext(languageContext) as any
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchConfigSuccess(config))
@@ -108,7 +111,7 @@ const SearchArea = (props: any) => {
       ...jobFunctionValue,
       ...moreData
     })
-  }, [searchValue, salaries, jobTypes, moreData, location, sort, jobFunctionValue,queryFields])
+  }, [searchValue, salaries, jobTypes, moreData, location, sort, jobFunctionValue, queryFields])
   const router = useRouter()
   const result = useMemo(() => {
     return encode(filterParams)
@@ -125,17 +128,18 @@ const SearchArea = (props: any) => {
   useEffect(() => {
     reloadRef.current = reload
   }, [reload])
-  useEffect(reload, [location, salaries, jobTypes, moreData, sort, jobFunctionValue,queryFields])
+  useEffect(reload, [location, salaries, jobTypes, moreData, sort, jobFunctionValue, queryFields])
 
   const moreCount = useMemo(() => {
     return Object.values(moreData).reduce((a1, a2: any) => a1 + (a2?.length ?? 0), 0)
   }, [moreData])
   const userAgent = useUserAgent()
   const styleleSelect = {
-    display:'flex',
-    alignItems:'center',
+    display: 'flex',
+    alignItems: 'center',
     cursor: 'pointer'
   }
+
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -151,6 +155,7 @@ const SearchArea = (props: any) => {
               locationList={config.location_lists}
               value={location}
               isClear={true}
+              label={search.location}
               defaultValue={location}
               onChange={(e, value) => {
                 setLocation(value)
@@ -167,7 +172,7 @@ const SearchArea = (props: any) => {
             />
             <JobSearchBar
               id='search'
-              label='Job title or company'
+              label={search.title}
               variant='outlined'
               size='small'
               className={styles.search}
@@ -188,32 +193,30 @@ const SearchArea = (props: any) => {
                 }
               }}
               renderOption={(props, option) => {
-                const {type, is_history:isHistory,value ,logo_url:logoUrl} = option || {}
-                return (
-                    type === 'company' ?
-                     <li {...props} style={styleleSelect}>
-                         <Image src={logoUrl} alt={value} width='22' height='22'/>
-                         <span style={{paddingLeft:'10px'}}>{value}</span>
-                     </li> 
-                     : isHistory ? (
-                    <li {...props} style={{...styleleSelect,color:'#136fd3'}}>
-                        <AccessTimeIcon/>
-                        <span style={{paddingLeft:'10px'}}>{value}</span>
-                    </li>
-                    ) : 
-                     <li {...props} style={styleleSelect}> 
-                       <SearchIcon/> 
-                       <span style={{paddingLeft:'10px'}}>{value || option}</span>
-                    </li>
-                   
+                const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
+                return type === 'company' ? (
+                  <li {...props} style={styleleSelect}>
+                    <Image src={logoUrl} alt={value} width='22' height='22' />
+                    <span style={{ paddingLeft: '10px' }}>{value}</span>
+                  </li>
+                ) : isHistory ? (
+                  <li {...props} style={{ ...styleleSelect, color: '#136fd3' }}>
+                    <AccessTimeIcon />
+                    <span style={{ paddingLeft: '10px' }}>{value}</span>
+                  </li>
+                ) : (
+                  <li {...props} style={styleleSelect}>
+                    <SearchIcon />
+                    <span style={{ paddingLeft: '10px' }}>{value || option}</span>
+                  </li>
                 )
-            }}
+              }}
               options={suggestionList}
               onSelect={(value: any) => {
                 const newValue = value?.value || value || ''
                 setQueryFields(value?.type || '')
                 flushSync(() => {
-                   setSearchValue(newValue)
+                  setSearchValue(newValue)
                 })
                 addSearchHistory(newValue)
                 reloadRef.current()
@@ -232,7 +235,7 @@ const SearchArea = (props: any) => {
               }}
             >
               {' '}
-              Search{' '}
+              {search.searchBtn}{' '}
             </MaterialButton>
             {accessToken ? (
               <div
@@ -314,7 +317,7 @@ const SearchArea = (props: any) => {
                     strokeLinejoin='round'
                   />
                 </svg>
-                <span> Login to see more jobs</span>
+                <span>{search.login}</span>
               </Button>
             )}
           </div>
@@ -329,20 +332,20 @@ const SearchArea = (props: any) => {
             <JobFunction
               // label='Job Function'
               id='jobFunction'
-              label='Job Function'
+              label={search.function}
               value={jobFunctionValue}
               className={[styles.filterItems, styles.jobFunctions]}
               onChange={jobFunctionChange}
             />
             <Multiple
-              label='Salary'
+              label={search.salary}
               value={salaries}
               options={salaryOptions}
               className={styles.filterItems}
               onSelect={setSelaries}
             />
             <Multiple
-              label='Job Type'
+              label={search.type}
               value={jobTypes}
               options={jobTypeList}
               className={styles.filterItems}
@@ -357,7 +360,7 @@ const SearchArea = (props: any) => {
               }}
             >
               {' '}
-              More Filters {moreCount ? `(${moreCount})` : ''}{' '}
+              {search.more} {moreCount ? `(${moreCount})` : ''}{' '}
             </Button>
             <Button
               className={styles.clearButton}
@@ -377,7 +380,7 @@ const SearchArea = (props: any) => {
                 setPage('1')
               }}
             >
-              Reset Filters{' '}
+              {search.reset}{' '}
             </Button>
           </div>
         </div>

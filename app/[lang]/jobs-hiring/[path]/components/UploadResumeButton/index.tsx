@@ -1,4 +1,3 @@
-
 import styles from '../../index.module.scss'
 import { quickCreateResume, ncreaseUserConversionDetailsBackgroundarrowArrow } from 'images'
 import classNames from 'classnames/bind'
@@ -7,14 +6,12 @@ interface PropsType {
   isShowBtn: Boolean
   isShowArrowIcon?: Boolean
   className?: String
+  text: string
 }
 
-const UploadResumeButton = ({ isShowBtn, isShowArrowIcon, className }: PropsType) => {
+const UploadResumeButton = ({ isShowBtn, isShowArrowIcon, className, text }: PropsType) => {
   return (
-    <Link
-      href={'/quick-upload-resume'}
-      prefetch={true}
-    >
+    <Link href={'/quick-upload-resume'} prefetch={true}>
       {isShowBtn ? (
         <div
           className={classNames([
@@ -32,7 +29,7 @@ const UploadResumeButton = ({ isShowBtn, isShowArrowIcon, className }: PropsType
                 : ''
             }}
           >
-            Upload Resume & Apply Job!
+            {text}
           </div>
         </div>
       ) : null}
