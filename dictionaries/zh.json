@@ -124,409 +124,446 @@
     "increment": "你真棒",
     "decrement": "你真棒"
   },
-
-  "companies.title": "寻找在{{country}}的优秀公司",
-
-  "companies.search.companyName": "寻找心仪的公司",
-  "companies.search.btn": "搜索",
-
-  "companies.employer.title": "特色雇主",
-  "companies.employer.size": "公司规模",
-  "companies.employer.industry": "行业",
-  "companies.employer.allJobs": "查看{{totalActiveJobs}}个热招工作",
-
-  "companies.popularCompany.title": "热门公司",
-  "companies.popularCompany.allJobs": "查看{{totalActiveJobs}}个热招工作",
-
-  "companies.seoTitle": "寻找在{{country}}的公司 | Bossjob",
-  "companies.seoDescription": "`寻找在{{country}}的优秀公司! 了解公司并申请公司正在招聘的工作！",
-
-  "companyDetail.tab.overview": "公司信息",
-  "companyDetail.tab.life": "公司日常",
-  "companyDetail.tab.jobs": "热招工作",
-
-  "companyDetail.overview.about": "关于公司",
-  "companyDetail.overview.size": "公司规模",
-  "companyDetail.overview.employees": "人",
-  "companyDetail.overview.industry": "行业",
-  "companyDetail.overview.website": "官方网站",
-  "companyDetail.overview.location": "位置",
-  "companyDetail.overview.socialMedia": "社交媒体",
-
-  "companyDetail.overview.culture.title": "公司文化",
-  "companyDetail.overview.culture.viewAll": "查看全部",
-  "companyDetail.overview.culture.noCultureTips": "{{companyName}}还没有上传任何公司日常信息，请等会再来",
-
-  "companyDetail.overview.benefit.title": "员工福利",
-  "companyDetail.overview.benefit.viewAll": "查看全部",
-
-  "companyDetail.overview.photo.title": "照片墙",
-
-  "companyDetail.overview.jobs.title": "热招工作",
-  "companyDetail.overview.jobs.viewAll": "查看全部工作",
-  "companyDetail.overview.jobs.search.jobTitle": "搜索公司职位",
-  "companyDetail.overview.jobs.search.location": "职位",
-  "companyDetail.overview.jobs.search.btn": "搜索",
-  "companyDetail.overview.jobs.card.chatNow": "立即沟通",
-
-  "companyDetail.life.culture": "公司文化",
-  "companyDetail.life.benefit": "员工福利",
-  "companyDetail.life.photo": "照片墙",
-  "companyDetail.life.noPhotoTips": "{{companyName}}还没有上传任何公司日常信息，请等会再来",
-
-  "companyDetail.job.title": "热招工作",
-  "companyDetail.job.search.jobTitle": "搜索公司职位",
-  "companyDetail.job.search.location": "位置",
-  "companyDetail.job.search.btn": "搜索",
-  "companyDetail.job.pagination.tips": "显示 {{range}} 总共 {{totalJobs}} 个工作",
-  "companyDetail.job.noMatchedJobs": "没有找到匹配的工作",
-  "companyDetail.job.noJobs": "{{companyName}}还没有任何工作。 请等会再来",
-
-  "companyDetail.rightSection.uploadResume": "上传并申请工作",
-  "companyDetail.rightSection.othersViewed": "其他人也看...",
-  "companyDetail.rightSection.viewAll": "查看全部",
-
-  "companyDetail.overview.seoTitle": "在{{companyName}}工作 | Bossjob",
-  "companyDetail.overview.seoDescription": "发现{{companyName}}的职业机会, 阅读员工评论、福利、文化以了解{{companyName}}的更多信息!",
-
-  "companyDetail.jobs.seoTitle": "{{companyName}}在{{country}}招贤纳士 | Bossjob",
-  "companyDetail.jobs.seoDescription": "在Bossjob上查看{{companyName}}在{{country}}的所有工作机会 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来",
-
-  "companyDetail.culture.seoTitle": "{{companyName}}的文化、生活 | Bossjob",
-  "companyDetail.culture.seoDescription": "在Bossjob上发现{{companyName}}在{{country}}的公司文化、日常 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来",
-
-  "home.title": "找工作，与老板谈",
-
-  "home.search.location": "位置",
-  "home.search.title": "职位或者公司名称",
-  "home.search.btn1": "搜索",
-  "home.search.download": "下载App",
-  "home.search.chatBoss": "并与老板直接谈",
-  "home.search.popup.chatBoss": "与老板直接谈",
-
-  "home.popularJobs": "受欢迎的工作",
-
-  "home.tag.java": "Java开发",
-  "home.tag.full": "全栈工程师",
-  "home.tag.web": "Web开发",
-  "home.tag.cs": "客户服务",
-  "home.tag.accountant": "会计师",
-  "home.tag.sales": "销售顾问",
-
-  "home.tab.IT": "IT",
-  "home.tab.CSR/Ops": "客户服务/操作员",
-  "home.tab.Sales": "销售",
-  "home.tab.Finance": "财务/审计/税务",
-  "home.tab.HR": "人力资源/行政/法律",
-  "home.tab.Manufacturing": "制造",
-  "home.tab.Banking": "银行",
-  "home.tab.Healthcare": "保健/医疗",
-
-  "home.improveRecommend": "更新并改进职位推荐",
-  "home.jobPrefer": "职位偏好",
-  "home.jobPreference": "基于你的职位偏好",
-
-  "home.jobTab.reco": "推荐",
-  "home.jobTab.latestJob": "最新",
-
-  "home.jobCard.chatNow": "立即沟通",
-  "home.jobCard.jobForYou": "为您推荐",
-  "home.jobCard.needMatches": "想要更精准的匹配？",
-  "home.jobCard.getStart": "立即开始",
-  "home.jobCard.noMore": "没有了",
-  "home.jobCard.loading": "加载中...",
-
-  "home.seeMoreBtn": "查看更多",
-
-  "home.topCompany": "热门企业",
-  "home.companyHiring": "热门企业招聘",
-  "home.companyCard.chatNow": "立即沟通",
-  "home.companyCard.employee": "人",
-  "home.companyCard.jobHiring": "{{count}}个热招职位",
-  "home.companyCard.moreJob": "更多工作",
-
-  "home.seo.title": "Bossjob - 在 {{country}} 的专业人士的职业平台",
-  "home.seo.copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation",
-
-  "jobDetail.header.urgent": "紧急",
-  "jobDetail.header.save": "保存",
-  "jobDetail.header.undoSave": "取消保存",
-  "jobDetail.header.apply": "立即申请",
-  "jobDetail.header.chatNow": "立即沟通",
-  "jobDetail.header.continueChat": "继续沟通",
-  "jobDetail.header.fillUpResume": "在线填写简历",
-  "jobDetail.header.uploadResume": "上传新的简历",
-
-  "jobDetail.content.JD": "职位描述",
-  "jobDetail.content.jobShare": "分享",
-  "jobDetail.content.report": "举报",
-  "jobDetail.content.requirement": "职位要求",
-  "jobDetail.content.showMore": "显示更多",
-  "jobDetail.content.showLess": "显示更少",
-
-  "jobDetail.shareModal.title": "分享工作",
-  "jobDetail.shareModal.facebook": "Facebook",
-  "jobDetail.shareModal.twitter": "Twitter",
-  "jobDetail.shareModal.linkedin": "Linkedin",
-  "jobDetail.shareModal.link": "网页链接",
-  "jobDetail.shareModal.linkCopied": "分享链接已复制",
-
-  "jobDetail.reportModal.title": "工作举报",
-  "jobDetail.reportModal.notReportedTitle": "为什么你要举报这个工作",
-  "jobDetail.reportModal.category.spam": "我认为这是垃圾邮件或骗局",
-  "jobDetail.reportModal.category.discrimination": "我认为有辱斯文",
-  "jobDetail.reportModal.category.broken": "我认为有东西不合理",
-  "jobDetail.reportModal.submitting": "提交.",
-
-  "jobDetail.detailModal.title": "再多告诉我们一点",
-  "jobDetail.detailModal.btn1": "上一步",
-  "jobDetail.detailModal.btn2": "提交",
-
-  "jobDetail.feedbackModal.title": "举报成功",
-  "jobDetail.feedbackModal.message": "我们已经收到这个工作的举报了，感谢您的通知。你的反馈十分重要，这有助于我们Bossjob社区稳定",
-
-  "jobDetail.content.rate": "回复率",
-
-  "jobDetail.content.state.online": "在线",
-  "jobDetail.content.state.now": "刚刚活跃",
-  "jobDetail.content.state.withinToday": "今天活跃",
-  "jobDetail.content.state.withinWeek": "本周活跃",
-  "jobDetail.content.state.withinMonth": "本月活跃",
-
-  "jobDetail.content.location": "工作位置",
-  "jobDetail.content.locationModal.btn": "完成",
-  "jobDetail.content.locationModal.title": "位置",
-
-  "jobDetail.content.search.location": "位置",
-  "jobDetail.content.search.title": "工作或者公司名称",
-  "jobDetail.content.search.btn": "搜索",
-
-  "jobDetail.content.jobPostedOn": "发布于",
-
-  "jobDetail.aside.company.title": "当前公司",
-  "jobDetail.aside.company.allJobHiring": "查看{{count}}个热招工作",
-  "jobDetail.aside.company.employees": "人",
-
-  "jobDetail.aside.similarJob.title": "相似工作",
-  "jobDetail.aside.similarJob.seeMore": "查看更多",
-
-  "jobDetail.aside.signUp.title": "加入Bossjob",
-  "jobDetail.aside.signUp.btn": "注册",
-  "jobDetail.aside.signUp.label": "邮箱",
-  "jobDetail.aside.signUp.note": "注册即表示我已阅读并同意",
-  "jobDetail.aside.signUp.term": "使用条款",
-  "jobDetail.aside.signUp.policy": "隐私政策",
-
-  "jobDetail.seo.title": "{{company}}正在热招{{jobTitle}} - {{jobId}} | Bossjob",
-  "jobDetail.seo.desc": "申请{{name}}的{{jobTitle}} {{jobId}}。现在开始找位于{{location}}, {{fullAddress}}的更多{{categoryMetaText}}工作！",
-
-  "search.location": "位置",
-  "search.title": "职位或者公司名称",
-  "search.searchBtn": "搜索",
-  "search.login": "登录并查看更多热门职位",
-
-  "search.relevance": "排序",
-  "search.function": "职位类型",
-  "search.salary": "薪资",
-  "search.type": "求职类型",
-  "search.more": "更多",
-  "search.reset": "重置",
-
-  "search.searchModal.header": "筛选",
-  "search.searchModal.exp": "工作经验",
-  "search.searchModal.edu": "学历资质",
-  "search.searchModal.industry": "行业",
-  "search.searchModal.companyVerified": "公司认证",
-  "search.searchModal.companySize": "公司规模",
-  "search.searchModal.finance": "融资阶段",
-  "search.searchModal.reset": "重置",
-  "search.searchModal.apply": "应用",
-
-  "search.alert": "启用工作通知",
-  "search.alertModal.title": "工作通知",
-  "search.alertModal.btn": "完成",
-  "search.alertModal.filters": "筛选条件",
-  "search.alertModal.frequency": "提示周期",
-
-  "search.updateAlertModal.title": "管理工作通知",
-  "search.updateAlertModal.btn1": "上一步",
-  "search.updateAlertModal.btn2": "完成",
-  "search.updateAlertModal.filters": "筛选条件",
-  "search.updateAlertModal.subTitle": "提示周期",
-  "search.updateAlertModal.daily": "每天",
-  "search.updateAlertModal.week": "每周",
-
-  "search.deleteAlertModal.title": "删除工作通知",
-  "search.deleteAlertModal.text1": "你将要删除",
-  "search.deleteAlertModal.text2": "在",
-  "search.deleteAlertModal.undo": "这个操作无法撤销。",
-  "search.deleteAlertModal.btn1": "取消",
-  "search.deleteAlertModal.btn2": "删除",
-
-  "search.enableAlertModal.title": "启用工作通知",
-  "search.enableAlertModal.text1": "Job alert for",
-  "search.enableAlertModal.text2": "in",
-  "search.enableAlertModal.text3": "enabled",
-  "search.enableAlertModal.manage": "通知管理",
-  "search.enableAlertModal.noKey": "未选择任何关键词",
-  "search.enableAlertModal.undo": "这个操作无法撤销。",
-  "search.enableAlertModal.btn1": "保留",
-  "search.enableAlertModal.btn2": "删除",
-
-  "search.uploadResume": "上传简历并申请工作!",
-  "search.chatBoss": "与老板直接谈",
-  "search.QRCode": "扫描并下载App",
-
-  "search.jobCard.chat": "立即沟通",
-  "search.jobCard.continue": "继续沟通",
-  "search.jobCard.apply": "立即申请",
-  "search.jobCard.online": "在线",
-  "search.jobCard.save": "保存",
-  "search.jobCard.saved": "已保存",
-  "search.jobCard.JD": "职位描述",
-  "search.jobCard.talkToBoss": "与老板随时谈",
-
-  "search.seo.default.title": "在{{country}}的专业工作 - 搜索并申请工作 - {{month}} {{year}} | Bossjob",
-  "search.seo.default.desc": "{{country}}的新工作已经可申请。立即在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来",
-
-  "search.seo.withQuery.title": "{{country}}的{{searchQuery}}工作，工作机会 - {{month}} {{year}} | Bossjob",
-  "search.seo.withQuery.desc": "在{{country}}的新{{searchQuery}}工作已经可申请啦。立即在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来",
-
-  "search.seo.withQueryAndLocation.title": "{{country}}的{{searchQuery}}工作, 现在抓住工作机会 - {{month}} {{year}} | Bossjob",
-  "search.seo.withQueryAndLocation.desc": "在{{country}}，{{location}}的新{{searchQuery}}工作已经可申请啦。立即在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来",
-
-  "manageProfile.tab.profile": "档案",
-
-  "manageProfile.tab.profile.findYou": "让雇主更快找到您!",
-  "manageProfile.tab.profile.informationCard.title": "填写你的相关信息",
-  "manageProfile.tab.profile.informationCard.content": "帮助招聘者了解您和能够联系您",
-  "manageProfile.tab.profile.informationCard.btn": "完善信息",
-
-  "manageProfile.tab.profile.aboutMeModal.title": "关于我",
-  "manageProfile.tab.profile.aboutMeModal.btn1": "取消",
-  "manageProfile.tab.profile.aboutMeModal.btn2": "保存",
-  "manageProfile.tab.profile.aboutMeModal.avatarTips": "为了更好的展示, 推荐上传方形或者1:1纵横比的图片",
-  "manageProfile.tab.profile.aboutMeModal.firstName": "名",
-  "manageProfile.tab.profile.aboutMeModal.lastName": "姓",
-  "manageProfile.tab.profile.aboutMeModal.birthday": "出生日期",
-  "manageProfile.tab.profile.aboutMeModal.location": "当前位置",
-  "manageProfile.tab.profile.aboutMeModal.exp": "工作经验",
-  "manageProfile.tab.profile.aboutMeModal.summary": "提供职业总结并简要突出您的相关经验、成就和技能。",
-
-  "manageProfile.tab.profile.exp.title": "工作经验",
-  "manageProfile.tab.profile.exp.present": "目前",
-  "manageProfile.tab.profile.exp.readMore": "显示更多",
-  "manageProfile.tab.profile.exp.readLess": "显示更少",
-  "manageProfile.tab.profile.exp.noExpTips": "展示你过去的贡献，你可以成为潜在雇主的雇员",
-  "manageProfile.tab.profile.exp.addExp": "添加工作经验",
-  "manageProfile.tab.profile.exp.addWorkExp": "添加工作经验",
-
-  "manageProfile.tab.profile.expModal.title": "工作经验",
-  "manageProfile.tab.profile.expModal.jobTitle": "职位名称",
-  "manageProfile.tab.profile.expModal.companyName": "公司名称",
-  "manageProfile.tab.profile.expModal.workPeriod": "在职时间",
-  "manageProfile.tab.profile.expModal.stillHere": "仍然在此工作",
-  "manageProfile.tab.profile.expModal.from": "从",
-  "manageProfile.tab.profile.expModal.to": "到",
-  "manageProfile.tab.profile.expModal.dateErrorMsg": "开始日期必须早于结束日期",
-  "manageProfile.tab.profile.expModal.jobFunction": "职位类型",
-  "manageProfile.tab.profile.expModal.industry": "行业",
-  "manageProfile.tab.profile.expModal.currency": "月薪 ({{PHP}})",
-  "manageProfile.tab.profile.expModal.notFillErrorMsg": "填写必填信息以便我们处理。",
-  "manageProfile.tab.profile.expModal.workSummaryPlaceholder": "填写一些信息...",
-
-  "manageProfile.tab.profile.edu.title": "教育经历",
-  "manageProfile.tab.profile.edu.noDataTips": "突出你的学历和成就。",
-  "manageProfile.tab.profile.edu.addEdu": "添加教育经历",
-  "manageProfile.tab.profile.eduModal.title": "教育经历",
-  "manageProfile.tab.profile.eduModal.btn1": "取消",
-  "manageProfile.tab.profile.eduModal.btn2": "保存",
-  "manageProfile.tab.profile.eduModal.eduLevel": "学历",
-  "manageProfile.tab.profile.eduModal.period": "学习时间",
-  "manageProfile.tab.profile.eduModal.attend": "仍然在读",
-  "manageProfile.tab.profile.eduModal.from": "从",
-  "manageProfile.tab.profile.eduModal.to": "到",
-  "manageProfile.tab.profile.eduModal.dateErrorMsg": "开始日期必须早于结束日期。",
-  "manageProfile.tab.profile.eduModal.field": "专业领域",
-
-  "manageProfile.tab.profile.skill.title": "技能",
-  "manageProfile.tab.profile.skill.noDataTips": "包括相关技能和关键词，以增加您获得面试的机会。",
-  "manageProfile.tab.profile.skill.addSkill": "添加技能",
-  "manageProfile.tab.profile.skillModal.title": "技能",
-  "manageProfile.tab.profile.skillModal.btn1": "取消",
-  "manageProfile.tab.profile.skillModal.btn2": "保存",
-  "manageProfile.tab.profile.skillModal.suggestions": "我们会根据您最近的工作职能为您推荐技能：",
-  "manageProfile.tab.profile.skillModal.jobFunction": "工作职能",
-  "manageProfile.tab.profile.skillModal.skill": "搜索或者添加一个技能",
-
-  "manageProfile.tab.profile.licenses.title": "执照和认证",
-  "manageProfile.tab.profile.licenses.noDataTips": "通过分享您获得的专业知识来展示您对工作的热情，从而在其他人中脱颖而出。",
-  "manageProfile.tab.profile.licenses.addLicense": "添加执行和认真",
-  "manageProfile.tab.profile.licensesModal.title": "执照和认证",
-  "manageProfile.tab.profile.licensesModal.btn1": "取消",
-  "manageProfile.tab.profile.licensesModal.btn2": "保存",
-  "manageProfile.tab.profile.licensesModal.licenseTitle": "执照/认证名称",
-  "manageProfile.tab.profile.licensesModal.issuing": "发证机构",
-  "manageProfile.tab.profile.licensesModal.licenseValidity": "执照和认证有效性",
-  "manageProfile.tab.profile.licensesModal.licenseExpired": "执照/认证仍然有效",
-  "manageProfile.tab.profile.licensesModal.issueDate": "签发日期",
-  "manageProfile.tab.profile.licensesModal.expiryDate": "到期日",
-  "manageProfile.tab.profile.licensesModal.dateErrorMsg": "签发日期必须早于到期日期",
-  "manageProfile.tab.profile.licensesModal.credentialId": "凭据ID",
-  "manageProfile.tab.profile.licensesModal.credentialURL": "凭据地址",
-  "manageProfile.tab.profile.licensesModal.urlErrorMsg": "请输入一个有效的地址",
-
-  "manageProfile.tab.profile.link.title": "链接",
-  "manageProfile.tab.profile.link.noDataTips": "通过分享您的网站、作品集、文章或任何相关链接，向招聘人员展示您的作品。",
-  "manageProfile.tab.profile.link.addLink": "添加链接",
-  "manageProfile.tab.profile.linkModal.title": "链接",
-  "manageProfile.tab.profile.linkModal.url": "URL",
-  "manageProfile.tab.profile.linkModal.urlErrorMsg": "请输入一个有效的地址",
-  "manageProfile.tab.profile.linkModal.linkTitle": "链接名称",
-  "manageProfile.tab.profile.linkModal.linkDesc": "输入描述信息...",
-
-  "manageProfile.tab.preference": "工作偏好",
-  "manageProfile.tab.preference.available": "到岗时间",
-
-  "manageProfile.tab.preference.availableModal.title": "工作偏好",
-  "manageProfile.tab.preference.availableModal.btn1": "取消",
-  "manageProfile.tab.preference.availableModal.btn2": "保存",
-  "manageProfile.tab.preference.availableModal.select": "到岗时间",
-
-  "manageProfile.tab.preference.card.tips": "我们会根据你的职位偏好找到符合的工作。",
-  "manageProfile.tab.preference.card.title": "职位名称:",
-  "manageProfile.tab.preference.card.type": "工作类型:",
-  "manageProfile.tab.preference.card.country": "国家:",
-  "manageProfile.tab.preference.card.city": "城市:",
-  "manageProfile.tab.preference.card.salary": "期望薪水:",
-  "manageProfile.tab.preference.card.industry": "期望行业:",
-
-  "manageProfile.tab.preference.editModal.title": "Job 工作偏好",
-  "manageProfile.tab.preference.editModal.btn1": "取消",
-  "manageProfile.tab.preference.editModal.btn2": "保存",
-  "manageProfile.tab.preference.editModal.jobTitle": "职位名称",
-  "manageProfile.tab.preference.editModal.jobType": "工作类型",
-  "manageProfile.tab.preference.editModal.location": "工作位置",
-  "manageProfile.tab.preference.editModal.currencyType": "货币类型",
-  "manageProfile.tab.preference.editModal.minSalary": "最低薪资",
-  "manageProfile.tab.preference.editModal.maxSalary": "最高薪资",
-  "manageProfile.tab.preference.editModal.country": "国家",
-  "manageProfile.tab.preference.editModal.industry": "行业",
-
-  "manageProfile.tab.preference.openToWork.title": "正在找工作",
-  "manageProfile.tab.preference.openToWork.explain": "让招聘人员知道你在找工作。",
-
-  "manageProfile.tab.resume": "简历",
-  "manageProfile.tab.resume.upload.title": "上传你的简历",
-  "manageProfile.tab.resume.upload.tips": "简历是帮助您进入求职过程下一步的重要工具。使用 Bossjob 个人资料中的其他信息给招聘人员留下深刻印象。",
-  "manageProfile.tab.resume.upload.time": "上传于 {{time}}",
-  "manageProfile.tab.resume.upload.uploadBtn": "上传简历",
-  "manageProfile.tab.resume.upload.support": "支持文件类型: PDF, DOC, DOCX. Max. 最大: 5MB",
-  "manageProfile.tab.resume.upload.error.title": "文件大小超出了限制",
-  "manageProfile.tab.resume.upload.error.tips": "请上传小于5MB的文件。",
-  "manageProfile.tab.resume.delete.error": "删除简历失败",
-
-  "manageProfile.tab.resume.bossjob.title": "Bossjob 简历",
-  "manageProfile.tab.resume.bossjob.tips": "当你在Bossjob上创建资料的时候，我们会为你创建简历。 你可以下载下面的模版并在你最新的简历中使用他们，然后申请在Bossjob上的工作",
-  "manageProfile.tab.resume.bossjob.download": "下载"
+  "companies": {
+    "title": "寻找在{{country}}的优秀公司",
+    "search": { "companyName": "寻找心仪的公司", "btn": "搜索" },
+    "employer": {
+      "title": "特色雇主",
+      "size": "公司规模",
+      "industry": "行业",
+      "allJobs": "查看{{totalActiveJobs}}个热招工作"
+    },
+    "popularCompany": { "title": "热门公司", "allJobs": "查看{{totalActiveJobs}}个热招工作" },
+    "seoTitle": "寻找在{{country}}的公司 | Bossjob",
+    "seoDescription": "`寻找在{{country}}的优秀公司! 了解公司并申请公司正在招聘的工作！"
+  },
+  "companyDetail": {
+    "tab": { "overview": "公司信息", "life": "公司日常", "jobs": "热招工作" },
+    "overview": {
+      "about": "关于公司",
+      "size": "公司规模",
+      "employees": "人",
+      "industry": "行业",
+      "website": "官方网站",
+      "location": "位置",
+      "socialMedia": "社交媒体",
+      "culture": {
+        "title": "公司文化",
+        "viewAll": "查看全部",
+        "noCultureTips": "{{companyName}}还没有上传任何公司日常信息，请等会再来"
+      },
+      "benefit": { "title": "员工福利", "viewAll": "查看全部" },
+      "photo": { "title": "照片墙" },
+      "jobs": {
+        "title": "热招工作",
+        "viewAll": "查看全部工作",
+        "search": { "jobTitle": "搜索公司职位", "location": "职位", "btn": "搜索" },
+        "card": { "chatNow": "立即沟通" }
+      },
+      "seoTitle": "在{{companyName}}工作 | Bossjob",
+      "seoDescription": "发现{{companyName}}的职业机会, 阅读员工评论、福利、文化以了解{{companyName}}的更多信息!"
+    },
+    "life": {
+      "culture": "公司文化",
+      "benefit": "员工福利",
+      "photo": "照片墙",
+      "noPhotoTips": "{{companyName}}还没有上传任何公司日常信息，请等会再来"
+    },
+    "job": {
+      "title": "热招工作",
+      "search": { "jobTitle": "搜索公司职位", "location": "位置", "btn": "搜索" },
+      "pagination": { "tips": "显示 {{range}} 总共 {{totalJobs}} 个工作" },
+      "noMatchedJobs": "没有找到匹配的工作",
+      "noJobs": "{{companyName}}还没有任何工作。 请等会再来"
+    },
+    "rightSection": {
+      "uploadResume": "上传并申请工作",
+      "othersViewed": "其他人也看...",
+      "viewAll": "查看全部"
+    },
+    "jobs": {
+      "seoTitle": "{{companyName}}在{{country}}招贤纳士 | Bossjob",
+      "seoDescription": "在Bossjob上查看{{companyName}}在{{country}}的所有工作机会 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
+    },
+    "culture": {
+      "seoTitle": "{{companyName}}的文化、生活 | Bossjob",
+      "seoDescription": "在Bossjob上发现{{companyName}}在{{country}}的公司文化、日常 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
+    }
+  },
+  "home": {
+    "title": "找工作，与老板谈",
+    "search": {
+      "location": "位置",
+      "title": "职位或者公司名称",
+      "btn1": "搜索",
+      "download": "下载App",
+      "chatBoss": "并与老板直接谈",
+      "popup": { "chatBoss": "与老板直接谈" }
+    },
+    "popularJobs": "受欢迎的工作",
+    "tag": {
+      "java": "Java开发",
+      "full": "全栈工程师",
+      "web": "Web开发",
+      "cs": "客户服务",
+      "accountant": "会计师",
+      "sales": "销售顾问"
+    },
+    "tab": {
+      "IT": "IT",
+      "CSR/Ops": "客户服务/操作员",
+      "Sales": "销售",
+      "Finance": "财务/审计/税务",
+      "HR": "人力资源/行政/法律",
+      "Manufacturing": "制造",
+      "Banking": "银行",
+      "Healthcare": "保健/医疗"
+    },
+    "improveRecommend": "更新并改进职位推荐",
+    "jobPrefer": "职位偏好",
+    "jobPreference": "基于你的职位偏好",
+    "jobTab": { "reco": "推荐", "latestJob": "最新" },
+    "jobCard": {
+      "chatNow": "立即沟通",
+      "jobForYou": "为您推荐",
+      "needMatches": "想要更精准的匹配？",
+      "getStart": "立即开始",
+      "noMore": "没有了",
+      "loading": "加载中..."
+    },
+    "seeMoreBtn": "查看更多",
+    "topCompany": "热门企业",
+    "companyHiring": "热门企业招聘",
+    "companyCard": {
+      "chatNow": "立即沟通",
+      "employee": "人",
+      "jobHiring": "{{count}}个热招职位",
+      "moreJob": "更多工作"
+    },
+    "seo": {
+      "title": "Bossjob - 在 {{country}} 的专业人士的职业平台",
+      "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
+    }
+  },
+  "jobDetail": {
+    "header": {
+      "urgent": "紧急",
+      "save": "保存",
+      "undoSave": "取消保存",
+      "apply": "立即申请",
+      "chatNow": "立即沟通",
+      "continueChat": "继续沟通",
+      "fillUpResume": "在线填写简历",
+      "uploadResume": "上传新的简历"
+    },
+    "content": {
+      "JD": "职位描述",
+      "jobShare": "分享",
+      "report": "举报",
+      "requirement": "职位要求",
+      "showMore": "显示更多",
+      "showLess": "显示更少",
+      "rate": "回复率",
+      "state": {
+        "online": "在线",
+        "now": "刚刚活跃",
+        "withinToday": "今天活跃",
+        "withinWeek": "本周活跃",
+        "withinMonth": "本月活跃"
+      },
+      "location": "工作位置",
+      "locationModal": { "btn": "完成", "title": "位置" },
+      "search": { "location": "位置", "title": "工作或者公司名称", "btn": "搜索" },
+      "jobPostedOn": "发布于"
+    },
+    "shareModal": {
+      "title": "分享工作",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "linkedin": "Linkedin",
+      "link": "网页链接",
+      "linkCopied": "分享链接已复制"
+    },
+    "reportModal": {
+      "title": "工作举报",
+      "notReportedTitle": "为什么你要举报这个工作",
+      "category": {
+        "spam": "我认为这是垃圾邮件或骗局",
+        "discrimination": "我认为有辱斯文",
+        "broken": "我认为有东西不合理"
+      },
+      "submitting": "提交."
+    },
+    "detailModal": { "title": "再多告诉我们一点", "btn1": "上一步", "btn2": "提交" },
+    "feedbackModal": {
+      "title": "举报成功",
+      "message": "我们已经收到这个工作的举报了，感谢您的通知。你的反馈十分重要，这有助于我们Bossjob社区稳定"
+    },
+    "aside": {
+      "company": {
+        "title": "当前公司",
+        "allJobHiring": "查看{{count}}个热招工作",
+        "employees": "人"
+      },
+      "similarJob": { "title": "相似工作", "seeMore": "查看更多" },
+      "signUp": {
+        "title": "加入Bossjob",
+        "btn": "注册",
+        "label": "邮箱",
+        "note": "注册即表示我已阅读并同意",
+        "term": "使用条款",
+        "policy": "隐私政策"
+      }
+    },
+    "seo": {
+      "title": "{{company}}正在热招{{jobTitle}} - {{jobId}} | Bossjob",
+      "desc": "申请{{name}}的{{jobTitle}} {{jobId}}。现在开始找位于{{location}}, {{fullAddress}}的更多{{categoryMetaText}}工作！"
+    }
+  },
+  "search": {
+    "location": "位置",
+    "title": "职位或者公司名称",
+    "searchBtn": "搜索",
+    "login": "登录并查看更多热门职位",
+    "relevance": "排序",
+    "function": "职位类型",
+    "salary": "薪资",
+    "type": "求职类型",
+    "more": "更多",
+    "reset": "重置",
+    "searchModal": {
+      "header": "筛选",
+      "exp": "工作经验",
+      "edu": "学历资质",
+      "industry": "行业",
+      "companyVerified": "公司认证",
+      "companySize": "公司规模",
+      "finance": "融资阶段",
+      "reset": "重置",
+      "apply": "应用"
+    },
+    "alert": "启用工作通知",
+    "alertModal": {
+      "title": "工作通知",
+      "btn": "完成",
+      "filters": "筛选条件",
+      "frequency": "提示周期"
+    },
+    "updateAlertModal": {
+      "title": "管理工作通知",
+      "btn1": "上一步",
+      "btn2": "完成",
+      "filters": "筛选条件",
+      "subTitle": "提示周期",
+      "daily": "每天",
+      "week": "每周"
+    },
+    "deleteAlertModal": {
+      "title": "删除工作通知",
+      "text1": "你将要删除",
+      "text2": "在",
+      "undo": "这个操作无法撤销。",
+      "btn1": "取消",
+      "btn2": "删除"
+    },
+    "enableAlertModal": {
+      "title": "启用工作通知",
+      "text1": "Job alert for",
+      "text2": "in",
+      "text3": "enabled",
+      "manage": "通知管理",
+      "noKey": "未选择任何关键词",
+      "undo": "这个操作无法撤销。",
+      "btn1": "保留",
+      "btn2": "删除"
+    },
+    "uploadResume": "上传简历并申请工作!",
+    "chatBoss": "与老板直接谈",
+    "QRCode": "扫描并下载App",
+    "jobCard": {
+      "chat": "立即沟通",
+      "continue": "继续沟通",
+      "apply": "立即申请",
+      "online": "在线",
+      "save": "保存",
+      "saved": "已保存",
+      "JD": "职位描述",
+      "talkToBoss": "与老板随时谈"
+    },
+    "seo": {
+      "default": {
+        "title": "在{{country}}的专业工作 - 搜索并申请工作 - {{month}} {{year}} | Bossjob",
+        "desc": "{{country}}的新工作已经可申请。立即在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
+      },
+      "withQuery": {
+        "title": "{{country}}的{{searchQuery}}工作，工作机会 - {{month}} {{year}} | Bossjob",
+        "desc": "在{{country}}的新{{searchQuery}}工作已经可申请啦。立即在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
+      },
+      "withQueryAndLocation": {
+        "title": "{{country}}的{{searchQuery}}工作, 现在抓住工作机会 - {{month}} {{year}} | Bossjob",
+        "desc": "在{{country}}，{{location}}的新{{searchQuery}}工作已经可申请啦。立即在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
+      }
+    }
+  },
+  "manageProfile": {
+    "tab": {
+      "profile": {
+        "tabTitle": "档案",
+        "findYou": "让雇主更快找到您!",
+        "informationCard": {
+          "title": "填写你的相关信息",
+          "content": "帮助招聘者了解您和能够联系您",
+          "btn": "完善信息"
+        },
+        "aboutMeModal": {
+          "title": "关于我",
+          "btn1": "取消",
+          "btn2": "保存",
+          "avatarTips": "为了更好的展示, 推荐上传方形或者1:1纵横比的图片",
+          "firstName": "名",
+          "lastName": "姓",
+          "birthday": "出生日期",
+          "location": "当前位置",
+          "exp": "工作经验",
+          "summary": "提供职业总结并简要突出您的相关经验、成就和技能。"
+        },
+        "exp": {
+          "title": "工作经验",
+          "present": "目前",
+          "readMore": "显示更多",
+          "readLess": "显示更少",
+          "noExpTips": "展示你过去的贡献，你可以成为潜在雇主的雇员",
+          "addExp": "添加工作经验",
+          "addWorkExp": "添加工作经验"
+        },
+        "expModal": {
+          "title": "工作经验",
+          "jobTitle": "职位名称",
+          "companyName": "公司名称",
+          "workPeriod": "在职时间",
+          "stillHere": "仍然在此工作",
+          "from": "从",
+          "to": "到",
+          "dateErrorMsg": "开始日期必须早于结束日期",
+          "jobFunction": "职位类型",
+          "industry": "行业",
+          "currency": "月薪 ({{PHP}})",
+          "notFillErrorMsg": "填写必填信息以便我们处理。",
+          "workSummaryPlaceholder": "填写一些信息..."
+        },
+        "edu": {
+          "title": "教育经历",
+          "noDataTips": "突出你的学历和成就。",
+          "addEdu": "添加教育经历"
+        },
+        "eduModal": {
+          "title": "教育经历",
+          "btn1": "取消",
+          "btn2": "保存",
+          "eduLevel": "学历",
+          "period": "学习时间",
+          "attend": "仍然在读",
+          "from": "从",
+          "to": "到",
+          "dateErrorMsg": "开始日期必须早于结束日期。",
+          "field": "专业领域"
+        },
+        "skill": {
+          "title": "技能",
+          "noDataTips": "包括相关技能和关键词，以增加您获得面试的机会。",
+          "addSkill": "添加技能"
+        },
+        "skillModal": {
+          "title": "技能",
+          "btn1": "取消",
+          "btn2": "保存",
+          "suggestions": "我们会根据您最近的工作职能为您推荐技能：",
+          "jobFunction": "工作职能",
+          "skill": "搜索或者添加一个技能"
+        },
+        "licenses": {
+          "title": "执照和认证",
+          "noDataTips": "通过分享您获得的专业知识来展示您对工作的热情，从而在其他人中脱颖而出。",
+          "addLicense": "添加执行和认真"
+        },
+        "licensesModal": {
+          "title": "执照和认证",
+          "btn1": "取消",
+          "btn2": "保存",
+          "licenseTitle": "执照/认证名称",
+          "issuing": "发证机构",
+          "licenseValidity": "执照和认证有效性",
+          "licenseExpired": "执照/认证仍然有效",
+          "issueDate": "签发日期",
+          "expiryDate": "到期日",
+          "dateErrorMsg": "签发日期必须早于到期日期",
+          "credentialId": "凭据ID",
+          "credentialURL": "凭据地址",
+          "urlErrorMsg": "请输入一个有效的地址"
+        },
+        "link": {
+          "title": "链接",
+          "noDataTips": "通过分享您的网站、作品集、文章或任何相关链接，向招聘人员展示您的作品。",
+          "addLink": "添加链接"
+        },
+        "linkModal": {
+          "title": "链接",
+          "url": "URL",
+          "urlErrorMsg": "请输入一个有效的地址",
+          "linkTitle": "链接名称",
+          "linkDesc": "输入描述信息..."
+        }
+      },
+      "preference": {
+        "tabTitle": "工作偏好",
+        "available": "到岗时间",
+        "availableModal": {
+          "title": "工作偏好",
+          "btn1": "取消",
+          "btn2": "保存",
+          "select": "到岗时间"
+        },
+        "card": {
+          "tips": "我们会根据你的职位偏好找到符合的工作。",
+          "title": "职位名称:",
+          "type": "工作类型:",
+          "country": "国家:",
+          "city": "城市:",
+          "salary": "期望薪水:",
+          "industry": "期望行业:"
+        },
+        "editModal": {
+          "title": "Job 工作偏好",
+          "btn1": "取消",
+          "btn2": "保存",
+          "jobTitle": "职位名称",
+          "jobType": "工作类型",
+          "location": "工作位置",
+          "currencyType": "货币类型",
+          "minSalary": "最低薪资",
+          "maxSalary": "最高薪资",
+          "country": "国家",
+          "industry": "行业"
+        },
+        "openToWork": { "title": "正在找工作", "explain": "让招聘人员知道你在找工作。" }
+      },
+      "resume": {
+        "tabTitle": "简历",
+        "upload": {
+          "title": "上传你的简历",
+          "tips": "简历是帮助您进入求职过程下一步的重要工具。使用 Bossjob 个人资料中的其他信息给招聘人员留下深刻印象。",
+          "time": "上传于 {{time}}",
+          "uploadBtn": "上传简历",
+          "support": "支持文件类型: PDF, DOC, DOCX. Max. 最大: 5MB",
+          "error": { "title": "文件大小超出了限制", "tips": "请上传小于5MB的文件。" }
+        },
+        "delete": { "error": "删除简历失败" },
+        "bossjob": {
+          "title": "Bossjob 简历",
+          "tips": "当你在Bossjob上创建资料的时候，我们会为你创建简历。 你可以下载下面的模版并在你最新的简历中使用他们，然后申请在Bossjob上的工作",
+          "download": "下载"
+        }
+      }
+    }
+  }
 }
