@@ -58,7 +58,7 @@ const JobCard = (props: any) => {
                 className={styles.titleContainer}
                 title={`${job_title} (${job_region})`}
             >
-                <div className={styles.title}>{`${job_title} (${job_region})`}</div>
+                <div className={styles.title}>{`${job_title}`}</div>
                 <div className={styles.salary}>{salary_range_value}</div>
             </div>
             <div
