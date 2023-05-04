@@ -121,12 +121,13 @@
   },
   "companies": {
     "title": "Find great companies in {{country}}",
-    "search": { "companyName": "Search for Companies", "btn": "Search for Search" },
+    "search": { "companyName": "Search for Companies", "btn": "Search" },
     "employer": {
       "title": "Featured Employer",
       "size": "Company Size",
       "industry": "Industry",
-      "allJobs": "View {{totalActiveJobs}} job openings"
+      "allJobs": "View {{totalActiveJobs}} job openings",
+      "employees": "Employees"
     },
     "popularCompany": {
       "title": "Popular Companies",

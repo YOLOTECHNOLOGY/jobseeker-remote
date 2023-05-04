@@ -51,7 +51,7 @@ const Search = ({ defaultQuery }: SearchProps) => {
       query,
       size: size,
       page: page,
-      source: width < 768 ? 'mobile_web' : 'web',
+      source: width < 768 ? 'mobile_web' : 'web'
     }
 
     setCurrentPage(Number(page))
@@ -70,7 +70,7 @@ const Search = ({ defaultQuery }: SearchProps) => {
       window.scrollTo({
         top: 0,
         left: 0,
-        behavior: 'smooth',
+        behavior: 'smooth'
       })
     }
   }
@@ -88,14 +88,17 @@ const Search = ({ defaultQuery }: SearchProps) => {
 
   return (
     <Layout>
-      
       <div className={styles.companies}>
         <div className={styles.searchCompany}>
           <Text textStyle='xxxl' tagName='h1' bold className={styles.searchCompanyTitle}>
             Search Companies
           </Text>
           <MetaText tagName='h1'>Find great companies in {getCountry()}</MetaText>
-          <SearchCompanyField defaultQuery={defaultQuery} onKeywordSearch={handleKeywordSearch} />
+          <SearchCompanyField
+            defaultQuery={defaultQuery}
+            onKeywordSearch={handleKeywordSearch}
+            transitions={undefined}
+          />
         </div>
         <div className={styles.searchCompanyQuery}>
           <Text textStyle='xl' tagName='p' bold>
@@ -108,6 +111,7 @@ const Search = ({ defaultQuery }: SearchProps) => {
             companiesList={companies}
             isLoading={isCompanyFilterFetching}
             isSearchPage
+            transitions={undefined}
           />
         </div>
 
@@ -130,10 +134,10 @@ export const getServerSideProps = wrapper.getServerSideProps(() => async ({ quer
   return {
     props: {
       defaultQuery: query.query || null,
-      seoMetaTitle:`Find Companies Hiring in ${getCountry()} | Bossjob`,
-      seoMetaDescription:`Discover great companies to work for in ${getCountry()}! Learn more about the company and apply to job openings on Bossjob!`,
-      canonicalUrl:'/companies/search'
-    },
+      seoMetaTitle: `Find Companies Hiring in ${getCountry()} | Bossjob`,
+      seoMetaDescription: `Discover great companies to work for in ${getCountry()}! Learn more about the company and apply to job openings on Bossjob!`,
+      canonicalUrl: '/companies/search'
+    }
   }
 })
 

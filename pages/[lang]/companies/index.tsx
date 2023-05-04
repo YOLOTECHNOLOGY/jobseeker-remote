@@ -32,8 +32,12 @@ import BannerCarousel from 'components/BannerCarousel'
 // Assets
 import { BlueTickIcon } from 'images'
 import { getCountry } from 'helpers/country'
+import { formatTemplateString } from 'helpers/formatter'
 
-const Companies = (props) => {
+const Companies = (props: any) => {
+  const {
+    lang: { companies }
+  } = props
   const dispatch = useDispatch()
   const router = useRouter()
   const { page } = router.query
@@ -63,7 +67,7 @@ const Companies = (props) => {
     if (featuredCompaniesResponse?.featured_companies) {
       setTotalPage(featuredCompaniesResponse.total_pages)
       const companies = featuredCompaniesResponse.featured_companies
-      if(!companies || (companies && !companies.length)) return
+      if (!companies || (companies && !companies.length)) return
       setFeaturedCompany(companies[0]?.company)
       companies.shift()
 
@@ -83,7 +87,6 @@ const Companies = (props) => {
 
   return (
     <Layout {...props}>
-      
       <div className={styles.companies}>
         <div className={styles.searchCompany}>
           <Text
@@ -93,15 +96,18 @@ const Companies = (props) => {
             className={styles.searchCompanyTitle}
             textColor='primaryBlue'
           >
-            Find great companies in {getCountry()}
+            {formatTemplateString(companies.title, getCountry())}
           </Text>
-          <SearchCompanyField onKeywordSearch={handleKeywordSearch} />
+          <SearchCompanyField
+            transitions={companies.search}
+            onKeywordSearch={handleKeywordSearch}
+          />
         </div>
 
         <BannerCarousel slides={featureBanners} />
 
         <Text textStyle='xxl' tagName='h2' bold className={styles.featuredEmployerSectionTitle}>
-          Featured Employer
+          {companies.employer.title}
         </Text>
         <div className={styles.featuredEmployer}>
           {featuredCompany && (
@@ -140,13 +146,15 @@ const Companies = (props) => {
                   <div className={styles.featuredEmployerAbout}>
                     <div className={styles.featuredEmployerAboutItem}>
                       <Text textStyle='lg' bold>
-                        Company Size
+                        {companies.employer.size}
                       </Text>
-                      <Text textStyle='lg'>{featuredCompany?.company_size} Employees</Text>
+                      <Text textStyle='lg'>
+                        {featuredCompany?.company_size} {companies.employer.employees}
+                      </Text>
                     </div>
                     <div className={styles.featuredEmployerAboutItem}>
                       <Text textStyle='lg' bold>
-                        Industry
+                        {companies.employer.industry}
                       </Text>
                       <Text textStyle='lg'>{featuredCompany?.industry}</Text>
                     </div>
@@ -161,7 +169,10 @@ const Companies = (props) => {
                     className={styles.featuredEmployerOpenings}
                   >
                     <Text textStyle='lg' bold>
-                      View {featuredCompany?.num_of_active_jobs} job openings
+                      {formatTemplateString(
+                        companies.employer.allJobs,
+                        featuredCompany?.num_of_active_jobs
+                      )}
                     </Text>
                   </Link>
                 </div>
@@ -199,11 +210,12 @@ const Companies = (props) => {
         </div>
 
         <Text textStyle='xxl' tagName='h2' bold className={styles.featuredEmployerSectionTitle}>
-          Popular Companies
+          {companies.popularCompany.title}
         </Text>
         <CompanyCardList
           companiesList={featuredCompanies}
           isLoading={isFeaturedCompaniesFetching}
+          transitions={companies.popularCompany}
         />
         <div className={styles.companiesPagination}>
           <MaterialRoundedPagination
@@ -219,7 +231,7 @@ const Companies = (props) => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (props) => {
-  const { page ,lang} : any = props.query
+  const { page, lang }: any = props.query
   const dictionary = await getDictionary(lang)
   // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesListRequest({ page: Number(page) || 1 }))
@@ -228,10 +240,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (p
   return {
     props: {
       seoMetaTitle: `Find Companies Hiring in ${getCountry()} | Bossjob`,
-      seoMetaDescription:
-        `Discover great companies to work for in ${getCountry()}! Learn more about the company and apply to job openings on Bossjob!`,
+      seoMetaDescription: `Discover great companies to work for in ${getCountry()}! Learn more about the company and apply to job openings on Bossjob!`,
       canonicalUrl: '/companies',
-      lang:dictionary
+      lang: dictionary
     }
   }
 })

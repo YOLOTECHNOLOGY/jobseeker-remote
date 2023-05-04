@@ -131,7 +131,8 @@
       "title": "特色雇主",
       "size": "公司规模",
       "industry": "行业",
-      "allJobs": "查看{{totalActiveJobs}}个热招工作"
+      "allJobs": "查看{{totalActiveJobs}}个热招工作",
+      "employees": "人"
     },
     "popularCompany": { "title": "热门公司", "allJobs": "查看{{totalActiveJobs}}个热招工作" },
     "seoTitle": "寻找在{{country}}的公司 | Bossjob",
