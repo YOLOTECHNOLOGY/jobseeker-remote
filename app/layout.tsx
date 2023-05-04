@@ -63,7 +63,7 @@ const defaultSEO = {
 const Providers = dynamic(() => import('./components/providers'), { ssr: true })
 const Initial = dynamic(() => import('./components/Initals'), { ssr: false })
 export default function RootLayout(props: any) {
-
+  const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
   const { children }: React.PropsWithChildren = props
   const { title, imageUrl, description, canonical } = defaultSEO
   return (
@@ -115,6 +115,18 @@ export default function RootLayout(props: any) {
           `
           }}
         ></script>
+        {/* Google Tag Manager (gtm)  https://tagmanager.google.com */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer', ${gtmID})
+        `
+          }}
+        />
       </head>
       <body id='next-app'>
         {/* Google Tag Manager (noscript) */}
