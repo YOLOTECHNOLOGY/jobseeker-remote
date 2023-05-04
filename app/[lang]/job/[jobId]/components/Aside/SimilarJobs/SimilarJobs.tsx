@@ -14,9 +14,10 @@ import classNames from 'classnames/bind'
 type propsType = {
   id?: number
   jobDetail: any
+  languages: Record<string, any>
 }
 
-export default async function SimilarJobs({ id, jobDetail }: propsType) {
+export default async function SimilarJobs({ id, jobDetail, languages }: propsType) {
   const params = {
     jobId: id,
     size: 5
@@ -24,7 +25,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
 
   let recruiterLineStatus = []
   const data = await fetchSimilarJobsService(params)
-    .then(({ data: { data } }) => data?.jobs )
+    .then(({ data: { data } }) => data?.jobs)
     .catch(() => ({ error: true }))
   if (!data.error) {
     const ids = data.map((item) => item.recruiter?.id)
@@ -35,12 +36,14 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
       recruiterLineStatus = lines
     }
   }
-
+  const {
+    aside: { similarJob: transitions }
+  } = languages
   return (
     <>
       {data.length ? (
         <section className={styles.similarJobs}>
-          <h3>SimilarJobs</h3>
+          <h3>{transitions.title}</h3>
 
           <div className={styles.similarJobs_container}>
             <div className={styles.similarJobs_webCard}>
@@ -135,7 +138,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
               })}
             </div>
 
-            <SeeMore jobDetail={jobDetail} />
+            <SeeMore text={transitions.seeMore} jobDetail={jobDetail} />
           </div>
         </section>
       ) : null}

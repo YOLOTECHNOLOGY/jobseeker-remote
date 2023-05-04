@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Avatar, Button } from 'app/[lang]/components/MUIs'
 
 import styles from '../../../page.module.scss'
+import { formatTemplateString } from 'helpers/formatter'
 
 export type propsType = {
   name: string
@@ -12,19 +13,25 @@ export type propsType = {
   jobId: number
   companyUrl: string
   jobDetail: any
+  languages: Record<string, any>
 }
 
 const Company = (company: propsType) => {
-  const { jobDetail } = company
+  const { jobDetail, languages } = company
+  const {
+    aside: { company: companySection, similarJob, signUp }
+  } = languages as any
   return (
     <>
       <section className={styles.company}>
         <Link href={company.companyUrl}>
-          <div className={styles.company_title}>Company</div>
+          <div className={styles.company_title}>{companySection.title}</div>
           <Avatar src={company.logo} sx={{ borderRadius: '5px', margin: '8px 0' }} />
           <h5 className={styles.company_name}>{company.name}</h5>
           <div className={styles.company_financingStage}>{jobDetail.company.industry}</div>
-          <div className={styles.company_financingStage}>{company.companySize} Employees</div>
+          <div className={styles.company_financingStage}>
+            {company.companySize} {companySection.employees}
+          </div>
         </Link>
 
         <Link href={company.companyUrl + '/jobs'}>
@@ -45,7 +52,7 @@ const Company = (company: propsType) => {
               textTransform: 'capitalize'
             }}
           >
-            View {company.numOfActiveJobs} jobs hiring
+            {formatTemplateString(companySection.allJobHiring, company.numOfActiveJobs)}
           </Button>
         </Link>
       </section>
@@ -59,7 +66,8 @@ const Company = (company: propsType) => {
           <div className={styles.company_mobileHead_info}>
             <span className={styles.company_mobileHead_info_name}>{company.name}</span>
             <span className={styles.company_mobileHead_info_tag}>
-              {jobDetail.company.industry} &nbsp;|&nbsp; {company.companySize} Employees
+              {jobDetail.company.industry} &nbsp;|&nbsp; {company.companySize}{' '}
+              {companySection.employees}
             </span>
           </div>
         </section>

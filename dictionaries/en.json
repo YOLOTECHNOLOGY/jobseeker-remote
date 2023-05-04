@@ -300,7 +300,7 @@
     "aside": {
       "company": {
         "title": "Company",
-        "allJobHiring": "View 3 jobs hiring",
+        "allJobHiring": "View {{jobs}} jobs hiring",
         "employees": "Employees"
       },
       "similarJob": { "title": "SimilarJobs", "seeMore": "See more" },

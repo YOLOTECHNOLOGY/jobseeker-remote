@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { escapeRegExp } from 'lodash-es'
 
 export const numberToThousands = (number) => {
   if (number <= 0) {
@@ -213,4 +214,22 @@ export const getFromObject = (obj, allowedAttributes) => {
   }
 
   return response
+}
+
+
+/**
+ * format strings that include {{text}} 
+ * @param {*} string e.g. View {{jobs}} jobs hiring
+ * @param  {...any} args the replace params
+ * @return {String} e.g. View 3 jobs hiring
+ */
+export const formatTemplateString = (string, ...args) => {
+  const matchedStrings = [...string.matchAll(/{{[^\}]*}}/g)].map(item => escapeRegExp(item[0]));
+
+  if (matchedStrings.length !== args.length) {
+    throw new Error('Those replace arguments are not matched the placeholders, please check the source string: "' + string + '"')
+  }
+  matchedStrings.forEach((regStr, index) => string = string.replace(new RegExp(regStr), args[index]));
+
+  return string
 }

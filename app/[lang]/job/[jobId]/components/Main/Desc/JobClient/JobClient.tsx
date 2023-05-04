@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { Stack } from 'app/[lang]/components/MUIs'
@@ -15,6 +15,7 @@ import { ShareIcon, ReportIcon } from 'images'
 import { getCookie } from 'helpers/cookies'
 
 import styles from '../../../../page.module.scss'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 export type sharePropsType = {
   id: number
@@ -28,6 +29,7 @@ export type sharePropsType = {
 }
 
 const JobClient = (props: sharePropsType) => {
+  const { jobDetail } = useContext(languageContext) as any
   const dispatch = useDispatch()
   const [reportJobReasonList, setReportJobReasonList] = useState<Array<any>>(null)
 
@@ -36,9 +38,7 @@ const JobClient = (props: sharePropsType) => {
   )
 
   useEffect(() => {
-    setReportJobReasonList(
-      config?.report_job_reasons ?? initialState.response.report_job_reasons
-    )
+    setReportJobReasonList(config?.report_job_reasons ?? initialState.response.report_job_reasons)
   }, [config])
 
   const isPostingReport = useSelector((store: any) => store.reports.postReport.fetching)
@@ -67,7 +67,7 @@ const JobClient = (props: sharePropsType) => {
               alt='share'
               sx={{ width: '17px', height: '17px', marginRight: '4px' }}
             />{' '}
-            Share
+            {jobDetail.content.jobShare}
           </div>
           <div onClick={() => setIsShowReportJob(true)} className={styles.jobClient_btn_wrapper}>
             <Avatar
@@ -75,7 +75,7 @@ const JobClient = (props: sharePropsType) => {
               alt='report'
               sx={{ width: '17px', height: '17px', marginRight: '4px' }}
             />{' '}
-            Report
+            {jobDetail.content.report}
           </div>
         </Stack>
       ) : null}

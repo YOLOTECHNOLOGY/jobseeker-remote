@@ -20,6 +20,7 @@ type propsType = {
   job_type_value: string
   status_key: string
   jobDetail?: any
+  languages: Record<string, any>
 }
 
 const Head = ({
@@ -33,11 +34,13 @@ const Head = ({
   is_saved,
   chat,
   job_type_value,
-  jobDetail
+  jobDetail,
+  languages
 }: propsType) => {
   const accessToken = cookies().get('accessToken')?.value
   const user = cookies().get('user')?.value
   const isLogin = !!accessToken && !!user
+  const { header } = languages
   return (
     <section id='jobDetaiPagelHead' className={classNames([styles.head, styles.headSticky])}>
       <div className={styles.head_main}>
@@ -47,7 +50,7 @@ const Head = ({
             <div className={styles.head_main_title_context}>
               <span className={styles.head_main_title_context_type}>({job_type_value})</span>
               {jobDetail.is_urgent ? (
-                <span className={styles.head_main_title_context_status}>Urgent</span>
+                <span className={styles.head_main_title_context_status}>{header.urgent}</span>
               ) : null}
             </div>
           </div>
@@ -65,22 +68,28 @@ const Head = ({
 
           <div className={styles.head_main_change_resume}>
             <Stack spacing={2} direction='row'>
-              {isLogin && <div>
-                <Link color='#000000' href='/manage-profile'>
-                  <div className={styles.head_main_change_resume_btnWrapper}>
-                    <Avatar
-                      src={CompleteResumeIcon}
-                      alt='complete resume'
-                      sx={{ width: '17px', height: '17px', marginRight: '4px' }}
-                      className={styles.head_main_change_resume_btnWrapper_icon}
-                    />
-
-                    <span> Fill up resume online</span>
-                  </div>
-                </Link>
-              </div>}
+              {isLogin && (
+                <div>
+                  <Link color='#000000' href='/manage-profile'>
+                    <div className={styles.head_main_change_resume_btnWrapper}>
+                      <Avatar
+                        src={CompleteResumeIcon}
+                        alt='complete resume'
+                        sx={{ width: '17px', height: '17px', marginRight: '4px' }}
+                        className={styles.head_main_change_resume_btnWrapper_icon}
+                      />
+                      <span>{header.fillUpResume}</span>
+                    </div>
+                  </Link>
+                </div>
+              )}
               <div>
-                <Link color='#000000' href={isLogin ? '/quick-upload-resume' : '/get-started?redirect=quick-upload-resume'}>
+                <Link
+                  color='#000000'
+                  href={
+                    isLogin ? '/quick-upload-resume' : '/get-started?redirect=quick-upload-resume'
+                  }
+                >
                   <div className={styles.head_main_change_resume_btnWrapper}>
                     <Avatar
                       src={UploadResumeIcon}
@@ -88,7 +97,7 @@ const Head = ({
                       sx={{ width: '17px', height: '17px', marginRight: '4px' }}
                       className={styles.head_main_change_resume_btnWrapper_icon}
                     />
-                    <span> Upload new resume</span>
+                    <span>{header.uploadResume}</span>
                   </div>
                 </Link>
               </div>

@@ -18,6 +18,7 @@ type propsType = {
   lastActiveAt?: number | string
   shareParams: any
   recruiter: any
+  languages: Record<string, any>
 }
 
 const Desc = ({
@@ -29,10 +30,12 @@ const Desc = ({
   chatResponseRate,
   lastActiveAt,
   shareParams,
-  recruiter
+  recruiter,
+  languages
 }: propsType) => {
   const cookieStore = cookies()
   const token = cookieStore.get('accessToken')
+  const { content } = languages
 
   return (
     <section className={styles.desc}>
@@ -46,7 +49,7 @@ const Desc = ({
             {recruiter.full_name}
           </span>
           <span className={classNames([styles.desc_footer_chat, styles.desc_mobileHead_info_rate])}>
-            {chatResponseRate}% &nbsp;response rate
+            {chatResponseRate}% &nbsp;{content.rate}
           </span>
           <div>
             <span
@@ -64,7 +67,7 @@ const Desc = ({
 
       <div className={styles.desc_jobDescWrapper}>
         <div className={styles.desc_title}>
-          <h5>Job Description</h5>
+          <h5>{content.JD}</h5>
           <div className={styles.desc_title_change}>{token && <JobClient {...shareParams} />}</div>
         </div>
 
@@ -84,7 +87,7 @@ const Desc = ({
 
       <div className={classNames([styles.desc_jobDescWrapper, styles.desc_jobRequireWrapper])}>
         <div className={classNames([styles.desc_title, styles.desc_requirement])}>
-          <h5>Requirement</h5>
+          <h5>{content.requirement}</h5>
         </div>
         <div
           className={styles.desc_context}
@@ -97,7 +100,9 @@ const Desc = ({
           src={recruiter.avatar || DefaultAvatar}
         ></Avatar>
         <span className={styles.desc_footer_name}>{recruiter.full_name}</span>
-        <span className={styles.desc_footer_chat}>{chatResponseRate}% &nbsp;response rate</span>
+        <span className={styles.desc_footer_chat}>
+          {chatResponseRate}% &nbsp;{content.rate}
+        </span>
         <span
           className={classNames([
             styles.desc_footer_lineStatus,

@@ -10,9 +10,10 @@ import styles from '../../../../page.module.scss'
 
 type propsType = {
   jobDetail: any
+  text: string
 }
 
-const SeeMore = ({ jobDetail }: propsType) => {
+const SeeMore = ({ jobDetail, text }: propsType) => {
   const router = useRouter()
   const xp_lvls = useSelector((store: any) => store.config.config.response?.xp_lvls ?? [])
 
@@ -56,7 +57,7 @@ const SeeMore = ({ jobDetail }: propsType) => {
       className={styles.similarJobs_seeMore}
       onClick={handleToHomePage}
     >
-      See more
+      {text || 'See more'}
     </Button>
   )
 }

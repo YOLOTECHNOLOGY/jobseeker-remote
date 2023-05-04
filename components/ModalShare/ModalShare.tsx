@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 
 /* Vendors */
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share'
@@ -19,6 +19,7 @@ import styles from './ModalShare.module.scss'
 /* Images */
 import { FacebookIcon, LinkedinIcon, TwitterIcon, CopyIcon } from 'images'
 import { useDispatch, useSelector } from 'react-redux'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 interface ModalShareProps {
   jobDetailUrl?: string
@@ -33,6 +34,9 @@ const ModalShare = ({
   handleShowModalShare,
   selectedJob
 }: ModalShareProps) => {
+  const {
+    jobDetail: { shareModal }
+  } = useContext(languageContext) as any
   const jobLinkRef = useRef(null)
   const dispatch = useDispatch()
   const [isDoneCopy, setIsDoneCopy] = useState(false)
@@ -78,7 +82,7 @@ const ModalShare = ({
 
   return (
     <Modal
-      headerTitle='Share this job'
+      headerTitle={shareModal.title}
       showModal={isShowModalShare}
       handleModal={handleShowModalShare}
     >
@@ -93,7 +97,7 @@ const ModalShare = ({
                 width='56px'
                 className={styles.ModalShareItemImg}
               />
-              <Text textStyle='base'>Facebook</Text>
+              <Text textStyle='base'>{shareModal.facebook}</Text>
             </FacebookShareButton>
           </div>
           <div className={styles.ModalShareItem} onClick={tokenData}>
@@ -106,7 +110,7 @@ const ModalShare = ({
                 className={styles.ModalShareItemImg}
               />
               <Text textStyle='base' textColor='warmgrey'>
-                Twitter
+                {shareModal.twitter}
               </Text>
             </TwitterShareButton>
           </div>
@@ -120,17 +124,17 @@ const ModalShare = ({
                 className={styles.ModalShareItemImg}
               />
               <Text textStyle='base' textColor='warmgrey'>
-                Linkedin
+                {shareModal.linkedin}
               </Text>
             </LinkedinShareButton>
           </div>
         </div>
         <div className={styles.ModalShareFooter} onClick={tokenData}>
-          <Text textStyle='lg'>Page Link</Text>
+          <Text textStyle='lg'> {shareModal.link}</Text>
           {isDoneCopy ? (
             <div className={styles.ModalShareFooterTooltip}>
               <Text textStyle='sm' textColor='white'>
-                Link copied
+                {shareModal.linkCopied}
               </Text>
             </div>
           ) : null}

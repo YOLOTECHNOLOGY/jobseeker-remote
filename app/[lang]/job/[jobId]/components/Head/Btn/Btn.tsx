@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { Stack } from 'app/[lang]/components/MUIs'
@@ -15,6 +15,7 @@ import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 type propsType = {
   is_saved: boolean
@@ -27,6 +28,8 @@ type propsType = {
 const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
   const dispatch = useDispatch()
   const userInfo = getCookie('user')
+  const { jobDetail: translation } = useContext(languageContext) as any
+  const { header } = translation
 
   const [loading, chatNow, changeJobModal] = useChatNow(jobDetail)
   const { status_key } = jobDetail
@@ -129,11 +132,11 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
         <span style={{ textTransform: 'capitalize' }}>
           {(() => {
             if (jobDetail.external_apply_url) {
-              return 'Apply Now'
+              return header.apply
             } else if (chat?.is_exists && chat?.job_id == jobId) {
-              return 'Continue Chat'
+              return header.continueChat
             } else {
-              return 'Chat Now'
+              return header.chatNow
             }
           })()}
         </span>
@@ -164,12 +167,16 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
             {isSave ? (
               <>
                 <FavoriteIcon sx={{ color: '#136FD3' }} />
-                <span style={{ textTransform: 'capitalize', marginLeft: '8px' }}>Undo saved</span>
+                <span style={{ textTransform: 'capitalize', marginLeft: '8px' }}>
+                  {header.undoSave}
+                </span>
               </>
             ) : (
               <>
                 <FavoriteBorderIcon sx={{ color: '#136FD3' }} />
-                <span style={{ textTransform: 'capitalize', marginLeft: '8px' }}> Save</span>
+                <span style={{ textTransform: 'capitalize', marginLeft: '8px' }}>
+                  {header.save}
+                </span>
               </>
             )}
 

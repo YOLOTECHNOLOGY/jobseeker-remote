@@ -10,8 +10,12 @@ import MaterialTextField from 'components/MaterialTextField'
 import { buildQuery } from 'app/[lang]/main-page/helper'
 
 import styles from '../../../page.module.scss'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 const Search = () => {
+  const {
+    jobDetail: { content }
+  } = useContext(languageContext) as any
   const router = useRouter()
   const { location, setLocation } = useContext(LocationContext)
 
@@ -29,6 +33,7 @@ const Search = () => {
         className={styles.search_location}
         value={location}
         isClear={false}
+        label={content.search.location}
         defaultValue='Las Pinas'
         disableClearable
         sx={{
@@ -49,7 +54,7 @@ const Search = () => {
 
       <MaterialTextField
         className={styles.search_field}
-        label='Job title or company'
+        label={content.search.title}
         variant='outlined'
         size='small'
         value={searchValue}
@@ -80,7 +85,7 @@ const Search = () => {
         onClick={handleUpdatePath}
         className={styles.search_field_bingo}
       >
-        Search
+        {content.search.btn}
       </Button>
     </section>
   )

@@ -11,7 +11,7 @@ import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs
 
 import styles from './page.module.scss'
 
-const Index = ({ data, jobId }: any) => {
+const Index = ({ data, jobId, languages }: any) => {
   const cookieStore = cookies()
 
   const accessToken = cookieStore.getAll('accessToken')
@@ -65,7 +65,8 @@ const Index = ({ data, jobId }: any) => {
     chat: data.chat,
     job_type_value: data.job_type_value,
     status_key: data.status_key,
-    jobDetail: data
+    jobDetail: data,
+    languages
   }
 
   const companyProps = {
@@ -76,7 +77,8 @@ const Index = ({ data, jobId }: any) => {
     numOfActiveJobs: data.company?.num_of_active_jobs,
     jobId,
     companyUrl: data.company?.company_url,
-    published_at: data.published_at
+    published_at: data.published_at,
+    languages
   }
 
   const mainProps = {
@@ -102,7 +104,8 @@ const Index = ({ data, jobId }: any) => {
     lng: data.longitude,
     full_address: data.full_address,
     published_at: data.published_at,
-    recruiter: data.recruiter
+    recruiter: data.recruiter,
+    languages
   }
 
   return (

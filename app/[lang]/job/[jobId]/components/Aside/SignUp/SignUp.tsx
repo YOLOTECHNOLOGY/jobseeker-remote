@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
 
@@ -14,6 +14,7 @@ import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOt
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 import styles from '../../../page.module.scss'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 type propsType = {
   jobId: number
@@ -64,6 +65,11 @@ const theme = createTheme({
 
 const SignUp = ({ jobId, job_url }: propsType) => {
   const dispatch = useDispatch()
+  const {
+    jobDetail: {
+      aside: { signUp }
+    }
+  } = useContext(languageContext) as any
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
@@ -92,12 +98,12 @@ const SignUp = ({ jobId, job_url }: propsType) => {
 
   return (
     <section className={styles.signUp}>
-      <h3>Join Bossjob</h3>
+      <h3>{signUp.title}</h3>
       <div>
         <Stack spacing={2}>
           <ThemeProvider theme={theme}>
             <TextField
-              label='Email address'
+              label={signUp.label}
               size='small'
               onChange={(e) => setEmail(e.target?.value)}
               onKeyUp={(e) => e.code == 'Enter' && handleSendEmailTOP()}
@@ -116,19 +122,19 @@ const SignUp = ({ jobId, job_url }: propsType) => {
             isLoading={loading}
             onClick={handleSendEmailTOP}
           >
-            Sign up
+            {signUp.btn}
           </MaterialButton>
         </Stack>
       </div>
 
       <p className={styles.signUp_userProtocol}>
-        By signing up, I have read and agreed to the{' '}
+        {signUp.note}{' '}
         <a href='https://blog.bossjob.ph/terms-and-conditions/' target='_blank' rel='noreferrer'>
-          Terms of Use
+          {signUp.term}
         </a>{' '}
         &nbsp; & &nbsp;
         <a href='https://blog.bossjob.ph/terms-and-conditions/' target='_blank' rel='noreferrer'>
-          Privacy Policy
+          {signUp.policy}
         </a>
       </p>
     </section>

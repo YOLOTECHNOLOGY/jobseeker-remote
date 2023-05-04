@@ -20,9 +20,11 @@ type propsType = {
   full_address: string
   published_at: string
   recruiter: any
+  languages: Record<string, any>
 }
 
 const MainFC = (props: propsType) => {
+  const { content } = props.languages
   return (
     <main className={styles.main}>
       <Desc {...props} />
@@ -30,7 +32,9 @@ const MainFC = (props: propsType) => {
       <Map lat={props.lat} lng={props.lng} full_address={props.full_address} />
       <Search />
 
-      <span className={styles.published_at}>Posted on {props.published_at}</span>
+      <span className={styles.published_at}>
+        {content.jobPostedOn} {props.published_at}
+      </span>
     </main>
   )
 }
