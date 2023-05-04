@@ -31,6 +31,7 @@ import 'moment/locale/zh-cn'
 import 'moment/locale/zh-hk'
 import moment from 'moment'
 moment.locale('en-sg')
+
 const App = (props: AppProps) => {
   const { Component, pageProps } = props
   const router = useRouter()
@@ -131,6 +132,45 @@ const App = (props: AppProps) => {
       <Head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no' />
       </Head>
+      {/* Global Site Tag (gtag.js) - Google Analytics */}
+      {/* Global Site Tag (gtag.js) - Google Analytics */}
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
+      <Script
+        id='gtag-init'
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gtag.GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
+          `
+        }}
+      />
+      {/* <Script
+        strategy='lazyOnload'
+        onLoad={() => {
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          // eslint-disable-next-line prefer-rest-params
+          function gtag(...args) { (window as any).dataLayer.push(args); }
+          gtag('js', new Date());
+          gtag('config', '${gtag.GA_TRACKING_ID}', {
+            page_path: window.location.pathname,
+          });
+
+          (window as any).gtag = gtag
+          setGtagReady(true)
+
+        }}
+        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+        id='gtag-init'
+        dangerouslySetInnerHTML={{
+          __html: `
+            
+          `
+        }}
+      /> */}
       {/* Facebook  */}
       <Script
         dangerouslySetInnerHTML={{

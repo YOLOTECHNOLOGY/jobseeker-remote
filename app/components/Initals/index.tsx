@@ -65,6 +65,7 @@ const Initial = () => {
   const firstRender = useFirstRender()
   const searchParams = useSearchParams()
 
+  const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
 
   useEffect(() => {
     if (firstRender) {
@@ -81,6 +82,56 @@ const Initial = () => {
     fbq.pageview()
   }, [])
   return <>
+    {/* <Script
+      strategy='lazyOnload'
+      onLoad={() => {
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        // eslint-disable-next-line prefer-rest-params
+        function gtag(...args) { ((window as any)).dataLayer.push(args); }
+        gtag('js', new Date());
+        gtag('config', gtag.GA_TRACKING_ID, {
+          page_path: window.location.pathname,
+        });
+        (window as any).gtag = gtag
+        setGtagReady(true)
+
+      }}
+      src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+      id='gtag-init'
+      dangerouslySetInnerHTML={{
+        __html: `
+            
+          `
+      }}
+    /> */}
+    <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
+    <Script
+      id='gtag-init'
+      dangerouslySetInnerHTML={{
+        __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gtag.GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
+          `
+      }}
+    />
+
+    {/* Google Tag Manager (gtm)  https://tagmanager.google.com */}
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer', ${gtmID})
+        `
+      }}
+    />
+      
     {/* Facebook  */}
     <Script
       dangerouslySetInnerHTML={{
