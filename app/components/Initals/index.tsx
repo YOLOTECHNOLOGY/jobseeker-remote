@@ -120,7 +120,7 @@ const Initial = () => {
     />
 
     {/* Google Tag Manager (gtm)  https://tagmanager.google.com */}
-    <Script
+    <script
       dangerouslySetInnerHTML={{
         __html: `
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
