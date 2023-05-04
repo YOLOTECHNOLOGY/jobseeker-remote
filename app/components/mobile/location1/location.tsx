@@ -31,8 +31,12 @@ const textFieldTheme = (value, height = '44px') => createTheme({
           overflow: 'hidden',
           // border:'1px solid #ccc',
           // backgroundColor:'while'
+          paddingTop: '0px',
           height,
         },
+        input: {
+          paddingTop: '0px'
+        }
       }
     },
     MuiOutlinedInput: {
@@ -48,7 +52,7 @@ const textFieldTheme = (value, height = '44px') => createTheme({
           color: '#136FD3',
           marginTop: '0px',
           paddingTop: '0px',
-          fontSize:'14px'
+          fontSize: '14px'
         },
 
         // input: {
@@ -73,7 +77,7 @@ const textFieldTheme = (value, height = '44px') => createTheme({
           top: '-8px',
           height: height,
           lineHeight: height,
-          paddingTop:'0px'
+          paddingTop: '0px'
         },
         shrink: {
           display: 'none',

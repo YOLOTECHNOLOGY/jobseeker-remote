@@ -53,7 +53,9 @@ const SearchArea = (props: any) => {
     const page = searchParams.page ?? '1'
     const { push } = useContext(LoadingContext)
     const locations = flatMap(config.location_lists, item => item.locations)
-    const [location, setLocation] = useState(locations.find(location => location.seo_value === searchParams.location?.[0]))
+   
+    const [location, setLocation] = useState(locations.find(location => location.seo_value === searchParams.location))
+    console.log({ searchParams, location })
     const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
     const [moreData, setMoreData] = useState(
         pipe(map(item => {
@@ -137,7 +139,9 @@ const SearchArea = (props: any) => {
                     <MaterialLocationField
                         height='30px'
                         labelTop='0px'
-                        style={{ width: '100%', height: '30px', marginLeft: 2 }}
+                        style={{ width: '100%', height: '30px' }}
+                        value={location}
+                        defaultValue={location}
                         options={locations}
                         onChange={(e, value) => {
                             setLocation(value)
@@ -167,7 +171,7 @@ const SearchArea = (props: any) => {
                         />
                     </div>
                 </div>
-                
+
             </div>
         </ThemeProvider>
     </div>

@@ -4,6 +4,7 @@ import { registInterpreter, Result } from 'app/abstractModels/util'
 import { ReaderTPromise as M } from 'app/abstractModels/monads'
 // import { check } from 'helpers/interpreters/services/chat'
 import { cookies } from 'next/headers'
+import { flatMap } from 'lodash-es'
 import { fetchJobsForYouLogin } from 'store/services/jobs/fetchJobsForYouLogin'
 
 export const thousandsToNumber = (string) => {
@@ -14,34 +15,34 @@ export const thousandsToNumber = (string) => {
         return 100001
     }
 }
-export const handleSalary = (salaryRanges,salaryList) => {
+export const handleSalary = (salaryRanges, salaryList) => {
     const selected = salaryRanges?.map(seo => salaryList.find(item => item['seo-value'] === seo))
     const from = selected?.map(item => item.from).join(',')
     const to = selected?.map(item => item.to).join(',')
     return [from, to]
-    let salaryFrom = ''
-    let salaryTo = ''
-    if (salaryRanges?.length) {
-        salaryFrom = salaryRanges
-            .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
-            .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split('-')[0]))
+    // let salaryFrom = ''
+    // let salaryTo = ''
+    // if (salaryRanges?.length) {
+    //     salaryFrom = salaryRanges
+    //         .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
+    //         .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split('-')[0]))
 
-        salaryTo = salaryRanges
-            .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
-            .map((salaryTo) => thousandsToNumber('' + salaryTo.split('-')[1]))
+    //     salaryTo = salaryRanges
+    //         .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
+    //         .map((salaryTo) => thousandsToNumber('' + salaryTo.split('-')[1]))
 
-        if (salaryRanges.includes('below-30k')) {
-            salaryFrom.push(0)
-            salaryTo.push(30000)
-        }
-        if (salaryRanges.includes('above-200k')) {
-            salaryFrom.push(200001)
-            salaryTo.push(400000)
-        }
-        salaryFrom = salaryFrom.join(',')
-        salaryTo = salaryTo.join(',')
-    }
-    return [salaryFrom, salaryTo]
+    //     if (salaryRanges.includes('below-30k')) {
+    //         salaryFrom.push(0)
+    //         salaryTo.push(30000)
+    //     }
+    //     if (salaryRanges.includes('above-200k')) {
+    //         salaryFrom.push(200001)
+    //         salaryTo.push(400000)
+    //     }
+    //     salaryFrom = salaryFrom.join(',')
+    //     salaryTo = salaryTo.join(',')
+    // }
+    // return [salaryFrom, salaryTo]
 }
 export default registInterpreter(command =>
     command.cata({
@@ -50,10 +51,11 @@ export default registInterpreter(command =>
             const industryList = config.industry_lists
             const qualificationList = config.educations
             const salaryList = config.salary_range_filters
-            const [salaryFrom, salaryTo] = handleSalary(searchParams.salary?.split?.(',') ?? [],salaryList)
+            const [salaryFrom, salaryTo] = handleSalary(searchParams.salary?.split?.(',') ?? [], salaryList)
             const workExperienceList = config.xp_lvls
             const jobTypeList = config.job_types
             const companySizeList = config.company_sizes
+            const locationLists = flatMap(config.location_lists, item => item.locations)
 
             const queriyParams = {
                 jobseekerPrefId: preferenceId,
@@ -62,6 +64,7 @@ export default registInterpreter(command =>
                 sort: searchParams.sort ?? 2,
                 salary_from: salaryFrom,
                 salary_to: salaryTo,
+                job_locations: locationLists.find(item => item?.['seo_value'] === searchParams.location)?.value ?? null,
                 company_industries: searchParams.industry?.split?.(',')?.map?.(key => industryList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
                 job_types: searchParams.jobTypes?.split?.(',')?.map?.(key => jobTypeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
                 xp_lvls: searchParams.workExperience?.split?.(',')?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
@@ -69,6 +72,7 @@ export default registInterpreter(command =>
                 // is_company_verified: Boolean(searchParams.verifiedCompany),
                 company_sizes: searchParams.companySizes?.split?.(',')?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
             }
+            console.log({ queriyParams })
             const token = cookies().get('accessToken')
             return fetchJobsForYouLogin(queriyParams, token.value)
                 .then(result => ({
