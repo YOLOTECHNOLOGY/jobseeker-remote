@@ -120,6 +120,8 @@ const App = (props: AppProps) => {
         })
     }
   }, []) // [router.route]
+  const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
+
   return (
     <>
       <SEO
@@ -131,6 +133,17 @@ const App = (props: AppProps) => {
       />
       <Head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no' />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer', '${gtmID}')
+        `
+          }}
+        />
       </Head>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       {/* Global Site Tag (gtag.js) - Google Analytics */}
@@ -148,6 +161,13 @@ const App = (props: AppProps) => {
           `
         }}
       />
+      {/* Google Tag Manager (noscript) */}
+      <noscript dangerouslySetInnerHTML={{
+        __html: `
+          <iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'}"
+          height="0" width="0" style="display:non e;visibility:hidden"></iframe>
+        `}}>
+      </noscript>
       {/* <Script
         strategy='lazyOnload'
         onLoad={() => {
