@@ -75,7 +75,7 @@ const CompanyProfileLayout = ({
   const imgPlaceholder =
     'https://assets.bossjob.com/companies/1668/cover-pictures/0817984dff0d7d63fcb8193fef08bbf2.jpeg'
   const {
-    companyDetail: { tab, rightSection }
+    companyDetail: { rightSection }
   } = lang
   const [tabValue, setTabValue] = useState(currentTab)
   const [similarCompanies, setSimilarCompanies] = useState(null)

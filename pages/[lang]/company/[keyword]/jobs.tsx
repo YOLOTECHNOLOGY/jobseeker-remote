@@ -25,13 +25,24 @@ import CompanyJobsCardLoader from 'components/Loader/CompanyJobsCard'
 import styles from '../Company.module.scss'
 import MetaText from '../../../../components/MetaText'
 import { getCountry } from 'helpers/country'
+import { getDictionary } from 'get-dictionary'
+import { formatTemplateString } from 'helpers/formatter'
 
 const CompanyJobsProfile = (props: any) => {
   const size = 30
   const router = useRouter()
   const { page } = router.query
   const dispatch = useDispatch()
-  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs } = props
+  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs, lang } =
+    props
+  const {
+    companyDetail: {
+      job,
+      overview: {
+        jobs: { card }
+      }
+    }
+  } = lang
   const company = companyDetail
 
   useEffect(() => {
@@ -97,6 +108,7 @@ const CompanyJobsProfile = (props: any) => {
 
   return (
     <CompanyProfileLayout
+      lang={lang}
       company={company}
       currentTab='jobs'
       totalJobs={totalActiveJobs}
@@ -108,7 +120,7 @@ const CompanyJobsProfile = (props: any) => {
           {totalActiveJobs > 0 && (
             <div className={styles.companyJobs}>
               <Text textStyle='xl' bold className={styles.companySectionTitle}>
-                Jobs
+                {job.title}
               </Text>
               <MetaText tagName='h1'>{`Jobs at ${company.name} ${company.id}`}</MetaText>
 
@@ -121,7 +133,7 @@ const CompanyJobsProfile = (props: any) => {
                       onChange={(e) => setJobQuery(e.target.value)}
                       className={styles.companyJobsSearchTitle}
                       size='small'
-                      label='Search for job title'
+                      label={job.search.jobTitle}
                       isSubmitOnEnter={true}
                       onSubmit={handleSearchCompanyJobSearch}
                     />
@@ -129,7 +141,7 @@ const CompanyJobsProfile = (props: any) => {
                   <div className={styles.companyJobsSearchRight}>
                     <MaterialLocationField
                       className={styles.companyJobsSearchLocation}
-                      label='Location'
+                      label={job.search.location}
                       value={jobLocation}
                       defaultValue={jobLocation}
                       onChange={onLocationSearch}
@@ -141,7 +153,7 @@ const CompanyJobsProfile = (props: any) => {
                       onClick={handleSearchCompanyJobSearch}
                     >
                       <Text textColor='white' bold>
-                        Search
+                        {job.search.btn}
                       </Text>
                     </MaterialButton>
                   </div>
@@ -165,11 +177,22 @@ const CompanyJobsProfile = (props: any) => {
                             jobUrl: companyJob.job_url
                           }
 
-                          return <CompanyJobsCard chatText={''} {...company} key={companyJob.id} />
+                          return (
+                            <CompanyJobsCard
+                              chatText={card.chatNow}
+                              {...company}
+                              key={companyJob.id}
+                            />
+                          )
                         })}
                       </div>
                       <Text textStyle='sm' className={styles.companyJobsResults}>
-                        Showing {handleJobsDisplayCount()} of {totalJobs} jobs
+                        {formatTemplateString(
+                          job.pagination.tips,
+                          handleJobsDisplayCount(),
+                          totalJobs
+                        )}
+                        {/* Showing {handleJobsDisplayCount()} of {totalJobs} jobs */}
                       </Text>
                       <div className={styles.companyJobsPagination}>
                         <MaterialRoundedPagination
@@ -185,7 +208,10 @@ const CompanyJobsProfile = (props: any) => {
               ) : (
                 <div className={styles.emptyResult}>
                   {totalActiveJobs > 0 && (
-                    <Text>We couldn't find any jobs matching your search.</Text>
+                    <Text>
+                      {job.noMatchedJobs}
+                      {/* We couldn't find any jobs matching your search. */}
+                    </Text>
                   )}
                 </div>
               )}
@@ -194,7 +220,8 @@ const CompanyJobsProfile = (props: any) => {
           {totalActiveJobs == 0 && (
             <div>
               <Text>
-                {company.name} does not have any job openings now. Please come back again.
+                {formatTemplateString(job.noJobs, company.name)}
+                {/* {company.name} does not have any job openings now. Please come back again. */}
               </Text>
             </div>
           )}
@@ -204,58 +231,63 @@ const CompanyJobsProfile = (props: any) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
-  const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-  const companyPageUrl = req.url.split('/')
-  const companyPath =
-    companyPageUrl.length === 4
-      ? companyPageUrl[2].split('-')
-      : companyPageUrl[companyPageUrl.length - 1].split('-')
-  const companyId = Number(companyPath[companyPath.length - 1])
-  const jobFilterpayload = {
-    companyIds: companyId,
-    size: 10,
-    page: 1
-  }
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, query: { lang } }) => {
+      const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
+      const companyPageUrl = req.url.split('/')
+      const companyPath =
+        companyPageUrl.length === 4
+          ? companyPageUrl[2].split('-')
+          : companyPageUrl[companyPageUrl.length - 1].split('-')
+      const companyId = Number(companyPath[companyPath.length - 1])
+      const jobFilterpayload = {
+        companyIds: companyId,
+        size: 10,
+        page: 1
+      }
+      const dictionary = await getDictionary(lang as any)
 
-  store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
-  // store.dispatch(fetchConfigRequest())
-  store.dispatch(fetchCompanyDetailRequest(companyId))
-  store.dispatch(END)
+      store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
+      // store.dispatch(fetchConfigRequest())
+      store.dispatch(fetchCompanyDetailRequest(companyId))
+      store.dispatch(END)
 
-  await (store as any).sagaTask.toPromise()
-  const storeState = store.getState()
-  const companyDetail = storeState.companies.companyDetail.response.data
+      await (store as any).sagaTask.toPromise()
+      const storeState = store.getState()
+      const companyDetail = storeState.companies.companyDetail.response.data
 
-  if (!companyDetail) {
-    return {
-      notFound: true
+      if (!companyDetail) {
+        return {
+          notFound: true
+        }
+      }
+
+      const config = storeState.config.config.response
+      const companyName = companyDetail?.name
+      const jobList = storeState.job.jobList.response.data
+      const totalActiveJobs = jobList?.total_num || 0
+      const seoMetaTitle = `${companyName} Careers in ${getCountry()}, Job Opportunities | Bossjob`
+      const seoMetaDescription = encodeURI(
+        `View all current job opportunities at ${companyName} in ${getCountry()} on Bossjob - Connecting pre-screened experienced professionals to employers`
+      )
+      const additionalCanonicalText = '/jobs'
+      const companyUrl = companyDetail.company_url
+      const canonicalUrl = companyUrl + additionalCanonicalText
+      return {
+        props: {
+          config,
+          companyDetail,
+          accessToken,
+          seoMetaTitle,
+          canonicalUrl,
+          imageUrl: companyDetail?.logo_url,
+          seoMetaDescription,
+          totalActiveJobs,
+          lang: dictionary
+        }
+      }
     }
-  }
-
-  const config = storeState.config.config.response
-  const companyName = companyDetail?.name
-  const jobList = storeState.job.jobList.response.data
-  const totalActiveJobs = jobList?.total_num || 0
-  const seoMetaTitle = `${companyName} Careers in ${getCountry()}, Job Opportunities | Bossjob`
-  const seoMetaDescription = encodeURI(
-    `View all current job opportunities at ${companyName} in ${getCountry()} on Bossjob - Connecting pre-screened experienced professionals to employers`
-  )
-  const additionalCanonicalText = '/jobs'
-  const companyUrl = companyDetail.company_url
-  const canonicalUrl = companyUrl + additionalCanonicalText
-  return {
-    props: {
-      config,
-      companyDetail,
-      accessToken,
-      seoMetaTitle,
-      canonicalUrl,
-      imageUrl: companyDetail?.logo_url,
-      seoMetaDescription,
-      totalActiveJobs
-    }
-  }
-})
+)
 
 export default CompanyJobsProfile

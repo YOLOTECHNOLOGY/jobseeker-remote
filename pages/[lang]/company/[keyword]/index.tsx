@@ -143,7 +143,9 @@ const CompanyDetail = (props: any) => {
                     <Text textStyle='lg' bold>
                       {overview.size}:{' '}
                     </Text>
-                    <Text textStyle='lg'>{company.company_size} Employees</Text>
+                    <Text textStyle='lg'>
+                      {company.company_size} {overview.employees}
+                    </Text>
                   </div>
                 )}
                 {company.industry && (
