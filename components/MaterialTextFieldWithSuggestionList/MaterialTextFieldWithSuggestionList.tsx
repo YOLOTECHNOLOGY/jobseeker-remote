@@ -84,15 +84,18 @@ const MaterialTextFieldWithSuggestionList = ({
         className={className}
         size={size}
         onChange={(_, val: any, reason) => {
+          console.log({reason})
           if ((reason === 'selectOption' || reason === 'clear') && onSelect) {
             const value = val?.value ? val?.value : val || ''
-             onSelect(value)
+            onSelect(value)
+          } else if (reason === 'clear') {
+            updateSearchValue(val)
           }
         }}
         renderOption={renderOption}
         getOptionLabel={(option: any) => option.value || option}
         defaultValue={defaultValue}
-        inputValue={value}
+        // inputValue={value}
         renderInput={(params) => (
           <MaterialTextField
             {...refs}
