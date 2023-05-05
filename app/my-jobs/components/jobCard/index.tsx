@@ -231,7 +231,7 @@ const JobCard = (props: any) => {
                                             {(() => {
                                                 if (external_apply_url) {
                                                     return 'Apply Now'
-                                                } else if (chat?.is_exists && chat?.job_id === id) {
+                                                } else if (chat?.is_exists) {
                                                     return 'Continue Chat'
                                                 } else {
                                                     return 'Chat Now'
