@@ -123,7 +123,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
                           ></span>
                         </div>
                         <div className={classNames([styles.similarJobs_mobileCard_loca])}>
-                          <div>{[item?.recruiter_full_name,item?.recruiter_job_title].filter(a=>a).join(' . ')}</div>
+                          <div>{[item?.recruiter_full_name,item?.recruiter_job_title].filter(a=>a).join(' · ')}</div>
                           <div className={styles.similarJobs_mobileCard_loca_value}>
                             {item.location_value}
                           </div>
