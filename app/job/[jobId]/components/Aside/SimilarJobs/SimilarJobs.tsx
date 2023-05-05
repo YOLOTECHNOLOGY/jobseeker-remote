@@ -35,7 +35,6 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
       recruiterLineStatus = lines
     }
   }
-
   return (
     <>
       {data.length ? (

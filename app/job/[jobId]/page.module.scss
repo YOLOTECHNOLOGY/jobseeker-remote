@@ -70,7 +70,7 @@
       font-weight: 700;
       font-size: 32px;
       letter-spacing: 0.02em;
-      color: #136fd3;
+      color: #fe574a;
     }
 
     &_desc {
@@ -472,7 +472,9 @@
         padding-left: 15px;
         margin-bottom: 0;
       }
-
+      &_card:first-child {
+        margin-top: 20px;
+      }
       &_card {
         margin-top: 32px;
       }
@@ -500,7 +502,7 @@
         font-weight: 700;
         font-size: 18px;
         letter-spacing: 0.02em;
-        color: #136fd3;
+        color: #fe574a;
       }
 
       &_info {
