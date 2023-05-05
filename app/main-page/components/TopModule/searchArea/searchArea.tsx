@@ -164,6 +164,7 @@ const SearchArea = (props: any) => {
         />
         <MaterialButton
             className={styles.searchButton}
+            variant='contained'
             onClick={() => {
                 if(!searchValue) return
                 addSearchHistory(searchValue)
