@@ -111,7 +111,6 @@ const JobCard = (props: any) => {
     const { job, preference } = props
     const {
         job_title,
-        job_region,
         salary_range_value,
         job_type,
         job_location,
@@ -187,7 +186,7 @@ const JobCard = (props: any) => {
                             onMouseEnter={() => setTitleHover(true)}
                             onMouseLeave={() => setTitleHover(false)}
                             className={styles.titleContainer}
-                            title={`${job_title} (${job_region})`}
+                            title={`${job_title}`}
                         >
                             <div className={styles.title}>{`${job_title}`}</div>
                             <div className={styles.salary}>{salary_range_value}</div>
@@ -287,9 +286,9 @@ const JobCard = (props: any) => {
                 <div className={styles.popTop}>
                     <div className={styles.popTopLeft}>
                         <div
-                            title={`${job_title} (${job_region})`}
+                            title={`${job_title}`}
                             className={styles.title}>
-                            {`${job_title} (${job_region})`}
+                            {`${job_title}`}
                         </div>
                         <div
                             className={styles.secondLabel}
