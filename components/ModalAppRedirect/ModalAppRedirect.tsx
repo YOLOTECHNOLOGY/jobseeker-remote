@@ -118,8 +118,11 @@ const ModalAppRedirect = ({
         IOS schema: BOSSJOBPH://register
         Android schema: intent://register/#Intent;scheme=BOSSJOBPH;package=com.poseidon.bossjobapp;end
       */
-      const schema = `${baseSchema}://bossjob.ph/${pathSchema}?email=${userInfo?.email}&role=jobseeker&jobsId=${jobId}`
+      // const schema = `${baseSchema}://bossjob.ph/${pathSchema}?email=${userInfo?.email}&role=jobseeker&jobsId=${jobId}`
       // // const schema = `${baseSchema}://${pathSchema}`
+
+      //  adjust link
+      const schema = `https://cyyj.adj.st/bossjob.ph?adj_t=4pha213&adj_deep_link=bossjob%3A%2F%2Fbossjob.ph%2Fjob-details%3FjobId%3D188027&adj_redirect_ios=https%3A%2F%2Fbossjob.ph%2Fjob%2F188027&adj_redirect_android=https%3A%2F%2Fbossjob.ph%2Fjob%2F188027`
 
       const appStoreLink = userAgent?.isIos
         ? process.env.APP_STORE_LINK
