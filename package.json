@@ -13,7 +13,11 @@
     "postinstall": "husky install",
     "prepare": "husky install",
     "commitmsg": "node node_modules/commitplease .git/COMMIT_EDITMSG",
-    "test": "NODE_OPTIONS=--experimental-vm-modules env=test yarn jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules env=test yarn jest",
+    "crowdin:pull": "crowdin pull --all",
+    "crowdin:pushT": "crowdin push translations",
+    "crowdin:pushS": "crowdin push sources",
+    "crowdin:status": "crowdin status translation"
   },
   "commitplease": {
     "limits": {
@@ -34,6 +38,7 @@
     ]
   },
   "dependencies": {
+    "@crowdin/cli": "^3.11.0",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@formatjs/intl-localematcher": "0.2.32",

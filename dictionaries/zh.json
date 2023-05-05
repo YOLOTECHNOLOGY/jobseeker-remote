@@ -1,7 +1,63 @@
 {
   "home": {
-    "h1": "找工作，BOSS直拒",
-    "searchBtn": "搜索"
+    "title": "找工作，与老板谈",
+    "search": {
+      "location": "位置",
+      "title": "职位或者公司名称",
+      "btn1": "搜索",
+      "download": "下载App",
+      "chatBoss": "并与老板直接谈",
+      "popup": {
+        "chatBoss": "与老板直接谈"
+      }
+    },
+    "popularJobs": "受欢迎的工作",
+    "tag": {
+      "java": "Java开发",
+      "full": "全栈工程师",
+      "web": "Web开发",
+      "cs": "客户服务",
+      "accountant": "会计师",
+      "sales": "销售顾问"
+    },
+    "tab": {
+      "IT": "信息技术",
+      "CSR/Ops": "客户服务/操作员",
+      "Sales": "销售",
+      "Finance": "财务/审计/税务",
+      "HR": "人力资源/行政/法律",
+      "Manufacturing": "制造",
+      "Banking": "银行",
+      "Healthcare": "保健/医疗"
+    },
+    "improveRecommend": "更新并改进职位推荐",
+    "jobPrefer": "职位偏好",
+    "jobPreference": "基于你的职位偏好",
+    "jobTab": {
+      "reco": "推荐",
+      "latestJob": "最新"
+    },
+    "jobCard": {
+      "chatNow": "立即沟通",
+      "jobForYou": "为您推荐",
+      "needMatches": "想要更精准的匹配？",
+      "getStart": "立即开始",
+      "noMore": "没有了",
+      "loading": "加载中..."
+    },
+    "seeMoreBtn": "查看更多",
+    "topCompany": "热门企业",
+    "companyHiring": "热门企业招聘",
+    "companyCard": {
+      "chatNow": "立即沟通",
+      "employee": "人",
+      "jobHiring": "{{count}}个热招职位",
+      "moreJob": "更多工作"
+    },
+    "seo": {
+      "title": "Bossjob - 在 {{country}} 的专业人士的职业平台",
+      "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
+    }
   },
   "header": {
     "findJobs": "职位",
@@ -65,11 +121,10 @@
     "pleaseEnter": "请输入我们发送给的6位一次性密码",
     "enter6DigitOTP": "输入 6 位数的一次性密码",
     "getOPT": "获得选择",
+    "heOTPYouHaveEnteredIsWrong": "heOTPYouHaveEnteredIsWrong",
     "resendOTP": "重新发送一次性密码",
     "havingTrouble": "遇到麻烦？",
     "requestAmagicLink": "申请魔法链接",
-    "heOTPYouHaveEnteredIsWrong": "heOTPYouHaveEnteredIsWrong",
-    "seoMetaTitle": "登陆 | Bossjob",
     "seoMetaDescription": "Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ",
     "seoMetaDescription2": "seoMetaDescription2"
   },
@@ -120,13 +175,12 @@
     "back": "返回",
     "addJobPreference": "新增工作偏好"
   },
-  "counter": {
-    "increment": "你真棒",
-    "decrement": "你真棒"
-  },
   "companies": {
     "title": "寻找在{{country}}的优秀公司",
-    "search": { "companyName": "寻找心仪的公司", "btn": "搜索" },
+    "search": {
+      "companyName": "寻找心仪的公司",
+      "btn": "搜索"
+    },
     "employer": {
       "title": "特色雇主",
       "size": "公司规模",
@@ -134,12 +188,19 @@
       "allJobs": "查看{{totalActiveJobs}}个热招工作",
       "employees": "人"
     },
-    "popularCompany": { "title": "热门公司", "allJobs": "查看{{totalActiveJobs}}个热招工作" },
+    "popularCompany": {
+      "title": "热门公司",
+      "allJobs": "查看{{totalActiveJobs}}个热招工作"
+    },
     "seoTitle": "寻找在{{country}}的公司 | Bossjob",
     "seoDescription": "`寻找在{{country}}的优秀公司! 了解公司并申请公司正在招聘的工作！"
   },
   "companyDetail": {
-    "tab": { "overview": "公司信息", "life": "公司日常", "jobs": "热招工作" },
+    "tab": {
+      "overview": "公司信息",
+      "life": "公司日常",
+      "jobs": "热招工作"
+    },
     "overview": {
       "about": "关于公司",
       "size": "公司规模",
@@ -153,13 +214,24 @@
         "viewAll": "查看全部",
         "noCultureTips": "{{companyName}}还没有上传任何公司日常信息，请等会再来"
       },
-      "benefit": { "title": "员工福利", "viewAll": "查看全部" },
-      "photo": { "title": "照片墙" },
+      "benefit": {
+        "title": "员工福利",
+        "viewAll": "查看全部"
+      },
+      "photo": {
+        "title": "照片墙"
+      },
       "jobs": {
         "title": "热招工作",
         "viewAll": "查看全部工作",
-        "search": { "jobTitle": "搜索公司职位", "location": "职位", "btn": "搜索" },
-        "card": { "chatNow": "立即沟通" }
+        "search": {
+          "jobTitle": "搜索公司职位",
+          "location": "职位",
+          "btn": "搜索"
+        },
+        "card": {
+          "chatNow": "立即沟通"
+        }
       },
       "seoTitle": "在{{companyName}}工作 | Bossjob",
       "seoDescription": "发现{{companyName}}的职业机会, 阅读员工评论、福利、文化以了解{{companyName}}的更多信息!"
@@ -172,8 +244,14 @@
     },
     "job": {
       "title": "热招工作",
-      "search": { "jobTitle": "搜索公司职位", "location": "位置", "btn": "搜索" },
-      "pagination": { "tips": "显示 {{range}} 总共 {{totalJobs}} 个工作" },
+      "search": {
+        "jobTitle": "搜索公司职位",
+        "location": "位置",
+        "btn": "搜索"
+      },
+      "pagination": {
+        "tips": "显示 {{range}} 总共 {{totalJobs}} 个工作"
+      },
       "noMatchedJobs": "没有找到匹配的工作",
       "noJobs": "{{companyName}}还没有任何工作。 请等会再来"
     },
@@ -189,61 +267,6 @@
     "culture": {
       "seoTitle": "{{companyName}}的文化、生活 | Bossjob",
       "seoDescription": "在Bossjob上发现{{companyName}}在{{country}}的公司文化、日常 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
-    }
-  },
-  "home": {
-    "title": "找工作，与老板谈",
-    "search": {
-      "location": "位置",
-      "title": "职位或者公司名称",
-      "btn1": "搜索",
-      "download": "下载App",
-      "chatBoss": "并与老板直接谈",
-      "popup": { "chatBoss": "与老板直接谈" }
-    },
-    "popularJobs": "受欢迎的工作",
-    "tag": {
-      "java": "Java开发",
-      "full": "全栈工程师",
-      "web": "Web开发",
-      "cs": "客户服务",
-      "accountant": "会计师",
-      "sales": "销售顾问"
-    },
-    "tab": {
-      "IT": "信息技术",
-      "CSR/Ops": "客户服务/操作员",
-      "Sales": "销售",
-      "Finance": "财务/审计/税务",
-      "HR": "人力资源/行政/法律",
-      "Manufacturing": "制造",
-      "Banking": "银行",
-      "Healthcare": "保健/医疗"
-    },
-    "improveRecommend": "更新并改进职位推荐",
-    "jobPrefer": "职位偏好",
-    "jobPreference": "基于你的职位偏好",
-    "jobTab": { "reco": "推荐", "latestJob": "最新" },
-    "jobCard": {
-      "chatNow": "立即沟通",
-      "jobForYou": "为您推荐",
-      "needMatches": "想要更精准的匹配？",
-      "getStart": "立即开始",
-      "noMore": "没有了",
-      "loading": "加载中..."
-    },
-    "seeMoreBtn": "查看更多",
-    "topCompany": "热门企业",
-    "companyHiring": "热门企业招聘",
-    "companyCard": {
-      "chatNow": "立即沟通",
-      "employee": "人",
-      "jobHiring": "{{count}}个热招职位",
-      "moreJob": "更多工作"
-    },
-    "seo": {
-      "title": "Bossjob - 在 {{country}} 的专业人士的职业平台",
-      "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
     }
   },
   "jobDetail": {
@@ -273,8 +296,15 @@
         "withinMonth": "本月活跃"
       },
       "location": "工作位置",
-      "locationModal": { "btn": "完成", "title": "位置" },
-      "search": { "location": "位置", "title": "工作或者公司名称", "btn": "搜索" },
+      "locationModal": {
+        "btn": "完成",
+        "title": "位置"
+      },
+      "search": {
+        "location": "位置",
+        "title": "工作或者公司名称",
+        "btn": "搜索"
+      },
       "jobPostedOn": "发布于"
     },
     "shareModal": {
@@ -295,7 +325,11 @@
       },
       "submitting": "提交."
     },
-    "detailModal": { "title": "再多告诉我们一点", "btn1": "上一步", "btn2": "提交" },
+    "detailModal": {
+      "title": "再多告诉我们一点",
+      "btn1": "上一步",
+      "btn2": "提交"
+    },
     "feedbackModal": {
       "title": "举报成功",
       "message": "我们已经收到这个工作的举报了，感谢您的通知。你的反馈十分重要，这有助于我们Bossjob社区稳定"
@@ -306,7 +340,10 @@
         "allJobHiring": "查看{{count}}个热招工作",
         "employees": "人"
       },
-      "similarJob": { "title": "相似工作", "seeMore": "查看更多" },
+      "similarJob": {
+        "title": "相似工作",
+        "seeMore": "查看更多"
+      },
       "signUp": {
         "title": "加入Bossjob",
         "btn": "注册",
@@ -374,7 +411,6 @@
       "text3": "enabled",
       "manage": "管理通知",
       "noKey": "未选择任何关键词",
-      "undo": "这个操作无法撤销。",
       "btn1": "保留",
       "btn2": "删除"
     },
@@ -541,12 +577,16 @@
           "jobType": "工作类型",
           "location": "工作位置",
           "currencyType": "货币类型",
+          "salary": "Expected min. salary",
           "minSalary": "最低薪资",
           "maxSalary": "最高薪资",
           "country": "国家",
           "industry": "行业"
         },
-        "openToWork": { "title": "正在找工作", "explain": "让招聘人员知道你在找工作。" }
+        "openToWork": {
+          "title": "正在找工作",
+          "explain": "让招聘人员知道你在找工作。"
+        }
       },
       "resume": {
         "tabTitle": "简历",
@@ -556,9 +596,14 @@
           "time": "上传于 {{time}}",
           "uploadBtn": "上传简历",
           "support": "支持文件类型: PDF, DOC, DOCX. Max. 最大: 5MB",
-          "error": { "title": "文件大小超出了限制", "tips": "请上传小于5MB的文件。" }
+          "error": {
+            "title": "文件大小超出了限制",
+            "tips": "请上传小于5MB的文件。"
+          }
         },
-        "delete": { "error": "删除简历失败" },
+        "delete": {
+          "error": "删除简历失败"
+        },
         "bossjob": {
           "title": "Bossjob 简历",
           "tips": "当你在Bossjob上创建资料的时候，我们会为你创建简历。 你可以下载下面的模版并在你最新的简历中使用他们，然后申请在Bossjob上的工作",
