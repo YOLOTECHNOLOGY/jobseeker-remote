@@ -29,15 +29,20 @@ import { FacebookOutline, LinkedinOutline, InstagramOutline, YoutubeOutline } fr
 
 // Styles
 import styles from '../Company.module.scss'
+import { formatTemplateString } from 'helpers/formatter'
 
 const CompanyDetail = (props: any) => {
+  const {
+    companyDetail: { overview, job }
+  } = props.lang
   const size = 10
   const router = useRouter()
   const dispatch = useDispatch()
   const { page } = router.query
   const [jobQuery, setJobQuery] = useState('')
 
-  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs,lang } = props
+  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs, lang } =
+    props
   const company = companyDetail
   const [companyJobs, setCompanyJobs] = useState(null)
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
@@ -111,7 +116,6 @@ const CompanyDetail = (props: any) => {
     const companyJobsElement = document.getElementById('companyJobs')
     companyJobsElement.scrollIntoView()
   }
-
   return (
     <CompanyProfileLayout
       company={company}
@@ -125,7 +129,7 @@ const CompanyDetail = (props: any) => {
       <div className={styles.companyTabsContent}>
         <div className={styles.companySection}>
           <Text textStyle='xl' bold className={styles.companySectionTitle}>
-            About the company
+            {overview.about}
           </Text>
           <div
             className={styles.companyDescription}
@@ -137,7 +141,7 @@ const CompanyDetail = (props: any) => {
                 {company.company_size && (
                   <div className={styles.companyOverviewItem}>
                     <Text textStyle='lg' bold>
-                      Company Size:{' '}
+                      {overview.size}:{' '}
                     </Text>
                     <Text textStyle='lg'>{company.company_size} Employees</Text>
                   </div>
@@ -145,7 +149,7 @@ const CompanyDetail = (props: any) => {
                 {company.industry && (
                   <div className={styles.companyOverviewItem}>
                     <Text textStyle='lg' bold>
-                      Industry:{' '}
+                      {overview.industry}:{' '}
                     </Text>
                     <Text textStyle='lg'>{company.industry}</Text>
                   </div>
@@ -153,7 +157,7 @@ const CompanyDetail = (props: any) => {
                 {company.website && (
                   <div className={styles.companyOverviewItem}>
                     <Text textStyle='lg' bold>
-                      Website:{' '}
+                      {overview.website}:{' '}
                     </Text>
                     <Link to={company.website} external>
                       <Text textStyle='lg' className={styles.companyOverviewLink}>
@@ -167,14 +171,17 @@ const CompanyDetail = (props: any) => {
                 {company.full_address && (
                   <div className={styles.companyOverviewItem}>
                     <Text textStyle='lg' bold>
-                      Location:{' '}
+                      {overview.location}:{' '}
                     </Text>
                     <Text textStyle='lg' className={styles.companyOverviewLocation}>
                       {company.full_address}
                     </Text>
                   </div>
                 )}
-                {company.facebook_url || company.instagram_url || company.linkedin_url || company.youtube_url ? (
+                {company.facebook_url ||
+                company.instagram_url ||
+                company.linkedin_url ||
+                company.youtube_url ? (
                   <div
                     className={classNames(
                       styles.companyOverviewItem,
@@ -182,7 +189,7 @@ const CompanyDetail = (props: any) => {
                     )}
                   >
                     <Text textStyle='lg' bold>
-                      Social Media:{' '}
+                      {overview.socialMedia}:{' '}
                     </Text>
                     <div className={styles.companyOverviewSocial}>
                       {company.facebook_url && (
@@ -238,7 +245,7 @@ const CompanyDetail = (props: any) => {
                     <div className={styles.companyCultureSection}>
                       <div className={styles.companyCultureHeading}>
                         <Text textStyle='xl' bold>
-                          Company Culture
+                          {overview.culture.title}
                         </Text>
                         <Link
                           to={`${company?.company_url}/life`}
@@ -248,7 +255,7 @@ const CompanyDetail = (props: any) => {
                           )}
                         >
                           <Text textColor='primaryBlue' textStyle='base'>
-                            View all
+                            {overview.culture.viewAll}
                           </Text>
                         </Link>
                       </div>
@@ -271,7 +278,7 @@ const CompanyDetail = (props: any) => {
                         )}
                       >
                         <Text textColor='primaryBlue' textStyle='base'>
-                          View all
+                          {overview.culture.viewAll}
                         </Text>
                       </Link>
                     </div>
@@ -280,7 +287,7 @@ const CompanyDetail = (props: any) => {
                     <div className={styles.companyCultureSection}>
                       <div className={styles.companyCultureHeading}>
                         <Text textStyle='xl' bold>
-                          Employee Benefits
+                          {overview.benefit.title}
                         </Text>
                         <Link
                           to={`${company?.company_url}/life`}
@@ -290,7 +297,7 @@ const CompanyDetail = (props: any) => {
                           )}
                         >
                           <Text textColor='primaryBlue' textStyle='base'>
-                            View all
+                            {overview.benefit.viewAll}
                           </Text>
                         </Link>
                       </div>
@@ -313,7 +320,7 @@ const CompanyDetail = (props: any) => {
                         )}
                       >
                         <Text textColor='primaryBlue' textStyle='base'>
-                          View all
+                          {overview.benefit.viewAll}
                         </Text>
                       </Link>
                     </div>
@@ -322,7 +329,7 @@ const CompanyDetail = (props: any) => {
                     <div className={styles.companyCultureSection}>
                       <div className={styles.companyCultureHeading}>
                         <Text textStyle='xl' bold>
-                          Photos
+                          {overview.photo.title}
                         </Text>
                       </div>
                       <div className={styles.companyCultureTopImage}>
@@ -373,12 +380,13 @@ const CompanyDetail = (props: any) => {
                 <div className={styles.companyCultureWrapper}>
                   <div className={styles.companyCultureHeading}>
                     <Text textStyle='xl' bold>
-                      Company Culture
+                      {overview.culture.title}
                     </Text>
                   </div>
                   <Text>
-                    {company.name} has not uploaded any information about their company life. Please
-                    come back again.
+                    {formatTemplateString(overview.culture.noCultureTips, company.name)}
+                    {/* {company.name} has not uploaded any information about their company life. Please
+                    come back again. */}
                   </Text>
                 </div>
               </div>
@@ -390,7 +398,7 @@ const CompanyDetail = (props: any) => {
           <div className={styles.companyCultureJobs}>
             <div className={styles.companyCultureHeading}>
               <Text textStyle='xl' bold>
-                Jobs
+                {overview.jobs.title}
               </Text>
               {companyJobs?.length > 0 && (
                 <Link
@@ -398,7 +406,7 @@ const CompanyDetail = (props: any) => {
                   className={styles.companyCultureHeadingLink}
                 >
                   <Text textColor='primaryBlue' textStyle='base'>
-                    See all Jobs
+                    {overview.jobs.viewAll}
                   </Text>
                 </Link>
               )}
@@ -413,7 +421,7 @@ const CompanyDetail = (props: any) => {
                     onChange={(e) => setJobQuery(e.target.value)}
                     className={styles.companyJobsSearchTitle}
                     size='small'
-                    label='Search for job title'
+                    label={overview.jobs.search.jobTitle} // 'Search for job title'
                     isSubmitOnEnter={true}
                     onSubmit={handleSearchCompanyJobSearch}
                   />
@@ -421,7 +429,7 @@ const CompanyDetail = (props: any) => {
                 <div className={styles.companyJobsSearchRight}>
                   <MaterialLocationField
                     className={styles.companyJobsSearchLocation}
-                    label='Location'
+                    label={overview.jobs.search.location}
                     value={jobLocation}
                     defaultValue={jobLocation}
                     onChange={onLocationSearch}
@@ -433,7 +441,7 @@ const CompanyDetail = (props: any) => {
                     onClick={handleSearchCompanyJobSearch}
                   >
                     <Text textColor='white' bold>
-                      Search
+                      {overview.jobs.search.btn}
                     </Text>
                   </MaterialButton>
                 </div>
@@ -457,7 +465,13 @@ const CompanyDetail = (props: any) => {
                           jobUrl: companyJob.job_url
                         }
 
-                        return <CompanyJobsCard {...company} key={companyJob.id} />
+                        return (
+                          <CompanyJobsCard
+                            chatText={overview.jobs.card.chatNow}
+                            {...company}
+                            key={companyJob.id}
+                          />
+                        )
                       })}
                     </div>
                     <div className={styles.companyJobsPagination}>
@@ -474,13 +488,19 @@ const CompanyDetail = (props: any) => {
             ) : (
               totalActiveJobs != 0 && (
                 <div className={styles.emptyResult}>
-                  <Text>We couldn't find any jobs matching your search.</Text>
+                  <Text>
+                    {job.noMatchedJobs}
+                    {/* {We couldn't find any jobs matching your search.} */}
+                  </Text>
                 </div>
               )
             )}
           </div>
           {totalActiveJobs === 0 && (
-            <Text>{company.name} does not have any job openings now. Please come back again.</Text>
+            <Text>
+              {formatTemplateString(job.noJobs, company.name)}
+              {/* {company.name} does not have any job openings now. Please come back again. */}
+            </Text>
           )}
         </div>
       </div>
@@ -489,11 +509,11 @@ const CompanyDetail = (props: any) => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (props) => {
- const {req,} = props || {}
+  const { req } = props || {}
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
   const companyPageUrl = req.url.split('/')
   const companyPath = companyPageUrl[companyPageUrl.length - 1].split('-')
-  const { lang} : any = props.query
+  const { lang }: any = props.query
   const dictionary = await getDictionary(lang)
 
   let companyId
@@ -543,7 +563,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (p
       imageUrl: companyDetail?.logo_url,
       seoMetaDescription,
       totalActiveJobs,
-      lang:dictionary
+      lang: dictionary
     }
   }
 })

@@ -13,12 +13,20 @@ interface ICompanyJobsCard {
   salary: string
   availability: string
   jobUrl: string
+  chatText: string
 }
 
+const CompanyJobsCard = ({
+  title,
+  location,
+  salary,
+  availability,
+  jobUrl,
+  chatText
+}: ICompanyJobsCard) => {
+  const host =
+    typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window?.location.host
 
-const CompanyJobsCard = ({ title, location, salary, availability, jobUrl }: ICompanyJobsCard) => {
-  const host = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window?.location.host
-  console.log({ host })
   return (
     <div className={styles.companyJobsCard}>
       <div className={styles.companyJobsCardLeft}>
@@ -42,7 +50,7 @@ const CompanyJobsCard = ({ title, location, salary, availability, jobUrl }: ICom
         <Link to={`${host}${jobUrl}`} external>
           <MaterialButton variant='outlined' capitalize className={styles.companyJobsCardApply}>
             <Text textStyle='base' textColor='primaryBlue' bold>
-              Chat Now
+              {chatText}
             </Text>
           </MaterialButton>
         </Link>

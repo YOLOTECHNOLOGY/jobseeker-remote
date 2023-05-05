@@ -54,7 +54,7 @@ const CompanyJobsProfile = (props: any) => {
       size,
       page,
       query: jobQuery,
-      location: jobLocation?.value || '',
+      location: jobLocation?.value || ''
     }
 
     dispatch(fetchJobsListRequest({ ...payload }, accessToken))
@@ -81,8 +81,9 @@ const CompanyJobsProfile = (props: any) => {
   }
 
   const handleJobsDisplayCount = () => {
-    return `${size * ((page as any) || 1) - size + 1} - ${totalJobs < size ? totalJobs : size * ((page as any) || 1)
-      }`
+    return `${size * ((page as any) || 1) - size + 1} - ${
+      totalJobs < size ? totalJobs : size * ((page as any) || 1)
+    }`
   }
 
   const onLocationSearch = (_, value) => {
@@ -104,96 +105,99 @@ const CompanyJobsProfile = (props: any) => {
     >
       <div className={styles.companySection} id='companyJobs'>
         <div className={styles.companyTabsContent}>
-          {totalActiveJobs > 0 && (<div className={styles.companyJobs}>
-            <Text textStyle='xl' bold className={styles.companySectionTitle}>
-              Jobs
-            </Text>
-            <MetaText tagName='h1'>{`Jobs at ${company.name} ${company.id}`}</MetaText>
+          {totalActiveJobs > 0 && (
+            <div className={styles.companyJobs}>
+              <Text textStyle='xl' bold className={styles.companySectionTitle}>
+                Jobs
+              </Text>
+              <MetaText tagName='h1'>{`Jobs at ${company.name} ${company.id}`}</MetaText>
 
-            {totalActiveJobs > 0 && (
-              <div className={styles.companyJobsSearch}>
-                <div className={styles.companyJobsSearchLeft}>
-                  <MaterialTextField
-                    value={jobQuery}
-                    defaultValue={jobQuery}
-                    onChange={(e) => setJobQuery(e.target.value)}
-                    className={styles.companyJobsSearchTitle}
-                    size='small'
-                    label='Search for job title'
-                    isSubmitOnEnter={true}
-                    onSubmit={handleSearchCompanyJobSearch}
-                  />
+              {totalActiveJobs > 0 && (
+                <div className={styles.companyJobsSearch}>
+                  <div className={styles.companyJobsSearchLeft}>
+                    <MaterialTextField
+                      value={jobQuery}
+                      defaultValue={jobQuery}
+                      onChange={(e) => setJobQuery(e.target.value)}
+                      className={styles.companyJobsSearchTitle}
+                      size='small'
+                      label='Search for job title'
+                      isSubmitOnEnter={true}
+                      onSubmit={handleSearchCompanyJobSearch}
+                    />
+                  </div>
+                  <div className={styles.companyJobsSearchRight}>
+                    <MaterialLocationField
+                      className={styles.companyJobsSearchLocation}
+                      label='Location'
+                      value={jobLocation}
+                      defaultValue={jobLocation}
+                      onChange={onLocationSearch}
+                    />
+                    <MaterialButton
+                      variant='contained'
+                      capitalize
+                      className={styles.companyJobsSearchButton}
+                      onClick={handleSearchCompanyJobSearch}
+                    >
+                      <Text textColor='white' bold>
+                        Search
+                      </Text>
+                    </MaterialButton>
+                  </div>
                 </div>
-                <div className={styles.companyJobsSearchRight}>
-                  <MaterialLocationField
-                    className={styles.companyJobsSearchLocation}
-                    label='Location'
-                    value={jobLocation}
-                    defaultValue={jobLocation}
-                    onChange={onLocationSearch}
-                  />
-                  <MaterialButton
-                    variant='contained'
-                    capitalize
-                    className={styles.companyJobsSearchButton}
-                    onClick={handleSearchCompanyJobSearch}
-                  >
-                    <Text textColor='white' bold>
-                      Search
-                    </Text>
-                  </MaterialButton>
+              )}
+
+              {isJobsListFetching &&
+                [...Array(size)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
+
+              {companyJobs?.length > 0 ? (
+                <React.Fragment>
+                  {!isJobsListFetching && (
+                    <>
+                      <div className={styles.companyJobsList}>
+                        {companyJobs.map((companyJob) => {
+                          const company = {
+                            title: companyJob.job_title,
+                            location: companyJob.job_location,
+                            salary: companyJob.salary_range_value,
+                            availability: companyJob.job_type,
+                            jobUrl: companyJob.job_url
+                          }
+
+                          return <CompanyJobsCard chatText={''} {...company} key={companyJob.id} />
+                        })}
+                      </div>
+                      <Text textStyle='sm' className={styles.companyJobsResults}>
+                        Showing {handleJobsDisplayCount()} of {totalJobs} jobs
+                      </Text>
+                      <div className={styles.companyJobsPagination}>
+                        <MaterialRoundedPagination
+                          onChange={handlePaginationClick}
+                          defaultPage={Number(page) || 1}
+                          page={selectedPage}
+                          totalPages={totalPages || 1}
+                        />
+                      </div>
+                    </>
+                  )}
+                </React.Fragment>
+              ) : (
+                <div className={styles.emptyResult}>
+                  {totalActiveJobs > 0 && (
+                    <Text>We couldn't find any jobs matching your search.</Text>
+                  )}
                 </div>
-              </div>
-            )}
-
-            {isJobsListFetching && [...Array(size)].map((_, i) => <CompanyJobsCardLoader key={i} />)}
-
-            {companyJobs?.length > 0 ? (
-              <React.Fragment>
-                {!isJobsListFetching && (
-                  <>
-                    <div className={styles.companyJobsList}>
-                      {companyJobs.map((companyJob) => {
-                        const company = {
-                          title: companyJob.job_title,
-                          location: companyJob.job_location,
-                          salary: companyJob.salary_range_value,
-                          availability: companyJob.job_type,
-                          jobUrl: companyJob.job_url
-                        }
-
-                        return <CompanyJobsCard {...company} key={companyJob.id} />
-                      })}
-                    </div>
-                    <Text textStyle='sm' className={styles.companyJobsResults}>
-                      Showing {handleJobsDisplayCount()} of {totalJobs} jobs
-                    </Text>
-                    <div className={styles.companyJobsPagination}>
-                      <MaterialRoundedPagination
-                        onChange={handlePaginationClick}
-                        defaultPage={Number(page) || 1}
-                        page={selectedPage}
-                        totalPages={totalPages || 1}
-                      />
-                    </div>
-                  </>
-                )}
-              </React.Fragment>
-            ) : (
-              <div className={styles.emptyResult}>
-                {totalActiveJobs > 0 && (
-                  <Text>
-                    We couldn't find any jobs matching your search.
-                  </Text>
-                )}
-              </div>
-            )}
-          </div>)}
-          {totalActiveJobs == 0 && (<div>
-            <Text>
-              {company.name} does not have any job openings now. Please come back again.
-            </Text>
-          </div>)}
+              )}
+            </div>
+          )}
+          {totalActiveJobs == 0 && (
+            <div>
+              <Text>
+                {company.name} does not have any job openings now. Please come back again.
+              </Text>
+            </div>
+          )}
         </div>
       </div>
     </CompanyProfileLayout>
@@ -234,7 +238,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
   const seoMetaTitle = `${companyName} Careers in ${getCountry()}, Job Opportunities | Bossjob`
-  const seoMetaDescription = encodeURI(`View all current job opportunities at ${companyName} in ${getCountry()} on Bossjob - Connecting pre-screened experienced professionals to employers`)
+  const seoMetaDescription = encodeURI(
+    `View all current job opportunities at ${companyName} in ${getCountry()} on Bossjob - Connecting pre-screened experienced professionals to employers`
+  )
   const additionalCanonicalText = '/jobs'
   const companyUrl = companyDetail.company_url
   const canonicalUrl = companyUrl + additionalCanonicalText
@@ -248,7 +254,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       imageUrl: companyDetail?.logo_url,
       seoMetaDescription,
       totalActiveJobs
-    },
+    }
   }
 })
 

@@ -58,8 +58,8 @@ interface ICompanyProfileLayout {
   totalJobs: number
   seoMetaTitle: string
   seoMetaDescription: string
-  accessToken?: boolean,
-  lang?:any
+  accessToken?: boolean
+  lang?: any
 }
 
 const CompanyProfileLayout = ({
@@ -68,13 +68,15 @@ const CompanyProfileLayout = ({
   currentTab,
   totalJobs,
   accessToken,
-  lang,
+  lang
 }: ICompanyProfileLayout) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const imgPlaceholder =
     'https://assets.bossjob.com/companies/1668/cover-pictures/0817984dff0d7d63fcb8193fef08bbf2.jpeg'
-
+  const {
+    companyDetail: { tab, rightSection }
+  } = lang
   const [tabValue, setTabValue] = useState(currentTab)
   const [similarCompanies, setSimilarCompanies] = useState(null)
 
@@ -165,6 +167,7 @@ const CompanyProfileLayout = ({
                         textStyle='xl'
                         textColor={tabValue === 'overview' ? 'primaryBlue' : 'black'}
                       >
+                        {/* {tab.overview} */}
                         Overview
                       </Text>
                     }
@@ -179,6 +182,7 @@ const CompanyProfileLayout = ({
                         textStyle='xl'
                         textColor={tabValue === 'life' ? 'primaryBlue' : 'black'}
                       >
+                        {/* {tab.life} */}
                         Life
                       </Text>
                     }
@@ -193,6 +197,7 @@ const CompanyProfileLayout = ({
                         textStyle='xl'
                         textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}
                       >
+                        {/* {tab.jobs} */}
                         Jobs
                         <span className={styles.companyJobsBadge}>{totalJobs}</span>
                       </Text>
@@ -214,13 +219,14 @@ const CompanyProfileLayout = ({
                 handleClick={handleQuickUploadResumeClick}
                 isShowArrowIcon
                 className={styles.arrowIconPostion}
+                text={rightSection.uploadResume}
               />
             </div>
           )}
 
           <div className={styles.relatedCompanyContent}>
             <Text textStyle='xl' bold>
-              People also viewed...
+              {rightSection.othersViewed}
             </Text>
 
             {isSimilarCompanyFetching &&
@@ -273,7 +279,7 @@ const CompanyProfileLayout = ({
             )}
             <Link to='/companies' className={styles.relatedCompanyLink}>
               <Text textColor='primaryBlue' textStyle='base'>
-                View all
+                {rightSection.viewAll}
               </Text>
             </Link>
           </div>

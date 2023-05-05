@@ -9,9 +9,16 @@ interface PropsType {
   isShowBtn: Boolean
   isShowArrowIcon?: Boolean
   className?: String
+  text: string
 }
 
-const UploadResumeButton = ({ handleClick, isShowBtn, isShowArrowIcon, className }: PropsType) => {
+const UploadResumeButton = ({
+  handleClick,
+  isShowBtn,
+  isShowArrowIcon,
+  text,
+  className
+}: PropsType) => {
   return (
     <>
       {isShowBtn ? (
@@ -32,7 +39,8 @@ const UploadResumeButton = ({ handleClick, isShowBtn, isShowArrowIcon, className
                 : ''
             }}
           >
-            Upload Resume & Apply Job!
+            {text}
+            {/* Upload Resume & Apply Job! */}
           </Button>
         </div>
       ) : null}
