@@ -221,6 +221,7 @@ const SearchArea = (props: any) => {
             />
             <MaterialButton
               className={styles.searchButton}
+              variant='contained'
               capitalize
               onClick={() => {
                 flushSync(() => {

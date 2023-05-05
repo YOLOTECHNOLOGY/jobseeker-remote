@@ -1,10 +1,11 @@
 import React from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Autocomplete from '@mui/material/Autocomplete'
-import MaterialTextField from 'components/MaterialTextField'
+import { TextField } from '@mui/material'
+
 
 type Input = React.InputHTMLAttributes<HTMLInputElement>
-type MaterialTextFieldWithSuggestionListProps = {
+type JobSearchBar = {
   children?: React.ReactNode
   style?: React.CSSProperties
   defaultValue?: string
@@ -21,38 +22,58 @@ type MaterialTextFieldWithSuggestionListProps = {
   onSelect?: Function
   searchFn?: Function
   updateSearchValue?: Function
-  maxLength?: Number,
-  renderOption?: any
+  maxLength?: Number
 } & Omit<Input, 'size'>
 
-const theme = createTheme({
+const theme = parent => createTheme(({
+  ...parent,
   components: {
-    MuiInputLabel: {
+    MuiAutocomplete: {
+      styleOverrides: {
+        ...parent?.components?.MuiAutocomplete?.styleOverrides,
+        root: {
+          ...parent?.components?.MuiAutocomplete?.styleOverrides,
+          // borderRadius: '10px',
+          // overflow: 'hidden',
+          // "&:Mui-focused":{
+          //   background:'none',
+          //   border:'none'
+          // },
+          height: '100%',
+          border: 'none'
+        },
+
+        // inputRoot:{
+        //   border:'none'
+        // },
+        // focused:{
+        //   border:'none'
+        // }
+      }
+    },
+    MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          fontSize: '14px',
-          transform: 'translate(14px, 10px) scale(1)',
-          letterSpacing: '1px',
-          '&.Mui-focused': {
-            fontSize: '10px',
-            transform: 'translate(14px, -10px) scale(1)'
+          borderRadius: '10px',
+          overflow: 'hidden',
+          border: 'none',
+          focused: {
+            border: 'none'
           },
-          lineHeight: '18px'
-        },
-        shrink: {
-          fontSize: '10px',
-          transform: 'translate(14px, -10px) scale(1)'
-        },
-        outlined: {
-          '&.MuiInputLabel-shrink': {
-            fontSize: '10px'
+          "&:Mui-focused": {
+            background: 'none',
+            border: 'none',
+            OutlinedFlag: false
           },
-          fontSize: '14px'
-        }
+          notchedOutline: {
+            border: 'none'
+          }
+        },
+
       }
-    }
+    },
   }
-})
+}))
 const MaterialTextFieldWithSuggestionList = ({
   id,
   label,
@@ -63,51 +84,60 @@ const MaterialTextFieldWithSuggestionList = ({
   defaultValue,
   value,
   options,
+  isLoading,
   onSelect,
   searchFn,
   updateSearchValue,
   maxLength,
   refs,
-  renderOption,
   ...rest
-}: MaterialTextFieldWithSuggestionListProps) => {
+}: JobSearchBar) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     updateSearchValue(event.target.value)
     searchFn(event.target.value)
   }
+
   return (
     <ThemeProvider theme={theme}>
       <Autocomplete
         id='autocomplete-suggestion-list'
         freeSolo
+        style={{ background: '#fff', color: '#ccc' }}
         options={options?.map((option) => option)}
         className={className}
         size={size}
-        onChange={(_, val: any, reason) => {
-          console.log({reason})
-          if ((reason === 'selectOption' || reason === 'clear') && onSelect) {
-            const value = val?.value ? val?.value : val || ''
-            onSelect(value)
-          } else if (reason === 'clear') {
-            updateSearchValue(val)
+        loading={isLoading}
+        onInputChange={(_, val: any, reason) => {
+          if ((reason === 'clear') && onSelect) {
+            onSelect(val ?? '')
           }
         }}
-        renderOption={renderOption}
-        getOptionLabel={(option: any) => option.value || option}
+        onChange={(_, val: any, reason) => {
+          if ((reason === 'selectOption' || reason === 'clear') && onSelect) {
+            onSelect(val ?? '')
+          }
+        }}
+        disableClearable={false}
+        placeholder={label}
         defaultValue={defaultValue}
-        // inputValue={value}
+        inputValue={value}
         renderInput={(params) => (
-          <MaterialTextField
+          <TextField
             {...refs}
             id={id}
-            label={label}
+            style={{ background: '#fff', color: '#ccc', borderRadius: '10px', height: 44 }}
+            classes={{}}
+            value={value}
+            hiddenLabel
             enterKeyHint='search'
             maxLength={maxLength}
+            label={label}
             color={color as any}
-            variant={variant as any}
+            onFocus={handleChange}
             onChange={handleChange}
             {...rest}
             {...params}
+            inputProps={{ ...(params as any).inputProps, enterKeyHint: 'search' }}
           />
         )}
       />

@@ -24,7 +24,7 @@ const useNotSuitable = (preferenceId, jobId) => {
             .then(dispatch(
                 displayNotification({
                     open: true,
-                    message: 'We will optimise your job recommendation',
+                    message: 'We will optimise your job recommendation.',
                     severity: 'success'
                 })
             )).then(() => {

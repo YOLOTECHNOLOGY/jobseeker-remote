@@ -35,7 +35,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
       recruiterLineStatus = lines
     }
   }
-
+  console.log({ data })
   return (
     <>
       {data.length ? (
@@ -96,8 +96,8 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
 
                       <div className={styles.similarJobs_mobileCard_tags}>
                         <span>{item.job_type}</span>
-                        <span>{item?.xp_lvl?.value}</span>
-                        <span>{item?.degree?.value}</span>
+                        <span>{item?.xp_lvl}</span>
+                        <span>{item?.degree}</span>
                       </div>
 
                       <div className={styles.similarJobs_info}>
@@ -123,7 +123,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
                           ></span>
                         </div>
                         <div className={classNames([styles.similarJobs_mobileCard_loca])}>
-                          <div>{item.recruiter?.full_name}</div>
+                          <div>{[item?.recruiter_full_name,item?.recruiter_job_title].filter(a=>a).join(' . ')}</div>
                           <div className={styles.similarJobs_mobileCard_loca_value}>
                             {item.location_value}
                           </div>
