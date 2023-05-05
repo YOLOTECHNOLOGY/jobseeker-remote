@@ -71,7 +71,7 @@ export default function RootLayout(props: any) {
       <head key={title + description + canonical}>
         <title>{title}</title>
         <meta name='description' content={decodeURI(description)} />
-        <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
         <meta
           name='copyright'
           content={`
