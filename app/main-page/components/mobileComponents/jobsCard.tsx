@@ -236,7 +236,7 @@ const JobsCard = ({ location }: any) => {
               >
                 <Image src={recruiterAvatar} alt={recruiterFullName} width={20} height={20} />
               </div>
-              {recruiterFullName}
+              {[recruiterFullName,jobTitle].filter(a=>a).join(' · ')}
               <span className={styles.location}>{jobLocation}</span>
             </div>
           </div>

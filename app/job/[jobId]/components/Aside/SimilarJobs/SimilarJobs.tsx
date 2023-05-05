@@ -65,7 +65,7 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
                         </div>
                         <div className={styles.similarJobs_info_jobType}>
                           <div>{item.company_name}</div>
-                          <div>{item.location_value}</div>
+                          <div>{item.company_location}</div>
                         </div>
                       </div>
                     </Link>
@@ -123,9 +123,9 @@ export default async function SimilarJobs({ id, jobDetail }: propsType) {
                           ></span>
                         </div>
                         <div className={classNames([styles.similarJobs_mobileCard_loca])}>
-                          <div>{[item?.recruiter_full_name,item?.recruiter_job_title].filter(a=>a).join(' . ')}</div>
+                          <div>{[item?.recruiter_full_name,item?.recruiter_job_title].filter(a=>a).join(' · ')}</div>
                           <div className={styles.similarJobs_mobileCard_loca_value}>
-                            {item.location_value}
+                            {item.company_location}
                           </div>
                         </div>
                       </div>
