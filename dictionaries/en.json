@@ -1,8 +1,4 @@
 {
-  "home": {
-    "h1": "Find Job. Talk to Boss.",
-    "searchBtn": "搜索"
-  },
   "header": {
     "findJobs": "findJobs",
     "companies": "公司",
@@ -48,6 +44,7 @@
     "corporation": "Philippines: Etos Adtech Corporation 嘿嘿嘿"
   },
   "getStatred": {
+    "seoMetaTitle":"Get started | Bossjob",
     "JoinBossjob": "Join Bossjob",
     "kickStartYourCareer": "kick-start your career!",
     "enterYourEmailAddress": "Enter your email address",

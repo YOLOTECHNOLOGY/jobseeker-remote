@@ -239,7 +239,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const companyPath =
         companyPageUrl.length === 4
           ? companyPageUrl[2].split('-')
-          : companyPageUrl[companyPageUrl.length - 1].split('-')
+          : companyPageUrl[companyPageUrl.length - 2].split('-')
       const companyId = Number(companyPath[companyPath.length - 1])
       const jobFilterpayload = {
         companyIds: companyId,

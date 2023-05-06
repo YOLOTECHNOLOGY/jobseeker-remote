@@ -62,7 +62,7 @@ const ServerFunctionFilter = async (props: { config: any }) => {
     }
   })?.map?.(getSimpleTitle) ?? []
   let popularList = []
-  console.log(typeof window,1111111)
+
   const accessToken = cookies().get('accessToken')?.value
   if (accessToken) {
     const result = await fetchJobsPreferences({}, accessToken)
