@@ -25,7 +25,7 @@ import { getCountry } from 'helpers/country'
 import { getDictionary } from 'get-dictionary'
 const COUNT_DOWN_VERIFY_DEFAULT = 60
 
-const GetStarted = (props:any) => {
+const GetStarted = (props: any) => {
   const lang = props.lang
   const {
     step,
@@ -44,11 +44,7 @@ const GetStarted = (props:any) => {
     handleAuthenticationSendEmailMagicLink,
     emailTOPError
   } = useGetStarted()
-  const {
-    lookingToHire,
-    employer,
-
-  } =  lang || {}
+  const { lookingToHire, employer } = lang || {}
   const dispatch = useDispatch()
   const router = useRouter()
   const firstRender = useFirstRender()
@@ -93,7 +89,7 @@ const GetStarted = (props:any) => {
             router.push('/')
           }
         })
-        .catch(result => {
+        .catch((result) => {
           const { data, status } = result.response ?? {}
           if (status == 400 || data?.errors?.error[0] === 'Invalid token') {
             removeCookie('accessToken')
@@ -161,7 +157,6 @@ const GetStarted = (props:any) => {
 
   return (
     <Layout isHiddenFooter lang={props?.dictionary}>
-     
       <div className={classNames([styles.Container, step === 3 ? styles.ContainerMagic : ''])}>
         <div>
           <div className={styles.getStartedContainer}>
@@ -225,16 +220,20 @@ const GetStarted = (props:any) => {
 }
 
 export const getServerSideProps = async (props) => {
-  const {lang} : any = props.query
-  const dictionary:any = await getDictionary(lang)
+  const { lang }: any = props.query
+  const dictionary: any = await getDictionary(lang)
+  console.log('dictionary', dictionary.getStatred)
   const getStatred = dictionary?.getStatred || {}
+
   return {
     props: {
-      seoMetaTitle: getStatred.seoMetaTitle,
-      seoMetaDescription:`${getStatred.seoMetaDescription} ${getCountry()}. ${getStatred.seoMetaDescription2}`,
+      seoMetaTitle: getStatred.seoMetaTitle || '',
+      seoMetaDescription: `${getStatred.seoMetaDescription} ${getCountry()}. ${
+        getStatred.seoMetaDescription2
+      }`,
       canonicalUrl: '/get-started',
-      lang:getStatred,
-      dictionary:dictionary
+      lang: getStatred,
+      dictionary: dictionary
     }
   }
 }

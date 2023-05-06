@@ -428,29 +428,34 @@
         "exp": {
           "title": "Work Experience",
           "present": "Present",
-          "readMore": "Read More",
-          "readLess": "Read Less",
+          "perMonth": "per month",
           "noExpTips": "Showcase your past contributions and that you can be an asset to potential employer.",
           "addExp": "Add experience",
           "addWorkExp": "Add work experience"
         },
         "expModal": {
           "title": "Work experience",
+          "btn1": "Cancel",
+          "btn2": "Save",
           "jobTitle": "Job Title",
           "companyName": "Company Name",
           "workPeriod": "Working Period",
           "stillHere": "I currently work here",
           "from": "From",
           "to": "to",
+          "startDate": "Month Year",
+          "endDate": "Month Year",
           "dateErrorMsg": "Start date must be earlier than completion date.",
           "jobFunction": "Job Functions",
           "industry": "Industry",
-          "currency": "Monthly Salary ({{PHP}})",
+          "currency": "Currency",
+          "salary": "Monthly Salary ({{currency}})",
           "notFillErrorMsg": "Fill up the required field to proceed.",
           "workSummaryPlaceholder": "Type here..."
         },
         "edu": {
           "title": "Education",
+          "present": "Present",
           "noDataTips": "Highlight your academic qualifications and achievements.",
           "addEdu": "Add education"
         },
@@ -458,11 +463,14 @@
           "title": "Education",
           "btn1": "Cancel",
           "btn2": "Save",
+          "school": "School Name",
           "eduLevel": "Education Level",
           "period": "Study Period",
           "attend": "Currently attending",
           "from": "From",
           "to": "to",
+          "startDate": "Month Year",
+          "endDate": "Month Year",
           "dateErrorMsg": "Start date must be earlier than completion date.",
           "field": "Field of Study"
         },
@@ -481,6 +489,7 @@
         },
         "licenses": {
           "title": "Licenses And Certifications",
+          "CID": "Credential ID",
           "noDataTips": "Stand out among the rest by sharing that expertise that you have earned to show your passion for the job.",
           "addLicense": "Add licenses & cert"
         },
@@ -491,7 +500,7 @@
           "licenseTitle": "Title of licenses/certification",
           "issuing": "Issuing organisation",
           "licenseValidity": "License/certification validity",
-          "licenseExpired": "This license or certificate doesn't expire",
+          "licenseNotExpired": "This license or certificate doesn't expire",
           "issueDate": "Issue date",
           "expiryDate": "Expiry date",
           "dateErrorMsg": "Issue date must be earlier than expiry date.",
@@ -506,6 +515,8 @@
         },
         "linkModal": {
           "title": "Links",
+          "btn1": "Cancel",
+          "btn2": "Save",
           "url": "URL",
           "urlErrorMsg": "Please enter a valid URL.",
           "linkTitle": "Title of link",
@@ -522,6 +533,7 @@
           "select": "Availability"
         },
         "card": {
+          "header": "Job Preferences",
           "tips": "We will find jobs that are of a good match to you based on your job preferences.",
           "title": "Desired job title:",
           "type": "Desired job type:",
@@ -538,11 +550,16 @@
           "jobType": "Desired job type",
           "location": "Desired working location",
           "currencyType": "Currency type",
-          "salary": "Expected min. salary",
           "minSalary": "Expected min. salary",
           "maxSalary": "Expected max. salary",
           "country": "country",
           "industry": "Desired Industry"
+        },
+        "deleteModal": {
+          "title": "Delete job preference",
+          "tips": "You are about to delete this job preference. This cannot be undone.",
+          "btn1": "Cancel",
+          "btn2": "Delete"
         },
         "openToWork": {
           "title": "Open to work",

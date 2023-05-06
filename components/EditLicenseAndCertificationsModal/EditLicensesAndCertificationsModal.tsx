@@ -28,14 +28,24 @@ type EditLicensesAndCertificationsModalProps = {
   showModal: boolean
   licenseData: any
   handleModal: Function
+  lang: Record<string, any>
 }
 
 const EditLicensesAndCertificationsModal = ({
   modalName,
   showModal,
   licenseData,
-  handleModal
+  handleModal,
+  lang
 }: EditLicensesAndCertificationsModalProps) => {
+  const {
+    manageProfile: {
+      tab: {
+        profile: { licensesModal }
+      }
+    }
+  } = lang
+
   const dispatch = useDispatch()
 
   const [licenseCertificationTitle, setLicenseCertificationTitle] = useState(null)
@@ -92,13 +102,13 @@ const EditLicensesAndCertificationsModal = ({
     handleResetForm()
   }
 
-	const handleCredentialUrl = (credentialUrl) => {
-		if (credentialUrl) {
-			return credentialUrl
-		} else {
-			return 'https://'
-		}
-	}
+  const handleCredentialUrl = (credentialUrl) => {
+    if (credentialUrl) {
+      return credentialUrl
+    } else {
+      return 'https://'
+    }
+  }
 
   const onSubmit = () => {
     const data = {
@@ -184,128 +194,125 @@ const EditLicensesAndCertificationsModal = ({
     credentialUrl
   ])
 
-	const editLicensesAndCertificationsModal = (
-		<div className={styles.container}>
-			<div className={styles.formWrapper}>
-				<div id='form' className={styles.form}>
-					<div className={styles.field}>
-						<MaterialTextField
-							className={styles.fullWidth}
-							label={requiredLabel('Title of licenses/certification')}
-							size='small'
-							variant='outlined'
-							value={licenseCertificationTitle}
-							defaultValue={licenseCertificationTitle}
-							onChange={(e) => setLicenseCertificationTitle(e.target.value)}
-						/>
-					</div>
-					<div className={styles.field}>
-						<MaterialTextField
-							className={styles.fullWidth}
-							label={requiredLabel('Issuing organisation')}
-							variant='outlined'
-							value={issuingOrganisation}
-							defaultValue={issuingOrganisation}
-							onChange={(e) => setIssuingOrganisation(e.target.value)}
-						/>
-					</div>
-					<div className={styles.field}>
-						<div>
-							<Text bold textStyle='lg'>
-								License/certification validity<span className={styles.fieldRequired}>*</span>
-							</Text>
-						</div>
-						<div>
-							<FormControlLabel
-								control={
-									<Switch
-										checked={isLicenseCertificationPermanent}
-										onChange={() => setIsLicenseCertificationPermanent(!isLicenseCertificationPermanent)}
-										name='isLicenseCertificationPermanent'
-									/>
-								}
-								label={
-									<Text textStyle='lg'>
-										This license or certificate doesn't expire
-									</Text>
-								}
-							/>
-						</div>
-					</div>
-					<div className={styles.field}>
-						<div className={classNames(styles.fieldDate)}>
-							<div className={styles.fieldDateItem}>
-								<MaterialDatePicker
-									label='Issue date'
-									views={['year', 'month']}
-									inputFormat='MMM yyyy'
-									value={issueDate}
-									onDateChange={(value) => {
-											setIssueDate(value)
-									}}
-								/>
-							</div>
-						</div>
-					</div>
-					{!isLicenseCertificationPermanent && (
-						<div className={styles.field}>
-							<div className={classNames(styles.fieldDate)}>
-								<div className={styles.fieldDateItem}>
-									<MaterialDatePicker
-										label='Expiry date'
-										views={['year', 'month']}
-										inputFormat='MMM yyyy'
-										value={expiryDate}
-										onDateChange={(value) => {
-												setExpiryDate(value)
-										}}
-									/>
-									{hasErrorOnExpiryDate && (
-										<Text textColor='red' textStyle='sm'>
-											Issue date must be earlier than expiry date.
-										</Text>
-									)}
-								</div>
-							</div>
-						</div>
-					)}
-					<div className={styles.field}>
-						<MaterialTextField
-							className={styles.fullWidth}
-							label='Credential ID'
-							variant='outlined'
-							value={credentialId}
-							defaultValue={credentialId}
-							onChange={(e) => setCredentialId(e.target.value)}
-						/>
-					</div>
-					<div className={styles.field}>
-						<MaterialTextField
-							className={styles.fullWidth}
-							label='Credential URL'
-							variant='outlined'
-							value={credentialUrl}
-							defaultValue={credentialUrl}
-							onClick={() => setCredentialUrl(handleCredentialUrl(credentialUrl))}
-							onChange={(e) => setCredentialUrl(e.target.value)}
-						/>
-					</div>
-					{credentialUrl && (
-						errorText(urlValidation(credentialUrl))
-					)}
-				</div>
-			</div>
-		</div>
-	)
+  const editLicensesAndCertificationsModal = (
+    <div className={styles.container}>
+      <div className={styles.formWrapper}>
+        <div id='form' className={styles.form}>
+          <div className={styles.field}>
+            <MaterialTextField
+              className={styles.fullWidth}
+              label={requiredLabel(licensesModal.licenseTitle)}
+              size='small'
+              variant='outlined'
+              value={licenseCertificationTitle}
+              defaultValue={licenseCertificationTitle}
+              onChange={(e) => setLicenseCertificationTitle(e.target.value)}
+            />
+          </div>
+          <div className={styles.field}>
+            <MaterialTextField
+              className={styles.fullWidth}
+              label={requiredLabel(licensesModal.issuing)}
+              variant='outlined'
+              value={issuingOrganisation}
+              defaultValue={issuingOrganisation}
+              onChange={(e) => setIssuingOrganisation(e.target.value)}
+            />
+          </div>
+          <div className={styles.field}>
+            <div>
+              <Text bold textStyle='lg'>
+                {licensesModal.licenseValidity}
+                <span className={styles.fieldRequired}>*</span>
+              </Text>
+            </div>
+            <div>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={isLicenseCertificationPermanent}
+                    onChange={() =>
+                      setIsLicenseCertificationPermanent(!isLicenseCertificationPermanent)
+                    }
+                    name='isLicenseCertificationPermanent'
+                  />
+                }
+                label={<Text textStyle='lg'>{licensesModal.licenseNotExpired}</Text>}
+              />
+            </div>
+          </div>
+          <div className={styles.field}>
+            <div className={classNames(styles.fieldDate)}>
+              <div className={styles.fieldDateItem}>
+                <MaterialDatePicker
+                  label={licensesModal.issueDate}
+                  views={['year', 'month']}
+                  inputFormat='MMM yyyy'
+                  value={issueDate}
+                  onDateChange={(value) => {
+                    setIssueDate(value)
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          {!isLicenseCertificationPermanent && (
+            <div className={styles.field}>
+              <div className={classNames(styles.fieldDate)}>
+                <div className={styles.fieldDateItem}>
+                  <MaterialDatePicker
+                    label={licensesModal.expiryDate}
+                    views={['year', 'month']}
+                    inputFormat='MMM yyyy'
+                    value={expiryDate}
+                    onDateChange={(value) => {
+                      setExpiryDate(value)
+                    }}
+                  />
+                  {hasErrorOnExpiryDate && (
+                    <Text textColor='red' textStyle='sm'>
+                      {licensesModal.dateErrorMsg}
+                    </Text>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+          <div className={styles.field}>
+            <MaterialTextField
+              className={styles.fullWidth}
+              label={licensesModal.credentialId}
+              variant='outlined'
+              value={credentialId}
+              defaultValue={credentialId}
+              onChange={(e) => setCredentialId(e.target.value)}
+            />
+          </div>
+          <div className={styles.field}>
+            <MaterialTextField
+              className={styles.fullWidth}
+              label={licensesModal.credentialURL}
+              variant='outlined'
+              value={credentialUrl}
+              defaultValue={credentialUrl}
+              onClick={() => setCredentialUrl(handleCredentialUrl(credentialUrl))}
+              onChange={(e) => setCredentialUrl(e.target.value)}
+            />
+          </div>
+          {credentialUrl && errorText(urlValidation(credentialUrl, licensesModal.urlErrorMsg))}
+        </div>
+      </div>
+    </div>
+  )
 
   return (
     <div>
       <Modal
         showModal={showModal}
         handleModal={handleCloseModal}
-        headerTitle='Licenses And Certifications'
-        firstButtonText='Cancel'
-        secondButtonText='Save'
+        headerTitle={licensesModal.title}
+        firstButtonText={licensesModal.btn1}
+        secondButtonText={licensesModal.btn2}
         isSecondButtonLoading={isUpdating}
         isSecondButtonDisabled={hasValidationError}
         firstButtonIsClose

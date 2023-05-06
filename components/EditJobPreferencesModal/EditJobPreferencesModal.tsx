@@ -27,6 +27,7 @@ type EditJobPreferencesModalProps = {
   userDetail: any
   handleModal: Function
   preference?: any
+  lang: Record<string, any>
 }
 
 const formatLocationConfig = (locationList) => {
@@ -39,8 +40,16 @@ const EditJobPreferencesModal = ({
   showModal,
   config,
   handleModal,
-  preference
+  preference,
+  lang
 }: EditJobPreferencesModalProps) => {
+  const {
+    manageProfile: {
+      tab: {
+        preference: { editModal }
+      }
+    }
+  } = lang
   const locationList = useSelector((store: any) => store.config.config.response?.location_lists)
   const currencyLists = useSelector((store: any) =>
     (store.config.config.response?.currency_lists ?? []).map((item) => ({
@@ -161,7 +170,7 @@ const EditJobPreferencesModal = ({
                 <JobFunctionSelector
                   className={styles.jobPreferencesFormInput}
                   control={control}
-                  label='Desired job title'
+                  label={editModal.jobTitle}
                   variant='outlined'
                   autoComplete='off'
                   jobTitle={preference?.function_job_title}
@@ -185,7 +194,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
-                  label='Desired job type'
+                  label={editModal.jobType}
                   options={jobTypeList}
                   required
                   {...fieldState}
@@ -206,7 +215,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialLocationField
                   className={styles.jobPreferencesFormInput}
-                  label='Desired working location'
+                  label={editModal.location}
                   required
                   {...fieldState}
                   {...field}
@@ -235,7 +244,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
-                  label='Currency type'
+                  label={editModal.currencyType}
                   options={currencyLists}
                   required
                   disabled
@@ -260,7 +269,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
-                  label='Expected min. salary'
+                  label={editModal.minSalary}
                   options={minSalaryOptions}
                   required
                   {...fieldState}
@@ -285,7 +294,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
-                  label='Expected max. salary'
+                  label={editModal.maxSalary}
                   rules={{ required: 'max salary is required' }}
                   required
                   options={maxSalaryOptions}
@@ -308,7 +317,7 @@ const EditJobPreferencesModal = ({
                 return (
                   <MaterialBasicSelect
                     className={styles.jobPreferencesFormInput}
-                    label={'Country'}
+                    label={editModal.country}
                     options={countryList}
                     {...fieldState}
                     {...field}
@@ -327,7 +336,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
-                  label='Desired Industry'
+                  label={editModal.industry}
                   required
                   options={industryOptions}
                   {...fieldState}
@@ -345,9 +354,9 @@ const EditJobPreferencesModal = ({
     <Modal
       showModal={showModal}
       handleModal={handleCloseModal}
-      headerTitle='Job Preference'
-      firstButtonText='Cancel'
-      secondButtonText='Save'
+      headerTitle={editModal.title}
+      firstButtonText={editModal.btn1}
+      secondButtonText={editModal.btn2}
       isSecondButtonLoading={isUpdating}
       firstButtonIsClose
       handleFirstButton={handleCloseModal}

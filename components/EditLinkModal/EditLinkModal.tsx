@@ -24,14 +24,23 @@ type EditLinkModalProps = {
   showModal: boolean
   linkData: any
   handleModal: Function
+  lang: Record<string, any>
 }
 
 const EditLinkModal = ({
   modalName,
   showModal,
   linkData,
-  handleModal
+  handleModal,
+  lang
 }: EditLinkModalProps) => {
+  const {
+    manageProfile: {
+      tab: {
+        profile: { linkModal }
+      }
+    }
+  } = lang
 
   const dispatch = useDispatch()
 
@@ -41,30 +50,26 @@ const EditLinkModal = ({
   const [hasValidationError, setHasValidationError] = useState(true)
 
   const isUpdating = useSelector((store: any) => store.users.manageUserLinks.fetching)
-  const updateLinkSuccess = useSelector(
-    (store: any) => store.users.manageUserLinks.response
-  )
+  const updateLinkSuccess = useSelector((store: any) => store.users.manageUserLinks.response)
 
   const requiredLabel = (text: string) => {
-		return (
-			<>
-				<span>{text}</span>
-				<span className={styles.fieldRequired}>*</span>
-			</>
-		)
-	}
+    return (
+      <>
+        <span>{text}</span>
+        <span className={styles.fieldRequired}>*</span>
+      </>
+    )
+  }
 
   const errorText = (errorMessage: string) => {
-		return (
-			<Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
-				{errorMessage}
-			</Text>
-		)
-	}
+    return (
+      <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
+        {errorMessage}
+      </Text>
+    )
+  }
 
-  const {
-    handleSubmit
-  } = useForm()
+  const { handleSubmit } = useForm()
 
   const handleResetForm = () => {
     setLinkUrl(null)
@@ -140,7 +145,7 @@ const EditLinkModal = ({
           <div className={styles.field}>
             <MaterialTextField
               className={styles.fullWidth}
-              label={requiredLabel('URL')}
+              label={requiredLabel(linkModal.url)}
               size='small'
               variant='outlined'
               value={linkUrl}
@@ -149,13 +154,11 @@ const EditLinkModal = ({
               onChange={(e) => setLinkUrl(e.target.value)}
             />
           </div>
-          {linkUrl && (
-            errorText(urlValidation(linkUrl))
-          )}
+          {linkUrl && errorText(urlValidation(linkUrl, linkModal.urlErrorMsg))}
           <div className={styles.field}>
             <MaterialTextField
               className={styles.fullWidth}
-              label={'Title of link'}
+              label={linkModal.linkTitle}
               variant='outlined'
               value={linkTitle}
               defaultValue={linkTitle}
@@ -163,7 +166,11 @@ const EditLinkModal = ({
             />
           </div>
           <div className={styles.editor}>
-            <TextEditor value={linkDescription} setValue={setLinkDescription} />
+            <TextEditor
+              placeholder={linkModal.linkDesc}
+              value={linkDescription}
+              setValue={setLinkDescription}
+            />
           </div>
         </div>
       </div>
@@ -175,9 +182,9 @@ const EditLinkModal = ({
       <Modal
         showModal={showModal}
         handleModal={handleCloseModal}
-        headerTitle='Links'
-        firstButtonText='Cancel'
-        secondButtonText='Save'
+        headerTitle={linkModal.title}
+        firstButtonText={linkModal.btn1}
+        secondButtonText={linkModal.btn2}
         isSecondButtonLoading={isUpdating}
         isSecondButtonDisabled={hasValidationError}
         firstButtonIsClose
@@ -189,7 +196,6 @@ const EditLinkModal = ({
       </Modal>
     </div>
   )
-
 }
 
 export default EditLinkModal
