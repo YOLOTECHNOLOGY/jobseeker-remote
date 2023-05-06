@@ -6,6 +6,7 @@ import { initFireBase } from 'helpers/fireBaseManager'
 import Script from 'next/script'
 import * as fbq from 'lib/fpixel'
 import * as gtag from 'lib/gtag'
+import { getCookie } from 'helpers/cookies';
 
 const tiktokfunc = () => {
   const w = window as any
@@ -57,7 +58,7 @@ const invokeGAAdsEvent = (searchParams) => {
     gtag('event', ads)
   }
 }
-
+const accessToken = getCookie('accessToken')
 // window.onhashchange = e => {
 //   console.log('windowChange', e)
 // }
@@ -157,6 +158,40 @@ const Initial = () => {
             `
       }}
     />
+     {/* Google One Tap Sign in */}
+     <Script
+        src='https://accounts.google.com/gsi/client'
+        onReady={() => {
+          if (!accessToken) {
+            const google = (window as any)?.google
+            google.accounts.id.initialize({
+              client_id: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
+              callback: handleGoogleOneTapLoginResponse,
+              cancel_on_tap_outside: false,
+              itp_support: true,
+              skip_prompt_cookie: 'accessToken'
+            })
+            google.accounts.id.prompt((notification) => {
+              if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                console.log(notification.getNotDisplayedReason())
+              }
+            })
+            function handleGoogleOneTapLoginResponse(CredentialResponse) {
+              const accessTokenGoogle = CredentialResponse.credential
+              let activeKey = 1
+              if (window.location.pathname.includes('/employer')) {
+                activeKey = 2
+              }
+              window.location.replace(
+                '/handlers/googleLoginHandler?access_token=' +
+                  accessTokenGoogle +
+                  '&active_key=' +
+                  activeKey
+              )
+            }
+          }
+        }}
+      />
     <Script
       strategy='lazyOnload'
       // dangerouslySetInnerHTML={{

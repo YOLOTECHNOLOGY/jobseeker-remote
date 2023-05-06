@@ -27,7 +27,7 @@ const Search = () => {
       <MaterialLocationField
         className={styles.search_location}
         value={location}
-        isClear={false}
+        // isClear={false}
         defaultValue='Las Pinas'
         disableClearable
         sx={{

@@ -98,7 +98,9 @@ const Desc = ({
           sx={{ width: '29.94px', height: '29px' }}
           src={recruiter?.avatar || DefaultAvatar}
         ></Avatar>
-        <span className={styles.desc_footer_name}>{recruiter.full_name}</span>
+        <span className={styles.desc_footer_name}>
+          {[recruiter.full_name,recruiter?.work_experience?.job_title].filter(a=>a).join(' · ')}
+          </span>
         <span className={styles.desc_footer_chat}>{chatResponseRate}% &nbsp;response rate</span>
         <span
           className={classNames([
