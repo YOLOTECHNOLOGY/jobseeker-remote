@@ -19,7 +19,7 @@ export type propsType = {
 const Company = (company: propsType) => {
   const { jobDetail, languages } = company
   const {
-    aside: { company: companySection, similarJob, signUp }
+    aside: { company: companySection}
   } = languages as any
   return (
     <>
