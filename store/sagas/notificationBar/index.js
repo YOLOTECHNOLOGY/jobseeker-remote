@@ -7,7 +7,6 @@ function* autoDisappearNotification() {
     refCount++
     yield delay(3000)
     refCount--
-    console.log({ refCount })
     if (refCount === 0) {
         yield put(closeNotification())
     }
