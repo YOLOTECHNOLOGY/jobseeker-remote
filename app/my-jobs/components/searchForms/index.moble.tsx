@@ -86,7 +86,6 @@ const SearchArea = (props: any) => {
     }, [moreData, location, sort, selectedPreferenceId])
     const router = useRouter()
     const firstRender = useFirstRender()
-    console.log({ filterParams, selectedPreferenceId })
     const reload = useCallback(() => {
         if (firstRender) {
             return
