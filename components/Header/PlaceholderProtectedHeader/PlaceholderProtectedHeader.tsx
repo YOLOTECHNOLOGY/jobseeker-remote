@@ -19,19 +19,20 @@ import MaterialAlert from 'components/MaterialAlert/ index'
 import { IMContext } from 'components/Chat/IMProvider.client'
 
 type PlaceholderProtectedHeaderProps = {
-  isShowEmailAlert: boolean
+  isShowEmailAlert: boolean,
+  lang:any
 }
 
-const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHeaderProps) => {
+const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderProtectedHeaderProps) => {
   const currentUser = getCookie('user')
   const { totalUnread } = useContext(IMContext)
   return (
     <>
       {isShowEmailAlert && (
         <MaterialAlert open={true} severity='info'>
-          <Text>Please verify your email address. </Text>
+          <Text>{lang.pleaseVerify} </Text>
           <a style={{ color: '#1976d2', textDecoration: 'underline rgba(25, 118, 210, 0.4)' }}>
-            Verify now.
+          {lang.verifyNow}
           </a>
         </MaterialAlert>
       )}
@@ -50,7 +51,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
               <React.Fragment>
                 <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Find Jobs
+                   {lang.findJobs}
                   </Text>
                 </li>
                 {/* <li className={styles.headerLink}>
@@ -62,20 +63,20 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                 </li> */}
                 <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Companies
+                  {lang.companies}
                   </Text>
                 </li>
 
                 <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Courses
+                  {lang.courses}
                   </Text>
                 </li>
 
                 <li className={styles.headerLink} style={{ position: 'relative' }}>
                   <Link title='Career Guide' to='https://blog.bossjob.ph' external>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                      Career Guide
+                    {lang.careerGuide}
                     </Text>
                   </Link>
                 </li>
@@ -109,7 +110,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                 style={{ flexDirection: 'row', alignItems: 'center' }}
               >
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                  Chat
+                {lang.Chat}
                 </Text>
                 {totalUnread ? (
                   <span className={styles.unread}>
@@ -139,7 +140,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert }: PlaceholderProtectedHe
                     }}
                   >
                     <Text textStyle='base' textColor='white' bold>
-                      Manage Resume
+                    {lang.manageResume}
                     </Text>
                   </MaterialButton>
                 </a>

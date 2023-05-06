@@ -52,7 +52,7 @@ import { handleNumericInput } from '../../../helpers/handleInput'
 import JobFunctionSelector from 'components/JobFunctionSelector'
 import ReadMore from 'components/ReadMore'
 import { getCountry } from 'helpers/country'
-
+import { getDictionary } from 'get-dictionary'
 const Step3 = (props: any) => {
   const quickUpladResumeType = getItem('quickUpladResume')
   const currentStep = 3
@@ -60,7 +60,7 @@ const Step3 = (props: any) => {
   const currentStepPure = quickUpladResumeType ? 2 : 3
   const router = useRouter()
   const dispatch = useDispatch()
-  const { userDetail, accessToken } = props
+  const { userDetail, accessToken,lang } = props
   const isFromCreateResume = getItem('isFromCreateResume') === '1'
   const config = useSelector((store: any) => store?.config?.config?.response)
  
@@ -450,12 +450,32 @@ const Step3 = (props: any) => {
       inline: 'nearest'
     })
   }
+  const {
+    addYourWorkExperience,
+    fillInYourCompleteWork,
+    workingPeriod,
+    currentlyWorkHere,
+    from,
+    startDateMustBeEarlier,
+    to,
+    monthlySalary,
+    addWorkExperience,
+    fillUpTheRequired,
+    noWorkExperience,
+    cancel,
+    save,
+    back,
+    JobTitleText,
+    companyNameText,
+    monthYear,
+    placeholder
+   } = lang.profile|| {} 
   return (
     <OnBoardLayout
       headingText={
         <Text bold textStyle='xxxl' tagName='h2'>
           {' '}
-          Add your work experience 💼
+         {addYourWorkExperience} 💼
         </Text>
       }
       currentStep={currentStepPure}
@@ -465,12 +485,12 @@ const Step3 = (props: any) => {
       isNextDisabled={isNextDisabled}
       backFnBtn={() => router.push(backBtnUrl)}
       isUpdating={isUpdating}
+      lang={lang?.profile}
     >
       <div className={styles.stepNotice}>
         <img src={InfoIcon} alt='' width='30' height='30' />
         <Text textStyle='base'>
-          Fill in your complete work experiences will increase your chances of being shortlisted by
-          83%.
+         {fillInYourCompleteWork}
         </Text>
       </div>
       {workExperience?.length > 0 && (
@@ -507,12 +527,12 @@ const Step3 = (props: any) => {
 
                 <br />
                 {(experience?.function_job_title ?? null) && <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
-                  Job function: {experience?.function_job_title}
+                  {lang?.profile?.jobFunction}: {experience?.function_job_title}
                 </Text>}
 
                 {experience?.company_industry && (
                   <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
-                    Industry: {experience?.company_industry}
+                     {lang?.profile?.industry}: {experience?.company_industry}
                   </Text>
                 )}
                 {/* {experience?.salary && (
@@ -525,7 +545,7 @@ const Step3 = (props: any) => {
                   <> <br />
                     <div className={styles.stepDataDescription} >
                       <Text textStyle='base' tagName='p'>
-                        Description:{' '}
+                      {lang?.profile?.description}:{' '}
                       </Text>
                       <ReadMore size={350} text={experience.description} />
                       {/* <div
@@ -567,7 +587,7 @@ const Step3 = (props: any) => {
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
-                label={requiredLabel('Job Title')}
+                label={requiredLabel(JobTitleText)}
                 size='small'
                 value={jobTitle}
                 defaultValue={jobTitle}
@@ -578,7 +598,7 @@ const Step3 = (props: any) => {
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
-                label={requiredLabel('Company Name')}
+                label={requiredLabel(companyNameText)}
                 size='small'
                 value={companyName}
                 defaultValue={companyName}
@@ -613,7 +633,7 @@ const Step3 = (props: any) => {
             <div className={styles.stepFieldGroup}>
               <div className={styles.stepFieldHeader}>
                 <Text textStyle='base' bold>
-                  Working Period <span className={styles.stepFieldRequired}>*</span>
+                  {workingPeriod} <span className={styles.stepFieldRequired}>*</span>
                 </Text>
               </div>
               <div className={styles.stepFieldBody}>
@@ -625,7 +645,7 @@ const Step3 = (props: any) => {
                       name='currentJob'
                     />
                   }
-                  label={<Text textStyle='base'>I currently work here</Text>}
+                  label={<Text textStyle='base'>{currentlyWorkHere}</Text>}
                 />
               </div>
             </div>
@@ -633,13 +653,13 @@ const Step3 = (props: any) => {
             <div className={styles.stepField}>
               <div className={styles.stepFieldHeader}>
                 <Text textStyle='base' bold>
-                  From
+                 {from}
                 </Text>
               </div>
               <div className={classNames(styles.stepFieldBody, styles.stepFieldDate)}>
                 <div className={styles.stepFieldDateItem}>
                   <MaterialDatePicker
-                    label='Month Year'
+                    label={monthYear}
                     views={['year', 'month']}
                     inputFormat='MMM yyyy'
                     value={workPeriodFrom}
@@ -651,7 +671,7 @@ const Step3 = (props: any) => {
               </div>
               {hasErrorOnFromPeriod && (
                 <Text textColor='red' textStyle='sm'>
-                  Start date must be earlier than completion date.
+                {startDateMustBeEarlier}
                 </Text>
               )}
             </div>
@@ -660,13 +680,13 @@ const Step3 = (props: any) => {
               <div className={styles.stepField}>
                 <div className={styles.stepFieldHeader}>
                   <Text textStyle='base' bold>
-                    To
+                  {to}
                   </Text>
                 </div>
                 <div className={classNames(styles.stepFieldBody, styles.stepFieldDate)}>
                   <div className={styles.stepFieldDateItem}>
                     <MaterialDatePicker
-                      label='Month Year'
+                      label={monthYear}
                       views={['year', 'month']}
                       inputFormat='MMM yyyy'
                       value={workPeriodTo}
@@ -678,7 +698,7 @@ const Step3 = (props: any) => {
                 </div>
                 {hasErrorOnToPeriod && (
                   <Text textColor='red' textStyle='sm'>
-                    Start date must be earlier than completion date.
+                     {startDateMustBeEarlier}
                   </Text>
                 )}
               </div>
@@ -686,7 +706,7 @@ const Step3 = (props: any) => {
             <div id='jobFunction' className={styles.stepField}>
               <JobFunctionSelector
                 className={styles.stepFullwidth}
-                label={'Job Function'}
+                label={lang?.profile?.jobFunction}
                 title='Job function'
                 name='jobFunction'
                 isTouched
@@ -698,7 +718,7 @@ const Step3 = (props: any) => {
             <div className={styles.stepField}>
               <MaterialBasicSelect
                 className={styles.stepFullwidth}
-                label='Industry'
+                label={lang?.profile?.industry}
                 value={industry}
                 onChange={(e) => {
                   setIndustry(e.target.value)
@@ -710,7 +730,7 @@ const Step3 = (props: any) => {
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
-                label='Monthly Salary'
+                label={monthlySalary}
                 size='small'
                 value={salary}
                 defaultValue={salary}
@@ -719,7 +739,7 @@ const Step3 = (props: any) => {
             </div>
 
             <div className={styles.step3Editor}>
-              <TextEditor value={description} setValue={setDescription} />
+              <TextEditor value={description} setValue={setDescription} placeholder={placeholder} />
             </div>
           </div>
         </div>
@@ -729,14 +749,14 @@ const Step3 = (props: any) => {
         <div className={styles.stepFormToggle} onClick={() => newExperienceForm()}>
           <img src={AddOutlineIcon} width='18' height='18' />
           <Text textColor='primaryBlue' textStyle='sm'>
-            Add a work experience
+           {addWorkExperience}
           </Text>
         </div>
       )}
 
       {showErrorToComplete && (
         <Text textStyle='base' textColor='red' tagName='p'>
-          Fill up the required field to proceed.
+         {fillUpTheRequired}
         </Text>
       )}
 
@@ -750,7 +770,7 @@ const Step3 = (props: any) => {
                 checked={hasNoWorkExperience}
               />
             }
-            label={<Text textStyle='base'>I have no work experience</Text>}
+            label={<Text textStyle='base'>{noWorkExperience}</Text>}
           />
         </div>
       )}
@@ -765,7 +785,7 @@ const Step3 = (props: any) => {
               capitalize
               onClick={handleCancelForm}
             >
-              <Text textColor='primaryBlue'>Cancel</Text>
+              <Text textColor='primaryBlue'>{cancel}</Text>
             </MaterialButton>
 
             <MaterialButton
@@ -775,7 +795,7 @@ const Step3 = (props: any) => {
               onClick={() => handleSaveForm()}
               isLoading={isUpdating}
             >
-              <Text textColor='white'>Save</Text>
+              <Text textColor='white'>{save}</Text>
             </MaterialButton>
           </div>
         </React.Fragment>
@@ -792,7 +812,7 @@ const Step3 = (props: any) => {
               capitalize
               onClick={() => router.push(backBtnUrl)}
             >
-              <Text textColor='primaryBlue'>Back</Text>
+              <Text textColor='primaryBlue'>{back}</Text>
             </MaterialButton>
 
             <MaterialButton
@@ -811,9 +831,9 @@ const Step3 = (props: any) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req ,query}) => {
   const accessToken = req.cookies.accessToken ? req.cookies.accessToken : null
-
+  const lang = await getDictionary(query.lang as 'en')
  // store.dispatch(fetchConfigRequest())
   if (accessToken) {
     store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
@@ -828,7 +848,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     props: {
      // config,
       userDetail,
-      accessToken
+      accessToken,
+      lang
     }
   }
 })

@@ -9,7 +9,7 @@ const Step2 = (props: any) => {
   const currentStep = 2
   const router = useRouter()
   const dispatch = useDispatch()
-  const { userDetail, accessToken } = props
+  const { userDetail, accessToken ,lang} = props
   const redirect = router.query?.redirect
     ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}`
     : '/jobseeker-complete-profile/1101'
@@ -46,7 +46,7 @@ const Step2 = (props: any) => {
         }
         dispatch(uploadUserResumeRequest(payload))
       } else {
-        setErrorMessage('File size is too huge. Please upload file that is within 5MB.')
+        setErrorMessage(lang?.profile?.fileTooHuge)
       }
 
       setIsDisabled(false)
@@ -64,7 +64,8 @@ const Step2 = (props: any) => {
     setResume,
     resume,
     currentStep,
-    redirect
+    redirect,
+    lang,
   }
 }
 

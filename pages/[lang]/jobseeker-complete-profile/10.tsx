@@ -8,19 +8,21 @@ import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetai
 import useUploadResume from '../../../hooks/useUploadResume'
 // Styles
 import OnRegisterUpload from '../../../components/JobseekerCompleteProfile/OnRegisterUpload'
-
+import { getDictionary } from 'get-dictionary'
 const Step2 = (props: any) => {
   const hookProps = useUploadResume(props)
   return <OnRegisterUpload {...hookProps} />
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req,query }) => {
   const accessToken = req.cookies.accessToken
+  const lang = await getDictionary(query.lang as 'en')
   if (!accessToken) {
     return {
       redirect: {
         destination: '/get-started?redirect=/jobseeker-complete-profile/10',
-        permanent: false
+        permanent: false,
+        lang
       }
     }
   }
@@ -34,7 +36,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   return {
     props: {
       userDetail,
-      accessToken
+      accessToken,
+      lang
     }
   }
 })

@@ -1,50 +1,52 @@
 {
   "header": {
     "findJobs": "findJobs",
-    "companies": "公司",
-    "courses": "课程",
-    "careerGuide": "职业生涯指导",
-    "hiring": "我要招聘",
-    "getStarted": "登陆/注册",
-    "manageResume": "编辑简历",
-    "myJobs": "我的工作",
-    "accountSettings": "账号设置",
-    "logOut": "登出",
-    "Chat": "聊天",
-    "downloadApp": "下载APP"
+    "companies": "companies",
+    "courses": "courses",
+    "careerGuide": "careerGuide",
+    "hiring": "I’m hiring",
+    "getStarted": "getStarted",
+    "manageResume": "manageResume",
+    "myJobs": "myJobs",
+    "accountSettings": "accountSettings",
+    "logOut": "logOut",
+    "Chat": "Chat",
+    "downloadApp": "downloadApp",
+    "pleaseVerify": "Please verify your email address.",
+    "verifyNow.": " Verify now."
   },
   "foot": {
-    "about": "关于",
-    "aboutBossjob": "BOSS直拒",
-    "termsConditions": "协议与规则",
-    "legal": "法律",
+    "about": "about",
+    "aboutBossjob": "About Bossjob",
+    "termsConditions": "Terms & Conditions",
+    "legal": "Legal",
     "FAQ": "FAQ",
-    "talents": "人才",
-    "allJobs": "工作",
-    "createJobAlert": "创建工作",
-    "createFree": "免费创造",
-    "careerGuide": "简历指导",
-    "courses": "课程",
-    "recruiter": "招聘人员",
-    "getStarted": "登陆/注册",
-    "popularJobs": "热门工作",
-    "JobsIn1": "马尼拉的工作",
-    "JobsIn2": "马卡蒂的工作",
-    "JobsIn3": "宿务的工作",
-    "ItJobs": "IT人才",
-    "financeJobs": "财务职位",
-    "customerService": "人才",
-    "jobs": "人才",
-    "BpoJobs": "人才",
-    "salesJobs": "人才",
-    "healthcareJobs": "人才",
-    "downloadBossjobApp": "人才",
-    "followUs": "跟随",
-    "technology": " Singapore: Yolo Technology Pte Ltd. All Rights Reserved。嘿嘿嘿",
-    "corporation": "Philippines: Etos Adtech Corporation 嘿嘿嘿"
+    "talents": "Talents",
+    "allJobs": "All jobs",
+    "createJobAlert": "Create job alert",
+    "createFree": "Create free resume",
+    "careerGuide": "Career guide",
+    "courses": "Courses",
+    "recruiter": "Recruiter",
+    "getStarted": "Get started",
+    "popularJobs": " Popular Jobs",
+    "JobsIn1": "Jobs in Manila",
+    "JobsIn2": "Jobs in Makati",
+    "JobsIn3": "Jobs in Cebu",
+    "ItJobs": "IT jobs",
+    "financeJobs": "Finance jobs",
+    "customerService": "Customer Service job",
+    "jobs": "jobs",
+    "BpoJobs": "BPO jobs",
+    "salesJobs": "Sales jobs",
+    "healthcareJobs": "Healthcare jobs",
+    "downloadBossjobApp": " Download Bossjob App",
+    "followUs": "Follow us",
+    "technology": " Singapore: Yolo Technology Pte Ltd. All Rights Reserved",
+    "corporation": "Philippines: Etos Adtech Corporation"
   },
   "getStatred": {
-    "seoMetaTitle":"Get started | Bossjob",
+    "seoMetaTitle": "Get started | Bossjob",
     "JoinBossjob": "Join Bossjob",
     "kickStartYourCareer": "kick-start your career!",
     "enterYourEmailAddress": "Enter your email address",
@@ -118,7 +120,10 @@
   },
   "companies": {
     "title": "Find great companies in {{country}}",
-    "search": { "companyName": "Search for Companies", "btn": "Search" },
+    "search": {
+      "companyName": "Search for Companies",
+      "btn": "Search"
+    },
     "employer": {
       "title": "Featured Employer",
       "size": "Company Size",
@@ -134,7 +139,11 @@
     "seoDescription": "Discover great companies to work for in {{country}}! Learn more about the company and apply to job openings on Bossjob!"
   },
   "companyDetail": {
-    "tab": { "overview": "Overview", "life": "Life", "jobs": "Jobs" },
+    "tab": {
+      "overview": "Overview",
+      "life": "Life",
+      "jobs": "Jobs"
+    },
     "overview": {
       "about": "About the company",
       "size": "Company Size",
@@ -148,13 +157,24 @@
         "viewAll": "View all",
         "noCultureTips": "{{companyName}} has not uploaded any information about their company life. Please come back again."
       },
-      "benefit": { "title": "Employee Benefits", "viewAll": "View all" },
-      "photo": { "title": "Photos" },
+      "benefit": {
+        "title": "Employee Benefits",
+        "viewAll": "View all"
+      },
+      "photo": {
+        "title": "Photos"
+      },
       "jobs": {
         "title": "Jobs",
         "viewAll": "See all Jobs",
-        "search": { "jobTitle": "Search for job title", "location": "location", "btn": "Search" },
-        "card": { "chatNow": "Chat Now" }
+        "search": {
+          "jobTitle": "Search for job title",
+          "location": "location",
+          "btn": "Search"
+        },
+        "card": {
+          "chatNow": "Chat Now"
+        }
       },
       "seoTitle": "Working at {{companyName}} | Bossjob",
       "seoDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!"
@@ -167,8 +187,14 @@
     },
     "job": {
       "title": "Jobs",
-      "search": { "jobTitle": "Search for job title", "location": "Location", "btn": "Search" },
-      "pagination": { "tips": "Showing {{range}} of {{totalJobs}} jobs" },
+      "search": {
+        "jobTitle": "Search for job title",
+        "location": "Location",
+        "btn": "Search"
+      },
+      "pagination": {
+        "tips": "Showing {{range}} of {{totalJobs}} jobs"
+      },
       "noMatchedJobs": "We couldn't find any jobs matching your search.",
       "noJobs": "{{companyName}} does not have any job openings now. Please come back again."
     },
@@ -194,7 +220,9 @@
       "btn1": "Search",
       "download": "Download APP",
       "chatBoss": "and chat with Boss",
-      "popup": { "chatBoss": "Chat directly with Boss" }
+      "popup": {
+        "chatBoss": "Chat directly with Boss"
+      }
     },
     "popularJobs": "Popular Jobs",
     "tag": {
@@ -218,7 +246,10 @@
     "improveRecommend": "Improve job recommendations by updating",
     "jobPrefer": "job preferences",
     "jobPreference": "Based on your job preference",
-    "jobTab": { "reco": "Recommended", "latestJob": "Latest jobs" },
+    "jobTab": {
+      "reco": "Recommended",
+      "latestJob": "Latest jobs"
+    },
     "jobCard": {
       "chatNow": "Chat now",
       "jobForYou": "Jobs for You",
@@ -268,8 +299,15 @@
         "withinMonth": "Active this month"
       },
       "location": "Working Location",
-      "locationModal": { "btn": "Done", "title": "Location" },
-      "search": { "location": "Location", "title": "Job title or company", "btn": "Search" },
+      "locationModal": {
+        "btn": "Done",
+        "title": "Location"
+      },
+      "search": {
+        "location": "Location",
+        "title": "Job title or company",
+        "btn": "Search"
+      },
       "jobPostedOn": "Posted on"
     },
     "shareModal": {
@@ -290,7 +328,11 @@
       },
       "submitting": "Submitting Report."
     },
-    "detailModal": { "title": "Tell us a little more", "btn1": "Back", "btn2": "Submit" },
+    "detailModal": {
+      "title": "Tell us a little more",
+      "btn1": "Back",
+      "btn2": "Submit"
+    },
     "feedbackModal": {
       "title": "Job Reported Successfully",
       "message": "We have received your report about this job. Thanks for letting us know. Your feedback is important in helping us to keep the Bossjob community safe."
@@ -301,7 +343,10 @@
         "allJobHiring": "View {{jobs}} jobs hiring",
         "employees": "Employees"
       },
-      "similarJob": { "title": "SimilarJobs", "seeMore": "See more" },
+      "similarJob": {
+        "title": "SimilarJobs",
+        "seeMore": "See more"
+      },
       "signUp": {
         "title": "Join Bossjob",
         "btn": "Sign up",
@@ -576,7 +621,9 @@
             "tips": "Please upload file size lesser than 5MB."
           }
         },
-        "delete": { "error": "Failed to delete resume" },
+        "delete": {
+          "error": "Failed to delete resume"
+        },
         "bossjob": {
           "title": "Bossjob resume",
           "tips": "As you build your profile at Bossjob, we create your resume for you. You can choose from the available templates and use your newly improve resume to apply for job opening at Bossjob.",
@@ -584,5 +631,70 @@
         }
       }
     }
+  },
+  "profile": {
+    "letGetYouJob": " Let’s get you a job!",
+    "tellUsAboutYourself": "Tell us about yourself.",
+    "firstName": "First Name",
+    "thisFieldIsRequired": "This field is required.",
+    "lastName": "Last Name",
+    "currentLocation": "Current location",
+    "countryText": "Country",
+    "countryCode": "Country code",
+    "mobileNumber": "Mobile Number",
+    "desiredJobTitle": "Desired job title",
+    "desiredJobType": "Desired job type",
+    "desiredLocation": "Desired  location",
+    "desiredSalaryCurrency": "Desired salary currency",
+    "minSalary": "Min. salary",
+    "maxSalary": "Max. salary",
+    "desiredIndustry": "Desired Industry",
+    "availability": "Availability",
+    "next": "Next",
+    "setp": "Setp",
+    "of": "of",
+    "back": "Back",
+    "fileTooHuge": "File size is too huge. Please upload file that is within 5MB.",
+    "addYourResume": "Add your resume",
+    "youCanBuildOnlineResume": "You can build an online resume to apply for jobs and export it with different templates.",
+    "youCanuploadYourResume": "You can also upload your resume, it will be saved to your profile.",
+    "uploadYourResume": "Upload your Resume",
+    "fileMax": "PDF, DOC, DOCX. file, max 5MB",
+    "resume": "Resume",
+    "OR": "OR",
+    "createFreeResume": "Create Free Resume",
+
+    "addYourWorkExperience":"Add your work experience",
+    "fillInYourCompleteWork ":"Fill in your complete work experiences will increase your chances of being shortlisted by 83%.",
+    "jobFunction":"Job function",
+    "industry":"Industry",
+    "description":"Description",
+    "workingPeriod":"Working Period",
+    "currentlyWorkHere":"I currently work here",
+    "from":"From",
+    "startDateMustBeEarlier":" Start date must be earlier than completion date.",
+    "to":"To",
+   "monthlySalary":"Monthly Salary",
+   "addWorkExperience":"Add a work experience",
+   "fillUpTheRequired":"Fill up the required field to proceed.",
+   "noWorkExperience":"I have no work experience",
+   "cancel":"Cancel",
+   "save":"Save",
+   "JobTitleText":"Job Title",
+   "companyNameText":"Company Name",
+   "monthYear":"'Month Year",
+   "placeholder":"Type here...",
+  
+   "allAboutYourEducation":"All about your education",
+   "present":"Present",
+   "schoolName":"School Name",
+   "educationLevel":"Education Level",
+   "studyPeriod":" Study Period",
+   "currentlyAttending":"Currently attending",
+   "fieldOfStudy":"Field of Study",
+   "fillUpTheFieldsWith":" Fill up the fields with (*) to proceed.",
+   "addAEducation":" Add a education",
+   "notWantToEnterEducation":"I do not want to enter my Education now"
+
   }
 }

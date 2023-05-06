@@ -1064,7 +1064,7 @@ const ManageProfilePage = ({ lang }: any) => {
   }
 
   return (
-    <Layout>
+    <Layout lang={lang}>
       <EditProfileModal
         lang={lang}
         modalName='profile'

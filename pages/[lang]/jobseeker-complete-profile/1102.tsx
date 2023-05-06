@@ -42,9 +42,9 @@ import { AddOutlineIcon, PencilIcon, AccountSettingDeleteIconBin } from 'images'
 // Styles
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
-
+import { getDictionary } from 'get-dictionary'
 const Step4 = (props: any) => {
-  const { userDetail, accessToken } = props
+  const { userDetail, accessToken,lang } = props
 
   const quickUpladResumeType = getItem('quickUpladResume')
   const currentStep = 4
@@ -392,11 +392,31 @@ const Step4 = (props: any) => {
     completePorfile()
   }
 
+  const {
+    allAboutYourEducation,
+    present,
+    schoolName,
+    educationLevel,
+    studyPeriod,
+    currentlyAttending,
+    fieldOfStudy,
+    fillUpTheFieldsWith,
+    addAEducation,
+    notWantToEnterEducation,
+    startDateMustBeEarlier,
+    cancel,
+    save,
+    from,
+    to,
+    monthYear,
+    next,
+    back
+  } = lang
   return (
     <OnBoardLayout
       headingText={
         <Text bold textStyle='xxxl' tagName='h2'>
-          All about your education 🎓
+          {allAboutYourEducation} 🎓
         </Text>
       }
       currentStep={totalStep}
@@ -406,6 +426,7 @@ const Step4 = (props: any) => {
       nextFnBtn={() => handleNextBtn()}
       isNextDisabled={isNextDisabled}
       isUpdating={isGeneratingUserResume || isCompletingUserProfile}
+      lang={lang}
     >
       {educations.length > 0 && (
         <div className={styles.stepDataList}>
@@ -422,7 +443,7 @@ const Step4 = (props: any) => {
                 <Text textStyle='base' tagName='p'>
                   {moment(education?.study_period_from).format('MMMM yyyy')} to{' '}
                   {education?.is_currently_studying
-                    ? 'Present'
+                    ? present
                     : moment(education?.study_period_to).format('MMMM yyyy')}
                 </Text>
                 <br />
@@ -460,7 +481,7 @@ const Step4 = (props: any) => {
           <div className={styles.stepField}>
             <MaterialTextField
               className={styles.stepFullwidth}
-              label={requiredLabel('School Name')}
+              label={requiredLabel(schoolName)}
               size='small'
               value={school}
               defaultValue={school}
@@ -471,7 +492,7 @@ const Step4 = (props: any) => {
           <div className={styles.stepField}>
             <MaterialBasicSelect
               className={styles.stepFullwidth}
-              label={requiredLabel('Education Level')}
+              label={requiredLabel(educationLevel)}
               value={degree}
               onChange={(e) => setDegree(e.target.value)}
               options={degreeList}
@@ -481,7 +502,7 @@ const Step4 = (props: any) => {
           <div className={styles.stepFieldGroup}>
             <div className={styles.stepFieldHeader}>
               <Text textStyle='base' bold>
-                Study Period<span className={styles.stepFieldRequired}>*</span>
+               {studyPeriod} <span className={styles.stepFieldRequired}>*</span>
               </Text>
             </div>
             <div className={styles.stepFieldBody}>
@@ -493,7 +514,7 @@ const Step4 = (props: any) => {
                     name='currentStudent'
                   />
                 }
-                label={<Text textStyle='base'>Currently attending</Text>}
+                label={<Text textStyle='base'>{currentlyAttending}</Text>}
               />
             </div>
           </div>
@@ -501,13 +522,13 @@ const Step4 = (props: any) => {
           <div className={styles.stepField}>
             <div className={styles.stepFieldHeader}>
               <Text textStyle='base' bold>
-                From
+               {from}
               </Text>
             </div>
             <div className={classNames(styles.stepFieldBody, styles.stepFieldDate)}>
               <div className={styles.stepFieldDateItem}>
                 <MaterialDatePicker
-                  label='Month Year'
+                  label={monthYear}
                   views={['year', 'month']}
                   inputFormat='MMM yyyy'
                   value={studyPeriodFrom}
@@ -520,7 +541,7 @@ const Step4 = (props: any) => {
 
             {hasErrorOnFromPeriod && (
               <Text textColor='red' textStyle='sm'>
-                Start date must be earlier than completion date.
+               {startDateMustBeEarlier}
               </Text>
             )}
           </div>
@@ -529,13 +550,13 @@ const Step4 = (props: any) => {
             <div className={styles.stepField}>
               <div className={styles.stepFieldHeader}>
                 <Text textStyle='base' bold>
-                  To
+                  {to}
                 </Text>
               </div>
               <div className={classNames(styles.stepFieldBody, styles.stepFieldDate)}>
                 <div className={styles.stepFieldDateItem}>
                   <MaterialDatePicker
-                    label='Month Year'
+                    label={monthYear}
                     views={['year', 'month']}
                     inputFormat='MMM yyyy'
                     value={studyPeriodTo}
@@ -548,7 +569,7 @@ const Step4 = (props: any) => {
 
               {hasErrorOnToPeriod && (
                 <Text textColor='red' textStyle='sm'>
-                  Start date must be earlier than completion date.
+                 {startDateMustBeEarlier}
                 </Text>
               )}
             </div>
@@ -579,7 +600,7 @@ const Step4 = (props: any) => {
           <div className={styles.stepField}>
             <MaterialTextField
               className={styles.stepFullwidth}
-              label={'Field of Study'}
+              label={fieldOfStudy}
               size='small'
               value={fieldStudy}
               defaultValue={fieldStudy}
@@ -591,7 +612,7 @@ const Step4 = (props: any) => {
 
       {showErrorToComplete && (
         <Text textStyle='base' textColor='red' tagName='p'>
-          Fill up the fields with (*) to proceed.
+        {fillUpTheFieldsWith}
         </Text>
       )}
       {missingFields.length > 0 && (
@@ -606,7 +627,7 @@ const Step4 = (props: any) => {
         <div className={styles.stepFormToggle} onClick={() => newEducationForm()}>
           <img src={AddOutlineIcon} width='18' height='18' />
           <Text textColor='primaryBlue' textStyle='sm'>
-            Add a education
+            {addAEducation}
           </Text>
         </div>
       )}
@@ -621,7 +642,7 @@ const Step4 = (props: any) => {
                 name='noEducation'
               />
             }
-            label={<Text textStyle='base'>I do not want to enter my Education now</Text>}
+            label={<Text textStyle='base'>{notWantToEnterEducation}</Text>}
           />
         </div>
       )}
@@ -637,7 +658,7 @@ const Step4 = (props: any) => {
               capitalize
               onClick={handleCancelForm}
             >
-              <Text textColor='primaryBlue'>Cancel</Text>
+              <Text textColor='primaryBlue'>{cancel}</Text>
             </MaterialButton>
 
             <MaterialButton
@@ -647,7 +668,7 @@ const Step4 = (props: any) => {
               onClick={() => handleSaveForm()}
               isLoading={isUpdating}
             >
-              <Text textColor='white'>Save</Text>
+              <Text textColor='white'>{save}</Text>
             </MaterialButton>
           </div>
         </React.Fragment>
@@ -663,7 +684,7 @@ const Step4 = (props: any) => {
               capitalize
               onClick={() => router.push(backBtnUrl)}
             >
-              <Text textColor='primaryBlue'>Back</Text>
+              <Text textColor='primaryBlue'>{back}</Text>
             </MaterialButton>
 
             <MaterialButton
@@ -673,7 +694,7 @@ const Step4 = (props: any) => {
               onClick={() => handleNextBtn()}
               isLoading={isUpdating}
             >
-              <Text textColor='white'>Next</Text>
+              <Text textColor='white'>{next}</Text>
             </MaterialButton>
           </div>
         </React.Fragment>
@@ -688,13 +709,15 @@ const Step4 = (props: any) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req ,query}) => {
   const accessToken = req.cookies.accessToken
+  const lang:any = await getDictionary(query.lang as 'en') || {}
   if (!accessToken) {
     return {
       redirect: {
         destination: '/get-started?redirect=/jobseeker-complete-profile/1102',
-        permanent: false
+        permanent: false,
+        lang:lang.profile
       }
     }
   }
@@ -711,7 +734,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     props: {
       // config,
       userDetail,
-      accessToken
+      accessToken,
+      lang:lang.profile
     }
   }
 })

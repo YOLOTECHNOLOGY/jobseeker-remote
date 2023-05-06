@@ -37,6 +37,7 @@ moment.locale('en-sg')
 const App = (props: AppProps) => {
 
    const { Component, pageProps } = props
+  const lang = props.router.query.lang
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
@@ -267,7 +268,7 @@ const App = (props: AppProps) => {
                 <MaintenancePage {...pageProps} />
               ) : isPageLoading &&
                 !(router.pathname.includes('jobs-hiring') && toPath.includes('jobs-hiring')) ? (
-                <TransitionLoader accessToken={accessToken}  />
+                <TransitionLoader accessToken={accessToken}  lang={lang}/>
               ) : (
                 <NotificationProvider>
 

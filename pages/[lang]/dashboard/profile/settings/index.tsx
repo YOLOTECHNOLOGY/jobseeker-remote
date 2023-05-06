@@ -23,6 +23,7 @@ import styles from './settings.module.scss'
 
 import { useDispatch, useSelector } from 'react-redux'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { getDictionary } from 'get-dictionary'
 interface TabPanelProps {
   children?: React.ReactNode
   index: number
@@ -54,7 +55,7 @@ function a11yProps(index: number) {
 const COUNT_DOWN_VERIFY_DEFAULT = 60
 // const countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
 
-const AccountSettings = ({ accessToken }: any) => {
+const AccountSettings = ({ accessToken ,lang}: any) => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
   const config = useSelector((store: any) => store?.config?.config?.response)
@@ -130,7 +131,7 @@ const AccountSettings = ({ accessToken }: any) => {
   })
 
   return (
-    <Layout>
+    <Layout lang={lang}>
       <div className={styles.accessSettings}>
         <div className={styles.accessSettingsTabs}>
           {(width ?? 0)  > 576 && (
@@ -208,14 +209,15 @@ const AccountSettings = ({ accessToken }: any) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req,query}) => {
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-
+  const lang = await getDictionary(query.lang as 'en')
   if (!accessToken) {
     return {
       redirect: {
         destination: '/get-started?redirect=/dashboard/profile/settings',
-        permanent: false
+        permanent: false,
+        lang
       }
     }
   }
@@ -230,7 +232,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const userDetail = storeState.users.fetchUserDetail.response
   return {
     props: {
-      
+      lang,
       accessToken,
       userDetail
     }

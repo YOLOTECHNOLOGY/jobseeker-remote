@@ -9,13 +9,13 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { useDispatch } from 'react-redux'
 import CustomCard from 'components/Chat/customCard'
+import { getDictionary } from 'get-dictionary'
 // import { updateDefaultChatList } from 'store/actions/chat/defaultChatList'
 const JobseekerChat = dynamic<any>(import('components/Chat'), {
     ssr: false
 })
 // import JobseekerChat from 'components/Chat'
-const Chat = () => {
-
+const Chat = ({lang}:any) => {
     const router = useRouter()
     const {
         userId,
@@ -72,8 +72,7 @@ const Chat = () => {
         }
     }, [chatId])
 
-
-    return <Layout isHiddenFooter isHiddenHeader={false}>
+    return <Layout isHiddenFooter isHiddenHeader={false}  lang={lang}>
         <div style={{ marginTop: mobile ? 0 : 24 }}>
             <JobseekerChat
                 key='jobchat'
@@ -99,13 +98,17 @@ const Chat = () => {
         </div>
     </Layout>
 }
-export const getServerSideProps = () => {
-    return { props: {} }
+export const getServerSideProps =  async ({query}) => {
+    const lang = await getDictionary(query.lang as 'en')
+    return { 
+     props: {
+        lang
+    } }
 }
-const Ready = () => {
+const Ready = (props) => {
     const { ready } = useContext(IMContext)
     if (ready) {
-        return <Chat />
+        return <Chat {...props}/>
     } else {
         return <div />
     }
