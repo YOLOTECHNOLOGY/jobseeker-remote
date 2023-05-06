@@ -12,7 +12,6 @@ const InterviewDetail = (props: any) => {
     const base = [
       ...[
         ['Job Title', data?.job_title],
-        // ['Job Position', data?.job_location],
         ['Location', data?.address],
         ['Date,Time', data.interviewed_at],
         ['Contact person', data?.contact_person],
