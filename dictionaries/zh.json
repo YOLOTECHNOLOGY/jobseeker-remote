@@ -612,7 +612,7 @@
           "tips": "简历是帮助您进入求职过程下一步的重要工具。使用 Bossjob 个人资料中的其他信息给招聘人员留下深刻印象。",
           "time": "上传于 {{time}}",
           "uploadBtn": "上传简历",
-          "support": "支持文件类型: PDF, DOC, DOCX. Max. 最大: 5MB",
+          "support": "支持的文件类型: PDF, DOC, DOCX. 最大: 5MB",
           "error": {
             "title": "文件大小超出了限制",
             "tips": "请上传小于5MB的文件。"
@@ -623,7 +623,7 @@
         },
         "bossjob": {
           "title": "Bossjob 简历",
-          "tips": "当你在Bossjob上创建资料的时候，我们会为你创建简历。 你可以下载下面的模版并在你最新的简历中使用他们，然后申请在Bossjob上的工作",
+          "tips": "当你在Bossjob上创建资料的时候，我们会为你创建简历。 你可以下载下面的模版并在你最新的简历中使用，然后申请在Bossjob上的工作",
           "download": "下载"
         }
       }

@@ -43,7 +43,12 @@ import { Upload } from 'components/UploadResume/Upload'
 import { SnackbarTips } from 'components/UploadResume/SnackbarTips'
 import { maxFileSize } from 'helpers/handleInput'
 
-const ResumeView = ({ userDetail }: any) => {
+const ResumeView = ({ userDetail, lang }: any) => {
+  const {
+    manageProfile: {
+      tab: { resume: transitions }
+    }
+  } = lang
   const accessToken = getCookie('accessToken')
   const isFirstRender = useFirstRender()
   const dispatch = useDispatch()
@@ -171,7 +176,8 @@ const ResumeView = ({ userDetail }: any) => {
       <div className={styles.sectionContainer}>
         <div className={styles.resumeTitle}>
           <Text textColor='primaryBlue' textStyle='xl' bold>
-            Upload your own resume
+            {/* Upload your own resume */}
+            {transitions.upload.title}
           </Text>
           {resume.length < 3 && (
             <label>
@@ -190,10 +196,10 @@ const ResumeView = ({ userDetail }: any) => {
           )}
         </div>
         <Text tagName='p' textStyle='lg'>
-          Resume is an essential tool to get you to the next step in your job hunting process.
-          Impress recruiters with additional information from your Bossjob profile.
+          {transitions.upload.tips}
         </Text>
         <UploadResume
+          lang={lang}
           title='resume'
           resumes={resume}
           handleDelete={handleDeleteResume}
@@ -202,15 +208,12 @@ const ResumeView = ({ userDetail }: any) => {
           deleteResumeLoading={deleteResumeLoading}
         />
       </div>
-      {/* Bossjob resume */}
       <div className={styles.sectionContainer}>
         <Text textColor='primaryBlue' textStyle='xl' bold>
-          Bossjob resume
+          {transitions.bossjob.title}
         </Text>
         <Text tagName='p' textStyle='lg'>
-          As you build your profile at Bossjob, we create your resume for you. You can choose from
-          the available templates and use your newly improve resume to apply for job opening at
-          Bossjob.
+          {transitions.bossjob.tips}
         </Text>
         <div className={styles.resumePreview}>
           <div className={styles.embla}>
@@ -260,7 +263,7 @@ const ResumeView = ({ userDetail }: any) => {
                           className={styles.downloadIcon}
                         />
                         <Text textStyle='lg' textColor='white' className={styles.downloadText}>
-                          Download
+                          {transitions.bossjob.download}
                         </Text>
                       </MaterialButton>
                     )}
@@ -298,7 +301,7 @@ const ResumeView = ({ userDetail }: any) => {
                           height='24px'
                         />
                         <Text textStyle='lg' textColor='white' className={styles.downloadText}>
-                          Download
+                          {transitions.bossjob.download}
                         </Text>
                       </MaterialButton>
                     )}

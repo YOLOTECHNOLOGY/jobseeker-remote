@@ -1212,7 +1212,7 @@ const ManageProfilePage = ({ lang }: any) => {
             </div>
           </div>
         )}
-        {tabValue === 'resume' && <ResumeView userDetail={userDetail} />}
+        {tabValue === 'resume' && <ResumeView userDetail={userDetail} lang={lang} />}
       </ProfileLayout>
     </Layout>
   )
