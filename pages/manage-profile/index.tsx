@@ -154,7 +154,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
     if (workExperiences?.length === 0) {
       count += 1
     }
-    if (educations.length === 0) {
+    if (educations?.length === 0) {
       count += 1
     }
     if (skills.length === 0) {
@@ -668,7 +668,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                     </div>
                   </div>
                 )}
-                {educations.length === 0 && (
+                {educations?.length === 0 && (
                   <div className={styles.emblaSlideHighlight}>
                     <div className={styles.highlightCard}>
                       <div className={styles.highlightCardHeader}>
