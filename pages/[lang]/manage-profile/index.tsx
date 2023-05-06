@@ -61,7 +61,14 @@ import EditJobPreferencesAvailabilityModal from 'components/EditJobPreferencesAv
 import { updateUserVisibilityToWorkService } from 'store/services/jobs/updateUserVisibilityToWork'
 import Image from 'next/image'
 import ResumeView from './ResumeSectgion'
-const RenderProfileView = ({ userDetail, handleModal }: any) => {
+import { getDictionary } from 'get-dictionary'
+import { Left } from './icons/left'
+const RenderProfileView = ({ userDetail, handleModal, lang }: any) => {
+  const {
+    manageProfile: {
+      tab: { profile }
+    }
+  } = lang
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
@@ -264,7 +271,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
           <Text textStyle='xl' textColor='primaryBlue' bold>
-            Work Experience
+            {/* Work Experience */}
+            {profile.exp.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
             <img src={AddIcon} width='14' height='14' />
@@ -310,7 +318,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                 <Text textStyle='base' textColor='darkgrey'>
                   {workingPeriodFrom.format('MMMM yyyy')} to{' '}
                   {workExp?.is_currently_work_here
-                    ? 'Present'
+                    ? profile.exp.present
                     : workingPeriodTo.format('MMMM yyyy')}{' '}
                   {dateDiff ? `(${dateDiff})` : ''}
                 </Text>
@@ -327,7 +335,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                   )}
                   {workExp?.salary && workExp?.salary !== '0.00' && (
                     <Text textStyle='base' textColor='darkgrey'>
-                      {formatSalary(workExp?.salary)} per month
+                      {formatSalary(workExp?.salary)} {profile.exp.perMonth}
                     </Text>
                   )}
                 </div>
@@ -351,7 +359,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
           <Text textStyle='xl' textColor='primaryBlue' bold>
-            Education
+            {profile.edu.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
             <img src={AddIcon} width='14' height='14' />
@@ -365,7 +373,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
               studyPeriod += moment(education?.study_period_from).format('MMM yyyy')
 
               if (education?.is_currently_studying === true) {
-                studyPeriod += ' - Present'
+                studyPeriod += ' - ' + profile.edu.present
               } else if (education?.is_currently_studying === false && education?.study_period_to) {
                 studyPeriod += ' - ' + moment(education?.study_period_to).format('MMM yyyy')
               }
@@ -417,7 +425,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
           <Text textStyle='xl' textColor='primaryBlue' bold>
-            Skills
+            {profile.skill.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleModal('skills', true)}>
             <img src={AddIcon} width='14' height='14' />
@@ -451,7 +459,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
           <Text textStyle='xl' textColor='primaryBlue' bold>
-            Links
+            {profile.link.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
             <img src={AddIcon} width='14' height='14' />
@@ -520,7 +528,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
           <Text textStyle='xl' textColor='primaryBlue' bold>
-            Licenses And Certifications
+            {/* Licenses And Certifications */}
+            {profile.licenses.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
             <img src={AddIcon} width='14' height='14' />
@@ -572,7 +581,9 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                 )}
                 <div style={{ height: '16px' }}></div>
                 {licenseCertification?.credential_id && (
-                  <Text textStyle='lg'>Credential ID: {licenseCertification.credential_id}</Text>
+                  <Text textStyle='lg'>
+                    {profile.licenses.CID}: {licenseCertification.credential_id}
+                  </Text>
                 )}
                 {licenseCertification?.credential_url && (
                   <Link
@@ -597,7 +608,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
       {isHighlightSectionVisible && (
         <div className={styles.highlightContainer}>
           <Text textStyle='xl' bold>
-            Let employer find you faster!
+            {profile.findYou}
+            {/* Let employer find you faster! */}
           </Text>
           {isSliderButtonVisible && (
             <div
@@ -614,26 +626,7 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                 ])}
                 onClick={scrollNext}
               >
-                <svg
-                  width='40'
-                  height='40'
-                  viewBox='0 0 40 40'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <circle
-                    cx='20'
-                    cy='20'
-                    r='19.75'
-                    fill='#2378E5'
-                    stroke='#BCBCBC'
-                    strokeWidth='0.5'
-                  />
-                  <path
-                    d='M24 26.7973L22.4833 28.25L14 20.125L22.4833 12L24 13.4527L17.0334 20.125L24 26.7973Z'
-                    fill='white'
-                  />
-                </svg>
+                <Left />
               </div>
             </div>
           )}
@@ -646,12 +639,13 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                       <div className={styles.highlightCardHeader}>
                         <img src={HighlightWorkExpIcon} height='35px' />
                         <Text textStyle='lg' bold>
-                          Add work experience
+                          {profile.exp.addWorkExp}
                         </Text>
                       </div>
                       <Text textStyle='lg' className={styles.highlightCardContent}>
-                        Showcase your past contributions and that you can be an asset to potential
-                        employer
+                        {profile.exp.noExpTips}
+                        {/* Showcase your past contributions and that you can be an asset to potential
+                        employer */}
                       </Text>
                       {isCarouselButtonVisible && (
                         <MaterialButton
@@ -662,7 +656,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                           style={{ height: '44px', textTransform: 'none' }}
                         >
                           <Text textStyle='lg' textColor='white'>
-                            Add experience
+                            {profile.exp.addExp}
+                            {/* Add experience */}
                           </Text>
                         </MaterialButton>
                       )}
@@ -675,11 +670,13 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                       <div className={styles.highlightCardHeader}>
                         <img src={HighlightEducationIcon} height='35px' />
                         <Text textStyle='lg' bold>
-                          Add education
+                          {/* Add education */}
+                          {profile.edu.title}
                         </Text>
                       </div>
                       <Text textStyle='lg' className={styles.highlightCardContent}>
-                        Highlight your academic qualifications and achievements
+                        {/* Highlight your academic qualifications and achievements */}
+                        {profile.edu.noDataTips}
                       </Text>
                       {isCarouselButtonVisible && (
                         <MaterialButton
@@ -690,7 +687,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                           style={{ height: '44px', textTransform: 'none' }}
                         >
                           <Text textStyle='lg' textColor='white'>
-                            Add education
+                            {/* Add education */}
+                            {profile.edu.addEdu}
                           </Text>
                         </MaterialButton>
                       )}
@@ -703,12 +701,14 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                       <div className={styles.highlightCardHeader}>
                         <img src={HighlightSkillIcon} height='35px' />
                         <Text textStyle='lg' bold>
-                          Add skill
+                          {/* Add skill */}
+                          {profile.skill.title}
                         </Text>
                       </div>
                       <Text textStyle='lg' className={styles.highlightCardContent}>
-                        Include relevant skill and keywords to boost your chances of getting an
-                        interview.
+                        {/* Include relevant skill and keywords to boost your chances of getting an
+                        interview. */}
+                        {profile.skill.noDataTips}
                       </Text>
                       {isCarouselButtonVisible && (
                         <MaterialButton
@@ -719,7 +719,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                           style={{ height: '44px', textTransform: 'none' }}
                         >
                           <Text textStyle='lg' textColor='white'>
-                            Add skill
+                            {/* Add skill */}
+                            {profile.skill.addSkill}
                           </Text>
                         </MaterialButton>
                       )}
@@ -732,11 +733,13 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                       <div className={styles.highlightCardHeader}>
                         <img src={HighlightAboutYouIcon} height='35px' />
                         <Text textStyle='lg' bold>
-                          Complete all information about you
+                          {profile.informationCard.title}
+                          {/* Complete all information about you */}
                         </Text>
                       </div>
                       <Text textStyle='lg' className={styles.highlightCardContent}>
-                        Help the recruiter to know more about you and connect more easily with you.
+                        {/* Help the recruiter to know more about you and connect more easily with you. */}
+                        {profile.informationCard.content}
                       </Text>
                       {isCarouselButtonVisible && (
                         <MaterialButton
@@ -747,7 +750,8 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
                           style={{ height: '44px', textTransform: 'none' }}
                         >
                           <Text textStyle='lg' textColor='white'>
-                            Add information
+                            {/* Add information */}
+                            {profile.informationCard.btn}
                           </Text>
                         </MaterialButton>
                       )}
@@ -778,9 +782,9 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         renderWorkExperienceSection('workExperience')
       ) : (
         <ProfileSettingCard
-          title='Work Experience'
-          description='Showcase your past contributions and that you can be an asset to potential employer.'
-          buttonText='Add work experience'
+          title={profile.exp.title} // 'Work Experience'
+          description={profile.exp.noDataTips} // 'Showcase your past contributions and that you can be an asset to potential employer.'
+          buttonText={profile.exp.addWorkExp} // 'Add work experience'
           // eslint-disable-next-line
           onClick={() => handleWorkExpModal()}
         />
@@ -790,9 +794,9 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         renderEducationSection('education')
       ) : (
         <ProfileSettingCard
-          title='Education'
-          description='Highlight your academic qualifications and achievements.'
-          buttonText='Add education'
+          title={profile.edu.title} // 'Education'
+          description={profile.edu.noDataTips} // 'Highlight your academic qualifications and achievements.'
+          buttonText={profile.edu.addEdu} // 'Add education'
           // eslint-disable-next-line
           onClick={() => handleEducationModal()}
         />
@@ -802,9 +806,9 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         renderSkillSection()
       ) : (
         <ProfileSettingCard
-          title='Skills'
-          description='Include relevant skill and keywords to boost your chances of getting an interview.'
-          buttonText='Add skills'
+          title={profile.skill.title} // 'Skills'
+          description={profile.skill.noDataTips} // 'Include relevant skill and keywords to boost your chances of getting an interview.'
+          buttonText={profile.skill.addSkill} // 'Add skills'
           // eslint-disable-next-line
           onClick={() => handleModal('skills', true)}
         />
@@ -814,9 +818,9 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         renderLicensesAndCertificationsSection('license')
       ) : (
         <ProfileSettingCard
-          title='Licenses And Certifications'
-          description='Stand out among the rest by sharing that expertise that you have earned to show your passion for the job.'
-          buttonText='Add licenses & cert'
+          title={profile.licenses.title} // 'Licenses And Certifications'
+          description={profile.licenses.noDataTips} // 'Stand out among the rest by sharing that expertise that you have earned to show your passion for the job.'
+          buttonText={profile.licenses.addLicense} // 'Add licenses & cert'
           // eslint-disable-next-line
           onClick={() => handleLicenseAndCertificationsModal()}
         />
@@ -826,9 +830,9 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
         renderLinkSection('links')
       ) : (
         <ProfileSettingCard
-          title='Links'
-          description='Show recruiters your work by sharing your websites, portfolio, articles, or any relevant links.'
-          buttonText='Add links'
+          title={profile.link.title} // 'Links'
+          description={profile.link.noDataTips} // 'Show recruiters your work by sharing your websites, portfolio, articles, or any relevant links.'
+          buttonText={profile.link.addLink} // 'Add links'
           // eslint-disable-next-line
           onClick={() => handleLinksModal()}
         />
@@ -837,8 +841,13 @@ const RenderProfileView = ({ userDetail, handleModal }: any) => {
   )
 }
 
-const RenderPreferencesView = ({ modalName, config, userDetail, preference }: any) => {
+const RenderPreferencesView = ({ modalName, config, userDetail, preference, lang }: any) => {
   // const [openToWork, setOpenToWork] = useState(true)
+  const {
+    manageProfile: {
+      tab: { preference: transitions }
+    }
+  } = lang
   const minSalary = preference?.salary_range_from
   const maxSalary = preference?.salary_range_to
   const salaryRange = minSalary + ' - ' + maxSalary
@@ -868,7 +877,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
               style={{ marginTop: '8px' }}
             >
               <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                Desired job title:
+                {transitions.card.title}
               </Text>
               <Text className={styles.jobPreferencesSectionDetailText}>{preference.job_title}</Text>
             </div>
@@ -876,7 +885,8 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
           {preference?.job_type && (
             <div className={styles.jobPreferencesSectionDetailListWrapper}>
               <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                Desired job type:
+                {/* Desired job type: */}
+                {transitions.card.type}
               </Text>
               <Text className={styles.jobPreferencesSectionDetailText}>{preference.job_type}</Text>
             </div>
@@ -884,7 +894,8 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
           {preference?.country && (
             <div className={styles.jobPreferencesSectionDetailListWrapper}>
               <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                Desired country:
+                {/* Desired country: */}
+                {transitions.card.country}
               </Text>
               <Text className={styles.jobPreferencesSectionDetailText}>{preference.country}</Text>
             </div>
@@ -892,7 +903,8 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
           {preference?.location && (
             <div className={styles.jobPreferencesSectionDetailListWrapper}>
               <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                Desired city:
+                {/* Desired city: */}
+                {transitions.card.city}
               </Text>
               <Text className={styles.jobPreferencesSectionDetailText}>{preference.location}</Text>
             </div>
@@ -900,7 +912,8 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
           {preference?.salary_range_from && (
             <div className={styles.jobPreferencesSectionDetailListWrapper}>
               <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                Expected salary:
+                {/* Expected salary: */}
+                {transitions.card.salary}
               </Text>
               <Text className={styles.jobPreferencesSectionDetailText}>
                 {formatSalaryRange(
@@ -913,7 +926,8 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
           {preference?.industry && (
             <div className={styles.jobPreferencesSectionDetailListWrapper}>
               <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                Desired industry:
+                {/* Desired industry: */}
+                {transitions.card.industry}
               </Text>
               <Text className={styles.jobPreferencesSectionDetailText}>{preference.industry}</Text>
             </div>
@@ -938,6 +952,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
         </div>
 
         <EditJobPreferencesModal
+          lang={lang}
           modalName={modalName}
           showModal={showModal}
           config={config}
@@ -946,6 +961,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
           handleModal={() => setShowModal(false)}
         />
         <EditJobPreferencesDeleteModal
+          lang={lang}
           modalName={modalName}
           showModal={showDelete}
           config={config}
@@ -958,11 +974,16 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference }: an
   )
 }
 
-const ManageProfilePage = () => {
+const ManageProfilePage = ({ lang }: any) => {
   const router = useRouter()
   const {
     query: { tab }
   } = router
+  const {
+    manageProfile: {
+      tab: { preference }
+    }
+  } = lang
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
   const config = useSelector((store: any) => store?.config?.config?.response)
@@ -1045,6 +1066,7 @@ const ManageProfilePage = () => {
   return (
     <Layout>
       <EditProfileModal
+        lang={lang}
         modalName='profile'
         showModal={modalState.profile.showModal}
         config={config}
@@ -1052,6 +1074,7 @@ const ManageProfilePage = () => {
         handleModal={handleModal}
       />
       <EditJobPreferencesModal
+        lang={lang}
         modalName='createJobPreference'
         showModal={modalState.createJobPreference.showModal}
         config={config}
@@ -1059,6 +1082,7 @@ const ManageProfilePage = () => {
         handleModal={handleModal}
       />
       <EditWorkExperienceModal
+        lang={lang}
         modalName='workExperience'
         showModal={modalState.workExperience.showModal}
         data={modalState.workExperience.data}
@@ -1066,6 +1090,7 @@ const ManageProfilePage = () => {
         handleModal={handleModal}
       />
       <EditEducationModal
+        lang={lang}
         modalName='education'
         showModal={modalState.education.showModal}
         education={modalState.education.data}
@@ -1080,6 +1105,7 @@ const ManageProfilePage = () => {
         handleModal={handleModal}
       />
       <EditSkillModal
+        lang={lang}
         modalName='skills'
         showModal={modalState.skills.showModal}
         categoryList={jobCategoryList}
@@ -1087,12 +1113,14 @@ const ManageProfilePage = () => {
         handleModal={handleModal}
       />
       <EditLicensesAndCertificationsModal
+        lang={lang}
         modalName='license'
         showModal={modalState.license.showModal}
         licenseData={modalState.license.data}
         handleModal={handleModal}
       />
       <EditLinkModal
+        lang={lang}
         modalName='links'
         showModal={modalState.links.showModal}
         linkData={modalState.links.data}
@@ -1106,14 +1134,19 @@ const ManageProfilePage = () => {
         handleModal={handleModal}
       >
         {tabValue === 'profile' && (
-          <RenderProfileView userDetail={userDetail} handleModal={handleModal} config={config} />
+          <RenderProfileView
+            lang={lang}
+            userDetail={userDetail}
+            handleModal={handleModal}
+            config={config}
+          />
         )}
         {tabValue === 'job-preferences' && (
           <div>
             <div className={styles.sectionContainer} style={{ paddingBottom: 0 }}>
               <div className={styles.sectionHeader}>
                 <Text bold textColor='primaryBlue' textStyle='xl'>
-                  Availability
+                  {preference.available}
                 </Text>
               </div>
               <div style={{ position: 'relative', width: '100%' }}>
@@ -1140,17 +1173,19 @@ const ManageProfilePage = () => {
                 )}
 
                 <Text bold textColor='primaryBlue' textStyle='xl'>
-                  Job Preferences
+                  {preference.card.header}
                 </Text>
               </div>
               <div>
                 <Text tagName='p' textStyle='lg'>
-                  We will find jobs that are of a good match to you based on your job preferences.
+                  {preference.card.tips}
+                  {/* We will find jobs that are of a good match to you based on your job preferences. */}
                 </Text>
               </div>{' '}
               <Fragment key={jobData[1]}>
                 {(jobData[0] ?? []).map((preference) => (
                   <RenderPreferencesView
+                    lang={lang}
                     key={preference.id}
                     modalName='jobPreferences'
                     config={config}
@@ -1168,22 +1203,22 @@ const ManageProfilePage = () => {
                 textStyle='xl'
                 textColor='primaryBlue'
               >
-                Open to work
+                {preference.openToWork.title}
               </Text>
               <FormControlLabel
                 control={<Switch checked={openToWork} onChange={handleVisibility} />}
-                label={<Text textStyle='lg'>Let recruiters know that you are open to work</Text>}
+                label={<Text textStyle='lg'>{preference.openToWork.explain}</Text>}
               />
             </div>
           </div>
         )}
-        {tabValue === 'resume' && <ResumeView userDetail={userDetail} />}
+        {tabValue === 'resume' && <ResumeView userDetail={userDetail} lang={lang} />}
       </ProfileLayout>
     </Layout>
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
   const accessToken = req.cookies.accessToken
   if (!accessToken) {
     return {
@@ -1193,7 +1228,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       }
     }
   }
-
+  const lang = await getDictionary(query.lang as 'en')
   // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)
@@ -1204,7 +1239,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   return {
     props: {
       // config,
-      accessToken
+      accessToken,
+      lang
     }
   }
 })

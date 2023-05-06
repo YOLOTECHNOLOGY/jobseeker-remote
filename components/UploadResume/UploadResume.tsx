@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 /* Components */
 import Text from 'components/Text'
@@ -17,6 +17,8 @@ import { TrashIcon, DocumentIcon } from 'images'
 // import format from 'date-fns/format'
 import { SnackbarTips } from './SnackbarTips'
 import moment from 'moment'
+import { formatTemplateString } from 'helpers/formatter'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 moment.locale('en')
 type resumeObject = {
   name: string
@@ -32,6 +34,7 @@ type UploadResumeProps = {
   handleUpload: Function
   buttonClassname?: string
   deleteResumeLoading?: boolean
+  lang?: Record<string, any>
 }
 
 const Trash = ({
@@ -68,10 +71,16 @@ const UploadResume = ({
   handleDelete,
   handleUpload,
   buttonClassname,
-  deleteResumeLoading
+  deleteResumeLoading,
+  lang
 }: UploadResumeProps) => {
+  const {
+    manageProfile: {
+      tab: { resume: transitions }
+    }
+  } = lang || (useContext(languageContext) as any)
   const [isExceedLimit, setIsExceedLimit] = useState(false)
-  console.log({resumes})
+  console.log({ resumes })
   const handleOnFileChange = (e) => {
     const file = e.target.files[0]
     if (!maxFileSize(file, 5)) {
@@ -104,7 +113,10 @@ const UploadResume = ({
                         </Text>
                       </Link>
                       <div className={styles.resumeTime}>
-                        Uploaded On {moment(item.updated_at).format('DD MMM yyyy')}
+                        {formatTemplateString(
+                          transitions.upload.time,
+                          moment(item.updated_at).format('DD MMM yyyy')
+                        )}
                       </div>
                     </div>
                   </div>
@@ -127,7 +139,7 @@ const UploadResume = ({
               className={classNames([styles.buttonCTA, buttonClassname])}
             >
               <Text textStyle='base' textColor='primaryBlue' bold>
-                Upload your resume
+                {transitions.upload.uploadBtn}
               </Text>
               <input
                 type='file'
@@ -139,10 +151,12 @@ const UploadResume = ({
           </div>
         )}
         <Text textColor='darkgrey' textStyle='sm'>
-          Supported file type: PDF, DOC, DOCX. Max. file size: 5MB
+          {transitions.upload.support}
         </Text>
       </div>
       <SnackbarTips
+        title={transitions.upload.error.title}
+        errorMessage={transitions.upload.error.tips}
         show={isExceedLimit}
         onDismiss={() => {
           setIsExceedLimit(false)

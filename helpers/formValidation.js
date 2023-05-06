@@ -1,9 +1,9 @@
-export const urlValidation = (value) => {
+export const urlValidation = (value, errorMessage = 'Please enter a valid URL.') => {
   const urlExpression = /http(s)?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
   const urlRegex = new RegExp(urlExpression)
 
   if (value && !value.match(urlRegex)) {
-    return 'Please enter a valid URL.'
+    return errorMessage
   } else {
     return null
   }

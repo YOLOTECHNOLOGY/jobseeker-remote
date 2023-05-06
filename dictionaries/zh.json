@@ -450,7 +450,7 @@
         "findYou": "让雇主更快找到您!",
         "informationCard": {
           "title": "填写你的相关信息",
-          "content": "帮助招聘者了解您和能够联系您",
+          "content": "帮助招聘者了解和联系您",
           "btn": "完善信息"
         },
         "aboutMeModal": {
@@ -467,30 +467,35 @@
         },
         "exp": {
           "title": "工作经验",
-          "present": "目前",
-          "readMore": "显示更多",
-          "readLess": "显示更少",
+          "present": "现在",
+          "perMonth": "每月",
           "noExpTips": "展示你过去的贡献，你可以成为潜在雇主的雇员",
           "addExp": "添加工作经验",
           "addWorkExp": "添加工作经验"
         },
         "expModal": {
           "title": "工作经验",
+          "btn1": "取消",
+          "btn2": "保存",
           "jobTitle": "职位名称",
           "companyName": "公司名称",
           "workPeriod": "在职时间",
           "stillHere": "仍然在此工作",
           "from": "从",
           "to": "到",
+          "startDate": "开始日期",
+          "endDate": "结束日期",
           "dateErrorMsg": "开始日期必须早于结束日期",
           "jobFunction": "职位类型",
           "industry": "行业",
-          "currency": "月薪 ({{PHP}})",
+          "currency": "薪水类型",
+          "salary": "月薪 ({{currency}})",
           "notFillErrorMsg": "填写必填信息以便我们处理。",
           "workSummaryPlaceholder": "填写一些信息..."
         },
         "edu": {
           "title": "教育经历",
+          "present": "现在",
           "noDataTips": "突出你的学历和成就。",
           "addEdu": "添加教育经历"
         },
@@ -498,11 +503,14 @@
           "title": "教育经历",
           "btn1": "取消",
           "btn2": "保存",
+          "school": "学习名称",
           "eduLevel": "学历",
           "period": "学习时间",
           "attend": "仍然在读",
           "from": "从",
           "to": "到",
+          "startDate": "开始日期",
+          "endDate": "结束日期",
           "dateErrorMsg": "开始日期必须早于结束日期。",
           "field": "专业领域"
         },
@@ -521,8 +529,9 @@
         },
         "licenses": {
           "title": "执照和认证",
+          "CID": "认证ID",
           "noDataTips": "通过分享您获得的专业知识来展示您对工作的热情，从而在其他人中脱颖而出。",
-          "addLicense": "添加执行和认真"
+          "addLicense": "添加执照和认证"
         },
         "licensesModal": {
           "title": "执照和认证",
@@ -531,7 +540,7 @@
           "licenseTitle": "执照/认证名称",
           "issuing": "发证机构",
           "licenseValidity": "执照和认证有效性",
-          "licenseExpired": "执照/认证仍然有效",
+          "licenseNotExpired": "执照/认证仍然有效",
           "issueDate": "签发日期",
           "expiryDate": "到期日",
           "dateErrorMsg": "签发日期必须早于到期日期",
@@ -547,6 +556,8 @@
         "linkModal": {
           "title": "链接",
           "url": "URL",
+          "btn1": "取消",
+          "btn2": "保存",
           "urlErrorMsg": "请输入一个有效的地址",
           "linkTitle": "链接名称",
           "linkDesc": "输入描述信息..."
@@ -562,6 +573,7 @@
           "select": "到岗时间"
         },
         "card": {
+          "header": "工作偏好",
           "tips": "我们会根据你的职位偏好找到符合的工作。",
           "title": "职位名称:",
           "type": "工作类型:",
@@ -571,18 +583,23 @@
           "industry": "期望行业:"
         },
         "editModal": {
-          "title": "Job 工作偏好",
+          "title": "工作偏好",
           "btn1": "取消",
           "btn2": "保存",
           "jobTitle": "职位名称",
           "jobType": "工作类型",
           "location": "工作位置",
           "currencyType": "货币类型",
-          "salary": "Expected min. salary",
           "minSalary": "最低薪资",
           "maxSalary": "最高薪资",
           "country": "国家",
           "industry": "行业"
+        },
+        "deleteModal": {
+          "title": "删除工作偏好",
+          "tips": "你即将删除工作偏好，这个操作无法撤销。",
+          "btn1": "取消",
+          "btn2": "删除"
         },
         "openToWork": {
           "title": "正在找工作",
@@ -596,7 +613,7 @@
           "tips": "简历是帮助您进入求职过程下一步的重要工具。使用 Bossjob 个人资料中的其他信息给招聘人员留下深刻印象。",
           "time": "上传于 {{time}}",
           "uploadBtn": "上传简历",
-          "support": "支持文件类型: PDF, DOC, DOCX. Max. 最大: 5MB",
+          "support": "支持的文件类型: PDF, DOC, DOCX. 最大: 5MB",
           "error": {
             "title": "文件大小超出了限制",
             "tips": "请上传小于5MB的文件。"
@@ -607,7 +624,7 @@
         },
         "bossjob": {
           "title": "Bossjob 简历",
-          "tips": "当你在Bossjob上创建资料的时候，我们会为你创建简历。 你可以下载下面的模版并在你最新的简历中使用他们，然后申请在Bossjob上的工作",
+          "tips": "当你在Bossjob上创建资料的时候，我们会为你创建简历。 你可以下载下面的模版并在你最新的简历中使用，然后申请在Bossjob上的工作",
           "download": "下载"
         }
       }

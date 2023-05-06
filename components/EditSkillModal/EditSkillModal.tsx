@@ -27,6 +27,7 @@ type EditSkillModalProps = {
   categoryList: any
   skills: any
   handleModal: Function
+  lang: Record<string, any>
 }
 
 const EditSkillModal = ({
@@ -34,8 +35,16 @@ const EditSkillModal = ({
   showModal,
   categoryList,
   skills,
-  handleModal
+  handleModal,
+  lang
 }: EditSkillModalProps) => {
+  const {
+    manageProfile: {
+      tab: {
+        profile: { skillModal }
+      }
+    }
+  } = lang
   const dispatch = useDispatch()
   const { handleSubmit } = useForm()
 
@@ -111,20 +120,20 @@ const EditSkillModal = ({
       <Modal
         showModal={showModal}
         handleModal={handleCloseModal}
-        headerTitle='Skills'
-        firstButtonText='Cancel'
-        secondButtonText='Save'
+        headerTitle={skillModal.title}
+        firstButtonText={skillModal.btn1}
+        secondButtonText={skillModal.btn2}
         isSecondButtonLoading={isUpdatingUserProfile}
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
         fullScreen
       >
         <div>
-          <Text>We will suggest skill for you according to your latest job function:</Text>
+          <Text>{skillModal.suggestions}</Text>
           <div className={styles.form}>
             <JobFunctionSelector
               id='jobFunction'
-              label='Job Function'
+              label={skillModal.jobFunction}
               options={categoryList}
               className={styles.sortField}
               isTouched={true}
@@ -135,7 +144,7 @@ const EditSkillModal = ({
           <div className={styles.form}>
             <MaterialTextFieldWithSuggestionList
               id='search'
-              label='Search or add a skill'
+              label={skillModal.skill}
               variant='outlined'
               size='small'
               value={searchValue}

@@ -15,7 +15,7 @@ import { manageUserEducationsRequest } from 'store/actions/users/manageUserEduca
 
 /* Helpers*/
 // import { getCountryOptions } from 'helpers/optionsFormatter'
-import {  getDegreeList } from 'helpers/jobPayloadFormatter'
+import { getDegreeList } from 'helpers/jobPayloadFormatter'
 
 /* Vendors */
 import { useForm } from 'react-hook-form'
@@ -26,13 +26,13 @@ import moment from 'moment'
 /* Styles */
 import styles from './EditEducationModal.module.scss'
 
-
 type EditEducationModalProps = {
   modalName: string
   showModal: boolean
   config: any
   education: any
   handleModal: Function
+  lang: Record<string, any>
 }
 
 const requiredLabel = (text: string) => {
@@ -50,7 +50,15 @@ const EditEducationModal = ({
   config,
   education,
   handleModal,
+  lang
 }: EditEducationModalProps) => {
+  const {
+    manageProfile: {
+      tab: {
+        profile: { eduModal }
+      }
+    }
+  } = lang
   const dispatch = useDispatch()
 
   // const degreeOptions = getDegreeOptions(config)
@@ -81,7 +89,7 @@ const EditEducationModal = ({
   // }
 
   const {
-    handleSubmit,
+    handleSubmit
     // formState: { errors },
   } = useForm()
 
@@ -113,21 +121,22 @@ const EditEducationModal = ({
       degree_key: degreeKey,
       is_currently_studying: isCurrentlyStudying,
       study_period_from: moment(new Date(studyPeriodFrom)).format('yyyy-MM-DD'),
-      study_period_to: isCurrentlyStudying === true ? null : moment(new Date(studyPeriodTo)).format('yyyy-MM-DD'),
+      study_period_to:
+        isCurrentlyStudying === true ? null : moment(new Date(studyPeriodTo)).format('yyyy-MM-DD'),
       // location_key: location?.key,
-      country_key: countryKey,
+      country_key: countryKey
     }
 
     const trimmedFieldOfStudy = fieldOfStudy?.trim()
 
     if (trimmedFieldOfStudy?.length > 0) {
-      data["field_of_study"] = trimmedFieldOfStudy
-    } 
+      data['field_of_study'] = trimmedFieldOfStudy
+    }
 
     const educationPayload = {
       isUpdate: education ? true : false,
       educationId: education ? education.id : null,
-      educationData: data,
+      educationData: data
     }
 
     dispatch(manageUserEducationsRequest(educationPayload))
@@ -200,9 +209,9 @@ const EditEducationModal = ({
       <Modal
         showModal={showModal}
         handleModal={handleCloseModal}
-        headerTitle='Education'
-        firstButtonText='Cancel'
-        secondButtonText='Save'
+        headerTitle={eduModal.title}
+        firstButtonText={eduModal.btn1}
+        secondButtonText={eduModal.btn2}
         isSecondButtonLoading={isUpdating}
         isSecondButtonDisabled={hasValidationError}
         firstButtonIsClose
@@ -216,7 +225,7 @@ const EditEducationModal = ({
               <div className={styles.field}>
                 <MaterialTextField
                   className={styles.fullWidth}
-                  label={requiredLabel('School Name')}
+                  label={requiredLabel(eduModal.school)}
                   size='small'
                   value={school}
                   defaultValue={school}
@@ -226,7 +235,7 @@ const EditEducationModal = ({
               <div className={styles.field}>
                 <MaterialBasicSelect
                   className={styles.fullWidth}
-                  label={requiredLabel('Education Level')}
+                  label={requiredLabel(eduModal.eduLevel)}
                   value={degreeKey}
                   onChange={(e) => setDegreeKey(e.target.value)}
                   options={degreeList}
@@ -235,7 +244,8 @@ const EditEducationModal = ({
               <div className={styles.field}>
                 <div>
                   <Text textStyle='lg' bold>
-                    Study Period<span className={styles.fieldRequired}>*</span>
+                    {eduModal.period}
+                    <span className={styles.fieldRequired}>*</span>
                   </Text>
                 </div>
                 <div>
@@ -247,20 +257,20 @@ const EditEducationModal = ({
                         name='isCurrentlyStudying'
                       />
                     }
-                    label={<Text textStyle='lg'>Currently attending</Text>}
+                    label={<Text textStyle='lg'>{eduModal.attend}</Text>}
                   />
                 </div>
               </div>
               <div className={styles.field}>
                 <div className={styles.fieldHeader}>
                   <Text textStyle='base' bold>
-                    From
+                    {eduModal.from}
                   </Text>
                 </div>
                 <div className={classNames(styles.fieldDate)}>
                   <div className={styles.fieldDateItem}>
                     <MaterialDatePicker
-                      label='Month Year'
+                      label={eduModal.startDate}
                       views={['year', 'month']}
                       inputFormat='MMM yyyy'
                       value={studyPeriodFrom}
@@ -275,13 +285,13 @@ const EditEducationModal = ({
                 <div className={styles.field}>
                   <div className={styles.fieldHeader}>
                     <Text textStyle='base' bold>
-                      To
+                      {eduModal.from}
                     </Text>
                   </div>
                   <div className={classNames(styles.fieldDate)}>
                     <div className={styles.fieldDateItem}>
                       <MaterialDatePicker
-                        label='Month Year'
+                        label={eduModal.endDate}
                         views={['year', 'month']}
                         inputFormat='MMM yyyy'
                         value={studyPeriodTo}
@@ -293,7 +303,7 @@ const EditEducationModal = ({
                   </div>
                   {hasErrorOnToPeriod && (
                     <Text textColor='red' textStyle='sm'>
-                      Start date must be earlier than completion date.
+                      {eduModal.dateErrorMsg}
                     </Text>
                   )}
                 </div>
@@ -323,7 +333,7 @@ const EditEducationModal = ({
               <div className={styles.field}>
                 <MaterialTextField
                   className={styles.fullWidth}
-                  label={'Field of Study'}
+                  label={eduModal.field}
                   size='small'
                   value={fieldOfStudy}
                   defaultValue={fieldOfStudy}
