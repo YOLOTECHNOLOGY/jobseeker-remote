@@ -1,12 +1,8 @@
-// if the last path is array. we can remove [] in the end, but it's children must be object
-export enum ConfigurePaths {
-  title = 'main_job_function_lists.[].sub_function_list.[].job_titles',
-}
 
-const isArrayFlag = flag => flag === '[]';
+
 
 // in some case, the target value's key isn't named value, likely label
-export const getValueById = (store: Record<string, any>, id: any, path: ConfigurePaths, key = 'value') => {
+export const getValueById = (store: Record<string, any>, id: any, path: string, key = 'value') => {
   const getLastedValue = (object: { [k: string]: any }[] | { [k: string]: any }, id: any) => {
     let result;
     if (Array.isArray(object)) {
@@ -14,7 +10,6 @@ export const getValueById = (store: Record<string, any>, id: any, path: Configur
         if (Array.isArray(item)) {
           throw new Error('the lasted value must is a plain object, but it is an array now')
         }
-
         if (item.id === id) {
           return result = item[key]
         }
@@ -25,15 +20,16 @@ export const getValueById = (store: Record<string, any>, id: any, path: Configur
   }
 
   const forEachObject = (object: any, id: any, path: string[]) => {
-
     const pathArray = path;
     let currentObject = object;
+
     let result;
     pathArray.find((pathKey, index) => {
-      if (isArrayFlag(pathKey)) {
-        return result = forEachArray(currentObject, id, pathArray.slice(index + 1))
+      const value = currentObject[pathKey]
+      if (Array.isArray(value)) {
+        return result = forEachArray(value, id, pathArray.slice(index + 1))
       } else {
-        currentObject = currentObject[pathKey];
+        currentObject = value;
       }
     })
 
@@ -45,15 +41,12 @@ export const getValueById = (store: Record<string, any>, id: any, path: Configur
   }
 
   const forEachArray = (array: any[], id: any, paths: string[]) => {
-    const firstPath = paths[0];
     let result;
     if (paths.length) {
       array.find((item, index) => {
-        if (isArrayFlag(firstPath)) {
-          // [].[]
-          return result = forEachArray(item, id, paths.slice(1))
+        if (Array.isArray(item)) {
+          return result = forEachArray(item, id, paths.slice())
         } else {
-          // [].a, the paths start with 'a', it's a object
           return result = forEachObject(item, id, paths.slice())
         }
       })
@@ -175,12 +168,10 @@ export const getValueById = (store: Record<string, any>, id: any, path: Configur
 // }
 
 // export const test = () => {
-//   // 'location.[].locations.[]' is same as 'location.[].locations'
 
-//   console.log('datadata', getValueById(data, 58, 'location.[].locations.[]'))
-//   console.log('datadata', getValueById(data, 58, 'location.[].locations'))
+//   console.log('datadata', getValueById(data, 58, 'location.locations'))
 
-//   console.log('datadata', getValueById(data, 157, 'main.[].children.[].job_titles'))
-//   console.log('datadata', getValueById(data, 21, 'main.[].children.[]'))
-//   console.log('datadata', getValueById(data, 68, 'main.[].children.[].skills'))
+//   console.log('datadata', getValueById(data, 157, 'main.children.job_titles'))
+//   console.log('datadata', getValueById(data, 21, 'main.children'))
+//   console.log('datadata', getValueById(data, 68, 'main.children.skills'))
 // }
