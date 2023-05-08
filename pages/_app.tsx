@@ -175,7 +175,8 @@ const App = (props: AppProps) => {
                 '/handlers/googleLoginHandler?access_token=' +
                   accessTokenGoogle +
                   '&active_key=' +
-                  activeKey
+                  activeKey +
+                  '&redirectUrl=' + window.location.href
               )
             }
           }
