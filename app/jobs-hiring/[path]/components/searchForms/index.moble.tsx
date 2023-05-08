@@ -123,7 +123,7 @@ const SearchArea = (props: any) => {
                         locationList={config.location_lists}
                         value={location}
                         disableClearable={true}
-                        isClear={true}
+                        // isClear={true}
                         defaultValue={location}
                         onChange={(e, value) => {
                             setLocation(value)

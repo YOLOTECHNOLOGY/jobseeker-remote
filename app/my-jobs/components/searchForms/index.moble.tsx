@@ -53,7 +53,7 @@ const SearchArea = (props: any) => {
     const page = searchParams.page ?? '1'
     const { push } = useContext(LoadingContext)
     const locations = flatMap(config.location_lists, item => item.locations)
-   
+
     const [location, setLocation] = useState(locations.find(location => location.seo_value === searchParams.location))
     console.log({ searchParams, location })
     const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
@@ -80,7 +80,7 @@ const SearchArea = (props: any) => {
             location: [location?.['seo_value']].filter(a => a),
             sort: sort,
             page: page,
-            preferenceId: selectedPreferenceId,
+            preferenceId: selectedPreferenceId ? ('' + selectedPreferenceId) : null,
             ...moreData
         })
     }, [moreData, location, sort, selectedPreferenceId])

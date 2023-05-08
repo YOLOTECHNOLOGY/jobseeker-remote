@@ -107,7 +107,7 @@ const SearchArea = (props: any) => {
         <MaterialLocationField
             className={styles.location}
             value={location}
-            isClear={false}
+            // isClear={false}
             defaultValue="Las Pinas"
             disableClearable
             style={{

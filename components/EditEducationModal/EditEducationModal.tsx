@@ -15,7 +15,7 @@ import { manageUserEducationsRequest } from 'store/actions/users/manageUserEduca
 
 /* Helpers*/
 // import { getCountryOptions } from 'helpers/optionsFormatter'
-import {  getDegreeList } from 'helpers/jobPayloadFormatter'
+import { getDegreeList } from 'helpers/jobPayloadFormatter'
 
 /* Vendors */
 import { useForm } from 'react-hook-form'
@@ -122,7 +122,7 @@ const EditEducationModal = ({
 
     if (trimmedFieldOfStudy?.length > 0) {
       data["field_of_study"] = trimmedFieldOfStudy
-    } 
+    }
 
     const educationPayload = {
       isUpdate: education ? true : false,

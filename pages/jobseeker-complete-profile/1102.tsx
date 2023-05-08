@@ -407,7 +407,7 @@ const Step4 = (props: any) => {
       isNextDisabled={isNextDisabled}
       isUpdating={isGeneratingUserResume || isCompletingUserProfile}
     >
-      {educations.length > 0 && (
+      {educations?.length > 0 && (
         <div className={styles.stepDataList}>
           {educations.map((education) => (
             <div className={styles.stepDataItem} key={education.id}>
@@ -611,7 +611,7 @@ const Step4 = (props: any) => {
         </div>
       )}
 
-      {educations.length === 0 && (
+      {educations?.length === 0 && (
         <div className={styles.stepField}>
           <FormControlLabel
             control={

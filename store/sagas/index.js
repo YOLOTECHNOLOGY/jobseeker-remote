@@ -67,7 +67,7 @@ import watchResetPassword from 'store/sagas/auth/resetPassword'
 import watchRegisterJobseeker from 'store/sagas/auth/registerJobseeker'
 import jobseekersLoginSaga from 'store/sagas/auth/jobseekersLogin'
 import jobseekersSocialLoginSaga from 'store/sagas/auth/jobseekersSocialLogin'
-
+import notificationBar from './notificationBar'
 import watchLogout from 'store/sagas/auth/logout'
 
 // Recruiters
@@ -134,7 +134,7 @@ function* rootSaga() {
     watchRegisterJobseeker(),
 
     watchFetchRecommendedCourses(),
-
+    notificationBar(),
     jobseekersLoginSaga(),
     jobseekersSocialLoginSaga()
   ])

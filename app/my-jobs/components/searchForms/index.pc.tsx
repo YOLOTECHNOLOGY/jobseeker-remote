@@ -137,7 +137,7 @@ const SearchArea = (props: any) => {
               className={styles.location}
               locationList={config.location_lists}
               value={location}
-              isClear={true}
+              // isClear={true}
               defaultValue={location}
               onChange={(e, value) => {
                 setLocation(value)
