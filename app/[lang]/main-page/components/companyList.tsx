@@ -5,7 +5,9 @@ import { HomePageChat } from 'images'
 import Image from 'next/image'
 const CompanyList = (props: any) => {
   const { featured_companies: companies } = props?.data?.data || {}
-  console.log(companies,'companies')
+  const {
+    lang: { home }
+  } = props
   return (
     <>
       {companies?.map((item) => {
@@ -16,17 +18,24 @@ const CompanyList = (props: any) => {
           name,
           industry,
           company_size: companySize,
-          financing_stage: financingStage,
+          financing_stage: financingStage
         } = item?.company || {}
         return (
           <div className={styles.card} key={Id}>
             <Link prefetch={false} className={styles.header} href={companyUrl}>
-              <Image className={styles.img} src={logoUrl} alt={name} width={44} height={44} quality={0}></Image>
+              <Image
+                className={styles.img}
+                src={logoUrl}
+                alt={name}
+                width={44}
+                height={44}
+                quality={0}
+              ></Image>
               <h5>{name}</h5>
               <p>
                 {industry}
                 {industry && companySize ? ' | ' : null}
-                {companySize ? `${companySize} Employee` : null}
+                {companySize ? `${companySize} ${home.companyCard.employee}` : null}
                 {(industry || companySize) && financingStage ? ' | ' : null}
                 {financingStage}
               </p>
@@ -44,13 +53,20 @@ const CompanyList = (props: any) => {
                 <Link href={jobUrl} className={styles.list} key={`${jobItem.id}-${index}`}>
                   <div className={styles.jobType}>
                     <p>{jobTitle}</p>
-                     <div className={styles.transBox}>
+                    <div className={styles.transBox}>
                       <div className={styles.salary}>{salaryRangeValue}</div>
-                      <div className={styles.chat} >
-                          <Image src={HomePageChat} alt='Boss job chat now' width='18' height='18' quality={0} style={{paddingRight:'4px'}}/> Chat now 
+                      <div className={styles.chat}>
+                        <Image
+                          src={HomePageChat}
+                          alt='Boss job chat now'
+                          width='18'
+                          height='18'
+                          quality={0}
+                          style={{ paddingRight: '4px' }}
+                        />{' '}
+                        {home.companyCard.chatNow}
                       </div>
-                     </div>
-                    
+                    </div>
                   </div>
                   <span className={styles.tag}>{jobLocation}</span>
                   <span className={styles.tag}>{xpLvl}</span>
@@ -59,7 +75,7 @@ const CompanyList = (props: any) => {
               )
             })}
             <Link href={`${companyUrl}/jobs`} className={styles.linkAddress}>
-              More jobs
+              {home.companyCard.moreJob}
             </Link>
           </div>
         )

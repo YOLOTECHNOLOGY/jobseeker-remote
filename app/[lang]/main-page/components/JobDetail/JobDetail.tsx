@@ -1,11 +1,14 @@
 // 'user client'
-import { memo } from 'react'
+import { memo, useContext } from 'react'
 import Link from 'next/link'
 // import Avatar from '@mui/material/Avatar'
 import { HomePageChat } from 'images'
 import styles from 'app/[lang]/index.module.scss'
 import Image from 'next/image'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 const JobDetail = ({ detail }: any) => {
+  const { home } = useContext(languageContext) as any
+
   return (
     <div className={styles.job_detail}>
       <Link prefetch={false} className={styles.job_info} href={detail.job_url}>
@@ -22,7 +25,7 @@ const JobDetail = ({ detail }: any) => {
                 quality={0}
                 style={{ paddingRight: '4px' }}
               />{' '}
-              Chat now
+              {home.jobCard.chatNow}
             </div>
           </div>
         </div>

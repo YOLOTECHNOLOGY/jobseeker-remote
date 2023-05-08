@@ -13,7 +13,7 @@ import Tracker from '../tracker'
 
 import styles from '../../../index.module.scss'
 
-const Main = (props) => {
+const Main = (props: any) => {
   const location = cookies().get('location')?.value
   const city = location ? JSON.parse(location)?.value : 'Manila'
   // eslint-disable-next-line react/prop-types
@@ -27,7 +27,7 @@ const Main = (props) => {
         <TopModule {...props} />
         <Tabs location={city} />
         {/* @ts-expect-error Async Server Component */}
-        <Companies location={city} />
+        <Companies location={city} lang={props.lang} />
         {/* @ts-expect-error Async Server Component */}
         <MobileHome location={city} />
         {/* Tracker component */}

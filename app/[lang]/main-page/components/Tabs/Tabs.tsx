@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useContext, useMemo } from 'react'
 
 import MuiTabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
@@ -22,23 +22,7 @@ import {
   fetchJobsPreferences
 } from 'store/services/jobs/fetchJobsForYouLogin'
 import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou'
-
-const tabList = [
-  {
-    tab: 'IT',
-    value: 'Information Technology'
-  },
-  {
-    tab: 'CSR/Ops',
-    value: 'Customer Service/Operations'
-  },
-  { tab: 'Sales', value: 'Sales' },
-  { tab: 'Finance', value: 'Finance/Audit/Tax' },
-  { tab: 'HR', value: 'Human Resources/Admin/Legal' },
-  { tab: 'Manufacturing', value: 'Manufacturing' },
-  { tab: 'Banking', value: 'Banking' },
-  { tab: 'Healthcare', value: 'Healthcare/Medical' }
-]
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 const tabListLogin = [
   {
@@ -120,6 +104,27 @@ const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => 
 }))
 
 const Tabs = ({ location }: any) => {
+  const { home } = useContext(languageContext) as any
+  const { tab } = home
+
+  const tabList = useMemo(() => {
+    return [
+      {
+        tab: tab.IT,
+        value: 'Information Technology'
+      },
+      {
+        tab: tab['CSR/Ops'],
+        value: 'Customer Service/Operations'
+      },
+      { tab: tab['Sales'], value: 'Sales' },
+      { tab: tab['Finance'], value: 'Finance/Audit/Tax' },
+      { tab: tab['HR'], value: 'Human Resources/Admin/Legal' },
+      { tab: tab['Manufacturing'], value: 'Manufacturing' },
+      { tab: tab['Banking'], value: 'Banking' },
+      { tab: tab['Healthcare'], value: 'Healthcare/Medical' }
+    ]
+  }, [])
   const [value, setValue] = useState<string>('Information Technology')
   const [list, setList] = useState<Array<any>>([])
   const [open, setOpen] = useState<boolean>(false)
@@ -234,11 +239,10 @@ const Tabs = ({ location }: any) => {
   const handlePopularJobSearch = (search: string) => {
     //
   }
- 
 
   return (
     <div>
-      <h2 className={styles.jobTitle}>{accessToken ? 'Jobs for You' : 'Popular Jobs'}</h2>
+      <h2 className={styles.jobTitle}>{accessToken ? home.jobCard.jobForYou : home.popularJobs}</h2>
       <div className={styles.webTab}>
         <Box sx={{ maxWidth: '100%', bgcolor: 'background.paper' }}>
           <TabContext value='1'>
@@ -262,9 +266,9 @@ const Tabs = ({ location }: any) => {
                       background: '#F5F6FA',
                       fontFamily: 'product sans',
                       letterSpacing: '1px',
-                      width:'auto',
-                      padding:'12px 0',
-                      marginRight:'78px'
+                      width: 'auto',
+                      padding: '12px 0',
+                      marginRight: '78px'
                     }}
                   />
                 ))}
@@ -274,7 +278,7 @@ const Tabs = ({ location }: any) => {
                   {jobseekerPrefIdRef.current ? (
                     <div>
                       {user?.avatar ? <img src={user?.avatar} /> : null}
-                      Based on your job preference:{' '}
+                      {home.jobPreference}:{' '}
                       <Link
                         prefetch={false}
                         href='/manage-profile?tab=job-preferences'
@@ -287,10 +291,10 @@ const Tabs = ({ location }: any) => {
                     </div>
                   ) : (
                     <p>
-                      Improve job recommendations by updating{' '}
+                      {home.improveRecommend}{' '}
                       <Link href='/manage-profile?tab=job-preferences' className={styles.link2}>
                         {' '}
-                        job preferences
+                        {home.jobPrefer}
                       </Link>
                     </p>
                   )}
@@ -318,7 +322,7 @@ const Tabs = ({ location }: any) => {
 
               <div className={styles.tabContainer_more}>
                 <Link prefetch={false} className={styles.moreBtn} href='/my-jobs'>
-                  See More
+                  {home.seeMoreBtn}
                 </Link>
               </div>
             </div>

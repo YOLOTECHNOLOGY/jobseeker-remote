@@ -5,28 +5,38 @@ import styles from 'app/[lang]/index.module.scss'
 
 import { LocationContext } from 'app/[lang]/components/providers/locationProvier'
 import { buildQuery } from 'app/[lang]/main-page/helper'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 const PopularJob = () => {
-    const { location } = useContext(LocationContext)
+  const { location } = useContext(LocationContext)
+  const { home } = useContext(languageContext) as any
 
-    const tags = [
-        'Java Developer',
-        'Full Stack Engineer',
-        'Web Developer',
-        'Customer Service',
-        'Accountant',
-        'Sales Consultant']
-    const querys = useMemo(() => {
-        return tags.map(tag => buildQuery(location?.value, tag))
-    }, [location, tags])
-    return <div className={styles.popularJobs}>
-        <label>Popular Jobs</label>
-        <div className={styles.tagContainer}>{tags.map((tag, index) => (
-            <div key={tag} className={styles.tag}>
-                <Link prefetch={false} href={querys[index]}>{tag}</Link>
-            </div>
-        ))}</div>
+  const tags = [
+    { value: 'Java Developer', label: home.tag.java },
+    { value: 'Full Stack Engineer', label: home.tag.full },
+    { value: 'Web Developer', label: home.tag.web },
+    { value: 'Customer Service', label: home.tag.cs },
+    { value: 'Accountant', label: home.tag.accountant },
+    { value: 'Sales Consultant', label: home.tag.sales }
+  ]
+  const querys = useMemo(() => {
+    return tags.map((tag) => buildQuery(location?.value, tag.value))
+  }, [location, tags])
+
+  return (
+    <div className={styles.popularJobs}>
+      <label>{home.popularJobs}</label>
+      <div className={styles.tagContainer}>
+        {tags.map((tag, index) => (
+          <div key={tag.value} className={styles.tag}>
+            <Link prefetch={false} href={querys[index]}>
+              {tag.label}
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
+  )
 }
 
 export default PopularJob as any

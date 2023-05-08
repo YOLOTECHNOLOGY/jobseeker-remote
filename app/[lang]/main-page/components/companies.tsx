@@ -8,17 +8,18 @@ async function getCompanyData(location) {
   return res.data
 }
 
-export default async function Companies({ location }: any) {
+export default async function Companies({ location, lang }: any) {
   const data: any = await getCompanyData(location)
+  const { home } = lang
   return (
     <div className={styles.companies}>
-      {data?.data?.featured_companies?.length ? <h2>Top Companies</h2> : null}
+      {data?.data?.featured_companies?.length ? <h2>{home.topCompany}</h2> : null}
       <div className={styles.companyContainer}>
-        <CompanyCardList data={data} />
+        <CompanyCardList data={data} lang={lang} />
       </div>
       {data?.data?.featured_companies?.length ? (
         <Link prefetch={false} href='/companies' className={styles.moreBtn}>
-          See More
+          {home.seeMoreBtn}
         </Link>
       ) : null}
     </div>
