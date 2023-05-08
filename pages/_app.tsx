@@ -316,7 +316,7 @@ const App = (props: AppProps) => {
       <ConnectedRouter>
         <CookiesProvider>
           <PersistGate loading={null} persistor={persistor}>
-            <IMProvider>
+            <IMProvider lang={lang}>
               {process.env.MAINTENANCE === 'true' ? (
                 <MaintenancePage {...pageProps} />
               ) : isPageLoading &&

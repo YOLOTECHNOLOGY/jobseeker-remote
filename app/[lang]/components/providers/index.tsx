@@ -21,7 +21,7 @@ const ClientProviders = (props: any) => {
                 <LocationProvider>
                     <PersistGate loading={null} persistor={persistor}>
                         <LanguageProvider store={LG}>
-                            <IMProvider>
+                            <IMProvider lang={lang}>
                                 {process.env.MAINTENANCE === 'true' ? (
                                     <MaintenancePage />
                                 )
