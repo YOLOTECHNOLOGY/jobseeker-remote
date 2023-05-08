@@ -1,7 +1,7 @@
 import { Button } from '@mui/material'
 
 import styles from './UploadResumeButton.module.scss'
-import { quickCreateResume, ncreaseUserConversionDetailsBackgroundarrowArrow } from 'images'
+import { quickCreateResume } from 'images'
 import classNames from 'classnames/bind'
 
 interface PropsType {
@@ -33,11 +33,11 @@ const UploadResumeButton = ({
           <Button
             className={classNames([styles.uploadResumeButton_button])}
             onClick={(): void => handleClick()}
-            style={{
-              backgroundImage: isShowArrowIcon
-                ? 'url(' + ncreaseUserConversionDetailsBackgroundarrowArrow + ')'
-                : ''
-            }}
+            // style={{
+            //   backgroundImage: isShowArrowIcon
+            //     ? 'url(' + ncreaseUserConversionDetailsBackgroundarrowArrow + ')'
+            //     : ''
+            // }}
           >
             {text}
             {/* Upload Resume & Apply Job! */}

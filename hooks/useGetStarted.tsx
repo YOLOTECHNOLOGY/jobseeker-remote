@@ -70,7 +70,7 @@ const useGetStarted = () => {
         }
       })
       .catch((error) => {
-        const { data } = error.response
+        const  data  = error.response?.data
         const errorMessage = data.data?.detail ? data.data?.detail : data.errors.email[0]
         dispatch(
           displayNotification({

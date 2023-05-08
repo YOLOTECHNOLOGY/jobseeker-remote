@@ -3,7 +3,6 @@ import styles from './index.module.scss'
 const CustomCard = (props: any) => {
 
     const { content, jobId } = props
-    console.log({ content })
     const jobPath = [content?.job_title, jobId].join('-')
     return <div className={styles.main}>
 

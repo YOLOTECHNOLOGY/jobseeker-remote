@@ -10,7 +10,6 @@ export const numberToThousands = (number) => {
 }
 
 export const unslugify = (string, capitalize = false) => {
-  console.log({ string })
   if (typeof string !== 'string') {
     return string
   }

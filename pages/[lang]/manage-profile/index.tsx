@@ -161,7 +161,7 @@ const RenderProfileView = ({ userDetail, handleModal, lang }: any) => {
     if (workExperiences?.length === 0) {
       count += 1
     }
-    if (educations.length === 0) {
+    if (educations?.length === 0) {
       count += 1
     }
     if (skills.length === 0) {
@@ -368,7 +368,6 @@ const RenderProfileView = ({ userDetail, handleModal, lang }: any) => {
         <div className={styles.sectionContent}>
           {educations.map((education) => {
             let studyPeriod = ''
-            console.log({ education })
             if (education?.study_period_from) {
               studyPeriod += moment(education?.study_period_from).format('MMM yyyy')
 
@@ -664,7 +663,7 @@ const RenderProfileView = ({ userDetail, handleModal, lang }: any) => {
                     </div>
                   </div>
                 )}
-                {educations.length === 0 && (
+                {educations?.length === 0 && (
                   <div className={styles.emblaSlideHighlight}>
                     <div className={styles.highlightCard}>
                       <div className={styles.highlightCardHeader}>

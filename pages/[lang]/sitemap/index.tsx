@@ -434,12 +434,12 @@ const PublicSitemap = () => {
             For Headhunters
           </Text>
           <div className={styles.section}>
-            <Link className={styles.item} to='https://hunt.bossjob.ph' external title='Bosshunt'>
+            <Link className={styles.item} to='https://employer.bossjob.com' external title='Bosshunt'>
               <Text textStyle='base'>Bosshunt</Text>
             </Link>
             <Link
               className={styles.item}
-              to='https://hunt.bossjob.ph/get-started'
+              to='https://employer.bossjob.com/get-started'
               external
               title='Request Demo'
             >

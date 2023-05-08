@@ -508,6 +508,10 @@
           line-height: 23px;
           color: #353535;
           margin: 0;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          max-width: 180px;
         }
 
         span {

@@ -11,7 +11,7 @@ const Benefits = ({ benefits }: propsType) => {
 
       <div className={styles.benefits_labels}>
         {benefits?.map((benefit) => (
-          <div key={benefit.id}>{benefit.name}</div>
+          <div key={benefit.id}>{benefit?.name}</div>
         ))}
       </div>
       {/* <div className={styles.benefits_more}>See more</div> */}

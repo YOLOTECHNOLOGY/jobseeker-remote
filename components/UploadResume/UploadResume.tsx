@@ -80,7 +80,6 @@ const UploadResume = ({
     }
   } = lang || (useContext(languageContext) as any)
   const [isExceedLimit, setIsExceedLimit] = useState(false)
-  console.log({ resumes })
   const handleOnFileChange = (e) => {
     const file = e.target.files[0]
     if (!maxFileSize(file, 5)) {

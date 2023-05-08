@@ -201,8 +201,8 @@ const GetStarted = (props: any) => {
                 <Link
                   to={
                     process.env.ENV === 'development'
-                      ? 'https://dev.hunt.bossjob.ph'
-                      : 'https://hunt.bossjob.ph'
+                      ? 'https://dev.employer.bossjob.com'
+                      : 'https://employer.bossjob.com'
                   }
                   className={styles.AuthCTALink}
                   aTag

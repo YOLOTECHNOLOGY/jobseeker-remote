@@ -28,6 +28,7 @@ import errorParser from 'helpers/errorParser'
 import { pushNotification } from 'store/services/notification'
 import { scripts } from 'imforbossjob'
 import OfferModal from './offer'
+import { getDictionary } from 'get-dictionary'
 const { offerJobseeker: { getDataAndShowOfferMessageScript } } = scripts
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
@@ -87,7 +88,18 @@ const msgToNote = (message, state) => {
 
 }
 
-const IMProvider = ({ children, IMManager, hooks }: any) => {
+const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
+
+    const [chatDictionary, setChatDictionary] = useState({})
+    useEffect(() => {
+        getDictionary(lang)
+        .then(dic => {
+            if (dic) {
+                setChatDictionary(dic)
+            }
+        })
+    }, [lang])
+    console.log({chatDictionary})
     useEffect(() => {
         if (window?.SharedWorker && (window as any)?.imSharedWorker?.port) {
             (window as any).imSharedWorker.port.onmessage = () => {
@@ -220,7 +232,6 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
                                                 }
                                             }
                                             ]
-                                            console.log({ userInfoResult })
                                             resolve(userInfoResult)
                                         } else {
                                             setTimeout(() => callBackUserInfo(), 500)
@@ -402,7 +413,6 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
         const receive = e => {
             const data = e.detail?.data ?? {}
             if (data?.landing_page === 'Offer dialog') {
-                console.log('receiveImNotification', e.detail)
                 interpreter(getDataAndShowOfferMessageScript(data.application_id, data.offer_id))
             }
         }
@@ -508,7 +518,7 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
     </Provider>
 }
 
-const wrapper = ({ children }) => {
+const wrapper = ({ children, lang }) => {
     const IMRef = useRef(null)
     const [ready, setReady] = useState(false)
     useEffect(() => {
@@ -522,11 +532,12 @@ const wrapper = ({ children }) => {
         return (<IMProvider
             IMManager={IMRef.current.IMManager}
             hooks={IMRef.current.hooks}
+            lang={lang}
         >
             {children}
         </IMProvider>)
     } else {
-        return <Provider value={{ ready }}>{children}</Provider>
+        return <Provider value={{ ready }} >{children}</Provider>
     }
 }
 

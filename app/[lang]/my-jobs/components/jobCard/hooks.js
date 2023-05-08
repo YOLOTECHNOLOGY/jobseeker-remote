@@ -20,12 +20,11 @@ const useNotSuitable = (preferenceId, jobId) => {
         setShowSelectionModal(false)
     }, [])
     const request = useCallback(reason => {
-        console.log('request', { reason, jobId })
-        return fetchJobsForYouDelete({ preferenceId, jobId }, accessToken)
+        return fetchJobsForYouDelete({ job_preference_id: preferenceId, job_id: jobId, reason }, accessToken)
             .then(dispatch(
                 displayNotification({
                     open: true,
-                    message: 'We will optimise your job recommendation',
+                    message: 'We will optimise your job recommendation.',
                     severity: 'success'
                 })
             )).then(() => {

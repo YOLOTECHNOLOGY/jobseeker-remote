@@ -60,6 +60,9 @@
       width: 118px;
       height: 44px;
       border-radius: 10px;
+      &:hover {
+        background: rgb(24, 84, 163);
+      }
     }
   }
 

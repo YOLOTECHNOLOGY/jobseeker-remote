@@ -23,18 +23,11 @@ function* logoutReq() {
   yield put(fetchUserOwnDetailClear())
   try {
     import('imforbossjob')
-      .then(im => {
-        console.log({ im })
-        return im
-      })
       .then(im => im?.IMManager?.logout?.())
       .then(() => localStorage?.clear?.())
 
   } catch (e) {
-    console.log('logoutError', e)
-    // return Promise.reject(e)
-  } finally {
-
+    console.log(e)
   }
 }
 

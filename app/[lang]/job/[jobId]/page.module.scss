@@ -1,6 +1,13 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
+.invalidLink {
+  text-align: center;
+  margin: 90px 0;
+  font-size: 20px;
+  color: #ff5555;
+}
+
 .errorMain {
   text-align: center;
   margin: 100px 0;
@@ -63,7 +70,7 @@
       font-weight: 700;
       font-size: 32px;
       letter-spacing: 0.02em;
-      color: #136fd3;
+      color: #fe574a;
     }
 
     &_desc {
@@ -201,10 +208,10 @@
         margin-top: 16px;
         overflow: hidden;
 
-        ul,ol {
+        ul,
+        ol {
           margin-left: 14px;
         }
-
       }
 
       &_requirement {
@@ -294,7 +301,7 @@
         color: #353535;
       }
 
-      h5+p {
+      h5 + p {
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -465,7 +472,9 @@
         padding-left: 15px;
         margin-bottom: 0;
       }
-
+      &_card:first-child {
+        margin-top: 20px;
+      }
       &_card {
         margin-top: 32px;
       }
@@ -493,7 +502,7 @@
         font-weight: 700;
         font-size: 18px;
         letter-spacing: 0.02em;
-        color: #136fd3;
+        color: #fe574a;
       }
 
       &_info {
@@ -1010,4 +1019,9 @@
       }
     }
   }
+}
+
+.read_more_container {
+  color: #136fd3;
+  cursor: pointer;
 }

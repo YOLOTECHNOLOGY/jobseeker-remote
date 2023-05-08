@@ -148,7 +148,7 @@ const EditLinkModal = ({
               label={requiredLabel(linkModal.url)}
               size='small'
               variant='outlined'
-              value={linkUrl}
+              value={linkUrl || ''}
               defaultValue={linkUrl}
               onClick={() => setLinkUrl(handleLinkUrl(linkUrl))}
               onChange={(e) => setLinkUrl(e.target.value)}

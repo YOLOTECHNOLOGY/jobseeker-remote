@@ -30,7 +30,7 @@ export default async function SimilarJobs({ id, jobDetail, languages }: propsTyp
   if (!data.error) {
     const ids = data.map((item) => item.recruiter?.id)
     if (ids.length) {
-      const lines = await fetchRecruiterLastActiveService(ids.join(','))
+      const lines = await fetchRecruiterLastActiveService(ids.filter(a => a).join(','))
         .then(({ data: { data } }) => data)
         .catch(() => ({ error: true }))
       recruiterLineStatus = lines
@@ -68,7 +68,7 @@ export default async function SimilarJobs({ id, jobDetail, languages }: propsTyp
                         </div>
                         <div className={styles.similarJobs_info_jobType}>
                           <div>{item.company_name}</div>
-                          <div>{item.location_value}</div>
+                          <div>{item.company_location}</div>
                         </div>
                       </div>
                     </Link>
@@ -99,8 +99,8 @@ export default async function SimilarJobs({ id, jobDetail, languages }: propsTyp
 
                       <div className={styles.similarJobs_mobileCard_tags}>
                         <span>{item.job_type}</span>
-                        <span>{item?.xp_lvl?.value}</span>
-                        <span>{item?.degree?.value}</span>
+                        <span>{item?.xp_lvl}</span>
+                        <span>{item?.degree}</span>
                       </div>
 
                       <div className={styles.similarJobs_info}>
@@ -126,9 +126,9 @@ export default async function SimilarJobs({ id, jobDetail, languages }: propsTyp
                           ></span>
                         </div>
                         <div className={classNames([styles.similarJobs_mobileCard_loca])}>
-                          <div>{item.recruiter?.full_name}</div>
+                          <div>{[item?.recruiter_full_name,item?.recruiter_job_title].filter(a=>a).join(' · ')}</div>
                           <div className={styles.similarJobs_mobileCard_loca_value}>
-                            {item.location_value}
+                            {item.company_location}
                           </div>
                         </div>
                       </div>

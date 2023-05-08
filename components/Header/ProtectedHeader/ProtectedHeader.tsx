@@ -266,22 +266,7 @@ const ProtectedHeader = ({lang}:any) => {
             </li>
           </React.Fragment>
         </ul>
-        {/* <select
-          onChange={(e) => {
-            const value = e.target.value
-            // console.log({ onChange: e.target.value })
-            if (value === countryKey) {
-              return
-            }
-            const accessToken = getCookie('accessToken')
-            const url = 'https://dev.bossjob.' + value + '/changeLocale?accessToken=' + accessToken
-            window.location.href = url
-          }}
-          value={countryKey}
-        >
-          <option value='ph' label='PH' />
-          <option value='sg' label='SGP' />
-        </select> */}
+     
         <div className={styles.mobileIconWrapper}>
           {pathname !== '/chat/[chat_id]' ? (
             <li

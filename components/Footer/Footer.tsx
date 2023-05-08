@@ -388,7 +388,7 @@ const Footer = ({lang}:any) => {
               <div className={styles.footerMobileSocialLinks}>
                 <Link
                   className={styles.socialLink}
-                  to='www.facebook.com/Bossjobph'
+                  to='https://www.facebook.com/Bossjobph'
                   external
                   title='Bossjob Facebook'
                 >
@@ -398,7 +398,7 @@ const Footer = ({lang}:any) => {
                 </Link>
                 <Link
                   className={styles.socialLink}
-                  to='www.linkedin.com/company/bossjob-yolo-technology/'
+                  to='https://www.linkedin.com/company/bossjob-yolo-technology/'
                   external
                   title='Bossjob LinkedIn'
                 >
@@ -408,7 +408,7 @@ const Footer = ({lang}:any) => {
                 </Link>
                 <Link
                   className={styles.socialLink}
-                  to='www.instagram.com/Bossjobph'
+                  to='https://www.instagram.com/Bossjobph'
                   external
                   title='Bossjob Instagram'
                 >
@@ -418,7 +418,7 @@ const Footer = ({lang}:any) => {
                 </Link>
                 <Link
                   className={styles.socialLink}
-                  to='www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'
+                  to='https://www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'
                   external
                   title='Bossjob Youtube'
                 >
@@ -428,7 +428,7 @@ const Footer = ({lang}:any) => {
                 </Link>
                 <Link
                   className={styles.socialLink}
-                  to='twitter.com/Bossjobph'
+                  to='https://twitter.com/Bossjobph'
                   external
                   title='Bossjob Twitter'
                 >
@@ -438,7 +438,7 @@ const Footer = ({lang}:any) => {
                 </Link>
                 <Link
                   className={styles.socialLink}
-                  to='tiktok.com/@bossjobph'
+                  to='https://tiktok.com/@bossjobph'
                   external
                   title='Bossjob Tiktok'
                 >
@@ -700,7 +700,7 @@ const Footer = ({lang}:any) => {
                     <div className={styles.footerDesktopSocialLinks}>
                       <Link
                         className={styles.socialLink}
-                        to='www.facebook.com/Bossjobph'
+                        to='https://www.facebook.com/Bossjobph'
                         external
                         title='Bossjob Facebook'
                       >
@@ -710,7 +710,7 @@ const Footer = ({lang}:any) => {
                       </Link>
                       <Link
                         className={styles.socialLink}
-                        to='www.linkedin.com/company/bossjob-yolo-technology/'
+                        to='https://www.linkedin.com/company/bossjob-yolo-technology/'
                         external
                         title='Bossjob LinkedIn'
                       >
@@ -720,7 +720,7 @@ const Footer = ({lang}:any) => {
                       </Link>
                       <Link
                         className={styles.socialLink}
-                        to='www.instagram.com/Bossjobph'
+                        to='https://www.instagram.com/Bossjobph'
                         external
                         title='Bossjob Instagram'
                       >
@@ -730,7 +730,7 @@ const Footer = ({lang}:any) => {
                       </Link>
                       <Link
                         className={styles.socialLink}
-                        to='www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'
+                        to='https://www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'
                         external
                         title='Bossjob Youtube'
                       >
@@ -740,7 +740,7 @@ const Footer = ({lang}:any) => {
                       </Link>
                       <Link
                         className={styles.socialLink}
-                        to='twitter.com/Bossjobph'
+                        to='https://twitter.com/Bossjobph'
                         external
                         title='Bossjob Twitter'
                       >
@@ -750,7 +750,7 @@ const Footer = ({lang}:any) => {
                       </Link>
                       <Link
                         className={styles.socialLink}
-                        to='tiktok.com/@bossjobph'
+                        to='https://tiktok.com/@bossjobph'
                         external
                         title='Bossjob Tiktok'
                       >
