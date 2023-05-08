@@ -48,8 +48,6 @@ const JobCardInterview = (props: any) => {
   } = data.recruiter || {};
   const  workJobTitle  = data.recruiter?.work_experience?.job_title ;
   const [loading, chatNow, modalChange] = useChatNow(props?.data?.job || {})
-  // const [modalInterview, interviewLoading] = useModalInterview()
-  // console.log({ data })
   return (
     <>
       <div

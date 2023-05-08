@@ -119,13 +119,11 @@ const SEOJobSearchMetaBuilder = (query, location, category, path) => {
 
 const checkFilterMatch = (routerQuery, config, isMobile = false) => {
   const matchedFilterV2 = checkFilterMatchV2(routerQuery, config, isMobile)
-  // console.log({matchedFilterV2})
   return matchedFilterV2
 }
 
 const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear = false) => {
   const dataV2 = userFilterSelectionDataParserV2(field, optionValue, routerQuery, config, isClear)
-  // console.log("dataV2", dataV2)
   return dataV2
 }
 

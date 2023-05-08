@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { NextRouter, useRouter } from 'next/router'
+import { NextRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
 /* Vendors */
@@ -25,17 +25,17 @@ interface ModalAppRedirectProps {
   currentRouter?: { asPath: string; [key: string]: any } | NextRouter
 }
 
-const useCurrentRouter = (router?: any) => {
-  return router || useRouter()
-}
+// const useCurrentRouter = (router?: any) => {
+//   return router || useRouter()
+// }
 
 const ModalAppRedirect = ({
   isShowModal,
   handleModal,
   handleOpenAppCallBack,
-  currentRouter
+  // currentRouter
 }: ModalAppRedirectProps) => {
-  const router = useCurrentRouter(currentRouter)
+  // const router = useCurrentRouter(currentRouter)
   const goToAppTime = useRef<any>()
 
   const [userAgent, setUserAgent] = useState(null)
@@ -88,38 +88,42 @@ const ModalAppRedirect = ({
 
   const handleOpenApp = useCallback(() => {
     if (window && typeof window !== undefined) {
-      const userInfo = Object.keys(userDetail).length ? userDetail : getCookie('user')
-      const windowPath = router.asPath
-      const baseSchema = 'bossjob'
-      let pathSchema = null
-      let jobId = null
+      // const userInfo = Object.keys(userDetail).length ? userDetail : getCookie('user')
+      // const windowPath = router.asPath
+      // const baseSchema = 'bossjob'
+      // let pathSchema = null
+      // let jobId = null
 
       // Mobile app deep link mapping
-      if (
-        windowPath.includes('manage-profile') ||
-        windowPath.includes('manage-profile?tab=profile')
-      ) {
-        pathSchema = 'online-resume'
-      } else if (windowPath.includes('manage-profile?tab=job-preferences')) {
-        pathSchema = 'jobs-preferences'
-      } else if (windowPath.includes('/manage-profile?tab=resume')) {
-        pathSchema = 'online-resume'
-      } else if (windowPath.includes('jobs-hiring/job-search')) {
-        pathSchema = 'home'
-      } else if (windowPath.includes('/job/')) {
-        jobId = windowPath.split('-')?.pop()
-        pathSchema = `job-details`
-      } else if (windowPath.includes('/chat/')) {
-        // chatId = windowPath.split('/')?.pop()
-        pathSchema = 'interview-detail'
-      }
+      // if (
+      //   windowPath.includes('manage-profile') ||
+      //   windowPath.includes('manage-profile?tab=profile')
+      // ) {
+      //   pathSchema = 'online-resume'
+      // } else if (windowPath.includes('manage-profile?tab=job-preferences')) {
+      //   pathSchema = 'jobs-preferences'
+      // } else if (windowPath.includes('/manage-profile?tab=resume')) {
+      //   pathSchema = 'online-resume'
+      // } else if (windowPath.includes('jobs-hiring/job-search')) {
+      //   pathSchema = 'home'
+      // } else if (windowPath.includes('/job/')) {
+      //   jobId = windowPath.split('-')?.pop()
+      //   pathSchema = `job-details`
+      // } else if (windowPath.includes('/chat/')) {
+      //   // chatId = windowPath.split('/')?.pop()
+      //   pathSchema = 'interview-detail'
+      // }
 
       /* 
         IOS schema: BOSSJOBPH://register
         Android schema: intent://register/#Intent;scheme=BOSSJOBPH;package=com.poseidon.bossjobapp;end
       */
-      const schema = `${baseSchema}://bossjob.ph/${pathSchema}?email=${userInfo?.email}&role=jobseeker&jobsId=${jobId}`
+      // const schema = `${baseSchema}://bossjob.ph/${pathSchema}?email=${userInfo?.email}&role=jobseeker&jobsId=${jobId}`
       // // const schema = `${baseSchema}://${pathSchema}`
+
+      //  adjust link
+
+      const schema = `https://cyyj.adj.st/bossjob.ph?adj_t=4pha213&adj_deep_link=bossjob%3A%2F%2Fbossjob.ph`
 
       const appStoreLink = userAgent?.isIos
         ? process.env.APP_STORE_LINK

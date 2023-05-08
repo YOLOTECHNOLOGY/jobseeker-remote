@@ -265,7 +265,6 @@ const JobFunctionMultiSelector = (props: any) => {
     [onSecondClick, mainFunctions, functionIds, functionTitleIds]
   )
   const listener = useCallback((e) => {
-    console.log('e.target', e.target)
     if (e.target.id?.includes?.('job-item')) {
       return
     }

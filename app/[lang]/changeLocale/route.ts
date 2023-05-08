@@ -8,12 +8,12 @@ async function removeServiceCache(token) {
   const currentCountry = getCountryKey()
   if (token) {
     await fetchUserSetting({ country_id: currentCountry === 'ph' ? 193 : 167 }, token)
-      .then((response) => console.log(response))
+      // .then((response) => console.log(response))
       .catch(({ response, request }) => console.log(response, request))
   }
 }
 
-export async function GET(request) {
+export async function GET() {
   const cookieStore = cookies()
   const accessToken = cookieStore.get('accessToken')
 

@@ -22,7 +22,6 @@ const Search = () => {
   const [searchValue, setSearchValue] = useState<string>('')
 
   const handleUpdatePath = () => {
-    console.log(location.value, searchValue)
     const path = buildQuery(location?.value, searchValue)
     router.push(path)
   }
@@ -32,7 +31,7 @@ const Search = () => {
       <MaterialLocationField
         className={styles.search_location}
         value={location}
-        isClear={false}
+        // isClear={false}
         label={content.search.location}
         defaultValue='Las Pinas'
         disableClearable

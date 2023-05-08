@@ -316,7 +316,7 @@ const JobDetail = ({
                     {(() => {
                       if (selectedJob?.external_apply_url) {
                         return 'Apply Now'
-                      } else if (chatDetail.is_exists && chatDetail.job_id === selectedJob.id) {
+                      } else if (chatDetail.is_exists) {
                         return 'Continue Chat'
                       } else {
                         return 'Chat Now'

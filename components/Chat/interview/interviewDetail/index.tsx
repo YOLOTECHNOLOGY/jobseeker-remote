@@ -8,12 +8,10 @@ import { CopyIconHaveTextCopy } from 'images'
 const InterviewDetail = (props: any) => {
   const { data = {}, status } = props
   const dispatch = useDispatch()
-  console.log(data)
   const detailData = useMemo(() => {
     const base = [
       ...[
         ['Job Title', data?.job_title],
-        // ['Job Position', data?.job_location],
         ['Location', data?.address],
         ['Date,Time', data.interviewed_at],
         ['Contact person', data?.contact_person],

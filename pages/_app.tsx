@@ -124,7 +124,8 @@ const App = (props: AppProps) => {
         })
     }
   }, []) // [router.route]
-  // console.log('renderProps', props.pageProps)
+  const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
+
   return (
     <>
       <SEO
@@ -136,9 +137,54 @@ const App = (props: AppProps) => {
       />
       <Head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no' />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer', '${gtmID}')
+        `
+          }}
+        />
       </Head>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       {/* Global Site Tag (gtag.js) - Google Analytics */}
+       {/* Google One Tap Sign in */}
+       <Script
+        src='https://accounts.google.com/gsi/client'
+        onReady={() => {
+          if (!accessToken) {
+            const google = (window as any)?.google
+            google.accounts.id.initialize({
+              client_id: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
+              callback: handleGoogleOneTapLoginResponse,
+              cancel_on_tap_outside: false,
+              itp_support: true,
+              skip_prompt_cookie: 'accessToken'
+            })
+            google.accounts.id.prompt((notification) => {
+              if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                console.log(notification.getNotDisplayedReason())
+              }
+            })
+            function handleGoogleOneTapLoginResponse(CredentialResponse) {
+              const accessTokenGoogle = CredentialResponse.credential
+              let activeKey = 1
+              if (window.location.pathname.includes('/employer')) {
+                activeKey = 2
+              }
+              window.location.replace(
+                '/handlers/googleLoginHandler?access_token=' +
+                  accessTokenGoogle +
+                  '&active_key=' +
+                  activeKey
+              )
+            }
+          }
+        }}
+      />
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
       <Script
         id='gtag-init'
@@ -153,6 +199,13 @@ const App = (props: AppProps) => {
           `
         }}
       />
+      {/* Google Tag Manager (noscript) */}
+      <noscript dangerouslySetInnerHTML={{
+        __html: `
+          <iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'}"
+          height="0" width="0" style="display:non e;visibility:hidden"></iframe>
+        `}}>
+      </noscript>
       {/* <Script
         strategy='lazyOnload'
         onLoad={() => {

@@ -38,7 +38,6 @@ const SingleSelect = ({
     error,
     style
 }: MaterialSelectCheckMarksProps) => {
-    // console.log({ value })
     const [open, setOpen] = useState(false)
     return (<FormControl fullWidth className={className} size='small'>
         <InputLabel id={`${id}-select-label`}>{label}</InputLabel>

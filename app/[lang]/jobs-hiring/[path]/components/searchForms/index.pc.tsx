@@ -154,7 +154,7 @@ const SearchArea = (props: any) => {
               className={styles.location}
               locationList={config.location_lists}
               value={location}
-              isClear={true}
+              // isClear={true}
               label={search.location}
               defaultValue={location}
               onChange={(e, value) => {
@@ -224,6 +224,7 @@ const SearchArea = (props: any) => {
             />
             <MaterialButton
               className={styles.searchButton}
+              variant='contained'
               capitalize
               onClick={() => {
                 flushSync(() => {

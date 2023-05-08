@@ -41,9 +41,9 @@ export const metadata = {
     },
     viewport: {
         width: 'device-width',
-        initialScale: '1.0',
-        maximumScale: '1.0',
-        userScalable: 'no'
+        initialScale: 1.0,
+        maximumScale: 1.0,
+        userScalable: false
     },
     robots: {
         index: true,

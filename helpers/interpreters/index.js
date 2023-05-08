@@ -36,7 +36,6 @@ const { Actions: JobActions } = job
 const { Actions: OfferActions } = offerJobseeker
 
 const { IMBusinessActions } = im
-console.log({ job })
 
 export default cond([
     [CommonActions.is, common],

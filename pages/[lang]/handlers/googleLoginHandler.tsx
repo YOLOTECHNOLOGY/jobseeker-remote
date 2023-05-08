@@ -102,12 +102,10 @@ const googleLoginHandler = ({
           } catch (err) {
             message.error('Login failed')
             dispatch(socialLoginFailed(err))
-            console.log(err)
           }
         })
-        .catch((error) => {
+        .catch(() => {
           message.error('Login failed')
-          console.log(error)
         })
     })()
   }, [])

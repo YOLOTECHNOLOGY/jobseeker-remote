@@ -131,7 +131,7 @@ const SearchArea = (props: any) => {
   useEffect(() => {
     reloadRef.current = reload
   }, [reload])
-  useEffect(reload, [qualification, workExperience, companySizes, industry, salaries, jobTypes, sort,push])
+  useEffect(reload, [qualification, workExperience, companySizes, industry, salaries, jobTypes, sort, push])
 
   return (
     <div>
@@ -145,7 +145,7 @@ const SearchArea = (props: any) => {
               className={styles.location}
               locationList={config.location_lists}
               value={location}
-              isClear={true}
+              // isClear={true}
               defaultValue={location}
               onChange={(e, value) => {
                 setLocation(value)
@@ -181,9 +181,9 @@ const SearchArea = (props: any) => {
             />
             <MaterialButton
               className={styles.searchButton}
+              variant='contained'
               capitalize
               onClick={() => {
-
                 addSearchHistory(searchValue)
                 pushJobSearchRef.current()
               }}

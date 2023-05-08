@@ -197,8 +197,8 @@ export const getPublicSitemapXML = (response) => {
       ${generatePath('/legal', 0.8, true)}
       ${generatePath('/support', 0.8, true)}
       ${generateExternalPath('https://blog.bossjob.ph/', 0.8)}
-      ${generateExternalPath('https://hunt.bossjob.ph', 0.8)}
-      ${generateExternalPath('https://hunt.bossjob.ph/get-started', 0.8)}
+      ${generateExternalPath('https://employer.bossjob.com/', 0.8)}
+      ${generateExternalPath('https://employer.bossjob.com/get-started', 0.8)}
       ${generatePath('/companies', 0.8)}
       ${generatePath('/companies/search', 0.8)}
       </urlset>`

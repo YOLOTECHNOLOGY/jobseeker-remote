@@ -54,12 +54,10 @@ const LocationProvider = ({ children }) => {
     const intepreter = useCallback(command => command.cata({
         queryLatLon: () => M(() => new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition((position) => {
-                console.log({ position })
                 const { latitude, longitude } = position.coords
                 resolve({ latitude, longitude })
             },
                 error => {
-                    console.log({ error })
                     reject(error)
                 }
             )

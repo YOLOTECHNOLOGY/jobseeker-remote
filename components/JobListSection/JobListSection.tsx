@@ -112,10 +112,6 @@ const JobListSection = ({
 
   const [userAgent] = useState(() => useUserAgent(window.navigator.userAgent))
 
-  useEffect(() => {
-    console.log(userAgent, 'userAgent')
-  }, [userAgent])
-
   const cx = classNames.bind(styles)
   const isStickyClass = cx({ isSticky: isSticky })
 

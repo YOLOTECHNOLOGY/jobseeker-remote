@@ -15,7 +15,8 @@ import { useRouter } from 'next/navigation'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { filter, toPairs, pipe, is, map } from 'ramda'
 import { LoadingContext } from 'app/[lang]/components/providers/loadingProvider'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, flatMap } from 'lodash-es'
+import MaterialLocationField from 'app/components/mobile/location1'
 
 
 const SearchArea = (props: any) => {
@@ -32,11 +33,7 @@ const SearchArea = (props: any) => {
         return preferences.map(preference => ({ value: preference.id, label: preference.job_title }))
     }, [preferences])
     const [selectedPreferenceId, setSelectedPreferenceId] = useState(+preferenceId)
-    // useEffect(() => {
-    //     if(preferenceId){
-    //         setSelectedPreferenceId(+preferenceId)
-    //     }
-    // }, [preferenceId])
+
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchConfigSuccess(config))
@@ -59,8 +56,9 @@ const SearchArea = (props: any) => {
     }, [config])
     const page = searchParams.page ?? '1'
     const { push } = useContext(LoadingContext)
-    // const locations = flatMap(config.location_lists, item => item.locations)
-    // const [location, setLocation] = useState(locations.find(location => location.seo_value === searchParams.location?.[0]))
+    const locations = flatMap(config.location_lists, item => item.locations)
+
+    const [location, setLocation] = useState(locations.find(location => location.seo_value === searchParams.location))
     const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
     const [moreData, setMoreData] = useState(
         pipe(map(item => {
@@ -82,10 +80,10 @@ const SearchArea = (props: any) => {
 
     const filterParams = useMemo(() => {
         return filter(a => a?.length)({
-            // location: [location?.['seo_value']].filter(a => a),
+            location: [location?.['seo_value']].filter(a => a),
             sort: sort,
             page: page,
-            preferenceId: selectedPreferenceId,
+            preferenceId: selectedPreferenceId ? ('' + selectedPreferenceId) : null,
             ...moreData
         })
     }, [moreData, location, sort, selectedPreferenceId])
@@ -140,6 +138,19 @@ const SearchArea = (props: any) => {
 
                     </div>
                 </div>
+                <div className={styles.location}>
+                    <MaterialLocationField
+                        height='30px'
+                        labelTop='0px'
+                        style={{ width: '100%', height: '30px' }}
+                        value={location}
+                        defaultValue={location}
+                        options={locations}
+                        onChange={(e, value) => {
+                            setLocation(value)
+                        }}
+                    />
+                </div>
                 <div className={styles.bottom}>
                     <div className={styles.selector}>
                         <Single
@@ -151,14 +162,7 @@ const SearchArea = (props: any) => {
                             label={sortBy}
                         />
                     </div>
-                    {/* <div className={styles.selector}>
-                        <LocationField
-                            height='30px'
-                            labelTop='0px'
-                            style={{ width: '100%', height: '30px', marginLeft: 2 }}
-                            options={locations}
-                        />
-                    </div> */}
+
                     <div className={styles.selector}>
                         <Grouped
                             value={moreData}
@@ -169,10 +173,8 @@ const SearchArea = (props: any) => {
                             onSelect={setMoreData}
                         />
                     </div>
-
-
-
                 </div>
+
             </div>
         </ThemeProvider>
     </div>

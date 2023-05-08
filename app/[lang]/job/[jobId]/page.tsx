@@ -14,21 +14,25 @@ const handleFetchJobDetail = async (params: any) => {
   const accessToken = cookieStore.getAll('accessToken')
   const jobId = params.jobId?.split('-').pop()
 
-  const querys = {
-    jobId,
-    status: 'public',
-    serverAccessToken: null
-  }
+  if (jobId && Number(jobId)) {
+    const querys = {
+      jobId: jobId,
+      status: 'public',
+      serverAccessToken: null
+    }
 
-  if (accessToken[0]) {
-    querys.status = accessToken[0].value ? 'protected' : 'public'
-    querys.serverAccessToken = accessToken[0].value ?? null
-  }
+    if (accessToken[0]) {
+      querys.status = accessToken[0].value ? 'protected' : 'public'
+      querys.serverAccessToken = accessToken[0].value ?? null
+    }
 
-  const data = await fetchJobDetailService(querys)
-    .then(({ data: { data } }) => data)
-    .catch(() => ({ error: true }))
-  return { data, jobId }
+    const data = await fetchJobDetailService(querys)
+      .then(({ data: { data } }) => data)
+      .catch(() => ({ error: true }))
+    return { data, jobId }
+  } else {
+    return { data: { error: true, message: 'Error: Invalid link address' }, jobId: null }
+  }
 }
 
 const handleShareInfo = async (params: any) => {
@@ -56,14 +60,11 @@ export async function generateMetadata({ params, searchParams }): Promise<Metada
     } = jobDetail
 
     const { wide: width, high: height, job_card: cardUrl } = shareInfo || {}
-    console.log(shareInfo, 'shareInfo')
     const categoryMetaText = 'jobs'
     const seoMetaTitle = `${name} is hiring ${jobTitle} - ${jobId} | Bossjob`
     const seoMetaDescription = `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${
       location.value
     }, ${fullAddress.split(',').pop()} on Bossjob now!`
-
-    console.log(jobDetail, seoMetaDescription)
 
     const seoParams: Metadata = !shareInfo
       ? {
@@ -101,7 +102,6 @@ export async function generateMetadata({ params, searchParams }): Promise<Metada
             images: [cardUrl]
           }
         }
-    // console.log(seoParams, 'seoParams')
     return seoParams
   }
 }

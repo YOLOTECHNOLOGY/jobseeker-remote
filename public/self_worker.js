@@ -1,5 +1,4 @@
 self.addEventListener('notificationclick', e => {
-  console.log('notificationclick', e)
   e.waitUntil(
     self.clients.matchAll({ type: 'window' }).then(clients => {
       const client = clients?.[0]
@@ -30,7 +29,6 @@ firebase.initializeApp({
 })
 const messaging = firebase.messaging()
 messaging.onBackgroundMessage(payload => {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload, messaging, self)
   self.clients.matchAll({ type: 'window' }).then(clients => {
     const client = clients?.[0]
     if (client) {

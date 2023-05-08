@@ -11,16 +11,13 @@ export const initFireBase = () => {
             const serviceWorkerRegistration = await navigator.serviceWorker.register('/self_worker.js',
                 { scope: '/' })
                 .then((reg) => {
-                    console.log('ServiceWorker register success: ', reg)
                     return reg
                 })
                 .catch((err) => {
-                    console.log('ServiceWorker register failed: ', err)
                     return Promise.reject(err)
                 })
             await serviceWorkerRegistration.update()
             navigator.serviceWorker.addEventListener('message', e => {
-                console.log({ messageLisoner: e })
                 if (e.data.type === 'redirect') {
                     if (e?.data?.link) {
                         window.location.href = e.data.link

@@ -16,7 +16,6 @@ const useModalInterview = () => {
     const { interpreter } = useContext(IMContext)
 
     const showInterview = chatId => {
-        console.log({ chatId })
         setLoading(true)
         return interpreter(
             changeChatScript(chatId)

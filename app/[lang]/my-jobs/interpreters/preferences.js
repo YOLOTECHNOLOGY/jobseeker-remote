@@ -9,7 +9,6 @@ export default registInterpreter(command =>
             const accessToken = cookies().get('accessToken')?.value
             return fetchJobsPreferences(null, accessToken)
                 .then(result => {
-                    console.log({ fetchJobsPreferences: result.data.data })
                     return result.data.data
                 })
 

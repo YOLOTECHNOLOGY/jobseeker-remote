@@ -132,8 +132,8 @@ export async function generateMetadata(props: any) {
     viewport: {
       width: 'device-width',
       initialScale: 1.0,
-      maximumScale: 1.0
-      // userScalable: 'no' as string
+      maximumScale: 1.0,
+      userScalable: false
     },
     alternates: {
       canonical: seoCanonical

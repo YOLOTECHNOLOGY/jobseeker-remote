@@ -34,7 +34,7 @@ const Company = (company: propsType) => {
           </div>
         </Link>
 
-        <Link href={company.companyUrl + '/jobs'}>
+        <Link href={company?.companyUrl + '/jobs'}>
           <Button
             variant='outlined'
             sx={{
@@ -57,14 +57,14 @@ const Company = (company: propsType) => {
         </Link>
       </section>
 
-      <Link href={company.companyUrl}>
+      <Link href={company?.companyUrl}>
         <section className={styles.company_mobileHead}>
           <Avatar
             sx={{ width: '32px', height: '32px', borderRadius: '5px', marginRight: '8px' }}
-            src={company.logo}
+            src={company?.logo}
           ></Avatar>
           <div className={styles.company_mobileHead_info}>
-            <span className={styles.company_mobileHead_info_name}>{company.name}</span>
+            <span className={styles.company_mobileHead_info_name}>{company?.name}</span>
             <span className={styles.company_mobileHead_info_tag}>
               {jobDetail.company.industry} &nbsp;|&nbsp; {company.companySize}{' '}
               {companySection.employees}
