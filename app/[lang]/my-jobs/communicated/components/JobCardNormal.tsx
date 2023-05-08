@@ -7,7 +7,7 @@ import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 import Link from 'next/link';
 const JobCardNormal = (props: any) => {
-  const { handelSave, data, loadingChat, tabValue, index } = props
+  const { handelSave, data, loadingChat, tabValue, index,lang } = props
   const {
     industry,
     company_size: companySize,
@@ -43,7 +43,7 @@ const JobCardNormal = (props: any) => {
           </div>
           <div className={styles.operator}>
             {
-              status === 'closed' ? <span className={styles.closedTip}>Job closed</span> : (
+              status === 'closed' ? <span className={styles.closedTip}>{lang?.JobClosed}</span> : (
                 <>
                   <MaterialButton className={`${styles.chatBox} ${!isExists ? styles.chatIng : null}`}
                     capitalize={true}
@@ -57,11 +57,11 @@ const JobCardNormal = (props: any) => {
                     <Text textColor='white' bold>
                       {(() => {
                         if (externalApplyUrl) {
-                          return 'Apply Now'
+                          return lang?.applyNow
                         } else if (isExists) {
-                          return 'Continue Chat'
+                          return lang?.continueChat
                         } else {
-                          return 'Chat Now'
+                          return lang?.chatNow
                         }
                       })()}
                     </Text>
@@ -78,7 +78,7 @@ const JobCardNormal = (props: any) => {
                       isLoading={loadingChat}
                     >
                       <FavoriteOutlinedIcon className={styles.saveIcon} />
-                      Undo Save
+                     {lang?.undoSave}
                     </MaterialButton> : null
                   }
 
@@ -103,7 +103,7 @@ const JobCardNormal = (props: any) => {
             <div className={styles.companyInfo}>
               <div className={styles.company}>  {name}</div>
               <span className={styles.tag}>{industry}</span>
-              <span className={styles.tag}>{companySize} Employees</span>
+              <span className={styles.tag}>{companySize} {lang?.employees}</span>
               {
                 financingStage && <span className={styles.tag}>{financingStage}</span>
               }

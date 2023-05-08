@@ -285,7 +285,7 @@ const MainLeft = (props: any) => {
           handelSave={handelSave}
           loadingChat={loadingChat}
           loadingList={loadingList}
-
+          lang={lang}
         />
       </div>
 
@@ -308,6 +308,7 @@ const MainLeft = (props: any) => {
             totalPage={total}
             loadingList={loadingList}
             onChange={(e) => setPage(e)}
+            lang={lang}
           />
         </Suspense>
       </div>

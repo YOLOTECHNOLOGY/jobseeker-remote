@@ -9,4 +9,4 @@ const dictionaries = {
   zh: () => import('./dictionaries/zh.json').then((module) => module.default),
 }
 
-export const getDictionary = async (locale: Locale) => dictionaries[locale]()
+export const getDictionary = async (locale: Locale) => dictionaries[locale]?.() || dictionaries['en']()

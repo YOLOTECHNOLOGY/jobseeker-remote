@@ -19,7 +19,8 @@ interface cardProps {
   tabValue: string,
   handelSave: Function,
   loadingChat: boolean,
-  loadingList: boolean
+  loadingList: boolean,
+  lang:any
 }
 
 const Card = ({
@@ -31,8 +32,8 @@ const Card = ({
   handelSave,
   loadingChat,
   loadingList,
+  lang
 }: cardProps) => {
-
   useEffect(()=>{
     if(loadingList){
       const width = document.body.clientWidth
@@ -65,7 +66,7 @@ const Card = ({
           {
             !same && e.created_at && <p className={styles.time}>{transDate(e.created_at?.substr(0, 10))}</p>
           }
-          <JobCardNormal data={e} index={index} tabValue={tabValue} handelSave={handelSave} loadingChat={loadingChat} />
+          <JobCardNormal lang={lang}  data={e} index={index} tabValue={tabValue} handelSave={handelSave} loadingChat={loadingChat} />
         </div>
       )
     }
@@ -81,7 +82,7 @@ const Card = ({
           {
             !same && e.interviewed_at && <p className={styles.time}>{transDate(e.interviewed_at?.substr(0, 10))}</p>
           }
-          <JobCardInterview data={e} />
+          <JobCardInterview lang={lang} data={e} />
         </div>
       )
     }
@@ -102,7 +103,7 @@ const Card = ({
                 <Image className={styles.noDataImg} src={JoinUs} alt='暂无数据' width={362} height={247} />
                 <button className={styles.seeJob}>
                   <Link href="/my-jobs?page=1">
-                    See job reco
+                    {lang?.seeJobReco}
                   </Link>
                 </button>
               </div>

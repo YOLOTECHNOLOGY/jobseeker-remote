@@ -116,7 +116,13 @@
     "resume": "Resume",
     "mobileNumber": "Mobile Number",
     "back": "Back",
-    "addJobPreference": "Add Job Preference"
+    "addJobPreference": "Add Job Preference",
+    "JobClosed":"Job closed",
+    "undoSave":"Undo Save",
+    "employees":"Employees",
+    "InterviewTime":"Interview Time",
+    "address":"Address",
+    "noMore":"No more"
   },
   "companies": {
     "title": "Find great companies in {{country}}",

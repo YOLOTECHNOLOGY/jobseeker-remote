@@ -23,7 +23,7 @@ const jobseekerDisplayStatusObject = {
 
 
 const JobCardInterview = (props: any) => {
-  const { data } = props
+  const { data,lang } = props
   const {
     interviewed_at: interviewedAt,
     full_address: fullAddress,
@@ -74,7 +74,7 @@ const JobCardInterview = (props: any) => {
           </div>
           <div className={styles.operator}>
             {
-              status === 'closed' ? <span className={styles.closedTip}>Job closed</span> : (
+              status === 'closed' ? <span className={styles.closedTip}>{lang?.JobClosed}</span> : (
                 <>
                   <MaterialButton className={`${styles.chatBox} ${!isExists ? styles.chatIng : null}`}
                     capitalize={true}
@@ -88,11 +88,11 @@ const JobCardInterview = (props: any) => {
                     <Text textColor='white' bold>
                       {(() => {
                         if (externalApplyUrl) {
-                          return 'Apply Now'
+                          return lang?.applyNow
                         } else if (isExists) {
-                          return 'Continue Chat'
+                          return lang?.continueChat
                         } else {
-                          return 'Chat'
+                          return lang?.chatNow
                         }
                       })()}
                     </Text>
@@ -114,9 +114,9 @@ const JobCardInterview = (props: any) => {
             </div>
           </div>
           <div className={styles.rightContent}>
-            <p className={styles.time}><span>Interview Time</span>: {transDate(interviewedAt, 'all')}</p>
+            <p className={styles.time}><span>{lang?.InterviewTime}</span>: {transDate(interviewedAt, 'all')}</p>
             <Tooltip title={fullAddress || ''} placement="top">
-              <p className={`${styles.time} ${styles.address}`}><span>Address</span>: {fullAddress} </p>
+              <p className={`${styles.time} ${styles.address}`}><span>{lang?.address}</span>: {fullAddress} </p>
             </Tooltip>
           </div>
         </div>

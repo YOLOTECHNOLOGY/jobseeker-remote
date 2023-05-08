@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { JoinUs } from 'images'
 import Link from 'next/link';
 const MainMobile = (props: any) => {
-    const {data } = props
+    const {data,lang} = props
     return <div>
         {
             data?.length ? <div className={styles.communicated}>  <JobsCard {...props} /></div>
@@ -13,7 +13,7 @@ const MainMobile = (props: any) => {
                     <Image className={styles.noDataImg} src={JoinUs} alt='暂无数据' width={362} height={247} />
                     <button className={styles.seeJob}>
                         <Link href="/my-jobs?page=1">
-                            See job reco
+                           {lang?.seeJobReco}
                         </Link>
                     </button>
                 </div>

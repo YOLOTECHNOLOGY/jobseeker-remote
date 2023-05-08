@@ -6,7 +6,6 @@ import Link from 'next/link';
 import Image from 'next/image'
 async function getCompanyData(location) {
     const res = await fetchCompanyTopService(location);
-    console.log(res,'comapny111')
     return res.data;
   }
 

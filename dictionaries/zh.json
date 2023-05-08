@@ -176,7 +176,13 @@
     "resume": "简历",
     "mobileNumber": "电话号码",
     "back": "返回",
-    "addJobPreference": "新增工作偏好"
+    "addJobPreference": "新增工作偏好",
+    "JobClosed":"关闭工作",
+    "undoSave":"取消收藏",
+    "employees":"员工",
+    "InterviewTime":"面试时间",
+    "address":"地址",
+    "noMore":"没有更多"
   },
   "companies": {
     "title": "寻找在{{country}}的优秀公司",

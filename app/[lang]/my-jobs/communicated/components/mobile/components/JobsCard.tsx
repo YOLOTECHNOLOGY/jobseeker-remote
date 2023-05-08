@@ -23,6 +23,7 @@ interface cardProps {
   loadingList: boolean,
   totalPage: number,
   tabValue: string
+  lang:any
 }
 
 const JobsCard = ({
@@ -32,6 +33,7 @@ const JobsCard = ({
   loadingList,
   totalPage,
   tabValue,
+  lang
 }: cardProps) => {
   const loading = useRef(null)
   const pageRef = useRef(null)
@@ -209,7 +211,7 @@ const JobsCard = ({
       {
         tabValue === 'interview' ? interviewCard(data) : card(data)
       }
-      <p className={styles.load}>{loadingList ? <CircularProgress  style={{margin:'10px 0'}}/> : page === totalPage ? 'No more' : ''}</p>
+      <p className={styles.load}>{loadingList ? <CircularProgress  style={{margin:'10px 0'}}/> : page === totalPage ? lang?.noMore : ''}</p>
 
     </>
   )
