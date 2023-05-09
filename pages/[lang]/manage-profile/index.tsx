@@ -1227,7 +1227,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
       }
     }
   }
-  const lang = await getDictionary(query.lang as 'en')
+  const lang = await getDictionary(query.lang as 'en-US')
   // store.dispatch(fetchConfigRequest())
   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)

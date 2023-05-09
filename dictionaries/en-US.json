@@ -117,12 +117,12 @@
     "mobileNumber": "Mobile Number",
     "back": "Back",
     "addJobPreference": "Add Job Preference",
-    "JobClosed":"Job closed",
-    "undoSave":"Undo Save",
-    "employees":"Employees",
-    "InterviewTime":"Interview Time",
-    "address":"Address",
-    "noMore":"No more"
+    "JobClosed": "Job closed",
+    "undoSave": "Undo Save",
+    "employees": "Employees",
+    "InterviewTime": "Interview Time",
+    "address": "Address",
+    "noMore": "No more"
   },
   "companies": {
     "title": "Find great companies in {{country}}",
@@ -669,7 +669,6 @@
     "resume": "Resume",
     "OR": "OR",
     "createFreeResume": "Create Free Resume",
-
     "addYourWorkExperience": "Add your work experience",
     "fillInYourCompleteWork ": "Fill in your complete work experiences will increase your chances of being shortlisted by 83%.",
     "jobFunction": "Job function",
@@ -690,7 +689,6 @@
     "companyNameText": "Company Name",
     "monthYear": "'Month Year",
     "placeholder": "Type here...",
-
     "allAboutYourEducation": "All about your education",
     "present": "Present",
     "schoolName": "School Name",

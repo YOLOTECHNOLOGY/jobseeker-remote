@@ -16,7 +16,7 @@ const Step2 = (props: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req,query }) => {
   const accessToken = req.cookies.accessToken
-  const lang = await getDictionary(query.lang as 'en')
+  const lang = await getDictionary(query.lang as 'en-US')
   if (!accessToken) {
     return {
       redirect: {

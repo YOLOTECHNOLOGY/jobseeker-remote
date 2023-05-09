@@ -1,8 +1,8 @@
 #
 # Your Crowdin credentials
 #
-'project_id': '585429'
-'api_token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJ3UUVxdmhVM3ZMT2EyWGljbVV5VCIsImp0aSI6ImJjZTJkNmZkNmJhOTYwMjZjMjk1NGM0NjNiMDg4ZjFiNGFiZjE4ODdiOTJkYzBkNTg2N2E4OTg3MmU3MDQ2MTM0ZGYxNzc0ZGIzNDA3MDczIiwiaWF0IjoxNjgzMjY3Nzc5LjM5NTI0MSwibmJmIjoxNjgzMjY3Nzc5LjM5NTI0NywiZXhwIjoxNjg1ODU5Nzc5LjMyMjY2LCJzdWIiOiIxNTc4OTM4MyIsInNjb3BlcyI6WyJwcm9qZWN0Il0sImRvbWFpbiI6bnVsbCwiYXNzb2NpYXRpb25zIjpbIioiXSwic2Vzc2lvbiI6MH0.nZ2r_IgXzYPFAQgh8SJMUGb8UP1YoGVARk8D8RdzpmocO6c8lIrTndY10Ufr1QFRGNH0g6j8cn09J-jYEM3Rg8n-fpHMD3qPop8UG7z2yjp24Im-c86IhAnqA4Um8JHPIBQSVfyZD2uuq3Pd-kIGm53r4QseFphXDGInLFG-o6iWg1bUcG0Do9qFKaahrYL21fjCeG8qbqwTrIwM4aZEK-FthI8AxCpCD8ry6d4wKRZFZYudrMPp8S6dXrUU-3goU3_V3j97KHkaDBPFcVGlXUMEMkW2Zw8XRWRTpAM-jy6F2Yy1HPWW5KViY1lvo4bgkYn8YA7YQWfHmZHfBgJfUQag9RjND9zNODyzHJGUxVQxEb3i95-L9Ze7z0XiFZmmwdDuZju3zrY-qC-RX-zEL2UrteUo0w860fPdbDPIdj0WK6O15h8OR7Il8rKfbjquBqeB76Zugn0cDpFGvszE1q19jbvNU77tbSj4QvwLlGktIUmYQXJ91cVuXvmGTtfs2gub2qkXqLpfYZaH2rs-d2alOfrSexAOyw-HFVCCFJCavmigNhxO-OlZLK8KmKp5jO2CupLH5WGNX9XVZbxNfrUQ-iw7_aHfh4MPA7eeOoP4DAZaYCcO0PfaU3MS0GnIeVGZs698PLCLIhIfSNmZVJe1J030WYNzY3_duoNQuy4'
+'project_id': '583839'
+'api_token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJ3UUVxdmhVM3ZMT2EyWGljbVV5VCIsImp0aSI6ImM0YmYzZGM5MTIzMTFjOWRkZGEyM2JmOWY5NmNiOWNlYzdkN2IzZDlhOGRjNTg5ODZlMGY2MWI3NzU4MTUyM2YwYzAxZTc5N2EwOWIyNTYxIiwiaWF0IjoxNjgzNjE2NDU2Ljc5ODEwNiwibmJmIjoxNjgzNjE2NDU2Ljc5ODExLCJleHAiOjE2ODYyMDg0NTYuNjk3NzkyLCJzdWIiOiIxNTc4OTM4MyIsInNjb3BlcyI6WyJwcm9qZWN0Il0sImRvbWFpbiI6bnVsbCwiYXNzb2NpYXRpb25zIjpbIioiXSwic2Vzc2lvbiI6MH0.pUpVBYqpPNaB26cmGNgYRLgx0fkaklDBCm7QCRqbJPdv_VakjErR-h3Jsjy4HC3X9Z3E30AAScApG4v2fafdpBno9DHDyL9zjxM13WT_fjxMTEOghr_pT9RihzenDuKkDGh6vDxYRUo1ELOaIVJcmmx-LL1F544ItEB9bCUM55l6eSkbEFkMLwGrevPeIdAr_OnVaiPvwuqL7iFMcr4AvMYXL0OkEONJbJW20cfSrLBz4zZ8glPwpZNwLYzKYU_HaEo5e_XZzYD7hA9osXcNGqIrBUljY7vvypfBcRNmkEnlQsr1e4ehYfki42F5nAB4AtlVa3aPG6RuaF_QJHtW3cUVCTawSE0BGX4JltEUY0ccBbWmGymRTHDm_9Ae_hPSFk6y6AVPQpNWyAwvabaNesEjUpoSpyafgcrAkbppkClfwVEWe4oqI6lWIdPXHLqFJQx3gho2pAnT9Jc3ea-9AihtnOZQqQkPMpSb5dL5kWPw85CFBhLiCb1CG15G5cNyvvYguD910KJ5ubcZTiqLXrHEdGwtGTH-kXZkXJichz8s88gKr4x2fVW1K2fOfIT7-YGh19YzESRAITvGoQ1Hu9Va349j5e6YzjM49eFE2AEYa-peBbn_zBbgjN5uS5m4lodAcMw3yC-aEXkSRhW3-GYP6KmNL5bcSCye_t52838'
 'base_path': '.'
 'base_url': 'https://api.crowdin.com'
 
@@ -21,13 +21,14 @@ files: [
       # Source files filter
       # e.g. "/resources/en/*.json"
       #
-      'source': '/dictionaries/en.json',
-
+      'source': '/dictionaries/init_language.json',
       #
       # Where translations will be placed
       # e.g. "/resources/%two_letters_code%/%original_file_name%"
       #
-      'translation': '/dictionaries/%locale%.json'
+      'translation': '/dictionaries/%locale%.json',
+      'dest': '/jobseeker-web/%file_name%.json',
+      'type': 'json'
       #
       # Files or directories for ignore
       # e.g. ["/**/?.txt", "/**/[0-9].txt", "/**/*\?*.txt"]

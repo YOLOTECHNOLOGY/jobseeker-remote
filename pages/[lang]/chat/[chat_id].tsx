@@ -99,7 +99,7 @@ const Chat = ({lang}:any) => {
     </Layout>
 }
 export const getServerSideProps =  async ({query}) => {
-    const lang = await getDictionary(query.lang as 'en')
+    const lang = await getDictionary(query.lang as 'en-US')
     return { 
      props: {
         lang

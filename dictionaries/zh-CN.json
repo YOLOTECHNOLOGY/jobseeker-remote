@@ -1,66 +1,6 @@
 {
-  "home": {
-    "title": "找工作，与老板谈",
-    "search": {
-      "location": "位置",
-      "title": "职位或者公司名称",
-      "btn1": "搜索",
-      "download": "下载App",
-      "chatBoss": "直接谈",
-      "popup": {
-        "chatBoss": "和老板直接谈"
-      }
-    },
-    "popularJobs": "受欢迎的工作",
-    "tag": {
-      "java": "Java开发",
-      "full": "全栈工程师",
-      "web": "Web开发",
-      "cs": "客户服务",
-      "accountant": "会计师",
-      "sales": "销售顾问"
-    },
-    "tab": {
-      "IT": "信息技术",
-      "CSR/Ops": "客户服务",
-      "Sales": "销售",
-      "Finance": "财务",
-      "HR": "人力资源",
-      "Manufacturing": "制造",
-      "Banking": "银行",
-      "Healthcare": "保健"
-    },
-    "improveRecommend": "更新并改进职位推荐",
-    "jobPrefer": "职位偏好",
-    "jobPreference": "基于你的职位偏好",
-    "jobTab": {
-      "reco": "推荐",
-      "latestJob": "最新"
-    },
-    "jobCard": {
-      "chatNow": "立即沟通",
-      "jobForYou": "为您推荐",
-      "needMatches": "想要更精准的匹配？",
-      "getStart": "立即开始",
-      "noMore": "没有了",
-      "loading": "加载中..."
-    },
-    "seeMoreBtn": "查看更多",
-    "topCompany": "热门企业",
-    "companyHiring": "热门企业招聘",
-    "companyCard": {
-      "chatNow": "立即沟通",
-      "employee": "人",
-      "jobHiring": "{{count}}个热招职位",
-      "moreJob": "更多工作"
-    },
-    "seo": {
-      "title": "Bossjob - 在 {{country}} 的专业人士的职业平台",
-      "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
-    }
-  },
   "header": {
-    "findJobs": "职位",
+    "findJobs": "职位来自Crowdin",
     "companies": "公司",
     "courses": "课程",
     "careerGuide": "职业生涯指导",
@@ -177,12 +117,12 @@
     "mobileNumber": "电话号码",
     "back": "返回",
     "addJobPreference": "新增工作偏好",
-    "JobClosed":"关闭工作",
-    "undoSave":"取消收藏",
-    "employees":"员工",
-    "InterviewTime":"面试时间",
-    "address":"地址",
-    "noMore":"没有更多"
+    "JobClosed": "关闭工作",
+    "undoSave": "取消收藏",
+    "employees": "员工",
+    "InterviewTime": "面试时间",
+    "address": "地址",
+    "noMore": "没有更多"
   },
   "companies": {
     "title": "寻找在{{country}}的优秀公司",
@@ -276,6 +216,66 @@
     "culture": {
       "seoTitle": "{{companyName}}的文化、生活 | Bossjob",
       "seoDescription": "在Bossjob上发现{{companyName}}在{{country}}的公司文化、日常 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
+    }
+  },
+  "home": {
+    "title": "找工作，与老板谈",
+    "search": {
+      "location": "位置",
+      "title": "职位或者公司名称",
+      "btn1": "搜索",
+      "download": "下载App",
+      "chatBoss": "直接谈",
+      "popup": {
+        "chatBoss": "和老板直接谈"
+      }
+    },
+    "popularJobs": "受欢迎的工作",
+    "tag": {
+      "java": "Java开发",
+      "full": "全栈工程师",
+      "web": "Web开发",
+      "cs": "客户服务",
+      "accountant": "会计师",
+      "sales": "销售顾问"
+    },
+    "tab": {
+      "IT": "信息技术",
+      "CSR/Ops": "客户服务",
+      "Sales": "销售",
+      "Finance": "财务",
+      "HR": "人力资源",
+      "Manufacturing": "制造",
+      "Banking": "银行",
+      "Healthcare": "保健"
+    },
+    "improveRecommend": "更新并改进职位推荐",
+    "jobPrefer": "职位偏好",
+    "jobPreference": "基于你的职位偏好",
+    "jobTab": {
+      "reco": "推荐",
+      "latestJob": "最新"
+    },
+    "jobCard": {
+      "chatNow": "立即沟通",
+      "jobForYou": "为您推荐",
+      "needMatches": "想要更精准的匹配？",
+      "getStart": "立即开始",
+      "noMore": "没有了",
+      "loading": "加载中..."
+    },
+    "seeMoreBtn": "查看更多",
+    "topCompany": "热门企业",
+    "companyHiring": "热门企业招聘",
+    "companyCard": {
+      "chatNow": "立即沟通",
+      "employee": "人",
+      "jobHiring": "{{count}}个热招职位",
+      "moreJob": "更多工作"
+    },
+    "seo": {
+      "title": "Bossjob - 在 {{country}} 的专业人士的职业平台",
+      "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
     }
   },
   "jobDetail": {
@@ -563,9 +563,9 @@
         },
         "linkModal": {
           "title": "链接",
-          "url": "URL",
           "btn1": "取消",
           "btn2": "保存",
+          "url": "URL",
           "urlErrorMsg": "请输入一个有效的地址",
           "linkTitle": "链接名称",
           "linkDesc": "输入描述信息..."

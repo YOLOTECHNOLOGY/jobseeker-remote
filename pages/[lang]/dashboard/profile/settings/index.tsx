@@ -211,7 +211,7 @@ const AccountSettings = ({ accessToken ,lang}: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req,query}) => {
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-  const lang = await getDictionary(query.lang as 'en')
+  const lang = await getDictionary(query.lang as 'en-US')
   if (!accessToken) {
     return {
       redirect: {

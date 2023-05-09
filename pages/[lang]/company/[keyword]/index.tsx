@@ -41,9 +41,9 @@ const CompanyDetail = (props: any) => {
   const { page } = router.query
   const [jobQuery, setJobQuery] = useState('')
 
-  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs, lang } =
-    props
+  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs, lang } = props
   const company = companyDetail
+  console.log(company,'company')
   const [companyJobs, setCompanyJobs] = useState(null)
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
   const [totalPages, setTotalPages] = useState(null)
@@ -538,6 +538,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (p
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
+  
+  const config = storeState
+  console.log(config,'storeState')
   const companyDetail = storeState.companies.companyDetail.response.data
 
   if (!companyDetail) {
