@@ -30,6 +30,7 @@ import { FacebookOutline, LinkedinOutline, InstagramOutline, YoutubeOutline } fr
 // Styles
 import styles from '../Company.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
+import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
 
 const CompanyDetail = (props: any) => {
   const {
@@ -533,7 +534,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (p
 
   store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
   store.dispatch(fetchCompanyDetailRequest(companyId))
-  // store.dispatch(fetchConfigRequest())
+  store.dispatch(fetchConfigRequest())
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
@@ -545,6 +546,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (p
       notFound: true
     }
   }
+  changeCompanyValueWithConfigure(companyDetail, storeState.config.config.response)
 
   const companyName = companyDetail.name
   const jobList = storeState.job.jobList.response.data

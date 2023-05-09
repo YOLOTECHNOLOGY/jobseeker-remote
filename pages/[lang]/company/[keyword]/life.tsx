@@ -15,6 +15,8 @@ import styles from '../Company.module.scss'
 import { getCountry } from 'helpers/country'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
+import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
 
 const CompanyLifeProfile = (props: any) => {
   const { companyDetail, seoMetaTitle, lang, seoMetaDescription, totalActiveJobs } = props
@@ -107,7 +109,6 @@ const CompanyLifeProfile = (props: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-
     async ({ req, query: { lang } }: any) => {
       const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
       const companyPageUrl = req.url.split('/')
@@ -125,6 +126,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
       store.dispatch(fetchCompanyDetailRequest(companyId))
+      store.dispatch(fetchConfigRequest())
       store.dispatch(END)
 
       await (store as any).sagaTask.toPromise()
@@ -136,6 +138,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           notFound: true
         }
       }
+      changeCompanyValueWithConfigure(companyDetail, storeState.config.config.response)
 
       const companyName = companyDetail?.name
       const jobList = storeState.job.jobList.response.data
