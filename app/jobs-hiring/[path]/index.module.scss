@@ -123,6 +123,10 @@
             width: 119px;
             height: 44px;
             border-radius: 10px;
+
+            &:hover {
+                background: rgb(24, 84, 163);
+            }
         }
 
         .downloadApp {
@@ -621,6 +625,7 @@
 
                     .labelContainer {
                         flex: 1;
+
                         .name {
                             --color: #353535;
                             font-family: "Product Sans";
@@ -690,12 +695,10 @@
                 width: 100%;
                 height: 100%;
                 opacity: 0.2;
-                background: linear-gradient(
-                    269.8deg,
-                    rgba(255, 235, 184, 0.8) 0.12%,
-                    rgba(242, 177, 202, 0.8) 43.36%,
-                    rgba(84, 142, 237, 0.8) 99.89%
-                );
+                background: linear-gradient(269.8deg,
+                        rgba(255, 235, 184, 0.8) 0.12%,
+                        rgba(242, 177, 202, 0.8) 43.36%,
+                        rgba(84, 142, 237, 0.8) 99.89%);
             }
 
             padding-left: 24px;
@@ -967,7 +970,8 @@
                 letter-spacing: 0.0075em;
                 color: #707070;
                 margin: 0 6px 6px 0;
-                &:last-child{
+
+                &:last-child {
                     margin-right: 0;
                 }
             }
@@ -1000,6 +1004,7 @@
                 line-height: 100%;
                 flex: 1;
                 width: 0;
+
                 .image {
                     border-radius: 8.5px;
                     margin-right: 10px;
@@ -1010,7 +1015,7 @@
                     overflow: hidden;
                     display: block;
                     text-overflow: ellipsis;
-                    white-space: nowrap;     
+                    white-space: nowrap;
                 }
 
             }
@@ -1144,6 +1149,7 @@
         letter-spacing: 0.0075em;
         color: var(--color);
         transition: color ease-in 0.3s;
+
         &:hover {
             --color: #136FD3;
         }
@@ -1151,45 +1157,51 @@
 }
 
 .tableContainer {
-  overflow: hidden;
-  border-radius: 10px;
-  background: transparent;
-  padding-left: 24px;
-  width: fit-content;
-  padding-bottom: 50px;
-  width: 100%;
-  height: 100%;
-  @include sm {
-      display: none;
-  }
-//   @include sm {
-//     display: flex;
-//     flex-direction: column;
-//     height: auto;
-//   }
+    overflow: hidden;
+    border-radius: 10px;
+    background: transparent;
+    padding-left: 24px;
+    width: fit-content;
+    padding-bottom: 50px;
+    width: 100%;
+    height: 100%;
 
-  .jobContainer {
-    margin-bottom: 15px;
-  }
+    @include sm {
+        display: none;
+    }
+
+    //   @include sm {
+    //     display: flex;
+    //     flex-direction: column;
+    //     height: auto;
+    //   }
+
+    .jobContainer {
+        margin-bottom: 15px;
+    }
 }
+
 .mobileContainer {
-  display: none;
-  @include sm {
-    display: flex;
-    flex-direction: column;
-  }
+    display: none;
+
+    @include sm {
+        display: flex;
+        flex-direction: column;
+    }
 }
+
 .loadingSke {
-  height: 145px;
-  background: #fff;
-  border-radius: 10px;
-  margin-bottom: 16px;
-  padding: 14px 24px 0 24px;
-  margin-left: 24px;
-  width: calc(100% - 36px);
-  .top {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+    height: 145px;
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    padding: 14px 24px 0 24px;
+    margin-left: 24px;
+    width: calc(100% - 36px);
+
+    .top {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
 }
