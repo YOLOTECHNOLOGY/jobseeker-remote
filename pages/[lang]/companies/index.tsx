@@ -46,9 +46,9 @@ const Companies = (props: any) => {
   const [totalPage, setTotalPage] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
 
-  useEffect(() => {
-    dispatch(fetchConfigRequest())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(fetchConfigRequest())
+  // }, [])
   const featuredCompaniesResponse = useSelector(
     (store: any) => store.companies.fetchFeaturedCompaniesList.response
   )
@@ -163,9 +163,8 @@ const Companies = (props: any) => {
                     {featuredCompany?.short_description}
                   </Text>
                   <Link
-                    to={`${
-                      featuredCompany?.company_url ? featuredCompany.company_url + '/jobs' : '/jobs'
-                    }`}
+                    to={`${featuredCompany?.company_url ? featuredCompany.company_url + '/jobs' : '/jobs'
+                      }`}
                     className={styles.featuredEmployerOpenings}
                   >
                     <Text textStyle='lg' bold>
@@ -233,10 +232,12 @@ const Companies = (props: any) => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (props) => {
   const { page, lang }: any = props.query
   const dictionary = await getDictionary(lang)
-  // store.dispatch(fetchConfigRequest())
+  store.dispatch(fetchConfigRequest())
   store.dispatch(fetchFeaturedCompaniesListRequest({ page: Number(page) || 1 }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
+  const storeState = store.getState()
+  console.log({ storeState })
   return {
     props: {
       seoMetaTitle: `Find Companies Hiring in ${getCountry()} | Bossjob`,
