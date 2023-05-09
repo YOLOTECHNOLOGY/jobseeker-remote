@@ -142,7 +142,13 @@
       "allJobs": "查看{{totalActiveJobs}}个热招工作"
     },
     "seoTitle": "寻找在{{country}}的公司 | Bossjob",
-    "seoDescription": "`寻找在{{country}}的优秀公司! 了解公司并申请公司正在招聘的工作！"
+    "seoDescription": "`寻找在{{country}}的优秀公司! 了解公司并申请公司正在招聘的工作！",
+    "searchPage": {
+      "title": "公司搜索",
+      "subTitle": "关键词为 {{searchKey}}",
+      "noResult": "没有找到匹配的工作。",
+      "seoText": "寻找在{{country}}的优秀公司"
+    }
   },
   "companyDetail": {
     "tab": {

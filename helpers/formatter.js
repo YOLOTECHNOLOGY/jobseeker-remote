@@ -223,6 +223,9 @@ export const getFromObject = (obj, allowedAttributes) => {
  * @return {String} e.g. View 3 jobs hiring
  */
 export const formatTemplateString = (string, ...args) => {
+  if (!string) {
+    return string
+  }
   const matchedStrings = [...string.matchAll(/{{[^\}]*}}/g)].map(item => escapeRegExp(item[0]));
 
   if (matchedStrings.length !== args.length) {

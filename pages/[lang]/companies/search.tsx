@@ -17,19 +17,24 @@ import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 import SearchCompanyField from 'components/SearchCompanyField/SearchCompanyField'
 
 // Helpers
-import { unslugify } from 'helpers/formatter'
+import { formatTemplateString, unslugify } from 'helpers/formatter'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 
 // Styles
 import styles from './Companies.module.scss'
 import MetaText from '../../../components/MetaText'
 import { getCountry } from 'helpers/country'
+import { END } from 'redux-saga'
+import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
+import { getDictionary } from 'get-dictionary'
+import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
 
 interface SearchProps {
   defaultQuery: string
+  lang: Record<string, any>
 }
 
-const Search = ({ defaultQuery }: SearchProps) => {
+const Search = ({ defaultQuery, lang: { companies: transitions } }: SearchProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { query, page, size } = router.query
@@ -45,7 +50,7 @@ const Search = ({ defaultQuery }: SearchProps) => {
   const isCompanyFilterFetching = useSelector(
     (store: any) => store.companies.fetchCompanyFilter.fetching
   )
-
+  const config = useSelector((store: any) => store.config.config.response)
   useEffect(() => {
     const searchFilterPayload = {
       query,
@@ -60,7 +65,12 @@ const Search = ({ defaultQuery }: SearchProps) => {
 
   useEffect(() => {
     if (fetchCompanyFilterResponse) {
-      setCompanies(fetchCompanyFilterResponse.companies)
+      setCompanies(
+        fetchCompanyFilterResponse.companies?.map((item) => {
+          changeCompanyValueWithConfigure(item, config)
+          return item
+        })
+      )
       setTotalPages(fetchCompanyFilterResponse.total_pages)
     }
   }, [fetchCompanyFilterResponse])
@@ -91,19 +101,24 @@ const Search = ({ defaultQuery }: SearchProps) => {
       <div className={styles.companies}>
         <div className={styles.searchCompany}>
           <Text textStyle='xxxl' tagName='h1' bold className={styles.searchCompanyTitle}>
-            Search Companies
+            {transitions.searchPage.title}
           </Text>
-          <MetaText tagName='h1'>Find great companies in {getCountry()}</MetaText>
+          <MetaText tagName='h1'>
+            {formatTemplateString(transitions.searchPage.seoText, getCountry())}
+          </MetaText>
           <SearchCompanyField
             defaultQuery={defaultQuery}
             onKeywordSearch={handleKeywordSearch}
-            transitions={undefined}
+            transitions={transitions.search}
           />
         </div>
         <div className={styles.searchCompanyQuery}>
           <Text textStyle='xl' tagName='p' bold>
-            Companies for “{query ? unslugify(query) : 'all'}”
-            {companies?.length === 0 && <span> - No Results Found.</span>}
+            {formatTemplateString(
+              transitions.searchPage.subTitle,
+              `"${query ? unslugify(query) : 'all'}"`
+            )}
+            {companies?.length === 0 && <span> - {transitions.searchPage.noResult}</span>}
           </Text>
         </div>
         <div className={styles.companiesList}>
@@ -111,7 +126,7 @@ const Search = ({ defaultQuery }: SearchProps) => {
             companiesList={companies}
             isLoading={isCompanyFilterFetching}
             isSearchPage
-            transitions={undefined}
+            transitions={transitions.popularCompany}
           />
         </div>
 
@@ -130,10 +145,18 @@ const Search = ({ defaultQuery }: SearchProps) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(() => async ({ query }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
+  const { lang }: any = query
+  const dictionary = await getDictionary(lang)
+
+  store.dispatch(fetchConfigRequest())
+  store.dispatch(END)
+  await (store as any).sagaTask.toPromise()
+
   return {
     props: {
       defaultQuery: query.query || null,
+      lang: dictionary,
       seoMetaTitle: `Find Companies Hiring in ${getCountry()} | Bossjob`,
       seoMetaDescription: `Discover great companies to work for in ${getCountry()}! Learn more about the company and apply to job openings on Bossjob!`,
       canonicalUrl: '/companies/search'

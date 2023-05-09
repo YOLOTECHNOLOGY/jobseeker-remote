@@ -117,12 +117,12 @@
     "mobileNumber": "Mobile Number",
     "back": "Back",
     "addJobPreference": "Add Job Preference",
-    "JobClosed":"Job closed",
-    "undoSave":"Undo Save",
-    "employees":"Employees",
-    "InterviewTime":"Interview Time",
-    "address":"Address",
-    "noMore":"No more"
+    "JobClosed": "Job closed",
+    "undoSave": "Undo Save",
+    "employees": "Employees",
+    "InterviewTime": "Interview Time",
+    "address": "Address",
+    "noMore": "No more"
   },
   "companies": {
     "title": "Find great companies in {{country}}",
@@ -142,7 +142,13 @@
       "allJobs": "View {{totalActiveJobs}} job openings"
     },
     "seoTitle": "Find Companies Hiring in {{country}} | Bossjob",
-    "seoDescription": "Discover great companies to work for in {{country}}! Learn more about the company and apply to job openings on Bossjob!"
+    "seoDescription": "Discover great companies to work for in {{country}}! Learn more about the company and apply to job openings on Bossjob!",
+    "searchPage": {
+      "title": "Search Companies",
+      "subTitle": "Companies for {{searchKey}}",
+      "noResult": "No Results Found.",
+      "seoText": "Find great companies in {{country}}"
+    }
   },
   "companyDetail": {
     "tab": {
