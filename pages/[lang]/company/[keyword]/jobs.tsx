@@ -27,6 +27,7 @@ import MetaText from '../../../../components/MetaText'
 import { getCountry } from 'helpers/country'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
+import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
 
 const CompanyJobsProfile = (props: any) => {
   const size = 30
@@ -249,7 +250,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const dictionary = await getDictionary(lang as any)
 
       store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
-      // store.dispatch(fetchConfigRequest())
+      store.dispatch(fetchConfigRequest())
       store.dispatch(fetchCompanyDetailRequest(companyId))
       store.dispatch(END)
 
@@ -264,6 +265,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       const config = storeState.config.config.response
+      changeCompanyValueWithConfigure(companyDetail, config)
+
       const companyName = companyDetail?.name
       const jobList = storeState.job.jobList.response.data
       const totalActiveJobs = jobList?.total_num || 0
