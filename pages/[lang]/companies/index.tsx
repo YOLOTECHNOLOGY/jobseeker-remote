@@ -33,6 +33,7 @@ import BannerCarousel from 'components/BannerCarousel'
 import { BlueTickIcon } from 'images'
 import { getCountry } from 'helpers/country'
 import { formatTemplateString } from 'helpers/formatter'
+import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
 
 const Companies = (props: any) => {
   const {
@@ -45,10 +46,12 @@ const Companies = (props: any) => {
   const [featuredCompany, setFeaturedCompany] = useState(null)
   const [totalPage, setTotalPage] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
+  const config = useSelector((store: any) => store.config.config.response)
 
   // useEffect(() => {
   //   dispatch(fetchConfigRequest())
   // }, [])
+
   const featuredCompaniesResponse = useSelector(
     (store: any) => store.companies.fetchFeaturedCompaniesList.response
   )
@@ -66,7 +69,10 @@ const Companies = (props: any) => {
   useEffect(() => {
     if (featuredCompaniesResponse?.featured_companies) {
       setTotalPage(featuredCompaniesResponse.total_pages)
-      const companies = featuredCompaniesResponse.featured_companies
+      const companies = featuredCompaniesResponse.featured_companies.map((item) => {
+        changeCompanyValueWithConfigure(item, config)
+        return item
+      })
       if (!companies || (companies && !companies.length)) return
       setFeaturedCompany(companies[0]?.company)
       companies.shift()
@@ -163,8 +169,9 @@ const Companies = (props: any) => {
                     {featuredCompany?.short_description}
                   </Text>
                   <Link
-                    to={`${featuredCompany?.company_url ? featuredCompany.company_url + '/jobs' : '/jobs'
-                      }`}
+                    to={`${
+                      featuredCompany?.company_url ? featuredCompany.company_url + '/jobs' : '/jobs'
+                    }`}
                     className={styles.featuredEmployerOpenings}
                   >
                     <Text textStyle='lg' bold>
@@ -236,8 +243,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (p
   store.dispatch(fetchFeaturedCompaniesListRequest({ page: Number(page) || 1 }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
-  const storeState = store.getState()
-  console.log({ storeState })
+
   return {
     props: {
       seoMetaTitle: `Find Companies Hiring in ${getCountry()} | Bossjob`,
