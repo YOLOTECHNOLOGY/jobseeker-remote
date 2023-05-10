@@ -242,20 +242,21 @@
         .filterItems {
             height: 30px;
             width: 196px;
-            margin-right: 8px;
+            margin-right: 9px;
         }
 
         .jobFunctions {
-            width: 184px;
+            width: 196px;
         }
 
         .moreButton {
             text-transform: capitalize !important;
             border-radius: 10px;
-            width: 145px;
+            width: 119px;
             border: 1.5px solid #136fd3;
             font-weight: 700;
             font-size: 14px;
+            padding: 0;
         }
 
         .clearButton {
@@ -269,7 +270,7 @@
             letter-spacing: 0.0075em;
             color: #707070;
             font-size: 14px;
-            margin-left: 4px;
+            margin-left: 2px;
         }
     }
 }
