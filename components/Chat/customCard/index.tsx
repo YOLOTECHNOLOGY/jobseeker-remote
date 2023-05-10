@@ -2,15 +2,15 @@ import React from 'react'
 import styles from './index.module.scss'
 const CustomCard = (props: any) => {
 
-    const { content, jobId } = props
-    const jobPath = [content?.job_title, jobId].join('-')
+    const { content } = props
+    // const jobPath = [content?.job_title, jobId].join('-')
     return <div className={styles.main}>
 
         <div className={styles.title}>
             <div className={styles.mainTitle}>Job in discussion:</div>
             <div
                 className={styles.salary}
-                onClick={() => window.open(location.origin + `/job/${jobPath}`)}
+                onClick={() => window.open(location.origin + content.job_url)}
             > {`${content?.job_title} (${content?.job_type_value})`}</div>
         </div>
         {/* <div className={styles.description} dangerouslySetInnerHTML={{ __html: content?.job_description_html }} />
