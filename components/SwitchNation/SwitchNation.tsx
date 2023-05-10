@@ -1,7 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-
+import { isEqual } from 'lodash-es'
 import Modal from '@mui/material/Modal'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
@@ -9,8 +9,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 
-import { getCountryKey } from 'helpers/country'
-import { getCookie } from 'helpers/cookies'
+import { getCountryKey, getLang, languages, nations } from 'helpers/country'
+import { accessToken as accessTokenKey, getCookie } from 'helpers/cookies'
 
 import MaterialButton from 'components/MaterialButton'
 
@@ -76,60 +76,48 @@ const autocompleteTheme = createTheme({
   }
 })
 
-const nations = [
-  { value: 'ph', label: 'Philippines' },
-  { value: 'sg', label: 'Singapore' }
-]
-
-const languages = [{ value: 'english', label: 'English' }]
-
 type propsType = {
   open: boolean
   close: () => void
   save?: () => void
 }
 
-const SwitchNation = ({ close, save }: propsType) => {
-  const [nation, setNation] = useState<any>()
-  const [nationDefault] = useState<string>(() => getCountryKey())
-  const [loading, setLoading] = useState<boolean>(false)
-
-  const handleSwitchNation = (value?) => {
+const SwitchNation = ({ close, open }: propsType) => {
+  const [nation, setNation] = useState(() => ({ lang: getLang(), country: getCountryKey() }))
+  const [loading, setLoading] = useState(false)
+  const originalSetting = useMemo(() => {
+    return {
+      country: getCountryKey(),
+      lang: getLang()
+    }
+  }, [open])
+  const handleSwitchNation = () => {
+    const { country, lang } = nation
     setLoading(true)
-    const countryKey = getCountryKey()
-    const accessToken = getCookie('accessToken')
-
-    if (nation?.value === countryKey || value === countryKey) {
-      close()
-      return
-    }
-
-    let url: string
-    let query: string
-    if (accessToken) {
-      query = value ? value : nation?.value + '/changeLocale?accessToken=' + accessToken
-      url = 'https://dev.bossjob.' + query
+    const isProduction = process.env.ENV === 'production'
+    const accessToken = getCookie(accessTokenKey)
+    let query = ''
+    let { origin } = window.location
+    if (isProduction) {
+      origin = origin.slice(0, origin.lastIndexOf('.') + 1)
+      query = country ?? nation?.country
     } else {
-      query = value ? value : nation?.value
-      url = 'https://dev.bossjob.' + query
+      // origin is localhost:3000
     }
-
-    window.location.href = url
+    query += `/${lang}`
+    if (accessToken && isProduction) {
+      query += '/changeLocale?accessToken=' + accessToken
+    }
+    window.location.href = origin + query
   }
 
-  const handleSelectNation = (event: any, newValue: any | null) => {
-    // if (isMobile) {
-    //   handleSwitchNation(newValue.value)
-    // } else {
-    //   setNation(newValue)
-    // }
-    setNation(newValue)
+  const handleSelectNation = (event: any, newValue: typeof nations[0]) => {
+    setNation((preState) => ({ ...preState, country: newValue.value }))
   }
 
   return (
     <Modal
-      // open={open}
-      open={false}
+      open={open}
       onClose={close}
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'
@@ -149,6 +137,7 @@ const SwitchNation = ({ close, save }: propsType) => {
           <ThemeProvider theme={autocompleteTheme}>
             <Autocomplete
               disablePortal
+              disableClearable
               options={nations}
               onChange={handleSelectNation}
               renderInput={(params) => (
@@ -161,23 +150,25 @@ const SwitchNation = ({ close, save }: propsType) => {
                 marginRight: isMobile ? 0 : '16px',
                 marginBottom: isMobile ? '16px' : 0
               }}
-              disabled
-              defaultValue={nations.find((nation) => nation.value == nationDefault)}
+              value={nations.find((item) => item.value === nation.country).label}
             />
           </ThemeProvider>
 
           <ThemeProvider theme={autocompleteTheme}>
             <Autocomplete
+              disableClearable
               disablePortal
+              value={languages.find((item) => item.value === nation.lang).label}
               options={languages}
+              onChange={(event, item: typeof languages[0]) => {
+                setNation((preState) => ({ ...preState, lang: item?.value }))
+              }}
               renderInput={(params) => (
                 <ThemeProvider theme={textFieldTheme}>
                   <TextField {...params} label='Language' />
                 </ThemeProvider>
               )}
               sx={{ flex: 1 }}
-              disabled
-              defaultValue={languages[0]}
             />
           </ThemeProvider>
         </main>
@@ -189,8 +180,8 @@ const SwitchNation = ({ close, save }: propsType) => {
           <MaterialButton
             className={styles.swtihcNation_footer_btn}
             variant='contained'
-            onClick={() => (save ? save : handleSwitchNation())}
-            disabled={!nation}
+            onClick={handleSwitchNation}
+            disabled={isEqual(nation, originalSetting)}
             isLoading={loading}
           >
             Save

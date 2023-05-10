@@ -19,19 +19,20 @@ import { getCookie } from 'helpers/cookies'
 // import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import styles from './HamburgerMenu.module.scss'
+import { getCountry, getLanguage } from 'helpers/country'
 
 const Divider = () => <div className={styles.divider} />
 
 interface HamburgerMenuProps {
   openState: boolean
-  toggleMenu: Function,
-  lang:Object
+  toggleMenu: Function
+  lang: Object
 }
 
-const HamburgerMenu = ({ openState, toggleMenu,lang }: HamburgerMenuProps) => {
-  const {header}:any= lang || {}
+const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
+  const { header }: any = lang || {}
   const {
-    downloadApp, 
+    downloadApp,
     findJobs,
     companies,
     courses,
@@ -102,7 +103,7 @@ const HamburgerMenu = ({ openState, toggleMenu,lang }: HamburgerMenuProps) => {
             >
               <li className={styles.menuList}>
                 <Text textStyle={textStyle} className={styles.downLoadApp}>
-                {downloadApp}
+                  {downloadApp}
                 </Text>
               </li>
             </Link>
@@ -112,20 +113,6 @@ const HamburgerMenu = ({ openState, toggleMenu,lang }: HamburgerMenuProps) => {
                 <Text textStyle={textStyle}>{findJobs}</Text>
               </li>
             </Link>
-            {/* <Link
-              className={styles.defaultLink}
-              to={
-                isAuthenticated
-                  ? authPathToOldProject(null, '/dashboard/headhunt-me')
-                  : `${process.env.OLD_PROJECT_URL}/headhunt-me`
-              }
-              title='Headhunt Me'
-              aTag
-            >
-              <li className={styles.menuList} onClick={handleClick}>
-                <Text textStyle='xl'>Headhunt Me</Text>
-              </li>
-            </Link> */}
             <Link className={styles.defaultLink} to='/companies' title='Companies'>
               <li className={styles.menuList} onClick={handleClick}>
                 <Text textStyle={textStyle}>{companies}</Text>
@@ -147,7 +134,7 @@ const HamburgerMenu = ({ openState, toggleMenu,lang }: HamburgerMenuProps) => {
                 >
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle={textStyle} className={styles.activeLink}>
-                     {manageResume}
+                      {manageResume}
                     </Text>
                   </li>
                 </Link>
@@ -186,7 +173,6 @@ const HamburgerMenu = ({ openState, toggleMenu,lang }: HamburgerMenuProps) => {
             </Link>
             {!isAuthenticated && (
               <>
-                
                 <Link
                   className={styles.defaultLink}
                   to='https://blog.bossjob.ph/'
@@ -286,22 +272,22 @@ const HamburgerMenu = ({ openState, toggleMenu,lang }: HamburgerMenuProps) => {
                     <Text textStyle={textStyle}>{logOut}</Text>
                   </li>
                 </div>
-
-                {/* <li
-                  className={styles.defaultLink}
-                  onClick={() => {
-                    setOpenSwitchNationModal(true)
-                  }}
-                  style={{ padding: '14px' }}
-                >
-                  <div className={styles.menuList}>
-                    <Text textStyle={textStyle}>
-                      {getCountry()}, English - <span style={{ color: '#136FD3' }}>Change</span>
-                    </Text>
-                  </div>
-                </li> */}
               </>
             )}
+            <Divider />
+            <li
+              className={styles.defaultLink}
+              onClick={() => {
+                setOpenSwitchNationModal(true)
+              }}
+              style={{ padding: '14px' }}
+            >
+              <div className={styles.menuList}>
+                <Text textStyle={textStyle}>
+                  {getCountry()}, {getLanguage()} - <span style={{ color: '#136FD3' }}>Change</span>
+                </Text>
+              </div>
+            </li>
           </React.Fragment>
         </ul>
       </div>
