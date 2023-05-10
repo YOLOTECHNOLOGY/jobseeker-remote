@@ -1,14 +1,19 @@
 @import 'styles/mixins.scss';
 
+$paddingLeftWidth: 600px;
+
 .content {
     display: flex;
     flex-direction: row;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: space-between;
 
     .table {
         margin-top: 40px;
-        margin-left: calc(50vw - 585px);
         background: transparent;
-        width: 954px;
+        width: 920px;
+        margin-right: 16px;
 
         @include sm {
             margin-left: 0px;
@@ -55,7 +60,7 @@
         margin-top: 40px;
         height: 100%;
         width: 254px;
-        margin-left: 6px;
+        margin-left: 0;
         height: 600px;
 
         @include sm {
@@ -68,7 +73,7 @@
     --box-shadow: none;
     width: 100vw;
     height: 153px;
-    max-width: 100%;
+    // max-width: 100%;
     display: flex;
     // position: sticky;
     top: 0px;
@@ -76,7 +81,7 @@
     align-items: center;
     background: #fff;
     box-shadow: var(--box-shadow);
-    padding-left: calc(50vw - 585px);
+    padding-left: 0;
     transition: box-shadow ease-in 0.5s;
 
     &.isFixed {
@@ -90,20 +95,31 @@
     .searchArea {
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
         align-items: flex-end;
+        justify-content: space-between;
         width: fit-content;
-        width: calc(50vw + 585px);
+        width: calc(50vw + $paddingLeftWidth);
         height: 74px;
-        padding-left: 24px;
+        max-width: 1200px;
+        // padding-left: 24px;
+        // padding-right: 24px;
+
+        &Left {
+            display: flex;
+        }
+
+        &Right {
+            display: flex;
+        }
+
 
         .location {
-            width: 196px;
+            width: 176px;
             height: 44px;
         }
 
         .search {
-            width: 608px;
+            width: 571px;
             height: 44px;
             // border: 1px solid #ccc;
             background: #fff;
@@ -112,7 +128,7 @@
             //   line-height: 100%;
             // }
             position: relative;
-            top: 2px;
+            top: 4px;
         }
 
         .searchButton {
@@ -120,7 +136,7 @@
             text-transform: capitalize !important;
             background: #136fd3;
             color: #fff;
-            width: 119px;
+            width: 132px;
             height: 44px;
             border-radius: 10px;
 
@@ -233,26 +249,36 @@
     .filters {
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
-        width: calc(50vw + 585px);
+        justify-content: space-between;
+        width: calc(50vw + $paddingLeftWidth);
+        max-width: 1200px;
         height: 50px;
         padding-top: 20px;
-        padding-left: 24px;
+        // padding-left: 24px;
+        // padding-right: 24px;
+
+        &Left{
+            display: flex;
+        }
+       
+        &Right{
+            display: flex;
+        }
 
         .filterItems {
             height: 30px;
-            width: 196px;
-            margin-right: 9px;
+            width: 181px;
+            margin-right: 8px;
         }
 
-        .jobFunctions {
-            width: 196px;
+        .jobSalary {
+            width: 188px;
         }
 
         .moreButton {
             text-transform: capitalize !important;
             border-radius: 10px;
-            width: 119px;
+            width: 132px;
             border: 1.5px solid #136fd3;
             font-weight: 700;
             font-size: 14px;
@@ -404,10 +430,10 @@
 }
 
 .jobCard {
-    width: 918px;
+    width: 100%;
     height: 170px;
     position: relative;
-    padding-right: 24px;
+    padding-right: 0;
 
     .urgent {
         position: absolute;
@@ -1161,11 +1187,12 @@
     overflow: hidden;
     border-radius: 10px;
     background: transparent;
-    padding-left: 24px;
+    padding-left: 0;
     width: fit-content;
     padding-bottom: 50px;
-    width: 100%;
+    width: 892px;
     height: 100%;
+    // margin-left: 24px;
 
     @include sm {
         display: none;
