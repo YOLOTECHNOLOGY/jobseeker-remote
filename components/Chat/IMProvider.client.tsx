@@ -29,6 +29,7 @@ import { pushNotification } from 'store/services/notification'
 import { scripts } from 'imforbossjob'
 import OfferModal from './offer'
 import { getDictionary } from 'get-dictionary'
+import { formatTemplateString } from 'helpers/formatter'
 const { offerJobseeker: { getDataAndShowOfferMessageScript } } = scripts
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
@@ -93,13 +94,22 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
     const [chatDictionary, setChatDictionary] = useState({})
     useEffect(() => {
         getDictionary(lang)
-        .then(dic => {
-            if (dic) {
-                setChatDictionary(dic)
-            }
-        })
+            .then(dic => {
+                if (dic) {
+                    setChatDictionary(dic.chat)
+                }
+            })
     }, [lang])
-    console.log({chatDictionary})
+    console.log({ chatDictionary })
+    const translate = useCallback((key, ...args) => {
+        if (!chatDictionary) {
+            return key
+        } else if (args.length === 0) {
+            return chatDictionary?.[key]
+        } else {
+            return formatTemplateString(key, ...args)
+        }
+    }, [chatDictionary])
     useEffect(() => {
         if (window?.SharedWorker && (window as any)?.imSharedWorker?.port) {
             (window as any).imSharedWorker.port.onmessage = () => {
@@ -107,6 +117,7 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
             }
         }
     }, [])
+   
     const [chatId, setChatId] = useState()
     const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
     const userDetailRef = useRef(userDetail)
@@ -440,7 +451,8 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
         imStatus,
         status,
         setStatus,
-        postNote
+        postNote,
+        translate
     }}>{userId ? <>
         <SendResumeModal
             loading={loading}

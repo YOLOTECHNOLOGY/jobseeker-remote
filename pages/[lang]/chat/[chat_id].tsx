@@ -15,7 +15,7 @@ const JobseekerChat = dynamic<any>(import('components/Chat'), {
     ssr: false
 })
 // import JobseekerChat from 'components/Chat'
-const Chat = ({lang}:any) => {
+const Chat = ({ lang }: any) => {
     const router = useRouter()
     const {
         userId,
@@ -33,7 +33,8 @@ const Chat = ({lang}:any) => {
         imStatus,
         interpreter,
         status,
-        setStatus
+        setStatus,
+        translate
     } = useContext(IMContext)
     const dispatch = useDispatch()
     useEffect(() => {
@@ -72,7 +73,7 @@ const Chat = ({lang}:any) => {
         }
     }, [chatId])
 
-    return <Layout isHiddenFooter isHiddenHeader={false}  lang={lang}>
+    return <Layout isHiddenFooter isHiddenHeader={false} lang={lang}>
         <div style={{ marginTop: mobile ? 0 : 24 }}>
             <JobseekerChat
                 key='jobchat'
@@ -93,22 +94,24 @@ const Chat = ({lang}:any) => {
                 updateChatList={updateChatList}
                 imStatus={imStatus}
                 interpreter={interpreter}
+                translate={translate}
             // businessInterpreters={interpreters}
             />
         </div>
     </Layout>
 }
-export const getServerSideProps =  async ({query}) => {
+export const getServerSideProps = async ({ query }) => {
     const lang = await getDictionary(query.lang as 'en-US')
-    return { 
-     props: {
-        lang
-    } }
+    return {
+        props: {
+            lang
+        }
+    }
 }
 const Ready = (props) => {
     const { ready } = useContext(IMContext)
     if (ready) {
-        return <Chat {...props}/>
+        return <Chat {...props} />
     } else {
         return <div />
     }
