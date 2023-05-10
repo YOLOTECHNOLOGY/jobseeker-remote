@@ -20,7 +20,7 @@ export const changeCompanyValueWithConfigure = (companyDetail, config) => [
     companyDetail[item.property] = getValueById(
       config,
       companyDetail[item.idKey],
-      getIdPath((item.pathKey || item.idKey) as any).slice(1)
+      item.pathKey || item.idKey
     )
   })
 ]

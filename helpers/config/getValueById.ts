@@ -1,5 +1,7 @@
 // in some case, the target value's key isn't named value, likely label
-export const getValueById = (store: Record<string, any>, id: any, path: string | string[], key = 'value') => {
+import { getIdPath } from "./getIdPath";
+export const getValueById = (store: Record<string, any>, id: any, idKey: string, key = 'value') => {
+  const path = getIdPath(idKey) ?? []
   const getLastedValue = (object: { [k: string]: any }[] | { [k: string]: any }, id: any) => {
     let result;
     if (Array.isArray(object)) {

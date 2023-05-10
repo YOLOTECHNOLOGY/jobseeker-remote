@@ -19,6 +19,8 @@ import { addJobViewService } from 'store/services/jobs/addJobView'
 
 import styles from '../../index.module.scss'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { useSelector } from 'react-redux'
+import { getValueById } from 'helpers/config/getValueById'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -111,6 +113,7 @@ const JobCard = (props: any) => {
   const {
     job_title,
     // job_region,
+    company_size_id,
     salary_range_value,
     job_type,
     job_location,
@@ -123,7 +126,7 @@ const JobCard = (props: any) => {
     company_logo,
     company_name,
     company_industry,
-    company_size,
+    // company_size,
     company_financing_stage,
     job_benefits,
     external_apply_url,
@@ -136,12 +139,16 @@ const JobCard = (props: any) => {
   } = props
   const { search } = useContext(languageContext) as any
   const labels = [job_type, job_location, xp_lvl, degree].filter((a) => a)
-  const companyLabels = [company_industry, company_size, company_financing_stage].filter((a) => a)
+  const config = useSelector((store:any)=> store.config.config.response)
+
+  const companySize = getValueById(config,company_size_id,'company_size_id')
+
+  const companyLabels = [company_industry, companySize, company_financing_stage].filter((a) => a)
   const router = useRouter()
   const [loading, chatNow, modalChange] = useChatNow(props)
   const [titleHover, setTitleHover] = useState(false)
   const [popHover, setPopHover] = useState(false)
-
+  // const jobBenefitsValue = job_benefits.map(benefits => getValueById(config,benefits.id,['job_benefits'],'value'))
   const showPopup = useShowPop(titleHover, popHover)
   const accessToken = getCookie('accessToken')
   const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken)

@@ -699,5 +699,8 @@
     "fillUpTheFieldsWith": " Fill up the fields with (*) to proceed.",
     "addAEducation": " Add a education",
     "notWantToEnterEducation": "I do not want to enter my Education now"
+  },
+  "chat": {
+    "chatTitle":"Chat"
   }
 }
