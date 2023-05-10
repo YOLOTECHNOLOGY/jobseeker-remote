@@ -10,6 +10,9 @@ import Link from 'components/Link'
 import Text from 'components/Text'
 import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
+import { IMContext } from 'components/Chat/IMProvider.client'
+import SwitchNation from 'components/SwitchNation/SwitchNation'
+import { getCountry, getLanguage } from 'helpers/country'
 
 /* Images */
 import { BossjobLogoWhite as BossjobLogo, DefaultAvatar } from 'images'
@@ -21,11 +24,9 @@ import { getCookie } from 'helpers/cookies'
 
 /* Style */
 import styles from '../Header.module.scss'
-import { IMContext } from 'components/Chat/IMProvider.client'
-import SwitchNation from 'components/SwitchNation/SwitchNation'
 
 // this header will be used when user is logged in
-const ProtectedHeader = ({lang}:any) => {
+const ProtectedHeader = ({ lang }: any) => {
   const {
     careerGuide,
     companies,
@@ -105,7 +106,7 @@ const ProtectedHeader = ({lang}:any) => {
                 {!pathname?.includes('/jobs-hiring/') ? (
                   <Link title='Jobs' to='/jobs-hiring/job-search'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                     {findJobs}
+                      {findJobs}
                     </Text>
                   </Link>
                 ) : (
@@ -117,7 +118,7 @@ const ProtectedHeader = ({lang}:any) => {
                       styles.headerLinkTextCurrentPage
                     ])}
                   >
-                   {findJobs}
+                    {findJobs}
                   </Text>
                 )}
               </li>
@@ -125,7 +126,7 @@ const ProtectedHeader = ({lang}:any) => {
                 {pathname !== '/companies' ? (
                   <Link title='Companies' to='/companies'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                     {companies}
+                      {companies}
                     </Text>
                   </Link>
                 ) : (
@@ -137,7 +138,7 @@ const ProtectedHeader = ({lang}:any) => {
                       styles.headerLinkTextCurrentPage
                     ])}
                   >
-                   {companies}
+                    {companies}
                   </Text>
                 )}
               </li>
@@ -157,7 +158,7 @@ const ProtectedHeader = ({lang}:any) => {
               <li className={styles.headerLink} style={{ position: 'relative' }}>
                 <Link title='Career Guide' to='https://blog.bossjob.ph' external>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                   {careerGuide}
+                    {careerGuide}
                   </Text>
                 </Link>
               </li>
@@ -220,7 +221,7 @@ const ProtectedHeader = ({lang}:any) => {
                     }}
                   >
                     <Text textColor='white' textStyle='base'>
-                    {manageResume}
+                      {manageResume}
                     </Text>
                   </MaterialButton>
                 </a>
@@ -243,7 +244,7 @@ const ProtectedHeader = ({lang}:any) => {
                   }}
                 >
                   <Text textColor='white' textStyle='base'>
-                   {manageResume}
+                    {manageResume}
                   </Text>
                 </MaterialButton>
               )}
@@ -266,7 +267,7 @@ const ProtectedHeader = ({lang}:any) => {
             </li>
           </React.Fragment>
         </ul>
-     
+
         <div className={styles.mobileIconWrapper}>
           {pathname !== '/chat/[chat_id]' ? (
             <li
@@ -329,7 +330,7 @@ const ProtectedHeader = ({lang}:any) => {
                   <Text textStyle='base'>{hiring}</Text>
                 </Link>
               </li>
-              {/* <li
+              <li
                 className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}
                 onClick={() => {
                   setOpenSwitchNationModal(true)
@@ -338,10 +339,11 @@ const ProtectedHeader = ({lang}:any) => {
               >
                 <div className={styles.headerMenuLink}>
                   <Text textStyle='base'>
-                    {getCountry()}, English - <span style={{ color: '#136FD3' }}>Change</span>
+                    {getCountry()}, {getLanguage()} -{' '}
+                    <span style={{ color: '#136FD3' }}>Change</span>
                   </Text>
                 </div>
-              </li> */}
+              </li>
               <li className={styles.headerMenuItem}>
                 <div className={styles.headerMenuLink} onClick={() => handleLogOut()}>
                   <Text textStyle='base'>{logOut}</Text>
