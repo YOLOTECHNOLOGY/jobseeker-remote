@@ -274,6 +274,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                 </div>
               </>
             )}
+            <Divider />
             <li
               className={styles.defaultLink}
               onClick={() => {
