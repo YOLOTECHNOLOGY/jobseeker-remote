@@ -723,6 +723,8 @@
     "sendImageText":"Send images",
     "sendPlaceHolder":"Write your message...",
     "mobileActionResume":"Send Resume",
-    "mobileActionExchange":"Exchange mobile number"
+    "mobileActionExchange":"Exchange mobile number",
+    "moreText":"More",
+    "emoji":"Emoji"
   }
 }

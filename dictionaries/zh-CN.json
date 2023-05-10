@@ -729,6 +729,8 @@
     "sendImageText":"发送图片",
     "sendPlaceHolder":"写下您的消息...",
     "mobileActionResume":"发送简历",
-    "mobileActionExchange":"交换号码"
+    "mobileActionExchange":"交换号码",
+    "moreText":"更多操作",
+    "emoji":"表情"
   }
 }
