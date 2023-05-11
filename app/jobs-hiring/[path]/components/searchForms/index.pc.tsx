@@ -137,7 +137,7 @@ const SearchArea = (props: any) => {
     cursor: 'pointer'
   }
   return (
-    <div>
+    <div className={styles.searchWrap}>
       <ThemeProvider theme={theme}>
         <div
           className={classNames({
@@ -145,7 +145,9 @@ const SearchArea = (props: any) => {
             [styles.isFixed]: isFixed
           })}
         >
+          {/* search */}
           <div className={styles.searchArea}>
+            <div className={styles.searchAreaLeft}>
             <MaterialLocationField
               className={styles.location}
               locationList={config.location_lists}
@@ -235,6 +237,8 @@ const SearchArea = (props: any) => {
               {' '}
               Search{' '}
             </MaterialButton>
+            </div>
+            <div className={styles.searchAreaRight}>
             {accessToken ? (
               <div
                 className={styles.downloadApp}
@@ -318,8 +322,11 @@ const SearchArea = (props: any) => {
                 <span> Login to see more jobs</span>
               </Button>
             )}
+            </div>
           </div>
+          {/* filter */}
           <div className={styles.filters}>
+            <div className={styles.filtersLeft}>
             <Single
               options={sortOptions}
               value={sort}
@@ -332,14 +339,14 @@ const SearchArea = (props: any) => {
               id='jobFunction'
               label='Job Function'
               value={jobFunctionValue}
-              className={[styles.filterItems, styles.jobFunctions]}
+              className={[styles.filterItems]}
               onChange={jobFunctionChange}
             />
             <Multiple
               label='Salary'
               value={salaries}
               options={salaryOptions}
-              className={styles.filterItems}
+              className={classNames([styles.filterItems, styles.jobSalary])}
               onSelect={setSelaries}
             />
             <Multiple
@@ -360,6 +367,8 @@ const SearchArea = (props: any) => {
               {' '}
               More Filters {moreCount ? `(${moreCount})` : ''}{' '}
             </Button>
+            </div>
+            <div className={styles.filtersRight}>
             <Button
               className={styles.clearButton}
               variant='text'
@@ -380,6 +389,7 @@ const SearchArea = (props: any) => {
             >
               Reset Filters{' '}
             </Button>
+            </div>
           </div>
         </div>
       </ThemeProvider>

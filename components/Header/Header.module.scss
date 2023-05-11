@@ -1,10 +1,17 @@
 @import 'styles/mixins.scss';
 @import 'styles/variable.scss';
 
+
 @mixin containers {
   @extend .GlobalContainer;
+  max-width: $maxContentWidth;
   height: 100%;
   display: flex;
+
+  @include md {
+    width: $maxContentWidth;
+  }
+
 }
 
 .logo {

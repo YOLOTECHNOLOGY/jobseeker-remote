@@ -1,8 +1,14 @@
+@import 'styles/mixins.scss';
+
 .jobListOptionAlerts {
     display: flex;
     flex-direction: row;
-    padding-left: 24px;
+    // padding-left: 24px;
     margin-bottom: 16px;
+
+    @include sm {
+        padding-left: 24px;
+    }
 
     &Item {
         font-family: 'Product Sans';
