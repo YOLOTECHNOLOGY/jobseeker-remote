@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { RequestCookies } from 'next/dist/server/web/spec-extension/cookies'
 import { i18n } from './i18n-config'
 import { match as matchLocale } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
+import { configKey } from 'helpers/cookies'
+import { getCountryKey } from 'helpers/country'
 
 function getLocale(request: NextRequest): string | undefined {
   // Negotiator expects plain object so we need to transform headers
@@ -16,9 +19,16 @@ function getLocale(request: NextRequest): string | undefined {
   return matchLocale(languages, locales, i18n.defaultLocale)
 }
 
+export const getCountryAndLang = (cookies: RequestCookies) => {
+  const config = cookies.get(configKey)
+  if (!config) {
+    return null
+  }
+  return config.value.split('_')
+}
+
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
-
   // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
   // // If you have one
   if (
@@ -38,15 +48,24 @@ export function middleware(request: NextRequest) {
   const pathnameIsMissingLocale = i18n.locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   )
-
   // Redirect if there is no locale
-  console.log({pathnameIsMissingLocale,pathname})
   if (pathnameIsMissingLocale) {
-    const locale = getLocale(request)
+    const locale = getCountryAndLang(request.cookies) || [getCountryKey(), getLocale(request)]
+    const lang = locale?.[1]
     // e.g. incoming request is /products
     // The new URL is now /en-US/products
-    return NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url))
+    const res = NextResponse.redirect(new URL(`/${lang}${pathname}`, request.url))
+    res.cookies.set(configKey, `${locale.join('_')}`, { path: '/' })
+    return res
   }
+
+  // const res = NextResponse.next();
+  // // Setting cookies in response.
+  // // This will be sent back to the browser.
+  // res.cookies.set("my-cookie", "my-cookie-value", {
+  //   path: "/",
+  //   httpOnly: true,
+  // });
 }
 
 export const config = {

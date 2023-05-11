@@ -31,6 +31,7 @@ import { FacebookOutline, LinkedinOutline, InstagramOutline, YoutubeOutline } fr
 import styles from '../Company.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
 import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
+import { configKey } from 'helpers/cookies'
 
 const CompanyDetail = (props: any) => {
   const {
@@ -42,9 +43,10 @@ const CompanyDetail = (props: any) => {
   const { page } = router.query
   const [jobQuery, setJobQuery] = useState('')
 
-  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs, lang } = props
+  const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs, lang } =
+    props
   const company = companyDetail
-  console.log(company,'company')
+  console.log(company, 'company')
   const [companyJobs, setCompanyJobs] = useState(null)
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
   const [totalPages, setTotalPages] = useState(null)
@@ -531,19 +533,15 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (p
     size: 10,
     page: 1
   }
-
   store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
   store.dispatch(fetchCompanyDetailRequest(companyId))
-  store.dispatch(fetchConfigRequest())
+  store.dispatch(fetchConfigRequest(req.cookies[configKey].split('_')))
   store.dispatch(END)
 
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  
-  const config = storeState
-  console.log(config,'storeState')
-  const companyDetail = storeState.companies.companyDetail.response.data
 
+  const companyDetail = storeState.companies.companyDetail.response.data
   if (!companyDetail) {
     return {
       notFound: true

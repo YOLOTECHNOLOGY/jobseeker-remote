@@ -6,43 +6,45 @@ import {
 } from 'store/actions/config/fetchConfig'
 import { fetchConfigService } from 'store/services/config/fetchConfig'
 import dayjs from 'dayjs'
-import { getCountryKey } from 'helpers/country'
-const countryKey = getCountryKey()
-const cached = (data) => {
+
+// key: e.g. ph_en-US ph_zh-CN
+const cached = (key, data) => {
   if (typeof window !== 'undefined') {
-    localStorage.setItem('cachedConfig-' + countryKey, JSON.stringify(data))
-    localStorage.setItem('configRefreshTime-' + countryKey, dayjs().format('YYYY-MM-DD'))
+    localStorage.setItem('cachedConfig-' + key, JSON.stringify(data))
+    localStorage.setItem('configRefreshTime-' + key, dayjs().format('YYYY-MM-DD'))
   } else {
-    globalThis['cachedConfig-' + countryKey] = data
-    globalThis['configRefreshTime-' + countryKey] = dayjs().format('YYYY-MM-DD')
+    globalThis['cachedConfig-' + key] = data
+    globalThis['configRefreshTime-' + key] = dayjs().format('YYYY-MM-DD')
   }
 }
 
-const load = () => {
+const load = (key) => {
   if (typeof window !== 'undefined') {
-    const data = JSON.parse(localStorage.getItem('cachedConfig-' + countryKey))
-    const time = localStorage.getItem('configRefreshTime-' + countryKey)
+    const data = JSON.parse(localStorage.getItem('cachedConfig-' + key))
+    const time = localStorage.getItem('configRefreshTime-' + key)
     return { data, time }
   } else {
     return {
-      data: globalThis['cachedConfig-' + countryKey],
-      time: globalThis['configRefreshTime-' + countryKey]
+      data: globalThis['cachedConfig-' + key],
+      time: globalThis['configRefreshTime-' + key]
     }
   }
 }
 
 function* fetchConfigReq(action) {
+  const { payload } = action
   try {
-    const { data, time: lastDate } = load()
+    const key = Array.isArray(payload) ? payload.join('_') : payload
+    const { data, time: lastDate } = load(key)
     let result = data
     if (!result) {
-      result = yield call(fetchConfigService, action.payload)
-      cached(result)
+      result = yield call(fetchConfigService, payload)
+      cached(key, result)
     } else {
       const daypassed = dayjs().diff(dayjs(lastDate), 'days')
       if (daypassed > 3) {
-        result = yield call(fetchConfigService, action.payload)
-        cached(result)
+        result = yield call(fetchConfigService, payload)
+        cached(key, result)
       } else {
         // yield delay(0)
       }

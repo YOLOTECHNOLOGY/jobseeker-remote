@@ -28,6 +28,7 @@ import { getCountry } from 'helpers/country'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
 import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
+import { configKey } from 'helpers/cookies'
 
 const CompanyJobsProfile = (props: any) => {
   const size = 30
@@ -250,7 +251,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const dictionary = await getDictionary(lang as any)
 
       store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
-      store.dispatch(fetchConfigRequest())
+      store.dispatch(fetchConfigRequest(req.cookies[configKey].split('_')))
       store.dispatch(fetchCompanyDetailRequest(companyId))
       store.dispatch(END)
 

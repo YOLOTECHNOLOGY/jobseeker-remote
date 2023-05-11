@@ -17,6 +17,7 @@ import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
+import { configKey } from 'helpers/cookies'
 
 const CompanyLifeProfile = (props: any) => {
   const { companyDetail, seoMetaTitle, lang, seoMetaDescription, totalActiveJobs } = props
@@ -126,7 +127,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
       store.dispatch(fetchCompanyDetailRequest(companyId))
-      store.dispatch(fetchConfigRequest())
+      store.dispatch(fetchConfigRequest(req.cookies[configKey].split('_')))
       store.dispatch(END)
 
       await (store as any).sagaTask.toPromise()
