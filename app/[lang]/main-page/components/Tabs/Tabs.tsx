@@ -24,17 +24,6 @@ import {
 import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
-const tabListLogin = [
-  {
-    tab: 'Recommended',
-    value: '2'
-  },
-  {
-    tab: 'Latest jobs',
-    value: '1'
-  }
-]
-
 const theme = createTheme({
   components: {
     MuiTabs: {
@@ -105,8 +94,7 @@ const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => 
 
 const Tabs = ({ location }: any) => {
   const { home } = useContext(languageContext) as any
-  const { tab } = home
-
+  const { tab, jobTab } = home
   const tabList = useMemo(() => {
     return [
       {
@@ -123,6 +111,18 @@ const Tabs = ({ location }: any) => {
       { tab: tab['Manufacturing'], value: 'Manufacturing' },
       { tab: tab['Banking'], value: 'Banking' },
       { tab: tab['Healthcare'], value: 'Healthcare/Medical' }
+    ]
+  }, [])
+  const tabListLogin = useMemo(() => {
+    return [
+      {
+        tab: jobTab.reco,
+        value: '2'
+      },
+      {
+        tab: jobTab.latestJob,
+        value: '1'
+      }
     ]
   }, [])
   const [value, setValue] = useState<string>('Information Technology')

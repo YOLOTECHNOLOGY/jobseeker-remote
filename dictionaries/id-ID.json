@@ -142,7 +142,13 @@
       "allJobs": "View {{totalActiveJobs}} job openings"
     },
     "seoTitle": "Find Companies Hiring in {{country}} | Bossjob",
-    "seoDescription": "Discover great companies to work for in {{country}}! Learn more about the company and apply to job openings on Bossjob!"
+    "seoDescription": "Discover great companies to work for in {{country}}! Learn more about the company and apply to job openings on Bossjob!",
+    "searchPage": {
+      "title": "Search Companies",
+      "subTitle": "Companies for {{searchKey}}",
+      "noResult": "No Results Found.",
+      "seoText": "Find great companies in {{country}}"
+    }
   },
   "companyDetail": {
     "tab": {
@@ -262,7 +268,8 @@
       "needMatches": "Want more accurate matches?",
       "getStart": "Get Started",
       "noMore": "No more",
-      "loading": "Loading"
+      "loading": "Loading",
+      "basedOnYou": "Based on your"
     },
     "seeMoreBtn": "See More",
     "topCompany": "Top Companies",
@@ -699,5 +706,32 @@
     "fillUpTheFieldsWith": " Fill up the fields with (*) to proceed.",
     "addAEducation": " Add a education",
     "notWantToEnterEducation": "I do not want to enter my Education now"
+  },
+  "chat": {
+    "chatTitle": "Chat",
+    "chatFilterPlaceholder": "All messages",
+    "qrCodeMessage": "Talk to Boss anywhere",
+    "interviewDisabled": "No Interview yet",
+    "interviewEnabled": "Interview details",
+    "pin": "Pin to the top",
+    "cancelPin": "Cancel pin to the top",
+    "notInterested": "Not interested",
+    "enterSendText": "Press Enter to send message",
+    "ctrlEnterSendText": "Press CTRL + Enter to send message",
+    "sendButtonText": "Send",
+    "resumeFirstText": "Send resume: Available after both parties replied.",
+    "resumeSubmittedText": "Request to send resume has been submitted.",
+    "resumeEnabled": "Send resume.",
+    "exchangeTextIsFirst": "Exchange mobile number: Available after both parties replied.",
+    "exchangeTextHasActive": "Mobile number exchange has been requested",
+    "exchangeTextFinished": "Mobile number has been exchanged",
+    "exchangeTextEnabled": "Exchange mobile number",
+    "commonPhrasesText": "Common phrase",
+    "sendImageText": "Send images",
+    "sendPlaceHolder": "Write your message...",
+    "mobileActionResume": "Send Resume",
+    "mobileActionExchange": "Exchange mobile number",
+    "moreText": "More",
+    "emoji": "Emoji"
   }
 }
