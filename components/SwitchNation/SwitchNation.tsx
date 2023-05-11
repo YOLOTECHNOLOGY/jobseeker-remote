@@ -10,7 +10,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 
 import { getCountryKey, getLang, languages, nations } from 'helpers/country'
-import { accessToken as accessTokenKey, getCookie } from 'helpers/cookies'
+import { accessToken as accessTokenKey, configKey, getCookie, setCookie } from 'helpers/cookies'
 
 import MaterialButton from 'components/MaterialButton'
 
@@ -108,6 +108,8 @@ const SwitchNation = ({ close, open }: propsType) => {
     if (accessToken && isProduction) {
       query += '/changeLocale?accessToken=' + accessToken
     }
+    // store this in cookies. then the others link request server can take it to server
+    setCookie(configKey, `${country}_${lang}`)
     window.location.href = origin + query
   }
 

@@ -4,8 +4,10 @@ import {
   FETCH_CONFIG_FAILED,
 } from 'store/types/config/fetchConfig'
 
-const fetchConfigRequest = () => ({
+// we can use payload to pass params on server side, and this payload only can be used on server
+const fetchConfigRequest = (payload) => ({
   type: FETCH_CONFIG_REQUEST,
+  payload
 })
 
 const fetchConfigSuccess = (payload) => ({
