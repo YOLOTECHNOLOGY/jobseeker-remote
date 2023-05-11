@@ -28,7 +28,7 @@ const Icon = ({ isFinish, active, ...rest }: any) => {
 }
 const DetailModal = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef, loading, data, applicationId } = props
+    const { contextRef, loading, data={}, applicationId } = props
     const actionsRef = useRef({} as any)
     const isStatusIn = useCallback(status => {
         return status.includes(data?.jobseeker_display_status)
