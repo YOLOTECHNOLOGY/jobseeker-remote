@@ -10,7 +10,7 @@ const LoadingProvider = ({ children, lang }: any) => {
     const [loading, startTransition] = useTransition()
     const push = useCallback((url) => {
         startTransition(() => {
-            router.push(`${'en'}` + url, { forceOptimisticNavigation: false })
+            router.push( url, { forceOptimisticNavigation: false })
         })
     }, [router, startTransition])
     const refresh = useCallback(() => {
