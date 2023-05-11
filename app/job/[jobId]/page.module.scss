@@ -1022,6 +1022,33 @@
 }
 
 .read_more_container {
-  color: #136fd3;
+  position: relative;
+  width: 100%;
+}
+
+.read_more_mask {
+  display: block;
+  position: absolute;
+  content: "";
+  pointer-events: none;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  height: 70px;
+  background: -webkit-linear-gradient(rgba(161, 159, 156, 0), #ffffff 90%);
+  background: linear-gradient(rgba(161, 159, 156, 0), #ffffff 90%);
+  -webkit-transition: inherit;
+  transition: inherit;
+  -webkit-transition-timing-function: ease;
+  transition-timing-function: ease;
+  -webkit-transform-origin: center bottom;
+  -ms-transform-origin: center bottom;
+  transform-origin: center bottom;
+}
+
+.read_more_text {
   cursor: pointer;
+  color: #136fd3;
+  display: inline-block;
+  height: 24px;
 }

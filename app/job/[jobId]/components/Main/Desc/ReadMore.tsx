@@ -42,7 +42,8 @@ const ReadMore = (props: Iprops) => {
                 className={styles['read_more_container']} 
                 onClick={handleShowMore}
                 >
-                    {showReadMore ? 'Read More': 'Read Less'}
+                    <div className={showReadMore ? styles['read_more_mask']: ''}></div>
+                    <span className={styles['read_more_text']}>{showReadMore ? 'Read More': 'Read Less'}</span>
                 </div>
             }
         </div>

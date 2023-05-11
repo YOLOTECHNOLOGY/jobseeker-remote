@@ -6,7 +6,6 @@ import { DefaultAvatar } from 'images'
 import { Avatar } from 'app/components/MUIs'
 import JobClient from './JobClient/JobClient'
 import ReadMore from './ReadMore'
-
 import styles from '../../../page.module.scss'
 
 type propsType = {
@@ -25,8 +24,8 @@ const Desc = ({
   description,
   requirements,
   skills,
-  logo,
-  name,
+  // logo,
+  // name,
   chatResponseRate,
   lastActiveAt,
   shareParams,
@@ -78,7 +77,7 @@ const Desc = ({
           className={styles.desc_context}
           dangerouslySetInnerHTML={{ __html: description }}
         ></div> */}
-        <ReadMore className={styles.desc_context} text={description} lineHeight={24} line={5} />
+        <ReadMore className={styles.desc_context} text={description} line={5} lineHeight={24} />
       </div>
 
       <div className={styles.desc_mobileLine}></div>
@@ -91,7 +90,7 @@ const Desc = ({
           className={styles.desc_context}
           dangerouslySetInnerHTML={{ __html: requirements }}
         ></div> */}
-        <ReadMore className={styles.desc_context} text={requirements} lineHeight={24} line={5} />
+        <ReadMore className={styles.desc_context} text={requirements} line={5} lineHeight={24} />
       </div>
       <div className={styles.desc_footer}>
         <Avatar
