@@ -127,7 +127,7 @@ const DetailModal = (props: any) => {
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
-        headerTitle={'Interview Invitation from Company name'}
+        headerTitle={`Interview Invitation from ${data.company_name}`}
         secondButtonText='Done'
         secondButtonIsClose={false}
         handleSecondButton={() => actionsRef.current.close?.({
