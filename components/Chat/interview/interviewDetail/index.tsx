@@ -13,7 +13,7 @@ const InterviewDetail = (props: any) => {
       ...[
         ['Job Title', data?.job_title],
         ['Location', data?.address],
-        ['Date,Time', moment(data.interviewed_at).format('DD MMM YYYY dddd, HH:mm A')],
+        ['Date,Time', data.interviewed_at ? moment(data.interviewed_at).format('DD MMM YYYY dddd, HH:mm A'): '-'],
         ['Contact person', data?.contact_person],
         ['Contact number', data?.contact_person_contact_num],
         ['Video link', data?.video_link],
