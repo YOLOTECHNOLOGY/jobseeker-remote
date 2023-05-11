@@ -237,7 +237,7 @@ const NavSearchFilter = ({
         >
           <div className={styles.searchFilterHeader}>
             <Text textStyle='lg' bold>
-              Filters
+              More Filters
             </Text>
             <div className={styles.searchFilterClose} onClick={() => onCloseFilter()}>
               <img src={CloseIcon} alt='logo' width='13' height='13' />
