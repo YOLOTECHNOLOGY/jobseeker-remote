@@ -67,29 +67,34 @@ $mobile-font-size-lg: 16px;
 $mobile-font-size-xl: 18px;
 $mobile-font-size-xxl: 21px;
 $mobile-font-size-xxxl: 21px;
+$maxContentWidth: 1170px;
 
 /*******************************************/
 /*                 Custom                  */
 /*******************************************/
 .GlobalContainer {
-  max-width: 1200px;
+  max-width: $maxContentWidth;
   width: 100%;
   margin: 0 auto;
-  padding-left: 24px !important;
-  padding-right: 24px !important;
+  // padding-left: 24px !important;
+  // padding-right: 24px !important;
 
   @media (max-width: 799px) {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
     max-width: 688px;
   }
 
   @media (max-width: 360px) {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
     max-width: 320px;
   }
 }
 
 // Next app Default page style
 .GlobalNextAppContainer {
-  max-width: 1200px;
+  max-width: $maxContentWidth;
   width: 100%;
   margin: 0 auto;
   padding-left: 10px;

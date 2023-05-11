@@ -137,7 +137,7 @@ const SearchArea = (props: any) => {
     cursor: 'pointer'
   }
   return (
-    <div>
+    <div className={styles.searchWrap}>
       <ThemeProvider theme={theme}>
         <div
           className={classNames({
