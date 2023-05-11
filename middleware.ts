@@ -50,6 +50,7 @@ export function middleware(request: NextRequest) {
   )
   // Redirect if there is no locale
   if (pathnameIsMissingLocale) {
+    // the a link will not take any geo data on url, but we can get those data by cookies
     const locale = getCountryAndLang(request.cookies) || [getCountryKey(), getLocale(request)]
     const lang = locale?.[1]
     // e.g. incoming request is /products

@@ -251,7 +251,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const dictionary = await getDictionary(lang as any)
 
       store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
-      store.dispatch(fetchConfigRequest(req.cookies[configKey].split('_')))
+      store.dispatch(fetchConfigRequest(req.cookies[configKey].split('_')?.[1]))
       store.dispatch(fetchCompanyDetailRequest(companyId))
       store.dispatch(END)
 
