@@ -33,7 +33,6 @@ const Desc = ({
 }: propsType) => {
   const cookieStore = cookies()
   const token = cookieStore.get('accessToken')
-
   return (
     <section className={styles.desc}>
       <div className={styles.desc_mobileHead}>
