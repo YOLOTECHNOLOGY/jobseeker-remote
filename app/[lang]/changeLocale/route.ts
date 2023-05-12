@@ -1,23 +1,29 @@
 import { cookies } from 'next/headers'
 
-import { getCountryKey } from 'helpers/country'
+import { getCountryKey, languages } from 'helpers/country'
 
 import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 
-async function removeServiceCache(token) {
+
+
+async function removeServiceCache(token, lang) {
   const currentCountry = getCountryKey()
   if (token) {
-    await fetchUserSetting({ country_id: currentCountry === 'ph' ? 193 : 167 }, token)
+    // should fetch config here
+    const { id } = languages.find(item => item.code === lang)
+    await fetchUserSetting({ country_id: currentCountry === 'ph' ? 193 : 167, language_id: id }, token)
       // .then((response) => console.log(response))
       .catch(({ response, request }) => console.log(response, request))
   }
 }
 
-export async function GET() {
+export async function GET(request) {
   const cookieStore = cookies()
   const accessToken = cookieStore.get('accessToken')
-
-  await removeServiceCache(accessToken.value)
+  const { url, } = request
+  // http://localhost:3004/en-US/changeLocale?accessToken=[object%20Object]
+  const lang = url.split("//")[1].split('/')[1]
+  await removeServiceCache(accessToken.value, lang)
 
   return new Response(null, {
     status: 301,
