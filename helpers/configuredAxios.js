@@ -16,7 +16,7 @@ const autoRefreshToken = () => {
     refreshTokenServer();
     autoRefreshToken();
     // Refresh every 25 minutes
-  }, 100 * 60 * 25);
+  }, 1000 * 60 * 25);
 }
 
 // generate url by a baseUrl
@@ -150,25 +150,14 @@ const refreshTokenServer = () => {
   const data = { source: 'web', refresh: getCookie(refreshToken) }
   return axios.post('/token/refresh', data).then((res) => {
     const { access, token_expired_at, data } = res.data.data
-    if (!globalPromise && access) {
-      globalThis.globalPromise = autoRefreshToken().catch(() => {
-        redirectToHomeOnClient()
-      }).finally(() => {
-        setTimeout(() => {
-          globalPromise = undefined;
-        }, 1000 * 60 * 2);
-      })
+    if (access) {
+      clearTime()
+      autoRefreshToken()
+      setCookie(accessToken, access, token_expired_at)
       return
-    } else if (!access) {
-      return Promise.reject(new Error(data))
     }
-    // if (access) {
-    //   clearTime()
-    //   autoRefreshToken()
-    //   setCookie(accessToken, access, token_expired_at)
-    //   return
-    // }
     // if goes in this statement, the data is 'refreshtoken expiration of identity'
+    return Promise.reject(new Error(data))
   })
 }
 const redirectToHomeOnClient = () => {
@@ -207,7 +196,15 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
                 redirectToHomeOnClient();
                 return Promise.reject(error)
               }
-              refreshTokenServer()
+              if (!globalPromise) {
+                globalThis.globalPromise = refreshTokenServer().catch(() => {
+                  redirectToHomeOnClient()
+                }).finally(() => {
+                  setTimeout(() => {
+                    globalPromise = undefined;
+                  }, 1000 * 60 * 2);
+                })
+              }
               return globalPromise.then(() => {
                 const chainObj = chain(true)(baseURL, type, passToken ? getCookie(accessToken) : '', serverAccessToken ? getCookie(accessToken) : '', server)
                 return chainObj[key](...params)
