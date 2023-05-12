@@ -33,3 +33,15 @@ export const changeJobPreference = (jobPreference: any[], config) => {
     })
   })
 }
+
+export const changeCompanyIndustry = (workExperiences: any[], config) => {
+  workExperiences.forEach(item => {
+    ['company_industry'].forEach(key => {
+      item[key] = getValueById(
+        config,
+        item[`${key}_id`],
+        `${key}_id`
+      )
+    })
+  })
+}

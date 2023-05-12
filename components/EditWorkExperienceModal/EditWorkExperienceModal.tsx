@@ -135,6 +135,7 @@ const EditWorkExperienceModal = ({
   }, [data])
   useEffect(() => {
     if (data) {
+      console.log('data', data)
       setJobTitle(data.job_title)
       setCompanyName(data.company)
       // setLocation(data.location ? getLocation(data.location)[0] : null)
@@ -143,9 +144,9 @@ const EditWorkExperienceModal = ({
       setWorkPeriodTo(data.working_period_to)
       setSalary(data.salary)
       setCurrency(data.currency_id)
-      if (data.company_industry)
+      if (data.company_industry_id)
         setIndustry(
-          industryList.filter((industry) => industry.label === data.company_industry)[0].value
+          industryList.find((industry) => industry.id === data.company_industry_id)?.value
         )
       // if (data.location && data.location.toLowerCase() === 'overseas') {
       //   setCountry(
@@ -211,15 +212,15 @@ const EditWorkExperienceModal = ({
 
   const onSubmit = () => {
     // eslint-disable-next-line no-console
-    const matchedIndustry = industryList.filter((option) => {
+    const matchedIndustry = industryList.find((option) => {
       return option.value === industry
     })
-
     const workExperienceData = {
       job_title: jobTitle,
       company: companyName,
       country_key: country?.value || 'ph',
-      company_industry_key: matchedIndustry?.[0]?.key || null,
+      company_industry_key: matchedIndustry?.key || null,
+      company_industry_id: matchedIndustry?.id || null,
       is_currently_work_here: isCurrentJob,
       function_job_title: jobFunction.value,
       function_job_title_id: jobFunction.id,
@@ -230,7 +231,6 @@ const EditWorkExperienceModal = ({
       description: description ? description : ''
       // location_key: location?.key || '',
     }
-
     const workExperiencesPayload = {
       isUpdate: data ? true : false,
       workExperienceId: data ? data.id : null,

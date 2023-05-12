@@ -119,6 +119,7 @@ const EditEducationModal = ({
     const data = {
       school: school.trim(),
       degree_key: degreeKey,
+      degree_id: degreeList.find((degree) => degree.key === degreeKey)?.id,
       is_currently_studying: isCurrentlyStudying,
       study_period_from: moment(new Date(studyPeriodFrom)).format('yyyy-MM-DD'),
       study_period_to:
@@ -126,7 +127,6 @@ const EditEducationModal = ({
       // location_key: location?.key,
       country_key: countryKey
     }
-
     const trimmedFieldOfStudy = fieldOfStudy?.trim()
 
     if (trimmedFieldOfStudy?.length > 0) {
@@ -138,7 +138,6 @@ const EditEducationModal = ({
       educationId: education ? education.id : null,
       educationData: data
     }
-
     dispatch(manageUserEducationsRequest(educationPayload))
   }
 
@@ -163,7 +162,7 @@ const EditEducationModal = ({
 
   useEffect(() => {
     if (education) {
-      const degKey = degreeList.filter((degree) => degree.label === education.degree)[0].key
+      const degKey = degreeList.filter((degree) => degree.id === education.degree_id)[0].key
       setSchool(education.school)
       setDegreeKey(degKey)
       setIsCurrentlyStudying(education.is_currently_studying)

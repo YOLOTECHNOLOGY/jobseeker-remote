@@ -63,8 +63,12 @@ import Image from 'next/image'
 import ResumeView from './ResumeSectgion'
 import { getDictionary } from 'get-dictionary'
 import { Left } from './icons/left'
-import { changeJobPreference, changeUserInfoValue } from 'helpers/config/changeUserInfoValue'
-const RenderProfileView = ({ userDetail, handleModal, lang }: any) => {
+import {
+  changeCompanyIndustry,
+  changeJobPreference,
+  changeUserInfoValue
+} from 'helpers/config/changeUserInfoValue'
+const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
   const {
     manageProfile: {
       tab: { profile }
@@ -86,6 +90,9 @@ const RenderProfileView = ({ userDetail, handleModal, lang }: any) => {
     license_certifications: licensesCertifications,
     websites
   } = userDetail
+  useMemo(() => {
+    changeCompanyIndustry(workExperiences, config)
+  }, [workExperiences])
 
   const isProfileInformationFilled = !!(
     firstName &&
@@ -312,7 +319,7 @@ const RenderProfileView = ({ userDetail, handleModal, lang }: any) => {
                 </div>
                 <div className={styles.companyInfoWrapper}>
                   <Text textStyle='lg'>{workExp.company}</Text>
-                  <Text textStyle='lg'>{`${workExp.location}${
+                  <Text textStyle='lg'>{`${workExp.location || ''}${
                     workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
                   }`}</Text>
                 </div>
