@@ -9,10 +9,11 @@ const InterviewDetail = (props: any) => {
   const { data = {}, status } = props
   const dispatch = useDispatch()
   const detailData = useMemo(() => {
+    const jobTitle = `${data?.job_title} - ${data?.job_location}, ${data?.job.job_country}`
     const base = [
       ...[
-        ['Job Title', data?.job_title],
-        ['Location', data?.address],
+        ['Job Title', jobTitle],
+        ['Interview Address', data?.address],
         ['Date,Time', data.interviewed_at ? moment(data.interviewed_at).format('DD MMM YYYY dddd, HH:mm A'): '-'],
         ['Contact person', data?.contact_person],
         ['Contact number', data?.contact_person_contact_num],
