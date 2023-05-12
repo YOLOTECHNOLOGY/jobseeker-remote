@@ -14,26 +14,26 @@ const theme = createTheme({
     MuiTabs: {
       styleOverrides: {
         root: {
-          minHeight: '50px',
+          minHeight: '50px'
         },
         centered: {
           justifyContent: 'flex-start',
           ['@media (max-width: 780px)']: {
             // eslint-disable-line no-useless-computed-key
-            justifyContent: 'center',
-          },
-        },
-      },
+            justifyContent: 'center'
+          }
+        }
+      }
     },
     MuiTab: {
       styleOverrides: {
         root: {
           fontWeight: 700,
-          textTransform: 'capitalize',
-        },
-      },
-    },
-  },
+          textTransform: 'capitalize'
+        }
+      }
+    }
+  }
 })
 
 type ProfileLayoutProps = {
@@ -51,9 +51,19 @@ const ProfileLayout = ({
   setTabValue,
   modalName,
   handleModal,
-  children,
+  children
 }: ProfileLayoutProps) => {
-  const { avatar, email, phone_num: contactNum, first_name: firstName, last_name:lastName, location: userLocation, description, xp_lvl: expLevel, birthdate } = userDetail
+  const {
+    avatar,
+    email,
+    phone_num: contactNum,
+    first_name: firstName,
+    last_name: lastName,
+    location: userLocation,
+    description,
+    xp_lvl: expLevel,
+    birthdate
+  } = userDetail
 
   const handleShowModal = () => {
     handleModal(modalName, true)

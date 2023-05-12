@@ -35,6 +35,10 @@ const formatLocationConfig = (locationList) => {
   return locationConfig
 }
 
+const getIdByValue = (options: any[], value) => {
+  const selectedOption = options.find((item) => item.value === value)
+  return selectedOption?.id
+}
 const EditJobPreferencesModal = ({
   modalName,
   showModal,
@@ -106,7 +110,8 @@ const EditJobPreferencesModal = ({
     return (
       config?.industry_lists?.map((industry) => ({
         label: industry.value,
-        value: industry.key
+        value: industry.key,
+        id: industry.id
       })) ?? []
     )
   }, [config?.industry_lists])
@@ -119,6 +124,8 @@ const EditJobPreferencesModal = ({
   const onSubmit = (data) => {
     // to add workSetting
     const { jobTitle, jobType, minSalary, maxSalary, location, industry, currencyKey } = data // jobType is a key
+    const industry_id = getIdByValue(industryOptions, industry)
+    const job_type_id = getIdByValue(jobTypeList, jobType)
     const payload = {
       preferences: {
         action: preference?.id ? 'update' : 'create',
@@ -128,10 +135,13 @@ const EditJobPreferencesModal = ({
           function_job_title_id: jobTitle.id,
           function_job_title: jobTitle.value,
           job_type_key: jobType || '',
+          job_type_id,
           location_key: location?.key || '',
+          location_id: location?.id || '',
           salary_range_from: Number(minSalary),
           salary_range_to: Number(maxSalary),
           industry_key: industry,
+          industry_id,
           currency_key: currencyKey,
           currency_id: currencyLists.find((item) => item.value === currencyKey)?.id ?? null,
           country_key: getCountryKey(),
@@ -139,7 +149,6 @@ const EditJobPreferencesModal = ({
         }
       }
     }
-
     dispatch(updateUserPreferencesRequest(payload))
     // setTimeout(() => handleCloseModal(true), 500)
   }

@@ -63,6 +63,7 @@ import Image from 'next/image'
 import ResumeView from './ResumeSectgion'
 import { getDictionary } from 'get-dictionary'
 import { Left } from './icons/left'
+import { changeJobPreference, changeUserInfoValue } from 'helpers/config/changeUserInfoValue'
 const RenderProfileView = ({ userDetail, handleModal, lang }: any) => {
   const {
     manageProfile: {
@@ -986,10 +987,15 @@ const ManageProfilePage = ({ lang }: any) => {
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
   const config = useSelector((store: any) => store?.config?.config?.response)
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchConfigRequest())
-  }, [])
+  useMemo(() => {
+    changeUserInfoValue(userDetail, config)
+    changeJobPreference(userDetail.job_preferences || [], config)
+    return userDetail
+  }, [userDetail, config])
+  // const dispatch = useDispatch()
+  // // useEffect(() => {
+  // //   dispatch(fetchConfigRequest())
+  // // }, [])
   const [openToWork, setOpenToWork] = useState(userDetail?.is_visible)
   const jobCategoryList = getJobCategoryList(config).map((category) => {
     return {
@@ -1228,7 +1234,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     }
   }
   const lang = await getDictionary(query.lang as 'en-US')
-  // store.dispatch(fetchConfigRequest())
+  store.dispatch(fetchConfigRequest(query.lang))
   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
