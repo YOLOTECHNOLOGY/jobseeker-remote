@@ -6,9 +6,11 @@ const ViewJobModal = (props: any) => {
     const [show, setShow] = useState(false)
     const { contextRef } = props
     const actionsRef = useRef({} as any)
+    const [job, setJob] = useState(null)
     const context = {
         showJobDetail(actions) {
             actionsRef.current = actions
+            setJob(actions.data)
             setShow(true)
         },
         closeJobDetail() {
@@ -16,7 +18,7 @@ const ViewJobModal = (props: any) => {
         }
     }
     contextRef.current = assign(contextRef.current, context)
-    const job = contextRef.current.getState?.()?.job
+    // const job = contextRef.current.getState?.()?.job
     const details = useMemo(() => {
         return [
             ['Job Type', job?.job_type_value],
