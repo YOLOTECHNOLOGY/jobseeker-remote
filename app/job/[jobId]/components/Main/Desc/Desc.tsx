@@ -5,7 +5,7 @@ import { transState } from 'helpers/utilities'
 import { DefaultAvatar } from 'images'
 import { Avatar } from 'app/components/MUIs'
 import JobClient from './JobClient/JobClient'
-
+import ReadMore from './ReadMore'
 import styles from '../../../page.module.scss'
 
 type propsType = {
@@ -24,8 +24,8 @@ const Desc = ({
   description,
   requirements,
   skills,
-  logo,
-  name,
+  // logo,
+  // name,
   chatResponseRate,
   lastActiveAt,
   shareParams,
@@ -33,7 +33,6 @@ const Desc = ({
 }: propsType) => {
   const cookieStore = cookies()
   const token = cookieStore.get('accessToken')
-
   return (
     <section className={styles.desc}>
       <div className={styles.desc_mobileHead}>
@@ -74,10 +73,11 @@ const Desc = ({
           ))}
         </div>
 
-        <div
+        {/* <div
           className={styles.desc_context}
           dangerouslySetInnerHTML={{ __html: description }}
-        ></div>
+        ></div> */}
+        <ReadMore className={styles.desc_context} text={description} line={5} lineHeight={24} />
       </div>
 
       <div className={styles.desc_mobileLine}></div>
@@ -86,10 +86,11 @@ const Desc = ({
         <div className={classNames([styles.desc_title, styles.desc_requirement])}>
           <h5>Requirement</h5>
         </div>
-        <div
+        {/* <div
           className={styles.desc_context}
           dangerouslySetInnerHTML={{ __html: requirements }}
-        ></div>
+        ></div> */}
+        <ReadMore className={styles.desc_context} text={requirements} line={5} lineHeight={24} />
       </div>
       <div className={styles.desc_footer}>
         <Avatar

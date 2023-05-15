@@ -43,6 +43,7 @@ const CompanyDetail = (props: any) => {
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
   const [totalPages, setTotalPages] = useState(null)
   const [jobLocation, setJobLocation] = useState(null)
+  const [defaultCompanyAddress, setDefaultCompanyAddress] = useState('')
 
   useEffect(() => {
     dispatch(fetchConfigRequest())
@@ -112,6 +113,18 @@ const CompanyDetail = (props: any) => {
     companyJobsElement.scrollIntoView()
   }
 
+  useEffect(() => {
+    let address = ''
+    let findAddress = company.working_addresses.filter(item => item.is_default)
+    if(findAddress.length == 0) {
+      findAddress = company.working_addresses.slice(0, 1)
+    }
+    if(findAddress.length > 0) {
+      address = findAddress[0].full_address
+    }
+    setDefaultCompanyAddress(address)
+  }, [company])
+
   return (
     <CompanyProfileLayout
       company={company}
@@ -163,13 +176,13 @@ const CompanyDetail = (props: any) => {
                 )}
               </div>
               <div className={styles.companyOverviewRight}>
-                {company.full_address && (
+                {defaultCompanyAddress && (
                   <div className={styles.companyOverviewItem}>
                     <Text textStyle='lg' bold>
                       Location:{' '}
                     </Text>
                     <Text textStyle='lg' className={styles.companyOverviewLocation}>
-                      {company.full_address}
+                      {defaultCompanyAddress}
                     </Text>
                   </div>
                 )}
