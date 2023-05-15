@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import TextField from '@mui/material/TextField'
 
 /* Helpers */
-import { titleCase } from 'helpers/formatter'
+import { formatTemplateString, titleCase } from 'helpers/formatter'
 
 /* Redux Actions */
 import {
@@ -436,12 +436,14 @@ const ModalJobAlerts = ({
           <Text textStyle='base'>
             {jobAlertResponse && (
               <React.Fragment>
-                <span>
-                  {enableAlertModal.text1}{' '}
-                  <strong>{titleCase(jobAlertResponse.keyword_value)}</strong>{' '}
-                  {enableAlertModal.text2} <strong>{jobAlertResponse.location_value}</strong>{' '}
-                  {enableAlertModal.text3}
-                </span>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: formatTemplateString(enableAlertModal.text1, {
+                      jobName: `<strong>${titleCase(jobAlertResponse.keyword_value)}</strong> `,
+                      location: `<strong>${jobAlertResponse.location_value}</strong> `
+                    })
+                  }}
+                ></span>
                 <Text
                   className={styles.ModalEnableJobAlertText}
                   textColor='primaryBlue'

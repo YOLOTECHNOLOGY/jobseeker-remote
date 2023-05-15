@@ -1,5 +1,5 @@
 'use client'
-import { useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { isEqual } from 'lodash-es'
 import Modal from '@mui/material/Modal'
@@ -11,6 +11,7 @@ import Button from '@mui/material/Button'
 
 import { getCountryKey, getLang, languages, nations } from 'helpers/country'
 import { accessToken as accessTokenKey, configKey, getCookie, setCookie } from 'helpers/cookies'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 import MaterialButton from 'components/MaterialButton'
 
@@ -91,6 +92,11 @@ const SwitchNation = ({ close, open }: propsType) => {
       lang: getLang()
     }
   }, [open])
+
+  const {
+    header: { switchCountry }
+  } = useContext(languageContext) as any
+
   const handleSwitchNation = () => {
     const { country, lang } = nation
     setLoading(true)
@@ -132,7 +138,7 @@ const SwitchNation = ({ close, open }: propsType) => {
     >
       <div className={styles.swtihcNation}>
         <div className={styles.swtihcNation_head}>
-          <p>Which country and language would you like to browse Bossjob in?</p>
+          <p>{switchCountry.title}</p>
           <CloseIcon
             sx={{ color: '#BCBCBC', fontSize: '26px', cursor: 'pointer' }}
             onClick={close}
@@ -149,7 +155,7 @@ const SwitchNation = ({ close, open }: propsType) => {
               onChange={handleSelectNation}
               renderInput={(params) => (
                 <ThemeProvider theme={textFieldTheme}>
-                  <TextField {...params} label='Country' />
+                  <TextField {...params} label={switchCountry.country} />
                 </ThemeProvider>
               )}
               sx={{
@@ -172,7 +178,7 @@ const SwitchNation = ({ close, open }: propsType) => {
               }}
               renderInput={(params) => (
                 <ThemeProvider theme={textFieldTheme}>
-                  <TextField {...params} label='Language' />
+                  <TextField {...params} label={switchCountry.lang} />
                 </ThemeProvider>
               )}
               sx={{ flex: 1 }}
@@ -182,7 +188,7 @@ const SwitchNation = ({ close, open }: propsType) => {
 
         <footer className={styles.swtihcNation_footer}>
           <Button className={styles.swtihcNation_footer_btn} variant='outlined' onClick={close}>
-            Close
+            {switchCountry.btn1}
           </Button>
           <MaterialButton
             className={styles.swtihcNation_footer_btn}
@@ -191,7 +197,7 @@ const SwitchNation = ({ close, open }: propsType) => {
             disabled={isEqual(nation, originalSetting)}
             isLoading={loading}
           >
-            Save
+            {switchCountry.btn2}
           </MaterialButton>
         </footer>
       </div>
