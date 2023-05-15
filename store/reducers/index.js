@@ -49,7 +49,8 @@ const rootReducer = (state, action) => {
     //   ...action.payload, // apply delta from hydration
     //   config:state.config
     // }
-    const nextState = {...mergeDeepLeft(action.payload, state),config:state.config}
+    const nextState = mergeDeepLeft(action.payload, state)
+   
     if (typeof window !== 'undefined' && state?.router) {
       // preserve router value on client side navigation
       nextState.router = state.router

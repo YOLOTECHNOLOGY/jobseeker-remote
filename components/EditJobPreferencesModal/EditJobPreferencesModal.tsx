@@ -27,6 +27,7 @@ type EditJobPreferencesModalProps = {
   userDetail: any
   handleModal: Function
   preference?: any
+  lang: Record<string, any>
 }
 
 const formatLocationConfig = (locationList) => {
@@ -34,13 +35,25 @@ const formatLocationConfig = (locationList) => {
   return locationConfig
 }
 
+const getIdByValue = (options: any[], value) => {
+  const selectedOption = options.find((item) => item.value === value)
+  return selectedOption?.id
+}
 const EditJobPreferencesModal = ({
   modalName,
   showModal,
   config,
   handleModal,
-  preference
+  preference,
+  lang
 }: EditJobPreferencesModalProps) => {
+  const {
+    manageProfile: {
+      tab: {
+        preference: { editModal }
+      }
+    }
+  } = lang
   const locationList = useSelector((store: any) => store.config.config.response?.location_lists)
   const currencyLists = useSelector((store: any) =>
     (store.config.config.response?.currency_lists ?? []).map((item) => ({
@@ -97,7 +110,8 @@ const EditJobPreferencesModal = ({
     return (
       config?.industry_lists?.map((industry) => ({
         label: industry.value,
-        value: industry.key
+        value: industry.key,
+        id: industry.id
       })) ?? []
     )
   }, [config?.industry_lists])
@@ -110,6 +124,8 @@ const EditJobPreferencesModal = ({
   const onSubmit = (data) => {
     // to add workSetting
     const { jobTitle, jobType, minSalary, maxSalary, location, industry, currencyKey } = data // jobType is a key
+    const industry_id = getIdByValue(industryOptions, industry)
+    const job_type_id = getIdByValue(jobTypeList, jobType)
     const payload = {
       preferences: {
         action: preference?.id ? 'update' : 'create',
@@ -119,10 +135,13 @@ const EditJobPreferencesModal = ({
           function_job_title_id: jobTitle.id,
           function_job_title: jobTitle.value,
           job_type_key: jobType || '',
+          job_type_id,
           location_key: location?.key || '',
+          location_id: location?.id || '',
           salary_range_from: Number(minSalary),
           salary_range_to: Number(maxSalary),
           industry_key: industry,
+          industry_id,
           currency_key: currencyKey,
           currency_id: currencyLists.find((item) => item.value === currencyKey)?.id ?? null,
           country_key: getCountryKey(),
@@ -130,7 +149,6 @@ const EditJobPreferencesModal = ({
         }
       }
     }
-
     dispatch(updateUserPreferencesRequest(payload))
     // setTimeout(() => handleCloseModal(true), 500)
   }
@@ -161,7 +179,7 @@ const EditJobPreferencesModal = ({
                 <JobFunctionSelector
                   className={styles.jobPreferencesFormInput}
                   control={control}
-                  label='Desired job title'
+                  label={editModal.jobTitle}
                   variant='outlined'
                   autoComplete='off'
                   jobTitle={preference?.function_job_title}
@@ -185,7 +203,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
-                  label='Desired job type'
+                  label={editModal.jobType}
                   options={jobTypeList}
                   required
                   {...fieldState}
@@ -206,7 +224,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialLocationField
                   className={styles.jobPreferencesFormInput}
-                  label='Desired working location'
+                  label={editModal.location}
                   required
                   {...fieldState}
                   {...field}
@@ -235,7 +253,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
-                  label='Currency type'
+                  label={editModal.currencyType}
                   options={currencyLists}
                   required
                   disabled
@@ -260,7 +278,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
-                  label='Expected min. salary'
+                  label={editModal.minSalary}
                   options={minSalaryOptions}
                   required
                   {...fieldState}
@@ -285,7 +303,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
-                  label='Expected max. salary'
+                  label={editModal.maxSalary}
                   rules={{ required: 'max salary is required' }}
                   required
                   options={maxSalaryOptions}
@@ -308,7 +326,7 @@ const EditJobPreferencesModal = ({
                 return (
                   <MaterialBasicSelect
                     className={styles.jobPreferencesFormInput}
-                    label={'Country'}
+                    label={editModal.country}
                     options={countryList}
                     {...fieldState}
                     {...field}
@@ -327,7 +345,7 @@ const EditJobPreferencesModal = ({
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
-                  label='Desired Industry'
+                  label={editModal.industry}
                   required
                   options={industryOptions}
                   {...fieldState}
@@ -345,9 +363,9 @@ const EditJobPreferencesModal = ({
     <Modal
       showModal={showModal}
       handleModal={handleCloseModal}
-      headerTitle='Job Preference'
-      firstButtonText='Cancel'
-      secondButtonText='Save'
+      headerTitle={editModal.title}
+      firstButtonText={editModal.btn1}
+      secondButtonText={editModal.btn2}
       isSecondButtonLoading={isUpdating}
       firstButtonIsClose
       handleFirstButton={handleCloseModal}

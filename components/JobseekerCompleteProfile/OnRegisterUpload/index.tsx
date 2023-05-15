@@ -8,7 +8,7 @@ import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialButton from 'components/MaterialButton'
 import Divider from '@mui/material/Divider'
 // Styles
-import styles from 'pages/jobseeker-complete-profile/Onboard.module.scss'
+import styles from 'pages/[lang]/jobseeker-complete-profile/Onboard.module.scss'
 import Link from 'components/Link'
 import { useRouter } from 'next/router'
 
@@ -26,13 +26,26 @@ const Step2 = (props: any) => {
     redirect,
     currentStep,
     // resume
+    lang,
   } = props
-
+  const {profile} = lang || {}
+  const {
+    addYourResume,
+    youCanBuildOnlineResume,
+    youCanuploadYourResume,
+    uploadYourResume,
+    fileMax,
+    resume,
+    OR,
+    createFreeResume,
+    next,
+    back
+  } = profile || {}
   return (
     <OnBoardLayout
       headingText={
         <Text bold textStyle='xxxl' tagName='h2'>
-          Add your resume 📄
+          {addYourResume} 📄
         </Text>
       }
       currentStep={currentStep}
@@ -41,12 +54,13 @@ const Step2 = (props: any) => {
       nextFnBtn={() => router.push(redirect)}
       backFnBtn={() => router.push('/jobseeker-complete-profile/1')}
       isNextDisabled={isDisabled}
+      lang={lang?.profile}
     >
       <div className={styles.stepForm}>
         <Text className={styles.step2Caption} textStyle='lg'>
-          You can build an online resume to apply for jobs and export it with different templates.{' '}
+          {youCanBuildOnlineResume}{' '}
           <br />
-          <br /> You can also upload your resume, it will be saved to your profile.
+          <br />{youCanuploadYourResume}
         </Text>
 
         <div className={styles.step2Upload}>
@@ -63,7 +77,7 @@ const Step2 = (props: any) => {
             component='label'
           >
             <Text textColor='white' bold>
-              Upload your Resume
+              {uploadYourResume}
             </Text>
             <input
               type='file'
@@ -73,12 +87,12 @@ const Step2 = (props: any) => {
             />
           </MaterialButton>
           <Text textColor='darkgrey' textStyle='xsm' className={styles.step2UploadAllowed}>
-            PDF, DOC, DOCX. file, max 5MB
+            {fileMax}
           </Text>
           {existingResume?.length ? (    
                 existingResume.map(e=>(
                 <Text key={e.id} textColor='darkgrey' textStyle='xsm' bold tagName='p'>
-                       (Resume:
+                       ({resume}:
                         <Link
                           to={e.url}
                           target='_blank'
@@ -96,7 +110,7 @@ const Step2 = (props: any) => {
         </div>
 
         <Text textStyle='lg' className={styles.step2UploadDivider}>
-          OR
+          {OR}
         </Text>
 
         <div className={styles.step2Create}>
@@ -112,7 +126,7 @@ const Step2 = (props: any) => {
             }}
           >
             <Text textColor='primary' bold>
-              Create Free Resume
+             {createFreeResume}
             </Text>
           </MaterialButton>
         </div>
@@ -128,7 +142,7 @@ const Step2 = (props: any) => {
               capitalize
               onClick={() => router.push('/jobseeker-complete-profile/1')}
             >
-              <Text textColor='primaryBlue'>Back</Text>
+              <Text textColor='primaryBlue'>{back}</Text>
             </MaterialButton>
 
             <MaterialButton
@@ -137,7 +151,7 @@ const Step2 = (props: any) => {
               capitalize
               onClick={() => router.push(redirect)}
             >
-              <Text textColor='white'>Next</Text>
+              <Text textColor='white'>{next}</Text>
             </MaterialButton>
           </div>
         </React.Fragment>

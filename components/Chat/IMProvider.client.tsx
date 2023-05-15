@@ -28,6 +28,8 @@ import errorParser from 'helpers/errorParser'
 import { pushNotification } from 'store/services/notification'
 import { scripts } from 'imforbossjob'
 import OfferModal from './offer'
+import { getDictionary } from 'get-dictionary'
+import { formatTemplateString } from 'helpers/formatter'
 const { offerJobseeker: { getDataAndShowOfferMessageScript } } = scripts
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
@@ -87,7 +89,27 @@ const msgToNote = (message, state) => {
 
 }
 
-const IMProvider = ({ children, IMManager, hooks }: any) => {
+const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
+
+    const [chatDictionary, setChatDictionary] = useState({})
+    useEffect(() => {
+        getDictionary(lang)
+            .then(dic => {
+                if (dic) {
+                    setChatDictionary(dic.chat)
+                }
+            })
+    }, [lang])
+    console.log({ chatDictionary })
+    const translate = useCallback((key, ...args) => {
+        if (!chatDictionary) {
+            return key
+        } else if (args.length === 0) {
+            return chatDictionary?.[key]
+        } else {
+            return formatTemplateString(key, ...args)
+        }
+    }, [chatDictionary])
     useEffect(() => {
         if (window?.SharedWorker && (window as any)?.imSharedWorker?.port) {
             (window as any).imSharedWorker.port.onmessage = () => {
@@ -95,6 +117,7 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
             }
         }
     }, [])
+   
     const [chatId, setChatId] = useState()
     const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
     const userDetailRef = useRef(userDetail)
@@ -428,13 +451,15 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
         imStatus,
         status,
         setStatus,
-        postNote
+        postNote,
+        translate
     }}>{userId ? <>
         <SendResumeModal
             loading={loading}
             contextRef={contextRef}
             data={imState.resume_request}
             applicationId={applicationId}
+            lang={lang}
         />
 
         <Interview
@@ -442,42 +467,50 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
             contextRef={contextRef}
             data={imState.interview}
             applicationId={applicationId}
+            lang={lang}
         />
         <OfferModal
             loading={loading}
             contextRef={contextRef}
+            lang={lang}
             applicationId={applicationId}
         />
         <ExchangeModal
             loading={loading}
             contextRef={contextRef}
+            lang={lang}
             applicationId={applicationId}
         />
         <ExchangeConfirmModal
             loading={loading}
             contextRef={contextRef}
+            lang={lang}
             applicationId={applicationId}
         />
         <ExchangeDetailModal
             loading={loading}
             contextRef={contextRef}
+            lang={lang}
             applicationId={applicationId}
         />
         <NotInterestModal
             loading={loading}
             data={imState}
             applicationId={applicationId}
+            lang={lang}
             contextRef={contextRef}
         />
         <IssueModal
             loading={loading}
             data={imState?.interview}
+            lang={lang}
             applicationId={applicationId}
             contextRef={contextRef}
         />
         <ViewJobModal
             loading={loading}
             data={imState?.interview}
+            lang={lang}
             applicationId={applicationId}
             contextRef={contextRef}
         />
@@ -485,17 +518,20 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
             loading={loading}
             data={imState?.interview}
             applicationId={applicationId}
+            lang={lang}
             contextRef={contextRef}
         />
         <CancelDetailModal
             loading={loading}
             data={imState?.interview}
+            lang={lang}
             applicationId={applicationId}
             contextRef={contextRef}
         />
         <CommonPhrases
             loading={loading}
             userId={userId}
+            lang={lang}
             applicationId={applicationId}
             contextRef={contextRef}
         />
@@ -506,7 +542,7 @@ const IMProvider = ({ children, IMManager, hooks }: any) => {
     </Provider>
 }
 
-const wrapper = ({ children }) => {
+const wrapper = ({ children, lang }) => {
     const IMRef = useRef(null)
     const [ready, setReady] = useState(false)
     useEffect(() => {
@@ -520,11 +556,12 @@ const wrapper = ({ children }) => {
         return (<IMProvider
             IMManager={IMRef.current.IMManager}
             hooks={IMRef.current.hooks}
+            lang={lang}
         >
             {children}
         </IMProvider>)
     } else {
-        return <Provider value={{ ready }}>{children}</Provider>
+        return <Provider value={{ ready }} >{children}</Provider>
     }
 }
 

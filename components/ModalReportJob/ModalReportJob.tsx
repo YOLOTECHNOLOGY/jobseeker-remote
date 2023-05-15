@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 /* Vendor */
 import { Radio, RadioGroup, FormControlLabel } from '@mui/material'
@@ -13,6 +13,7 @@ import styles from './ModalReportJob.module.scss'
 
 /* Images */
 import { ArrowForwardIcon } from 'images'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 interface ModalReportJobProps {
   isShowReportJob?: boolean
@@ -33,6 +34,9 @@ const ModalReportJob = ({
   postReportResponse,
   isPostingReport
 }: ModalReportJobProps) => {
+  const {
+    jobDetail: { reportModal, detailModal, feedbackModal }
+  } = useContext(languageContext) as any
 
   const [modalReportDetail, setModalReportDetail] = useState(false)
   const [modalReportSelected, setModalReportSelected] = useState(null)
@@ -42,9 +46,9 @@ const ModalReportJob = ({
   const [hasReportedJob, setHasReportedJob] = useState(false)
 
   let reportList = [
-    { category: 'spam', description: 'I think it’s spam or scam' },
-    { category: 'discrimination', description: 'I think it’s discriminatory or offensive' },
-    { category: 'broken', description: 'I think something is broken' }
+    { category: 'spam', description: reportModal.category.spam },
+    { category: 'discrimination', description: reportModal.category.discrimination },
+    { category: 'broken', description: reportModal.category.broken }
   ]
 
   const { register, handleSubmit } = useForm()
@@ -57,7 +61,7 @@ const ModalReportJob = ({
     reportList = []
     setHasReportedJob(true)
     setModalReportDetail(false)
-    handlePostReportJob({jobId: selectedJobId, jobReasonId: data.reportDetail})
+    handlePostReportJob({ jobId: selectedJobId, jobReasonId: data.reportDetail })
   }
 
   const handleChange = (event) => {
@@ -75,73 +79,80 @@ const ModalReportJob = ({
     setHasReportedJob(false)
   }
 
-  const isShowInitialModal = isShowReportJob && !modalReportDetail &&!isShowConfirmation
+  const isShowInitialModal = isShowReportJob && !modalReportDetail && !isShowConfirmation
   const isShowDetailModal = isShowReportJob && modalReportDetail && !isShowConfirmation
   const isShowConfirmationModal = isShowReportJob && !modalReportDetail && isShowConfirmation
 
   return (
     <>
       <Modal
-        headerTitle={`${isPostingReport ? 'Report Job' : 'Why are you reporting this job?'}`}
+        headerTitle={`${isPostingReport ? reportModal.title : reportModal.notReportedTitle}`}
         showModal={isShowInitialModal}
-        handleModal={() => { onCloseModal() }}
+        handleModal={() => {
+          onCloseModal()
+        }}
       >
         <div className={styles.modalReportJob}>
           {isPostingReport && (
             <div className={styles.modalReportJobConfirmation}>
-              <Text textStyle='xxl'>Submitting Report.</Text>
+              <Text textStyle='xxl'>{reportModal.submitting}</Text>
             </div>
           )}
-          {!isPostingReport && reportList.map((report, i) => (
-            <div 
-              key={i}
-              className={styles.modalReportJobItem} 
-              onClick={() => {
-                setModalReportDetail(true)
-                setModalReportSelected(report)
-                setModalReportSelectedItem(handleSelectedReportJob(report.category)[0].id)
-              }}
-            >
-              <Text>{report.description}</Text>
-              <div className={styles.modalReportJobItemIcon}>
-                <img src={ArrowForwardIcon} width='20' height='20'/>
+          {!isPostingReport &&
+            reportList.map((report, i) => (
+              <div
+                key={i}
+                className={styles.modalReportJobItem}
+                onClick={() => {
+                  setModalReportDetail(true)
+                  setModalReportSelected(report)
+                  setModalReportSelectedItem(handleSelectedReportJob(report.category)[0].id)
+                }}
+              >
+                <Text>{report.description}</Text>
+                <div className={styles.modalReportJobItemIcon}>
+                  <img src={ArrowForwardIcon} width='20' height='20' />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </Modal>
       <Modal
-        headerTitle='Tell us a little more'
+        headerTitle={detailModal.title}
         showModal={isShowDetailModal}
-        handleModal={() => { onCloseModal()} }
-        firstButtonText='Back'
+        handleModal={() => {
+          onCloseModal()
+        }}
+        firstButtonText={detailModal.btn1}
         handleFirstButton={() => {
           setModalReportDetail(false)
           setModalReportSelected(modalReportSelected)
         }}
-        secondButtonText='Submit'
+        secondButtonText={detailModal.btn2}
         handleSecondButton={handleSubmit(onSubmit)}
       >
         <div className={styles.modalReportJobDetail}>
           {handleSelectedReportJob(modalReportSelected?.category).map((option, i) => (
             <div className={styles.modalReportJobDetailItem} key={i}>
               <RadioGroup
-                aria-label="reportDetail"
-                name="controlled-radio-buttons-group"
+                aria-label='reportDetail'
+                name='controlled-radio-buttons-group'
                 value={modalReportSelectedItem}
                 onChange={handleChange}
                 className={styles.modalReportJobDetailRadioGroup}
               >
-                <FormControlLabel 
+                <FormControlLabel
                   {...register('reportDetail')}
-                  value={option.id} 
-                  control={<Radio />} 
+                  value={option.id}
+                  control={<Radio />}
                   label={
                     <div className={styles.modalReportJobDetailLabel}>
                       <Text textStyle='lg'>{option.title}</Text>
-                      <Text textStyle='base' textColor='lightgrey'>{option.description}</Text>
+                      <Text textStyle='base' textColor='lightgrey'>
+                        {option.description}
+                      </Text>
                     </div>
-                  } 
+                  }
                 />
               </RadioGroup>
             </div>
@@ -149,13 +160,15 @@ const ModalReportJob = ({
         </div>
       </Modal>
       <Modal
-        headerTitle='Job Reported Successfully'
+        headerTitle={feedbackModal.title}
         showModal={isShowConfirmationModal}
-        handleModal={() => { onCloseModal() }}
+        handleModal={() => {
+          onCloseModal()
+        }}
       >
         <div className={styles.modalReportJob}>
           <div className={styles.modalReportJobConfirmation}>
-            <Text>We have received your report about this job. Thanks for letting us know. Your feedback is important in helping us to keep the Bossjob community safe.</Text>
+            <Text>{feedbackModal.message}</Text>
           </div>
         </div>
       </Modal>

@@ -11,19 +11,20 @@ import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWit
 import styles from './SearchCompanyField.module.scss'
 
 interface ISearchCompanyField {
-  defaultQuery?: string,
+  defaultQuery?: string
   onKeywordSearch: Function
+  transitions: Record<string, any>
 }
 
 const SearchCompanyField = ({
   defaultQuery = '',
   onKeywordSearch,
+  transitions
 }: ISearchCompanyField) => {
   const ref = useRef(null)
 
   const [suggestionList, setSuggestionList] = useState([])
   const [searchValue, setSearchValue] = useState('')
-
 
   useEffect(() => {
     if (searchValue) setSearchValue(searchValue)
@@ -40,14 +41,14 @@ const SearchCompanyField = ({
       <div className={styles.searchFieldInputContainer}>
         <MaterialTextFieldWithSuggestionList
           id='search'
-          label='Search for Companies'
+          label={transitions?.companyName}
           variant='outlined'
           size='small'
           className={styles.searchField}
           searchFn={handleSuggestionSearch}
           updateSearchValue={setSearchValue}
           defaultValue={defaultQuery}
-          onSelect={(val:any)=>{
+          onSelect={(val: any) => {
             setSearchValue(val)
             onKeywordSearch(val)
           }}
@@ -58,11 +59,18 @@ const SearchCompanyField = ({
             }
           }}
           options={suggestionList}
-        />    
+        />
       </div>
-      
-      <MaterialButton variant='contained' capitalize className={styles.searchFieldButton} onClick={() => onKeywordSearch(searchValue)}>
-        <Text textColor='white' bold>Search</Text>
+
+      <MaterialButton
+        variant='contained'
+        capitalize
+        className={styles.searchFieldButton}
+        onClick={() => onKeywordSearch(searchValue)}
+      >
+        <Text textColor='white' bold>
+          {transitions?.btn}
+        </Text>
       </MaterialButton>
     </div>
   )

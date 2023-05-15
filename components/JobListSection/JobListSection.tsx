@@ -309,6 +309,7 @@ const JobListSection = ({
                 <UploadResumeButton
                   isShowBtn={!accessToken}
                   handleClick={handleQuickUploadResumeClick}
+                  text={''}
                 />
               </div>
             )}

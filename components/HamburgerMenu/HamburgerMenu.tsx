@@ -19,15 +19,32 @@ import { getCookie } from 'helpers/cookies'
 // import { authPathToOldProject } from 'helpers/authenticationTransition'
 
 import styles from './HamburgerMenu.module.scss'
+import { getCountry, getLanguage } from 'helpers/country'
 
 const Divider = () => <div className={styles.divider} />
 
 interface HamburgerMenuProps {
   openState: boolean
   toggleMenu: Function
+  lang: Object
 }
 
-const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
+const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
+  const { header }: any = lang || {}
+  const {
+    downloadApp,
+    findJobs,
+    companies,
+    courses,
+    careerGuide,
+    hiring,
+    getStarted,
+    manageResume,
+    Chat,
+    myJobs,
+    accountSettings,
+    logOut
+  } = header || {}
   const pathname = usePathname()
   const router = useRouter()
   const dispatch = useDispatch()
@@ -86,33 +103,19 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
             >
               <li className={styles.menuList}>
                 <Text textStyle={textStyle} className={styles.downLoadApp}>
-                  Download APP
+                  {downloadApp}
                 </Text>
               </li>
             </Link>
             <Divider />
             <Link className={styles.defaultLink} to='/jobs-hiring/job-search' title='Jobs'>
               <li className={styles.menuList} onClick={handleClick}>
-                <Text textStyle={textStyle}>Find Jobs</Text>
+                <Text textStyle={textStyle}>{findJobs}</Text>
               </li>
             </Link>
-            {/* <Link
-              className={styles.defaultLink}
-              to={
-                isAuthenticated
-                  ? authPathToOldProject(null, '/dashboard/headhunt-me')
-                  : `${process.env.OLD_PROJECT_URL}/headhunt-me`
-              }
-              title='Headhunt Me'
-              aTag
-            >
-              <li className={styles.menuList} onClick={handleClick}>
-                <Text textStyle='xl'>Headhunt Me</Text>
-              </li>
-            </Link> */}
             <Link className={styles.defaultLink} to='/companies' title='Companies'>
               <li className={styles.menuList} onClick={handleClick}>
-                <Text textStyle={textStyle}>Companies</Text>
+                <Text textStyle={textStyle}>{companies}</Text>
               </li>
             </Link>
 
@@ -131,13 +134,13 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                 >
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle={textStyle} className={styles.activeLink}>
-                      Manage Resume
+                      {manageResume}
                     </Text>
                   </li>
                 </Link>
                 <Link className={styles.defaultLink} to='/my-jobs?page=1' title='My Jobs'>
                   <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle={textStyle}>My Jobs</Text>
+                    <Text textStyle={textStyle}>{myJobs}</Text>
                   </li>
                 </Link>
                 <Link
@@ -147,12 +150,12 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   title='Account Settings'
                 >
                   <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle={textStyle}>Account Settings</Text>
+                    <Text textStyle={textStyle}>{accountSettings}</Text>
                   </li>
                 </Link>
                 <Link className={styles.defaultLink} title='Jobs' to='/chat/list'>
                   <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle={textStyle}>Chat</Text>
+                    <Text textStyle={textStyle}>{Chat}</Text>
                   </li>
                 </Link>
               </>
@@ -165,12 +168,11 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
               title='Courses'
             >
               <li className={styles.menuList} onClick={handleClick}>
-                <Text textStyle={textStyle}>Courses</Text>
+                <Text textStyle={textStyle}>{courses}</Text>
               </li>
             </Link>
             {!isAuthenticated && (
               <>
-                
                 <Link
                   className={styles.defaultLink}
                   to='https://blog.bossjob.ph/'
@@ -178,7 +180,7 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   title='Career Guide'
                 >
                   <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle={textStyle}>Career Guide</Text>
+                    <Text textStyle={textStyle}>{careerGuide}</Text>
                   </li>
                 </Link>
                 <Divider />
@@ -189,14 +191,14 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   title='Employers'
                 >
                   <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle={textStyle}>I’m hiring</Text>
+                    <Text textStyle={textStyle}>{hiring}</Text>
                   </li>
                 </Link>
                 <Divider />
                 <Link className={`${styles.defaultLink}`} to='/get-started' title='Get Started'>
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle={textStyle} className={styles.activeLink}>
-                      Get Started
+                      {getStarted}
                     </Text>
                   </li>
                 </Link>
@@ -261,31 +263,31 @@ const HamburgerMenu = ({ openState, toggleMenu }: HamburgerMenuProps) => {
                   title='Career Guide'
                 >
                   <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle={textStyle}>Career Guide</Text>
+                    <Text textStyle={textStyle}>{careerGuide}</Text>
                   </li>
                 </Link>
                 <Divider />
                 <div className={`${styles.defaultLink}`}>
                   <li className={styles.menuList} onClick={() => handleLogOut()}>
-                    <Text textStyle={textStyle}>Log Out</Text>
+                    <Text textStyle={textStyle}>{logOut}</Text>
                   </li>
                 </div>
-
-                {/* <li
-                  className={styles.defaultLink}
-                  onClick={() => {
-                    setOpenSwitchNationModal(true)
-                  }}
-                  style={{ padding: '14px' }}
-                >
-                  <div className={styles.menuList}>
-                    <Text textStyle={textStyle}>
-                      {getCountry()}, English - <span style={{ color: '#136FD3' }}>Change</span>
-                    </Text>
-                  </div>
-                </li> */}
               </>
             )}
+            <Divider />
+            <li
+              className={styles.defaultLink}
+              onClick={() => {
+                setOpenSwitchNationModal(true)
+              }}
+              style={{ padding: '14px' }}
+            >
+              <div className={styles.menuList}>
+                <Text textStyle={textStyle}>
+                  {getCountry()}, {getLanguage()} - <span style={{ color: '#136FD3' }}>Change</span>
+                </Text>
+              </div>
+            </li>
           </React.Fragment>
         </ul>
       </div>

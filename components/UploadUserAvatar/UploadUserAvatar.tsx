@@ -8,9 +8,10 @@ type UploadUserAvatarProps = {
   currentAvatarUrl?: string
   selectedAvatar?: any
   setSelectedAvatar?: any
+  tip: string
 }
 
-const UploadUserAvatar = ({ currentAvatarUrl, setSelectedAvatar }: UploadUserAvatarProps) => {
+const UploadUserAvatar = ({ currentAvatarUrl, setSelectedAvatar, tip }: UploadUserAvatarProps) => {
   const [preview, setPreview] = useState(null)
 
   const handleChoosePhoto = () => {
@@ -68,8 +69,9 @@ const UploadUserAvatar = ({ currentAvatarUrl, setSelectedAvatar }: UploadUserAva
           </button>
         </div>
         <div className={styles.uploadAvatarText}>
-          For the best visual results, we recommend uploading photo with a square shape or 1:1
-          aspect ratio.
+          {tip}
+          {/* For the best visual results, we recommend uploading photo with a square shape or 1:1
+          aspect ratio. */}
         </div>
       </div>
       <div className={styles.uploadAvatarError}></div>

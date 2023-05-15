@@ -23,6 +23,7 @@ import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
 
 /* Styles */
 import styles from './EditProfileModal.module.scss'
+import { getCountryId } from 'helpers/country'
 
 type EditProfileModalProps = {
   modalName: string
@@ -30,6 +31,7 @@ type EditProfileModalProps = {
   config: any
   userDetail: any
   handleModal: Function
+  lang: Record<string, any>
 }
 
 const dayList = []
@@ -75,7 +77,8 @@ const EditProfileModal = ({
   modalName,
   showModal,
   userDetail,
-  handleModal
+  handleModal,
+  lang
 }: EditProfileModalProps) => {
   const {
     avatar,
@@ -86,7 +89,13 @@ const EditProfileModal = ({
     description,
     xp_lvl: expLevel
   } = userDetail
-
+  const {
+    manageProfile: {
+      tab: {
+        profile: { aboutMeModal }
+      }
+    }
+  } = lang
   const dispatch = useDispatch()
 
   const [selectedAvatar, setSelectedAvatar] = useState(null)
@@ -96,12 +105,8 @@ const EditProfileModal = ({
   const updateUserProfileSuccess = useSelector(
     (store: any) => store.users.updateUserProfile.response
   )
-  const xpLevelList = useSelector(
-    (store: any) => store.config.config.response?.xp_lvls ?? []
-  )
-  const locationList = useSelector(
-    (store: any) => store.config.config.response?.location_lists
-  )
+  const xpLevelList = useSelector((store: any) => store.config.config.response?.xp_lvls ?? [])
+  const locationList = useSelector((store: any) => store.config.config.response?.location_lists)
 
   const formattedXpLevelList = xpLevelList?.map?.((xp) => {
     return { ...xp, label: xp.value, value: xp.key }
@@ -165,20 +170,25 @@ const EditProfileModal = ({
 
   const onSubmit = (data) => {
     const { firstName, lastName, summary, yearsOfExperience, location } = data
-    const matchedLocation = formattedLocationList.find((loc) => {
-      return loc?.value == location
-    })
+    const getIdByValue = (options: any[], value) => {
+      const selectedOption = options.find((item) => item.value === value)
+      return selectedOption?.id
+    }
+    const location_id = getIdByValue(formattedLocationList, location)
+    const xp_lvl_id = getIdByValue(formattedXpLevelList, yearsOfExperience)
 
     const payload = {
+      country_id: getCountryId(),
       avatar: selectedAvatar,
       first_name: firstName,
       last_name: lastName,
       birthdate: birthdate && moment(new Date(birthdate)).format('yyyy-MM-DD'),
       location_key: matchedLocation?.key,
+      location_id,
       xp_lvl_key: yearsOfExperience || '',
+      xp_lvl_id,
       description: summary?.length > 0 ? summary : ''
     }
-
     dispatch(updateUserProfileRequest(payload))
   }
 
@@ -206,9 +216,9 @@ const EditProfileModal = ({
       <Modal
         showModal={showModal}
         handleModal={handleCloseModal}
-        headerTitle='About me'
-        firstButtonText='Cancel'
-        secondButtonText='Save'
+        headerTitle={aboutMeModal.title}
+        firstButtonText={aboutMeModal.btn1}
+        secondButtonText={aboutMeModal.btn2}
         isSecondButtonLoading={isUpdatingUserProfile}
         firstButtonIsClose
         handleFirstButton={handleCloseModal}
@@ -220,6 +230,7 @@ const EditProfileModal = ({
         <div className={styles.profile}>
           <div className={styles.profileAvatar}>
             <UploadUserAvatar
+              tip={aboutMeModal.avatarTips}
               currentAvatarUrl={avatar}
               selectedAvatar={selectedAvatar}
               setSelectedAvatar={setSelectedAvatar}
@@ -239,7 +250,7 @@ const EditProfileModal = ({
                   }}
                   className={styles.profileFormInput}
                   name='firstName'
-                  label={requiredLabel('First Name')}
+                  label={requiredLabel(aboutMeModal.firstName)}
                   variant='outlined'
                   autoComplete='off'
                   error={errors.firstName}
@@ -259,7 +270,7 @@ const EditProfileModal = ({
                   }}
                   className={styles.profileFormInput}
                   name='lastName'
-                  label={requiredLabel('Last Name')}
+                  label={requiredLabel(aboutMeModal.lastName)}
                   variant='outlined'
                   size='small'
                   autoComplete='off'
@@ -270,7 +281,8 @@ const EditProfileModal = ({
             </div>
             <div className={styles.profileFormTitle}>
               <Text textStyle='lg' bold>
-                Date of Birth
+                {/* Date of Birth */}
+                {aboutMeModal.birthday}
               </Text>
             </div>
             <div className={styles.profileFormGroup}>
@@ -279,7 +291,7 @@ const EditProfileModal = ({
                   refs={{
                     ...register('birthdate')
                   }}
-                  label='Date of birth'
+                  label={aboutMeModal.birthday}
                   views={['year', 'month', 'day']}
                   inputFormat='yyyy-MM-dd'
                   value={birthdate}
@@ -301,7 +313,7 @@ const EditProfileModal = ({
                     })
                   }}
                   className={styles.profileFormInput}
-                  label={requiredLabel('Current Location')}
+                  label={requiredLabel(aboutMeModal.location)}
                   error={errors.location ? true : false}
                   value={location}
                   defaultValue={location}
@@ -316,7 +328,7 @@ const EditProfileModal = ({
                   ...register('yearsOfExperience')
                 }}
                 className={styles.profileFormInput}
-                label='Years of Experience'
+                label={aboutMeModal.exp}
                 value={yearsOfExperience}
                 options={formattedXpLevelList}
                 onChange={(e) => {
@@ -331,8 +343,8 @@ const EditProfileModal = ({
                     maxLength: { value: 4000, message: 'Please enter text within 4000' }
                   })}
                   className={styles.profileFormInput}
-                  label='Provide a career summary and briefly highlight your relevant experience, achievement and skills.'
-                  placeholder='Provide a career summary and briefly highlight your relevant experience, achievement and skills.'
+                  label={aboutMeModal.summary}
+                  placeholder={aboutMeModal.summary}
                   name='summary'
                   variant='outlined'
                   autoComplete='off'

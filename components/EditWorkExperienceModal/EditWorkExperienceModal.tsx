@@ -27,13 +27,14 @@ import { handleNumericInput } from 'helpers/handleInput'
 import {
   getJobCategoryList,
   // getLocationList,
-  getIndustryList,
+  getIndustryList
   // getCountryList,
 } from 'helpers/jobPayloadFormatter'
 
 /* Styles */
 import styles from './EditWorkExperienceModal.module.scss'
 import JobFunctionSelector from 'components/JobFunctionSelector'
+import { formatTemplateString } from 'helpers/formatter'
 
 type EditWorkExperienceModalProps = {
   modalName: string
@@ -41,6 +42,7 @@ type EditWorkExperienceModalProps = {
   data: any
   config: any
   handleModal: Function
+  lang: Record<string, any>
 }
 
 const dayList = []
@@ -71,7 +73,15 @@ const EditWorkExperienceModal = ({
   data,
   config,
   handleModal,
+  lang
 }: EditWorkExperienceModalProps) => {
+  const {
+    manageProfile: {
+      tab: {
+        profile: { expModal }
+      }
+    }
+  } = lang
   const dispatch = useDispatch()
 
   // const locList = getLocationList(config)
@@ -110,7 +120,7 @@ const EditWorkExperienceModal = ({
   )
 
   const {
-    handleSubmit,
+    handleSubmit
     // formState: { errors },
   } = useForm()
 
@@ -125,6 +135,7 @@ const EditWorkExperienceModal = ({
   }, [data])
   useEffect(() => {
     if (data) {
+      console.log('data', data)
       setJobTitle(data.job_title)
       setCompanyName(data.company)
       // setLocation(data.location ? getLocation(data.location)[0] : null)
@@ -133,11 +144,9 @@ const EditWorkExperienceModal = ({
       setWorkPeriodTo(data.working_period_to)
       setSalary(data.salary)
       setCurrency(data.currency_id)
-      if (data.company_industry)
+      if (data.company_industry_id)
         setIndustry(
-          industryList.filter(
-            (industry) => industry.label === data.company_industry
-          )[0].value
+          industryList.find((industry) => industry.id === data.company_industry_id)?.value
         )
       // if (data.location && data.location.toLowerCase() === 'overseas') {
       //   setCountry(
@@ -185,7 +194,7 @@ const EditWorkExperienceModal = ({
     workPeriodFrom,
     workPeriodTo,
     hasErrorOnFromPeriod,
-    hasErrorOnToPeriod,
+    hasErrorOnToPeriod
   ])
 
   const setDisabledButton = (value) => {
@@ -203,30 +212,29 @@ const EditWorkExperienceModal = ({
 
   const onSubmit = () => {
     // eslint-disable-next-line no-console
-    const matchedIndustry = industryList.filter((option) => {
+    const matchedIndustry = industryList.find((option) => {
       return option.value === industry
     })
-
     const workExperienceData = {
       job_title: jobTitle,
       company: companyName,
       country_key: country?.value || 'ph',
-      company_industry_key: matchedIndustry?.[0]?.key || null,
+      company_industry_key: matchedIndustry?.key || null,
+      company_industry_id: matchedIndustry?.id || null,
       is_currently_work_here: isCurrentJob,
       function_job_title: jobFunction.value,
       function_job_title_id: jobFunction.id,
       currency_id: currency,
-      salary: (currency && salary) ? Number(salary) : null,
+      salary: currency && salary ? Number(salary) : null,
       working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
       working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
-      description: description ? description : '',
+      description: description ? description : ''
       // location_key: location?.key || '',
     }
-
     const workExperiencesPayload = {
       isUpdate: data ? true : false,
       workExperienceId: data ? data.id : null,
-      workExperienceData: workExperienceData,
+      workExperienceData: workExperienceData
     }
     dispatch(manageUserWorkExperiencesRequest(workExperiencesPayload))
   }
@@ -269,9 +277,9 @@ const EditWorkExperienceModal = ({
       <Modal
         showModal={showModal}
         handleModal={handleCloseModal}
-        headerTitle='Work experience'
-        firstButtonText='Cancel'
-        secondButtonText='Save'
+        headerTitle={expModal.title}
+        firstButtonText={expModal.btn1}
+        secondButtonText={expModal.btn2}
         isSecondButtonLoading={isUpdating}
         isSecondButtonDisabled={isNextDisabled}
         firstButtonIsClose
@@ -285,7 +293,7 @@ const EditWorkExperienceModal = ({
               <div className={styles.field}>
                 <MaterialTextField
                   className={styles.fullWidth}
-                  label={requiredLabel('Job Title')}
+                  label={requiredLabel(expModal.jobTitle)}
                   size='small'
                   value={jobTitle}
                   defaultValue={jobTitle}
@@ -296,7 +304,7 @@ const EditWorkExperienceModal = ({
               <div className={styles.field}>
                 <MaterialTextField
                   className={styles.fullWidth}
-                  label={requiredLabel('Company Name')}
+                  label={requiredLabel(expModal.companyName)}
                   size='small'
                   value={companyName}
                   defaultValue={companyName}
@@ -331,7 +339,7 @@ const EditWorkExperienceModal = ({
               <div className={styles.fieldGroup}>
                 <div className={styles.fieldHeader}>
                   <Text textStyle='base' bold>
-                    Working Period <span className={styles.fieldRequired}>*</span>
+                    {expModal.workPeriod} <span className={styles.fieldRequired}>*</span>
                   </Text>
                 </div>
                 <div className={styles.fieldBody}>
@@ -343,7 +351,7 @@ const EditWorkExperienceModal = ({
                         name='currentJob'
                       />
                     }
-                    label={<Text textStyle='base'>I currently work here</Text>}
+                    label={<Text textStyle='base'>{expModal.stillHere}</Text>}
                   />
                 </div>
               </div>
@@ -351,13 +359,13 @@ const EditWorkExperienceModal = ({
               <div className={styles.field}>
                 <div className={styles.fieldHeader}>
                   <Text textStyle='base' bold>
-                    From
+                    {expModal.from}
                   </Text>
                 </div>
                 <div className={classNames(styles.fieldBody, styles.fieldDate)}>
                   <div className={styles.fieldDateItem}>
                     <MaterialDatePicker
-                      label='Month Year'
+                      label={expModal.startDate}
                       views={['year', 'month']}
                       inputFormat='MMM yyyy'
                       value={workPeriodFrom}
@@ -369,7 +377,8 @@ const EditWorkExperienceModal = ({
                 </div>
                 {hasErrorOnFromPeriod && (
                   <Text textColor='red' textStyle='sm'>
-                    Start date must be earlier than completion date.
+                    {expModal.dateErrorMsg}
+                    {/* Start date must be earlier than completion date. */}
                   </Text>
                 )}
               </div>
@@ -378,13 +387,13 @@ const EditWorkExperienceModal = ({
                 <div className={styles.field}>
                   <div className={styles.fieldHeader}>
                     <Text textStyle='base' bold>
-                      To
+                      {expModal.to}
                     </Text>
                   </div>
                   <div className={classNames(styles.fieldBody, styles.fieldDate)}>
                     <div className={styles.fieldDateItem}>
                       <MaterialDatePicker
-                        label='Month Year'
+                        label={expModal.endDate}
                         views={['year', 'month']}
                         inputFormat='MMM yyyy'
                         value={workPeriodTo}
@@ -396,7 +405,8 @@ const EditWorkExperienceModal = ({
                   </div>
                   {hasErrorOnToPeriod && (
                     <Text textColor='red' textStyle='sm'>
-                      Start date must be earlier than completion date.
+                      {expModal.dateErrorMsg}
+                      {/* Start date must be earlier than completion date. */}
                     </Text>
                   )}
                 </div>
@@ -405,7 +415,7 @@ const EditWorkExperienceModal = ({
               <div id='jobFunction' className={styles.field}>
                 <JobFunctionSelector
                   className={styles.fullWidth}
-                  label={'Job Functions'}
+                  label={expModal.jobFunction}
                   title='Job Function'
                   name='jobFunction'
                   isTouched
@@ -418,7 +428,7 @@ const EditWorkExperienceModal = ({
               <div className={styles.field}>
                 <MaterialBasicSelect
                   className={styles.fullWidth}
-                  label='Industry'
+                  label={expModal.industry}
                   value={industry}
                   onChange={(e) => {
                     setIndustry(e.target.value)
@@ -430,32 +440,42 @@ const EditWorkExperienceModal = ({
               <div className={styles.field}>
                 <MaterialBasicSelect
                   className={styles.fullWidth}
-                  label='Currency'
+                  label={expModal.currency}
                   value={currency}
                   onChange={(e) => {
                     setCurrency(e.target.value)
                   }}
                   options={currencyLists}
                 />
-                {currency && <MaterialTextField
-                  className={styles.fullWidth}
-                  label='Monthly Salary (PHP)'
-                  size='small'
-                  value={salary}
-                  defaultValue={salary}
-                  onChange={(e) => setSalary(handleNumericInput(e.target.value))}
-                />}
+                {currency && (
+                  <MaterialTextField
+                    className={styles.fullWidth}
+                    label={formatTemplateString(
+                      expModal.salary,
+                      currencyLists.find(({ value }) => value === currency).label
+                    )}
+                    size='small'
+                    value={salary}
+                    defaultValue={salary}
+                    onChange={(e) => setSalary(handleNumericInput(e.target.value))}
+                  />
+                )}
               </div>
 
               <div className={styles.editor}>
-                <TextEditor value={description} setValue={setDescription} />
+                <TextEditor
+                  placeholder={expModal.workSummaryPlaceholder}
+                  value={description}
+                  setValue={setDescription}
+                />
               </div>
             </div>
           </div>
 
           {showErrorToComplete && (
             <Text textStyle='base' textColor='red' tagName='p'>
-              Fill up the required field to proceed.
+              {expModal.notFillErrorMsg}
+              {/* Fill up the required field to proceed. */}
             </Text>
           )}
         </div>

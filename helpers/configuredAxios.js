@@ -2,6 +2,7 @@ import axios from 'axios'
 import { getCookie, removeCookie, setCookie } from 'helpers/cookies'
 import { accessToken, refreshToken } from './cookies';
 import { getCountryId } from './country';
+import { NextResponse } from 'next/server';
 // import accessToken from 'pages/api/handlers/linkedinHandlers/accessToken'
 // import { configureStore } from 'store'
 // import { logout } from 'shared/helpers/authentication'
@@ -69,7 +70,7 @@ const getUrl = (baseURL) => {
   return url
 }
 
-const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken, server = false) => {
+const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken) => {
   // let remoteAddress = ''
   // let isMobile = ''
   if (typeof window !== 'undefined') {
@@ -166,6 +167,8 @@ const redirectToHomeOnClient = () => {
     import('imforbossjob')
       .then((im) => im?.IMManager?.logout?.())
       .then(() => localStorage?.clear?.())
+  } else {
+    NextResponse.next().redirect('/get-started', 301)
   }
 }
 
@@ -194,7 +197,7 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
                 return Promise.reject(error)
               }
               if (!globalPromise) {
-                globalThis.globalPromise = refreshTokenServer().catch(error => {
+                globalThis.globalPromise = refreshTokenServer().catch(() => {
                   redirectToHomeOnClient()
                 }).finally(() => {
                   setTimeout(() => {
@@ -202,7 +205,7 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
                   }, 1000 * 60 * 2);
                 })
               }
-              return globalPromise.then((res) => {
+              return globalPromise.then(() => {
                 const chainObj = chain(true)(baseURL, type, passToken ? getCookie(accessToken) : '', serverAccessToken ? getCookie(accessToken) : '', server)
                 return chainObj[key](...params)
               })
@@ -212,6 +215,7 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
               // eslint-disable-next-line prefer-promise-reject-errors
               return Promise.reject(401)
             } else {
+
               return Promise.reject(error)
             }
           }

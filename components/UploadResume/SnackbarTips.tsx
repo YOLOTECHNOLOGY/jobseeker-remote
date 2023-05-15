@@ -8,10 +8,17 @@ import { ErrorOutline, Close } from '@mui/icons-material'
 type SnackbarTipsProps = {
   show: boolean
   onDismiss: () => void
+  title?: string
+  errorMessage?: string
 }
 
 // todo: in the feature, maybe we can improve this as a global component
-export const SnackbarTips = ({ show, onDismiss }: SnackbarTipsProps) => {
+export const SnackbarTips = ({
+  show,
+  onDismiss,
+  title = 'File exceed limit',
+  errorMessage = 'Please upload file size lesser than 5MB.'
+}: SnackbarTipsProps) => {
   const { width } = useWindowDimensions()
   const isMobile = width < 768
   const origin = useMemo<SnackbarOrigin>(() => {
@@ -34,8 +41,8 @@ export const SnackbarTips = ({ show, onDismiss }: SnackbarTipsProps) => {
         <div className={styles.innerWrapper}>
           <ErrorOutline color='error' />
           <div className={styles.messageWrapper}>
-            <div className={styles.header}>File exceed limit</div>
-            <div className={styles.content}>Please upload file size lesser than 5MB.</div>
+            <div className={styles.header}>{title}</div>
+            <div className={styles.content}>{errorMessage}</div>
           </div>
           <Close style={{ cursor: 'pointer' }} onClick={onDismiss} />
         </div>

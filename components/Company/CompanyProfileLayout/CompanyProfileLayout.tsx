@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { Tabs, Tab } from '@mui/material'
@@ -23,6 +23,7 @@ import JobDetailSidebarCard from 'components/Loader/JobDetailSidebarCard'
 
 // Assets
 import { BlueTickIcon } from 'images'
+import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
 
 const theme = createTheme({
   components: {
@@ -59,19 +60,34 @@ interface ICompanyProfileLayout {
   seoMetaTitle: string
   seoMetaDescription: string
   accessToken?: boolean
+  lang?: any
 }
-
 const CompanyProfileLayout = ({
   children,
   company,
   currentTab,
   totalJobs,
-  accessToken
+  accessToken,
+  lang
 }: ICompanyProfileLayout) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const imgPlaceholder =
     'https://assets.bossjob.com/companies/1668/cover-pictures/0817984dff0d7d63fcb8193fef08bbf2.jpeg'
+  const {
+    companyDetail: { tab, rightSection }
+  } = lang
+
+  const tabs = useMemo<{ value: string; label: string; path?: string; badge?: number }[]>(() => {
+    return [
+      { value: 'overview', path: '' },
+      { value: 'life' },
+      { value: 'jobs', badge: totalJobs }
+    ].map((item) => {
+      ;(item as any).label = tab[item.value]
+      return item
+    }) as any
+  }, [])
 
   const [tabValue, setTabValue] = useState(currentTab)
   const [similarCompanies, setSimilarCompanies] = useState(null)
@@ -82,13 +98,21 @@ const CompanyProfileLayout = ({
   const isSimilarCompanyFetching = useSelector(
     (store: any) => store.companies.fetchSimilarCompany.fetching
   )
+  const config = useSelector((store: any) => store.config.config.response)
 
   useEffect(() => {
     dispatch(fetchSimilarCompanyRequest({ companyId: company.id }))
   }, [])
 
   useEffect(() => {
-    if (similarCompaniesResponse) setSimilarCompanies(similarCompaniesResponse)
+    if (similarCompaniesResponse && Array.isArray(similarCompaniesResponse)) {
+      setSimilarCompanies(
+        similarCompaniesResponse?.map((item) => {
+          changeCompanyValueWithConfigure(item, config)
+          return item
+        })
+      )
+    }
   }, [similarCompaniesResponse])
 
   const handleQuickUploadResumeClick = () => {
@@ -101,7 +125,7 @@ const CompanyProfileLayout = ({
   // const canonicalUrl = companyUrl + additionalCanonicalText
 
   return (
-    <Layout>
+    <Layout lang={lang}>
       {/* <SEO
         title={seoMetaTitle}
         description={seoMetaDescription}
@@ -148,54 +172,32 @@ const CompanyProfileLayout = ({
                 <Tabs
                   value={tabValue}
                   centered
-                  onChange={(e: any) => {
-                    const tab = e.target.childNodes[0].textContent.toLowerCase()
-                    setTabValue(tab === 'overview' || tab === 'life' ? tab : 'jobs')
+                  onChange={(e: any, value) => {
+                    setTabValue(value)
                   }}
                 >
-                  <Tab
-                    className={styles.companyTabsItem}
-                    value='overview'
-                    href={companyUrl}
-                    label={
-                      <Text
-                        bold
-                        textStyle='xl'
-                        textColor={tabValue === 'overview' ? 'primaryBlue' : 'black'}
-                      >
-                        Overview
-                      </Text>
-                    }
-                  />
-                  <Tab
-                    className={styles.companyTabsItem}
-                    value='life'
-                    href={`${companyUrl}/life`}
-                    label={
-                      <Text
-                        bold
-                        textStyle='xl'
-                        textColor={tabValue === 'life' ? 'primaryBlue' : 'black'}
-                      >
-                        Life
-                      </Text>
-                    }
-                  />
-                  <Tab
-                    className={styles.companyTabsItem}
-                    value='jobs'
-                    href={`${companyUrl}/jobs`}
-                    label={
-                      <Text
-                        bold
-                        textStyle='xl'
-                        textColor={tabValue === 'jobs' ? 'primaryBlue' : 'black'}
-                      >
-                        Jobs
-                        <span className={styles.companyJobsBadge}>{totalJobs}</span>
-                      </Text>
-                    }
-                  />
+                  {tabs.map((item) => {
+                    let { path, label, value, badge } = item
+                    path = path ?? `/${value}`
+                    return (
+                      <Tab
+                        key={value}
+                        className={styles.companyTabsItem}
+                        value={value}
+                        href={companyUrl + path}
+                        label={
+                          <Text
+                            bold
+                            textStyle='xl'
+                            textColor={tabValue === value ? 'primaryBlue' : 'black'}
+                          >
+                            {label}
+                            {badge && <span className={styles.companyJobsBadge}>{badge}</span>}
+                          </Text>
+                        }
+                      />
+                    )
+                  })}
                 </Tabs>
               </ThemeProvider>
             </div>
@@ -212,13 +214,14 @@ const CompanyProfileLayout = ({
                 handleClick={handleQuickUploadResumeClick}
                 isShowArrowIcon
                 className={styles.arrowIconPostion}
+                text={rightSection.uploadResume}
               />
             </div>
           )}
 
           <div className={styles.relatedCompanyContent}>
             <Text textStyle='xl' bold>
-              People also viewed...
+              {rightSection.othersViewed}
             </Text>
 
             {isSimilarCompanyFetching &&
@@ -271,7 +274,7 @@ const CompanyProfileLayout = ({
             )}
             <Link to='/companies' className={styles.relatedCompanyLink}>
               <Text textColor='primaryBlue' textStyle='base'>
-                View all
+                {rightSection.viewAll}
               </Text>
             </Link>
           </div>

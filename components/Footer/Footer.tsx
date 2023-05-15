@@ -1,12 +1,12 @@
 'use client'
-import React from 'react'
+import React,{useContext}from 'react'
 
 /* Components */
 import Link from 'components/Link'
 import Text from 'components/Text'
 import Accordian from 'components/Accordian'
 import { getCountry, getCountryKey } from 'helpers/country'
-
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 /* Images */
 import {
   ChevronUpIcon,
@@ -26,39 +26,45 @@ import LazyLoad from '../LazyLoad'
 
 const scrollToBottom = () => document.body.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
-const COUNTRY_MAP = {
-  'ph': [
-    {
-      to: `/jobs-hiring/manila-jobs`,
-      title: 'Jobs in Manila',
-    },
-    {
-      to: `/jobs-hiring/makati-jobs`,
-      title: 'Jobs in Makati'
-    },
-    {
-      to: `/jobs-hiring/cebu-city-jobs`,
-      title: 'Jobs in Cebu'
-    }
-  ],
-  'sg': [
-    {
-      to: `/jobs-hiring/downtown-core-jobs`,
-      title: 'Jobs in Downtown Core',
-    },
-    {
-      to: `/jobs-hiring/kallang-jobs`,
-      title: 'Jobs in Kallang'
-    },
-    {
-      to: `/jobs-hiring/jurong-east-jobs`,
-      title: 'Jobs in Jurong East'
-    }
-  ]
-}
 
-const CountryList = () => {
+
+const CountryList = (data) => {
   const countryKey = getCountryKey()
+  const {
+    JobsIn1,
+    JobsIn2,
+    JobsIn3,
+  } = data?.lang ||{}
+  const COUNTRY_MAP = {
+    'ph': [
+      {
+        to: `/jobs-hiring/manila-jobs`,
+        title: JobsIn1,
+      },
+      {
+        to: `/jobs-hiring/makati-jobs`,
+        title: JobsIn2
+      },
+      {
+        to: `/jobs-hiring/cebu-city-jobs`,
+        title: JobsIn3
+      }
+    ],
+    'sg': [
+      {
+        to: `/jobs-hiring/downtown-core-jobs`,
+        title: JobsIn1,
+      },
+      {
+        to: `/jobs-hiring/kallang-jobs`,
+        title: JobsIn2
+      },
+      {
+        to: `/jobs-hiring/jurong-east-jobs`,
+        title: JobsIn3
+      }
+    ]
+  }
   const currentCounties = COUNTRY_MAP[countryKey]
 
   return (
@@ -85,7 +91,34 @@ const CountryList = () => {
 }
 
 
-const Footer = () => {
+const Footer = ({lang}:any) => {
+  const data = lang ?? useContext(languageContext)
+  const {
+    about,
+    aboutBossjob,
+    termsConditions,
+    legal,
+    FAQ,
+    talents,
+    allJobs,
+    createJobAlert,
+    createFree,
+    careerGuide,
+    courses,
+    recruiter,
+    getStarted,
+    popularJobs,
+    ItJobs,
+    financeJobs,
+    customerService,
+    BpoJobs,
+    salesJobs,
+    healthcareJobs,
+    downloadBossjobApp,
+    followUs,
+    technology,
+    corporation
+  } = data?.foot ||{}
   return (
     <footer className={styles.footer}>
       <button
@@ -108,7 +141,7 @@ const Footer = () => {
               paddedContent
               title={
                 <Text textStyle='sm' bold>
-                  About
+                  {about}
                 </Text>
               }
             >
@@ -121,7 +154,7 @@ const Footer = () => {
                     aTag={false}
                     title='About Bossjob'
                   >
-                    <Text textStyle='sm'>About Bossjob</Text>
+                    <Text textStyle='sm'>{aboutBossjob}</Text>
                   </Link>
                 </li>
                 <li>
@@ -131,7 +164,7 @@ const Footer = () => {
                     title='Blog Bossjob'
                     external
                   >
-                    <Text textStyle='sm'>Terms & Conditions</Text>
+                    <Text textStyle='sm'>{termsConditions}</Text>
                   </Link>
                 </li>
                 <li>
@@ -141,7 +174,7 @@ const Footer = () => {
                     title='Legal'
                     external
                   >
-                    <Text textStyle='sm'>Legal</Text>
+                    <Text textStyle='sm'>{legal}</Text>
                   </Link>
                 </li>
                 {/* <li>
@@ -161,7 +194,7 @@ const Footer = () => {
                     title='FAQs'
                     external
                   >
-                    <Text textStyle='sm'>FAQ</Text>
+                    <Text textStyle='sm'>{FAQ}</Text>
                   </Link>
                 </li>
                 {/* <li>
@@ -176,7 +209,7 @@ const Footer = () => {
               paddedContent
               title={
                 <Text textStyle='sm' bold>
-                  Talents
+                  {talents}
                 </Text>
               }
             >
@@ -187,12 +220,12 @@ const Footer = () => {
                     to='/jobs-hiring/job-search'
                     title={`Jobs in ${getCountry()}`}
                   >
-                    <Text textStyle='sm'>All jobs</Text>
+                    <Text textStyle='sm'>{allJobs}</Text>
                   </Link>
                 </li>
                 <li>
                   <Link className={styles.footerLink} to='/jobs-hiring' title='Create Job Alert'>
-                    <Text textStyle='sm'>Create job alert</Text>
+                    <Text textStyle='sm'>{createJobAlert}</Text>
                   </Link>
                 </li>
                 <li>
@@ -201,7 +234,7 @@ const Footer = () => {
                     to='/resumetemplate'
                     title='Create Free Resume'
                   >
-                    <Text textStyle='sm'>Create free resume</Text>
+                    <Text textStyle='sm'>{createFree}</Text>
                   </Link>
                 </li>
                 <li>
@@ -211,7 +244,7 @@ const Footer = () => {
                     title='Career Guide'
                     external
                   >
-                    <Text textStyle='sm'>Career guide</Text>
+                    <Text textStyle='sm'>{careerGuide}</Text>
                   </Link>
                 </li>
                 <li>
@@ -221,7 +254,7 @@ const Footer = () => {
                     title='Courses'
                     external
                   >
-                    <Text textStyle='sm'>Courses</Text>
+                    <Text textStyle='sm'>{courses}</Text>
                   </Link>
                 </li>
               </ul>
@@ -231,7 +264,7 @@ const Footer = () => {
               paddedContent
               title={
                 <Text textStyle='sm' bold>
-                  Recruiter
+                  {recruiter}
                 </Text>
               }
             >
@@ -243,7 +276,7 @@ const Footer = () => {
                     external
                     title='Get started'
                   >
-                    <Text textStyle='sm'>Get started</Text>
+                    <Text textStyle='sm'>{getStarted}</Text>
                   </Link>
                 </li>
               </ul>
@@ -253,12 +286,12 @@ const Footer = () => {
               paddedContent
               title={
                 <Text textStyle='sm' bold>
-                  Popular Jobs
+                  {popularJobs}
                 </Text>
               }
             >
               <ul className={styles.footerDesktopLinkList}>
-                <CountryList />
+                <CountryList lang={lang?.foot ||{}}/>
                 <li>
                   <Link
                     className={styles.footerLink}
@@ -267,7 +300,7 @@ const Footer = () => {
                     external={false}
                     aTag={false}
                   >
-                    <Text textStyle='sm'>IT jobs</Text>
+                    <Text textStyle='sm'>{ItJobs}</Text>
                   </Link>
                 </li>
                 <li>
@@ -278,7 +311,7 @@ const Footer = () => {
                     external={false}
                     aTag={false}
                   >
-                    <Text textStyle='sm'>Finance jobs</Text>
+                    <Text textStyle='sm'>{financeJobs}</Text>
                   </Link>
                 </li>
                 <li>
@@ -289,7 +322,7 @@ const Footer = () => {
                     external={false}
                     aTag={false}
                   >
-                    <Text textStyle='sm'>Customer Service jobs</Text>
+                    <Text textStyle='sm'>{customerService}</Text>
                   </Link>
                 </li>
                 <li>
@@ -300,7 +333,7 @@ const Footer = () => {
                     external={false}
                     aTag={false}
                   >
-                    <Text textStyle='sm'>BPO jobs</Text>
+                    <Text textStyle='sm'>{BpoJobs}</Text>
                   </Link>
                 </li>
                 <li>
@@ -311,7 +344,7 @@ const Footer = () => {
                     external={false}
                     aTag={false}
                   >
-                    <Text textStyle='sm'>Sales jobs</Text>
+                    <Text textStyle='sm'>{salesJobs}</Text>
                   </Link>
                 </li>
                 <li>
@@ -322,14 +355,14 @@ const Footer = () => {
                     external={false}
                     aTag={false}
                   >
-                    <Text textStyle='sm'>Healthcare jobs</Text>
+                    <Text textStyle='sm'>{healthcareJobs}</Text>
                   </Link>
                 </li>
               </ul>
             </Accordian>
             <div className={styles.footerMobileSections}>
               <Text textStyle='sm' bold>
-                Download Bossjob App
+                {downloadBossjobApp}
               </Text>
               <div className={styles.footerMobileDownloadApp}>
                 <div style={{ marginRight: '15px' }}>
@@ -350,7 +383,7 @@ const Footer = () => {
             </div>
             <div className={styles.footerMobileSections}>
               <Text textStyle='sm' bold>
-                Follow us
+               {followUs}
               </Text>
               <div className={styles.footerMobileSocialLinks}>
                 <Link
@@ -437,7 +470,7 @@ const Footer = () => {
             <div className={styles.footerDesktopSupportWrapper}>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  About
+                  {about}
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
@@ -448,7 +481,7 @@ const Footer = () => {
                       aTag={false}
                       external={false}
                     >
-                      <Text textStyle='sm'>About Bossjob</Text>
+                      <Text textStyle='sm'>{aboutBossjob}</Text>
                     </Link>
                   </li>
                   <li>
@@ -458,7 +491,7 @@ const Footer = () => {
                       title='Blog Bossjob'
                       external
                     >
-                      <Text textStyle='sm'>Terms & Conditions</Text>
+                      <Text textStyle='sm'>{termsConditions}</Text>
                     </Link>
                   </li>
                   <li>
@@ -468,7 +501,7 @@ const Footer = () => {
                       title='Legal'
                       external
                     >
-                      <Text textStyle='sm'>Legal</Text>
+                      <Text textStyle='sm'>{legal}</Text>
                     </Link>
                   </li>
                   {/* <li>
@@ -488,7 +521,7 @@ const Footer = () => {
                       title='faq'
                       external
                     >
-                      <Text textStyle='sm'>FAQ</Text>
+                      <Text textStyle='sm'>{FAQ}</Text>
                     </Link>
                   </li>
                   {/* <li>
@@ -500,7 +533,7 @@ const Footer = () => {
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Talents
+                  {talents}
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
@@ -509,12 +542,12 @@ const Footer = () => {
                       to='/jobs-hiring/job-search'
                       title='All jobs'
                     >
-                      <Text textStyle='sm'>All jobs</Text>
+                      <Text textStyle='sm'>{allJobs}</Text>
                     </Link>
                   </li>
                   <li>
                     <Link className={styles.footerLink} to='/jobs-hiring' title='Create job alert'>
-                      <Text textStyle='sm'>Create job alert</Text>
+                      <Text textStyle='sm'>{createJobAlert}</Text>
                     </Link>
                   </li>
                   <li>
@@ -523,7 +556,7 @@ const Footer = () => {
                       to='/resumetemplate'
                       title='Create Free Resume'
                     >
-                      <Text textStyle='sm'>Create free resume</Text>
+                      <Text textStyle='sm'>{createFree}</Text>
                     </Link>
                   </li>
                   <li>
@@ -533,7 +566,7 @@ const Footer = () => {
                       title='Career guide'
                       external
                     >
-                      <Text textStyle='sm'>Career guide</Text>
+                      <Text textStyle='sm'>{careerGuide}</Text>
                     </Link>
                   </li>
                   <li>
@@ -543,14 +576,14 @@ const Footer = () => {
                       title='Courses'
                       external
                     >
-                      <Text textStyle='sm'>Courses</Text>
+                      <Text textStyle='sm'>{courses}</Text>
                     </Link>
                   </li>
                 </ul>
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                 Recruiter
+                 {recruiter}
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
                   <li>
@@ -560,17 +593,17 @@ const Footer = () => {
                       title='Get started'
                       external
                     >
-                      <Text textStyle='sm'>Get started</Text>
+                      <Text textStyle='sm'>{getStarted}</Text>
                     </Link>
                   </li>
                 </ul>
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Popular Jobs
+                  {popularJobs}
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
-                  <CountryList />
+                  <CountryList lang={lang?.foot ||{}}/>
                   <li>
                     <Link
                       className={styles.footerLink}
@@ -579,7 +612,7 @@ const Footer = () => {
                       external={false}
                       aTag={false}
                     >
-                      <Text textStyle='sm'>IT jobs</Text>
+                      <Text textStyle='sm'>{ItJobs}</Text>
                     </Link>
                   </li>
                   <li>
@@ -590,7 +623,7 @@ const Footer = () => {
                       external={false}
                       aTag={false}
                     >
-                      <Text textStyle='sm'>Finance jobs</Text>
+                      <Text textStyle='sm'>{financeJobs}</Text>
                     </Link>
                   </li>
                   <li>
@@ -601,7 +634,7 @@ const Footer = () => {
                       external={false}
                       aTag={false}
                     >
-                      <Text textStyle='sm'>Customer Service jobs</Text>
+                      <Text textStyle='sm'>{customerService}</Text>
                     </Link>
                   </li>
                   <li>
@@ -612,7 +645,7 @@ const Footer = () => {
                       external={false}
                       aTag={false}
                     >
-                      <Text textStyle='sm'>BPO jobs</Text>
+                      <Text textStyle='sm'>{BpoJobs}</Text>
                     </Link>
                   </li>
                   <li>
@@ -623,7 +656,7 @@ const Footer = () => {
                       external={false}
                       aTag={false}
                     >
-                      <Text textStyle='sm'>Sales jobs</Text>
+                      <Text textStyle='sm'>{salesJobs}</Text>
                     </Link>
                   </li>
                   <li>
@@ -634,14 +667,14 @@ const Footer = () => {
                       external={false}
                       aTag={false}
                     >
-                      <Text textStyle='sm'>Healthcare jobs</Text>
+                      <Text textStyle='sm'>{healthcareJobs}</Text>
                     </Link>
                   </li>
                 </ul>
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Download Bossjob App
+                 {downloadBossjobApp}
                 </Text>
                 <div style={{ margin: '25px 10px 10px 0' }}>
                   <Link to={process.env.APP_STORE_LINK} external>
@@ -660,7 +693,7 @@ const Footer = () => {
               </div>
               <div className={styles.footerColumn}>
                 <Text textStyle='sm' bold tagName='p'>
-                  Follow Us
+                  {followUs}
                 </Text>
                 <div className={styles.footerDesktopSocialWrapper}>
                   <div>
@@ -737,9 +770,9 @@ const Footer = () => {
             </Text>
             <div className={styles.copyrightCompanies}>
               <Text tagName='p' textStyle='sm'>
-                Singapore: Yolo Technology Pte Ltd. All Rights Reserved.
+               {technology}
                 <br />
-                <span>Philippines: Etos Adtech Corporation</span>
+                <span>{corporation}</span>
               </Text>
             </div>
           </div>

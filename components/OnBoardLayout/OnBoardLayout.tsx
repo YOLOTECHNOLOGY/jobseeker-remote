@@ -21,7 +21,8 @@ interface IOnBoardLayout {
   nextFnBtn?: Function,
   isUpdating?: boolean,
   isNextDisabled?: boolean,
-  isMobile?: boolean
+  isMobile?: boolean,
+  lang:any
 }
 
 const OnBoardLayout = ({
@@ -33,7 +34,8 @@ const OnBoardLayout = ({
   nextFnBtn,
   isUpdating,
   isNextDisabled,
-  isMobile = false
+  isMobile = false,
+  lang={}
 }: IOnBoardLayout) => {
   const componentClass = {
     ['is-disabled']: isNextDisabled,
@@ -63,7 +65,7 @@ const OnBoardLayout = ({
                 textStyle='base' 
                 textColor='darkgrey'
               >
-                Setp {currentStep} of {totalStep}
+                {lang.setp} {currentStep} {lang.of}  {totalStep}
               </Text>
             </div>
             <div className={styles.OnBoardContent}>
@@ -74,7 +76,7 @@ const OnBoardLayout = ({
             <div>
               {backFnBtn && !isMobile && (
                 <MaterialButton variant='outlined' capitalize onClick={() => backFnBtn()}>
-                  <Text textColor='primary' bold>Back</Text>
+                  <Text textColor='primary' bold> {lang.back}</Text>
                 </MaterialButton>
               )}
             </div>
@@ -88,7 +90,7 @@ const OnBoardLayout = ({
                   disabled={isNextDisabled}
                   className={classNames([buttonClass])}
                 >
-                  <Text textColor='white' bold>Next</Text>
+                  <Text textColor='white' bold>{lang.next}</Text>
                 </MaterialButton>
               )}
             </div>

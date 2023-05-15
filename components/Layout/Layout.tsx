@@ -24,10 +24,11 @@ interface LayoutProps {
   children: React.ReactNode
   className?: string
   isHiddenFooter?: boolean
-  isHiddenHeader?: boolean
+  isHiddenHeader?: boolean,
+  lang?:any,
 }
 
-const Layout = ({ children, className, isHiddenFooter, isHiddenHeader }: LayoutProps) => {
+const Layout = ({ children, className, isHiddenFooter, isHiddenHeader,lang }: LayoutProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isEmailVerified, setIsEmailVerified] = useState(false)
   const [isShowModal, setIsShowModal] = useState(false)
@@ -107,12 +108,12 @@ const Layout = ({ children, className, isHiddenFooter, isHiddenHeader }: LayoutP
       )}
       {!isHiddenHeader && (
         <>
-          <Header />
-          <HamburgerMenu />
+          <Header lang={lang}/>
+          <HamburgerMenu lang={lang}/>
         </>
       )}
       {children}
-      {!isHiddenFooter && <Footer />}
+      {!isHiddenFooter && <Footer lang={lang}/>}
 
       <ModalVerifyEmail
         email={isAuthenticated && userCookie ? userCookie.email : ''}

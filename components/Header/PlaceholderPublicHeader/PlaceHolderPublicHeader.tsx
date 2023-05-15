@@ -13,7 +13,8 @@ import MaterialButton from 'components/MaterialButton'
 import { BossjobLogoWhite } from 'images'
 
 // this Header will be used when user is not logged in
-const PlaceHolderPublicHeader = () => {
+const PlaceHolderPublicHeader = (props:any) => {
+  const {lang = {}} =  props
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
@@ -30,7 +31,7 @@ const PlaceHolderPublicHeader = () => {
             <React.Fragment>
               <li className={styles.headerLink}>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                  Find Jobs
+                  {lang.findJobs}
                 </Text>
               </li>
               {/* <li className={styles.headerLink}>
@@ -40,17 +41,17 @@ const PlaceHolderPublicHeader = () => {
               </li> */}
               <li className={styles.headerLink}>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                  Companies
+                {lang.companies}
                 </Text>
               </li>
               <li className={styles.headerLink}>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                  Courses
+                {lang.courses}
                 </Text>
               </li>
               <li className={styles.headerLink}>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                  Career Guide
+                {lang.careerGuide}
                 </Text>
               </li>
               {/* <li className={styles.headerLink} style={{ position:'relative' }}>
@@ -68,7 +69,7 @@ const PlaceHolderPublicHeader = () => {
           <React.Fragment>
             <li className={styles.headerLink}>
               <Text textStyle='base' textColor='white' className={styles.headerLinkText}>
-                I’m hiring
+              {lang.hiring} 
               </Text>
             </li>
             {/* <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
@@ -102,7 +103,7 @@ const PlaceHolderPublicHeader = () => {
                 }}
               >
                 <Text textStyle='base' textColor='white' bold>
-                  Get Started
+                {lang.getStarted}
                 </Text>
               </MaterialButton>
             </li>

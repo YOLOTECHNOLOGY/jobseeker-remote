@@ -13,12 +13,13 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 // nation
 import SwitchNation from 'components/SwitchNation/SwitchNation'
-
+import { getCountryKey } from 'helpers/country'
 
 /* Images */
-import { BossjobLogoWhite as BossjobLogo } from 'images'
+import { BossjobLogoWhite as BossjobLogo, ChevronDownIcon } from 'images'
 
-const PublicHeader = () => {
+const PublicHeader = ({ lang }: any) => {
+  const { findJobs, companies, courses, careerGuide, getStarted, hiring } = lang || {}
   const pathname = usePathname()
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
 
@@ -68,7 +69,7 @@ const PublicHeader = () => {
                 {!pathname.includes('/jobs-hiring/') ? (
                   <Link title='Jobs' to='/jobs-hiring/job-search'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                      Find Jobs
+                      {findJobs}
                     </Text>
                   </Link>
                 ) : (
@@ -80,7 +81,7 @@ const PublicHeader = () => {
                       styles.headerLinkTextCurrentPage
                     ])}
                   >
-                    Find Jobs
+                    {findJobs}
                   </Text>
                 )}
               </li>
@@ -100,7 +101,7 @@ const PublicHeader = () => {
                 {pathname !== '/companies' ? (
                   <Link title='Companies' to='/companies'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                      Companies
+                      {companies}
                     </Text>
                   </Link>
                 ) : (
@@ -112,14 +113,14 @@ const PublicHeader = () => {
                       styles.headerLinkTextCurrentPage
                     ])}
                   >
-                    Companies
+                    {companies}
                   </Text>
                 )}
               </li>
               <li className={styles.headerLink}>
                 <Link title='Courses' to='https://academy.bossjob.ph/courses/search-courses' aTag>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Courses
+                    {courses}
                   </Text>
                 </Link>
               </li>
@@ -136,7 +137,7 @@ const PublicHeader = () => {
               <li className={styles.headerLink}>
                 <Link title='Career Guide' to='https://blog.bossjob.ph/' external>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Career Guide
+                    {careerGuide}
                   </Text>
                 </Link>
               </li>
@@ -148,7 +149,7 @@ const PublicHeader = () => {
             <li className={styles.headerLink}>
               <Link title='Employer' to={process.env.BOSSHUNT_URL} aTag>
                 <Text textStyle='base' textColor='white' className={styles.headerLinkText}>
-                  I’m hiring
+                  {hiring}
                 </Text>
               </Link>
             </li>
@@ -174,7 +175,7 @@ const PublicHeader = () => {
                     }}
                   >
                     <Text textStyle='base' style={{ fontWeight: '400' }} textColor='white' bold>
-                      Get Started
+                      {getStarted}
                     </Text>
                   </MaterialButton>
                 </Link>
@@ -198,39 +199,26 @@ const PublicHeader = () => {
                   }}
                 >
                   <Text textStyle='base' textColor='white' bold>
-                    Get Started
+                    {getStarted}
                   </Text>
                 </MaterialButton>
               )}
             </li>
-            {/* <select
-              // onChange={(e) => {
-              //   const value = e.target.value
-              //   // console.log({ onChange: e.target.value })
-              //   const countryKey = getCountryKey()
-              //   if (value === countryKey) {
-              //     return
-              //   }
-              //   // const accessToken = getCookie('accessToken')
-              //   const url = 'https://dev.bossjob.' + value
-              //   window.location.href = url
-              // }}
-              value={undefined}
-              onClick={() => setOpenSwitchNationModal(true)}
-            >
-              <option value='ph' label='PH' />
-              <option value='sg' label='SGP' />
-            </select> */}
-
-            {/* <li className={styles.headerLink} onClick={() => setOpenSwitchNationModal(true)}>
-              <div className={classNames([styles.profileWrapper, styles.profileDisabled])}>
-                <Text textStyle='base' textColor='white' className={styles.profileCountry}>
-                  {getCountryKey()?.toUpperCase()}
-                </Text>
-
-                <div className={styles.profileCaret} />
+            <li className={classNames(styles.headerLink)}>
+              <div
+                className={styles.countryItem}
+                onClick={() => {
+                  setOpenSwitchNationModal(true)
+                }}
+              >
+                <span className={styles.label}>{getCountryKey().toUpperCase()}</span>
+                <object
+                  className={styles.object}
+                  data={ChevronDownIcon}
+                  type='image/svg+xml'
+                ></object>
               </div>
-            </li> */}
+            </li>
           </React.Fragment>
         </ul>
         <div className={styles.mobileIconWrapper}>

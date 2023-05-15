@@ -27,8 +27,9 @@ const Icon = ({ isFinish, active, ...rest }: any) => {
     }
 }
 const DetailModal = (props: any) => {
+   
     const [show, setShow] = useState(false)
-    const { contextRef, loading, data={}, applicationId } = props
+    const { contextRef, loading, data, applicationId,dic } = props
     const actionsRef = useRef({} as any)
     const isStatusIn = useCallback(status => {
         return status.includes(data?.jobseeker_display_status)
@@ -58,8 +59,8 @@ const DetailModal = (props: any) => {
     const timelineItems = useMemo(() => {
         return [
             {
-                title: 'Interview Confirmed',
-                label: 'Your interview cannot be cancelled now',
+                title: dic?.confirmText,
+                label: dic?.confirmLabel,
                 isFinish: true,
                 active: true,
                 show: true,
@@ -70,15 +71,15 @@ const DetailModal = (props: any) => {
                 }
             },
             {
-                title: 'Checked-in',
-                label: 'Check in for the interview with recruiter',
+                title: dic?.checkedText,
+                label: dic?.checkedLabel,
                 isFinish: !!data?.checked_in_at,
                 actionName: (() => {
                     if (data?.checked_in_at) {
-                        return 'Checked-in'
+                        return dic?.checkedText
                     }
                     if (canCheckedIn) {
-                        return 'Check-in now'
+                        return dic?.checkInText
                     } else {
                         return 'You cannot check in now.'
                     }

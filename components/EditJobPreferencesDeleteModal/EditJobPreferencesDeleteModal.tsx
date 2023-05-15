@@ -10,6 +10,7 @@ type EditJobPreferencesDeleteModalProps = {
   userDetail: any
   handleModal: Function
   preference: any
+  lang: Record<string, any>
 }
 
 const EditJobPreferencesDeleteModal = ({
@@ -17,18 +18,26 @@ const EditJobPreferencesDeleteModal = ({
   showModal,
   userDetail,
   handleModal,
-  preference
+  preference,
+  lang
 }: EditJobPreferencesDeleteModalProps) => {
+  const {
+    manageProfile: {
+      tab: {
+        preference: { deleteModal }
+      }
+    }
+  } = lang
   const dispatch = useDispatch()
   const isUpdating = useSelector((store: any) => store.users.updateUserPreferences.fetching)
   const onSubmit = () => {
     const payload = {
       preferences: {
-        action:'delete',
-        preferenceId:preference.id,
+        action: 'delete',
+        preferenceId: preference.id
       }
     }
-    
+
     dispatch(updateUserPreferencesRequest(payload))
   }
   useEffect(() => {
@@ -42,16 +51,16 @@ const EditJobPreferencesDeleteModal = ({
     <Modal
       showModal={showModal}
       handleModal={handleModal}
-      headerTitle='Delete job preference'
-      firstButtonText='Cancel'
-      secondButtonText='Delete'
+      headerTitle={deleteModal.title}
+      firstButtonText={deleteModal.btn1}
+      secondButtonText={deleteModal.btn2}
       isSecondButtonLoading={isUpdating}
       firstButtonIsClose
       handleFirstButton={handleModal}
       handleSecondButton={onSubmit}
       fullScreen
     >
-      You are about to delete this job preference. This cannot be undone.
+      {deleteModal.tips}
     </Modal>
   )
 }

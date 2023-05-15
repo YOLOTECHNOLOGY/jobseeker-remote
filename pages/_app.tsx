@@ -1,4 +1,4 @@
-'use client'
+
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -16,7 +16,8 @@ import Script from 'next/script'
 import * as gtag from 'lib/gtag'
 import Head from 'next/head'
 const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
-const MaintenancePage = dynamic(() => import('./maintenance'))
+
+const MaintenancePage = dynamic(() => import('./[lang]/maintenance'))
 import * as fbq from 'lib/fpixel'
 import NotificationProvider from 'components/NotificationProvider'
 // import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
@@ -30,10 +31,13 @@ import 'moment/locale/en-sg'
 import 'moment/locale/zh-cn'
 import 'moment/locale/zh-hk'
 import moment from 'moment'
+
 moment.locale('en-sg')
 
 const App = (props: AppProps) => {
-  const { Component, pageProps } = props
+
+   const { Component, pageProps } = props
+  const lang = props.router.query.lang
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
@@ -313,12 +317,12 @@ const App = (props: AppProps) => {
       <ConnectedRouter>
         <CookiesProvider>
           <PersistGate loading={null} persistor={persistor}>
-            <IMProvider>
+            <IMProvider lang={lang}>
               {process.env.MAINTENANCE === 'true' ? (
                 <MaintenancePage {...pageProps} />
               ) : isPageLoading &&
                 !(router.pathname.includes('jobs-hiring') && toPath.includes('jobs-hiring')) ? (
-                <TransitionLoader accessToken={accessToken} />
+                <TransitionLoader accessToken={accessToken}  lang={lang}/>
               ) : (
                 <NotificationProvider>
 

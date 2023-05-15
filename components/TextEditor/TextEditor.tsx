@@ -11,35 +11,38 @@ import styles from './TextEditor.module.scss'
 interface TextEditorInterface {
   value: string
   setValue: any
+  placeholder?: string
 }
 
 // Refer to link below for React-quill implementation on Nextjs:
 // https://www.simplenextjs.com/posts/react-quill
 // eslint-disable-next-line no-unused-vars
-const QuillNoSSRWrapper = typeof window !== 'undefined' && dynamic(import('react-quill'), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-})
+const QuillNoSSRWrapper =
+  typeof window !== 'undefined' &&
+  dynamic(import('react-quill'), {
+    ssr: false,
+    loading: () => <p>Loading ...</p>
+  })
 
 const modules = {
-  toolbar: [
-    [{ list: 'ordered' }, { list: 'bullet' }]
-  ],
+  toolbar: [[{ list: 'ordered' }, { list: 'bullet' }]]
 }
 
 const formats = ['list', 'bullet']
 
-const TextEditor = ({ value, setValue }: TextEditorInterface) => {
+const TextEditor = ({ value, setValue, placeholder = 'Type here...' }: TextEditorInterface) => {
   return (
     <div className={styles.textEditor}>
-      {QuillNoSSRWrapper ? <QuillNoSSRWrapper
-        theme="snow"
-        modules={modules}
-        formats={formats}
-        placeholder="Type here..."
-        value={value}
-        onChange={setValue}
-      /> : null}
+      {QuillNoSSRWrapper ? (
+        <QuillNoSSRWrapper
+          theme='snow'
+          modules={modules}
+          formats={formats}
+          placeholder={placeholder}
+          value={value}
+          onChange={setValue}
+        />
+      ) : null}
     </div>
   )
 }
