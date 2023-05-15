@@ -229,7 +229,11 @@ const PublicHeader = ({ lang }: any) => {
       </nav>
 
       {/* switch nation */}
-      <SwitchNation open={openSwitchNationModal} close={() => setOpenSwitchNationModal(false)} />
+      <SwitchNation
+        lang={lang}
+        open={openSwitchNationModal}
+        close={() => setOpenSwitchNationModal(false)}
+      />
     </div>
   )
 }

@@ -355,7 +355,11 @@ const ProtectedHeader = ({ lang }: any) => {
       </nav>
 
       {/* switch nation */}
-      <SwitchNation open={openSwitchNationModal} close={() => setOpenSwitchNationModal(false)} />
+      <SwitchNation
+        open={openSwitchNationModal}
+        lang={lang}
+        close={() => setOpenSwitchNationModal(false)}
+      />
     </div>
   )
 }

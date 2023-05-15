@@ -81,9 +81,10 @@ type propsType = {
   open: boolean
   close: () => void
   save?: () => void
+  lang: any
 }
 
-const SwitchNation = ({ close, open }: propsType) => {
+const SwitchNation = ({ close, open, lang }: propsType) => {
   const [nation, setNation] = useState(() => ({ lang: getLang(), country: getCountryKey() }))
   const [loading, setLoading] = useState(false)
   const originalSetting = useMemo(() => {
@@ -93,9 +94,7 @@ const SwitchNation = ({ close, open }: propsType) => {
     }
   }, [open])
 
-  const {
-    header: { switchCountry }
-  } = useContext(languageContext) as any
+  const { switchCountry } = lang?.header || lang || (useContext(languageContext) as any)
 
   const handleSwitchNation = () => {
     const { country, lang } = nation

@@ -293,7 +293,11 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
       </div>
 
       {/* switch nation */}
-      <SwitchNation open={openSwitchNationModal} close={() => setOpenSwitchNationModal(false)} />
+      <SwitchNation
+        lang={lang}
+        open={openSwitchNationModal}
+        close={() => setOpenSwitchNationModal(false)}
+      />
     </div>
   )
 }
