@@ -733,5 +733,12 @@
     "mobileActionExchange": "Exchange mobile number",
     "moreText": "More",
     "emoji": "Emoji"
+  },
+  "chatInterview": {
+    "confirmText": "Interview Confirmed",
+    "confirmLabel": "Your interview cannot be cancelled now",
+    "checkedText": "Checked-In",
+    "checkedLabel":"Check in for the interview with recruiter",
+    "checkInText":"Check-in now"
   }
 }

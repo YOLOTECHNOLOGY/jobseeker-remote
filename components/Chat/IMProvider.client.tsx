@@ -459,6 +459,7 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
             contextRef={contextRef}
             data={imState.resume_request}
             applicationId={applicationId}
+            lang={lang}
         />
 
         <Interview
@@ -466,42 +467,50 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
             contextRef={contextRef}
             data={imState.interview}
             applicationId={applicationId}
+            lang={lang}
         />
         <OfferModal
             loading={loading}
             contextRef={contextRef}
+            lang={lang}
             applicationId={applicationId}
         />
         <ExchangeModal
             loading={loading}
             contextRef={contextRef}
+            lang={lang}
             applicationId={applicationId}
         />
         <ExchangeConfirmModal
             loading={loading}
             contextRef={contextRef}
+            lang={lang}
             applicationId={applicationId}
         />
         <ExchangeDetailModal
             loading={loading}
             contextRef={contextRef}
+            lang={lang}
             applicationId={applicationId}
         />
         <NotInterestModal
             loading={loading}
             data={imState}
             applicationId={applicationId}
+            lang={lang}
             contextRef={contextRef}
         />
         <IssueModal
             loading={loading}
             data={imState?.interview}
+            lang={lang}
             applicationId={applicationId}
             contextRef={contextRef}
         />
         <ViewJobModal
             loading={loading}
             data={imState?.interview}
+            lang={lang}
             applicationId={applicationId}
             contextRef={contextRef}
         />
@@ -509,17 +518,20 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
             loading={loading}
             data={imState?.interview}
             applicationId={applicationId}
+            lang={lang}
             contextRef={contextRef}
         />
         <CancelDetailModal
             loading={loading}
             data={imState?.interview}
+            lang={lang}
             applicationId={applicationId}
             contextRef={contextRef}
         />
         <CommonPhrases
             loading={loading}
             userId={userId}
+            lang={lang}
             applicationId={applicationId}
             contextRef={contextRef}
         />

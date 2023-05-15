@@ -733,5 +733,12 @@
     "mobileActionExchange": "交换号码",
     "moreText": "更多操作",
     "emoji": "表情"
+  },
+  "chatInterview": {
+    "confirmText": "面试已经确认",
+    "confirmLabel": "您的面试现在不能取消",
+    "checkedText": "已签到",
+    "checkedLabel":"为这场面试签到",
+    "checkInText":"马上签到"
   }
 }
