@@ -13,7 +13,14 @@
     "Chat": "聊天",
     "downloadApp": "下载APP",
     "pleaseVerify": "请验证你的邮箱",
-    "verifyNow.": " 立即验证"
+    "verifyNow.": " 立即验证",
+    "switchCountry": {
+      "title": "您想使用哪个国家和语言浏览 Bossjob？",
+      "country": "国家",
+      "lang": "语言",
+      "btn1": "关闭",
+      "btn2": "保存"
+    }
   },
   "foot": {
     "about": "关于",
@@ -422,9 +429,7 @@
     },
     "enableAlertModal": {
       "title": "启用工作通知",
-      "text1": "Job alert for",
-      "text2": "in",
-      "text3": "enabled",
+      "text1": "已启用在{{location}}的{{jobName}}的工作通知",
       "manage": "管理通知",
       "noKey": "未选择任何关键词",
       "btn1": "保留",

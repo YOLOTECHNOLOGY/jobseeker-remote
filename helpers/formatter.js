@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { escapeRegExp } from 'lodash-es'
+import { escapeRegExp, isPlainObject, isNil } from 'lodash-es'
 
 export const numberToThousands = (number) => {
   if (number <= 0) {
@@ -219,19 +219,36 @@ export const getFromObject = (obj, allowedAttributes) => {
 /**
  * format strings that include {{text}} 
  * @param {*} string e.g. View {{jobs}} jobs hiring
- * @param  {...any} args the replace params
+ * @param  {any} args the replace params, it's a string[] or an object
  * @return {String} e.g. View 3 jobs hiring
  */
-export const formatTemplateString = (string, ...args) => {
+export const formatTemplateString = (string, ...rest) => {
   if (!string) {
     return string
   }
-  const matchedStrings = [...string.matchAll(/{{[^\}]*}}/g)].map(item => escapeRegExp(item[0]));
+  let len = rest.length;
+  const isObject = isPlainObject(rest[0])
+  if (isObject) {
+    rest = rest[0]
+    len = Object.keys(rest).length
+  }
+  const matchedStrings = [...string.matchAll(/{{[^\}]*}}/g)].map(item => {
+    return escapeRegExp(item[0])
+  });
 
-  if (matchedStrings.length !== args.length) {
+  if (matchedStrings.length !== len) {
     throw new Error('Those replace arguments are not matched the placeholders, please check the source string: "' + string + '"')
   }
-  matchedStrings.forEach((regStr, index) => string = string.replace(new RegExp(regStr), args[index]));
+  matchedStrings.forEach((regStr, index) => {
+    if (isObject) {
+      index = regStr.match(/\w+/)
+    }
+    const value = rest[index]
+    if (isNil(value)) {
+      throw new Error(`formatTemplateString Error: the ${index} property is null or undefined`)
+    }
+    string = string.replace(new RegExp(regStr), rest[index])
+  });
 
   return string
 }
