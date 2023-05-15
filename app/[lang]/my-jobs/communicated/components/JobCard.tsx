@@ -20,7 +20,8 @@ interface cardProps {
   handelSave: Function,
   loadingChat: boolean,
   loadingList: boolean,
-  lang:any
+  lang:any,
+  config:any
 }
 
 const Card = ({
@@ -32,7 +33,8 @@ const Card = ({
   handelSave,
   loadingChat,
   loadingList,
-  lang
+  lang,
+  config
 }: cardProps) => {
   useEffect(()=>{
     if(loadingList){
@@ -66,7 +68,7 @@ const Card = ({
           {
             !same && e.created_at && <p className={styles.time}>{transDate(e.created_at?.substr(0, 10))}</p>
           }
-          <JobCardNormal lang={lang}  data={e} index={index} tabValue={tabValue} handelSave={handelSave} loadingChat={loadingChat} />
+          <JobCardNormal lang={lang}  config={config} data={e} index={index} tabValue={tabValue} handelSave={handelSave} loadingChat={loadingChat} />
         </div>
       )
     }
@@ -82,7 +84,7 @@ const Card = ({
           {
             !same && e.interviewed_at && <p className={styles.time}>{transDate(e.interviewed_at?.substr(0, 10))}</p>
           }
-          <JobCardInterview lang={lang} data={e} />
+          <JobCardInterview lang={lang} data={e} config={config}/>
         </div>
       )
     }

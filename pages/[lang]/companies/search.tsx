@@ -34,7 +34,8 @@ interface SearchProps {
   lang: Record<string, any>
 }
 
-const Search = ({ defaultQuery, lang: { companies: transitions } }: SearchProps) => {
+const Search = ({ defaultQuery, lang }: SearchProps) => {
+    const  { companies: transitions } = lang
   const router = useRouter()
   const dispatch = useDispatch()
   const { query, page, size } = router.query
@@ -97,7 +98,7 @@ const Search = ({ defaultQuery, lang: { companies: transitions } }: SearchProps)
   }
 
   return (
-    <Layout>
+    <Layout lang={lang}>
       <div className={styles.companies}>
         <div className={styles.searchCompany}>
           <Text textStyle='xxxl' tagName='h1' bold className={styles.searchCompanyTitle}>

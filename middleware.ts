@@ -28,7 +28,9 @@ export const getCountryAndLang = (cookies: RequestCookies) => {
 }
 
 export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname
+  const {pathname,search} = request.nextUrl
+  const fullUrl = pathname + search
+
   // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
   // // If you have one
   if (
@@ -55,7 +57,7 @@ export function middleware(request: NextRequest) {
     const lang = locale?.[1]
     // e.g. incoming request is /products
     // The new URL is now /en-US/products
-    const res = NextResponse.redirect(new URL(`/${lang}${pathname}`, request.url))
+    const res = NextResponse.redirect(new URL(`/${lang}${fullUrl}`, request.url))
     res.cookies.set(configKey, `${locale.join('_')}`, { path: '/' })
     return res
   }

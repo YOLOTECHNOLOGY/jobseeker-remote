@@ -56,7 +56,8 @@ const ServerFunctionFilter = async (props: { config: any }) => {
         title: item.value,
         children: item.job_titles?.map(item => ({
           label: item.value,
-          value: item['seo-value']
+          // value: item['seo-value']
+          value:String(item.id)
         })) ?? []
       })) ?? [],
     }
