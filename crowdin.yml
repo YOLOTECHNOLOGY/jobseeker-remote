@@ -17,6 +17,12 @@
 #
 files: [
     {
+      'source': '/errorcode/errorcode.json',
+      'translation': '/errorcode/%locale%/errorcode.json',
+      'dest': '/backend/errorcode.json',
+      'type': 'json'
+    },
+    {
       #
       # Source files filter
       # e.g. "/resources/en/*.json"
