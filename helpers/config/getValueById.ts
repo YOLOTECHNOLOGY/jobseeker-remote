@@ -15,7 +15,7 @@ export const getValueById = (store: Record<string, any>, id: any, idKey: string,
       })
       return result
     }
-    return object[key]
+    return object?.[key]
   }
 
   const forEachObject = (object: any, id: any, path: string[]) => {
@@ -24,7 +24,7 @@ export const getValueById = (store: Record<string, any>, id: any, idKey: string,
 
     let result;
     pathArray.find((pathKey, index) => {
-      const value = currentObject[pathKey]
+      const value = currentObject?.[pathKey]
       if (Array.isArray(value) && (index !== pathArray.length - 1)) {
         return result = forEachArray(value, id, pathArray.slice(index + 1))
       } else {
