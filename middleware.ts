@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { RequestCookies } from 'next/dist/server/web/spec-extension/cookies'
 import { i18n } from './i18n-config'
-import { match as matchLocale } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
 import { configKey } from 'helpers/cookies'
 import { getCountryKey } from 'helpers/country'
@@ -16,7 +15,8 @@ function getLocale(request: NextRequest): string | undefined {
   const languages = new Negotiator({ headers: negotiatorHeaders }).languages()
   // @ts-ignore locales are readonly
   const locales: string[] = i18n.locales
-  return matchLocale(languages, locales, i18n.defaultLocale)
+  const match = languages.find(item => locales.includes(item)) ?? i18n.defaultLocale
+  return match
 }
 
 export const getCountryAndLang = (cookies: RequestCookies) => {
@@ -45,7 +45,6 @@ export function middleware(request: NextRequest) {
   ) { return }
 
   // Check if there is any supported locale in the pathname
-  console.log('start11111')
   const pathnameIsMissingLocale = i18n.locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   )
@@ -54,9 +53,7 @@ export function middleware(request: NextRequest) {
   if (pathnameIsMissingLocale) {
     // the a link will not take any geo data on url, but we can get those data by cookies
     const locale = getCountryAndLang(request.cookies) || [getCountryKey(), getLocale(request)]
-    console.log('22222222', { locale })
     const lang = locale?.[1]
-    console.log('22222222', { lang })
     // e.g. incoming request is /products
     // The new URL is now /en-US/products
     const res = NextResponse.redirect(new URL(`/${lang}${pathname}`, request.url))
