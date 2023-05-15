@@ -13,7 +13,14 @@
     "Chat": "Chat",
     "downloadApp": "downloadApp",
     "pleaseVerify": "Please verify your email address.",
-    "verifyNow.": " Verify now."
+    "verifyNow.": " Verify now.",
+    "switchCountry": {
+      "title": "Which country and language would you like to browse Bossjob in?",
+      "country": "Country",
+      "lang": "Language",
+      "btn1": "Close",
+      "btn2": "Save"
+    }
   },
   "foot": {
     "about": "about",
@@ -422,9 +429,7 @@
     },
     "enableAlertModal": {
       "title": "Enable job alert",
-      "text1": "Job alert for",
-      "text2": "in",
-      "text3": "enabled",
+      "text1": "Job alert for {{jobName}} in {{location}} enabled",
       "manage": "Manage alert",
       "noKey": "No selected keyword",
       "btn1": "Keep",
