@@ -7,4 +7,4 @@ export const Left = () => (
     />
   </svg>
 )
-1
+export default Left

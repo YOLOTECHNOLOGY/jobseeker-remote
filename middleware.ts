@@ -78,4 +78,7 @@ export const config = {
     // Optional: only run on root (/) URL
     // '/'
   ],
+  unstable_allowDynamic: [
+    '/node_modules/lodash-es/**', 
+  ],
 }
