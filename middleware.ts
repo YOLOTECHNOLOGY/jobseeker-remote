@@ -49,13 +49,14 @@ export function middleware(request: NextRequest) {
   const pathnameIsMissingLocale = i18n.locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   )
-  console.log({pathnameIsMissingLocale})
+  console.log({ pathnameIsMissingLocale })
   // Redirect if there is no locale
   if (pathnameIsMissingLocale) {
     // the a link will not take any geo data on url, but we can get those data by cookies
     const locale = getCountryAndLang(request.cookies) || [getCountryKey(), getLocale(request)]
+    console.log('22222222', { locale })
     const lang = locale?.[1]
-    console.log('22222222',{lang})
+    console.log('22222222', { lang })
     // e.g. incoming request is /products
     // The new URL is now /en-US/products
     const res = NextResponse.redirect(new URL(`/${lang}${pathname}`, request.url))
@@ -82,6 +83,6 @@ export const config = {
     // '/'
   ],
   unstable_allowDynamic: [
-    '/node_modules/lodash-es/**', 
+    '/node_modules/lodash-es/**',
   ],
 }
