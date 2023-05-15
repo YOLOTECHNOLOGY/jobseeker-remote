@@ -127,7 +127,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       store.dispatch(fetchJobsListRequest({ ...jobFilterpayload }, accessToken))
       store.dispatch(fetchCompanyDetailRequest(companyId))
-      store.dispatch(fetchConfigRequest(req.cookies[configKey].split('_')))
+      store.dispatch(fetchConfigRequest(req.cookies[configKey].split('_')?.[1]))
       store.dispatch(END)
 
       await (store as any).sagaTask.toPromise()

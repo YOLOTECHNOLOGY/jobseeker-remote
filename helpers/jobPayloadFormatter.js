@@ -295,6 +295,7 @@ const getCountryList = (config) => {
 
   let countryOptions = countryLists.map((country) => {
     return {
+      id: country.id,
       label: country.value,
       value: country.value,
       key: country.key
@@ -316,7 +317,8 @@ const getIndustryList = (config) => {
     return {
       label: industry.value,
       value: industry.value,
-      key: industry.key
+      key: industry.key,
+      id: industry.id
     }
   })
 }
@@ -328,11 +330,12 @@ const getDegreeList = (config) => {
   if (degreeList && degreeList.length === 0) return degreeList
   return degreeList?.map((degree) => {
     return {
+      id: degree.id,
       label: degree.value,
       value: degree.key,
       key: degree.key
     }
-  })?.filter(e=>e.label !== 'Edu not required')
+  })?.filter(e => e.label !== 'Edu not required')
 }
 
 const getApplyJobLink = (job, user) => {

@@ -23,6 +23,7 @@ import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
 
 /* Styles */
 import styles from './EditProfileModal.module.scss'
+import { getCountryId } from 'helpers/country'
 
 type EditProfileModalProps = {
   modalName: string
@@ -169,20 +170,25 @@ const EditProfileModal = ({
 
   const onSubmit = (data) => {
     const { firstName, lastName, summary, yearsOfExperience, location } = data
-    const matchedLocation = formattedLocationList.find((loc) => {
-      return loc?.value == location
-    })
+    const getIdByValue = (options: any[], value) => {
+      const selectedOption = options.find((item) => item.value === value)
+      return selectedOption?.id
+    }
+    const location_id = getIdByValue(formattedLocationList, location)
+    const xp_lvl_id = getIdByValue(formattedXpLevelList, yearsOfExperience)
 
     const payload = {
+      country_id: getCountryId(),
       avatar: selectedAvatar,
       first_name: firstName,
       last_name: lastName,
       birthdate: birthdate && moment(new Date(birthdate)).format('yyyy-MM-DD'),
       location_key: matchedLocation?.key,
+      location_id,
       xp_lvl_key: yearsOfExperience || '',
+      xp_lvl_id,
       description: summary?.length > 0 ? summary : ''
     }
-
     dispatch(updateUserProfileRequest(payload))
   }
 

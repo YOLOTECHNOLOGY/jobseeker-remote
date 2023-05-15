@@ -5,6 +5,8 @@ import { registInterpreter, Result } from 'app/[lang]/abstractModels/util';
 import { cache } from 'react'
 import { mergeDeepLeft } from 'ramda'
 import { cookies } from 'next/headers';
+import { configKey } from 'helpers/cookies'
+
 
 const cachedConfig = cache(fetchConfigService)
 
@@ -22,21 +24,19 @@ export default usedConfigProps => {
     }
     const interpreter = registInterpreter(command =>
         command.cata({
-            fetchData: () => M((content) =>
-            {
-             const lang = cookies().get('lang')?.value;
-              console.log(content,lang,'content')
-              return  cachedConfig(lang? { lang } : content?.params).then(data => {
-                return Result.success({
-                    config: usedConfigProps
-                        .map(valueForKeyPath(data))
-                        .reduce(mergeDeepLeft)
-                })
+            fetchData: () => M((content) => {
+                const lang = cookies().get(configKey).value?.split('_')?.[1];
+                return cachedConfig(content?.params?.lang ?? lang).then(data => {
+                    return Result.success({
+                        config: usedConfigProps
+                            .map(valueForKeyPath(data))
+                            .reduce(mergeDeepLeft)
+                    })
+                }
+                )
             }
-            )
-            }
-               
-                ).catch(Result.error),
+
+            ).catch(Result.error),
             prepareProps: M.of,
         }))
     return interpreter

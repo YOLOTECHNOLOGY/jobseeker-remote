@@ -28,7 +28,7 @@ const Main = (props: any) => {
         {/* @ts-expect-error Async Server Component */}
         <Companies location={city} lang={props.lang} />
         {/* @ts-expect-error Async Server Component */}
-        <MobileHome location={city} />
+        <MobileHome lang={props.lang} location={city} />
         {/* Tracker component */}
         <Tracker />
       </div>

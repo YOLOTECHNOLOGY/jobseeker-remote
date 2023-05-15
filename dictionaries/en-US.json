@@ -142,7 +142,13 @@
       "allJobs": "View {{totalActiveJobs}} job openings"
     },
     "seoTitle": "Find Companies Hiring in {{country}} | Bossjob",
-    "seoDescription": "Discover great companies to work for in {{country}}! Learn more about the company and apply to job openings on Bossjob!"
+    "seoDescription": "Discover great companies to work for in {{country}}! Learn more about the company and apply to job openings on Bossjob!",
+    "searchPage": {
+      "title": "Search Companies",
+      "subTitle": "Companies for {{searchKey}}",
+      "noResult": "No Results Found.",
+      "seoText": "Find great companies in {{country}}"
+    }
   },
   "companyDetail": {
     "tab": {
@@ -262,7 +268,8 @@
       "needMatches": "Want more accurate matches?",
       "getStart": "Get Started",
       "noMore": "No more",
-      "loading": "Loading"
+      "loading": "Loading",
+      "basedOnYou": "Based on your"
     },
     "seeMoreBtn": "See More",
     "topCompany": "Top Companies",

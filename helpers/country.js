@@ -4,8 +4,8 @@ export const nations = [
 ]
 
 export const languages = [
-  { value: 'en-US', label: 'English' },
-  { value: 'zh-CN', label: '中文 (简体)' }
+  { value: 'en-US', id: 1, label: 'English' },
+  { value: 'zh-CN', id: 2, label: '中文 (简体)' }
 ]
 
 export const getCountryKey = () => {

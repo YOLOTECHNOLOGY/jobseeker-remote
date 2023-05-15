@@ -16,7 +16,7 @@ const pageParams = {
   source: 'web'
 }
 
-const JobsCard = ({ location }: any) => {
+const JobsCard = ({ location, lang }: any) => {
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [current, setCurrent] = useState<number>(1)
@@ -175,16 +175,16 @@ const JobsCard = ({ location }: any) => {
     <p className={styles.tips}>
       {accessToken ? (
         <>
-          Based on your{' '}
+          {lang.jobCard.basedOnYou}{' '}
           <span className={styles.preference} onClick={getPreference}>
-            job preference
+            {lang.jobPrefer}
           </span>
         </>
       ) : (
         <>
-          Want more accurate matches?
+          {lang.jobCard.needMatches}
           <span className={styles.started} onClick={getStarted}>
-            Get Started
+            {lang.jobCard.getStart}
           </span>
         </>
       )}
@@ -236,7 +236,7 @@ const JobsCard = ({ location }: any) => {
               >
                 <Image src={recruiterAvatar} alt={recruiterFullName} width={20} height={20} />
               </div>
-              {[recruiterFullName,jobTitle].filter(a=>a).join(' · ')}
+              {[recruiterFullName, jobTitle].filter((a) => a).join(' · ')}
               <span className={styles.location}>{jobLocation}</span>
             </div>
           </div>

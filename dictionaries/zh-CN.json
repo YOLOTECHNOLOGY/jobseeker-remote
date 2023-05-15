@@ -268,7 +268,8 @@
       "needMatches": "想要更精准的匹配？",
       "getStart": "立即开始",
       "noMore": "没有了",
-      "loading": "加载中..."
+      "loading": "加载中...",
+      "basedOnYou": "基于你的"
     },
     "seeMoreBtn": "查看更多",
     "topCompany": "热门企业",
