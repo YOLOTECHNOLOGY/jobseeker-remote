@@ -37,6 +37,11 @@ const configs = getConfigs([
   ['educations'],
   ['salary_range_filters'],
   ['job_benefit_lists'],
+  ['main_job_function_lists'],
+  ['degrees'],
+  ['salary_ranges'],
+  ['subscibe_job_frequency_lists'],
+  ['country_lists']
 ])
 
 const QRCode = () => (

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
 import FieldFormWrapper from '../FieldFormWrapper'
@@ -23,8 +23,10 @@ import { openCreateJobAlertModal } from 'store/actions/modals/createJobAlertModa
 import styles from './index.module.scss'
 import { useRouter } from 'next/router'
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import { changeAlertValue } from 'helpers/config/changeAlertValue'
+import { MemoedFilters } from 'components/ModalJobAlerts/MemoedFilter'
 
-const Alerts = ({ accessToken }: any) => {
+const Alerts = ({ accessToken, lang }: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
@@ -34,16 +36,18 @@ const Alerts = ({ accessToken }: any) => {
   const jobAlertListResponse = useSelector((store: any) => store.alerts.fetchJobAlertsList.response)
   const isLoading = useSelector((store: any) => store.alerts.fetchJobAlertsList.fetching)
   const showCreateJobAlertModal = useSelector((store: any) => store.modal.createJobAlertModal.show)
+  const config = useSelector((store: any) => store.config.config.response)
+  const { search } = lang
 
+  const formattedAlertList = useMemo(() => {
+    jobAlertListResponse?.forEach?.((item) => {
+      changeAlertValue(item, config)
+    })
+    return jobAlertListResponse
+  }, [jobAlertListResponse, config])
   useEffect(() => {
     getFetchAlertsListRequest()
   }, [])
-
-  // useEffect(() => {
-  //   if (removeId) {
-  //     dispatch(openCreateJobAlertModal())
-  //   }
-  // }, [removeId])
 
   const getFetchAlertsListRequest = () => {
     dispatch(fetchJobAlertsListRequest({ accessToken }))
@@ -114,8 +118,8 @@ const Alerts = ({ accessToken }: any) => {
             <div
             // className={jobAlertListResponse.length ? styles.JobAlertContainer_mobileStyle : ''}
             >
-              {jobAlertListResponse.length ? (
-                jobAlertListResponse.map((item, index) => (
+              {formattedAlertList.length ? (
+                formattedAlertList.map((item, index) => (
                   <FieldFormWrapper
                     label={item.id}
                     alertTitle={item.keyword_value}
@@ -132,7 +136,7 @@ const Alerts = ({ accessToken }: any) => {
                       {item.location_value}
                     </Text>
                     <Text block className={styles.JobAlertContainer_desc}>
-                      Filters: {item.filters}
+                      Filters: <MemoedFilters config={config} alert={item} lang={search} />
                     </Text>
                     <Text block className={styles.JobAlertContainer_desc}>
                       Frequency: {item.frequency_value}
@@ -184,7 +188,7 @@ const Alerts = ({ accessToken }: any) => {
                       </div>
                     )}
 
-                    {index !== jobAlertListResponse.length - 1 && (
+                    {index !== formattedAlertList.length - 1 && (
                       <div className={styles.fieldWrapper_border}></div>
                     )}
                   </FieldFormWrapper>

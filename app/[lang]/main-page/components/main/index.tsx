@@ -16,6 +16,7 @@ import styles from '../../../index.module.scss'
 const Main = (props: any) => {
   const location = cookies().get('location')?.value
   const city = location ? JSON.parse(location)?.value : 'Manila'
+  const locationId = location ? JSON.parse(location)?.id : 63
   const {
     lang: { home }
   } = props || {}
@@ -26,9 +27,9 @@ const Main = (props: any) => {
         <TopModule {...props} />
         <Tabs location={city} />
         {/* @ts-expect-error Async Server Component */}
-        <Companies location={city} lang={props.lang} />
+        <Companies location={city} lang={props.lang} location_id={locationId} />
         {/* @ts-expect-error Async Server Component */}
-        <MobileHome lang={props.lang} location={city} />
+        <MobileHome lang={props.lang} location={city} location_id={locationId} />
         {/* Tracker component */}
         <Tracker />
       </div>

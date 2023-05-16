@@ -21,7 +21,10 @@
         "name": "next"
       }
     ],
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "paths": {
+      "helpers": ["src/helpers"]
+    }
   },
   "include": [
     "next-env.d.ts",

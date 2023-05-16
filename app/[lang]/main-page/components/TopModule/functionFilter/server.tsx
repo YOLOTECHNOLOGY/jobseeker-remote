@@ -41,7 +41,7 @@ const fillTo3 = popularList => filledList => sourceList => {
     return filledList
   } else {
     const one = sourceList.find(
-      item => !filledList.includes(item.label) && popularList.includes(item.label)
+      item => !filledList.includes(item.label) && popularList.includes(item.id)
     ) || sourceList.find(item => !filledList.includes(item.label))
     return fillTo3(popularList)([...filledList, one.label])(sourceList)
   }
@@ -49,25 +49,28 @@ const fillTo3 = popularList => filledList => sourceList => {
 
 const ServerFunctionFilter = async (props: { config: any }) => {
   const config = props?.config
-  const list = config?.main_functions?.map?.(item => {
+  const list = config?.main_job_function_lists?.map?.(item => {
     return {
+      ...item,
       title: item.value,
-      children: item.children?.map?.(item => ({
+      children: item.sub_function_list?.map?.(item => ({
+        ...item,
         title: item.value,
         children: item.job_titles?.map(item => ({
+          ...item,
           label: item.value,
           // value: item['seo-value']
-          value:String(item.id)
+          value: String(item.id)
         })) ?? []
       })) ?? [],
     }
   })?.map?.(getSimpleTitle) ?? []
   let popularList = []
-
   const accessToken = cookies().get('accessToken')?.value
   if (accessToken) {
     const result = await fetchJobsPreferences({}, accessToken)
-    popularList = result?.data?.data?.map(item => item.function_job_title) ?? []
+    popularList = result?.data?.data?.map(item => item.function_job_title_id) ?? []
+
   }
   const functionTitles = getFunctionTitles(list)
   const subTitlesList = functionTitles.map(fillTo3(popularList)([]))

@@ -8,8 +8,8 @@ async function getCompanyData(location) {
   return res.data
 }
 
-export default async function Companies({ location, lang }: any) {
-  const data: any = await getCompanyData(location)
+export default async function Companies({ location_id, lang }: any) {
+  const data: any = await getCompanyData(location_id)
   const { home } = lang
   return (
     <div className={styles.companies}>

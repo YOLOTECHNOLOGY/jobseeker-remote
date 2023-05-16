@@ -10,9 +10,9 @@ import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { flatMap } from 'lodash-es'
 import { getCookie } from 'helpers/cookies'
 import { useRouter } from 'next/navigation'
-import {getCountryKey} from 'helpers/country'
-const countryList = {
-    "ph":{
+import { getCountryKey } from 'helpers/country'
+export const countryList = {
+    "ph": {
         "id": 63,
         "key": "manila",
         "value": "Manila",
@@ -20,16 +20,16 @@ const countryList = {
         "region_display_name": "National Capital Region",
         "seo_value": "manila"
     },
-    "sg":{
+    "sg": {
         id: 165,
-        is_popular:  false,
+        is_popular: false,
         key: "downtown_core",
         region_display_name: "Central",
         seo_value: "downtown-core",
         value: "Downtown Core",
     }
- };
- 
+};
+
 
 export const LocationContext = createContext()
 const Provider = LocationContext.Provider

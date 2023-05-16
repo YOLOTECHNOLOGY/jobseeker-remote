@@ -30,7 +30,7 @@ function* createJobAlertReq(action) {
         Math.random()
           .toString(36)
           .substring(2, 15)
-          
+
       const userPayload = {
         email: jobAlertData.email,
         first_name: first_name,
@@ -51,25 +51,26 @@ function* createJobAlertReq(action) {
       const jobAlertPayload = {
         jobAlertData: {
           user_id: user_id ? user_id : registerUserResponse.data.data.id,
-          keyword: jobAlertData.keyword,
-          location_values: jobAlertData.location_values,
-          job_type_values: jobAlertData.job_type_values,
-          salary_range_values: jobAlertData.salary_range_values,
-          job_category_values: jobAlertData.job_category_values,
-          industry_values: jobAlertData.industry_values,
-          xp_lvl_values: jobAlertData.xp_lvl_values,
-          degree_values: jobAlertData.degree_values,
-          is_company_verified: jobAlertData.is_company_verified,
-          frequency_id: jobAlertData.frequency_id,
-          main_function_values:jobAlertData.main_functions,
-          job_function_ids:jobAlertData.job_functions,
-          function_job_title_ids:jobAlertData.function_titles
+          ...jobAlertData
+          // keyword: jobAlertData.keyword,
+          // location_values: jobAlertData.location_values,
+          // job_type_values: jobAlertData.job_type_values,
+          // salary_range_values: jobAlertData.salary_range_values,
+          // job_category_values: jobAlertData.job_category_values,
+          // industry_values: jobAlertData.industry_values,
+          // xp_lvl_values: jobAlertData.xp_lvl_values,
+          // degree_values: jobAlertData.degree_values,
+          // is_company_verified: jobAlertData.is_company_verified,
+          // frequency_id: jobAlertData.frequency_id,
+          // main_function_values: jobAlertData.main_functions,
+          // job_function_ids: jobAlertData.job_functions,
+          // function_job_title_ids: jobAlertData.function_titles
         },
         accessToken: accessToken
       }
-      
+      debugger
       removeUtmCampaign()
-      
+
       const { data } = yield call(createJobAlertService, jobAlertPayload)
 
       yield put(createJobAlertSuccess(data.data))

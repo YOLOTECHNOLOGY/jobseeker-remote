@@ -20,7 +20,7 @@ const PopularJob = () => {
     { value: 'Sales Consultant', label: home.tag.sales }
   ]
   const querys = useMemo(() => {
-    return tags.map((tag) => buildQuery(location?.value, tag.value))
+    return tags.map((tag) => buildQuery(location?.seo_value, tag.value))
   }, [location, tags])
 
   return (

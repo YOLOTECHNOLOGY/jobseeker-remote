@@ -408,7 +408,9 @@
       "title": "Job Alerts",
       "btn": "Done",
       "filters": "Filters",
-      "frequency": "Frequency: via"
+      "frequency": "Frequency: via",
+      "companyVerified": "Verified",
+      "noFilter": "No active filters are selected"
     },
     "updateAlertModal": {
       "title": "Manage Job Alert",
@@ -743,7 +745,7 @@
     "confirmText": "Interview Confirmed",
     "confirmLabel": "Your interview cannot be cancelled now",
     "checkedText": "Checked-In",
-    "checkedLabel":"Check in for the interview with recruiter",
-    "checkInText":"Check-in now"
+    "checkedLabel": "Check in for the interview with recruiter",
+    "checkInText": "Check-in now"
   }
 }
