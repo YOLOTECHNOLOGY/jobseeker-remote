@@ -152,246 +152,246 @@ const SearchArea = (props: any) => {
           {/* search */}
           <div className={styles.searchArea}>
             <div className={styles.searchAreaLeft}>
-            <MaterialLocationField
-              className={styles.location}
-              locationList={config.location_lists}
-              value={location}
-              // isClear={true}
-              label={search.location}
-              defaultValue={location}
-              onChange={(e, value) => {
-                setLocation(value)
-              }}
-              sx={{
-                '> .MuiFormControl-root': {
-                  '> .MuiOutlinedInput-root': {
-                    borderRadius: '10px',
-                    height: '40px',
-                    marginTop: '4px'
+              <MaterialLocationField
+                className={styles.location}
+                locationList={config.location_lists}
+                value={location}
+                // isClear={true}
+                label={search.location}
+                defaultValue={location}
+                onChange={(e, value) => {
+                  setLocation(value)
+                }}
+                sx={{
+                  '> .MuiFormControl-root': {
+                    '> .MuiOutlinedInput-root': {
+                      borderRadius: '10px',
+                      height: '40px',
+                      marginTop: '4px'
+                    }
                   }
-                }
-              }}
-            />
-            <JobSearchBar
-              id='search'
-              label={search.title}
-              variant='outlined'
-              size='small'
-              className={styles.search}
-              value={searchValue}
-              maxLength={255}
-              isLoading={searchLoading}
-              searchFn={handleSuggestionSearch as any}
-              updateSearchValue={setSearchValue}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault()
+                }}
+              />
+              <JobSearchBar
+                id='search'
+                label={search.title}
+                variant='outlined'
+                size='small'
+                className={styles.search}
+                value={searchValue}
+                maxLength={255}
+                isLoading={searchLoading}
+                searchFn={handleSuggestionSearch as any}
+                updateSearchValue={setSearchValue}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault()
+                    flushSync(() => {
+                      setSearchValue((e.target as HTMLInputElement).value)
+                    })
+                    addSearchHistory((e.target as HTMLInputElement).value)
+                    setQueryFields('')
+                    reloadRef.current()
+                  }
+                }}
+                renderOption={(props, option) => {
+                  const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
+                  return type === 'company' ? (
+                    <li {...props} style={styleleSelect}>
+                      <Image src={logoUrl} alt={value} width='22' height='22' />
+                      <span style={{ paddingLeft: '10px' }}>{value}</span>
+                    </li>
+                  ) : isHistory ? (
+                    <li {...props} style={{ ...styleleSelect, color: '#136fd3' }}>
+                      <AccessTimeIcon />
+                      <span style={{ paddingLeft: '10px' }}>{value}</span>
+                    </li>
+                  ) : (
+                    <li {...props} style={styleleSelect}>
+                      <SearchIcon />
+                      <span style={{ paddingLeft: '10px' }}>{value || option}</span>
+                    </li>
+                  )
+                }}
+                options={suggestionList}
+                onSelect={(value: any) => {
+                  const newValue = value?.value || value || ''
+                  setQueryFields(value?.type || '')
                   flushSync(() => {
-                    setSearchValue((e.target as HTMLInputElement).value)
+                    setSearchValue(newValue)
                   })
-                  addSearchHistory((e.target as HTMLInputElement).value)
-                  setQueryFields('')
+                  addSearchHistory(newValue)
                   reloadRef.current()
-                }
-              }}
-              renderOption={(props, option) => {
-                const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
-                return type === 'company' ? (
-                  <li {...props} style={styleleSelect}>
-                    <Image src={logoUrl} alt={value} width='22' height='22' />
-                    <span style={{ paddingLeft: '10px' }}>{value}</span>
-                  </li>
-                ) : isHistory ? (
-                  <li {...props} style={{ ...styleleSelect, color: '#136fd3' }}>
-                    <AccessTimeIcon />
-                    <span style={{ paddingLeft: '10px' }}>{value}</span>
-                  </li>
-                ) : (
-                  <li {...props} style={styleleSelect}>
-                    <SearchIcon />
-                    <span style={{ paddingLeft: '10px' }}>{value || option}</span>
-                  </li>
-                )
-              }}
-              options={suggestionList}
-              onSelect={(value: any) => {
-                const newValue = value?.value || value || ''
-                setQueryFields(value?.type || '')
-                flushSync(() => {
-                  setSearchValue(newValue)
-                })
-                addSearchHistory(newValue)
-                reloadRef.current()
-              }}
-            />
-            <MaterialButton
-              className={styles.searchButton}
-              variant='contained'
-              capitalize
-              onClick={() => {
-                flushSync(() => {
-                  setSearchValue(searchValue)
-                })
-                addSearchHistory(searchValue)
-                reloadRef.current()
-                setQueryFields('')
-              }}
-            >
-              {' '}
-              {search.searchBtn}{' '}
-            </MaterialButton>
+                }}
+              />
+              <MaterialButton
+                className={styles.searchButton}
+                variant='contained'
+                capitalize
+                onClick={() => {
+                  flushSync(() => {
+                    setSearchValue(searchValue)
+                  })
+                  addSearchHistory(searchValue)
+                  reloadRef.current()
+                  setQueryFields('')
+                }}
+              >
+                {' '}
+                {search.searchBtn}{' '}
+              </MaterialButton>
             </div>
             <div className={styles.searchAreaRight}>
-            {accessToken ? (
-              <div
-                className={styles.downloadApp}
-                onClick={() => {
-                  // app store
-                  window.location.href = userAgent.ua.isMac
-                    ? process.env.APP_STORE_LINK
-                    : process.env.GOOGLE_PLAY_STORE_LINK
-                }}
-              >
-                <svg
-                  width='32'
-                  height='32'
-                  viewBox='0 0 32 32'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
+              {accessToken ? (
+                <div
+                  className={styles.downloadApp}
+                  onClick={() => {
+                    // app store
+                    window.location.href = userAgent.ua.isMac
+                      ? process.env.APP_STORE_LINK
+                      : process.env.GOOGLE_PLAY_STORE_LINK
+                  }}
                 >
-                  <path
-                    d='M22.6667 2.66675H9.33341C7.86066 2.66675 6.66675 3.86066 6.66675 5.33341V26.6667C6.66675 28.1395 7.86066 29.3334 9.33341 29.3334H22.6667C24.1395 29.3334 25.3334 28.1395 25.3334 26.6667V5.33341C25.3334 3.86066 24.1395 2.66675 22.6667 2.66675Z'
-                    stroke='#136FD3'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    className={styles.downloadApp_phoneIconBorderPath}
-                  />
-                  <path
-                    d='M16 24H16.0133'
-                    stroke='#136FD3'
-                    stroke-width='2'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    className={styles.downloadApp_phoneIconHomePath}
-                  />
-                </svg>
-                <div className={styles.text}>Download APP and chat with Boss </div>
-                <div className={styles.popver}>
-                  <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
-                  <p>
-                    Chat directly
-                    <br />
-                    with Boss
-                  </p>
+                  <svg
+                    width='32'
+                    height='32'
+                    viewBox='0 0 32 32'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='M22.6667 2.66675H9.33341C7.86066 2.66675 6.66675 3.86066 6.66675 5.33341V26.6667C6.66675 28.1395 7.86066 29.3334 9.33341 29.3334H22.6667C24.1395 29.3334 25.3334 28.1395 25.3334 26.6667V5.33341C25.3334 3.86066 24.1395 2.66675 22.6667 2.66675Z'
+                      stroke='#136FD3'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      className={styles.downloadApp_phoneIconBorderPath}
+                    />
+                    <path
+                      d='M16 24H16.0133'
+                      stroke='#136FD3'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      className={styles.downloadApp_phoneIconHomePath}
+                    />
+                  </svg>
+                  <div className={styles.text}>Download APP and chat with Boss </div>
+                  <div className={styles.popver}>
+                    <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
+                    <p>
+                      Chat directly
+                      <br />
+                      with Boss
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <Button
-                className={styles.loginButton}
-                variant='outlined'
-                onClick={() => {
-                  router.push('/get-started', { forceOptimisticNavigation: true })
-                }}
-              >
-                <svg
-                  width='21'
-                  height='20'
-                  viewBox='0 0 21 20'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
+              ) : (
+                <Button
+                  className={styles.loginButton}
+                  variant='outlined'
+                  onClick={() => {
+                    router.push('/get-started', { forceOptimisticNavigation: true })
+                  }}
                 >
-                  <path
-                    d='M7.84375 13.2812L11.125 10L7.84375 6.71875'
-                    stroke='#136FD3'
-                    stroke-width='1.5'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                  <path
-                    d='M2.375 10H11.125'
-                    stroke='#136FD3'
-                    stroke-width='1.5'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                  <path
-                    d='M11.125 3.125H15.5C15.6658 3.125 15.8247 3.19085 15.9419 3.30806C16.0592 3.42527 16.125 3.58424 16.125 3.75V16.25C16.125 16.4158 16.0592 16.5747 15.9419 16.6919C15.8247 16.8092 15.6658 16.875 15.5 16.875H11.125'
-                    stroke='#136FD3'
-                    stroke-width='1.5'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                </svg>
-                <span>{search.login}</span>
-              </Button>
-            )}
+                  <svg
+                    width='21'
+                    height='20'
+                    viewBox='0 0 21 20'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='M7.84375 13.2812L11.125 10L7.84375 6.71875'
+                      stroke='#136FD3'
+                      stroke-width='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                    <path
+                      d='M2.375 10H11.125'
+                      stroke='#136FD3'
+                      stroke-width='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                    <path
+                      d='M11.125 3.125H15.5C15.6658 3.125 15.8247 3.19085 15.9419 3.30806C16.0592 3.42527 16.125 3.58424 16.125 3.75V16.25C16.125 16.4158 16.0592 16.5747 15.9419 16.6919C15.8247 16.8092 15.6658 16.875 15.5 16.875H11.125'
+                      stroke='#136FD3'
+                      stroke-width='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                  <span>{search.login}</span>
+                </Button>
+              )}
             </div>
           </div>
           {/* filter */}
           <div className={styles.filters}>
             <div className={styles.filtersLeft}>
-            <Single
-              options={sortOptions}
-              value={sort}
-              onSelect={setSort}
-              className={styles.filterItems}
-              label='Sort by'
-            />
-            <JobFunction
-              // label='Job Function'
-              id='jobFunction'
-              label={search.function}
-              value={jobFunctionValue}
-              className={[styles.filterItems]}
-              onChange={jobFunctionChange}
-            />
-            <Multiple
-              label={search.salary}
-              value={salaries}
-              options={salaryOptions}
-              className={classNames([styles.filterItems, styles.jobSalary])}
-              onSelect={setSelaries}
-            />
-            <Multiple
-              label={search.type}
-              value={jobTypes}
-              options={jobTypeList}
-              className={styles.filterItems}
-              onSelect={setJobtypes}
-              defaultValue={jobTypes}
-            />
-            <Button
-              className={styles.moreButton}
-              variant='outlined'
-              onClick={() => {
-                setShowMore(true)
-              }}
-            >
-              {' '}
-              {search.more} {moreCount ? `(${moreCount})` : ''}{' '}
-            </Button>
+              <Single
+                options={sortOptions}
+                value={sort}
+                onSelect={setSort}
+                className={styles.filterItems}
+                label='Sort by'
+              />
+              <JobFunction
+                // label='Job Function'
+                id='jobFunction'
+                label={search.function}
+                value={jobFunctionValue}
+                className={[styles.filterItems]}
+                onChange={jobFunctionChange}
+              />
+              <Multiple
+                label={search.salary}
+                value={salaries}
+                options={salaryOptions}
+                className={classNames([styles.filterItems, styles.jobSalary])}
+                onSelect={setSelaries}
+              />
+              <Multiple
+                label={search.type}
+                value={jobTypes}
+                options={jobTypeList}
+                className={styles.filterItems}
+                onSelect={setJobtypes}
+                defaultValue={jobTypes}
+              />
+              <Button
+                className={styles.moreButton}
+                variant='outlined'
+                onClick={() => {
+                  setShowMore(true)
+                }}
+              >
+                {' '}
+                {search.more} {moreCount ? `(${moreCount})` : ''}{' '}
+              </Button>
             </div>
             <div className={styles.filtersRight}>
-            <Button
-              className={styles.clearButton}
-              variant='text'
-              onClick={() => {
-                setLocation(null)
-                setSearchValue('')
-                setSort('1')
-                jobFunctionChange({
-                  jobFunctions: [],
-                  mainFunctions: [],
-                  functionTitles: []
-                })
-                setJobtypes([])
-                setSelaries([])
-                setMoreData({} as any)
-                setPage('1')
-              }}
-            >
-              {search.reset}{' '}
-            </Button>
+              <Button
+                className={styles.clearButton}
+                variant='text'
+                onClick={() => {
+                  setLocation(null)
+                  setSearchValue('')
+                  setSort('1')
+                  jobFunctionChange({
+                    jobFunctions: [],
+                    mainFunctions: [],
+                    functionTitles: []
+                  })
+                  setJobtypes([])
+                  setSelaries([])
+                  setMoreData({} as any)
+                  setPage('1')
+                }}
+              >
+                {search.reset}{' '}
+              </Button>
             </div>
           </div>
         </div>

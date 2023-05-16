@@ -408,7 +408,9 @@
       "title": "工作通知",
       "btn": "完成",
       "filters": "筛选条件",
-      "frequency": "提示周期"
+      "frequency": "提示周期",
+      "companyVerified": "已验证",
+      "noFilter": "未选择任何条件"
     },
     "updateAlertModal": {
       "title": "管理工作通知",
@@ -743,7 +745,7 @@
     "confirmText": "面试已经确认",
     "confirmLabel": "您的面试现在不能取消",
     "checkedText": "已签到",
-    "checkedLabel":"为这场面试签到",
-    "checkInText":"马上签到"
+    "checkedLabel": "为这场面试签到",
+    "checkInText": "马上签到"
   }
 }
