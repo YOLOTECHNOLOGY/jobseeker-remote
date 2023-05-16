@@ -1,5 +1,4 @@
 import { cond, T } from "ramda"
-import slugify from "slugify"
 
 
 export const buildQuery = (location, searchValue) => {
@@ -7,7 +6,7 @@ export const buildQuery = (location, searchValue) => {
     const locationAndSearch = () => searchValue && location
     const onlySearch = () => searchValue && !location
     const buildLocationAndOneValue = (location, value) => {
-        return `/jobs-hiring/${encodeURIComponent(value?.value || value)}-jobs-in-${slugify(location)}`
+        return `/jobs-hiring/${encodeURIComponent(value?.value || value)}-jobs-in-${encodeURIComponent(location)}`
     }
     const buildOnlyOneValue = value => {
         return `/jobs-hiring/${encodeURIComponent(value?.value || value)}-jobs`
