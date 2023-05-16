@@ -6,8 +6,15 @@ import { HomePageChat } from 'images'
 import styles from 'app/[lang]/index.module.scss'
 import Image from 'next/image'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
-const JobDetail = ({ detail }: any) => {
+import { getValueById } from 'helpers/config/getValueById'
+
+const JobDetail = ({ detail,config }: any) => {
   const { home } = useContext(languageContext) as any
+  const jobLocation = getValueById(config,detail?.job_location_id,'location_id')
+  const financingStage = getValueById(config,detail?.company_financing_stage_id,'company_financing_stage_id')
+  const xpLvlValue = getValueById(config,detail?.xp_lvl_id,'xp_lvl_id')
+  const degreeValue = getValueById(config,detail?.degree_id,'degree_id')
+  const industry =  getValueById(config,detail?.company_industry_id,'industry_id')
 
   return (
     <div className={styles.job_detail}>
@@ -31,9 +38,9 @@ const JobDetail = ({ detail }: any) => {
         </div>
 
         <div className={styles.job_tags}>
-          <div>{detail?.job_location}</div>
-          <div>{detail?.xp_lvl}</div>
-          <div>{detail?.degree}</div>
+          <div>{jobLocation}</div>
+          <div>{xpLvlValue}</div>
+          <div>{degreeValue}</div>
         </div>
       </Link>
 
@@ -50,9 +57,9 @@ const JobDetail = ({ detail }: any) => {
             <div className={styles.job_companyInfo_name}>{detail?.company_name}</div>
           </div>
           <div className={styles.job_companyInfo_industry}>
-            {detail?.company_industry}
-            {detail?.company_industry && detail?.company_financing_stage ? ' | ' : null}
-            {detail?.company_financing_stage}
+            {industry}
+            {industry && financingStage ? ' | ' : null}
+            {financingStage}
           </div>
         </div>
       </Link>
