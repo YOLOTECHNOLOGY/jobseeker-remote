@@ -12,9 +12,12 @@ export const getValueById = (store: Record<string, any>, id: any, idKey: string,
         if (item.id === id) {
           return result = item[key]
         }
+      
       })
+   
       return result
     }
+  
     return object?.[key]
   }
 

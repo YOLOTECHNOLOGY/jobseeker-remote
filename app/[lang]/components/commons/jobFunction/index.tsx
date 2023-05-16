@@ -3,7 +3,7 @@ import { FormControl, TextField } from '@mui/material'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import styles from './index.module.scss'
 import { useSelector } from 'react-redux'
-import { keys, flatMap, identity, isEqual } from 'lodash-es'
+import {  flatMap, identity, isEqual } from 'lodash-es'
 import JobItem from './item'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import Header from './header'
@@ -90,21 +90,19 @@ const JobFunctionMultiSelector = (props: any) => {
     preShowModal.current = showModal
   }, [showModal])
   const jobFunctions = useSelector(
-    (store: any) => store.config.config.response?.job_function_lists ?? []
+    (store: any) => store.config.config.response?.main_functions ?? []
   )
 
   const formattedJobfunctions = useMemo(() => {
     return jobFunctions.map((obj, index) => {
-      const key = keys(obj)[0]
-      const value = obj[key]
       const firstParent = {
-        value: key,
+        value: obj.value,
         id: index,
-        seo_value: toSeo(key),
-        key: toSeo(key),
+        seo_value: obj.seo_value,
+        key: toSeo(obj.key),
         children: undefined
       }
-      firstParent.children = value.map((second) => {
+      firstParent.children = obj.children.map((second) => {
         const secondParent = {
           id: second.id,
           value: second.value,

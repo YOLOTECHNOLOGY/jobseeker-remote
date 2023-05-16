@@ -25,7 +25,7 @@ export default usedConfigProps => {
     const interpreter = registInterpreter(command =>
         command.cata({
             fetchData: () => M((content) => {
-                const lang = cookies().get(configKey).value?.split('_')?.[1];
+                const lang = cookies().get(configKey)?.value?.split('_')?.[1];
                 return cachedConfig(content?.params?.lang ?? lang).then(data => {
                     return Result.success({
                         config: usedConfigProps

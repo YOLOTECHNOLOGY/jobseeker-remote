@@ -148,7 +148,7 @@ const JobCard = (props: any) => {
   const [loading, chatNow, modalChange] = useChatNow(props)
   const [titleHover, setTitleHover] = useState(false)
   const [popHover, setPopHover] = useState(false)
-  // const jobBenefitsValue = job_benefits.map(benefits => getValueById(config,benefits.id,['job_benefits'],'value'))
+  const jobBenefitsValue = job_benefits.map(benefits => getValueById(config,benefits.id,'job_benefit_id','name'))?.join(', ')
   const showPopup = useShowPop(titleHover, popHover)
   const accessToken = getCookie('accessToken')
   const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken)
@@ -338,7 +338,7 @@ const JobCard = (props: any) => {
               {(job_skills ?? '').split(',').join(' | ')}
             </div>
             <div className={styles.benefits} title={job_benefits}>
-              {job_benefits}
+              {jobBenefitsValue}
             </div>
           </div>
         </div>
