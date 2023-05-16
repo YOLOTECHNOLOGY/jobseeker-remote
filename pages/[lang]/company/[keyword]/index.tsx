@@ -53,9 +53,9 @@ const CompanyDetail = (props: any) => {
   const [jobLocation, setJobLocation] = useState(null)
   const [defaultCompanyAddress, setDefaultCompanyAddress] = useState('')
 
-  useEffect(() => {
-    dispatch(fetchConfigRequest())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(fetchConfigRequest())
+  // }, [])
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     loop: false,
@@ -123,11 +123,11 @@ const CompanyDetail = (props: any) => {
 
   useEffect(() => {
     let address = ''
-    let findAddress = company.working_addresses.filter(item => item.is_default)
-    if(findAddress.length == 0) {
+    let findAddress = company.working_addresses.filter((item) => item.is_default)
+    if (findAddress.length == 0) {
       findAddress = company.working_addresses.slice(0, 1)
     }
-    if(findAddress.length > 0) {
+    if (findAddress.length > 0) {
       address = findAddress[0].full_address
     }
     setDefaultCompanyAddress(address)
