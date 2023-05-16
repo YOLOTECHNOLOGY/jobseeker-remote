@@ -7,10 +7,10 @@ export const buildQuery = (location, searchValue) => {
     const locationAndSearch = () => searchValue && location
     const onlySearch = () => searchValue && !location
     const buildLocationAndOneValue = (location, value) => {
-        return `/jobs-hiring/${slugify(value?.value || value)}-jobs-in-${slugify(location)}`
+        return `/jobs-hiring/${value?.value || value}-jobs-in-${slugify(location)}`
     }
     const buildOnlyOneValue = value => {
-        return `/jobs-hiring/${slugify(value?.value || value)}-jobs`
+        return `/jobs-hiring/${value?.value || value}-jobs`
     }
     return  cond([
         [onlySearch, () => buildOnlyOneValue(searchValue)],
