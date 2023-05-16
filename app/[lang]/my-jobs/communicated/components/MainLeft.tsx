@@ -176,8 +176,6 @@ const MainLeft = (props: any) => {
       const data = res.data.data[tab.key]
       const total = res.data.data.total_pages
       const idList = []
-      console.log(data,7777)
-
       data.map(e => {
         idList.push(e.recruiter_id)
       })

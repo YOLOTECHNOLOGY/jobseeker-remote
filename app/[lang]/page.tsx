@@ -61,6 +61,7 @@ export default async (props) => {
     const dictionary = await getDictionary(lang)
     const newProps = {...props,lang:dictionary}
     return <div className={styles.container}>
+         {/* @ts-expect-error Async Server Component */}
           <Main {...newProps} />
     </div>
 }

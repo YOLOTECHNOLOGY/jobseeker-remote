@@ -10,10 +10,10 @@ async function getCompanyData(location) {
   return res.data
 }
 
-const mobileHome = async ({ location, lang, location_id }) => {
+const mobileHome = async ({ location, lang, location_id ,config}) => {
   const data = await getCompanyData(location_id)
   const comapny = data?.data?.featured_companies || []
-  const { companyHiring, jobCard } = lang.home
+  const { companyHiring, jobCard ,jobsHiring} = lang.home
   return (
     <div className={styles.mobileHome}>
       {comapny?.length ? (
@@ -33,7 +33,7 @@ const mobileHome = async ({ location, lang, location_id }) => {
                     <Image src={logo_url} alt='name' width={27} height={27} />
                     <div className={styles.info}>
                       <p className={styles.name}>{name}</p>
-                      <p className={styles.num}> {num_of_active_jobs} jobs hiring</p>
+                      <p className={styles.num}> {num_of_active_jobs} {jobsHiring}</p>
                     </div>
                   </Link>
                 )
@@ -45,7 +45,7 @@ const mobileHome = async ({ location, lang, location_id }) => {
 
       <div className={styles.jobs}>
         <h2>{jobCard.jobForYou}</h2>
-        <JobCard location={location} lang={lang.home} />
+        <JobCard location={location} lang={lang.home}  config={config}/>
       </div>
     </div>
   )

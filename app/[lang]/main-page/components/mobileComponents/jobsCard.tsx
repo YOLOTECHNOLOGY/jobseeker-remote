@@ -10,13 +10,14 @@ import { useRouter } from 'next/navigation'
 import { getCookie } from 'helpers/cookies'
 import Image from 'next/image'
 import ClearIcon from '@mui/icons-material/Clear'
+import { getValueById } from 'helpers/config/getValueById'
 const pageParams = {
   size: 20,
   sort: 1,
   source: 'web'
 }
 
-const JobsCard = ({ location, lang }: any) => {
+const JobsCard = ({ location, lang, config }: any) => {
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [current, setCurrent] = useState<number>(1)
@@ -204,16 +205,27 @@ const JobsCard = ({ location, lang }: any) => {
           id: Id,
           job_title: jobTitle,
           local_salary_range_value: salaryRangeValue,
-          job_location: jobLocation,
+         // job_location: jobLocation,
+          job_location_id,
           job_url: jobUrl,
-          job_type: jobType,
-          xp_lvl: xpLvl,
-          degree,
+        //  job_type: jobType,
+          job_type_id,
+         // xp_lvl: xpLvl,
+          xp_lvl_id,
+         // degree,
+          degree_id,
           recruiter_avatar: recruiterAvatar,
           recruiter_full_name: recruiterFullName,
           company_name: companyName,
-          recruiter_last_active_at: recruiterLastActiveAt
+          recruiter_last_active_at: recruiterLastActiveAt,
+          recruiter_job_title:recruiterJobTitle,
         } = item || {}
+       console.log(item)
+        const jobLocation = getValueById(config,job_location_id,'location_id')
+        const jobType = getValueById(config,job_type_id,'job_type_id')
+        const xpLvlValue = getValueById(config,xp_lvl_id,'xp_lvl_id')
+        const degreeValue = getValueById(config,degree_id,'degree_id')
+        // const industry =  getValueById(config,detail?.company_industry_id,'industry_id')
         return (
           <div
             className={styles.jobCard}
@@ -226,8 +238,8 @@ const JobsCard = ({ location, lang }: any) => {
             </div>
             <p className={styles.company}>{companyName}</p>
             <span className={styles.tag}>{jobType}</span>
-            <span className={styles.tag}>{xpLvl}</span>
-            <span className={styles.tag}>{degree}</span>
+            <span className={styles.tag}>{xpLvlValue}</span>
+            <span className={styles.tag}>{degreeValue}</span>
             <div className={styles.contact}>
               <div
                 className={`${styles.avator}  ${
@@ -236,7 +248,7 @@ const JobsCard = ({ location, lang }: any) => {
               >
                 <Image src={recruiterAvatar} alt={recruiterFullName} width={20} height={20} />
               </div>
-              {[recruiterFullName, jobTitle].filter((a) => a).join(' · ')}
+              {[recruiterFullName, recruiterJobTitle].filter((a) => a).join(' · ')}
               <span className={styles.location}>{jobLocation}</span>
             </div>
           </div>

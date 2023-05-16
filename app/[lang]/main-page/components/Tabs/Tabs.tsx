@@ -92,7 +92,7 @@ const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => 
   }
 }))
 
-const Tabs = ({ location }: any) => {
+const Tabs = ({ location,config }: any) => {
   const { home } = useContext(languageContext) as any
   const { tab, jobTab } = home
   const tabList = useMemo(() => {
@@ -304,7 +304,7 @@ const Tabs = ({ location }: any) => {
 
             <div className={styles.tabContainer}>
               {!loading ? (
-                list?.map((item) => <JobDetail key={item.id} detail={item} />)
+                list?.map((item) => <JobDetail config={config} key={item.id} detail={item} />)
               ) : (
                 <Box sx={{ width: '100%' }}>
                   <Skeleton width={'100%'} height={200} sx={{ margin: '20px 0' }} />
