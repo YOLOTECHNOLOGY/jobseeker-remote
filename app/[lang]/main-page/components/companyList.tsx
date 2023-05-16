@@ -54,13 +54,15 @@ const CompanyList = (props: any) => {
               const {
                 job_title: jobTitle,
                 salary_range_value: salaryRangeValue,
-                job_location: jobLocation,
+                // job_location: jobLocation,
+                job_location_id,
                // xp_lvl: xpLvl,
                 xp_lvl_id,
                // degree,
                 degree_id,
                 job_url: jobUrl
               } = jobItem || {}
+              const jobLocation =  getValueById(config,job_location_id,'location_id')
               const xpLvl = getValueById(config,xp_lvl_id,'xp_lvl_id')
               const degree = getValueById(config,degree_id,'degree_id')
 
