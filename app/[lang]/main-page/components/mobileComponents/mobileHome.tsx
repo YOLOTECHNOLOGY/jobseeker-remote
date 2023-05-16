@@ -6,14 +6,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 async function getCompanyData(location) {
   const res = await fetchCompanyTopService(location)
+    .catch(e => console.log({ fetchCompanyTopService: e }))
   return res.data
 }
 
-const mobileHome = async ({ location, lang }) => {
-  const data = await getCompanyData(location)
+const mobileHome = async ({ location, lang, location_id }) => {
+  const data = await getCompanyData(location_id)
   const comapny = data?.data?.featured_companies || []
   const { companyHiring, jobCard } = lang.home
-
   return (
     <div className={styles.mobileHome}>
       {comapny?.length ? (
