@@ -1,7 +1,6 @@
-import { getIdPath } from "helpers/config/getIdPath"
 import { getValueById } from "helpers/config/getValueById"
 
-export const changeCompanyValueWithConfigure = (companyDetail, config) => [
+export const changeCompanyValueWithConfigure = (companyDetail, config) => {
   [
     {
       property: 'company_size',
@@ -23,4 +22,25 @@ export const changeCompanyValueWithConfigure = (companyDetail, config) => [
       item.pathKey || item.idKey
     )
   })
-]
+}
+
+
+export const changeJobOnCompany = (job, config) => {
+  [
+    {
+      property: 'job_type',
+      idKey: 'job_type_id'
+    },
+    {
+      property: 'job_location',
+      idKey: 'job_location_id',
+      pathKey: 'location_id',
+    }
+  ].forEach((item) => {
+    job[item.property] = getValueById(
+      config,
+      job[item.idKey],
+      item.pathKey || item.idKey
+    )
+  })
+}

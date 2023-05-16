@@ -27,7 +27,10 @@ import MetaText from '../../../../components/MetaText'
 import { getCountry } from 'helpers/country'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
-import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
+import {
+  changeCompanyValueWithConfigure,
+  changeJobOnCompany
+} from 'helpers/config/changeCompanyValue'
 import { configKey } from 'helpers/cookies'
 
 const CompanyJobsProfile = (props: any) => {
@@ -47,9 +50,6 @@ const CompanyJobsProfile = (props: any) => {
   } = lang
   const company = companyDetail
 
-  useEffect(() => {
-    dispatch(fetchConfigRequest())
-  }, [])
   const [jobQuery, setJobQuery] = useState('')
   const [jobLocation, setJobLocation] = useState(null)
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
@@ -60,7 +60,7 @@ const CompanyJobsProfile = (props: any) => {
 
   const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
   const isJobsListFetching = useSelector((store: any) => store.job.jobList.fetching)
-
+  const config = useSelector((store: any) => store.config.config.response)
   const filterJobs = () => {
     const payload = {
       companyIds: company.id,
@@ -75,6 +75,9 @@ const CompanyJobsProfile = (props: any) => {
 
   useEffect(() => {
     if (fetchJobsListResponse) {
+      fetchJobsListResponse.data?.jobs?.forEach((job) => {
+        changeJobOnCompany(job, config)
+      })
       setCompanyJobs(fetchJobsListResponse.data?.jobs)
       setTotalPages(fetchJobsListResponse.data?.total_pages)
       setTotalJobs(fetchJobsListResponse.data?.total_num)

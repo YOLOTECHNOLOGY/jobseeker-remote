@@ -70,7 +70,7 @@ const Companies = (props: any) => {
     if (featuredCompaniesResponse?.featured_companies) {
       setTotalPage(featuredCompaniesResponse.total_pages)
       const companies = featuredCompaniesResponse.featured_companies.map((item) => {
-        changeCompanyValueWithConfigure(item, config)
+        changeCompanyValueWithConfigure(item.company, config)
         return item
       })
       if (!companies || (companies && !companies.length)) return
@@ -239,7 +239,7 @@ const Companies = (props: any) => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (props) => {
   const { page, lang }: any = props.query
   const dictionary = await getDictionary(lang)
-  store.dispatch(fetchConfigRequest())
+  store.dispatch(fetchConfigRequest(lang))
   store.dispatch(fetchFeaturedCompaniesListRequest({ page: Number(page) || 1 }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
