@@ -133,7 +133,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await (store as any).sagaTask.toPromise()
       const storeState = store.getState()
       const companyDetail = storeState.companies.companyDetail.response.data
-      console.log('companyDetail', !companyDetail)
       if (!companyDetail) {
         return {
           notFound: true

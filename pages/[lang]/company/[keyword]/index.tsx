@@ -30,7 +30,10 @@ import { FacebookOutline, LinkedinOutline, InstagramOutline, YoutubeOutline } fr
 // Styles
 import styles from '../Company.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
-import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
+import {
+  changeCompanyValueWithConfigure,
+  changeJobOnCompany
+} from 'helpers/config/changeCompanyValue'
 import { configKey } from 'helpers/cookies'
 
 const CompanyDetail = (props: any) => {
@@ -46,16 +49,12 @@ const CompanyDetail = (props: any) => {
   const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs, lang } =
     props
   const company = companyDetail
-  console.log(company, 'company')
   const [companyJobs, setCompanyJobs] = useState(null)
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
   const [totalPages, setTotalPages] = useState(null)
   const [jobLocation, setJobLocation] = useState(null)
   const [defaultCompanyAddress, setDefaultCompanyAddress] = useState('')
 
-  // useEffect(() => {
-  //   dispatch(fetchConfigRequest())
-  // }, [])
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     loop: false,
@@ -66,9 +65,13 @@ const CompanyDetail = (props: any) => {
 
   const fetchJobsListResponse = useSelector((store: any) => store.job.jobList.response)
   const isJobsListFetching = useSelector((store: any) => store.job.jobList.fetching)
+  const config = useSelector((store: any) => store.config.config.response)
 
   useEffect(() => {
     if (fetchJobsListResponse) {
+      fetchJobsListResponse.data?.jobs?.forEach((job) => {
+        changeJobOnCompany(job, config)
+      })
       setCompanyJobs(fetchJobsListResponse.data?.jobs)
       setTotalPages(fetchJobsListResponse.data?.total_pages)
     }
