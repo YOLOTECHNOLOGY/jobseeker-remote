@@ -35,7 +35,12 @@ const configs = getConfigs([
   ['industry_lists'],
   ['company_financing_stage_lists'],
   ['educations'],
-  ['salary_range_filters']
+  ['salary_range_filters'],
+  ['main_job_function_lists'],
+  ['degrees'],
+  ['salary_ranges'],
+  ['subscibe_job_frequency_lists'],
+  ['country_lists']
 ])
 
 const QRCode = () => (

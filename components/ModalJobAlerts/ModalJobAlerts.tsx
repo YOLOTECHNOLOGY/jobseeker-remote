@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
+/* eslint-disable react/prop-types */
+'use client'
+import React, { useState, useEffect, useContext, memo, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 /* Vendor */
@@ -29,13 +31,15 @@ import {
 import Text from 'components/Text'
 import Modal from 'components/Modal'
 import Link from 'components/Link'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 /* Images */
 import { CreateIcon, DeleteIcon } from 'images'
 
 /* Styles */
 import styles from './ModalJobAlerts.module.scss'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { formatJobAlertFilter } from './formatJobAlertFilters'
+import { changeAlertValue } from 'helpers/config/changeAlertValue'
 
 interface ModalJobAlertsProps {
   query?: any
@@ -51,6 +55,14 @@ interface ModalJobAlertsProps {
   isCreatingJobAlert?: boolean
   isPublicPostReportJob?: boolean
 }
+const MemoedFilters = memo<{ alert: any; config: any; lang: any }>(function AlertFilters(props) {
+  const { config, alert, lang } = props
+  const { is_company_verified } = alert
+  let companyVerify = is_company_verified == '1' ? 'Verified' : ''
+  companyVerify = !companyVerify ? `` : `,${lang.alertModal.companyVerified}`
+  const result = formatJobAlertFilter(config, alert) + companyVerify
+  return result ? result : lang.alertModal.noFilter
+})
 
 const ModalJobAlerts = ({
   jobAlertsList,
@@ -89,7 +101,13 @@ const ModalJobAlerts = ({
   const showCreateJobAlertModal = useSelector((store: any) => store.modal.createJobAlertModal.show)
   const showUpdateJobAlertModal = useSelector((store: any) => store.modal.updateJobAlertModal.show)
   const showDeleteJobAlertModal = useSelector((store: any) => store.modal.deleteJobAlertModal.show)
-
+  const config = useSelector((store: any) => store.config.config.response)
+  const formattedAlertList = useMemo(() => {
+    jobAlertsList?.forEach?.((item) => {
+      changeAlertValue(item, config)
+    })
+    return jobAlertsList
+  }, [jobAlertsList])
   useEffect(() => {
     if (showManageJobAlertsModal && !isDeletingJobAlert) {
       if (isDeletingJobAlert || !isUpdatingJobAlert) {
@@ -135,52 +153,55 @@ const ModalJobAlerts = ({
       >
         <div className={classNames(styles.ModalJobAlertBody, styles.ModalJobAlertsListBody)}>
           <ul className={styles.ModalJobAlertsList}>
-            {jobAlertsList?.length > 0 &&
-              jobAlertsList.map((alert) => (
-                <li key={alert.id} className={styles.ModalJobAlertsItem}>
-                  <div className={styles.ModalJobAlertsItemHeader}>
-                    <Text textStyle='xl' bold>
-                      {titleCase(alert.keyword_value)}
-                    </Text>
-                    <div className={styles.ModalJobAlertsItemAction}>
-                      <img
-                        src={CreateIcon}
-                        width='18'
-                        height='18'
-                        onClick={() => {
-                          dispatch(closeManageJobAlertsModal())
-                          dispatch(openUpdateJobAlertModal())
-                          setSelectedJobAlert(alert)
-                          setFrequency(alert.frequency_value === 'Daily' ? 1 : 2)
-                        }}
-                        className={styles.ModalJobAlertsItemButton}
-                      />
-                      <img
-                        src={DeleteIcon}
-                        width='18'
-                        height='18'
-                        onClick={() => {
-                          dispatch(closeManageJobAlertsModal())
-                          dispatch(openDeleteJobAlertModal())
-                          setSelectedJobAlert(alert)
-                        }}
-                        className={styles.ModalJobAlertsItemButton}
-                      />
+            {formattedAlertList?.length > 0 &&
+              formattedAlertList.map((alert) => {
+                return (
+                  <li key={alert.id} className={styles.ModalJobAlertsItem}>
+                    <div className={styles.ModalJobAlertsItemHeader}>
+                      <Text textStyle='xl' bold>
+                        {titleCase(alert.keyword_value)}
+                      </Text>
+                      <div className={styles.ModalJobAlertsItemAction}>
+                        <img
+                          src={CreateIcon}
+                          width='18'
+                          height='18'
+                          onClick={() => {
+                            dispatch(closeManageJobAlertsModal())
+                            dispatch(openUpdateJobAlertModal())
+                            setSelectedJobAlert(alert)
+                            setFrequency(alert.frequency_value === 'Daily' ? 1 : 2)
+                          }}
+                          className={styles.ModalJobAlertsItemButton}
+                        />
+                        <img
+                          src={DeleteIcon}
+                          width='18'
+                          height='18'
+                          onClick={() => {
+                            dispatch(closeManageJobAlertsModal())
+                            dispatch(openDeleteJobAlertModal())
+                            setSelectedJobAlert(alert)
+                          }}
+                          className={styles.ModalJobAlertsItemButton}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className={styles.ModalJobAlertsItemBody}>
-                    <Text textStyle='base' bold>
-                      {formatLocationKeyDisplay(alert.location_value)}
-                    </Text>
-                    <Text textStyle='base'>
-                      {alertModal.filters}: {alert.filters}{' '}
-                    </Text>
-                    <Text textStyle='base'>
-                      {alertModal.frequency} {alert.frequency_value}
-                    </Text>
-                  </div>
-                </li>
-              ))}
+                    <div className={styles.ModalJobAlertsItemBody}>
+                      <Text textStyle='base' bold>
+                        {formatLocationKeyDisplay(alert.location_value)}
+                      </Text>
+                      <Text textStyle='base'>
+                        {alertModal.filters}:{' '}
+                        <MemoedFilters config={config} lang={search} alert={alert} />
+                      </Text>
+                      <Text textStyle='base'>
+                        {alertModal.frequency}: {alert.frequency_value}
+                      </Text>
+                    </div>
+                  </li>
+                )
+              })}
           </ul>
         </div>
       </Modal>
@@ -239,7 +260,8 @@ const ModalJobAlerts = ({
                 {selectedJobAlert?.location_value}
               </Text>
               <Text textStyle='base'>
-                {updateAlertModal.filters}: {selectedJobAlert?.filters}
+                {updateAlertModal.filters}:{' '}
+                <MemoedFilters config={config} lang={search} alert={selectedJobAlert} />
               </Text>
             </div>
 

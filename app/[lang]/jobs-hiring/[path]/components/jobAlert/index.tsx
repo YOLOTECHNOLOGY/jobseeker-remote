@@ -14,16 +14,13 @@ import { buildParams } from 'app/[lang]/jobs-hiring/interpreters/encoder'
 import { BellIcon } from 'images'
 import { openManageJobAlertsModal } from 'store/actions/modals/manageJobAlertsModal'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { getAlertData } from './getAlertData'
 
 const JobAlert = (props: any) => {
   const accessToken = getCookie('accessToken')
   const userCookie = getCookie('user')
   const router = useRouter()
   const { searchValues, config } = props
-  const salaryList = config.salary_range_filters ?? []
-  const salaryValues = (searchValues.salary ?? [])
-    .map((item) => salaryList.find((salary) => salary['seo-value'] === item).value)
-    .join(',')
   const params = buildParams(config, searchValues)
   const { query, location } = params
   const [createdJobAlert, setCreatedJobAlert] = useState(null)
@@ -62,19 +59,13 @@ const JobAlert = (props: any) => {
     dispatch(updateJobAlertRequest(updateJobAlertPayload))
   }
   const handleCreateJobAlertData = (email) => {
+    const data = getAlertData(searchValues, config)
     const createJobAlertPayload = {
       email: email,
+      frequency_id: 1,
       keyword: params?.query ? params.query : '',
-      location_values: params?.job_locations ? params.job_locations : 'all',
-      job_type_values: params?.job_types ? params.job_types : 'all',
-      salary_range_values: salaryValues ? salaryValues : 'all',
-      xp_lvl_values: params?.xp_lvls ? params.xp_lvls : 'all',
-      degree_values: params?.qualification ? params.qualification : 'all',
-      main_functions: params?.main_functions ?? 'all',
-      job_functions: params?.job_functions_ids ?? 'all',
-      function_titles: params?.function_job_title_ids ?? 'all',
-      is_company_verified: 'all',
-      frequency_id: 1
+      is_company_verified: (params.is_company_verified ? '1' : undefined) ?? 'all',
+      ...data
     }
     createJobAlert(createJobAlertPayload)
   }
@@ -105,10 +96,7 @@ const JobAlert = (props: any) => {
           }
         }}
       >
-        <Text textStyle='base'>
-          {isUserAuthenticated}
-          {search.alert}
-        </Text>
+        <Text textStyle='base'>{search.alert}</Text>
       </div>
       {isUserAuthenticated && (
         <div
