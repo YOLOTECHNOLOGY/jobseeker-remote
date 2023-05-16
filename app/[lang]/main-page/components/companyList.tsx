@@ -25,7 +25,6 @@ const CompanyList = (props: any) => {
          // financing_stage: financingStage
          financing_stage_id,
         } = item?.company || {}
-        console.log(item,config,'item111111')
         // const jobLocation = getValueById(config,detail?.job_location_id,'location_id')
         const financingStage = getValueById(config,financing_stage_id,'company_financing_stage_id')
        
