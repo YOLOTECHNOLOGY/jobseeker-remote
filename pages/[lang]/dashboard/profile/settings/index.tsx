@@ -55,14 +55,14 @@ function a11yProps(index: number) {
 const COUNT_DOWN_VERIFY_DEFAULT = 60
 // const countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
 
-const AccountSettings = ({ accessToken ,lang}: any) => {
+const AccountSettings = ({ accessToken, lang }: any) => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
   const config = useSelector((store: any) => store?.config?.config?.response)
- 
-  useEffect(()=>{
+
+  useEffect(() => {
     dispatch(fetchConfigRequest())
-  },[])
+  }, [])
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
 
@@ -134,7 +134,7 @@ const AccountSettings = ({ accessToken ,lang}: any) => {
     <Layout lang={lang}>
       <div className={styles.accessSettings}>
         <div className={styles.accessSettingsTabs}>
-          {(width ?? 0)  > 576 && (
+          {(width ?? 0) > 576 && (
             <Text tagName='h2' bold className={styles.accessSettingsTabsTitle}>
               Account Setting
             </Text>
@@ -201,7 +201,7 @@ const AccountSettings = ({ accessToken ,lang}: any) => {
           </TabPanel>
 
           <TabPanel value={value} index={1}>
-            <Alerts accessToken={accessToken} />
+            <Alerts accessToken={accessToken} lang={lang} />
           </TabPanel>
         </div>
       </div>
@@ -209,7 +209,7 @@ const AccountSettings = ({ accessToken ,lang}: any) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req,query}) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
   const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
   const lang = await getDictionary(query.lang as 'en-US')
   if (!accessToken) {
@@ -223,7 +223,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   }
 
   store.dispatch(fetchUserDetailRequest({ accessToken }))
- // store.dispatch(fetchConfigRequest())
+  // store.dispatch(fetchConfigRequest())
 
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()

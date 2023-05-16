@@ -38,8 +38,8 @@ import { CreateIcon, DeleteIcon } from 'images'
 
 /* Styles */
 import styles from './ModalJobAlerts.module.scss'
-import { formatJobAlertFilter } from './formatJobAlertFilters'
 import { changeAlertValue } from 'helpers/config/changeAlertValue'
+import { MemoedFilters } from './MemoedFilter'
 
 interface ModalJobAlertsProps {
   query?: any
@@ -55,14 +55,6 @@ interface ModalJobAlertsProps {
   isCreatingJobAlert?: boolean
   isPublicPostReportJob?: boolean
 }
-const MemoedFilters = memo<{ alert: any; config: any; lang: any }>(function AlertFilters(props) {
-  const { config, alert, lang } = props
-  const { is_company_verified } = alert
-  let companyVerify = is_company_verified == '1' ? 'Verified' : ''
-  companyVerify = !companyVerify ? `` : `,${lang.alertModal.companyVerified}`
-  const result = formatJobAlertFilter(config, alert) + companyVerify
-  return result ? result : lang.alertModal.noFilter
-})
 
 const ModalJobAlerts = ({
   jobAlertsList,
