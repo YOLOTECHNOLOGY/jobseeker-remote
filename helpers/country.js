@@ -8,17 +8,6 @@ export const languages = [
   { value: 'zh-CN', id: 2, label: '中文 (简体)' }
 ]
 
-export const getCountryKeyServer = () => {
-  'use server'
-  const path = process.env.NEXT_PUBLIC_HOST_PATH
-  if (path?.includes?.('.sg')) {
-    return 'sg'
-  } else {
-    return 'ph'
-  }
-  // return (process.env.COUNTRY_KEY) || (process.env.HOST_PATH).split('.').pop()
-}
-
 export const getCountryKey = () => {
   const path =
     typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window.location.href
