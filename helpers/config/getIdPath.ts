@@ -51,7 +51,8 @@ export const map = {
   "interview_result_status_id": ["interview_result"],
   "feature_banner_id": ["feature_banners"],
   "recruiter_role_permission_id": ["recruiter_role_permissions"],
-  "main_job_function_id": ["main_job_function_lists"]
+  "main_job_function_id": ["main_job_function_lists"],
+  "function_job_title_id": ["main_job_function_lists","sub_function_list","job_titles"]
 }
 
 export const getIdPath = (key: string) => {
