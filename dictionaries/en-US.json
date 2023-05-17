@@ -1,17 +1,17 @@
 {
   "header": {
-    "findJobs": "Find Jobs",
-    "companies": "Companies",
-    "courses": "Courses",
-    "careerGuide": "Career Guide",
-    "hiring": "I'm hiring",
-    "getStarted": "Get Started",
-    "manageResume": "Manage Resume",
-    "myJobs": "My Jobs",
-    "accountSettings": "Account Settings",
-    "logOut": "Log Out",
+    "findJobs": "findJobs",
+    "companies": "companies",
+    "courses": "courses",
+    "careerGuide": "careerGuide",
+    "hiring": "I’m hiring",
+    "getStarted": "getStarted",
+    "manageResume": "manageResume",
+    "myJobs": "myJobs",
+    "accountSettings": "accountSettings",
+    "logOut": "logOut",
     "Chat": "Chat",
-    "downloadApp": "Download App",
+    "downloadApp": "downloadApp",
     "pleaseVerify": "Please verify your email address.",
     "verifyNow.": " Verify now.",
     "switchCountry": {
@@ -356,6 +356,12 @@
     "feedbackModal": {
       "title": "Job Reported Successfully",
       "message": "We have received your report about this job. Thanks for letting us know. Your feedback is important in helping us to keep the Bossjob community safe."
+    },
+    "switchModal": {
+      "title": "Chat with {{name}}",
+      "btn1": "Cancel",
+      "btn2": "Proceed",
+      "content": "You are currently chatting with recruiter for the {{jobName}} position. Are you sure you want to switch job?"
     },
     "aside": {
       "company": {
@@ -740,12 +746,5 @@
     "mobileActionExchange": "Exchange mobile number",
     "moreText": "More",
     "emoji": "Emoji"
-  },
-  "chatInterview": {
-    "confirmText": "Interview Confirmed",
-    "confirmLabel": "Your interview cannot be cancelled now",
-    "checkedText": "Checked-In",
-    "checkedLabel": "Check in for the interview with recruiter",
-    "checkInText": "Check-in now"
   }
 }

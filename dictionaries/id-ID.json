@@ -357,6 +357,12 @@
       "title": "Job Reported Successfully",
       "message": "We have received your report about this job. Thanks for letting us know. Your feedback is important in helping us to keep the Bossjob community safe."
     },
+    "switchModal": {
+      "title": "Chat with {{name}}",
+      "btn1": "Cancel",
+      "btn2": "Proceed",
+      "content": "You are currently chatting with recruiter for the {{jobName}} position. Are you sure you want to switch job?"
+    },
     "aside": {
       "company": {
         "title": "Company",
@@ -408,7 +414,9 @@
       "title": "Job Alerts",
       "btn": "Done",
       "filters": "Filters",
-      "frequency": "Frequency: via"
+      "frequency": "Frequency: via",
+      "companyVerified": "Verified",
+      "noFilter": "No active filters are selected"
     },
     "updateAlertModal": {
       "title": "Manage Job Alert",

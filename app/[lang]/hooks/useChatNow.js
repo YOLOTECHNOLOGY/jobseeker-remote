@@ -1,12 +1,19 @@
 /* eslint-disable react/prop-types */
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useState, useMemo, useContext } from 'react';
 import Modal from 'components/Modal'
 import { chatNowScript, switchJobScript } from '../abstractModels/ChatNow';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import interpreter from 'app/[lang]/interpreters/chatNow'
+import { formatTemplateString } from 'helpers/formatter';
+import { languageContext } from '../components/providers/languageProvider';
+
 const ModalSwitch = (props) => {
     const { showModal, setShowModal, requestSwitch, loading, selectedJob, chatData } = props
+    debugger
+    const { jobDetail: translation } = useContext(languageContext)
+    const { switchModal } = translation || {}
+
     return <Modal
         showModal={showModal}
         handleModal={() => setShowModal(false)}
@@ -15,16 +22,14 @@ const ModalSwitch = (props) => {
         handleSecondButton={requestSwitch}
         isFirstButtonLoading={loading}
         isSecondButtonLoading={loading}
-        firstButtonText='Cancel'
-        secondButtonText='Proceed'
-        headerTitle={'Chat with ' + selectedJob?.recruiter?.full_name ?? ''}
+        firstButtonText={switchModal.btn1}
+        secondButtonText={switchModal.btn2}
+        headerTitle={formatTemplateString(switchModal.title, selectedJob?.recruiter?.full_name ?? '')}
     >
         <p>
-            You are currently chatting with recruiter for the{' '}
-            {chatData?.job?.job_title ?? chatData?.job?.function_job_title ?? 'this job'}{' '}
-            position. Are you sure you want to switch job?
+            {formatTemplateString(switchModal.content, chatData?.job?.job_title ?? chatData?.job?.function_job_title ?? 'this job')}
         </p>
-    </Modal>
+    </Modal >
 }
 export const useChatNow = (jobDetail) => {
     const [loading, setLoading] = useState(false)
@@ -46,7 +51,7 @@ export const useChatNow = (jobDetail) => {
         interpreter(switchJobScript(chatData)).run(context).finally(() => {
             setModalLoading(false)
         })
-    }, [interpreter, context,chatData])
+    }, [interpreter, context, chatData])
 
     const changeJobModal = useMemo(() => {
         return <ModalSwitch
