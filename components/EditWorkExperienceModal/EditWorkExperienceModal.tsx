@@ -419,9 +419,10 @@ const EditWorkExperienceModal = ({
                   title='Job Function'
                   name='jobFunction'
                   isTouched
+                  jobFunctionId={''}
                   value={jobFunction}
                   onChange={setJobFunction}
-                  options={jobCategoryList}
+                  // options={jobCategoryList}
                 />
               </div>
 

@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styles from './index.module.scss'
 import TopBar from './topBar'
 import { useSelector } from 'react-redux'
-import { flatMap, flatMapDeep, keys, assign, values, groupBy } from 'lodash-es'
+import { values, groupBy } from 'lodash-es'
 import { Plus, Minus } from 'images'
 import Text from 'components/Text'
 import classNames from 'classnames'
@@ -28,23 +28,20 @@ const JobFunctionSelector = (props: any) => {
   const [showModal, setShowModal] = useState(false)
   const [selectedSubItem, setSelectedSubItem] = useState<any>({})
   const [expandeds, setExpandeds] = useState([])
-  const jobFunctions = useSelector(
-    (store: any) => store.config.config.response?.job_function_lists ?? []
-  )
-  const jobFunctionsKeys = useMemo(() => flatMap(jobFunctions, keys), [jobFunctions])
-  const jobFunctionsObject = useMemo(() => jobFunctions?.reduce(assign, {}), [jobFunctions])
+  const main_job_function_lists = useSelector((store: any) => store.config.config.response?.main_job_function_lists ?? [])
+  const jobFunctionsKeys = useMemo(() => main_job_function_lists.map(item => item.id), [main_job_function_lists])
   const [selectedKey, setSelectedKey] = useState<any>(jobFunctionsKeys?.[0])
   const [init, setInit] = useState(false)
-
-  useEffect(() => {
-    if (jobTitle && !value) {
-      const allTitles = flatMapDeep(values(jobFunctionsObject), (group) =>
-        group.map((item) => item.job_titles)
-      )
-      const title = allTitles.find((item) => item.value === jobTitle)
-      onChange(title)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (jobTitle && !value) {
+  //     const allTitles = flatMapDeep(values(jobFunctionsObject), (group) =>
+  //       group.map((item) => item.job_titles)
+  //     )
+  //     console.log({ allTitles })
+  //     const title = allTitles.find((item) => item.value === jobTitle)
+  //     onChange(title)
+  //   }
+  // }, [])
 
   useEffect(() => {
     if (jobFunctionsKeys.length > 0) {
@@ -60,9 +57,10 @@ const JobFunctionSelector = (props: any) => {
 
   const selectedItem = useMemo(() => {
     if (selectedKey) {
-      return jobFunctionsObject[selectedKey]
+      return main_job_function_lists.find(item => item.id === selectedKey)?.sub_function_list ?? []
     }
   }, [selectedKey])
+  console.log({ selectedItem })
   const groupedSelected = useMemo(() => {
     return values(
       groupBy(selectedItem, (o) => {
@@ -89,14 +87,14 @@ const JobFunctionSelector = (props: any) => {
   }, [value])
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       if (showModal) {
         const t = await setTimeout(() => {
           clearTimeout(t)
         })
 
         const selectTabNode = menuRef.current.querySelector(`[name="${selectedKey}"]`)
-        menuRef.current.scrollTop = selectTabNode.offsetTop - 75
+        menuRef.current.scrollTop = selectTabNode?.offsetTop - 75
       }
     })()
   }, [showModal]) // menuRef.current,
@@ -125,30 +123,20 @@ const JobFunctionSelector = (props: any) => {
     [expandeds]
   )
 
-  const initDefaultJobFunctionSelect = () => {
-    if (jobFunctions?.length) {
-      jobFunctions.forEach((jobFunction) =>
+  const initDefaultJobFunctionSelect = useCallback(() => {
+    if (main_job_function_lists?.length) {
+      main_job_function_lists.forEach((jobFunction) =>
         //
-        Object.keys(jobFunction).forEach((key: any) =>
-          //
-          jobFunction[key].forEach((job) =>
-            //
-            job.job_titles.forEach((item) => {
-              //
-              if (item?.value === value.value) {
-                const key = Object.keys(jobFunction)[0]
-                //
-                onChange(item)
-                setSelectedKey(key)
-                setSelectedSubItem(job)
-              }
-            })
-          )
-        )
+        jobFunction.sub_function_list.forEach(job => job.job_titles.forEach((item) => {
+          if (item?.value === value.value) {
+            onChange(item)
+            setSelectedKey(item.id)
+            setSelectedSubItem(job)
+          }
+        }))
       )
     }
-  }
-
+  }, [main_job_function_lists, value])
   return (
     <FormControl className={className} size='small'>
       <MaterialTextField
@@ -182,22 +170,22 @@ const JobFunctionSelector = (props: any) => {
             />
             <div className={styles.container}>
               <MenuList classes={{ root: styles.menu }} id='menuParentNode' ref={menuRef}>
-                {jobFunctionsKeys.map((key) => {
+                {main_job_function_lists.map((item) => {
                   return (
                     <div
                       role='cell'
-                      key={key}
+                      key={item.id}
                       // @ts-ignore
-                      name={key}
+                      name={item.value}
                       className={classNames({
                         [styles.menuItem]: true,
-                        [styles.selected]: key === selectedKey
+                        [styles.selected]: item.id === selectedKey
                       })}
                       onClick={() => {
-                        setSelectedKey(key)
+                        setSelectedKey(item.id)
                       }}
                     >
-                      <label className={styles.itemText}>{formatMenuText(key)}</label>
+                      <label className={styles.itemText}>{formatMenuText(item.value)}</label>
                     </div>
                   )
                 })}
