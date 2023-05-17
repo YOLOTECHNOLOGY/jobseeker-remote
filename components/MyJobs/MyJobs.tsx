@@ -168,7 +168,11 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
   }, [isAppliedJobsListFetching, isSavedJobsListFetching])
 
   useEffect(() => {
-    setJobsList(appliedJobsListResponse.data?.job_applications)
+    setJobsList(
+      appliedJobsListResponse.data?.job_applications?.map((item) => {
+        return item
+      })
+    )
     setTotalPages(appliedJobsListResponse.data?.total_pages)
     setTotalNum(appliedJobsListResponse.data?.total_num)
   }, [appliedJobsListResponse])
@@ -324,7 +328,6 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
 
   return (
     <Layout>
-      
       <div className={styles.myJobsMenuContent}>
         <div className={styles.container}>
           <ThemeProvider theme={theme}>

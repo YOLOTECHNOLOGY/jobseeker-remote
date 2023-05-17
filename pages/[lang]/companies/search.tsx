@@ -28,6 +28,7 @@ import { END } from 'redux-saga'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { getDictionary } from 'get-dictionary'
 import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
+import { configKey } from 'helpers/cookies'
 
 interface SearchProps {
   defaultQuery: string
@@ -35,7 +36,7 @@ interface SearchProps {
 }
 
 const Search = ({ defaultQuery, lang }: SearchProps) => {
-    const  { companies: transitions } = lang
+  const { companies: transitions } = lang
   const router = useRouter()
   const dispatch = useDispatch()
   const { query, page, size } = router.query
@@ -146,11 +147,11 @@ const Search = ({ defaultQuery, lang }: SearchProps) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
   const { lang }: any = query
   const dictionary = await getDictionary(lang)
 
-  store.dispatch(fetchConfigRequest())
+  store.dispatch(fetchConfigRequest(req.cookies[configKey].split('_')?.[1]))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
 
