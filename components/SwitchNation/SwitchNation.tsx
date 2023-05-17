@@ -93,34 +93,34 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
       lang: getLang()
     }
   }, [open])
-
-  const { switchCountry } = lang?.header || lang || (useContext(languageContext) as any)
+  const { switchCountry } = lang
 
   const handleSwitchNation = () => {
     const { country, lang } = nation
     setLoading(true)
-    const isProduction = process.env.ENV === 'production'
+    const { origin, hostname, pathname } = window.location
+    const isLocal = hostname.includes('localhost')
     const accessToken = getCookie(accessTokenKey)
-    console.log('isProduction', isProduction, process.env.ENV)
-    // todo: if we just modify the language, in this case, we can refresh browser with it's own path, that's should be better
+    let query = `/${lang}`
+    let newOrigin = origin
 
-    let query = ''
-    let { origin, hostname } = window.location
-    if (!hostname.includes('localhost')) {
-      origin = origin.slice(0, origin.lastIndexOf('.') + 1)
-      query = country ?? nation?.country
-    } else {
-      // origin is localhost:3000
+    if (!isLocal) {
+      newOrigin = origin.slice(0, origin.lastIndexOf('.') + 1) + country
     }
-    query += `/${lang}`
-    // && isProduction
-    if (!hostname.includes('localhost') && accessToken) {
+    if (origin.includes(newOrigin)) {
+      // only language changed
+      // the pathname is likely "/en-US/get-started"
+      let restPath = pathname.split('/').slice(2).join('/')
+      restPath = restPath ? `/${restPath}` : ''
+      window.location.href = newOrigin + query + restPath
+      return
+    }
+    if (!isLocal && accessToken) {
       query += '/changeLocale?accessToken=' + accessToken
     }
     // store this in cookies. then the others link request server can take it to server
     setCookie(configKey, `${country}_${lang}`)
-    console.log('origin + query', origin + query)
-    window.location.href = origin + query
+    window.location.href = newOrigin + query
   }
 
   const handleSelectNation = (event: any, newValue: typeof nations[0]) => {
