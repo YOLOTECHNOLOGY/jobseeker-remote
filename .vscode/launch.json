@@ -14,10 +14,10 @@
       //   "outFiles": ["${workspaceFolder}/**/*.js", "${workspaceFolder}/**/*.ts"],
       "runtimeArgs": [
         "--inspect",
-        "--max_old_space_size=12000"
+        "--max_old_space_size=12000",
       ],
       "env": {
-        "NEXT_PUBLIC_HOST_PATH": "http://localhost:3004"
+        "NEXT_PUBLIC_HOST_PATH": "http://localhost:3000"
       }
     }
   ]
