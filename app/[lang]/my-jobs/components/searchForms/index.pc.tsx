@@ -27,15 +27,11 @@ import { SortContext } from './SortProvider'
 
 const SearchArea = (props: any) => {
   const { sort, setSort } = useContext(SortContext)
-  const { config, preferences, preferenceId,lang } = props
-  const {
-    searchForJobTitleOrCompanyName,
-    salary,
-    experience,
-    Industry,
-    JobType,
-    resetFilters,
-  } = lang || {}
+  let { config, preferences, preferenceId, lang } = props
+  const allLang = lang
+  lang = lang?.myJobs
+  const { searchForJobTitleOrCompanyName, salary, experience, Industry, JobType, resetFilters } =
+    lang || {}
   const dispatch = useDispatch()
   const searchParams: any = useSearchParams() ?? {}
   useEffect(() => {
@@ -52,11 +48,13 @@ const SearchArea = (props: any) => {
     }
     const params = {
       query: searchValue?.trim?.(),
-      location: [location?.['seo_value']].filter((a) => a),
+      location: [location?.['seo_value']].filter((a) => a)
     }
     const result = encode(params)
     const url = new URLSearchParams(toPairs(result.params)).toString()
-    router.push('/jobs-hiring/' + result.searchQuery + '?' + url, { forceOptimisticNavigation: true })
+    router.push('/jobs-hiring/' + result.searchQuery + '?' + url, {
+      forceOptimisticNavigation: true
+    })
   }, [searchValue, location])
   const pushJobSearchRef = useRef(pushJobSearch)
   useEffect(() => {
@@ -68,25 +66,28 @@ const SearchArea = (props: any) => {
   const [qualification, setQualification] = useState(
     searchParams.get('qualification')?.split?.(',') ?? []
   )
-  const qualificationList = config.educations.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+  const qualificationList =
+    config.educations.map?.((item) => ({ value: item?.['seo-value'], label: item.value })) ?? []
   const [workExperience, setWorkExperience] = useState(
     searchParams.get('workExperience')?.split?.(',') ?? []
   )
-  const workExperienceList = config.xp_lvls.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
-  const [industry, setIndustry] = useState(
-    searchParams.get('industry')?.split?.(',') ?? []
-  )
-  const industryList = config.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+  const workExperienceList =
+    config.xp_lvls.map?.((item) => ({ value: item?.['seo-value'], label: item.value })) ?? []
+  const [industry, setIndustry] = useState(searchParams.get('industry')?.split?.(',') ?? [])
+  const industryList =
+    config.industry_lists.map?.((item) => ({ value: item?.['seo-value'], label: item.value })) ?? []
   const [companySizes, setCompanySizes] = useState(
     searchParams.get('companySizes')?.split?.(',') ?? []
   )
-  const companySizeList = config.company_sizes.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? []
+  const companySizeList =
+    config.company_sizes.map?.((item) => ({ value: item?.['seo-value'], label: item.value })) ?? []
 
   const [salaries, setSelaries] = useState(searchParams.get('salary')?.split(',') ?? [])
-  const salaryOptions = config?.salary_range_filters?.map?.((item) => ({
-    value: item?.['seo-value'],
-    label: item.value
-  })) ?? []
+  const salaryOptions =
+    config?.salary_range_filters?.map?.((item) => ({
+      value: item?.['seo-value'],
+      label: item.value
+    })) ?? []
   // const [isFixed, setIsfixed] = useState(false)
   // useEffect(() => {
   //   const listener = () => {
@@ -99,11 +100,13 @@ const SearchArea = (props: any) => {
 
   // const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
   const [jobTypes, setJobtypes] = useState(searchParams?.jobTypes ?? [])
-  const jobTypeList = config?.job_types?.map?.((item) => ({
-    value: item?.['seo-value'],
-    label: item.value
-  })) ?? []
-  const [suggestionList, handleSuggestionSearch, addSearchHistory, searchLoading] = useSuggest() as any[]
+  const jobTypeList =
+    config?.job_types?.map?.((item) => ({
+      value: item?.['seo-value'],
+      label: item.value
+    })) ?? []
+  const [suggestionList, handleSuggestionSearch, addSearchHistory, searchLoading] =
+    useSuggest() as any[]
 
   const filterParams = useMemo(() => {
     return filter((a) => a?.length)({
@@ -115,9 +118,18 @@ const SearchArea = (props: any) => {
       companySizes,
       sort,
       page,
-      preferenceId,
+      preferenceId
     })
-  }, [qualification, workExperience, companySizes, industry, salaries, jobTypes, sort, preferenceId])
+  }, [
+    qualification,
+    workExperience,
+    companySizes,
+    industry,
+    salaries,
+    jobTypes,
+    sort,
+    preferenceId
+  ])
 
   const firstRender = useFirstRender()
   const reload = useCallback(() => {
@@ -131,15 +143,26 @@ const SearchArea = (props: any) => {
   useEffect(() => {
     reloadRef.current = reload
   }, [reload])
-  useEffect(reload, [qualification, workExperience, companySizes, industry, salaries, jobTypes, sort, push])
+  useEffect(reload, [
+    qualification,
+    workExperience,
+    companySizes,
+    industry,
+    salaries,
+    jobTypes,
+    sort,
+    push
+  ])
 
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <div className={classNames({
-          [styles.container]: true,
-          // [styles.isFixed]: isFixed
-        })}>
+        <div
+          className={classNames({
+            [styles.container]: true
+            // [styles.isFixed]: isFixed
+          })}
+        >
           <div className={styles.searchArea}>
             <LocationField
               className={styles.location}
@@ -192,7 +215,12 @@ const SearchArea = (props: any) => {
               {lang.search}{' '}
             </MaterialButton>
           </div>
-          <PreferenceSelector lang={lang} preferences={preferences} preferenceId={preferenceId} config={config} />
+          <PreferenceSelector
+            lang={allLang}
+            preferences={preferences}
+            preferenceId={preferenceId}
+            config={config}
+          />
           <div className={styles.filters}>
             <Multiple
               label={lang.qualification}
@@ -255,12 +283,11 @@ const SearchArea = (props: any) => {
                 setIndustry([])
               }}
             >
-             {resetFilters}{' '}
+              {resetFilters}{' '}
             </Button>
           </div>
         </div>
       </ThemeProvider>
-
     </div>
   )
 }

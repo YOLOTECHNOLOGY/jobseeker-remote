@@ -55,7 +55,7 @@ const Main = async (props: any) => {
                 preferenceId={preferenceId}
                 preferences={preferences}
                 config={config}
-                lang={dictionary?.myJobs}
+                lang={dictionary}
               />
             </div>
             <SortFilter lang={dictionary?.myJobs} />

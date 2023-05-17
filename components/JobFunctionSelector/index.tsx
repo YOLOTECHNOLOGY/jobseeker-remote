@@ -22,7 +22,7 @@ const formatMenuText = (value) => {
   return text
 }
 const JobFunctionSelector = (props: any) => {
-  const { value, jobTitle = '', className, title, onChange, isTouched, onBlur, ...rest } = props
+  const { value, jobTitle = '', className, title, onChange, isTouched, onBlur,lang, ...rest } = props
   const menuRef = useRef(null)
 
   const [showModal, setShowModal] = useState(false)
@@ -51,7 +51,7 @@ const JobFunctionSelector = (props: any) => {
 
   useEffect(() => {
     if (init) {
-      setSelectedKey(jobFunctionsKeys[0])
+      setSelectedKey(jobFunctionsKeys[0]?.id)
     }
   }, [init])
 
@@ -60,7 +60,6 @@ const JobFunctionSelector = (props: any) => {
       return main_job_function_lists.find(item => item.id === selectedKey)?.sub_function_list ?? []
     }
   }, [selectedKey])
-  console.log({ selectedItem })
   const groupedSelected = useMemo(() => {
     return values(
       groupBy(selectedItem, (o) => {
@@ -167,6 +166,7 @@ const JobFunctionSelector = (props: any) => {
               onChange={(title) => onChange(title)}
               value={value}
               onClose={setShowModal}
+              lang={lang}
             />
             <div className={styles.container}>
               <MenuList classes={{ root: styles.menu }} id='menuParentNode' ref={menuRef}>
@@ -237,6 +237,7 @@ const JobFunctionSelector = (props: any) => {
                                 if (subItem.id === (selectedSubItem as any)?.id) {
                                   setSelectedSubItem(undefined)
                                 } else {
+                                  console.log(subItem,'subItem')
                                   setSelectedSubItem(subItem)
                                 }
                               }}

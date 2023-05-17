@@ -35,7 +35,7 @@ import { getCountryList, getLocationList, getDegreeList } from 'helpers/jobPaylo
 import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { getCookie } from 'helpers/cookies'
 import { getItem } from 'helpers/localStorage'
-
+import { getValueById } from 'helpers/config/getValueById'
 // Images
 import { AddOutlineIcon, PencilIcon, AccountSettingDeleteIconBin } from 'images'
 
@@ -438,7 +438,7 @@ const Step4 = (props: any) => {
                 </Text>
                 <br />
                 <Text textStyle='base' tagName='p'>
-                  {education?.degree_key}
+                  {getValueById(config,education?.degree_id,'degree_id') ?? ''}
                 </Text>
                 <Text textStyle='base' tagName='p'>
                   {moment(education?.study_period_from).format('MMMM yyyy')} to{' '}

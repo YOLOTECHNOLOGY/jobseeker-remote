@@ -192,7 +192,6 @@ export const buildParams = (config, searchValues) => {
     const jobTypeList = config.job_types
     const locationLists = flatMap(config.location_lists, item => item.locations)
     const queryFields = searchValues?.queryFields?.join(',') || "job_title,company_name"
-    console.log(searchValues,mainFunctionList,'mainFunctionList')
     return {
         query: searchValues.query,
         query_fields: queryFields === 'company' ? 'company_name' : queryFields,

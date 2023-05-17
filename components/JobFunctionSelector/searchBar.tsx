@@ -2,6 +2,7 @@ import React from 'react'
 import { styled, alpha } from '@mui/material/styles'
 import InputBase from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   // borderRadius: theme.shape.borderRadius,
@@ -44,13 +45,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   }
 }))
 
-export default function SearchBar({ inputProps, ...rest }: any) {
+export default function SearchBar({ inputProps, lang, ...rest }: any) {
+  console.log(lang,'lang')
   return (
     <Search {...rest}>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
-      <StyledInputBase placeholder='Search for job title' {...inputProps} />
+      <StyledInputBase placeholder={lang?.profile?.searchForJobTitle} {...inputProps} />
     </Search>
   )
 }

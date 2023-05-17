@@ -717,7 +717,11 @@
     "fieldOfStudy": "Field of Study",
     "fillUpTheFieldsWith": " Fill up the fields with (*) to proceed.",
     "addAEducation": " Add a education",
-    "notWantToEnterEducation": "I do not want to enter my Education now"
+    "notWantToEnterEducation": "I do not want to enter my Education now",
+    "searchForJobTitle":"Search for job title",
+    "year":"year",
+    "month":"month",
+    "months":"s" 
   },
   "chat": {
     "chatTitle": "Chat",

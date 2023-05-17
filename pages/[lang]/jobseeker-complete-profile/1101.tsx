@@ -44,7 +44,7 @@ import {
 } from 'helpers/jobPayloadFormatter'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { getItem } from 'helpers/localStorage'
-
+import { getValueById } from 'helpers/config/getValueById'
 // Styles
 import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
@@ -186,10 +186,10 @@ const Step3 = (props: any) => {
       setWorkPeriodFrom(selectedExperience.working_period_from)
       setWorkPeriodTo(selectedExperience.working_period_to)
       setSalary(selectedExperience.salary)
-      if (selectedExperience.company_industry)
+      if (selectedExperience.company_industry_id)
         setIndustry(
           industryList.filter(
-            (industry) => industry.label === selectedExperience.company_industry
+            (industry) => industry.id === selectedExperience.company_industry_id
           )[0].value
         )
       if (selectedExperience.location && selectedExperience.location.toLowerCase() === 'overseas') {
@@ -197,7 +197,10 @@ const Step3 = (props: any) => {
         setIsShowCountry(true)
       }
       setDescription(selectedExperience.description)
-      setJobFunction({ id: selectedExperience.function_job_title_id, value: selectedExperience.function_job_title })
+      setJobFunction({ 
+        id: selectedExperience.function_job_title_id, 
+        value: getValueById(config,selectedExperience.function_job_title_id,'function_job_title_id'),
+      })
     }
   }, [selectedExperience])
 
@@ -515,10 +518,10 @@ const Step3 = (props: any) => {
                     const years = to.diff(from, 'year')
                     const month = to.diff(from, 'month') - years * 12
                     return `${from?.format?.('MMMM yyyy')}-${experience?.is_currently_work_here
-                      ? 'Present'
+                      ?  lang?.profile?.present
                       : to?.format
                         ?.('MMMM yyyy')
-                      } (${years || ''}${years ? `year${years !== 1 ? 's' : ''}` : ''}${month ? ' ' + month : ''}${month ? `month${month !== 1 ? 's' : ''}` : ''})`
+                      } (${years || ''}${years ? `${lang?.profile?.year}${years !== 1 ?  lang?.profile?.months : ''}` : ''}${month ? ' ' + month : ''}${month ? `${lang?.profile?.month}${month !== 1 ? lang?.profile?.months : ''}` : ''})`
                   })(moment(
                     experience?.working_period_from),
                     experience?.is_currently_work_here ? moment() : moment(experience.working_period_to
@@ -527,12 +530,12 @@ const Step3 = (props: any) => {
 
                 <br />
                 {(experience?.function_job_title ?? null) && <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
-                  {lang?.profile?.jobFunction}: {experience?.function_job_title}
+                  {lang?.profile?.jobFunction}: {getValueById(config,experience.function_job_title_id,'function_job_title_id')}
                 </Text>}
 
                 {experience?.company_industry && (
                   <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
-                     {lang?.profile?.industry}: {experience?.company_industry}
+                     {lang?.profile?.industry}: {getValueById(config,experience.company_industry_id,'industry_id')}
                   </Text>
                 )}
                 {/* {experience?.salary && (
@@ -707,7 +710,8 @@ const Step3 = (props: any) => {
               <JobFunctionSelector
                 className={styles.stepFullwidth}
                 label={lang?.profile?.jobFunction}
-                title='Job function'
+                title={lang?.profile?.jobFunction}
+                lang={lang}
                 name='jobFunction'
                 isTouched
                 value={jobFunction}
