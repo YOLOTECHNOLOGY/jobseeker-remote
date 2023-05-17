@@ -319,9 +319,8 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                 </div>
                 <div className={styles.companyInfoWrapper}>
                   <Text textStyle='lg'>{workExp.company}</Text>
-                  <Text textStyle='lg'>{`${workExp.location || ''}${
-                    workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
-                  }`}</Text>
+                  <Text textStyle='lg'>{`${workExp.location || ''}${workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
+                    }`}</Text>
                 </div>
                 <Text textStyle='base' textColor='darkgrey'>
                   {workingPeriodFrom.format('MMMM yyyy')} to{' '}
@@ -988,9 +987,10 @@ const ManageProfilePage = ({ lang }: any) => {
   } = router
   const {
     manageProfile: {
-      tab: { preference }
+      tab: tabDic
     }
   } = lang
+  const { preference } = tabDic
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
   const config = useSelector((store: any) => store?.config?.config?.response)
@@ -1139,6 +1139,7 @@ const ManageProfilePage = ({ lang }: any) => {
         handleModal={handleModal}
       />
       <ProfileLayout
+        dic={tabDic}
         userDetail={userDetail}
         tabValue={tabValue}
         setTabValue={setTabValue}

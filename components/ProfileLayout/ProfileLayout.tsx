@@ -43,9 +43,11 @@ type ProfileLayoutProps = {
   modalName: string
   handleModal: Function
   children: React.ReactNode
+  dic: any
 }
 
 const ProfileLayout = ({
+  dic,
   userDetail,
   tabValue,
   setTabValue,
@@ -69,18 +71,15 @@ const ProfileLayout = ({
     handleModal(modalName, true)
   }
 
-  const handleTabChange = (e) => {
-    let tab = e.target.childNodes[0].textContent.toLowerCase()
-    tab = tab.replace(' ', '-')
-    setTabValue(tab)
-
+  const handleTabChange = (e,target) => {
+    setTabValue(target)
     /*
      * Set the tab with param: e.g: ?tab=profile.
      * Using window.history.replaceState instead of router event from useRouter as router event causes the page to rerender.
      * We only want the params to change without rerendering the page
      */
     const url = new URL(window.location as any)
-    url.searchParams.set('tab', tab)
+    url.searchParams.set('tab', target)
     window.history.replaceState({}, '', url)
   }
 
@@ -120,7 +119,7 @@ const ProfileLayout = ({
                     textStyle='xl'
                     textColor={tabValue === 'profile' ? 'primaryBlue' : 'black'}
                   >
-                    Profile
+                    {dic.profile.tabTitle}
                   </Text>
                 }
               />
@@ -133,7 +132,7 @@ const ProfileLayout = ({
                     textStyle='xl'
                     textColor={tabValue === 'job-preferences' ? 'primaryBlue' : 'black'}
                   >
-                    Job Preferences
+                    {dic.preference.tabTitle}
                   </Text>
                 }
               />
@@ -146,7 +145,7 @@ const ProfileLayout = ({
                     textStyle='xl'
                     textColor={tabValue === 'resume' ? 'primaryBlue' : 'black'}
                   >
-                    Resume
+                    {dic.resume.tabTitle}
                   </Text>
                 }
               />
