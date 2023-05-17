@@ -10,7 +10,10 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp'
 const PreferenceSelector = (props: any) => {
-  const { preferences, preferenceId, config, lang } = props
+  let { preferences, preferenceId, config, lang } = props
+  const allLang = lang
+  lang = lang?.myJobs
+
   const preferencesRef = useRef(preferences)
   const [showPreferenceId, setShowPreferenceId] = useState(preferenceId)
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
@@ -95,7 +98,7 @@ const PreferenceSelector = (props: any) => {
       )}
       {showModal && (
         <EditJobPreferencesModal
-          lang={lang}
+          lang={allLang}
           modalName={'jobPreference'}
           showModal={showModal}
           config={config}
