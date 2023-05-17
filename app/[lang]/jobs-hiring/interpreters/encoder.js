@@ -192,21 +192,22 @@ export const buildParams = (config, searchValues) => {
     const jobTypeList = config.job_types
     const locationLists = flatMap(config.location_lists, item => item.locations)
     const queryFields = searchValues?.queryFields?.join(',') || "job_title,company_name"
+    console.log(searchValues,mainFunctionList,'mainFunctionList')
     return {
         query: searchValues.query,
         query_fields: queryFields === 'company' ? 'company_name' : queryFields,
         company_industries: searchValues.industry?.map?.(key => industryList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-        job_locations: searchValues.location?.map?.(key => locationLists.find(item => item?.['seo_value'] === key)?.value).join(',') ?? null,
+        job_location_ids: searchValues.location?.map?.(key => locationLists.find(item => item?.['seo_value'] === key)?.id).join(',') ?? null,
         salary_from: salaryFrom,
         salary_to: salaryTo,
-        job_types: searchValues.jobType?.map?.(key => jobTypeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-        xp_lvls: searchValues.workExperience?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-        degrees: searchValues.qualification?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-        company_financing_stages: searchValues.financingStages?.map?.(key => financingStagesList.find(item => item?.key === key)?.value).join(',') ?? null,
+        job_type_ids: searchValues.jobType?.map?.(key => jobTypeList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
+        xp_lvl_ids: searchValues.workExperience?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
+        degree_ids: searchValues.qualification?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
+        company_financing_stage_ids: searchValues.financingStages?.map?.(key => financingStagesList.find(item => item?.key === key)?.id).join(',') ?? null,
         is_company_verified: searchValues.verifiedCompany  ? Boolean(searchValues.verifiedCompany) : null,
         job_functions_ids: searchValues?.jobFunctions?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
-        main_functions: searchValues?.mainFunctions?.map?.(seo => mainFunctionList.find(item => item.seo_value === seo)?.value)?.join?.(',') ?? null,
-        company_sizes: searchValues.companySizes?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
+        main_job_function_ids: searchValues?.mainFunctions?.map?.(seo => mainFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
+        company_size_ids: searchValues.companySizes?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
         function_job_title_ids: searchValues?.functionTitles?.map?.(seo => functionsTitleList.find(item => item.seo_value === seo)?.id)
             ?.join?.(',') ?? null,
         page: searchValues?.page?.[0] ?? 1,

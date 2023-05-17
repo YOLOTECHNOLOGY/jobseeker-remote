@@ -32,15 +32,15 @@ import classNames from 'classnames'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import SearchIcon from '@mui/icons-material/Search'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
-const sortOptions = [
-  { label: 'Newest', value: '1' },
-  { label: 'Relevance', value: '2' },
-  { label: 'Highest Salary', value: '3' }
-]
+
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
   const { search } = useContext(languageContext) as any
-
+  const sortOptions = [
+    { label: search?.newest, value: '1' },
+    { label: search?.relevance, value: '2' },
+    { label: search?.highestSalary, value: '3' }
+  ]
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchConfigSuccess(config))
@@ -139,7 +139,7 @@ const SearchArea = (props: any) => {
     alignItems: 'center',
     cursor: 'pointer'
   }
-
+console.log(location)
   return (
     <div className={styles.searchWrap}>
       <ThemeProvider theme={theme}>
@@ -160,6 +160,7 @@ const SearchArea = (props: any) => {
                 label={search.location}
                 defaultValue={location}
                 onChange={(e, value) => {
+                  console.log(e,value,11111)
                   setLocation(value)
                 }}
                 sx={{

@@ -13,7 +13,7 @@ const fetchConfigService = (defaultLang) => {
       const result = data.data.data
      // const jobFunctions = result.job_function_lists
       const jobFunctions = result.main_job_function_lists
-      console.log(result,'configOrgin')
+     
       // result.main_functions = jobFunctions.map((item, index) => {
       //   const key = Object.keys(item)?.[0]
       //   const value = item[key]
@@ -28,16 +28,16 @@ const fetchConfigService = (defaultLang) => {
       result.main_functions = jobFunctions.map((item) => {
         return {
           value: item.value,
-          key: toSeo(item.value),
-          seo_value: toSeo(item.value),
+          key: toSeo(item['seo-value']),
+          seo_value: toSeo(item['seo-value']),
           id: item.id,
           children: item.sub_function_list
         }
       })
       result.job_functions = flatMap(result.main_functions, item => item.children?.map?.(item => {
         return {
-          key: toSeo(item.value),
-          seo_value: toSeo(item.value),
+          key: toSeo(item['seo-value']),
+          seo_value: toSeo(item['seo-value']),
           children: item.job_titles,
           value: item.value,
           id: item.id
@@ -45,13 +45,14 @@ const fetchConfigService = (defaultLang) => {
       }) ?? [])
       result.function_titles = flatMap(result.job_functions, item => item.children?.map?.(item => {
         return {
-          key: toSeo(item.value) + '-' + item.id,
-          seo_value: toSeo(item.value) + '-' + item.id,
-          function_title_value: toSeo(item.value),
+          key: toSeo(item['seo-value']) + '-' + item.id,
+          seo_value: toSeo(item['seo-value']) + '-' + item.id,
+          function_title_value: toSeo(item['seo-value']),
           value: item.value,
           id: item.id
         }
       }) ?? [])
+      console.log(result,'configOrgin')
       return result
     })
 }

@@ -219,8 +219,7 @@ const JobsCard = ({ location, lang, config }: any) => {
           company_name: companyName,
           recruiter_last_active_at: recruiterLastActiveAt,
           recruiter_job_title:recruiterJobTitle,
-        } = item || {}
-       console.log(item)
+        } = item || {}  
         const jobLocation = getValueById(config,job_location_id,'location_id')
         const jobType = getValueById(config,job_type_id,'job_type_id')
         const xpLvlValue = getValueById(config,xp_lvl_id,'xp_lvl_id')

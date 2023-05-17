@@ -13,7 +13,7 @@ import Text from 'components/Text'
 import { useRef } from 'react'
 import { debounce } from 'lodash-es'
 
-const toSeo = (value) => value.replaceAll('/', '-').replaceAll(' ', '-').toLowerCase()
+const toSeo = (value) => value?.replaceAll('/', '-')?.replaceAll(' ', '-')?.toLowerCase()
 
 const JobFunctionMultiSelector = (props: any) => {
   const { label, className, value, isTouched, onChange, ...rest } = props
@@ -95,6 +95,7 @@ const JobFunctionMultiSelector = (props: any) => {
 
   const formattedJobfunctions = useMemo(() => {
     return jobFunctions.map((obj, index) => {
+      console.log(obj['seo_value'],7777)
       const firstParent = {
         value: obj.value,
         id: index,
@@ -106,8 +107,8 @@ const JobFunctionMultiSelector = (props: any) => {
         const secondParent = {
           id: second.id,
           value: second.value,
-          seo_value: toSeo(second.value),
-          key: toSeo(second.value),
+          seo_value: toSeo(second['seo-value']),
+          key: toSeo(second['seo-value']),
           parent: firstParent,
           children: undefined
         }
@@ -115,8 +116,8 @@ const JobFunctionMultiSelector = (props: any) => {
           return {
             ...third,
             parent: secondParent,
-            seo_value: toSeo(third.value) + '-' + third.id,
-            key: toSeo(third.value) + '-' + third.id
+            seo_value: toSeo(third['seo-value']),
+            key: toSeo(third['seo-value']) + '-' + third.id
           }
         })
 
@@ -125,6 +126,7 @@ const JobFunctionMultiSelector = (props: any) => {
       return firstParent
     })
   }, [jobFunctions])
+
   const allSeconds = useMemo(
     () => flatMap(formattedJobfunctions, (item) => item.children),
     [formattedJobfunctions]
@@ -200,7 +202,7 @@ const JobFunctionMultiSelector = (props: any) => {
     },
     [mainFunctions, functionIds, functionTitleIds]
   )
-
+ 
   const onSecondClick = useCallback(
     (second) => {
       if (second.id === -1) {

@@ -233,6 +233,8 @@
   },
   "home": {
     "title": "Find Job. Talk to Boss.",
+    "defaultLocationPH":"manila",
+    "defaultLocationSG":"downtown core",
     "search": {
       "location": "Location",
       "title": "Job title or company",
@@ -393,6 +395,8 @@
     "type": "Job Type",
     "more": "More Filters",
     "reset": "Reset Filters",
+    "newest":"Newest",
+    "highestSalary":"Highest Salary",
     "searchModal": {
       "header": "Filters",
       "exp": "Work Experience",
