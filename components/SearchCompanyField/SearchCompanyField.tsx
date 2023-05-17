@@ -9,6 +9,7 @@ import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWit
 
 // Styles
 import styles from './SearchCompanyField.module.scss'
+import { fetchCompanySuggestionsService } from 'store/services/companies/fetchCompanySuggestions'
 
 interface ISearchCompanyField {
   defaultQuery?: string
@@ -31,9 +32,12 @@ const SearchCompanyField = ({
   }, [searchValue])
 
   const handleSuggestionSearch = (val) => {
-    fetch(`${process.env.COMPANY_URL}/search-suggestion?size=5&query=${val}`)
-      .then((resp) => resp.json())
-      .then((data) => setSuggestionList(data.data.items))
+    fetchCompanySuggestionsService({ size: 5, query: val })
+      // fetch(`${process.env.COMPANY_URL}/search-suggestion?size=5&query=${val}`)
+      // .then((resp) => resp.json())
+      .then((data) =>
+        setSuggestionList(data.data.data.items)
+      )
   }
 
   return (
