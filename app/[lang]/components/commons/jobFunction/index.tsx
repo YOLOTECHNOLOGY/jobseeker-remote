@@ -3,7 +3,7 @@ import { FormControl, TextField } from '@mui/material'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import styles from './index.module.scss'
 import { useSelector } from 'react-redux'
-import {  flatMap, identity, isEqual } from 'lodash-es'
+import { flatMap, identity, isEqual } from 'lodash-es'
 import JobItem from './item'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import Header from './header'
@@ -95,7 +95,6 @@ const JobFunctionMultiSelector = (props: any) => {
 
   const formattedJobfunctions = useMemo(() => {
     return jobFunctions.map((obj, index) => {
-      console.log(obj['seo_value'],7777)
       const firstParent = {
         value: obj.value,
         id: index,
@@ -116,7 +115,7 @@ const JobFunctionMultiSelector = (props: any) => {
           return {
             ...third,
             parent: secondParent,
-            seo_value: toSeo(third['seo-value']),
+            seo_value:toSeo(third['seo-value']) + '-' + third.id,
             key: toSeo(third['seo-value']) + '-' + third.id
           }
         })
@@ -202,7 +201,7 @@ const JobFunctionMultiSelector = (props: any) => {
     },
     [mainFunctions, functionIds, functionTitleIds]
   )
- 
+
   const onSecondClick = useCallback(
     (second) => {
       if (second.id === -1) {
@@ -460,7 +459,7 @@ const JobFunctionMultiSelector = (props: any) => {
             e.preventDefault()
             e.stopPropagation()
           }}
-          style={{ height: height - 50}}
+          style={{ height: height - 50 }}
         >
           <div className={styles.topContainer}>
             <div
