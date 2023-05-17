@@ -33,6 +33,7 @@ import JobFunctionSelector from 'components/JobFunctionSelector'
 import {getCountryKey}  from 'helpers/country'
 import { flatMap } from 'lodash-es'
 import { getDictionary } from 'get-dictionary'
+import { getValueById } from 'helpers/config/getValueById'
 const  countryForCurrency = {
   ph: 'php',
   sg: "sgd"
@@ -108,7 +109,7 @@ const Step1 = (props: any) => {
     return {
       jobTitle: {
         id: preference?.function_job_title_id,
-        value: preference?.function_job_title ?? ''
+        value:  getValueById(config,preference?.function_job_title_id,'function_job_title_id') ?? ''
       },
       jobType: preference?.job_type_key,
       minSalary: Number(preference?.salary_range_from) ?? undefined,
@@ -325,7 +326,7 @@ const Step1 = (props: any) => {
               <Controller
                 control={control}
                 name={'contactNumber'}
-                rules={{ required: 'This field is required.' }}
+                rules={{ required: thisFieldIsRequired }}
                 render={({ field, fieldState }) => {
                   return (
                     <MaterialTextField
@@ -363,6 +364,7 @@ const Step1 = (props: any) => {
                     {...fieldState}
                     {...field}
                     ref={undefined}
+                    lang={lang}
                   />
                 )
               }}

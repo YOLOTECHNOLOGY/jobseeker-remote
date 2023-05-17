@@ -8,7 +8,7 @@ import { flatMapDeep } from 'lodash-es'
 import SearchBar from './searchBar'
 import { CloseIcon } from 'images'
 
-export default function PrimarySearchAppBar({ title, onChange, onClose }: any) {
+export default function PrimarySearchAppBar({ title, onChange, onClose,lang }: any) {
   const jobFunctions = useSelector(
     (store: any) => store.config.config.response?.job_function_lists ?? []
   )
@@ -64,7 +64,7 @@ export default function PrimarySearchAppBar({ title, onChange, onClose }: any) {
         />
       </Toolbar>
       <div className={styles.searchBar} {...getRootProps()}>
-        <SearchBar style={{ background: '#00000000' }} inputProps={inputProps} />
+        <SearchBar style={{ background: '#00000000' }} lang={lang} inputProps={inputProps} />
         {groupedOptions.length > 0 && (inputProps as any)?.value?.length > 0 ? (
           <div className={styles.listbox} {...(getListboxProps() as any)}>
             {(groupedOptions as any).map((option, index) => (

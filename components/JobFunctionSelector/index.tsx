@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styles from './index.module.scss'
 import TopBar from './topBar'
 import { useSelector } from 'react-redux'
-import { flatMap, flatMapDeep, keys, assign, values, groupBy } from 'lodash-es'
+import { flatMapDeep, values, groupBy } from 'lodash-es'
 import { Plus, Minus } from 'images'
 import Text from 'components/Text'
 import classNames from 'classnames'
@@ -22,17 +22,23 @@ const formatMenuText = (value) => {
   return text
 }
 const JobFunctionSelector = (props: any) => {
-  const { value, jobTitle = '', className, title, onChange, isTouched, onBlur, ...rest } = props
+  const { value, jobTitle = '', className, title, onChange, isTouched, onBlur,lang, ...rest } = props
   const menuRef = useRef(null)
 
   const [showModal, setShowModal] = useState(false)
   const [selectedSubItem, setSelectedSubItem] = useState<any>({})
   const [expandeds, setExpandeds] = useState([])
   const jobFunctions = useSelector(
-    (store: any) => store.config.config.response?.job_function_lists ?? []
+    (store: any) => store.config.config.response?.main_job_function_lists ?? []
   )
-  const jobFunctionsKeys = useMemo(() => flatMap(jobFunctions, keys), [jobFunctions])
-  const jobFunctionsObject = useMemo(() => jobFunctions?.reduce(assign, {}), [jobFunctions])
+  const jobFunctionsKeys = jobFunctions
+
+  const jobFunctionsObject = useMemo(() => {
+    const newObject = {}
+    jobFunctions.map(e => (newObject[e.id] = e))
+    return newObject
+  }, [jobFunctions])
+
   const [selectedKey, setSelectedKey] = useState<any>(jobFunctionsKeys?.[0])
   const [init, setInit] = useState(false)
 
@@ -54,13 +60,13 @@ const JobFunctionSelector = (props: any) => {
 
   useEffect(() => {
     if (init) {
-      setSelectedKey(jobFunctionsKeys[0])
+      setSelectedKey(jobFunctionsKeys[0]?.id)
     }
   }, [init])
 
   const selectedItem = useMemo(() => {
     if (selectedKey) {
-      return jobFunctionsObject[selectedKey]
+      return jobFunctionsObject[selectedKey]?.sub_function_list
     }
   }, [selectedKey])
   const groupedSelected = useMemo(() => {
@@ -96,7 +102,7 @@ const JobFunctionSelector = (props: any) => {
         })
 
         const selectTabNode = menuRef.current.querySelector(`[name="${selectedKey}"]`)
-        menuRef.current.scrollTop = selectTabNode.offsetTop - 75
+        menuRef.current.scrollTop = selectTabNode?.offsetTop - 75
       }
     })()
   }, [showModal]) // menuRef.current,
@@ -124,28 +130,42 @@ const JobFunctionSelector = (props: any) => {
     },
     [expandeds]
   )
-
+  console.log(jobFunctions,value,'jobFunctions')
   const initDefaultJobFunctionSelect = () => {
+   console.log(jobFunctions,value,'jobFunctions')
+     
     if (jobFunctions?.length) {
-      jobFunctions.forEach((jobFunction) =>
-        //
-        Object.keys(jobFunction).forEach((key: any) =>
-          //
-          jobFunction[key].forEach((job) =>
-            //
-            job.job_titles.forEach((item) => {
-              //
-              if (item?.value === value.value) {
-                const key = Object.keys(jobFunction)[0]
-                //
-                onChange(item)
-                setSelectedKey(key)
-                setSelectedSubItem(job)
-              }
-            })
-          )
-        )
-      )
+      jobFunctions.map(e=>{
+        e.sub_function_list.map(job=>{
+          job.job_titles.forEach((item) => {
+            if (item?.value === value.value) {      
+              console.log(item)            
+              onChange(item)
+              setSelectedKey(job?.id)
+              setSelectedSubItem(job)
+               }
+          })
+        })
+       })
+      // jobFunctions.forEach((jobFunction) =>
+      //   //
+      //   Object.keys(jobFunction).forEach((key: any) =>
+      //     //
+      //     jobFunction[key].forEach((job) =>
+      //       //
+      //       job.job_titles.forEach((item) => {
+      //         //
+      //         if (item?.value === value.value) {
+      //           const key = Object.keys(jobFunction)[0]
+      //           //
+      //           onChange(item)
+      //           setSelectedKey(key)
+      //           setSelectedSubItem(job)
+      //         }
+      //       })
+      //     )
+      //   )
+      // )
     }
   }
 
@@ -179,6 +199,7 @@ const JobFunctionSelector = (props: any) => {
               onChange={(title) => onChange(title)}
               value={value}
               onClose={setShowModal}
+              lang={lang}
             />
             <div className={styles.container}>
               <MenuList classes={{ root: styles.menu }} id='menuParentNode' ref={menuRef}>
@@ -194,10 +215,10 @@ const JobFunctionSelector = (props: any) => {
                         [styles.selected]: key === selectedKey
                       })}
                       onClick={() => {
-                        setSelectedKey(key)
+                        setSelectedKey(key.id)
                       }}
                     >
-                      <label className={styles.itemText}>{formatMenuText(key)}</label>
+                      <label className={styles.itemText}>{formatMenuText(key.value)}</label>
                     </div>
                   )
                 })}
@@ -249,6 +270,7 @@ const JobFunctionSelector = (props: any) => {
                                 if (subItem.id === (selectedSubItem as any)?.id) {
                                   setSelectedSubItem(undefined)
                                 } else {
+                                  console.log(subItem,'subItem')
                                   setSelectedSubItem(subItem)
                                 }
                               }}
