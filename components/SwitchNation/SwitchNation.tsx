@@ -101,12 +101,12 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
     setLoading(true)
     const isProduction = process.env.ENV === 'production'
     const accessToken = getCookie(accessTokenKey)
-
+    console.log('isProduction', isProduction, process.env.ENV)
     // todo: if we just modify the language, in this case, we can refresh browser with it's own path, that's should be better
 
     let query = ''
-    let { origin } = window.location
-    if (isProduction) {
+    let { origin, hostname } = window.location
+    if (!hostname.includes('localhost')) {
       origin = origin.slice(0, origin.lastIndexOf('.') + 1)
       query = country ?? nation?.country
     } else {
@@ -114,7 +114,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
     }
     query += `/${lang}`
     // && isProduction
-    if (accessToken) {
+    if (!hostname.includes('localhost') && accessToken) {
       query += '/changeLocale?accessToken=' + accessToken
     }
     // store this in cookies. then the others link request server can take it to server
