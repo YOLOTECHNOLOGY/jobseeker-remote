@@ -1,5 +1,5 @@
 'use client'
-import { useContext, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { isEqual } from 'lodash-es'
 import Modal from '@mui/material/Modal'
@@ -11,7 +11,6 @@ import Button from '@mui/material/Button'
 
 import { getCountryKey, getLang, languages, nations } from 'helpers/country'
 import { accessToken as accessTokenKey, configKey, getCookie, setCookie } from 'helpers/cookies'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 import MaterialButton from 'components/MaterialButton'
 
@@ -112,6 +111,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
       // the pathname is likely "/en-US/get-started"
       let restPath = pathname.split('/').slice(2).join('/')
       restPath = restPath ? `/${restPath}` : ''
+      setCookie(configKey, `${country}_${lang}`)
       window.location.href = newOrigin + query + restPath
       return
     }
