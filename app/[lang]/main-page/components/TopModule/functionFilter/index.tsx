@@ -65,9 +65,9 @@ const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps 
         <div className={styles.mainTitle}>
             <div className={styles.mainTitleFirst}>{data.simpleTitle || data.title}</div>
             <div className={styles.subContainer}>
-                {subTitles.map(subTitle => (
-                    <Link prefetch={false} key={subTitle} href={buildQuery(location?.seo_value, data?.['seo-value'])}>
-                        <div key={subTitle} title={subTitle} style={{ maxWidth: contentWidth }} className={styles.mainTitleSub}>
+                {subTitles.map((subTitle,index) => (
+                    <Link prefetch={false} key={subTitle+index} href={buildQuery(location?.seo_value, data?.['seo-value'])}>
+                        <div key={subTitle+index} title={subTitle} style={{ maxWidth: contentWidth }} className={styles.mainTitleSub}>
                             {subTitle}
                         </div>
                     </Link>
@@ -79,13 +79,13 @@ const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps 
 })
 
 const SectionItem = (props: SectionProps) => {
-    const { data } = props
-    return <div className={styles.sectionItems} key={props.key}>
+    const { data }:any = props
+    return <div className={styles.sectionItems} key={data?.id + data['seo-value']}>
         <label className={styles.sectionName}>{data.title}</label>
         <div className={styles.subItems}>
             {
-                data?.children.map(item => (
-                    <SubItem data={item} key={item.value} />
+                data?.children.map((item,index) => (
+                    <SubItem data={item} key={item.value+index} />
                 ))
             }
         </div>
@@ -145,8 +145,8 @@ const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props:
             </div>
         </div>
         {hoverData && <div className={styles.sectionContainer}>
-            {hoverData?.map?.(sectionData => {
-                return <SectionItem data={sectionData} key={sectionData.title} />
+            {hoverData?.map?.((sectionData,index) => {
+                return <SectionItem data={sectionData} key={sectionData.title+index} />
             })}
         </div>
         }

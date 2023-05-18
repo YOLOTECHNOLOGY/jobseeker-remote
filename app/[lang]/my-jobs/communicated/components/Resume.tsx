@@ -22,16 +22,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const notice_period_lists = [
-  { "id": 1, "value": "Immediate" },
-  { "id": 2, "value": "One week" },
-  { "id": 3, "value": "Two weeks" },
-  { "id": 4, "value": "Three weeks" },
-  { "id": 5, "value": "One month" },
-  { "id": 6, "value": "Two months or above" }
-];
-
-
 
 const Resume = ({
   resumes,
@@ -39,6 +29,8 @@ const Resume = ({
 }: any) => {
 
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
+  const config = useSelector((store: any) => store.config.config.response)
+  const notice_period_lists = config.notice_period_lists || []
   const {
     xp_lvl: xpLvl,
     full_name: fullName,

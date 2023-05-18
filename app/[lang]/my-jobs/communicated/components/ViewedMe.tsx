@@ -10,7 +10,8 @@ async function getViewedRcruiters(accessToken) {
      return res?.data?.data?.['viewed_profiles'] || [];
 }
 
-const ViewedMe = async ({lang}) => {
+const ViewedMe = async (props:any) => {
+     const {lang,config} = props
      const accessToken = cookies().get('accessToken')?.value
      const data = await getViewedRcruiters(accessToken);
 
@@ -25,7 +26,7 @@ const ViewedMe = async ({lang}) => {
                               <div className={styles.interstedBox}>
                                    {
                                         data.map(item => {
-                                             return <InterstedCard key={item.id} item={item} />
+                                             return <InterstedCard key={item.id} item={item} config={config}/>
                                         })
                                    }
 
