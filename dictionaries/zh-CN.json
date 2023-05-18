@@ -5,7 +5,7 @@
     "courses": "课程",
     "careerGuide": "职业指南",
     "hiring": "我要招聘",
-    "getStarted": "登陆/注册",
+    "getStarted": "登录/注册",
     "manageResume": "编辑简历",
     "myJobs": "我的工作",
     "accountSettings": "账号设置",
@@ -24,7 +24,7 @@
   },
   "foot": {
     "about": "关于我们",
-    "aboutBossjob": "BOSS直拒",
+    "aboutBossjob": "关于Bossjob",
     "termsConditions": "协议与规则",
     "legal": "使用政策",
     "FAQ": "FAQ",
@@ -35,7 +35,7 @@
     "careerGuide": "职业指南",
     "courses": "课程",
     "recruiter": "招聘人员",
-    "getStarted": "登陆/注册",
+    "getStarted": "登录/注册",
     "popularJobs": "热门工作",
     "JobsIn1": "Manila的工作",
     "JobsIn2": "Makati的工作",
@@ -46,11 +46,11 @@
     "jobs": "工作",
     "BpoJobs": "BPO工作",
     "salesJobs": "销售工作",
-    "healthcareJobs": "医疗人才",
-    "downloadBossjobApp": "人才",
+    "healthcareJobs": "医疗保健工作",
+    "downloadBossjobApp": " 下载 Bossjob 应用程序",
     "followUs": "关注我们",
-    "technology": " Singapore: Yolo Technology Pte Ltd. All Rights Reserved。",
-    "corporation": "Philippines: Etos Adtech Corporation 嘿嘿嘿"
+    "technology": " 新加坡：Yolo Technology Pte Ltd. 保留所有权利",
+    "corporation": "菲律宾：Etos Adtech Corporation"
   },
   "getStatred": {
     "seoMetaTitle": "Get started | Bossjob",
@@ -59,7 +59,7 @@
     "enterYourEmailAddress": "输入你的电子邮箱地址",
     "submit": "提交",
     "pleaseEnterAvalidEmailAddress.": "请输入有效的电子邮件地址。",
-    "bySigningUp": "通过注册，我已经阅读并同意",
+    "bySigningUp": "注册即表示我已阅读并同意",
     "termsOfUse": "使用条款",
     "and": "和",
     "privacyPolicy": "隐私政策",
@@ -68,11 +68,11 @@
     "employer": "企业免费注册",
     "welcomeBack": "欢迎回来！",
     "signUpAnAccount": "注册新帐户",
-    "pleaseEnter": "请输入我们发送给的6位一次验证码",
+    "pleaseEnter": "请输入我们发送的6位一次性密码",
     "enter6DigitOTP": "输入 6 位数验证码",
     "getOPT": "获得验证码",
     "heOTPYouHaveEnteredIsWrong": "您输入的一次性密码有误。请重试。",
-    "resendOTP": "重新发送验证码",
+    "resendOTP": "重新发送",
     "havingTrouble": "您需要帮助吗？",
     "requestAmagicLink": "请求魔术链接",
     "seoMetaDescription": "Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ",
@@ -81,9 +81,9 @@
   "myJobs": {
     "communicated": "已沟通",
     "exchanged": "已交换",
-    "saved": "已保存",
+    "saved": "已收藏",
     "Interview": "面试",
-    "viewed": "看过我的",
+    "viewed": "看过我",
     "InterestedInMe": "对我感兴趣",
     "whoViewedMe": "谁看过我",
     "newest": "最新",
@@ -100,7 +100,7 @@
     "JobType": "工作类型",
     "companySizes": "公司规模",
     "searchForJobTitleOrCompanyName": "搜索职位名称或公司名称",
-    "resetFilters": "清空筛选",
+    "resetFilters": "清空筛选条件",
     "recommended": "推荐工作",
     "latestJob": "最新",
     "talkToBossAnywhere": "随时与老板谈",
@@ -149,9 +149,9 @@
       "allJobs": "查看{{totalActiveJobs}}个热招工作"
     },
     "seoTitle": "寻找在{{country}}的公司 | Bossjob",
-    "seoDescription": "`寻找在{{country}}的优秀公司! 了解公司并申请公司正在招聘的工作！",
+    "seoDescription": "寻找在{{country}} 的优秀公司! 了解公司并申请公司正在招聘的工作！",
     "searchPage": {
-      "title": "公司搜索",
+      "title": "寻找心仪的公司",
       "subTitle": "关键词为 {{searchKey}}",
       "noResult": "未找到结果",
       "seoText": "寻找在{{country}}的优秀公司"
@@ -233,6 +233,8 @@
   },
   "home": {
     "title": "找工作，与老板谈",
+    "defaultLocationPH": "马尼拉",
+    "defaultLocationSG": "downtown core",
     "search": {
       "location": "位置",
       "title": "职位或者公司名称",
@@ -243,7 +245,7 @@
         "chatBoss": "和老板直接谈"
       }
     },
-    "popularJobs": "受欢迎的工作",
+    "popularJobs": "热门工作",
     "tag": {
       "java": "Java开发",
       "full": "全栈工程师",
@@ -256,11 +258,11 @@
       "IT": "信息技术",
       "CSR/Ops": "客户服务",
       "Sales": "销售",
-      "Finance": "财务",
+      "Finance": "金融",
       "HR": "人力资源",
       "Manufacturing": "制造",
       "Banking": "银行",
-      "Healthcare": "保健"
+      "Healthcare": "医疗保健"
     },
     "improveRecommend": "更新并改进职位推荐",
     "jobPrefer": "职位偏好",
@@ -281,6 +283,7 @@
     "seeMoreBtn": "查看更多",
     "topCompany": "热门企业",
     "companyHiring": "热门企业招聘",
+    "jobsHiring": "招聘工作",
     "companyCard": {
       "chatNow": "立即沟通",
       "employee": "人",
@@ -289,14 +292,14 @@
     },
     "seo": {
       "title": "Bossjob - 在 {{country}} 的专业人士的职业平台",
-      "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
+      "copyright": "版权所有 ©️ {{currentYear}} 新加坡: Yolo Technology Pte Ltd. 保留所有权利. 菲律宾: Etos Adtech Corporation"
     }
   },
   "jobDetail": {
     "header": {
       "urgent": "紧急",
-      "save": "保存",
-      "undoSave": "取消保存",
+      "save": "收藏",
+      "undoSave": "取消收藏",
       "apply": "立即申请",
       "chatNow": "立即沟通",
       "continueChat": "继续沟通",
@@ -328,28 +331,25 @@
         "title": "工作或者公司名称",
         "btn": "搜索"
       },
-      "jobPostedOn": "发布于",
-      "benefits":"福利待遇",
-      "workingLocation":"工作地址",
-      "workLocation":"工作地址"
+      "jobPostedOn": "发布于"
     },
     "shareModal": {
       "title": "分享工作",
-      "facebook": "Facebook",
-      "twitter": "Twitter",
-      "linkedin": "Linkedin",
+      "facebook": "脸书",
+      "twitter": "推特",
+      "linkedin": "领英",
       "link": "网页链接",
-      "linkCopied": "分享链接已复制"
+      "linkCopied": "复制链接成功"
     },
     "reportModal": {
-      "title": "工作举报",
-      "notReportedTitle": "为什么你要举报这个工作",
+      "title": "举报投诉",
+      "notReportedTitle": "请选择举报原因",
       "category": {
-        "spam": "我认为这是垃圾邮件或骗局",
-        "discrimination": "我认为有辱斯文",
-        "broken": "我认为有东西不合理"
+        "spam": "职位虚假/招聘者身份虚假/涉嫌诈骗",
+        "discrimination": "人身攻击/歧视/色情低俗",
+        "broken": "违法/违规行为/违反劳动法/向求职者收费"
       },
-      "submitting": "提交."
+      "submitting": "提交"
     },
     "detailModal": {
       "title": "再多告诉我们一点",
@@ -399,13 +399,15 @@
     "function": "职位类型",
     "salary": "薪资",
     "type": "求职类型",
-    "more": "更多",
-    "reset": "重置",
+    "more": "更多筛选条件",
+    "reset": "清空筛选条件",
+    "newest": "最新",
+    "highestSalary": "最高薪资",
     "searchModal": {
       "header": "筛选",
       "exp": "工作经验",
-      "edu": "学历资质",
-      "industry": "行业",
+      "edu": "学历要求",
+      "industry": "公司行业",
       "companyVerified": "公司认证",
       "companySize": "公司规模",
       "finance": "融资阶段",
@@ -416,7 +418,7 @@
     "alertModal": {
       "title": "工作通知",
       "btn": "完成",
-      "filters": "筛选条件",
+      "filters": "筛选",
       "frequency": "提示周期",
       "companyVerified": "已验证",
       "noFilter": "未选择任何条件"
@@ -425,7 +427,7 @@
       "title": "管理工作通知",
       "btn1": "上一步",
       "btn2": "完成",
-      "filters": "筛选条件",
+      "filters": "筛选",
       "subTitle": "提示周期",
       "daily": "每天",
       "week": "每周"
@@ -454,8 +456,8 @@
       "continue": "继续沟通",
       "apply": "立即申请",
       "online": "在线",
-      "save": "保存",
-      "saved": "已保存",
+      "save": "收藏",
+      "saved": "已收藏",
       "JD": "职位描述",
       "talkToBoss": "与老板随时谈"
     },
@@ -521,7 +523,7 @@
           "industry": "行业",
           "currency": "薪水类型",
           "salary": "月薪 ({{currency}})",
-          "notFillErrorMsg": "填写必填信息以便我们处理。",
+          "notFillErrorMsg": "填写必填字段以继续。",
           "workSummaryPlaceholder": "填写一些信息..."
         },
         "edu": {
@@ -534,7 +536,7 @@
           "title": "教育经历",
           "btn1": "取消",
           "btn2": "保存",
-          "school": "学习名称",
+          "school": "学校名称",
           "eduLevel": "学历",
           "period": "学习时间",
           "attend": "仍然在读",
@@ -606,9 +608,9 @@
         "card": {
           "header": "工作偏好",
           "tips": "我们会根据你的职位偏好找到符合的工作。",
-          "title": "职位名称:",
-          "type": "工作类型:",
-          "country": "国家:",
+          "title": "职位名称：",
+          "type": "工作类型：",
+          "country": "国家：",
           "city": "城市:",
           "salary": "期望薪水:",
           "industry": "期望行业:"
@@ -721,11 +723,7 @@
     "fieldOfStudy": "研究领域",
     "fillUpTheFieldsWith": " 用 (*) 填写字段以继续。",
     "addAEducation": " 添加学历",
-    "notWantToEnterEducation": "我现在不想接受教育",
-    "searchForJobTitle": "搜索工作名称",
-    "year": "年",
-    "month": "月",
-    "months": ""
+    "notWantToEnterEducation": "我现在不想接受教育"
   },
   "chat": {
     "chatTitle": "聊天",
@@ -739,14 +737,14 @@
     "enterSendText": "使用Enter发送消息",
     "ctrlEnterSendText": "使用CTRL + Enter发送消息",
     "sendButtonText": "发送",
-    "resumeFirstText": "发送简历：双方回答以后才能进行",
+    "resumeFirstText": "发送简历：双方回答以后才能请求发送",
     "resumeSubmittedText": "发送的简历申请已经存在",
     "resumeEnabled": "发送简历",
     "exchangeTextIsFirst": "交换号码：双方回答以后才能进行",
-    "exchangeTextHasActive": "交换号码的申请已经发送",
+    "exchangeTextHasActive": "已请求交换手机号码",
     "exchangeTextFinished": "交换号码已经完成",
     "exchangeTextEnabled": "交换号码",
-    "commonPhrasesText": "通用短语",
+    "commonPhrasesText": "常用语",
     "sendImageText": "发送图片",
     "sendPlaceHolder": "写下您的消息...",
     "mobileActionResume": "发送简历",
@@ -754,40 +752,20 @@
     "moreText": "更多操作",
     "emoji": "表情"
   },
-  "chatInterview": {
-    "confirmText": "面试已经确认",
-    "confirmLabel": "您的面试现在不能取消",
-    "cancelAction": "取消面试",
-    "canNotCancel": "面试无法取消",
-    "checkedText": "已签到",
-    "checkedLabel": "为这场面试签到",
-    "checkInText": "马上签到",
-    "canNoteCheckIn": "目前无法签到",
-    "inProgressText": "进行中",
-    "inProgressLabel": "目前无法投诉",
-    "issueReported": "问题已发送",
-    "reportIssue": "投诉",
-    "finishedText": "完成",
-    "finishedLabel": "您可以向面试官索要结果",
-    "requestResult": "索要面试结果",
-    "requestAfter": "在 {{time}} 之后可以向面试官索要结果",
-    "title": "来自企业 {{companyName}} 的面试",
-    "buttonText": "完成",
-    "notAttend": "您没有参加面试",
-    "jobTitleLabel": "工作名称",
-    "addressLabel": "面试地点",
-    "timeLabel": "日期&时间",
-    "contactPersonLabel": "联系人",
-    "contactNumberLabel": "联系电话",
-    "videoLink": "视频链接",
-    "instructions":"说明",
-    "decline":"拒绝",
-    "accept":"接受",
-    "cancelReason":"取消原因",
-    "cancelTitle":"面试已取消",
-   
-    "confirmText1": "By accepting this interview invite, I agreed that I will show up for the interview at the given time and place. \nIf I need to change the time, I will notify the recruiter at least 7 hours in advance.",
-    "contirmText2":"Job seekers who do not turn up for interview will be marked as “No Show”. Job seekers who accumulate 3 no-show records in 3 months will be banned from using Bossjob for 6 months."
-  
+  "quickUploadResume": {
+    "title": "上传你的简历",
+    "UploadAndApply": "上传您的简历并开始申请工作！",
+    "uploadBtn": "上传简历",
+    "uploadTips": "支持 PDF, DOC, DOCX 文件, 最大 5MB",
+    "or": "或",
+    "createFreeResume": "创建免费简历",
+    "resume": "简历",
+    "register": {
+      "join": "加入Bossjob，",
+      "start": "开启您的职业生涯",
+      "submit": "提交",
+      "term": "我已经阅读并同意使用条款",
+      "policy": "和隐私政策"
+    }
   }
 }

@@ -233,6 +233,8 @@
   },
   "home": {
     "title": "Find Job. Talk to Boss.",
+    "defaultLocationPH": "manila",
+    "defaultLocationSG": "downtown core",
     "search": {
       "location": "Location",
       "title": "Job title or company",
@@ -281,6 +283,7 @@
     "seeMoreBtn": "See More",
     "topCompany": "Top Companies",
     "companyHiring": "Top Companies Hiring",
+    "jobsHiring": "jobs hiring",
     "companyCard": {
       "chatNow": "Chat now",
       "employee": "Employee",
@@ -398,6 +401,8 @@
     "type": "Job Type",
     "more": "More Filters",
     "reset": "Reset Filters",
+    "newest": "Newest",
+    "highestSalary": "Highest Salary",
     "searchModal": {
       "header": "Filters",
       "exp": "Work Experience",
@@ -746,5 +751,20 @@
     "mobileActionExchange": "Exchange mobile number",
     "moreText": "More",
     "emoji": "Emoji"
+  },
+  "quickUploadResume": {
+    "title": "Upload your resume",
+    "UploadAndApply": "Upload your resume and start applying for job now!",
+    "uploadBtn": "Upload your Resume",
+    "uploadTips": "PDF, DOC, DOCX. file, max 5MB",
+    "or": "OR",
+    "createFreeResume": "Create Free Resume",
+    "register": {
+      "join": "Join Bossjob",
+      "start": "kick-start your career",
+      "submit": "Submit",
+      "term": "By signing up, I have read and agreed to Terms of Use",
+      "policy": "and Privacy Policy"
+    }
   }
 }

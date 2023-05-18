@@ -22,8 +22,10 @@ const UploadResume = (props: any) => {
     isDoneUpdating,
     isUploading,
     setResume,
-    resume
+    resume,
+    lang
   } = props
+  const { quickUploadResume } = lang
 
   return (
     <div>
@@ -31,11 +33,11 @@ const UploadResume = (props: any) => {
         <div className={styles.stepForm_title}>
           <Text bold textStyle='xxxl' tagName='h2'>
             {' '}
-            Upload your resume 📄
+            {quickUploadResume.title} 📄
           </Text>
         </div>
         <Text className={styles.step2Caption} textStyle='lg'>
-          Upload your resume and start applying for job now!
+          {quickUploadResume.UploadAndApply}
           <br />
           <br />
         </Text>
@@ -54,7 +56,8 @@ const UploadResume = (props: any) => {
             component='label'
           >
             <Text textColor='white' bold>
-              Upload your Resume
+              {/* Upload your Resume */}
+              {quickUploadResume.uploadBtn}
             </Text>
             <input
               type='file'
@@ -69,11 +72,12 @@ const UploadResume = (props: any) => {
             />
           </MaterialButton>
           <Text textColor='darkgrey' textStyle='xsm' className={styles.step2UploadAllowed}>
-            PDF, DOC, DOCX. file, max 5MB
+            {/* PDF, DOC, DOCX. file, max 5MB */}
+            {quickUploadResume.uploadTips}
           </Text>
           {existingResume && (
             <Text textColor='darkgrey' textStyle='xsm' bold tagName='p'>
-              (Resume:{resume?.name}
+              ( {quickUploadResume.resume}:{resume?.name}
               <Link to={existingResume.url}>
                 <a target='_blank' rel='noreferrer' style={{ textDecoration: 'underline' }}>
                   {existingResume.filename}
@@ -85,7 +89,7 @@ const UploadResume = (props: any) => {
         </div>
 
         <Text textStyle='lg' className={styles.step2UploadDivider}>
-          OR
+          {quickUploadResume.or}
         </Text>
 
         <div className={styles.step2Create}>
@@ -102,7 +106,7 @@ const UploadResume = (props: any) => {
             }}
           >
             <Text textColor='primary' bold>
-              Create Free Resume
+              {quickUploadResume.createFreeResume}
             </Text>
           </MaterialButton>
         </div>
