@@ -4,7 +4,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import classNames from 'classnames'
 import { HomePageChat as ChatCircleDots } from 'images'
 import { logoutRequest } from 'store/actions/auth/logout'
-
+import { useSelector } from 'react-redux'
 /* components */
 import Link from 'components/Link'
 import Text from 'components/Text'
@@ -12,8 +12,8 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 import { IMContext } from 'components/Chat/IMProvider.client'
 import SwitchNation from 'components/SwitchNation/SwitchNation'
-import { getCountry, getLanguage } from 'helpers/country'
-
+import { getLanguage,getCountryId } from 'helpers/country'
+import { getValueById } from 'helpers/config/getValueById'
 /* Images */
 import { BossjobLogoWhite as BossjobLogo, DefaultAvatar } from 'images'
 
@@ -37,7 +37,8 @@ const ProtectedHeader = ({ lang }: any) => {
     myJobs,
     accountSettings,
     logOut,
-    Chat
+    Chat,
+    change
   } = lang || {}
   const router = useRouter()
   const pathname = usePathname()
@@ -48,7 +49,9 @@ const ProtectedHeader = ({ lang }: any) => {
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
   const { totalUnread } = useContext(IMContext)
   // const totalUnread = 999
-
+  const config = useSelector((store: any) => store.config.config.response)
+  
+  console.log(config,'config1111')
   useEffect(() => {
     if (pathname && isShowHeaderMenu) {
       setIsShowHeaderMenu(false)
@@ -123,7 +126,7 @@ const ProtectedHeader = ({ lang }: any) => {
                 )}
               </li>
               <li className={styles.headerLink}>
-                {pathname !== '/companies' ? (
+                {!pathname.includes('/companies') ? (
                   <Link title='Companies' to='/companies'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                       {companies}
@@ -339,8 +342,8 @@ const ProtectedHeader = ({ lang }: any) => {
               >
                 <div className={styles.headerMenuLink}>
                   <Text textStyle='base'>
-                    {getCountry()}, {getLanguage()} -{' '}
-                    <span style={{ color: '#136FD3' }}>Change</span>
+                    { getValueById(config,getCountryId(),'country_id') }, {getLanguage()} -{' '}
+                    <span style={{ color: '#136FD3' }}>{change}</span>
                   </Text>
                 </div>
               </li>

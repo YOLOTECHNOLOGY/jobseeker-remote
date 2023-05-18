@@ -98,7 +98,7 @@ const PublicHeader = ({ lang }: any) => {
                     Companies
                   </Text>
                 </Link> */}
-                {pathname !== '/companies' ? (
+                {!pathname.includes('/companies') ? (
                   <Link title='Companies' to='/companies'>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                       {companies}

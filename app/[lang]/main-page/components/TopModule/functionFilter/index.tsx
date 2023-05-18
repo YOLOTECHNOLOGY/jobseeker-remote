@@ -94,7 +94,7 @@ const SectionItem = (props: SectionProps) => {
 const SubItem: FunctionComponent<SubItemProps> = hoverable((props: SubItemProps & HoverableProps) => {
     const { location } = useContext(LocationContext)
     const { data } = props
-    return <Link className={styles.subItem} prefetch={false} href={buildQuery(location?.seo_value, data?.['seo-value'])}>
+    return <Link className={styles.subItem} prefetch={false} href={buildQuery(location?.seo_value, data?.label)}>
         <Tooltip title={data.label} placement="top-start">
             <div className={styles.linkText}> {data.label}</div>
         </Tooltip>

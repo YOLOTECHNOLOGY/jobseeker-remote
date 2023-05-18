@@ -20,7 +20,8 @@
       "lang": "Language",
       "btn1": "Close",
       "btn2": "Save"
-    }
+    },
+    "change":"Change"
   },
   "foot": {
     "about": "about",

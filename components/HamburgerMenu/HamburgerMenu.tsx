@@ -43,7 +43,8 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
     Chat,
     myJobs,
     accountSettings,
-    logOut
+    logOut,
+    change
   } = header || {}
   const pathname = usePathname()
   const router = useRouter()
@@ -284,7 +285,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
             >
               <div className={styles.menuList}>
                 <Text textStyle={textStyle}>
-                  {getCountry()}, {getLanguage()} - <span style={{ color: '#136FD3' }}>Change</span>
+                  {getCountry()}, {getLanguage()} - <span style={{ color: '#136FD3' }}>{change}</span>
                 </Text>
               </div>
             </li>
