@@ -80,42 +80,6 @@ const Initial = () => {
     fbq.pageview()
   }, [])
   return <>
-    {/* <Script
-      strategy='lazyOnload'
-      onLoad={() => {
-        (window as any).dataLayer = (window as any).dataLayer || [];
-        // eslint-disable-next-line prefer-rest-params
-        function gtag(...args) { ((window as any)).dataLayer.push(args); }
-        gtag('js', new Date());
-        gtag('config', gtag.GA_TRACKING_ID, {
-          page_path: window.location.pathname,
-        });
-        (window as any).gtag = gtag
-        setGtagReady(true)
-
-      }}
-      src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-      id='gtag-init'
-      dangerouslySetInnerHTML={{
-        __html: `
-            
-          `
-      }}
-    /> */}
-    <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
-    <Script
-      id='gtag-init'
-      dangerouslySetInnerHTML={{
-        __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${gtag.GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
-          `
-      }}
-    />
     {/* Facebook  */}
     <Script
       dangerouslySetInnerHTML={{
