@@ -92,7 +92,8 @@ const CountryList = (data) => {
 
 
 const Footer = ({lang}:any) => {
-  const data = lang ?? useContext(languageContext)
+  const contextLang =  useContext(languageContext)
+  const data = lang ?? contextLang
   const {
     about,
     aboutBossjob,

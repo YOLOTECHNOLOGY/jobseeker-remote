@@ -781,6 +781,10 @@
     "decline":"拒绝",
     "accept":"接受",
     "cancelReason":"取消原因",
-    "cancelTitle":"面试已取消"
+    "cancelTitle":"面试已取消",
+   
+    "confirmText1": "By accepting this interview invite, I agreed that I will show up for the interview at the given time and place. \nIf I need to change the time, I will notify the recruiter at least 7 hours in advance.",
+    "contirmText2":"Job seekers who do not turn up for interview will be marked as “No Show”. Job seekers who accumulate 3 no-show records in 3 months will be banned from using Bossjob for 6 months."
+  
   }
 }

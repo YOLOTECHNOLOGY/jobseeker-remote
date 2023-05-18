@@ -11,7 +11,8 @@ import { getCookie } from 'helpers/cookies'
 const Header = (props: any) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
-  const data: any = props.lang ?? useContext(languageContext)
+  const contextLang = useContext(languageContext)
+  const data: any = props.lang ?? contextLang
 
   useEffect(() => {
     setIsAuthenticated(getCookie('accessToken') ? true : false)
