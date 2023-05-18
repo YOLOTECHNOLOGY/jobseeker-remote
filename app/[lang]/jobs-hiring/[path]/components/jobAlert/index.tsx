@@ -22,7 +22,6 @@ const JobAlert = (props: any) => {
   const router = useRouter()
   const { searchValues, config } = props
   const params = buildParams(config, searchValues)
-  console.log(params,'params')
   const { query, location } = params
   const [createdJobAlert, setCreatedJobAlert] = useState(null)
   const dispatch = useDispatch()

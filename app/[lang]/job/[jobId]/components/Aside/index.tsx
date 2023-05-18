@@ -12,7 +12,8 @@ import styles from '../../page.module.scss'
 type propsT = propsType & { jobDetail: any } & {
   published_at: string
   languages: Record<string, any>
-}
+  config:Array<any>
+} 
 
 const AsideFC = (props: propsT) => {
   const cookieStore = cookies()
@@ -26,7 +27,7 @@ const AsideFC = (props: propsT) => {
       <Company {...props} />
 
       {/* @ts-expect-error Async Server Component */}
-      <SimilarJobs id={props.jobId} jobDetail={props.jobDetail} languages={props.languages} />
+      <SimilarJobs id={props.jobId} jobDetail={props.jobDetail} languages={props.languages} config={props.config}/>
 
       <div className={styles.ad_container}>
         <AdSlot adSlot={'job-detail/square-banner-1'} />

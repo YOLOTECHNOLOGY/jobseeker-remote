@@ -10,8 +10,9 @@ import { getSourceCookie } from 'helpers/cookies'
 import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
 
 import styles from './page.module.scss'
+import { getValueById } from 'helpers/config/getValueById'
 
-const Index = ({ data, jobId, languages }: any) => {
+const Index = ({ data, jobId, languages,config }: any) => {
   const cookieStore = cookies()
 
   const accessToken = cookieStore.getAll('accessToken')
@@ -53,12 +54,14 @@ const Index = ({ data, jobId, languages }: any) => {
       })
     }
   }
+
+
   const headProps = {
     title: data.job_title,
-    localhost: data.location?.value,
-    degree: data.degree?.value,
-    xp_lvl: data.xp_lvl?.value,
-    jobType: data.job_type_value,
+    localhost: getValueById(config,data.location?.id,'location_id'),
+    degree: getValueById(config,data.degree?.id,'degree_id'),
+    xp_lvl:getValueById(config,data.xp_lvl?.id,'xp_lvl_id') ,
+    jobType: getValueById(config,data?.job_type_id,'job_type_id'),
     salary: data.local_salary_range_value,
     jobId,
     is_saved: data.is_saved,
@@ -89,7 +92,7 @@ const Index = ({ data, jobId, languages }: any) => {
     name: data.company?.name,
     chatResponseRate: data.recruiter?.response_rate,
     lastActiveAt: data.recruiter?.last_active_at,
-    benefitsProps: data.benefits,
+    benefitsProps: data?.benefits?.map(e=>getValueById(config,e.id,'job_benefit_id','name')),
     shareParams: {
       id: data.id,
       job_url: data.job_url,
@@ -110,10 +113,10 @@ const Index = ({ data, jobId, languages }: any) => {
 
   return (
     <div>
-      <Head {...headProps} />
+      <Head {...headProps}/>
       <div className={styles.container}>
-        <MainFC {...mainProps} />
-        <AsideFC {...companyProps} jobDetail={data} />
+        <MainFC {...mainProps}  />
+        <AsideFC {...companyProps} jobDetail={data} config={config}/>
       </div>
     </div>
   )

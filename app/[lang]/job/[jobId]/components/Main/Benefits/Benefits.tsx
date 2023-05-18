@@ -2,16 +2,17 @@ import styles from '../../../page.module.scss'
 
 export type propsType = {
   benefits?: Array<any>
+  lang:Record<string, any>
 }
 
-const Benefits = ({ benefits }: propsType) => {
+const Benefits = ({ benefits,lang }: propsType) => {
   return (
     <section className={styles.benefits}>
-      <h2>Benefits</h2>
+      <h2>{lang?.benefits}</h2>
 
       <div className={styles.benefits_labels}>
         {benefits?.map((benefit) => (
-          <div key={benefit.id}>{benefit?.name}</div>
+          <div key={benefit.id}>{benefit}</div>
         ))}
       </div>
       {/* <div className={styles.benefits_more}>See more</div> */}

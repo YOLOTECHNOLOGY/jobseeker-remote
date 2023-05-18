@@ -3,7 +3,7 @@ import { Avatar, Button } from 'app/[lang]/components/MUIs'
 
 import styles from '../../../page.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
-
+import { getValueById } from 'helpers/config/getValueById'
 export type propsType = {
   name: string
   companySize: string
@@ -13,14 +13,16 @@ export type propsType = {
   jobId: number
   companyUrl: string
   jobDetail: any
-  languages: Record<string, any>
+  languages: Record<string, any>,
+  config:Array<any>
 }
 
 const Company = (company: propsType) => {
-  const { jobDetail, languages } = company
+  const { jobDetail, languages,config } = company
   const {
     aside: { company: companySection}
   } = languages as any
+  const industry = getValueById(config,jobDetail.company.industry_id,'industry_id')
   return (
     <>
       <section className={styles.company}>
@@ -28,7 +30,7 @@ const Company = (company: propsType) => {
           <div className={styles.company_title}>{companySection.title}</div>
           <Avatar src={company.logo} sx={{ borderRadius: '5px', margin: '8px 0' }} />
           <h5 className={styles.company_name}>{company.name}</h5>
-          <div className={styles.company_financingStage}>{jobDetail.company.industry}</div>
+          <div className={styles.company_financingStage}>{industry}</div>
           <div className={styles.company_financingStage}>
             {company.companySize} {companySection.employees}
           </div>
