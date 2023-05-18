@@ -328,10 +328,7 @@
         "title": "工作或者公司名称",
         "btn": "搜索"
       },
-      "jobPostedOn": "发布于",
-      "benefits":"福利待遇",
-      "workingLocation":"工作地址",
-      "workLocation":"工作地址"
+      "jobPostedOn": "发布于"
     },
     "shareModal": {
       "title": "分享工作",
@@ -785,9 +782,8 @@
     "accept":"接受",
     "cancelReason":"取消原因",
     "cancelTitle":"面试已取消",
-   
-    "confirmText1": "By accepting this interview invite, I agreed that I will show up for the interview at the given time and place. \nIf I need to change the time, I will notify the recruiter at least 7 hours in advance.",
-    "contirmText2":"Job seekers who do not turn up for interview will be marked as “No Show”. Job seekers who accumulate 3 no-show records in 3 months will be banned from using Bossjob for 6 months."
+    "confirmText1": "我接受这个面试邀请，意味着我同意在其指定的时间和地点参加面试。\n如果我需要改变时间，我会在面试开始前至少7小时通知招聘者。",
+    "contirmText2":"求职者爽约面试会记录一条爽约记录，求职者在3个月内累计超过3条爽约记录，会被禁止使用Bossjob六个月。"
   
   }
 }
