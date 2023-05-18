@@ -146,6 +146,7 @@ const App = (props: AppProps) => {
         />
       </Head>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
+      {/* Global Site Tag (gtag.js) - Google Analytics */}
        {/* Google One Tap Sign in */}
        <Script
         src='https://accounts.google.com/gsi/client'
@@ -202,6 +203,29 @@ const App = (props: AppProps) => {
           height="0" width="0" style="display:non e;visibility:hidden"></iframe>
         `}}>
       </noscript>
+      {/* <Script
+        strategy='lazyOnload'
+        onLoad={() => {
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          // eslint-disable-next-line prefer-rest-params
+          function gtag(...args) { (window as any).dataLayer.push(args); }
+          gtag('js', new Date());
+          gtag('config', '${gtag.GA_TRACKING_ID}', {
+            page_path: window.location.pathname,
+          });
+
+          (window as any).gtag = gtag
+          setGtagReady(true)
+
+        }}
+        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+        id='gtag-init'
+        dangerouslySetInnerHTML={{
+          __html: `
+            
+          `
+        }}
+      /> */}
       {/* Facebook  */}
       <Script
         dangerouslySetInnerHTML={{
