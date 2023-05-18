@@ -2,10 +2,11 @@ import Modal from 'components/Modal'
 import React, { useRef, useState } from 'react'
 import { assign } from 'lodash-es'
 import InterviewDetail from './interviewDetail'
+import { formatTemplateString } from 'helpers/formatter'
 
 const AcceptModal = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef, loading, data, applicationId } = props
+    const { contextRef, loading, data, applicationId,dic } = props
     const actionsRef = useRef({} as any)
     const context = {
         showAccept(actions) {
@@ -21,9 +22,9 @@ const AcceptModal = (props: any) => {
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
-        headerTitle={`Interview Invitation from ${imState?.company?.name ?? 'company'}`}
-        firstButtonText='Decline'
-        secondButtonText='Accept'
+        headerTitle={formatTemplateString(dic.title, imState?.company?.name ?? 'company')}
+        firstButtonText={dic.decline}
+        secondButtonText={dic.accept}
         firstButtonIsClose={false}
         secondButtonIsClose={false}
         handleFirstButton={() => actionsRef.current.declined?.({
@@ -37,7 +38,7 @@ const AcceptModal = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <InterviewDetail data={data}/>
+        <InterviewDetail dic={dic} data={data}/>
     </Modal>
 }
 

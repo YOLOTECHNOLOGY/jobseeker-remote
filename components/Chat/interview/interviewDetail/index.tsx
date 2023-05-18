@@ -8,6 +8,7 @@ import { CopyIconHaveTextCopy } from 'images'
 const InterviewDetail = (props: any) => {
   const { data = {}, status, dic } = props
   const dispatch = useDispatch()
+  console.log({dic})
   const detailData = useMemo(() => {
     const jobTitle = `${data?.job_title} - ${data?.job_location}, ${data?.job.job_country}`
     const base = [
@@ -23,10 +24,10 @@ const InterviewDetail = (props: any) => {
       ...(status ? [['Status', status]] : [])
     ]
     if (data?.cancelled_reason) {
-      base.push(['Cancel reason', data.cancelled_reason])
+      base.push([dic.cancelReason, data.cancelled_reason])
     }
     return base
-  }, [data])
+  }, [data,dic])
 
   const handleCopyVideoViewLink = () => {
     if (data.video_link) {

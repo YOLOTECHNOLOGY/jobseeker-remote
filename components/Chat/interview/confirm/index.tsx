@@ -2,9 +2,10 @@ import Modal from 'components/Modal'
 import React, { useRef, useState } from 'react'
 import { assign } from 'lodash-es'
 import styles from './index.module.scss'
+import { formatTemplateString } from 'helpers/formatter'
 const ConfirmModal = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef, loading, data, applicationId } = props
+    const { contextRef, loading, data, applicationId,dic } = props
     const actionsRef = useRef({} as any)
     const context = {
         showConfirm(actions) {
@@ -21,7 +22,7 @@ const ConfirmModal = (props: any) => {
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
-        headerTitle={`Interview Invitation from ${imState?.company?.name ?? 'company'}`}
+        headerTitle={formatTemplateString(dic.title, imState?.company?.name ?? 'company')}
         firstButtonText='Back'
         secondButtonText='Accept'
         firstButtonIsClose={false}

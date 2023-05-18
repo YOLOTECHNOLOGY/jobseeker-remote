@@ -777,6 +777,10 @@
     "contactPersonLabel": "联系人",
     "contactNumberLabel": "联系电话",
     "videoLink": "视频链接",
-    "instructions":"说明"
+    "instructions":"说明",
+    "decline":"拒绝",
+    "accept":"接受",
+    "cancelReason":"取消原因",
+    "cancelTitle":"面试已取消"
   }
 }

@@ -776,6 +776,10 @@
     "contactPersonLabel":"Contact person",
     "contactNumberLabel":"Contact number",
     "videoLink":"Video link",
-    "instructions":"Instructions"
+    "instructions":"Instructions",
+    "decline":"Decline",
+    "accept":"Accept",
+    "cancelReason":"Cancel reason",
+    "cancelTitle":"Interview cancelled"
   }
 }
