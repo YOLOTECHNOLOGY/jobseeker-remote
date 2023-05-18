@@ -11,6 +11,7 @@ import dayjs from 'dayjs'
 import InterviewDetail from '../interviewDetail'
 import classNames from 'classnames'
 import moment from 'moment'
+import { formatTemplateString } from 'helpers/formatter'
 /**
 1	Pending interview approval
 2	Interview accepted
@@ -27,21 +28,21 @@ const Icon = ({ isFinish, active, ...rest }: any) => {
     }
 }
 const DetailModal = (props: any) => {
-   
+
     const [show, setShow] = useState(false)
-    const { contextRef, loading, data, applicationId,dic } = props
+    const { contextRef, loading, data, applicationId, dic } = props
     const actionsRef = useRef({} as any)
     const isStatusIn = useCallback(status => {
         return status.includes(data?.jobseeker_display_status)
     }, [data?.jobseeker_display_status])
     // const dispatch = useDispatch()
-    const [canCheckedIn,checkInTimeover] = useMemo(() => {
+    const [canCheckedIn, checkInTimeover] = useMemo(() => {
         const hours = (() => {
             const hours = dayjs(data?.interviewed_at).diff(dayjs(), 'hours')
             const minutes = dayjs(data?.interviewed_at).diff(dayjs(), 'minutes')
             return hours + minutes / 60
         })()
-        return [hours < 2 && hours >= -0.5,hours < -0.5]
+        return [hours < 2 && hours >= -0.5, hours < -0.5]
     }, [data?.interviewed_at])
     const context = {
         showDetail(actions) {
@@ -56,6 +57,7 @@ const DetailModal = (props: any) => {
         }
     }
     contextRef.current = assign(contextRef.current, context)
+    console.log({ dic })
     const timelineItems = useMemo(() => {
         return [
             {
@@ -64,7 +66,7 @@ const DetailModal = (props: any) => {
                 isFinish: true,
                 active: true,
                 show: true,
-                actionName: isStatusIn(['Accepted', 'Pending']) ? 'Cancel interview' : 'Your interview cannot be cancelled now',
+                actionName: isStatusIn(['Accepted', 'Pending']) ? dic.cancelAction : dic.canNotCancel,
                 actionEnable: isStatusIn(['Accepted', 'Pending']),
                 action: () => {
                     actionsRef.current?.cancel?.()
@@ -81,7 +83,7 @@ const DetailModal = (props: any) => {
                     if (canCheckedIn) {
                         return dic?.checkInText
                     } else {
-                        return 'You cannot check in now.'
+                        return dic?.canNoteCheckIn
                     }
                 })(),
                 active: canCheckedIn && isStatusIn(['Accepted', 'Upcoming']),
@@ -93,13 +95,13 @@ const DetailModal = (props: any) => {
                 })
             },
             {
-                title: 'In-progress',
-                label: 'You can report any issue during this stage',
+                title: dic.inProgressText,
+                label: dic.inProgressLabel,
                 isFinish: isStatusIn(['Completed']),
                 // isFinish: data?.data?.is_reported,
                 active: !isStatusIn(['Completed']),
                 show: true,
-                actionName: data?.is_reported ? 'Isseus reported' : 'Report issues',
+                actionName: data?.is_reported ? dic.issueReported : dic.reportIssue,
                 actionEnable: isStatusIn(['In progress'])
                     && (data?.jobseeker_mark_jobseeker_attended || !!data.checked_in_at)
                     && !data?.is_reported,
@@ -109,27 +111,28 @@ const DetailModal = (props: any) => {
                 })
             },
             {
-                title: 'Finished',
-                label: 'You can request interview result from the recruiter',
+                title: dic.finishedText,
+                label: dic.finishedLabel,
                 isFinish: isStatusIn(['Completed']),
                 active: true,
                 show: true,
-                actionName: checkInTimeover?(data?.requested_result_at ?
-                    (data?.interview_result ? data?.interview_result : 'Requested for results')
-                    : 'Request for results') : `You can request interview result after ${moment(data?.interviewed_at).add(30,'minutes').format('MM-DD HH:mm')}`,
+                actionName: checkInTimeover ? (data?.requested_result_at ?
+                    (data?.interview_result ? data?.interview_result : dic.requestResult)
+                    : dic.requestResult) : formatTemplateString(dic.requestAfter, moment(data?.interviewed_at).add(30, 'minutes').format('MM-DD HH:mm')),
                 actionEnable: !data?.requested_result_at && checkInTimeover,
                 action: () => actionsRef.current?.askResult?.()
             }
         ].filter(item => item.show)
     }, [data, actionsRef.current, applicationId, isStatusIn])
+    formatTemplateString(dic.requestAfter, moment(data?.interviewed_at).add(30, 'minutes').format('MM-DD HH:mm'))
     const sureNotCheck = useMemo(() => {
         return !data?.checked_in_at && data?.jobseeker_mark_jobseeker_attended === false
     }, [data?.checked_in_at, data?.jobseeker_mark_jobseeker_attended])
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
-        headerTitle={`Interview Invitation from ${data?.company_name}`}
-        secondButtonText='Done'
+        headerTitle={formatTemplateString(dic.title, data?.company_name)}
+        secondButtonText={dic.buttonText}
         secondButtonIsClose={false}
         handleSecondButton={() => actionsRef.current.close?.({
             applicationId,
@@ -165,7 +168,7 @@ const DetailModal = (props: any) => {
                                 <label >{item.title}</label>
                                 <p>{item.label}</p>
                                 {item.actionName &&
-                                    <div className={classNames({[styles.action]:true,[styles.disabled]:aProps.disabled})} {...aProps}>
+                                    <div className={classNames({ [styles.action]: true, [styles.disabled]: aProps.disabled })} {...aProps}>
                                         {item.actionName}
                                     </div>}
                             </div>
