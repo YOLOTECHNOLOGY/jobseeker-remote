@@ -49,7 +49,8 @@ const RegisterInfo = (props: any) => {
     emailTOPError,
     socialAUTHLoginCallBack,
     hideSocialMediaAuth,
-    setSnackbarState
+    setSnackbarState,
+    lang
   } = props
 
   // upFileError
@@ -81,6 +82,9 @@ const RegisterInfo = (props: any) => {
   useEffect(() => {
     setQuickUpladResume(getItem('quickUpladResume'))
   }, [])
+  const {
+    quickUploadResume: { register }
+  } = lang
 
   const errorText = (errorMessage: string) => {
     return (
@@ -109,9 +113,9 @@ const RegisterInfo = (props: any) => {
             {!register4Step && (
               <Text bold textStyle='xxxl' tagName='h2'>
                 {' '}
-                Join Bossjob,
+                {register.join}
                 <br />
-                kick-start your career 🎉
+                {register.start} 🎉
               </Text>
             )}
           </div>
@@ -144,14 +148,14 @@ const RegisterInfo = (props: any) => {
             >
               {/* hanleRegister false 3step; true 4step */}
               <Text textStyle='xl' textColor='white' bold>
-                Submit
+                {register.submit}
               </Text>
             </MaterialButton>
 
             <Text className={styles.RegisterAgreement} textStyle='sm'>
-              By signing up, I have read and agreed to Terms of Use
+              {register.term}
               <br />
-              and Privacy Policy
+              {register.policy}
             </Text>
           </div>
         </div>

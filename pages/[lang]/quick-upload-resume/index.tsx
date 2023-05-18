@@ -12,14 +12,16 @@ import useFakeUploadResume from 'hooks/useFakeUploadResume'
 
 import styles from './styles.module.scss'
 import { getCountry } from 'helpers/country'
+import { getDictionary } from 'get-dictionary'
 
-const QuickUploadResume = () => {
+const QuickUploadResume = (props: { lang: any }) => {
+  const { lang } = props
   const UseHooksRegister = useRegister()
   const useHooksFakeUploadResume = useFakeUploadResume()
   const { isLoading, isShowRegisterInfo, userWorkExperiences } = UseHooksRegister
 
   return (
-    <QuickLayout>
+    <QuickLayout lang={lang}>
       <div className={styles.AuthLayout}>
         <div className={styles.AuthLayoutBody}>
           <div className={styles.wrapper}>
@@ -92,9 +94,9 @@ const QuickUploadResume = () => {
               ) : null}
 
               {isShowRegisterInfo() ? (
-                <RegisterInfo {...UseHooksRegister} hideSocialMediaAuth />
+                <RegisterInfo {...UseHooksRegister} lang={lang} hideSocialMediaAuth />
               ) : (
-                <UploadResume {...useHooksFakeUploadResume} />
+                <UploadResume {...useHooksFakeUploadResume} lang={lang} />
               )}
             </div>
           </div>
@@ -104,13 +106,15 @@ const QuickUploadResume = () => {
   )
 }
 
-export const getServerSideProps = () => {
-
+export const getServerSideProps = async (props) => {
+  const { lang } = props.query
+  const dic = await getDictionary(lang)
   return {
     props: {
+      lang: dic,
       seoMetaTitle: 'Sign Up | Bossjob',
       canonicalUrl: '/register/jobseeker',
-      seoMetaDescription: `Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ${getCountry()}. Network of 2 million+ professionals.`,
+      seoMetaDescription: `Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ${getCountry()}. Network of 2 million+ professionals.`
     }
   }
 }

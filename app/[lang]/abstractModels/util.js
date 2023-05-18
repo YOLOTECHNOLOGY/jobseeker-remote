@@ -3,6 +3,8 @@ import { cond, T } from 'ramda'
 import { Free } from 'fantasy-frees'
 import commonInterpreter from './commonInterpreter'
 import { ReaderTPromise } from './monads'
+import Redirect from '../components/Redirect'
+import { getURLFromRedirectError, isRedirectError } from 'next/dist/client/components/redirect'
 // import Redirect from 'app/[lang]/components/Redirect'
 // import { isRedirectError, getURLFromRedirectError } from 'next/dist/client/components/redirect'
 const { liftFC: DO } = Free
@@ -48,12 +50,12 @@ export const registInterpreter = interpreter => {
   // command 抽象逻辑
   return script => Free.runFC(script, merged, ReaderTPromise)
     .catch(error => {
-      // if (isRedirectError(error)) {
-      //   const redirectUrl = getURLFromRedirectError(error)
-      //   if (redirectUrl) {
-      //     return <Redirect url={redirectUrl} />
-      //   }
-      // }
+      if (isRedirectError(error)) {
+        const redirectUrl = getURLFromRedirectError(error)
+        if (redirectUrl) {
+          return <Redirect url={redirectUrl} />
+        }
+      }
       // if (error?.response?.status === 401) {
       //   return <Redirect url='/get-started' />
       // }
