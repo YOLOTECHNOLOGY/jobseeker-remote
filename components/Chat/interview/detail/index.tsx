@@ -131,7 +131,7 @@ const DetailModal = (props: any) => {
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
-        headerTitle={formatTemplateString(dic.title, data?.company_name)}
+        headerTitle={formatTemplateString(dic.title, data?.company_name ?? '')}
         secondButtonText={dic.buttonText}
         secondButtonIsClose={false}
         handleSecondButton={() => actionsRef.current.close?.({
@@ -141,7 +141,7 @@ const DetailModal = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <InterviewDetail data={data} status={sureNotCheck && dic.notAttend} />
+        <InterviewDetail dic={dic} data={data} status={sureNotCheck && dic.notAttend} />
         {!sureNotCheck && <Timeline position='right' classes={{ root: styles.root }}>
             {timelineItems.map((item, i) => {
                 const aProps: any = {

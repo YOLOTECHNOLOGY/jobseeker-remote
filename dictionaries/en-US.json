@@ -766,6 +766,13 @@
     "requestAfter":"You can request interview result after {{time}}",
     "title":"Interview Invitation from {{companyName}}",
     "buttonText":"Done",
-    "notAttend":"You did not attend the interview."
+    "notAttend":"You did not attend the interview.",
+    "jobTitleLabel":"Job Title",
+    "addressLabel":"Interview Address",
+    "timeLabel":"Date,Time",
+    "contactPersonLabel":"Contact person",
+    "contactNumberLabel":"Contact number",
+    "videoLink":"Video link",
+    "instructions":"Instructions"
   }
 }

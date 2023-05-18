@@ -223,6 +223,7 @@ export const getFromObject = (obj, allowedAttributes) => {
  * @return {String} e.g. View 3 jobs hiring
  */
 export const formatTemplateString = (string, ...rest) => {
+  console.log(string,rest)
   if (!string) {
     return string
   }
@@ -245,6 +246,7 @@ export const formatTemplateString = (string, ...rest) => {
     }
     const value = rest[index]
     if (isNil(value)) {
+      console.log(string,rest)
       throw new Error(`formatTemplateString Error: the ${index} property is null or undefined`)
     }
     string = string.replace(new RegExp(regStr), rest[index])

@@ -6,19 +6,19 @@ import moment from 'moment'
 import { CopyIconHaveTextCopy } from 'images'
 
 const InterviewDetail = (props: any) => {
-  const { data = {}, status } = props
+  const { data = {}, status, dic } = props
   const dispatch = useDispatch()
   const detailData = useMemo(() => {
     const jobTitle = `${data?.job_title} - ${data?.job_location}, ${data?.job.job_country}`
     const base = [
       ...[
-        ['Job Title', jobTitle],
-        ['Interview Address', data?.address],
-        ['Date,Time', data.interviewed_at ? moment(data.interviewed_at).format('DD MMM YYYY dddd, HH:mm A'): '-'],
-        ['Contact person', data?.contact_person],
-        ['Contact number', data?.contact_person_contact_num],
-        ['Video link', data?.video_link],
-        ['Instructions', data?.instruction]
+        [dic.jobTitleLabel, jobTitle],
+        [dic.addressLabel, data?.address],
+        [dic.timeLabel, data.interviewed_at ? moment(data.interviewed_at).format('DD MMM YYYY dddd, HH:mm A') : '-'],
+        [dic.contactPersonLabel, data?.contact_person],
+        [dic.contactNumberLabel, data?.contact_person_contact_num],
+        [dic.videoLink, data?.video_link],
+        [dic.instructions, data?.instruction]
       ],
       ...(status ? [['Status', status]] : [])
     ]
@@ -29,23 +29,44 @@ const InterviewDetail = (props: any) => {
   }, [data])
 
   const handleCopyVideoViewLink = () => {
-    if (data?.video_link && navigator?.clipboard?.writeText(data?.video_link)) {
-      dispatch(
-        displayNotification({
-          open: true,
-          severity: 'success',
-          message: 'Copy successfully'
+    if (data.video_link) {
+      navigator?.clipboard?.writeText(data?.video_link)
+        .then(() => {
+          dispatch(
+            displayNotification({
+              open: true,
+              severity: 'success',
+              message: 'Copy successfully'
+            })
+          )
         })
-      )
-    } else {
-      dispatch(
-        displayNotification({
-          open: true,
-          severity: 'error',
-          message: 'Copy failed'
+        .catch(() => {
+          dispatch(
+            displayNotification({
+              open: true,
+              severity: 'error',
+              message: 'Copy failed'
+            })
+          )
         })
-      )
     }
+    // if (data?.video_link && navigator?.clipboard?.writeText(data?.video_link)) {
+    //   dispatch(
+    //     displayNotification({
+    //       open: true,
+    //       severity: 'success',
+    //       message: 'Copy successfully'
+    //     })
+    //   )
+    // } else {
+    //   dispatch(
+    //     displayNotification({
+    //       open: true,
+    //       severity: 'error',
+    //       message: 'Copy failed'
+    //     })
+    //   )
+    // }
   }
 
   return (
@@ -54,7 +75,7 @@ const InterviewDetail = (props: any) => {
         {detailData.map(([label, content]) => {
           return (
             <div className={styles.detailItemContainer} key={label}>
-              {label == 'Video link' ? (
+              {label == dic.videoLink ? (
                 <>
                   {content && (
                     <>

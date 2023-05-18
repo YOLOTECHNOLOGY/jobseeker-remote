@@ -770,6 +770,13 @@
     "requestAfter": "在 {{time}} 之后可以向面试官索要结果",
     "title": "来自企业 {{companyName}} 的面试",
     "buttonText": "完成",
-    "notAttend": "您没有参加面试"
+    "notAttend": "您没有参加面试",
+    "jobTitleLabel": "工作名称",
+    "addressLabel": "面试地点",
+    "timeLabel": "日期&时间",
+    "contactPersonLabel": "联系人",
+    "contactNumberLabel": "联系电话",
+    "videoLink": "视频链接",
+    "instructions":"说明"
   }
 }
