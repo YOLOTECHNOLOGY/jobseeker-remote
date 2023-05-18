@@ -10,14 +10,15 @@ import { transState } from 'helpers/utilities'
 
 import styles from '../../../page.module.scss'
 import classNames from 'classnames/bind'
-
+import { getValueById } from 'helpers/config/getValueById'
 type propsType = {
   id?: number
   jobDetail: any
-  languages: Record<string, any>
+  languages: Record<string, any>,
+  config:Array<any>,
 }
 
-export default async function SimilarJobs({ id, jobDetail, languages }: propsType) {
+export default async function SimilarJobs({ id, jobDetail, languages,config }: propsType) {
   const params = {
     jobId: id,
     size: 5
@@ -39,6 +40,9 @@ export default async function SimilarJobs({ id, jobDetail, languages }: propsTyp
   const {
     aside: { similarJob: transitions }
   } = languages
+
+  console.log(data,'jobDetail')
+
   return (
     <>
       {data.length ? (
@@ -68,7 +72,7 @@ export default async function SimilarJobs({ id, jobDetail, languages }: propsTyp
                         </div>
                         <div className={styles.similarJobs_info_jobType}>
                           <div>{item.company_name}</div>
-                          <div>{item.company_location}</div>
+                          <div>{getValueById(config,item.company_location_id,'location_id')}</div>
                         </div>
                       </div>
                     </Link>
@@ -128,7 +132,7 @@ export default async function SimilarJobs({ id, jobDetail, languages }: propsTyp
                         <div className={classNames([styles.similarJobs_mobileCard_loca])}>
                           <div>{[item?.recruiter_full_name,item?.recruiter_job_title].filter(a=>a).join(' · ')}</div>
                           <div className={styles.similarJobs_mobileCard_loca_value}>
-                            {item.company_location}
+                          {getValueById(config,item.company_location_id,'location_id')}
                           </div>
                         </div>
                       </div>

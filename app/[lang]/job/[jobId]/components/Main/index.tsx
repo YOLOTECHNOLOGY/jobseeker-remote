@@ -28,8 +28,8 @@ const MainFC = (props: propsType) => {
   return (
     <main className={styles.main}>
       <Desc {...props} />
-      {props.benefitsProps?.length ? <Benefits benefits={props.benefitsProps} /> : null}
-      <Map lat={props.lat} lng={props.lng} full_address={props.full_address} />
+      {props.benefitsProps?.length ? <Benefits benefits={props.benefitsProps} lang={content}/> : null}
+      <Map lat={props.lat} lng={props.lng} full_address={props.full_address} lang={content}/>
       <Search />
 
       <span className={styles.published_at}>

@@ -105,7 +105,6 @@ const PreferenceSelector = (props: any) => {
           preference={editingPreference}
           userDetail={userDetail}
           handleModal={(name, show, refresh) => {
-            console.log('handleModal', show)
             setShowModal(show)
             if (refresh) {
               startTransition(() => {

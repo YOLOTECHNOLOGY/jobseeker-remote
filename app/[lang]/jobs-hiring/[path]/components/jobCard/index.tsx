@@ -142,8 +142,7 @@ const JobCard = (props: any) => {
     degree_id,
     company_financing_stage_id,
     company_industry_id,
-  } = props
-  console.log(props,'props')
+  } = props  
   const config = useSelector((store:any)=> store.config.config.response)
   const { search } = useContext(languageContext) as any
   const labels = [

@@ -139,7 +139,6 @@ const SearchArea = (props: any) => {
     alignItems: 'center',
     cursor: 'pointer'
   }
-console.log(location)
   return (
     <div className={styles.searchWrap}>
       <ThemeProvider theme={theme}>
@@ -160,7 +159,6 @@ console.log(location)
                 label={search.location}
                 defaultValue={location}
                 onChange={(e, value) => {
-                  console.log(e,value,11111)
                   setLocation(value)
                 }}
                 sx={{

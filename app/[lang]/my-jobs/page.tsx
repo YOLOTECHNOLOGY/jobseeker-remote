@@ -31,7 +31,8 @@ const configs = getConfigs([
   ['educations'],
   ['salary_range_filters'],
   ['job_benefit_lists'],
-  ['notice_period_lists']
+  ['notice_period_lists'],
+  ['main_job_function_lists'],
 ])
 
 // or dynamic metadata

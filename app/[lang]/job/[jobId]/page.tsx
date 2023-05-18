@@ -7,7 +7,9 @@ import { getGoogleJobJSON } from 'app/[lang]/components/SEO'
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 import { getShreCard } from 'store/services/jobs/addJobView'
 import { getDictionary } from 'get-dictionary'
-
+import interpreter from "./intepreter"
+import { serverDataScript } from "app/[lang]/abstractModels/FetchServierComponents"
+import { buildComponentScript } from "app/[lang]/abstractModels/util"
 const handleFetchJobDetail = async (params: any) => {
   const cookieStore = cookies()
 
@@ -107,14 +109,14 @@ export async function generateMetadata({ params, searchParams }): Promise<Metada
 }
 
 const Page = async (props: any) => {
-  const { params } = props
+  const { params ,config} = props
   const { data, jobId } = await handleFetchJobDetail(params)
   const dictionary = (await getDictionary(params.lang)) as any
   const jobDetail = data
 
   return (
     <>
-      <Index data={data} jobId={jobId} languages={dictionary.jobDetail} />
+      <Index data={data} jobId={jobId} languages={dictionary.jobDetail} config={config}/>
 
       {jobDetail && jobDetail?.status_key === 'active' && (
         <script
@@ -130,4 +132,4 @@ const Page = async (props: any) => {
   )
 }
 
-export default Page
+export default interpreter(serverDataScript().chain(props => buildComponentScript(props, Page))).run

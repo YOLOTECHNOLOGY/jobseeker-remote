@@ -9,6 +9,7 @@ const usedConfigProps = [
     ['industry_lists'],
     ['company_financing_stage_lists'],
     ['company_sizes'],
-    ['main_job_function_lists'],
+    ['job_benefit_lists'],
+    ['job_types'],
 ]
 export default config(usedConfigProps)

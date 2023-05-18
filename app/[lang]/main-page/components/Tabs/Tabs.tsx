@@ -23,7 +23,7 @@ import {
 } from 'store/services/jobs/fetchJobsForYouLogin'
 import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
-
+import { getValueById } from 'helpers/config/getValueById'
 const theme = createTheme({
   components: {
     MuiTabs: {
@@ -93,7 +93,6 @@ const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => 
 }))
 
 const Tabs = ({ location,config,location_id }: any) => {
-  console.log(location_id,'location')
   const { home } = useContext(languageContext) as any
   const { tab, jobTab } = home
   const tabList = useMemo(() => {
@@ -285,8 +284,8 @@ const Tabs = ({ location,config,location_id }: any) => {
                         href='/manage-profile?tab=job-preferences'
                         className={styles.link}
                       >
-                        {jobseekerPrefIdRef.current?.location} |{' '}
-                        {jobseekerPrefIdRef.current?.job_title} |{' '}
+                        {getValueById(config,jobseekerPrefIdRef.current?.location_id,'location_id')} |{' '}
+                        {getValueById(config,jobseekerPrefIdRef.current?.function_job_title_id,'function_job_title_id')} |{' '}
                         {jobseekerPrefIdRef.current?.salary_range}
                       </Link>
                     </div>
