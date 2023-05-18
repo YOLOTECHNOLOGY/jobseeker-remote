@@ -722,10 +722,10 @@
     "fillUpTheFieldsWith": " 用 (*) 填写字段以继续。",
     "addAEducation": " 添加学历",
     "notWantToEnterEducation": "我现在不想接受教育",
-    "searchForJobTitle":"搜索工作名称",
-    "year":"年",
-    "month":"月",
-    "months":"" 
+    "searchForJobTitle": "搜索工作名称",
+    "year": "年",
+    "month": "月",
+    "months": ""
   },
   "chat": {
     "chatTitle": "聊天",
@@ -753,5 +753,37 @@
     "mobileActionExchange": "交换号码",
     "moreText": "更多操作",
     "emoji": "表情"
+  },
+  "chatInterview": {
+    "confirmText": "面试已经确认",
+    "confirmLabel": "您的面试现在不能取消",
+    "cancelAction": "取消面试",
+    "canNotCancel": "面试无法取消",
+    "checkedText": "已签到",
+    "checkedLabel": "为这场面试签到",
+    "checkInText": "马上签到",
+    "canNoteCheckIn": "目前无法签到",
+    "inProgressText": "进行中",
+    "inProgressLabel": "目前无法投诉",
+    "issueReported": "问题已发送",
+    "reportIssue": "投诉",
+    "finishedText": "完成",
+    "finishedLabel": "您可以向面试官索要结果",
+    "requestResult": "索要面试结果",
+    "requestAfter": "在 {{time}} 之后可以向面试官索要结果",
+    "title": "来自企业 {{companyName}} 的面试",
+    "buttonText": "完成",
+    "notAttend": "您没有参加面试",
+    "jobTitleLabel": "工作名称",
+    "addressLabel": "面试地点",
+    "timeLabel": "日期&时间",
+    "contactPersonLabel": "联系人",
+    "contactNumberLabel": "联系电话",
+    "videoLink": "视频链接",
+    "instructions":"说明",
+    "decline":"拒绝",
+    "accept":"接受",
+    "cancelReason":"取消原因",
+    "cancelTitle":"面试已取消"
   }
 }
