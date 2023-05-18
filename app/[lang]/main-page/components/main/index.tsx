@@ -47,7 +47,7 @@ const Main = async (props: any) => {
       <div className={styles.main}>
         <div className={styles.title}>{home.title}</div>
         <TopModule {...props} />
-        <Tabs location={city} config={config}/>
+        <Tabs location={city} config={config} location_id={locationId}/>
         {/* @ts-expect-error Async Server Component */}
         <Companies location={city} lang={props.lang} config={config} location_id={locationId} />
         {/* @ts-expect-error Async Server Component */}

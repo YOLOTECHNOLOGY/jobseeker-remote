@@ -10,7 +10,7 @@ import { languageContext } from '../components/providers/languageProvider';
 
 const ModalSwitch = (props) => {
     const { showModal, setShowModal, requestSwitch, loading, selectedJob, chatData } = props
-    debugger
+
     const { jobDetail: translation } = useContext(languageContext)
     const { switchModal } = translation || {}
 

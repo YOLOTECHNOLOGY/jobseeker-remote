@@ -10,7 +10,8 @@ async function getRecurites(accessToken) {
      const res = await fetchRecruiters({ accessToken });
      return res?.data?.data?.['saved_candidates'] || [];
 }
-const Interested = async ({lang}) => {
+const Interested = async (props) => {
+     const {lang,config} = props;
      const accessToken = cookies().get('accessToken')?.value
      const data = await getRecurites(accessToken);
      return (
@@ -25,7 +26,7 @@ const Interested = async ({lang}) => {
                                    <div className={styles.interstedBox}>
                                         {
                                              data.map(item => {
-                                                  return <InterstedCard key={item.id} item={item} />
+                                                  return <InterstedCard key={item.id} item={item}  config={config}/>
                                              })
                                         }
                                    </div>

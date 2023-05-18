@@ -68,7 +68,6 @@ function* createJobAlertReq(action) {
         },
         accessToken: accessToken
       }
-      debugger
       removeUtmCampaign()
 
       const { data } = yield call(createJobAlertService, jobAlertPayload)

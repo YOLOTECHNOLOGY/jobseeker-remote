@@ -92,7 +92,8 @@ const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => 
   }
 }))
 
-const Tabs = ({ location,config }: any) => {
+const Tabs = ({ location,config,location_id }: any) => {
+  console.log(location_id,'location')
   const { home } = useContext(languageContext) as any
   const { tab, jobTab } = home
   const tabList = useMemo(() => {
@@ -218,7 +219,7 @@ const Tabs = ({ location,config }: any) => {
     const params = {
       size: 6,
       page: 1,
-      job_locations: location,
+      job_location_ids: location_id,
       main_functions: value
     }
 

@@ -16,7 +16,7 @@ const Page = async (props:any) => {
         <MainLeft {...newProps}/>
       </div>
         {/* @ts-expect-error Async Server Component */}
-        <MainRight lang={dictionary?.myJobs}/>
+        <MainRight lang={dictionary?.myJobs} config={props.config}/>
     </div>
   )
 }

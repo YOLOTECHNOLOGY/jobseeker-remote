@@ -30,7 +30,8 @@ const configs = getConfigs([
   ['salary_ranges'],
   ['educations'],
   ['salary_range_filters'],
-  ['job_benefit_lists']
+  ['job_benefit_lists'],
+  ['notice_period_lists']
 ])
 
 // or dynamic metadata
@@ -76,7 +77,7 @@ const Main = async (props: any) => {
         </div>
         <div className={styles.right}>
           {/* @ts-expect-error Async Server Component */}
-          <MainRight lang={dictionary?.myJobs} />
+          <MainRight lang={dictionary?.myJobs}   config={props.config}/>
         </div>
       </div>
       <Footer />

@@ -17,7 +17,7 @@ export default async function  Page (props) {
   const accessToken = cookies().get('accessToken')?.value
   const resumesData = await getResumes(accessToken);
   const [resumes] = await Promise.all([resumesData]);
-
+  console.log(props,77777)
   return (
       <div className={styles.aside}>
          <Resume resumes={resumes} lang={props.lang}/>

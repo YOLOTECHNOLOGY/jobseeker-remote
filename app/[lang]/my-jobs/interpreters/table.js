@@ -64,13 +64,13 @@ export default registInterpreter(command =>
                 sort: searchParams.sort ?? 2,
                 salary_from: salaryFrom,
                 salary_to: salaryTo,
-                job_locations: locationLists.find(item => item?.['seo_value'] === searchParams.location)?.value ?? null,
-                company_industries: searchParams.industry?.split?.(',')?.map?.(key => industryList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-                job_types: searchParams.jobTypes?.split?.(',')?.map?.(key => jobTypeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-                xp_lvls: searchParams.workExperience?.split?.(',')?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
-                degrees: searchParams.qualification?.split?.(',')?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
+                ob_location_ids: locationLists.find(item => item?.['seo_value'] === searchParams.location)?.id ?? null,
+                company_industry_ids: searchParams.industry?.split?.(',')?.map?.(key => industryList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
+                job_type_ids: searchParams.jobTypes?.split?.(',')?.map?.(key => jobTypeList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
+                xp_lvl_ids: searchParams.workExperience?.split?.(',')?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
+                degree_ids: searchParams.qualification?.split?.(',')?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
                 // is_company_verified: Boolean(searchParams.verifiedCompany),
-                company_sizes: searchParams.companySizes?.split?.(',')?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
+                company_size_ids: searchParams.companySizes?.split?.(',')?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
             }
             console.log({ queriyParams })
             const token = cookies().get('accessToken')

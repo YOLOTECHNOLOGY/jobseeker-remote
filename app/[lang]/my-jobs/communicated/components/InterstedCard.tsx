@@ -1,10 +1,13 @@
 
 import React from "react";
 import styles from '../index.module.scss';
+import { getValueById } from 'helpers/config/getValueById'
+const InterstedCard = (props:any) => {
+   const {item, config} = props;
 
-const InterstedCard = ({ item }: any) => {
    const { avatar, full_name: userName } = item?.recruiter || {};
-   const workJobTitle = item?.recruiter?.work_experience?.job_title
+   const {job_title_id ,job_title}= item?.recruiter?.work_experience || {}
+   const workJobTitle = job_title_id ?  getValueById(config,item?.recruiter?.work_experience?.job_title_id,'function_job_title_id'):job_title
    const { name } = item?.company || {};
    const {
       job_title: jobTitle,
