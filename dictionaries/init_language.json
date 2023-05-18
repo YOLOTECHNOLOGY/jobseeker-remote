@@ -331,10 +331,7 @@
         "title": "Job title or company",
         "btn": "Search"
       },
-      "jobPostedOn": "Posted on",
-      "benefits":"Benefits",
-      "workingLocation":"Working Location",
-      "workLocation":"Work Location"
+      "jobPostedOn": "Posted on"
     },
     "shareModal": {
       "title": "Share this job",
@@ -362,6 +359,12 @@
     "feedbackModal": {
       "title": "Job Reported Successfully",
       "message": "We have received your report about this job. Thanks for letting us know. Your feedback is important in helping us to keep the Bossjob community safe."
+    },
+    "switchModal": {
+      "title": "Chat with {{name}}",
+      "btn1": "Cancel",
+      "btn2": "Proceed",
+      "content": "You are currently chatting with recruiter for the {{jobName}} position. Are you sure you want to switch job?"
     },
     "aside": {
       "company": {
@@ -720,11 +723,7 @@
     "fieldOfStudy": "Field of Study",
     "fillUpTheFieldsWith": " Fill up the fields with (*) to proceed.",
     "addAEducation": " Add a education",
-    "notWantToEnterEducation": "I do not want to enter my Education now",
-    "searchForJobTitle": "Search for job title",
-    "year": "year",
-    "month": "month",
-    "months": "s"
+    "notWantToEnterEducation": "I do not want to enter my Education now"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -756,35 +755,51 @@
   "chatInterview": {
     "confirmText": "Interview Confirmed",
     "confirmLabel": "Your interview cannot be cancelled now",
-    "cancelAction": "Cancel interview",
-    "canNotCancel": "Your interview cannot be cancelled now",
+    "cancelAction":"Cancel interview",
+    "canNotCancel":"Your interview cannot be cancelled now",
     "checkedText": "Checked-In",
     "checkedLabel": "Check in for the interview with recruiter",
     "checkInText": "Check-in now",
-    "canNoteCheckIn": "You cannot check in now.",
-    "inProgressText": "In-progress",
-    "inProgressLabel": "You can report any issue during this stage",
-    "issueReported": "Issues reported",
-    "reportIssue": "Report issues",
-    "finishedText": "Finished",
-    "finishedLabel": "You can request interview result from the recruiter",
-    "requestResult": "Requested for results",
-    "requestAfter": "You can request interview result after {{time}}",
-    "title": "Interview Invitation from {{companyName}}",
-    "buttonText": "Done",
-    "notAttend": "You did not attend the interview.",
-    "jobTitleLabel": "Job Title",
-    "addressLabel": "Interview Address",
-    "timeLabel": "Date,Time",
-    "contactPersonLabel": "Contact person",
-    "contactNumberLabel": "Contact number",
-    "videoLink": "Video link",
-    "instructions": "Instructions",
-    "decline": "Decline",
-    "accept": "Accept",
-    "cancelReason": "Cancel reason",
-    "cancelTitle": "Interview cancelled",
+    "canNoteCheckIn":"You cannot check in now.",
+    "inProgressText":"In-progress",
+    "inProgressLabel":"You can report any issue during this stage",
+    "issueReported":"Issues reported",
+    "reportIssue":"Report issues",
+    "finishedText":"Finished",
+    "finishedLabel":"You can request interview result from the recruiter",
+    "requestResult":"Requested for results",
+    "requestAfter":"You can request interview result after {{time}}",
+    "title":"Interview Invitation from {{companyName}}",
+    "buttonText":"Done",
+    "notAttend":"You did not attend the interview.",
+    "jobTitleLabel":"Job Title",
+    "addressLabel":"Interview Address",
+    "timeLabel":"Date,Time",
+    "contactPersonLabel":"Contact person",
+    "contactNumberLabel":"Contact number",
+    "videoLink":"Video link",
+    "instructions":"Instructions",
+    "decline":"Decline",
+    "accept":"Accept",
+    "cancelReason":"Cancel reason",
+    "cancelTitle":"Interview cancelled",
     "confirmText1": "By accepting this interview invite, I agreed that I will show up for the interview at the given time and place. \nIf I need to change the time, I will notify the recruiter at least 7 hours in advance.",
     "contirmText2":"Job seekers who do not turn up for interview will be marked as “No Show”. Job seekers who accumulate 3 no-show records in 3 months will be banned from using Bossjob for 6 months."
+  
+  },
+  "quickUploadResume": {
+    "title": "Upload your resume",
+    "UploadAndApply": "Upload your resume and start applying for job now!",
+    "uploadBtn": "Upload your Resume",
+    "uploadTips": "PDF, DOC, DOCX. file, max 5MB",
+    "or": "OR",
+    "createFreeResume": "Create Free Resume",
+    "register": {
+      "join": "Join Bossjob",
+      "start": "kick-start your career",
+      "submit": "Submit",
+      "term": "By signing up, I have read and agreed to Terms of Use",
+      "policy": "and Privacy Policy"
+    }
   }
 }

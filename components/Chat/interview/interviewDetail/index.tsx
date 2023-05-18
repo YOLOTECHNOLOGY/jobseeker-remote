@@ -1,21 +1,33 @@
 import React, { useMemo } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import styles from './index.module.scss'
 import moment from 'moment'
 import { CopyIconHaveTextCopy } from 'images'
+import { getValueById } from 'helpers/config/getValueById'
 
 const InterviewDetail = (props: any) => {
   const { data = {}, status, dic } = props
   const dispatch = useDispatch()
-  console.log({dic})
+  const config = useSelector((store: any) => store?.config?.config?.response)
+
+  console.log({ dic })
   const detailData = useMemo(() => {
-    const jobTitle = `${data?.job_title} - ${data?.job_location}, ${data?.job.job_country}`
+    // const location = getValueById(config, data?.job_location, 'location_id')
+    const jobLocation = getValueById(config, data?.location_id, 'location_id')
+    const jobCountry = getValueById(config, data?.job.job_country_id, 'country_id')
+
+    const jobTitle = `${data?.job_title} - ${data?.location_id ? jobLocation : ''}, ${jobCountry}`
     const base = [
       ...[
         [dic.jobTitleLabel, jobTitle],
         [dic.addressLabel, data?.address],
-        [dic.timeLabel, data.interviewed_at ? moment(data.interviewed_at).format('DD MMM YYYY dddd, HH:mm A') : '-'],
+        [
+          dic.timeLabel,
+          data.interviewed_at
+            ? moment(data.interviewed_at).format('DD MMM YYYY dddd, HH:mm A')
+            : '-'
+        ],
         [dic.contactPersonLabel, data?.contact_person],
         [dic.contactNumberLabel, data?.contact_person_contact_num],
         [dic.videoLink, data?.video_link],
@@ -27,11 +39,12 @@ const InterviewDetail = (props: any) => {
       base.push([dic.cancelReason, data.cancelled_reason])
     }
     return base
-  }, [data,dic])
+  }, [data, dic])
 
   const handleCopyVideoViewLink = () => {
     if (data.video_link) {
-      navigator?.clipboard?.writeText(data?.video_link)
+      navigator?.clipboard
+        ?.writeText(data?.video_link)
         .then(() => {
           dispatch(
             displayNotification({
