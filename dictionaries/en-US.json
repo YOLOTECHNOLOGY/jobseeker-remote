@@ -765,6 +765,7 @@
     "requestResult":"Requested for results",
     "requestAfter":"You can request interview result after {{time}}",
     "title":"Interview Invitation from {{companyName}}",
-    "buttonText":"Done"
+    "buttonText":"Done",
+    "notAttend":"You did not attend the interview."
   }
 }

@@ -141,7 +141,7 @@ const DetailModal = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <InterviewDetail data={data} status={sureNotCheck && 'You did not attend the interview.'} />
+        <InterviewDetail data={data} status={sureNotCheck && dic.notAttend} />
         {!sureNotCheck && <Timeline position='right' classes={{ root: styles.root }}>
             {timelineItems.map((item, i) => {
                 const aProps: any = {
