@@ -804,7 +804,10 @@
     "no": "否",
     "askResultText1": "没有参加的面试，不能申请结果",
     "askResultText2": "在 {{enableDate}} 以后才可以申请查看结果",
-    "cancelInterview": "取消面试"
+    "cancelInterview": "取消面试",
+    "acceptAnother":"我已经接受了其他工作",
+    "retime":"我想更改面试时间",
+    "cancelReasonLabel":"您即将取消面试，请让招聘者知道取消的原因："
   },
   "quickUploadResume": {
     "title": "上传你的简历",

@@ -48,14 +48,14 @@ const CancelModal = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <p className={styles.mainText}>You are about to cancel the interview. Please let recruiter know why you are cancelling this interview:</p>
+        <p className={styles.mainText}>{dic.cancelReasonLabel}</p>
         <RadioGroup
             aria-labelledby='demo-radio-buttons-group-label'
             name='radio-buttons-group'
             onChange={(e) => setCancelledReason(e.target.value)}
         >
-            <FormControlLabel value='I have accepted another offer.' control={<Radio />} label='I have accepted another offer.' />
-            <FormControlLabel value='I would like to reschedule the interview timing.' control={<Radio />} label='I would like to reschedule the interview timing.' />
+            <FormControlLabel value={dic.acceptAnother} control={<Radio />} label={dic.acceptAnother} />
+            <FormControlLabel value={dic.retime} control={<Radio />} label={dic.retime} />
         </RadioGroup>
     </Modal>
 }

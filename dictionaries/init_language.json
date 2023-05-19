@@ -804,7 +804,10 @@
     "no": "No",
     "askResultText1": "You are unable to request for interview result as you did not attend the interview.",
     "askResultText2": "You can only request for result from {{enableDate}} onwards.",
-    "cancelInterview": "Cancel interview"
+    "cancelInterview": "Cancel interview",
+    "acceptAnother":"I have accepted another offer.",
+    "retime":"I would like to reschedule the interview timing.",
+    "cancelReasonLabel":"You are about to cancel the interview. Please let recruiter know why you are cancelling this interview:"
   },
   "chatCommonPhrase": {},
   "quickUploadResume": {
