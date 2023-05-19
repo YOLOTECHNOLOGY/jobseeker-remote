@@ -134,7 +134,7 @@ const ChangePassword = () => {
         <div className={styles.ChangePasswordFieldError}>
           {errors.password && (
             <Text textStyle='sm' textColor='red'>
-              {errors.password.message}
+              {errors.password.message as any}
             </Text>
           )}
         </div>
@@ -177,7 +177,7 @@ const ChangePassword = () => {
         <div className={styles.ChangePasswordFieldErrorConfirm}>
           {errors.confirmPassword && (
             <Text textStyle='sm' textColor='red'>
-              {errors.confirmPassword.message}
+              {errors.confirmPassword.message as any}
             </Text>
           )}
         </div>

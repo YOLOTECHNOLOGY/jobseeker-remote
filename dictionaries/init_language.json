@@ -802,5 +802,17 @@
       "term": "By signing up, I have read and agreed to Terms of Use",
       "policy": "and Privacy Policy"
     }
+  },
+  "editJobPreferencesModal": {
+    "validate": {
+      "jobTitle": "job title is required",
+      "jobType": "job type is required",
+      "location": "location is required",
+      "minSalary": "min salary is required",
+      "maxSalary": "max salary is required",
+      "currency": "currency is required",
+      "country": "country is required when location is overseas",
+      "industry": "industry is required"
+    }
   }
 }

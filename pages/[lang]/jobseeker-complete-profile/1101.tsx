@@ -280,7 +280,7 @@ const Step3 = (props: any) => {
     )
   }
 
-  const errorText = (errorMessage: string) => {
+  const errorText = (errorMessage: any) => {
     return (
       <Text textStyle='sm' textColor='red' tagName='p' className={styles.stepFieldError}>
         {errorMessage}
@@ -629,7 +629,7 @@ const Step3 = (props: any) => {
                   error={errors.country ? true : false}
                   options={countryList}
                 />
-                {errors.country && errorText(errors.country.message)}
+                {errors.country && errorText(errors.country.message as string)}
               </div>
             )}
 

@@ -802,5 +802,17 @@
       "term": "我已经阅读并同意使用条款",
       "policy": "和隐私政策"
     }
+  },
+  "editJobPreferencesModal": {
+    "validate": {
+      "jobTitle": "职位标题是必须的",
+      "jobType": "职位类型是必须的",
+      "location": "地址是必须的",
+      "minSalary": "最小薪资是必须的",
+      "maxSalary": "最大薪资是必须的",
+      "currency": "货币是必须的",
+      "country": "当位置在海外时，国家是必需的",
+      "industry": "行业是必须的"
+    }
   }
 }

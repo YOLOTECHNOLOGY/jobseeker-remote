@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useRef } from 'react'
+import { useEffect, useMemo, useState, useRef, useContext } from 'react'
 
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
@@ -94,7 +94,7 @@ const EditJobPreferencesModal = ({
   const [isShowCountry, setIsShowCountry] = useState(preference?.location_key === 'overseas')
   const jobTypeList = getJobTypeList(config)
   const minSalaryOptions = getSalaryOptions(config)
-  const { handleSubmit, getValues, setValue, control, reset } = useForm({ defaultValues })
+  const { handleSubmit, getValues, setValue, control, reset, trigger } = useForm({ defaultValues })
   const [minSalary, setMinSalary] = useState(getValues().minSalary)
   useEffect(() => {
     getMaxSalaryOptions(minSalary)
@@ -120,6 +120,7 @@ const EditJobPreferencesModal = ({
     // setMaxSalary(maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : null)
     setValue('maxSalary', maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : '')
     setMaxSalaryOptions(maxSalaryOptions)
+    trigger('maxSalary')
   }
   const onSubmit = (data) => {
     // to add workSetting
@@ -173,7 +174,7 @@ const EditJobPreferencesModal = ({
           <Controller
             control={control}
             name={'jobTitle'}
-            rules={{ required: 'job title is required' }}
+            rules={{ validate: (data) => !!data.value || lang.editJobPreferencesModal.validate.jobTitle}}
             render={({ field, fieldState }) => {
               return (
                 <JobFunctionSelector
@@ -198,7 +199,7 @@ const EditJobPreferencesModal = ({
           <Controller
             control={control}
             name={'jobType'}
-            rules={{ required: 'job type is required' }}
+            rules={{ required: lang.editJobPreferencesModal.validate.jobType }}
             render={({ field, fieldState }) => {
               return (
                 <MaterialBasicSelect
@@ -218,7 +219,7 @@ const EditJobPreferencesModal = ({
           <Controller
             control={control}
             name={'location'}
-            rules={{ required: 'location is required' }}
+            rules={{ required: lang.editJobPreferencesModal.validate.location }}
             render={({ field, fieldState }) => {
               const { onChange } = field
               return (
@@ -245,7 +246,7 @@ const EditJobPreferencesModal = ({
             rules={{
               required: {
                 value: true,
-                message: 'currency is required'
+                message: lang.editJobPreferencesModal.validate.currency
               }
             }}
             render={({ field, fieldState }) => {
@@ -272,7 +273,7 @@ const EditJobPreferencesModal = ({
           <Controller
             control={control}
             name={'minSalary'}
-            rules={{ validate: (value) => !!value || 'min salary is required' }}
+            rules={{ validate: (value) => !!value || lang.editJobPreferencesModal.validate.minSalary }}
             render={({ field, fieldState }) => {
               const { value, onChange } = field
               return (
@@ -297,14 +298,14 @@ const EditJobPreferencesModal = ({
           <Controller
             control={control}
             name={'maxSalary'}
-            rules={{ validate: (value) => !!value || 'max salary is required' }}
+            rules={{ validate: (value) => !!value || lang.editJobPreferencesModal.validate.maxSalary}}
             render={({ field, fieldState }) => {
               const { value } = field
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
                   label={editModal.maxSalary}
-                  rules={{ required: 'max salary is required' }}
+                  rules={{ required: lang.editJobPreferencesModal.validate.maxSalary }}
                   required
                   options={maxSalaryOptions}
                   {...fieldState}
@@ -321,7 +322,7 @@ const EditJobPreferencesModal = ({
             <Controller
               control={control}
               name={'country'}
-              rules={{ required: 'country is required when location is overseas' }}
+              rules={{ required: lang.editJobPreferencesModal.validate.country }}
               render={({ field, fieldState }) => {
                 return (
                   <MaterialBasicSelect
@@ -340,7 +341,7 @@ const EditJobPreferencesModal = ({
           <Controller
             control={control}
             name={'industry'}
-            rules={{ required: 'industry is required' }}
+            rules={{ required: lang.editJobPreferencesModal.validate.industry }}
             render={({ field, fieldState }) => {
               return (
                 <MaterialBasicSelect

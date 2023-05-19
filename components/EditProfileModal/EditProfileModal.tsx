@@ -65,7 +65,7 @@ const requiredLabel = (text: string) => {
   )
 }
 
-const errorText = (errorMessage: string) => {
+const errorText = (errorMessage: any) => {
   return (
     <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
       {errorMessage}
@@ -224,7 +224,7 @@ const EditProfileModal = ({
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
         // Disable button if error exist for fields with manual setError
-        isSecondButtonDisabled={errors && errors.birthdate}
+        isSecondButtonDisabled={!!(errors && errors.birthdate)}
         fullScreen
       >
         <div className={styles.profile}>

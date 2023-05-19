@@ -137,7 +137,7 @@ const QuickApplyModal = ({
     dispatch(quickApplyJobRequest(payload))
   }
 
-  const errorText = (errorMessage: string) => {
+  const errorText = (errorMessage: any) => {
     return (
       <Text textStyle='sm' textColor='red' tagName='p' className={styles.error}>
         {errorMessage}
