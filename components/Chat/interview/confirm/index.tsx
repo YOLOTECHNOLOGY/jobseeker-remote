@@ -5,7 +5,7 @@ import styles from './index.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
 const ConfirmModal = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef, loading, data, applicationId,dic } = props
+    const { contextRef, loading, data, applicationId, dic } = props
     const actionsRef = useRef({} as any)
     const context = {
         showConfirm(actions) {
@@ -23,8 +23,8 @@ const ConfirmModal = (props: any) => {
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
         headerTitle={formatTemplateString(dic.title, imState?.company?.name ?? 'company')}
-        firstButtonText='Back'
-        secondButtonText='Accept'
+        firstButtonText={dic.back}
+        secondButtonText={dic.accept}
         firstButtonIsClose={false}
         secondButtonIsClose={false}
         handleFirstButton={() => actionsRef.current.back?.()}
@@ -35,7 +35,7 @@ const ConfirmModal = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <p className={styles.mainText}>By accepting this interview invite, I agreed that I will show up for the interview at the given time and place. 
+        <p className={styles.mainText}>By accepting this interview invite, I agreed that I will show up for the interview at the given time and place.
             If I need to change the time, I will notify the recruiter at least 7 hours in advance.</p>
         <p className={styles.subText}>Job seekers who do not turn up for interview will be marked as “No Show”. Job seekers who accumulate 3 no-show records in 3 months will be banned from using Bossjob for 6 months.</p>
     </Modal>
