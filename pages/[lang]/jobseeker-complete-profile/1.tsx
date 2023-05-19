@@ -30,25 +30,24 @@ import styles from './Onboard.module.scss'
 // import { DisclaimerIcon } from 'images'
 import { getItem } from 'helpers/localStorage'
 import JobFunctionSelector from 'components/JobFunctionSelector'
-import {getCountryKey}  from 'helpers/country'
+import { getCountryKey } from 'helpers/country'
 import { flatMap } from 'lodash-es'
 import { getDictionary } from 'get-dictionary'
 import { getValueById } from 'helpers/config/getValueById'
-const  countryForCurrency = {
+const countryForCurrency = {
   ph: 'php',
-  sg: "sgd"
+  sg: 'sgd'
 }
 
-const   countryForCountryCode ={
+const countryForCountryCode = {
   ph: '+63',
-  sg: "+65"
+  sg: '+65'
 }
-
-const Step1 = (props: any) => {
+const Step1Content = (props: any) => {
   const currentStep = 1
   const quickUpladResumeType = getItem('quickUpladResume')
   const totalStep = quickUpladResumeType === 'upFile' || quickUpladResumeType === 'onLine' ? 3 : 4
-  const { userDetail, accessToken,lang } = props
+  const { userDetail, accessToken, lang } = props
   const {
     letGetYouJob,
     tellUsAboutYourself,
@@ -66,13 +65,10 @@ const Step1 = (props: any) => {
     desiredIndustry,
     availability,
     next
-  } = lang?.profile|| {}
+  } = lang?.profile || {}
   const preference = userDetail?.job_preferences?.[0]
   const config = useSelector((store: any) => store?.config?.config?.response)
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchConfigRequest())
-  }, [])
   // const rhTooltipTitle =
   ;('Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.')
   const locationList = useSelector((store: any) => store.config.config.response?.location_lists)
@@ -80,9 +76,8 @@ const Step1 = (props: any) => {
   const desiredLoaction = useMemo(() => {
     return formattedLocationList.find((l) => l.key === preference?.location_key)
   }, [formattedLocationList, preference?.location_key])
-
   const location = useMemo(() => {
-    return formattedLocationList.find((l) => l.value === userDetail?.location)
+    return formattedLocationList.find((l) => l.id === userDetail.location_id)
   }, [formattedLocationList, userDetail?.location])
   const currencyLists = getCurrencyList(config)
   const noticeList = getNoticePeriodList(config)
@@ -90,7 +85,7 @@ const Step1 = (props: any) => {
 
   const jobTypeList = getJobTypeList(config)
   const countryList = getCountryList(config)
-  const country  = getCountryKey();
+  const country = getCountryKey()
 
   const getSmsCountryCode = (phoneNumber, smsCountryList) => {
     if (!phoneNumber || !smsCountryList) return null
@@ -105,17 +100,20 @@ const Step1 = (props: any) => {
   )
 
   const defaultValues = useMemo(() => {
-    const countryCode = getSmsCountryCode(userDetail?.phone_num, smsCountryList) || countryForCountryCode[country]
-    return {
+    const countryCode =
+      getSmsCountryCode(userDetail?.phone_num, smsCountryList) || countryForCountryCode[country]
+    const { location_id, job_type_id, industry_id, country_id } = preference
+    const result = {
       jobTitle: {
         id: preference?.function_job_title_id,
-        value:  getValueById(config,preference?.function_job_title_id,'function_job_title_id') ?? ''
+        value:
+          getValueById(config, preference?.function_job_title_id, 'function_job_title_id') ?? ''
       },
-      jobType: preference?.job_type_key,
+      jobType: getValueById(config, job_type_id, 'job_type_id', 'key'),
       minSalary: Number(preference?.salary_range_from) ?? undefined,
       maxSalary: Number(preference?.salary_range_to) ?? undefined,
-      location: location,
-      industry: preference?.industry_key,
+      location,
+      industry: getValueById(config, industry_id, 'industry_id', 'key'),
       desiredLocation: desiredLoaction,
       countryCode,
       noticePeriod: userDetail?.notice_period_id,
@@ -126,6 +124,7 @@ const Step1 = (props: any) => {
       firstName: userDetail?.first_name,
       lastName: userDetail?.last_name
     }
+    return result
   }, [preference])
   const minSalaryOptions = getSalaryOptions(config)
   const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
@@ -133,7 +132,8 @@ const Step1 = (props: any) => {
     return (
       config?.industry_lists?.map((industry) => ({
         label: industry.value,
-        value: industry.key
+        value: industry.key,
+        id: industry.id
       })) ?? []
     )
   }, [config?.industry_lists])
@@ -170,6 +170,9 @@ const Step1 = (props: any) => {
       firstName,
       lastName
     } = data
+    const industry_id = industryOptions?.find((item) => item.value === industry)?.id
+    const job_type_id = jobTypeList?.find((item) => item.value === jobType)?.id
+
     const payload = {
       redirect: router.query?.redirect ? router.query.redirect : null,
       preferenceId: preference?.id,
@@ -177,20 +180,20 @@ const Step1 = (props: any) => {
         job_title: jobTitle.value || '',
         function_job_title_id: jobTitle.id,
         function_job_title: jobTitle.value,
-        job_type_key: jobType || '',
-        location_key: desiredLocation?.key || '',
+        job_type_id,
+        location_id: desiredLocation?.id || '',
         salary_range_from: Number(minSalary),
         salary_range_to: Number(maxSalary),
-        industry_key: industry,
+        industry_id,
         currency_key: currency,
         country_key: desiredCountry,
         country_id: getCountryId(),
-        currency_id:currencyLists?.find(e=>e.key ==countryForCurrency[country])?.id,
+        currency_id: currencyLists?.find((e) => e.key == countryForCurrency[country])?.id
       },
       profile: {
         notice_period_id: noticePeriod,
         country_id: getCountryId(),
-        location_key: location?.key || '',
+        location_id: location?.id || '',
         phone_num: countryCode + contactNumber,
         first_name: firstName,
         last_name: lastName
@@ -204,7 +207,6 @@ const Step1 = (props: any) => {
 
   return (
     <>
-     
       <OnBoardLayout
         headingText={
           <Text bold textStyle='xxxl' tagName='h2'>
@@ -580,7 +582,20 @@ const Step1 = (props: any) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req ,query}) => {
+const Step1 = (props) => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchConfigRequest())
+  }, [])
+
+  const locationList = useSelector((store: any) => store.config.config.response?.location_lists)
+  if (!locationList?.length) {
+    return null
+  }
+  return <Step1Content {...props} />
+}
+
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
   const accessToken = req.cookies.accessToken
   const lang = await getDictionary(query.lang as 'en-US')
   if (!accessToken) {
