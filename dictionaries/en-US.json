@@ -794,7 +794,8 @@
     "yes":"Yes",
     "no":"No",
     "askResultText1":"You are unable to request for interview result as you did not attend the interview.",
-    "askResultText2":"You can only request for result from {{enableDate}} onwards."
+    "askResultText2":"You can only request for result from {{enableDate}} onwards.",
+    "cancelInterview": "Cancel interview"
   },
   "quickUploadResume": {
     "title": "Upload your resume",

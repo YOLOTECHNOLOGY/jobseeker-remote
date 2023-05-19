@@ -794,8 +794,9 @@
     "attendancelabel": "Interview attendance",
     "yes": "Yes",
     "no": "No",
-    "askResultText1":"You are unable to request for interview result as you did not attend the interview.",
-    "askResultText2":"You can only request for result from {{enableDate}} onwards."
+    "askResultText1": "You are unable to request for interview result as you did not attend the interview.",
+    "askResultText2": "You can only request for result from {{enableDate}} onwards.",
+    "cancelInterview": "Cancel interview"
   },
   "chatCommonPhrase": {},
   "quickUploadResume": {
