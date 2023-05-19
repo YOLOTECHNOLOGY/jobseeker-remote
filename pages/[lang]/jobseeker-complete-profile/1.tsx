@@ -358,7 +358,7 @@ const Step1 = (props: any) => {
                     variant='outlined'
                     autoComplete='off'
                     jobTitle={preference?.function_job_title}
-                    title='Job Title'
+                    title={lang.profile?.JobTitleText}
                     helperText={fieldState?.error?.message}
                     required
                     {...fieldState}

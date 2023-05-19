@@ -18,6 +18,8 @@ import { AppDownQRCode } from 'images'
 import Image from 'next/image'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import SearchIcon from '@mui/icons-material/Search'
+import { getCountryId } from 'helpers/country';
+
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
 }
@@ -75,7 +77,11 @@ const SearchArea = (props: any) => {
           fetch(
             `${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=5&query=${val}&${transQs(
               searchHistories
-            )}`
+            )}`,{
+              headers:{
+                'Country-Id': String(getCountryId())
+              }        
+            }
           )
             .then((resp) => resp.json())
             .then((data) => setSuggestionList(data.data.items))

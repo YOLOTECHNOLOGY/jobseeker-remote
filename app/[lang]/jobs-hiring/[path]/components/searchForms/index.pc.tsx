@@ -274,13 +274,13 @@ const SearchArea = (props: any) => {
                       className={styles.downloadApp_phoneIconHomePath}
                     />
                   </svg>
-                  <div className={styles.text}>Download APP and chat with Boss </div>
+                  <div className={styles.text}> {search.downloadAPP} </div>
                   <div className={styles.popver}>
                     <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
                     <p>
-                      Chat directly
+                    {search.chatDirectly} 
                       <br />
-                      with Boss
+                    {search.withBoss}
                     </p>
                   </div>
                 </div>
