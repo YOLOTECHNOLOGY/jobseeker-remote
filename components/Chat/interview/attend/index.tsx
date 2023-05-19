@@ -5,7 +5,7 @@ import styles from './index.module.scss'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 const Attend = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef, loading, data, applicationId } = props
+    const { contextRef, loading, data, applicationId,dic } = props
     const actionsRef = useRef({} as any)
     const context = {
         showAttend(actions) {
@@ -21,9 +21,9 @@ const Attend = (props: any) => {
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
-        headerTitle='Interview result'
-        firstButtonText='Back'
-        secondButtonText='Next'
+        headerTitle={dic.resultTitle}
+        firstButtonText={dic.back}
+        secondButtonText={dic.next}
         firstButtonIsClose={false}
         secondButtonIsClose={false}
         handleFirstButton={() => actionsRef.current.back?.()}
@@ -38,20 +38,20 @@ const Attend = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <p className={styles.mainText}>Did you attended the interview?</p>
+        <p className={styles.mainText}>{dic.resultText}</p>
         <MaterialBasicSelect
             className={styles.fullWidth}
-            label='Interview attendance'
+            label={dic.attendancelabel}
             value={value}
             onChange={(e) => onChange(e.target.value)}
             options={[
                 {
                     value: '1',
-                    label: 'Yes'
+                    label: dic.yes
                 },
                 {
                     value: '0',
-                    label: 'No'
+                    label: dic.no
                 }
             ]}
         />

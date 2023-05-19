@@ -21,7 +21,7 @@
       "btn1": "关闭",
       "btn2": "保存"
     },
-    "change":"切换"
+    "change": "切换"
   },
   "foot": {
     "about": "关于我们",
@@ -785,7 +785,14 @@
     "cancelReason": "取消原因",
     "cancelTitle": "面试已取消",
     "confirmText1": "我接受这个面试邀请，意味着我同意在其指定的时间和地点参加面试。\n如果我需要改变时间，我会在面试开始前至少7小时通知招聘者。",
-    "contirmText2": "求职者爽约面试会记录一条爽约记录，求职者在3个月内累计超过3条爽约记录，会被禁止使用Bossjob六个月。"
+    "contirmText2": "求职者爽约面试会记录一条爽约记录，求职者在3个月内累计超过3条爽约记录，会被禁止使用Bossjob六个月。",
+    "back": "返回",
+    "next": "下一步",
+    "resultTitle":"面试结果",
+    "resultText":"您是否参加了这场面试?",
+    "attendancelabel":"面试参加情况",
+    "yes":"是",
+    "no":"否"
   },
   "quickUploadResume": {
     "title": "上传你的简历",
