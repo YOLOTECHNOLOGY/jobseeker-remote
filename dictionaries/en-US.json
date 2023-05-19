@@ -787,11 +787,14 @@
     "contirmText2":"Job seekers who do not turn up for interview will be marked as “No Show”. Job seekers who accumulate 3 no-show records in 3 months will be banned from using Bossjob for 6 months.",
     "back":"Back",
     "next":"Next",
+    "close": "Close",
     "resultTitle":"Interview result",
     "resultText":"Did you attended the interview?",
     "attendancelabel":"Interview attendance",
     "yes":"Yes",
-    "no":"No"
+    "no":"No",
+    "askResultText1":"You are unable to request for interview result as you did not attend the interview.",
+    "askResultText2":"You can only request for result from {{enableDate}} onwards."
   },
   "quickUploadResume": {
     "title": "Upload your resume",
