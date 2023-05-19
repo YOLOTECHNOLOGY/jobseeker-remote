@@ -1,17 +1,17 @@
 {
   "header": {
-    "findJobs": "findJobs",
-    "companies": "companies",
-    "courses": "courses",
-    "careerGuide": "careerGuide",
-    "hiring": "I’m hiring",
-    "getStarted": "getStarted",
-    "manageResume": "manageResume",
-    "myJobs": "myJobs",
-    "accountSettings": "accountSettings",
-    "logOut": "logOut",
+    "findJobs": "Find Jobs",
+    "companies": "Companies",
+    "courses": "Courses",
+    "careerGuide": "Career Guide",
+    "hiring": "I'm hiring",
+    "getStarted": "Get Started",
+    "manageResume": "Manage Resume",
+    "myJobs": "My Jobs",
+    "accountSettings": "Account Settings",
+    "logOut": "Log Out",
     "Chat": "Chat",
-    "downloadApp": "downloadApp",
+    "downloadApp": "Download App",
     "pleaseVerify": "Please verify your email address.",
     "verifyNow.": " Verify now.",
     "switchCountry": {
@@ -787,8 +787,17 @@
     "cancelReason":"Cancel reason",
     "cancelTitle":"Interview cancelled",
     "confirmText1": "By accepting this interview invite, I agreed that I will show up for the interview at the given time and place. \nIf I need to change the time, I will notify the recruiter at least 7 hours in advance.",
-    "contirmText2":"Job seekers who do not turn up for interview will be marked as “No Show”. Job seekers who accumulate 3 no-show records in 3 months will be banned from using Bossjob for 6 months."
-  
+    "contirmText2":"Job seekers who do not turn up for interview will be marked as “No Show”. Job seekers who accumulate 3 no-show records in 3 months will be banned from using Bossjob for 6 months.",
+    "back":"Back",
+    "next":"Next",
+    "close": "Close",
+    "resultTitle":"Interview result",
+    "resultText":"Did you attended the interview?",
+    "attendancelabel":"Interview attendance",
+    "yes":"Yes",
+    "no":"No",
+    "askResultText1":"You are unable to request for interview result as you did not attend the interview.",
+    "askResultText2":"You can only request for result from {{enableDate}} onwards."
   },
   "quickUploadResume": {
     "title": "Upload your resume",

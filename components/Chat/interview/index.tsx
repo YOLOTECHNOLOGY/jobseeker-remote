@@ -22,7 +22,7 @@ const Interview = (props: any) => {
         <AcceptModal {...props} dic={interviewDictionary}/>
         <ConfirmModal {...props} dic={interviewDictionary}/>
         <DetailModal {...props} dic={interviewDictionary}/>
-        <Attend {...props} />
+        <Attend {...props} dic={interviewDictionary} />
         <AskResultFailed {...props} dic={interviewDictionary}/>
     </>
 }
