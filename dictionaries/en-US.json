@@ -474,7 +474,10 @@
         "title": "{{searchQuery}} Jobs in {{country}}, Apply Job Opportunities - {{month}} {{year}} | Bossjob",
         "desc": "New {{searchQuery}} Jobs in {{location}}, {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
       }
-    }
+    },
+    "downloadAPP":" Download APP and chat with Boss",
+    "chatDirectly":" Chat directly",
+    "withBoss":"with Boss"
   },
   "manageProfile": {
     "tab": {

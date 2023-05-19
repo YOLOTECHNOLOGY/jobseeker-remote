@@ -1,11 +1,8 @@
 import React from 'react'
 import styles from './index.module.scss'
-const defaultDescription = <>
-    <div>No results found.</div>
-    <div>Please use a different keyword or try to change your filter selection.</div>
-</>
-const Empty = ({
-    description = defaultDescription }: any) => {
+
+const Empty = ({ description,lang }: any) => {
+    console.log(lang,'lang')
     return <div className={styles.container}>
         <svg width="287" height="285" viewBox="0 0 287 285" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M138.125 284.429C59.3313 282.29 29.2341 242.24 24.0347 222.482L38.7416 165.883L60.3563 94.3539C54.1913 84.2522 41.2373 62.177 38.7416 54.6898C35.622 45.3309 38.9644 32.6294 44.5352 26.1673C50.106 19.7052 67.4869 4.107 111.83 0.764524C156.174 -2.57795 171.549 5.88967 182.468 9.90065C193.387 13.9116 219.235 29.9555 226.812 45.7765C234.388 61.5976 229.04 79.647 224.806 86.7776C220.572 93.9082 215.447 100.37 215.002 116.86C214.556 133.349 242.41 142.263 249.763 144.937C257.117 147.611 264.693 151.844 274.052 164.1C295.221 197.525 283.857 228.276 274.052 238.972C264.248 249.668 236.616 287.104 138.125 284.429Z" fill="url(#paint0_linear_3914_23310)" />
@@ -72,7 +69,10 @@ const Empty = ({
         </svg>
 
         <div className={styles.description}>
-            {description}
+            {description ? description : <>
+                                    <div>{lang?.noResultsFound}</div>
+                                    <div>{lang?.pleaseUseDifferentKeyword}</div>
+                                </>}
         </div>
     </div>
 }

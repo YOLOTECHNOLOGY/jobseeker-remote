@@ -1,11 +1,13 @@
 'use client'
-import React,{} from 'react'
+import React,{useContext} from 'react'
 import styles from './index.module.scss'
 // import { CloseIcon } from 'images'
 // import Image from 'next/image'
 import Button from '@mui/material/Button'
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 const PopContainer = (props: any) => {
+    const { search } = useContext(languageContext) as any
     // const syncHeight = () => {
     //     document.documentElement.style.setProperty('--window-inner-height', `${window.innerHeight}px`)
     // }
@@ -25,8 +27,8 @@ const PopContainer = (props: any) => {
         </div>
         <div className={styles.content}>{children}</div>
         {multiple && <div className={styles.buttonContent}>
-            <Button className={styles.resetButton} onClick={onReset}>Reset</Button>
-            <Button className={styles.saveButton} onClick={onSave}>Save</Button>
+            <Button className={styles.resetButton} onClick={onReset}>{search.reset2}</Button>
+            <Button className={styles.saveButton} onClick={onSave}>{search.save}</Button>
         </div>}
     </div>
 }

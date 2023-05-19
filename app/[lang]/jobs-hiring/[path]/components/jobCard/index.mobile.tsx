@@ -4,26 +4,38 @@ import React, { } from 'react'
 import styles from '../../index.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-
-
+import { getValueById } from 'helpers/config/getValueById'
+import { useSelector } from 'react-redux'
 const JobCard = (props: any) => {
     const {
         job_title,
         // job_region,
         salary_range_value,
-        job_type,
-        job_location,
-        xp_lvl,
-        degree,
+       //  job_type,
+       // job_location,
+       // xp_lvl,
+       // degree,
         recruiter_full_name,
         recruiter_job_title,
         company_logo,
         company_name,
         id,
-        job_url
+        job_url,
+        job_type_id,
+        job_location_id,
+        xp_lvl_id,
+        degree_id,
     } = props
-    const labels = [job_type, xp_lvl, degree].filter(a => a)
-    const router = useRouter()
+    console.log(props,'props')
+   // const labels = [job_type, xp_lvl, degree].filter(a => a)
+    const config = useSelector((store:any)=> store.config.config.response)
+    const labels = [
+        getValueById(config,job_type_id,'job_type_id'), 
+       
+        getValueById(config,xp_lvl_id,'xp_lvl_id'),
+        getValueById(config,degree_id,'degree_id'),
+       ].filter((a) => a)
+     const router = useRouter()
 
     return <div className={styles.jobCardMoblie}>
         <div
@@ -60,7 +72,7 @@ const JobCard = (props: any) => {
                     </div>
                 </div>
                 <div className={styles.fullName}>
-                    {job_location}
+                    {getValueById(config,job_location_id,'location_id')}
                 </div>
             </div>
         </div>

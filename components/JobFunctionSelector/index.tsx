@@ -24,7 +24,7 @@ const formatMenuText = (value) => {
 const JobFunctionSelector = (props: any) => {
   const { value, jobTitle = '', className, title, onChange, isTouched, onBlur,lang, ...rest } = props
   const menuRef = useRef(null)
-
+  console.log(lang,'lang')
   const [showModal, setShowModal] = useState(false)
   const [selectedSubItem, setSelectedSubItem] = useState<any>({})
   const [expandeds, setExpandeds] = useState([])

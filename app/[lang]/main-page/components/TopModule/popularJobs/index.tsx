@@ -12,12 +12,12 @@ const PopularJob = () => {
   const { home } = useContext(languageContext) as any
 
   const tags = [
-    { value: 'Java Developer', label: home.tag.java },
-    { value: 'Full Stack Engineer', label: home.tag.full },
-    { value: 'Web Developer', label: home.tag.web },
-    { value: 'Customer Service', label: home.tag.cs },
-    { value: 'Accountant', label: home.tag.accountant },
-    { value: 'Sales Consultant', label: home.tag.sales }
+    { value: home.tag.java, label: home.tag.java },
+    { value: home.tag.full, label: home.tag.full },
+    { value: home.tag.web, label: home.tag.web },
+    { value: home.tag.cs, label: home.tag.cs },
+    { value: home.tag.accountant, label: home.tag.accountant },
+    { value: home.tag.sales, label: home.tag.sales }
   ]
   const querys = useMemo(() => {
     return tags.map((tag) => buildQuery(location?.seo_value, tag.value))

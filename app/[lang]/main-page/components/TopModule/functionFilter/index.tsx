@@ -66,7 +66,7 @@ const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps 
             <div className={styles.mainTitleFirst}>{data.simpleTitle || data.title}</div>
             <div className={styles.subContainer}>
                 {subTitles.map((subTitle,index) => (
-                    <Link prefetch={false} key={subTitle+index} href={buildQuery(location?.seo_value, data?.['seo-value'])}>
+                    <Link prefetch={false} key={subTitle+index} href={buildQuery(location?.seo_value,subTitle)}>
                         <div key={subTitle+index} title={subTitle} style={{ maxWidth: contentWidth }} className={styles.mainTitleSub}>
                             {subTitle}
                         </div>

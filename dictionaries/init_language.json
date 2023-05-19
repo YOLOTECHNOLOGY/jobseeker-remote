@@ -475,7 +475,14 @@
         "title": "{{searchQuery}} Jobs in {{country}}, Apply Job Opportunities - {{month}} {{year}} | Bossjob",
         "desc": "New {{searchQuery}} Jobs in {{location}}, {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
       }
-    }
+    },
+    "noResultsFound":"No results found.",
+    "pleaseUseDifferentKeyword":"Please use a different keyword or try to change your filter selection.",
+    "reset2":"Reset",
+    "save":"Save",
+    "downloadAPP":" Download APP and chat with Boss",
+    "chatDirectly":" Chat directly",
+    "withBoss":"with Boss"
   },
   "manageProfile": {
     "tab": {
@@ -724,7 +731,8 @@
     "fieldOfStudy": "Field of Study",
     "fillUpTheFieldsWith": " Fill up the fields with (*) to proceed.",
     "addAEducation": " Add a education",
-    "notWantToEnterEducation": "I do not want to enter my Education now"
+    "notWantToEnterEducation": "I do not want to enter my Education now",
+    "searchForJobTitle":"Search for job title"
   },
   "chat": {
     "chatTitle": "Chat",

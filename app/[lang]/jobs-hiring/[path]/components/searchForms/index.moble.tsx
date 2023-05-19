@@ -28,15 +28,15 @@ import SearchIcon from '@mui/icons-material/Search'
 import { cloneDeep } from 'lodash-es'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
-const sortOptions = [
-  { label: 'Newest', value: '1' },
-  { label: 'Relevance', value: '2' },
-  { label: 'Highest Salary', value: '3' }
-]
+
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
-  const { search } = useContext(languageContext) as any
-
+  const { search ,myJobs} = useContext(languageContext) as any
+  const sortOptions = [
+    { label: search?.newest, value: '1' },
+    { label: search?.relevance, value: '2' },
+    { label: search?.highestSalary, value: '3' }
+  ]
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchConfigSuccess(config))
@@ -225,7 +225,7 @@ const SearchArea = (props: any) => {
               value={sort}
               onSelect={setSort}
               className={styles.filterItems}
-              label='Sort by'
+              label={myJobs.sortBy}
             />
             <JobFunction
               // label='Job Function'
@@ -234,6 +234,7 @@ const SearchArea = (props: any) => {
               value={jobFunctionValue}
               className={[styles.filterItems, styles.jobFunctions]}
               onChange={jobFunctionChange}
+              lang={search}
             />
             <Multiple
               label={search.searchModal.industry}
@@ -241,6 +242,7 @@ const SearchArea = (props: any) => {
               options={industryList}
               className={styles.filterItems}
               onSelect={setIndustry}
+              lang={search}
             />
             <MultyGroup
               label={search.more}
@@ -250,6 +252,7 @@ const SearchArea = (props: any) => {
               className={styles.filterItems}
               onSelect={setMoreData}
               defaultValue={moreData}
+              lang={search}
             />
           </div>
         </div>

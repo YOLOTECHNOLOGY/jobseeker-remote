@@ -16,7 +16,7 @@ import { debounce } from 'lodash-es'
 const toSeo = (value) => value?.replaceAll('/', '-')?.replaceAll(' ', '-')?.toLowerCase()
 
 const JobFunctionMultiSelector = (props: any) => {
-  const { label, className, value, isTouched, onChange, ...rest } = props
+  const { label, className, value, isTouched, onChange, lang, ...rest } = props
   const [showModal, setShowModal] = useState(false)
   const [firstRender, setFirstRender] = useState(true)
   const [isClosing, setIsClosing] = useState(false)
@@ -469,7 +469,7 @@ const JobFunctionMultiSelector = (props: any) => {
                 [styles.hide]: !activeFirst && !firstRender
               })}
             >
-              <Header title='Job Function' onClose={animtionClose}></Header>
+              <Header title={label} onClose={animtionClose}></Header>
 
               <div className={styles.columnMain} style={{ height: height - 56 - 76 - 10 }}>
                 {formattedJobfunctions.map((first) => {
@@ -554,7 +554,7 @@ const JobFunctionMultiSelector = (props: any) => {
               sx={{ height: '44px', width: '40%', borderRadius: 10 }}
             >
               <Text textColor='primaryBlue' bold>
-                Reset
+               {lang?.reset2}
               </Text>
             </MaterialButton>
 
@@ -565,7 +565,7 @@ const JobFunctionMultiSelector = (props: any) => {
               sx={{ height: '44px', width: '40%', borderRadius: 10 }}
             >
               <Text textColor='white' bold>
-                Save
+              {lang?.save}
               </Text>
             </MaterialButton>
           </div>

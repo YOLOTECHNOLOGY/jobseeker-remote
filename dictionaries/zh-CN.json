@@ -475,7 +475,14 @@
         "title": "{{country}}的{{searchQuery}}工作, 现在抓住工作机会 - {{month}} {{year}} | Bossjob",
         "desc": "在{{country}}，{{location}}的新{{searchQuery}}工作已经可申请啦。立即在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
       }
-    }
+    },
+    "noResultsFound":"没有结果",
+    "pleaseUseDifferentKeyword":"请使用不同的搜索条件并重试",
+    "reset2":"重置",
+    "save":"保存",
+    "downloadAPP":"下载APP",
+    "chatDirectly":"直接谈",
+    "withBoss":"和老板"
   },
   "manageProfile": {
     "tab": {
@@ -724,7 +731,8 @@
     "fieldOfStudy": "研究领域",
     "fillUpTheFieldsWith": " 用 (*) 填写字段以继续。",
     "addAEducation": " 添加学历",
-    "notWantToEnterEducation": "我现在不想接受教育"
+    "notWantToEnterEducation": "我现在不想接受教育",
+    "searchForJobTitle":"搜索工作标题"
   },
   "chat": {
     "chatTitle": "聊天",

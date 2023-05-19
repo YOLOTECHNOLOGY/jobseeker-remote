@@ -180,7 +180,7 @@ const Main = async (props: any) => {
             {/* <Loading/> */}
             <JobAlert searchValues={props.searchValues} config={props.config} />
             <Suspense fallback={<Loading />}>
-              <Table searchValues={props.searchValues ?? null} config={props.config} />
+              <Table searchValues={props.searchValues ?? null} lang={search} config={props.config} />
             </Suspense>
           </div>
           <div className={styles.rightContent}>

@@ -100,6 +100,8 @@ const ModalJobAlerts = ({
     })
     return jobAlertsList
   }, [jobAlertsList])
+
+  console.log(jobAlertsList,formattedAlertList,'formattedAlertList')
   useEffect(() => {
     if (showManageJobAlertsModal && !isDeletingJobAlert) {
       if (isDeletingJobAlert || !isUpdatingJobAlert) {
@@ -151,7 +153,7 @@ const ModalJobAlerts = ({
                   <li key={alert.id} className={styles.ModalJobAlertsItem}>
                     <div className={styles.ModalJobAlertsItemHeader}>
                       <Text textStyle='xl' bold>
-                        {titleCase(alert.keyword_value)}
+                        {titleCase(alert.keyword_value)}1111
                       </Text>
                       <div className={styles.ModalJobAlertsItemAction}>
                         <img
