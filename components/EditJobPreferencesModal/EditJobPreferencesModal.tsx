@@ -255,6 +255,7 @@ const EditJobPreferencesModal = ({
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
                   label={editModal.currencyType}
+                  IconComponent={null}
                   options={currencyLists}
                   required
                   disabled
