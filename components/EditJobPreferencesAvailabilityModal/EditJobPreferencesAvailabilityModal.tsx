@@ -13,6 +13,7 @@ type EditJobPreferencesAvailabilityModalProps = {
   showModal: boolean
   config: any
   userDetail: any
+  lang: any
   handleModal: Function
 }
 
@@ -21,7 +22,8 @@ const EditJobPreferencesAvailabilityModal = ({
   showModal,
   config,
   userDetail,
-  handleModal
+  handleModal,
+  lang
 }: EditJobPreferencesAvailabilityModalProps) => {
   const preferredAvailability = userDetail?.notice_period_id
   const dispatch = useDispatch()
@@ -39,6 +41,9 @@ const EditJobPreferencesAvailabilityModal = ({
       noticePeriod: preferredAvailability
     }
   })
+  // translate maps
+  const langPreferences = lang.manageProfile.tab.preference
+
   useEffect(() => {
     if (userDetail && preferredAvailability) {
       setAvailability(userDetail.notice_period_id)
@@ -85,9 +90,9 @@ const EditJobPreferencesAvailabilityModal = ({
     <Modal
       showModal={showModal}
       handleModal={handleCloseModal}
-      headerTitle='Job Preference'
-      firstButtonText='Cancel'
-      secondButtonText='Save'
+      headerTitle={langPreferences.availableModal.title}
+      firstButtonText={langPreferences.availableModal.btn1}
+      secondButtonText={langPreferences.availableModal.btn2}
       isSecondButtonLoading={isUpdating}
       firstButtonIsClose
       handleFirstButton={handleCloseModal}

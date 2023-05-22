@@ -68,6 +68,7 @@ import {
   changeJobPreference,
   changeUserInfoValue
 } from 'helpers/config/changeUserInfoValue'
+import { getValueById } from 'helpers/config/getValueById'
 const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
   const {
     manageProfile: {
@@ -1013,7 +1014,7 @@ const ManageProfilePage = ({ lang }: any) => {
   const jobData = useMemo(() => {
     return [userDetail?.job_preferences || [], Date.now()]
   }, [userDetail?.job_preferences])
-  const availability = userDetail?.notice_period
+  const availability = getValueById(config, userDetail?.notice_period_id, 'notice_period_id')
   const [modalState, setModalState] = useState({
     profile: {
       showModal: false,
@@ -1115,6 +1116,7 @@ const ManageProfilePage = ({ lang }: any) => {
         config={config}
         userDetail={userDetail}
         handleModal={handleModal}
+        lang={lang}
       />
       <EditSkillModal
         lang={lang}
