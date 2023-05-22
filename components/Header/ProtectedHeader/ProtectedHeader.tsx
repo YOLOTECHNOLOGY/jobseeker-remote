@@ -12,7 +12,7 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 import { IMContext } from 'components/Chat/IMProvider.client'
 import SwitchNation from 'components/SwitchNation/SwitchNation'
-import { getLanguage,getCountryId } from 'helpers/country'
+import { getLanguage, getCountryId } from 'helpers/country'
 import { getValueById } from 'helpers/config/getValueById'
 /* Images */
 import { BossjobLogoWhite as BossjobLogo, DefaultAvatar } from 'images'
@@ -50,8 +50,7 @@ const ProtectedHeader = ({ lang }: any) => {
   const { totalUnread } = useContext(IMContext)
   // const totalUnread = 999
   const config = useSelector((store: any) => store.config.config.response)
-  
-  console.log(config,'config1111')
+
   useEffect(() => {
     if (pathname && isShowHeaderMenu) {
       setIsShowHeaderMenu(false)
@@ -342,7 +341,7 @@ const ProtectedHeader = ({ lang }: any) => {
               >
                 <div className={styles.headerMenuLink}>
                   <Text textStyle='base'>
-                    { getValueById(config,getCountryId(),'country_id') }, {getLanguage()} -{' '}
+                    {getValueById(config, getCountryId(), 'country_id')}, {getLanguage()} -{' '}
                     <span style={{ color: '#136FD3' }}>{change}</span>
                   </Text>
                 </div>
