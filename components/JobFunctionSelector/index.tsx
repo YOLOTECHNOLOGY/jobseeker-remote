@@ -24,7 +24,6 @@ const formatMenuText = (value) => {
 const JobFunctionSelector = (props: any) => {
   const { value, jobTitle = '', className, title, onChange, isTouched, onBlur, lang, ...rest } = props
   const menuRef = useRef(null)
-  console.log(lang, 'lang')
   const [showModal, setShowModal] = useState(false)
   const [selectedSubItem, setSelectedSubItem] = useState<any>({})
   const [expandeds, setExpandeds] = useState([])
@@ -131,14 +130,12 @@ const JobFunctionSelector = (props: any) => {
     },
     [expandeds]
   )
-  console.log({ selectedKey, selectedItem, selectedSubItem })
   const initDefaultJobFunctionSelect = () => {
     if (jobFunctions?.length) {
       jobFunctions.map(e => {
         e.sub_function_list.map(job => {
           job.job_titles.forEach((item) => {
             if (item?.id === value.id) {
-              console.log({ item, job })
               onChange(item)
               setSelectedKey(e.id)
               setSelectedSubItem(job)
