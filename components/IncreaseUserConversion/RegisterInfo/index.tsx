@@ -176,6 +176,7 @@ const RegisterInfo = (props: any) => {
           emailTOPError={emailTOPError}
           customizeSendOTPContainerMainFieldStyle={styles.customizeSendOTPContainerMainField}
           hideMagicLink={quickUpladResume === 'upFile'}
+          lang={lang.getStatred}
         />
       )}
 
