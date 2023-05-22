@@ -484,6 +484,9 @@
       "profile": {
         "tabTitle": "Profile",
         "findYou": "Let employer find you faster!",
+        "year_one": "{{age}} year old",
+        "year_other": "{{age}} years old",
+        "about": "About",
         "informationCard": {
           "title": "Complete all information about you",
           "content": "Help the recruiter to know more about you and connect more easily with you.",

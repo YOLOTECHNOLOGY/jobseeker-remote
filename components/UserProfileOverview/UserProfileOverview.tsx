@@ -22,6 +22,7 @@ import {
 
 /* Styles */
 import styles from './UserProfileOverview.module.scss'
+import { formatTemplateString } from 'helpers/formatter'
 
 type UserProfileOverviewProps = {
   name: string
@@ -32,6 +33,7 @@ type UserProfileOverviewProps = {
   description?: string
   birthdate?: string
   expLevel?: string
+  lang?: object
   handleEditClick: () => void
 }
 
@@ -44,6 +46,7 @@ const UserProfileOverview = ({
   description,
   birthdate,
   expLevel,
+  lang,
   handleEditClick
 }: UserProfileOverviewProps) => {
   const { width } = useWindowDimensions()
@@ -54,6 +57,15 @@ const UserProfileOverview = ({
     const then = moment(birthdate).format('YYYY-MM-DD')
     age = now.diff(moment(then), 'years')
   }
+  
+  const getYearString = (age: number) => {
+    if(age > 1) {
+      return formatTemplateString((lang as any).profile.year_other, {age})
+    } else {
+      return formatTemplateString((lang as any).profile.year_one, {age})
+    }
+  }
+
   return (
     <div className={styles.userOverview}>
       <div className={styles.userOverviewEditIcon} onClick={()=>handleEditClick()}>
@@ -71,9 +83,9 @@ const UserProfileOverview = ({
         {birthdate && age >= 16 && (
           <div className={styles.userOverviewInfoDetail}>
             <img src={BodyIcon} width='14' height='14' style={{ marginRight: '6px' }} />
-            <Text textStyle='lg'> {age} year{age > 0 ? 's' : ''} old</Text>
+            <Text textStyle='lg'>{getYearString(age)}</Text>
           </div>
-        )}
+        )}  
         {location && (
           <div className={styles.userOverviewInfoDetail}>
             <img src={LocationIcon} width='14' height='14' style={{ marginRight: '6px' }} />
@@ -99,7 +111,7 @@ const UserProfileOverview = ({
         {description && (
           <div className={styles.userOverviewInfoAbout}>
             <Text textColor='primaryBlue' textStyle='xl' bold>
-              About
+              {(lang as any).profile.about}
             </Text>
             <ReadMore className={styles.readMore} size={isMobile ? 200 : 160} text={description} />
           </div>
