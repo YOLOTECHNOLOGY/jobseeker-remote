@@ -476,13 +476,13 @@
         "desc": "在{{country}}，{{location}}的新{{searchQuery}}工作已经可申请啦。立即在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
       }
     },
-    "noResultsFound":"没有结果",
-    "pleaseUseDifferentKeyword":"请使用不同的搜索条件并重试",
-    "reset2":"重置",
-    "save":"保存",
-    "downloadAPP":"下载APP",
-    "chatDirectly":"直接谈",
-    "withBoss":"和老板"
+    "noResultsFound": "没有结果",
+    "pleaseUseDifferentKeyword": "请使用不同的搜索条件并重试",
+    "reset2": "重置",
+    "save": "保存",
+    "downloadAPP": "下载APP",
+    "chatDirectly": "直接谈",
+    "withBoss": "和老板"
   },
   "manageProfile": {
     "tab": {
@@ -703,7 +703,7 @@
     "OR": "或者",
     "createFreeResume": "创建免费简历",
     "addYourWorkExperience": "添加您的工作经验",
-    "fillInYourCompleteWork ": "填写完整的工作经历，入围几率将提高83%。",
+    "fillInYourCompleteWork": "填写完整的工作经历，入围几率将提高83%。",
     "jobFunction": "工作职能",
     "industry": "行业",
     "description": "描述",
@@ -732,7 +732,7 @@
     "fillUpTheFieldsWith": " 用 (*) 填写字段以继续。",
     "addAEducation": " 添加学历",
     "notWantToEnterEducation": "我现在不想接受教育",
-    "searchForJobTitle":"搜索工作标题"
+    "searchForJobTitle": "搜索工作标题"
   },
   "chat": {
     "chatTitle": "聊天",
@@ -805,9 +805,9 @@
     "askResultText1": "没有参加的面试，不能申请结果",
     "askResultText2": "在 {{enableDate}} 以后才可以申请查看结果",
     "cancelInterview": "取消面试",
-    "acceptAnother":"我已经接受了其他工作",
-    "retime":"我想更改面试时间",
-    "cancelReasonLabel":"您即将取消面试，请让招聘者知道取消的原因："
+    "acceptAnother": "我已经接受了其他工作",
+    "retime": "我想更改面试时间",
+    "cancelReasonLabel": "您即将取消面试，请让招聘者知道取消的原因："
   },
   "quickUploadResume": {
     "title": "上传你的简历",

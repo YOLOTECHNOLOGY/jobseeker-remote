@@ -476,13 +476,13 @@
         "desc": "New {{searchQuery}} Jobs in {{location}}, {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
       }
     },
-    "noResultsFound":"No results found.",
-    "pleaseUseDifferentKeyword":"Please use a different keyword or try to change your filter selection.",
-    "reset2":"Reset",
-    "save":"Save",
-    "downloadAPP":" Download APP and chat with Boss",
-    "chatDirectly":" Chat directly",
-    "withBoss":"with Boss"
+    "noResultsFound": "No results found.",
+    "pleaseUseDifferentKeyword": "Please use a different keyword or try to change your filter selection.",
+    "reset2": "Reset",
+    "save": "Save",
+    "downloadAPP": " Download APP and chat with Boss",
+    "chatDirectly": " Chat directly",
+    "withBoss": "with Boss"
   },
   "manageProfile": {
     "tab": {
@@ -703,7 +703,7 @@
     "OR": "OR",
     "createFreeResume": "Create Free Resume",
     "addYourWorkExperience": "Add your work experience",
-    "fillInYourCompleteWork ": "Fill in your complete work experiences will increase your chances of being shortlisted by 83%.",
+    "fillInYourCompleteWork": "Fill in your complete work experiences will increase your chances of being shortlisted by 83%.",
     "jobFunction": "Job function",
     "industry": "Industry",
     "description": "Description",
@@ -732,7 +732,7 @@
     "fillUpTheFieldsWith": " Fill up the fields with (*) to proceed.",
     "addAEducation": " Add a education",
     "notWantToEnterEducation": "I do not want to enter my Education now",
-    "searchForJobTitle":"Search for job title"
+    "searchForJobTitle": "Search for job title"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -805,9 +805,9 @@
     "askResultText1": "You are unable to request for interview result as you did not attend the interview.",
     "askResultText2": "You can only request for result from {{enableDate}} onwards.",
     "cancelInterview": "Cancel interview",
-    "acceptAnother":"I have accepted another offer.",
-    "retime":"I would like to reschedule the interview timing.",
-    "cancelReasonLabel":"You are about to cancel the interview. Please let recruiter know why you are cancelling this interview:"
+    "acceptAnother": "I have accepted another offer.",
+    "retime": "I would like to reschedule the interview timing.",
+    "cancelReasonLabel": "You are about to cancel the interview. Please let recruiter know why you are cancelling this interview:"
   },
   "chatCommonPhrase": {},
   "quickUploadResume": {
