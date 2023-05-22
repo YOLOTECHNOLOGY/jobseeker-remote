@@ -422,6 +422,7 @@ const EditWorkExperienceModal = ({
                   jobFunctionId={''}
                   value={jobFunction}
                   onChange={setJobFunction}
+                  lang={lang}
                   // options={jobCategoryList}
                 />
               </div>
