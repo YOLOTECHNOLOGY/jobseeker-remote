@@ -519,7 +519,7 @@ const Step3 = (props: any) => {
                 <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
                   {((from, to) => {
                     const years = to.diff(from, 'year')
-                    const month = to.diff(from, 'month') - years * 12 || 1
+                    const month = to.diff(from, 'month') - years * 12 || (years ? 0 : 1)
                     return `${from?.format?.('MMMM yyyy')}-${
                       experience?.is_currently_work_here
                         ? lang?.profile?.present
