@@ -53,9 +53,9 @@ const UserProfileOverview = ({
   const isMobile = width < 768 ? true : false
   let age 
   if (birthdate){
-    const now = moment(new Date())
-    const then = moment(birthdate).format('YYYY-MM-DD')
-    age = now.diff(moment(then), 'years')
+    const now = new Date()
+    const then = new Date(birthdate)
+    age = now.getFullYear() - then.getFullYear()
   }
   
   const getYearString = (age: number) => {
