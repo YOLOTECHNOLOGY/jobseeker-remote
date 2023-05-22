@@ -93,7 +93,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
   useMemo(() => {
     changeCompanyIndustry(workExperiences, config)
   }, [workExperiences])
-
+  const { currency_lists } = config
   const isProfileInformationFilled = !!(
     firstName &&
     lastName &&
@@ -288,6 +288,10 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
         </div>
         <div className={styles.sectionContent}>
           {workExperiences.map((workExp) => {
+            const { currency_id } = workExp
+            const currencySymbol = currency_lists.find(
+              ({ id }) => currency_id === id
+            )?.display_symbol
             const workingPeriodFrom = moment(workExp?.working_period_from)
             const workingPeriodTo = moment(workExp?.working_period_to)
             const dateDiff = getYearMonthDiffBetweenDates(
@@ -319,8 +323,9 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                 </div>
                 <div className={styles.companyInfoWrapper}>
                   <Text textStyle='lg'>{workExp.company}</Text>
-                  <Text textStyle='lg'>{`${workExp.location || ''}${workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
-                    }`}</Text>
+                  <Text textStyle='lg'>{`${workExp.location || ''}${
+                    workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
+                  }`}</Text>
                 </div>
                 <Text textStyle='base' textColor='darkgrey'>
                   {workingPeriodFrom.format('MMMM yyyy')} to{' '}
@@ -342,6 +347,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                   )}
                   {workExp?.salary && workExp?.salary !== '0.00' && (
                     <Text textStyle='base' textColor='darkgrey'>
+                      {currencySymbol}
                       {formatSalary(workExp?.salary)} {profile.exp.perMonth}
                     </Text>
                   )}
@@ -986,9 +992,7 @@ const ManageProfilePage = ({ lang }: any) => {
     query: { tab }
   } = router
   const {
-    manageProfile: {
-      tab: tabDic
-    }
+    manageProfile: { tab: tabDic }
   } = lang
   const { preference } = tabDic
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
