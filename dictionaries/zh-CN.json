@@ -732,7 +732,10 @@
     "fillUpTheFieldsWith": " 用 (*) 填写字段以继续。",
     "addAEducation": " 添加学历",
     "notWantToEnterEducation": "我现在不想接受教育",
-    "searchForJobTitle": "搜索工作标题"
+    "searchForJobTitle": "搜索工作标题",
+    "year": "年",
+    "month": "月",
+    "months": ""
   },
   "chat": {
     "chatTitle": "聊天",
