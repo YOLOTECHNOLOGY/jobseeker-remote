@@ -9,24 +9,43 @@ import SearchBar from './searchBar'
 import { CloseIcon } from 'images'
 
 export default function PrimarySearchAppBar({ title, onChange, onClose,lang }: any) {
-  const jobFunctions = useSelector(
-    (store: any) => store.config.config.response?.job_function_lists ?? []
+  // const jobFunctions = useSelector(
+  //   (store: any) => store.config.config.response?.job_function_lists ?? []
+  // )
+
+  const jobFunctionsOptions = useSelector(
+    (store: any) => store.config.config.response?.main_job_function_lists ?? []
   )
+
+  // const options = useMemo(
+  //   () =>
+  //     flatMapDeep(jobFunctions, (item) =>
+  //       Object.keys(item).map((mainCategory) =>
+  //         item[mainCategory].map((subItem) =>
+  //           subItem.job_titles.map((title) => ({
+  //             ...title,
+  //             mainCategory,
+  //             subCategory: subItem.value
+  //           }))
+  //         )
+  //       )
+  //     ),
+  //   [jobFunctions]
+  // )
 
   const options = useMemo(
     () =>
-      flatMapDeep(jobFunctions, (item) =>
-        Object.keys(item).map((mainCategory) =>
-          item[mainCategory].map((subItem) =>
+      flatMapDeep(jobFunctionsOptions, (item:any) => {
+        return item['sub_function_list'].map((subItem) =>
             subItem.job_titles.map((title) => ({
               ...title,
-              mainCategory,
+              mainCategory: item.value,
               subCategory: subItem.value
             }))
           )
-        )
+      }
       ),
-    [jobFunctions]
+    [jobFunctionsOptions]
   )
 
   const { getRootProps, getInputProps, getListboxProps, getOptionProps, groupedOptions } =

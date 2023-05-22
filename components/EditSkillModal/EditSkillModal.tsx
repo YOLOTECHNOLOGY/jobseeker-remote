@@ -47,7 +47,7 @@ const EditSkillModal = ({
   } = lang
   const dispatch = useDispatch()
   const { handleSubmit } = useForm()
-
+  
   const [choosed, setChoosed] = useState(skills)
   const [searchValue, setSearchValue] = useState('')
   const [functionTitle, setFunctionTitle] = useState({ value: '', id: undefined })
@@ -137,6 +137,7 @@ const EditSkillModal = ({
               options={categoryList}
               className={styles.sortField}
               isTouched={true}
+              title={lang.profile.jobFunction}
               value={functionTitle}
               onChange={setFunctionTitle}
             />
