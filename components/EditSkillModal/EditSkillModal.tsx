@@ -137,6 +137,7 @@ const EditSkillModal = ({
               options={categoryList}
               className={styles.sortField}
               isTouched={true}
+              title='Job Function'
               value={functionTitle}
               onChange={setFunctionTitle}
             />
