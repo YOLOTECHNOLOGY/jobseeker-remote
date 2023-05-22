@@ -93,7 +93,7 @@ const JobFunctionSelector = (props: any) => {
     if (value?.value) {
       initDefaultJobFunctionSelect()
     }
-  }, [value])
+  }, [value.id])
 
   useEffect(() => {
     ;(async () => {
