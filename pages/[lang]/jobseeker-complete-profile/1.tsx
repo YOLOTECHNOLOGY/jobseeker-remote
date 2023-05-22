@@ -69,7 +69,6 @@ const Step1Content = (props: any) => {
   const preference = userDetail?.job_preferences?.[0]
   const config = useSelector((store: any) => store?.config?.config?.response)
   const dispatch = useDispatch()
-  // const rhTooltipTitle =
   ;('Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.')
   const locationList = useSelector((store: any) => store.config.config.response?.location_lists)
   const formattedLocationList = flatMap(locationList, (l) => l.locations)
@@ -79,12 +78,17 @@ const Step1Content = (props: any) => {
   const location = useMemo(() => {
     return formattedLocationList.find((l) => l.id === userDetail.location_id)
   }, [formattedLocationList, userDetail?.location])
-  const currencyLists = getCurrencyList(config)
-  const noticeList = getNoticePeriodList(config)
-  const smsCountryList = getSmsCountryList(config)
 
-  const jobTypeList = getJobTypeList(config)
-  const countryList = getCountryList(config)
+  const [currencyLists, countryList, noticeList, smsCountryList, jobTypeList] = useMemo(() => {
+    return [
+      getCurrencyList(config),
+      getCountryList(config),
+      getNoticePeriodList(config),
+      getSmsCountryList(config),
+      getJobTypeList(config)
+    ]
+  }, [config])
+
   const country = getCountryKey()
 
   const getSmsCountryCode = (phoneNumber, smsCountryList) => {
@@ -102,7 +106,7 @@ const Step1Content = (props: any) => {
   const defaultValues = useMemo(() => {
     const countryCode =
       getSmsCountryCode(userDetail?.phone_num, smsCountryList) || countryForCountryCode[country]
-    const { location_id, job_type_id, industry_id, country_id } = preference
+    const { location_id, job_type_id, industry_id, country_id } = preference || {}
     const result = {
       jobTitle: {
         id: preference?.function_job_title_id,
