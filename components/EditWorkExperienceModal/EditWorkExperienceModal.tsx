@@ -416,7 +416,7 @@ const EditWorkExperienceModal = ({
                 <JobFunctionSelector
                   className={styles.fullWidth}
                   label={expModal.jobFunction}
-                  title='Job Function'
+                  title={lang.profile.jobFunction}
                   name='jobFunction'
                   isTouched
                   jobFunctionId={''}
