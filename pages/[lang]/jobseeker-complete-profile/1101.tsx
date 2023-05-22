@@ -513,7 +513,7 @@ const Step3 = (props: any) => {
                   {experience?.company +
                     ' | ' +
                     (location?.value ? location?.value + ',' : '') +
-                    (experience?.country || getCountry())}
+                    getValueById(config, experience?.country_id, 'country_id')}
                 </Text>
 
                 <Text textStyle='base' style={{ color: '#707070' }} tagName='p'>
