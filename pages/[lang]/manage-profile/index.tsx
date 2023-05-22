@@ -240,6 +240,11 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
     handleModal('links', true, link)
   }
 
+  const getEducationLang = (eduction: any) => {
+    if(!eduction.degree_id) return eduction.degree
+    return  getValueById(config, eduction.degree_id, 'degree_id')
+  }
+
   const handleDeleteData = async (type, id) => {
     switch (type) {
       case 'workExperience':
@@ -415,10 +420,10 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                 </div>
                 {education?.degree && education?.field_of_study ? (
                   <Text textStyle='lg'>
-                    {education.degree} in {education.field_of_study}
+                    {getEducationLang(education)} in {education.field_of_study}
                   </Text>
                 ) : education?.degree ? (
-                  <Text textStyle='lg'>{education.degree} </Text>
+                  <Text textStyle='lg'>{getEducationLang(education)} </Text>
                 ) : null}
                 {studyPeriod !== '' && (
                   <Text textStyle='base' textColor='darkgrey'>
@@ -1019,6 +1024,9 @@ const ManageProfilePage = ({ lang }: any) => {
     return [userDetail?.job_preferences || [], Date.now()]
   }, [userDetail?.job_preferences])
   const availability = getValueById(config, userDetail?.notice_period_id, 'notice_period_id')
+
+  console.log('config', userDetail, config)
+
   const [modalState, setModalState] = useState({
     profile: {
       showModal: false,
