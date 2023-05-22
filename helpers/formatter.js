@@ -149,7 +149,7 @@ export const formatDecimalSalary = (salary) => {
 
 export const formatSalary = (salary) => {
   if (salary) {
-    return `₱${parseInt(salary).toLocaleString()}`
+    return `${parseInt(salary).toLocaleString()}`
   }
 }
 

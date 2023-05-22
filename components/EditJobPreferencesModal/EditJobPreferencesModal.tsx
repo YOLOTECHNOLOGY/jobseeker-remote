@@ -184,7 +184,7 @@ const EditJobPreferencesModal = ({
                   variant='outlined'
                   autoComplete='off'
                   jobTitle={preference?.function_job_title}
-                  title='Job function'
+                  title={lang.profile.jobFunction}
                   helperText={fieldState?.error?.message}
                   required
                   {...fieldState}
@@ -255,6 +255,7 @@ const EditJobPreferencesModal = ({
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
                   label={editModal.currencyType}
+                  IconComponent={null}
                   options={currencyLists}
                   required
                   disabled

@@ -59,10 +59,10 @@
       color: #353535;
       justify-content: space-between;
       margin-bottom: 0;
-      text-overflow: ellipsis;
-      overflow: hidden;
+      // text-overflow: ellipsis;
+      // overflow: hidden;
       word-break: break-all;
-      white-space: nowrap;
+      // white-space: nowrap;
     }
 
     &_salary {

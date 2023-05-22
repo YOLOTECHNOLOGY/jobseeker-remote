@@ -99,6 +99,7 @@ const ProfileLayout = ({
           expLevel={expLevel}
           birthdate={birthdate}
           handleEditClick={handleEditClick}
+          lang={dic}
         />
       </div>
       <div className={styles.profileLayoutSettings}>

@@ -95,7 +95,7 @@ const EditWorkExperienceModal = ({
       key: item.key
     }))
   )
-  const [currency, setCurrency] = useState()
+  const [currency, setCurrency] = useState('')
   const [jobTitle, setJobTitle] = useState('')
   const [companyName, setCompanyName] = useState('')
   // const [location, setLocation] = useState(null)
@@ -135,7 +135,6 @@ const EditWorkExperienceModal = ({
   }, [data])
   useEffect(() => {
     if (data) {
-      console.log('data', data)
       setJobTitle(data.job_title)
       setCompanyName(data.company)
       // setLocation(data.location ? getLocation(data.location)[0] : null)
@@ -143,7 +142,11 @@ const EditWorkExperienceModal = ({
       setWorkPeriodFrom(data.working_period_from)
       setWorkPeriodTo(data.working_period_to)
       setSalary(data.salary)
-      setCurrency(data.currency_id)
+      setCurrency(
+        currencyLists.find((item) => {
+          return item.value === data.currency_id
+        })?.value
+      )
       if (data.company_industry_id)
         setIndustry(
           industryList.find((industry) => industry.id === data.company_industry_id)?.value
@@ -416,12 +419,13 @@ const EditWorkExperienceModal = ({
                 <JobFunctionSelector
                   className={styles.fullWidth}
                   label={expModal.jobFunction}
-                  title='Job Function'
+                  title={lang.profile.jobFunction}
                   name='jobFunction'
                   isTouched
                   jobFunctionId={''}
                   value={jobFunction}
                   onChange={setJobFunction}
+                  lang={lang}
                   // options={jobCategoryList}
                 />
               </div>
@@ -453,11 +457,10 @@ const EditWorkExperienceModal = ({
                     className={styles.fullWidth}
                     label={formatTemplateString(
                       expModal.salary,
-                      currencyLists.find(({ value }) => value === currency).label
+                      currencyLists.find(({ value }) => value === currency)?.label
                     )}
                     size='small'
                     value={salary}
-                    defaultValue={salary}
                     onChange={(e) => setSalary(handleNumericInput(e.target.value))}
                   />
                 )}

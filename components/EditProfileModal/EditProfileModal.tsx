@@ -92,7 +92,7 @@ const EditProfileModal = ({
   const {
     manageProfile: {
       tab: {
-        profile: { aboutMeModal }
+        profile: { aboutMeModal,birthdayError }
       }
     }
   } = lang
@@ -200,9 +200,10 @@ const EditProfileModal = ({
   const onDateChange = (value) => {
     const year = value?.getFullYear()
     if (year < hundredYearsAgo || year > sixteenYearsAgo) {
+      setBirthdate(value)
       setError(
         'birthdate',
-        { message: 'You need to be at least 16 years old to use Bossjob.' },
+        { message: aboutMeModal.birthdayError },
         { shouldFocus: true }
       )
     } else {

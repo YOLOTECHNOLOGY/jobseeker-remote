@@ -68,6 +68,7 @@ import {
   changeJobPreference,
   changeUserInfoValue
 } from 'helpers/config/changeUserInfoValue'
+import { getValueById } from 'helpers/config/getValueById'
 const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
   const {
     manageProfile: {
@@ -93,7 +94,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
   useMemo(() => {
     changeCompanyIndustry(workExperiences, config)
   }, [workExperiences])
-
+  const { currency_lists } = config
   const isProfileInformationFilled = !!(
     firstName &&
     lastName &&
@@ -239,6 +240,11 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
     handleModal('links', true, link)
   }
 
+  const getEducationLang = (eduction: any) => {
+    if(!eduction.degree_id) return eduction.degree
+    return  getValueById(config, eduction.degree_id, 'degree_id')
+  }
+
   const handleDeleteData = async (type, id) => {
     switch (type) {
       case 'workExperience':
@@ -288,6 +294,10 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
         </div>
         <div className={styles.sectionContent}>
           {workExperiences.map((workExp) => {
+            const { currency_id } = workExp
+            const currencySymbol = currency_lists.find(
+              ({ id }) => currency_id === id
+            )?.display_symbol
             const workingPeriodFrom = moment(workExp?.working_period_from)
             const workingPeriodTo = moment(workExp?.working_period_to)
             const dateDiff = getYearMonthDiffBetweenDates(
@@ -296,6 +306,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                 ? moment(new Date()).format('YYYY-MM-DD')
                 : workingPeriodTo
             )
+
             return (
               <div key={workExp.id} className={styles.workExpSection}>
                 <div className={styles.titleWrapper}>
@@ -319,8 +330,11 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                 </div>
                 <div className={styles.companyInfoWrapper}>
                   <Text textStyle='lg'>{workExp.company}</Text>
-                  <Text textStyle='lg'>{`${workExp.location || ''}${workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
-                    }`}</Text>
+                  <Text textStyle='lg'>{`${workExp.location || ''}${getValueById(
+                    config,
+                    workExp.country_id,
+                    'country_id'
+                  )}`}</Text>
                 </div>
                 <Text textStyle='base' textColor='darkgrey'>
                   {workingPeriodFrom.format('MMMM yyyy')} to{' '}
@@ -342,6 +356,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                   )}
                   {workExp?.salary && workExp?.salary !== '0.00' && (
                     <Text textStyle='base' textColor='darkgrey'>
+                      {currencySymbol}
                       {formatSalary(workExp?.salary)} {profile.exp.perMonth}
                     </Text>
                   )}
@@ -408,10 +423,10 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                 </div>
                 {education?.degree && education?.field_of_study ? (
                   <Text textStyle='lg'>
-                    {education.degree} in {education.field_of_study}
+                    {getEducationLang(education)} in {education.field_of_study}
                   </Text>
                 ) : education?.degree ? (
-                  <Text textStyle='lg'>{education.degree} </Text>
+                  <Text textStyle='lg'>{getEducationLang(education)} </Text>
                 ) : null}
                 {studyPeriod !== '' && (
                   <Text textStyle='base' textColor='darkgrey'>
@@ -701,7 +716,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                     </div>
                   </div>
                 )}
-                {skills.length === 0 && (
+                {skills?.length === 0 && (
                   <div className={styles.emblaSlideHighlight}>
                     <div className={styles.highlightCard}>
                       <div className={styles.highlightCardHeader}>
@@ -986,9 +1001,7 @@ const ManageProfilePage = ({ lang }: any) => {
     query: { tab }
   } = router
   const {
-    manageProfile: {
-      tab: tabDic
-    }
+    manageProfile: { tab: tabDic }
   } = lang
   const { preference } = tabDic
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
@@ -1013,7 +1026,10 @@ const ManageProfilePage = ({ lang }: any) => {
   const jobData = useMemo(() => {
     return [userDetail?.job_preferences || [], Date.now()]
   }, [userDetail?.job_preferences])
-  const availability = userDetail?.notice_period
+  const availability = getValueById(config, userDetail?.notice_period_id, 'notice_period_id')
+
+  console.log('config', userDetail, config)
+
   const [modalState, setModalState] = useState({
     profile: {
       showModal: false,
@@ -1115,6 +1131,7 @@ const ManageProfilePage = ({ lang }: any) => {
         config={config}
         userDetail={userDetail}
         handleModal={handleModal}
+        lang={lang}
       />
       <EditSkillModal
         lang={lang}
