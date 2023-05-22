@@ -12,7 +12,7 @@ import { Chip } from '@mui/material'
 import ClearIcon from '@mui/icons-material/Clear'
 import Text from 'components/Text'
 import Modal from 'components/Modal'
-import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
+import MaterialTextField from 'components/MaterialTextField'
 
 /* Helpers */
 import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
@@ -115,6 +115,10 @@ const EditSkillModal = ({
     handleModal(modalName, false)
   }
 
+  const handleClearIcon = () => {
+    setSearchValue('')
+  }
+
   return (
     <div>
       <Modal
@@ -143,20 +147,16 @@ const EditSkillModal = ({
             />
           </div>
           <div className={styles.form}>
-            <MaterialTextFieldWithSuggestionList
+            <MaterialTextField
               id='search'
               label={skillModal.skill}
               variant='outlined'
               size='small'
               value={searchValue}
               className={styles.searchField}
-              updateSearchValue={setSearchValue}
-              searchFn={handleSuggestionSearch}
-              onSelect={(val: any) => {
-                if (val !== '') {
-                  handleAddSkill(val.label)
-                  setSearchValue('')
-                }
+              onChange={e => setSearchValue(e.target.value)}
+              InputProps={{
+                endAdornment: searchValue ? <ClearIcon style={{cursor: 'pointer'}} onClick={handleClearIcon} /> : null
               }}
               onKeyPress={(e: any) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
@@ -166,7 +166,6 @@ const EditSkillModal = ({
                   }
                 }
               }}
-              options={suggestList}
             />
           </div>
           <div className={styles.skillList}>
