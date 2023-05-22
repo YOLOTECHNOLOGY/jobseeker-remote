@@ -1,5 +1,5 @@
-@import 'styles/variable.scss';
-@import 'styles/mixins.scss';
+@import "styles/variable.scss";
+@import "styles/mixins.scss";
 
 .stepForm {
   &Actions {
@@ -55,7 +55,8 @@
   border-radius: 4px;
 
   span {
-    display: block;
+    display: flex;
+    align-items: center;
     width: 90%;
     line-height: 20px;
     color: rgb(13, 60, 97);
@@ -138,7 +139,7 @@
     }
 
     p {
-      font-family: 'Product Sans';
+      font-family: "Product Sans";
       font-style: normal;
       font-weight: 400;
       font-size: 16px;
@@ -320,7 +321,7 @@
   &Editor {
     margin-top: 15px;
 
-    div[class*='TextEditor_textEditor'] {
+    div[class*="TextEditor_textEditor"] {
       padding: 0;
     }
 
