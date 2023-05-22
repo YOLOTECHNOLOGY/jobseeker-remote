@@ -306,6 +306,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                 ? moment(new Date()).format('YYYY-MM-DD')
                 : workingPeriodTo
             )
+
             return (
               <div key={workExp.id} className={styles.workExpSection}>
                 <div className={styles.titleWrapper}>
@@ -329,9 +330,11 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                 </div>
                 <div className={styles.companyInfoWrapper}>
                   <Text textStyle='lg'>{workExp.company}</Text>
-                  <Text textStyle='lg'>{`${workExp.location || ''}${
-                    workExp.location && workExp.country_key === 'ph' ? ', Philippines' : ''
-                  }`}</Text>
+                  <Text textStyle='lg'>{`${workExp.location || ''}${getValueById(
+                    config,
+                    workExp.country_id,
+                    'country_id'
+                  )}`}</Text>
                 </div>
                 <Text textStyle='base' textColor='darkgrey'>
                   {workingPeriodFrom.format('MMMM yyyy')} to{' '}
@@ -713,7 +716,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                     </div>
                   </div>
                 )}
-                {skills.length === 0 && (
+                {skills?.length === 0 && (
                   <div className={styles.emblaSlideHighlight}>
                     <div className={styles.highlightCard}>
                       <div className={styles.highlightCardHeader}>
