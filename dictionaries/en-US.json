@@ -20,7 +20,8 @@
       "lang": "Language",
       "btn1": "Close",
       "btn2": "Save"
-    }
+    },
+    "change": "Change"
   },
   "foot": {
     "about": "about",
@@ -130,6 +131,16 @@
     "InterviewTime": "Interview Time",
     "address": "Address",
     "noMore": "No more",
+    "location":"location",
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "upcoming": "Upcoming",
+    "InProgress": "In progress",
+    "declined": "Declined",
+    "cancelled": "Cancelled",
+    "notAccepted": "Not accepted",
+    "completed": "Completed",
+    "notCheckedIn": "Not checked in",
     "notSuitable": {
       "title": "Why this job is not suitable?",
       "description": "Please select a reason why this job is not what you are looking for. We will optimise your job recommendations.",
@@ -489,6 +500,10 @@
         "desc": "New {{searchQuery}} Jobs in {{location}}, {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
       }
     },
+    "noResultsFound": "No results found.",
+    "pleaseUseDifferentKeyword": "Please use a different keyword or try to change your filter selection.",
+    "reset2": "Reset",
+    "save": "Save",
     "downloadAPP": " Download APP and chat with Boss",
     "chatDirectly": " Chat directly",
     "withBoss": "with Boss"
@@ -826,7 +841,7 @@
     "cancelReasonLabel": "You are about to cancel the interview. Please let recruiter know why you are cancelling this interview:"
   },
   "chatCommonPhrase": {
-    "phraseTitle":"Common Phrases",
+    "phraseTitle": "Common Phrases",
     "phraseLabel": "Phrase",
     "inputPlaceholder": "Insert the common phrases that you would like to send to Boss",
     "addDescription": "Add your own phrase. Please do not include your contact details here.",
