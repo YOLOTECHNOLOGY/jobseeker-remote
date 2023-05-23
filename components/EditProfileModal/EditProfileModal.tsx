@@ -73,6 +73,13 @@ const errorText = (errorMessage: any) => {
   )
 }
 
+const getDiffYear = (time) => {
+  const now = moment(new Date())
+  const then = moment(time).format('YYYY-MM-DD')
+  const age = now.diff(moment(then), 'years')
+  return age
+}
+
 const EditProfileModal = ({
   modalName,
   showModal,
@@ -92,7 +99,7 @@ const EditProfileModal = ({
   const {
     manageProfile: {
       tab: {
-        profile: { aboutMeModal,birthdayError }
+        profile: { aboutMeModal }
       }
     }
   } = lang
@@ -122,9 +129,11 @@ const EditProfileModal = ({
   const [location, setLocation] = useState(matchedLocation)
 
   // Limit user from selecting date more than 16-100 years ago from now.
-  const today = new Date()
-  const sixteenYearsAgo = today.getFullYear() - 16
-  const hundredYearsAgo = today.getFullYear() - 100
+  // const today = new Date()
+  // const sixteenYearsAgo = today.getFullYear() - 16
+  // const hundredYearsAgo = today.getFullYear() - 100
+  const SIXTEEN_YEAR = 16
+  const HUNDRED_YEAR = 100
 
   const defaultValues = {
     firstName: first_name,
@@ -198,8 +207,9 @@ const EditProfileModal = ({
   }
 
   const onDateChange = (value) => {
-    const year = value?.getFullYear()
-    if (year < hundredYearsAgo || year > sixteenYearsAgo) {
+    const isMinYear = getDiffYear(value) < SIXTEEN_YEAR
+    const isMaxYear = getDiffYear(value) > HUNDRED_YEAR
+    if (isMaxYear || isMinYear) {
       setBirthdate(value)
       setError(
         'birthdate',
@@ -290,7 +300,17 @@ const EditProfileModal = ({
               <div className={styles.profileFormGroupField}>
                 <MaterialDatePicker
                   refs={{
-                    ...register('birthdate')
+                    ...register('birthdate', {
+                      validate: () => {
+                        const isMinYear = getDiffYear(birthdate) < SIXTEEN_YEAR
+                        const isMaxYear = getDiffYear(birthdate) > HUNDRED_YEAR
+                        if(isMaxYear || isMinYear) {
+                          return aboutMeModal.birthdayError
+                        }else {
+                          return true
+                        }
+                      }
+                    })
                   }}
                   label={aboutMeModal.birthday}
                   views={['year', 'month', 'day']}
