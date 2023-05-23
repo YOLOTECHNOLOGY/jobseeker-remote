@@ -188,6 +188,9 @@ const EditWorkExperienceModal = ({
       setDisabledButton(requireFields && isValidDate ? true : false)
     }
 
+    const hasValue = [currency,salary, jobFunction.id,industry].every(Boolean)
+    setDisabledButton(!!hasValue)
+
     if (requireFields) setShowErrorToComplete(false)
   }, [
     jobTitle,
@@ -197,7 +200,11 @@ const EditWorkExperienceModal = ({
     workPeriodFrom,
     workPeriodTo,
     hasErrorOnFromPeriod,
-    hasErrorOnToPeriod
+    hasErrorOnToPeriod,
+    currency,
+    salary,
+    jobFunction?.id,
+    industry
   ])
 
   const setDisabledButton = (value) => {
@@ -422,6 +429,7 @@ const EditWorkExperienceModal = ({
                   title={lang.profile.jobFunction}
                   name='jobFunction'
                   isTouched
+                  required
                   jobFunctionId={''}
                   value={jobFunction}
                   onChange={setJobFunction}
@@ -457,6 +465,7 @@ const EditWorkExperienceModal = ({
                 {currency && (
                   <MaterialTextField
                     className={styles.fullWidth}
+                    required
                     label={formatTemplateString(
                       expModal.salary,
                       currencyLists.find(({ value }) => value === currency)?.label
