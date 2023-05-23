@@ -13,6 +13,9 @@
       margin: 0 auto !important;
       text-align: left;
       padding: 24px 0;
+      word-break: break-all;
+      word-wrap: break-word;
+      white-space: pre-wrap; 
 
       @include sm {
         width: 100%;
