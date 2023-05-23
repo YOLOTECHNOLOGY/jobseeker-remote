@@ -218,7 +218,7 @@ const JobDetail = ({
       const source = getSourceCookie()
       createChat(selectedJob?.id, {
         source,
-        job_title_id: selectedJob.id,
+        job_title_id: null,
         device: isMobile ? 'mobile_web' : 'web'
       })
         .then((result) => {
