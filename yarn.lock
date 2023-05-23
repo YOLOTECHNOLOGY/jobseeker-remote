@@ -3972,10 +3972,10 @@ buzzmsg@^1.2.0:
     react-intl "^5.18.1"
     viewerjs "^1.11.0"
 
-buzzmsg@^1.6.2:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.6.2.tgz#7f59fadf59d473e26d0ebea70d0a6df7d615588a"
-  integrity sha512-VakQCXmrwNhobbrPtX6+RTqwuWBTbOc822sAG0BPUttAjxv8GpBU4KWY5JDK9WdMO9DJdnJIGBHuGuYrIIzCQQ==
+buzzmsg@^1.6.5:
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.6.5.tgz#1ae01ab054927a299820a439d0bdce1b536ac368"
+  integrity sha512-QphSk66J3kmypxKxZWifTUTE4Dnm2O5WGlIlgSkA7RQDP0e5JvDWo7p7PI6iwZf18XWCnEADGv5HVsE/gj2+1A==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
@@ -3988,6 +3988,7 @@ buzzmsg@^1.6.2:
     compressorjs "^1.2.1"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
+    dompurify "^3.0.3"
     lodash "^4.17.21"
     md5 "^2.3.0"
     mobx "^5.15.4"
@@ -4520,6 +4521,11 @@ dom-helpers@^5.0.1:
   dependencies:
     "@babel/runtime" "^7.8.7"
     csstype "^3.0.2"
+
+dompurify@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.0.3.tgz#4b115d15a091ddc96f232bcef668550a2f6f1430"
+  integrity sha512-axQ9zieHLnAnHh0sfAamKYiqXMJAVwu+LM/alQ7WDagoWessyWvMSFyW65CqF3owufNu8HBcE4cM2Vflu7YWcQ==
 
 duplexer@^0.1.2:
   version "0.1.2"
@@ -5553,10 +5559,10 @@ imforbossjob@^0.0.1117:
     sha1 "^1.1.1"
     viewerjs "^1.11.0"
 
-imforbossjob@^0.1.45-hotfix2:
-  version "0.1.45-hotfix2"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.1.45-hotfix2.tgz#fd19fbda179f6946c70b10651ada4c058795a46c"
-  integrity sha512-tNBe+UXTFbj0nMWXh2mxyVuqLMGK8lX+E84XggDPuyZv4chJuH2IQVOjTz0ZbaYcxfUmbwprn7r0uhduYj917g==
+imforbossjob@^0.1.45-hotfix3:
+  version "0.1.45-hotfix3"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.1.45-hotfix3.tgz#3419b959ab49e466160a7d145952160d318a3fa0"
+  integrity sha512-zP82AXciQO7j9hxasTFDElwEjACGetJHXfl4BUtzZDCkp0KGp1itefhXha/HqmZorkpDkUUrvcaiOSI6FKWV8w==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -5566,7 +5572,7 @@ imforbossjob@^0.1.45-hotfix2:
     antd "^4.23.3"
     axios "^0.18.0"
     buffer "^6.0.3"
-    buzzmsg "^1.6.2"
+    buzzmsg "^1.6.5"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
     fantasy-combinators "^0.0.1"
