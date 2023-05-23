@@ -29,7 +29,15 @@ import styles from './ResumeTemplate.module.scss'
 
 const COUNT_DOWN_VERIFY_DEFAULT = 60
 
-const ResumeTemplate = () => {
+const errorText = (errorMessage: string) => {
+  return (
+    <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
+      {errorMessage}
+    </Text>
+  )
+}
+
+const ResumeTemplate = ({ lang }: any) => {
   const {
     step,
     email,
@@ -97,9 +105,9 @@ const ResumeTemplate = () => {
     let errorText = null
     if (!/\S+@\S+\.\S+/.test(email)) {
       if (!email.length) {
-        errorText = 'Please enter your email address.'
+        errorText = resumetemplate.form.emptyError
       } else {
-        errorText = 'Please enter a valid email address.'
+        errorText = resumetemplate.form.validError
       }
     }
     setEmailError(errorText)
@@ -138,16 +146,9 @@ const ResumeTemplate = () => {
     emblaApi.on('select', onSelect)
   }, [emblaApi, setScrollSnaps, onSelect])
 
-  const errorText = (errorMessage: string) => {
-    return (
-      <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
-        {errorMessage}
-      </Text>
-    )
-  }
-
+  const { resumetemplate } = lang
   return (
-    <Layout>
+    <Layout lang={lang}>
       {/* <SEO
         title='Free Resume Template to Edit & Download | Bossjob.ph'
         description='Free resume template & sample for you to edit and download on Bossjob. Customize your resume and add career objectives, work experiences and job skills!'
@@ -165,16 +166,16 @@ const ResumeTemplate = () => {
               <div className={styles.resumeTemplateHeroContent}>
                 <form className={styles.resumeTemplateForm}>
                   <Text tagName='h1' textStyle='xxxl' bold className={styles.formHeader}>
-                    Free resume template
+                    {resumetemplate.title}
                   </Text>
                   <Text textStyle='xl' className={styles.formSubHeader}>
-                    Create and download resume in a minute.
+                    {resumetemplate.subTitle}
                   </Text>
                   {!userCookie && (
                     <div>
                       <MaterialTextField
                         id='email'
-                        label='Email address'
+                        label={resumetemplate.form.label}
                         variant='outlined'
                         value={email}
                         size='small'
@@ -205,7 +206,7 @@ const ResumeTemplate = () => {
                     isLoading={isLoading}
                     disabled={emailBtnDisabled}
                   >
-                    <Text textColor='white'>Create Resume</Text>
+                    <Text textColor='white'>{resumetemplate.createBtn}</Text>
                   </MaterialButton>
                 </form>
                 <img
@@ -218,47 +219,36 @@ const ResumeTemplate = () => {
             <div className={styles.sectionContentDivider}></div>
             <div className={styles.resumeTemplateSection}>
               <Text tagName='h2' textStyle='xxxl' bold className={styles.sectionHeader}>
-                How to create resume template
+                {resumetemplate.howToCreate.title}
               </Text>
               <div className={styles.sectionContentHalfDivider}></div>
               <ul className={styles.resumeStepsList}>
                 <li className={styles.resumeStepsItem}>
-                  <Text textStyle='lg'>
-                    Fill in your name as well as a valid email (important that you enter a valid
-                    email which will be used in your resume template)
-                  </Text>
+                  <Text textStyle='lg'>{resumetemplate.howToCreate.step1}</Text>
                 </li>
                 <li className={styles.resumeStepsItem}>
-                  <Text textStyle='lg'>
-                    Click on “Create Resume” and proceed to fill in more information such as
-                    personal summary and career objectives, education, experience, skills, and more.
-                  </Text>
+                  <Text textStyle='lg'>{resumetemplate.howToCreate.step2}</Text>
                 </li>
                 <li className={styles.resumeStepsItem}>
-                  <Text textStyle='lg'>Download, print and save your new resume</Text>
+                  <Text textStyle='lg'> {resumetemplate.howToCreate.step3}</Text>
                 </li>
                 <li className={styles.resumeStepsItem}>
-                  <Text textStyle='lg'>
-                    Update your online resume any time and create new resume template whenever you
-                    wish to
-                  </Text>
+                  <Text textStyle='lg'>{resumetemplate.howToCreate.step4}</Text>
                 </li>
               </ul>
             </div>
             <div className={styles.sectionContentDivider}></div>
             <div className={styles.resumeTemplateSection}>
               <Text tagName='h2' textStyle='xxxl' bold className={styles.sectionHeader}>
-                Have a question?
+                {resumetemplate.haveAQuestion}
               </Text>
               <div className={styles.sectionContentHalfDivider}></div>
               <Text tagName='h2' textStyle='xl' bold className={styles.sectionSubHeader}>
-                Is it free?
+                {resumetemplate.freeLabel}
               </Text>
               <div className={styles.sectionContentRegDivider}></div>
               <Text textStyle='lg' className={styles.sectionSubContent}>
-                Yes, Bossjob resume generation service is free. You can create as many resume as you
-                want. You can choose from different themes of resume samples and use different
-                resume sample for different job applications
+                {resumetemplate.freeAnswer}
               </Text>
               <div className={styles.sectionContentHalfDivider}></div>
             </div>
@@ -267,13 +257,11 @@ const ResumeTemplate = () => {
                 <div className={styles.sectionContentHalfDivider}></div>
                 <div className={styles.resumeTemplateOtherSection}>
                   <Text tagName='h2' textStyle='xl' bold className={styles.sectionSubHeader}>
-                    How many templates can I choose from?
+                    {resumetemplate.chooseTemplate}
                   </Text>
                   <div className={styles.sectionContentRegDivider}></div>
                   <Text textStyle='lg' className={styles.sectionSubContent}>
-                    You can choose from 2 templates, professional or creative resume samples. You
-                    can immediately use your newly improved resume to apply for job openings on
-                    Bossjob.
+                    {resumetemplate.chooseTemplateAnswer}
                   </Text>
                 </div>
                 <div className={styles.sectionContentRegDivider}></div>
@@ -330,13 +318,11 @@ const ResumeTemplate = () => {
             <div className={styles.sectionContentRegDivider}></div>
             <div className={styles.resumeTemplateSection}>
               <Text tagName='h2' textStyle='xl' bold className={styles.sectionSubHeader}>
-                Would I be able to edit the resume template later?
+                {resumetemplate.editLater}
               </Text>
               <div className={styles.sectionContentRegDivider}></div>
               <Text textStyle='lg' className={styles.sectionSubContent}>
-                Absolutely yes. Login to your Bossjob account anytime to update your resume. You can
-                use your Bossjob account as a resume bank. Keep your most updated career details in
-                Bossjob and use them as your professional identity!
+                {resumetemplate.editLaterAnswer}
               </Text>
               <div className={styles.sectionContentDivider}></div>
             </div>
@@ -357,6 +343,7 @@ const ResumeTemplate = () => {
               login={handleAuthenticationJobseekersLogin}
               magicLink={handleAuthenticationSendEmailMagicLink}
               emailTOPError={emailTOPError}
+              lang={lang.getStatred}
             />
           </div>
         )}
@@ -385,7 +372,8 @@ export async function getServerSideProps({ req }) {
   return {
     props: {
       seoMetaTitle: 'Free Resume Template to Edit & Download | Bossjob.ph',
-      seoMetaDescription: 'Free resume template & sample for you to edit and download on Bossjob. Customize your resume and add career objectives, work experiences and job skills!',
+      seoMetaDescription:
+        'Free resume template & sample for you to edit and download on Bossjob. Customize your resume and add career objectives, work experiences and job skills!',
       canonicalUrl: '/resumetemplate'
     }
   }
