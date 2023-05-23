@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { Avatar, Button } from 'app/[lang]/components/MUIs'
-
 import styles from '../../../page.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
 import { getValueById } from 'helpers/config/getValueById'
+import React from 'react'
 export type propsType = {
   name: string
   companySize: string
@@ -14,19 +14,20 @@ export type propsType = {
   companyUrl: string
   jobDetail: any
   languages: Record<string, any>,
-  config:Array<any>
+  config: Array<any>
+  lang: string
 }
 
 const Company = (company: propsType) => {
-  const { jobDetail, languages,config } = company
+  const { jobDetail, languages, config, lang } = company
   const {
-    aside: { company: companySection}
+    aside: { company: companySection }
   } = languages as any
-  const industry = getValueById(config,jobDetail.company.industry_id,'industry_id')
+  const industry = getValueById(config, jobDetail.company.industry_id, 'industry_id')
   return (
     <>
       <section className={styles.company}>
-        <Link href={company.companyUrl}>
+        <Link href={'/' + lang + company.companyUrl}>
           <div className={styles.company_title}>{companySection.title}</div>
           <Avatar src={company.logo} sx={{ borderRadius: '5px', margin: '8px 0' }} />
           <h5 className={styles.company_name}>{company.name}</h5>
@@ -36,7 +37,7 @@ const Company = (company: propsType) => {
           </div>
         </Link>
 
-        <Link href={company?.companyUrl + '/jobs'}>
+        <Link href={'/' + lang + company?.companyUrl + '/jobs'}>
           <Button
             variant='outlined'
             sx={{
@@ -59,7 +60,7 @@ const Company = (company: propsType) => {
         </Link>
       </section>
 
-      <Link href={company?.companyUrl}>
+      <Link href={'/' + lang + company?.companyUrl}>
         <section className={styles.company_mobileHead}>
           <Avatar
             sx={{ width: '32px', height: '32px', borderRadius: '5px', marginRight: '8px' }}

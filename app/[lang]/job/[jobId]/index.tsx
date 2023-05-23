@@ -11,8 +11,9 @@ import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs
 
 import styles from './page.module.scss'
 import { getValueById } from 'helpers/config/getValueById'
+import React from 'react'
 
-const Index = ({ data, jobId, languages,config }: any) => {
+const Index = ({ data, jobId, languages, config, lang }: any) => {
   const cookieStore = cookies()
 
   const accessToken = cookieStore.getAll('accessToken')
@@ -58,10 +59,10 @@ const Index = ({ data, jobId, languages,config }: any) => {
 
   const headProps = {
     title: data.job_title,
-    localhost: getValueById(config,data.location?.id,'location_id'),
-    degree: getValueById(config,data.degree?.id,'degree_id'),
-    xp_lvl:getValueById(config,data.xp_lvl?.id,'xp_lvl_id') ,
-    jobType: getValueById(config,data?.job_type_id,'job_type_id'),
+    localhost: getValueById(config, data.location?.id, 'location_id'),
+    degree: getValueById(config, data.degree?.id, 'degree_id'),
+    xp_lvl: getValueById(config, data.xp_lvl?.id, 'xp_lvl_id'),
+    jobType: getValueById(config, data?.job_type_id, 'job_type_id'),
     salary: data.local_salary_range_value,
     jobId,
     is_saved: data.is_saved,
@@ -92,7 +93,7 @@ const Index = ({ data, jobId, languages,config }: any) => {
     name: data.company?.name,
     chatResponseRate: data.recruiter?.response_rate,
     lastActiveAt: data.recruiter?.last_active_at,
-    benefitsProps: data?.benefits?.map(e=>getValueById(config,e.id,'job_benefit_id','name')),
+    benefitsProps: data?.benefits?.map(e => getValueById(config, e.id, 'job_benefit_id', 'name')),
     shareParams: {
       id: data.id,
       job_url: data.job_url,
@@ -113,10 +114,10 @@ const Index = ({ data, jobId, languages,config }: any) => {
 
   return (
     <div>
-      <Head {...headProps}/>
+      <Head {...headProps} />
       <div className={styles.container}>
-        <MainFC {...mainProps}  />
-        <AsideFC {...companyProps} jobDetail={data} config={config}/>
+        <MainFC {...mainProps} />
+        <AsideFC {...companyProps} jobDetail={data} lang={lang} config={config} />
       </div>
     </div>
   )

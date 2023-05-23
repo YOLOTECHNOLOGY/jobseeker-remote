@@ -24,6 +24,7 @@ import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
 /* Styles */
 import styles from './EditProfileModal.module.scss'
 import { getCountryId } from 'helpers/country'
+import React from 'react'
 
 type EditProfileModalProps = {
   modalName: string

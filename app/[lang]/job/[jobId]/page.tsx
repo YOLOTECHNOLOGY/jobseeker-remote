@@ -10,6 +10,7 @@ import { getDictionary } from 'get-dictionary'
 import interpreter from "./intepreter"
 import { serverDataScript } from "app/[lang]/abstractModels/FetchServierComponents"
 import { buildComponentScript } from "app/[lang]/abstractModels/util"
+import React from 'react'
 const handleFetchJobDetail = async (params: any) => {
   const cookieStore = cookies()
 
@@ -64,59 +65,64 @@ export async function generateMetadata({ params, searchParams }): Promise<Metada
     const { wide: width, high: height, job_card: cardUrl } = shareInfo || {}
     const categoryMetaText = 'jobs'
     const seoMetaTitle = `${name} is hiring ${jobTitle} - ${jobId} | Bossjob`
-    const seoMetaDescription = `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${
-      location.value
-    }, ${fullAddress.split(',').pop()} on Bossjob now!`
+    const seoMetaDescription = `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${location.value
+      }, ${fullAddress.split(',').pop()} on Bossjob now!`
 
     const seoParams: Metadata = !shareInfo
       ? {
-          title: seoMetaTitle,
-          description: seoMetaDescription,
-          openGraph: {
-            images: [
-              {
-                url: jobDetail?.company?.logo,
-                width: 450,
-                height: 290
-              }
-            ]
-          },
-          alternates: {
-            canonical: (process.env.NEXT_PUBLIC_HOST_PATH ?? '') + jobUrl
-          }
+        title: seoMetaTitle,
+        description: seoMetaDescription,
+        openGraph: {
+          images: [
+            {
+              url: jobDetail?.company?.logo,
+              width: 450,
+              height: 290
+            }
+          ]
+        },
+        alternates: {
+          canonical: (process.env.NEXT_PUBLIC_HOST_PATH ?? '') + jobUrl
         }
+      }
       : {
+        title: seoMetaTitle,
+        description: seoMetaDescription,
+        openGraph: {
+          images: [
+            {
+              url: cardUrl,
+              width: width,
+              height: height
+            }
+          ]
+        },
+        twitter: {
+          card: 'summary_large_image',
           title: seoMetaTitle,
           description: seoMetaDescription,
-          openGraph: {
-            images: [
-              {
-                url: cardUrl,
-                width: width,
-                height: height
-              }
-            ]
-          },
-          twitter: {
-            card: 'summary_large_image',
-            title: seoMetaTitle,
-            description: seoMetaDescription,
-            images: [cardUrl]
-          }
+          images: [cardUrl]
         }
+      }
     return seoParams
   }
 }
 
 const Page = async (props: any) => {
-  const { params ,config} = props
+  const { params, config } = props
   const { data, jobId } = await handleFetchJobDetail(params)
   const dictionary = (await getDictionary(params.lang)) as any
   const jobDetail = data
 
   return (
     <>
-      <Index data={data} jobId={jobId} languages={dictionary.jobDetail} config={config}/>
+      <Index
+        data={data}
+        jobId={jobId}
+        lang={params.lang}
+        languages={dictionary.jobDetail}
+        config={config}
+      />
 
       {jobDetail && jobDetail?.status_key === 'active' && (
         <script

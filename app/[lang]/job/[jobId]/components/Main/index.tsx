@@ -4,6 +4,7 @@ import Map from './Map/Map'
 import Search from './Search/Search'
 
 import styles from '../../page.module.scss'
+import React from 'react'
 
 type propsType = {
   description: string

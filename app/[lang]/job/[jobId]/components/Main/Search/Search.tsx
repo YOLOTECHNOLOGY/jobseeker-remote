@@ -11,6 +11,7 @@ import { buildQuery } from 'app/[lang]/main-page/helper'
 
 import styles from '../../../page.module.scss'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import React from 'react'
 
 const Search = () => {
   const {

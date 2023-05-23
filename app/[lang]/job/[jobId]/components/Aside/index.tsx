@@ -8,11 +8,13 @@ import Search from '../Main/Search/Search'
 import Btn from '../Head/Btn/Btn'
 
 import styles from '../../page.module.scss'
+import React from 'react'
 
 type propsT = propsType & { jobDetail: any } & {
   published_at: string
   languages: Record<string, any>
   config:Array<any>
+  lang:string
 } 
 
 const AsideFC = (props: propsT) => {
@@ -27,7 +29,7 @@ const AsideFC = (props: propsT) => {
       <Company {...props} />
 
       {/* @ts-expect-error Async Server Component */}
-      <SimilarJobs id={props.jobId} jobDetail={props.jobDetail} languages={props.languages} config={props.config}/>
+      <SimilarJobs id={props.jobId} jobDetail={props.jobDetail} languages={props.languages} lang={props.lang} config={props.config}/>
 
       <div className={styles.ad_container}>
         <AdSlot adSlot={'job-detail/square-banner-1'} />

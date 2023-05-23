@@ -11,14 +11,16 @@ import { transState } from 'helpers/utilities'
 import styles from '../../../page.module.scss'
 import classNames from 'classnames/bind'
 import { getValueById } from 'helpers/config/getValueById'
+import React from 'react'
 type propsType = {
   id?: number
   jobDetail: any
   languages: Record<string, any>,
-  config:Array<any>,
+  config: Array<any>,
+  lang: string
 }
 
-export default async function SimilarJobs({ id, jobDetail, languages,config }: propsType) {
+export default async function SimilarJobs({ id, jobDetail, languages, config, lang }: propsType) {
   const params = {
     jobId: id,
     size: 5
@@ -41,7 +43,7 @@ export default async function SimilarJobs({ id, jobDetail, languages,config }: p
     aside: { similarJob: transitions }
   } = languages
 
-  console.log(data,'jobDetail')
+  console.log(data, 'jobDetail')
 
   return (
     <>
@@ -54,7 +56,7 @@ export default async function SimilarJobs({ id, jobDetail, languages,config }: p
               {data?.map((item) => {
                 return (
                   <div key={item.id} className={styles.similarJobs_card}>
-                    <Link href={item.job_url}>
+                    <Link href={'/' + lang + item.job_url}>
                       <h6 className={styles.similarJobs_title}>{item.truncated_job_title}</h6>
                       <div className={styles.similarJobs_salary}>{item.salary_range_value}</div>
                       <div className={styles.similarJobs_info}>
@@ -72,7 +74,7 @@ export default async function SimilarJobs({ id, jobDetail, languages,config }: p
                         </div>
                         <div className={styles.similarJobs_info_jobType}>
                           <div>{item.company_name}</div>
-                          <div>{getValueById(config,item.company_location_id,'location_id')}</div>
+                          <div>{getValueById(config, item.company_location_id, 'location_id')}</div>
                         </div>
                       </div>
                     </Link>
@@ -89,7 +91,7 @@ export default async function SimilarJobs({ id, jobDetail, languages,config }: p
 
                 return (
                   <div key={item.id} className={styles.similarJobs_card}>
-                    <Link href={item.job_url}>
+                    <Link href={'/' + lang + item.job_url}>
                       <div className={styles.similarJobs_mobileCardWrapper}>
                         <h6 className={classNames([styles.similarJobs_title])}>
                           {item.truncated_job_title}
@@ -130,9 +132,9 @@ export default async function SimilarJobs({ id, jobDetail, languages,config }: p
                           ></span>
                         </div>
                         <div className={classNames([styles.similarJobs_mobileCard_loca])}>
-                          <div>{[item?.recruiter_full_name,item?.recruiter_job_title].filter(a=>a).join(' · ')}</div>
+                          <div>{[item?.recruiter_full_name, item?.recruiter_job_title].filter(a => a).join(' · ')}</div>
                           <div className={styles.similarJobs_mobileCard_loca_value}>
-                          {getValueById(config,item.company_location_id,'location_id')}
+                            {getValueById(config, item.company_location_id, 'location_id')}
                           </div>
                         </div>
                       </div>

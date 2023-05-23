@@ -7,6 +7,7 @@ import { Avatar } from 'app/[lang]/components/MUIs'
 import JobClient from './JobClient/JobClient'
 import ReadMore from './ReadMore'
 import styles from '../../../page.module.scss'
+import React from 'react'
 
 type propsType = {
   description?: string
