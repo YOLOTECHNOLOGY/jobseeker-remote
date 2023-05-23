@@ -31,12 +31,12 @@ export const hoverable: Hoverable = (SubComponent, lastHover = false) => {
         return <SubComponent
             {...props}
             onMouseEnter={e => {
-                e.stopPropagation()
+                // e.stopPropagation()
                 onMouseEnter?.(e)
                 setIsHover(true)
             }}
             onMouseLeave={e => {
-                e.stopPropagation()
+                // e.stopPropagation()
                 onMouseLeave?.(e)
                 setIsHover(false)
             }}

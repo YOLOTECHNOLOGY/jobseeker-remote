@@ -606,7 +606,7 @@ const Step3 = (props: any) => {
                   error={errors.country ? true : false}
                   options={countryList}
                 />
-                {errors.country && errorText(errors.country.message)}
+                {errors.country && errorText(errors.country.message as any)}
               </div>
             )}
 

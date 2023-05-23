@@ -214,7 +214,7 @@ const EditProfileModal = ({
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
         // Disable button if error exist for fields with manual setError
-        isSecondButtonDisabled={errors && errors.birthdate}
+        isSecondButtonDisabled={!!(errors && errors.birthdate)}
         fullScreen
       >
         <div className={styles.profile}>
@@ -244,7 +244,7 @@ const EditProfileModal = ({
                   autoComplete='off'
                   error={errors.firstName}
                 />
-                {errors.firstName && errorText(errors.firstName.message)}
+                {errors.firstName && errorText(errors.firstName.message as any) }
               </div>
               <div style={{ width: '20px', height: '24px' }}></div>
               <div className={styles.profileFormGroupField}>
@@ -265,7 +265,7 @@ const EditProfileModal = ({
                   autoComplete='off'
                   error={errors.lastName}
                 />
-                {errors.lastName && errorText(errors.lastName.message)}
+                {errors.lastName && errorText(errors.lastName.message as any)}
               </div>
             </div>
             <div className={styles.profileFormTitle}>
@@ -286,7 +286,7 @@ const EditProfileModal = ({
                   onDateChange={onDateChange}
                   fullWidth={true}
                 />
-                {errors.birthdate && errorText(errors.birthdate.message)}
+                {errors.birthdate && errorText(errors.birthdate.message as any)}
               </div>
             </div>
             <div className={styles.profileFormGroup}>
@@ -307,7 +307,7 @@ const EditProfileModal = ({
                   defaultValue={location}
                   onChange={onLocationSearch}
                 />
-                {errors.location && errorText(errors.location.message)}
+                {errors.location && errorText(errors.location.message as any)}
               </div>
             </div>
             <div className={styles.profileFormGroup}>
@@ -339,7 +339,7 @@ const EditProfileModal = ({
                   multiline
                   rows={6}
                 />
-                {errors.summary && errorText(errors.summary.message)}
+                {errors.summary && errorText(errors.summary.message as any)}
               </div>
             </div>
           </div>
