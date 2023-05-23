@@ -129,14 +129,14 @@ const AccountSettings = ({ accessToken, lang }: any) => {
       }
     }
   })
-
+  const { accountSetting } = lang
   return (
     <Layout lang={lang}>
       <div className={styles.accessSettings}>
         <div className={styles.accessSettingsTabs}>
           {(width ?? 0) > 576 && (
             <Text tagName='h2' bold className={styles.accessSettingsTabsTitle}>
-              Account Setting
+              {accountSetting.title}
             </Text>
           )}
           {width && (
@@ -151,12 +151,12 @@ const AccountSettings = ({ accessToken, lang }: any) => {
                 }}
               >
                 <Tab
-                  label='Account'
+                  label={accountSetting.tabs.account}
                   {...a11yProps(0)}
                   sx={{ textTransform: 'none', paddingLeft: '0' }}
                 />
                 <Tab
-                  label='Job Alert'
+                  label={accountSetting.tabs.jobAlert}
                   {...a11yProps(1)}
                   sx={{ textTransform: 'none', paddingLeft: '0' }}
                 />
@@ -168,7 +168,7 @@ const AccountSettings = ({ accessToken, lang }: any) => {
         <div className={styles.accessSettingsContainer}>
           <TabPanel value={value} index={0}>
             <VerifyMailAndBindEmail
-              label='Email'
+              label={accountSetting.email}
               edit={edit}
               setEdit={setEdit}
               isEdit
@@ -177,10 +177,11 @@ const AccountSettings = ({ accessToken, lang }: any) => {
               verify={userDetail.is_email_verify}
               getInitData={getInitData}
               COUNT_DOWN_VERIFY_DEFAULT={COUNT_DOWN_VERIFY_DEFAULT}
+              lang={lang}
             />
 
             <VerifyPhoneNumber
-              label='Mobile Number'
+              label={accountSetting.mobile}
               edit={edit}
               setEdit={setEdit}
               isEdit
@@ -190,13 +191,15 @@ const AccountSettings = ({ accessToken, lang }: any) => {
               config={config}
               getInitData={getInitData}
               COUNT_DOWN_VERIFY_DEFAULT={COUNT_DOWN_VERIFY_DEFAULT}
+              lang={lang}
             />
 
             <EmailNotificationsetting
-              label='Email Notification'
+              label={accountSetting.notify}
               edit={edit}
               setEdit={setEdit}
               emailNotificationSetting={userDetail ? userDetail.email_notification_setting : null}
+              lang={lang}
             />
           </TabPanel>
 

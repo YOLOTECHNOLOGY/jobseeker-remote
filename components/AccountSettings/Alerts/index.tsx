@@ -28,16 +28,18 @@ import { MemoedFilters } from 'components/ModalJobAlerts/MemoedFilter'
 
 const Alerts = ({ accessToken, lang }: any) => {
   const router = useRouter()
+  const { search, accountSetting } = lang
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
   const [alertEdit, setAlertEdit] = useState(null)
   const [removeId, setRemoveId] = useState(null)
-
   const jobAlertListResponse = useSelector((store: any) => store.alerts.fetchJobAlertsList.response)
   const isLoading = useSelector((store: any) => store.alerts.fetchJobAlertsList.fetching)
   const showCreateJobAlertModal = useSelector((store: any) => store.modal.createJobAlertModal.show)
   const config = useSelector((store: any) => store.config.config.response)
-  const { search } = lang
+  const frequencyList = useMemo(() => {
+    return config.subscibe_job_frequency_lists
+  }, [config])
 
   const formattedAlertList = useMemo(() => {
     jobAlertListResponse?.forEach?.((item) => {
@@ -68,27 +70,25 @@ const Alerts = ({ accessToken, lang }: any) => {
   }
 
   const handelSaveSetFrequency = (item) => {
+    debugger
     const payload = {
       accessToken,
       updateJobAlertData: {
         id: item.id,
-        frequency_id: item.frequency_value === 'Daily' ? '1' : '2'
+        frequency_id: item.frequency_id
       }
     }
     dispatch(updateJobAlertRequest(payload))
   }
 
-  const handleFrequencyRadio = (item, ev) => {
-    if (!item.default_frequency_value) {
-      item.default_frequency_value = item.frequency_value
-    }
-    item.frequency_value = ev.target?._wrapperState?.initialValue
+  const handleFrequencyRadio = (item, id) => {
+    item.frequency_id = parseInt(id)
+    item.frequency_value = frequencyList?.find((frequency) => frequency.id === +id)?.value
   }
 
   const handelBackToJobSearch = () => {
     router.push('/jobs-hiring/job-search')
   }
-
   return (
     <div className={styles.JobAlertContainer}>
       <div className={styles.JobAlertContainer_wrapper}>
@@ -112,7 +112,7 @@ const Alerts = ({ accessToken, lang }: any) => {
           >
             {(width ?? 0) > 576 && (
               <Text tagName='h2' className={styles.JobAlertTitle}>
-                Job alert
+                {accountSetting.jobAlertTitle}
               </Text>
             )}
             <div
@@ -136,10 +136,11 @@ const Alerts = ({ accessToken, lang }: any) => {
                       {item.location_value}
                     </Text>
                     <Text block className={styles.JobAlertContainer_desc}>
-                      Filters: <MemoedFilters config={config} alert={item} lang={search} />
+                      {accountSetting.filter}:{' '}
+                      <MemoedFilters config={config} alert={item} lang={search} />
                     </Text>
                     <Text block className={styles.JobAlertContainer_desc}>
-                      Frequency: {item.frequency_value}
+                      {accountSetting.frequency}: {item.frequency_value}
                     </Text>
                     {alertEdit === item.id && (
                       <div>
@@ -150,17 +151,25 @@ const Alerts = ({ accessToken, lang }: any) => {
                             bold
                             className={styles.JobAlertContainer_Text}
                           >
-                            Alert Frequency
+                            {accountSetting.alertFrequency}
                           </Text>
                           <div>
                             <RadioGroup
                               aria-labelledby='demo-radio-buttons-group-label'
-                              defaultValue={item.frequency_value}
+                              defaultValue={item.frequency_id}
                               name='radio-buttons-group'
-                              onChange={(ev) => handleFrequencyRadio(item, ev)}
+                              onChange={(ev, value) => handleFrequencyRadio(item, value)}
                             >
-                              <FormControlLabel value='Daily' control={<Radio />} label='Daily' />
-                              <FormControlLabel value='Weekly' control={<Radio />} label='Weekly' />
+                              {frequencyList?.map((item) => {
+                                return (
+                                  <FormControlLabel
+                                    key={item.id}
+                                    value={item.id}
+                                    control={<Radio />}
+                                    label={item.value}
+                                  />
+                                )
+                              })}
                             </RadioGroup>
                           </div>
                         </div>
@@ -171,7 +180,7 @@ const Alerts = ({ accessToken, lang }: any) => {
                               setAlertEdit(null), handelSaveSetFrequency(item)
                             }}
                           >
-                            Save
+                            {accountSetting.save}
                           </Button>
                           <Button
                             variant='outlined'
@@ -182,7 +191,7 @@ const Alerts = ({ accessToken, lang }: any) => {
                                   : item.frequency_value)
                             }}
                           >
-                            Cancel
+                            {accountSetting.cancel}
                           </Button>
                         </div>
                       </div>
@@ -195,7 +204,7 @@ const Alerts = ({ accessToken, lang }: any) => {
                 ))
               ) : (
                 <div className={styles.JobAlertContainer_noJobAlert}>
-                  <Text block>You have no job alert yet. </Text>
+                  <Text block>{accountSetting.notJobAlert} </Text>
                   <Button
                     variant='contained'
                     onClick={() => {
@@ -203,7 +212,7 @@ const Alerts = ({ accessToken, lang }: any) => {
                     }}
                     className={styles.JobAlertContainer_noJobAlert_backBtn}
                   >
-                    Back to job search
+                    {accountSetting.toSearch}
                   </Button>
                 </div>
               )}
@@ -212,12 +221,12 @@ const Alerts = ({ accessToken, lang }: any) => {
         )}
 
         <Modal
-          headerTitle='Delete job alert'
+          headerTitle={accountSetting.deleteTitle}
           showModal={showCreateJobAlertModal}
           handleModal={() => {
             dispatch(closeCreateJobAlertModal())
           }}
-          firstButtonText='Keep'
+          firstButtonText={accountSetting.keep}
           firstButtonIsClose={true}
           handleFirstButton={() => {
             dispatch(closeCreateJobAlertModal())
@@ -226,11 +235,11 @@ const Alerts = ({ accessToken, lang }: any) => {
             dispatch(closeCreateJobAlertModal())
             deleteJobAlert()
           }}
-          secondButtonText='Delete'
+          secondButtonText={accountSetting.delete}
         >
           <div className={styles.ModalJobAlertBody}>
             <Text textStyle='lg' tagName='p' className={styles.ModalJobAlertBodyEnabled}>
-              You are about to delete this job alert. This cannot be undone.{' '}
+              {accountSetting.deleteTips}
             </Text>
           </div>
         </Modal>

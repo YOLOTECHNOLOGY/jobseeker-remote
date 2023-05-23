@@ -13,7 +13,14 @@ import Switch from '@mui/material/Switch'
 // styles
 import styles from './index.module.scss'
 
-const EmailNotificationsetting = ({ label, setEdit, edit, emailNotificationSetting }: any) => {
+const EmailNotificationsetting = ({
+  label,
+  setEdit,
+  edit,
+  emailNotificationSetting,
+  lang
+}: any) => {
+  const { accountSetting } = lang
   const firstRender = useFirstRender()
   const [systemEmail, setSystemEmail] = useState(emailNotificationSetting?.system_email)
   const [chatEmail, setChatEmail] = useState(emailNotificationSetting?.chat_email)
@@ -36,22 +43,16 @@ const EmailNotificationsetting = ({ label, setEdit, edit, emailNotificationSetti
       <FieldFormWrapper label={label} edit={edit} setEdit={setEdit}>
         <div className={styles.accessSettingsContainer_swtich}>
           <div className={styles.accessSettingsContainer_notification}>
-            <Text>Receive new chat messages or resume request from recruiters:</Text>
-            <p>
-              This is to notify you of new chat messages or resume request. You will only receive
-              email notification for this when you are offline
-            </p>
+            <Text>{accountSetting.receiveNewMessage}</Text>
+            <p>{accountSetting.receiveNewMessageExplanation}</p>
           </div>
 
           <Switch checked={systemEmail} onChange={() => setSystemEmail(!systemEmail)} />
         </div>
         <div className={styles.accessSettingsContainer_swtich}>
           <div className={styles.accessSettingsContainer_notification}>
-            <Text>Receive system notification:</Text>
-            <p>
-              This is to inform you of important notification such as jobs that you might be
-              interested in and your interviews details.
-            </p>
+            <Text>{accountSetting.receiveFromSystem}</Text>
+            <p>{accountSetting.receiveFromSystemExplanation}</p>
           </div>
           <Switch
             checked={chatEmail}
@@ -61,8 +62,8 @@ const EmailNotificationsetting = ({ label, setEdit, edit, emailNotificationSetti
         </div>
         <div className={styles.accessSettingsContainer_swtich}>
           <div className={styles.accessSettingsContainer_notification}>
-            <Text>Receive career and hiring tips newsletter:</Text>
-            <p>This is to share insights and tips that will help you with your job search.</p>
+            <Text>{accountSetting.receiveTips}</Text>
+            <p>{accountSetting.receiveTipsExplanation}</p>
           </div>
           <Switch
             checked={newsletterEmail}

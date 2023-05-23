@@ -24,6 +24,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 // styles
 import styles from './index.module.scss'
 import { useFirstRender } from 'helpers/useFirstRender'
+import { formatTemplateString } from 'helpers/formatter'
 
 const VerifyMailAndBindEmail = ({
   label,
@@ -33,8 +34,10 @@ const VerifyMailAndBindEmail = ({
   verify,
   errorText,
   getInitData,
-  COUNT_DOWN_VERIFY_DEFAULT
+  COUNT_DOWN_VERIFY_DEFAULT,
+  lang
 }: any) => {
+  const { accountSetting } = lang
   const dispatch = useDispatch()
 
   let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
@@ -53,9 +56,7 @@ const VerifyMailAndBindEmail = ({
   const [otp, setOtp] = useState('')
   const [otpError, setOtpError] = useState('')
   const [emailTip, setEmailTip] = useState(
-    verify
-      ? 'Your email has been verified. You will be able to receive job applications update through your email. To change your email address, please verify your new email address.'
-      : 'To receive job applications update, please verify your email.'
+    verify ? accountSetting.editEmailExplanation : accountSetting.notVerifyTips
   )
 
   useEffect(() => {
@@ -209,7 +210,7 @@ const VerifyMailAndBindEmail = ({
       </>
     )
   }
-
+  debugger
   return (
     <div className={styles.VerifyMailAndBindEmail}>
       <FieldFormWrapper
@@ -217,16 +218,16 @@ const VerifyMailAndBindEmail = ({
         setEdit={setEdit}
         edit={edit}
         isEdit
-        titleTips='Receive job applications updates through your email. '
+        titleTips={accountSetting.emailTip}
       >
-        {edit === 'Email' ? (
+        {edit === label ? (
           <div className={styles.accessSettingsContainer_fromWrapper}>
             {emailTip}
             <div className={styles.accessSettingsContainer_fromWrapper_edit}>
               <MaterialTextField
                 className={styles.accessSettingsContainer_fromWrapper_edit_input}
                 id='email'
-                label={requiredLabel('Email Address')}
+                label={requiredLabel(accountSetting.emailLabel)}
                 variant='outlined'
                 size='small'
                 value={email}
@@ -240,7 +241,7 @@ const VerifyMailAndBindEmail = ({
 
             <div className={styles.VerifyMailAndBindEmail_button}>
               <Button variant='contained' disabled={isBtnDisabled} onClick={sendEmailOTPS}>
-                Send OTP {isShowCountDownSwitch && `(${countDown}s)`}
+                {accountSetting.sendOpt} {isShowCountDownSwitch && `(${countDown}s)`}
               </Button>
               {!isShowemailVerify && (
                 <Button
@@ -250,14 +251,14 @@ const VerifyMailAndBindEmail = ({
                     setEdit(null)
                   }}
                 >
-                  Cancel
+                  {accountSetting.cancel}
                 </Button>
               )}
             </div>
 
             {isShowemailVerify && (
               <div className={styles.accessSettingsContainer_fromWrapper_verifyContainer}>
-                <Text>Enter the code that we have sent to {email}</Text>
+                <Text>{formatTemplateString(accountSetting.enterCode, email)}</Text>
                 <div className={styles.accessSettingsContainer_fromWrapper_edit}>
                   <MaterialTextField
                     className={styles.accessSettingsContainer_fromWrapper_edit_input}
@@ -279,7 +280,7 @@ const VerifyMailAndBindEmail = ({
                     disabled={isBtnDisabledVerify}
                     onClick={verifyEmailOrChangeEmail}
                   >
-                    Verify
+                    {accountSetting.verify}
                   </Button>
 
                   <Button
@@ -289,7 +290,7 @@ const VerifyMailAndBindEmail = ({
                       setEdit(null)
                     }}
                   >
-                    Cancel
+                    {accountSetting.cancel}
                   </Button>
                 </div>
               </div>
