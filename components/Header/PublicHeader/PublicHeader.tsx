@@ -13,7 +13,7 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 // nation
 import SwitchNation from 'components/SwitchNation/SwitchNation'
-import { getCountryKey } from 'helpers/country'
+import { getCountryKey, getLang } from 'helpers/country'
 
 /* Images */
 import { BossjobLogoWhite as BossjobLogo, ChevronDownIcon } from 'images'
@@ -22,12 +22,12 @@ const PublicHeader = ({ lang }: any) => {
   const { findJobs, companies, courses, careerGuide, getStarted, hiring } = lang || {}
   const pathname = usePathname()
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
-
+  const langKey = getLang()
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
-          <Link title='Home' to={'/'}>
+          <Link title='Home' to={'/' + langKey}>
             <img
               className={styles.headerLogoImage}
               src={BossjobLogo}
@@ -43,31 +43,9 @@ const PublicHeader = ({ lang }: any) => {
           <ul className={styles.headerLinksList}>
             <React.Fragment>
               <li className={styles.headerLink}>
-                {/* <Link title='Jobs' to='/jobs-hiring/job-search'>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Jobs
-                  </Text>
-                </Link> */}
-                {/* {router.route !== '/chat/[chat_id]' ? (
-                  <Link title='Chats' to='/chat/list'>
-                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                      Chats
-                    </Text>
-                  </Link>
-                ) : (
-                  <Text
-                    textStyle='base'
-                    textColor='darkGrey'
-                    className={classNames([
-                      styles.headerLinkText,
-                      styles.headerLinkTextCurrentPage
-                    ])}
-                  >
-                    Chats
-                  </Text>
-                )} */}
+
                 {!pathname.includes('/jobs-hiring/') ? (
-                  <Link title='Jobs' to='/jobs-hiring/job-search'>
+                  <Link title='Jobs' to={'/' + langKey + '/jobs-hiring/job-search'}>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                       {findJobs}
                     </Text>
@@ -85,21 +63,11 @@ const PublicHeader = ({ lang }: any) => {
                   </Text>
                 )}
               </li>
-              {/* <li className={styles.headerLink}>
-                <Link title='Headhunt Me' to={`${process.env.OLD_PROJECT_URL}/headhunt-me`} aTag>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Headhunt Me
-                  </Text>
-                </Link>
-              </li> */}
+
               <li className={styles.headerLink}>
-                {/* <Link title='Companies' to='/companies'>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Companies
-                  </Text>
-                </Link> */}
+
                 {!pathname.includes('/companies') ? (
-                  <Link title='Companies' to='/companies'>
+                  <Link title='Companies' to={'/' + langKey + '/companies'}>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                       {companies}
                     </Text>
@@ -124,16 +92,7 @@ const PublicHeader = ({ lang }: any) => {
                   </Text>
                 </Link>
               </li>
-              {/* <li className={styles.headerLink} style={{ position:'relative' }}>
-                <Link title='Virtual Career Fair' to={process.env.VCF_CLIENT_URL} aTag>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    Virtual Career Fair
-                    <span className={styles.hotTag}>
-                      Hot!
-                    </span>
-                  </Text>
-                </Link>
-              </li> */}
+
               <li className={styles.headerLink}>
                 <Link title='Career Guide' to='https://blog.bossjob.ph/' external>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
@@ -154,8 +113,8 @@ const PublicHeader = ({ lang }: any) => {
               </Link>
             </li>
             <li className={styles.headerLink}>
-              {pathname !== '/get-started' ? (
-                <Link to='/get-started' title='Get Started'>
+              {!pathname?.includes?.('/get-started') ? (
+                <Link to={'/' + langKey + '/get-started'} title='Get Started'>
                   <MaterialButton
                     variant='outlined'
                     size='medium'

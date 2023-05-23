@@ -7,13 +7,14 @@ import PublicHeader from './PublicHeader'
 import ProtectedHeader from './ProtectedHeader'
 
 import { getCookie } from 'helpers/cookies'
+import React from 'react'
 
 const Header = (props: any) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
   const contextLang = useContext(languageContext)
   const data: any = props.lang ?? contextLang
-
+  
   useEffect(() => {
     setIsAuthenticated(getCookie('accessToken') ? true : false)
   }, [userDetail])

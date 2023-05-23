@@ -14,6 +14,7 @@ import { IMContext } from 'components/Chat/IMProvider.client'
 import SwitchNation from 'components/SwitchNation/SwitchNation'
 import { getLanguage, getCountryId } from 'helpers/country'
 import { getValueById } from 'helpers/config/getValueById'
+import { getLang } from 'helpers/country'
 /* Images */
 import { BossjobLogoWhite as BossjobLogo, DefaultAvatar } from 'images'
 
@@ -50,7 +51,7 @@ const ProtectedHeader = ({ lang }: any) => {
   const { totalUnread } = useContext(IMContext)
   // const totalUnread = 999
   const config = useSelector((store: any) => store.config.config.response)
-
+  const langKey = getLang()
   useEffect(() => {
     if (pathname && isShowHeaderMenu) {
       setIsShowHeaderMenu(false)
@@ -89,7 +90,7 @@ const ProtectedHeader = ({ lang }: any) => {
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
-          <Link title='Home' to={'/'}>
+          <Link title='Home' to={'/' + langKey}>
             <img
               className={styles.headerLogoImage}
               src={BossjobLogo}
@@ -106,7 +107,7 @@ const ProtectedHeader = ({ lang }: any) => {
             <React.Fragment>
               <li className={styles.headerLink}>
                 {!pathname?.includes('/jobs-hiring/') ? (
-                  <Link title='Jobs' to='/jobs-hiring/job-search'>
+                  <Link title='Jobs' to={'/' + langKey + '/jobs-hiring/job-search'}>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                       {findJobs}
                     </Text>
@@ -126,7 +127,7 @@ const ProtectedHeader = ({ lang }: any) => {
               </li>
               <li className={styles.headerLink}>
                 {!pathname.includes('/companies') ? (
-                  <Link title='Companies' to='/companies'>
+                  <Link title='Companies' to={'/' + langKey + '/companies'}>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                       {companies}
                     </Text>
@@ -174,7 +175,7 @@ const ProtectedHeader = ({ lang }: any) => {
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
               {pathname !== '/chat/[chat_id]' ? (
-                <Link title='Jobs' to='/chat/list'>
+                <Link title='Jobs' to={'/' + langKey + '/chat/list'}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     {Chat}
                   </Text>
@@ -200,8 +201,8 @@ const ProtectedHeader = ({ lang }: any) => {
                   title='Manage Resume'
                   onClick={() => {
                     currentUser?.is_profile_completed
-                      ? router.push('/manage-profile')
-                      : router.push('/jobseeker-complete-profile/1')
+                      ? router.push('/' + langKey + '/manage-profile')
+                      : router.push('/' + langKey + '/jobseeker-complete-profile/1')
                     // currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
                   }}
                 >
@@ -261,7 +262,7 @@ const ProtectedHeader = ({ lang }: any) => {
                   className={styles.profilePlaceHolder}
                   alt='avatar'
                   onError={(e) => {
-                    ;(e.target as HTMLInputElement).src = DefaultAvatar
+                    ; (e.target as HTMLInputElement).src = DefaultAvatar
                   }}
                 />
                 <div className={styles.profileCaret} />
@@ -271,7 +272,7 @@ const ProtectedHeader = ({ lang }: any) => {
         </ul>
 
         <div className={styles.mobileIconWrapper}>
-          {pathname !== '/chat/[chat_id]' ? (
+          {!pathname.includes('/chat/[chat_id]') ? (
             <li
               className={styles.headerLink}
               style={{
@@ -282,7 +283,7 @@ const ProtectedHeader = ({ lang }: any) => {
                 // top: 5
               }}
             >
-              <Link title='Jobs' to='/chat/list'>
+              <Link title='Jobs' to={'/' + langKey + '/chat/list'}>
                 <img src={ChatCircleDots} alt='Chat logo' />
                 {totalUnread ? (
                   <span
@@ -304,7 +305,7 @@ const ProtectedHeader = ({ lang }: any) => {
           <div className={styles.headerMenu} ref={ref}>
             <ul className={styles.headerMenuList}>
               <li className={styles.headerMenuItem}>
-                <Link to='/my-jobs?page=1' className={styles.headerMenuLink}>
+                <Link to={'/' + langKey + '/my-jobs?page=1'} className={styles.headerMenuLink}>
                   <Text textStyle='base'>{myJobs}</Text>
                 </Link>
               </li>
@@ -313,20 +314,7 @@ const ProtectedHeader = ({ lang }: any) => {
                   <Text textStyle='base'>{accountSettings}</Text>
                 </Link>
               </li>
-              {/* <li className={styles.headerMenuItem}>
-                <a
-                  onClick={(e) => handleRedirectAuthentication(e, '/dashboard/bosspoint')}
-                  href='/dashboard/bosspoint'
-                  className={styles.headerMenuLink}
-                >
-                  <Text textStyle='base'>BossPoints</Text>
-                </a>
-              </li> */}
-              {/* <li className={styles.headerMenuItem}>
-                <Link to='https://blog.bossjob.ph/' aTag external className={styles.headerMenuLink}>
-                  <Text textStyle='base'>Career Guide</Text>
-                </Link>
-              </li> */}
+             
               <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}>
                 <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
                   <Text textStyle='base'>{hiring}</Text>
