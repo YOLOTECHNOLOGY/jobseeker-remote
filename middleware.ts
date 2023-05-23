@@ -28,7 +28,7 @@ export const getCountryAndLang = (cookies: RequestCookies) => {
 }
 
 export function middleware(request: NextRequest) {
-  const {pathname,search} = request.nextUrl
+  const { pathname, search } = request.nextUrl
   const fullUrl = pathname + search
 
   // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
@@ -52,7 +52,7 @@ export function middleware(request: NextRequest) {
   )
   console.log({ pathnameIsMissingLocale })
   // Redirect if there is no locale
-  if (pathnameIsMissingLocale) {
+  if (pathnameIsMissingLocale && pathname !== '/') {
     // the a link will not take any geo data on url, but we can get those data by cookies
     const locale = getCountryAndLang(request.cookies) || [getCountryKey(), getLocale(request)]
     const lang = locale?.[1]

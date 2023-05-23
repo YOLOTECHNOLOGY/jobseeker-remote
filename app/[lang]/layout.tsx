@@ -10,6 +10,7 @@ import { getCountry } from 'helpers/country'
 import './index.module.scss'
 import 'app/[lang]/jobs-hiring/[path]/index.module.scss'
 import { getDictionary } from 'get-dictionary'
+import React from 'react'
 const defaultSEO = {
   title: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
   description: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
