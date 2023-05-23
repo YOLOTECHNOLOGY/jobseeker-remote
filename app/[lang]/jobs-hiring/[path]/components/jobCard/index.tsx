@@ -5,7 +5,6 @@ import { isMobile } from 'react-device-detect'
 import Image from 'next/image'
 import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
-
 import useChatNow from 'app/[lang]/hooks/useChatNow'
 import { hoverableFunc } from 'components/highLevel/hoverable'
 import MaterialButton from 'components/MaterialButton'
@@ -16,7 +15,6 @@ import { getCookie, setSourceCookie } from 'helpers/cookies'
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 import { CircularProgress } from 'app/[lang]/components/MUIs'
 import { addJobViewService } from 'store/services/jobs/addJobView'
-
 import styles from '../../index.module.scss'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 import { useSelector } from 'react-redux'
@@ -165,12 +163,8 @@ const JobCard = (props: any) => {
   const showPopup = useShowPop(titleHover, popHover)
   const accessToken = getCookie('accessToken')
   const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken)
-  const [jobDetail, detailLoading, startLoading] = useJobDetail(id)
-
-       
+  const [jobDetail, detailLoading, startLoading] = useJobDetail(id)   
  // const industry =  getValueById(config,industry_id,'industry_id')
-
-
 
   useEffect(() => {
     if (showPopup && !jobDetail && !detailLoading) {

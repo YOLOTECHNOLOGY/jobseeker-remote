@@ -3,7 +3,7 @@ import { assign } from 'lodash-es'
 import styles from './index.module.scss'
 import Modal from 'components/Modal'
 const CommonPhrasesDeleteModal = (props: any) => {
-    const { contextRef, loading } = props
+    const { contextRef, loading, dic } = props
     const [show, setShow] = useState(false)
     const [phrase, setPhrase] = useState<any>({})
     const actionsRef = useRef<any>()
@@ -22,9 +22,9 @@ const CommonPhrasesDeleteModal = (props: any) => {
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.back?.()}
-        headerTitle={'Common Phrases'}
-        firstButtonText='Back'
-        secondButtonText='Delete'
+        headerTitle={dic?.phraseTitle}
+        firstButtonText={dic?.back}
+        secondButtonText={dic?.delete}
         firstButtonIsClose={false}
         secondButtonIsClose={false}
         handleFirstButton={() => actionsRef.current?.back?.()}
@@ -34,7 +34,7 @@ const CommonPhrasesDeleteModal = (props: any) => {
         <div className={styles.modalContainer}>
             {/* <p className={styles.modalTitle}>Common Phrases</p> */}
             <div className={styles.formContainer}>
-                <p>Sure to delete this?</p>
+                <p>{dic?.sureDelete}</p>
                 <h5>{phrase.message}</h5>
             </div>
         </div>

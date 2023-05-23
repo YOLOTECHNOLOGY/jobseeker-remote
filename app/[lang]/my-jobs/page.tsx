@@ -33,6 +33,7 @@ const configs = getConfigs([
   ['job_benefit_lists'],
   ['notice_period_lists'],
   ['main_job_function_lists'],
+  ['degrees'],
 ])
 
 // or dynamic metadata

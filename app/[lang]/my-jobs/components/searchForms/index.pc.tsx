@@ -169,6 +169,7 @@ const SearchArea = (props: any) => {
               locationList={config.location_lists}
               value={location}
               // isClear={true}
+              label={lang.location}
               defaultValue={location}
               onChange={(e, value) => {
                 setLocation(value)

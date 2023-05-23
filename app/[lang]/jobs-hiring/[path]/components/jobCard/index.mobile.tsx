@@ -26,7 +26,6 @@ const JobCard = (props: any) => {
         xp_lvl_id,
         degree_id,
     } = props
-    console.log(props,'props')
    // const labels = [job_type, xp_lvl, degree].filter(a => a)
     const config = useSelector((store:any)=> store.config.config.response)
     const labels = [

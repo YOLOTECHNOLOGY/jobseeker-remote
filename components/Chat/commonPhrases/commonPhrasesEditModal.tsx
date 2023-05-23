@@ -5,7 +5,7 @@ import { TextField } from '@mui/material'
 import Modal from 'components/Modal'
 
 const CommonPhrasesEditModal = (props: any) => {
-  const { contextRef, loading } = props
+  const { contextRef, loading, dic } = props
   const [show, setShow] = useState(false)
   const actionsRef = useRef<any>()
   const [phrase, setPhrase] = useState({} as any)
@@ -31,9 +31,9 @@ const CommonPhrasesEditModal = (props: any) => {
     <Modal
       showModal={show}
       handleModal={() => actionsRef.current?.back?.()}
-      headerTitle={'Common Phrases'}
-      firstButtonText='Back'
-      secondButtonText='Save'
+      headerTitle={dic?.phraseTitle}
+      firstButtonText={dic?.back}
+      secondButtonText={dic?.save}
       firstButtonIsClose={false}
       secondButtonIsClose={false}
       isSecondButtonDisabled={!text}
@@ -45,11 +45,11 @@ const CommonPhrasesEditModal = (props: any) => {
       isFirstButtonLoading={loading}
     >
       <div className={styles.formContainer}>
-        <p>Add your own phrase. Please do not include your contact details here.</p>
+        <p>{dic.addDescription}</p>
         <TextField
           name='phrase_text'
-          placeholder='Insert the common phrases that you would like to send to Boss'
-          label='phrase'
+          placeholder={dic?.inputPlaceholder}
+          label={dic?.phraseLabel}
           value={text}
           autoFocus
           style={{ width: '100%' }}

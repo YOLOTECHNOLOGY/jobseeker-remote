@@ -15,6 +15,7 @@ import Link from 'next/link';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { useSearchParams } from 'next/navigation'
 import moment from 'moment'
+import { getValueById } from 'helpers/config/getValueById'
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
@@ -33,6 +34,7 @@ const Resume = ({
   const notice_period_lists = config.notice_period_lists || []
   const {
     xp_lvl: xpLvl,
+    xp_lvl_id,
     full_name: fullName,
     notice_period_id: noticePeriodId,
     avatar,
@@ -142,7 +144,7 @@ const Resume = ({
     availabilityUpdateSuccessfully,
     uploadedResumes
   } = lang || {}
- 
+ console.log(userDetail,11111)
   return (
     <>
       <div className={styles.resume}>
@@ -152,7 +154,7 @@ const Resume = ({
             <p>{fullName}</p>
             {birthdate ? <span>{ageFun(birthdate)} {yearsOld}</span> : null}
             {birthdate && xpLvl ? <i>|</i> : null}
-            <span> {xpLvl}</span>
+            <span> { getValueById(config,xp_lvl_id,'xp_lvl_id')}</span>
             {(xpLvl || birthdate) && educations?.[0]?.field_of_study ? <i>|</i> : null}
             <span> {educations?.[0]?.field_of_study}</span>
           </div>

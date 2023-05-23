@@ -20,7 +20,7 @@ const Icon = ({ onClick, src, width, height, ...rest }: IconProps) => {
 }
 
 const CommonPhrasesEditListModal = (props: any) => {
-  const { contextRef, loading, listLoading, list } = props
+  const { contextRef, loading, listLoading, list ,dic} = props
   const [show, setShow] = useState(false)
   const actionsRef = useRef<any>()
   const context = {
@@ -38,8 +38,8 @@ const CommonPhrasesEditListModal = (props: any) => {
     <Modal
       showModal={show}
       handleModal={() => actionsRef.current?.back?.()}
-      headerTitle={'Common Phrases'}
-      secondButtonText='Done'
+      headerTitle={dic?.phraseTitle}
+      secondButtonText={dic?.done}
       secondButtonIsClose={false}
       handleSecondButton={() => actionsRef.current.back?.()}
       isSecondButtonLoading={loading}
