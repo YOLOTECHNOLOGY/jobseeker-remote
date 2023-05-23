@@ -814,7 +814,26 @@
     "cancelInterview": "取消面试",
     "acceptAnother": "我已经接受了其他工作",
     "retime": "我想更改面试时间",
-    "cancelReasonLabel": "您即将取消面试，请让招聘者知道取消的原因："
+    "cancelReasonLabel": "您即将取消面试，请让招聘者知道取消的原因：",
+    "or": "或者"
+  },
+  "chatCommonPhrase": {
+    "phraseTitle": "常用短语",
+    "phraseLabel": "短语",
+    "inputPlaceholder": "输入您常用的发给招聘者的短语",
+    "addDescription": "添加您的专属短语，请不要包含您的联系方式",
+    "save": "保存",
+    "back": "返回",
+    "delete": "删除",
+    "done": "完成",
+    "close": "关闭",
+    "send": "发送",
+    "sureDelete": "确定删除吗？",
+    "pickDescription": "请选择要发送给招聘者的短语",
+    "actionEdit":"编辑或者删除",
+    "actionCreate":"添加短语",
+    "actionDescription":"最多可以保存10条短语",
+    "or":"或者"
   },
   "quickUploadResume": {
     "title": "上传你的简历",

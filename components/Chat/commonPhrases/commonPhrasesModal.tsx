@@ -5,7 +5,7 @@ import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import ContentLoader from 'react-content-loader'
 import Modal from 'components/Modal'
 const CommonPhrasesModal = (props: any) => {
-  const { contextRef, loading, listLoading, list } = props
+  const { contextRef, loading, listLoading, list,dic } = props
   const [show, setShow] = useState(false)
   const [selected, setSelected] = useState({} as any)
   const actionsRef = useRef<any>()
@@ -28,9 +28,9 @@ const CommonPhrasesModal = (props: any) => {
     <Modal
       showModal={show}
       handleModal={() => actionsRef.current?.close?.()}
-      headerTitle={'Common Phrases'}
-      firstButtonText='Close'
-      secondButtonText='send'
+      headerTitle={dic?.phraseTitle}
+      firstButtonText={dic?.close}
+      secondButtonText={dic?.send}
       firstButtonIsClose={false}
       secondButtonIsClose={false}
       isSecondButtonDisabled={!selected.id}
@@ -41,7 +41,7 @@ const CommonPhrasesModal = (props: any) => {
     >
       <div className={styles.modalContainer}>
         <div className={styles.formContainer}>
-          <p>Please select the phrase that you want to send to Boss.</p>
+          <p>{dic?.pickDescription}</p>
           <RadioGroup
             aria-labelledby='demo-radio-buttons-group-label'
             defaultValue={selected?.id}
@@ -68,13 +68,13 @@ const CommonPhrasesModal = (props: any) => {
               onClick={() => editProps.disabled || actionsRef?.current?.modalEditList?.()}
               {...editProps}
             >
-              Edit or delete phrase{' '}
+              {dic?.actionEdit}
             </a>{' '}
-            or{' '}
+            {dic?.or}
             <a onClick={() => aProps.disabled || actionsRef?.current?.modalCreate()} {...aProps}>
-              Create new phrase{' '}
+             {' '}{dic?.actionCreate}{' '}
             </a>
-            (You can save up to 10 phrases)
+            {dic?.actionDescription}
           </span>
         </div>
       </div>
