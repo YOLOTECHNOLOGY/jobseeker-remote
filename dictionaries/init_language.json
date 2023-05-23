@@ -140,7 +140,21 @@
     "cancelled": "Cancelled",
     "notAccepted": "Not accepted",
     "completed": "Completed",
-    "notCheckedIn": "Not checked in"
+    "notCheckedIn": "Not checked in",
+    "notSuitable": {
+      "title": "Why this job is not suitable?",
+      "description": "Please select a reason why this job is not what you are looking for. We will optimise your job recommendations.",
+      "others": "Others",
+      "reasons": "Please let us know why this job is not suitable.",
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "reason1": "Does not match my job preference",
+      "reason2": "Working location is too far",
+      "reason3": "Salary is below my expectation",
+      "reason4": "Education qualification mismatch",
+      "reason5": "Industry mismatch",
+      "reason6": "Not interested in this company"
+    }
   },
   "companies": {
     "title": "Find great companies in {{country}}",

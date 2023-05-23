@@ -4,7 +4,7 @@ import styles from './index.module.scss'
 import Modal from 'components/Modal'
 import {  TextareaAutosize } from 'app/[lang]/components/MUIs'
 const NotSuitableModal = (props: any) => {
-
+    const translateLang = props?.lang?.notSuitable || {}
     const {
         // showSelection,
         hideSelection,
@@ -15,43 +15,45 @@ const NotSuitableModal = (props: any) => {
         showTextModal,
         // refreshing
     } = props
+
     const reasons = [
-        'Does not match my job preference',
-        'Working location is too far',
-        'Salary is below my expectation',
-        'Education qualification mismatch',
-        'Industry mismatch',
-        'Not interested in this company',
+        translateLang.reason1,
+        translateLang.reason2,
+        translateLang.reason3,
+        translateLang.reason4,
+        translateLang.reason5,
+        translateLang.reason6
     ]
+
     const [other, setOther] = useState('')
     return <>
         <Modal
             showModal={showSelectionModal}
             handleModal={hideSelection}
-            headerTitle={'Why this job is not suitable?'}
+            headerTitle={translateLang.title}
             closeModalOnOutsideClick={true}
 
         >
-            <div className={styles.description}>Please select a reason why this job is not what you are looking for. We will optimise your job recommendations.</div>
+            <div className={styles.description}>{translateLang.description}</div>
             {reasons.map(reason => {
                 return <div className={styles.item} key={reason} onClick={() => request(reason)}>{reason}</div>
             })}
-            <div onClick={showText} className={styles.others}>Others</div>
+            <div onClick={showText} className={styles.others}>{translateLang.others}</div>
         </Modal>
         <Modal
             showModal={showTextModal}
             handleModal={hideText}
-            headerTitle={'Others'}
+            headerTitle={translateLang.others}
             closeModalOnOutsideClick={false}
             firstButtonIsClose={true}
             handleFirstButton={hideText}
             handleSecondButton={() => request(other)}
-            firstButtonText='Cancel'
-            secondButtonText='Submit'
+            firstButtonText={translateLang.cancel}
+            secondButtonText={translateLang.submit}
             isSecondButtonDisabled={!other.length}
         >
             <TextareaAutosize
-                placeholder='Please let us know why this job is not suitable.'
+                placeholder={translateLang.reasons}
                 style={{
                     width: '100%',
                     minHeight: 100,

@@ -423,7 +423,7 @@ const JobCard = (props: any) => {
 
         {modalChange}
       </>
-      <NotSuitableModal {...modalProps} />
+      <NotSuitableModal {...modalProps} lang={props.lang} />
     </div>
   )
 }
