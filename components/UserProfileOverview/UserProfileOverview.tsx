@@ -37,6 +37,13 @@ type UserProfileOverviewProps = {
   handleEditClick: () => void
 }
 
+const getAge = (birthDate) => {
+  const now = moment(new Date())
+  const then = moment(birthDate).format('YYYY-MM-DD')
+  const age = now.diff(moment(then), 'years')
+  return age
+}
+
 const UserProfileOverview = ({
   name,
   location,
@@ -53,9 +60,7 @@ const UserProfileOverview = ({
   const isMobile = width < 768 ? true : false
   let age 
   if (birthdate){
-    const now = new Date()
-    const then = new Date(birthdate)
-    age = now.getFullYear() - then.getFullYear()
+    age = getAge(birthdate)
   }
   
   const getYearString = (age: number) => {

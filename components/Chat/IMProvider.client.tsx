@@ -100,7 +100,7 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
                 }
             })
     }, [lang])
-    console.log({ chatDictionary })
+    
     const translate = useCallback((key, ...args) => {
         if (!chatDictionary) {
             return key
@@ -202,7 +202,11 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
         updateChatListRef.current = updateChatList
         updateChatList()
     }, [updateChatList])
-
+    useEffect(() => {
+        if(lang) {
+            IMManager.setCurrentLanguage(lang)
+        }
+      }, [lang])
     useEffect(() => {
         if (userId) {
             IMManager.accessUser(

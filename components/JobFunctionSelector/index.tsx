@@ -22,9 +22,8 @@ const formatMenuText = (value) => {
   return text
 }
 const JobFunctionSelector = (props: any) => {
-  const { value, jobTitle = '', className, title, onChange, isTouched, onBlur,lang, ...rest } = props
+  const { value, jobTitle = '', className, title, onChange, isTouched, onBlur, lang, ...rest } = props
   const menuRef = useRef(null)
-  console.log(lang,'lang')
   const [showModal, setShowModal] = useState(false)
   const [selectedSubItem, setSelectedSubItem] = useState<any>({})
   const [expandeds, setExpandeds] = useState([])
@@ -80,7 +79,7 @@ const JobFunctionSelector = (props: any) => {
     const group = (groupedSelected ?? []).find((group) => {
       return group.filter((subItem) => subItem.id === selectedSubItem?.id).length
     })
-   
+
     return groupedSelected?.indexOf(group) ?? -1
   }, [groupedSelected, selectedSubItem])
 
@@ -93,10 +92,10 @@ const JobFunctionSelector = (props: any) => {
     if (value?.value) {
       initDefaultJobFunctionSelect()
     }
-  }, [value])
+  }, [value.id])
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       if (showModal) {
         const t = await setTimeout(() => {
           clearTimeout(t)
@@ -131,21 +130,19 @@ const JobFunctionSelector = (props: any) => {
     },
     [expandeds]
   )
-
   const initDefaultJobFunctionSelect = () => {
     if (jobFunctions?.length) {
-      jobFunctions.map(e=>{
-        e.sub_function_list.map(job=>{
+      jobFunctions.map(e => {
+        e.sub_function_list.map(job => {
           job.job_titles.forEach((item) => {
-            if (item?.id === value.id) {      
-              console.log(item)            
+            if (item?.id === value.id) {
               onChange(item)
-              setSelectedKey(job?.id)
+              setSelectedKey(e.id)
               setSelectedSubItem(job)
             }
           })
         })
-       })
+      })
       // jobFunctions.forEach((jobFunction) =>
       //   //
       //   Object.keys(jobFunction).forEach((key: any) =>
@@ -269,7 +266,7 @@ const JobFunctionSelector = (props: any) => {
                                 if (subItem.id === (selectedSubItem as any)?.id) {
                                   setSelectedSubItem(undefined)
                                 } else {
-                                  console.log(subItem,'subItem')
+                                  console.log(subItem, 'subItem')
                                   setSelectedSubItem(subItem)
                                 }
                               }}

@@ -853,5 +853,29 @@
       "country": "country is required when location is overseas",
       "industry": "industry is required"
     }
+  },
+  "resumetemplate": {
+    "title": "Free resume template",
+    "subTitle": "Create and download resume in a minute.",
+    "createBtn": "Create Resume",
+    "form": {
+      "label": "Email address",
+      "emptyError": "Please enter your email address.",
+      "validError": "'Please enter a valid email address.'"
+    },
+    "howToCreate": {
+      "title": "How to create resume template",
+      "step1": "Fill in your name as well as a valid email (important that you enter a valid email which will be used in your resume template)",
+      "step2": "Click on “Create Resume” and proceed to fill in more information such as personal summary and career objectives, education, experience, skills, and more.",
+      "step3": "Download, print and save your new resume",
+      "step4": "Update your online resume any time and create new resume template whenever you wish to"
+    },
+    "haveAQuestion": "Have a question?",
+    "freeLabel": "Is it free?",
+    "freeAnswer": "Yes, Bossjob resume generation service is free. You can create as many resume as you want. You can choose from different themes of resume samples and use different resume sample for different job applications",
+    "chooseTemplate": "How many templates can I choose from?",
+    "chooseTemplateAnswer": "You can choose from 2 templates, professional or creative resume samples. You can immediately use your newly improved resume to apply for job openings on Bossjob.",
+    "editLater": "Would I be able to edit the resume template later?",
+    "editLaterAnswer": "Absolutely yes. Login to your Bossjob account anytime to update your resume. You can use your Bossjob account as a resume bank. Keep your most updated career details in Bossjob and use them as your professional identity!"
   }
 }
