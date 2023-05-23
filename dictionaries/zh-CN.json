@@ -131,7 +131,7 @@
     "InterviewTime": "面试时间",
     "address": "地址",
     "noMore": "没有更多",
-    "location":"地区",
+    "location": "地区",
     "pending": "待办的",
     "accepted": "公认",
     "upcoming": "即将到来",
@@ -512,7 +512,7 @@
     "tab": {
       "profile": {
         "tabTitle": "档案",
-        "findYou": "让雇主更快找到您!",
+        "findYou": "让企业更快找到您!",
         "year_one": "{{age}} 岁",
         "year_other": "{{age}} 岁",
         "about": "关于",
@@ -759,7 +759,7 @@
     "fieldOfStudy": "专业",
     "fillUpTheFieldsWith": " 用 (*) 填写字段以继续。",
     "addAEducation": " 添加学历",
-    "notWantToEnterEducation": "我现在不想接受教育",
+    "notWantToEnterEducation": "暂时不填写教育背景",
     "searchForJobTitle": "搜索工作标题",
     "year": "年",
     "month": "月",
@@ -838,8 +838,7 @@
     "cancelInterview": "取消面试",
     "acceptAnother": "我已经接受了其他工作",
     "retime": "我想更改面试时间",
-    "cancelReasonLabel": "您即将取消面试，请让招聘者知道取消的原因：",
-    "or": "或者"
+    "cancelReasonLabel": "您即将取消面试，请让招聘者知道取消的原因："
   },
   "chatCommonPhrase": {
     "phraseTitle": "常用短语",
@@ -854,10 +853,10 @@
     "send": "发送",
     "sureDelete": "确定删除吗？",
     "pickDescription": "请选择要发送给招聘者的短语",
-    "actionEdit":"编辑或者删除",
-    "actionCreate":"添加短语",
-    "actionDescription":"最多可以保存10条短语",
-    "or":"或者"
+    "actionEdit": "编辑或者删除",
+    "actionCreate": "添加短语",
+    "actionDescription": "最多可以保存10条短语",
+    "or": "或者"
   },
   "quickUploadResume": {
     "title": "上传你的简历",
@@ -866,7 +865,6 @@
     "uploadTips": "支持 PDF, DOC, DOCX 文件, 最大 5MB",
     "or": "或",
     "createFreeResume": "创建免费简历",
-    "resume": "简历",
     "register": {
       "join": "加入Bossjob，",
       "start": "开启您的职业生涯",
