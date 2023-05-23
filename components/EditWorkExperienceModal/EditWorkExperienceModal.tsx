@@ -434,6 +434,7 @@ const EditWorkExperienceModal = ({
                 <MaterialBasicSelect
                   className={styles.fullWidth}
                   label={expModal.industry}
+                  required
                   value={industry}
                   onChange={(e) => {
                     setIndustry(e.target.value)
@@ -447,6 +448,7 @@ const EditWorkExperienceModal = ({
                   className={styles.fullWidth}
                   label={expModal.currency}
                   value={currency}
+                  required
                   onChange={(e) => {
                     setCurrency(e.target.value)
                   }}

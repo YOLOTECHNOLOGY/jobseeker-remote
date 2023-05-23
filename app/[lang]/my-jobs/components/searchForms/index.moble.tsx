@@ -17,12 +17,12 @@ import { filter, toPairs, pipe, is, map } from 'ramda'
 import { LoadingContext } from 'app/[lang]/components/providers/loadingProvider'
 import { cloneDeep, flatMap } from 'lodash-es'
 import MaterialLocationField from 'app/components/mobile/location1'
-
+import { getValueById } from 'helpers/config/getValueById'
 
 const SearchArea = (props: any) => {
     // console.log({ props })
     const { config, preferences, preferenceId, searchParams ,lang} = props
-     const {newest,relevance,highestSalary,JobPreference,sortBy,filters,qualification, workExprerience, Industry, salary, JobType, companySizes} = lang ||{}
+     const {newest,relevance,highestSalary,JobPreference,sortBy,filters,qualification, workExprerience, Industry, salary, JobType, companySizes} = lang.myJobs ||{}
     const sortOptions = [
         { label: newest, value: '1' },
         { label: relevance, value: '2' },
@@ -30,10 +30,10 @@ const SearchArea = (props: any) => {
     ]
 
     const preferenceOptions = useMemo(() => {
-        return preferences.map(preference => ({ value: preference.id, label: preference.job_title }))
+        return preferences.map(preference => ({ value: preference.id, label:getValueById(config,preference.function_job_title_id,'function_job_title_id')}))
     }, [preferences])
     const [selectedPreferenceId, setSelectedPreferenceId] = useState(+preferenceId)
-
+    
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchConfigSuccess(config))
@@ -104,7 +104,7 @@ const SearchArea = (props: any) => {
 
     const newTheme = cloneDeep(theme)
     newTheme.components.MuiPaper.styleOverrides.root['height'] = 'calc(100% - 64px)'
-
+  
     return <div>
         <ThemeProvider theme={newTheme}>
             <div className={styles.container}>
@@ -146,6 +146,7 @@ const SearchArea = (props: any) => {
                         value={location}
                         defaultValue={location}
                         options={locations}
+                        label={lang.myJobs?.location}
                         onChange={(e, value) => {
                             setLocation(value)
                         }}

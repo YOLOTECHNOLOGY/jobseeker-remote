@@ -97,7 +97,9 @@ const EditJobPreferencesModal = ({
   const { handleSubmit, getValues, setValue, control, reset, trigger } = useForm({ defaultValues })
   const [minSalary, setMinSalary] = useState(getValues().minSalary)
   useEffect(() => {
-    getMaxSalaryOptions(minSalary)
+    if(minSalary){
+      getMaxSalaryOptions(minSalary)
+    }
   }, [minSalary])
   useEffect(() => {
     if (initial) {
@@ -306,7 +308,6 @@ const EditJobPreferencesModal = ({
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
                   label={editModal.maxSalary}
-                  rules={{ required: lang.editJobPreferencesModal.validate.maxSalary }}
                   required
                   options={maxSalaryOptions}
                   {...fieldState}

@@ -9,6 +9,7 @@ import { CircularProgress } from 'app/[lang]/components/MUIs'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp'
+import { getValueById } from 'helpers/config/getValueById'
 const PreferenceSelector = (props: any) => {
   let { preferences, preferenceId, config, lang } = props
   const allLang = lang
@@ -37,6 +38,7 @@ const PreferenceSelector = (props: any) => {
   useEffect(() => {
     setShowPreferenceId(preferenceId)
   }, [preferenceId])
+  console.log(preferences,'preferenceId')
   const { push, loading: pushing } = useContext(LoadingContext)
   const busy = useMemo(() => {
     return loading // || pushing
@@ -71,7 +73,7 @@ const PreferenceSelector = (props: any) => {
                 [styles.disabled]: busy && +showPreferenceId !== preference.id
               })}
             >
-              {preference.function_job_title}
+              { getValueById(config, preference?.function_job_title_id, 'function_job_title_id') ?? ''}
             </div>
           )
         })}
