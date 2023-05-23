@@ -909,5 +909,46 @@
     "chooseTemplateAnswer": "你可以从两个专业并富有创造性的简历模版中选择。您可以立即使用新改进的简历来申请Bossjob上的职位空缺。",
     "editLater": "我可以稍后在编辑简历模版吗？",
     "editLaterAnswer": "当然可以，随时登录你的Bossjob账号去更新简历，你可以把你的Bossjob账号作为一个简历中心，将您最新的职业详细信息保存在 Bossjob 中，并将其用作您的职业身份"
+  },
+  "accountSetting": {
+    "title": "账户设置",
+    "tabs": {
+      "account": "账户",
+      "jobAlert": "职位提醒"
+    },
+    "email": "邮件",
+    "sendOpt": "发送验证码",
+    "save": "保存",
+    "cancel": "取消",
+    "verify": "验证",
+    "emailTip": "通过您的电子邮件接收工作申请更新。",
+    "editEmailExplanation": "您的电子邮件已通过验证。 您将能够通过您的电子邮件接收工作申请更新。 要更改您的电子邮件地址，请验证您的新电子邮件地址。",
+    "notVerifyTips": "要接收工作申请更新，请验证您的电子邮件。",
+    "emailLabel": "邮件地址",
+    "enterCode": "输入我们发送到{{email}}的代码",
+    "mobile": "手机号码",
+    "mobileTip": "帮助招聘人员更好地联系您寻找工作机会。",
+    "mobileNotVerified": "帮助招聘人员更好地联系您寻找工作机会。 请验证您的手机号码。",
+    "mobileExplanation": "您的手机号码已通过验证。 招聘人员将能够通过您的手机号码与您联系。 要更改您的手机号码，请验证您的新手机号码。",
+
+    "country": "国家",
+    "contactNumber": "联系电话",
+    "notify": "电子邮件通知",
+    "receiveNewMessage": "接收来自招聘人员的新聊天消息或简历请求：",
+    "receiveNewMessageExplanation": "这是为了通知您新的聊天消息或恢复请求。 您只会在离线时收到这方面的电子邮件通知",
+    "receiveFromSystem": "接收系统通知：",
+    "receiveFromSystemExplanation": "这是为了通知您重要的通知，例如您可能感兴趣的工作和面试详情。",
+    "receiveTips": "接收职业和招聘技巧通讯：",
+    "receiveTipsExplanation": "这是为了分享有助于您求职的见解和技巧。",
+    "jobAlertTitle": "职位提醒",
+    "filter": "筛选条件",
+    "frequency": "通知频率",
+    "alertFrequency": "通知频率",
+    "notJobAlert": "你还没有工作通知",
+    "toSearch": "返回到搜索工作",
+    "deleteTitle": "删除工作通知",
+    "keep": "保留",
+    "delete": "删除",
+    "deleteTips": "您即将删除此职位提醒。 这不能被撤消。"
   }
 }
