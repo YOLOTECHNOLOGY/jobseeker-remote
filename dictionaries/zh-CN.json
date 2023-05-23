@@ -154,7 +154,8 @@
       "reason4": "学历不匹配",
       "reason5": "行业不匹配",
       "reason6": "对这家公司不感兴趣"
-    }
+    },
+    "deleteSuccess":"删除成功"
   },
   "companies": {
     "title": "寻找在{{country}}的优秀公司",

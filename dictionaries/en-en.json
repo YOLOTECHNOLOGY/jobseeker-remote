@@ -4,7 +4,7 @@
     "companies": "Companies",
     "courses": "Courses",
     "careerGuide": "Career Guide",
-    "hiring": "I'm Hiring",
+    "hiring": "I'm hiring",
     "getStarted": "Get Started",
     "manageResume": "Manage Resume",
     "myJobs": "My Jobs",
@@ -131,7 +131,7 @@
     "InterviewTime": "Interview Time",
     "address": "Address",
     "noMore": "No more",
-    "location": "location",
+    "location":"location",
     "pending": "Pending",
     "accepted": "Accepted",
     "upcoming": "Upcoming",
@@ -154,7 +154,8 @@
       "reason4": "Education qualification mismatch",
       "reason5": "Industry mismatch",
       "reason6": "Not interested in this company"
-    }
+    },
+    "deleteSuccess":"delete seccess"
   },
   "companies": {
     "title": "Find great companies in {{country}}",
@@ -258,7 +259,7 @@
   },
   "home": {
     "title": "Find Job. Talk to Boss.",
-    "defaultLocationPH": "manila",
+    "defaultLocationPH": "Manila",
     "defaultLocationSG": "downtown core",
     "search": {
       "location": "Location",
@@ -845,18 +846,18 @@
     "phraseLabel": "Phrase",
     "inputPlaceholder": "Insert the common phrases that you would like to send to Boss",
     "addDescription": "Add your own phrase. Please do not include your contact details here.",
-    "save": "Save",
-    "back": "Back",
-    "delete": "Delete",
-    "done": "Done",
-    "close": "Close",
-    "send": "Send",
-    "sureDelete": "Sure to delete this?",
-    "pickDescription": "Please select the phrase that you want to send to Boss.",
-    "actionEdit": " Edit or delete phrase",
-    "actionCreate": "Create new phras",
-    "actionDescription": "You can save up to 10 phrases",
-    "or": "or"
+    "save":"Save",
+    "back":"Back",
+    "delete":"Delete",
+    "done":"Done",
+    "close":"Close",
+    "send":"Send",
+    "sureDelete":"Sure to delete this?",
+    "pickDescription":"Please select the phrase that you want to send to Boss.",
+    "actionEdit":" Edit or delete phrase",
+    "actionCreate":"Create new phras",
+    "actionDescription":"You can save up to 10 phrases",
+    "or":"or"
   },
   "quickUploadResume": {
     "title": "Upload your resume",

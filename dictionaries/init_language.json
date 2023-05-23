@@ -154,7 +154,8 @@
       "reason4": "Education qualification mismatch",
       "reason5": "Industry mismatch",
       "reason6": "Not interested in this company"
-    }
+    },
+    "deleteSuccess":"delete seccess"
   },
   "companies": {
     "title": "Find great companies in {{country}}",
@@ -258,7 +259,7 @@
   },
   "home": {
     "title": "Find Job. Talk to Boss.",
-    "defaultLocationPH": "manila",
+    "defaultLocationPH": "Manila",
     "defaultLocationSG": "downtown core",
     "search": {
       "location": "Location",
