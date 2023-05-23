@@ -26,6 +26,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 // styles
 import styles from './index.module.scss'
 import { useFirstRender } from 'helpers/useFirstRender'
+import { formatTemplateString } from 'helpers/formatter'
 
 const VerifyPhoneNumber = ({
   label,
@@ -36,8 +37,10 @@ const VerifyPhoneNumber = ({
   errorText,
   config,
   getInitData,
-  COUNT_DOWN_VERIFY_DEFAULT
+  COUNT_DOWN_VERIFY_DEFAULT,
+  lang
 }: any) => {
+  const { accountSetting } = lang
   const dispatch = useDispatch()
 
   let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
@@ -75,9 +78,7 @@ const VerifyPhoneNumber = ({
   const [otp, setOtp] = useState('')
   const [otpError, setOtpError] = useState('')
   const [phoneTip, setPhoneTip] = useState(
-    verify
-      ? 'Your mobile number has been verified. Recruiters will be able to contact you through your mobile number. To change your mobile number, please verify your new mobile number.'
-      : 'To help recruiters to better contact you for job opportunities. please verify your mobile number.'
+    verify ? accountSetting.mobileExplanation : accountSetting.mobileNotVerified
   )
 
   useEffect(() => {
@@ -243,9 +244,9 @@ const VerifyPhoneNumber = ({
         setEdit={setEdit}
         edit={edit}
         isEdit
-        titleTips='Help recruiters to better contact you for job opportunities.'
+        titleTips={accountSetting.mobileTip}
       >
-        {edit === 'Mobile Number' ? (
+        {edit === label ? (
           <div className={styles.accessSettingsContainer_fromWrapper}>
             <Text>{phoneTip}</Text>
 
@@ -253,7 +254,7 @@ const VerifyPhoneNumber = ({
               <div className={styles.accessSettingsContainer_fromWrapper_edit_wrapper_block}>
                 <MaterialBasicSelect
                   className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                  label='Country'
+                  label={accountSetting.country}
                   value={smsCode}
                   options={smsCountryList}
                   onChange={(e) => {
@@ -266,7 +267,7 @@ const VerifyPhoneNumber = ({
               <div className={styles.accessSettingsContainer_fromWrapper_edit_wrapper_block}>
                 <MaterialTextField
                   className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                  label={'Contact Number'}
+                  label={accountSetting.contactNumber}
                   size='small'
                   error={phoneNumError ? true : false}
                   value={phoneNum}
@@ -279,7 +280,7 @@ const VerifyPhoneNumber = ({
 
             <div className={styles.VerifyMailAndBindEmail_button}>
               <Button variant='contained' disabled={isBtnDisabled} onClick={sendPhoneNumberOTPS}>
-                Send OTP {isShowCountDownSwitch && `(${countDown}s)`}
+                {accountSetting.sendOpt} {isShowCountDownSwitch && `(${countDown}s)`}
               </Button>
               {!isShowPhoneVerify && (
                 <Button
@@ -289,14 +290,14 @@ const VerifyPhoneNumber = ({
                     setEdit(null)
                   }}
                 >
-                  Cancel
+                  {accountSetting.cancel}
                 </Button>
               )}
             </div>
 
             {isShowPhoneVerify && (
               <div className={styles.accessSettingsContainer_fromWrapper_verifyContainer}>
-                <Text>Enter the code that we have sent to {phoneNum}</Text>
+                <Text>{(formatTemplateString(accountSetting.enterCode), phoneNum)}</Text>
                 <div className={styles.accessSettingsContainer_fromWrapper_edit}>
                   <MaterialTextField
                     className={styles.accessSettingsContainer_fromWrapper_edit_input}
@@ -318,7 +319,7 @@ const VerifyPhoneNumber = ({
                     disabled={isBtnDisabledVerify}
                     onClick={verifyEmailOrChangeEmail}
                   >
-                    Verify
+                    {accountSetting.verify}
                   </Button>
 
                   <Button
@@ -328,7 +329,7 @@ const VerifyPhoneNumber = ({
                       setEdit(null)
                     }}
                   >
-                    Cancel
+                    {accountSetting.cancel}
                   </Button>
                 </div>
               </div>
