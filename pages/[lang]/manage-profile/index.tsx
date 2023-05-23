@@ -241,8 +241,8 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
   }
 
   const getEducationLang = (eduction: any) => {
-    if(!eduction.degree_id) return eduction.degree
-    return  getValueById(config, eduction.degree_id, 'degree_id')
+    if (!eduction.degree_id) return eduction.degree
+    return getValueById(config, eduction.degree_id, 'degree_id')
   }
 
   const handleDeleteData = async (type, id) => {
@@ -294,10 +294,15 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
         </div>
         <div className={styles.sectionContent}>
           {workExperiences.map((workExp) => {
-            const { currency_id } = workExp
+            const { currency_id, function_job_title_id } = workExp
             const currencySymbol = currency_lists.find(
               ({ id }) => currency_id === id
             )?.display_symbol
+            const function_job_title = getValueById(
+              config,
+              function_job_title_id,
+              'function_job_title_id'
+            )
             const workingPeriodFrom = moment(workExp?.working_period_from)
             const workingPeriodTo = moment(workExp?.working_period_to)
             const dateDiff = getYearMonthDiffBetweenDates(
@@ -344,9 +349,9 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                   {dateDiff ? `(${dateDiff})` : ''}
                 </Text>
                 <div className={styles.companySecondaryInfoWrapper}>
-                  {workExp?.function_job_title?.length > 0 && (
+                  {function_job_title && (
                     <Text textStyle='base' textColor='darkgrey'>
-                      {workExp?.function_job_title}
+                      {function_job_title}
                     </Text>
                   )}
                   {workExp?.company_industry && (
