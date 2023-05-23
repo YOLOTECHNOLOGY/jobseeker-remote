@@ -60,7 +60,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
     setSaveLoading(true)
 
     postSaveJobService({
-      job_title_id: jobId,
+      job_title_id: null,
       job_id: jobId
     })
       .then(({ status }) => {

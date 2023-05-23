@@ -16,11 +16,11 @@ const Table = (props: any) => {
     const preference = preferences?.find?.(item => item.id === +preferenceId)
     const recruiterIds = jobs.map(job => job.recruiter_id)
     return <ChatInfoProvider recruiterIds={recruiterIds}>
-       { jobs?.length?<Loader>
+        {jobs?.length ? <Loader>
             <div className={styles.container}>
                 {jobs.map(job => {
                     return (<div className={styles.jobContainer} key={job?.id}>
-                        <JobCard job={job} preference={preference} />
+                        <JobCard job={job} preference={preference} jobTitleId={preference?.job_title_id} {...props} />
                     </div>)
                 })}
                 {
@@ -32,7 +32,7 @@ const Table = (props: any) => {
 
             </div>
             <MobileTable {...props} preference={preference} />
-        </Loader>:<NoData/>}
+        </Loader> : <NoData />}
     </ChatInfoProvider>
 }
 

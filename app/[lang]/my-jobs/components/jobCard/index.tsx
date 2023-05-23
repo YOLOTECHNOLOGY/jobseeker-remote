@@ -68,7 +68,7 @@ const useShowPop = (titleHover, popHover) => {
   return showPopup
 }
 
-const useSaveJob = (jobId, defaultSaved, accessToken) => {
+const useSaveJob = (jobId, defaultSaved, accessToken,jobTitleId) => {
   const [isSaved, setIsSaved] = useState(defaultSaved)
   const [isSaving, setIsSaving] = useState(false)
   const router = useRouter()
@@ -82,7 +82,7 @@ const useSaveJob = (jobId, defaultSaved, accessToken) => {
     }
     if (!isSaved) {
       setIsSaving(true)
-      postSaveJobService({ job_id: jobId, accessToken })
+      postSaveJobService({ job_id: jobId, accessToken,job_title_id: jobTitleId})
         .then(() => setIsSaved(true))
         .finally(() => setIsSaving(false))
     } else {
@@ -111,7 +111,7 @@ const useJobDetail = (jobId) => {
 }
 
 const JobCard = (props: any) => {
-  const { job, preference } = props
+  const { job, jobTitleId, preference } = props
   const config = useSelector((store: any) => store.config.config.response)
   const memoedJob = useMemo(() => {
     changeJobValue(config, job)
@@ -121,6 +121,7 @@ const JobCard = (props: any) => {
   const {
     job_title,
     salary_range_value,
+   
     // job_type,
     // job_location,
     // xp_lvl,
@@ -173,7 +174,7 @@ const JobCard = (props: any) => {
 
   const showPopup = useShowPop(titleHover, popHover)
   const accessToken = getCookie('accessToken')
-  const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken)
+  const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken,jobTitleId)
   const [jobDetail, detailLoading, startLoading] = useJobDetail(id)
   useEffect(() => {
     if (showPopup && !jobDetail && !detailLoading) {
@@ -422,7 +423,7 @@ const JobCard = (props: any) => {
 
         {modalChange}
       </>
-      <NotSuitableModal {...modalProps} />
+      <NotSuitableModal {...modalProps} lang={props.lang} />
     </div>
   )
 }

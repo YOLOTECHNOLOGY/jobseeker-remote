@@ -102,7 +102,7 @@ const JobCard = (props: any) => {
                 <Image src={CloseIcon} alt='logo' width={13} height={13} />
             </div>
         </div>
-        <NotSuitableModal {...modalProps} />
+        <NotSuitableModal {...modalProps} lang={props.lang} />
     </div>
 }
 

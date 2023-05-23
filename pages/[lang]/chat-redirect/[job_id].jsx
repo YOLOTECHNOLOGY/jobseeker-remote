@@ -18,7 +18,7 @@ const Chat = () => {
     const userId = userDetail.id
     useEffect(() => {
         if (userId) {
-            createChat(job_id, { source, job_title_id: job_id, device: isMobile ? 'mobile_web' : 'web' }).then(result => {
+            createChat(job_id, { source, job_title_id: null, device: isMobile ? 'mobile_web' : 'web' }).then(result => {
                 const chatId = result.data.data.id
                 router.push(`/chat/${chatId}`)
             }).catch(() => {

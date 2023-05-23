@@ -231,15 +231,7 @@ const MainLeft = (props: any) => {
     deleteSaveJobService(id).then(res => {
       checkSavedData(res, index, id)
     })
-    // if (saved) {
-    //   deleteSaveJobService(id).then(res => {
-    //     checkSavedData(res, id, false)
-    //   }).finally(() => setLoadingChat(false))
-    // } else {
-    //   postSaveJobService({ job_id: id }).then(res => {
-    //     checkSavedData(res, id, true)
-    //   }).finally(() => setLoadingChat(false))
-    // }
+    
   }
 
 

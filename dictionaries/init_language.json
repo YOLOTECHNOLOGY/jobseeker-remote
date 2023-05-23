@@ -140,7 +140,21 @@
     "cancelled": "Cancelled",
     "notAccepted": "Not accepted",
     "completed": "Completed",
-    "notCheckedIn": "Not checked in"
+    "notCheckedIn": "Not checked in",
+    "notSuitable": {
+      "title": "Why this job is not suitable?",
+      "description": "Please select a reason why this job is not what you are looking for. We will optimise your job recommendations.",
+      "others": "Others",
+      "reasons": "Please let us know why this job is not suitable.",
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "reason1": "Does not match my job preference",
+      "reason2": "Working location is too far",
+      "reason3": "Salary is below my expectation",
+      "reason4": "Education qualification mismatch",
+      "reason5": "Industry mismatch",
+      "reason6": "Not interested in this company"
+    }
   },
   "companies": {
     "title": "Find great companies in {{country}}",
@@ -826,7 +840,24 @@
     "retime": "I would like to reschedule the interview timing.",
     "cancelReasonLabel": "You are about to cancel the interview. Please let recruiter know why you are cancelling this interview:"
   },
-  "chatCommonPhrase": {},
+  "chatCommonPhrase": {
+    "phraseTitle": "Common Phrases",
+    "phraseLabel": "Phrase",
+    "inputPlaceholder": "Insert the common phrases that you would like to send to Boss",
+    "addDescription": "Add your own phrase. Please do not include your contact details here.",
+    "save":"Save",
+    "back":"Back",
+    "delete":"Delete",
+    "done":"Done",
+    "close":"Close",
+    "send":"Send",
+    "sureDelete":"Sure to delete this?",
+    "pickDescription":"Please select the phrase that you want to send to Boss.",
+    "actionEdit":" Edit or delete phrase",
+    "actionCreate":"Create new phras",
+    "actionDescription":"You can save up to 10 phrases",
+    "or":"or"
+  },
   "quickUploadResume": {
     "title": "Upload your resume",
     "UploadAndApply": "Upload your resume and start applying for job now!",
