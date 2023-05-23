@@ -32,7 +32,7 @@
     "talents": "人才",
     "allJobs": "工作",
     "createJobAlert": "创建工作",
-    "createFree": "免费创造",
+    "createFree": "创建简历",
     "careerGuide": "职业指南",
     "courses": "课程",
     "recruiter": "招聘人员",
@@ -843,5 +843,29 @@
       "country": "当位置在海外时，国家是必需的",
       "industry": "行业是必须的"
     }
+  },
+  "resumetemplate": {
+    "title": "免费的简历模版",
+    "subTitle": "在一分钟内创建并下载简历。",
+    "createBtn": "创建简历",
+    "form": {
+      "label": "邮件地址",
+      "emptyError": "请输入邮件地址.",
+      "validError": "请输入有效的电子邮件地址。"
+    },
+    "howToCreate": {
+      "title": "如何创建简历模版",
+      "step1": "填写您的姓名以及有效的电子邮件 (提示：你需要输入一个有效的邮件地址，这个地址会在简历中模版中使用)",
+      "step2": "点击“创建简历”然后继续填写更多的一些信息比如个人概述，职业目标，教育，职业经历，技能等等",
+      "step3": "下载，打印并保存新的简历",
+      "step4": "随时更新在线简历并可以随便创建新简历"
+    },
+    "haveAQuestion": "有问题?",
+    "freeLabel": "它是免费的吗?",
+    "freeAnswer": "是的，Bossjob 简历生成服务是免费的，您可以根据需要创建任意数量的简历。 您可以选择不同主题的简历样本，针对不同的求职申请使用不同的简历样本",
+    "chooseTemplate": "我能够选择多少个简历模版？",
+    "chooseTemplateAnswer": "你可以从两个专业并富有创造性的简历模版中选择。您可以立即使用新改进的简历来申请Bossjob上的职位空缺。",
+    "editLater": "我可以稍后在编辑简历模版吗？",
+    "editLaterAnswer": "当然可以，随时登录你的Bossjob账号去更新简历，你可以把你的Bossjob账号作为一个简历中心，将您最新的职业详细信息保存在 Bossjob 中，并将其用作您的职业身份"
   }
 }
