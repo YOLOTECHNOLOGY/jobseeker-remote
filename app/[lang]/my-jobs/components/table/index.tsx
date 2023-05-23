@@ -20,7 +20,7 @@ const Table = (props: any) => {
             <div className={styles.container}>
                 {jobs.map(job => {
                     return (<div className={styles.jobContainer} key={job?.id}>
-                        <JobCard job={job} preference={preference} />
+                        <JobCard job={job} preference={preference} {...props} />
                     </div>)
                 })}
                 {

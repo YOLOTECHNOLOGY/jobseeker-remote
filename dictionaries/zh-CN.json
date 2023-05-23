@@ -140,7 +140,21 @@
     "cancelled": "取消",
     "notAccepted": "不接受",
     "completed": "完全的",
-    "notCheckedIn": "未签到"
+    "notCheckedIn": "未签到",
+    "notSuitable": {
+      "title": "为什么这份工作不合适？",
+      "description": "请选择此职位不是您要找的职位的原因。",
+      "others": "其他的",
+      "reasons": "请告诉我们为什么这份工作不合适。",
+      "cancel": "取消",
+      "submit": "提交",
+      "reason1": "不符合我的工作偏好",
+      "reason2": "工作地点太远",
+      "reason3": "薪水低于我的预期",
+      "reason4": "学历不匹配",
+      "reason5": "行业不匹配",
+      "reason6": "对这家公司不感兴趣"
+    }
   },
   "companies": {
     "title": "寻找在{{country}}的优秀公司",
