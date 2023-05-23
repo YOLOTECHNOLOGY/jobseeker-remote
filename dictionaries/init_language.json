@@ -161,7 +161,7 @@
       "reason5": "Industry mismatch",
       "reason6": "Not interested in this company"
     },
-    "deleteSuccess":"delete seccess"
+    "deleteSuccess": "delete seccess"
   },
   "companies": {
     "title": "Find great companies in {{country}}",
@@ -748,6 +748,7 @@
     "startDateMustBeEarlier": " Start date must be earlier than completion date.",
     "to": "To",
     "monthlySalary": "Monthly Salary",
+    "currency": "Currency",
     "addWorkExperience": "Add a work experience",
     "fillUpTheRequired": "Fill up the required field to proceed.",
     "noWorkExperience": "I have no work experience",

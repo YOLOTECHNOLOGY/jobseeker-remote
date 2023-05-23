@@ -137,7 +137,7 @@
     "InterviewTime": "Interview Time",
     "address": "Address",
     "noMore": "No more",
-    "location":"location",
+    "location": "location",
     "pending": "Pending",
     "accepted": "Accepted",
     "upcoming": "Upcoming",
@@ -161,7 +161,7 @@
       "reason5": "Industry mismatch",
       "reason6": "Not interested in this company"
     },
-    "deleteSuccess":"delete seccess"
+    "deleteSuccess": "delete seccess"
   },
   "companies": {
     "title": "Find great companies in {{country}}",
@@ -748,6 +748,7 @@
     "startDateMustBeEarlier": " Start date must be earlier than completion date.",
     "to": "To",
     "monthlySalary": "Monthly Salary",
+    "currency": "Currency",
     "addWorkExperience": "Add a work experience",
     "fillUpTheRequired": "Fill up the required field to proceed.",
     "noWorkExperience": "I have no work experience",
@@ -852,18 +853,18 @@
     "phraseLabel": "Phrase",
     "inputPlaceholder": "Insert the common phrases that you would like to send to Boss",
     "addDescription": "Add your own phrase. Please do not include your contact details here.",
-    "save":"Save",
-    "back":"Back",
-    "delete":"Delete",
-    "done":"Done",
-    "close":"Close",
-    "send":"Send",
-    "sureDelete":"Sure to delete this?",
-    "pickDescription":"Please select the phrase that you want to send to Boss.",
-    "actionEdit":" Edit or delete phrase",
-    "actionCreate":"Create new phras",
-    "actionDescription":"You can save up to 10 phrases",
-    "or":"or"
+    "save": "Save",
+    "back": "Back",
+    "delete": "Delete",
+    "done": "Done",
+    "close": "Close",
+    "send": "Send",
+    "sureDelete": "Sure to delete this?",
+    "pickDescription": "Please select the phrase that you want to send to Boss.",
+    "actionEdit": " Edit or delete phrase",
+    "actionCreate": "Create new phras",
+    "actionDescription": "You can save up to 10 phrases",
+    "or": "or"
   },
   "quickUploadResume": {
     "title": "Upload your resume",

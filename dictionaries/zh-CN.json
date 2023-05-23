@@ -161,7 +161,7 @@
       "reason5": "行业不匹配",
       "reason6": "对这家公司不感兴趣"
     },
-    "deleteSuccess":"删除成功"
+    "deleteSuccess": "删除成功"
   },
   "companies": {
     "title": "寻找在{{country}}的优秀公司",
@@ -738,7 +738,7 @@
     "OR": "或者",
     "createFreeResume": "创建免费简历",
     "addYourWorkExperience": "添加工作经验",
-    "fillInYourCompleteWork": "Fill in your complete work experiences will increase your chances of being shortlisted by 83%.",
+    "fillInYourCompleteWork": "填写完整的工作经历，入围几率将提高83%。",
     "jobFunction": "职位类型",
     "industry": "行业",
     "description": "描述",
@@ -748,6 +748,7 @@
     "startDateMustBeEarlier": " 开始日期必须早于完成日期。",
     "to": "到",
     "monthlySalary": "月收入",
+    "currency": "薪水类型",
     "addWorkExperience": "添加工作经历",
     "fillUpTheRequired": "填写必填字段以继续。",
     "noWorkExperience": "不填写，我没有工作经验",

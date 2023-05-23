@@ -40,19 +40,21 @@ import { InfoIcon, AddOutlineIcon, PencilIcon, AccountSettingDeleteIconBin } fro
 import {
   // getLocationList,
   getIndustryList,
-  getCountryList
+  getCountryList,
+  getCurrencyList
 } from 'helpers/jobPayloadFormatter'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { getItem } from 'helpers/localStorage'
 import { getValueById } from 'helpers/config/getValueById'
-// Styles
-import styles from './Onboard.module.scss'
 import MaterialButton from 'components/MaterialButton'
 import { handleNumericInput } from '../../../helpers/handleInput'
 import JobFunctionSelector from 'components/JobFunctionSelector'
 import ReadMore from 'components/ReadMore'
-import { getCountry } from 'helpers/country'
 import { getDictionary } from 'get-dictionary'
+
+// Styles
+import styles from './Onboard.module.scss'
+
 const Step3 = (props: any) => {
   const quickUpladResumeType = getItem('quickUpladResume')
   const currentStep = 3
@@ -63,7 +65,6 @@ const Step3 = (props: any) => {
   const { userDetail, accessToken, lang } = props
   const isFromCreateResume = getItem('isFromCreateResume') === '1'
   const config = useSelector((store: any) => store?.config?.config?.response)
-
   useEffect(() => {
     dispatch(fetchConfigRequest())
   }, [])
@@ -92,6 +93,7 @@ const Step3 = (props: any) => {
     label: country.label,
     value: country.key
   }))
+  const currencyList = getCurrencyList(config)
 
   const [jobTitle, setJobTitle] = useState('')
   const [companyName, setCompanyName] = useState('')
@@ -104,6 +106,7 @@ const Step3 = (props: any) => {
   const [jobFunction, setJobFunction] = useState({ id: undefined, value: '' })
   const [industry, setIndustry] = useState('')
   const [salary, setSalary] = useState('')
+  const [salaryType, setSalaryType] = useState('')
   const [description, setDescription] = useState('')
   const [hasErrorOnFromPeriod, setHasErrorOnFromPeriod] = useState(false)
   const [hasErrorOnToPeriod, setHasErrorOnToPeriod] = useState(false)
@@ -194,6 +197,9 @@ const Step3 = (props: any) => {
             (industry) => industry.id === selectedExperience.company_industry_id
           )[0].value
         )
+      setSalaryType(
+        currencyList.find((item) => item.id === selectedExperience.currency_id)?.value || ''
+      )
       if (selectedExperience.location && selectedExperience.location.toLowerCase() === 'overseas') {
         setCountry(selectedExperience.country_key)
         setIsShowCountry(true)
@@ -313,6 +319,7 @@ const Step3 = (props: any) => {
     setWorkPeriodFrom(null)
     setWorkPeriodTo(null)
     setSalary('')
+    setSalaryType('')
     setIndustry('')
     setCountry('')
     setIsShowCountry(false)
@@ -367,6 +374,7 @@ const Step3 = (props: any) => {
       company_industry_key: matchedIndustry?.[0]?.key || null,
       is_currently_work_here: isCurrentJob,
       salary: Number(salary),
+      currency_id: currencyList.find((item) => item.value === salaryType)?.id,
       working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
       working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
       description: description ? description : '',
@@ -380,7 +388,6 @@ const Step3 = (props: any) => {
       location: null,
       id: null
     }
-
     const workExperiencesPayload = {
       accessToken,
       currentStep,
@@ -468,6 +475,7 @@ const Step3 = (props: any) => {
     startDateMustBeEarlier,
     to,
     monthlySalary,
+    currency,
     addWorkExperience,
     fillUpTheRequired,
     noWorkExperience,
@@ -478,7 +486,7 @@ const Step3 = (props: any) => {
     companyNameText,
     monthYear,
     placeholder
-  } = lang.profile || {}
+  } = lang?.profile || {}
   return (
     <OnBoardLayout
       headingText={
@@ -754,7 +762,17 @@ const Step3 = (props: any) => {
                 options={industryList}
               />
             </div>
-
+            <div className={styles.stepField}>
+              <MaterialBasicSelect
+                className={styles.stepFullwidth}
+                label={currency}
+                value={salaryType}
+                onChange={(e) => {
+                  setSalaryType(e.target.value)
+                }}
+                options={currencyList}
+              />
+            </div>
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
@@ -860,21 +878,25 @@ const Step3 = (props: any) => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
-  const accessToken = req.cookies.accessToken ? req.cookies.accessToken : null
+  const accessToken = req.cookies.accessToken
   const lang = await getDictionary(query.lang as 'en-US')
-  // store.dispatch(fetchConfigRequest())
-  if (accessToken) {
-    store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
+  if (!accessToken) {
+    return {
+      redirect: {
+        destination: '/get-started?redirect=/jobseeker-complete-profile/1',
+        permanent: false,
+        lang
+      }
+    }
   }
+
+  store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const storeState = store.getState()
-  // const config = storeState.config.config.response
   const userDetail = storeState.users.fetchUserOwnDetail.response
-
   return {
     props: {
-      // config,
       userDetail,
       accessToken,
       lang
