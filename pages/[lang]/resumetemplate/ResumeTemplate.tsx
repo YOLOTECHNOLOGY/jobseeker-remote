@@ -37,7 +37,7 @@ const errorText = (errorMessage: string) => {
   )
 }
 
-const ResumeTemplate = ({ lang ,query}: any) => {
+const ResumeTemplate = ({ lang, query }: any) => {
   const {
     step,
     email,
@@ -351,7 +351,7 @@ const ResumeTemplate = ({ lang ,query}: any) => {
         {step == 3 && (
           <div className={styles.resumeTemplateSendOTP}>
             {' '}
-            <MagicLink userId={userId} email={email} />
+            <MagicLink userId={userId} email={email} lang={lang.getStatred} />
           </div>
         )}
       </div>
@@ -359,7 +359,7 @@ const ResumeTemplate = ({ lang ,query}: any) => {
   )
 }
 
-export async function getServerSideProps({ req ,query}) {
+export async function getServerSideProps({ req, query }) {
   const accessToken = req.cookies.accessToken
 
   if (accessToken) {
@@ -372,7 +372,7 @@ export async function getServerSideProps({ req ,query}) {
   }
   return {
     props: {
-      query:query.lang,
+      query: query.lang,
       seoMetaTitle: 'Free Resume Template to Edit & Download | Bossjob.ph',
       seoMetaDescription:
         'Free resume template & sample for you to edit and download on Bossjob. Customize your resume and add career objectives, work experiences and job skills!',
