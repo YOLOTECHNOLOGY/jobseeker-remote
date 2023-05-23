@@ -51,6 +51,7 @@ const Link = ({
   return (
     <NextLink
       href={to}
+      prefetch={false}
       passHref={passHref}
       target={external ? '_blank' : '_self'}
       rel='noopener noreferrer'

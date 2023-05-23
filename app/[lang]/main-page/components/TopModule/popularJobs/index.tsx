@@ -7,7 +7,7 @@ import { LocationContext } from 'app/[lang]/components/providers/locationProvier
 import { buildQuery } from 'app/[lang]/main-page/helper'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
-const PopularJob = () => {
+const PopularJob = ({ langKey }: any) => {
   const { location } = useContext(LocationContext)
   const { home } = useContext(languageContext) as any
 
@@ -29,7 +29,7 @@ const PopularJob = () => {
       <div className={styles.tagContainer}>
         {tags.map((tag, index) => (
           <div key={tag.value} className={styles.tag}>
-            <Link prefetch={false} href={querys[index]}>
+            <Link prefetch={false} href={'/' + langKey + querys[index]}>
               {tag.label}
             </Link>
           </div>

@@ -7,10 +7,10 @@ const ServerFunctionFilter = dynamic(() => import('./functionFilter/server'))
 const TopModule = (props: any) => {
   return (
     <div>
-      <SearchArea {...props}/>
-      <PopularJob />
+      <SearchArea {...props} />
+      <PopularJob langKey={props?.params?.lang} />
       <Ad>
-        <ServerFunctionFilter  {...props}/>
+        <ServerFunctionFilter  langKey={props?.params?.lang}  {...props} />
       </Ad>
     </div>
   )

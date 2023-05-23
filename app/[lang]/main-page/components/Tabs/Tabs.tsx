@@ -55,6 +55,7 @@ interface StyledTabsProps {
   onChange: (event: React.SyntheticEvent, newValue: number | string) => void
   variant?: 'standard' | 'scrollable' | 'fullWidth'
   scrollButtons: boolean | 'auto'
+  langKey: string
 }
 
 const StyledTabs = styled((props: StyledTabsProps) => (
@@ -86,13 +87,13 @@ interface StyledTabProps {
   sx: SxProps<Theme>
 }
 
-const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => ({
+const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
   '&.Mui-selected': {
     color: '#136FD3'
   }
 }))
 
-const Tabs = ({ location,config,location_id }: any) => {
+const Tabs = ({ location, config, location_id, langKey }: any) => {
   const { home } = useContext(languageContext) as any
   const { tab, jobTab } = home
   const tabList = useMemo(() => {
@@ -252,8 +253,7 @@ const Tabs = ({ location,config,location_id }: any) => {
                 variant='scrollable'
                 scrollButtons='auto'
                 aria-label='scrollable auto tabs example'
-                onChange={handleChange}
-              >
+                onChange={handleChange} langKey={''}              >
                 {newTabList.map((item) => (
                   <StyledTab
                     key={item.value}
@@ -284,8 +284,8 @@ const Tabs = ({ location,config,location_id }: any) => {
                         href='/manage-profile?tab=job-preferences'
                         className={styles.link}
                       >
-                        {getValueById(config,jobseekerPrefIdRef.current?.location_id,'location_id')} |{' '}
-                        {getValueById(config,jobseekerPrefIdRef.current?.function_job_title_id,'function_job_title_id')} |{' '}
+                        {getValueById(config, jobseekerPrefIdRef.current?.location_id, 'location_id')} |{' '}
+                        {getValueById(config, jobseekerPrefIdRef.current?.function_job_title_id, 'function_job_title_id')} |{' '}
                         {jobseekerPrefIdRef.current?.salary_range}
                       </Link>
                     </div>
@@ -304,7 +304,7 @@ const Tabs = ({ location,config,location_id }: any) => {
 
             <div className={styles.tabContainer}>
               {!loading ? (
-                list?.map((item) => <JobDetail config={config} key={item.id} detail={item} />)
+                list?.map((item) => <JobDetail config={config} langKey={langKey} key={item.id} detail={item} />)
               ) : (
                 <Box sx={{ width: '100%' }}>
                   <Skeleton width={'100%'} height={200} sx={{ margin: '20px 0' }} />

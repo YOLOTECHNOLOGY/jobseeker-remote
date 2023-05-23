@@ -24,8 +24,9 @@ const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
 }
 const SearchArea = (props: any) => {
-  const { config } = props
-
+  const { config, lang } = props
+  console.log({ props })
+  const langKey = props?.params?.lang
   const dispatch = useDispatch()
   const { location, setLocation } = useContext(LocationContext)
   const data: any = useContext(languageContext)
@@ -49,7 +50,7 @@ const SearchArea = (props: any) => {
   const pushJobPage = useCallback(
     (value) => {
       const query = buildQuery(location?.seo_value, value)
-      router.push(query, { forceOptimisticNavigation: true })
+      router.push('/' + langKey + query, { forceOptimisticNavigation: true })
     },
     [location, router]
   )
@@ -77,11 +78,11 @@ const SearchArea = (props: any) => {
           fetch(
             `${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=5&query=${val}&${transQs(
               searchHistories
-            )}`,{
-              headers:{
-                'Country-Id': String(getCountryId())
-              }        
+            )}`, {
+            headers: {
+              'Country-Id': String(getCountryId())
             }
+          }
           )
             .then((resp) => resp.json())
             .then((data) => setSuggestionList(data.data.items))

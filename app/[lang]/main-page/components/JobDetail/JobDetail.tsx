@@ -8,17 +8,17 @@ import Image from 'next/image'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 import { getValueById } from 'helpers/config/getValueById'
 
-const JobDetail = ({ detail,config }: any) => {
+const JobDetail = ({ detail, config, langKey }: any) => {
   const { home } = useContext(languageContext) as any
-  const jobLocation = getValueById(config,detail?.job_location_id,'location_id')
-  const financingStage = getValueById(config,detail?.company_financing_stage_id,'company_financing_stage_id')
-  const xpLvlValue = getValueById(config,detail?.xp_lvl_id,'xp_lvl_id')
-  const degreeValue = getValueById(config,detail?.degree_id,'degree_id')
-  const industry =  getValueById(config,detail?.company_industry_id,'industry_id')
+  const jobLocation = getValueById(config, detail?.job_location_id, 'location_id')
+  const financingStage = getValueById(config, detail?.company_financing_stage_id, 'company_financing_stage_id')
+  const xpLvlValue = getValueById(config, detail?.xp_lvl_id, 'xp_lvl_id')
+  const degreeValue = getValueById(config, detail?.degree_id, 'degree_id')
+  const industry = getValueById(config, detail?.company_industry_id, 'industry_id')
 
   return (
     <div className={styles.job_detail}>
-      <Link prefetch={false} className={styles.job_info} href={detail.job_url}>
+      <Link prefetch={false} className={styles.job_info} href={'/' + langKey + detail.job_url}>
         <div className={styles.job_titleWrapper}>
           <div className={styles.job_info_title}>{detail?.job_title}</div>
           <div className={styles.transBox}>
@@ -44,7 +44,7 @@ const JobDetail = ({ detail,config }: any) => {
         </div>
       </Link>
 
-      <Link className={styles.job_companyInfo} href={detail.company_url}>
+      <Link className={styles.job_companyInfo} href={'/' + langKey + detail.company_url}>
         <div className={styles.job_avatarWrapper}>
           <div className={styles.job_box}>
             <Image

@@ -10,10 +10,10 @@ async function getCompanyData(location) {
   return res.data
 }
 
-const mobileHome = async ({ location, lang, location_id ,config}) => {
+const mobileHome = async ({ location, lang, location_id, config, langKey }) => {
   const data = await getCompanyData(location_id)
   const comapny = data?.data?.featured_companies || []
-  const { companyHiring, jobCard ,jobsHiring} = lang.home
+  const { companyHiring, jobCard, jobsHiring } = lang.home
   return (
     <div className={styles.mobileHome}>
       {comapny?.length ? (
@@ -26,7 +26,7 @@ const mobileHome = async ({ location, lang, location_id ,config}) => {
                 return (
                   <Link
                     prefetch={false}
-                    href={`${company_url}/jobs`}
+                    href={`/${langKey}${company_url}/jobs`}
                     className={styles.item}
                     key={id}
                   >
@@ -45,7 +45,7 @@ const mobileHome = async ({ location, lang, location_id ,config}) => {
 
       <div className={styles.jobs}>
         <h2>{jobCard.jobForYou}</h2>
-        <JobCard location={location} lang={lang.home}  config={config}/>
+        <JobCard location={location} lang={lang.home} langKey={langKey} config={config} />
       </div>
     </div>
   )

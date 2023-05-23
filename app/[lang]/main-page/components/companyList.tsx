@@ -6,9 +6,10 @@ import Image from 'next/image'
 import { getValueById } from 'helpers/config/getValueById'
 const CompanyList = (props: any) => {
   const { featured_companies: companies } = props?.data?.data || {}
-  const {config} = props
+  const { config } = props
   const {
-    lang: { home }
+    lang: { home },
+    langKey
   } = props
   return (
     <>
@@ -18,21 +19,21 @@ const CompanyList = (props: any) => {
           company_url: companyUrl,
           logo_url: logoUrl,
           name,
-         // industry,
+          // industry,
           industry_id,
           // company_size: companySize,
           company_size_id,
-         // financing_stage: financingStage
-         financing_stage_id,
+          // financing_stage: financingStage
+          financing_stage_id,
         } = item?.company || {}
         // const jobLocation = getValueById(config,detail?.job_location_id,'location_id')
-        const financingStage = getValueById(config,financing_stage_id,'company_financing_stage_id')
-       
-        const industry =  getValueById(config,industry_id,'industry_id')
-        const companySize =  getValueById(config,company_size_id,'company_size_id')
+        const financingStage = getValueById(config, financing_stage_id, 'company_financing_stage_id')
+
+        const industry = getValueById(config, industry_id, 'industry_id')
+        const companySize = getValueById(config, company_size_id, 'company_size_id')
         return (
           <div className={styles.card} key={Id}>
-            <Link prefetch={false} className={styles.header} href={companyUrl}>
+            <Link prefetch={false} className={styles.header} href={'/' + langKey + companyUrl}>
               <Image
                 className={styles.img}
                 src={logoUrl}
@@ -56,18 +57,18 @@ const CompanyList = (props: any) => {
                 salary_range_value: salaryRangeValue,
                 // job_location: jobLocation,
                 job_location_id,
-               // xp_lvl: xpLvl,
+                // xp_lvl: xpLvl,
                 xp_lvl_id,
-               // degree,
+                // degree,
                 degree_id,
                 job_url: jobUrl
               } = jobItem || {}
-              const jobLocation =  getValueById(config,job_location_id,'location_id')
-              const xpLvl = getValueById(config,xp_lvl_id,'xp_lvl_id')
-              const degree = getValueById(config,degree_id,'degree_id')
+              const jobLocation = getValueById(config, job_location_id, 'location_id')
+              const xpLvl = getValueById(config, xp_lvl_id, 'xp_lvl_id')
+              const degree = getValueById(config, degree_id, 'degree_id')
 
               return (
-                <Link href={jobUrl} className={styles.list} key={`${jobItem.id}-${index}`}>
+                <Link href={'/' + langKey + jobUrl} className={styles.list} key={`${jobItem.id}-${index}`}>
                   <div className={styles.jobType}>
                     <p>{jobTitle}</p>
                     <div className={styles.transBox}>
@@ -91,7 +92,7 @@ const CompanyList = (props: any) => {
                 </Link>
               )
             })}
-            <Link href={`${companyUrl}/jobs`} className={styles.linkAddress}>
+            <Link href={`/${langKey}${companyUrl}/jobs`} className={styles.linkAddress}>
               {home.companyCard.moreJob}
             </Link>
           </div>

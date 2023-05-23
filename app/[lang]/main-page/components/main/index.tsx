@@ -36,6 +36,8 @@ const Main = async (props: any) => {
   const location = cookies().get('location')?.value
   const city = location ? JSON.parse(location)?.value : 'Manila'
   const locationId = location ? JSON.parse(location)?.id : 63
+  const langKey = props?.params?.lang
+
   const {
     lang: { home }
   } = props || {}
@@ -47,11 +49,11 @@ const Main = async (props: any) => {
       <div className={styles.main}>
         <div className={styles.title}>{home.title}</div>
         <TopModule {...props} />
-        <Tabs location={city} config={config} location_id={locationId}/>
+        <Tabs location={city} config={config} langKey={langKey} location_id={locationId} />
         {/* @ts-expect-error Async Server Component */}
-        <Companies location={city} lang={props.lang} config={config} location_id={locationId} />
+        <Companies location={city} langKey={langKey} lang={props.lang} config={config} location_id={locationId} />
         {/* @ts-expect-error Async Server Component */}
-        <MobileHome lang={props.lang} location={city} config={config} location_id={locationId} />
+        <MobileHome lang={props.lang} location={city} config={config} langKey={langKey} location_id={locationId} />
         {/* Tracker component */}
         <Tracker />
       </div>

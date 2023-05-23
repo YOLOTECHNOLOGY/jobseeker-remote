@@ -30,6 +30,7 @@ interface FunctionFilterProps {
     list: MainData[]
     subTitlesList: string[][]
     contentWidths: number[]
+    langKey: string
 }
 
 type MainProps = Attributes & {
@@ -39,10 +40,10 @@ type MainProps = Attributes & {
     subTitles: string[]
     setHoverTitle: (string) => void
     contentWidth: number
-
+    langKey: string
 }
-type SectionProps = { data: SectionData } & Attributes
-type SubItemProps = { data: SubData } & Attributes
+type SectionProps = { data: SectionData, langKey: string } & Attributes
+type SubItemProps = { data: SubData, langKey: string } & Attributes
 
 const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps & MainProps) => {
     const { isHover, setHoverData, data, onMouseEnter, onMouseLeave, setHoverTitle, contentWidth, hoverTitle, subTitles = [] } = props
@@ -65,9 +66,9 @@ const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps 
         <div className={styles.mainTitle}>
             <div className={styles.mainTitleFirst}>{data.simpleTitle || data.title}</div>
             <div className={styles.subContainer}>
-                {subTitles.map((subTitle,index) => (
-                    <Link prefetch={false} key={subTitle+index} href={buildQuery(location?.seo_value,subTitle)}>
-                        <div key={subTitle+index} title={subTitle} style={{ maxWidth: contentWidth }} className={styles.mainTitleSub}>
+                {subTitles.map((subTitle, index) => (
+                    <Link prefetch={false} key={subTitle + index} href={'/' + props.langKey + buildQuery(location?.seo_value, subTitle)}>
+                        <div key={subTitle + index} title={subTitle} style={{ maxWidth: contentWidth }} className={styles.mainTitleSub}>
                             {subTitle}
                         </div>
                     </Link>
@@ -79,13 +80,13 @@ const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps 
 })
 
 const SectionItem = (props: SectionProps) => {
-    const { data }:any = props
+    const { data }: any = props
     return <div className={styles.sectionItems} key={data?.id + data['seo-value']}>
         <label className={styles.sectionName}>{data.title}</label>
         <div className={styles.subItems}>
             {
-                data?.children.map((item,index) => (
-                    <SubItem data={item} key={item.value+index} />
+                data?.children.map((item, index) => (
+                    <SubItem data={item} langKey={props.langKey} key={item.value + index} />
                 ))
             }
         </div>
@@ -94,7 +95,7 @@ const SectionItem = (props: SectionProps) => {
 const SubItem: FunctionComponent<SubItemProps> = hoverable((props: SubItemProps & HoverableProps) => {
     const { location } = useContext(LocationContext)
     const { data } = props
-    return <Link className={styles.subItem} prefetch={false} href={buildQuery(location?.seo_value, data?.label)}>
+    return <Link className={styles.subItem} prefetch={false} href={'/' + props.langKey + buildQuery(location?.seo_value, data?.label)}>
         <Tooltip title={data.label} placement="top-start">
             <div className={styles.linkText}> {data.label}</div>
         </Tooltip>
@@ -103,7 +104,7 @@ const SubItem: FunctionComponent<SubItemProps> = hoverable((props: SubItemProps 
 })
 
 const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props: FunctionFilterProps & HoverableProps) => {
-    const { list, isHover, subTitlesList, contentWidths, ...rest } = props
+    const { list, isHover, subTitlesList, contentWidths, langKey, ...rest } = props
     const [hoverTitle, setHoverTitle] = useState('')
     const {
         currentPage,
@@ -131,6 +132,7 @@ const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props:
                 subTitles={subTitlesList[(currentPage - 1) * 5 + index]}
                 setHoverTitle={setHoverTitle}
                 contentWidth={contentWidths[index]}
+                langKey={langKey}
             />
         ))}
 
@@ -145,8 +147,8 @@ const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props:
             </div>
         </div>
         {hoverData && <div className={styles.sectionContainer}>
-            {hoverData?.map?.((sectionData,index) => {
-                return <SectionItem data={sectionData} key={sectionData.title+index} />
+            {hoverData?.map?.((sectionData, index) => {
+                return <SectionItem langKey={langKey} data={sectionData} key={sectionData.title + index} />
             })}
         </div>
         }
