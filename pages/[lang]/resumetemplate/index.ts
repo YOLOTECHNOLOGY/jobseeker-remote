@@ -2,15 +2,15 @@ import { getDictionary } from 'get-dictionary'
 import ResumeTemplate from './ResumeTemplate'
 
 export async function getServerSideProps({ req, query }) {
-  const accessToken = req.cookies.accessToken
-  if (accessToken) {
-    return {
-      redirect: {
-        destination: `${process.env.OLD_PROJECT_URL}/dashboard/profile/jobseeker`,
-        permanent: false
-      }
-    }
-  }
+  // const accessToken = req.cookies.accessToken
+  // if (accessToken) {
+  //   return {
+  //     redirect: {
+  //       destination: `${process.env.OLD_PROJECT_URL}/dashboard/profile/jobseeker`,
+  //       permanent: false
+  //     }
+  //   }
+  // }
   const lang = await getDictionary(query.lang)
   return {
     props: {

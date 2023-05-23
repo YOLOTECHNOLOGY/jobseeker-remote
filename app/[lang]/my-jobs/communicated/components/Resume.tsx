@@ -28,7 +28,21 @@ const Resume = ({
   resumes,
   lang
 }: any) => {
-
+  const {
+    yearsOld,
+    availability,
+    editOnlineResume,
+    communicated,
+    exchanged,
+    saved,
+    Interview,
+    viewed,
+    noResumeUploadNow,
+    uploadResume,
+    availabilityUpdateSuccessfully,
+    uploadedResumes,
+    deleteSuccess,
+  } = lang || {}
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
   const config = useSelector((store: any) => store.config.config.response)
   const notice_period_lists = config.notice_period_lists || []
@@ -43,6 +57,7 @@ const Resume = ({
   } = userDetail
   const [noticePeriodData, setNoticePeriodData] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const [message,setMessgae] = React.useState(availabilityUpdateSuccessfully)
   const [resumeData, setResumeData] = React.useState([]);
   const [jobData, setJobTotal] = React.useState({
     no_of_applied_jobs: 0,
@@ -106,6 +121,7 @@ const Resume = ({
       if (res.data?.data) {
         resumeData.splice(index, 1)
         setResumeData([...resumeData]);
+        setMessgae(deleteSuccess)
         setOpen(true);
       }
     })
@@ -117,6 +133,7 @@ const Resume = ({
       accessToken
     }).then(res => {
       if (res.data?.data) {
+        setMessgae(availabilityUpdateSuccessfully)
         setOpen(true);
       }
     })
@@ -130,20 +147,7 @@ const Resume = ({
     no_of_viewed_jobs: noOfViewedJobs
   } = jobData || {}
    
-  const {
-    yearsOld,
-    availability,
-    editOnlineResume,
-    communicated,
-    exchanged,
-    saved,
-    Interview,
-    viewed,
-    noResumeUploadNow,
-    uploadResume,
-    availabilityUpdateSuccessfully,
-    uploadedResumes
-  } = lang || {}
+  
  console.log(userDetail,11111)
   return (
     <>
@@ -228,7 +232,7 @@ const Resume = ({
         }}
       >
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-        {availabilityUpdateSuccessfully}!
+        {message}!
         </Alert>
       </Snackbar>
 

@@ -7,6 +7,7 @@ import Text from 'components/Text'
 import Accordian from 'components/Accordian'
 import { getCountry, getCountryKey } from 'helpers/country'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { getCookie } from 'helpers/cookies'
 /* Images */
 import {
   ChevronUpIcon,
@@ -93,6 +94,7 @@ const CountryList = (data) => {
 
 const Footer = ({lang}:any) => {
   const contextLang =  useContext(languageContext)
+ const isLogin = getCookie('accessToken') ? true : false
   const data = lang ?? contextLang
   const {
     about,
@@ -232,7 +234,7 @@ const Footer = ({lang}:any) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to='/resumetemplate'
+                    to={isLogin ? `/manage-profile?tab=resume` : `/resumetemplate`}
                     title='Create Free Resume'
                   >
                     <Text textStyle='sm'>{createFree}</Text>
@@ -554,7 +556,7 @@ const Footer = ({lang}:any) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to='/resumetemplate'
+                      to={isLogin ? `/manage-profile?tab=resume` : `/resumetemplate`}
                       title='Create Free Resume'
                     >
                       <Text textStyle='sm'>{createFree}</Text>

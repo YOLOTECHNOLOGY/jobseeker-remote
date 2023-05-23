@@ -37,7 +37,7 @@ const errorText = (errorMessage: string) => {
   )
 }
 
-const ResumeTemplate = ({ lang }: any) => {
+const ResumeTemplate = ({ lang ,query}: any) => {
   const {
     step,
     email,
@@ -78,10 +78,10 @@ const ResumeTemplate = ({ lang }: any) => {
     }
 
     if (userId) {
-      router.push('/manage-profile?tab=resume')
+      router.push(`/${query}/manage-profile?tab=resume`)
     } else {
       setItem('isRegisterModuleRedirect', '/manage-profile?tab=resume')
-      router.push('/jobseeker-complete-profile/1')
+      router.push(`/${query}/jobseeker-complete-profile/1`)
     }
   }, [userInfo])
 
@@ -359,18 +359,20 @@ const ResumeTemplate = ({ lang }: any) => {
   )
 }
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req ,query}) {
   const accessToken = req.cookies.accessToken
+
   if (accessToken) {
     return {
       redirect: {
-        destination: `${process.env.OLD_PROJECT_URL}/dashboard/profile/jobseeker`,
+        destination: `${process.env.OLD_PROJECT_URL}/${query.lang}/dashboard/profile/jobseeker`,
         permanent: false
       }
     }
   }
   return {
     props: {
+      query:query.lang,
       seoMetaTitle: 'Free Resume Template to Edit & Download | Bossjob.ph',
       seoMetaDescription:
         'Free resume template & sample for you to edit and download on Bossjob. Customize your resume and add career objectives, work experiences and job skills!',

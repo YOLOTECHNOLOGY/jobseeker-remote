@@ -10,7 +10,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 
 import { getCountryKey, getLang, languages, nations } from 'helpers/country'
-import { accessToken as accessTokenKey, configKey, getCookie, setCookie } from 'helpers/cookies'
+import { accessToken as accessTokenKey, configKey, getCookie, setCookie,removeCookie } from 'helpers/cookies'
 
 import MaterialButton from 'components/MaterialButton'
 
@@ -96,6 +96,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
 
   const handleSwitchNation = () => {
     const { country, lang } = nation
+    removeCookie('location')
     setLoading(true)
     const { origin, hostname, pathname } = window.location
     const isLocal = hostname.includes('localhost')
