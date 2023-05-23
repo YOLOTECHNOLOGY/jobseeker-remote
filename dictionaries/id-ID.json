@@ -1,17 +1,17 @@
 {
   "header": {
-    "findJobs": "findJobs",
-    "companies": "companies",
-    "courses": "courses",
-    "careerGuide": "careerGuide",
-    "hiring": "I’m hiring",
-    "getStarted": "getStarted",
-    "manageResume": "manageResume",
-    "myJobs": "myJobs",
-    "accountSettings": "accountSettings",
-    "logOut": "logOut",
+    "findJobs": "Find Jobs",
+    "companies": "Companies",
+    "courses": "Courses",
+    "careerGuide": "Career Guide",
+    "hiring": "I'm hiring",
+    "getStarted": "Get Started",
+    "manageResume": "Manage Resume",
+    "myJobs": "My Jobs",
+    "accountSettings": "Account Settings",
+    "logOut": "Log Out",
     "Chat": "Chat",
-    "downloadApp": "downloadApp",
+    "downloadApp": "Download App",
     "pleaseVerify": "Please verify your email address.",
     "verifyNow.": " Verify now.",
     "switchCountry": {
@@ -20,7 +20,8 @@
       "lang": "Language",
       "btn1": "Close",
       "btn2": "Save"
-    }
+    },
+    "change": "Change"
   },
   "foot": {
     "about": "about",
@@ -129,7 +130,31 @@
     "employees": "Employees",
     "InterviewTime": "Interview Time",
     "address": "Address",
-    "noMore": "No more"
+    "noMore": "No more",
+    "location": "location",
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "upcoming": "Upcoming",
+    "InProgress": "In progress",
+    "declined": "Declined",
+    "cancelled": "Cancelled",
+    "notAccepted": "Not accepted",
+    "completed": "Completed",
+    "notCheckedIn": "Not checked in",
+    "notSuitable": {
+      "title": "Why this job is not suitable?",
+      "description": "Please select a reason why this job is not what you are looking for. We will optimise your job recommendations.",
+      "others": "Others",
+      "reasons": "Please let us know why this job is not suitable.",
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "reason1": "Does not match my job preference",
+      "reason2": "Working location is too far",
+      "reason3": "Salary is below my expectation",
+      "reason4": "Education qualification mismatch",
+      "reason5": "Industry mismatch",
+      "reason6": "Not interested in this company"
+    }
   },
   "companies": {
     "title": "Find great companies in {{country}}",
@@ -474,13 +499,23 @@
         "title": "{{searchQuery}} Jobs in {{country}}, Apply Job Opportunities - {{month}} {{year}} | Bossjob",
         "desc": "New {{searchQuery}} Jobs in {{location}}, {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
       }
-    }
+    },
+    "noResultsFound": "No results found.",
+    "pleaseUseDifferentKeyword": "Please use a different keyword or try to change your filter selection.",
+    "reset2": "Reset",
+    "save": "Save",
+    "downloadAPP": " Download APP and chat with Boss",
+    "chatDirectly": " Chat directly",
+    "withBoss": "with Boss"
   },
   "manageProfile": {
     "tab": {
       "profile": {
         "tabTitle": "Profile",
         "findYou": "Let employer find you faster!",
+        "year_one": "{{age}} year old",
+        "year_other": "{{age}} years old",
+        "about": "About",
         "informationCard": {
           "title": "Complete all information about you",
           "content": "Help the recruiter to know more about you and connect more easily with you.",
@@ -496,7 +531,8 @@
           "birthday": "Date of Birth",
           "location": "Current Location",
           "exp": "Years of Experience",
-          "summary": "Provide a career summary and briefly highlight your relevant experience, achievement and skills."
+          "summary": "Provide a career summary and briefly highlight your relevant experience, achievement and skills.",
+          "birthdayError": "You need to be at least 16 years old to use Bossjob."
         },
         "exp": {
           "title": "Work Experience",
@@ -756,6 +792,72 @@
     "moreText": "More",
     "emoji": "Emoji"
   },
+  "chatInterview": {
+    "confirmText": "Interview Confirmed",
+    "confirmLabel": "Your interview cannot be cancelled now",
+    "cancelAction": "Cancel interview",
+    "canNotCancel": "Your interview cannot be cancelled now",
+    "checkedText": "Checked-In",
+    "checkedLabel": "Check in for the interview with recruiter",
+    "checkInText": "Check-in now",
+    "canNoteCheckIn": "You cannot check in now.",
+    "inProgressText": "In-progress",
+    "inProgressLabel": "You can report any issue during this stage",
+    "issueReported": "Issues reported",
+    "reportIssue": "Report issues",
+    "finishedText": "Finished",
+    "finishedLabel": "You can request interview result from the recruiter",
+    "requestResult": "Requested for results",
+    "requestAfter": "You can request interview result after {{time}}",
+    "title": "Interview Invitation from {{companyName}}",
+    "buttonText": "Done",
+    "notAttend": "You did not attend the interview.",
+    "jobTitleLabel": "Job Title",
+    "addressLabel": "Interview Address",
+    "timeLabel": "Date,Time",
+    "contactPersonLabel": "Contact person",
+    "contactNumberLabel": "Contact number",
+    "videoLink": "Video link",
+    "instructions": "Instructions",
+    "decline": "Decline",
+    "accept": "Accept",
+    "cancelReason": "Cancel reason",
+    "cancelTitle": "Interview cancelled",
+    "confirmText1": "By accepting this interview invite, I agreed that I will show up for the interview at the given time and place. \nIf I need to change the time, I will notify the recruiter at least 7 hours in advance.",
+    "contirmText2": "Job seekers who do not turn up for interview will be marked as “No Show”. Job seekers who accumulate 3 no-show records in 3 months will be banned from using Bossjob for 6 months.",
+    "back": "Back",
+    "next": "Next",
+    "close": "Close",
+    "resultTitle": "Interview result",
+    "resultText": "Did you attended the interview?",
+    "attendancelabel": "Interview attendance",
+    "yes": "Yes",
+    "no": "No",
+    "askResultText1": "You are unable to request for interview result as you did not attend the interview.",
+    "askResultText2": "You can only request for result from {{enableDate}} onwards.",
+    "cancelInterview": "Cancel interview",
+    "acceptAnother": "I have accepted another offer.",
+    "retime": "I would like to reschedule the interview timing.",
+    "cancelReasonLabel": "You are about to cancel the interview. Please let recruiter know why you are cancelling this interview:"
+  },
+  "chatCommonPhrase": {
+    "phraseTitle": "Common Phrases",
+    "phraseLabel": "Phrase",
+    "inputPlaceholder": "Insert the common phrases that you would like to send to Boss",
+    "addDescription": "Add your own phrase. Please do not include your contact details here.",
+    "save": "Save",
+    "back": "Back",
+    "delete": "Delete",
+    "done": "Done",
+    "close": "Close",
+    "send": "Send",
+    "sureDelete": "Sure to delete this?",
+    "pickDescription": "Please select the phrase that you want to send to Boss.",
+    "actionEdit": " Edit or delete phrase",
+    "actionCreate": "Create new phras",
+    "actionDescription": "You can save up to 10 phrases",
+    "or": "or"
+  },
   "quickUploadResume": {
     "title": "Upload your resume",
     "UploadAndApply": "Upload your resume and start applying for job now!",
@@ -770,5 +872,41 @@
       "term": "By signing up, I have read and agreed to Terms of Use",
       "policy": "and Privacy Policy"
     }
+  },
+  "editJobPreferencesModal": {
+    "validate": {
+      "jobTitle": "job title is required",
+      "jobType": "job type is required",
+      "location": "location is required",
+      "minSalary": "min salary is required",
+      "maxSalary": "max salary is required",
+      "currency": "currency is required",
+      "country": "country is required when location is overseas",
+      "industry": "industry is required"
+    }
+  },
+  "resumetemplate": {
+    "title": "Free resume template",
+    "subTitle": "Create and download resume in a minute.",
+    "createBtn": "Create Resume",
+    "form": {
+      "label": "Email address",
+      "emptyError": "Please enter your email address.",
+      "validError": "'Please enter a valid email address.'"
+    },
+    "howToCreate": {
+      "title": "How to create resume template",
+      "step1": "Fill in your name as well as a valid email (important that you enter a valid email which will be used in your resume template)",
+      "step2": "Click on “Create Resume” and proceed to fill in more information such as personal summary and career objectives, education, experience, skills, and more.",
+      "step3": "Download, print and save your new resume",
+      "step4": "Update your online resume any time and create new resume template whenever you wish to"
+    },
+    "haveAQuestion": "Have a question?",
+    "freeLabel": "Is it free?",
+    "freeAnswer": "Yes, Bossjob resume generation service is free. You can create as many resume as you want. You can choose from different themes of resume samples and use different resume sample for different job applications",
+    "chooseTemplate": "How many templates can I choose from?",
+    "chooseTemplateAnswer": "You can choose from 2 templates, professional or creative resume samples. You can immediately use your newly improved resume to apply for job openings on Bossjob.",
+    "editLater": "Would I be able to edit the resume template later?",
+    "editLaterAnswer": "Absolutely yes. Login to your Bossjob account anytime to update your resume. You can use your Bossjob account as a resume bank. Keep your most updated career details in Bossjob and use them as your professional identity!"
   }
 }

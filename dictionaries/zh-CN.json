@@ -6,10 +6,10 @@
     "careerGuide": "职业指南",
     "hiring": "我要招聘",
     "getStarted": "登录/注册",
-    "manageResume": "编辑简历",
+    "manageResume": "简历管理",
     "myJobs": "我的工作",
     "accountSettings": "账号设置",
-    "logOut": "登出",
+    "logOut": "退出登录",
     "Chat": "消息",
     "downloadApp": "下载APP",
     "pleaseVerify": "请验证你的邮箱",
@@ -29,19 +29,19 @@
     "termsConditions": "协议与规则",
     "legal": "使用政策",
     "FAQ": "FAQ",
-    "talents": "人才",
-    "allJobs": "工作",
-    "createJobAlert": "创建工作",
-    "createFree": "创建简历",
+    "talents": "求职用户",
+    "allJobs": "所有职位",
+    "createJobAlert": "新职位通知",
+    "createFree": "免费简历模版",
     "careerGuide": "职业指南",
     "courses": "课程",
-    "recruiter": "招聘人员",
+    "recruiter": "企业用户",
     "getStarted": "登录/注册",
     "popularJobs": "热门工作",
     "JobsIn1": "Manila的工作",
     "JobsIn2": "Makati的工作",
     "JobsIn3": "Cebu的工作",
-    "ItJobs": "IT人才",
+    "ItJobs": "IT工作",
     "financeJobs": "金融工作",
     "customerService": "客服工作",
     "jobs": "工作",
@@ -55,8 +55,8 @@
   },
   "getStatred": {
     "seoMetaTitle": "Get started | Bossjob",
-    "JoinBossjob": "加入Bossjob",
-    "kickStartYourCareer": "开启你的职业生涯！",
+    "JoinBossjob": "上Bossjob",
+    "kickStartYourCareer": "和老板直接聊工作！",
     "enterYourEmailAddress": "输入你的电子邮箱地址",
     "submit": "提交",
     "pleaseEnterAvalidEmailAddress.": "请输入有效的电子邮件地址。",
@@ -65,8 +65,8 @@
     "and": "和",
     "privacyPolicy": "隐私政策",
     "signInWith": "其他登录方式",
-    "lookingToHire": "您要招人吗？",
-    "employer": "企业免费注册",
+    "lookingToHire": "我要招聘！",
+    "employer": "点击此处免费注册企业账号",
     "welcomeBack": "欢迎回来！",
     "signUpAnAccount": "注册新帐户",
     "pleaseEnter": "请输入我们发送的6位一次性密码",
@@ -84,9 +84,9 @@
     "exchanged": "已交换",
     "saved": "已收藏",
     "Interview": "面试",
-    "viewed": "看过我",
+    "viewed": "我看过的",
     "InterestedInMe": "对我感兴趣",
-    "whoViewedMe": "谁看过我",
+    "whoViewedMe": "看过我的",
     "newest": "最新",
     "relevance": "最相关",
     "highestSalary": "最高薪资",
@@ -102,9 +102,9 @@
     "companySizes": "公司规模",
     "searchForJobTitleOrCompanyName": "搜索职位名称或公司名称",
     "resetFilters": "清空筛选条件",
-    "recommended": "推荐工作",
+    "recommended": "推荐职位",
     "latestJob": "最新",
-    "talkToBossAnywhere": "随时与老板谈",
+    "talkToBossAnywhere": "下载APP，随时随地聊！",
     "applyNow": "现在申请",
     "continueChat": "继续沟通",
     "chatNow": "立即沟通",
@@ -117,15 +117,15 @@
     "seeMore": "查看更多",
     "seeJobReco": "查看推荐工作",
     "search": "搜索",
-    "desiredJobTitle": "期望职位",
-    "edit": "编辑",
-    "addNew": "新增",
-    "yearsOld": "年龄",
+    "desiredJobTitle": "期望职位名称",
+    "edit": "修改工作偏好",
+    "addNew": "添加工作偏好",
+    "yearsOld": "岁",
     "resume": "简历",
     "mobileNumber": "电话号码",
     "back": "返回",
     "addJobPreference": "新增工作偏好",
-    "JobClosed": "关闭工作",
+    "JobClosed": "职位已关闭",
     "undoSave": "取消收藏",
     "employees": "员工",
     "InterviewTime": "面试时间",
@@ -184,9 +184,9 @@
   },
   "companyDetail": {
     "tab": {
-      "overview": "公司信息",
-      "life": "公司日常",
-      "jobs": "热招工作"
+      "overview": "公司简介",
+      "life": "企业文化",
+      "jobs": "热招职位"
     },
     "overview": {
       "about": "关于公司",
@@ -194,7 +194,7 @@
       "employees": "人",
       "industry": "行业",
       "website": "官方网站",
-      "location": "位置",
+      "location": "城市",
       "socialMedia": "社交媒体",
       "culture": {
         "title": "公司文化",
@@ -209,11 +209,11 @@
         "title": "照片墙"
       },
       "jobs": {
-        "title": "热招工作",
-        "viewAll": "查看全部工作",
+        "title": "热招职位",
+        "viewAll": "查看全部职位",
         "search": {
           "jobTitle": "搜索公司职位",
-          "location": "职位",
+          "location": "城市",
           "btn": "搜索"
         },
         "card": {
@@ -230,10 +230,10 @@
       "noPhotoTips": "{{companyName}}还没有上传任何公司日常信息，请等会再来"
     },
     "job": {
-      "title": "热招工作",
+      "title": "全部职位",
       "search": {
         "jobTitle": "搜索公司职位",
-        "location": "位置",
+        "location": "城市",
         "btn": "搜索"
       },
       "pagination": {
@@ -243,7 +243,7 @@
       "noJobs": "{{companyName}}还没有任何工作。 请等会再来"
     },
     "rightSection": {
-      "uploadResume": "上传并申请工作",
+      "uploadResume": "上传简历和老板开聊",
       "othersViewed": "其他人也看...",
       "viewAll": "查看全部"
     },
@@ -261,7 +261,7 @@
     "defaultLocationPH": "马尼拉",
     "defaultLocationSG": "downtown core",
     "search": {
-      "location": "位置",
+      "location": "城市",
       "title": "职位或者公司名称",
       "btn1": "搜索",
       "download": "下载App",
@@ -329,7 +329,7 @@
       "chatNow": "立即沟通",
       "continueChat": "继续沟通",
       "fillUpResume": "在线填写简历",
-      "uploadResume": "上传新的简历"
+      "uploadResume": "立即上传简历"
     },
     "content": {
       "JD": "职位描述",
@@ -346,13 +346,13 @@
         "withinWeek": "本周活跃",
         "withinMonth": "本月活跃"
       },
-      "location": "工作位置",
+      "location": "工作城市",
       "locationModal": {
         "btn": "完成",
-        "title": "位置"
+        "title": "城市"
       },
       "search": {
-        "location": "位置",
+        "location": "城市",
         "title": "工作或者公司名称",
         "btn": "搜索"
       },
@@ -393,16 +393,16 @@
     },
     "aside": {
       "company": {
-        "title": "当前公司",
+        "title": "公司介绍",
         "allJobHiring": "查看{{count}}个热招工作",
         "employees": "人"
       },
       "similarJob": {
-        "title": "相似工作",
+        "title": "猜你想看",
         "seeMore": "查看更多"
       },
       "signUp": {
-        "title": "加入Bossjob",
+        "title": "海量职位任你选！",
         "btn": "注册",
         "label": "邮箱",
         "note": "注册即表示我已阅读并同意",
@@ -416,10 +416,10 @@
     }
   },
   "search": {
-    "location": "位置",
+    "location": "城市",
     "title": "职位或者公司名称",
     "searchBtn": "搜索",
-    "login": "登录并查看更多热门职位",
+    "login": "登录查看更多热门职位",
     "relevance": "排序",
     "function": "职位类型",
     "salary": "薪资",
@@ -439,7 +439,7 @@
       "reset": "重置",
       "apply": "应用"
     },
-    "alert": "启用工作通知",
+    "alert": "开启新职位通知",
     "alertModal": {
       "title": "工作通知",
       "btn": "完成",
@@ -466,16 +466,16 @@
       "btn2": "删除"
     },
     "enableAlertModal": {
-      "title": "启用工作通知",
+      "title": "开启新职位提醒",
       "text1": "已启用在{{location}}的{{jobName}}的工作通知",
       "manage": "管理通知",
       "noKey": "未选择任何关键词",
       "btn1": "保留",
       "btn2": "删除"
     },
-    "uploadResume": "上传简历并申请工作!",
-    "chatBoss": "与老板直接谈",
-    "QRCode": "扫描并下载App",
+    "uploadResume": "上传简历极速注册",
+    "chatBoss": "找工作，和老板谈！",
+    "QRCode": "扫码下载App",
     "jobCard": {
       "chat": "立即沟通",
       "continue": "继续沟通",
@@ -522,21 +522,21 @@
           "btn": "完善信息"
         },
         "aboutMeModal": {
-          "title": "关于我",
+          "title": "个人信息",
           "btn1": "取消",
           "btn2": "保存",
           "avatarTips": "为了更好的展示, 推荐上传方形或者1:1纵横比的图片",
           "firstName": "名",
           "lastName": "姓",
           "birthday": "出生日期",
-          "location": "当前位置",
+          "location": "当前城市",
           "exp": "工作经验",
-          "summary": "提供职业总结并简要突出您的相关经验、成就和技能。",
+          "summary": "我的优势 （写写你的相关经验和个人成就等，更能赢得Boss赏识）",
           "birthdayError": "您需要满足年龄大于16岁才能继续使用Bossjob。"
         },
         "exp": {
           "title": "工作经验",
-          "present": "现在",
+          "present": "至今",
           "perMonth": "每月",
           "noExpTips": "展示你过去的贡献，你可以成为潜在雇主的雇员",
           "addExp": "添加工作经验",
@@ -564,7 +564,7 @@
         },
         "edu": {
           "title": "教育经历",
-          "present": "现在",
+          "present": "至今",
           "noDataTips": "突出你的学历和成就。",
           "addEdu": "添加教育经历"
         },
@@ -592,41 +592,41 @@
           "title": "技能",
           "btn1": "取消",
           "btn2": "保存",
-          "suggestions": "我们会根据您最近的工作职能为您推荐技能：",
-          "jobFunction": "工作职能",
+          "suggestions": "我们会根据您最近的职位类型为您推荐技能：",
+          "jobFunction": "职位类型",
           "skill": "搜索或者添加一个技能"
         },
         "licenses": {
-          "title": "执照和认证",
-          "CID": "认证ID",
+          "title": "资格证书",
+          "CID": "证书ID",
           "noDataTips": "通过分享您获得的专业知识来展示您对工作的热情，从而在其他人中脱颖而出。",
-          "addLicense": "添加执照和认证"
+          "addLicense": "添加证书"
         },
         "licensesModal": {
-          "title": "执照和认证",
+          "title": "资格证书",
           "btn1": "取消",
           "btn2": "保存",
           "licenseTitle": "执照/认证名称",
           "issuing": "发证机构",
-          "licenseValidity": "执照和认证有效性",
-          "licenseNotExpired": "执照/认证仍然有效",
+          "licenseValidity": "有效日期",
+          "licenseNotExpired": "此执照或证书不过期",
           "issueDate": "签发日期",
           "expiryDate": "到期日",
           "dateErrorMsg": "签发日期必须早于到期日期",
-          "credentialId": "凭据ID",
-          "credentialURL": "凭据地址",
-          "urlErrorMsg": "请输入一个有效的地址"
+          "credentialId": "证书ID",
+          "credentialURL": "证书网址",
+          "urlErrorMsg": "请输入一个有效的网址"
         },
         "link": {
           "title": "链接",
-          "noDataTips": "通过分享您的网站、作品集、文章或任何相关链接，向招聘人员展示您的作品。",
+          "noDataTips": "通过分享您的网站、作品集、文章或任何相关链接，向招聘企业展示您的作品。",
           "addLink": "添加链接"
         },
         "linkModal": {
           "title": "链接",
           "btn1": "取消",
           "btn2": "保存",
-          "url": "URL",
+          "url": "网址链接",
           "urlErrorMsg": "请输入一个有效的地址",
           "linkTitle": "链接名称",
           "linkDesc": "输入描述信息..."
@@ -643,11 +643,11 @@
         },
         "card": {
           "header": "工作偏好",
-          "tips": "我们会根据你的职位偏好找到符合的工作。",
+          "tips": "我们会根据你的工作偏好，给你推荐工作。",
           "title": "职位名称：",
           "type": "工作类型：",
           "country": "国家：",
-          "city": "城市:",
+          "city": "期望工作城市:",
           "salary": "期望薪水:",
           "industry": "期望行业:"
         },
@@ -656,13 +656,13 @@
           "btn1": "取消",
           "btn2": "保存",
           "jobTitle": "职位名称",
-          "jobType": "工作类型",
-          "location": "工作位置",
+          "jobType": "期望职位类型",
+          "location": "期望工作城市",
           "currencyType": "货币类型",
           "minSalary": "最低薪资",
           "maxSalary": "最高薪资",
           "country": "国家",
-          "industry": "行业"
+          "industry": "期望行业"
         },
         "deleteModal": {
           "title": "删除工作偏好",
@@ -678,8 +678,8 @@
       "resume": {
         "tabTitle": "简历",
         "upload": {
-          "title": "上传你的简历",
-          "tips": "简历是帮助您进入求职过程下一步的重要工具。使用 Bossjob 个人资料中的其他信息给招聘人员留下深刻印象。",
+          "title": "你的简历附件",
+          "tips": "Boss会向你索要简历附件，建议你至少上传一个！",
           "time": "上传于 {{time}}",
           "uploadBtn": "上传简历",
           "support": "支持的文件类型: PDF, DOC, DOCX. 最大: 5MB",
@@ -692,8 +692,8 @@
           "error": "删除简历失败"
         },
         "bossjob": {
-          "title": "Bossjob 简历",
-          "tips": "当你在Bossjob上创建资料的时候，我们会为你创建简历。 你可以下载下面的模版并在你最新的简历中使用，然后申请在Bossjob上的工作",
+          "title": "Bossjob 简历模版",
+          "tips": "请选择简历模版，我们将根据在线简历和你的联系方式制作简历",
           "download": "下载"
         }
       }
@@ -701,62 +701,62 @@
   },
   "profile": {
     "letGetYouJob": " 让我们帮你找份工作！",
-    "tellUsAboutYourself": "向我们介绍你自己。",
+    "tellUsAboutYourself": "介绍一下你自己吧～",
     "firstName": "名",
     "thisFieldIsRequired": "此字段是必需的。",
     "lastName": "姓",
-    "currentLocation": "当前位置",
+    "currentLocation": "当前城市",
     "countryText": "国家",
     "countryCode": "国家代码",
     "mobileNumber": "手机号码",
-    "desiredJobTitle": "期待的职位",
-    "desiredJobType": "期望的工作类型",
-    "desiredLocation": "理想位置",
-    "desiredSalaryCurrency": "期望的工资货币",
-    "minSalary": "分钟",
-    "maxSalary": "最大限度",
-    "desiredIndustry": "期望的行业",
-    "availability": "可用性",
+    "desiredJobTitle": "期望职位名称",
+    "desiredJobType": "期望的职位类型",
+    "desiredLocation": "期望工作城市",
+    "desiredSalaryCurrency": "货币类型",
+    "minSalary": "最低薪资",
+    "maxSalary": "最高薪资",
+    "desiredIndustry": "期望行业",
+    "availability": "到岗时间",
     "next": "下一步",
     "setp": "步骤",
     "of": "/",
     "back": "返回",
     "fileTooHuge": "文件太大。",
-    "addYourResume": "添加您的简历",
-    "youCanBuildOnlineResume": "您可以构建在线简历以申请工作并使用不同的模板将其导出。",
-    "youCanuploadYourResume": "您也可以上传您的简历，它会保存到您的个人资料中。",
-    "uploadYourResume": "上传你的简历",
-    "fileMax": "PDF、DOC、DOCX。",
-    "resume": "恢复",
+    "addYourResume": "上传简历附件",
+    "youCanBuildOnlineResume": "我们会自动导出您的信息，帮助您填写在线简历！",
+    "youCanuploadYourResume": "如果你没有简历附件，可以使用免费的简历模版",
+    "uploadYourResume": "你的简历附件",
+    "fileMax": "支持PDF, DOC, DOCX 文件，最大5MB",
+    "resume": "简历",
     "OR": "或者",
     "createFreeResume": "创建免费简历",
-    "addYourWorkExperience": "添加您的工作经验",
-    "fillInYourCompleteWork": "填写完整的工作经历，入围几率将提高83%。",
-    "jobFunction": "工作职能",
+    "addYourWorkExperience": "添加工作经验",
+    "fillInYourCompleteWork": "Fill in your complete work experiences will increase your chances of being shortlisted by 83%.",
+    "jobFunction": "职位类型",
     "industry": "行业",
     "description": "描述",
     "workingPeriod": "工作期间",
-    "currentlyWorkHere": "我现在在这里工作",
+    "currentlyWorkHere": "我目前在职",
     "from": "从",
     "startDateMustBeEarlier": " 开始日期必须早于完成日期。",
     "to": "到",
     "monthlySalary": "月收入",
     "addWorkExperience": "添加工作经历",
     "fillUpTheRequired": "填写必填字段以继续。",
-    "noWorkExperience": "我没有工作经验",
+    "noWorkExperience": "不填写，我没有工作经验",
     "cancel": "取消",
     "save": "保存",
-    "JobTitleText": "工作名称",
-    "companyNameText": "公司名称",
+    "JobTitleText": "工作职位",
+    "companyNameText": "所在公司",
     "monthYear": "日期",
-    "placeholder": "类型...",
-    "allAboutYourEducation": "所有关于你的教育",
-    "present": "展示",
+    "placeholder": "输入描述信息...",
+    "allAboutYourEducation": "你的学历背景",
+    "present": "至今",
     "schoolName": "学校名称",
-    "educationLevel": "教育程度",
+    "educationLevel": "学历类型",
     "studyPeriod": " 学习时段",
-    "currentlyAttending": "正在出席",
-    "fieldOfStudy": "研究领域",
+    "currentlyAttending": "当前在读",
+    "fieldOfStudy": "专业",
     "fillUpTheFieldsWith": " 用 (*) 填写字段以继续。",
     "addAEducation": " 添加学历",
     "notWantToEnterEducation": "我现在不想接受教育",
@@ -767,8 +767,8 @@
   },
   "chat": {
     "chatTitle": "聊天",
-    "chatFilterPlaceholder": "所有消息",
-    "qrCodeMessage": "随时与老板谈",
+    "chatFilterPlaceholder": "全部",
+    "qrCodeMessage": "下载APP，随时随地聊！",
     "interviewDisabled": "目前没有面试",
     "interviewEnabled": "面试详情",
     "pin": "置顶",
@@ -786,7 +786,7 @@
     "exchangeTextEnabled": "交换号码",
     "commonPhrasesText": "常用语",
     "sendImageText": "发送图片",
-    "sendPlaceHolder": "写下您的消息...",
+    "sendPlaceHolder": "输入消息..",
     "mobileActionResume": "发送简历",
     "mobileActionExchange": "交换号码",
     "moreText": "更多操作",
