@@ -21,6 +21,8 @@ import { ChatInfoContext } from 'app/[lang]/components/chatInfoProvider'
 import { Urgent } from './Urgent'
 import { useSelector } from 'react-redux'
 import { changeJobValue } from 'helpers/config/changeJobValue'
+import { getValueById } from 'helpers/config/getValueById'
+import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
   const titleHoverRef = useRef(titleHover)
@@ -119,19 +121,19 @@ const JobCard = (props: any) => {
   const {
     job_title,
     salary_range_value,
-    job_type,
-    job_location,
-    xp_lvl,
-    degree,
+    // job_type,
+    // job_location,
+    // xp_lvl,
+    // degree,
     recruiter_full_name,
     recruiter_job_title,
     recruiter_is_online,
     job_skills,
     company_logo,
     company_name,
-    company_industry,
-    company_size,
-    company_financing_stage,
+  //  company_industry,
+  //   company_size,
+  //   company_financing_stage, 
     job_benefits,
     external_apply_url,
     id,
@@ -139,15 +141,31 @@ const JobCard = (props: any) => {
     is_saved,
     job_url,
     company_url,
-    is_urgent
+    is_urgent,
+    job_type_id,
+    job_location_id,
+    xp_lvl_id,
+    degree_id,
+    company_industry_id,
+    company_size_id,
+    company_financing_stage_id
   } = memoedJob
   const { chatInfos } = useContext(ChatInfoContext)
   const chat = useMemo(() => {
     return chatInfos.find((chatInfo) => chatInfo.recruiter_id === recruiter_id)
   }, [chatInfos])
-
-  const labels = [job_type, job_location, xp_lvl, degree].filter((a) => a)
-  const companyLabels = [company_industry, company_size, company_financing_stage].filter((a) => a)
+  const { search } = useContext(languageContext) as any
+  const labels = [
+    getValueById(config,job_type_id,'job_type_id'), 
+    getValueById(config,job_location_id,'location_id'),
+    getValueById(config,xp_lvl_id,'xp_lvl_id'),
+    getValueById(config,degree_id,'degree_id'),
+  ].filter((a) => a)
+  const companyLabels = [
+    getValueById(config,company_industry_id,'industry_id'), 
+    getValueById(config,company_size_id,'company_size_id'), 
+    getValueById(config,company_financing_stage_id,'company_financing_stage_id')
+  ].filter((a) => a)
   const router = useRouter()
   const [loading, chatNow, modalChange] = useChatNow({ ...job, chat })
   const [titleHover, setTitleHover] = useState(false)
@@ -272,17 +290,17 @@ const JobCard = (props: any) => {
                           <Text textColor='white' bold>
                             {(() => {
                               if (external_apply_url) {
-                                return 'Apply Now'
+                                return search.jobCard.apply
                               } else if (chat?.is_exists) {
-                                return 'Continue Chat'
+                                return search.jobCard.continue
                               } else {
-                                return 'Chat Now'
-                              }
+                                return search.jobCard.chat
+                              }  
                             })()}
                           </Text>
                         </MaterialButton>
                       </div>
-                      {!!recruiter_is_online && <div className={styles.online}>Online</div>}
+                      {!!recruiter_is_online && <div className={styles.online}>{search.jobCard.online}</div>}
                     </div>
                   )
                 },
@@ -370,7 +388,7 @@ const JobCard = (props: any) => {
                   />
                 </svg>
                 <Text textColor='#136FD3' bold style={{ marginLeft: 8 }}>
-                  {isSaved ? 'Saved' : 'Save'}
+                  {isSaved ? search?.jobCard?.saved : search?.jobCard?.save}
                 </Text>
               </MaterialButton>
             </div>

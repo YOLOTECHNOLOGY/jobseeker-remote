@@ -130,7 +130,17 @@
     "employees": "员工",
     "InterviewTime": "面试时间",
     "address": "地址",
-    "noMore": "没有更多"
+    "noMore": "没有更多",
+    "location":"地区",
+    "pending": "待办的",
+    "accepted": "公认",
+    "upcoming": "即将到来",
+    "InProgress": "进行中",
+    "declined": "谢绝",
+    "cancelled": "取消",
+    "notAccepted": "不接受",
+    "completed": "完全的",
+    "notCheckedIn": "未签到"
   },
   "companies": {
     "title": "寻找在{{country}}的优秀公司",

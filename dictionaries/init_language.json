@@ -130,7 +130,17 @@
     "employees": "Employees",
     "InterviewTime": "Interview Time",
     "address": "Address",
-    "noMore": "No more"
+    "noMore": "No more",
+    "location":"location",
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "upcoming": "Upcoming",
+    "InProgress": "In progress",
+    "declined": "Declined",
+    "cancelled": "Cancelled",
+    "notAccepted": "Not accepted",
+    "completed": "Completed",
+    "notCheckedIn": "Not checked in"
   },
   "companies": {
     "title": "Find great companies in {{country}}",

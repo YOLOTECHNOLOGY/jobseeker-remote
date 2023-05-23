@@ -10,6 +10,7 @@ const usedConfigProps = [
     ['company_financing_stage_lists'],
     ['company_sizes'],
     ['main_job_function_lists'],
-    ['country_lists']
+    ['country_lists'],
+    ['degrees'],
 ]
 export default config(usedConfigProps)

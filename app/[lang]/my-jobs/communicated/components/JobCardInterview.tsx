@@ -22,6 +22,7 @@ const jobseekerDisplayStatusObject = {
 };
 
 
+
 const JobCardInterview = (props: any) => {
   const { data,lang } = props
   const {
@@ -29,6 +30,19 @@ const JobCardInterview = (props: any) => {
     full_address: fullAddress,
     jobseeker_display_status: jobseekerDisplayStatus,
   } = data;
+  console.log(data,lang,1111)
+  const {pending,accepted,upcoming,InProgress,declined,cancelled,notAccepted,completed,notCheckedIn} = lang || {}
+  const jobseekerDisplayStatusTrans = {
+    "Pending": pending,
+    "Accepted": accepted,
+    "Upcoming": upcoming,
+    "In progress": InProgress,
+    "Declined": declined,
+    "Cancelled": cancelled,
+    "Not accepted": notAccepted,
+    "Completed": completed,
+    "Not checked in": notCheckedIn,
+  };
   const {
     name,
     logo_url: logoUrl
@@ -68,7 +82,9 @@ const JobCardInterview = (props: any) => {
               }
               {phoneNum}
             </span>
-            <span className={styles.jobrStatus} style={{ color: jobseekerDisplayStatusObject[jobseekerDisplayStatus] || '#136FD3' }}> {jobseekerDisplayStatus}</span>
+            <span className={styles.jobrStatus}  style={{ color: jobseekerDisplayStatusObject[jobseekerDisplayStatus] || '#136FD3' }}> 
+            {jobseekerDisplayStatusTrans[jobseekerDisplayStatus]}
+            </span>
           </div>
           <div className={styles.operator}>
             {
