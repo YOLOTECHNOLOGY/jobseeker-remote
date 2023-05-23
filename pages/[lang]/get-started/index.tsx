@@ -191,7 +191,7 @@ const GetStarted = (props: any) => {
               />
             )}
 
-            {step == 3 && <MagicLink userId={userId} email={email} />}
+            {step == 3 && <MagicLink userId={userId} email={email} lang={lang} />}
           </div>
 
           <div className={styles.ToEmployer}>

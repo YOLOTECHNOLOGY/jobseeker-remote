@@ -77,7 +77,13 @@
     "havingTrouble": "Having trouble?",
     "requestAmagicLink": "Request a Magic Link",
     "seoMetaDescription": "Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ",
-    "seoMetaDescription2": "Network of 2 million+ professionals."
+    "seoMetaDescription2": "Network of 2 million+ professionals.",
+    "magicLink": {
+      "welcomeBack": "Welcome back!",
+      "signUp": "Sign up an account",
+      "haveSendEmail": "We’ve sent a magic link to {{email}}. Please click on the link to proceed.",
+      "toHome": "Back to home page"
+    }
   },
   "myJobs": {
     "communicated": "Communicated",

@@ -77,7 +77,13 @@
     "havingTrouble": "您需要帮助吗？",
     "requestAmagicLink": "请求魔术链接",
     "seoMetaDescription": "Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ",
-    "seoMetaDescription2": "2百万注册求职者在线等你"
+    "seoMetaDescription2": "2百万注册求职者在线等你",
+    "magicLink": {
+      "welcomeBack": "欢迎回来！",
+      "signUp": "注册一个账户",
+      "haveSendEmail": "我们已向{{email}}发送了一个魔法链接。 请点击链接继续。",
+      "toHome": "回到主页"
+    }
   },
   "myJobs": {
     "communicated": "已沟通",

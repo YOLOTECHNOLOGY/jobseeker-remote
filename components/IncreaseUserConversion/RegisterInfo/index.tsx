@@ -180,7 +180,7 @@ const RegisterInfo = (props: any) => {
         />
       )}
 
-      {step == 3 && <MagicLink userId={userId} email={email} />}
+      {step == 3 && <MagicLink userId={userId} email={email} lang={lang.getStatred} />}
 
       <Snackbar anchorOrigin={{ vertical, horizontal }} open={open} key={vertical + horizontal}>
         <Alert onClose={handleSnackbarClose} severity='error' sx={{ width: '100%' }}>
