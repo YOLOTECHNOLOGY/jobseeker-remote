@@ -963,5 +963,23 @@
     "keep": "Keep",
     "delete": "Delete",
     "deleteTips": "You are about to delete this job alert. This cannot be undone."
+  },
+  "chatExchange":{
+    "exchangeTitle":"Mobile number",
+    "cancel":"Cancel",
+    "send":"Send",
+    "verify":"Verify",
+    "sendOtp":"Send OTP",
+    "resendOtp":"Resend OTP",
+    "copy":"Copy",
+    "resendOtpIn":"Resend OTP in {{count}} s",
+    "sureText":"Are you sure you want to exchange mobile number with Boss? You will be able to view Boss’s mobile number after Boss had agreed to your request.",
+    "verifyText":"To exchange mobile number with Boss, please verify your mobile number.",
+    "countryCode":"Country code",
+    "mobileNumber":"Mobile Number",
+    "digitPlaceholder":"Enter 6 digit OTP",
+    "msgText":"Enter the code that we have message to {{number}}",
+    "smb":"'s mobile number:",
+    "boss":"Boss"
   }
 }

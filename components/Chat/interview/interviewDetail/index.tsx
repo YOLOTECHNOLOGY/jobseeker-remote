@@ -11,7 +11,6 @@ const InterviewDetail = (props: any) => {
   const dispatch = useDispatch()
   const config = useSelector((store: any) => store?.config?.config?.response)
 
-  console.log({ dic })
   const detailData = useMemo(() => {
     // const location = getValueById(config, data?.job_location, 'location_id')
     const jobLocation = getValueById(config, data?.location_id, 'location_id')

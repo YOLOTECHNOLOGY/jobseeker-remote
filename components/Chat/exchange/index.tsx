@@ -9,17 +9,23 @@ import classNames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUserDetailRequest } from 'store/actions/users/fetchUserDetail'
 import { getCookie } from 'helpers/cookies'
+import { getDictionary } from 'get-dictionary'
+import { formatTemplateString } from 'helpers/formatter'
 const ExchangeModal = (props: any) => {
-    const { contextRef, loading, applicationId } = props
+    const { contextRef, loading, applicationId, lang } = props
     const dispatch = useDispatch()
     const [countryCode, setCountryCode] = useState('+63')
     const [mobileNumber, setMobileNumber] = useState('')
-    // const existNumber = useSelector((store: any) => store?.users?.fetchUserOwnDetail?.response.phone_num)
-    // useEffect(() => {
-    //     if (existNumber && countryCode) {
-    //         setMobileNumber(existNumber.replace(countryCode, ''))
-    //     }
-    // }, [existNumber, countryCode])
+    const [dic, setDic] = useState<any>({})
+    console.log({dic})
+    useEffect(() => {
+        getDictionary(lang)
+            .then(dic => {
+                if (dic) {
+                    setDic(dic.chatExchange)
+                }
+            })
+    }, [lang])
     const [otp, setOtp] = useState('')
 
     const countryOptions = useSelector((store: any) => store.config.config.response?.country_lists
@@ -60,9 +66,9 @@ const ExchangeModal = (props: any) => {
     contextRef.current = assign(contextRef.current, context)
     const rightButtonText = useMemo(() => {
         if (step === 'verified') {
-            return 'Send'
+            return dic.send
         } else {
-            return 'Verify'
+            return dic.verify
         }
     }, [step])
     const rightBtnClick = useCallback(() => {
@@ -74,9 +80,11 @@ const ExchangeModal = (props: any) => {
     }, [step, otp, applicationId, mobileNumber])
     const sendText = useMemo(() => {
         if (step === 'init') {
-            return 'Send OTP'
+            return dic?.sendOtp
+        } else if (count >= 0) {
+            return formatTemplateString(dic?.resendOtpIn, '' + count)
         } else {
-            return 'Resend OTP ' + (count >= 0 ? `in ${count}s` : '')
+            return dic?.resendOtp
         }
     }, [count, step, actionsRef.current])
     const sendEnable = useMemo(() => {
@@ -123,8 +131,8 @@ const ExchangeModal = (props: any) => {
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current?.close?.()}
-        headerTitle={'Mobile number'}
-        firstButtonText='Cancel'
+        headerTitle={dic?.exchangeTitle}
+        firstButtonText={dic?.cancel}
         secondButtonText={rightButtonText}
         firstButtonIsClose={false}
         secondButtonIsClose={false}
@@ -136,10 +144,7 @@ const ExchangeModal = (props: any) => {
     >
         <div className={styles.modalContainer}>
             <p className={styles.modalTitle}>
-                {showSendResult
-                    ?
-                    'Are you sure you want to exchange mobile number with Boss? You will be able to view Boss’s mobile number after Boss had agreed to your request.'
-                    : 'To exchange mobile number with Boss, please verify your mobile number.'}
+                {showSendResult ? dic?.sureText : dic?.verifyText}
             </p>
             <div className={styles.formContainer}>
                 {showSendOTP && <>
@@ -150,7 +155,7 @@ const ExchangeModal = (props: any) => {
                         >
                             <MaterialBasicSelect
                                 className={styles.fullWidth}
-                                label='Country code'
+                                label={dic?.countryCode}
                                 value={countryCode}
                                 onChange={(e) => setCountryCode(e.target.value)}
                                 options={countryOptions}
@@ -159,7 +164,7 @@ const ExchangeModal = (props: any) => {
                         </div>
                         <MaterialTextField
                             className={styles.inputContainer}
-                            label="Mobile number"
+                            label={dic?.mobileNumber}
                             size='small'
                             value={mobileNumber}
                             defaultValue={mobileNumber}
@@ -175,10 +180,10 @@ const ExchangeModal = (props: any) => {
                     >{sendText}</div>
                 </>}
                 {showInputCode && <>
-                    <label>Enter the code that we have message to {number}</label>
+                    <label>{formatTemplateString(dic?.msgText, '' + number)}</label>
                     <MaterialTextField
                         className={styles.inputContainer}
-                        label="Enter 6 digit OTP"
+                        label={dic?.digitPlaceholder}
                         size='small'
                         value={otp}
                         defaultValue={otp}
@@ -189,7 +194,7 @@ const ExchangeModal = (props: any) => {
                 {showSendResult && <>
                     {/* <label>This allow easier communication with the talent</label> */}
                     <div className={styles.detailItemContainer} >
-                        <label>Mobile number:</label>
+                        <label>{dic?.mobileNumber}:</label>
                         <p>{number}</p>
                     </div>
                 </>}

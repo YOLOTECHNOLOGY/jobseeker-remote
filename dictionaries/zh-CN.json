@@ -964,5 +964,23 @@
     "keep": "保留",
     "delete": "删除",
     "deleteTips": "您即将删除此职位提醒。 这不能被撤消。"
+  },
+  "chatExchange":{
+    "exchangeTitle":"电话号码",
+    "cancel":"取消",
+    "send":"发送",
+    "verify":"验证",
+    "sendOtp":"发送验证码",
+    "resendOtp":"重新发送验证码",
+    "copy":"复制",
+    "resendOtpIn":"在{{count}}秒后可重新发送",
+    "sureText":"确定与招聘者交换号码吗？如果对方同意，您将会获得招聘者的电话号码。",
+    "verifyText":"请先验证您的电话号码",
+    "countryCode":"国家代码",
+    "mobileNumber":"电话号码",
+    "digitPlaceholder":"输入6位验证码",
+    "msgText":"请输入我们向此电话{{number}}发送的信息",
+    "smb":"的电话号码:",
+    "boss":"招聘者"
   }
 }
