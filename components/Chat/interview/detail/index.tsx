@@ -62,8 +62,8 @@ const DetailModal = (props: any) => {
             {
                 title: dic?.confirmText,
                 label: dic?.confirmLabel,
-                isFinish: true,
-                active: true,
+                isFinish: !isStatusIn(['Not accepted']),
+                active: !isStatusIn(['Not accepted']),
                 show: true,
                 actionName: isStatusIn(['Accepted', 'Pending']) ? dic.cancelAction : dic.canNotCancel,
                 actionEnable: isStatusIn(['Accepted', 'Pending']),
