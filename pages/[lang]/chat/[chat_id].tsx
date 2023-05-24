@@ -7,7 +7,7 @@ import { IMContext } from 'components/Chat/IMProvider.client'
 import dynamic from 'next/dynamic'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import CustomCard from 'components/Chat/customCard'
 import { getDictionary } from 'get-dictionary'
 // import { updateDefaultChatList } from 'store/actions/chat/defaultChatList'
@@ -44,8 +44,13 @@ const Chat = ({ lang }: any) => {
     // const defaultChatList = useSelector((store: any) => store?.chat?.defaultChatList ?? [])
     const [chat_id, setChatId] = useState(router?.query?.chat_id)
     const [first, setFirst] = useState(true)
-
-
+    const statusOptions = useSelector((store: any) => store.config.config.response?.jobseeker_chat_type_filters?.map?.(item=>{
+        return {
+                label:item.value,
+                value:item.key
+        }
+    }))
+    console.log({statusOptions})
     useEffect(() => {
         if (chat_id !== chatId) {
             if (chat_id === 'list') {
@@ -90,6 +95,7 @@ const Chat = ({ lang }: any) => {
                 contextRef={contextRef}
                 CustomCard={CustomCard}
                 userId={userId}
+                statusOptions={statusOptions}
                 filterMode={filterMode}
                 updateChatList={updateChatList}
                 imStatus={imStatus}

@@ -33,7 +33,9 @@ module.exports = withBundleAnalyzer({
     appDir: true,
     // mdxRs: true,
     // typedRoutes: true,
-    cpus: 8,
+    appDocumentPreloading:true,
+    newNextLinkBehavior:true,
+    cpus: 2,
     esmExternals: 'loose'
   },
   env: {

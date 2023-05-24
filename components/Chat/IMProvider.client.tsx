@@ -190,7 +190,7 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
     const updateChatList = useCallback(() => {
         if (!chatListLoading && accessToken) {
             setChatListLoading(true)
-            const params = filterMode ? searchParams : { type: 'Not interested' }
+            const params = filterMode ? searchParams : { type: 'not_interested' }
             list(params).then(result => {
                 setChatList(result.data?.data ?? [])
 
