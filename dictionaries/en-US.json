@@ -363,7 +363,10 @@
         "title": "Job title or company",
         "btn": "Search"
       },
-      "jobPostedOn": "Posted on"
+      "jobPostedOn": "Posted on",
+      "benefits": "Benefits",
+      "workingLocation": "Working Location",
+      "workLocation": "Work Location"
     },
     "shareModal": {
       "title": "Share this job",

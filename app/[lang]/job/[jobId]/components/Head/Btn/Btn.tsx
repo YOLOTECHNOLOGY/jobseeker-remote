@@ -133,7 +133,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
           {(() => {
             if (jobDetail.external_apply_url) {
               return header.apply
-            } else if (chat?.is_exists && chat?.job_id == jobId) {
+            } else if (chat?.is_exists) {
               return header.continueChat
             } else {
               return header.chatNow

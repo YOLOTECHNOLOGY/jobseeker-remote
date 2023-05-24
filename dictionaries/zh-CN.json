@@ -363,7 +363,10 @@
         "title": "工作或者公司名称",
         "btn": "搜索"
       },
-      "jobPostedOn": "发布于"
+      "jobPostedOn": "发布于",
+      "benefits": "福利待遇",
+      "workingLocation": "工作地址",
+      "workLocation": "工作地址"
     },
     "shareModal": {
       "title": "分享工作",

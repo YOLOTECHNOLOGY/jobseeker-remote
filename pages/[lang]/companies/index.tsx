@@ -35,9 +35,11 @@ import { getCountry } from 'helpers/country'
 import { formatTemplateString } from 'helpers/formatter'
 import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
 
+
 const Companies = (props: any) => {
   const {
-    lang: { companies }
+    lang: { companies },
+    langKey
   } = props
   const dispatch = useDispatch()
   const router = useRouter()
@@ -47,7 +49,7 @@ const Companies = (props: any) => {
   const [totalPage, setTotalPage] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
   const config = useSelector((store: any) => store.config.config.response)
-
+  
   // useEffect(() => {
   //   dispatch(fetchConfigRequest())
   // }, [])
@@ -80,10 +82,10 @@ const Companies = (props: any) => {
       setFeaturedCompanies(companies)
     }
   }, [featuredCompaniesResponse])
-
+  console.log(langKey,9999)
   const handleKeywordSearch = (keyword) => {
     const words = keyword.trim()
-    router.push(`/companies/search?query=${words}&size=15&page=1`)
+    router.push(`/${langKey}/companies/search?query=${words}&size=15&page=1`)
   }
 
   const handlePaginationClick = (event, val) => {
@@ -249,7 +251,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (p
       seoMetaTitle: `Find Companies Hiring in ${getCountry()} | Bossjob`,
       seoMetaDescription: `Discover great companies to work for in ${getCountry()}! Learn more about the company and apply to job openings on Bossjob!`,
       canonicalUrl: '/companies',
-      lang: dictionary
+      lang: dictionary,
+      langKey:lang
     }
   }
 })
