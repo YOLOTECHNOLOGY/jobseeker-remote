@@ -43,7 +43,7 @@ const MobileTable = (props: any) => {
     return <div className={styles.mobileContainer}>
         {jobList.map(job => {
             return (<div className={styles.jobContainer} key={job?.id}>
-                <MobileCard {...job} preference={preference} />
+                <MobileCard {...props} {...job} preference={preference} />
             </div>)
         })}
         <LoadMore loading={loading} shouldLoad={shouldLoadMore} noMore={noMore} />
