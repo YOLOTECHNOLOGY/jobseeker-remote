@@ -210,7 +210,6 @@ const VerifyMailAndBindEmail = ({
       </>
     )
   }
-  debugger
   return (
     <div className={styles.VerifyMailAndBindEmail}>
       <FieldFormWrapper
