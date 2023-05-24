@@ -5,14 +5,19 @@ import { getCountryId, getLanguageId } from 'helpers/country'
 import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 
 async function removeServiceCache(token, lang?) {
-  const countryId = getCountryId()
-  const languageId = getLanguageId()
-  if (token) {
-    // should fetch config here
-    await fetchUserSetting({ country_id: countryId, language_id: languageId }, token)
-      // .then((response) => console.log(response))
-      .catch(({ response, request }) => console.log(response, request))
+  try {
+    const countryId = getCountryId()
+    const languageId = getLanguageId()
+    if (token) {
+      // should fetch config here
+      await fetchUserSetting({ country_id: countryId, language_id: languageId }, token)
+        // .then((response) => console.log(response))
+        .catch(({ response, request }) => console.log(response, request))
+    }
+  } catch (error) {
+    console.log({ error })
   }
+
 }
 
 export async function GET(request) {
