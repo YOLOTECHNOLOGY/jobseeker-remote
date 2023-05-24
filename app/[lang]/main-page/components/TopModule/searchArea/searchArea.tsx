@@ -24,9 +24,7 @@ const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
 }
 const SearchArea = (props: any) => {
-  const { config, lang } = props
-  console.log({ props })
-  const langKey = props?.params?.lang
+  const { config, langKey } = props
   const dispatch = useDispatch()
   const { location, setLocation } = useContext(LocationContext)
   const data: any = useContext(languageContext)
@@ -82,8 +80,7 @@ const SearchArea = (props: any) => {
             headers: {
               'Country-Id': String(getCountryId())
             }
-          }
-          )
+          })
             .then((resp) => resp.json())
             .then((data) => setSuggestionList(data.data.items))
         }
