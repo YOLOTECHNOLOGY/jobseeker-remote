@@ -113,7 +113,7 @@ const VerifyMailAndBindEmail = ({
     }
     if (otp.length > 6) {
       setIsBtnDisabledVerify(true)
-      setOtpError('OTP is incorrect. Please try again.')
+      setOtpError(accountSetting.errorMsg.optIncorrect)
     } else {
       setIsBtnDisabledVerify(false)
       setOtpError(null)
@@ -163,7 +163,7 @@ const VerifyMailAndBindEmail = ({
   }
 
   const emailVerifiError = () => {
-    setOtpError('OTP is incorrect. Please try again.')
+    setOtpError(accountSetting.errorMsg.optIncorrect)
   }
 
   const verifyEmailOrChangeEmail = () => {
@@ -263,7 +263,7 @@ const VerifyMailAndBindEmail = ({
                   <MaterialTextField
                     className={styles.accessSettingsContainer_fromWrapper_edit_input}
                     id='email'
-                    label='6-digit OTP'
+                    label={accountSetting.optLabel}
                     variant='outlined'
                     size='small'
                     value={otp}

@@ -928,6 +928,10 @@
     "save": "保存",
     "cancel": "取消",
     "verify": "验证",
+    "optLabel": "6位数字验证码",
+    "errorMsg": {
+      "optIncorrect": "验证码错误，请再试一次"
+    },
     "emailTip": "通过您的电子邮件接收工作申请更新。",
     "editEmailExplanation": "您的电子邮件已通过验证。 您将能够通过您的电子邮件接收工作申请更新。 要更改您的电子邮件地址，请验证您的新电子邮件地址。",
     "notVerifyTips": "要接收工作申请更新，请验证您的电子邮件。",

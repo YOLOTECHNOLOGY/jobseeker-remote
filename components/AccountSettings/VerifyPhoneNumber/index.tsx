@@ -125,7 +125,7 @@ const VerifyPhoneNumber = ({
     }
     if (otp.length > 6) {
       setIsBtnDisabledVerify(true)
-      setOtpError('OTP is incorrect. Please try again.')
+      setOtpError(accountSetting.errorMsg.optIncorrect)
     } else {
       setIsBtnDisabledVerify(false)
       setOtpError('')
@@ -187,7 +187,7 @@ const VerifyPhoneNumber = ({
 
   const verifiError = (errorMessage?: string) => {
     if (errorMessage == 'Invalid otp') {
-      errorMessage = 'OTP is incorrect. Please try again.'
+      errorMessage = accountSetting.errorMsg.optIncorrect
     }
     setOtpError(errorMessage)
   }
@@ -297,12 +297,12 @@ const VerifyPhoneNumber = ({
 
             {isShowPhoneVerify && (
               <div className={styles.accessSettingsContainer_fromWrapper_verifyContainer}>
-                <Text>{(formatTemplateString(accountSetting.enterCode), phoneNum)}</Text>
+                <Text>{formatTemplateString(accountSetting.enterCode, phoneNum)}</Text>
                 <div className={styles.accessSettingsContainer_fromWrapper_edit}>
                   <MaterialTextField
                     className={styles.accessSettingsContainer_fromWrapper_edit_input}
                     id='email'
-                    label='6-digit OTP'
+                    label={accountSetting.optLabel}
                     variant='outlined'
                     size='small'
                     value={otp}

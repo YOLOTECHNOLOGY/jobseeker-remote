@@ -928,6 +928,10 @@
     "save": "Save",
     "cancel": "Cancel",
     "verify": "Verify",
+    "optLabel": "6-digit OTP",
+    "errorMsg": {
+      "optIncorrect": "OTP is incorrect. Please try again."
+    },
     "emailTip": "Receive job applications updates through your email.",
     "editEmailExplanation": "Your email has been verified. You will be able to receive job applications update through your email. To change your email address, please verify your new email address.",
     "notVerifyTips": "To receive job applications update, please verify your email.",
