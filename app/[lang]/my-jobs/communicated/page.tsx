@@ -9,7 +9,7 @@ import { buildComponentScript } from "app/[lang]/abstractModels/util"
 const Page = async (props:any) => {
   const {lang} = props.params
   const dictionary:any = await getDictionary(lang);
-  const newProps = {...props,lang:dictionary?.myJobs}
+  const newProps = {...props,lang:dictionary?.myJobs,langKey:lang}
   return (
     <div className={styles.container}>
       <div className={styles.main}>

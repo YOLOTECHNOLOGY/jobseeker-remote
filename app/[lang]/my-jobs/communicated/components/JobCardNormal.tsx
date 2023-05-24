@@ -8,7 +8,7 @@ import Text from 'components/Text'
 import Link from 'next/link';
 import { getValueById } from 'helpers/config/getValueById'
 const JobCardNormal = (props: any) => {
-  const { handelSave, data, loadingChat, tabValue, index,lang,config } = props
+  const { handelSave, data, loadingChat, tabValue, index,lang,config,langKey } = props
   const {
     industry_id,
    // company_size: companySize,
@@ -102,7 +102,7 @@ const JobCardNormal = (props: any) => {
         <div className={styles.info}>
           <div className={styles.leftContent}>
             <div className={styles.developer}>
-              <Link href={jobUrl || ''} className={styles.title}>{jobTitle}</Link>
+              <Link href={ '/' + langKey + jobUrl || ''} className={styles.title}>{jobTitle}</Link>
               <p className={styles.salary}>{salaryRangeValue}</p>
             </div>
             <span className={styles.tag}>{locationValue}</span>

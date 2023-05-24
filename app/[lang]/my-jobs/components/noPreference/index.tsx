@@ -4,11 +4,14 @@ import { JoinUs } from 'images'
 import Image from 'next/image'
 import { Button } from 'app/[lang]/components/MUIs'
 import Link from 'next/link'
+import { getLang } from 'helpers/country'
 const NoPreference = (props:any) => {
+    const langKey = getLang();
+    console.log(langKey,'langKey')
     return <div className={styles.container}>
         <Image src={JoinUs} width={362} height={247} alt='' />
         <Link
-            href='/manage-profile?tab=job-preferences'
+            href={`/${langKey}/manage-profile?tab=job-preferences`}
             className={styles.description}
             prefetch={false}
         >
