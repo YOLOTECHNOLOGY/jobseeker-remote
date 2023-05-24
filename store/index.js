@@ -7,7 +7,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import rootReducer from 'store/reducers'
 import rootSaga from 'store/sagas'
-// import logger from 'redux-logger'
+import logger from 'redux-logger'
 
 const persistConfig = {
   key: 'chat',
@@ -28,7 +28,7 @@ const bindMiddleware = (middleware) => {
     return composeWithDevTools(
       applyMiddleware(
         ...middleware
-        //  , process.env.ENV === 'development' && logger
+        , process.env.ENV === 'development' && logger
       )
     )
   }
