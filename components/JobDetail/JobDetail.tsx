@@ -251,7 +251,6 @@ const JobDetail = ({
     const minutes = currentActiveAt.diff(lastActiveAt, 'm')
     const hours = currentActiveAt.diff(lastActiveAt, 'h')
 
-    
     if (minutes <= 5) {
       return 'Online'
     } else if (hours < 8) {
