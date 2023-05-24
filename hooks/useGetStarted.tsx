@@ -10,7 +10,7 @@ import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
 
-import { getCountryKey } from 'helpers/country'
+import { getCountryId, getLanguageId } from 'helpers/country'
 
 import router, { useRouter } from 'next/router'
 import { getCookie } from 'helpers/cookies'
@@ -97,9 +97,11 @@ const useGetStarted = () => {
 
   const removeServiceCache = async () => {
     const token = getCookie('accessToken')
-    const currentCountry = getCountryKey()
+    const countryId = getCountryId()
+    const languageId = getLanguageId()
+
     if (token) {
-      await fetchUserSetting({ country_id: currentCountry === 'ph' ? 167 : 193 }, token)
+      await fetchUserSetting({ country_id: countryId, language_id: languageId }, token)
         .then((response) => console.log(response))
         .catch(({ response, request }) => console.log(response, request))
     }

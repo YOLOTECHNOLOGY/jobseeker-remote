@@ -526,6 +526,8 @@
         "year_one": "{{age}} year old",
         "year_other": "{{age}} years old",
         "about": "About",
+        "readMore": "Read More",
+        "readLess": "Read Less",
         "informationCard": {
           "title": "Complete all information about you",
           "content": "Help the recruiter to know more about you and connect more easily with you.",
@@ -550,7 +552,11 @@
           "perMonth": "per month",
           "noExpTips": "Showcase your past contributions and that you can be an asset to potential employer.",
           "addExp": "Add experience",
-          "addWorkExp": "Add work experience"
+          "addWorkExp": "Add work experience",
+          "year": "year",
+          "years": "years",
+          "month": "month",
+          "months": "months"
         },
         "expModal": {
           "title": "Work experience",
@@ -774,7 +780,9 @@
     "searchForJobTitle": "Search for job title",
     "year": "year",
     "month": "month",
-    "months": "s"
+    "months": "s",
+    "readMore": "Read More",
+    "readLess": "Read Less"
   },
   "chat": {
     "chatTitle": "Chat",

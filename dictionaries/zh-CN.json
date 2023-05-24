@@ -526,6 +526,8 @@
         "year_one": "{{age}} 岁",
         "year_other": "{{age}} 岁",
         "about": "关于",
+        "readMore": "显示更多",
+        "readLess": "显示更少",
         "informationCard": {
           "title": "填写你的相关信息",
           "content": "帮助招聘者了解和联系您",
@@ -550,7 +552,11 @@
           "perMonth": "每月",
           "noExpTips": "展示你过去的贡献，你可以成为潜在雇主的雇员",
           "addExp": "添加工作经验",
-          "addWorkExp": "添加工作经验"
+          "addWorkExp": "添加工作经验",
+          "year": "年",
+          "years": "年",
+          "month": "月",
+          "months": "月"
         },
         "expModal": {
           "title": "工作经验",
@@ -774,7 +780,9 @@
     "searchForJobTitle": "搜索工作标题",
     "year": "年",
     "month": "月",
-    "months": ""
+    "months": "",
+    "readMore": "显示更多",
+    "readLess": "显示更少"
   },
   "chat": {
     "chatTitle": "聊天",

@@ -346,7 +346,13 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                   {workExp?.is_currently_work_here
                     ? profile.exp.present
                     : workingPeriodTo.format('MMMM yyyy')}{' '}
-                  {dateDiff ? `(${dateDiff})` : ''}
+                  {dateDiff
+                    ? `(${dateDiff
+                        .replace('years', profile.exp.year)
+                        .replace('year', profile.exp.year)
+                        .replace('months', profile.exp.months)
+                        .replace('month', profile.exp.month)})`
+                    : ''}
                 </Text>
                 <div className={styles.companySecondaryInfoWrapper}>
                   {function_job_title && (
@@ -368,6 +374,8 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                 </div>
                 {workExp?.description && (
                   <ReadMore
+                    expandText={profile.readMore}
+                    shirkText={profile.readLess}
                     size={isMobile ? 210 : 300}
                     text={workExp?.description}
                     className={styles.readMoreDescriptionWrapper}
@@ -536,6 +544,8 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                 </div>
                 {link?.description && (
                   <ReadMore
+                    expandText={profile.readMore}
+                    shirkText={profile.readLess}
                     size={isMobile ? 210 : 300}
                     text={link?.description}
                     className={styles.readMoreDescriptionWrapper}
