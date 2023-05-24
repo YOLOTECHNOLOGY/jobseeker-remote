@@ -485,7 +485,9 @@ const Step3 = (props: any) => {
     JobTitleText,
     companyNameText,
     monthYear,
-    placeholder
+    placeholder,
+    readMore,
+    readLess
   } = lang?.profile || {}
   return (
     <OnBoardLayout
@@ -581,7 +583,12 @@ const Step3 = (props: any) => {
                       <Text textStyle='base' tagName='p'>
                         {lang?.profile?.description}:{' '}
                       </Text>
-                      <ReadMore size={350} text={experience.description} />
+                      <ReadMore
+                        expandText={readMore}
+                        shirkText={readLess}
+                        size={350}
+                        text={experience.description}
+                      />
                       {/* <div
                       className={styles.stepDataDescription}
                       dangerouslySetInnerHTML={{ __html: experience.description }}

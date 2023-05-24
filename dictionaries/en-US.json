@@ -526,6 +526,8 @@
         "year_one": "{{age}} year old",
         "year_other": "{{age}} years old",
         "about": "About",
+        "readMore": "Read More",
+        "readLess": "Read Less",
         "informationCard": {
           "title": "Complete all information about you",
           "content": "Help the recruiter to know more about you and connect more easily with you.",
@@ -774,7 +776,9 @@
     "searchForJobTitle": "Search for job title",
     "year": "year",
     "month": "month",
-    "months": "s"
+    "months": "s",
+    "readMore": "Read More",
+    "readLess": "Read Less"
   },
   "chat": {
     "chatTitle": "Chat",

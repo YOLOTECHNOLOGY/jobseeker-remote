@@ -10,13 +10,17 @@ import classNames from 'classnames'
 interface ReadMoreProps {
   size?: number
   text?: any
+  expandText?: string
+  shirkText?: string
   className?: string
 }
 
 const ReadMore = ({
   size,
   text,
-  className
+  className,
+  shirkText = 'Read Less',
+  expandText = 'Read More'
 }: ReadMoreProps) => {
   const [description, setDescription] = useState(null)
   const [isFullDescription, setIsFullDescription] = useState(false)
@@ -37,7 +41,10 @@ const ReadMore = ({
     <div className={classNames([styles.readMore, className])}>
       <div className={styles.readMoreDescription}>
         <Text textStyle='base'>
-          <div className={styles.JobDetailSectionBody} dangerouslySetInnerHTML={{ __html: description || '' }} />  
+          <div
+            className={styles.JobDetailSectionBody}
+            dangerouslySetInnerHTML={{ __html: description || '' }}
+          />
         </Text>
       </div>
       {description?.length > size && (
@@ -49,7 +56,7 @@ const ReadMore = ({
             }}
           >
             <Text textStyle='lg' textColor='primaryBlue'>
-              {isFullDescription ? 'Read Less' : 'Read More'}
+              {isFullDescription ? shirkText : expandText}
             </Text>
           </span>
         </div>

@@ -526,6 +526,8 @@
         "year_one": "{{age}} 岁",
         "year_other": "{{age}} 岁",
         "about": "关于",
+        "readMore": "显示更多",
+        "readLess": "显示更少",
         "informationCard": {
           "title": "填写你的相关信息",
           "content": "帮助招聘者了解和联系您",
@@ -774,7 +776,9 @@
     "searchForJobTitle": "搜索工作标题",
     "year": "年",
     "month": "月",
-    "months": ""
+    "months": "",
+    "readMore": "显示更多",
+    "readLess": "显示更少"
   },
   "chat": {
     "chatTitle": "聊天",

@@ -368,6 +368,8 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                 </div>
                 {workExp?.description && (
                   <ReadMore
+                    expandText={profile.readMore}
+                    shirkText={profile.readLess}
                     size={isMobile ? 210 : 300}
                     text={workExp?.description}
                     className={styles.readMoreDescriptionWrapper}
@@ -536,6 +538,8 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                 </div>
                 {link?.description && (
                   <ReadMore
+                    expandText={profile.readMore}
+                    shirkText={profile.readLess}
                     size={isMobile ? 210 : 300}
                     text={link?.description}
                     className={styles.readMoreDescriptionWrapper}
