@@ -13,19 +13,20 @@ import { formatTemplateString, truncateWords } from 'helpers/formatter'
 import styles from './CompanyCard.module.scss'
 interface ICompanyCard {
   company: any
-  transitions: Record<string, any>
+  transitions: Record<string, any>,
+  langKey: string
 }
 
 // Assets
 import { BlueTickIcon } from 'images'
 
-const CompanyCard = ({ company, transitions }: ICompanyCard) => {
+const CompanyCard = ({ company, transitions,langKey }: ICompanyCard) => {
   const companyUrl = company?.company_url || '/'
 
   return (
     <div className={styles.companyCard}>
       <div className={styles.companyCardLeft}>
-        <Link to={companyUrl}>
+        <Link to={'/' + langKey + companyUrl}>
           <img
             src={company.logo_url || company.logo}
             alt={company.name}
@@ -36,7 +37,7 @@ const CompanyCard = ({ company, transitions }: ICompanyCard) => {
       <div className={styles.companyCardRight}>
         <div className={styles.companyCardName}>
           <Text textStyle='lg' bold>
-            <Link to={companyUrl}>{truncateWords(company.name, 60)}</Link>
+            <Link to={'/' + langKey + companyUrl}>{truncateWords(company.name, 60)}</Link>
             {company?.is_verify &&
               (isMobile ? (
                 <MaterialMobileTooltip
@@ -56,7 +57,7 @@ const CompanyCard = ({ company, transitions }: ICompanyCard) => {
         <Text textStyle='lg' tagName='p' className={styles.companyCardCategory}>
           {company?.industry}
         </Text>
-        <Link to={`${companyUrl}/jobs`} className={styles.companyCardOpenings}>
+        <Link to={`/${langKey}${companyUrl}/jobs`} className={styles.companyCardOpenings}>
           <Text textStyle='lg' bold>
             {formatTemplateString(transitions.allJobs, company.num_of_active_jobs)}
           </Text>

@@ -121,7 +121,7 @@ const Companies = (props: any) => {
           {featuredCompany && (
             <div className={styles.featuredEmployerLeft}>
               <div className={styles.featuredEmployerInfo}>
-                <Link to={featuredCompany?.company_url || '/'}>
+                <Link to={ '/' + langKey + featuredCompany?.company_url || '/'}>
                   <img
                     src={featuredCompany?.logo_url}
                     alt={`${featuredCompany?.name} logo`}
@@ -131,7 +131,7 @@ const Companies = (props: any) => {
                 <div className={styles.featuredEmployerDetails}>
                   <Text textStyle='xl' bold>
                     <Link
-                      to={featuredCompany?.company_url || '/'}
+                      to={'/' + langKey + featuredCompany?.company_url || '/'}
                       className={styles.featuredEmployerName}
                     >
                       {featuredCompany?.name}
@@ -172,7 +172,7 @@ const Companies = (props: any) => {
                   </Text>
                   <Link
                     to={`${
-                      featuredCompany?.company_url ? featuredCompany.company_url + '/jobs' : '/jobs'
+                      featuredCompany?.company_url ?  '/' + langKey + featuredCompany.company_url + '/jobs' : '/jobs'
                     }`}
                     className={styles.featuredEmployerOpenings}
                   >
@@ -224,6 +224,7 @@ const Companies = (props: any) => {
           companiesList={featuredCompanies}
           isLoading={isFeaturedCompaniesFetching}
           transitions={companies.popularCompany}
+          langKey={langKey}
         />
         <div className={styles.companiesPagination}>
           <MaterialRoundedPagination

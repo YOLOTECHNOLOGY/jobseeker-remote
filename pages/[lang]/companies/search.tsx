@@ -23,7 +23,7 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 // Styles
 import styles from './Companies.module.scss'
 import MetaText from '../../../components/MetaText'
-import { getCountry } from 'helpers/country'
+import { getCountry,getLang } from 'helpers/country'
 import { END } from 'redux-saga'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { getDictionary } from 'get-dictionary'
@@ -129,6 +129,7 @@ const Search = ({ defaultQuery, lang }: SearchProps) => {
             isLoading={isCompanyFilterFetching}
             isSearchPage
             transitions={transitions.popularCompany}
+            langKey={getLang()}
           />
         </div>
 

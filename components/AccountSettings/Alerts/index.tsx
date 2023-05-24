@@ -70,7 +70,6 @@ const Alerts = ({ accessToken, lang }: any) => {
   }
 
   const handelSaveSetFrequency = (item) => {
-    debugger
     const payload = {
       accessToken,
       updateJobAlertData: {

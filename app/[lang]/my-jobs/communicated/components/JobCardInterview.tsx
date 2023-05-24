@@ -24,7 +24,7 @@ const jobseekerDisplayStatusObject = {
 
 
 const JobCardInterview = (props: any) => {
-  const { data,lang } = props
+  const { data,lang,langKey } = props
   const {
     interviewed_at: interviewedAt,
     full_address: fullAddress,
@@ -121,7 +121,7 @@ const JobCardInterview = (props: any) => {
             <img src={logoUrl} className={styles.logo} alt={name} />
             <div className={styles.box}>
               <div className={styles.developer}>
-                <Link href={jobUrl || ''} className={styles.title}>{jobTitle}</Link>
+                <Link href={ '/' + langKey + jobUrl || ''} className={styles.title}>{jobTitle}</Link>
                 <p className={styles.salary}>{salaryRangeValue}</p>
               </div>
               <p className={styles.companyName}>{name}</p>

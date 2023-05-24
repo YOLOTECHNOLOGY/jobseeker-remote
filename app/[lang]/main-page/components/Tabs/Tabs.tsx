@@ -281,7 +281,7 @@ const Tabs = ({ location, config, location_id, langKey }: any) => {
                       {home.jobPreference}:{' '}
                       <Link
                         prefetch={false}
-                        href='/manage-profile?tab=job-preferences'
+                        href={`${langKey}/manage-profile?tab=job-preferences`}
                         className={styles.link}
                       >
                         {getValueById(config, jobseekerPrefIdRef.current?.location_id, 'location_id')} |{' '}
@@ -292,7 +292,7 @@ const Tabs = ({ location, config, location_id, langKey }: any) => {
                   ) : (
                     <p>
                       {home.improveRecommend}{' '}
-                      <Link href='/manage-profile?tab=job-preferences' className={styles.link2}>
+                      <Link href={`${langKey}/manage-profile?tab=job-preferences`} className={styles.link2}>
                         {' '}
                         {home.jobPrefer}
                       </Link>

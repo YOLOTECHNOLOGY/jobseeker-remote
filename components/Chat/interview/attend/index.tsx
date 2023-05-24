@@ -37,6 +37,7 @@ const Attend = (props: any) => {
         isSecondButtonDisabled={!value}
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
+        
     >
         <p className={styles.mainText}>{dic.resultText}</p>
         <MaterialBasicSelect
