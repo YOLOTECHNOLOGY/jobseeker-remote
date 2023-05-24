@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useCallback, useState, useMemo, useContext } from 'react';
+import { useCallback, useState, useMemo, useContext, useEffect } from 'react';
 import Modal from 'components/Modal'
 import { chatNowScript, switchJobScript } from '../abstractModels/ChatNow';
 import { useRouter } from 'next/navigation';
@@ -7,12 +7,12 @@ import { useDispatch } from 'react-redux';
 import interpreter from 'app/[lang]/interpreters/chatNow'
 import { formatTemplateString } from 'helpers/formatter';
 import { languageContext } from '../components/providers/languageProvider';
+import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail';
 
 const ModalSwitch = (props) => {
-    const { showModal, setShowModal, requestSwitch, loading, selectedJob, chatData } = props
+    const { showModal, setShowModal, requestSwitch, loading, existedJob, selectedJob, chatData } = props
     const { jobDetail: translation } = useContext(languageContext)
     const { switchModal } = translation || {}
-
     return <Modal
         showModal={showModal}
         handleModal={() => setShowModal(false)}
@@ -26,7 +26,7 @@ const ModalSwitch = (props) => {
         headerTitle={formatTemplateString(switchModal.title, selectedJob?.recruiter?.full_name ?? '')}
     >
         <p>
-            {formatTemplateString(switchModal.content, chatData?.job?.job_title ?? chatData?.job?.function_job_title ?? 'this job')}
+            {formatTemplateString(switchModal.content, existedJob.job_title ?? 'this job')}
         </p>
     </Modal >
 }
@@ -35,6 +35,7 @@ export const useChatNow = (jobDetail) => {
     const [showModal, setShowModal] = useState(false)
     const [chatData, setChatData] = useState()
     const [modalLoading, setModalLoading] = useState(false)
+    const [existedJob, setExistedJob] = useState({})
     const router = useRouter()
     const dispatch = useDispatch()
     const context = useMemo(() => {
@@ -52,8 +53,17 @@ export const useChatNow = (jobDetail) => {
         })
     }, [interpreter, context, chatData])
 
+    useEffect(() => {
+        const jobId = jobDetail?.chat?.job_id
+        if (jobId && jobId !== jobDetail.id) {
+            fetchJobDetailService({ jobId }).then((data) => {
+                setExistedJob(data?.data?.data)
+            })
+        }
+    }, [jobDetail])
     const changeJobModal = useMemo(() => {
         return <ModalSwitch
+            existedJob={existedJob}
             showModal={showModal}
             setShowModal={setShowModal}
             loading={modalLoading}

@@ -101,7 +101,6 @@ const ModalJobAlerts = ({
     return jobAlertsList
   }, [jobAlertsList])
 
-  console.log(jobAlertsList,formattedAlertList,'formattedAlertList')
   useEffect(() => {
     if (showManageJobAlertsModal && !isDeletingJobAlert) {
       if (isDeletingJobAlert || !isUpdatingJobAlert) {
