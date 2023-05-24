@@ -15,13 +15,13 @@ async function removeServiceCache(token, lang?) {
   }
 }
 
-export async function GET(request) {
+export async function GET() {
   const cookieStore = cookies()
   const accessToken = cookieStore.get('accessToken')
-  const { url } = request
+  // const { url } = request
   // http://localhost:3004/en-US/changeLocale?accessToken=[object%20Object]
-  const lang = url.split('//')[1].split('/')[1]
-  await removeServiceCache(accessToken.value, lang)
+  // const lang = url.split('//')[1].split('/')[1]
+  await removeServiceCache(accessToken?.value)
 
   return new Response(null, {
     status: 301,
