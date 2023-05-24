@@ -6,8 +6,9 @@ import { DefaultAvatar } from 'images'
 import { Avatar } from 'app/[lang]/components/MUIs'
 import JobClient from './JobClient/JobClient'
 import ReadMore from './ReadMore'
-import styles from '../../../page.module.scss'
 import React from 'react'
+import { accessToken } from 'helpers/cookies'
+import styles from '../../../page.module.scss'
 
 type propsType = {
   description?: string
@@ -33,7 +34,7 @@ const Desc = ({
   languages
 }: propsType) => {
   const cookieStore = cookies()
-  const token = cookieStore.get('accessToken')
+  const token = cookieStore.get(accessToken)
   const { content } = languages
 
   return (
@@ -55,10 +56,10 @@ const Desc = ({
               className={classNames([
                 styles.desc_footer_lineStatus,
                 styles.desc_mobileHead_info_active,
-                transState(lastActiveAt)?.text !== 'Online' ? styles.desc_footer_notLine : null
+                transState(lastActiveAt)?.state !== 1 ? styles.desc_footer_notLine : null
               ])}
             >
-              {transState(lastActiveAt)?.text}
+              {transState(lastActiveAt, content?.state)?.text}
             </span>
           </div>
         </div>
@@ -79,7 +80,14 @@ const Desc = ({
           className={styles.desc_context}
           dangerouslySetInnerHTML={{ __html: description }}
         ></div> */}
-        <ReadMore className={styles.desc_context} text={description} line={5} lineHeight={24} />
+        <ReadMore
+          expandText={content.showMore}
+          shrinkText={content.showLess}
+          className={styles.desc_context}
+          text={description}
+          line={5}
+          lineHeight={24}
+        />
       </div>
 
       <div className={styles.desc_mobileLine}></div>
@@ -92,26 +100,31 @@ const Desc = ({
           className={styles.desc_context}
           dangerouslySetInnerHTML={{ __html: requirements }}
         ></div> */}
-        <ReadMore className={styles.desc_context} text={requirements} line={5} lineHeight={24} />
+        <ReadMore
+          expandText={content.showMore}
+          shrinkText={content.showLess}
+          className={styles.desc_context}
+          text={requirements}
+          line={5}
+          lineHeight={24}
+        />
       </div>
       <div className={styles.desc_footer}>
         <Avatar
           sx={{ width: '29.94px', height: '29px' }}
           src={recruiter?.avatar || DefaultAvatar}
         ></Avatar>
-        <span className={styles.desc_footer_name}>
-          {recruiter.full_name}
-          </span>
+        <span className={styles.desc_footer_name}>{recruiter.full_name}</span>
         <span className={styles.desc_footer_chat}>
           {chatResponseRate}% &nbsp;{content.rate}
         </span>
         <span
           className={classNames([
             styles.desc_footer_lineStatus,
-            transState(lastActiveAt)?.text !== 'Online' ? styles.desc_footer_notLine : null
+            transState(lastActiveAt)?.state !== 1 ? styles.desc_footer_notLine : null
           ])}
         >
-          {transState(lastActiveAt)?.text}
+          {transState(lastActiveAt, content?.state)?.text}
         </span>
       </div>
     </section>
