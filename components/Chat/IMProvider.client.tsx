@@ -204,7 +204,7 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
     }, [updateChatList])
     useEffect(() => {
         if(lang) {
-            IMManager?.setCurrentLanguage?.(lang)
+            // IMManager?.setCurrentLanguage?.(lang)
         }
       }, [lang])
     useEffect(() => {
