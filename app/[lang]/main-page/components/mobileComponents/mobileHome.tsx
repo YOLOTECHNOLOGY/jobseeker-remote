@@ -45,7 +45,7 @@ const mobileHome = async ({ location, lang, location_id, config, langKey }) => {
 
       <div className={styles.jobs}>
         <h2>{jobCard.jobForYou}</h2>
-        <JobCard location={location} lang={lang.home} langKey={langKey} config={config} />
+        <JobCard location={location} lang={lang.home} langKey={langKey} config={config} location_id={location_id}/>
       </div>
     </div>
   )

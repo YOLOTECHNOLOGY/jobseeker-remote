@@ -17,7 +17,7 @@ const pageParams = {
   source: 'web'
 }
 
-const JobsCard = ({ location, lang, config,langKey }: any) => {
+const JobsCard = ({ location, lang, config,langKey,location_id }: any) => {
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [current, setCurrent] = useState<number>(1)
@@ -34,7 +34,7 @@ const JobsCard = ({ location, lang, config,langKey }: any) => {
 
   useEffect(() => {
     dataRef.current = []
-    getList({ page: current, job_locations: location, ...pageParams })
+    getList({ page: current, job_location_ids: location_id, ...pageParams })
     window.addEventListener('scroll', useFn)
     return () => {
       window.removeEventListener('scroll', useFn)

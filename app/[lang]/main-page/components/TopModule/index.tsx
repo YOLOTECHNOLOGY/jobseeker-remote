@@ -12,7 +12,7 @@ const ServerFunctionFilter = dynamic(() => import('./functionFilter/server'))
       <SearchArea {...props} langKey={langKey}/>
       <PopularJob langKey={langKey} />
       <Ad>
-        <ServerFunctionFilter  langKey={props?.params?.lang}  {...props} />
+        <ServerFunctionFilter  langKey={langKey}  {...props} />
       </Ad>
     </div>
   )

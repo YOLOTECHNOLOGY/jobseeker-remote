@@ -60,7 +60,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
     setSaveLoading(true)
 
     postSaveJobService({
-      job_title_id: null,
+      job_title_id: jobId,
       job_id: jobId
     })
       .then(({ status }) => {
@@ -106,7 +106,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
   }
 
   const handleBtnEvent = () => {
-    if (jobDetail?.external_apply_url || jobDetail.id === jobDetail?.chat?.job_id) {
+    if (jobDetail?.external_apply_url) {
       const userCookie = getCookie('user') || null
       const link = getApplyJobLink(jobDetail, userCookie)
       window.open(link)

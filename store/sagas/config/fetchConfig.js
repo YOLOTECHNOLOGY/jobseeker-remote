@@ -34,25 +34,31 @@ const load = (key) => {
 function* fetchConfigReq(action) {
   const { payload } = action
   try {
-    const key = Array.isArray(payload) ? payload.join('_') : payload
-    const { data, time: lastDate } = load(key)
-    let result = data
-    if (!result) {
-      result = yield call(fetchConfigService, payload)
-      cached(key, result)
-    } else {
-      const daypassed = dayjs().diff(dayjs(lastDate), 'days')
-      if (daypassed > 3) {
-        result = yield call(fetchConfigService, payload)
-        cached(key, result)
-      } else {
-        // yield delay(0)
-      }
-    }
+    const result = yield call(fetchConfigService, payload)
     yield put(fetchConfigSuccess(result))
   } catch (error) {
     yield put(fetchConfigFailed(error))
   }
+  // try {
+  //   const key = Array.isArray(payload) ? payload.join('_') : payload
+  //   const { data, time: lastDate } = load(key)
+  //   let result = data
+  //   if (!result) {
+  //     result = yield call(fetchConfigService, payload)
+  //     cached(key, result)
+  //   } else {
+  //     const daypassed = dayjs().diff(dayjs(lastDate), 'days')
+  //     if (daypassed > 3) {
+  //       result = yield call(fetchConfigService, payload)
+  //       cached(key, result)
+  //     } else {
+  //       // yield delay(0)
+  //     }
+  //   }
+  //   yield put(fetchConfigSuccess(result))
+  // } catch (error) {
+  //   yield put(fetchConfigFailed(error))
+  // }
 }
 
 export default function* fetchConfig() {
