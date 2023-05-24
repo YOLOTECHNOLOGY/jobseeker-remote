@@ -210,7 +210,7 @@ const QuickApplyModal = ({
                 clearErrors('firstName')
               }}
             />
-            {errors.firstName && errorText(errors.firstName.message)}
+            {errors.firstName && errorText(errors.firstName.message as any)}
           </div>
 
           <div className={styles.lastName}>
@@ -229,7 +229,7 @@ const QuickApplyModal = ({
                 clearErrors('lastName')
               }}
             />
-            {errors.lastName && errorText(errors.lastName.message)}
+            {errors.lastName && errorText(errors.lastName.message as any)}
           </div>
         </div>
 
@@ -255,7 +255,7 @@ const QuickApplyModal = ({
             }}
           />
 
-          {errors.email && errorText(errors.email.message)}
+          {errors.email && errorText(errors.email.message as any)}
 
           {emailError && errorText(emailError) /* Error message from the API response */}
         </div>
@@ -287,7 +287,7 @@ const QuickApplyModal = ({
             }}
           />
 
-          {errors.contactNumber && errorText(errors.contactNumber.message)}
+          {errors.contactNumber && errorText(errors.contactNumber.message as any)}
         </div>
 
         <div className={styles.quickApplyFormField}>
@@ -316,7 +316,7 @@ const QuickApplyModal = ({
             }}
           />
 
-          {errors.password && errorText(errors.password.message)}
+          {errors.password && errorText(errors.password.message as any)}
         </div>
 
         <div className={styles.quickApplyFormField}>
@@ -327,7 +327,7 @@ const QuickApplyModal = ({
             handleUpload={handleUploadResume}
           />
 
-          {errors.resume && errorText(errors.resume.message)}
+          {errors.resume && errorText(errors.resume.message as any)}
         </div>
 
         {!jobDetails.external_apply_url && (
@@ -362,7 +362,7 @@ const QuickApplyModal = ({
                       size='small'
                     />
                     {errors[`screening_answer_${i}`] &&
-                      errorText(errors[`screening_answer_${i}`].message)}
+                      errorText(errors[`screening_answer_${i}`].message as any)}
                   </div>
                 )
               })}
@@ -395,7 +395,7 @@ const QuickApplyModal = ({
                   }}
                 />
 
-                {errors.firstMessage && errorText(errors.firstMessage.message)}
+                {errors.firstMessage && errorText(errors.firstMessage.message as any)}
               </div>
             )}
           </div>
