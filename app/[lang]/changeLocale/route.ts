@@ -21,12 +21,11 @@ async function removeServiceCache(token, lang?) {
 }
 
 export async function GET(request) {
-  const cookieStore = cookies()
-  const accessToken = cookieStore.get('accessToken')
+ 
+  const accessToken = new URL(request.url).searchParams.get('accessToken')
   const { url } = request
-  // http://localhost:3004/en-US/changeLocale?accessToken=[object%20Object]
   const lang = url.split('//')[1].split('/')[1]
-  await removeServiceCache(accessToken.value, lang)
+  await removeServiceCache(accessToken, lang)
 
   return new Response(null, {
     status: 301,
@@ -41,14 +40,14 @@ export async function GET(request) {
   })
 }
 
-export async function OPTIONS() {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS'
-      // "Access-Control-Allow-Headers": "Set-Cookie"
-    }
-  })
-}
+// export async function OPTIONS() {
+//   return new Response(null, {
+//     status: 204,
+//     headers: {
+//       'Access-Control-Allow-Origin': '*',
+//       'Access-Control-Allow-Credentials': 'true',
+//       'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS'
+//       // "Access-Control-Allow-Headers": "Set-Cookie"
+//     }
+//   })
+// }
