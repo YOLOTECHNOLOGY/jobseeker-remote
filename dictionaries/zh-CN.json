@@ -550,7 +550,11 @@
           "perMonth": "每月",
           "noExpTips": "展示你过去的贡献，你可以成为潜在雇主的雇员",
           "addExp": "添加工作经验",
-          "addWorkExp": "添加工作经验"
+          "addWorkExp": "添加工作经验",
+          "year": "年",
+          "years": "年",
+          "month": "月",
+          "months": "月"
         },
         "expModal": {
           "title": "工作经验",

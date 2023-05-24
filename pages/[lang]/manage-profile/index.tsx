@@ -346,7 +346,13 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                   {workExp?.is_currently_work_here
                     ? profile.exp.present
                     : workingPeriodTo.format('MMMM yyyy')}{' '}
-                  {dateDiff ? `(${dateDiff})` : ''}
+                  {dateDiff
+                    ? `(${dateDiff
+                        .replace('years', profile.exp.year)
+                        .replace('year', profile.exp.year)
+                        .replace('months', profile.exp.months)
+                        .replace('month', profile.exp.month)})`
+                    : ''}
                 </Text>
                 <div className={styles.companySecondaryInfoWrapper}>
                   {function_job_title && (

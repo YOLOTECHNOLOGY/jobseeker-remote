@@ -550,7 +550,11 @@
           "perMonth": "per month",
           "noExpTips": "Showcase your past contributions and that you can be an asset to potential employer.",
           "addExp": "Add experience",
-          "addWorkExp": "Add work experience"
+          "addWorkExp": "Add work experience",
+          "year": "year",
+          "years": "years",
+          "month": "month",
+          "months": "months"
         },
         "expModal": {
           "title": "Work experience",
