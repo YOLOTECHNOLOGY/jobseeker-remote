@@ -15,7 +15,8 @@ const JobseekerChat = dynamic<any>(import('components/Chat'), {
     ssr: false
 })
 // import JobseekerChat from 'components/Chat'
-const Chat = ({ lang }: any) => {
+const Chat = (props: any) => {
+    const { langKey, lang } = props
     const router = useRouter()
     const {
         userId,
@@ -44,13 +45,12 @@ const Chat = ({ lang }: any) => {
     // const defaultChatList = useSelector((store: any) => store?.chat?.defaultChatList ?? [])
     const [chat_id, setChatId] = useState(router?.query?.chat_id)
     const [first, setFirst] = useState(true)
-    const statusOptions = useSelector((store: any) => store.config.config.response?.jobseeker_chat_type_filters?.map?.(item=>{
+    const statusOptions = useSelector((store: any) => store.config.config.response?.jobseeker_chat_type_filters?.map?.(item => {
         return {
-                label:item.value,
-                value:item.key
+            label: item.value,
+            value: item.key
         }
     }))
-    console.log({statusOptions})
     useEffect(() => {
         if (chat_id !== chatId) {
             if (chat_id === 'list') {
@@ -69,15 +69,14 @@ const Chat = ({ lang }: any) => {
         }
         if (chatId !== chat_id) {
             if (chatId) {
-                history.replaceState(null, '', `/chat/${chatId}`)
+                history.replaceState(null, '', '/' + langKey + `/chat/${chatId}`)
                 setChatId(chatId)
             } else if (chat_id !== 'list') {
-                history.replaceState(null, '', `/chat/${'list'}`)
+                history.replaceState(null, '', '/' + langKey + `/chat/${'list'}`)
                 setChatId(chatId)
             }
         }
     }, [chatId])
-
     return <Layout isHiddenFooter isHiddenHeader={false} lang={lang}>
         <div style={{ marginTop: mobile ? 0 : 24 }}>
             <JobseekerChat
@@ -106,11 +105,12 @@ const Chat = ({ lang }: any) => {
         </div>
     </Layout>
 }
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps = async (props) => {
+    const { query,params:{lang:langKey} } = props
     const lang = await getDictionary(query.lang as 'en-US')
     return {
         props: {
-            lang
+            lang, langKey
         }
     }
 }
