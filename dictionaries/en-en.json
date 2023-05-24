@@ -909,5 +909,23 @@
     "chooseTemplateAnswer": "You can choose from 2 templates, professional or creative resume samples. You can immediately use your newly improved resume to apply for job openings on Bossjob.",
     "editLater": "Would I be able to edit the resume template later?",
     "editLaterAnswer": "Absolutely yes. Login to your Bossjob account anytime to update your resume. You can use your Bossjob account as a resume bank. Keep your most updated career details in Bossjob and use them as your professional identity!"
+  },
+  "chatExchange":{
+    "exchangeTitle":"Mobile number",
+    "cancel":"Cancel",
+    "send":"Send",
+    "verify":"Verify",
+    "sendOtp":"Send OTP",
+    "resendOtp":"Resend OTP",
+    "copy":"Copy",
+    "resendOtpIn":"Resend OTP in {{count}} s",
+    "sureText":"Are you sure you want to exchange mobile number with Boss? You will be able to view Boss’s mobile number after Boss had agreed to your request.",
+    "verifyText":"To exchange mobile number with Boss, please verify your mobile number.",
+    "countryCode":"Country code",
+    "mobileNumber":"Mobile Number",
+    "digitPlaceholder":"Enter 6 digit OTP",
+    "msgText":"Enter the code that we have message to {{number}}",
+    "smb":"'s mobile number:",
+    "boss":"Boss"
   }
 }

@@ -1,4 +1,4 @@
-import { getCookie } from "./cookies"
+import { getCookie } from './cookies'
 
 export const nations = [
   { value: 'ph', label: 'Philippines' },
@@ -30,16 +30,23 @@ export const getCountryId = () => {
 export const getLang = () => {
   let path =
     typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window.location.href
-  path = path.split('//')[1].split('/')[1]; // https://dev.bossjob.sg/en-US/...
+  path = path.split('//')[1].split('/')[1] // https://dev.bossjob.sg/en-US/...
   return path || getCookie('geoConfiguration')?.split('_')?.[1] || 'en-US'
 }
 
 export const getLanguage = () => {
-  const langCode = getLang();
-  const currentLang = languages.find(item => item.value === langCode);
+  const langCode = getLang()
+  const currentLang = languages.find((item) => item.value === langCode)
 
   return currentLang?.label || 'English'
 }
+
+export const getLanguageId = () => {
+  const langCode = getLang()
+  const currentLang = languages.find((item) => item.value === langCode)
+  return currentLang?.id || 1
+}
+
 export const getCountry = () => {
   const path =
     typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window.location.href
@@ -53,5 +60,5 @@ export const getCountry = () => {
 
 export const countryForCurrency = {
   ph: 'php',
-  sg: "sgd"
+  sg: 'sgd'
 }

@@ -209,7 +209,7 @@ const VerifyMailAndBindEmail = ({
         <span className={styles.stepFieldRequired}>* &nbsp; &nbsp;</span>
       </>
     )
-  }  
+  }
   return (
     <div className={styles.VerifyMailAndBindEmail}>
       <FieldFormWrapper

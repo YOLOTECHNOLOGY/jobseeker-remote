@@ -526,6 +526,8 @@
         "year_one": "{{age}} year old",
         "year_other": "{{age}} years old",
         "about": "About",
+        "readMore": "Read More",
+        "readLess": "Read Less",
         "informationCard": {
           "title": "Complete all information about you",
           "content": "Help the recruiter to know more about you and connect more easily with you.",
@@ -550,7 +552,11 @@
           "perMonth": "per month",
           "noExpTips": "Showcase your past contributions and that you can be an asset to potential employer.",
           "addExp": "Add experience",
-          "addWorkExp": "Add work experience"
+          "addWorkExp": "Add work experience",
+          "year": "year",
+          "years": "years",
+          "month": "month",
+          "months": "months"
         },
         "expModal": {
           "title": "Work experience",
@@ -774,7 +780,9 @@
     "searchForJobTitle": "Search for job title",
     "year": "year",
     "month": "month",
-    "months": "s"
+    "months": "s",
+    "readMore": "Read More",
+    "readLess": "Read Less"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -963,5 +971,23 @@
     "keep": "Keep",
     "delete": "Delete",
     "deleteTips": "You are about to delete this job alert. This cannot be undone."
+  },
+  "chatExchange":{
+    "exchangeTitle":"Mobile number",
+    "cancel":"Cancel",
+    "send":"Send",
+    "verify":"Verify",
+    "sendOtp":"Send OTP",
+    "resendOtp":"Resend OTP",
+    "copy":"Copy",
+    "resendOtpIn":"Resend OTP in {{count}} s",
+    "sureText":"Are you sure you want to exchange mobile number with Boss? You will be able to view Boss’s mobile number after Boss had agreed to your request.",
+    "verifyText":"To exchange mobile number with Boss, please verify your mobile number.",
+    "countryCode":"Country code",
+    "mobileNumber":"Mobile Number",
+    "digitPlaceholder":"Enter 6 digit OTP",
+    "msgText":"Enter the code that we have message to {{number}}",
+    "smb":"'s mobile number:",
+    "boss":"Boss"
   }
 }

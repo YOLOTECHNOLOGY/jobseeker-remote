@@ -57,7 +57,6 @@ const DetailModal = (props: any) => {
         }
     }
     contextRef.current = assign(contextRef.current, context)
-    console.log({ dic })
     const timelineItems = useMemo(() => {
         return [
             {

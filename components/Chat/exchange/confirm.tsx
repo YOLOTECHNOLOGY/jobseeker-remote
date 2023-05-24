@@ -1,10 +1,20 @@
 /* eslint-disable no-unused-vars */
 import Modal from 'components/Modal'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { assign } from 'lodash-es'
 import styles from './index.module.scss'
+import { getDictionary } from 'get-dictionary'
 const ExchangeConfirmModal = (props: any) => {
-    const { contextRef, loading, applicationId } = props
+    const { contextRef, loading, applicationId,lang } = props
+    const [dic, setDic] = useState<any>({})
+    useEffect(() => {
+        getDictionary(lang)
+            .then(dic => {
+                if (dic) {
+                    setDic(dic.chatExchange)
+                }
+            })
+    }, [lang])
     const [show, setShow] = useState(false)
     const actionsRef = useRef<any>()
     const context = {
@@ -24,9 +34,9 @@ const ExchangeConfirmModal = (props: any) => {
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current?.close?.()}
-        headerTitle={'Mobile number'}
-        firstButtonText='Cancel'
-        secondButtonText={'Send'}
+        headerTitle={dic?.exchangeTitle}
+        firstButtonText={dic?.cancel}
+        secondButtonText={dic?.send}
         firstButtonIsClose={false}
         secondButtonIsClose={false}
         handleFirstButton={() => actionsRef.current?.close?.()}

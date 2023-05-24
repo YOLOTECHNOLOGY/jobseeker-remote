@@ -526,6 +526,8 @@
         "year_one": "{{age}} 岁",
         "year_other": "{{age}} 岁",
         "about": "关于",
+        "readMore": "显示更多",
+        "readLess": "显示更少",
         "informationCard": {
           "title": "填写你的相关信息",
           "content": "帮助招聘者了解和联系您",
@@ -550,7 +552,11 @@
           "perMonth": "每月",
           "noExpTips": "展示你过去的贡献，你可以成为潜在雇主的雇员",
           "addExp": "添加工作经验",
-          "addWorkExp": "添加工作经验"
+          "addWorkExp": "添加工作经验",
+          "year": "年",
+          "years": "年",
+          "month": "月",
+          "months": "月"
         },
         "expModal": {
           "title": "工作经验",
@@ -774,7 +780,9 @@
     "searchForJobTitle": "搜索工作标题",
     "year": "年",
     "month": "月",
-    "months": ""
+    "months": "",
+    "readMore": "显示更多",
+    "readLess": "显示更少"
   },
   "chat": {
     "chatTitle": "聊天",
@@ -964,5 +972,23 @@
     "keep": "保留",
     "delete": "删除",
     "deleteTips": "您即将删除此职位提醒。 这不能被撤消。"
+  },
+  "chatExchange":{
+    "exchangeTitle":"电话号码",
+    "cancel":"取消",
+    "send":"发送",
+    "verify":"验证",
+    "sendOtp":"发送验证码",
+    "resendOtp":"重新发送验证码",
+    "copy":"复制",
+    "resendOtpIn":"在{{count}}秒后可重新发送",
+    "sureText":"确定与招聘者交换号码吗？如果对方同意，您将会获得招聘者的电话号码。",
+    "verifyText":"请先验证您的电话号码",
+    "countryCode":"国家代码",
+    "mobileNumber":"电话号码",
+    "digitPlaceholder":"输入6位验证码",
+    "msgText":"请输入我们向此电话{{number}}发送的信息",
+    "smb":"的电话号码:",
+    "boss":"招聘者"
   }
 }
