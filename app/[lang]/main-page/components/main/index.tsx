@@ -36,7 +36,7 @@ const Main = async (props: any) => {
   const location = cookies().get('location')?.value
   const city = location ? JSON.parse(location)?.value : 'Manila'
   const locationId = location ? JSON.parse(location)?.id : 63
-  const langKey = props?.params?.lang
+  const langKey = props?.params?.lang || (cookies().get('geoConfiguration') as any)?.split('_')?.[1] || 'en-US'
 
   const {
     lang: { home }
