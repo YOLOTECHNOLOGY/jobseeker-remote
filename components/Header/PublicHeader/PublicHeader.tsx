@@ -112,7 +112,7 @@ const PublicHeader = ({ lang }: any) => {
                 </Text>
               </Link>
             </li>
-            <li className={styles.headerLink}>
+            <li className={styles.headerLink} style={{width:'162px'}}>
               {!pathname?.includes?.('/get-started') ? (
                 <Link to={'/' + langKey + '/get-started'} title='Get Started'>
                   <MaterialButton
@@ -163,7 +163,7 @@ const PublicHeader = ({ lang }: any) => {
                 </MaterialButton>
               )}
             </li>
-            <li className={classNames(styles.headerLink)}>
+            <li className={classNames(styles.headerLink)} style={{width:'60px'}}>
               <div
                 className={styles.countryItem}
                 onClick={() => {

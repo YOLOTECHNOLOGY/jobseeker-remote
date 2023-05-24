@@ -35,7 +35,7 @@ const JobCard = (props: any) => {
     const config = useSelector((store: any) => store.config.config.response)
     const labels = [
         getValueById(config,job_type_id,'job_type_id'), 
-        getValueById(config,job_location_id,'location_id'),
+        // getValueById(config,job_location_id,'location_id'),
         getValueById(config,xp_lvl_id,'xp_lvl_id'),
         getValueById(config,degree_id,'degree_id'),
     ].filter(a => a)

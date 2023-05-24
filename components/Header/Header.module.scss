@@ -84,7 +84,6 @@
   flex-direction: column;
   justify-content: center;
   margin-left: 20px;
-
   @include msd {
     display: none;
   }
@@ -110,7 +109,7 @@
   justify-content: center;
   position: relative;
   letter-spacing: 0.05em;
-
+  width: 120px;  
   &Item,
   &Icon {
     &:hover {

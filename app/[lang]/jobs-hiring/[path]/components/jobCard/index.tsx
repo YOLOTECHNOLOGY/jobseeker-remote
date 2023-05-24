@@ -19,6 +19,7 @@ import styles from '../../index.module.scss'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 import { useSelector } from 'react-redux'
 import { getValueById } from 'helpers/config/getValueById'
+import { getLang } from 'helpers/country'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -65,7 +66,7 @@ const useShowPop = (titleHover, popHover) => {
   return showPopup
 }
 
-const useSaveJob = (jobId, defaultSaved, accessToken) => {
+const useSaveJob = (jobId, defaultSaved, accessToken,langKey) => {
   const [isSaved, setIsSaved] = useState(defaultSaved)
   const [isSaving, setIsSaving] = useState(false)
   const router = useRouter()
@@ -74,7 +75,7 @@ const useSaveJob = (jobId, defaultSaved, accessToken) => {
       return
     }
     if (!accessToken) {
-      router.push('/get-started', { forceOptimisticNavigation: true })
+      router.push(`${langKey}/get-started`, { forceOptimisticNavigation: true })
       return
     }
     if (!isSaved) {
@@ -155,6 +156,7 @@ const JobCard = (props: any) => {
     getValueById(config, company_size_id, 'company_size_id'),
     getValueById(config, company_financing_stage_id, 'company_financing_stage_id')
   ].filter((a) => a)
+  const langKey = getLang();
   const router = useRouter()
   const [loading, chatNow, modalChange] = useChatNow(props)
   const [titleHover, setTitleHover] = useState(false)
@@ -164,7 +166,7 @@ const JobCard = (props: any) => {
     ?.join(', ')
   const showPopup = useShowPop(titleHover, popHover)
   const accessToken = getCookie('accessToken')
-  const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken)
+  const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken,langKey)
   const [jobDetail, detailLoading, startLoading] = useJobDetail(id)
   // const industry =  getValueById(config,industry_id,'industry_id')
 
@@ -216,7 +218,7 @@ const JobCard = (props: any) => {
           <div className={styles.topContainer}>
             <div
               className={styles.left}
-              onClick={() => router.push(job_url, { forceOptimisticNavigation: true })}
+              onClick={() => router.push(`${langKey}`+job_url, { forceOptimisticNavigation: true })}
             >
               <div
                 key={job_title + id}
@@ -330,7 +332,7 @@ const JobCard = (props: any) => {
               className={styles.right}
               onClick={(e) => {
                 e.stopPropagation()
-                router.push(company_url, { forceOptimisticNavigation: true })
+                router.push(`${langKey}`+company_url, { forceOptimisticNavigation: true })
               }}
             >
               <div className={styles.company}>
