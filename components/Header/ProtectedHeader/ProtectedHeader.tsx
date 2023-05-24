@@ -195,7 +195,7 @@ const ProtectedHeader = ({ lang }: any) => {
                 </span>
               ) : null}
             </li>
-            <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
+            <li className={classNames([styles.headerLink, styles.headerLinkLogin])} style={{width:'150px'}}>
               {pathname !== '/manage-profile' ? (
                 <a
                   title='Manage Resume'
@@ -252,7 +252,7 @@ const ProtectedHeader = ({ lang }: any) => {
                 </MaterialButton>
               )}
             </li>
-            <li className={styles.headerLink}>
+            <li className={styles.headerLink} style={{width:'90px'}}>
               <div
                 className={styles.profileProtectedWrapper}
                 onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}

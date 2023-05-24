@@ -5,9 +5,10 @@ import React,{useContext}from 'react'
 import Link from 'components/Link'
 import Text from 'components/Text'
 import Accordian from 'components/Accordian'
-import { getCountry, getCountryKey } from 'helpers/country'
+import { getCountry, getCountryKey ,getLang} from 'helpers/country'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 import { getCookie } from 'helpers/cookies'
+
 /* Images */
 import {
   ChevronUpIcon,
@@ -36,32 +37,33 @@ const CountryList = (data) => {
     JobsIn2,
     JobsIn3,
   } = data?.lang ||{}
+  const langKey = data.langKey
   const COUNTRY_MAP = {
     'ph': [
       {
-        to: `/jobs-hiring/manila-jobs`,
+        to: `${langKey}/jobs-hiring/manila-jobs`,
         title: JobsIn1,
       },
       {
-        to: `/jobs-hiring/makati-jobs`,
+        to: `${langKey}/jobs-hiring/makati-jobs`,
         title: JobsIn2
       },
       {
-        to: `/jobs-hiring/cebu-city-jobs`,
+        to: `${langKey}/jobs-hiring/cebu-city-jobs`,
         title: JobsIn3
       }
     ],
     'sg': [
       {
-        to: `/jobs-hiring/downtown-core-jobs`,
+        to: `${langKey}/jobs-hiring/downtown-core-jobs`,
         title: JobsIn1,
       },
       {
-        to: `/jobs-hiring/kallang-jobs`,
+        to: `${langKey}/jobs-hiring/kallang-jobs`,
         title: JobsIn2
       },
       {
-        to: `/jobs-hiring/jurong-east-jobs`,
+        to: `${langKey}/jobs-hiring/jurong-east-jobs`,
         title: JobsIn3
       }
     ]
@@ -94,8 +96,9 @@ const CountryList = (data) => {
 
 const Footer = ({lang}:any) => {
   const contextLang =  useContext(languageContext)
- const isLogin = getCookie('accessToken') ? true : false
+  const isLogin = getCookie('accessToken') ? true : false
   const data = lang ?? contextLang
+  const langKey = getLang();
   const {
     about,
     aboutBossjob,
@@ -152,7 +155,7 @@ const Footer = ({lang}:any) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`/company/bossjob-1668`}
+                    to={`${langKey}/company/bossjob-1668`}
                     external={false}
                     aTag={false}
                     title='About Bossjob'
@@ -163,7 +166,7 @@ const Footer = ({lang}:any) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`/terms-and-conditions/  `}
+                    to={`${langKey}/terms-and-conditions/  `}
                     title='Blog Bossjob'
                     external
                   >
@@ -173,7 +176,7 @@ const Footer = ({lang}:any) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`/terms-and-conditions/  `}
+                    to={`${langKey}/terms-and-conditions/  `}
                     title='Legal'
                     external
                   >
@@ -220,21 +223,21 @@ const Footer = ({lang}:any) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to='/jobs-hiring/job-search'
+                    to= {`${langKey}/jobs-hiring/job-search`}
                     title={`Jobs in ${getCountry()}`}
                   >
                     <Text textStyle='sm'>{allJobs}</Text>
                   </Link>
                 </li>
                 <li>
-                  <Link className={styles.footerLink} to='/jobs-hiring' title='Create Job Alert'>
+                  <Link className={styles.footerLink} to={`${langKey}/jobs-hiring`} title='Create Job Alert'>
                     <Text textStyle='sm'>{createJobAlert}</Text>
                   </Link>
                 </li>
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={isLogin ? `/manage-profile?tab=resume` : `/resumetemplate`}
+                    to={isLogin ? `${langKey}/manage-profile?tab=resume` : `${langKey}/resumetemplate`}
                     title='Create Free Resume'
                   >
                     <Text textStyle='sm'>{createFree}</Text>
@@ -294,11 +297,11 @@ const Footer = ({lang}:any) => {
               }
             >
               <ul className={styles.footerDesktopLinkList}>
-                <CountryList lang={lang?.foot ||{}}/>
+                <CountryList lang={lang?.foot ||{}} langKey={langKey}/>
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`/jobs-hiring/information-technology-jobs?page=1`}
+                    to={`${langKey}/jobs-hiring/information-technology-jobs?page=1`}
                     title='IT jobs'
                     external={false}
                     aTag={false}
@@ -309,7 +312,7 @@ const Footer = ({lang}:any) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`/jobs-hiring/finance-accounting-jobs`}
+                    to={`${langKey}/jobs-hiring/finance-accounting-jobs`}
                     title='Finance Jobs'
                     external={false}
                     aTag={false}
@@ -320,7 +323,7 @@ const Footer = ({lang}:any) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`/jobs-hiring/customer-service-jobs`}
+                    to={`${langKey}/jobs-hiring/customer-service-jobs`}
                     title='Customer Service jobs'
                     external={false}
                     aTag={false}
@@ -331,7 +334,7 @@ const Footer = ({lang}:any) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`/jobs-hiring/bpo-jobs`}
+                    to={`${langKey}/jobs-hiring/bpo-jobs`}
                     title='BPO jobs'
                     external={false}
                     aTag={false}
@@ -342,7 +345,7 @@ const Footer = ({lang}:any) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`/jobs-hiring/sales-marketing-jobs`}
+                    to={`${langKey}/jobs-hiring/sales-marketing-jobs`}
                     title='Sales jobs'
                     external={false}
                     aTag={false}
@@ -353,7 +356,7 @@ const Footer = ({lang}:any) => {
                 <li>
                   <Link
                     className={styles.footerLink}
-                    to={`/jobs-hiring/healthcare-medical-jobs`}
+                    to={`${langKey}/jobs-hiring/healthcare-medical-jobs`}
                     title='Healthcare jobs'
                     external={false}
                     aTag={false}
@@ -479,7 +482,7 @@ const Footer = ({lang}:any) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`/company/bossjob-1668`}
+                      to={`${langKey}/company/bossjob-1668`}
                       title='About Bossjob'
                       aTag={false}
                       external={false}
@@ -542,21 +545,21 @@ const Footer = ({lang}:any) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to='/jobs-hiring/job-search'
+                      to={`${langKey}/jobs-hiring/job-search`}
                       title='All jobs'
                     >
                       <Text textStyle='sm'>{allJobs}</Text>
                     </Link>
                   </li>
                   <li>
-                    <Link className={styles.footerLink} to='/jobs-hiring' title='Create job alert'>
+                    <Link className={styles.footerLink} to={`${langKey}/jobs-hiring`} title='Create job alert'>
                       <Text textStyle='sm'>{createJobAlert}</Text>
                     </Link>
                   </li>
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={isLogin ? `/manage-profile?tab=resume` : `/resumetemplate`}
+                      to={isLogin ? `${langKey}/manage-profile?tab=resume` : `${langKey}/resumetemplate`}
                       title='Create Free Resume'
                     >
                       <Text textStyle='sm'>{createFree}</Text>
@@ -606,11 +609,11 @@ const Footer = ({lang}:any) => {
                   {popularJobs}
                 </Text>
                 <ul className={styles.footerDesktopLinkList}>
-                  <CountryList lang={lang?.foot ||{}}/>
+                  <CountryList lang={lang?.foot ||{}} langKey={langKey}/>
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`/jobs-hiring/information-technology-jobs?page=1`}
+                      to={`${langKey}/jobs-hiring/information-technology-jobs?page=1`}
                       title='IT jobs'
                       external={false}
                       aTag={false}
@@ -621,7 +624,7 @@ const Footer = ({lang}:any) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`/jobs-hiring/finance-audit-tax-jobs?page=1`}
+                      to={`${langKey}/jobs-hiring/finance-audit-tax-jobs?page=1`}
                       title='Finance jobs'
                       external={false}
                       aTag={false}
@@ -632,7 +635,7 @@ const Footer = ({lang}:any) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`/jobs-hiring/customer-service-operations-jobs?page=1`}
+                      to={`${langKey}/jobs-hiring/customer-service-operations-jobs?page=1`}
                       title='Customer Service jobs'
                       external={false}
                       aTag={false}
@@ -643,7 +646,7 @@ const Footer = ({lang}:any) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`/jobs-hiring/bpo-jobs`}
+                      to={`${langKey}/jobs-hiring/bpo-jobs`}
                       title='BPO jobs'
                       external={false}
                       aTag={false}
@@ -654,7 +657,7 @@ const Footer = ({lang}:any) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`/jobs-hiring/sales-jobs?page=1`}
+                      to={`${langKey}/jobs-hiring/sales-jobs?page=1`}
                       title='Sales jobs'
                       external={false}
                       aTag={false}
@@ -665,7 +668,7 @@ const Footer = ({lang}:any) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`/jobs-hiring/healthcare-medical-jobs?page=1`}
+                      to={`${langKey}/jobs-hiring/healthcare-medical-jobs?page=1`}
                       title='Healthcare jobs'
                       external={false}
                       aTag={false}
