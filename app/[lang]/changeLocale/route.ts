@@ -21,7 +21,7 @@ async function removeServiceCache(token, lang?) {
 }
 
 export async function GET(request) {
- 
+
   const accessToken = new URL(request.url).searchParams.get('accessToken')
   const { url } = request
   const lang = url.split('//')[1].split('/')[1]
@@ -30,7 +30,7 @@ export async function GET(request) {
   return new Response(null, {
     status: 301,
     headers: {
-      'Set-Cookie': `accessToken=${accessToken}`,
+      'Set-Cookie': `accessToken=${accessToken};path=/`,
       Location: process.env.NEXT_PUBLIC_HOST_PATH,
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true',
