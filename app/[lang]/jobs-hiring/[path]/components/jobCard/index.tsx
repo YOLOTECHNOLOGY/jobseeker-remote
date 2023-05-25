@@ -80,7 +80,7 @@ const useSaveJob = (jobId, defaultSaved, accessToken,langKey) => {
     }
     if (!isSaved) {
       setIsSaving(true)
-      postSaveJobService({ job_id: jobId, job_title_id: null, accessToken })
+      postSaveJobService({ job_id: jobId, accessToken })
         .then(() => setIsSaved(true))
         .finally(() => setIsSaving(false))
     } else {
