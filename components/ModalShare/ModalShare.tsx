@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 
 /* Vendors */
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share'
@@ -10,15 +10,12 @@ import Text from 'components/Text'
 /* Service */
 import { fetchUserShare } from 'store/services/users/share'
 
-/* Active */
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
-
 /* Styles */
 import styles from './ModalShare.module.scss'
 
 /* Images */
 import { FacebookIcon, LinkedinIcon, TwitterIcon, CopyIcon } from 'images'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
 interface ModalShareProps {
@@ -27,7 +24,6 @@ interface ModalShareProps {
   handleShowModalShare?: Function
   selectedJob?: any
 }
-
 const ModalShare = ({
   jobDetailUrl,
   isShowModalShare,
@@ -38,20 +34,11 @@ const ModalShare = ({
     jobDetail: { shareModal }
   } = useContext(languageContext) as any
   const jobLinkRef = useRef(null)
-  const dispatch = useDispatch()
   const [isDoneCopy, setIsDoneCopy] = useState(false)
-
+  // this share feature is no needed login, but it's better if user login
   const meInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
 
   jobDetailUrl = `${location.origin}${jobDetailUrl}`
-
-  useEffect(() => {
-    if (meInfo.id) {
-      return
-    }
-
-    dispatch(fetchUserOwnDetailRequest({}))
-  }, [])
 
   const handleCopyLink = (link) => {
     navigator.clipboard.writeText(link)
@@ -62,6 +49,9 @@ const ModalShare = ({
   }
 
   const tokenData = () => {
+    if (!meInfo.id) {
+      return
+    }
     const data = {
       jobseeker_id: meInfo.id,
       recruiter_id: selectedJob.recruiter.id,
