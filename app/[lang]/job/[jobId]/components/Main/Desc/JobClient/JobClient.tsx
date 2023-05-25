@@ -12,7 +12,7 @@ import { postReportRequest } from 'store/actions/reports/postReport'
 import { initialState } from 'store/reducers/config/fetchConfig'
 
 import { ShareIcon, ReportIcon } from 'images'
-import { getCookie } from 'helpers/cookies'
+import { accessToken as accessTokenKey, getCookie } from 'helpers/cookies'
 
 import styles from '../../../../page.module.scss'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
@@ -26,9 +26,11 @@ export type sharePropsType = {
   company: {
     id: number
   }
+  isLogin?: boolean
 }
 
 const JobClient = (props: sharePropsType) => {
+  const { isLogin } = props
   const { jobDetail } = useContext(languageContext) as any
   const dispatch = useDispatch()
   const [reportJobReasonList, setReportJobReasonList] = useState<Array<any>>(null)
@@ -48,7 +50,7 @@ const JobClient = (props: sharePropsType) => {
   const [isShowReportJob, setIsShowReportJob] = useState<boolean>(false)
 
   const handlePostReportJob = (reportJobData) => {
-    const accessToken = getCookie('accessToken')
+    const accessToken = getCookie(accessTokenKey)
     const postReportJobPayload = {
       reportJobData,
       accessToken
@@ -66,17 +68,19 @@ const JobClient = (props: sharePropsType) => {
               src={ShareIcon}
               alt='share'
               sx={{ width: '17px', height: '17px', marginRight: '4px' }}
-            />{' '}
+            />
             {jobDetail.content.jobShare}
           </div>
-          <div onClick={() => setIsShowReportJob(true)} className={styles.jobClient_btn_wrapper}>
-            <Avatar
-              src={ReportIcon}
-              alt='report'
-              sx={{ width: '17px', height: '17px', marginRight: '4px' }}
-            />{' '}
-            {jobDetail.content.report}
-          </div>
+          {isLogin && (
+            <div onClick={() => setIsShowReportJob(true)} className={styles.jobClient_btn_wrapper}>
+              <Avatar
+                src={ReportIcon}
+                alt='report'
+                sx={{ width: '17px', height: '17px', marginRight: '4px' }}
+              />
+              {jobDetail.content.report}
+            </div>
+          )}
         </Stack>
       ) : null}
 

@@ -68,7 +68,9 @@ const Desc = ({
       <div className={styles.desc_jobDescWrapper}>
         <div className={styles.desc_title}>
           <h5>{content.JD}</h5>
-          <div className={styles.desc_title_change}>{token && <JobClient {...shareParams} />}</div>
+          <div className={styles.desc_title_change}>
+            <JobClient isLogin={Boolean(token)} {...shareParams} />
+          </div>
         </div>
 
         <div className={styles.desc_labels}>
