@@ -39,7 +39,7 @@ const ViewJobModal = (props: any) => {
             [quealitification, getValueById(config, job?.degree?.id, 'degree_id')],
             [workLocation, getValueById(config, job?.location?.id, 'location_id')],
             [address, job?.full_address],
-            [JobFunction, getValueById(config,job?.function_job_id,'function_job_title_id')],
+            [JobFunction, getValueById(config,job?.function_job_title_id,'function_job_title_id')],
             [skills,
                 <div key="skills" className={styles.skillContainer}>
                     {(job?.skills ?? []).map(skill => {
