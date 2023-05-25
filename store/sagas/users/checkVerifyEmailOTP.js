@@ -1,5 +1,4 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { push } from 'connected-next-router'
 import { CHECK_VERIFY_EMAIL_OTP_REQUEST } from 'store/types/users/checkVerifyEmailOTP'
 import { getCookie, setCookie } from 'helpers/cookies'
 

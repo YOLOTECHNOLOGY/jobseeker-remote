@@ -116,6 +116,7 @@ const App = (props: AppProps) => {
           if (status == 400 || data?.errors?.error[0] === 'Invalid token') {
             if (router.pathname !== '/get-started') {
               removeCookie('accessToken')
+              removeCookie('refreshToken')
               window.location.href = '/get-started?type=LoginOut'
             } else {
               removeCookie('accessToken')

@@ -93,6 +93,7 @@ const GetStarted = (props: any) => {
           const { data, status } = result.response ?? {}
           if (status == 400 || data?.errors?.error[0] === 'Invalid token') {
             removeCookie('accessToken')
+            removeCookie('refreshToken')
             window.location.reload()
           }
         })

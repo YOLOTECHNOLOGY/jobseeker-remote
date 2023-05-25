@@ -4,13 +4,13 @@ import { BossjobLogo } from 'images'
 import { Button } from 'app/[lang]/components/MUIs'
 import styles from './index.module.scss'
 import configuredAxios from 'helpers/configuredAxios'
-import { getCookie, setCookie } from 'helpers/cookies'
+import { getCookie, removeCookie, setCookie } from 'helpers/cookies'
 import Loading from './loading'
 
 export default function Error(props: { error: any; reset: () => void }) {
   const { error, reset } = props
   const router = useRouter()
-  
+
   if (error?.message?.includes('status code 401') || error.digest === '193452068' || error.digest === '2228123006') {
     if (globalThis.globalPromise) {
       globalThis.globalPromise.then(() => {
@@ -26,9 +26,13 @@ export default function Error(props: { error: any; reset: () => void }) {
           window.location.reload()
 
         } else {
+          removeCookie('accessToken')
+          removeCookie('refreshToken')
           router.push('/get-started', { forceOptimisticNavigation: true })
         }
       }).catch((e) => {
+        removeCookie('accessToken')
+        removeCookie('refreshToken')
         router.push('/get-started', { forceOptimisticNavigation: true })
       })
     }
