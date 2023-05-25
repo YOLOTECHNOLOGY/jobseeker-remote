@@ -1,13 +1,9 @@
 import Link from 'next/link'
-
 import { fetchSimilarJobsService } from 'store/services/jobs/fetchSimilarJobs'
 import { fetchRecruiterLastActiveService } from 'store/services/recruiters/last-active'
-
 import SeeMore from './SeeMore/SeeMore'
 import { Avatar } from 'app/[lang]/components/MUIs'
-
 import { transState } from 'helpers/utilities'
-
 import styles from '../../../page.module.scss'
 import classNames from 'classnames/bind'
 import { getValueById } from 'helpers/config/getValueById'
@@ -42,8 +38,6 @@ export default async function SimilarJobs({ id, jobDetail, languages, config, la
   const {
     aside: { similarJob: transitions }
   } = languages
-
-  console.log(data, 'jobDetail')
 
   return (
     <>
@@ -104,9 +98,9 @@ export default async function SimilarJobs({ id, jobDetail, languages, config, la
                       <div className={styles.similarJobs_mobileCard_name}>{item.company_name}</div>
 
                       <div className={styles.similarJobs_mobileCard_tags}>
-                        <span>{item.job_type}</span>
-                        <span>{item?.xp_lvl}</span>
-                        <span>{item?.degree}</span>
+                        <span>{ getValueById(config,item.job_type_id,'job_type_id')}</span>
+                        <span>{ getValueById(config,item?.xp_lvl_id,'xp_lvl_id')}</span>
+                        <span>{ getValueById(config,item?.degree_id,'degree_id')}</span>
                       </div>
 
                       <div className={styles.similarJobs_info}>
@@ -134,7 +128,7 @@ export default async function SimilarJobs({ id, jobDetail, languages, config, la
                         <div className={classNames([styles.similarJobs_mobileCard_loca])}>
                           <div>{[item?.recruiter_full_name, item?.recruiter_job_title].filter(a => a).join(' · ')}</div>
                           <div className={styles.similarJobs_mobileCard_loca_value}>
-                            {getValueById(config, item.company_location_id, 'location_id')}
+                            {getValueById(config, item?.job_location_id, 'location_id')}
                           </div>
                         </div>
                       </div>
