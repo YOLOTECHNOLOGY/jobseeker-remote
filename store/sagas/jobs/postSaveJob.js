@@ -5,9 +5,9 @@ import { postSaveJobSuccess, postSaveJobFailed } from 'store/actions/jobs/postSa
 import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 
 function* postSaveJobReq(action) {
-  const { jobId, accessToken, user_id } = action.payload
+  const { jobId, accessToken, } = action.payload
   try {
-    const { data } = yield call(postSaveJobService, { job_id: jobId , user_id, accessToken })
+    const { data } = yield call(postSaveJobService, { job_id: jobId, accessToken })
     yield put(postSaveJobSuccess(data.data))
   } catch (error) {
     yield put(postSaveJobFailed(error))
