@@ -204,6 +204,7 @@ const Main = async (props: any) => {
               location={location}
               value={props?.searchValues?.query as any}
               path={props.params?.path}
+              lang={search}
             />
           </div>
         </div>

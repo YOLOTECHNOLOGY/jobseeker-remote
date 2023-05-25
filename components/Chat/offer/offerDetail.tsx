@@ -6,9 +6,10 @@ import OfferView from './offerView'
 
 const OfferDetail = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef, loading } = props
+    const { contextRef, loading ,lang} = props
     const [data, setData] = useState<any>({})
     const actionsRef = useRef({} as any)
+    const {offerFrom,offered,reject,accept} = lang || {}
     const context = {
         modalOfferDetail(actions) {
             actionsRef.current = actions
@@ -26,9 +27,9 @@ const OfferDetail = (props: any) => {
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
-        headerTitle={`Offer from ${data?.company_name}`}
-        firstButtonText={data?.status === 'Offered' && 'Reject'}
-        secondButtonText={data?.status === 'Offered' && 'Accept'}
+        headerTitle={`${offerFrom} ${data?.company_name}`}
+        firstButtonText={data?.status === offered && reject}
+        secondButtonText={data?.status === offered && accept}
         firstButtonIsClose={false}
         secondButtonIsClose={false}
         handleFirstButton={() => actionsRef.current.reject?.()}
@@ -36,7 +37,7 @@ const OfferDetail = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <OfferView offerData={data} />
+        <OfferView offerData={data} lang={lang}/>
 
     </Modal >
 }

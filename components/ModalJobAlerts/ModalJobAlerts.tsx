@@ -287,7 +287,7 @@ const ModalJobAlerts = ({
       </Modal>
     )
   }
-
+ console.log(selectedJobAlert,formattedAlertList,'selectedJobAlert')
   // Modal - Delete Job Alert
   const ModalDeleteJobAlert = () => {
     return (

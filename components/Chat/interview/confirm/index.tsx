@@ -35,9 +35,8 @@ const ConfirmModal = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <p className={styles.mainText}>By accepting this interview invite, I agreed that I will show up for the interview at the given time and place.
-            If I need to change the time, I will notify the recruiter at least 7 hours in advance.</p>
-        <p className={styles.subText}>Job seekers who do not turn up for interview will be marked as “No Show”. Job seekers who accumulate 3 no-show records in 3 months will be banned from using Bossjob for 6 months.</p>
+        <p className={styles.mainText}>{dic.confirmText1}</p>
+        <p className={styles.subText}>{dic.contirmText2}</p>
     </Modal>
 }
 

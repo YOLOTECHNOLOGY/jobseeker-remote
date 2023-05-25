@@ -4,7 +4,8 @@ import styles from './index.module.scss'
 import { Image } from 'antd'
 import { Offerbottom, Offercenter } from 'images'
 const OfferView = props => {
-  const { offerData, isSent } = props
+  const { offerData, isSent,lang } = props
+  const {pleaseNoteThatThisOffer} = lang
   return (
     <div className={styles.offerview}>
       <div className={styles.topInfo}>
@@ -23,8 +24,7 @@ const OfferView = props => {
           </svg>
         </div>
         <div className={styles.content}>
-          Please note that this offer is not binding and is subject to change. There may be some
-          additional paperwork and steps required to finalize the offer.
+         {pleaseNoteThatThisOffer}
         </div>
       </div>
       {isSent && <Image wrapperClassName={styles.sent} src={Sent} preview={false} />}
@@ -41,7 +41,8 @@ const OfferView = props => {
 }
 OfferView.propTypes = {
   offerData: PropTypes.object,
-  isSent: PropTypes.bool
+  isSent: PropTypes.bool,
+  lang:PropTypes.object
 }
 
 export default OfferView

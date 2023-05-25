@@ -66,15 +66,26 @@ const CommonPhrasesModal = (props: any) => {
             )}{' '}
           </RadioGroup>
           <span>
-            <a
+            {
+              list?.length ? <><a
               onClick={() => {
                 setSelected(null)
                 editProps.disabled || actionsRef?.current?.modalEditList?.()
               } }
               {...editProps}
-            >
+               >
               {dic?.actionEdit}
-            </a>{' '}
+            </a>
+            </> : <a
+              style={{color:"#999"}}
+              {...editProps}
+               >
+              {dic?.actionEdit}
+            </a>
+            }
+            
+            
+            {' '}
             {dic?.or}
             <a onClick={() => aProps.disabled || actionsRef?.current?.modalCreate()} {...aProps}>
              {' '}{dic?.actionCreate}{' '}

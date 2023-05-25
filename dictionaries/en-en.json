@@ -447,7 +447,8 @@
       "companySize": "Company Size",
       "finance": "Financing Stage",
       "reset": "Reset Filter",
-      "apply": "Apply Filter"
+      "apply": "Apply Filter",
+      "viewVerifiedCompanies":"View verified companies"
     },
     "alert": "Enable job alert",
     "alertModal": {
@@ -516,7 +517,8 @@
     "save": "Save",
     "downloadAPP": " Download APP and chat with Boss",
     "chatDirectly": " Chat directly",
-    "withBoss": "with Boss"
+    "withBoss": "with Boss",
+    "relatedSearch":"Related Search"
   },
   "manageProfile": {
     "tab": {
@@ -825,7 +827,25 @@
     "pleaseSelectResume":"Please select the resume that you would like to share with recruiter.",
     "orUploadNewResume":"Or upload a new resume",
     "onlyMax3Resumes":"only max. of 3 resumes can be uploaded, please delete at least 1 resume above",
-    "uploadNewResume":"Upload a new resume"
+    "uploadNewResume":"Upload a new resume",
+    "JobType": "Job Type",
+    "yearsOfExp": "Years of Exp",
+    "quealitification":"Quealitification",
+    "workLocation":"Work location",
+    "address":"Address",
+    "JobFunction":"Job function",
+    "skills":"Skills",
+    "salary":"Salary",
+    "done":"Done",
+    "offerFrom":"Offer from",
+    "offered":"Offered",
+    "reject":"Reject",
+    "accept":"Accept",
+    "pleaseNoteThatThisOffer":" Please note that this offer is not binding and is subject to change. There may be some  additional paperwork and steps required to finalize the offer.",
+    "company":"Company",
+    "sendAnOffer":"send an offer",
+    "viewNow":"View now",
+    "viewLater":"View later"
 
   },
   "chatInterview": {

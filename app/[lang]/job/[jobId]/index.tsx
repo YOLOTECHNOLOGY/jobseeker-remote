@@ -56,6 +56,7 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
     }
   }
 
+  
 
   const headProps = {
     title: data.job_title,

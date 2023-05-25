@@ -7,7 +7,8 @@ import Image from 'next/image'
 import MaterialButton from 'components/MaterialButton'
 const OfferMessage = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef } = props
+    const { contextRef,lang } = props
+    const {company,sendAnOffer,viewNow,viewLater} = lang?? {} 
     const actionsRef = useRef({} as any)
     const [data, setData] = useState<any>({})
 
@@ -35,21 +36,21 @@ const OfferMessage = (props: any) => {
             />
             <div className={styles.content}>
                 <Image className={styles.company_logo} src={data?.company?.logo_url} width={56} height={56} alt='' />
-                <div className={styles.company_name}>{data?.company_name ?? 'Company'}</div>
-                <div className={styles.sender}>{`${data?.recruiter?.full_name ?? 'Boss'} send an offer`}</div>
+                <div className={styles.company_name}>{data?.company_name ?? company}</div>
+                <div className={styles.sender}>{`${data?.recruiter?.full_name ?? 'Boss'} ${sendAnOffer}`}</div>
                 <MaterialButton
                     capitalize
                     className={styles.viewnow}
                     onClick={() => actionsRef.current?.view?.()}
                 >
-                    View now
+                   {viewNow}
                 </MaterialButton>
                 <MaterialButton
                     capitalize
                     className={styles.viewlater}
                     onClick={() => actionsRef.current?.close?.()}
                 >
-                    View later
+                    {viewLater}
                 </MaterialButton>
             </div>
             <img

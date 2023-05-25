@@ -71,8 +71,9 @@ const NavSearchFilter = ({
   const {
     search: { searchModal }
   } = useContext(languageContext) as any
+
   const expLvlList = config.xp_lvls
-  const eduLevelList = config.educations
+  const eduLevelList = config.degrees
   const jobTypeList = config.job_types
   const companySizeList = config.company_sizes
   const industryList = config.industry_lists
@@ -313,8 +314,8 @@ const NavSearchFilter = ({
                 options={[
                   {
                     key: 'verified-companies',
-                    ['seo-value']: 'verified-companies',
-                    value: 'View verified companies',
+                    ['seo-value']: 'verified-companies111',
+                    value: searchModal.viewVerifiedCompanies,
                     label: 'View verified companies'
                   }
                 ]}

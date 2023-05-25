@@ -100,7 +100,8 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
                 }
             })
     }, [lang])
-    
+    const config = useSelector((store: any) => store.config.config.response ?? {})
+
     const translate = useCallback((key, ...args) => {
         if (!chatDictionary) {
             return key
@@ -476,7 +477,7 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
         <OfferModal
             loading={loading}
             contextRef={contextRef}
-            lang={lang}
+            lang={chatDictionary}
             applicationId={applicationId}
         />
         <ExchangeModal
@@ -514,9 +515,10 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
         <ViewJobModal
             loading={loading}
             data={imState?.interview}
-            lang={lang}
+            lang={chatDictionary}
             applicationId={applicationId}
             contextRef={contextRef}
+            config={config}
         />
         <CancelModal
             loading={loading}

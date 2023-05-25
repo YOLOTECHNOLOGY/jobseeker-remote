@@ -2,11 +2,24 @@ import Modal from 'components/Modal'
 import React, { useRef, useState,useMemo } from 'react'
 import { assign } from 'lodash-es'
 import styles from './index.module.scss'
+import { getValueById } from 'helpers/config/getValueById'
 const ViewJobModal = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef } = props
+    const { contextRef,lang,config} = props
     const actionsRef = useRef({} as any)
     const [job, setJob] = useState(null)
+
+    const {
+        JobType,
+        yearsOfExp,
+        quealitification,
+        workLocation,
+        address,
+        JobFunction,
+        skills,
+        salary,
+        done
+    } = lang ?? {};
     const context = {
         showJobDetail(actions) {
             actionsRef.current = actions
@@ -21,14 +34,13 @@ const ViewJobModal = (props: any) => {
     // const job = contextRef.current.getState?.()?.job
     const details = useMemo(() => {
         return [
-            ['Job Type', job?.job_type_value],
-            ['Years of Exp', job?.xp_lvl?.value],
-            ['Quealitification', job?.degree?.value],
-            ['Work location', job?.location?.value],
-            ['Address', job?.full_address],
-            ['Job function', job?.function_job_title],
-            [
-                'Skills',
+            [JobType, getValueById(config, job?.job_type_id, 'job_type_id')],
+            [yearsOfExp,  getValueById(config, job?.xp_lvl?.id, 'xp_lvl_id')],
+            [quealitification, getValueById(config, job?.degree?.id, 'degree_id')],
+            [workLocation, getValueById(config, job?.location?.id, 'location_id')],
+            [address, job?.full_address],
+            [JobFunction, getValueById(config,job?.function_job_id,'function_job_title_id')],
+            [skills,
                 <div key="skills" className={styles.skillContainer}>
                     {(job?.skills ?? []).map(skill => {
                         return (
@@ -39,14 +51,14 @@ const ViewJobModal = (props: any) => {
                     })}
                 </div>
             ],
-            ['Salary', job?.salary_range_value]
+            [salary, job?.salary_range_value]
         ]
     }, [job])
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
         headerTitle={job?.job_title}
-        secondButtonText='Done'
+        secondButtonText={done}
         secondButtonIsClose={false}
         handleSecondButton={() => actionsRef.current.close?.()}
     >

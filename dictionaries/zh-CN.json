@@ -447,7 +447,8 @@
       "companySize": "公司规模",
       "finance": "融资阶段",
       "reset": "重置",
-      "apply": "应用"
+      "apply": "应用",
+      "viewVerifiedCompanies":"查看认证公司"
     },
     "alert": "开启新职位通知",
     "alertModal": {
@@ -516,7 +517,8 @@
     "save": "保存",
     "downloadAPP": "下载APP",
     "chatDirectly": "直接谈",
-    "withBoss": "和老板"
+    "withBoss": "和老板",
+    "relatedSearch":"相关搜索"
   },
   "manageProfile": {
     "tab": {
@@ -825,7 +827,25 @@
     "pleaseSelectResume": "请选择您想与招聘人员分享的简历。",
     "orUploadNewResume": "或上传新简历",
     "onlyMax3Resumes": "最大允许3份简历，请至少删除1份以上简历",
-    "uploadNewResume": "上传新简历"
+    "uploadNewResume": "上传新简历",
+    "JobType": "工作类型",
+    "yearsOfExp": "多年经验",
+    "quealitification": "资格化",
+    "workLocation": "工作地点",
+    "address": "地址",
+    "JobFunction": "工作职能",
+    "skills": "技能",
+    "salary": "薪水",
+    "done": "完毕",
+    "offerFrom": "Offer 来自",
+    "offered": "提供",
+    "reject": "拒绝",
+    "accept":"接受",
+    "pleaseNoteThatThisOffer": " 请注意，此报价不具约束力，并有可能更改。可能会有一些 敲定要约所需的额外文书工作和步骤。",
+    "company": "公司",
+    "sendAnOffer": "发送Offer",
+    "viewNow": "现在查看",
+    "viewLater": "稍后查看"
   },
   "chatInterview": {
     "confirmText": "面试已经确认",
