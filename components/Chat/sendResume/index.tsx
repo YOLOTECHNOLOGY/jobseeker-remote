@@ -20,12 +20,13 @@ import styles from './index.module.scss'
 
 type UploadButtonProps = {
   disabled?: boolean
-  onChange: (event: React.ChangeEvent) => void
+  onChange: (event: React.ChangeEvent) => void,
+  lang:any
 }
 
-const UploadButton = ({ disabled = false, onChange }: UploadButtonProps) => {
+const UploadButton = ({ disabled = false, onChange,lang }: UploadButtonProps) => {
   const inputRef: Ref<HTMLInputElement> = useRef()
-
+  const {uploadYourResume,supportedFileType} = lang || {}
   return (
     <>
       <MaterialButton
@@ -41,12 +42,12 @@ const UploadButton = ({ disabled = false, onChange }: UploadButtonProps) => {
         disabled={disabled}
       >
         <Text textStyle='base' textColor={disabled ? '#fff' : 'primaryBlue'} bold>
-          Upload your resume
+          {uploadYourResume}
         </Text>
         <input type='file' hidden accept='.pdf, .doc, .docx' onChange={onChange} ref={inputRef} />
       </MaterialButton>
       <label className={styles.fileLabel}>
-        Supported file type: PDF, DOC, DOCX. Max. file size: 5MB
+        {supportedFileType}
       </label>
     </>
   )
@@ -54,9 +55,19 @@ const UploadButton = ({ disabled = false, onChange }: UploadButtonProps) => {
 
 const SendResumeModal = (props: any) => {
   const [show, setShow] = useState(false)
-  const { contextRef, loading, data, applicationId } = props
+  const { contextRef, loading, data, applicationId,lang } = props
   const actionsRef = useRef({} as any)
-
+  const {fileSizeIsTooHuge,
+    failedToUploadResume,
+    pleaseContactSupport,
+    sendResume,
+    pleaseSelectResume,
+    orUploadNewResume,
+    onlyMax3Resumes,
+    uploadNewResume,
+    cancel,
+    send
+  } = lang || {}
   const context = {
     showSendResume(actions) {
       actionsRef.current = actions
@@ -96,7 +107,7 @@ const SendResumeModal = (props: any) => {
         displayNotification({
           open: true,
           severity: 'error',
-          message: 'File size is too huge. Please upload file that is within 5MB.'
+          message: fileSizeIsTooHuge
         })
       )
       return
@@ -106,8 +117,7 @@ const SendResumeModal = (props: any) => {
         displayNotification({
           open: true,
           severity: 'error',
-          message: `Failed to upload resume with error: ${error.message}. 
-            Please contact support@bossjob.com for assistance.`
+          message: `${failedToUploadResume}: ${error.message}. ${pleaseContactSupport}`
         })
       )
     })
@@ -124,9 +134,9 @@ const SendResumeModal = (props: any) => {
     <Modal
       showModal={show}
       handleModal={() => actionsRef.current.close?.()}
-      headerTitle={'Send Resume'}
-      firstButtonText='Cancel'
-      secondButtonText='Send'
+      headerTitle={sendResume}
+      firstButtonText={cancel}
+      secondButtonText={send}
       firstButtonIsClose={false}
       secondButtonIsClose={false}
       handleFirstButton={() => actionsRef.current.close?.()}
@@ -149,7 +159,7 @@ const SendResumeModal = (props: any) => {
           if (resumeList.length) {
             return (
               <>
-                <p>Please select the resume that you would like to share with recruiter.</p>
+                <p>{pleaseSelectResume}</p>
                 <RadioGroup
                   name='radio-buttons-group'
                   onChange={(e) => setResumeId(+e.target.value)}
@@ -176,18 +186,18 @@ const SendResumeModal = (props: any) => {
                   ))}
                 </RadioGroup>
                 <p className={styles.bottomText}>
-                  Or upload a new resume
+                 {orUploadNewResume}
                   {resumeList.length >= 3 &&
-                    '(only max. of 3 resumes can be uploaded, please delete at least 1 resume above)'}
+                    `(${onlyMax3Resumes})`}
                 </p>
-                <UploadButton onChange={handleUploadResume} disabled={resumeList.length >= 3} />
+                <UploadButton onChange={handleUploadResume} disabled={resumeList.length >= 3} lang={lang}/>
               </>
             )
           }
           return (
             <>
-              <p>Upload a new resume</p>
-              <UploadButton onChange={handleUploadResume} />
+              <p>{uploadNewResume}</p>
+              <UploadButton onChange={handleUploadResume} lang={lang}/>
             </>
           )
         })()}

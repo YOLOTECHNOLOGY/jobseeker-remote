@@ -20,7 +20,9 @@ const CommonPhrasesModal = (props: any) => {
   }
   contextRef.current = assign(contextRef.current, context)
   const rightBtnClick = useCallback(() => {
-    actionsRef.current.send(selected.message)
+    if(selected?.message) {
+      actionsRef.current.send(selected.message)
+    }
   }, [actionsRef.current, selected])
   const aProps: any = { disabled: list.length >= 10 }
   const editProps: any = { disabled: !(list.length > 0) }
@@ -33,7 +35,7 @@ const CommonPhrasesModal = (props: any) => {
       secondButtonText={dic?.send}
       firstButtonIsClose={false}
       secondButtonIsClose={false}
-      isSecondButtonDisabled={!selected.id}
+      isSecondButtonDisabled={!selected?.id}
       handleFirstButton={() => actionsRef.current?.close?.()}
       handleSecondButton={rightBtnClick}
       isSecondButtonLoading={loading}
@@ -65,7 +67,10 @@ const CommonPhrasesModal = (props: any) => {
           </RadioGroup>
           <span>
             <a
-              onClick={() => editProps.disabled || actionsRef?.current?.modalEditList?.()}
+              onClick={() => {
+                setSelected(null)
+                editProps.disabled || actionsRef?.current?.modalEditList?.()
+              } }
               {...editProps}
             >
               {dic?.actionEdit}

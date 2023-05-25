@@ -45,7 +45,7 @@ const ExchangeConfirmModal = (props: any) => {
         isFirstButtonLoading={loading}
     >
         <div className={styles.modalContainer}>
-            <p className={styles.modalTitle}>Are you sure you want to exchange mobile number with Boss? You will be able to view Boss’s mobile number after Boss had agreed to your request.</p>
+            <p className={styles.modalTitle}>{dic.sureText}</p>
         </div>
     </Modal>
 }

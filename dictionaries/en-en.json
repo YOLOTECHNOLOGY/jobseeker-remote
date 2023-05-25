@@ -77,7 +77,13 @@
     "havingTrouble": "Having trouble?",
     "requestAmagicLink": "Request a Magic Link",
     "seoMetaDescription": "Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ",
-    "seoMetaDescription2": "Network of 2 million+ professionals."
+    "seoMetaDescription2": "Network of 2 million+ professionals.",
+    "magicLink": {
+      "welcomeBack": "Welcome back!",
+      "signUp": "Sign up an account",
+      "haveSendEmail": "We’ve sent a magic link to {{email}}. Please click on the link to proceed.",
+      "toHome": "Back to home page"
+    }
   },
   "myJobs": {
     "communicated": "Communicated",
@@ -131,7 +137,7 @@
     "InterviewTime": "Interview Time",
     "address": "Address",
     "noMore": "No more",
-    "location":"location",
+    "location": "location",
     "pending": "Pending",
     "accepted": "Accepted",
     "upcoming": "Upcoming",
@@ -155,7 +161,7 @@
       "reason5": "Industry mismatch",
       "reason6": "Not interested in this company"
     },
-    "deleteSuccess":"delete seccess"
+    "deleteSuccess": "delete seccess"
   },
   "companies": {
     "title": "Find great companies in {{country}}",
@@ -357,7 +363,10 @@
         "title": "Job title or company",
         "btn": "Search"
       },
-      "jobPostedOn": "Posted on"
+      "jobPostedOn": "Posted on",
+      "benefits": "Benefits",
+      "workingLocation": "Working Location",
+      "workLocation": "Work Location"
     },
     "shareModal": {
       "title": "Share this job",
@@ -517,6 +526,8 @@
         "year_one": "{{age}} year old",
         "year_other": "{{age}} years old",
         "about": "About",
+        "readMore": "Read More",
+        "readLess": "Read Less",
         "informationCard": {
           "title": "Complete all information about you",
           "content": "Help the recruiter to know more about you and connect more easily with you.",
@@ -541,7 +552,11 @@
           "perMonth": "per month",
           "noExpTips": "Showcase your past contributions and that you can be an asset to potential employer.",
           "addExp": "Add experience",
-          "addWorkExp": "Add work experience"
+          "addWorkExp": "Add work experience",
+          "year": "year",
+          "years": "years",
+          "month": "month",
+          "months": "months"
         },
         "expModal": {
           "title": "Work experience",
@@ -742,6 +757,7 @@
     "startDateMustBeEarlier": " Start date must be earlier than completion date.",
     "to": "To",
     "monthlySalary": "Monthly Salary",
+    "currency": "Currency",
     "addWorkExperience": "Add a work experience",
     "fillUpTheRequired": "Fill up the required field to proceed.",
     "noWorkExperience": "I have no work experience",
@@ -764,7 +780,9 @@
     "searchForJobTitle": "Search for job title",
     "year": "year",
     "month": "month",
-    "months": "s"
+    "months": "s",
+    "readMore": "Read More",
+    "readLess": "Read Less"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -791,7 +809,24 @@
     "mobileActionResume": "Send Resume",
     "mobileActionExchange": "Exchange mobile number",
     "moreText": "More",
-    "emoji": "Emoji"
+    "emoji": "Emoji",
+    "JobCcopeIsNotWhat":"Job scope is not what I am looking for.",
+    "theSalaryIsNotWithin":"The salary is not within my expected range.",
+    "workingLocationIsTooFar":"Working location is too far.",
+    "cancel":"Cancel",
+    "send":"Send",
+    "pleaseShareUsWhyThisRole":"Please share with us why this role is not what you are looking for and we will provide better job suggestion. This chat will be moved to “Not interested” folder.",
+    "uploadYourResume":"Upload your resume",
+    "supportedFileType":"Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
+    "fileSizeIsTooHuge":"File size is too huge. Please upload file that is within 5MB.",
+    "failedToUploadResume":"Failed to upload resume with error",
+    "pleaseContactSupport":" Please contact support@bossjob.com for assistance.",
+    "sendResume":"Send Resume",
+    "pleaseSelectResume":"Please select the resume that you would like to share with recruiter.",
+    "orUploadNewResume":"Or upload a new resume",
+    "onlyMax3Resumes":"only max. of 3 resumes can be uploaded, please delete at least 1 resume above",
+    "uploadNewResume":"Upload a new resume"
+
   },
   "chatInterview": {
     "confirmText": "Interview Confirmed",
@@ -846,18 +881,18 @@
     "phraseLabel": "Phrase",
     "inputPlaceholder": "Insert the common phrases that you would like to send to Boss",
     "addDescription": "Add your own phrase. Please do not include your contact details here.",
-    "save":"Save",
-    "back":"Back",
-    "delete":"Delete",
-    "done":"Done",
-    "close":"Close",
-    "send":"Send",
-    "sureDelete":"Sure to delete this?",
-    "pickDescription":"Please select the phrase that you want to send to Boss.",
-    "actionEdit":" Edit or delete phrase",
-    "actionCreate":"Create new phras",
-    "actionDescription":"You can save up to 10 phrases",
-    "or":"or"
+    "save": "Save",
+    "back": "Back",
+    "delete": "Delete",
+    "done": "Done",
+    "close": "Close",
+    "send": "Send",
+    "sureDelete": "Sure to delete this?",
+    "pickDescription": "Please select the phrase that you want to send to Boss.",
+    "actionEdit": " Edit or delete phrase",
+    "actionCreate": "Create new phras",
+    "actionDescription": "You can save up to 10 phrases",
+    "or": "or"
   },
   "quickUploadResume": {
     "title": "Upload your resume",
@@ -909,6 +944,50 @@
     "chooseTemplateAnswer": "You can choose from 2 templates, professional or creative resume samples. You can immediately use your newly improved resume to apply for job openings on Bossjob.",
     "editLater": "Would I be able to edit the resume template later?",
     "editLaterAnswer": "Absolutely yes. Login to your Bossjob account anytime to update your resume. You can use your Bossjob account as a resume bank. Keep your most updated career details in Bossjob and use them as your professional identity!"
+  },
+  "accountSetting": {
+    "title": "Account Setting",
+    "tabs": {
+      "account": "Account",
+      "jobAlert": "Job Alert"
+    },
+    "email": "Email",
+    "sendOpt": "Send OTP",
+    "save": "Save",
+    "cancel": "Cancel",
+    "verify": "Verify",
+    "optLabel": "6-digit OTP",
+    "errorMsg": {
+      "optIncorrect": "OTP is incorrect. Please try again."
+    },
+    "emailTip": "Receive job applications updates through your email.",
+    "editEmailExplanation": "Your email has been verified. You will be able to receive job applications update through your email. To change your email address, please verify your new email address.",
+    "notVerifyTips": "To receive job applications update, please verify your email.",
+    "emailLabel": "Email Address",
+    "enterCode": "Enter the code that we have sent to {{email}}",
+    "mobile": "Mobile Number",
+    "mobileTip": "Help recruiters to better contact you for job opportunities.",
+    "mobileNotVerified": "To help recruiters to better contact you for job opportunities. please verify your mobile number.",
+    "mobileExplanation": "Your mobile number has been verified. Recruiters will be able to contact you through your mobile number. To change your mobile number, please verify your new mobile number.",
+    "country": "Country",
+    "contactNumber": "Contact Number",
+    "notify": "Email Notification",
+    "receiveNewMessage": "Receive new chat messages or resume request from recruiters:",
+    "receiveNewMessageExplanation": "This is to notify you of new chat messages or resume request. You will only receive email notification for this when you are offline",
+    "receiveFromSystem": "Receive system notification:",
+    "receiveFromSystemExplanation": "This is to inform you of important notification such as jobs that you might be interested in and your interviews details.",
+    "receiveTips": "Receive career and hiring tips newsletter:",
+    "receiveTipsExplanation": "This is to share insights and tips that will help you with your job search.",
+    "jobAlertTitle": "Job alert",
+    "filter": "Filters",
+    "frequency": "Frequency",
+    "alertFrequency": "Alert Frequency",
+    "notJobAlert": "You have no job alert yet.",
+    "toSearch": " Back to job search",
+    "deleteTitle": "Delete job alert",
+    "keep": "Keep",
+    "delete": "Delete",
+    "deleteTips": "You are about to delete this job alert. This cannot be undone."
   },
   "chatExchange":{
     "exchangeTitle":"Mobile number",

@@ -809,7 +809,24 @@
     "mobileActionResume": "Send Resume",
     "mobileActionExchange": "Exchange mobile number",
     "moreText": "More",
-    "emoji": "Emoji"
+    "emoji": "Emoji",
+    "JobCcopeIsNotWhat":"Job scope is not what I am looking for.",
+    "theSalaryIsNotWithin":"The salary is not within my expected range.",
+    "workingLocationIsTooFar":"Working location is too far.",
+    "cancel":"Cancel",
+    "send":"Send",
+    "pleaseShareUsWhyThisRole":"Please share with us why this role is not what you are looking for and we will provide better job suggestion. This chat will be moved to “Not interested” folder.",
+    "uploadYourResume":"Upload your resume",
+    "supportedFileType":"Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
+    "fileSizeIsTooHuge":"File size is too huge. Please upload file that is within 5MB.",
+    "failedToUploadResume":"Failed to upload resume with error",
+    "pleaseContactSupport":" Please contact support@bossjob.com for assistance.",
+    "sendResume":"Send Resume",
+    "pleaseSelectResume":"Please select the resume that you would like to share with recruiter.",
+    "orUploadNewResume":"Or upload a new resume",
+    "onlyMax3Resumes":"only max. of 3 resumes can be uploaded, please delete at least 1 resume above",
+    "uploadNewResume":"Upload a new resume"
+
   },
   "chatInterview": {
     "confirmText": "Interview Confirmed",

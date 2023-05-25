@@ -809,7 +809,23 @@
     "mobileActionResume": "发送简历",
     "mobileActionExchange": "交换号码",
     "moreText": "更多操作",
-    "emoji": "表情"
+    "emoji": "表情",
+    "JobCcopeIsNotWhat": "工作范围不是我要找的。",
+    "theSalaryIsNotWithin": "工资不在我的预期范围内。",
+    "workingLocationIsTooFar": "工作地点太远。",
+    "cancel": "取消",
+    "send": "发送",
+    "pleaseShareUsWhyThisRole": "请与我们分享为什么这个职位不是您想要的，我们将提供更好的工作建议。",
+    "uploadYourResume": "上传你的简历",
+    "supportedFileType": "支持的文件类型：PDF、DOC、DOCX。",
+    "fileSizeIsTooHuge": "文件太大。",
+    "failedToUploadResume": "上传简历失败，出现错误",
+    "pleaseContactSupport": " 请联系 support@bossjob.com 寻求帮助。",
+    "sendResume": "发送简历",
+    "pleaseSelectResume": "请选择您想与招聘人员分享的简历。",
+    "orUploadNewResume": "或上传新简历",
+    "onlyMax3Resumes": "最大允许3份简历，请至少删除1份以上简历",
+    "uploadNewResume": "上传新简历"
   },
   "chatInterview": {
     "confirmText": "面试已经确认",
@@ -990,5 +1006,6 @@
     "msgText":"请输入我们向此电话{{number}}发送的信息",
     "smb":"的电话号码:",
     "boss":"招聘者"
+  
   }
 }

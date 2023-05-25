@@ -463,7 +463,7 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
             contextRef={contextRef}
             data={imState.resume_request}
             applicationId={applicationId}
-            lang={lang}
+            lang={chatDictionary}
         />
 
         <Interview
@@ -501,7 +501,7 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
             loading={loading}
             data={imState}
             applicationId={applicationId}
-            lang={lang}
+            lang={chatDictionary}
             contextRef={contextRef}
         />
         <IssueModal

@@ -6,7 +6,16 @@ import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import styles from './index.module.scss'
 const NotInterestModal = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef, loading, applicationId } = props
+    const { contextRef, loading, applicationId ,lang} = props
+    const {
+        JobCcopeIsNotWhat,
+        theSalaryIsNotWithin,
+        notInterested,
+        workingLocationIsTooFar,
+        cancel,
+        send,
+        pleaseShareUsWhyThisRole
+    } = lang ?? {}
     const [reason, setReason] = useState('')
 
     const actionsRef = useRef({} as any)
@@ -22,17 +31,17 @@ const NotInterestModal = (props: any) => {
 
     }
     const reasons = [
-        'Job scope is not what I am looking for.',
-        'The salary is not within my expected range.',
-        'Working location is too far.'
+        JobCcopeIsNotWhat,
+        theSalaryIsNotWithin,
+        workingLocationIsTooFar
     ]
     contextRef.current = assign(contextRef.current, context)
     return <Modal
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
-        headerTitle='Not Interested'
-        firstButtonText='Cancel'
-        secondButtonText='Send'
+        headerTitle={notInterested}
+        firstButtonText={cancel}
+        secondButtonText={send}
         firstButtonIsClose={false}
         secondButtonIsClose={false}
         handleFirstButton={() => actionsRef.current.close?.()}
@@ -44,7 +53,7 @@ const NotInterestModal = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <p>Please share with us why this role is not what you are looking for and we will provide better job suggestion. This chat will be moved to “Not interested” folder.</p>
+        <p>{pleaseShareUsWhyThisRole}</p>
         <div>
             <RadioGroup
                 aria-labelledby='demo-radio-buttons-group-label'
