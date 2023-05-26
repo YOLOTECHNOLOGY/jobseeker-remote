@@ -1,81 +1,86 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React, { } from 'react'
+import React from 'react'
 import styles from '../../index.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { getValueById } from 'helpers/config/getValueById'
 import { useSelector } from 'react-redux'
+import { transState } from 'helpers/utilities'
+import common_styles from 'app/[lang]/index.module.scss'
 const JobCard = (props: any) => {
-    const {
-        job_title,
-        // job_region,
-        salary_range_value,
-       //  job_type,
-       // job_location,
-       // xp_lvl,
-       // degree,
-        recruiter_full_name,
-        recruiter_job_title,
-        company_logo,
-        company_name,
-        id,
-        job_url,
-        job_type_id,
-        job_location_id,
-        xp_lvl_id,
-        degree_id,
-    } = props
-   // const labels = [job_type, xp_lvl, degree].filter(a => a)
-    const config = useSelector((store:any)=> store.config.config.response)
-    const labels = [
-        getValueById(config,job_type_id,'job_type_id'), 
-       
-        getValueById(config,xp_lvl_id,'xp_lvl_id'),
-        getValueById(config,degree_id,'degree_id'),
-       ].filter((a) => a)
-     const router = useRouter()
+  const {
+    job_title,
+    // job_region,
+    salary_range_value,
+    //  job_type,
+    // job_location,
+    // xp_lvl,
+    // degree,
+    recruiter_full_name,
+    recruiter_job_title,
+    company_logo,
+    company_name,
+    id,
+    job_url,
+    job_type_id,
+    job_location_id,
+    xp_lvl_id,
+    degree_id,
+    recruiter_last_active_at: recruiterLastActiveAt
+  } = props
+  // const labels = [job_type, xp_lvl, degree].filter(a => a)
+  const config = useSelector((store: any) => store.config.config.response)
+  const labels = [
+    getValueById(config, job_type_id, 'job_type_id'),
 
-    return <div className={styles.jobCardMoblie}>
-        <div
-            id={'job_card_container_' + id}
-            className={styles.container}
-            onClick={e => {
-                e.stopPropagation()
-                router.push(job_url, { forceOptimisticNavigation: true })
-            }}
-        >
-            <div
-                key={job_title + id}
-                className={styles.titleContainer}
-                title={`${job_title}`}
-            >
-                <div className={styles.title}>{`${job_title}`}</div>
-                <div className={styles.salary}>{salary_range_value}</div>
-            </div>
-            <div
-                className={styles.companyName}
+    getValueById(config, xp_lvl_id, 'xp_lvl_id'),
+    getValueById(config, degree_id, 'degree_id')
+  ].filter((a) => a)
+  const router = useRouter()
 
-            >{company_name}</div>
-            <div className={styles.labelContainer}>
-                {labels.map(label => <div key={label} className={styles.label}>{label}</div>)}
-            </div>
-            <div className={styles.recruiterContainer}>
-                <div className={styles.info}>
-                    <Image className={styles.image} src={company_logo} height={17} width={17} alt={''} />
-                    <div
-                        className={styles.hrTitle}
-                        title={`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
-                    >
-                        {`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
-                    </div>
-                </div>
-                <div className={styles.fullName}>
-                    {getValueById(config,job_location_id,'location_id')}
-                </div>
-            </div>
+  return (
+    <div className={styles.jobCardMoblie}>
+      <div
+        id={'job_card_container_' + id}
+        className={styles.container}
+        onClick={(e) => {
+          e.stopPropagation()
+          router.push(job_url, { forceOptimisticNavigation: true })
+        }}
+      >
+        <div key={job_title + id} className={styles.titleContainer} title={`${job_title}`}>
+          <div className={styles.title}>{`${job_title}`}</div>
+          <div className={styles.salary}>{salary_range_value}</div>
         </div>
+        <div className={styles.companyName}>{company_name}</div>
+        <div className={styles.labelContainer}>
+          {labels.map((label) => (
+            <div key={label} className={styles.label}>
+              {label}
+            </div>
+          ))}
+        </div>
+        <div className={styles.recruiterContainer}>
+          <div className={styles.info}>
+            <div
+              className={`${common_styles.avator}  ${transState(recruiterLastActiveAt).state === 1 ? '' :  common_styles.avator2}`}>
+              <Image src={company_logo} height={20} width={20} alt={''} />
+            </div>
+            <div
+              className={styles.hrTitle}
+              title={`${[recruiter_full_name, recruiter_job_title].filter((a) => a).join(' · ')}`}
+            >
+              {`${[recruiter_full_name, recruiter_job_title].filter((a) => a).join(' · ')}`}
+            </div>
+          </div>
+          <div className={styles.fullName}>
+            {getValueById(config, job_location_id, 'location_id')}
+          </div>
+        </div>
+      </div>
     </div>
+  )
 }
 
 export default JobCard
