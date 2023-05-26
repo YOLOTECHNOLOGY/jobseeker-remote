@@ -54,7 +54,7 @@ export async function GET(request) {
   response.cookies.set(refreshTokenKey, `${refreshToken}`, { path: '/', maxAge: refreshToken ? maxTime : 0 })
   // clear the user data, and refetch the user data again
   response.cookies.set(userKey, user, { path: '/', maxAge: user ? maxTime : 0 })
-  response.cookies.set('location', '', { path: '/', maxAge: 0 })
+  response.cookies.delete('location')
 
   return response
 }
