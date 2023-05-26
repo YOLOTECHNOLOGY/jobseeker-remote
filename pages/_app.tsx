@@ -1,11 +1,10 @@
-
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import SEO from 'components/SEO'
 import { wrapper } from 'store'
-import { getCookie, removeCookie } from 'helpers/cookies'
+import { getCookie, removeUserCookie } from 'helpers/cookies'
 import { CookiesProvider } from 'react-cookie'
 import { ConnectedRouter } from 'connected-next-router'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -35,8 +34,7 @@ import moment from 'moment'
 moment.locale('en-sg')
 
 const App = (props: AppProps) => {
-
-   const { Component, pageProps } = props
+  const { Component, pageProps } = props
   const lang = props.router.query.lang
   const router = useRouter()
   const accessToken = getCookie('accessToken')
@@ -44,7 +42,7 @@ const App = (props: AppProps) => {
   const [toPath, setToPath] = useState('')
   useEffect(() => {
     if (!(window as any)?.imSharedWorker && window.SharedWorker) {
-      (window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
+      ;(window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
     }
   }, [])
   // useEffect(() => {
@@ -105,21 +103,19 @@ const App = (props: AppProps) => {
   }, [])
 
   useEffect(() => {
-    const accessToken = getCookie('accessToken')
-    if (accessToken) {
-      jobseekerTokenValidate(accessToken)
+    const accessTokenValue = getCookie(accessToken)
+    if (accessTokenValue) {
+      jobseekerTokenValidate(accessTokenValue)
         .then(() => {
           //
         })
         .catch((result) => {
           const { data, status } = result.response ?? {}
           if (status == 400 || data?.errors?.error[0] === 'Invalid token') {
+            removeUserCookie()
+
             if (!router.pathname.includes('/get-started')) {
-              removeCookie('accessToken')
-              removeCookie('refreshToken')
               window.location.href = '/get-started?type=LoginOut'
-            } else {
-              removeCookie('accessToken')
             }
           }
         })
@@ -137,7 +133,10 @@ const App = (props: AppProps) => {
         jobDetail={props?.pageProps?.jobDetail}
       />
       <Head>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no' />
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no'
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -152,8 +151,8 @@ const App = (props: AppProps) => {
       </Head>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       {/* Global Site Tag (gtag.js) - Google Analytics */}
-       {/* Google One Tap Sign in */}
-       <Script
+      {/* Google One Tap Sign in */}
+      <Script
         src='https://accounts.google.com/gsi/client'
         onReady={() => {
           if (!accessToken) {
@@ -181,7 +180,8 @@ const App = (props: AppProps) => {
                   accessTokenGoogle +
                   '&active_key=' +
                   activeKey +
-                  '&redirectUrl=' + window.location.href
+                  '&redirectUrl=' +
+                  window.location.href
               )
             }
           }
@@ -202,12 +202,16 @@ const App = (props: AppProps) => {
         }}
       />
       {/* Google Tag Manager (noscript) */}
-      <noscript dangerouslySetInnerHTML={{
-        __html: `
-          <iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'}"
+      <noscript
+        dangerouslySetInnerHTML={{
+          __html: `
+          <iframe src="https://www.googletagmanager.com/ns.html?id=${
+            process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
+          }"
           height="0" width="0" style="display:non e;visibility:hidden"></iframe>
-        `}}>
-      </noscript>
+        `
+        }}
+      ></noscript>
       {/* <Script
         strategy='lazyOnload'
         onLoad={() => {
@@ -237,8 +241,9 @@ const App = (props: AppProps) => {
           __html: `
             function initialize() {	
               FB.init({	
-                appId            : ${process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
-            },
+                appId            : ${
+                  process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
+                },
                 xfbml            : true,	
                 version          : 'v6.0'	
               });	
@@ -323,12 +328,10 @@ const App = (props: AppProps) => {
                 <MaintenancePage {...pageProps} />
               ) : isPageLoading &&
                 !(router.pathname.includes('jobs-hiring') && toPath.includes('jobs-hiring')) ? (
-                <TransitionLoader accessToken={accessToken}  lang={lang}/>
+                <TransitionLoader accessToken={accessToken} lang={lang} />
               ) : (
                 <NotificationProvider>
-
                   <Component {...pageProps} />
-
                 </NotificationProvider>
               )}
             </IMProvider>

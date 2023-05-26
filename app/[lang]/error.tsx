@@ -4,37 +4,55 @@ import { BossjobLogo } from 'images'
 import { Button } from 'app/[lang]/components/MUIs'
 import styles from './index.module.scss'
 import configuredAxios from 'helpers/configuredAxios'
-import { getCookie, removeCookie, setCookie } from 'helpers/cookies'
+import { accessToken, getCookie, removeUserCookie, setCookie } from 'helpers/cookies'
 import Loading from './loading'
 
 export default function Error(props: { error: any; reset: () => void }) {
   const { error, reset } = props
   const router = useRouter()
 
-  if (error?.message?.includes('status code 401') || error.digest === '193452068' || error.digest === '2228123006') {
+  if (
+    error?.message?.includes('status code 401') ||
+    error.digest === '193452068' ||
+    error.digest === '2228123006'
+  ) {
     if (globalThis.globalPromise) {
       globalThis.globalPromise.then(() => {
         window.location.reload()
       })
     } else {
-      const axios = configuredAxios('auth', '', '', '');
-      const data = { source: 'web', refresh: getCookie('refreshToken') }
-      globalThis.globalPromise = axios.post('/token/refresh', data).then((res: any) => {
-        const { access, token_expired_at } = res?.data?.data ?? {}
-        if (access) {
-          setCookie('accessToken', access, token_expired_at)
-          window.location.reload()
+      const axios = configuredAxios('auth', '', '', '')
+      const refresh = getCookie('refreshToken')
+      const data = { source: 'web', refresh }
 
-        } else {
-          removeCookie('accessToken')
-          removeCookie('refreshToken')
-          router.push('/get-started', { forceOptimisticNavigation: true })
-        }
-      }).catch((e) => {
-        removeCookie('accessToken')
-        removeCookie('refreshToken')
+      function redirectToGetStarted() {
+        removeUserCookie()
         router.push('/get-started', { forceOptimisticNavigation: true })
-      })
+      }
+
+      if (!refresh) {
+        setTimeout(() => {
+          redirectToGetStarted()
+        }, 3000)
+        // redirect to login after 3s, so
+        return <Loading />
+      }
+      globalThis.globalPromise = axios
+        .post('/token/refresh', data)
+        .then((res: any) => {
+          const { access, token_expired_at } = res?.data?.data ?? {}
+          if (access) {
+            setCookie(accessToken, access, token_expired_at)
+            window.location.reload()
+          } else {
+            // refresh token errored, in this case, that means the refreshToken is expired
+            // so we should leave and login
+            redirectToGetStarted()
+          }
+        })
+        .catch((e) => {
+          redirectToGetStarted()
+        })
     }
     return <Loading />
   }

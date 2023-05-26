@@ -22,7 +22,7 @@ export const getCookie = (cookieName) => {
 }
 
 export const removeCookie = (cookieName) => {
-  cookies.remove(cookieName)
+  cookies.remove(cookieName, { path: '/' })
 }
 
 export const setCookieWithExpiry = (cookieName, data, timeToExpiry) => {
@@ -35,4 +35,13 @@ export const setSourceCookie = (data) => {
 
 export const getSourceCookie = () => {
   return getCookie(sourceKey) || 'job_search'
+}
+
+/**
+ * remove the user's data in browser
+ */
+export const removeUserCookie = () => {
+  removeCookie(accessToken)
+  removeCookie(refreshToken)
+  removeCookie(userKey)
 }
