@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getCookie, removeCookie, setCookie } from 'helpers/cookies'
+import { getCookie, removeCookie, setCookie, userKey } from 'helpers/cookies'
 import { accessToken, refreshToken } from './cookies';
 import { getCountryId } from './country';
 import { NextResponse } from 'next/server';
@@ -168,7 +168,9 @@ const redirectToHomeOnClient = () => {
       .then((im) => im?.IMManager?.logout?.())
       .then(() => localStorage?.clear?.())
   } else {
-    NextResponse.next().redirect('/get-started', 301)
+    const response = NextResponse.next()
+    response.cookies.delete(accessToken, refreshToken, userKey)
+    response.redirect('/get-started', 301)
   }
 }
 
