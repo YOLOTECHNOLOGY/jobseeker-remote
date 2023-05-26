@@ -28,11 +28,11 @@ const PopularJob = ({ langKey }: any) => {
       <label>{home.popularJobs}</label>
       <div className={styles.tagContainer}>
         {tags.map((tag, index) => (
-          <div key={tag.value} className={styles.tag}>
-            <Link prefetch={false} href={'/' + langKey + querys[index]}>
+          <Link key={tag.value} prefetch={false} href={'/' + langKey + querys[index]} className={styles.tag}>
+            <div>
               {tag.label}
-            </Link>
-          </div>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
