@@ -114,7 +114,6 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
     const accessToken = getCookie(accessTokenKey)
     const refreshToken = getCookie(refreshTokenKey)
     const user = getCookie(userKey)
-    debugger
 
     let query = `/${lang}`
     let newOrigin = origin
