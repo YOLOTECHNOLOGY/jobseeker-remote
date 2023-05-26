@@ -168,9 +168,9 @@ const redirectToHomeOnClient = () => {
       .then((im) => im?.IMManager?.logout?.())
       .then(() => localStorage?.clear?.())
   } else {
-    const response = NextResponse.next()
-    response.cookies.delete(accessToken, refreshToken, userKey)
-    response.redirect('/get-started', 301)
+    // const response = NextResponse.redirect('/get-started')
+    // response.cookies.delete(accessToken, refreshToken, userKey)
+    // NextResponse.next().redirect('/get-started', 301)
   }
 }
 
@@ -188,7 +188,9 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
         axios.interceptors.response.use(
           (response) => response,
           (error) => {
+            debugger
             redirectToHomeOnClient();
+            
             return Promise.reject(error)
             // if (error?.response?.status === 401 && server) {
             //   console.log('server401', error,  error.request)
