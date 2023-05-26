@@ -152,7 +152,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   const { lang }: any = query
   const dictionary = await getDictionary(lang)
 
-  store.dispatch(fetchConfigRequest(req.cookies[configKey].split('_')?.[1]))
+  store.dispatch(fetchConfigRequest(lang))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
 

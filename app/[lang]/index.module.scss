@@ -423,40 +423,6 @@
         color: #353535;
         line-height: 26px;
 
-        .avator {
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          position: relative;
-          margin-right: 10px;
-          display: inline-block;
-          top: -2px;
-
-          img {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-          }
-
-          &::after {
-            content: ' ';
-            display: block;
-            position: absolute;
-            bottom: -5px;
-            right: -4px;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: #32A071;
-            border: 2px solid #fff;
-          }
-        }
-
-        .avator2 {
-          &::after {
-            background: #ccc;
-          }
-        }
 
         .location {
           float: right;
@@ -465,7 +431,7 @@
       }
     }
   }
-
+ 
   .load {
     text-align: center;
     height: 40px;
@@ -505,7 +471,40 @@
     }
   }
 }
+.avator {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: relative;
+  margin-right: 10px;
+  display: inline-block;
+  top: -2px;
 
+  img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+  &::after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    bottom: -5px;
+    right: -4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #32A071;
+    border: 2px solid #fff;
+  }
+}
+
+.avator2 {
+  &::after {
+    background: #ccc;
+  }
+}
 @media (max-width: 750px) {
   .mobileHome {
     display: block;
