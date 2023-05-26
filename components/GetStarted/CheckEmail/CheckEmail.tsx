@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from '@mui/material/Link'
+import TextField from '@mui/material/TextField'
 
 import Text from 'components/Text'
 import MaterialTextField from 'components/MaterialTextField'
@@ -123,17 +124,22 @@ const CheckEmail = ({
           {kickStartYourCareer}
         </Text>
       </div>
-
-      <div className={styles.emailLoginContainer_from}>
+      <form className={styles.emailLoginContainer_from} autoComplete='on' onSubmit={e => e.stopPropagation()}>
+        <div style={{ opacity: 0, height: '1px', pointerEvents: 'none', zIndex: -1 }} >
+          <input type="email" name='hidden-email' autoComplete="on" />
+          <input type="password" name='hidden-password' autoComplete='on' />
+       </div>
         <MaterialTextField
           className={styles.formInput}
-          name={enterYourEmailAddress}
+          id='username'
+          name={'username'}
           label={enterYourEmailAddress}
           variant='outlined'
           value={email}
           size='small'
           autoFocus
-          autoComplete='off'
+          autoComplete='on'
+          type='email'
           onChange={(e) => setEmaile(e.target.value)}
           error={emailError ? true : false}
         />
@@ -143,6 +149,7 @@ const CheckEmail = ({
           capitalize
           size='large'
           variant='contained'
+          type='submit'
           className={styles.formButton}
           disabled={emailBtnDisabled}
           // isLoading={isRegisteringJobseeker}
@@ -153,7 +160,8 @@ const CheckEmail = ({
            {submit}
           </Text>
         </MaterialButton>
-      </div>
+
+      </form>
 
       <div className={styles.emailLoginContainer_tip}>
         <Text className={styles.emailLoginContainer_tip_content}>
