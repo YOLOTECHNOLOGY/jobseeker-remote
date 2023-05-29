@@ -1,12 +1,26 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../index.module.scss'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialTextField from 'components/MaterialTextField'
 import Captacha from '../components/captcha'
+import VerifyPhone from '../components/verifyPhone'
+import VerifyEmail from '../components/verifyEmail'
+import { useSearchParams } from 'next/navigation'
+
 
 const PhoneLogin = () => {
+  const searchParams = useSearchParams();
+  const search = searchParams.get('step');
   const [step, setStep] = useState(1)
+
+  useEffect(() => {
+    if (search) {
+      setStep(Number(search))
+    }
+  }, [search])
+
+
   return (
     <div className={styles.main}>
       <div className={styles.container}>
@@ -98,6 +112,16 @@ const PhoneLogin = () => {
               </p>
           </div>
         )}
+      {
+        step === 6 && (
+          <VerifyPhone />
+        )
+      }  
+      {
+        step === 7 && (
+          <VerifyEmail />
+        )
+      }  
     </div>
     </div>
   )

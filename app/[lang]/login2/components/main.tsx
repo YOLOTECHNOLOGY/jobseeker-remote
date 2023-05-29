@@ -1,5 +1,6 @@
 'use client'
 import React,{useState} from 'react';
+import Divider from '@mui/material/Divider';
 import styles from '../index.module.scss'
 
 const Main = () => {
