@@ -311,5 +311,32 @@
       color: rgba(19, 111, 211, 1);
     }
   }
+
+  .login_item {
+      cursor: pointer;
+      margin-top: 16px;
+      position: relative;
+      font-size: 14px;
+      border-radius: 8px;
+      text-align: center;
+      height: 44px;
+      border: 1px solid #c9cdd4;
+      letter-spacing: 0.0075em;
+      color: #1d2129;
+      font-weight: 700;
+      line-height: 44px;
+
+      &:hover {
+        background-color: #e5f4ff;
+      }
+
+      img {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        left: 17px;
+        top: 10px;
+      }
+  }
 }
 @import './indexMobile.module.scss';
