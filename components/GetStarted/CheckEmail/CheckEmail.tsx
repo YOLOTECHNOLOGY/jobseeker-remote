@@ -81,7 +81,8 @@ const CheckEmail = ({
     }
 
     let errorText = null
-    if (!email.length || !/\S+@\S+\.\S+/.test(email)) {
+    const validEmailReg = /^[\w-\\.]+@([\w-]+\.)+[\w-]{1,9}$/i
+    if (!email.length || !validEmailReg.test(email)) {
       errorText = pleaseEnterAvalidEmailAddress
     }
     setEmailError(errorText)
