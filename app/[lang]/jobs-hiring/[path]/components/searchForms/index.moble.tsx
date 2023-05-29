@@ -28,10 +28,9 @@ import SearchIcon from '@mui/icons-material/Search'
 import { cloneDeep } from 'lodash-es'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
-
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
-  const { search ,myJobs} = useContext(languageContext) as any
+  const { search, myJobs } = useContext(languageContext) as any
   const sortOptions = [
     { label: search?.newest, value: '1' },
     { label: search?.relevance, value: '2' },
@@ -40,8 +39,8 @@ const SearchArea = (props: any) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchConfigSuccess(config))
-  }),
-    []
+  }, [])
+
   const [page, setPage] = useState(searchValues.page ?? '1')
 
   const locations = flatMap(config.location_lists, (item) => item.locations)
