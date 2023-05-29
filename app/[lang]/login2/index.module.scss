@@ -78,6 +78,11 @@
       letter-spacing: 0.02em;
       color: #86909c;
       padding: 24px 0;
+
+      &.divider_none {
+        margin: 0;
+        padding: 0;
+      }
     }
 
     .phoneNumber {

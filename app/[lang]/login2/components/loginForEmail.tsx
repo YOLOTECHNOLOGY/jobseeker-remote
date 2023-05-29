@@ -16,7 +16,7 @@ const countryForCountryCode = {
     sg: '+65'
   }
 
-const LoginForPhone = ()=>{
+const loginForEmail = ()=>{
 
 const [countryValue,setCountry] = useState<string>('');
 const [isDisable,setDisable] = useState<boolean>(true)
@@ -49,20 +49,11 @@ const sendOpt =()=>{
           <h2>Log in or sign up to Bossjob</h2>
          <div className={styles.phoneNumber}>
           <div className={styles.item}>
-            <MaterialBasicSelect 
-            className={styles.fullwidth} 
-            label={'Country'} 
-            options={countryList}
-            value={countryValue}
-            onChange={(e) => setCountry(e.target.value)}
-             />
-          </div>
-          <div className={styles.item}>
             <MaterialTextField
               className={styles.fullwidth}
-              label={'Phone number'}
+              label={'Email address'}
               size='small'
-              type='number'
+              type='email'
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
           </div>
@@ -101,4 +92,4 @@ const sendOpt =()=>{
           </>
   )
 }
-export default LoginForPhone
+export default loginForEmail
