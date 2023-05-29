@@ -23,7 +23,7 @@ const Page = async (props: any) => {
           <h2>Log in or sign up to Bossjob</h2>
            <Main/>
         </div>
-      <p className={styles.tips}>Live Chat with Support</p>
+      <p className={styles.tips}>Looking to hire people? Sign up as <span>Employer</span></p>
       </div>
     </>
   )
