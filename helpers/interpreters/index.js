@@ -12,7 +12,7 @@ import jobIp from './job'
 import { cond } from 'lodash-es'
 import offer from './offer'
 import alertInfo from './alertInfo'
-
+import autoSendResumeIp from './autoSendResume'
 const {
     utils,
     responseResumeJobseeker,
@@ -25,7 +25,8 @@ const {
     im,
     job,
     offerJobseeker,
-    infoAlert
+    infoAlert,
+    autoSendResume,
 } = scripts
 const { CommonActions } = utils
 const { Actions: ResponseResumeActions } = responseResumeJobseeker
@@ -38,7 +39,7 @@ const { Actions: SwitchJobActions } = switchJobJobseeker
 const { Actions: JobActions } = job
 const { Actions: OfferActions } = offerJobseeker
 const { Actions: InfoAlertActions } = infoAlert
-
+const { Actions: AutoSendResumeActions } = autoSendResume
 const { IMBusinessActions } = im
 
 export default cond([
@@ -53,8 +54,8 @@ export default cond([
     [SwitchJobActions.is, switchJob],
     [JobActions.is, jobIp],
     [OfferActions.is, offer],
-    [InfoAlertActions.is, alertInfo]
-
+    [InfoAlertActions.is, alertInfo],
+    [AutoSendResumeActions.is, autoSendResumeIp]
 ])
 
 

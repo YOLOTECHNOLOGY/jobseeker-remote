@@ -3975,10 +3975,10 @@ buzzmsg@^1.2.0:
     react-intl "^5.18.1"
     viewerjs "^1.11.0"
 
-buzzmsg@^1.6.6:
-  version "1.6.6"
-  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.6.6.tgz#41e061299b630cc6a5a6a255f64e36cf2f7f1cb8"
-  integrity sha512-UbT08T1/S7984030ulu8YHNJLEjC7bL0M7SNc3nVmt84uqMrtyojpHFl3sNbKOczDWGFcRcNex0I4m+NRT+oOQ==
+buzzmsg@^1.6.8:
+  version "1.6.8"
+  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.6.8.tgz#bc3e1edff4e234c4d978f435c3e62e998e7e8343"
+  integrity sha512-nih7ZWEHmRBKJR0GOrDh6UUnfI4PO2Too8HF3FFwhy4ekNZJD37i3RxlcOv/qp14QHFJLcu0xtsLu/0Z1HqVbA==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
@@ -3991,7 +3991,6 @@ buzzmsg@^1.6.6:
     compressorjs "^1.2.1"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
-    dompurify "^3.0.3"
     lodash "^4.17.21"
     md5 "^2.3.0"
     mobx "^5.15.4"
@@ -4526,11 +4525,6 @@ dom-helpers@^5.0.1:
   dependencies:
     "@babel/runtime" "^7.8.7"
     csstype "^3.0.2"
-
-dompurify@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.0.3.tgz#4b115d15a091ddc96f232bcef668550a2f6f1430"
-  integrity sha512-axQ9zieHLnAnHh0sfAamKYiqXMJAVwu+LM/alQ7WDagoWessyWvMSFyW65CqF3owufNu8HBcE4cM2Vflu7YWcQ==
 
 duplexer@^0.1.2:
   version "0.1.2"
@@ -5578,10 +5572,10 @@ imforbossjob@^0.0.1117:
     sha1 "^1.1.1"
     viewerjs "^1.11.0"
 
-imforbossjob@^0.1.65:
-  version "0.1.65"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.1.65.tgz#6df713a78156de8ac678de05ae751cccba9dd5b5"
-  integrity sha512-joSw8tWidqH6z5VfhkIFux8fF6EEIgvHIOOUcZoBCUeDfvMPp3GZC8RVpLIhXotTLfeCL3JV9edpF/fzs5l7Gg==
+imforbossjob@^0.1.77:
+  version "0.1.77"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.1.77.tgz#7e40e10d36faa0dc1e3a1b68549fec0cd8d59ef0"
+  integrity sha512-tw3r2AU1nJUo+/ZgbcV9EeQbCGK9FR5zWFHTA9SpAKVLdF5gmXAmclgzoLPmMYg17k4LGCT429t94gDHgE84MQ==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -5591,7 +5585,7 @@ imforbossjob@^0.1.65:
     antd "^4.23.3"
     axios "^0.18.0"
     buffer "^6.0.3"
-    buzzmsg "^1.6.6"
+    buzzmsg "^1.6.8"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
     fantasy-combinators "^0.0.1"
