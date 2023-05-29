@@ -125,10 +125,11 @@ const CheckEmail = ({
         </Text>
       </div>
       <form className={styles.emailLoginContainer_from} autoComplete='on' onSubmit={e => e.stopPropagation()}>
+        {/* Don't delete this div, this fixed browser autocomplete email */}
         <div style={{ opacity: 0, height: '1px', overflow: 'hidden', pointerEvents: 'none',zIndex:-1 }} >
           <input type="email" value={email} name='hidden-email' autoComplete="on" />
           <input type="password" value={ email ? ' ': ''} name='hidden-password' autoComplete='on' />
-       </div>
+        </div>
         <MaterialTextField
           className={styles.formInput}
           id='username'
