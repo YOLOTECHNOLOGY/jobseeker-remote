@@ -1,13 +1,13 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import styles from '../index.module.scss'
-import MaterialBasicSelect from 'components/MaterialBasicSelect'
+
 import MaterialTextField from 'components/MaterialTextField'
 import Captacha from '../components/captcha'
 import VerifyPhone from '../components/verifyPhone'
 import VerifyEmail from '../components/verifyEmail'
 import { useSearchParams } from 'next/navigation'
-
+import LoginForPhone from '../components/loginForPhone'
 
 const PhoneLogin = () => {
   const searchParams = useSearchParams();
@@ -26,32 +26,7 @@ const PhoneLogin = () => {
        <div className={styles.bg}></div>
       <div className={styles.container}>
       {step === 1 && (
-          <>
-          <h2>Log in or sign up to Bossjob</h2>
-         <div className={styles.phoneNumber}>
-          <div className={styles.item}>
-            <MaterialBasicSelect className={styles.fullwidth} label={'Country'} options={[]} />
-          </div>
-          <div className={styles.item}>
-            <MaterialTextField
-              className={styles.fullwidth}
-              label={'Phone number'}
-              size='small'
-              type='number'
-              sx={{ borderRadius: '8px' }}
-            />
-          </div>
-          <button className={styles.btn}>Send verification code</button>
-          <p className={styles.msg}>
-            I have read and agreed to and
-            <span>Terms of Use</span>
-            and
-            <span>Privacy Policy</span>
-          </p>
-
-          <p className={styles.tips}>Looking to hire people? Sign up as <span>Employer</span></p>
-          </div> 
-          </>
+          <LoginForPhone/>
       )}
 
      {step === 2 && (

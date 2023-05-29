@@ -43,7 +43,10 @@
         color: #1d2129;
         font-weight: 700;
         line-height: 44px;
-
+         a{
+            display: block;
+            color: #1d2129;
+         }
         &:hover {
           background-color: #e5f4ff;
         }
@@ -119,8 +122,8 @@
         letter-spacing: 0.0075em;
         color: #4e5969;
         margin: 0;
-        text-align: center;
-        span {
+       
+        a {
           color: rgba(35, 120, 229, 1);
           padding: 0 4px;
           display: inline-block;
@@ -290,21 +293,22 @@
     .phone_text {
       font-weight: 400;
     }
-    .tips {
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 24px;
-      letter-spacing: 0.0075em;
-      color: #4e5969;
-      position: fixed;
-      width: 100%;
-      text-align: center;
-      bottom: 30px;
-      margin: 0;
-      left: 0;
-      span {
-        color: rgba(19, 111, 211, 1);
-      }
+    
+  }
+  .tips {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.0075em;
+    color: #4e5969;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    bottom: 30px;
+    margin: 0;
+    left: 0;
+    span {
+      color: rgba(19, 111, 211, 1);
     }
   }
 }
