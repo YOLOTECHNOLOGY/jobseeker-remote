@@ -23,6 +23,7 @@ const PhoneLogin = () => {
 
   return (
     <div className={styles.main}>
+       <div className={styles.bg}></div>
       <div className={styles.container}>
       {step === 1 && (
           <>
@@ -48,7 +49,7 @@ const PhoneLogin = () => {
             <span>Privacy Policy</span>
           </p>
 
-          <p className={styles.tips}>Live Chat with Support</p>
+          <p className={styles.tips}>Looking to hire people? Sign up as <span>Employer</span></p>
           </div> 
           </>
       )}
