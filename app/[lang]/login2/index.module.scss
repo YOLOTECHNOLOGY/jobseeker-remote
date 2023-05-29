@@ -1,0 +1,257 @@
+@import 'styles/mixins.scss';
+
+.main {
+    width: 1170px;
+    margin: 0 auto;
+    position: relative;
+    padding-top: 64px;
+
+    .container {
+        width: 575px;
+        background: #FFFFFF;
+        border-radius: 20px;
+        margin: 0 auto;
+        padding: 40px 36px;
+
+        h2 {
+            font-weight: 700;
+            font-size: 32px;
+            letter-spacing: 0.0075em;
+            color: #1D2129;
+            text-align: center;
+            padding-bottom: 8px;
+            line-height: 40px;
+            margin: 0;
+        }
+
+        .list {
+            list-style: none;
+            width: 100%;
+
+            li {
+                cursor: pointer;
+                margin-top: 16px;
+                position: relative;
+                font-size: 14px;
+                border-radius: 8px;
+                text-align: center;
+                height: 44px;
+                border: 1px solid #C9CDD4;
+                letter-spacing: 0.0075em;
+                color: #1D2129;
+                font-weight: 700;
+                line-height: 44px;
+
+                &:hover {
+                    background-color: #e5f4ff;
+                }
+
+                img {
+                    position: absolute;
+                    width: 22px;
+                    height: 22px;
+                    left: 17px;
+                    top: 10px
+                }
+            }
+        }
+
+        .phoneNumber {
+            .item {
+                .fullwidth {
+                    width: 100%;
+                    margin-bottom: 14px;
+
+                    :global {
+                        .MuiOutlinedInput-root {
+                            border-radius: 8px;
+                        }
+                    }
+                }
+            }
+
+            .btn {
+                width: 100%;
+                border:1px solid #2378E5;
+                color: #2378E5;
+                font-weight: 700;
+                font-size: 14px;
+                height: 44px;
+                border-radius: 8px;
+                outline: none;
+                background-color: #fff;
+                margin-bottom: 16px;
+                &:last-child{
+                    margin-bottom: 0;
+                }
+                &:disabled {
+                    color: #fff;
+                    background: #F2F3F5;
+                    border:1px solid #F2F3F5;
+                }
+            }
+
+            .msg {
+                padding: 16px 0;
+                font-weight: 400;
+                font-size: 14px;
+                letter-spacing: 0.0075em;
+                color: #4E5969;
+                margin: 0;
+                text-align: center;
+                span {
+                    color: rgba(35, 120, 229, 1);
+                    padding: 0 4px;
+                }
+            }
+            .optBox{
+                .enterTips{
+                    margin: 0;
+                    font-size: 16px;
+                    align-items: center;
+                    letter-spacing: 1px;
+                    color: #1D2129;
+                    padding-bottom: 16px;
+                    word-break: break-all;
+                    span{
+                        color: rgba(29, 33, 41, 1);
+                        font-weight: 700;
+                        padding-left: 10px;
+                    }
+                }
+                
+                .countdown{
+                    margin: 0;
+                    font-size: 16px;
+                    line-height: 24px;
+                    letter-spacing: 1px;
+                    text-decoration-line: underline;
+                    color: #86909C;
+                    margin: 16px 0 20px;
+                }
+                .trouble{
+                    font-size: 16px;
+                    line-height: 24px;              
+                    letter-spacing: 1px;                 
+                    color: #1D2129;  
+                    margin: 0;
+                    span{
+                      color: rgba(35, 120, 229, 1);
+                    }
+                }
+                
+            }
+        }
+
+    }
+
+    .tips {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.0075em;
+        color: #86909C;
+        position: fixed;
+        left: 50%;
+        bottom: 30px;
+        transform: translateX(-50%);
+    }
+    .captcha {
+        .codeBox {
+          display: flex;            
+          .itemContent { 
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 54px;
+            text-align: center;
+            width: 55px;
+            height: 60px;
+            margin-right: 12px;
+            background: #F4F9FF;
+          
+            border: 1px solid #F4F9FF;
+            &.itemContentActive::before {
+              position: absolute;
+              top: 25%;
+              left: 50%;
+              display: block;
+              width: 2px;
+              height: 50%;
+              margin-left: -1px;
+              border: 1px solid #86909C;
+              animation: rc-captcha-input-flash steps(2) 1s infinite;
+              content: '';
+            }
+          }
+        }
+      
+        .InputBoxWrap {
+          position: absolute;
+          left: -9999px;
+        }
+      
+
+      
+        &.captchaThemeBox{
+          .codeBox {
+            .itemContent {
+              color: #1D2129;
+              background: #F4F9FF;
+              font-weight: 700;
+              border: 1px solid transparent;
+              border-radius: 10px;
+              &.itemContentActive {
+                position: relative;
+                border-color: #166AD4;
+                box-shadow: 0px 0px 0px 2px rgba(246, 4, 87, 0.15);
+              }
+            }
+          }
+        }
+      
+        @keyframes rc-captcha-input-flash {
+          0% {
+            visibility: hidden;
+          }
+      
+          100% {
+            visibility: visible;
+          }
+        }
+      }
+      .emailFactor{
+        p{
+            margin: 0;
+        }
+        .secure{
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 23px;
+            letter-spacing: 1px;
+            color: #1D2129;
+          }
+          .emailTips{
+            margin-top: 5px;
+            margin-bottom: 16px;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;  
+            letter-spacing: 1px;
+            color: #4E5969;
+          }
+
+      }
+      .enabled{
+        .notice{
+            font-size: 16px;
+            line-height: 24px;
+            display: flex;
+            align-items: center;
+            letter-spacing:1px;
+            color: #1D2129;
+            margin-top: 26px;
+        }
+       
+      }
+      
+}
