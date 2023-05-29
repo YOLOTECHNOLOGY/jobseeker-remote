@@ -128,7 +128,7 @@ const CheckEmail = ({
         {/* Don't delete this div, this fixed safari browser autocomplete email */}
         <div style={{ opacity: 0, height: '1px', overflow: 'hidden', pointerEvents: 'none',zIndex:-1 }} >
           <input type="email" value={email} name='hidden-email' autoComplete="on" />
-          <input type="password" value={ email ? ' ': ''} name='hidden-password' autoComplete='on' />
+          <input type="password" value={ (email.trim()|| '') ? ' ': ''} name='hidden-password' autoComplete='on' />
         </div>
         <MaterialTextField
           className={styles.formInput}
