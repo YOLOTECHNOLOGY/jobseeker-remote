@@ -4,7 +4,7 @@
   margin: 0 auto;
   position: relative;
   padding-top: 64px;
-  min-height: calc(100vh - 56px);
+  min-height: calc(100vh - 70px);
   position: relative;
   overflow: hidden;
   z-index: 1;
@@ -172,16 +172,7 @@
       }
     }
 
-    h2 {
-      font-weight: 700;
-      font-size: 32px;
-      letter-spacing: 0.0075em;
-      color: #1d2129;
-      text-align: center;
-      padding-bottom: 8px;
-      line-height: 40px;
-      margin: 0;
-    }
+  
 
     .captcha {
       .codeBox {
@@ -194,8 +185,8 @@
           width: 55px;
           height: 60px;
           margin-right: 12px;
-          background: #f4f9ff;
-          border: 1px solid #f4f9ff;
+          background: 166AD4;;
+          border: 1px solid #166AD4;
           &.itemContentActive::before {
             position: absolute;
             top: 25%;
@@ -206,7 +197,7 @@
             margin-left: -1px;
             border: 1px solid #86909c;
             animation: rc-captcha-input-flash steps(2) 1s infinite;
-            content: ‘’;
+            content: ' ';
           }
         }
       }
@@ -224,8 +215,8 @@
             border-radius: 10px;
             &.itemContentActive {
               position: relative;
-              border-color: #166ad4;
-              box-shadow: 0px 0px 0px 2px rgba(246, 4, 87, 0.15);
+              border-color: #166AD4;
+           
             }
           }
         }
@@ -299,6 +290,27 @@
       font-weight: 400;
     }
     
+  }
+  .emailFactor {
+    p {
+      margin: 0;
+    }
+    .secure {
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 23px;
+      letter-spacing: 1px;
+      color: #1d2129;
+    }
+    .emailTips {
+      margin-top: 5px;
+      margin-bottom: 16px;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 1px;
+      color: #4e5969;
+    }
   }
   .tips {
     font-weight: 400;

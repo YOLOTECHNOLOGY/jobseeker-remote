@@ -11,6 +11,7 @@ import FacebookLogin from './link/facebook'
 import GoogleLogin from './link/google'
 import Divider from '@mui/material/Divider'
 import classNames from "classnames";
+
 const countryForCountryCode = {
     ph: '+63',
     sg: '+65'
@@ -25,6 +26,7 @@ const config = useSelector((store: any) => store.config.config.response ?? [])
 const countryList = getSmsCountryList(config)
 const country = getCountryKey()
 const countryCode = countryForCountryCode[country]
+
 useEffect(()=>{
   if(countryCode){
     setCountry(countryCode)
@@ -41,7 +43,7 @@ useEffect(()=>{
  
 const sendOpt =()=>{
   console.log(1111)
-
+ 
 }
  console.log(country,phoneNumber,111)
   return (

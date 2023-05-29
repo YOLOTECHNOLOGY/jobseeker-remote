@@ -15,7 +15,8 @@ const PhoneLogin = () => {
   const searchParams = useSearchParams()
   const search = searchParams.get('step')
   const [step, setStep] = useState(1)
-
+  
+  console.log(search,'search')
   useEffect(() => {
     if (search) {
       setStep(Number(search))
