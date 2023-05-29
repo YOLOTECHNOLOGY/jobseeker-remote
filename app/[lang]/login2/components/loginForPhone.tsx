@@ -6,6 +6,10 @@ import { useSelector } from 'react-redux'
 import {  getSmsCountryList} from 'helpers/jobPayloadFormatter'
 import { getCountryKey } from 'helpers/country' 
 import Link from 'next/link'
+import AppleLogin from './link/apple'
+import FacebookLogin from './link/facebook'
+import GoogleLogin from './link/google'
+import Divider from '@mui/material/Divider'
 const countryForCountryCode = {
     ph: '+63',
     sg: '+65'
@@ -83,6 +87,14 @@ const sendOpt =()=>{
           </p>
           <p className={styles.tips}>Looking to hire people? Sign up as <span>Employer</span></p>
           </div> 
+          <div>
+        <Divider>or continue with</Divider>
+      </div>
+      <div className={styles.list}>
+        <GoogleLogin />
+        <FacebookLogin />
+        <AppleLogin />
+      </div>
           </>
   )
 }

@@ -3,6 +3,11 @@ import styles from '../index.module.scss'
 import Captcha from './captcha/index'
 
 function PhoneCode() {
+   
+  const onChange = (code) => {
+    console.log(code)
+  }
+
   return (
     <>
       <div className={styles.phoneNumber}>
@@ -12,7 +17,7 @@ function PhoneCode() {
             Please enter the 6-digit code that we have sent to
             <span>+65 98182828.</span>
           </p>
-          <Captcha />
+          <Captcha onChange={onChange}/>
           <p className={styles.countdown}>60s</p>
           <p className={styles.trouble}>
             Having trouble? Try to sign up with <span>other options</span>
