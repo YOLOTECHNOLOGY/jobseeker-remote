@@ -37,14 +37,14 @@ const useGetStartedClient = () => {
     await removeServiceCache()
     const isChatRedirect = localStorage.getItem('isChatRedirect')
     if (data.is_profile_update_required || !data.is_profile_completed) {
-      router.push('/jobseeker-complete-profile/1')
+      router.replace('/jobseeker-complete-profile/1')
     } else if (isChatRedirect) {
       localStorage.removeItem('isChatRedirect')
-      router.push(isChatRedirect)
+      router.replace(isChatRedirect)
     } else if (defaultRedirectPage) {
-      router.push(defaultRedirectPage)
+      router.replace(defaultRedirectPage)
     } else {
-      router.push('/')
+      router.replace('/')
     }
   }
 
