@@ -13,8 +13,8 @@ function EmailCode() {
           Please enter the 6-digit code that we sent to
           <span>johndoe@gmail.com.</span>
         </p>
-        <Captcha />
-        <p className={styles.countdown}>60s</p>
+        <Captcha autoFocus={true}/>
+        {/* <p className={styles.countdown}>60s</p> */}
         <button className={styles.btn}>Set this up later</button>
       </div>
     </div>

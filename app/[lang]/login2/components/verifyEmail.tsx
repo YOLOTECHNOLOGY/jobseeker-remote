@@ -4,17 +4,20 @@ import styles from '../index.module.scss'
 
 interface IProps {
   phone: string
-  avatar: string
+  avatar: string,
+  back: boolean
 }
 
 const verifyPhone: React.FC = function (props: IProps) {
-  const { phone, avatar } = props
+  const { phone, avatar ,back = false,} = props
 
   return (
     <>
       <div className={styles.phoneNumber}>
         <div className={styles.optBox}>
-          <h2>Welcome back, John 🎉</h2>
+          {
+            back ? <>
+              <h2>Welcome back, John 🎉</h2>
           <p className={styles.enterTips}>
             Please enter the 6-digit code that we sent to{' '}
             <span className={styles.phone_text}>johndoe@gmail.com</span>
@@ -26,6 +29,9 @@ const verifyPhone: React.FC = function (props: IProps) {
               alt='avatar'
             />
           </div>
+            </> :  <h2>Sign up an account 🎉</h2>
+          }
+        
           <Captcha />
           <p className={styles.countdown}>60s</p>
           <div>
