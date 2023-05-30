@@ -266,12 +266,12 @@ $contentWidth: 894px;
         // padding-left: 24px;
         // padding-right: 24px;
 
-        &Left{
+        &Left {
             display: flex;
             width: $contentWidth;
         }
-       
-        &Right{
+
+        &Right {
             display: flex;
         }
 
@@ -463,7 +463,7 @@ $contentWidth: 894px;
         cursor: pointer;
 
         &:hover {
-            box-shadow: 0px 12px 30px rgb(0,0,0,0.1);
+            box-shadow: 0px 12px 30px rgb(0, 0, 0, 0.1);
         }
 
         .topContainer {
@@ -558,6 +558,7 @@ $contentWidth: 894px;
                     align-items: center;
                     margin-top: 16px;
                     width: 100%;
+
                     .imgContainer {
                         position: relative;
                         overflow: visible;
@@ -573,22 +574,21 @@ $contentWidth: 894px;
                             right: 2px;
                         }
                     }
+
                     .recruiter {
                         .info {
                             padding: 2px 9px;
-                            border-radius: 12px;
-                            border: #bcbcbc solid 1px;
                             width: fit-content;
                             display: flex;
                             align-items: center;
                             flex-direction: row;
-                            font-family: "Product Sans";
+                            font-family: 'Product Sans';
                             font-style: normal;
                             font-weight: 400;
                             font-size: 12px;
                             line-height: 15px;
                             letter-spacing: 0.0075em;
-                            color: #353535;
+                            color: #4E5969;
                             height: 24px;
 
                             &.isHover {
@@ -623,7 +623,7 @@ $contentWidth: 894px;
                     }
 
                     .online {
-                        background:  #F2F9F3;
+                        background: #F2F9F3;
                         border-radius: 15px;
                         padding: 5px 8px;
                         display: flex;
@@ -941,7 +941,7 @@ $contentWidth: 894px;
         cursor: pointer;
 
         &:hover {
-            box-shadow: 0px 12px 30px rgb(0,0,0,0.1);
+            box-shadow: 0px 12px 30px rgb(0, 0, 0, 0.1);
         }
 
         .titleContainer {
