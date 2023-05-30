@@ -24,7 +24,6 @@ export default function AppleLogin() {
 
        script.src = 'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js'
        script.async = true
-       script.defer = true
        script.onload = handleClientLoad
 
        document.body.appendChild(script)
