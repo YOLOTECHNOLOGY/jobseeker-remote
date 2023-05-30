@@ -84,7 +84,7 @@ module.exports = withBundleAnalyzer({
     domains: [
       'dev-assets.bossjob.com',
       'assets.bossjob.com',
-      'fakeimg.pl',
+      'fake-image.bossjob.com',
       'local-assets.bossjob.com'
     ]
   },
