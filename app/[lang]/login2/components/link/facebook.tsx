@@ -1,10 +1,12 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
 import { FacebookIcon } from 'images'
 
 import styles from '../../index.module.scss'
+import useGetStartedClient from '../../hooks'
+import { removeItem } from 'helpers/localStorage'
 
 interface IFacebook {
   className?: string
@@ -17,9 +19,20 @@ interface IFacebook {
 
 const FacebookLogin = (props: IFacebook) => {
   const {activeKey,isLogin,redirect} = props
-
   const dispatch = useDispatch()
+  const [defaultLoginCallBack] = useGetStartedClient()
 
+  const jobseekersSocialResponse = useSelector(
+    (store: any) => store.auth.jobseekersSocialLogin?.response
+  )
+
+  useEffect(() => {
+    const { data } = jobseekersSocialResponse
+    if (data?.token) {
+      removeItem('quickUpladResume')
+      defaultLoginCallBack(data)
+    }
+  }, [jobseekersSocialResponse])
 
   const callBackMethod = (payload) => {
     const data = {

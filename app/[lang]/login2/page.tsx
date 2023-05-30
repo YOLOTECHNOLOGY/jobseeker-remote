@@ -29,4 +29,4 @@ const Page = async (props: any) => {
   )
 }
 
-export default configs(serverDataScript().chain(props => buildComponentScript(props, Page))).run
+export default Page

@@ -1,10 +1,11 @@
 import React,{useState, useEffect} from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
 import { GoogleLogo } from 'images'
-
 import styles from '../../index.module.scss'
+import { removeItem } from 'helpers/localStorage'
+import useGetStartedClient from '../../hooks'
 
 interface IGoogle {
   className?: string,
@@ -18,7 +19,19 @@ const GoogleLogin = (props: IGoogle)  => {
   const {activeKey,isLogin,redirect} = props
   const [googleAuth, setGoogleAuth] = useState(null)
   const dispatch = useDispatch()
+  const [defaultLoginCallBack] = useGetStartedClient()
 
+  const jobseekersSocialResponse = useSelector(
+    (store: any) => store.auth.jobseekersSocialLogin?.response
+  )
+
+  useEffect(() => {
+    const { data } = jobseekersSocialResponse
+    if (data?.token) {
+      removeItem('quickUpladResume')
+      defaultLoginCallBack(data)
+    }
+  }, [jobseekersSocialResponse])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
