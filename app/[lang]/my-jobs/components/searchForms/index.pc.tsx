@@ -24,6 +24,7 @@ import PreferenceSelector from '../preferenceSelector'
 import classNames from 'classnames'
 import { encode } from 'app/[lang]/jobs-hiring/interpreters/encoder'
 import { useRouter } from 'next/navigation'
+import { flatMap } from 'lodash-es'
 import { SortContext } from './SortProvider'
 
 const SearchArea = (props: any) => {
@@ -37,11 +38,14 @@ const SearchArea = (props: any) => {
   const searchParams: any = useSearchParams() ?? {}
   useEffect(() => {
     dispatch(fetchConfigSuccess(config))
-  }),
-    []
+  }, [])
+  const flatLoaction = useMemo(() => {
+    return flatMap(config?.location_lists, item => item.locations) ?? []
+  }, [config?.location_lists])
+  console.log({ config, searchParams })
   const { push } = useContext(LoadingContext)
   const [location, setLocation] = useState<any>()
-  const [filterLocation, setFilterLocation] = useState<any>()
+  const [filterLocation, setFilterLocation] = useState<any>(flatLoaction?.find(location => location.id == searchParams.get('location')))
   const [searchValue, setSearchValue] = useState<any>()
   const router = useRouter()
   const pushJobSearch = useCallback(() => {
@@ -99,7 +103,6 @@ const SearchArea = (props: any) => {
     })) ?? []
   const [suggestionList, handleSuggestionSearch, addSearchHistory, searchLoading] =
     useSuggest() as any[]
-  console.log({ filterLocation })
   const filterParams = useMemo(() => {
     return filter((a) => a?.length)({
       qualification,
@@ -111,7 +114,7 @@ const SearchArea = (props: any) => {
       sort,
       page,
       preferenceId,
-      location: filterLocation?.key
+      location: filterLocation?.id?.toString()
     })
   }, [
     qualification,

@@ -58,7 +58,7 @@ const SearchArea = (props: any) => {
     const { push } = useContext(LoadingContext)
     const locations = flatMap(config.location_lists, item => item.locations)
 
-    const [location, setLocation] = useState(locations.find(location => location.seo_value === searchParams.location))
+    const [location, setLocation] = useState(locations.find(location => location.id == searchParams.location))
     const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
     const [moreData, setMoreData] = useState(
         pipe(map(item => {
@@ -80,7 +80,7 @@ const SearchArea = (props: any) => {
 
     const filterParams = useMemo(() => {
         return filter(a => a?.length)({
-            location: [location?.['seo_value']].filter(a => a),
+            location: location?.id?.toString(),
             sort: sort,
             page: page,
             preferenceId: selectedPreferenceId ? ('' + selectedPreferenceId) : null,
