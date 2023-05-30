@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 
 import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
-import { FacebookLogo } from 'images'
+import { FacebookIcon } from 'images'
 
 import styles from '../../index.module.scss'
 
@@ -76,7 +76,7 @@ const FacebookLogin = (props: IFacebook) => {
 
   return (
     <div className={styles.login_item}>
-        <img src={FacebookLogo}></img>
+        <img src={FacebookIcon}></img>
         <span onClick={handleAuthClick}>Continue with Facebook</span>
     </div>
   )

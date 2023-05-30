@@ -46,6 +46,7 @@ export const DeleteIcon = `${S3BucketJobseeker}/DeleteIcon.svg`
 export const FacebookIcon = `${S3BucketJobseeker}/FacebookIcon.svg`
 export const TwitterIcon = `${S3BucketJobseeker}/TwitterIcon.svg`
 export const LinkedinIcon = `${S3BucketJobseeker}/LinkedinIcon.svg`
+export const AppleIcon = `${S3BucketJobseeker}/loginAppleIcon.svg`
 
 // Copy
 export const CopyIcon = `${S3BucketJobseeker}/CopyIcon.svg`
