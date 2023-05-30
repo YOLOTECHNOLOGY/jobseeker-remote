@@ -26,7 +26,7 @@ const SearchArea = (props: any) => {
     const sortOptions = [
         { label: newest, value: '1' },
         { label: relevance, value: '2' },
-        { label: highestSalary, value: '3' }
+        // { label: highestSalary, value: '3' }
     ]
 
     const preferenceOptions = useMemo(() => {
