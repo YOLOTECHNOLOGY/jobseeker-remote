@@ -2,7 +2,7 @@
 import React,{useEffect,useState} from 'react'
 import MaterialTextField from 'components/MaterialTextField'
 import styles from '../index.module.scss'
-import Text from 'components/Text'
+import errorText from '../components/errorText'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { sendOTP } from 'helpers/interpreters/services/exchangeNumber'
 import { useRouter } from 'next/navigation'
@@ -36,17 +36,8 @@ function EmailFactor() {
       console.log(res)
       router.push(`${langKey}/get-started/person/sttp=4`)
     })
-
-
   }
 
-  const errorText = (errorMessage: string) => {
-    return (
-      <Text textStyle='sm' textColor='red' tagName='p' className={styles.fieldError}>
-        {errorMessage}
-      </Text>
-    )
-  }
 
   return (
     <div className={styles.emailFactor}>

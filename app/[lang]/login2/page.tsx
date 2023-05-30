@@ -19,6 +19,7 @@ const Page = async (props: any) => {
   return (
     <>
       <div className={styles.main}>
+         <div className={styles.bg}></div>
         <div className={styles.container}>
           <h2>Log in or sign up to Bossjob</h2>
            <Main/>

@@ -1,3 +1,4 @@
+
 import React,{useState, useEffect} from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -46,7 +47,7 @@ const GoogleLogin = (props: IGoogle)  => {
        document.body.appendChild(script)
 
        return () => {
-         document.body.removeChild(script)
+         document?.body?.removeChild?.(script)
        }
     }
   }, [])

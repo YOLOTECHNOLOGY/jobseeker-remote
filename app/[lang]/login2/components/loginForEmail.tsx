@@ -1,60 +1,48 @@
-import React,{useState,useEffect} from "react";
+import React,{useState} from "react";
 import styles from '../index.module.scss'
-import MaterialTextField from 'components/MaterialTextField'
-import { useSelector } from 'react-redux'
-import {  getSmsCountryList} from 'helpers/jobPayloadFormatter'
-import { getCountryKey } from 'helpers/country' 
 import Link from 'next/link'
 import AppleLogin from './link/apple'
 import FacebookLogin from './link/facebook'
 import GoogleLogin from './link/google'
 import Divider from '@mui/material/Divider'
 import classNames from "classnames";
-const countryForCountryCode = {
-    ph: '+63',
-    sg: '+65'
-  }
-
+import { useRouter } from 'next/navigation'
+import EmailComponent from './emailComponent'
+import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
+import { useDispatch } from 'react-redux'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { getLang } from 'helpers/country'
 const loginForEmail = ()=>{
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const langKey = getLang();
 
-const [countryValue,setCountry] = useState<string>('');
-const [isDisable,setDisable] = useState<boolean>(true)
-const [phoneNumber,setPhoneNumber] = useState<string>('');
-const config = useSelector((store: any) => store.config.config.response ?? [])
-const countryList = getSmsCountryList(config)
-const country = getCountryKey()
-const countryCode = countryForCountryCode[country]
-useEffect(()=>{
-  if(countryCode){
-    setCountry(countryCode)
+   const [email,setEmail] = useState<string>('')
+   const [isDisable,setDisable] = useState<boolean>(true)
+   const sendOpt =()=>{
+      authenticationSendEmaillOtp({ email })
+      .then((res) => {
+        console.log(res?.data?.data,'res')
+        const {user_id} = res?.data?.data ?? {}
+        router.push(`${langKey}/get-started?step=2&&email=${email}&userId=${user_id}`)
+      })
+      .catch((error) => {
+        dispatch(
+          displayNotification({
+            open: true,
+            message: error.message ?? 'Send EmailOTP fail',
+            severity: 'error'
+          })
+        )
+      })
   }
-},[countryCode])
 
-useEffect(()=>{
-  if(phoneNumber?.length > 4){
-    setDisable(false)
-  }else{
-    setDisable(true)
-  }
-},[phoneNumber])
- 
-const sendOpt =()=>{
-  console.log(1111)
-
-}
- console.log(country,phoneNumber,111)
   return (
     <>
           <h2>Log in or sign up to Bossjob</h2>
          <div className={styles.phoneNumber}>
           <div className={styles.item}>
-            <MaterialTextField
-              className={styles.fullwidth}
-              label={'Email address'}
-              size='small'
-              type='email'
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
+            <EmailComponent setEmail={setEmail} setDisable={setDisable} email={email}/>
           </div>
           <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>Send verification code</button>
 
@@ -88,7 +76,7 @@ const sendOpt =()=>{
         <FacebookLogin />
         <AppleLogin />
       </div>
-          </>
+     </>
   )
 }
 export default loginForEmail

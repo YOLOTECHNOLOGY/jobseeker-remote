@@ -11,6 +11,12 @@ import FacebookLogin from './link/facebook'
 import GoogleLogin from './link/google'
 import Divider from '@mui/material/Divider'
 import classNames from "classnames";
+import { getLang } from 'helpers/country'
+import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
+import { useRouter } from 'next/navigation'
+import { useDispatch } from 'react-redux'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+
 
 const countryForCountryCode = {
     ph: '+63',
@@ -26,7 +32,9 @@ const config = useSelector((store: any) => store.config.config.response ?? [])
 const countryList = getSmsCountryList(config)
 const country = getCountryKey()
 const countryCode = countryForCountryCode[country]
-
+const langKey = getLang();
+const router = useRouter()
+const dispatch = useDispatch()
 useEffect(()=>{
   if(countryCode){
     setCountry(countryCode)
@@ -43,9 +51,23 @@ useEffect(()=>{
  
 const sendOpt =()=>{
   console.log(1111)
- 
+  authenticationSendEmaillOtp({ phone:phoneNumber })
+  .then((res) => {
+    console.log(res?.data?.data,'res')
+    const {user_id} = res?.data?.data ?? {}
+    router.push(`${langKey}/get-started?step=2&&phone=${phoneNumber}&userId=${user_id}`)
+  })
+  .catch((error) => {
+    dispatch(
+      displayNotification({
+        open: true,
+        message: error.message ?? 'Send EmailOTP fail',
+        severity: 'error'
+      })
+    )
+  })
 }
- console.log(country,phoneNumber,111)
+
   return (
     <>
           <h2>Log in or sign up to Bossjob</h2>

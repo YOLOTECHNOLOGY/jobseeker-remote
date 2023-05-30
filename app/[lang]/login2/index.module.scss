@@ -8,6 +8,17 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
+  .bg{
+    position: absolute;
+    width: 1620px;
+    height: 800px;
+    left: 0;
+    background: linear-gradient(86.06deg, #9DEDFF 59.41%, #9DEDFF 68.95%, #1052FB 76.03%, #1052FB 80.45%, rgba(16, 82, 251, 0.89) 88.18%);
+    opacity: 0.2;
+    filter: blur(154.5px);
+    transform: rotate(90deg);
+    z-index: -1;
+  }
   .container {
     width: 575px;
     background: #ffffff;
@@ -85,94 +96,6 @@
       }
     }
 
-    .phoneNumber {
-      .item {
-        .fullwidth {
-          width: 100%;
-          margin-bottom: 14px;
-
-          :global {
-            .MuiOutlinedInput-root {
-              border-radius: 8px;
-            }
-          }
-        }
-      }
-
-      .btn {
-        width: 100%;
-        border: 1px solid #2378e5;
-        color: #2378e5;
-        font-weight: 700;
-        font-size: 14px;
-        height: 44px;
-        border-radius: 8px;
-        outline: none;
-        background-color: #fff;
-        margin-bottom: 16px;
-        &:last-child {
-          margin-bottom: 0;
-        }
-        &:disabled {
-          color: #fff;
-          background: #f2f3f5;
-          border: 1px solid #f2f3f5;
-        }
-      }
-
-      .msg {
-        padding: 16px 0;
-        font-weight: 400;
-        font-size: 14px;
-        letter-spacing: 0.0075em;
-        color: #4e5969;
-        margin: 0;
-       text-align: center;
-        a {
-          color: rgba(35, 120, 229, 1);
-          padding: 0 4px;
-          display: inline-block;
-        }
-      }
-      .optBox {
-        .enterTips {
-          margin: 0;
-          font-size: 16px;
-          align-items: center;
-          letter-spacing: 1px;
-          color: #1d2129;
-          padding-bottom: 16px;
-          word-break: break-all;
-          span {
-            color: rgba(29, 33, 41, 1);
-            font-weight: 700;
-            padding-left: 10px;
-          }
-        }
-
-        .countdown {
-          margin: 0;
-          font-size: 16px;
-          line-height: 24px;
-          letter-spacing: 1px;
-          text-decoration-line: underline;
-          color: #86909c;
-          margin: 16px 0 20px;
-        }
-        .trouble {
-          font-size: 16px;
-          line-height: 24px;
-          letter-spacing: 1px;
-          color: #1d2129;
-          margin: 0;
-          span {
-            color: rgba(35, 120, 229, 1);
-          }
-        }
-      }
-    }
-
-  
 
     .captcha {
       .codeBox {
@@ -233,10 +156,12 @@
 
     .phoneNumber {
       .item {
+        margin-top: 16px;
+        &:first-child{
+          margin-top: 0;
+        }
         .fullwidth {
           width: 100%;
-          margin-bottom: 14px;
-
           :global {
             .MuiOutlinedInput-root {
               border-radius: 8px;
@@ -255,10 +180,10 @@
         border-radius: 8px;
         outline: none;
         background-color: #fff;
-        margin-bottom: 16px;
+        margin-top: 16px;
         cursor: pointer;
-        &:last-child {
-          margin-bottom: 0;
+        &:first-child {
+          margin-top: 0;
         }
         &:disabled {
           color: #fff;
@@ -266,7 +191,59 @@
           border: 1px solid #f2f3f5;
         }
       }
+
+      .msg {
+        padding: 16px 0;
+        font-weight: 400;
+        font-size: 14px;
+        letter-spacing: 0.0075em;
+        color: #4e5969;
+        margin: 0;
+       text-align: center;
+        a {
+          color: rgba(35, 120, 229, 1);
+          padding: 0 4px;
+          display: inline-block;
+        }
+      }
+      .optBox {
+        .enterTips {
+          margin: 0;
+          font-size: 16px;
+          align-items: center;
+          letter-spacing: 1px;
+          color: #1d2129;
+          padding-bottom: 16px;
+          word-break: break-all;
+          span {
+            color: rgba(29, 33, 41, 1);
+            font-weight: 700;
+            padding-left: 10px;
+          }
+        }
+
+        .countdown {
+          margin: 0;
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 1px;
+          text-decoration-line: underline;
+          color: #86909c;
+          margin: 16px 0 20px;
+        }
+        .trouble {
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 1px;
+          color: #1d2129;
+          margin: 0;
+          span {
+            color: rgba(35, 120, 229, 1);
+          }
+        }
+      }
     }
+
     .link {
       color: #2378e5;
       cursor: pointer;
