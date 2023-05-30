@@ -28,8 +28,8 @@ const OfferDetail = (props: any) => {
         showModal={show}
         handleModal={() => actionsRef.current.close?.()}
         headerTitle={`${offerFrom} ${data?.company_name}`}
-        firstButtonText={data?.status === offered && reject}
-        secondButtonText={data?.status === offered && accept}
+        firstButtonText={data?.status === 'Offered' && reject}
+        secondButtonText={data?.status === 'Offered' && accept}
         firstButtonIsClose={false}
         secondButtonIsClose={false}
         handleFirstButton={() => actionsRef.current.reject?.()}

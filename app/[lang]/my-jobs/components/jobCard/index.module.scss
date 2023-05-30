@@ -1,12 +1,13 @@
 .main {
-    
+
     width: 918px;
     height: 170px;
     position: relative;
     padding-right: 24px;
-    --opacity:1;
+    --opacity: 1;
     opacity: var(--opacity);
-    transition: var(--opacity) ease-in-out 0.5s ;
+    transition: var(--opacity) ease-in-out 0.5s;
+
     &.aboutDisappear {
         --opacity: 0.3;
     }
@@ -17,6 +18,7 @@
         left: 0px;
         z-index: 30;
     }
+
     .container {
         width: 100%;
         height: 100%;
@@ -34,13 +36,13 @@
         }
 
         &:hover {
-            box-shadow: 6px 7px 7px #ccc;
+            box-shadow: 0px 12px 30px rgb(0, 0, 0, 0.1);
         }
 
         .topContainer {
             width: 100%;
-            height: 130px;
-            padding: 24px 24px 0px 24px;
+            height: 128px;
+            padding: 16px 24px 0px 24px;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -126,8 +128,24 @@
                     display: flex;
                     flex-direction: row;
                     align-items: center;
-                    margin-top: 8px;
+                    margin-top: 16px;
                     width: 100%;
+
+                    .imgContainer {
+                        position: relative;
+                        overflow: visible;
+
+                        .isOnline {
+                            width: 9px;
+                            height: 9px;
+                            border-radius: 4.5px;
+                            border: #fff solid 1px;
+                            background: #0EBD5C;
+                            position: absolute;
+                            bottom: 1px;
+                            right: 2px;
+                        }
+                    }
 
                     .recruiter {
                         .info {
@@ -179,19 +197,19 @@
                     }
 
                     .online {
-                        background: #0EBD5C;
+                        background: #F2F9F3;
                         border-radius: 15px;
                         padding: 5px 8px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         height: 24px;
-                        color: #fff;
+                        color: #4CAF50;
                         margin-left: 2px;
 
                         &:before {
                             content: '';
-                            background: #fff;
+                            background: #4CAF50;
                             border-radius: 4px;
                             border: 1px solid #FFFFFF;
                             width: 8px;
@@ -298,7 +316,7 @@
                 width: 100%;
                 height: 100%;
                 opacity: 0.2;
-                background: linear-gradient(269.8deg, rgba(255, 235, 184, 0.8) 0.12%, rgba(242, 177, 202, 0.8) 43.36%, rgba(84, 142, 237, 0.8) 99.89%);
+                background: linear-gradient(90.08deg, #F5FAFF , #FFFA00);
             }
 
             padding-left: 24px;

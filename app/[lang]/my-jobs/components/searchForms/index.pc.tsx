@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import { flushSync } from 'react-dom'
 import LocationField from 'app/[lang]/components/commons/location'
+import LocationField1 from 'app/[lang]/components/mobile/location1'
 import JobSearchBar from '../../../components/commons/location/search'
 import styles from './index.pc.module.scss'
 import MaterialButton from 'components/MaterialButton'
@@ -23,6 +24,7 @@ import PreferenceSelector from '../preferenceSelector'
 import classNames from 'classnames'
 import { encode } from 'app/[lang]/jobs-hiring/interpreters/encoder'
 import { useRouter } from 'next/navigation'
+import { flatMap } from 'lodash-es'
 import { SortContext } from './SortProvider'
 
 const SearchArea = (props: any) => {
@@ -36,10 +38,14 @@ const SearchArea = (props: any) => {
   const searchParams: any = useSearchParams() ?? {}
   useEffect(() => {
     dispatch(fetchConfigSuccess(config))
-  }),
-    []
+  }, [])
+  const flatLoaction = useMemo(() => {
+    return flatMap(config?.location_lists, item => item.locations) ?? []
+  }, [config?.location_lists])
+  console.log({ config, searchParams })
   const { push } = useContext(LoadingContext)
   const [location, setLocation] = useState<any>()
+  const [filterLocation, setFilterLocation] = useState<any>(flatLoaction?.find(location => location.id == searchParams.get('location')))
   const [searchValue, setSearchValue] = useState<any>()
   const router = useRouter()
   const pushJobSearch = useCallback(() => {
@@ -88,17 +94,7 @@ const SearchArea = (props: any) => {
       value: item?.['seo-value'],
       label: item.value
     })) ?? []
-  // const [isFixed, setIsfixed] = useState(false)
-  // useEffect(() => {
-  //   const listener = () => {
-  //     const scrollTop = document.documentElement.scrollTop
-  //     setIsfixed(scrollTop > 58)
-  //   }
-  //   window.addEventListener('scroll', listener, true)
-  //   return window.removeEventListener('scroll', listener)
-  // }, [])
 
-  // const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
   const [jobTypes, setJobtypes] = useState(searchParams?.jobTypes ?? [])
   const jobTypeList =
     config?.job_types?.map?.((item) => ({
@@ -107,7 +103,6 @@ const SearchArea = (props: any) => {
     })) ?? []
   const [suggestionList, handleSuggestionSearch, addSearchHistory, searchLoading] =
     useSuggest() as any[]
-
   const filterParams = useMemo(() => {
     return filter((a) => a?.length)({
       qualification,
@@ -118,7 +113,8 @@ const SearchArea = (props: any) => {
       companySizes,
       sort,
       page,
-      preferenceId
+      preferenceId,
+      location: filterLocation?.id?.toString()
     })
   }, [
     qualification,
@@ -128,7 +124,8 @@ const SearchArea = (props: any) => {
     salaries,
     jobTypes,
     sort,
-    preferenceId
+    preferenceId,
+    filterLocation
   ])
 
   const firstRender = useFirstRender()
@@ -151,7 +148,8 @@ const SearchArea = (props: any) => {
     salaries,
     jobTypes,
     sort,
-    push
+    push,
+    filterLocation
   ])
 
   return (
@@ -223,6 +221,18 @@ const SearchArea = (props: any) => {
             config={config}
           />
           <div className={styles.filters}>
+            <LocationField1
+              className={styles.filterItems}
+              height={'30px'}
+              locationList={config.location_lists}
+              value={filterLocation}
+              // isClear={true}
+              label={lang.location}
+              defaultValue={filterLocation}
+              onChange={(e, value) => {
+                setFilterLocation(value)
+              }}
+            />
             <Multiple
               label={lang.qualification}
               value={qualification}

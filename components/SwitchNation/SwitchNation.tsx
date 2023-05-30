@@ -15,7 +15,9 @@ import {
   configKey,
   getCookie,
   setCookie,
-  removeCookie
+  removeCookie,
+  refreshToken as refreshTokenKey,
+  userKey
 } from 'helpers/cookies'
 
 import MaterialButton from 'components/MaterialButton'
@@ -88,6 +90,9 @@ type propsType = {
   save?: () => void
   lang: any
 }
+const isLocalDev = (url: string) => {
+  return url?.includes('localhost') || url.includes('127.0.0.1')
+}
 
 const SwitchNation = ({ close, open, lang }: propsType) => {
   const [nation, setNation] = useState(() => ({ lang: getLang(), country: getCountryKey() }))
@@ -104,29 +109,38 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
     const { country, lang } = nation
     removeCookie('location')
     setLoading(true)
-    const { origin, hostname, pathname } = window.location
-    const isLocal = hostname.includes('localhost')
+    const { origin, port, hostname, pathname } = window.location
+    const isLocal = isLocalDev(hostname)
     const accessToken = getCookie(accessTokenKey)
+    const refreshToken = getCookie(refreshTokenKey)
+    const user = getCookie(userKey)
+
     let query = `/${lang}`
     let newOrigin = origin
 
     if (!isLocal) {
-      newOrigin = origin.slice(0, origin.lastIndexOf('.') + 1) + country
+      newOrigin = origin.slice(0, origin.lastIndexOf('.') + 1) + country + (port ? `:${port}` : '')
     }
+
     if (origin.includes(newOrigin)) {
       // only language changed
       // the pathname is likely "/en-US/get-started"
       let restPath = pathname.split('/').slice(2).join('/')
       restPath = restPath ? `/${restPath}` : ''
+      // store this in cookies. then the others link request server can take it to server
       setCookie(configKey, `${country}_${lang}`)
       window.location.href = newOrigin + query + restPath
       return
     }
+
     if (!isLocal && accessToken) {
-      query += '/changeLocale?accessToken=' + accessToken
+      query +=
+        `/changeLocale?${accessTokenKey}=` +
+        accessToken +
+        `&country=${country}` +
+        `&${refreshTokenKey}=${refreshToken}` +
+        `&${userKey}=${JSON.stringify(user)}`
     }
-    // store this in cookies. then the others link request server can take it to server
-    setCookie(configKey, `${country}_${lang}`)
     window.location.href = newOrigin + query
   }
 

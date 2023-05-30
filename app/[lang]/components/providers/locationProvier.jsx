@@ -96,7 +96,7 @@ const LocationProvider = ({ children,lang }) => {
         }),
         updateLocation: location => M.do(() => {
             const newLocation = flatLocations.find(item => item.value === location.city)
-            if (newLocation && newLocation.value !== location?.value) {
+            if (newLocation && newLocation.id !== location?.id) {
                 setLocation(newLocation)
             }
         }),

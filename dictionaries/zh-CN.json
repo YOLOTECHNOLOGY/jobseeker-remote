@@ -59,7 +59,7 @@
     "kickStartYourCareer": "和老板直接聊工作！",
     "enterYourEmailAddress": "输入你的电子邮箱地址",
     "submit": "提交",
-    "pleaseEnterAvalidEmailAddress.": "请输入有效的电子邮件地址。",
+    "pleaseEnterAvalidEmailAddress": "请输入有效的电子邮件地址。",
     "bySigningUp": "注册即表示我已阅读并同意",
     "termsOfUse": "使用条款",
     "and": "和",
@@ -448,7 +448,7 @@
       "finance": "融资阶段",
       "reset": "重置",
       "apply": "应用",
-      "viewVerifiedCompanies":"查看认证公司"
+      "viewVerifiedCompanies": "查看认证公司"
     },
     "alert": "开启新职位通知",
     "alertModal": {
@@ -518,7 +518,7 @@
     "downloadAPP": "下载APP",
     "chatDirectly": "直接谈",
     "withBoss": "和老板",
-    "relatedSearch":"相关搜索"
+    "relatedSearch": "相关搜索"
   },
   "manageProfile": {
     "tab": {
@@ -840,12 +840,14 @@
     "offerFrom": "Offer 来自",
     "offered": "提供",
     "reject": "拒绝",
-    "accept":"接受",
+    "accept": "接受",
     "pleaseNoteThatThisOffer": " 请注意，此报价不具约束力，并有可能更改。可能会有一些 敲定要约所需的额外文书工作和步骤。",
     "company": "公司",
     "sendAnOffer": "发送Offer",
     "viewNow": "现在查看",
-    "viewLater": "稍后查看"
+    "viewLater": "稍后查看",
+    "buttonTextEnable": "自动发送简历",
+    "buttonTextDisable": "取消自动发送简历"
   },
   "chatInterview": {
     "confirmText": "面试已经确认",
@@ -988,7 +990,6 @@
     "mobileTip": "帮助招聘人员更好地联系您寻找工作机会。",
     "mobileNotVerified": "帮助招聘人员更好地联系您寻找工作机会。 请验证您的手机号码。",
     "mobileExplanation": "您的手机号码已通过验证。 招聘人员将能够通过您的手机号码与您联系。 要更改您的手机号码，请验证您的新手机号码。",
-
     "country": "国家",
     "contactNumber": "联系电话",
     "notify": "电子邮件通知",
@@ -1009,23 +1010,39 @@
     "delete": "删除",
     "deleteTips": "您即将删除此职位提醒。 这不能被撤消。"
   },
-  "chatExchange":{
-    "exchangeTitle":"电话号码",
-    "cancel":"取消",
-    "send":"发送",
-    "verify":"验证",
-    "sendOtp":"发送验证码",
-    "resendOtp":"重新发送验证码",
-    "copy":"复制",
-    "resendOtpIn":"在{{count}}秒后可重新发送",
-    "sureText":"确定与招聘者交换号码吗？如果对方同意，您将会获得招聘者的电话号码。",
-    "verifyText":"请先验证您的电话号码",
-    "countryCode":"国家代码",
-    "mobileNumber":"电话号码",
-    "digitPlaceholder":"输入6位验证码",
-    "msgText":"请输入我们向此电话{{number}}发送的信息",
-    "smb":"的电话号码:",
-    "boss":"招聘者"
-  
+  "chatExchange": {
+    "exchangeTitle": "电话号码",
+    "cancel": "取消",
+    "send": "发送",
+    "verify": "验证",
+    "sendOtp": "发送验证码",
+    "resendOtp": "重新发送验证码",
+    "copy": "复制",
+    "resendOtpIn": "在{{count}}秒后可重新发送",
+    "sureText": "确定与招聘者交换号码吗？如果对方同意，您将会获得招聘者的电话号码。",
+    "verifyText": "请先验证您的电话号码",
+    "countryCode": "国家代码",
+    "mobileNumber": "电话号码",
+    "digitPlaceholder": "输入6位验证码",
+    "msgText": "请输入我们向此电话{{number}}发送的信息",
+    "smb": "的电话号码:",
+    "boss": "招聘者"
+  },
+  "chatAutoSendResume": {
+    "failedToUploadResume": "上传简历失败，出现错误",
+    "pleaseContactSupport": " 请联系 support@bossjob.com 寻求帮助。",
+    "enableAutoSendTitle": "启用自动发送简历",
+    "disabledAutoSendTitle": "禁用自动发送简历",
+    "pleaseSelectResume": "请选择您想与招聘人员分享的简历。",
+    "orUploadNewResume": "或上传新简历",
+    "onlyMax3Resumes": "最大允许3份简历，请至少删除1份以上简历",
+    "uploadNewResume": "上传新简历",
+    "uploadYourResume": "上传你的简历",
+    "cancel": "取消",
+    "send": "发送",
+    "change": "更换简历",
+    "disabledDescription": "当招聘者向您索取简历时，我们会将当前简历自动发送，确定要取消自动发送吗？",
+    "enableDescription": "当招聘者向您索取简历时，我们会将当前简历自动发送。 请选择需要自动发送给招聘者的简历 ",
+    "warnText": "否则，您将需要等到双方都回复消息以后，才能请求发送简历"
   }
 }

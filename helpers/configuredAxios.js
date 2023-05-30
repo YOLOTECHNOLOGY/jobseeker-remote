@@ -1,23 +1,8 @@
 import axios from 'axios'
-import { getCookie, removeCookie, setCookie } from 'helpers/cookies'
+import { getCookie, removeUserCookie, setCookie } from 'helpers/cookies'
 import { accessToken, refreshToken } from './cookies';
 import { getCountryId } from './country';
 import { NextResponse } from 'next/server';
-// import accessToken from 'pages/api/handlers/linkedinHandlers/accessToken'
-// import { configureStore } from 'store'
-// import { logout } from 'shared/helpers/authentication'
-// import { IMManager } from 'imforbossjob'
-
-let timer = 0;
-const clearTime = () => clearTimeout(timer)
-const autoRefreshToken = () => {
-  timer = setTimeout(() => {
-    clearTime()
-    refreshTokenServer();
-    autoRefreshToken();
-    // Refresh every 25 minutes
-  }, 1000 * 60 * 25);
-}
 
 // generate url by a baseUrl
 const getUrl = (baseURL) => {
@@ -144,15 +129,30 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
 }
 
 
-
+const redirectToHomeOnClient = () => {
+  if (typeof window !== 'undefined') {
+    removeUserCookie();
+    window.location.href = '/get-started'
+    import('imforbossjob')
+      .then((im) => im?.IMManager?.logout?.())
+      .then(() => localStorage?.clear?.())
+  } else {
+    // seems this code is not working
+    const response = NextResponse.redirect('/get-started', 301)
+    response.cookies.delete(accessToken)
+    response.cookies.delete(refreshToken)
+  }
+}
 const refreshTokenServer = () => {
   const axios = configuredAxios('auth', '', '', '');
-  const data = { source: 'web', refresh: getCookie(refreshToken) }
+  const refreshKey = getCookie(refreshToken)
+  const data = { source: 'web', refresh: refreshKey }
+  if (!refreshKey) {
+    return redirectToHomeOnClient()
+  }
   return axios.post('/token/refresh', data).then((res) => {
     const { access, token_expired_at, data } = res.data.data
     if (access) {
-      clearTime()
-      autoRefreshToken()
       setCookie(accessToken, access, token_expired_at)
       return
     }
@@ -160,19 +160,8 @@ const refreshTokenServer = () => {
     return Promise.reject(new Error(data))
   })
 }
-const redirectToHomeOnClient = () => {
-  if (typeof window !== 'undefined') {
-    removeCookie(accessToken)
-    window.location.href = '/get-started'
-    import('imforbossjob')
-      .then((im) => im?.IMManager?.logout?.())
-      .then(() => localStorage?.clear?.())
-  } else {
-    NextResponse.next().redirect('/get-started', 301)
-  }
-}
 
-// let globalPromise;
+
 globalThis.globalPromise = null
 const chain = configured => (baseURL, type = 'public', passToken, serverAccessToken, server = typeof window === 'undefined') => {
   const createAxios = () => configuredAxios(baseURL, type, passToken, serverAccessToken, server)
@@ -182,22 +171,18 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
 
   keys.forEach(key => {
     wrapper[key] = (...params) => {
+      //  only the protected url need to refresh in browser 
       if (type === 'protected') {
         axios.interceptors.response.use(
           (response) => response,
           (error) => {
-
-            // if (error?.response?.status === 401 && server) {
-            //   console.log('server401', error,  error.request)
-            //   redirect(process.env.HOST_PATH + '/refresh-token')
-            // }
             if (error?.response?.status === 401 && typeof window !== 'undefined') {
               if (configured) {
                 redirectToHomeOnClient();
                 return Promise.reject(error)
               }
               if (!globalPromise) {
-                globalThis.globalPromise = refreshTokenServer().catch(() => {
+                globalThis.globalPromise = refreshTokenServer().catch((error) => {
                   redirectToHomeOnClient()
                 }).finally(() => {
                   setTimeout(() => {
@@ -213,9 +198,8 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
               // const error = new Error('401', { cause: 401 })
               // error.digest = '440011'
               // eslint-disable-next-line prefer-promise-reject-errors
-              return Promise.reject(401)
+              return Promise.reject(401) // will redirect to error page, that code in the _app.tsx
             } else {
-
               return Promise.reject(error)
             }
           }

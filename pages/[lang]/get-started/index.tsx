@@ -14,7 +14,7 @@ import Link from 'components/Link'
 import { useFirstRender } from 'helpers/useFirstRender'
 import useGetStarted from 'hooks/useGetStarted'
 import { removeItem } from 'helpers/localStorage'
-import { getCookie, removeCookie } from 'helpers/cookies'
+import { getCookie, accessToken as accessTokenKey, removeUserCookie } from 'helpers/cookies'
 
 import { jobseekerTokenValidate } from 'store/services/auth/jobseekersTokenValidate'
 
@@ -48,7 +48,7 @@ const GetStarted = (props: any) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const firstRender = useFirstRender()
-  const accessToken = getCookie('accessToken')
+  const accessToken = getCookie(accessTokenKey)
 
   const jobseekersSocialResponse = useSelector(
     (store: any) => store.auth.jobseekersSocialLogin?.response
@@ -92,8 +92,9 @@ const GetStarted = (props: any) => {
         .catch((result) => {
           const { data, status } = result.response ?? {}
           if (status == 400 || data?.errors?.error[0] === 'Invalid token') {
-            removeCookie('accessToken')
-            removeCookie('refreshToken')
+            // if go into here, that means the accessToken is invalid.
+            // maybe we should refresh token here if refreshToken is existed
+            removeUserCookie()
             window.location.reload()
           }
         })
