@@ -10,6 +10,10 @@ export default function AppleLogin() {
     if (typeof window !== 'undefined') {
       // setAppleAuth(null)
       const handleClientLoad = () => {
+        if (!window?.AppleID) {
+          console.error(new Error('Error loading apple script'));
+          return;
+        }
         window.AppleID.auth.init({
             clientId : 'com.poseidon.bossjobapp.client',
             scope : 'name email',
@@ -36,6 +40,10 @@ export default function AppleLogin() {
 
 
   const handleAuth = async () => {
+    if (!window?.AppleID) {
+      console.error(new Error('Error loading apple script'));
+      return;
+    }
     try {
       const data = await window.AppleID.auth.signIn()
             // Handle successful response.
@@ -66,7 +74,7 @@ export default function AppleLogin() {
     <div className={styles.login_item}>
         <img src={AppleIcon}></img>
         {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
-        <span data-type="sign in" onClick={handleAuth}>Continue with Apple</span>
+        <span data-type="sign in" aria-label="Signin with apple ID" onClick={handleAuth}>Continue with Apple</span>
     </div>
   )
 }

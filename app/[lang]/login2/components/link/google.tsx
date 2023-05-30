@@ -6,6 +6,7 @@ import { GoogleLogo } from 'images'
 import styles from '../../index.module.scss'
 import { removeItem } from 'helpers/localStorage'
 import useGetStartedClient from '../../hooks'
+import { useSearchParams } from 'next/navigation'
 
 interface IGoogle {
   className?: string,
@@ -20,6 +21,12 @@ const GoogleLogin = (props: IGoogle)  => {
   const [googleAuth, setGoogleAuth] = useState(null)
   const dispatch = useDispatch()
   const [defaultLoginCallBack] = useGetStartedClient()
+  const searchParams = useSearchParams()
+
+  const query = {};
+  for(const entry of searchParams.entries()) {
+    query[entry[0]] = entry[1]
+  }
 
   const jobseekersSocialResponse = useSelector(
     (store: any) => store.auth.jobseekersSocialLogin?.response
@@ -64,6 +71,10 @@ const GoogleLogin = (props: IGoogle)  => {
   }, [])
 
   const handleAuthClick = () => {
+    if(!googleAuth) {
+      console.error(new Error('Error loading google auth script'));
+      return
+    }
     googleAuth?.signIn().then(() => {
       handleSigninStatus()
     })
@@ -73,8 +84,7 @@ const GoogleLogin = (props: IGoogle)  => {
   const callBackMethod = (payload) => {
     const data = {
       ...payload,
-      // ...router.query,
-      // avatar: payload.pictureUrl ? payload.pictureUrl : '',
+      ...query,
       email: payload.email ? payload.email : '',
       social_user_token: payload.accessToken,
       social_type: payload.socialType,
