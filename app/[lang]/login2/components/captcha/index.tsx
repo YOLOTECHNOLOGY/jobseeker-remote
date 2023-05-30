@@ -26,10 +26,16 @@ interface ICaptchaProps {
   autoFocus?: boolean
   className?: string | undefined
   style?: CSSProperties | undefined
+  sendOpt?:() => void
 }
+
+let timer = null;
+
+const origninTimer = 60
+
 const Captcha: React.FC<ICaptchaProps> = (props)=>{
 
-    const { value = '', onChange, length = DEFAULT_LENGTH, autoFocus = false } = props
+    const { value = '', onChange, length = DEFAULT_LENGTH, autoFocus = false,sendOpt } = props
     // 组件内部维护的输入框输入值
     const [inputValue, setInputValue] = useState('')
     // 验证码数组
@@ -53,6 +59,26 @@ const Captcha: React.FC<ICaptchaProps> = (props)=>{
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
   
+    const [countdown,setCountdown] = useState<number>(origninTimer)
+  
+    const timerRef = useRef(origninTimer)
+
+    useEffect(()=>{
+      
+      timer = setInterval(()=>{
+        const newTime =  timerRef.current - 1
+        console.log(newTime,newTime)
+        if(newTime <= 0){ 
+          clearInterval(timer)
+          timerRef.current = origninTimer 
+        }else{
+          timerRef.current = newTime     
+        }
+        setCountdown(newTime)     
+      },1000)
+  
+    },[])
+
     const handleInputCodeChange = (e: any) => {
       const eValue = e.target.value
       const tempValue = eValue.replace(/[^0-9]/g, '').slice(0, length)
@@ -66,7 +92,8 @@ const Captcha: React.FC<ICaptchaProps> = (props)=>{
       inputRef.current?.focus()
       setFocus(true)
     }
-return <div className={`${styles.captcha} ${styles.captchaThemeBox}`}>
+return <>
+ <div className={`${styles.captcha} ${styles.captchaThemeBox}`}>
 <div className={styles.codeBox} onMouseDown={handleCodeBoxClick}>
   {codeArray.map((item, index, array) => {
     const prevItemValue = index === 0 ? '-1' : array[index - 1]
@@ -98,6 +125,11 @@ return <div className={`${styles.captcha} ${styles.captchaThemeBox}`}>
   />
 </div>
 </div>
-
+<p className={styles.countdown}>
+            {
+              countdown === 0 ?  <span onClick={()=>sendOpt}>resend code</span> : countdown + 's'
+            }
+            </p>
+</>
 }
 export default Captcha;
