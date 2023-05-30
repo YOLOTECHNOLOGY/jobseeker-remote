@@ -29,13 +29,13 @@ module.exports = withBundleAnalyzer({
   experimental: {
     // concurrentFeatures: true,
     // serverComponents: true,
-    forceSwcTransforms: true,
-    appDir: true,
+    // forceSwcTransforms: true,
+    // appDir: true,
     // mdxRs: true,
     // typedRoutes: true,
-    appDocumentPreloading:true,
-    newNextLinkBehavior:true,
-    cpus: 2,
+    // appDocumentPreloading:true,
+    // newNextLinkBehavior:true,
+    // cpus: 2,
     esmExternals: 'loose'
   },
   env: {

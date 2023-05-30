@@ -558,7 +558,21 @@ $contentWidth: 894px;
                     align-items: center;
                     margin-top: 8px;
                     width: 100%;
+                    .imgContainer {
+                        position: relative;
+                        overflow: visible;
 
+                        .isOnline {
+                            width: 9px;
+                            height: 9px;
+                            border-radius: 4.5px;
+                            border: #fff solid 1px;
+                            background: #0EBD5C;
+                            position: absolute;
+                            bottom: 1px;
+                            right: 2px;
+                        }
+                    }
                     .recruiter {
                         .info {
                             padding: 2px 9px;

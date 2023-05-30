@@ -16,7 +16,7 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { filter, toPairs, pipe, is, map } from 'ramda'
 import { LoadingContext } from 'app/[lang]/components/providers/loadingProvider'
 import { cloneDeep, flatMap } from 'lodash-es'
-import MaterialLocationField from 'app/components/mobile/location1'
+import MaterialLocationField from 'app/[lang]/components/mobile/location1'
 import { getValueById } from 'helpers/config/getValueById'
 
 const SearchArea = (props: any) => {

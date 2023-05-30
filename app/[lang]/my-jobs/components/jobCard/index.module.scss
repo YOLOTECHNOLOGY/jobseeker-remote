@@ -1,12 +1,13 @@
 .main {
-    
+
     width: 918px;
     height: 170px;
     position: relative;
     padding-right: 24px;
-    --opacity:1;
+    --opacity: 1;
     opacity: var(--opacity);
-    transition: var(--opacity) ease-in-out 0.5s ;
+    transition: var(--opacity) ease-in-out 0.5s;
+
     &.aboutDisappear {
         --opacity: 0.3;
     }
@@ -17,6 +18,7 @@
         left: 0px;
         z-index: 30;
     }
+
     .container {
         width: 100%;
         height: 100%;
@@ -128,6 +130,22 @@
                     align-items: center;
                     margin-top: 8px;
                     width: 100%;
+
+                    .imgContainer {
+                        position: relative;
+                        overflow: visible;
+
+                        .isOnline {
+                            width: 9px;
+                            height: 9px;
+                            border-radius: 4.5px;
+                            border: #fff solid 1px;
+                            background: #0EBD5C;
+                            position: absolute;
+                            bottom: 1px;
+                            right: 2px;
+                        }
+                    }
 
                     .recruiter {
                         .info {
