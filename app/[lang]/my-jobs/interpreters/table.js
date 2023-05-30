@@ -70,6 +70,7 @@ export default registInterpreter(command =>
                 xp_lvl_ids: searchParams.workExperience?.split?.(',')?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
                 degree_ids: searchParams.qualification?.split?.(',')?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
                 // is_company_verified: Boolean(searchParams.verifiedCompany),
+                location_key: searchParams.location,
                 company_size_ids: searchParams.companySizes?.split?.(',')?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
             }
             console.log({ queriyParams })

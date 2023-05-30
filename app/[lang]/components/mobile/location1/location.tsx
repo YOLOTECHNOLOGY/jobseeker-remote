@@ -119,7 +119,11 @@ const MaterialLocationField = ({ className, label, locationList, disableClearabl
             style={{ height: '100%' }}
             required={rest.required}
             helperText={error?.message}
-            label={<span>{label ? label : 'Location'} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>} variant='outlined' size='small' {...params} />
+            label={<span>{label ? label : 'Location'} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>}
+            variant='outlined'
+            size='small'
+            {...params}
+          />
         )}
         defaultValue={defaultValue}
         {...rest}

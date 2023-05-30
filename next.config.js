@@ -85,7 +85,8 @@ module.exports = withBundleAnalyzer({
       'dev-assets.bossjob.com',
       'assets.bossjob.com',
       'fakeimg.pl',
-      'local-assets.bossjob.com'
+      'local-assets.bossjob.com',
+      'fake-image.bossjob.com'
     ]
   },
   // plugins: [
