@@ -10,11 +10,10 @@ import useGetStartedClient from '../../hooks/useGetStarted'
 import { useSearchParams } from 'next/navigation'
 
 interface IGoogle {
-  className?: string,
-  activeKey?: number,
-  isLogin?: boolean,
-  callBackMethod?: Function,
-  redirect?: string | string[],
+  className?: string;
+  activeKey?: number;
+  isLogin?: boolean;
+  redirect?: string | string[];
 }
 
 const GoogleLogin = (props: IGoogle)  => {
@@ -61,6 +60,8 @@ const GoogleLogin = (props: IGoogle)  => {
 
        script.src = 'https://apis.google.com/js/api.js'
        script.async = true
+       script.defer = true
+       script.crossOrigin="anonymous"
        script.onload = handleClientLoad
 
        document.body.appendChild(script)
