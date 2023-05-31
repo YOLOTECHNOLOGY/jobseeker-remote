@@ -41,6 +41,7 @@
     "@crowdin/cli": "^3.11.0",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
+    "@fingerprintjs/fingerprintjs": "^3.4.1",
     "@formatjs/intl-localematcher": "0.2.25",
     "@googlemaps/js-api-loader": "^1.15.1",
     "@mui/icons-material": "^5.3.1",

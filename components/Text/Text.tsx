@@ -29,7 +29,7 @@ const Text = ({
   style,
   className,
   children,
-  tagName: TagName,
+  tagName,
   textStyle,
   textColor = 'black',
   block,
@@ -37,6 +37,7 @@ const Text = ({
   // enableUnescape,
   ...rest
 }: TextProps) => {
+  const TagName =  tagName ?? 'span' 
   const componentClass = {
     text: true,
     textBold: bold,
@@ -75,8 +76,8 @@ const Text = ({
   )
 }
 
-Text.defaultProps = {
-  tagName: 'span'
-}
+// Text.defaultProps = {
+//   tagName: 'span'
+// }
 
 export default Text
