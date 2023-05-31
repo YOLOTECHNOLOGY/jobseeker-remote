@@ -16,7 +16,7 @@ const APPLE_LOGIN_URL =
 
 const AppleLogin = (props: IApple) => {
   const dispatch = useDispatch()
-  // const { defaultLoginCallBack } = useGetStartedClient()
+  const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
 
   const query = {}
@@ -24,17 +24,17 @@ const AppleLogin = (props: IApple) => {
     query[entry[0]] = entry[1]
   }
 
-  // const jobseekersSocialResponse = useSelector(
-  //   (store: any) => store.auth.jobseekersSocialLogin?.response
-  // )
+  const jobseekersSocialResponse = useSelector(
+    (store: any) => store.auth.jobseekersSocialLogin?.response
+  )
 
-  // useEffect(() => {
-  //   const { data } = jobseekersSocialResponse
-  //   if (data?.token) {
-  //     removeItem('quickUpladResume')
-  //     defaultLoginCallBack(data)
-  //   }
-  // }, [jobseekersSocialResponse])
+  useEffect(() => {
+    const { data } = jobseekersSocialResponse
+    if (data?.token) {
+      removeItem('quickUpladResume')
+      defaultLoginCallBack(data)
+    }
+  }, [jobseekersSocialResponse])
 
   const appleConfig = {
     clientId: 'com.bossjob.web',
@@ -99,22 +99,6 @@ const AppleLogin = (props: IApple) => {
     }
     dispatch(jobbseekersSocialLoginRequest(data))
   }
-
-  useEffect(() => {
-    if (typeof window != 'undefined') {
-      // Listen for authorization success.
-      document.addEventListener('AppleIDSignInOnSuccess', (event: any) => {
-        // Handle successful response.
-        console.log('success: ', event.detail.data)
-      })
-
-      // Listen for authorization failures.
-      document.addEventListener('AppleIDSignInOnFailure', (event: any) => {
-        // Handle error.
-        console.log('error: ', event.detail.error)
-      })
-    }
-  }, [])
 
   return (
     <div className={styles.login_item}>
