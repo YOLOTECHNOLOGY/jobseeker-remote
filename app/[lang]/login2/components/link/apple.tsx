@@ -11,6 +11,9 @@ interface IApple {
   isLogin?: boolean
 }
 
+const APPLE_LOGIN_URL =
+  'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js'
+
 const AppleLogin = (props: IApple) => {
   const dispatch = useDispatch()
   // const { defaultLoginCallBack } = useGetStartedClient()
@@ -33,6 +36,15 @@ const AppleLogin = (props: IApple) => {
   //   }
   // }, [jobseekersSocialResponse])
 
+  const appleConfig = {
+    clientId: 'com.poseidon.bossjobapp.client',
+    scope: 'name email',
+    redirectURI: 'https://dev.bossjob.ph/',
+    state: '',
+    nonce: '',
+    usePopup: true
+  }
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const handleClientLoad = () => {
@@ -40,21 +52,15 @@ const AppleLogin = (props: IApple) => {
           console.error(new Error('Error loading apple script'))
           return
         }
-        window.AppleID.auth.init({
-          clientId: 'com.poseidon.bossjobapp.client',
-          scope: 'name email',
-          redirectURI: 'https://dev.bossjob.ph/',
-          state: '',
-          nonce: '',
-          usePopup: true
-        })
+        window.AppleID.auth.init(appleConfig)
       }
 
       const script = document.createElement('script')
 
-      script.src =
-        'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js'
+      script.src = APPLE_LOGIN_URL
       script.async = true
+      script.defer = true
+      script.crossOrigin = 'anonymous'
       script.onload = handleClientLoad
 
       document.body.appendChild(script)
@@ -117,7 +123,7 @@ const AppleLogin = (props: IApple) => {
     <div className={styles.login_item}>
       <img src={AppleIcon}></img>
       {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
-      <span data-type='sign in' aria-label='Signin with apple ID' onClick={handleAuth}>
+      <span data-type='sign in' aria-label='Sign in with apple ID' onClick={handleAuth}>
         Continue with Apple
       </span>
     </div>

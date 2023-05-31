@@ -18,7 +18,7 @@ const PhoneLogin = () => {
   
   console.log(search,'search')
   useEffect(() => {
-    if (search && (typeof search === 'number')) {
+    if (search) {
       setStep(Number(search))
     }
   }, [search])
