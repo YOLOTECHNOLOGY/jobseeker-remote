@@ -1,6 +1,0 @@
-[2023-05-31T16:03:01.097] [ERROR] serverError - {
-  code: 40002,
-  data: { detail: 'Incorrect authentication credentials.' },
-  message: 'Incorrect authentication credentials.',
-  errors: { detail: 'Incorrect authentication credentials.' }
-}
