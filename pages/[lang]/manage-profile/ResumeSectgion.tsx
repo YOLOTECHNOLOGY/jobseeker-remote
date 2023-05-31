@@ -44,6 +44,10 @@ import { SnackbarTips } from 'components/UploadResume/SnackbarTips'
 import { maxFileSize } from 'helpers/handleInput'
 
 const ResumeView = ({ userDetail, lang }: any) => {
+  useEffect(() => {
+    console.log(userDetail, '========>>>>userDetail')
+  }, [userDetail])
+
   const {
     manageProfile: {
       tab: { resume: transitions }
@@ -75,6 +79,10 @@ const ResumeView = ({ userDetail, lang }: any) => {
     inViewThreshold: 0.7,
     slidesToScroll: width < 799 ? 1 : 2
   })
+
+  useEffect(() => {
+    setResume(userDetail.resumes)
+  }, [userDetail.resumes])
 
   useEffect(() => {
     if (width < 799) {
