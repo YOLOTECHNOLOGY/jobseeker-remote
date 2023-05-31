@@ -6,6 +6,7 @@ import { removeItem } from 'helpers/localStorage'
 import useGetStartedClient from '../../hooks/useGetStarted'
 import { useSearchParams } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
+import * as jose from 'jose'
 
 interface IApple {
   isLogin?: boolean
@@ -76,28 +77,28 @@ const AppleLogin = (props: IApple) => {
     try {
       const data = await window.AppleID.auth.signIn()
       // Handle successful response.
-      console.log('success', data)
       callBackMethod(data)
     } catch (error) {
-      // Handle error.
       console.log('error', error)
     }
   }
 
   const callBackMethod = (payload) => {
-    const data = {
-      ...payload,
-      ...query,
-      email: payload?.user?.email ? payload?.user?.email : '',
-      social_user_token: payload.authorization.id_token,
-      social_type: 'apple',
-      social_user_id: payload?.userId || '',
-      source: 'web'
+    try {
+      const decodeJwt = jose.decodeJwt(payload?.authorization?.id_token)
+      const data = {
+        ...payload,
+        ...query,
+        email: payload?.user?.email ? payload?.user?.email : '',
+        social_user_token: payload?.authorization?.id_token,
+        social_type: 'apple',
+        social_user_id: decodeJwt.sub || '',
+        source: 'web'
+      }
+      dispatch(jobbseekersSocialLoginRequest(data))
+    } catch (error) {
+      console.log('error', error)
     }
-    if (payload?.pictureUrl) {
-      data.avatar = payload.pictureUrl
-    }
-    dispatch(jobbseekersSocialLoginRequest(data))
   }
 
   return (
