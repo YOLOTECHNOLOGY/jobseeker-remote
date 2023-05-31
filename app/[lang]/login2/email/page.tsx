@@ -13,6 +13,8 @@ const EmailLogin = () => {
   useEffect(() => {
     if (search) {
       setStep(Number(search))
+    }else {
+      setStep(1)
     }
   }, [search])
 

@@ -37,9 +37,9 @@ const AppleLogin = (props: IApple) => {
   // }, [jobseekersSocialResponse])
 
   const appleConfig = {
-    clientId: 'com.poseidon.bossjobapp.client',
+    clientId: 'com.bossjob.web',
     scope: 'name email',
-    redirectURI: 'https://dev.bossjob.ph/',
+    redirectURI: 'https://dev.bossjob.ph/login2',
     state: '',
     nonce: '',
     usePopup: true
@@ -80,7 +80,7 @@ const AppleLogin = (props: IApple) => {
       const data = await window.AppleID.auth.signIn()
       // Handle successful response.
       console.log('success', data)
-      // callBackMethod(data)
+      callBackMethod(data)
     } catch (error) {
       // Handle error.
       console.log('error', error)
@@ -91,13 +91,13 @@ const AppleLogin = (props: IApple) => {
     const data = {
       ...payload,
       ...query,
-      email: payload.email ? payload.email : '',
-      social_user_token: payload.accessToken,
+      email: payload?.user?.email ? payload?.user?.email : '',
+      social_user_token: payload.authorization.id_token,
       social_type: 'apple',
-      social_user_id: payload.userId || '',
+      social_user_id: payload?.userId || '',
       source: 'web'
     }
-    if (payload.pictureUrl) {
+    if (payload?.pictureUrl) {
       data.avatar = payload.pictureUrl
     }
     dispatch(jobbseekersSocialLoginRequest(data))
