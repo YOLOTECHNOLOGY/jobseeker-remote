@@ -243,7 +243,7 @@ const JobCard = (props: any) => {
                         [styles.isHover]: isChatHover
                       })}
                     >
-                      <div style={{ transform: 'scale(0.5,0.5)' }}>
+                      {/* <div style={{ transform: 'scale(0.5,0.5)' }}>
                         <svg
                           width='32'
                           height='32'
@@ -278,7 +278,7 @@ const JobCard = (props: any) => {
                             strokeWidth='0.125'
                           />
                         </svg>
-                      </div>
+                      </div> */}
                       {`${[recruiter_full_name, recruiter_job_title]
                         .filter((a) => a)
                         .join(' · ')}`}
