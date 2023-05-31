@@ -10,12 +10,10 @@ import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
 
 interface IFacebook {
-  className?: string
-  activeKey?: number
-  isLogin?: boolean
-  callBackMethod?: Function
-  redirect?: string | string[]
-  loading?: boolean
+  className?: string;
+  activeKey?: number;
+  isLogin?: boolean;
+  redirect?: string | string[];
 }
 
 const FacebookLogin = (props: IFacebook) => {

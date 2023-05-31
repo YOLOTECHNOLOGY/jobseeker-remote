@@ -10,11 +10,10 @@ import useGetStartedClient from '../../hooks/useGetStarted'
 import { useSearchParams } from 'next/navigation'
 
 interface IGoogle {
-  className?: string,
-  activeKey?: number,
-  isLogin?: boolean,
-  callBackMethod?: Function,
-  redirect?: string | string[],
+  className?: string;
+  activeKey?: number;
+  isLogin?: boolean;
+  redirect?: string | string[];
 }
 
 const GoogleLogin = (props: IGoogle)  => {
