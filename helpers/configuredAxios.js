@@ -2,11 +2,6 @@ import axios from 'axios'
 import { getCookie, removeCookie, setCookie, userKey } from 'helpers/cookies'
 import { accessToken, refreshToken } from './cookies';
 import { getCountryId } from './country';
-import { NextResponse } from 'next/server';
-// import accessToken from 'pages/api/handlers/linkedinHandlers/accessToken'
-// import { configureStore } from 'store'
-// import { logout } from 'shared/helpers/authentication'
-// import { IMManager } from 'imforbossjob'
 
 let timer = 0;
 const clearTime = () => clearTimeout(timer)
@@ -19,7 +14,9 @@ const autoRefreshToken = () => {
   }, 1000 * 60 * 25);
 }
 
+import logError from 'app/errors/logError';
 // generate url by a baseUrl
+
 const getUrl = (baseURL) => {
   let url = '';
   switch (baseURL) {
@@ -147,7 +144,12 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
 
 const refreshTokenServer = () => {
   const axios = configuredAxios('auth', '', '', '');
-  const data = { source: 'web', refresh: getCookie(refreshToken) }
+  const refreshKey = getCookie(refreshToken)
+  const data = { source: 'web', refresh: refreshKey }
+  if (!refreshKey) {
+    redirectToHomeOnClient()
+    return Promise.reject(new Error('no refresh token!!'))
+  }
   return axios.post('/token/refresh', data).then((res) => {
     const { access, token_expired_at, data } = res.data.data
     if (access) {
@@ -188,41 +190,33 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
         axios.interceptors.response.use(
           (response) => response,
           (error) => {
-            debugger
-            redirectToHomeOnClient();
-            
-            return Promise.reject(error)
-            // if (error?.response?.status === 401 && server) {
-            //   console.log('server401', error,  error.request)
-            //   redirect(process.env.HOST_PATH + '/refresh-token')
-            // }
-            // if (error?.response?.status === 401 && typeof window !== 'undefined') {
-            //   if (configured) {
-            //     redirectToHomeOnClient();
-            //     return Promise.reject(error)
-            //   }
-            //   if (!globalPromise) {
-            //     globalThis.globalPromise = refreshTokenServer().catch(() => {
-            //       redirectToHomeOnClient()
-            //     }).finally(() => {
-            //       setTimeout(() => {
-            //         globalPromise = undefined;
-            //       }, 1000 * 60 * 2);
-            //     })
-            //   }
-            //   return globalPromise.then(() => {
-            //     const chainObj = chain(true)(baseURL, type, passToken ? getCookie(accessToken) : '', serverAccessToken ? getCookie(accessToken) : '', server)
-            //     return chainObj[key](...params)
-            //   })
-            // } else if (error?.response?.status === 401) {
-            //   // const error = new Error('401', { cause: 401 })
-            //   // error.digest = '440011'
-            //   // eslint-disable-next-line prefer-promise-reject-errors
-            //   return Promise.reject(401)
-            // } else {
-
-            //   return Promise.reject(error)
-            // }
+            logError(error?.response?.data ?? error?.response ?? error)
+            if (error?.response?.status === 401 && typeof window !== 'undefined') {
+              if (configured) {
+                redirectToHomeOnClient();
+                return Promise.reject(error)
+              }
+              if (!globalPromise) {
+                globalThis.globalPromise = refreshTokenServer().catch((error) => {
+                  redirectToHomeOnClient()
+                }).finally(() => {
+                  setTimeout(() => {
+                    globalPromise = undefined;
+                  }, 1000 * 60 * 2);
+                })
+              }
+              return globalPromise.then(() => {
+                const chainObj = chain(true)(baseURL, type, passToken ? getCookie(accessToken) : '', serverAccessToken ? getCookie(accessToken) : '', server)
+                return chainObj[key](...params)
+              })
+            } else if (error?.response?.status === 401) {
+              // const error = new Error('401', { cause: 401 })
+              // error.digest = '440011'
+              // eslint-disable-next-line prefer-promise-reject-errors
+              return Promise.reject(401) // will redirect to error page, that code in the _app.tsx
+            } else {
+              return Promise.reject(error)
+            }
           }
         )
       }

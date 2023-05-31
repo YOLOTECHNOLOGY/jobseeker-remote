@@ -41,7 +41,10 @@ export function middleware(request: NextRequest) {
       '/imbackground.js',
       '/robots.txt',
       '/self_worker.js',
-      '/vercel.svg'
+      '/vercel.svg',
+      '/errors/report',
+      '/clientError.log',
+      '/serverError.log'
       // Your other files in `public`
     ].includes(pathname)
   ) { return }
