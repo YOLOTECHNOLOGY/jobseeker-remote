@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const logError = error => {
     if (typeof window !== 'undefined') {
-        axios.post(window.location.href + '/errors/report', { error })
+        axios.post(window.location.origin + '/errors/report', { error })
     } else {
         const log4js = require('log4js')
         const logger = log4js.getLogger('serverError')

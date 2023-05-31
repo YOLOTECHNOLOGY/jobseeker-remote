@@ -7,7 +7,7 @@
     "build:staging": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
     "build:production": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
     "analyze": "ANALYZE=true yarn build:production",
-    "start": "NODE_OPTIONS='--max_old_space_size=12000' next start",
+    "start": "next start",
     "lint": "next lint ",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit --skipLibCheck",
     "postinstall": "husky install",
