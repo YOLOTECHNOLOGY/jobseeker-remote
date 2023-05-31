@@ -1,43 +1,48 @@
 "use client"
-import React,{useEffect,useState} from 'react'
-import MaterialTextField from 'components/MaterialTextField'
+import React,{useState} from 'react'
 import styles from '../index.module.scss'
-import errorText from '../components/errorText'
-import { useFirstRender } from 'helpers/useFirstRender'
-import { sendOTP } from 'helpers/interpreters/services/exchangeNumber'
 import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
+import  EmailComponent from './emailComponent'
+import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
+import { useDispatch, } from 'react-redux'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+
+import SetUpLater from './setUpLater'
+import { useSearchParams } from 'next/navigation'
+
 function EmailFactor() {
   
-  const [emailError, setEmailError] = useState<string>('')
+  const [isDisable, setDisable] = useState<boolean>(true)
   const [email, setEmail] = useState<string>('')
-  const firstRender = useFirstRender()
+  const searchParams = useSearchParams()
+  const phoneNum =  '+' + searchParams.get('phone')?.trim?.()
+  const dispatch = useDispatch()
   const router = useRouter()
   const langKey = getLang();
-  useEffect(() => {
-    if (firstRender) {
-      return
-    }
-    let errorText = null
-    if (!email.length || !/\S+@\S+\.\S+/.test(email)) {
-      errorText = "Please enter a valid email address."
-    }
-    setEmailError(errorText)
-  }, [email])
-
-  const goHome = () => {
-   console.log(111)
-  }
+  
 
   const sendOTPFun = () => {
-    sendOTP({
-      code:email
-    }).then((res)=>{
-      console.log(res)
-      router.push(`${langKey}/get-started/person/sttp=4`)
+    console.log(999);
+    
+    authenticationSendEmaillOtp({ email })
+    .then((res) => {
+      console.log(res?.data?.data,'res')
+      router.push(`${langKey}/get-started/phone?step=4&&phone=${phoneNum}&email=${email}`)
     })
-  }
+    .catch((error) => {
+      dispatch(
+        displayNotification({
+          open: true,
+          message: error.message ?? 'Send EmailOTP fail',
+          severity: 'error'
+        })
+      )
+    })
+}
+  
 
+ 
 
   return (
     <div className={styles.emailFactor}>
@@ -51,21 +56,13 @@ function EmailFactor() {
         recognise. Please enter the email address to receive the code.
       </p>
       <div className={styles.phoneNumber}>
-        <div className={styles.item} style={{height:'66px'}}>
-          <MaterialTextField 
-          className={styles.fullwidth}
-           style={{marginBottom:'0'}} 
-          label={'Email address'} 
-          size='small'
-          onChange={(e) => setEmail(e.target.value)}
-          error={emailError ? true : false}
-           />
-          {emailError && errorText(emailError)}
+      <div className={styles.item}>
+        <EmailComponent setEmail={setEmail} setDisable={setDisable} email={email}/>
         </div>
-        <button className={styles.btn} disabled={!!emailError} onClick={()=>sendOTPFun}>
+        <button className={styles.btn} disabled={isDisable} onClick={()=>sendOTPFun()}>
           Send verification code
         </button>
-        <button className={styles.btn} onClick={()=>goHome}>Set this up later</button>
+        <SetUpLater/>
       </div>
     </div>
   )

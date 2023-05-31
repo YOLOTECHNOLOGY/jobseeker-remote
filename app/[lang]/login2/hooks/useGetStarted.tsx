@@ -26,7 +26,7 @@ const useGetStarted = () => {
   const [userId, setUserId] = useState(null)
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
   const [defaultRedirectPage, setDefaultRedirectPage] = useState<string>(null)
-  console.log(useSearchParams,'router')
+ 
   // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
 
@@ -64,6 +64,19 @@ const useGetStarted = () => {
       source: 'web',
     //  ...router.query,
       userId
+    }
+
+    dispatch(jobbseekersLoginRequest(data))
+  }
+
+  const handleAuthenticationJobseekersLoginPhone = (code,phone_num,browser_serial_number) => {
+    setEmailOTPInputDisabled(true)
+    const data = {
+      phone_num,
+      otp: code,
+      source: 'web',
+      userId,
+      browser_serial_number
     }
     dispatch(jobbseekersLoginRequest(data))
   }
@@ -183,6 +196,7 @@ const useGetStarted = () => {
     setEmailTOP,
     emailOTPInputDisabled,
     handleAuthenticationJobseekersLogin,
+    handleAuthenticationJobseekersLoginPhone,
     handleAuthenticationSendEmailMagicLink,
     emailTOPError
   }

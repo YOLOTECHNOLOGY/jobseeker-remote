@@ -108,7 +108,7 @@
           width: 55px;
           height: 60px;
           margin-right: 12px;
-          background: 166AD4;;
+          background: #166AD4;;
           border: 1px solid #166AD4;
           &.itemContentActive::before {
             position: absolute;
@@ -124,9 +124,16 @@
           }
         }
       }
+      .optErr{
+        margin: 0;
+        padding-top: 8px;
+      }
       .InputBoxWrap {
         position: absolute;
         left: -9999px;
+      }
+      .resendCode{
+        color: #2379EA;;
       }
       &.captchaThemeBox {
         .codeBox {
@@ -230,6 +237,9 @@
           text-decoration-line: underline;
           color: #86909c;
           margin: 16px 0 20px;
+          .resendCode{
+            color: #2379EA;;
+          }
         }
         .trouble {
           font-size: 16px;

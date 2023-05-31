@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo, CSSProperties } from 'react'
 import styles from '../../index.module.scss'
+import errorText from '../errorText'
 // 默认位数
 const DEFAULT_LENGTH = 6
 
@@ -26,7 +27,8 @@ interface ICaptchaProps {
   autoFocus?: boolean
   className?: string | undefined
   style?: CSSProperties | undefined
-  sendOpt?:() => void
+  sendOpt?:() => void,
+  error?:string
 }
 
 let timer = null;
@@ -35,7 +37,7 @@ const origninTimer = 60
 
 const Captcha: React.FC<ICaptchaProps> = (props)=>{
 
-    const { value = '', onChange, length = DEFAULT_LENGTH, autoFocus = false,sendOpt } = props
+    const { value = '', onChange, length = DEFAULT_LENGTH, autoFocus = false,sendOpt,error } = props
     // 组件内部维护的输入框输入值
     const [inputValue, setInputValue] = useState('')
     // 验证码数组
@@ -67,7 +69,6 @@ const Captcha: React.FC<ICaptchaProps> = (props)=>{
       
       timer = setInterval(()=>{
         const newTime =  timerRef.current - 1
-        console.log(newTime,newTime)
         if(newTime <= 0){ 
           clearInterval(timer)
           timerRef.current = origninTimer 
@@ -76,7 +77,7 @@ const Captcha: React.FC<ICaptchaProps> = (props)=>{
         }
         setCountdown(newTime)     
       },1000)
-  
+     
     },[])
 
     const handleInputCodeChange = (e: any) => {
@@ -92,6 +93,8 @@ const Captcha: React.FC<ICaptchaProps> = (props)=>{
       inputRef.current?.focus()
       setFocus(true)
     }
+
+   
 return <>
  <div className={`${styles.captcha} ${styles.captchaThemeBox}`}>
 <div className={styles.codeBox} onMouseDown={handleCodeBoxClick}>
@@ -110,9 +113,12 @@ return <>
     )
   })}
 </div>
+  {
+    error ? <p className={styles.optErr}>{ errorText(error)}</p>  :null
+}
 <div className={styles.InputBoxWrap}>
   <input
-    type='text'
+    type='number'
     value={inputValue}
     onChange={handleInputCodeChange}
     onFocus={() => setFocus(true)}
@@ -127,7 +133,7 @@ return <>
 </div>
 <p className={styles.countdown}>
             {
-              countdown === 0 ?  <span onClick={()=>sendOpt}>resend code</span> : countdown + 's'
+              countdown <= 0 ?  <span className={styles.resendCode}  onClick={()=>sendOpt}>Resend code</span> : countdown + 's'
             }
             </p>
 </>

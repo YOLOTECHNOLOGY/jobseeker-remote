@@ -4,6 +4,7 @@ import Link from 'next/link'
 import AppleLogin from './link/apple'
 import FacebookLogin from './link/facebook'
 import GoogleLogin from './link/google'
+import PhoneLink from './link/phone'
 import Divider from '@mui/material/Divider'
 import classNames from "classnames";
 import { useRouter } from 'next/navigation'
@@ -24,7 +25,7 @@ const loginForEmail = ()=>{
       .then((res) => {
         console.log(res?.data?.data,'res')
         const {user_id} = res?.data?.data ?? {}
-        router.push(`${langKey}/get-started?step=2&&email=${email}&userId=${user_id}`)
+        router.push(`${langKey}/get-started/email?step=2&&email=${email}&userId=${user_id}`)
       })
       .catch((error) => {
         dispatch(
@@ -75,6 +76,7 @@ const loginForEmail = ()=>{
         <GoogleLogin />
         <FacebookLogin />
         <AppleLogin />
+        <PhoneLink/>
       </div>
      </>
   )
