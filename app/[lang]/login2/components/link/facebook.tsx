@@ -5,23 +5,21 @@ import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSoci
 import { FacebookIcon } from 'images'
 
 import styles from '../../index.module.scss'
-import useGetStartedClient from '../../hooks'
+import useGetStartedClient from '../../hooks/useGetStarted'
 import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
 
 interface IFacebook {
-  className?: string
-  activeKey?: number
-  isLogin?: boolean
-  callBackMethod?: Function
-  redirect?: string | string[]
-  loading?: boolean
+  className?: string;
+  activeKey?: number;
+  isLogin?: boolean;
+  redirect?: string | string[];
 }
 
 const FacebookLogin = (props: IFacebook) => {
   const {activeKey,isLogin,redirect} = props
   const dispatch = useDispatch()
-  const [defaultLoginCallBack] = useGetStartedClient()
+  const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
 
   const query = {};

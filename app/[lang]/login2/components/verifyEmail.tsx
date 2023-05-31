@@ -26,7 +26,6 @@ const verifyPhone: React.FC = function () {
 
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const firstRender = useFirstRender()
-
   useEffect(() => {
     if (email) {
       setEmail(email)
@@ -68,7 +67,7 @@ const verifyPhone: React.FC = function () {
               <h2>Welcome back ! 🎉</h2>
               <p className={styles.enterTips}>
                 Please enter the 6-digit code that we sent to{' '}
-                <span className={styles.phone_text}>johndoe@gmail.com</span>
+                <span className={styles.phone_text}>{email}</span>
               </p>
               <div className={styles.avatar}>
                 <img

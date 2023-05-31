@@ -12,19 +12,22 @@ import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOt
 import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { getLang } from 'helpers/country'
+import { usePathname } from "next/navigation";
 const loginForEmail = ()=>{
   const router = useRouter()
   const dispatch = useDispatch()
-  const langKey = getLang();
+  // const langKey = getLang();
 
-   const [email,setEmail] = useState<string>('')
-   const [isDisable,setDisable] = useState<boolean>(true)
+  const [email,setEmail] = useState<string>('')
+  const [isDisable,setDisable] = useState<boolean>(true)
+  const pathname = usePathname()
+
    const sendOpt =()=>{
       authenticationSendEmaillOtp({ email })
       .then((res) => {
         console.log(res?.data?.data,'res')
         const {user_id} = res?.data?.data ?? {}
-        router.push(`${langKey}/get-started?step=2&&email=${email}&userId=${user_id}`)
+        router.push(`${pathname}?step=2&&email=${email}&userId=${user_id}`)
       })
       .catch((error) => {
         dispatch(
