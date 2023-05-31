@@ -40,8 +40,6 @@ const AppleLogin = (props: IApple) => {
     clientId: 'com.bossjob.web',
     scope: 'name email',
     redirectURI: 'https://dev.bossjob.ph/login2',
-    state: '',
-    nonce: '',
     usePopup: true
   }
 
@@ -60,7 +58,6 @@ const AppleLogin = (props: IApple) => {
       script.src = APPLE_LOGIN_URL
       script.async = true
       script.defer = true
-      script.crossOrigin = 'anonymous'
       script.onload = handleClientLoad
 
       document.body.appendChild(script)
