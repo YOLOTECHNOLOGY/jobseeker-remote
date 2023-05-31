@@ -6,7 +6,7 @@ import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSoci
 import { GoogleLogo } from 'images'
 import styles from '../../index.module.scss'
 import { removeItem } from 'helpers/localStorage'
-import useGetStartedClient from '../../hooks'
+import useGetStartedClient from '../../hooks/useGetStarted'
 import { useSearchParams } from 'next/navigation'
 
 interface IGoogle {
@@ -21,7 +21,7 @@ const GoogleLogin = (props: IGoogle)  => {
   const {activeKey,isLogin,redirect} = props
   const [googleAuth, setGoogleAuth] = useState(null)
   const dispatch = useDispatch()
-  const [defaultLoginCallBack] = useGetStartedClient()
+  const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
 
   const query = {};
