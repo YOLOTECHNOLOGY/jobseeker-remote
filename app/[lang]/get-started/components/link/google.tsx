@@ -45,33 +45,29 @@ const GoogleLogin = (props: IGoogle) => {
   }, [jobseekersSocialResponse])
 
   useEffect(() => {
-    if (typeof window == 'undefined') return
     setGoogleAuth(null)
-    const handleClientLoad = () => window.gapi.load('client:auth2', initClient)
-    const initClient = () => {
-      window.gapi.client
-        .init({
-          apiKey: 'AIzaSyAFYSp8vzxmXF_PourfSFW6t0VynH5d9Vs',
-          clientId: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
-          scope: 'https://www.googleapis.com/auth/userinfo.profile'
-        })
-        .then(() => {
-          setGoogleAuth(window.gapi.auth2.getAuthInstance())
-        })
-    }
-
-    const script = document.createElement('script')
-
-    script.src = 'https://apis.google.com/js/api.js'
-    script.async = true
-    script.defer = true
-    script.crossOrigin = 'anonymous'
-    script.onload = handleClientLoad
-
-    document.body.appendChild(script)
-
-    return () => {
-      document?.body?.removeChild?.(script)
+    if (typeof window !== 'undefined') {
+      const script = document.createElement('script')
+      const handleClientLoad = () => window.gapi.load('client:auth2', initClient)
+      const initClient = () => {
+        window.gapi.client
+          .init({
+            apiKey: 'AIzaSyAFYSp8vzxmXF_PourfSFW6t0VynH5d9Vs',
+            clientId: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
+            scope: 'https://www.googleapis.com/auth/userinfo.profile'
+          })
+          .then(() => {
+            setGoogleAuth(window.gapi.auth2.getAuthInstance())
+          })
+        document?.body?.removeChild?.(script)  
+      }
+  
+      script.src = 'https://apis.google.com/js/api.js'
+      script.async = true
+      script.defer = true
+      script.type = 'text/javascript'
+      script.onload = handleClientLoad
+      document.body.appendChild(script)
     }
   }, [])
 

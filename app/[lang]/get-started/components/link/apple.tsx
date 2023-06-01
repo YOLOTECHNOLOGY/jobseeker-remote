@@ -47,27 +47,23 @@ const AppleLogin = (props: IApple) => {
   }
 
   useEffect(() => {
-    if(typeof window == 'undefined') return
+    if(typeof window !== 'undefined') {
+      const script = document.createElement('script')
       const handleClientLoad = () => {
         if (!window?.AppleID) {
           console.error(new Error('Error loading apple script'))
           return
         }
         window.AppleID.auth.init(appleConfig)
+        document.body.removeChild(script)
       }
-
-      const script = document.createElement('script')
-
       script.src = APPLE_LOGIN_URL
+      script.type = 'text/javascript'
       script.async = true
       script.defer = true
       script.onload = handleClientLoad
-
       document.body.appendChild(script)
-
-      return () => {
-        document.body.removeChild(script)
-      }
+    }
   }, [])
 
   const handleAuth = async () => {
