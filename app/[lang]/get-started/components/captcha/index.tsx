@@ -29,6 +29,7 @@ interface ICaptchaProps {
   style?: CSSProperties | undefined
   sendOpt?:() => void,
   error?:string
+  lang?:any
 }
 
 let timer = null;
@@ -37,7 +38,8 @@ const origninTimer = 60
 
 const Captcha: React.FC<ICaptchaProps> = (props)=>{
 
-    const { value = '', onChange, length = DEFAULT_LENGTH, autoFocus = false,sendOpt,error } = props
+    const { value = '', onChange, length = DEFAULT_LENGTH, autoFocus = false,sendOpt,error,lang } = props
+    const { newGetStarted } = lang
     // 组件内部维护的输入框输入值
     const [inputValue, setInputValue] = useState('')
     // 验证码数组
@@ -133,7 +135,7 @@ return <>
 </div>
 <p className={styles.countdown}>
             {
-              countdown <= 0 ?  <span className={styles.resendCode}  onClick={()=>sendOpt}>Resend code</span> : countdown + 's'
+              countdown <= 0 ?  <span className={styles.resendCode}  onClick={()=>sendOpt}>{newGetStarted.resendCode}</span> : countdown + 's'
             }
             </p>
 </>

@@ -20,7 +20,7 @@ function EmailFactor(props: any) {
   const dispatch = useDispatch()
   const router = useRouter()
   const langKey = getLang();
-  
+  const { newGetStarted } = props.lang
 
   const sendOTPFun = () => {
     console.log(999);
@@ -47,22 +47,21 @@ function EmailFactor(props: any) {
   return (
     <div className={styles.emailFactor}>
       <h2>
-        Enable two-factor <br />
-        authentication 🔒
+        {newGetStarted.twoFactor} <br />
+        {newGetStarted.authentication} 🔒
       </h2>
-      <p className={styles.secure}>Secure your account and receive code on your email</p>
+      <p className={styles.secure}>{newGetStarted.secure}</p>
       <p className={styles.emailTips}>
-        We will ask you for additional code when you log in on a device or browser that we don’t
-        recognise. Please enter the email address to receive the code.
+       {newGetStarted.emailTips}
       </p>
       <div className={styles.phoneNumber}>
       <div className={styles.item}>
         <EmailComponent setEmail={setEmail} setDisable={setDisable} email={email} lang={props.lang}/>
         </div>
         <button className={styles.btn} disabled={isDisable} onClick={()=>sendOTPFun()}>
-          Send verification code
+          {newGetStarted.sendCode}
         </button>
-        <SetUpLater/>
+        <SetUpLater lang={props.lang}/>
       </div>
     </div>
   )

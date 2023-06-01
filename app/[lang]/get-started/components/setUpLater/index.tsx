@@ -4,10 +4,11 @@ import useGetStarted from '../../hooks/useGetStarted'
 import { useSelector } from 'react-redux'
 import { removeItem } from 'helpers/localStorage'
 
-const SetUpLater = ()=>{
+const SetUpLater = (props: any)=>{
     const {defaultLoginCallBack } =  useGetStarted()
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
-  
+  const { newGetStarted } = props.lang
+
   console.log({userInfo});
   
     const login = () => {
@@ -17,6 +18,6 @@ const SetUpLater = ()=>{
             defaultLoginCallBack(data)        
            }
        }
-    return  <button className={styles.btn} onClick={()=>login()}>Set this up later</button>
+    return  <button className={styles.btn} onClick={()=>login()}>{newGetStarted.setUpLater}</button>
 }
 export default SetUpLater

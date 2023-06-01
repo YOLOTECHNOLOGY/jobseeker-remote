@@ -5,9 +5,10 @@ import useGetStarted from '../hooks/useGetStarted'
 import Image from 'next/image'
 import { PhoneIcon } from 'images'
 
-function FactorEnable({lang}:any) {
+function FactorEnable(props:any) {
    
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+  const { newGetStarted } = props.lang
   const {  defaultLoginCallBack } =  useGetStarted() 
   console.log({userInfo})
   useEffect(()=>{
@@ -23,12 +24,11 @@ function FactorEnable({lang}:any) {
     <div className={styles.enabled}>
       <Image src={PhoneIcon} alt={''}   className={styles.factorImg} width={200} height={200}></Image>
       <h2>
-        Two-factor <br />
-        authentication enabled ✅
+        {newGetStarted.enableTwoFactor} <br />
+        {newGetStarted.authenticationEnabled} ✅
       </h2>
       <p className={styles.notice}>
-        If we notice an attempted login from a device or browser that we don’t recognise, we will
-        ask you for code sent to your email address.
+        {newGetStarted.factorTip}
       </p>
     </div>
   )

@@ -10,6 +10,7 @@ interface IProps {
 }
 
 const VerifyFactorEmail = (props: IProps) => {
+  const { newGetStarted } = props.lang
   const [error,setError] = useState<string>('')
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
@@ -49,13 +50,13 @@ const VerifyFactorEmail = (props: IProps) => {
     <>
       <div className={styles.phoneNumber}>
         <div className={styles.optBox}>
-          <h2>Verify it’s you</h2>
+          <h2>{newGetStarted.verifyText}</h2>
           <div className={styles.enterTips}>
-            <p className={styles.extra}>This extra step show that it is really you trying to log in. </p>
-            <p>Please enter the 6-digit code that we sent to  <span>{email}.</span></p>
+            <p className={styles.extra}>{}</p>
+            <p>{newGetStarted.sendCodeDigit} <span>{email}.</span></p>
           </div>
-          <Captcha  autoFocus={true} onChange={onChange} error={error}/>
-          <p>Check your spam mail if you didn’t receive code.</p>
+          <Captcha lang={props.lang} autoFocus={true} onChange={onChange} error={error}/>
+          <p>{newGetStarted.verifyExtra}</p>
         </div>
       </div>
     </>

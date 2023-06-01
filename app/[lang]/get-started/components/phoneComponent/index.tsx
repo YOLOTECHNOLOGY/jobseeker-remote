@@ -9,11 +9,12 @@ interface initProps {
   phone?: string
   setDisable?: Function
   phoneError?: string
+  lang: any
 }
 
-const EmailComponent = ({ setPhoneNumber, phone, setDisable, phoneError }: initProps) => {
+const PhoneComponent = ({ setPhoneNumber, phone, setDisable, phoneError, lang }: initProps) => {
   const firstRender = useFirstRender()
-
+  const { newGetStarted } = lang
   useEffect(() => {
     if (firstRender) {
       return
@@ -25,7 +26,7 @@ const EmailComponent = ({ setPhoneNumber, phone, setDisable, phoneError }: initP
     <>
       <MaterialTextField
         className={styles.fullwidth}
-        label={'Phone number'}
+        label={newGetStarted.phoneNumber}
         size='small'
         type='number'
         error={!!phoneError}
@@ -36,4 +37,4 @@ const EmailComponent = ({ setPhoneNumber, phone, setDisable, phoneError }: initP
     </>
   )
 }
-export default EmailComponent
+export default PhoneComponent
