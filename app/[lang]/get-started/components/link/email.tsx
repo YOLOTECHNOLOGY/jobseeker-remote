@@ -4,14 +4,19 @@ import Link from 'next/link'
 import { EmailIcon } from 'images'
 import { usePathname } from "next/navigation";
 
-const EmailLink = ()=>{
+interface IProps {
+  lang?: any;
+}
+
+const EmailLink = (props: IProps)=>{
+  const { lang: {newGetStarted} } = props
+
   const pathname = usePathname()
-  
   return (
     <li>
      <Link href={`${pathname}/email`}>
      <img src={EmailIcon}></img>
-      Email
+      {newGetStarted.email}
     </Link>
     </li>
   )

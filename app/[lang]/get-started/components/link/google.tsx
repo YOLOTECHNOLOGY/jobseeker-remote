@@ -14,15 +14,15 @@ interface IGoogle {
   activeKey?: number;
   isLogin?: boolean;
   redirect?: string | string[];
+  lang?: any;
 }
 
 const GoogleLogin = (props: IGoogle)  => {
-  const {activeKey,isLogin,redirect} = props
+  const {activeKey,isLogin,redirect, lang: {newGetStarted}} = props
   const [googleAuth, setGoogleAuth] = useState(null)
   const dispatch = useDispatch()
   const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
-
   const query = {};
   for(const entry of searchParams.entries()) {
     query[entry[0]] = entry[1]
@@ -137,7 +137,7 @@ const GoogleLogin = (props: IGoogle)  => {
   return (
     <div className={styles.login_item}>
         <img src={GoogleLogo} />
-        <span onClick={handleAuthClick}>Continue with Google</span>
+        <span onClick={handleAuthClick}>{newGetStarted.links.google}</span>
     </div>
   )
 }

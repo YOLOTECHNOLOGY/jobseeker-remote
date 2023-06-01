@@ -14,10 +14,11 @@ interface IFacebook {
   activeKey?: number;
   isLogin?: boolean;
   redirect?: string | string[];
+  lang?: any;
 }
 
 const FacebookLogin = (props: IFacebook) => {
-  const {activeKey,isLogin,redirect} = props
+  const {activeKey,isLogin,redirect, lang:{newGetStarted}} = props
   const dispatch = useDispatch()
   const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
@@ -97,7 +98,7 @@ const FacebookLogin = (props: IFacebook) => {
   return (
     <div className={styles.login_item}>
         <img src={FacebookIcon}></img>
-        <span onClick={handleAuthClick}>Continue with Facebook</span>
+        <span onClick={handleAuthClick}>{newGetStarted.links.facebook}</span>
     </div>
   )
 }

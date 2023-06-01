@@ -9,20 +9,29 @@ import FacebookLogin from './link/facebook'
 import GoogleLogin from './link/google'
 
 
-const Main = () => {
+interface IProps {
+  dictionary: any;
+  config: any;
+  lang: string;
+}
+
+const Main = (props: IProps) => {
+  const { dictionary } = props
+  const { newGetStarted } = dictionary
+
   return (
     <>
       <div className={styles.list}>
-        <GoogleLogin />
-        <FacebookLogin />
-        <AppleLogin />
+        <GoogleLogin lang={dictionary} />
+        <FacebookLogin lang={dictionary} />
+        <AppleLogin lang={dictionary} />
       </div>
       <div className={styles.divider}>
-        <Divider>or continue with</Divider>
+        <Divider>{newGetStarted.continueWith}</Divider>
       </div>
       <ul className={`${styles.list} ${styles.listEmail}`}>
-      <EmailLink/>
-      <PhoneLink/>
+      <EmailLink lang={dictionary} />
+      <PhoneLink lang={dictionary} />
       </ul>
     </>
   )
