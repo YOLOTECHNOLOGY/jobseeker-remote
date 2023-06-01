@@ -1070,6 +1070,9 @@
     "havingTrouble": "还是有问题？ 尝试注册",
     "otherOptions": "其他选项",
     "alternatively": "或者，请求一个",
-    "magicLink": "魔术链接"
+    "magicLink": "魔术链接",
+    "resendCode": "重新发送验证码",
+    "country": "国家",
+    "phoneNumber": "电话号码"
   }
 }

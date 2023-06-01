@@ -73,9 +73,7 @@ const loginForEmail = (props: IProps)=>{
           </div>
           <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>{newGetStarted.sendCode}</button>
 
-          <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}>
-         
-          </p>
+          <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>
           <p className={styles.tips}>{newGetStarted.tips} <span>{newGetStarted.employer}</span></p>
           </div> 
           <div>

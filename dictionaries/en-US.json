@@ -1070,6 +1070,9 @@
     "havingTrouble": "Still having trouble? Try to sign up with",
     "otherOptions": "other options",
     "alternatively": "Alternatively, request a",
-    "magicLink": "magic link"
+    "magicLink": "magic link",
+    "resendCode": "Resend code",
+    "country": "Country",
+    "phoneNumber": "Phone Number"
   }
 }

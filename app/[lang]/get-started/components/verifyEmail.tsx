@@ -82,7 +82,7 @@ const verifyEmail = function (props) {
             </>
             
           )}
-          <Captcha autoFocus={true} onChange={onChange} />
+          <Captcha lang={props.lang} autoFocus={true} onChange={onChange} />
           <div>
             <div>{newGetStarted.checkSpamEmail}</div>
             <div>
