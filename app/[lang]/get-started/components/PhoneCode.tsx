@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 import { removeItem } from 'helpers/localStorage'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { useRouter } from 'next/navigation'
-function PhoneCode() {
+function PhoneCode(props) {
   const searchParams = useSearchParams()
   const [captchaError,setCaptchaError] = useState<string>('');
   const langKey = getLang()

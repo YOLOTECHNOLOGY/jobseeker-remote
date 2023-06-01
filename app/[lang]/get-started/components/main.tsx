@@ -11,8 +11,6 @@ import GoogleLogin from './link/google'
 
 interface IProps {
   dictionary: any;
-  config: any;
-  lang: string;
 }
 
 const Main = (props: IProps) => {

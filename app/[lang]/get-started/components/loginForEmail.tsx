@@ -12,12 +12,17 @@ import EmailComponent from './emailComponent'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-import { getLang } from 'helpers/country'
 import { usePathname } from "next/navigation";
-const loginForEmail = ()=>{
+import { formatTemplateString } from "helpers/formatter";
+
+interface IProps {
+  lang: any;
+}
+
+const loginForEmail = (props: IProps)=>{
   const router = useRouter()
   const dispatch = useDispatch()
-  // const langKey = getLang();
+  const { lang: { newGetStarted } } = props
 
   const [email,setEmail] = useState<string>('')
   const [isDisable,setDisable] = useState<boolean>(true)
@@ -26,7 +31,6 @@ const loginForEmail = ()=>{
    const sendOpt =()=>{
       authenticationSendEmaillOtp({ email })
       .then((res) => {
-        console.log(res?.data?.data,'res')
         const {user_id} = res?.data?.data ?? {}
         router.push(`${pathname}?step=2&&email=${email}&userId=${user_id}`)
       })
@@ -41,45 +45,49 @@ const loginForEmail = ()=>{
       })
   }
 
+
+  const agreementWord = formatTemplateString(newGetStarted.agreement, {
+    value1: `<a
+        target='_blank'
+        href='https://blog.bossjob.ph/terms-and-conditions/' rel="noreferrer"
+      >
+          ${newGetStarted.termsOfUse}
+      </a>`
+    ,
+    value2: 
+      `<a
+        target='_blank'
+        href='https://blog.bossjob.ph/terms-and-conditions/' rel="noreferrer"
+      >
+        ${newGetStarted.privacyPolicy}
+      </a>`
+    ,
+  })
+
   return (
     <>
-          <h2>Log in or sign up to Bossjob</h2>
+          <h2>{newGetStarted.title}</h2>
          <div className={styles.phoneNumber}>
           <div className={styles.item}>
-            <EmailComponent setEmail={setEmail} setDisable={setDisable} email={email}/>
+            <EmailComponent lang={props.lang} setEmail={setEmail} setDisable={setDisable} email={email}/>
           </div>
-          <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>Send verification code</button>
+          <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>{newGetStarted.sendCode}</button>
 
-          <p className={styles.msg}>
-            I have read and agreed to and
-           <Link
-            target='_blank'
-            href='https://blog.bossjob.ph/terms-and-conditions/'
-          >
-             Terms of Use
-          </Link>
-            and
-            <Link
-            target='_blank'
-            href='https://blog.bossjob.ph/terms-and-conditions/'
-            //  className={styles.emailLoginContainer_link}
-          >
-             Privacy Policy
-          </Link>
-            <span></span>
+          <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}>
+         
           </p>
-          <p className={styles.tips}>Looking to hire people? Sign up as <span>Employer</span></p>
+          <p className={styles.tips}>{newGetStarted.tips} <span>{newGetStarted.employer}</span></p>
           </div> 
           <div>
         <div className={classNames([styles.divider, styles.divider_none])}>
-          <Divider>or continue with</Divider>
+          <Divider>{newGetStarted.continueWith}</Divider>
         </div>    
       </div>
       <div className={styles.list}>
-        <GoogleLogin />
-        <FacebookLogin />
-        <AppleLogin />
-        <PhoneLink/>
+        <GoogleLogin lang={props.lang} />
+        <FacebookLogin lang={props.lang} />
+        <AppleLogin lang={props.lang} />
+        <PhoneLink lang={props.lang} />
       </div>
      </>
   )

@@ -5,7 +5,7 @@ import { EmailIcon } from 'images'
 import { usePathname } from "next/navigation";
 
 interface IProps {
-  lang?: any;
+  lang: any;
 }
 
 const EmailLink = (props: IProps)=>{

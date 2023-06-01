@@ -14,7 +14,7 @@ interface IFacebook {
   activeKey?: number;
   isLogin?: boolean;
   redirect?: string | string[];
-  lang?: any;
+  lang: any;
 }
 
 const FacebookLogin = (props: IFacebook) => {

@@ -11,7 +11,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import SetUpLater from './setUpLater'
 import { useSearchParams } from 'next/navigation'
 
-function EmailFactor() {
+function EmailFactor(props: any) {
   
   const [isDisable, setDisable] = useState<boolean>(true)
   const [email, setEmail] = useState<string>('')
@@ -57,7 +57,7 @@ function EmailFactor() {
       </p>
       <div className={styles.phoneNumber}>
       <div className={styles.item}>
-        <EmailComponent setEmail={setEmail} setDisable={setDisable} email={email}/>
+        <EmailComponent setEmail={setEmail} setDisable={setDisable} email={email} lang={props.lang}/>
         </div>
         <button className={styles.btn} disabled={isDisable} onClick={()=>sendOTPFun()}>
           Send verification code

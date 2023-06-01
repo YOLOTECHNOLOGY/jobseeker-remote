@@ -24,7 +24,7 @@ const countryForCountryCode = {
     sg: '+65'
   }
 
-const LoginForPhone = ()=>{
+const LoginForPhone = (props: any)=>{
 
 const [countryValue,setCountry] = useState<string>('');
 const [isDisable,setDisable] = useState<boolean>(true)
@@ -124,10 +124,10 @@ const sendOpt =()=>{
         </div>    
       </div>
       <div className={styles.list}>
-        <GoogleLogin />
-        <FacebookLogin />
-        <AppleLogin />
-        <EmailLogin/>
+        <GoogleLogin lang={props.lang} />
+        <FacebookLogin lang={props.lang} />
+        <AppleLogin lang={props.lang} />
+        <EmailLogin lang={props.lang} />
       </div>
       </>
   )

@@ -1,32 +1,24 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import styles from '../index.module.scss'
-import VerifyEmail from '../components/verifyEmail'
-import { useSearchParams } from 'next/navigation'
-import LoginForEmail from '../components/loginForEmail'
+import React from 'react'
+import getConfigs from 'app/[lang]/interpreters/config'
+import { buildComponentScript } from 'app/[lang]/abstractModels/util'
+import { serverDataScript } from 'app/[lang]/abstractModels/FetchServierComponents'
 
-const EmailLogin = () => {
-  const searchParams = useSearchParams()
-  const search = searchParams.get('step')
-  const [step, setStep] = useState(1)
+import EmailLogin from './EmailLogin'
 
-  useEffect(() => {
-    if (search && [1,2].includes(+search)) {
-      setStep(Number(search))
-    }else {
-      setStep(1)
-    }
-  }, [search])
+import { getDictionary } from 'get-dictionary'
+const configs = getConfigs([
+  ['location_lists'],
+])
+
+const EmailIndex = async (props: any) => {
+  const { lang } = props.params
+  const dictionary: any = await getDictionary(lang)
 
   return (
-    <div className={styles.main}>
-      <div className={styles.bg}></div>
-      <div className={styles.container}>
-        {step === 1 &&  <LoginForEmail/>}
-        {step === 2 && <VerifyEmail />}
-      </div>
-    </div>
+    <>
+      <EmailLogin lang={dictionary} />
+    </>
   )
 }
 
-export default EmailLogin
+export default configs(serverDataScript().chain(props => buildComponentScript(props, EmailIndex))).run

@@ -3,12 +3,11 @@ import Captcha from './captcha/index'
 import styles from '../index.module.scss'
 
 interface IProps {
-  phone: string
-  avatar: string
+  lang: any;
 }
 
-const verifyPhone: React.FC = function (props: IProps) {
-  const { phone, avatar } = props
+const verifyPhone = (props: IProps) => {
+  const { lang } = props
 
   return (
     <>

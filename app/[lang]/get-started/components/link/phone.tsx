@@ -5,7 +5,7 @@ import { PhoneIcon } from 'images'
 import { usePathname } from "next/navigation";
 
 interface IProps {
-  lang?: any;
+  lang: any;
 }
 
 const PhoneLink = (props: IProps)=>{

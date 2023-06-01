@@ -10,7 +10,7 @@ import * as jose from 'jose'
 
 interface IApple {
   isLogin?: boolean;
-  lang?: any;
+  lang: any;
 }
 
 const APPLE_LOGIN_URL =

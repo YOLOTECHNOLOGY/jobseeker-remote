@@ -5,14 +5,15 @@ import styles from '../../index.module.scss'
 import errorText from '../errorText'
 
 interface initProps{
-    setEmail?:Function,
-    email:string,
-    setDisable?:Function
+    setEmail?:Function;
+    email:string;
+    setDisable?:Function;
+    lang: any;
 }
 
-const EmailComponent =({setEmail,email,setDisable}:initProps)=>{
+const EmailComponent =({setEmail,email,setDisable, lang}:initProps)=>{
     const [emailError, setEmailError] = useState<string>('')
-   
+    const { newGetStarted } = lang
     const firstRender = useFirstRender()
   
     useEffect(() => {
@@ -21,7 +22,7 @@ const EmailComponent =({setEmail,email,setDisable}:initProps)=>{
      }
      let errorText = null
      if (!email?.length || !/\S+@\S+\.\S+/.test(email)) {
-       errorText = "Please enter a valid email address."
+       errorText = newGetStarted.emailValid
      }else{
         errorText = null
      }
@@ -40,7 +41,7 @@ return (
     <>
     <MaterialTextField
     className={styles.fullwidth}
-    label={'Email address'}
+    label={newGetStarted.emailLabel}
     size='small'
     type='email'
     onChange={(e) => setEmail(e.target.value)}

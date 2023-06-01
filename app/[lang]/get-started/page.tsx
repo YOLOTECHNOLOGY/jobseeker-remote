@@ -13,7 +13,6 @@ const configs = getConfigs([
 
 
 const Page = async (props: any) => {
-  const { config } = props
   const { lang } = props.params
   const dictionary: any = await getDictionary(lang)
 
@@ -25,7 +24,7 @@ const Page = async (props: any) => {
          <div className={styles.bg}></div>
         <div className={styles.container}>
           <h2>{newGetStarted.title}</h2>
-           <Main config={config} lang={lang} dictionary={dictionary} />
+           <Main dictionary={dictionary} />
         </div>
       <p className={styles.tips}>{newGetStarted.tips}<span>{newGetStarted.employer}</span></p>
       </div>

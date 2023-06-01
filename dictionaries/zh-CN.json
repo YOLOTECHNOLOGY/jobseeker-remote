@@ -1056,6 +1056,18 @@
       "apple": "使用Apple登录",
       "google": "使用Google登录",
       "facebook": "使用Facebook登录"
-    }
+    },
+    "termsOfUse": "使用条款",
+    "privacyPolicy": "隐私政策",
+    "agreement": "我已经阅读并同意 {{value1}} 和 {{value2}}",
+    "emailValid": "请输入一个有效的邮件地址.",
+    "emailLabel": "邮件地址",
+    "sendCode": "发送验证码",
+    "welcomeBack": "欢迎回来!",
+    "sendCodeDigit": "请输入我们发送给的6位代码",
+    "signUpAnAccount": "注册新帐户",
+    "checkSpamEmail":"Check your spam mail if you didn’t receive code.",
+    "havingTrouble": "Still having trouble? Try to sign up with",
+    "otherOptions": "other options"
   }
 }

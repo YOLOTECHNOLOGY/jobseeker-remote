@@ -13,7 +13,7 @@ interface IGoogle {
   activeKey?: number
   isLogin?: boolean
   redirect?: string | string[]
-  lang?: any
+  lang: any
 }
 
 const GoogleLogin = (props: IGoogle) => {

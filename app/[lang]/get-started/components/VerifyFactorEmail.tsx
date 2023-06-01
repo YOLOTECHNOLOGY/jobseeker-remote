@@ -2,13 +2,11 @@ import React, { useState } from 'react'
 import Captcha from './captcha/index'
 import styles from '../index.module.scss'
 
-interface IProps {
-  phone: string
-  avatar: string
+interface IVerifyFactorEmail {
+  lang: any;
 }
 
-const VerifyFactorEmail: React.FC = function (props: IProps) {
-  const { phone, avatar } = props
+const VerifyFactorEmail = (props: IVerifyFactorEmail) => {
 
   return (
     <>

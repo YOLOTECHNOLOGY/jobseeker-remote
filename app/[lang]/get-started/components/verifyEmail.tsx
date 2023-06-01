@@ -8,7 +8,9 @@ import { removeItem } from 'helpers/localStorage'
 import useGetStarted from '../hooks/useGetStarted'
 import Link from 'next/link'
 import { getLang } from 'helpers/country'
-const verifyPhone: React.FC = function () {
+
+const verifyEmail = function (props) {
+  const { newGetStarted } = props.lang
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
   const email = searchParams.get('email')
@@ -50,16 +52,16 @@ const verifyPhone: React.FC = function () {
       handleAuthenticationJobseekersLogin(code)
     }
   }
-  console.log(!!userId)
+
   return (
     <>
       <div className={styles.phoneNumber}>
         <div className={styles.optBox}>
           {userId ? (
             <>
-              <h2>Welcome back ! 🎉</h2>
+              <h2>{newGetStarted.welcomeBack}🎉</h2>
               <p className={styles.enterTips}>
-                Please enter the 6-digit code that we sent to{' '}
+                {newGetStarted.sendCodeDigit}{' '}
                 <span className={styles.phone_text}>{email}</span>
               </p>
               <div className={styles.avatar}>
@@ -72,9 +74,9 @@ const verifyPhone: React.FC = function () {
             </>
           ) : (
             <>
-            <h2>Sign up an account 🎉</h2>
-             <p className={styles.enterTips}>
-                Please enter the 6-digit code that we sent to{' '}
+              <h2>{newGetStarted.signUpAnAccount} 🎉</h2>
+              <p className={styles.enterTips}>
+                {newGetStarted.sendCodeDigit}{' '}
                 <span className={styles.phone_text}>johndoe@gmail.com</span>
               </p>
             </>
@@ -97,4 +99,4 @@ const verifyPhone: React.FC = function () {
   )
 }
 
-export default verifyPhone
+export default verifyEmail

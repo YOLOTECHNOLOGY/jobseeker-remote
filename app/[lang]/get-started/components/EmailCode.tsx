@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
 import SetUpLater from './setUpLater'
-function EmailCode() {
+function EmailCode(props) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const phoneNum =  '+' + searchParams.get('phone')?.trim?.()

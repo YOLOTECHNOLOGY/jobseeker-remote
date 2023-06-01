@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '../index.module.scss'
 
-function FactorEnable() {
+function FactorEnable(props) {
   return (
     <div className={styles.enabled}>
       <h2>
