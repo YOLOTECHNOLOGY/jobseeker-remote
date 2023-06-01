@@ -13,9 +13,9 @@ const verifyPhone: React.FC = function () {
   const userId = searchParams.get('userId')
   const email = searchParams.get('email')
   const langKey = getLang();
-  const jobseekersSocialResponse = useSelector(
-    (store: any) => store.auth.jobseekersSocialLogin?.response
-  )
+  // const jobseekersSocialResponse = useSelector(
+  //   (store: any) => store.auth.jobseekersSocialLogin?.response
+  // )
   console.log(userId, 'userId')
   const { setUserId, setEmail, 
     defaultLoginCallBack, 
@@ -33,20 +33,13 @@ const verifyPhone: React.FC = function () {
   }, [email])
 
   useEffect(() => {
-    if (userId) {
-      setUserId(userId)
-    }
+    setUserId(userId)
   }, [userId])
 
   useEffect(() => {
-    if (firstRender) {
+    if (firstRender || !Object.keys(userInfo).length) {
       return
     }
-
-    if (!Object.keys(userInfo).length) {
-      return
-    }
-
     const { data } = userInfo
     removeItem('quickUpladResume')
     defaultLoginCallBack(data)
@@ -62,7 +55,7 @@ const verifyPhone: React.FC = function () {
     <>
       <div className={styles.phoneNumber}>
         <div className={styles.optBox}>
-          {userId != 'null' ? (
+          {userId ? (
             <>
               <h2>Welcome back ! 🎉</h2>
               <p className={styles.enterTips}>
@@ -78,7 +71,14 @@ const verifyPhone: React.FC = function () {
               </div>
             </>
           ) : (
+            <>
             <h2>Sign up an account 🎉</h2>
+             <p className={styles.enterTips}>
+                Please enter the 6-digit code that we sent to{' '}
+                <span className={styles.phone_text}>johndoe@gmail.com</span>
+              </p>
+            </>
+            
           )}
           <Captcha autoFocus={true} onChange={onChange} />
           <div>

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import AppleLogin from './link/apple'
 import FacebookLogin from './link/facebook'
 import GoogleLogin from './link/google'
+import PhoneLink from './link/phone'
 import Divider from '@mui/material/Divider'
 import classNames from "classnames";
 import { useRouter } from 'next/navigation'
@@ -78,6 +79,7 @@ const loginForEmail = ()=>{
         <GoogleLogin />
         <FacebookLogin />
         <AppleLogin />
+        <PhoneLink/>
       </div>
      </>
   )

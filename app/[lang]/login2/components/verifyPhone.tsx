@@ -27,7 +27,6 @@ const verifyPhone: React.FC = function (props: IProps) {
             />
           </div>
           <Captcha />
-          <p className={styles.countdown}>60s</p>
           <div>
             Having trouble? Try to sign up with <span className={styles.link}>other options</span>
           </div>

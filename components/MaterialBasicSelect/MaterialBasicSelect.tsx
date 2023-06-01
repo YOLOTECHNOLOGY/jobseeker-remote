@@ -107,7 +107,7 @@ const MaterialBasicSelect = ({
           onChange={handleChange}
           onOpen={onOpen}
           disabled={disabled}
-          helperText={error?.message}
+          helpertext={error?.message}
           {...rest}
         >
           {options &&

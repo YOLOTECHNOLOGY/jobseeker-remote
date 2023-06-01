@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from "react";
 import styles from '../index.module.scss'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
-import MaterialTextField from 'components/MaterialTextField'
 import { useSelector } from 'react-redux'
 import {  getSmsCountryList} from 'helpers/jobPayloadFormatter'
 import { getCountryKey } from 'helpers/country' 
@@ -9,13 +8,15 @@ import Link from 'next/link'
 import AppleLogin from './link/apple'
 import FacebookLogin from './link/facebook'
 import GoogleLogin from './link/google'
+import EmailLogin from './link/email'
 import Divider from '@mui/material/Divider'
 import classNames from "classnames";
 import { getLang } from 'helpers/country'
-import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import PhoneComponent from './phoneComponent'
+import {phoneOtpenerate} from 'store/services/auth/newLogin'
 
 
 const countryForCountryCode = {
@@ -28,6 +29,10 @@ const LoginForPhone = ()=>{
 const [countryValue,setCountry] = useState<string>('');
 const [isDisable,setDisable] = useState<boolean>(true)
 const [phoneNumber,setPhoneNumber] = useState<string>('');
+const [phoneError, setPhoneError] = useState<string>('')
+   
+
+
 const config = useSelector((store: any) => store.config.config.response ?? [])
 const countryList = getSmsCountryList(config)
 const country = getCountryKey()
@@ -35,6 +40,7 @@ const countryCode = countryForCountryCode[country]
 const langKey = getLang();
 const router = useRouter()
 const dispatch = useDispatch()
+
 useEffect(()=>{
   if(countryCode){
     setCountry(countryCode)
@@ -51,11 +57,17 @@ useEffect(()=>{
  
 const sendOpt =()=>{
   console.log(1111)
-  authenticationSendEmaillOtp({ phone:phoneNumber })
+  const phoneNum = countryValue + phoneNumber
+  phoneOtpenerate({ phone_num:phoneNum })
   .then((res) => {
     console.log(res?.data?.data,'res')
-    const {user_id} = res?.data?.data ?? {}
-    router.push(`${langKey}/get-started?step=2&&phone=${phoneNumber}&userId=${user_id}`)
+    const {user_id,avatar,first_name} = res?.data?.data ?? {}
+    
+     let url = `${langKey}/get-started/phone?step=2&&phone=${phoneNum}`
+     if(user_id){
+       url = `${langKey}/get-started/phone?step=6&&phone=${phoneNum}&userId=${user_id}&avatar=${avatar}&name=${first_name}`
+     }
+     router.push(url)
   })
   .catch((error) => {
     dispatch(
@@ -82,13 +94,7 @@ const sendOpt =()=>{
              />
           </div>
           <div className={styles.item}>
-            <MaterialTextField
-              className={styles.fullwidth}
-              label={'Phone number'}
-              size='small'
-              type='number'
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
+            <PhoneComponent phoneError={phoneError} setPhoneNumber={setPhoneNumber} setDisable={setDisable}/>
           </div>
           <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>Send verification code</button>
 
@@ -121,8 +127,9 @@ const sendOpt =()=>{
         <GoogleLogin />
         <FacebookLogin />
         <AppleLogin />
+        <EmailLogin/>
       </div>
-          </>
+      </>
   )
 }
 export default LoginForPhone
