@@ -11,6 +11,8 @@ import './index.module.scss'
 import 'app/[lang]/jobs-hiring/[path]/index.module.scss'
 import { getDictionary } from 'get-dictionary'
 import React from 'react'
+
+
 const defaultSEO = {
   title: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
   description: `Bossjob - Career Platform for Professionals in ${getCountry()}`,
@@ -67,10 +69,10 @@ export default async function RootLayout(props: any) {
   const { children }: React.PropsWithChildren = props
   const { title, imageUrl, description, canonical } = defaultSEO
   const { lang } = props.params
-
+  
   const dictionary = await getDictionary(lang)
-
-
+  
+  
   return (
     <html lang={lang}>
       <head key={title + description + canonical}>

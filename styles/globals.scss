@@ -4,6 +4,9 @@ $rootFontSize: 16px;
 
 :root {
   font-size: $rootFontSize;
+  --animate-duration: 1s;
+  --animate-delay: 1s;
+  --animate-repeat: 1;
 }
 
 @font-face {
