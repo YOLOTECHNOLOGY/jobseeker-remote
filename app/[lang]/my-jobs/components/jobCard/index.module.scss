@@ -1,7 +1,7 @@
 .main {
 
     width: 918px;
-    height: 170px;
+    height: 166px;
     position: relative;
     padding-right: 24px;
     --opacity: 1;
@@ -66,7 +66,7 @@
                         font-family: 'Product Sans';
                         font-style: normal;
                         font-weight: 700;
-                        font-size: 16px;
+                        font-size: 18px;
                         line-height: 23px;
                         align-items: center;
                         letter-spacing: 0.02em;
@@ -150,8 +150,8 @@
 
                     .recruiter {
                         .info {
-                            padding: 2px 9px;
-                            margin-left: 4px;
+                            padding: 2px 0px;
+                            margin-left: 0px;
                             width: fit-content;
                             display: flex;
                             align-items: center;
@@ -255,7 +255,7 @@
                             font-family: 'Product Sans';
                             font-style: normal;
                             font-weight: 500;
-                            font-size: 18px;
+                            font-size: 16px;
                             line-height: 23px;
                             align-items: center;
                             letter-spacing: 0.02em;
@@ -279,7 +279,7 @@
                                 display: flex;
                                 align-items: center;
                                 padding: 2px 10px;
-                                background: #86909C;
+                                background: #F2F3F5;
                                 border-radius: 16px;
                                 font-family: "Product Sans";
                                 font-style: normal;
@@ -303,7 +303,7 @@
         }
 
         .bottomContainer {
-            height: 41px;
+            height: 38px;
             width: 100%;
             position: relative;
             border-radius: 10px 0px 10px 0px;
@@ -338,7 +338,7 @@
                 line-height: 15px;
                 align-items: center;
                 letter-spacing: 0.0075em;
-                color: #B0B8C6;
+                color:   #86909C;
                 overflow: hidden;
                 z-index: 10;
                 white-space: nowrap;
@@ -356,7 +356,7 @@
                 line-height: 15px;
                 align-items: center;
                 letter-spacing: 0.0075em;
-                color: #707070;
+                color:  #86909C;
                 z-index: 10;
                 overflow: hidden;
                 white-space: nowrap;
