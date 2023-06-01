@@ -442,7 +442,7 @@ $contentWidth: 894px;
 
 .jobCard {
     width: 100%;
-    height: 170px;
+    height: 166px;
     position: relative;
     padding-right: 0;
 
@@ -578,8 +578,8 @@ $contentWidth: 894px;
 
                     .recruiter {
                         .info {
-                            padding: 2px 9px;
-                            margin-left: 4px;
+                            padding: 2px 0px;
+                            margin-left: 0px;
                             width: fit-content;
                             display: flex;
                             align-items: center;
@@ -735,7 +735,7 @@ $contentWidth: 894px;
         }
 
         .bottomContainer {
-            height: 41px;
+            height: 38px;
             width: 100%;
             position: relative;
             border-radius: 10px 0px 10px 0px;
@@ -743,7 +743,7 @@ $contentWidth: 894px;
             &::before {
                 content: "";
                 position: absolute;
-                top: 0px;
+                bottom: 0px;
                 left: 0px;
                 width: 100%;
                 height: 100%;
@@ -769,7 +769,7 @@ $contentWidth: 894px;
                 line-height: 15px;
                 align-items: center;
                 letter-spacing: 0.0075em;
-                color: #B0B8C6;
+                color:  #86909C;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -787,7 +787,7 @@ $contentWidth: 894px;
                 line-height: 15px;
                 align-items: center;
                 letter-spacing: 0.0075em;
-                color: #707070;
+                color:  #86909C;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
