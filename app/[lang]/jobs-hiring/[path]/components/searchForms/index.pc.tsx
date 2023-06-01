@@ -3,7 +3,6 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
-import MaterialLocationField from 'components/MaterialLocationField'
 import JobSearchBar from '../../../../components/commons/location/search'
 import styles from '../../index.module.scss'
 import MaterialButton from 'components/MaterialButton'
@@ -52,7 +51,7 @@ const SearchArea = (props: any) => {
   const { push } = useContext(LoadingContext)
   const locations = flatMap(config.location_lists, (item) => item.locations)
   const [location, setLocation] = useState(
-    locations.find((location) => location.seo_value === searchValues.location?.[0])
+    locations.filter((location) => searchValues?.location?.includes(location.seo_value))
   )
   const [isFixed, setIsfixed] = useState(false)
   useEffect(() => {
@@ -105,7 +104,7 @@ const SearchArea = (props: any) => {
       query: searchValue?.trim?.(),
       queryFields,
       salary: salaries,
-      location: [location?.['seo_value']].filter((a) => a),
+      location: location?.map((a) => a['seo_value']),
       jobType: jobTypes,
       sort: sort,
       page: page,
@@ -155,14 +154,12 @@ const SearchArea = (props: any) => {
               <LocationMultiSelector
                 className={styles.location}
                 locationList={config.location_lists}
-                value={[location]}
+                value={location}
                 // isClear={true}
                 label={search.location}
                 // defaultValue={location}
-                onChange={(e, value) => {
-                  console.log({onLocationChange:value,e})
-                  // setLocation(value)
-                }}
+                lang={search}
+                onChange={setLocation}
                 sx={{
                   '> .MuiFormControl-root': {
                     '> .MuiOutlinedInput-root': {
@@ -280,9 +277,9 @@ const SearchArea = (props: any) => {
                   <div className={styles.popver}>
                     <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
                     <p>
-                    {search.chatDirectly} 
+                      {search.chatDirectly}
                       <br />
-                    {search.withBoss}
+                      {search.withBoss}
                     </p>
                   </div>
                 </div>
@@ -377,7 +374,7 @@ const SearchArea = (props: any) => {
                 className={styles.clearButton}
                 variant='text'
                 onClick={() => {
-                  setLocation(null)
+                  setLocation([])
                   setSearchValue('')
                   setSort('1')
                   jobFunctionChange({

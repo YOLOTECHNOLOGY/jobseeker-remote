@@ -24,7 +24,7 @@ const conditions = {
     onlyOne: onlyOneIn(['query', 'location', ...userSelectKeys]),
     oneWithLocation: both(
         onlyOneIn(['query', ...userSelectKeys]),
-        has('location')
+        onlyOneIn(['location'])
     ),
     queryMany: both(
         has('query'),
@@ -101,7 +101,7 @@ const keywordMatches = pipe(
     dissoc('functionTitles'),
     toPairs,
     map(([key, list]) => [flip(includes)(list), applySpec({ [key]: Array.of })]),
-    append([T, applySpec({ query: unslugify })]),
+    append([T, applySpec({ query: decodeURIComponent })]),
     cond
 )
 
@@ -149,34 +149,11 @@ export const thousandsToNumber = (string) => {
         return 100001
     }
 }
-export const handleSalary = (salaryRanges=[], salaryList) => {
+export const handleSalary = (salaryRanges = [], salaryList) => {
     const selected = salaryRanges.map(seo => salaryList.find(item => item['seo-value'] === seo))
     const from = selected.map(item => item.from).join(',')
     const to = selected.map(item => item.to).join(',')
     return [from, to]
-    // let salaryFrom = ''
-    // let salaryTo = ''
-    // if (salaryRanges?.length) {
-    //     salaryFrom = salaryRanges
-    //         .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
-    //         .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split('-')[0]))
-
-    //     salaryTo = salaryRanges
-    //         .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
-    //         .map((salaryTo) => thousandsToNumber('' + salaryTo.split('-')[1]))
-
-    //     if (salaryRanges.includes('below-30k')) {
-    //         salaryFrom.push(0)
-    //         salaryTo.push(30000)
-    //     }
-    //     if (salaryRanges.includes('above-200k')) {
-    //         salaryFrom.push(200001)
-    //         salaryTo.push(400000)
-    //     }
-    //     salaryFrom = salaryFrom.join(',')
-    //     salaryTo = salaryTo.join(',')
-    // }
-    // return [salaryFrom, salaryTo]
 }
 export const buildParams = (config, searchValues) => {
     const industryList = config.industry_lists
@@ -203,7 +180,7 @@ export const buildParams = (config, searchValues) => {
         xp_lvl_ids: searchValues.workExperience?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
         degree_ids: searchValues.qualification?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
         company_financing_stage_ids: searchValues.financingStages?.map?.(key => financingStagesList.find(item => item?.key === key)?.id).join(',') ?? null,
-        is_company_verified: searchValues.verifiedCompany  ? Boolean(searchValues.verifiedCompany) : null,
+        is_company_verified: searchValues.verifiedCompany ? Boolean(searchValues.verifiedCompany) : null,
         job_functions_ids: searchValues?.jobFunctions?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
         main_job_function_ids: searchValues?.mainFunctions?.map?.(seo => mainFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
         company_size_ids: searchValues.companySizes?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
@@ -212,6 +189,6 @@ export const buildParams = (config, searchValues) => {
         page: searchValues?.page?.[0] ?? 1,
         size: 15,
         source: 'web',
-        sort:searchValues?.sort?.join(),
+        sort: searchValues?.sort?.join(),
     }
 }

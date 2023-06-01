@@ -1,6 +1,6 @@
 'use client'
-import React, { useEffect, useState, useTransition, useCallback, useContext } from 'react'
-import MaterialLocationField from 'components/MaterialLocationField'
+import React, { useEffect, useState, useTransition, useCallback, useContext, useMemo } from 'react'
+import { flatMap, toPairs } from 'lodash-es'
 import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
 import styles from 'app/[lang]/index.module.scss'
 
@@ -9,16 +9,16 @@ import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import useSearchHistory from 'helpers/useSearchHistory'
 import { useRouter } from 'next/navigation'
-import { buildQuery } from '../../../helper'
 import { LocationContext } from '../../../../components/providers/locationProvier'
 import { languageContext } from '../../../../components/providers/languageProvider'
-import { getCookie, setCookie } from 'helpers/cookies'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import { AppDownQRCode } from 'images'
 import Image from 'next/image'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import SearchIcon from '@mui/icons-material/Search'
 import { getCountryId } from 'helpers/country';
+import LocationMultiSelector from 'app/[lang]/components/commons/locationMulty'
+import { encode } from 'app/[lang]/jobs-hiring/interpreters/encoder'
 
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
@@ -26,7 +26,11 @@ const transQs = (params: any) => {
 const SearchArea = (props: any) => {
   const { config, langKey } = props
   const dispatch = useDispatch()
-  const { location, setLocation } = useContext(LocationContext)
+  const { location: defaultLoaction } = useContext(LocationContext)
+  const flatLocations = useMemo(() => {
+    return flatMap(config.location_lists ?? [], item => item.locations)
+  }, [config])
+  const [location, setLocation] = useState(flatLocations.filter(item => item.id === defaultLoaction?.id))
   const data: any = useContext(languageContext)
   const home = data.home
 
@@ -38,17 +42,23 @@ const SearchArea = (props: any) => {
       window.removeEventListener('scroll', useFn)
     }
   }, [])
-  useEffect(() => {
-    const cookieLocation = getCookie('location')
-    if (cookieLocation?.value !== location.value) {
-      setCookie('location', location)
-      router.refresh()
-    }
-  }, [location.value])
+  // useEffect(() => {
+  //   const cookieLocation = getCookie('location')
+  //   if (cookieLocation?.value !== location.value) {
+  //     setCookie('location', location)
+  //     router.refresh()
+  //   }
+  // }, [location.value])
   const pushJobPage = useCallback(
     (value) => {
-      const query = buildQuery(location?.seo_value, value)
-      router.push('/' + langKey + query, { forceOptimisticNavigation: true })
+      const result = encode({
+        query: value?.trim?.(),
+        location: location?.map((a) => a['seo_value'])
+      })
+      const url = new URLSearchParams(toPairs(result.params)).toString()
+      console.log({ url })
+      router.push('/' + langKey + '/jobs-hiring/' + result.searchQuery + '?' + url, { forceOptimisticNavigation: true })
+      // router.push('/' + langKey + query, { forceOptimisticNavigation: true })
     },
     [location, router]
   )
@@ -123,17 +133,28 @@ const SearchArea = (props: any) => {
   return (
     <div className={`${styles.searchArea} ${isShow ? styles.searchAreaFix : ''}`}>
       <div className={styles.box}>
-        <MaterialLocationField
-          label={home.search.location}
+
+        <LocationMultiSelector
           className={styles.location}
+          // locationList={config.location_lists}
           value={location}
-          isClear={false}
-          defaultValue='Las Pinas'
-          disableClearable
-          style={{
-            fontSize: '14px'
+          label={home.search.location}
+          onChange={setLocation}
+          lang={home.search}
+          sx={{
+            '> .MuiFormControl-root': {
+              borderRadius: '10px',
+              height: '40px',
+              marginTop: '4px',
+              overflow: 'hidden',
+              '> .MuiOutlinedInput-root': {
+                borderRadius: '10px',
+                height: '40px',
+                overflow: 'hidden',
+                marginTop: '4px'
+              }
+            }
           }}
-          onChange={(e, value) => setLocation(value)}
         />
         <MaterialTextFieldWithSuggestionList
           id='search'

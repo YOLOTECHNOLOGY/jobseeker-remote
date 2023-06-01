@@ -2,7 +2,6 @@
 'use client'
 import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import { flushSync } from 'react-dom'
-import LocationField from 'app/[lang]/components/commons/location'
 import LocationField1 from 'app/[lang]/components/mobile/location1'
 import JobSearchBar from '../../../components/commons/location/search'
 import styles from './index.pc.module.scss'
@@ -26,6 +25,7 @@ import { encode } from 'app/[lang]/jobs-hiring/interpreters/encoder'
 import { useRouter } from 'next/navigation'
 import { flatMap } from 'lodash-es'
 import { SortContext } from './SortProvider'
+import LocationMultiSelector from 'app/[lang]/components/commons/locationMulty'
 
 const SearchArea = (props: any) => {
   const { sort, setSort } = useContext(SortContext)
@@ -42,9 +42,8 @@ const SearchArea = (props: any) => {
   const flatLoaction = useMemo(() => {
     return flatMap(config?.location_lists, item => item.locations) ?? []
   }, [config?.location_lists])
-  console.log({ config, searchParams })
   const { push } = useContext(LoadingContext)
-  const [location, setLocation] = useState<any>()
+  const [location, setLocation] = useState<any>([])
   const [filterLocation, setFilterLocation] = useState<any>(flatLoaction?.find(location => location.id == searchParams.get('location')))
   const [searchValue, setSearchValue] = useState<any>()
   const router = useRouter()
@@ -54,7 +53,7 @@ const SearchArea = (props: any) => {
     }
     const params = {
       query: searchValue?.trim?.(),
-      location: [location?.['seo_value']].filter((a) => a)
+      location: location.map(a => a['seo_value'])
     }
     const result = encode(params)
     const url = new URLSearchParams(toPairs(result.params)).toString()
@@ -162,15 +161,25 @@ const SearchArea = (props: any) => {
           })}
         >
           <div className={styles.searchArea}>
-            <LocationField
+           
+            <LocationMultiSelector
               className={styles.location}
-              locationList={config.location_lists}
               value={location}
-              // isClear={true}
               label={lang.location}
-              defaultValue={location}
-              onChange={(e, value) => {
-                setLocation(value)
+              onChange={setLocation}
+              sx={{
+                '> .MuiFormControl-root': {
+                  borderRadius: '10px',
+                  height: '40px',
+                  marginTop: '4px',
+                  overflow: 'hidden',
+                  '> .MuiOutlinedInput-root': {
+                    borderRadius: '10px',
+                    height: '40px',
+                    overflow: 'hidden',
+                    marginTop: '4px'
+                  }
+                }
               }}
             />
             <JobSearchBar

@@ -171,15 +171,6 @@ $animationTime : 0.3s;
                         }
                     }
 
-                    .thirdContainer {
-                        height: 100%;
-                        width: 50%;
-                        overflow-y: auto;
-
-                        .item {
-                            width: 100%;
-                        }
-                    }
                 }
             }
 
@@ -252,7 +243,8 @@ $animationTime : 0.3s;
 
 .item {
     height: 50px;
-    width: 277px;
+    width: 100%;
+    min-width: 277px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

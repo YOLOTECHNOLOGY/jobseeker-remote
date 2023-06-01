@@ -6,7 +6,6 @@ import Image from 'next/image'
 import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import useChatNow from 'app/[lang]/hooks/useChatNow'
-import { hoverableFunc } from 'components/highLevel/hoverable'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 import { postSaveJobService } from 'store/services/jobs/postSaveJob'
@@ -125,9 +124,6 @@ const JobCard = (props: any) => {
     job_skills,
     company_logo,
     company_name,
-    // company_industry,
-    // company_size,
-    // company_financing_stage,
     job_benefits,
     external_apply_url,
     id,

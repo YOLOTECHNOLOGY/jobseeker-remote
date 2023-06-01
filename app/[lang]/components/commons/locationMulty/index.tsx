@@ -29,7 +29,6 @@ const LocationMultiSelector = (props: any) => {
   const secondList = useMemo(() => {
     return activeFirst?.locations ?? []
   }, [activeFirst])
-  console.log({ activeFirst, secondList })
   const locationList = useSelector((store: any) => store.config.config.response?.location_lists)
   const [locations, setLocations] = useState<any[]>([])
   const locationIds = useMemo(() => {
@@ -90,6 +89,13 @@ const LocationMultiSelector = (props: any) => {
   const isFirstSelected = useCallback(
     (first) => {
       return !first.locations.find(item => !isSecondSelected(item))
+    },
+    [locationList, isSecondSelected]
+  )
+
+  const isFirstHalfSelected = useCallback(
+    (first) => {
+      return first.locations.find(item => isSecondSelected(item))
     },
     [locationList, isSecondSelected]
   )
@@ -238,6 +244,7 @@ const LocationMultiSelector = (props: any) => {
                   data={{ ...first, value: first.display_name }}
                   active={activeFirst?.id === first.id}
                   checked={isFirstSelected(first)}
+                  halfChecked={isFirstHalfSelected(first)}
                   onMouseOver={() => onFirstHover(first)}
                   onClick={() => onFirstClick(first)}
                   noArrow={!(first?.locations?.length > 0)}
@@ -299,9 +306,10 @@ const LocationMultiSelector = (props: any) => {
                   return (
                     <JobItem
                       key={first.id}
-                      data={first}
+                      data={{ ...first, value: first.display_name }}
                       active={activeFirst?.id === first.id}
                       checked={isFirstSelected(first)}
+                      halfChecked={isFirstHalfSelected(first)}
                       onArrowClick={(e) => {
                         e.stopPropagation()
                         onFirstHover(first)
@@ -310,7 +318,7 @@ const LocationMultiSelector = (props: any) => {
                         e.stopPropagation()
                         onFirstClick(first)
                       }}
-                      noArrow={true}
+                      noArrow={false}
                     />
                   )
                 })}
@@ -323,10 +331,10 @@ const LocationMultiSelector = (props: any) => {
                 [styles.hide]: !activeFirst && !firstRender
               })}
             >
-              <Header title={activeFirst?.value} onBack={onBack} onClose={onClose}></Header>
-              <div className={styles.subContainer} style={{ height: height - 59 - 75 }}>
+              <Header title={activeFirst?.display_name} onBack={onBack} onClose={onClose}></Header>
+              {/* <div className={styles.subContainer} style={{ height: height - 59 - 75 }}> */}
                 <div className={styles.secondContainer}>
-                  {secondList.length > 1 && (
+                  {secondList.length > 0 && (
                     <div className={styles.columnSub}>
                       {secondList.map((second: any) => {
                         return (
@@ -346,7 +354,7 @@ const LocationMultiSelector = (props: any) => {
                       })}
                     </div>
                   )}
-                </div>
+                {/* </div> */}
 
               </div>
             </div>

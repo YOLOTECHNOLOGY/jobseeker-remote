@@ -275,7 +275,9 @@
       "chatBoss": "直接谈",
       "popup": {
         "chatBoss": "和老板直接谈"
-      }
+      },
+      "reset2": "重置",
+      "save": "保存"
     },
     "popularJobs": "热门工作",
     "tag": {

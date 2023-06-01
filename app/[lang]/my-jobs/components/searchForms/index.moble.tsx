@@ -20,13 +20,11 @@ import MaterialLocationField from 'app/[lang]/components/mobile/location1'
 import { getValueById } from 'helpers/config/getValueById'
 
 const SearchArea = (props: any) => {
-    // console.log({ props })
     const { config, preferences, preferenceId, searchParams ,lang} = props
-     const {newest,relevance,highestSalary,JobPreference,sortBy,filters,qualification, workExprerience, Industry, salary, JobType, companySizes} = lang.myJobs ||{}
+     const {newest,relevance,JobPreference,sortBy,filters,qualification, workExprerience, Industry, salary, JobType, companySizes} = lang.myJobs ||{}
     const sortOptions = [
         { label: newest, value: '1' },
         { label: relevance, value: '2' },
-        // { label: highestSalary, value: '3' }
     ]
 
     const preferenceOptions = useMemo(() => {

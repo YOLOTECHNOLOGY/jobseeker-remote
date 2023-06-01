@@ -275,7 +275,9 @@
       "chatBoss": "and chat with Boss",
       "popup": {
         "chatBoss": "Chat directly with Boss"
-      }
+      },
+      "reset2":"Reset",
+      "save":"Save"
     },
     "popularJobs": "Popular Jobs",
     "tag": {

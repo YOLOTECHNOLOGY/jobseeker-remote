@@ -4,7 +4,6 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
-import LocationField from 'app/[lang]/components/mobile/location'
 import JobSearchBar from '../../../../components/commons/location/search'
 import styles from '../../index.module.scss'
 import Single from 'app/[lang]/components/mobile/select/single'
@@ -27,6 +26,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import SearchIcon from '@mui/icons-material/Search'
 import { cloneDeep } from 'lodash-es'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import LocationMultiSelector from 'app/[lang]/components/commons/locationMulty'
 
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
@@ -41,11 +41,11 @@ const SearchArea = (props: any) => {
     dispatch(fetchConfigSuccess(config))
   }, [])
 
-  const [page, setPage] = useState(searchValues.page ?? '1')
+  const page = searchValues.page ?? '1'
 
   const locations = flatMap(config.location_lists, (item) => item.locations)
   const [location, setLocation] = useState(
-    locations.find((location) => location.seo_value === searchValues.location?.[0])
+    locations.filter((location) => searchValues?.location?.includes(location.seo_value))
   )
   const [industry, setIndustry] = useState(searchValues.industry ?? [])
   const industryList =
@@ -114,7 +114,7 @@ const SearchArea = (props: any) => {
       query: searchValue,
       queryFields,
       industry: industry.length ? industry : null,
-      location: [location?.['seo_value']].filter((a) => a),
+      location: location?.map((a) => a['seo_value']),
       sort: sort,
       page: page,
       ...jobFunctionValue,
@@ -152,7 +152,25 @@ const SearchArea = (props: any) => {
       <ThemeProvider theme={newTheme}>
         <div className={styles.searchFormMoblie}>
           <div className={styles.searchArea}>
-            <LocationField
+            <LocationMultiSelector
+              className={styles.location}
+              locationList={config.location_lists}
+              value={location}
+              lang={search}
+              label={search.location}
+              // defaultValue={location}
+              onChange={setLocation}
+              sx={{
+                '> .MuiFormControl-root': {
+                  '> .MuiOutlinedInput-root': {
+                    borderRadius: '10px',
+                    height: '40px',
+                    marginTop: '4px'
+                  }
+                }
+              }}
+            />
+            {/* <LocationField
               className={styles.location}
               locationList={config.location_lists}
               value={location}
@@ -163,7 +181,7 @@ const SearchArea = (props: any) => {
               onChange={(e, value) => {
                 setLocation(value)
               }}
-            />
+            /> */}
             <JobSearchBar
               id='search'
               label={search.title}
@@ -202,7 +220,7 @@ const SearchArea = (props: any) => {
                     setSearchValue((e.target as HTMLInputElement).value)
                   })
                   addSearchHistory?.((e.target as HTMLInputElement).value)
-                  ;((e.target ?? {}) as any)?.blur?.()
+                    ; ((e.target ?? {}) as any)?.blur?.()
                   reloadRef?.current?.()
                 }
               }}
