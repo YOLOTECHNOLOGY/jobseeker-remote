@@ -90,7 +90,7 @@ const Captcha: React.FC<ICaptchaProps> = (props)=>{
       onChange?.(tempValue)
     }
   
-    const handleCodeBoxClick = (e: any) => {
+    const handleCodeBoxClick = (e: any,index:number) => {
       e.preventDefault()
       inputRef.current?.focus()
       setFocus(true)
@@ -99,12 +99,13 @@ const Captcha: React.FC<ICaptchaProps> = (props)=>{
    
 return <>
  <div className={`${styles.captcha} ${styles.captchaThemeBox}`}>
-<div className={styles.codeBox} onMouseDown={handleCodeBoxClick}>
+<div className={styles.codeBox} >
   {codeArray.map((item, index, array) => {
     const prevItemValue = index === 0 ? '-1' : array[index - 1]
     const isItemActive = isFocused && !!prevItemValue && !item
     return (
       <div
+      onMouseDown={(e)=>handleCodeBoxClick(e,index)}
         key={index}
         className={`${styles.itemContent} ${
           isItemActive ? styles.itemContentActive : ''

@@ -5,12 +5,9 @@ import { buildComponentScript } from 'app/[lang]/abstractModels/util'
 import { serverDataScript } from 'app/[lang]/abstractModels/FetchServierComponents'
 import styles from './index.module.scss'
 import Main from './components/main'
-
+import Link from 'next/link'
 import { getDictionary } from 'get-dictionary'
-const configs = getConfigs([
-  ['location_lists'],
-])
-
+const configs = getConfigs([['location_lists']])
 
 const Page = async (props: any) => {
   const { lang } = props.params
@@ -21,15 +18,27 @@ const Page = async (props: any) => {
   return (
     <>
       <div className={styles.main}>
-         <div className={styles.bg}></div>
+        <div className={styles.bg}></div>
         <div className={styles.container}>
           <h2>{newGetStarted.title}</h2>
-           <Main dictionary={dictionary} />
+          <Main dictionary={dictionary} />
         </div>
-      <p className={styles.tips}>{newGetStarted.tips}<span>{newGetStarted.employer}</span></p>
+        <p className={styles.tips}>
+          {newGetStarted.tips}
+          <Link
+            href={
+              process.env.ENV === 'development'
+                ? 'https://dev.employer.bossjob.com'
+                : 'https://employer.bossjob.com'
+            }
+            className={styles.AuthCTALink}
+          >
+            {newGetStarted.employer}
+          </Link>
+        </p>
       </div>
     </>
   )
 }
 
-export default configs(serverDataScript().chain(props => buildComponentScript(props, Page))).run
+export default configs(serverDataScript().chain((props) => buildComponentScript(props, Page))).run

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import Captcha from './captcha/index'
 import styles from '../index.module.scss'
 import { useSearchParams } from 'next/navigation'
@@ -16,10 +16,7 @@ const verifyEmail = function (props) {
   const email = searchParams.get('email')
   const avatar = searchParams.get('avatar')
   const langKey = getLang();
-  // const jobseekersSocialResponse = useSelector(
-  //   (store: any) => store.auth.jobseekersSocialLogin?.response
-  // )
-  console.log(userId, 'userId')
+  const [errorText,setErrorText] = useState<string>('')
   const { setUserId, setEmail, 
     defaultLoginCallBack, 
     handleAuthenticationJobseekersLogin ,
@@ -27,6 +24,15 @@ const verifyEmail = function (props) {
   } =  useGetStarted()
 
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+  const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+  console.log({error});
+  
+   useEffect(()=>{
+    const text = error?.data?.message
+     if(text){
+      setErrorText(text)
+     }
+   },[error])
   const firstRender = useFirstRender()
   useEffect(() => {
     if (email) {
@@ -48,6 +54,7 @@ const verifyEmail = function (props) {
   }, [userInfo])
 
   const onChange = (code) => {
+    setErrorText('')
     if (code?.length === 6) {
       handleAuthenticationJobseekersLogin(code)
     }
@@ -82,12 +89,12 @@ const verifyEmail = function (props) {
             </>
             
           )}
-          <Captcha lang={props.lang} autoFocus={true} onChange={onChange} />
+          <Captcha lang={props.lang} autoFocus={true} onChange={onChange} error={errorText}/>
           <div>
             <div>{newGetStarted.checkSpamEmail}</div>
             <div>
              {newGetStarted.havingTrouble}{' '}
-              <Link className={styles.link} href={`${langKey}/get-started`}>{newGetStarted.otherOptions}</Link>
+              <Link className={styles.link} href={`/${langKey}/get-started`}>{newGetStarted.otherOptions}</Link>
             </div>
             <div>
               {newGetStarted.alternatively}<span className={styles.link} onClick={()=>handleAuthenticationSendEmailMagicLink()}>{newGetStarted.magicLink}</span>

@@ -13,7 +13,8 @@ import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { usePathname } from "next/navigation";
 import { formatTemplateString } from "helpers/formatter";
-
+import Link from 'next/link'
+import { CircularProgress } from 'app/[lang]/components/MUIs'
 interface IProps {
   lang: any;
 }
@@ -73,7 +74,16 @@ const loginForEmail = (props: IProps)=>{
           <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>{newGetStarted.sendCode}</button>
 
           <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>
-          <p className={styles.tips}>{newGetStarted.tips} <span>{newGetStarted.employer}</span></p>
+          <p className={styles.tips}>{newGetStarted.tips} <Link
+            href={
+              process.env.ENV === 'development'
+                ? 'https://dev.employer.bossjob.com'
+                : 'https://employer.bossjob.com'
+            }
+            className={styles.AuthCTALink}
+          >
+            {newGetStarted.employer}
+          </Link></p>
           </div> 
           <div>
         <div className={classNames([styles.divider, styles.divider_none])}>

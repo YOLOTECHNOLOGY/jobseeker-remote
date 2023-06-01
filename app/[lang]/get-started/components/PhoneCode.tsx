@@ -14,7 +14,7 @@ import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOt
 
 function PhoneCode(props: any) {
   const searchParams = useSearchParams()
-  const [captchaError,setCaptchaError] = useState<string>('');
+  const [errorText,setErrorText] = useState<string>('')
   const langKey = getLang()
   const userId = searchParams.get('userId')
   const phoneNum =  '+' + searchParams.get('phone')?.trim?.()
@@ -53,7 +53,7 @@ function PhoneCode(props: any) {
   } =  useGetStarted()
 
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
-
+  const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   const onChange = (otp) => {
    
     if(otp?.length === 6 ){
@@ -65,6 +65,15 @@ function PhoneCode(props: any) {
       }
     }
   }
+  
+  console.log({error})
+
+  useEffect(()=>{
+    const text = error?.data?.message
+     if(text){
+      setErrorText(text)
+     }
+   },[error])
 
   const  verifyPhoneFun = (otp)=>{
    console.log(otp)
@@ -73,11 +82,11 @@ function PhoneCode(props: any) {
     phone_num:phoneNum
    }).then(res=>{
     console.log(res?.data)
-    const {code,data,message } = res?.data ?? {}
-    if(code === 0){
+    const {data } = res?.data ?? {}
+    if(data){
       sendOpt(email)
     }else{
-      setCaptchaError(message)
+      setErrorText('Invalid otp')
     }
    })
   }
@@ -124,7 +133,7 @@ function PhoneCode(props: any) {
           <p className={styles.enterTips}>
             {newGetStarted.sendCodeDigit} <span>{phoneNum}.</span>
           </p>
-          <Captcha lang={props.lang} onChange={onChange} autoFocus={true} error = {captchaError}/>
+          <Captcha lang={props.lang} onChange={onChange} autoFocus={true} error = {errorText}/>
           <p className={styles.trouble}>
           {newGetStarted.havingTrouble}   <Link className={styles.link} href={`${langKey}/get-started`}>{newGetStarted.otherOptions}</Link> 
           </p>

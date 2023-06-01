@@ -174,11 +174,13 @@ const useGetStarted = () => {
     authenticationSendEmailMagicLink(params)
       .then(({ data }) => {
         console.log(data)
+        dispatch(
         displayNotification({
           open: true,
           message: `We’ve sent a magic link to ${email}. Please click on the link to proceed.`,
           severity: 'success'
         })
+        )
       })
       .catch((error) => {
         const { data } = error.response?.data

@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useState}from 'react'
 import styles from '../index.module.scss'
 import Captcha from './captcha/index'
 import {verificationOtp,bindUserEmail} from 'store/services/auth/newLogin'
@@ -12,6 +12,7 @@ function EmailCode(props: any) {
   const searchParams = useSearchParams()
   const phoneNum =  '+' + searchParams.get('phone')?.trim?.()
   const email =   searchParams.get('email')
+  const [errorText,setErrorText] = useState<string>('')
   const langKey = getLang();
   const onChange = (otp) => {
     console.log(otp)
@@ -24,7 +25,7 @@ function EmailCode(props: any) {
         if(res.data.code === 0){
           bindUserEmailFun()
         } else{
-
+          setErrorText(res.data?.message)
         }
       })
     }
@@ -54,7 +55,7 @@ function EmailCode(props: any) {
           {newGetStarted.sendCodeDigit}
           <span>{email}.</span>
         </p>
-        <Captcha lang={props.lang} autoFocus={true} onChange={onChange}/>
+        <Captcha lang={props.lang} autoFocus={true} onChange={onChange} error={errorText}/>
         <SetUpLater lang={props.lang} />
       </div>
     </div>
