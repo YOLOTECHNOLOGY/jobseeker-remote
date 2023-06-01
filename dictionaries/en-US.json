@@ -1078,6 +1078,11 @@
     "authentication": "authentication",
     "secure": "Secure your account and receive code on your email",
     "emailTips": "We will ask you for additional code when you log in on a device or browser that we don’t recognise. Please enter the email address to receive the code.",
-    "setUpLater": "Set this up later"
+    "setUpLater": "Set this up later",
+    "enableTwoFactor": "two-factor",
+    "authenticationEnabled": "authentication enabled",
+    "factorTip": "If we notice an attempted login from a device or browser that we don’t recognise, we will ask you for code sent to your email address.",
+    "verifyText": "Verify it’s you",
+    "verifyExtra": "This extra step show that it is really you trying to log in."
   }
 }

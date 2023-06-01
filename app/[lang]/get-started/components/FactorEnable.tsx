@@ -1,16 +1,17 @@
 import React from 'react'
 import styles from '../index.module.scss'
 
-function FactorEnable(props) {
+function FactorEnable(props:any) {
+  const { newGetStarted } = props.lang
+
   return (
     <div className={styles.enabled}>
       <h2>
-        Two-factor <br />
-        authentication enabled ✅
+        {newGetStarted.enableTwoFactor} <br />
+        {newGetStarted.authenticationEnabled} ✅
       </h2>
       <p className={styles.notice}>
-        If we notice an attempted login from a device or browser that we don’t recognise, we will
-        ask you for code sent to your email address.
+        {newGetStarted.factorTip}
       </p>
     </div>
   )

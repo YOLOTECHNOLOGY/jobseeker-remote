@@ -6,7 +6,8 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
 import SetUpLater from './setUpLater'
-function EmailCode(props) {
+function EmailCode(props: any) {
+  const { newGetStarted } = props.lang
   const router = useRouter()
   const searchParams = useSearchParams()
   const phoneNum =  '+' + searchParams.get('phone')?.trim?.()
@@ -47,14 +48,14 @@ function EmailCode(props) {
     <div className={styles.phoneNumber}>
       <div className={styles.optBox}>
         <h2>
-          Enable two-factor <br /> authentication 🔒
+         {newGetStarted.twoFactor} <br /> {newGetStarted.authentication} 🔒
         </h2>
         <p className={styles.enterTips}>
-          Please enter the 6-digit code that we sent to
+          {newGetStarted.sendCodeDigit}
           <span>{email}.</span>
         </p>
-        <Captcha autoFocus={true} onChange={onChange}/>
-        <SetUpLater/>
+        <Captcha lang={props.lang} autoFocus={true} onChange={onChange}/>
+        <SetUpLater lang={props.lang} />
       </div>
     </div>
   )
