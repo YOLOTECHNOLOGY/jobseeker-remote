@@ -17,6 +17,6 @@ const SetUpLater = ()=>{
             defaultLoginCallBack(data)        
            }
        }
-    return  <button className={styles.btn} onClick={()=>login}>Set this up later</button>
+    return  <button className={styles.btn} onClick={()=>login()}>Set this up later</button>
 }
 export default SetUpLater

@@ -231,6 +231,13 @@ z-index: -1;
           color: #1d2129;
           padding-bottom: 16px;
           word-break: break-all;
+          p{
+            margin: 0;
+            &.extra{
+              margin-bottom: 20px;
+            }
+          }
+          
           span {
             color: rgba(29, 33, 41, 1);
             font-weight: 700;

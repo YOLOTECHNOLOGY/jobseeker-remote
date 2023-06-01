@@ -1,8 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import styles from '../index.module.scss'
-import VerifyPhone from '../components/verifyPhone'
-import VerifyEmail from '../components/verifyEmail'
 import { useSearchParams } from 'next/navigation'
 import LoginForPhone from '../components/loginForPhone'
 import PhoneCode from '../components/PhoneCode'
@@ -37,9 +35,9 @@ const PhoneLogin = (props: IProps) => {
         {step === 3 && <EmailFactor lang={props.lang} />}
         {step === 4 && <EmailCode lang={props.lang} />}
         {step === 5 && <FactorEnable lang={props.lang} />}
-        {step === 6 && <VerifyPhone lang={props.lang} />}
-        {step === 7 && <VerifyEmail lang={props.lang} />}
-        {step === 8 && <VerifyFactorEmail lang={props.lang} />}
+        {/* {step === 6 && <VerifyPhone lang={props.lang} />}
+        {step === 7 && <VerifyEmail lang={props.lang} />} */}
+        {step === 6 && <VerifyFactorEmail lang={props.lang} />}
       </div>
     </div>
   )

@@ -10,10 +10,16 @@ const verificationOtp = (payload) => {
   return axios.post(`/verification-otp`, payload)
 }
 
-const bindUserEmail = (payload) => {
+const verificationPhoneOtp = (payload) => {
   const axios = configuredAxios('auth', 'public')
-  return axios.post(`/bing/user-email`, payload)
+  return axios.post(`/verification-phone-otp`, payload)
 }
 
 
-export { phoneOtpenerate,verificationOtp,bindUserEmail }
+const bindUserEmail = (payload) => {
+  const axios = configuredAxios('auth', 'protected')
+  return axios.post(`/bind/user-email`, payload)
+}
+
+
+export { phoneOtpenerate,verificationOtp,bindUserEmail,verificationPhoneOtp }
