@@ -107,7 +107,7 @@ function PhoneCode(props: any) {
           removeItem('quickUpladResume')
           defaultLoginCallBack(data)
     }else{
-      router.push(`${langKey}/get-started/phone?step=5`)
+      router.push(`${langKey}/get-started/phone?step=3&phone=${phoneNum}`)
     }
    }
  },[userInfo])

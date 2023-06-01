@@ -67,8 +67,7 @@ const Captcha: React.FC<ICaptchaProps> = (props)=>{
   
     const timerRef = useRef(origninTimer)
 
-    useEffect(()=>{
-      
+    useEffect(()=>{    
       timer = setInterval(()=>{
         const newTime =  timerRef.current - 1
         if(newTime <= 0){ 
@@ -81,6 +80,9 @@ const Captcha: React.FC<ICaptchaProps> = (props)=>{
       },1000)
      
     },[])
+
+    
+
 
     const handleInputCodeChange = (e: any) => {
       const eValue = e.target.value
@@ -136,7 +138,7 @@ return <>
 </div>
 <p className={styles.countdown}>
             {
-              countdown <= 0 ?  <span className={styles.resendCode}  onClick={()=>sendOpt}>{newGetStarted.resendCode}</span> : countdown + 's'
+              countdown <= 0 ?  <span className={styles.resendCode}  onClick={()=>sendOpt()}>{newGetStarted.resendCode}</span> : countdown + 's'
             }
             </p>
 </>

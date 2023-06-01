@@ -22,7 +22,7 @@ function FactorEnable(props:any) {
 
   return (
     <div className={styles.enabled}>
-      <Image src={PhoneIcon} alt={''}   className={styles.factorImg} width={200} height={200}></Image>
+      <Image src={PhoneIcon} alt={''}   width={200} height={200}></Image>
       <h2>
         {newGetStarted.enableTwoFactor} <br />
         {newGetStarted.authenticationEnabled} ✅
