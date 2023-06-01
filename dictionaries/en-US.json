@@ -1073,6 +1073,11 @@
     "magicLink": "magic link",
     "resendCode": "Resend code",
     "country": "Country",
-    "phoneNumber": "Phone Number"
+    "phoneNumber": "Phone Number",
+    "twoFactor": "Enable two-factor",
+    "authentication": "authentication",
+    "secure": "Secure your account and receive code on your email",
+    "emailTips": "We will ask you for additional code when you log in on a device or browser that we don’t recognise. Please enter the email address to receive the code.",
+    "setUpLater": "Set this up later"
   }
 }
