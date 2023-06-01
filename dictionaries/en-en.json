@@ -4,7 +4,7 @@
     "companies": "Companies",
     "courses": "Courses",
     "careerGuide": "Career Guide",
-    "hiring": "I'm hiring",
+    "hiring": "I'm an Employer",
     "getStarted": "Get Started",
     "manageResume": "Manage Resume",
     "myJobs": "My Jobs",
@@ -59,7 +59,7 @@
     "kickStartYourCareer": "kick-start your career!",
     "enterYourEmailAddress": "Enter your email address",
     "submit": "Submit",
-    "pleaseEnterAvalidEmailAddress": "Please enter a valid email address.",
+    "pleaseEnterAvalidEmailAddress.": "Please enter a valid email address.",
     "bySigningUp": "By signing up, I have read and agreed to",
     "termsOfUse": "Terms of Use",
     "and": "and",
@@ -265,7 +265,7 @@
   },
   "home": {
     "title": "Find Job. Talk to Boss.",
-    "defaultLocationPH": "Manila",
+    "defaultLocationPH": "manila",
     "defaultLocationSG": "downtown core",
     "search": {
       "location": "Location",
@@ -1044,6 +1044,5 @@
     "disabledDescription":"When Boss requests for your resume, we will send your resume attachment automatically to Boss. Are you sure you want to disable it?",
     "enableDescription":"When Boss requests for your resume, we will send your resume attachment automatically to Boss. Please select which resume would you like to be sent to Boss automatically. ",
     "warnText":"Otherwise, you would need to wait for both parties to reply before you can request to send resume."
-
   }
 }
