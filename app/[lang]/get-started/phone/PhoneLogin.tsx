@@ -35,8 +35,6 @@ const PhoneLogin = (props: IProps) => {
         {step === 3 && <EmailFactor lang={props.lang} />}
         {step === 4 && <EmailCode lang={props.lang} />}
         {step === 5 && <FactorEnable lang={props.lang} />}
-        {/* {step === 6 && <VerifyPhone lang={props.lang} />}
-        {step === 7 && <VerifyEmail lang={props.lang} />} */}
         {step === 6 && <VerifyFactorEmail lang={props.lang} />}
       </div>
     </div>

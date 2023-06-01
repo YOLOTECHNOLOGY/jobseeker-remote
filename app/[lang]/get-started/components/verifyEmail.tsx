@@ -70,7 +70,7 @@ const verifyEmail = function (props) {
         dispatch(
           displayNotification({
             open: true,
-            message: 'resend emailOPT success',
+            message: newGetStarted.resendCodeSuccesses,
             severity: 'success'
           })
         )

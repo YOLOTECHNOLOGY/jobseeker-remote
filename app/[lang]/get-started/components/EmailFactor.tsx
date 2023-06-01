@@ -28,13 +28,13 @@ function EmailFactor(props: any) {
     authenticationSendEmaillOtp({ email })
     .then((res) => {
       console.log(res?.data?.data,'res')
-      router.push(`${langKey}/get-started/phone?step=4&&phone=${phoneNum}&email=${email}`)
+      router.push(`${langKey}/get-started/phone?step=4&phone=${phoneNum}&email=${email}`)
     })
     .catch((error) => {
       dispatch(
         displayNotification({
           open: true,
-          message: error.message ?? 'Send EmailOTP fail',
+          message: error.message ?? newGetStarted.optError,
           severity: 'error'
         })
       )
