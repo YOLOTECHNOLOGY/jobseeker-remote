@@ -1083,6 +1083,7 @@
     "authenticationEnabled": "authentication enabled",
     "factorTip": "If we notice an attempted login from a device or browser that we don’t recognise, we will ask you for code sent to your email address.",
     "verifyText": "Verify it’s you",
-    "verifyExtra": "This extra step show that it is really you trying to log in."
+    "verifyExtra": "This extra step show that it is really you trying to log in.",
+    "optError": "Send EmailOTP fail"
   }
 }
