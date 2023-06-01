@@ -1,5 +1,4 @@
-
-import React,{useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
@@ -10,21 +9,26 @@ import useGetStartedClient from '../../hooks/useGetStarted'
 import { useSearchParams } from 'next/navigation'
 
 interface IGoogle {
-  className?: string;
-  activeKey?: number;
-  isLogin?: boolean;
-  redirect?: string | string[];
-  lang?: any;
+  className?: string
+  activeKey?: number
+  isLogin?: boolean
+  redirect?: string | string[]
+  lang?: any
 }
 
-const GoogleLogin = (props: IGoogle)  => {
-  const {activeKey,isLogin,redirect, lang: {newGetStarted}} = props
+const GoogleLogin = (props: IGoogle) => {
+  const {
+    activeKey,
+    isLogin,
+    redirect,
+    lang: { newGetStarted }
+  } = props
   const [googleAuth, setGoogleAuth] = useState(null)
   const dispatch = useDispatch()
   const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
-  const query = {};
-  for(const entry of searchParams.entries()) {
+  const query = {}
+  for (const entry of searchParams.entries()) {
     query[entry[0]] = entry[1]
   }
 
@@ -41,47 +45,45 @@ const GoogleLogin = (props: IGoogle)  => {
   }, [jobseekersSocialResponse])
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setGoogleAuth(null)
-      const handleClientLoad = () => window.gapi.load('client:auth2', initClient)
-      const initClient = () => {
-        window.gapi.client
-          .init({
-            apiKey: 'AIzaSyAFYSp8vzxmXF_PourfSFW6t0VynH5d9Vs',
-            clientId: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
-            scope: 'https://www.googleapis.com/auth/userinfo.profile',
-          })
-          .then(() => {
-            setGoogleAuth(window.gapi.auth2.getAuthInstance())
-          })
-      }
+    if (typeof window == 'undefined') return
+    setGoogleAuth(null)
+    const handleClientLoad = () => window.gapi.load('client:auth2', initClient)
+    const initClient = () => {
+      window.gapi.client
+        .init({
+          apiKey: 'AIzaSyAFYSp8vzxmXF_PourfSFW6t0VynH5d9Vs',
+          clientId: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
+          scope: 'https://www.googleapis.com/auth/userinfo.profile'
+        })
+        .then(() => {
+          setGoogleAuth(window.gapi.auth2.getAuthInstance())
+        })
+    }
 
-       const script = document.createElement('script')
+    const script = document.createElement('script')
 
-       script.src = 'https://apis.google.com/js/api.js'
-       script.async = true
-       script.defer = true
-       script.crossOrigin="anonymous"
-       script.onload = handleClientLoad
+    script.src = 'https://apis.google.com/js/api.js'
+    script.async = true
+    script.defer = true
+    script.crossOrigin = 'anonymous'
+    script.onload = handleClientLoad
 
-       document.body.appendChild(script)
+    document.body.appendChild(script)
 
-       return () => {
-         document?.body?.removeChild?.(script)
-       }
+    return () => {
+      document?.body?.removeChild?.(script)
     }
   }, [])
 
   const handleAuthClick = () => {
-    if(!googleAuth) {
-      console.error(new Error('Error loading google auth script'));
+    if (!googleAuth) {
+      console.error(new Error('Error loading google auth script'))
       return
     }
     googleAuth?.signIn().then(() => {
       handleSigninStatus()
     })
   }
-
 
   const callBackMethod = (payload) => {
     const data = {
@@ -99,7 +101,6 @@ const GoogleLogin = (props: IGoogle)  => {
     dispatch(jobbseekersSocialLoginRequest(data))
   }
 
-
   const handleSigninStatus = async () => {
     const user = googleAuth.currentUser.get()
     const isAuthorized = user.hasGrantedScopes('profile')
@@ -110,12 +111,11 @@ const GoogleLogin = (props: IGoogle)  => {
       if (typeof window !== 'undefined') {
         const request = window.gapi.client.request({
           method: 'GET',
-          path:
-            'https://www.googleapis.com/oauth2/v2/userinfo?fields=id,email,family_name,given_name,picture'
+          path: 'https://www.googleapis.com/oauth2/v2/userinfo?fields=id,email,family_name,given_name,picture'
         })
 
         // Execute the API request.
-        request.execute(function(response) {
+        request.execute(function (response) {
           const payload = {
             userId: response.id,
             firstName: response.given_name,
@@ -136,8 +136,8 @@ const GoogleLogin = (props: IGoogle)  => {
 
   return (
     <div className={styles.login_item}>
-        <img src={GoogleLogo} />
-        <span onClick={handleAuthClick}>{newGetStarted.links.google}</span>
+      <img src={GoogleLogo} />
+      <span onClick={handleAuthClick}>{newGetStarted.links.google}</span>
     </div>
   )
 }

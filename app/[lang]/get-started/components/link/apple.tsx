@@ -47,7 +47,7 @@ const AppleLogin = (props: IApple) => {
   }
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if(typeof window == 'undefined') return
       const handleClientLoad = () => {
         if (!window?.AppleID) {
           console.error(new Error('Error loading apple script'))
@@ -68,7 +68,6 @@ const AppleLogin = (props: IApple) => {
       return () => {
         document.body.removeChild(script)
       }
-    }
   }, [])
 
   const handleAuth = async () => {
