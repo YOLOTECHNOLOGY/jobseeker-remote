@@ -46,10 +46,10 @@ function PhoneCode() {
 
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
 
-  const onChange = (opt) => {
-    console.log(opt)
-    if(opt?.length === 6 ){
-      handleAuthenticationJobseekersLoginPhone(opt,phoneNum,uuid)
+  const onChange = (otp) => {
+    console.log(otp)
+    if(otp?.length === 6 ){
+      handleAuthenticationJobseekersLoginPhone(otp,phoneNum,uuid)
     }
   }
   console.log(userInfo,userInfo)

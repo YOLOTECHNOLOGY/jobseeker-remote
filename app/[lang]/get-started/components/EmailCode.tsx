@@ -5,6 +5,7 @@ import {verificationOtp,bindUserEmail} from 'store/services/auth/newLogin'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
+import SetUpLater from './setUpLater'
 function EmailCode() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -50,10 +51,10 @@ function EmailCode() {
         </h2>
         <p className={styles.enterTips}>
           Please enter the 6-digit code that we sent to
-          <span>johndoe@gmail.com.</span>
+          <span>{email}.</span>
         </p>
         <Captcha autoFocus={true} onChange={onChange}/>
-        <button className={styles.btn}>Set this up later</button>
+        <SetUpLater/>
       </div>
     </div>
   )
