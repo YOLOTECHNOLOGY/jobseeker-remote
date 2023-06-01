@@ -63,9 +63,9 @@ const sendOpt =()=>{
   .then((res) => {
     console.log(res?.data?.data,'res')
     const {user_id,avatar,first_name,browser_serial_number,email} = res?.data?.data ?? {}
-     let url = `${langKey}/get-started/phone?step=2&&phone=${phoneNum}`
+     let url = `${langKey}/get-started/phone?step=2&phone=${phoneNum}`
      if(user_id){
-       url = `${langKey}/get-started/phone?step=2&&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}`
+       url = `${langKey}/get-started/phone?step=2&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}`
      }
      router.push(url)
   })
@@ -73,7 +73,7 @@ const sendOpt =()=>{
     dispatch(
       displayNotification({
         open: true,
-        message: error.message ?? 'Send EmailOTP fail',
+        message: error.message ?? newGetStarted.optError,
         severity: 'error'
       })
     )
