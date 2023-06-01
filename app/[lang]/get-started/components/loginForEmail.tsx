@@ -1,6 +1,5 @@
 import React,{useState} from "react";
 import styles from '../index.module.scss'
-import Link from 'next/link'
 import AppleLogin from './link/apple'
 import FacebookLogin from './link/facebook'
 import GoogleLogin from './link/google'
@@ -31,8 +30,8 @@ const loginForEmail = (props: IProps)=>{
    const sendOpt =()=>{
       authenticationSendEmaillOtp({ email })
       .then((res) => {
-        const {user_id} = res?.data?.data ?? {}
-        router.push(`${pathname}?step=2&&email=${email}&userId=${user_id}`)
+        const {user_id,avatar} = res?.data?.data ?? {}
+        router.push(`${pathname}?step=2&&email=${email}&userId=${user_id}&avatar=${avatar}`)
       })
       .catch((error) => {
         dispatch(

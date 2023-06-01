@@ -1,8 +1,7 @@
 import React from "react";
 import Link from 'next/link'
-
+import {getLang } from 'helpers/country'
 import { EmailIcon } from 'images'
-import { usePathname } from "next/navigation";
 
 interface IProps {
   lang: any;
@@ -10,11 +9,11 @@ interface IProps {
 
 const EmailLink = (props: IProps)=>{
   const { lang: {newGetStarted} } = props
+  const langKey = getLang()
 
-  const pathname = usePathname()
   return (
     <li>
-     <Link href={`${pathname}/email`}>
+     <Link href={`/${langKey}/get-started/email`}>
      <img src={EmailIcon}></img>
       {newGetStarted.email}
     </Link>

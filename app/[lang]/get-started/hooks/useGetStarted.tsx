@@ -173,9 +173,12 @@ const useGetStarted = () => {
     params = { email, source: 'web', ...params }
     authenticationSendEmailMagicLink(params)
       .then(({ data }) => {
-        if (data.data) {
-          setStep(3)
-        }
+        console.log(data)
+        displayNotification({
+          open: true,
+          message: `We’ve sent a magic link to ${email}. Please click on the link to proceed.`,
+          severity: 'success'
+        })
       })
       .catch((error) => {
         const { data } = error.response?.data

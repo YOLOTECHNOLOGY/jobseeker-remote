@@ -1,19 +1,17 @@
 import React from "react";
 import Link from 'next/link'
-
+import {getLang } from 'helpers/country'
 import { PhoneIcon } from 'images'
-import { usePathname } from "next/navigation";
-
 interface IProps {
   lang: any;
 }
 
 const PhoneLink = (props: IProps)=>{
-  const pathname = usePathname()
+  const langKey = getLang()
   const { lang: {newGetStarted} } = props
   return (
     <li>
-     <Link href={`${pathname}/phone`}>
+     <Link href={`/${langKey}/get-started/phone`}>
      <img src={PhoneIcon}></img>
       {newGetStarted.phone}
     </Link>

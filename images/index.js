@@ -171,3 +171,4 @@ export const UploadResumeIcon = `${S3BucketJobseeker}/UploadResumeIcon.svg`
 
 /* CompleteResumeIcon.svg */
 export const CompleteResumeIcon = `${S3BucketJobseeker}/CompleteResumeIcon.svg`
+

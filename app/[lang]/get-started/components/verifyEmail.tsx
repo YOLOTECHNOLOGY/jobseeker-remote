@@ -14,6 +14,7 @@ const verifyEmail = function (props) {
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
   const email = searchParams.get('email')
+  const avatar = searchParams.get('avatar')
   const langKey = getLang();
   // const jobseekersSocialResponse = useSelector(
   //   (store: any) => store.auth.jobseekersSocialLogin?.response
@@ -23,7 +24,6 @@ const verifyEmail = function (props) {
     defaultLoginCallBack, 
     handleAuthenticationJobseekersLogin ,
     handleAuthenticationSendEmailMagicLink
-  
   } =  useGetStarted()
 
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
@@ -67,7 +67,7 @@ const verifyEmail = function (props) {
               <div className={styles.avatar}>
                 <img
                   className={styles.avatar_img}
-                  src='https://dev-assets.bossjob.com/users/2847285/avatars/b.jpeg'
+                  src={avatar}
                   alt='avatar'
                 />
               </div>
@@ -90,7 +90,7 @@ const verifyEmail = function (props) {
               <Link className={styles.link} href={`${langKey}/get-started`}>other options</Link>
             </div>
             <div>
-              Alternatively, request a <span className={styles.link} onClick={()=>handleAuthenticationSendEmailMagicLink}>magic link</span>
+              Alternatively, request a <span className={styles.link} onClick={()=>handleAuthenticationSendEmailMagicLink()}>magic link</span>
             </div>
           </div>
         </div>

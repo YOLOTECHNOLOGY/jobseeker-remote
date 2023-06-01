@@ -94,7 +94,7 @@ function PhoneCode(props) {
    if(userInfo && Object.keys(userInfo).length){
     const { data} = userInfo;
     if(userId){
-         removeItem('quickUpladResume')
+          removeItem('quickUpladResume')
           defaultLoginCallBack(data)
     }else{
       router.push(`${langKey}/get-started/phone?step=5`)
