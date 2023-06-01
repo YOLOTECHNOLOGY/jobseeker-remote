@@ -316,7 +316,7 @@ const JobCard = (props: any) => {
                           ; (chatNow as any)()
                       }}
                     >
-                      {/* <Image src={HomePageChat} width={16} height={16} alt={''} /> */}
+                      <Image src={HomePageChat} width={16} height={16} alt={''} />
                       <Text textColor='white' bold>
                         {(() => {
                           if (external_apply_url) {
