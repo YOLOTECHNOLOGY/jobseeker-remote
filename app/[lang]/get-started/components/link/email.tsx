@@ -1,14 +1,22 @@
 import React from "react";
 import Link from 'next/link'
-import {getLang } from 'helpers/country'
 
-const EmailLink = ()=>{
-  const langKey = getLang();
+import { EmailIcon } from 'images'
+import { usePathname } from "next/navigation";
+
+interface IProps {
+  lang?: any;
+}
+
+const EmailLink = (props: IProps)=>{
+  const { lang: {newGetStarted} } = props
+
+  const pathname = usePathname()
   return (
     <li>
-     <Link href={`/${langKey}/get-started/email`}>
-     <img src='https://dev.bossjob.ph/_next/image?url=https%3A%2F%2Fdev-assets.bossjob.com%2Fcompanies%2F31430%2Flogo%2Flogo.png&w=48&q=75'></img>
-      Email
+     <Link href={`${pathname}/email`}>
+     <img src={EmailIcon}></img>
+      {newGetStarted.email}
     </Link>
     </li>
   )

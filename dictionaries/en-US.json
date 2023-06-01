@@ -1044,5 +1044,18 @@
     "disabledDescription":"When Boss requests for your resume, we will send your resume attachment automatically to Boss. Are you sure you want to disable it?",
     "enableDescription":"When Boss requests for your resume, we will send your resume attachment automatically to Boss. Please select which resume would you like to be sent to Boss automatically. ",
     "warnText":"Otherwise, you would need to wait for both parties to reply before you can request to send resume."
+  },
+  "newGetStarted": {
+    "title": "Log in or sign up to Bossjob",
+    "employer": "Employer",
+    "tips": "Looking to hire people? Sign up as",
+    "continueWith": "or continue with",
+    "email": "Email",
+    "phone": "Phone",
+    "links": {
+      "apple": "Continue with Apple",
+      "google": "Continue with Google",
+      "facebook": "Continue with Facebook"
+    }
   }
 }

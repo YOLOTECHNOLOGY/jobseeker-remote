@@ -16,15 +16,18 @@ const Page = async (props: any) => {
   const { config } = props
   const { lang } = props.params
   const dictionary: any = await getDictionary(lang)
+
+  const { newGetStarted } = dictionary
+
   return (
     <>
       <div className={styles.main}>
          <div className={styles.bg}></div>
         <div className={styles.container}>
-          <h2>Log in or sign up to Bossjob</h2>
-           <Main/>
+          <h2>{newGetStarted.title}</h2>
+           <Main config={config} lang={lang} dictionary={dictionary} />
         </div>
-      <p className={styles.tips}>Looking to hire people? Sign up as <span>Employer</span></p>
+      <p className={styles.tips}>{newGetStarted.tips}<span>{newGetStarted.employer}</span></p>
       </div>
     </>
   )

@@ -1044,5 +1044,18 @@
     "disabledDescription": "当招聘者向您索取简历时，我们会将当前简历自动发送，确定要取消自动发送吗？",
     "enableDescription": "当招聘者向您索取简历时，我们会将当前简历自动发送。 请选择需要自动发送给招聘者的简历 ",
     "warnText": "否则，您将需要等到双方都回复消息以后，才能请求发送简历"
+  },
+  "newGetStarted": {
+    "title": "登录或注册Bossjob",
+    "employer": "招聘端",
+    "tips": "寻找人才? 登录",
+    "continueWith": "使用其他方式",
+    "email": "邮件",
+    "phone": "电话",
+    "links": {
+      "apple": "使用Apple登录",
+      "google": "使用Google登录",
+      "facebook": "使用Facebook登录"
+    }
   }
 }
