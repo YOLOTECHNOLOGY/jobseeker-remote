@@ -1063,7 +1063,7 @@
     "emailValid": "请输入一个有效的邮件地址.",
     "emailLabel": "邮件地址",
     "sendCode": "发送验证码",
-    "welcomeBack": "欢迎回来!",
+    "welcomeBack": "欢迎回来",
     "sendCodeDigit": "请输入我们发送到的6位验证码",
     "signUpAnAccount": "注册新帐户",
     "checkSpamEmail":"如果您没有收到验证码，请检查您的垃圾邮件。",
@@ -1083,6 +1083,7 @@
     "authenticationEnabled": "验证已启用",
     "factorTip": "如果我们注意到有人尝试从我们无法识别的设备或浏览器登录，我们会要求您提供发送到您的电子邮件地址的代码。",
     "verifyText": "验证是你",
-    "verifyExtra": "这个额外的步骤表明确实是您在尝试登录。"
+    "verifyExtra": "这个额外的步骤表明确实是您在尝试登录。",
+    "optError": "发送邮箱OPT失败"
   }
 }
