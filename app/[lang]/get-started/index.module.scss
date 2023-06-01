@@ -169,7 +169,12 @@ z-index: -1;
         }
       }
     }
-
+    .enabled{
+      >img{
+        display: block;
+        margin: 0 auto;
+      }
+     }
     .phoneNumber {
       .item {
         margin-top: 16px;
@@ -185,7 +190,7 @@ z-index: -1;
           }
         }
       }
-
+    
       .btn {
         width: 100%;
         border: 1px solid #2378e5;

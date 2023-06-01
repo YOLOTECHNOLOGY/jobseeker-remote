@@ -8,7 +8,9 @@ import { removeItem } from 'helpers/localStorage'
 import useGetStarted from '../hooks/useGetStarted'
 import Link from 'next/link'
 import { getLang } from 'helpers/country'
-
+import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
+import { useDispatch } from 'react-redux'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 const verifyEmail = function (props) {
   const { newGetStarted } = props.lang
   const searchParams = useSearchParams()
@@ -26,7 +28,7 @@ const verifyEmail = function (props) {
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   console.log({error});
-  
+  const dispatch = useDispatch()
    useEffect(()=>{
     const text = error?.data?.message
      if(text){
@@ -60,6 +62,28 @@ const verifyEmail = function (props) {
     }
   }
 
+  const sendOpt = () => {
+    authenticationSendEmaillOtp({ email })
+      .then((res) => {
+        dispatch(
+          displayNotification({
+            open: true,
+            message: 'resend code success',
+            severity: 'success'
+          })
+        )
+      })
+      .catch((error) => {
+        dispatch(
+          displayNotification({
+            open: true,
+            message: error.message ?? newGetStarted.optError,
+            severity: 'error'
+          })
+        )
+      })
+  }
+
   return (
     <>
       <div className={styles.phoneNumber}>
@@ -84,12 +108,12 @@ const verifyEmail = function (props) {
               <h2>{newGetStarted.signUpAnAccount} 🎉</h2>
               <p className={styles.enterTips}>
                 {newGetStarted.sendCodeDigit}{' '}
-                <span className={styles.phone_text}>johndoe@gmail.com</span>
+                <span className={styles.phone_text}>{email}</span>
               </p>
             </>
             
           )}
-          <Captcha lang={props.lang} autoFocus={true} onChange={onChange} error={errorText}/>
+          <Captcha lang={props.lang} autoFocus={true} onChange={onChange} error={errorText} sendOpt={sendOpt} />
           <div>
             <div>{newGetStarted.checkSpamEmail}</div>
             <div>
