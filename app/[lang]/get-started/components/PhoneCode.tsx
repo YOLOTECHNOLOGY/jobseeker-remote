@@ -135,7 +135,7 @@ function PhoneCode(props: any) {
           </p>
           <Captcha lang={props.lang} onChange={onChange} autoFocus={true} error = {errorText}/>
           <p className={styles.trouble}>
-          {newGetStarted.havingTrouble}   <Link className={styles.link} href={`${langKey}/get-started`}>{newGetStarted.otherOptions}</Link> 
+          {newGetStarted.havingTrouble}   <Link className={styles.link} href={`/${langKey}/get-started`}>{newGetStarted.otherOptions}</Link> 
           </p>
         </div>
       </div>
