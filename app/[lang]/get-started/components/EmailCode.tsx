@@ -6,6 +6,9 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
 import SetUpLater from './setUpLater'
+import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { useDispatch } from 'react-redux'
 function EmailCode(props: any) {
   const { newGetStarted } = props.lang
   const router = useRouter()
@@ -14,6 +17,8 @@ function EmailCode(props: any) {
   const email =   searchParams.get('email')
   const [errorText,setErrorText] = useState<string>('')
   const langKey = getLang();
+  const [number,setNumber] = useState<number>(0)
+  const dispatch = useDispatch()
   const onChange = (otp) => {
     console.log(otp)
     if(otp?.length === 6 ){
@@ -31,6 +36,21 @@ function EmailCode(props: any) {
     }
   }
   
+  const sendOpt = () => {
+    authenticationSendEmaillOtp({ email })
+      .then(() => {
+        setNumber(new Date().getTime())
+        dispatch(
+          displayNotification({
+            open: true,
+            message: 'resend emailOPT success',
+            severity: 'success'
+          })
+        )
+      })
+    
+  }
+
   const bindUserEmailFun = ()=>{
     bindUserEmail({
       phone_num:phoneNum,
@@ -55,7 +75,7 @@ function EmailCode(props: any) {
           {newGetStarted.sendCodeDigit}
           <span>{email}.</span>
         </p>
-        <Captcha lang={props.lang} autoFocus={true} onChange={onChange} error={errorText}/>
+        <Captcha lang={props.lang} autoFocus={true} onChange={onChange}  sendOpt={sendOpt} error={errorText} number={number}/>
         <SetUpLater lang={props.lang} />
       </div>
     </div>

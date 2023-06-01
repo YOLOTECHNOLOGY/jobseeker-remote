@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react'
 import Captcha from './captcha/index'
 import styles from '../index.module.scss'
 import useGetStarted from '../hooks/useGetStarted'
-import { useSelector } from 'react-redux'
+import { useSelector ,useDispatch} from 'react-redux'
 import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
+import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 interface IProps {
   lang: any;
 }
@@ -16,6 +18,8 @@ const VerifyFactorEmail = (props: IProps) => {
   const userId = searchParams.get('userId')
   const email = searchParams.get('email')
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+  const [number,setNumber] = useState<number>(0)
+  const dispatch = useDispatch()
   const {
     setUserId, 
     setEmail, 
@@ -46,6 +50,21 @@ const VerifyFactorEmail = (props: IProps) => {
     }
   }
 
+  const sendOpt = () => {
+    authenticationSendEmaillOtp({ email })
+      .then(() => {
+        setNumber(new Date().getTime())
+        dispatch(
+          displayNotification({
+            open: true,
+            message: 'resend emailOPT success',
+            severity: 'success'
+          })
+        )
+      })
+    
+  }
+
   return (
     <>
       <div className={styles.phoneNumber}>
@@ -55,7 +74,7 @@ const VerifyFactorEmail = (props: IProps) => {
             <p className={styles.extra}>{}</p>
             <p>{newGetStarted.sendCodeDigit} <span>{email}.</span></p>
           </div>
-          <Captcha lang={props.lang} autoFocus={true} onChange={onChange} error={error}/>
+          <Captcha lang={props.lang} autoFocus={true} sendOpt={sendOpt} onChange={onChange} error={error} number={number}/>
           <p>{newGetStarted.verifyExtra}</p>
         </div>
       </div>

@@ -5,16 +5,17 @@ import { useSearchParams } from 'next/navigation'
 import {getLang } from 'helpers/country'
 import Link from 'next/link'
 import useGetStarted from '../hooks/useGetStarted'
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
 import { removeItem } from 'helpers/localStorage'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { useRouter,usePathname } from 'next/navigation'
-import {verificationPhoneOtp} from 'store/services/auth/newLogin'
+import {verificationPhoneOtp,phoneOtpenerate} from 'store/services/auth/newLogin'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
-
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 function PhoneCode(props: any) {
   const searchParams = useSearchParams()
   const [errorText,setErrorText] = useState<string>('')
+  const [number,setNumber] = useState<number>(0)
   const langKey = getLang()
   const userId = searchParams.get('userId')
   const phoneNum =  '+' + searchParams.get('phone')?.trim?.()
@@ -26,7 +27,7 @@ function PhoneCode(props: any) {
   const router = useRouter()
   const pathname = usePathname()
   const { newGetStarted } = props.lang
-
+  const dispatch = useDispatch()
   console.log({uuid})
   useEffect(()=>{
     if(!uuid){
@@ -91,6 +92,23 @@ function PhoneCode(props: any) {
    })
   }
 
+  const sendOptPhone =()=>{
+    phoneOtpenerate({ phone_num:phoneNum })
+    .then((res) => {
+      console.log(res?.data?.data,'res')
+      dispatch(
+        displayNotification({
+          open: true,
+          message: 'resend phonelOTP success',
+          severity: 'success'
+        })
+      )
+      setNumber(new Date().getTime())
+    })
+    
+  }
+
+
   const sendOpt =(email)=>{
       authenticationSendEmaillOtp({ email })
       .then((res) => {
@@ -133,7 +151,7 @@ function PhoneCode(props: any) {
           <p className={styles.enterTips}>
             {newGetStarted.sendCodeDigit} <span>{phoneNum}.</span>
           </p>
-          <Captcha lang={props.lang} onChange={onChange} autoFocus={true} error = {errorText}/>
+          <Captcha lang={props.lang} onChange={onChange} sendOpt={sendOptPhone} autoFocus={true} error = {errorText} number={number}/>
           <p className={styles.trouble}>
           {newGetStarted.havingTrouble}   <Link className={styles.link} href={`/${langKey}/get-started`}>{newGetStarted.otherOptions}</Link> 
           </p>
