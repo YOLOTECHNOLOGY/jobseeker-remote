@@ -1063,7 +1063,7 @@
     "emailValid": "Please enter a valid email address.",
     "emailLabel": "Email Address",
     "sendCode": "Send verification code",
-    "welcomeBack": "Welcome back!",
+    "welcomeBack": "Welcome back",
     "sendCodeDigit": "Please enter the 6-digit code that we sent to",
     "signUpAnAccount":"Sign up an account",
     "checkSpamEmail":"Check your spam mail if you didn’t receive code.",

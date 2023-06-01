@@ -12,7 +12,7 @@ import { useRouter,usePathname } from 'next/navigation'
 import {verificationPhoneOtp} from 'store/services/auth/newLogin'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 
-function PhoneCode(props) {
+function PhoneCode(props: any) {
   const searchParams = useSearchParams()
   const [captchaError,setCaptchaError] = useState<string>('');
   const langKey = getLang()
@@ -25,6 +25,7 @@ function PhoneCode(props) {
   let uuid = localStorage.getItem('uuid');
   const router = useRouter()
   const pathname = usePathname()
+  const { newGetStarted } = props.lang
 
   console.log({uuid})
   useEffect(()=>{
@@ -108,7 +109,7 @@ function PhoneCode(props) {
       <div className={styles.phoneNumber}>
         <div className={styles.optBox}>
           {
-            userId ?   <h2>Welcome back  {name}  🎉</h2> :  <h2>Sign up an account 🎉</h2>
+            userId ?   <h2>{newGetStarted.welcomeBack}  {name}  🎉</h2> : <h2>{newGetStarted.signUpAnAccount} 🎉</h2>
           }
           {
              avatar ? <div className={styles.avatar}>
@@ -121,11 +122,11 @@ function PhoneCode(props) {
           }
 
           <p className={styles.enterTips}>
-            Please enter the 6-digit code that we have sent to <span>{phoneNum}.</span>
+            {newGetStarted.sendCodeDigit} <span>{phoneNum}.</span>
           </p>
-          <Captcha onChange={onChange} autoFocus={true} error = {captchaError}/>
+          <Captcha lang={props.lang} onChange={onChange} autoFocus={true} error = {captchaError}/>
           <p className={styles.trouble}>
-            Having trouble? Try to sign up with   <Link className={styles.link} href={`${langKey}/get-started`}>other options</Link> 
+          {newGetStarted.havingTrouble}   <Link className={styles.link} href={`${langKey}/get-started`}>{newGetStarted.otherOptions}</Link> 
           </p>
         </div>
       </div>

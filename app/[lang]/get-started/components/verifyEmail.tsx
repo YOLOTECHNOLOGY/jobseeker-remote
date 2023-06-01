@@ -59,7 +59,7 @@ const verifyEmail = function (props) {
         <div className={styles.optBox}>
           {userId ? (
             <>
-              <h2>{newGetStarted.welcomeBack}🎉</h2>
+              <h2>{newGetStarted.welcomeBack}!🎉</h2>
               <p className={styles.enterTips}>
                 {newGetStarted.sendCodeDigit}{' '}
                 <span className={styles.phone_text}>{email}</span>

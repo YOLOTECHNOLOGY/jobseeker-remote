@@ -1057,6 +1057,23 @@
       "apple": "Continue with Apple",
       "google": "Continue with Google",
       "facebook": "Continue with Facebook"
-    }
+    },
+    "termsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "agreement": "I have read and agreed to {{value1}} and {{value2}}",
+    "emailValid": "Please enter a valid email address.",
+    "emailLabel": "Email Address",
+    "sendCode": "Send verification code",
+    "welcomeBack": "Welcome back",
+    "sendCodeDigit": "Please enter the 6-digit code that we sent to",
+    "signUpAnAccount":"Sign up an account",
+    "checkSpamEmail":"Check your spam mail if you didn’t receive code.",
+    "havingTrouble": "Still having trouble? Try to sign up with",
+    "otherOptions": "other options",
+    "alternatively": "Alternatively, request a",
+    "magicLink": "magic link",
+    "resendCode": "Resend code",
+    "country": "Country",
+    "phoneNumber": "Phone Number"
   }
 }
