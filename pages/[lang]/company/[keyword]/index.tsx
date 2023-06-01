@@ -541,6 +541,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (p
   let companyId
   if (companyPath[companyPath.length - 1].includes('?page=')) {
     companyId = Number(companyPath[companyPath.length - 1].split('?page=')[0])
+  } else if (companyPath[companyPath.length - 1].includes('?')) {
+    companyId = companyPath[companyPath.length - 1].split('?')?.[0]
   } else {
     companyId = Number(companyPath[companyPath.length - 1])
   }
