@@ -32,6 +32,7 @@ import classNames from 'classnames'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import SearchIcon from '@mui/icons-material/Search'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import LocationMultiSelector from 'app/[lang]/components/commons/locationMulty'
 
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
@@ -151,15 +152,16 @@ const SearchArea = (props: any) => {
           {/* search */}
           <div className={styles.searchArea}>
             <div className={styles.searchAreaLeft}>
-              <MaterialLocationField
+              <LocationMultiSelector
                 className={styles.location}
                 locationList={config.location_lists}
-                value={location}
+                value={[location]}
                 // isClear={true}
                 label={search.location}
-                defaultValue={location}
+                // defaultValue={location}
                 onChange={(e, value) => {
-                  setLocation(value)
+                  console.log({onLocationChange:value,e})
+                  // setLocation(value)
                 }}
                 sx={{
                   '> .MuiFormControl-root': {
