@@ -18,6 +18,8 @@ const Page = async (props: any) => {
 
   const { newGetStarted } = dictionary
 
+  const BOSSHUNT_URL = process.env.BOSSHUNT_URL
+
   return (
     <>
       <div className={styles.main}>
@@ -26,7 +28,7 @@ const Page = async (props: any) => {
           <h2>{newGetStarted.title}</h2>
            <Main dictionary={dictionary} />
         </div>
-      <p className={styles.tips}>{newGetStarted.tips}<span>{newGetStarted.employer}</span></p>
+      <p className={styles.tips}>{newGetStarted.tips}<a target='_blank' href={BOSSHUNT_URL} rel="noreferrer">{newGetStarted.employer}</a></p>
       </div>
     </>
   )
