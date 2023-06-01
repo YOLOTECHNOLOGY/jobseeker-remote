@@ -66,9 +66,9 @@ const GoogleLogin = (props: IGoogle)  => {
 
        document.body.appendChild(script)
 
-       return () => {
-         document?.body?.removeChild?.(script)
-       }
+      //  return () => {
+      //    document?.body?.removeChild?.(script)
+      //  }
     }
   }, [])
 

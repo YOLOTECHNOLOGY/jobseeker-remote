@@ -59,14 +59,17 @@ const useGetStarted = () => {
 
   const handleAuthenticationJobseekersLogin = (code) => {
     setEmailOTPInputDisabled(true)
+    const uuid = localStorage.getItem('uuid')
     const data = {
       email,
       otp: code,
       source: 'web',
-    //  ...router.query,
-      userId
+      userId,
+      browser_serial_number:uuid
     }
-
+    if(!uuid){
+     delete  data.browser_serial_number
+    }
     dispatch(jobbseekersLoginRequest(data))
   }
 

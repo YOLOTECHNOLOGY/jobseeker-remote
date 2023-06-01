@@ -8,7 +8,9 @@ import useGetStarted from '../hooks/useGetStarted'
 import { useSelector } from 'react-redux'
 import { removeItem } from 'helpers/localStorage'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
-import { useRouter } from 'next/navigation'
+import { useRouter,usePathname } from 'next/navigation'
+import {verificationPhoneOtp} from 'store/services/auth/newLogin'
+import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 function PhoneCode() {
   const searchParams = useSearchParams()
   const [captchaError,setCaptchaError] = useState<string>('');
@@ -17,8 +19,12 @@ function PhoneCode() {
   const phoneNum =  '+' + searchParams.get('phone')?.trim?.()
   const avatar =  searchParams.get('avatar')
   const name = searchParams.get('name')
+  const email = searchParams.get('email')
+  const browserId = searchParams.get('browserId')
   let uuid = localStorage.getItem('uuid');
   const router = useRouter()
+  const pathname = usePathname()
+
   console.log({uuid})
   useEffect(()=>{
     if(!uuid){
@@ -47,22 +53,51 @@ function PhoneCode() {
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
 
   const onChange = (otp) => {
-    console.log(otp)
+   
     if(otp?.length === 6 ){
-      handleAuthenticationJobseekersLoginPhone(otp,phoneNum,uuid)
+      console.log(otp,uuid,browserId)
+      if(uuid != browserId && browserId){
+        verifyPhoneFun(otp)
+      }else{
+        handleAuthenticationJobseekersLoginPhone(otp,phoneNum,uuid)
+      }
     }
   }
-  console.log(userInfo,userInfo)
+
+  const  verifyPhoneFun = (otp)=>{
+   console.log(otp)
+   verificationPhoneOtp({
+    otp,
+    phone_num:phoneNum
+   }).then(res=>{
+    console.log(res?.data)
+    const {code,data,message } = res?.data ?? {}
+    if(code === 0){
+      sendOpt(email)
+    }else{
+      setCaptchaError(message)
+    }
+   })
+  }
+
+  const sendOpt =(email)=>{
+      authenticationSendEmaillOtp({ email })
+      .then((res) => {
+        console.log(res?.data?.data,'res')
+        router.push(`${pathname}?step=6&email=${email}&userId=${userId}`)
+      })
+    
+  }
+ console.log({userInfo})
  useEffect(()=>{
    if(userInfo && Object.keys(userInfo).length){
-    const { data } = userInfo;
+    const { data} = userInfo;
     if(userId){
-      removeItem('quickUpladResume')
-      defaultLoginCallBack(data)
+         removeItem('quickUpladResume')
+          defaultLoginCallBack(data)
     }else{
-      router.push(`${langKey}/get-started/phone?step=3&&phone=${phoneNum}`)
+      router.push(`${langKey}/get-started/phone?step=5`)
     }
-  
    }
  },[userInfo])
 
@@ -72,7 +107,7 @@ function PhoneCode() {
       <div className={styles.phoneNumber}>
         <div className={styles.optBox}>
           {
-            userId ?   <h2>Welcome back, {name}  🎉</h2> :  <h2>Sign up an account 🎉</h2>
+            userId ?   <h2>Welcome back  {name}  🎉</h2> :  <h2>Sign up an account 🎉</h2>
           }
           {
              avatar ? <div className={styles.avatar}>

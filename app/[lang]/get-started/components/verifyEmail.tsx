@@ -8,7 +8,7 @@ import { removeItem } from 'helpers/localStorage'
 import useGetStarted from '../hooks/useGetStarted'
 import Link from 'next/link'
 import { getLang } from 'helpers/country'
-const verifyPhone: React.FC = function () {
+const verifyEmail: React.FC = function () {
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
   const email = searchParams.get('email')
@@ -97,4 +97,4 @@ const verifyPhone: React.FC = function () {
   )
 }
 
-export default verifyPhone
+export default verifyEmail
