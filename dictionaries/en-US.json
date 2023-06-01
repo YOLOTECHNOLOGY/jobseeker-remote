@@ -1068,6 +1068,8 @@
     "signUpAnAccount":"Sign up an account",
     "checkSpamEmail":"Check your spam mail if you didn’t receive code.",
     "havingTrouble": "Still having trouble? Try to sign up with",
-    "otherOptions": "other options"
+    "otherOptions": "other options",
+    "alternatively": "Alternatively, request a",
+    "magicLink": "magic link"
   }
 }

@@ -84,13 +84,13 @@ const verifyEmail = function (props) {
           )}
           <Captcha autoFocus={true} onChange={onChange} />
           <div>
-            <div>Check your spam mail if you didn’t receive code.</div>
+            <div>{newGetStarted.checkSpamEmail}</div>
             <div>
-              Still having trouble? Try to sign up with{' '}
-              <Link className={styles.link} href={`${langKey}/get-started`}>other options</Link>
+             {newGetStarted.havingTrouble}{' '}
+              <Link className={styles.link} href={`${langKey}/get-started`}>{newGetStarted.otherOptions}</Link>
             </div>
             <div>
-              Alternatively, request a <span className={styles.link} onClick={()=>handleAuthenticationSendEmailMagicLink}>magic link</span>
+              {newGetStarted.alternatively}<span className={styles.link} onClick={()=>handleAuthenticationSendEmailMagicLink}>{newGetStarted.magicLink}</span>
             </div>
           </div>
         </div>
