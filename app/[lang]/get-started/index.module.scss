@@ -4,20 +4,29 @@
   margin: 0 auto;
   position: relative;
   padding-top: 64px;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 55px);
   position: relative;
   overflow: hidden;
   z-index: 1;
   .bg{
+    // position: absolute;
+    // width: 1620px;
+    // height: 800px;
+    // left: 0;
+    // background: linear-gradient(86.06deg, #9DEDFF 59.41%, #9DEDFF 68.95%, #1052FB 76.03%, #1052FB 80.45%, rgba(16, 82, 251, 0.89) 88.18%);
+    // opacity: 0.2;
+    // filter: blur(154.5px);
+    // transform: rotate(90deg);
+    // z-index: -1;
     position: absolute;
-    width: 1620px;
-    height: 800px;
-    left: 0;
-    background: linear-gradient(86.06deg, #9DEDFF 59.41%, #9DEDFF 68.95%, #1052FB 76.03%, #1052FB 80.45%, rgba(16, 82, 251, 0.89) 88.18%);
-    opacity: 0.2;
-    filter: blur(154.5px);
-    transform: rotate(90deg);
-    z-index: -1;
+width: 1366px;
+height: 768px;
+left: 0px;
+top: 0px;
+background: linear-gradient(166.11deg, #FFFFFF 18.61%, #9DEDFF 59.16%, #1052FB 100.91%, #1052FB 133%, rgba(16, 82, 251, 0.89) 186.95%);
+opacity: 0.6;
+filter: blur(154.5px); 
+z-index: -1;
   }
   .container {
     width: 575px;
