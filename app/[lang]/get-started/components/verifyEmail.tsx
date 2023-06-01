@@ -19,6 +19,7 @@ const verifyEmail = function (props) {
   const avatar = searchParams.get('avatar')
   const langKey = getLang();
   const [errorText,setErrorText] = useState<string>('')
+  const [number,setNumber] = useState<number>(0)
   const { setUserId, setEmail, 
     defaultLoginCallBack, 
     handleAuthenticationJobseekersLogin ,
@@ -64,11 +65,12 @@ const verifyEmail = function (props) {
 
   const sendOpt = () => {
     authenticationSendEmaillOtp({ email })
-      .then((res) => {
+      .then(() => {
+        setNumber(new Date().getTime())
         dispatch(
           displayNotification({
             open: true,
-            message: 'resend code success',
+            message: 'resend emailOPT success',
             severity: 'success'
           })
         )
@@ -113,7 +115,7 @@ const verifyEmail = function (props) {
             </>
             
           )}
-          <Captcha lang={props.lang} autoFocus={true} onChange={onChange} error={errorText} sendOpt={sendOpt} />
+          <Captcha lang={props.lang} autoFocus={true} onChange={onChange} error={errorText} sendOpt={sendOpt} number={number}/>
           <div>
             <div>{newGetStarted.checkSpamEmail}</div>
             <div>

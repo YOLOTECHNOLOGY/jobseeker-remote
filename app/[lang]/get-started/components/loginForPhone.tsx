@@ -57,7 +57,6 @@ useEffect(()=>{
 },[phoneNumber])
  
 const sendOpt =()=>{
-  console.log(1111)
   const phoneNum = countryValue + phoneNumber
   phoneOtpenerate({ phone_num:phoneNum })
   .then((res) => {
