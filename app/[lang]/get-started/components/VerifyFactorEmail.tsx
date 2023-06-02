@@ -2,30 +2,26 @@ import React, { useState, useEffect } from 'react'
 import Captcha from './captcha/index'
 import styles from '../index.module.scss'
 import useGetStarted from '../hooks/useGetStarted'
-import { useSelector ,useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 interface IProps {
-  lang: any;
+  lang: any
 }
 
 const VerifyFactorEmail = (props: IProps) => {
   const { newGetStarted } = props.lang
-  const [error,setError] = useState<string>('')
+  const [error, setError] = useState<string>('')
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
   const email = searchParams.get('email')
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
-  const [number,setNumber] = useState<number>(0)
+  const [number, setNumber] = useState<number>(0)
   const dispatch = useDispatch()
-  const {
-    setUserId, 
-    setEmail, 
-    handleAuthenticationJobseekersLogin,
-    defaultLoginCallBack
-  } =  useGetStarted()
+  const { setUserId, setEmail, handleAuthenticationJobseekersLogin, defaultLoginCallBack } =
+    useGetStarted()
   useEffect(() => {
     if (email) {
       setEmail(email)
@@ -51,18 +47,16 @@ const VerifyFactorEmail = (props: IProps) => {
   }
 
   const sendOpt = () => {
-    authenticationSendEmaillOtp({ email })
-      .then(() => {
-        setNumber(new Date().getTime())
-        dispatch(
-          displayNotification({
-            open: true,
-            message: 'resend emailOPT success',
-            severity: 'success'
-          })
-        )
-      })
-    
+    authenticationSendEmaillOtp({ email }).then(() => {
+      setNumber(new Date().getTime())
+      dispatch(
+        displayNotification({
+          open: true,
+          message: 'resend emailOPT success',
+          severity: 'success'
+        })
+      )
+    })
   }
 
   return (
@@ -72,9 +66,18 @@ const VerifyFactorEmail = (props: IProps) => {
           <h2>{newGetStarted.verifyText}</h2>
           <div className={styles.enterTips}>
             <p className={styles.extra}>{}</p>
-            <p>{newGetStarted.sendCodeDigit} <span>{email}.</span></p>
+            <p>
+              {newGetStarted.sendCodeDigit} <span>{email}.</span>
+            </p>
           </div>
-          <Captcha lang={props.lang} autoFocus={true} sendOpt={sendOpt} onChange={onChange} error={error} number={number}/>
+          <Captcha
+            lang={props.lang}
+            autoFocus={true}
+            sendOpt={sendOpt}
+            onChange={onChange}
+            error={error}
+            number={number}
+          />
           <p>{newGetStarted.verifyExtra}</p>
         </div>
       </div>

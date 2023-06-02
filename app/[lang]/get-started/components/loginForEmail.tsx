@@ -1,4 +1,4 @@
-import React, { useState ,useRef} from 'react'
+import React, { useState, useRef } from 'react'
 import styles from '../index.module.scss'
 import AppleLogin from './link/apple'
 import FacebookLogin from './link/facebook'
@@ -32,7 +32,7 @@ const loginForEmail = (props: IProps) => {
   const pathname = usePathname()
 
   const sendOpt = () => {
-    if(submitRef.current){
+    if (submitRef.current) {
       return
     }
     submitRef.current = true
@@ -40,12 +40,11 @@ const loginForEmail = (props: IProps) => {
       .then((res) => {
         submitRef.current = false
         const { user_id, avatar } = res?.data?.data ?? {}
-        if(user_id){
+        if (user_id) {
           router.push(`${pathname}?step=2&&email=${email}&userId=${user_id}&avatar=${avatar}`)
-        }else{
+        } else {
           router.push(`${pathname}?step=2&&email=${email}`)
         }
-  
       })
       .catch((error) => {
         dispatch(
@@ -91,7 +90,8 @@ const loginForEmail = (props: IProps) => {
 
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>
         <p className={styles.tips}>
-          {newGetStarted.tips} <Link
+          {newGetStarted.tips}{' '}
+          <Link
             href={
               process.env.ENV === 'development'
                 ? 'https://dev.employer.bossjob.com'

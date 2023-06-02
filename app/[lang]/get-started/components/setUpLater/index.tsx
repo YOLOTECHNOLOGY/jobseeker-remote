@@ -1,23 +1,27 @@
-import React from "react";
+import React from 'react'
 import styles from '../../index.module.scss'
 import useGetStarted from '../../hooks/useGetStarted'
 import { useSelector } from 'react-redux'
 import { removeItem } from 'helpers/localStorage'
 
-const SetUpLater = (props: any)=>{
-    const {defaultLoginCallBack } =  useGetStarted()
+const SetUpLater = (props: any) => {
+  const { defaultLoginCallBack } = useGetStarted()
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const { newGetStarted } = props.lang
 
-  console.log({userInfo});
-  
-    const login = () => {
-        if(userInfo && Object.keys(userInfo).length){
-            const { data } = userInfo;
-            removeItem('quickUpladResume')
-            defaultLoginCallBack(data)        
-           }
-       }
-    return  <button className={styles.btn} onClick={()=>login()}>{newGetStarted.setUpLater}</button>
+  console.log({ userInfo })
+
+  const login = () => {
+    if (userInfo && Object.keys(userInfo).length) {
+      const { data } = userInfo
+      removeItem('quickUpladResume')
+      defaultLoginCallBack(data)
+    }
+  }
+  return (
+    <button className={styles.btn} onClick={() => login()}>
+      {newGetStarted.setUpLater}
+    </button>
+  )
 }
 export default SetUpLater

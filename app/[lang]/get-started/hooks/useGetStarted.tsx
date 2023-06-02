@@ -9,16 +9,16 @@ import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
 
-import { getCountryId, getLanguageId, } from 'helpers/country'
+import { getCountryId, getLanguageId } from 'helpers/country'
 
-import { useRouter,useSearchParams,usePathname} from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { getCookie } from 'helpers/cookies'
 
 const useGetStarted = () => {
   const routes = useRouter()
   const dispatch = useDispatch()
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
   const [step, setStep] = useState(1)
   const [email, setEmail] = useState<string>('')
   const [emailTOP, setEmailTOP] = useState<number>()
@@ -26,7 +26,7 @@ const useGetStarted = () => {
   const [userId, setUserId] = useState(null)
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
   const [defaultRedirectPage, setDefaultRedirectPage] = useState<string>(null)
- 
+
   // console.log(useSearchParams,'router')
   // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
@@ -55,8 +55,6 @@ const useGetStarted = () => {
     loginFailed()
   }, [error])
 
-
-
   const handleAuthenticationJobseekersLogin = (code) => {
     setEmailOTPInputDisabled(true)
     const uuid = localStorage.getItem('uuid')
@@ -65,15 +63,15 @@ const useGetStarted = () => {
       otp: code,
       source: 'web',
       userId,
-      browser_serial_number:uuid
+      browser_serial_number: uuid
     }
-    if(!uuid){
-     delete  data.browser_serial_number
+    if (!uuid) {
+      delete data.browser_serial_number
     }
     dispatch(jobbseekersLoginRequest(data))
   }
 
-  const handleAuthenticationJobseekersLoginPhone = (code,phone_num,browser_serial_number) => {
+  const handleAuthenticationJobseekersLoginPhone = (code, phone_num, browser_serial_number) => {
     setEmailOTPInputDisabled(true)
     const data = {
       phone_num,
@@ -150,13 +148,13 @@ const useGetStarted = () => {
       localStorage.removeItem('isChatRedirect')
     } else if (pathname === '/quick-upload-resume') {
       params = {
-        redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1',
-       // redirect_fail: router.asPath
+        redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1'
+        // redirect_fail: router.asPath
       }
-    } else if (pathname=== '/resumetemplate') {
+    } else if (pathname === '/resumetemplate') {
       params = {
-        redirect: userId ? '/manage-profile?tab=resume' : '/jobseeker-complete-profile/1',
-       // redirect_fail: router.asPath
+        redirect: userId ? '/manage-profile?tab=resume' : '/jobseeker-complete-profile/1'
+        // redirect_fail: router.asPath
       }
     } else if (pathname === '/job/[keyword]') {
       params = {
@@ -175,11 +173,11 @@ const useGetStarted = () => {
       .then(({ data }) => {
         console.log(data)
         dispatch(
-        displayNotification({
-          open: true,
-          message: `We’ve sent a magic link to ${email}. Please click on the link to proceed.`,
-          severity: 'success'
-        })
+          displayNotification({
+            open: true,
+            message: `We’ve sent a magic link to ${email}. Please click on the link to proceed.`,
+            severity: 'success'
+          })
         )
       })
       .catch((error) => {
