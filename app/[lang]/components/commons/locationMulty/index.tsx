@@ -13,7 +13,7 @@ import Text from 'components/Text'
 import { useRef } from 'react'
 import { debounce } from 'lodash-es'
 import { uniqBy, prop } from 'ramda'
-import { LocationContext } from 'app/[lang]/components/providers/locationProvier'
+// import { LocationContext } from 'app/[lang]/components/providers/locationProvier'
 
 const LocationMultiSelector = (props: any) => {
   const { label, className, value, isTouched, onChange, lang, ...rest } = props

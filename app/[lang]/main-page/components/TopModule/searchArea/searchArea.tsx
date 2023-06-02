@@ -19,6 +19,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { getCountryId } from 'helpers/country';
 import LocationMultiSelector from 'app/[lang]/components/commons/locationMulty'
 import { encode } from 'app/[lang]/jobs-hiring/interpreters/encoder'
+import { getCookie, setCookie } from 'helpers/cookies'
 
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
@@ -42,13 +43,10 @@ const SearchArea = (props: any) => {
       window.removeEventListener('scroll', useFn)
     }
   }, [])
-  // useEffect(() => {
-  //   const cookieLocation = getCookie('location')
-  //   if (cookieLocation?.value !== location.value) {
-  //     setCookie('location', location)
-  //     router.refresh()
-  //   }
-  // }, [location.value])
+  useEffect(() => {
+      setCookie('location', location)
+      router.refresh()
+  }, [location])
   const pushJobPage = useCallback(
     (value) => {
       const result = encode({

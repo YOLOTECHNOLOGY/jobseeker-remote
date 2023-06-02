@@ -5,6 +5,7 @@ import { fetchCompanyTopService } from '../../../../store/services/companies/fet
 import Link from 'next/link'
 async function getCompanyData(location) {
   const res = await fetchCompanyTopService(location)
+  console.log({ res })
   return res.data
 }
 
