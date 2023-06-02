@@ -83,7 +83,7 @@ function PhoneCode(props: any) {
       if (data) {
         sendOpt(email)
       } else {
-        setErrorText('Invalid otp')
+        setErrorText(newGetStarted.invalidOtp)
       }
     })
   }
@@ -95,7 +95,7 @@ function PhoneCode(props: any) {
       dispatch(
         displayNotification({
           open: true,
-          message: 'resend phonelOTP success',
+          message: newGetStarted.resendPhoneCode,
           severity: 'success'
         })
       )

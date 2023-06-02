@@ -30,7 +30,7 @@ function EmailCode(props: any) {
         if (res.data?.data) {
           bindUserEmailFun()
         } else {
-          setErrorText('Invalid otp')
+          setErrorText(newGetStarted.invalidOtp)
         }
       })
     }
@@ -43,7 +43,7 @@ function EmailCode(props: any) {
       dispatch(
         displayNotification({
           open: true,
-          message: 'resend emailOPT success',
+          message: newGetStarted.resendEmailCode,
           severity: 'success'
         })
       )
