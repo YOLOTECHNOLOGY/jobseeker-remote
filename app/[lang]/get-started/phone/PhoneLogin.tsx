@@ -18,11 +18,13 @@ const PhoneLogin = (props: IProps) => {
   const search = searchParams.get('step')
   const [step, setStep] = useState(1)
   
-
-
+  
   useEffect(() => {
-    if (search) {
+    const hasStep = [1,2,3,4,5,6].includes(+search)
+    if (search && hasStep) {
       setStep(Number(search))
+    }else {
+      setStep(1)
     }
   }, [search])
 

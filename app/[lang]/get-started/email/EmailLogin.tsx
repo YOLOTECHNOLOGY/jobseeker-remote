@@ -16,7 +16,8 @@ const EmailLogin = (props: IProps) => {
   const [step, setStep] = useState(1)
 
   useEffect(() => {
-    if (search && [1,2].includes(+search)) {
+    const hasStep = [1,2].includes(+search)
+    if (search && hasStep) {
       setStep(Number(search))
     }else {
       setStep(1)
