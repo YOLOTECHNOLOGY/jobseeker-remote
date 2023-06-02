@@ -3,25 +3,28 @@ import styles from '../index.module.scss'
 import Captcha from './captcha/index'
 import { verificationOtp, bindUserEmail } from 'store/services/auth/newLogin'
 import { useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/navigation'
-import { getLang } from 'helpers/country'
 import SetUpLater from './setUpLater'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { useDispatch } from 'react-redux'
-function EmailCode(props: any) {
+import useGetStarted from '../hooks/useGetStarted'
+import { useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
+const EmailCode = (props: any)=> {
   const { newGetStarted } = props.lang
-  const router = useRouter()
+  const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const searchParams = useSearchParams()
   const phoneNum = '+' + searchParams.get('phone')?.trim?.()
   const email = searchParams.get('email')
   const [errorText, setErrorText] = useState<string>('')
-  const langKey = getLang()
+  const router = useRouter()
   const [number, setNumber] = useState<number>(0)
+  const {defaultLoginCallBack } =  useGetStarted()
   const dispatch = useDispatch()
   const onChange = (otp) => {
     console.log(otp)
     if (otp?.length === 6) {
+      setErrorText('')
       verificationOtp({
         otp,
         email
@@ -51,6 +54,7 @@ function EmailCode(props: any) {
   }
 
   const bindUserEmailFun = () => {
+   
     bindUserEmail({
       phone_num: phoneNum,
       email,
@@ -58,7 +62,14 @@ function EmailCode(props: any) {
     }).then((res) => {
       console.log(res.data)
       if (res.data) {
-        router.push(`${langKey}/get-started/phone?step=4&&phone=${phoneNum}&email=${email}`)
+     
+        if(userInfo && Object.keys(userInfo).length){
+          const { data } = userInfo;
+          defaultLoginCallBack(data)        
+         }else{
+          router.push('/')
+         }
+
       }
     }).catch((error) => {
       console.log(error,7778888)
