@@ -60,6 +60,16 @@ function EmailCode(props: any) {
       if (res.data) {
         router.push(`${langKey}/get-started/phone?step=4&&phone=${phoneNum}&email=${email}`)
       }
+    }).catch((error) => {
+      console.log(error,7778888)
+      setErrorText(error?.data?.message )
+      dispatch(
+        displayNotification({
+          open: true,
+          message: error?.data?.message || 'error' ,
+          severity: 'error'
+        })
+      )
     })
   }
 
