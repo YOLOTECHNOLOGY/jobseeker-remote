@@ -57,7 +57,7 @@ function PhoneCode(props: any) {
     dispatch(jobbseekersLoginFailed({}))
     if (otp?.length === 6) {
       console.log(otp, uuid, browserId)
-      if (uuid != browserId && browserId) {
+      if (uuid != browserId && browserId && email) {
         verifyPhoneFun(otp)
       } else {
         handleAuthenticationJobseekersLoginPhone(otp, phoneNum, uuid)
