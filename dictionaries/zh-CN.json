@@ -1087,7 +1087,7 @@
     "verifyText": "验证是你",
     "verifyExtra": "这个额外的步骤表明确实是您在尝试登录。",
     "optError": "发送OTP失败",
-    "resendCodeSuccesses": "重新发送验证码成功",
+    "resendCodeSuccesses": "重新发送邮箱OTP成功",
     "invalidOtp": "无效的OTP",
     "resendPhoneCode": "重新发送电话OTP成功"
   }

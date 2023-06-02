@@ -1087,7 +1087,7 @@
     "verifyText": "Verify it’s you",
     "verifyExtra": "This extra step show that it is really you trying to log in.",
     "optError": "Send OTP fail",
-    "resendEmailCode": "Resend email'OPT success",
+    "resendEmailCode": "Resend email'OTP success",
     "invalidOtp": "Invalid OTP",
     "resendPhoneCode": "Resend phone'OTP success"
   }
