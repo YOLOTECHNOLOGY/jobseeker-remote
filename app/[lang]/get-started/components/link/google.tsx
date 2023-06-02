@@ -7,6 +7,7 @@ import styles from '../../index.module.scss'
 import { removeItem } from 'helpers/localStorage'
 import useGetStartedClient from '../../hooks/useGetStarted'
 import { useSearchParams } from 'next/navigation'
+import classNames from 'classnames'
 
 interface IGoogle {
   className?: string
@@ -24,6 +25,7 @@ const GoogleLogin = (props: IGoogle) => {
     lang: { newGetStarted }
   } = props
   const [googleAuth, setGoogleAuth] = useState(null)
+  const [init, setInit] = useState(false)
   const dispatch = useDispatch()
   const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
@@ -59,6 +61,7 @@ const GoogleLogin = (props: IGoogle) => {
           .then(() => {
             setGoogleAuth(window.gapi.auth2.getAuthInstance())
           })
+        setInit(true)
         document?.body?.removeChild?.(script)  
       }
   
@@ -67,6 +70,7 @@ const GoogleLogin = (props: IGoogle) => {
       script.defer = true
       script.type = 'text/javascript'
       script.onload = handleClientLoad
+      script.onerror = () => { setInit(false) }
       document.body.appendChild(script)
     }
   }, [])
@@ -131,7 +135,7 @@ const GoogleLogin = (props: IGoogle) => {
   }
 
   return (
-    <div className={styles.login_item}>
+    <div className={classNames([styles.login_item, !init ? styles.login_disabled: ''])}>
       <img src={GoogleLogo} />
       <span onClick={handleAuthClick}>{newGetStarted.links.google}</span>
     </div>
