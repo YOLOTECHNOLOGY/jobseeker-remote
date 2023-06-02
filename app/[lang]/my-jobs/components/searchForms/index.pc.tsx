@@ -126,7 +126,6 @@ const SearchArea = (props: any) => {
     preferenceId,
     filterLocation
   ])
-
   const firstRender = useFirstRender()
   const reload = useCallback(() => {
     if (firstRender) {
@@ -161,7 +160,7 @@ const SearchArea = (props: any) => {
           })}
         >
           <div className={styles.searchArea}>
-           
+
             <LocationMultiSelector
               className={styles.location}
               value={location}
@@ -235,11 +234,20 @@ const SearchArea = (props: any) => {
               height={'30px'}
               locationList={config.location_lists}
               value={filterLocation}
+              width='100%'
               // isClear={true}
               label={lang.location}
-              defaultValue={filterLocation}
+              // defaultValue={filterLocation}
               onChange={(e, value) => {
                 setFilterLocation(value)
+              }}
+              sx={{
+                '.MuiPaper-root': {
+                  width: '300px',
+                  '.MuiAutocomplete-paper': {
+                    width: '300px'
+                  }
+                }
               }}
             />
             <Multiple
@@ -301,6 +309,7 @@ const SearchArea = (props: any) => {
                 setCompanySizes([])
                 setJobtypes([])
                 setIndustry([])
+                setFilterLocation(null)
               }}
             >
               {resetFilters}{' '}

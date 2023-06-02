@@ -10,12 +10,12 @@ import TextField from '@mui/material/TextField'
 // import { formatLocationConfig } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
 
-const textFieldTheme = (value, height = '44px') => createTheme({
+const textFieldTheme = (value, height = '44px', width = '90vw') => createTheme({
   components: {
     MuiPaper: {
       styleOverrides: {
         root: {
-          width: '90vw',
+          width: width,
           height: '100%',
           padding: '0px',
           top: '0px',
@@ -97,34 +97,36 @@ const formatLocationConfig = (locationList) => {
   return locationConfig
 }
 
-const MaterialLocationField = ({ className, label, locationList, disableClearable = false, defaultValue, required, fieldRef, error, value, height, ...rest }: any) => {
+const MaterialLocationField = ({ className, label, locationList, width, disableClearable = false, defaultValue, required, fieldRef, error, value, height, ...rest }: any) => {
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
   return (
-    <ThemeProvider theme={textFieldTheme(value, height)}>
+    <ThemeProvider theme={textFieldTheme(value, height, width)}>
       <Autocomplete
         id='location-autocomplete'
         options={formattedLocationList}
         groupBy={(option: any) => option.region_display_name}
         getOptionLabel={(option: any) => option.value || ''}
         size='small'
-
+        value={value}
         disableClearable={disableClearable}
         className={className}
         classes={{}}
-        renderInput={(params) => (
-          <TextField id='location'
-            {...fieldRef}
-            error={!!error}
-            style={{ height: '100%' }}
-            required={rest.required}
-            helperText={error?.message}
-            label={<span>{label ? label : 'Location'} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>}
-            variant='outlined'
-            size='small'
-            {...params}
-          />
-        )}
+        renderInput={(params) => {
+          return (
+            <TextField id='location'
+              {...fieldRef}
+              error={!!error}
+              style={{ height: '100%' }}
+              required={rest.required}
+              helperText={error?.message}
+              label={<span>{label ? label : 'Location'} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>}
+              variant='outlined'
+              size='small'
+              {...params}
+            />
+          )
+        }}
         defaultValue={defaultValue}
         {...rest}
       />
