@@ -42,7 +42,7 @@ const AppleLogin = (props: IApple) => {
   const appleConfig = {
     clientId: 'com.bossjob.web',
     scope: 'name email',
-    redirectURI: 'https://dev.bossjob.ph/login2',
+    redirectURI: `${location.origin}/get-started`,
     usePopup: true
   }
 
