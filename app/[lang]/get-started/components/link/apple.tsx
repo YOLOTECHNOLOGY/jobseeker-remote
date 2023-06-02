@@ -7,6 +7,7 @@ import useGetStartedClient from '../../hooks/useGetStarted'
 import { useSearchParams } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import * as jose from 'jose'
+import classNames from 'classnames'
 
 interface IApple {
   isLogin?: boolean;
@@ -21,6 +22,7 @@ const AppleLogin = (props: IApple) => {
   const dispatch = useDispatch()
   const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
+  const [init, setInit] = useState(false)
 
   const query = {}
   for (const entry of searchParams.entries()) {
@@ -54,6 +56,7 @@ const AppleLogin = (props: IApple) => {
           console.error(new Error('Error loading apple script'))
           return
         }
+        setInit(true)
         window.AppleID.auth.init(appleConfig)
         document.body.removeChild(script)
       }
@@ -62,6 +65,7 @@ const AppleLogin = (props: IApple) => {
       script.async = true
       script.defer = true
       script.onload = handleClientLoad
+      script.onerror = () => { setInit(false) }
       document.body.appendChild(script)
     }
   }, [])
@@ -99,7 +103,8 @@ const AppleLogin = (props: IApple) => {
   }
 
   return (
-    <div className={styles.login_item}>
+    // <div className={styles.login_item}>
+    <div className={classNames([styles.login_item, !init ? styles.login_disabled: ''])}>
       <img src={AppleIcon}></img>
       {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
       <span data-type='sign in' aria-label='Sign in with apple ID' onClick={handleAuth}>

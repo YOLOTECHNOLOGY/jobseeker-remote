@@ -365,5 +365,9 @@ z-index: -1;
         top: 10px;
       }
   }
+  .login_disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
 @import './indexMobile.module.scss';
