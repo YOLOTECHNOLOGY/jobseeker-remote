@@ -10,20 +10,25 @@ import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
 
 interface IFacebook {
-  className?: string;
-  activeKey?: number;
-  isLogin?: boolean;
-  redirect?: string | string[];
-  lang: any;
+  className?: string
+  activeKey?: number
+  isLogin?: boolean
+  redirect?: string | string[]
+  lang: any
 }
 
 const FacebookLogin = (props: IFacebook) => {
-  const {activeKey,isLogin,redirect, lang:{newGetStarted}} = props
+  const {
+    activeKey,
+    isLogin,
+    redirect,
+    lang: { newGetStarted }
+  } = props
   const dispatch = useDispatch()
   const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
-  const query = {};
-  for(const entry of searchParams.entries()) {
+  const query = {}
+  for (const entry of searchParams.entries()) {
     query[entry[0]] = entry[1]
   }
 
@@ -55,12 +60,11 @@ const FacebookLogin = (props: IFacebook) => {
     dispatch(jobbseekersSocialLoginRequest(data))
   }
 
-
   const handleAuthClick = () => {
     let accessToken
     if (typeof window?.FB == 'undefined') {
-      console.error(new Error('Error loading FB script'));
-      return;
+      console.error(new Error('Error loading FB script'))
+      return
     }
     window.FB.login(
       function (response) {
@@ -96,8 +100,8 @@ const FacebookLogin = (props: IFacebook) => {
 
   return (
     <div className={styles.login_item}>
-        <img src={FacebookIcon}></img>
-        <span onClick={handleAuthClick}>{newGetStarted.links.facebook}</span>
+      <img src={FacebookIcon}></img>
+      <span onClick={handleAuthClick}>{newGetStarted.links.facebook}</span>
     </div>
   )
 }

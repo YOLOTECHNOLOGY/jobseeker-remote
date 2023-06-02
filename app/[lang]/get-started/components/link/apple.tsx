@@ -10,15 +10,17 @@ import * as jose from 'jose'
 import classNames from 'classnames'
 
 interface IApple {
-  isLogin?: boolean;
-  lang: any;
+  isLogin?: boolean
+  lang: any
 }
 
 const APPLE_LOGIN_URL =
   'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js'
 
 const AppleLogin = (props: IApple) => {
-  const {lang: {newGetStarted}} = props;
+  const {
+    lang: { newGetStarted }
+  } = props
   const dispatch = useDispatch()
   const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
@@ -53,7 +55,7 @@ const AppleLogin = (props: IApple) => {
   }
 
   useEffect(() => {
-    if(typeof window !== 'undefined') {
+    if (typeof window !== 'undefined') {
       const script = document.createElement('script')
       const handleClientLoad = () => {
         if (!window?.AppleID) {
@@ -69,7 +71,9 @@ const AppleLogin = (props: IApple) => {
       script.async = true
       script.defer = true
       script.onload = handleClientLoad
-      script.onerror = () => { setInit(false) }
+      script.onerror = () => {
+        setInit(false)
+      }
       document.body.appendChild(script)
     }
   }, [])
@@ -108,7 +112,7 @@ const AppleLogin = (props: IApple) => {
 
   return (
     // <div className={styles.login_item}>
-    <div className={classNames([styles.login_item, !init ? styles.login_disabled: ''])}>
+    <div className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}>
       <img src={AppleIcon}></img>
       {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
       <span data-type='sign in' aria-label='Sign in with apple ID' onClick={handleAuth}>

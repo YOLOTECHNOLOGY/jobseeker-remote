@@ -66,15 +66,17 @@ const GoogleLogin = (props: IGoogle) => {
             setGoogleAuth(window.gapi.auth2.getAuthInstance())
           })
         setInit(true)
-        document?.body?.removeChild?.(script)  
+        document?.body?.removeChild?.(script)
       }
-  
+
       script.src = 'https://apis.google.com/js/api.js'
       script.async = true
       script.defer = true
       script.type = 'text/javascript'
       script.onload = handleClientLoad
-      script.onerror = () => { setInit(false) }
+      script.onerror = () => {
+        setInit(false)
+      }
       document.body.appendChild(script)
     }
   }, [])
@@ -139,7 +141,7 @@ const GoogleLogin = (props: IGoogle) => {
   }
 
   return (
-    <div className={classNames([styles.login_item, !init ? styles.login_disabled: ''])}>
+    <div className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}>
       <img src={GoogleLogo} />
       <span onClick={handleAuthClick}>{newGetStarted.links.google}</span>
     </div>
