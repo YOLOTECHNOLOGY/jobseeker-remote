@@ -138,7 +138,7 @@ const verifyEmail = function (props) {
                 className={styles.link}
                 onClick={() => handleAuthenticationSendEmailMagicLink()}
               >
-                {newGetStarted.magicLink}
+                {' '}{newGetStarted.magicLink}
               </span>
             </div>
           </div>
