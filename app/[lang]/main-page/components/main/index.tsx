@@ -34,8 +34,19 @@ const configs = getConfigs([
 ])
 const Main = async (props: any) => {
   const location = cookies().get('location')?.value
-  const city = location ? JSON.parse(location)?.value : 'Manila'
-  const locationId = location?.length ? JSON.parse(location)?.id : 63
+  let locationId = '63'
+  if (location?.length) {
+    try {
+      const locationArr = JSON.parse(location)
+      const locations = Array.isArray(locationArr) ? locationArr : [locationArr].filter(a => a)
+      // locationId = locations?.map(loc=>loc.id).join(',')
+      if(locations?.[0]?.id){
+        locationId = locations?.[0]?.id
+      }
+    } catch (error) {
+      console.log({ error })
+    }
+  }
   const langKey = props?.params?.lang || (cookies().get('geoConfiguration') as any)?.split('_')?.[1] || 'en-US'
   console.log({ locationId, location })
   const {
@@ -43,17 +54,16 @@ const Main = async (props: any) => {
   } = props || {}
   const { config } = await configs(serverDataScript()).run(props)
 
-
   return (
     <>
       <div className={styles.main}>
         <div className={styles.title}>{home.title}</div>
         <TopModule {...props} />
-        <Tabs location={city} config={config} langKey={langKey} location_id={locationId} />
+        <Tabs config={config} langKey={langKey} location_id={locationId} />
         {/* @ts-expect-error Async Server Component */}
-        <Companies location={city} langKey={langKey} lang={props.lang} config={config} location_id={locationId} />
+        <Companies langKey={langKey} lang={props.lang} config={config} location_id={locationId} />
         {/* @ts-expect-error Async Server Component */}
-        <MobileHome lang={props.lang} location={city} config={config} langKey={langKey} location_id={locationId} />
+        <MobileHome lang={props.lang} config={config} langKey={langKey} location_id={locationId} />
         {/* Tracker component */}
         <Tracker />
       </div>

@@ -93,7 +93,7 @@ const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) =>
   }
 }))
 
-const Tabs = ({ location, config, location_id, langKey }: any) => {
+const Tabs = ({ config, location_id, langKey }: any) => {
   const { home } = useContext(languageContext) as any
   const { tab, jobTab } = home
   const tabList = useMemo(() => {
@@ -155,7 +155,7 @@ const Tabs = ({ location, config, location_id, langKey }: any) => {
     } else {
       handleFetchPopularJobs()
     }
-  }, [value, location])
+  }, [value, location_id])
 
   const getJobseekerPref = async () => {
     const perData = await fetchJobsPreferences()
