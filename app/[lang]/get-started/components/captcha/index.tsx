@@ -89,6 +89,9 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
       }
       setCountdown(newTime)
     }, 1000)
+    return () => {
+      clearInterval(timer)
+    }
   }, [number])
 
   const handleInputCodeChange = (e: any) => {
