@@ -99,9 +99,9 @@ const FacebookLogin = (props: IFacebook) => {
   }
 
   return (
-    <div className={styles.login_item}>
+    <div className={styles.login_item} onClick={handleAuthClick}>
       <img src={FacebookIcon}></img>
-      <span onClick={handleAuthClick}>{newGetStarted.links.facebook}</span>
+      <span>{newGetStarted.links.facebook}</span>
     </div>
   )
 }

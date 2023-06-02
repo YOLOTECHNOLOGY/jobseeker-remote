@@ -112,10 +112,10 @@ const AppleLogin = (props: IApple) => {
 
   return (
     // <div className={styles.login_item}>
-    <div className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}>
+    <div className={classNames([styles.login_item, !init ? styles.login_disabled : ''])} onClick={handleAuth}>
       <img src={AppleIcon}></img>
       {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
-      <span data-type='sign in' aria-label='Sign in with apple ID' onClick={handleAuth}>
+      <span data-type='sign in' aria-label='Sign in with apple ID'>
         {newGetStarted.links.apple}
       </span>
     </div>
