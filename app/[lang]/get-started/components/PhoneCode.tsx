@@ -12,6 +12,7 @@ import { useRouter,usePathname } from 'next/navigation'
 import {verificationPhoneOtp,phoneOtpenerate} from 'store/services/auth/newLogin'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import {jobbseekersLoginFailed} from 'store/actions/auth/jobseekersLogin'
 function PhoneCode(props: any) {
   const searchParams = useSearchParams()
   const [errorText,setErrorText] = useState<string>('')
@@ -70,10 +71,8 @@ function PhoneCode(props: any) {
   console.log({error})
 
   useEffect(()=>{
-    const text = error?.data?.message
-     if(text){
-      setErrorText(text)
-     }
+    const text = error?.data?.message || ''
+    setErrorText(text)
    },[error])
 
   const  verifyPhoneFun = (otp)=>{
@@ -93,6 +92,9 @@ function PhoneCode(props: any) {
   }
 
   const sendOptPhone =()=>{
+    dispatch(
+      jobbseekersLoginFailed({ })
+    )
     phoneOtpenerate({ phone_num:phoneNum })
     .then((res) => {
       console.log(res?.data?.data,'res')
