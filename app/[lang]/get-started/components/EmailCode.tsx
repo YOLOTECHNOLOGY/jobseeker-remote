@@ -62,11 +62,11 @@ function EmailCode(props: any) {
       }
     }).catch((error) => {
       console.log(error,7778888)
-      setErrorText(error?.data?.message )
+      setErrorText(error?.response?.data?.message )
       dispatch(
         displayNotification({
           open: true,
-          message: error?.data?.message || 'error' ,
+          message: error?.response?.data?.message || 'error' ,
           severity: 'error'
         })
       )

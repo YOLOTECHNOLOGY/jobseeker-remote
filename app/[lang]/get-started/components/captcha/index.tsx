@@ -54,9 +54,7 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   // 验证码数组
   const codeArray = useMemo(() => {
-    if (inputValue) {
-      setCurrentIndex(inputValue?.length)
-    }
+    setCurrentIndex(inputValue?.length)
     return new Array(length).fill('').map((item, index) => inputValue[index] || '')
   }, [inputValue, length])
   // 是否获取焦点，仅在 focus 时展示 Input 闪烁条
@@ -96,16 +94,14 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
   const handleInputCodeChange = (e: any) => {
     const eValue = e.target.value
     const tempValue = eValue.replace(/[^0-9]/g, '').slice(0, length)
-
     setInputValue(tempValue)
     onChange?.(tempValue)
   }
 
-  const handleCodeBoxClick = (e: any, index: number) => {
+  const handleCodeBoxClick = (e: any) => {
     if (inputValue?.length === DEFAULT_LENGTH) {
-      setCurrentIndex(index)
+      setCurrentIndex(DEFAULT_LENGTH -1)
     }
-
     e.preventDefault()
     inputRef.current?.focus()
     setFocus(true)
@@ -113,15 +109,15 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
 
   return (
     <>
-      <div className={`${styles.captcha} ${styles.captchaThemeBox}`}>
-        <div className={styles.codeBox}>
+      <div className={`${styles.captcha} ${styles.captchaThemeBox}`} >
+        <div className={styles.codeBox}  onMouseDown={(e) => handleCodeBoxClick(e)}>
           {codeArray.map((item, index, array) => {
             const prevItemValue = index === 0 ? '-1' : array[index - 1]
             // const isItemActive = isFocused && !!prevItemValue && !item
             const isItemActive = isFocused && index == currentIndex
             return (
               <div
-                onMouseDown={(e) => handleCodeBoxClick(e, index)}
+               
                 key={index}
                 className={`${styles.itemContent} ${isItemActive ? styles.itemContentActive : ''}`}
               >
