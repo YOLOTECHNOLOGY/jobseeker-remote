@@ -52,7 +52,7 @@ const VerifyFactorEmail = (props: IProps) => {
       dispatch(
         displayNotification({
           open: true,
-          message: 'resend emailOPT success',
+          message: newGetStarted.resendEmailCode,
           severity: 'success'
         })
       )

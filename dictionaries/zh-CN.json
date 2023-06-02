@@ -1086,7 +1086,9 @@
     "factorTip": "如果我们注意到有人尝试从我们无法识别的设备或浏览器登录，我们会要求您提供发送到您的电子邮件地址的代码。",
     "verifyText": "验证是你",
     "verifyExtra": "这个额外的步骤表明确实是您在尝试登录。",
-    "optError": "发送邮箱OPT失败",
-    "resendCodeSuccesses": "重新发送验证码成功"
+    "optError": "发送OTP失败",
+    "resendCodeSuccesses": "重新发送邮箱OTP成功",
+    "invalidOtp": "无效的OTP",
+    "resendPhoneCode": "重新发送电话OTP成功"
   }
 }

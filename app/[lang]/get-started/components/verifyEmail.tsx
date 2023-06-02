@@ -78,7 +78,7 @@ const verifyEmail = function (props) {
         dispatch(
           displayNotification({
             open: true,
-            message: newGetStarted.resendCodeSuccesses,
+            message: newGetStarted.resendEmailCode,
             severity: 'success'
           })
         )
