@@ -31,12 +31,18 @@ const verifyEmail = function (props) {
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   console.log({error});
   const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(
+      jobbseekersLoginFailed({ })
+    )
+    setErrorText('')
+  },[])
+
    useEffect(()=>{
-    const text = error?.data?.message
-     if(text){
-      setErrorText(text)
-     }
-   },[error])
+    const text = error?.data?.message ?? ''
+    setErrorText(text)
+   },[JSON.stringify(error)])
   const firstRender = useFirstRender()
   useEffect(() => {
     if (email) {
