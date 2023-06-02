@@ -6,9 +6,8 @@ import { useSearchParams } from 'next/navigation'
 import LoginForEmail from '../components/loginForEmail'
 
 interface IProps {
-    lang: any
+  lang: any
 }
-
 
 const EmailLogin = (props: IProps) => {
   const searchParams = useSearchParams()
@@ -16,10 +15,10 @@ const EmailLogin = (props: IProps) => {
   const [step, setStep] = useState(1)
 
   useEffect(() => {
-    const hasStep = [1,2].includes(+search)
+    const hasStep = [1, 2].includes(+search)
     if (search && hasStep) {
       setStep(Number(search))
-    }else {
+    } else {
       setStep(1)
     }
   }, [search])
@@ -28,7 +27,7 @@ const EmailLogin = (props: IProps) => {
     <div className={styles.main}>
       <div className={styles.bg}></div>
       <div className={styles.container}>
-        {step === 1 &&  <LoginForEmail lang={props.lang} />}
+        {step === 1 && <LoginForEmail lang={props.lang} />}
         {step === 2 && <VerifyEmail lang={props.lang} />}
       </div>
     </div>

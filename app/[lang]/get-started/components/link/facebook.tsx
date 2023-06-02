@@ -8,34 +8,33 @@ import styles from '../../index.module.scss'
 import useGetStartedClient from '../../hooks/useGetStarted'
 import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
-import classNames from 'classnames'
 
 interface IFacebook {
-  className?: string;
-  activeKey?: number;
-  isLogin?: boolean;
-  redirect?: string | string[];
-  lang: any;
+  className?: string
+  activeKey?: number
+  isLogin?: boolean
+  redirect?: string | string[]
+  lang: any
 }
 
 const FacebookLogin = (props: IFacebook) => {
-  const {activeKey,isLogin,redirect, lang:{newGetStarted}} = props
+  const {
+    activeKey,
+    isLogin,
+    redirect,
+    lang: { newGetStarted }
+  } = props
   const dispatch = useDispatch()
   const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
-  const [init, setInit] = useState(false)
-  const query = {};
-  for(const entry of searchParams.entries()) {
+  const query = {}
+  for (const entry of searchParams.entries()) {
     query[entry[0]] = entry[1]
   }
 
   const jobseekersSocialResponse = useSelector(
     (store: any) => store.auth.jobseekersSocialLogin?.response
   )
-
-  useEffect(() => {
-    setInit(typeof window?.FB != 'undefined')
-  }, [window?.FB])
 
   useEffect(() => {
     const { data } = jobseekersSocialResponse
@@ -61,12 +60,11 @@ const FacebookLogin = (props: IFacebook) => {
     dispatch(jobbseekersSocialLoginRequest(data))
   }
 
-
   const handleAuthClick = () => {
     let accessToken
     if (typeof window?.FB == 'undefined') {
-      console.error(new Error('Error loading FB script'));
-      return;
+      console.error(new Error('Error loading FB script'))
+      return
     }
     window.FB.login(
       function (response) {
@@ -101,9 +99,9 @@ const FacebookLogin = (props: IFacebook) => {
   }
 
   return (
-    <div className={classNames([styles.login_item, !init ? styles.login_disabled: ''])}>
-        <img src={FacebookIcon}></img>
-        <span onClick={handleAuthClick}>{newGetStarted.links.facebook}</span>
+    <div className={styles.login_item}>
+      <img src={FacebookIcon}></img>
+      <span onClick={handleAuthClick}>{newGetStarted.links.facebook}</span>
     </div>
   )
 }
