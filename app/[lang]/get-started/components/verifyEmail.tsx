@@ -11,6 +11,7 @@ import { getLang } from 'helpers/country'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import {jobbseekersLoginFailed} from 'store/actions/auth/jobseekersLogin'
 const verifyEmail = function (props) {
   const { newGetStarted } = props.lang
   const searchParams = useSearchParams()
@@ -64,6 +65,9 @@ const verifyEmail = function (props) {
   }
 
   const sendOpt = () => {
+    dispatch(
+      jobbseekersLoginFailed({ })
+    )
     authenticationSendEmaillOtp({ email })
       .then(() => {
         setNumber(new Date().getTime())

@@ -27,16 +27,17 @@ function EmailCode(props: any) {
         email
       }).then(res=>{
        console.log(res)
-        if(res.data.code === 0){
+        if(res.data?.data){
           bindUserEmailFun()
         } else{
-          setErrorText(res.data?.message)
+          setErrorText('Invalid otp')
         }
       })
     }
   }
   
   const sendOpt = () => {
+    setErrorText('')
     authenticationSendEmaillOtp({ email })
       .then(() => {
         setNumber(new Date().getTime())
