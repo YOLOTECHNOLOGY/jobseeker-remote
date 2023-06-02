@@ -309,7 +309,7 @@ const SearchArea = (props: any) => {
                 setCompanySizes([])
                 setJobtypes([])
                 setIndustry([])
-                setFilterLocation(null)
+                setFilterLocation(undefined)
               }}
             >
               {resetFilters}{' '}

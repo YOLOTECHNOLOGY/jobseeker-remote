@@ -96,7 +96,6 @@ const formatLocationConfig = (locationList) => {
   const locationConfig = locationList?.map((region) => region.locations)
   return locationConfig
 }
-
 const MaterialLocationField = ({ className, label, locationList, width, disableClearable = false, defaultValue, required, fieldRef, error, value, height, ...rest }: any) => {
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
@@ -112,9 +111,11 @@ const MaterialLocationField = ({ className, label, locationList, width, disableC
         disableClearable={disableClearable}
         className={className}
         classes={{}}
+        onChange={rest?.onChange}
         renderInput={(params) => {
           return (
-            <TextField id='location'
+            <TextField
+              id='location12'
               {...fieldRef}
               error={!!error}
               style={{ height: '100%' }}
@@ -124,6 +125,7 @@ const MaterialLocationField = ({ className, label, locationList, width, disableC
               variant='outlined'
               size='small'
               {...params}
+              inputProps={{ ...params?.inputProps, value: value?.value ?? '' }}
             />
           )
         }}
