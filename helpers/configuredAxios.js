@@ -204,7 +204,7 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
               // eslint-disable-next-line prefer-promise-reject-errors
               return Promise.reject(401) // will redirect to error page, that code in the _app.tsx
             } else {
-              return Promise.reject(error?.response)
+              return Promise.reject(error)
             }
           }
         )
