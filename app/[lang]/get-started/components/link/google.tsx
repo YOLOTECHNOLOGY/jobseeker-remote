@@ -47,6 +47,10 @@ const GoogleLogin = (props: IGoogle) => {
   }, [jobseekersSocialResponse])
 
   useEffect(() => {
+    setInit(typeof window?.gapi != 'undefined')
+  }, [window?.gapi])
+
+  useEffect(() => {
     setGoogleAuth(null)
     if (typeof window !== 'undefined') {
       const script = document.createElement('script')

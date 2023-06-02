@@ -34,6 +34,10 @@ const AppleLogin = (props: IApple) => {
   )
 
   useEffect(() => {
+    setInit(typeof window?.AppleID != 'undefined')
+  }, [window?.AppleID])
+
+  useEffect(() => {
     const { data } = jobseekersSocialResponse
     if (data?.token) {
       removeItem('quickUpladResume')
