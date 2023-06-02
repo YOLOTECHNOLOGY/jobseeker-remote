@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { usePathname } from 'next/navigation'
 import { formatTemplateString } from 'helpers/formatter'
+import Link from 'next/link'
 
 interface IProps {
   lang: any
@@ -79,7 +80,16 @@ const loginForEmail = (props: IProps) => {
 
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>
         <p className={styles.tips}>
-          {newGetStarted.tips} <span>{newGetStarted.employer}</span>
+          {newGetStarted.tips} <Link
+            href={
+              process.env.ENV === 'development'
+                ? 'https://dev.employer.bossjob.com'
+                : 'https://employer.bossjob.com'
+            }
+            className={styles.AuthCTALink}
+          >
+            {newGetStarted.employer}
+          </Link>
         </p>
       </div>
       <div>
