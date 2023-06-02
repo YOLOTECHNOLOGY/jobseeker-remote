@@ -141,9 +141,9 @@ const GoogleLogin = (props: IGoogle) => {
   }
 
   return (
-    <div className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}>
+    <div className={classNames([styles.login_item, !init ? styles.login_disabled : ''])} onClick={handleAuthClick}>
       <img src={GoogleLogo} />
-      <span onClick={handleAuthClick}>{newGetStarted.links.google}</span>
+      <span>{newGetStarted.links.google}</span>
     </div>
   )
 }
