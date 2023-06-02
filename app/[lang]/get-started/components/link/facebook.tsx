@@ -8,7 +8,6 @@ import styles from '../../index.module.scss'
 import useGetStartedClient from '../../hooks/useGetStarted'
 import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
-import classNames from 'classnames'
 
 interface IFacebook {
   className?: string;
@@ -23,7 +22,6 @@ const FacebookLogin = (props: IFacebook) => {
   const dispatch = useDispatch()
   const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
-  const [init, setInit] = useState(false)
   const query = {};
   for(const entry of searchParams.entries()) {
     query[entry[0]] = entry[1]
@@ -32,10 +30,6 @@ const FacebookLogin = (props: IFacebook) => {
   const jobseekersSocialResponse = useSelector(
     (store: any) => store.auth.jobseekersSocialLogin?.response
   )
-
-  useEffect(() => {
-    setInit(typeof window?.FB != 'undefined')
-  }, [window?.FB])
 
   useEffect(() => {
     const { data } = jobseekersSocialResponse
@@ -101,7 +95,7 @@ const FacebookLogin = (props: IFacebook) => {
   }
 
   return (
-    <div className={classNames([styles.login_item, !init ? styles.login_disabled: ''])}>
+    <div className={styles.login_item}>
         <img src={FacebookIcon}></img>
         <span onClick={handleAuthClick}>{newGetStarted.links.facebook}</span>
     </div>
