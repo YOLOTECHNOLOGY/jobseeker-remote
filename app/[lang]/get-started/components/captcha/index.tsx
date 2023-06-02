@@ -43,25 +43,30 @@ const Captcha: React.FC<ICaptchaProps> = (props)=>{
     const { newGetStarted } = lang
     // 组件内部维护的输入框输入值
     const [inputValue, setInputValue] = useState('')
+    const [currentIndex, setCurrentIndex] = useState(0)
     // 验证码数组
     const codeArray = useMemo(() => {
+    
+      if(inputValue){
+        setCurrentIndex(inputValue?.length)
+      }
       return new Array(length).fill('').map((item, index) => inputValue[index] || '')
     }, [inputValue, length])
     // 是否获取焦点，仅在 focus 时展示 Input 闪烁条
     const [isFocused, setFocus] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
-  
     useEffect(() => {
       const tempValue = value.replace(/[^0-9]/g, '').slice(0, length)
       setInputValue(tempValue)
     }, [value, length])
   
-    useEffect(() => {
+    useEffect(() => {   
       if (autoFocus) {
-        inputRef.current?.focus()
+        setTimeout(()=>{
+          inputRef.current?.focus()
         setFocus(true)
+        },200)  
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
   
     const [countdown,setCountdown] = useState<number>(origninTimer)
@@ -94,6 +99,10 @@ const Captcha: React.FC<ICaptchaProps> = (props)=>{
     }
   
     const handleCodeBoxClick = (e: any,index:number) => {
+      if(inputValue?.length === DEFAULT_LENGTH){
+        setCurrentIndex(index)
+      }
+   
       e.preventDefault()
       inputRef.current?.focus()
       setFocus(true)
@@ -105,7 +114,8 @@ return <>
 <div className={styles.codeBox} >
   {codeArray.map((item, index, array) => {
     const prevItemValue = index === 0 ? '-1' : array[index - 1]
-    const isItemActive = isFocused && !!prevItemValue && !item
+   // const isItemActive = isFocused && !!prevItemValue && !item
+   const isItemActive = isFocused && index == currentIndex
     return (
       <div
       onMouseDown={(e)=>handleCodeBoxClick(e,index)}

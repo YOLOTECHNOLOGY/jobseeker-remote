@@ -57,7 +57,9 @@ function PhoneCode(props: any) {
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   const onChange = (otp) => {
-   
+    dispatch(
+      jobbseekersLoginFailed({ })
+    )
     if(otp?.length === 6 ){
       console.log(otp,uuid,browserId)
       if(uuid != browserId && browserId){

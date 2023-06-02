@@ -3,7 +3,7 @@ import styles from '../index.module.scss'
 import { useSelector } from 'react-redux'
 import useGetStarted from '../hooks/useGetStarted'
 import Image from 'next/image'
-import { PhoneIcon } from 'images'
+import { LoginSafe } from 'images'
 
 function FactorEnable(props:any) {
    
@@ -22,7 +22,7 @@ function FactorEnable(props:any) {
 
   return (
     <div className={styles.enabled}>
-      <Image src={PhoneIcon} alt={''}   width={200} height={200}></Image>
+      <Image src={LoginSafe} alt={''}   width={150} height={150}></Image>
       <h2>
         {newGetStarted.enableTwoFactor} <br />
         {newGetStarted.authenticationEnabled} ✅

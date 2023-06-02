@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState ,useRef} from 'react'
 import styles from '../index.module.scss'
 import AppleLogin from './link/apple'
 import FacebookLogin from './link/facebook'
@@ -22,6 +22,7 @@ interface IProps {
 const loginForEmail = (props: IProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
+  const submitRef = useRef(null)
   const {
     lang: { newGetStarted }
   } = props
@@ -31,10 +32,20 @@ const loginForEmail = (props: IProps) => {
   const pathname = usePathname()
 
   const sendOpt = () => {
+    if(submitRef.current){
+      return
+    }
+    submitRef.current = true
     authenticationSendEmaillOtp({ email })
       .then((res) => {
+        submitRef.current = false
         const { user_id, avatar } = res?.data?.data ?? {}
-        router.push(`${pathname}?step=2&&email=${email}&userId=${user_id}&avatar=${avatar}`)
+        if(user_id){
+          router.push(`${pathname}?step=2&&email=${email}&userId=${user_id}&avatar=${avatar}`)
+        }else{
+          router.push(`${pathname}?step=2&&email=${email}`)
+        }
+  
       })
       .catch((error) => {
         dispatch(
