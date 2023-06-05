@@ -95,11 +95,17 @@ const useGetStarted = () => {
     }
   }
 
-  const defaultLoginCallBack = async (data: any) => {
+  const defaultLoginCallBack = async (data: any,isPhone = false) => {
     await removeServiceCache()
 
     const isChatRedirect = localStorage.getItem('isChatRedirect')
     if (data.is_profile_update_required || !data.is_profile_completed) {
+      if(isPhone){
+       sessionStorage.setItem('fromPhoneLogin','1'); 
+      }else{
+        sessionStorage.removeItem('fromPhoneLogin')
+      }
+      
       routes.push('/jobseeker-complete-profile/1')
     } else if (isChatRedirect) {
       localStorage.removeItem('isChatRedirect')
