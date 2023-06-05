@@ -13,7 +13,7 @@
     "Chat": "Chat",
     "downloadApp": "Download App",
     "pleaseVerify": "Please verify your email address.",
-    "verifyNow.": " Verify now.",
+    "verifyNow": " Verify now.",
     "switchCountry": {
       "title": "Which country and language would you like to browse Bossjob in?",
       "country": "Country",
@@ -137,7 +137,7 @@
     "InterviewTime": "Interview Time",
     "address": "Address",
     "noMore": "No more",
-    "location": "location",
+    "location": "Location",
     "pending": "Pending",
     "accepted": "Accepted",
     "upcoming": "Upcoming",
@@ -849,7 +849,8 @@
     "viewNow":"View now",
     "viewLater":"View later",
     "buttonTextEnable":"Auto-send my resume",
-    "buttonTextDisable":"Disable Auto-send my resume"
+    "buttonTextDisable":"Disable Auto-send my resume",
+    "offerTitle":"CONGRATULATIONS!"
   },
   "chatInterview": {
     "confirmText": "Interview Confirmed",
@@ -981,6 +982,7 @@
     "verify": "Verify",
     "optLabel": "6-digit OTP",
     "errorMsg": {
+      "invalidOtp":"Invalid OTP",
       "optIncorrect": "OTP is incorrect. Please try again."
     },
     "emailTip": "Receive job applications updates through your email.",
@@ -1046,5 +1048,49 @@
     "disabledDescription":"When Boss requests for your resume, we will send your resume attachment automatically to Boss. Are you sure you want to disable it?",
     "enableDescription":"When Boss requests for your resume, we will send your resume attachment automatically to Boss. Please select which resume would you like to be sent to Boss automatically. ",
     "warnText":"Otherwise, you would need to wait for both parties to reply before you can request to send resume."
+  },
+  "newGetStarted": {
+    "title": "Log in or sign up to Bossjob",
+    "employer": "Employer",
+    "tips": "Looking to hire people? Sign up as",
+    "continueWith": "or continue with",
+    "email": "Email",
+    "phone": "Phone",
+    "links": {
+      "apple": "Continue with Apple",
+      "google": "Continue with Google",
+      "facebook": "Continue with Facebook"
+    },
+    "termsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "agreement": "I have read and agreed to {{value1}} and {{value2}}",
+    "emailValid": "Please enter a valid email address.",
+    "emailLabel": "Email Address",
+    "sendCode": "Send verification code",
+    "welcomeBack": "Welcome back",
+    "sendCodeDigit": "Please enter the 6-digit code that we sent to",
+    "signUpAnAccount":"Sign up an account",
+    "checkSpamEmail":"Check your spam mail if you didn’t receive code.",
+    "havingTrouble": "Still having trouble? Try to sign up with",
+    "otherOptions": "other options",
+    "alternatively": "Alternatively, request a",
+    "magicLink": "magic link",
+    "resendCode": "Resend code",
+    "country": "Country",
+    "phoneNumber": "Phone Number",
+    "twoFactor": "Enable two-factor",
+    "authentication": "authentication",
+    "secure": "Secure your account and receive code on your email",
+    "emailTips": "We will ask you for additional code when you log in on a device or browser that we don’t recognise. Please enter the email address to receive the code.",
+    "setUpLater": "Set this up later",
+    "enableTwoFactor": "two-factor",
+    "authenticationEnabled": "authentication enabled",
+    "factorTip": "If we notice an attempted login from a device or browser that we don’t recognise, we will ask you for code sent to your email address.",
+    "verifyText": "Verify it’s you",
+    "verifyExtra": "This extra step show that it is really you trying to log in.",
+    "optError": "Send OTP fail",
+    "resendEmailCode": "Resend email'OTP success",
+    "invalidOtp": "Invalid OTP",
+    "resendPhoneCode": "Resend phone'OTP success"
   }
 }

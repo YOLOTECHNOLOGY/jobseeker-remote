@@ -38,7 +38,6 @@ const OfferDetail = (props: any) => {
         isFirstButtonLoading={loading}
     >
         <OfferView offerData={data} lang={lang}/>
-
     </Modal >
 }
 export default OfferDetail
