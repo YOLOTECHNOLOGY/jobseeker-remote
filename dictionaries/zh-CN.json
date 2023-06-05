@@ -981,6 +981,7 @@
     "verify": "验证",
     "optLabel": "6位数字验证码",
     "errorMsg": {
+      "invalidOtp":"无效的OTP",
       "optIncorrect": "验证码错误，请再试一次"
     },
     "emailTip": "通过您的电子邮件接收工作申请更新。",
