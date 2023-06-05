@@ -113,12 +113,14 @@ function PhoneCode(props: any) {
   useEffect(() => {
     if (userInfo && Object.keys(userInfo).length) {
       const { data } = userInfo
-      if (userId) {
-        removeItem('quickUpladResume')
-        defaultLoginCallBack(data)
-      } else {
-        router.push(`${langKey}/get-started/phone?step=3&phone=${phoneNum}`)
-      }
+      // if (userId) {
+      //   removeItem('quickUpladResume')
+      //   defaultLoginCallBack(data)
+      // } else {
+      //   router.push(`${langKey}/get-started/phone?step=3&phone=${phoneNum}`)
+      // }
+      removeItem('quickUpladResume')
+      defaultLoginCallBack(data,true)
     }
   }, [userInfo])
 

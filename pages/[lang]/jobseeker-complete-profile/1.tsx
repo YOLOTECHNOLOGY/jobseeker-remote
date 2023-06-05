@@ -48,6 +48,7 @@ const Step1Content = (props: any) => {
   const quickUpladResumeType = getItem('quickUpladResume')
   const totalStep = quickUpladResumeType === 'upFile' || quickUpladResumeType === 'onLine' ? 3 : 4
   const { userDetail, accessToken, lang } = props
+  console.log({userDetail})
   const {
     letGetYouJob,
     tellUsAboutYourself,
@@ -69,6 +70,7 @@ const Step1Content = (props: any) => {
   const preference = userDetail?.job_preferences?.[0]
   const config = useSelector((store: any) => store?.config?.config?.response)
   const dispatch = useDispatch()
+
   ;('Robo-headhunting is a fully-automated executive placement service based powered by our very own machine learning algorithms that automatically matches you with employers and help you gain access to the hidden job market.')
   const locationList = useSelector((store: any) => store.config.config.response?.location_lists)
   const formattedLocationList = flatMap(locationList, (l) => l.locations)
@@ -145,6 +147,8 @@ const Step1Content = (props: any) => {
   const { handleSubmit, setValue, getValues, control } = useForm({ defaultValues })
   const [minSalary, setMinSalary] = useState(getValues().minSalary)
   const router = useRouter()
+  const fromPhone = sessionStorage.getItem('fromPhoneLogin')
+  console.log({fromPhone})
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
     setValue('maxSalary', maxSalaryOptions?.length > 0 ? maxSalaryOptions[0].value : null)
@@ -308,7 +312,8 @@ const Step1Content = (props: any) => {
               </div>
             )}
           </div>
-          <div className={styles.step1Contact}>
+          {
+            !fromPhone ?  <div className={styles.step1Contact}>
             <Controller
               control={control}
               name={'countryCode'}
@@ -349,7 +354,11 @@ const Step1Content = (props: any) => {
                 }}
               />
             </div>
-          </div>
+          </div> : null
+          }
+         
+
+
           <div className={styles.stepField}>
             <Controller
               control={control}
