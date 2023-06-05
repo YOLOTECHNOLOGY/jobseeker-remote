@@ -7,8 +7,9 @@ import Image from 'next/image'
 import MaterialButton from 'components/MaterialButton'
 const OfferMessage = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef,lang } = props
-    const {company,sendAnOffer,viewNow,viewLater} = lang?? {} 
+    const { contextRef, lang } = props
+    const { company, sendAnOffer, viewNow, viewLater } = lang ?? {}
+    console.log({lang})
     const actionsRef = useRef({} as any)
     const [data, setData] = useState<any>({})
 
@@ -30,12 +31,14 @@ const OfferMessage = (props: any) => {
     }
     return (<div className={styles.message_background}>
         <div className={styles.message}>
+            <div className={styles.title}>{lang?.offerTitle}</div>
             <img
                 className={styles.background}
                 src={Offermask} alt={''}
             />
             <div className={styles.content}>
                 <Image className={styles.company_logo} src={data?.company?.logo_url} width={56} height={56} alt='' />
+
                 <div className={styles.company_name}>{data?.company_name ?? company}</div>
                 <div className={styles.sender}>{`${data?.recruiter?.full_name ?? 'Boss'} ${sendAnOffer}`}</div>
                 <MaterialButton
@@ -43,7 +46,7 @@ const OfferMessage = (props: any) => {
                     className={styles.viewnow}
                     onClick={() => actionsRef.current?.view?.()}
                 >
-                   {viewNow}
+                    {viewNow}
                 </MaterialButton>
                 <MaterialButton
                     capitalize

@@ -849,7 +849,8 @@
     "viewNow": "现在查看",
     "viewLater": "稍后查看",
     "buttonTextEnable": "自动发送简历",
-    "buttonTextDisable": "取消自动发送简历"
+    "buttonTextDisable": "取消自动发送简历",
+    "offerTitle": "恭喜您被录用！"
   },
   "chatInterview": {
     "confirmText": "面试已经确认",
@@ -981,7 +982,7 @@
     "verify": "验证",
     "optLabel": "6位数字验证码",
     "errorMsg": {
-      "invalidOtp":"无效的OTP",
+      "invalidOtp": "无效的OTP",
       "optIncorrect": "验证码错误，请再试一次"
     },
     "emailTip": "通过您的电子邮件接收工作申请更新。",
@@ -1069,7 +1070,7 @@
     "welcomeBack": "欢迎回来",
     "sendCodeDigit": "请输入我们发送到的6位验证码",
     "signUpAnAccount": "注册新帐户",
-    "checkSpamEmail":"如果您没有收到验证码，请检查您的垃圾邮件。",
+    "checkSpamEmail": "如果您没有收到验证码，请检查您的垃圾邮件。",
     "havingTrouble": "还是有问题？ 尝试注册",
     "otherOptions": "其他选项",
     "alternatively": "或者，请求一个",

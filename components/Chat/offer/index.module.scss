@@ -86,6 +86,7 @@
     .description {
         margin-top: 16px;
         white-space: pre-wrap;
+        word-wrap: break-word;
         font-family: 'Product Sans';
         font-style: normal;
         font-weight: 400;
@@ -95,6 +96,8 @@
         color: #353535;
         margin-left: 20px;
         margin-right: 20px;
+        max-width: calc(100% - 40px);
+        overflow: hidden;
     }
 
     .bottomImage {
@@ -191,8 +194,9 @@
                 margin-top: 20px;
             }
 
-           
+
         }
+
         .closeIcon {
             position: absolute;
             top: 18px;
@@ -201,12 +205,34 @@
             height: 50px;
             cursor: pointer;
         }
+
         .background {
             position: absolute;
             width: 100%;
             height: auto;
             left: 0px;
             bottom: 0px;
+        }
+
+        .title {
+            position: absolute;
+            width: 100%;
+            height: auto;
+            top: 40px;
+            left: 0px;
+            width: 100%;
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            font-family: 'Product Sans';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 0.02em;
+            color: #FFFFFF;
         }
 
         .head {

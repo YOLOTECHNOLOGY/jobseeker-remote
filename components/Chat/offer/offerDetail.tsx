@@ -9,7 +9,7 @@ const OfferDetail = (props: any) => {
     const { contextRef, loading ,lang} = props
     const [data, setData] = useState<any>({})
     const actionsRef = useRef({} as any)
-    const {offerFrom,offered,reject,accept} = lang || {}
+    const {offerFrom,reject,accept} = lang || {}
     const context = {
         modalOfferDetail(actions) {
             actionsRef.current = actions
@@ -38,7 +38,6 @@ const OfferDetail = (props: any) => {
         isFirstButtonLoading={loading}
     >
         <OfferView offerData={data} lang={lang}/>
-
     </Modal >
 }
 export default OfferDetail
