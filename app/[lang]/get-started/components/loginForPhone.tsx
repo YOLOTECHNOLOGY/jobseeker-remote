@@ -18,7 +18,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import PhoneComponent from './phoneComponent'
 import { phoneOtpenerate } from 'store/services/auth/newLogin'
 import { formatTemplateString } from 'helpers/formatter'
-
+import { CircularProgress } from 'app/[lang]/components/MUIs'
 const countryForCountryCode = {
   ph: '+63',
   sg: '+65'
@@ -29,6 +29,7 @@ const LoginForPhone = (props: any) => {
   const [isDisable, setDisable] = useState<boolean>(true)
   const [phoneNumber, setPhoneNumber] = useState<string>('')
   const [phoneError, setPhoneError] = useState<string>('')
+  const [loading,setLoading] = useState<boolean>(false)
   const {
     lang: { newGetStarted }
   } = props
@@ -57,6 +58,7 @@ const LoginForPhone = (props: any) => {
 
   const sendOpt = () => {
     const phoneNum = countryValue + phoneNumber
+    setLoading(true)
     phoneOtpenerate({ phone_num: phoneNum })
       .then((res) => {
         console.log(res?.data?.data, 'res')
@@ -75,7 +77,7 @@ const LoginForPhone = (props: any) => {
             severity: 'error'
           })
         )
-      })
+      }).finally(()=>  setLoading(false))
   }
 
   const agreementWord = formatTemplateString(newGetStarted.agreement, {
@@ -114,8 +116,11 @@ const LoginForPhone = (props: any) => {
             setDisable={setDisable}
           />
         </div>
-        <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
-          {newGetStarted.sendCode}
+        <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>  
+          {
+           loading ? <CircularProgress color={'primary' } size={16} /> : newGetStarted.sendCode
+          }
+         
         </button>
 
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>
