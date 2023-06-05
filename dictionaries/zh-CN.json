@@ -715,6 +715,29 @@
           "title": "Bossjob 简历模版",
           "tips": "请选择简历模版，我们将根据在线简历和你的联系方式制作简历",
           "download": "下载"
+        },
+        "changeResume": {
+          "rename": "重命名",
+          "sendToEmail": "发送到邮箱",
+          "delete": "删除",
+          "cancel": "取消",
+          "save": "保存",
+          "send": "发送",
+          "back": "返回",
+          "confirm": "确认",
+          "pleaseRenameYourResumeFile": "请重命名您的简历文件。",
+          "maximumLengthLimitExceeded": "超出最大长度限制",
+          "cannotEnterSpecialCharacters": "不能输入特殊字符",
+          "resumeFileName": "恢复文件名",
+          "pleaseEnterTheEmailAddressToReceiveTheResume": "请输入接收简历的邮箱地址。",
+          "eMailFormatIsIncorrect": "电子邮件格式不正确",
+          "emailAddress": "邮箱地址",
+          "theEmailAddressYouWantToSendIs": "您要发送的邮件地址是",
+          "pleaseConfirmThatYourEmailAddressIsCorrectBeforeSending": "发送前请确认您的邮箱地址正确",
+          "more": "更多",
+          "resumeHasBeenRenameSuccessfully": "简历重命名成功",
+          "resumeHasBeenSentToYourEmailSuccessfully": "简历已成功发送到您的邮箱",
+          "resumeHasBeenDeletedSuccessfully": "简历删除成功"
         }
       }
     }
@@ -981,7 +1004,7 @@
     "verify": "验证",
     "optLabel": "6位数字验证码",
     "errorMsg": {
-      "invalidOtp":"无效的OTP",
+      "invalidOtp": "无效的OTP",
       "optIncorrect": "验证码错误，请再试一次"
     },
     "emailTip": "通过您的电子邮件接收工作申请更新。",
@@ -1069,7 +1092,7 @@
     "welcomeBack": "欢迎回来",
     "sendCodeDigit": "请输入我们发送到的6位验证码",
     "signUpAnAccount": "注册新帐户",
-    "checkSpamEmail":"如果您没有收到验证码，请检查您的垃圾邮件。",
+    "checkSpamEmail": "如果您没有收到验证码，请检查您的垃圾邮件。",
     "havingTrouble": "还是有问题？ 尝试注册",
     "otherOptions": "其他选项",
     "alternatively": "或者，请求一个",

@@ -44,10 +44,6 @@ import { SnackbarTips } from 'components/UploadResume/SnackbarTips'
 import { maxFileSize } from 'helpers/handleInput'
 
 const ResumeView = ({ userDetail, lang }: any) => {
-  useEffect(() => {
-    console.log(userDetail, '========>>>>userDetail')
-  }, [userDetail])
-
   const {
     manageProfile: {
       tab: { resume: transitions }

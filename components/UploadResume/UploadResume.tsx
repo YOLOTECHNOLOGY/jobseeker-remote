@@ -14,7 +14,7 @@ import styles from './UploadResume.module.scss'
 import classNames from 'classnames'
 
 /* Assets */
-import { TrashIcon, DocumentIcon } from 'images'
+import { DocumentIcon } from 'images'
 // import format from 'date-fns/format'
 
 import { SnackbarTips } from './SnackbarTips'
@@ -43,12 +43,14 @@ const Trash = ({
   id,
   name,
   deleteResumeLoading,
-  onClick
+  onClick,
+  lang
 }: {
   id: number
   deleteResumeLoading: boolean
   onClick: () => void
   name: string
+  lang?: Record<string, any>
 }) => {
   return (
     <div
@@ -74,6 +76,7 @@ const Trash = ({
         name={name}
         deleteResumeLoading={deleteResumeLoading}
         handleDeleteResume={onClick}
+        lang={lang}
       />
     </div>
   )
@@ -138,6 +141,7 @@ const UploadResume = ({
                       name={item.name}
                       deleteResumeLoading={deleteResumeLoading}
                       onClick={() => handleDeleteResume(item.id)}
+                      lang={lang}
                     />
                   )}
                 </div>
