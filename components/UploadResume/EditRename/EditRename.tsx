@@ -1,6 +1,7 @@
-import { useState, MouseEvent } from 'react'
+import { useState, MouseEvent, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
+import { isMobile } from 'react-device-detect'
 // Mui components
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -11,14 +12,13 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import Text from 'components/Text'
 import Modal from 'components/Modal'
 import MaterialTextField from 'components/MaterialTextField'
-import MaterialButton from 'components/MaterialButton'
 // Server
 import { fetchRenameResumes, fetchSendResumeEmail } from 'store/services/jobs/fetchJobsCommunicated'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 // Style
 import styles from './EditRename.module.scss'
 import { getCookie } from 'helpers/cookies'
-import { Alert, Snackbar } from '@mui/material'
+import { Alert, AlertColor, Snackbar } from '@mui/material'
 import { fetchResumeDelete } from 'store/services/auth/fetchResumeDelete'
 
 type propsType = {
@@ -32,27 +32,57 @@ const EditRename = ({ id, name }: propsType) => {
   const dispatch = useDispatch()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
   const [showRenameModal, setShowRenameModal] = useState<boolean>(false)
   const [showSendMailModal, setShowSendMailModal] = useState<boolean>(false)
+  const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false)
   const [showConfirmEmailModal, setShowConfirmEmailModal] = useState<boolean>(false)
+
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
+
   const [showSnackbarModal, setShowSnackbarModal] = useState<boolean>(false)
+  const [snackbarContent, setSnackbarContent] = useState<string>(
+    'Resume has been renamed successfully'
+  )
+  const [snackbarType, setSnackbarType] = useState<AlertColor>('success')
+
   const [email, setEmail] = useState<string>('')
   const open = Boolean(anchorEl)
 
-  const defaultValues = {
-    reName: name.slice(0, name.lastIndexOf('.')),
-    mail: null
-  }
-
   const {
+    // setValue,
     register,
     handleSubmit,
     formState: { errors }
   } = useForm({
-    defaultValues
+    defaultValues: {
+      mail: null
+    }
   })
+
+  const {
+    setValue: reNameSetValue,
+    register: reNameRegister,
+    handleSubmit: reNameHandleSubmit,
+    formState: { errors: reNameErrors }
+  } = useForm({
+    defaultValues: {
+      reName: name.slice(0, name.lastIndexOf('.'))
+    }
+  })
+
+  useEffect(() => {
+    if (showRenameModal) {
+      reNameSetValue('reName', name.slice(0, name.lastIndexOf('.')))
+    }
+  }, [showRenameModal])
+
+  // useEffect(() => {
+  //   if (showSendMailModal) {
+  //     setValue('mail', null)
+  //   }
+  // }, [showSendMailModal])
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -66,6 +96,7 @@ const EditRename = ({ id, name }: propsType) => {
     setShowRenameModal(false)
     setShowSendMailModal(false)
     setShowConfirmEmailModal(false)
+    setShowMobileMenu(false)
   }
 
   const handleShowRenameModal = () => {
@@ -93,10 +124,15 @@ const EditRename = ({ id, name }: propsType) => {
         if (status === 200) {
           handleRefreshResume()
           handleCloseModal()
-          setShowSnackbarModal(true)
+          handleSnackbarContent('reName', 'success')
         }
       })
-      .catch((error) => console.log(error))
+      .catch(({ response: { data } }) => {
+        if (data.code) {
+          console.log(data.code, '报错number')
+          handleSnackbarContent('reName', 'warning', data.code)
+        }
+      })
       .finally(() => {
         setIsLoading(false)
       })
@@ -124,13 +160,14 @@ const EditRename = ({ id, name }: propsType) => {
       .then(({ status }) => {
         console.log(status, 'status')
         if (status === 200) {
-          setShowConfirmEmailModal(false)
-          setShowSnackbarModal(true)
+          handleCloseModal()
+          handleSnackbarContent('mail', 'success')
         }
       })
       .catch(({ response: { data } }) => {
         if (data.code) {
           console.log(data.code, '报错number')
+          handleSnackbarContent('mail', 'warning', data.code)
         }
       })
       .finally(() => {
@@ -144,17 +181,23 @@ const EditRename = ({ id, name }: propsType) => {
       .then(({ status }) => {
         if (status === 200) {
           handleRefreshResume()
+          handleSnackbarContent('delete', 'success')
         }
       })
       .catch(({ response: { data } }) => {
         if (data.code) {
           console.log(data.code, '报错number')
+          handleSnackbarContent('delete', 'warning', data.code)
         }
       })
       .finally(() => {
         setIsDisabled(true)
         // setDeleteResumeLoading(false)
       })
+  }
+
+  const handleCloseMobileMenuModal = () => {
+    setShowMobileMenu(false)
   }
 
   const errorText = (errorMessage: any) => {
@@ -170,19 +213,41 @@ const EditRename = ({ id, name }: propsType) => {
     setShowSendMailModal(true)
   }
 
+  const handleSnackbarContent = (
+    type: 'reName' | 'mail' | 'delete',
+    severity: AlertColor,
+    errorCode?
+  ) => {
+    if (type == 'reName' && severity == 'success') {
+      setSnackbarContent('Resume has been rename successfully')
+    } else if (type == 'mail' && severity == 'success') {
+      setSnackbarContent('Resume has been sent to your email successfully')
+    } else if (type == 'delete' && severity == 'success') {
+      setSnackbarContent('Resume has been deleted successfully')
+    }
+
+    if (severity) {
+      setSnackbarType(severity)
+    }
+
+    setShowSnackbarModal(true)
+  }
+
   return (
     <div className={styles.editRename}>
+      {/* Init dom */}
       <IconButton
         aria-label='delete'
         id='basic-button'
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup='true'
         aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
+        onClick={isMobile ? () => setShowMobileMenu(true) : handleClick}
       >
         <MoreHorizIcon />
       </IconButton>
 
+      {/* Menu */}
       <Menu
         id='basic-menu'
         anchorEl={anchorEl}
@@ -201,7 +266,7 @@ const EditRename = ({ id, name }: propsType) => {
         </MenuItem>
       </Menu>
 
-      {/* rename */}
+      {/* Rename */}
       <Modal
         showModal={showRenameModal}
         handleModal={handleCloseModal}
@@ -211,18 +276,22 @@ const EditRename = ({ id, name }: propsType) => {
         isSecondButtonLoading={isLoading}
         firstButtonIsClose
         handleFirstButton={handleCloseModal}
-        handleSecondButton={handleSubmit(handleRename)}
+        handleSecondButton={reNameHandleSubmit(handleRename)}
         fullScreen
       >
         <p>Please rename your resume file.</p>
         <MaterialTextField
           refs={{
-            ...register('reName', {
+            ...reNameRegister('reName', {
               required: {
                 value: true,
                 message: 'Please rename your resume file.'
               },
-              maxLength: { value: 30, message: 'Maximum length limit exceeded' }
+              maxLength: { value: 30, message: 'Maximum length limit exceeded' },
+              pattern: {
+                value: /^\S.*\S$|(^\S{0,1}\S$)/,
+                message: '不可以输入特殊字符'
+              }
             })
           }}
           className={styles.editRename_renameField}
@@ -230,9 +299,9 @@ const EditRename = ({ id, name }: propsType) => {
           label='Resume file name'
           variant='outlined'
           autoComplete='off'
-          error={errors.reName}
+          error={reNameErrors.reName}
         />
-        {errors.reName && errorText(errors.reName.message as any)}
+        {reNameErrors.reName && errorText(reNameErrors.reName.message as any)}
       </Modal>
 
       {/* send */}
@@ -291,14 +360,28 @@ const EditRename = ({ id, name }: propsType) => {
         </p>
       </Modal>
 
+      {/* Mobile Menu */}
+      <Modal
+        showModal={showMobileMenu}
+        handleModal={handleCloseMobileMenuModal}
+        headerTitle='More'
+        fullScreen
+      >
+        <MenuItem onClick={handleShowRenameModal}>Rename</MenuItem>
+        <MenuItem onClick={handleShowSendMailModal}>Send to email</MenuItem>
+        <MenuItem onClick={handleFetchDeleteResume} disabled={isDisabled}>
+          Delete
+        </MenuItem>
+      </Modal>
+
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         open={showSnackbarModal}
         onClose={() => setShowSnackbarModal(false)}
         key='resumeDelete'
       >
-        <Alert onClose={() => setShowSnackbarModal(false)} severity='success'>
-          Resume has been renamed successfully
+        <Alert onClose={() => setShowSnackbarModal(false)} severity={snackbarType}>
+          {snackbarContent}
         </Alert>
       </Snackbar>
     </div>
