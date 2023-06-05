@@ -17,7 +17,7 @@ const pageParams = {
   source: 'web'
 }
 
-const JobsCard = ({ location, lang, config,langKey,location_id }: any) => {
+const JobsCard = ({lang, config,langKey,location_id }: any) => {
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [current, setCurrent] = useState<number>(1)
@@ -39,7 +39,7 @@ const JobsCard = ({ location, lang, config,langKey,location_id }: any) => {
     return () => {
       window.removeEventListener('scroll', useFn)
     }
-  }, [location])
+  }, [location_id])
 
   useEffect(() => {
     currentRef.current = current
