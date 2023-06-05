@@ -28,9 +28,10 @@ type propsType = {
   deleteResumeLoading: boolean
   handleDeleteResume: () => void
   lang?: Record<string, any>
+  displayClear: boolean
 }
 
-const EditRename = ({ id, name, lang }: propsType) => {
+const EditRename = ({ id, name, lang, displayClear }: propsType) => {
   const dispatch = useDispatch()
   const {
     errorcode,
@@ -49,7 +50,7 @@ const EditRename = ({ id, name, lang }: propsType) => {
   const [showConfirmEmailModal, setShowConfirmEmailModal] = useState<boolean>(false)
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [isDisabled, setIsDisabled] = useState<boolean>(false)
+  const [isDisabled, setIsDisabled] = useState<boolean>(!displayClear)
 
   const [showSnackbarModal, setShowSnackbarModal] = useState<boolean>(false)
   const [snackbarContent, setSnackbarContent] = useState<string>(
@@ -81,6 +82,10 @@ const EditRename = ({ id, name, lang }: propsType) => {
       reName: name.slice(0, name.lastIndexOf('.'))
     }
   })
+
+  useEffect(() => {
+    setIsDisabled(!displayClear)
+  }, [displayClear])
 
   useEffect(() => {
     if (showRenameModal) {
@@ -167,7 +172,6 @@ const EditRename = ({ id, name, lang }: propsType) => {
 
     fetchSendResumeEmail(payload)
       .then(({ status }) => {
-        console.log(status, 'status')
         if (status === 200) {
           handleCloseModal()
           handleSnackbarContent('mail', 'success')
@@ -191,6 +195,7 @@ const EditRename = ({ id, name, lang }: propsType) => {
         if (status === 200) {
           handleRefreshResume()
           handleSnackbarContent('delete', 'success')
+          handleCloseMenu()
         }
       })
       .catch(({ response: { data } }) => {
