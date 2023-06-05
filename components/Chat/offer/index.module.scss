@@ -32,7 +32,17 @@
     align-items: center;
     position: relative;
     padding-bottom: 80px;
-
+    .companyName {
+        margin-top: 20px;
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 15px;
+        letter-spacing: 0.02em;
+        display: flex;
+        align-items: center;
+      }
     .topInfo {
         display: flex;
         flex-direction: row;

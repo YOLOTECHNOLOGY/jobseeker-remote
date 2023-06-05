@@ -33,6 +33,7 @@ const OfferView = props => {
         preview={false}
         wrapperClassName={styles.image}
       />
+      <div className={styles.companyName}>{offerData?.company_name}</div>
       <p className={styles.description}>{offerData?.description}
       </p>
       <Image wrapperClassName={styles.bottomImage} src={Offerbottom} preview={false} />

@@ -101,6 +101,11 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
                 }
             })
     }, [lang])
+
+    const langRef = useRef(lang)
+    useEffect(() => {
+        langRef.current = lang
+    }, [lang])
     const config = useSelector((store: any) => store.config.config.response ?? {})
 
     const translate = useCallback((key, ...args) => {
@@ -326,6 +331,9 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
         },
         isUserNumberValidate() {
             return userDetailRef.current?.is_mobile_verified
+        },
+        getLang() {
+            return langRef.current
         },
         getRouter() {
             return router

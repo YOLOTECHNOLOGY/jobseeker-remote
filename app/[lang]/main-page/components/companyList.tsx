@@ -56,7 +56,7 @@ const CompanyList = (props: any) => {
                 job_title: jobTitle,
                 salary_range_value: salaryRangeValue,
                 // job_location: jobLocation,
-                job_location_id,
+                job_location_ids:job_location_id,
                 // xp_lvl: xpLvl,
                 xp_lvl_id,
                 // degree,

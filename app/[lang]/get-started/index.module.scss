@@ -203,6 +203,9 @@ z-index: -1;
         background-color: #fff;
         margin-top: 16px;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         &:first-child {
           margin-top: 0;
         }
