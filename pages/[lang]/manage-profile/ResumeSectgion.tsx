@@ -77,6 +77,10 @@ const ResumeView = ({ userDetail, lang }: any) => {
   })
 
   useEffect(() => {
+    setResume(userDetail.resumes)
+  }, [userDetail.resumes])
+
+  useEffect(() => {
     if (width < 799) {
       setIsTemplateDownloadable({ creative: true, corporate: true })
     }

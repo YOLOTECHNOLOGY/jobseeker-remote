@@ -1,0 +1,11 @@
+.editRename {
+  position: relative;
+
+  &_renameField {
+    display: flex !important;
+  }
+
+  &_snackbar {
+    max-width: 400px;
+  }
+}

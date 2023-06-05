@@ -276,8 +276,8 @@
       "popup": {
         "chatBoss": "Chat directly with Boss"
       },
-      "reset2":"Reset",
-      "save":"Save"
+      "reset2": "Reset",
+      "save": "Save"
     },
     "popularJobs": "Popular Jobs",
     "tag": {
@@ -450,7 +450,7 @@
       "finance": "Financing Stage",
       "reset": "Reset Filter",
       "apply": "Apply Filter",
-      "viewVerifiedCompanies":"View verified companies"
+      "viewVerifiedCompanies": "View verified companies"
     },
     "alert": "Enable job alert",
     "alertModal": {
@@ -520,7 +520,7 @@
     "downloadAPP": " Download APP and chat with Boss",
     "chatDirectly": " Chat directly",
     "withBoss": "with Boss",
-    "relatedSearch":"Related Search"
+    "relatedSearch": "Related Search"
   },
   "manageProfile": {
     "tab": {
@@ -715,6 +715,29 @@
           "title": "Bossjob resume",
           "tips": "As you build your profile at Bossjob, we create your resume for you. You can choose from the available templates and use your newly improve resume to apply for job opening at Bossjob.",
           "download": "Download"
+        },
+        "changeResume": {
+          "rename": "Rename",
+          "sendToEmail": "Send to email",
+          "delete": "Delete",
+          "cancel": "Cancel",
+          "save": "Save",
+          "send": "Send",
+          "back": "Back",
+          "confirm": "Confirm",
+          "pleaseRenameYourResume file.": "Please rename your resume file.",
+          "maximumLengthLimitExceeded": "Maximum length limit exceeded",
+          "cannotEnterSpecialCharacters": "Cannot enter special characters",
+          "resumeFileName": "Resume file name",
+          "pleaseEnterTheEmailAddressToReceiveTheResume": "Please enter the email address to receive the resume.",
+          "eMailFormatIsIncorrect": "E-mail format is incorrect",
+          "emailAddress": "Email address",
+          "theEmailAddressYouWantToSendIs": "The email address you want to send is",
+          "pleaseConfirmThatYourEmailAddressIsCorrectBeforeSending": "Please confirm that your email address is correct before sending",
+          "more": "More",
+          "resumeHasBeenRenameSuccessfully": "Resume has been rename successfully",
+          "resumeHasBeenSentToYourEmailSuccessfully": "Resume has been sent to your email successfully",
+          "resumeHasBeenDeletedSuccessfully": "Resume has been deleted successfully"
         }
       }
     }
@@ -814,43 +837,43 @@
     "mobileActionExchange": "Exchange mobile number",
     "moreText": "More",
     "emoji": "Emoji",
-    "JobCcopeIsNotWhat":"Job scope is not what I am looking for.",
-    "theSalaryIsNotWithin":"The salary is not within my expected range.",
-    "workingLocationIsTooFar":"Working location is too far.",
-    "cancel":"Cancel",
-    "send":"Send",
-    "pleaseShareUsWhyThisRole":"Please share with us why this role is not what you are looking for and we will provide better job suggestion. This chat will be moved to “Not interested” folder.",
-    "uploadYourResume":"Upload your resume",
-    "supportedFileType":"Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
-    "fileSizeIsTooHuge":"File size is too huge. Please upload file that is within 5MB.",
-    "failedToUploadResume":"Failed to upload resume with error",
-    "pleaseContactSupport":" Please contact support@bossjob.com for assistance.",
-    "sendResume":"Send Resume",
-    "pleaseSelectResume":"Please select the resume that you would like to share with recruiter.",
-    "orUploadNewResume":"Or upload a new resume",
-    "onlyMax3Resumes":"only max. of 3 resumes can be uploaded, please delete at least 1 resume above",
-    "uploadNewResume":"Upload a new resume",
+    "JobCcopeIsNotWhat": "Job scope is not what I am looking for.",
+    "theSalaryIsNotWithin": "The salary is not within my expected range.",
+    "workingLocationIsTooFar": "Working location is too far.",
+    "cancel": "Cancel",
+    "send": "Send",
+    "pleaseShareUsWhyThisRole": "Please share with us why this role is not what you are looking for and we will provide better job suggestion. This chat will be moved to “Not interested” folder.",
+    "uploadYourResume": "Upload your resume",
+    "supportedFileType": "Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
+    "fileSizeIsTooHuge": "File size is too huge. Please upload file that is within 5MB.",
+    "failedToUploadResume": "Failed to upload resume with error",
+    "pleaseContactSupport": " Please contact support@bossjob.com for assistance.",
+    "sendResume": "Send Resume",
+    "pleaseSelectResume": "Please select the resume that you would like to share with recruiter.",
+    "orUploadNewResume": "Or upload a new resume",
+    "onlyMax3Resumes": "only max. of 3 resumes can be uploaded, please delete at least 1 resume above",
+    "uploadNewResume": "Upload a new resume",
     "JobType": "Job Type",
     "yearsOfExp": "Years of Exp",
-    "quealitification":"Quealitification",
-    "workLocation":"Work location",
-    "address":"Address",
-    "JobFunction":"Job function",
-    "skills":"Skills",
-    "salary":"Salary",
-    "done":"Done",
-    "offerFrom":"Offer from",
-    "offered":"Offered",
-    "reject":"Reject",
-    "accept":"Accept",
-    "pleaseNoteThatThisOffer":" Please note that this offer is not binding and is subject to change. There may be some  additional paperwork and steps required to finalize the offer.",
-    "company":"Company",
-    "sendAnOffer":"send an offer",
-    "viewNow":"View now",
-    "viewLater":"View later",
-    "buttonTextEnable":"Auto-send my resume",
-    "buttonTextDisable":"Disable Auto-send my resume",
-    "offerTitle":"CONGRATULATIONS!"
+    "quealitification": "Quealitification",
+    "workLocation": "Work location",
+    "address": "Address",
+    "JobFunction": "Job function",
+    "skills": "Skills",
+    "salary": "Salary",
+    "done": "Done",
+    "offerFrom": "Offer from",
+    "offered": "Offered",
+    "reject": "Reject",
+    "accept": "Accept",
+    "pleaseNoteThatThisOffer": " Please note that this offer is not binding and is subject to change. There may be some  additional paperwork and steps required to finalize the offer.",
+    "company": "Company",
+    "sendAnOffer": "send an offer",
+    "viewNow": "View now",
+    "viewLater": "View later",
+    "buttonTextEnable": "Auto-send my resume",
+    "buttonTextDisable": "Disable Auto-send my resume",
+    "offerTitle": "CONGRATULATIONS!"
   },
   "chatInterview": {
     "confirmText": "Interview Confirmed",
@@ -982,7 +1005,7 @@
     "verify": "Verify",
     "optLabel": "6-digit OTP",
     "errorMsg": {
-      "invalidOtp":"Invalid OTP",
+      "invalidOtp": "Invalid OTP",
       "optIncorrect": "OTP is incorrect. Please try again."
     },
     "emailTip": "Receive job applications updates through your email.",
@@ -1014,23 +1037,23 @@
     "delete": "Delete",
     "deleteTips": "You are about to delete this job alert. This cannot be undone."
   },
-  "chatExchange":{
-    "exchangeTitle":"Mobile number",
-    "cancel":"Cancel",
-    "send":"Send",
-    "verify":"Verify",
-    "sendOtp":"Send OTP",
-    "resendOtp":"Resend OTP",
-    "copy":"Copy",
-    "resendOtpIn":"Resend OTP in {{count}} s",
-    "sureText":"Are you sure you want to exchange mobile number with Boss? You will be able to view Boss’s mobile number after Boss had agreed to your request.",
-    "verifyText":"To exchange mobile number with Boss, please verify your mobile number.",
-    "countryCode":"Country code",
-    "mobileNumber":"Mobile Number",
-    "digitPlaceholder":"Enter 6 digit OTP",
-    "msgText":"Enter the code that we have message to {{number}}",
-    "smb":"'s mobile number:",
-    "boss":"Boss"
+  "chatExchange": {
+    "exchangeTitle": "Mobile number",
+    "cancel": "Cancel",
+    "send": "Send",
+    "verify": "Verify",
+    "sendOtp": "Send OTP",
+    "resendOtp": "Resend OTP",
+    "copy": "Copy",
+    "resendOtpIn": "Resend OTP in {{count}} s",
+    "sureText": "Are you sure you want to exchange mobile number with Boss? You will be able to view Boss’s mobile number after Boss had agreed to your request.",
+    "verifyText": "To exchange mobile number with Boss, please verify your mobile number.",
+    "countryCode": "Country code",
+    "mobileNumber": "Mobile Number",
+    "digitPlaceholder": "Enter 6 digit OTP",
+    "msgText": "Enter the code that we have message to {{number}}",
+    "smb": "'s mobile number:",
+    "boss": "Boss"
   },
   "chatAutoSendResume": {
     "failedToUploadResume": "Failed to upload resume with error",
@@ -1045,9 +1068,9 @@
     "cancel": "Cancel",
     "send": "Send",
     "change": "Change",
-    "disabledDescription":"When Boss requests for your resume, we will send your resume attachment automatically to Boss. Are you sure you want to disable it?",
-    "enableDescription":"When Boss requests for your resume, we will send your resume attachment automatically to Boss. Please select which resume would you like to be sent to Boss automatically. ",
-    "warnText":"Otherwise, you would need to wait for both parties to reply before you can request to send resume."
+    "disabledDescription": "When Boss requests for your resume, we will send your resume attachment automatically to Boss. Are you sure you want to disable it?",
+    "enableDescription": "When Boss requests for your resume, we will send your resume attachment automatically to Boss. Please select which resume would you like to be sent to Boss automatically. ",
+    "warnText": "Otherwise, you would need to wait for both parties to reply before you can request to send resume."
   },
   "newGetStarted": {
     "title": "Log in or sign up to Bossjob",
