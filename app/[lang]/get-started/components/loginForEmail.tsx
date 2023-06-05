@@ -14,7 +14,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { usePathname } from 'next/navigation'
 import { formatTemplateString } from 'helpers/formatter'
 import Link from 'next/link'
-
+import { CircularProgress } from 'app/[lang]/components/MUIs'
 interface IProps {
   lang: any
 }
@@ -29,12 +29,14 @@ const loginForEmail = (props: IProps) => {
 
   const [email, setEmail] = useState<string>('')
   const [isDisable, setDisable] = useState<boolean>(true)
+  const [loading,setLoading] = useState<boolean>(false)
   const pathname = usePathname()
 
   const sendOpt = () => {
     if (submitRef.current) {
       return
     }
+    setLoading(true)
     submitRef.current = true
     authenticationSendEmaillOtp({ email })
       .then((res) => {
@@ -54,7 +56,7 @@ const loginForEmail = (props: IProps) => {
             severity: 'error'
           })
         )
-      })
+      }).finally(()=>  setLoading(false))
   }
 
   const agreementWord = formatTemplateString(newGetStarted.agreement, {
@@ -85,7 +87,9 @@ const loginForEmail = (props: IProps) => {
           />
         </div>
         <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
-          {newGetStarted.sendCode}
+          {
+           loading ? <CircularProgress color={'primary' } size={16} /> : newGetStarted.sendCode
+          }
         </button>
 
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>

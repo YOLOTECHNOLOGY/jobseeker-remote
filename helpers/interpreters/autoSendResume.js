@@ -37,7 +37,7 @@ export default command => command.cata({
         const applicationId = context.getApplicationId()
         return autoSendResumeUpdate(applicationId, resumeId)
             .then(result => RequestResult.success(result.data.data))
-            .catch(error => RequestResult.error(error))
+            .catch(error => RequestResult.error(error?.response?.data?.message))
             .finally(() => context.setLoading(false))
     }),
     requestDisable: () => M(context => {

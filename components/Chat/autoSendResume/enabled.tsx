@@ -219,7 +219,8 @@ const EnableAutoSendResumeModal = (props: any) => {
                           <div className={styles.resumeName}>{item.name}</div>
                         </div>}
                       />
-                      <img
+                      {
+                        resumeList?.length > 1  &&  <img
                         src={TrashIcon}
                         onClick={() => {
                           if (item.id === resumeId) {
@@ -228,6 +229,8 @@ const EnableAutoSendResumeModal = (props: any) => {
                           deleteItem(item)
                         }}
                       />
+                      }
+                     
                     </div>
                   ))}
                 </RadioGroup>

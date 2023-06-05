@@ -1,5 +1,5 @@
-@import "styles/variable.scss";
-@import "styles/mixins.scss";
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
 
 .uploadResumeField {
   width: 100%;
@@ -10,9 +10,9 @@
     }
   }
 
-  div {
-    width: 100%;
-  }
+  // div {
+  //   width: 100%;
+  // }
 
   .error {
     margin: 6px 0 0;
