@@ -981,6 +981,7 @@
     "verify": "Verify",
     "optLabel": "6-digit OTP",
     "errorMsg": {
+      "invalidOtp":"Invalid OTP",
       "optIncorrect": "OTP is incorrect. Please try again."
     },
     "emailTip": "Receive job applications updates through your email.",
