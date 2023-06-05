@@ -30,6 +30,9 @@ function PhoneCode(props: any) {
   const { newGetStarted } = props.lang
   const dispatch = useDispatch()
   console.log({ uuid })
+  useEffect(()=>{
+    dispatch(jobbseekersLoginFailed({}))
+  },[])
   useEffect(() => {
     if (!uuid) {
       const fpPromise = FingerprintJS.load()
