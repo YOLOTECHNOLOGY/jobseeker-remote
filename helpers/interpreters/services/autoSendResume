@@ -1,0 +1,22 @@
+import configuredAxios from '../../configuredAxios'
+
+export const autoSendResumeDetail = (applicationId) => {
+    const axios = configuredAxios('jobApplication', 'protected')
+    return axios.get(
+        `/${applicationId}/jobseekers/auto-sent-resume/detail`
+    )
+}
+export const autoSendResumeUpdate = (applicationId, resumeId) => {
+    const axios = configuredAxios('jobApplication', 'protected')
+    return axios.put(
+        `/${applicationId}/jobseekers/auto-sent-resume/update`,
+        { auto_sent_resume_id: resumeId }
+    )
+}
+
+export const autoSendResumeDelete = (applicationId) => {
+    const axios = configuredAxios('jobApplication', 'protected')
+    return axios.delete(
+        `/${applicationId}/jobseekers/auto-sent-resume/delete`
+    )
+}

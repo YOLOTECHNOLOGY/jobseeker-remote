@@ -60,7 +60,7 @@ export const useChatNow = (jobDetail) => {
                 setExistedJob(data?.data?.data)
             })
         }
-    }, [jobDetail])
+    }, [jobDetail?.id])
     const changeJobModal = useMemo(() => {
         return <ModalSwitch
             existedJob={existedJob}

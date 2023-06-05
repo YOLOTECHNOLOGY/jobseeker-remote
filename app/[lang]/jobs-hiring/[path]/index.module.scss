@@ -13,7 +13,7 @@ $contentWidth: 894px;
     justify-content: space-between;
 
     .table {
-        margin-top: 40px;
+        margin-top: 20px;
         background: transparent;
         width: $contentWidth;
         margin-right: 16px;
@@ -109,7 +109,7 @@ $contentWidth: 894px;
         width: calc(50vw + $paddingLeftWidth);
         height: 50px;
         max-width: $maxContentWidth;
-        overflow: hidden;
+        overflow: visible;
         margin-top: 30px;
 
         &Left {
@@ -125,6 +125,7 @@ $contentWidth: 894px;
         .location {
             width: 176px;
             height: 44px;
+            position: relative;
         }
 
         .search {
@@ -266,12 +267,12 @@ $contentWidth: 894px;
         // padding-left: 24px;
         // padding-right: 24px;
 
-        &Left{
+        &Left {
             display: flex;
             width: $contentWidth;
         }
-       
-        &Right{
+
+        &Right {
             display: flex;
         }
 
@@ -441,7 +442,7 @@ $contentWidth: 894px;
 
 .jobCard {
     width: 100%;
-    height: 170px;
+    height: 166px;
     position: relative;
     padding-right: 0;
 
@@ -463,13 +464,13 @@ $contentWidth: 894px;
         cursor: pointer;
 
         &:hover {
-            box-shadow: 6px 7px 7px #ccc;
+            box-shadow: 0px 12px 30px rgb(0, 0, 0, 0.1);
         }
 
         .topContainer {
             width: 100%;
-            height: 130px;
-            padding: 24px 24px 0px 24px;
+            height: 128px;
+            padding: 16px 24px 0px 24px;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -493,7 +494,7 @@ $contentWidth: 894px;
                         font-family: "Product Sans";
                         font-style: normal;
                         font-weight: bold;
-                        font-size: 16px;
+                        font-size: 18px;
                         line-height: 23px;
                         align-items: center;
                         letter-spacing: 0.02em;
@@ -528,7 +529,7 @@ $contentWidth: 894px;
 
                 .labelContainer {
                     height: 23px;
-                    margin-top: 5px;
+                    margin-top: 8px;
                     width: 100%;
                     display: flex;
                     // justify-content: space-between;
@@ -539,7 +540,7 @@ $contentWidth: 894px;
                         align-items: center;
                         padding: 2px 10px;
                         /* General/White 1 */
-                        background: #f0f0f0;
+                        background: #F2F3F5;
                         border-radius: 16px;
                         font-family: "Product Sans";
                         font-style: normal;
@@ -547,7 +548,7 @@ $contentWidth: 894px;
                         font-size: 12px;
                         line-height: 15px;
                         letter-spacing: 0.0075em;
-                        color: #707070;
+                        color: #86909C;
                         margin-right: 8px;
                     }
                 }
@@ -556,25 +557,40 @@ $contentWidth: 894px;
                     display: flex;
                     flex-direction: row;
                     align-items: center;
-                    margin-top: 8px;
+                    margin-top: 16px;
                     width: 100%;
+
+                    .imgContainer {
+                        position: relative;
+                        overflow: visible;
+
+                        .isOnline {
+                            width: 9px;
+                            height: 9px;
+                            border-radius: 4.5px;
+                            border: #fff solid 1px;
+                            background: #0EBD5C;
+                            position: absolute;
+                            bottom: 1px;
+                            right: 2px;
+                        }
+                    }
 
                     .recruiter {
                         .info {
-                            padding: 2px 9px;
-                            border-radius: 12px;
-                            border: #bcbcbc solid 1px;
+                            padding: 2px 0px;
+                            margin-left: 0px;
                             width: fit-content;
                             display: flex;
                             align-items: center;
                             flex-direction: row;
-                            font-family: "Product Sans";
+                            font-family: 'Product Sans';
                             font-style: normal;
                             font-weight: 400;
                             font-size: 12px;
                             line-height: 15px;
                             letter-spacing: 0.0075em;
-                            color: #353535;
+                            color: #4E5969;
                             height: 24px;
 
                             &.isHover {
@@ -609,19 +625,19 @@ $contentWidth: 894px;
                     }
 
                     .online {
-                        background: #0ebd5c;
+                        background: #F2F9F3;
                         border-radius: 15px;
                         padding: 5px 8px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         height: 24px;
-                        color: #fff;
+                        color: #4CAF50;
                         margin-left: 8px;
 
                         &:before {
                             content: "";
-                            background: #fff;
+                            background: #4CAF50;
                             border-radius: 4px;
                             border: 1px solid #ffffff;
                             width: 8px;
@@ -667,8 +683,8 @@ $contentWidth: 894px;
                             --color: #353535;
                             font-family: "Product Sans";
                             font-style: normal;
-                            font-weight: bold;
-                            font-size: 18px;
+                            font-weight: 500;
+                            font-size: 16px;
                             line-height: 23px;
                             align-items: center;
                             letter-spacing: 0.02em;
@@ -693,13 +709,13 @@ $contentWidth: 894px;
                             flex-wrap: wrap;
                             flex-direction: row;
                             justify-content: flex-start;
-                            margin-top: 5px;
+                            margin-top: 8px;
 
                             .label {
                                 display: flex;
                                 align-items: center;
                                 padding: 2px 10px;
-                                background: #f0f0f0;
+                                background: #F2F3F5;
                                 border-radius: 16px;
                                 font-family: "Product Sans";
                                 font-style: normal;
@@ -707,7 +723,7 @@ $contentWidth: 894px;
                                 font-size: 12px;
                                 line-height: 15px;
                                 letter-spacing: 0.0075em;
-                                color: #707070;
+                                color: #86909C;
                                 margin-right: 8px;
                                 height: 23px;
                                 margin-bottom: 8px;
@@ -719,7 +735,7 @@ $contentWidth: 894px;
         }
 
         .bottomContainer {
-            height: 41px;
+            height: 38px;
             width: 100%;
             position: relative;
             border-radius: 10px 0px 10px 0px;
@@ -727,15 +743,13 @@ $contentWidth: 894px;
             &::before {
                 content: "";
                 position: absolute;
-                top: 0px;
+                bottom: 0px;
                 left: 0px;
                 width: 100%;
                 height: 100%;
-                opacity: 0.2;
-                background: linear-gradient(269.8deg,
-                        rgba(255, 235, 184, 0.8) 0.12%,
-                        rgba(242, 177, 202, 0.8) 43.36%,
-                        rgba(84, 142, 237, 0.8) 99.89%);
+                opacity: 1;
+                z-index: 1;
+                background: linear-gradient(90.08deg, #F5FAFF 1.5%, #FFFAFA 95.77%);
             }
 
             padding-left: 24px;
@@ -755,10 +769,11 @@ $contentWidth: 894px;
                 line-height: 15px;
                 align-items: center;
                 letter-spacing: 0.0075em;
-                color: #707070;
+                color:  #86909C;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
+                z-index: 10;
             }
 
             .benefits {
@@ -772,10 +787,11 @@ $contentWidth: 894px;
                 line-height: 15px;
                 align-items: center;
                 letter-spacing: 0.0075em;
-                color: #707070;
+                color:  #86909C;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
+                z-index: 10;
             }
         }
     }
@@ -927,7 +943,7 @@ $contentWidth: 894px;
         cursor: pointer;
 
         &:hover {
-            box-shadow: 6px 7px 7px #ccc;
+            box-shadow: 0px 12px 30px rgb(0, 0, 0, 0.1);
         }
 
         .titleContainer {
@@ -986,7 +1002,7 @@ $contentWidth: 894px;
         }
 
         .labelContainer {
-            margin-top: 5px;
+            margin-top: 8px;
             width: 100%;
             display: flex;
             flex-wrap: wrap;
@@ -1100,19 +1116,19 @@ $contentWidth: 894px;
 
 
             .online {
-                background: #0EBD5C;
+                background: #F2F9F3;
                 border-radius: 15px;
                 padding: 5px 8px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 height: 24px;
-                color: #fff;
+                color: #4CAF50;
                 margin-left: 8px;
 
                 &:before {
                     content: '';
-                    background: #fff;
+                    background: #4CAF50;
                     border-radius: 4px;
                     border: 1px solid #FFFFFF;
                     width: 8px;

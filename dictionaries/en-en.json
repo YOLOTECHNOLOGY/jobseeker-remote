@@ -4,7 +4,7 @@
     "companies": "Companies",
     "courses": "Courses",
     "careerGuide": "Career Guide",
-    "hiring": "I'm hiring",
+    "hiring": "I'm an Employer",
     "getStarted": "Get Started",
     "manageResume": "Manage Resume",
     "myJobs": "My Jobs",
@@ -59,7 +59,7 @@
     "kickStartYourCareer": "kick-start your career!",
     "enterYourEmailAddress": "Enter your email address",
     "submit": "Submit",
-    "pleaseEnterAvalidEmailAddress": "Please enter a valid email address.",
+    "pleaseEnterAvalidEmailAddress.": "Please enter a valid email address.",
     "bySigningUp": "By signing up, I have read and agreed to",
     "termsOfUse": "Terms of Use",
     "and": "and",
@@ -265,7 +265,7 @@
   },
   "home": {
     "title": "Find Job. Talk to Boss.",
-    "defaultLocationPH": "Manila",
+    "defaultLocationPH": "manila",
     "defaultLocationSG": "downtown core",
     "search": {
       "location": "Location",
@@ -275,7 +275,9 @@
       "chatBoss": "and chat with Boss",
       "popup": {
         "chatBoss": "Chat directly with Boss"
-      }
+      },
+      "reset2":"Reset",
+      "save":"Save"
     },
     "popularJobs": "Popular Jobs",
     "tag": {
@@ -845,8 +847,9 @@
     "company":"Company",
     "sendAnOffer":"send an offer",
     "viewNow":"View now",
-    "viewLater":"View later"
-
+    "viewLater":"View later",
+    "buttonTextEnable":"Auto-send my resume",
+    "buttonTextDisable":"Disable Auto-send my resume"
   },
   "chatInterview": {
     "confirmText": "Interview Confirmed",
@@ -1026,5 +1029,22 @@
     "msgText":"Enter the code that we have message to {{number}}",
     "smb":"'s mobile number:",
     "boss":"Boss"
+  },
+  "chatAutoSendResume": {
+    "failedToUploadResume": "Failed to upload resume with error",
+    "pleaseContactSupport": " Please contact support@bossjob.com for assistance.",
+    "enableAutoSendTitle": "Enable Auto-send Resume",
+    "disabledAutoSendTitle": "Disable Auto-send Resume",
+    "pleaseSelectResume": "Please select the resume that you would like to share with recruiter.",
+    "orUploadNewResume": "Or upload a new resume",
+    "onlyMax3Resumes": "only max. of 3 resumes can be uploaded, please delete at least 1 resume above",
+    "uploadNewResume": "Upload a new resume",
+    "uploadYourResume": "Upload your Resume",
+    "cancel": "Cancel",
+    "send": "Send",
+    "change": "Change",
+    "disabledDescription":"When Boss requests for your resume, we will send your resume attachment automatically to Boss. Are you sure you want to disable it?",
+    "enableDescription":"When Boss requests for your resume, we will send your resume attachment automatically to Boss. Please select which resume would you like to be sent to Boss automatically. ",
+    "warnText":"Otherwise, you would need to wait for both parties to reply before you can request to send resume."
   }
 }

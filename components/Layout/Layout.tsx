@@ -99,9 +99,9 @@ const Layout = ({ children, className, isHiddenFooter, isHiddenHeader,lang }: La
       {isAuthenticated && !isEmailVerified && (
         <MaterialAlert open={true} severity='info'>
           <Text>
-            Please verify your email address.{' '}
+            {lang.header.pleaseVerify}{' '}
             <Link onClick={handleVerifyEmailClick} sx={{ cursor: 'pointer' }}>
-              Verify now.
+              {lang.header.verifyNow}
             </Link>
           </Text>
         </MaterialAlert>

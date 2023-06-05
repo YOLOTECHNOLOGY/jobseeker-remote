@@ -46,6 +46,9 @@ export const DeleteIcon = `${S3BucketJobseeker}/DeleteIcon.svg`
 export const FacebookIcon = `${S3BucketJobseeker}/FacebookIcon.svg`
 export const TwitterIcon = `${S3BucketJobseeker}/TwitterIcon.svg`
 export const LinkedinIcon = `${S3BucketJobseeker}/LinkedinIcon.svg`
+export const AppleIcon = `${S3BucketJobseeker}/loginAppleIcon.svg`
+export const EmailIcon = `${S3BucketJobseeker}/EmailIcon.svg`
+export const PhoneIcon = `${S3BucketJobseeker}/PhoneIcon.svg`
 
 // Copy
 export const CopyIcon = `${S3BucketJobseeker}/CopyIcon.svg`
@@ -168,3 +171,5 @@ export const UploadResumeIcon = `${S3BucketJobseeker}/UploadResumeIcon.svg`
 
 /* CompleteResumeIcon.svg */
 export const CompleteResumeIcon = `${S3BucketJobseeker}/CompleteResumeIcon.svg`
+
+export const LoginSafe = `${S3BucketJobseeker}/loginSafa.gif`
