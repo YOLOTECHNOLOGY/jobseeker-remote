@@ -25,7 +25,9 @@ export default command => command.cata({
     redirectToChat: data => M(context => Promise.resolve().then(() => {
         const router = context.getRouter()
         const lang = context.getLang()
-        router.push(`/${lang}/chat/${data?.chat_id ?? 'list'}`)
+        if(!window.location.pathname?.includes('chat')){
+            router.push(`/${lang}/chat/${data?.chat_id ?? 'list'}`)
+        }
     })),
     declineRequest: (applicationId, offerId) => M(context => {
         context.setLoading(true)

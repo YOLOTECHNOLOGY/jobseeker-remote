@@ -873,7 +873,8 @@
     "viewLater": "稍后查看",
     "buttonTextEnable": "自动发送简历",
     "buttonTextDisable": "取消自动发送简历",
-    "offerTitle": "恭喜您被录用！"
+    "offerTitle": "恭喜您被录用！",
+    "offerSent": "来自于"
   },
   "chatInterview": {
     "confirmText": "面试已经确认",
