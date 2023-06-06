@@ -3,36 +3,9 @@ import './page.module.scss'
 import 'components/Header/Header.module.scss'
 import 'app/[lang]/globals.scss'
 import { getShreCard } from 'store/services/jobs/addJobView'
-import { cookies } from 'next/headers'
-import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 import PublicLayout from 'app/[lang]/components/publicLayout'
-const handleFetchJobDetail = async (params: any) => {
-  const cookieStore = cookies()
-
-  const accessToken = cookieStore.getAll('accessToken')
-  const jobId = params.jobId?.split('-').pop()
-
-  if (jobId && Number(jobId)) {
-    const querys = {
-      jobId: jobId,
-      status: 'public',
-      serverAccessToken: null
-    }
-
-    if (accessToken[0]) {
-      querys.status = accessToken[0].value ? 'protected' : 'public'
-      querys.serverAccessToken = accessToken[0].value ?? null
-    }
-
-    const data = await fetchJobDetailService(querys)
-      .then(({ data: { data } }) => data)
-      .catch(() => ({ error: true }))
-    return { data, jobId }
-  } else {
-    return { data: { error: true, message: 'Error: Invalid link address' }, jobId: null }
-  }
-}
-
+import { handleFetchJobDetail } from './service'
+export const revalidate = 3600
 const handleShareInfo = async (params: any): Promise<any> => {
   const shareId = params.jobId?.split('-').shift()
   const res = await getShreCard(shareId)
