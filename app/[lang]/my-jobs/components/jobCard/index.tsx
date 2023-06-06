@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux'
 import { changeJobValue } from 'helpers/config/changeJobValue'
 import { getValueById } from 'helpers/config/getValueById'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { QRCodeSVG } from 'qrcode.react'
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
   const titleHoverRef = useRef(titleHover)
@@ -133,7 +134,7 @@ const JobCard = (props: any) => {
     company_name,
     //  company_industry,
     //   company_size,
-    //   company_financing_stage, 
+    //   company_financing_stage,
     recruiter_avatar,
     job_benefits,
     external_apply_url,
@@ -160,7 +161,7 @@ const JobCard = (props: any) => {
     getValueById(config, job_type_id, 'job_type_id'),
     getValueById(config, job_location_id, 'location_id'),
     getValueById(config, xp_lvl_id, 'xp_lvl_id'),
-    getValueById(config, degree_id, 'degree_id'),
+    getValueById(config, degree_id, 'degree_id')
   ].filter((a) => a)
   const companyLabels = [
     getValueById(config, company_industry_id, 'industry_id'),
@@ -196,11 +197,26 @@ const JobCard = (props: any) => {
       <>
         <div id={'job_card_container_' + id} className={styles.container}>
           <div className={styles.closeButton} onClick={showSelection}>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M14.0625 3.9375L3.9375 14.0625" stroke="#707070" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M14.0625 14.0625L3.9375 3.9375" stroke="#707070" strokeLinecap="round" strokeLinejoin="round" />
+            <svg
+              width='18'
+              height='18'
+              viewBox='0 0 18 18'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M14.0625 3.9375L3.9375 14.0625'
+                stroke='#707070'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
+              <path
+                d='M14.0625 14.0625L3.9375 3.9375'
+                stroke='#707070'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
             </svg>
-
 
             {/* <Image src={CloseIcon} alt='logo' width={13} height={13} /> */}
           </div>
@@ -234,7 +250,9 @@ const JobCard = (props: any) => {
               >
                 <div style={{ height: 24, display: 'flex', flexDirection: 'row' }}>
                   <div className={styles.imgContainer}>
-                    <Image src={recruiter_avatar} alt={''}
+                    <Image
+                      src={recruiter_avatar}
+                      alt={''}
                       style={{ overflow: 'hidden', borderRadius: 12, marginRight: 6 }}
                       width={24}
                       height={24}
@@ -285,9 +303,7 @@ const JobCard = (props: any) => {
                           />
                         </svg>
                       </div> */}
-                      {`${[recruiter_full_name, recruiter_job_title]
-                        .filter((a) => a)
-                        .join(' · ')}`}
+                      {`${[recruiter_full_name, recruiter_job_title].filter((a) => a).join(' · ')}`}
                     </div>
                     <MaterialButton
                       className={classNames({
@@ -301,7 +317,7 @@ const JobCard = (props: any) => {
                       onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
-                          ; (chatNow as any)()
+                        ;(chatNow as any)()
                       }}
                     >
                       <Image src={HomePageChat} width={16} height={16} alt={''} />
@@ -318,7 +334,9 @@ const JobCard = (props: any) => {
                       </Text>
                     </MaterialButton>
                   </div>
-                  {!!recruiter_is_online && <div className={styles.online}>{search.jobCard.online}</div>}
+                  {!!recruiter_is_online && (
+                    <div className={styles.online}>{search.jobCard.online}</div>
+                  )}
                 </div>
               </div>
             </div>
@@ -383,7 +401,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                    ; (save as any)()
+                  ;(save as any)()
                 }}
               >
                 <svg
@@ -407,13 +425,19 @@ const JobCard = (props: any) => {
               </MaterialButton>
             </div>
             <div className={styles.popTopRight}>
-              <Image
+              <QRCodeSVG
+                value={location?.origin + job_url}
+                size={60}
+                // imageSettings={{ src: SmallAppLogo, height: 10, width: 10, excavate: true }}
+                className={styles.qrcode}
+              />
+              {/* <Image
                 style={{ margin: '0px 6px' }}
                 src={AppDownQRCode}
                 height={60}
                 width={60}
                 alt={''}
-              />
+              /> */}
               Talk to Boss anywhere
             </div>
           </div>
