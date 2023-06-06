@@ -44,8 +44,10 @@ const EmailComponent = ({ setEmail, email, setDisable, lang }: initProps) => {
         label={newGetStarted.emailLabel}
         size='small'
         type='email'
+        name="email"
         onChange={(e) => setEmail(e.target.value)}
         error={emailError ? true : false}
+        autoComplete="true"
       />
       {emailError && errorText(emailError)}
     </>

@@ -78,6 +78,22 @@ const loginForEmail = (props: IProps) => {
     <>
       <h2>{newGetStarted.title}</h2>
       <div className={styles.phoneNumber}>
+      {/* <form  autoComplete='on' onSubmit={e => e.preventDefault()}>
+        <div style={{ opacity: 0, height: '1px', overflow: 'hidden', pointerEvents: 'none' }}>
+          <input
+            type="email"
+            value={email}
+            name="email-hidden"
+            hidden
+            autoComplete="on"
+          />
+          <input
+            type="password"
+            value={(email || '').trim() ? ' ' : ''}
+            name="hidden-password"
+            autoComplete="on"
+          />
+        </div> */}
         <div className={styles.item}>
           <EmailComponent
             lang={props.lang}
@@ -86,12 +102,12 @@ const loginForEmail = (props: IProps) => {
             email={email}
           />
         </div>
-        <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
+        <button  className={styles.btn} disabled={isDisable} onClick={sendOpt}>
           {
            loading ? <CircularProgress color={'primary' } size={16} /> : newGetStarted.sendCode
           }
         </button>
-
+        {/* </form> */}
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>
         <p className={styles.tips}>
           {newGetStarted.tips}{' '}
