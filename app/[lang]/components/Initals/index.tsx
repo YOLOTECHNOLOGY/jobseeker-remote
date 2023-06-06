@@ -164,6 +164,7 @@ const Initial = () => {
         onReady={() => {
           if (!accessToken) {
             const google = (window as any)?.google
+            if(!google) return
             google.accounts.id.initialize({
               client_id: '197019623682-n8mch4vlad6r9c6t3vhovu01sartbahq.apps.googleusercontent.com',
               callback: handleGoogleOneTapLoginResponse,
