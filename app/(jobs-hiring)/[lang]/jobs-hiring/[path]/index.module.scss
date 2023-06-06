@@ -4,1016 +4,714 @@ $paddingLeftWidth: 600px;
 $maxContentWidth: 1170px;
 $contentWidth: 894px;
 
-
 .content {
+  display: flex;
+  flex-direction: row;
+  max-width: $maxContentWidth;
+  margin: 0 auto;
+  justify-content: space-between;
+
+  .table {
+    margin-top: 20px;
+    background: transparent;
+    width: $contentWidth;
+    margin-right: 16px;
+
+    @include sm {
+      margin-left: 0px;
+      width: 100%;
+    }
+  }
+
+  .qrCode {
+    width: 254px;
+    height: 108px;
+    margin-top: 20px;
+    background: #136fd3;
+    border-radius: 10px;
+    padding: 10px 16px;
     display: flex;
     flex-direction: row;
-    max-width: $maxContentWidth;
-    margin: 0 auto;
-    justify-content: space-between;
 
-    .table {
-        margin-top: 20px;
-        background: transparent;
-        width: $contentWidth;
-        margin-right: 16px;
+    .rightContainer {
+      padding: 7px 14px;
 
-        @include sm {
-            margin-left: 0px;
-            width: 100%;
-        }
+      label {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 18px;
+        letter-spacing: 0.02em;
+        color: #ffffff;
+      }
+
+      p {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        letter-spacing: 0.02em;
+        color: #ffffff;
+      }
     }
+  }
 
-    .qrCode {
-        width: 254px;
-        height: 108px;
-        margin-top: 20px;
-        background: #136FD3;
-        border-radius: 10px;
-        padding: 10px 16px;
-        display: flex;
-        flex-direction: row;
+  .rightContent {
+    margin-top: 40px;
+    height: 100%;
+    width: 254px;
+    margin-left: 0;
+    height: 600px;
 
-        .rightContainer {
-            padding: 7px 14px;
-
-            label {
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight: 700;
-                font-size: 16px;
-                line-height: 18px;
-                letter-spacing: 0.02em;
-                color: #FFFFFF;
-            }
-
-            p {
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 15px;
-                letter-spacing: 0.02em;
-                color: #FFFFFF;
-            }
-        }
+    @include sm {
+      display: none;
     }
-
-    .rightContent {
-        margin-top: 40px;
-        height: 100%;
-        width: 254px;
-        margin-left: 0;
-        height: 600px;
-
-        @include sm {
-            display: none;
-        }
-    }
+  }
 }
 
 .searchWrap {
-    background: #ffffff;
+  background: #ffffff;
 }
 
 .searchForm {
-    --box-shadow: none;
-    width: 100%;
-    height: 153px;
-    // max-width: 100%;
+  --box-shadow: none;
+  width: 100%;
+  height: 153px;
+  // max-width: 100%;
+  display: flex;
+  // position: sticky;
+  top: 0px;
+  flex-direction: column;
+  align-items: center;
+  // background: #fff;
+  box-shadow: var(--box-shadow);
+  padding-left: 0;
+  transition: box-shadow ease-in 0.5s;
+  margin: 0 auto;
+
+  &.isFixed {
+    --box-shadow: 0px 0px 20px #bcbcbc;
+  }
+
+  @include sm {
+    display: none;
+  }
+
+  .searchArea {
     display: flex;
-    // position: sticky;
-    top: 0px;
-    flex-direction: column;
-    align-items: center;
-    // background: #fff;
-    box-shadow: var(--box-shadow);
-    padding-left: 0;
-    transition: box-shadow ease-in 0.5s;
-    margin: 0 auto;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: fit-content;
+    width: calc(50vw + $paddingLeftWidth);
+    height: 50px;
+    max-width: $maxContentWidth;
+    overflow: visible;
+    margin-top: 30px;
 
-    &.isFixed {
-        --box-shadow: 0px 0px 20px #bcbcbc;
+    &Left {
+      display: flex;
+      width: $contentWidth;
     }
 
-    @include sm {
+    &Right {
+      display: flex;
+    }
+
+    .location {
+      width: 176px;
+      height: 44px;
+      position: relative;
+    }
+
+    .search {
+      width: 571px;
+      height: 44px;
+      // border: 1px solid #ccc;
+      background: #fff;
+      margin-left: 8px;
+      // label {
+      //   line-height: 100%;
+      // }
+      position: relative;
+      top: 4px;
+    }
+
+    .searchButton {
+      margin-left: 8px;
+      text-transform: capitalize !important;
+      background: #136fd3;
+      color: #fff;
+      width: 132px;
+      height: 44px;
+      border-radius: 10px;
+
+      &:hover {
+        background: rgb(24, 84, 163);
+      }
+    }
+
+    .downloadApp {
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      height: 36px;
+      align-items: center;
+      margin-left: 30px;
+      margin-bottom: 3px;
+      position: relative;
+
+      &:hover {
+        .popver {
+          display: block;
+        }
+      }
+
+      &_phoneIconBorderPath,
+      &_phoneIconHomePath {
+        transition: all 0.2s ease;
+      }
+
+      .text {
+        width: 116px;
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 0.0075em;
+        color: #136fd3;
+        margin-left: 10px;
+      }
+
+      .popver {
+        position: absolute;
+        left: -12px;
+        top: 50px;
+        background: #ffffff;
+        border: 0.5px solid #bcbcbc;
+        border-radius: 10px;
+        padding: 14px 20px;
+        z-index: 100;
         display: none;
+        box-shadow: 0px 0px 14px #bcbcbc;
+
+        &::after {
+          content: ' ';
+          position: absolute;
+          left: 20px;
+          top: -16px;
+          width: 0;
+          height: 0;
+          border-width: 8px;
+          border-style: solid;
+          border-color: transparent transparent #fff transparent;
+        }
+
+        img {
+          width: 104px;
+          height: 104px;
+        }
+
+        p {
+          padding: 6px 0 0 0;
+          text-align: center;
+          line-height: 20px;
+          margin: 0;
+        }
+      }
     }
 
-    .searchArea {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-end;
-        justify-content: space-between;
-        width: fit-content;
-        width: calc(50vw + $paddingLeftWidth);
-        height: 50px;
-        max-width: $maxContentWidth;
-        overflow: visible;
-        margin-top: 30px;
-
-        &Left {
-            display: flex;
-            width: $contentWidth;
-        }
-
-        &Right {
-            display: flex;
-        }
-
-
-        .location {
-            width: 176px;
-            height: 44px;
-            position: relative;
-        }
-
-        .search {
-            width: 571px;
-            height: 44px;
-            // border: 1px solid #ccc;
-            background: #fff;
-            margin-left: 8px;
-            // label {
-            //   line-height: 100%;
-            // }
-            position: relative;
-            top: 4px;
-        }
-
-        .searchButton {
-            margin-left: 8px;
-            text-transform: capitalize !important;
-            background: #136fd3;
-            color: #fff;
-            width: 132px;
-            height: 44px;
-            border-radius: 10px;
-
-            &:hover {
-                background: rgb(24, 84, 163);
-            }
-        }
-
-        .downloadApp {
-            cursor: pointer;
-            display: flex;
-            flex-direction: row;
-            height: 36px;
-            align-items: center;
-            margin-left: 30px;
-            margin-bottom: 3px;
-            position: relative;
-
-            &:hover {
-                .popver {
-                    display: block;
-                }
-            }
-
-            &_phoneIconBorderPath,
-            &_phoneIconHomePath {
-                transition: all 0.2s ease;
-            }
-
-            .text {
-                width: 116px;
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 14px;
-                line-height: 18px;
-                letter-spacing: 0.0075em;
-                color: #136fd3;
-                margin-left: 10px;
-            }
-
-            .popver {
-                position: absolute;
-                left: -12px;
-                top: 50px;
-                background: #ffffff;
-                border: 0.5px solid #bcbcbc;
-                border-radius: 10px;
-                padding: 14px 20px;
-                z-index: 100;
-                display: none;
-                box-shadow: 0px 0px 14px #bcbcbc;
-
-                &::after {
-                    content: ' ';
-                    position: absolute;
-                    left: 20px;
-                    top: -16px;
-                    width: 0;
-                    height: 0;
-                    border-width: 8px;
-                    border-style: solid;
-                    border-color: transparent transparent #fff transparent;
-                }
-
-                img {
-                    width: 104px;
-                    height: 104px;
-                }
-
-                p {
-                    padding: 6px 0 0 0;
-                    text-align: center;
-                    line-height: 20px;
-                    margin: 0;
-                }
-            }
-        }
-
-        .downloadApp:hover .downloadApp_phoneIconBorderPath {
-            fill: #136fd3;
-        }
-
-        .downloadApp:hover .downloadApp_phoneIconHomePath {
-            stroke: white;
-        }
-
-        .loginButton {
-            text-transform: capitalize !important;
-            font-family: 'Product Sans';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 14px;
-            line-height: 18px;
-            align-items: center;
-            letter-spacing: 0.0075em;
-            color: #136fd3;
-            width: 216px;
-            height: 44px;
-            border: 1.5px solid #136fd3;
-            border-radius: 10px;
-            margin-left: 9px;
-
-            span {
-                margin-left: 5px;
-            }
-        }
+    .downloadApp:hover .downloadApp_phoneIconBorderPath {
+      fill: #136fd3;
     }
 
-    .filters {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: calc(50vw + $paddingLeftWidth);
-        max-width: $maxContentWidth;
-        height: 50px;
-        padding-top: 20px;
-        // padding-left: 24px;
-        // padding-right: 24px;
-
-        &Left {
-            display: flex;
-            width: $contentWidth;
-        }
-
-        &Right {
-            display: flex;
-        }
-
-        .filterItems {
-            height: 30px;
-            width: 181px;
-            margin-right: 8px;
-        }
-
-        .jobSalary {
-            width: 188px;
-        }
-
-        .moreButton {
-            text-transform: capitalize !important;
-            border-radius: 10px;
-            width: 132px;
-            border: 1.5px solid #136fd3;
-            font-weight: 700;
-            font-size: 14px;
-            padding: 0;
-        }
-
-        .clearButton {
-            text-transform: capitalize !important;
-            font-family: 'Product Sans';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 12px;
-            line-height: 15px;
-            align-items: center;
-            letter-spacing: 0.0075em;
-            color: #707070;
-            font-size: 14px;
-            margin-left: 2px;
-        }
+    .downloadApp:hover .downloadApp_phoneIconHomePath {
+      stroke: white;
     }
+
+    .loginButton {
+      text-transform: capitalize !important;
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 18px;
+      align-items: center;
+      letter-spacing: 0.0075em;
+      color: #136fd3;
+      width: 216px;
+      height: 44px;
+      border: 1.5px solid #136fd3;
+      border-radius: 10px;
+      margin-left: 9px;
+
+      span {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: calc(50vw + $paddingLeftWidth);
+    max-width: $maxContentWidth;
+    height: 50px;
+    padding-top: 20px;
+    // padding-left: 24px;
+    // padding-right: 24px;
+
+    &Left {
+      display: flex;
+      width: $contentWidth;
+    }
+
+    &Right {
+      display: flex;
+    }
+
+    .filterItems {
+      height: 30px;
+      width: 181px;
+      margin-right: 8px;
+    }
+
+    .jobSalary {
+      width: 188px;
+    }
+
+    .moreButton {
+      text-transform: capitalize !important;
+      border-radius: 10px;
+      width: 132px;
+      border: 1.5px solid #136fd3;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 0;
+    }
+
+    .clearButton {
+      text-transform: capitalize !important;
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+      align-items: center;
+      letter-spacing: 0.0075em;
+      color: #707070;
+      font-size: 14px;
+      margin-left: 2px;
+    }
+  }
 }
 
 .searchFormMoblie {
-    width: 100vw;
-    height: 153px;
-    max-width: 100%;
-    display: none;
-    // position: sticky;
-    top: 0px;
-    flex-direction: column;
-    align-items: center;
-    background: #fff;
+  width: 100vw;
+  height: 153px;
+  max-width: 100%;
+  display: none;
+  // position: sticky;
+  top: 0px;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
 
-    @include sm {
-        display: flex;
+  @include sm {
+    display: flex;
+  }
+
+  .searchArea {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 24px;
+    padding: 0px 19px;
+
+    justify-content: flex-start;
+    align-items: flex-end;
+    height: 74px;
+
+    .location {
+      width: 124px;
+      height: 44px;
     }
 
-    .searchArea {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        margin-top: 24px;
-        padding: 0px 19px;
+    .search {
+      height: 44px;
+      flex: 1;
+      background: #fff;
+      margin-left: 8px;
+      position: relative;
+      top: 2px;
+    }
+  }
 
-        justify-content: flex-start;
-        align-items: flex-end;
-        height: 74px;
+  .filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 155px;
+    padding: 0px 19px;
+    margin-top: 10px;
 
-        .location {
-            width: 124px;
-            height: 44px;
-        }
-
-        .search {
-            height: 44px;
-            flex: 1;
-            background: #fff;
-            margin-left: 8px;
-            position: relative;
-            top: 2px;
-        }
+    .filterItems {
+      height: 30px;
+      width: 46%;
+      margin-right: 8px;
     }
 
-    .filters {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        width: 100%;
-        height: 155px;
-        padding: 0px 19px;
-        margin-top: 10px;
-
-        .filterItems {
-            height: 30px;
-            width: 46%;
-            margin-right: 8px;
-
-        }
-
-        .jobFunctions {
-            width: 46%;
-        }
-
-        .moreButton {
-            text-transform: capitalize !important;
-            border-radius: 10px;
-            width: 145px;
-        }
-
-        .clearButton {
-            text-transform: capitalize !important;
-            font-family: 'Product Sans';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 12px;
-            line-height: 15px;
-            align-items: center;
-            letter-spacing: 0.0075em;
-            color: #707070;
-
-        }
+    .jobFunctions {
+      width: 46%;
     }
+
+    .moreButton {
+      text-transform: capitalize !important;
+      border-radius: 10px;
+      width: 145px;
+    }
+
+    .clearButton {
+      text-transform: capitalize !important;
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+      align-items: center;
+      letter-spacing: 0.0075em;
+      color: #707070;
+    }
+  }
 }
 
 .uploadResumeButton {
+  width: 100%;
+  padding: 12px 13px;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+
+  &_button {
     width: 100%;
-    padding: 12px 13px;
-    background-repeat: no-repeat;
-    border-radius: 10px;
-    background-size: cover;
-    background-position: center;
+    border-radius: 10px !important;
+    height: 48px;
+    background-color: #136fd3 !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    line-height: 17px !important;
+    text-transform: capitalize !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    &_button {
-        width: 100%;
-        border-radius: 10px !important;
-        height: 48px;
-        background-color: #136fd3 !important;
-        color: #fff !important;
-        font-size: 14px !important;
-        line-height: 17px !important;
-        text-transform: capitalize !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    &_button:hover {
-        background-color: #136fd3 !important;
-    }
+  &_button:hover {
+    background-color: #136fd3 !important;
+  }
 }
 
 .arrowContainer {
+  .uploadResumeButton_button {
+    padding: 6px 35px !important;
+    background-repeat: no-repeat !important;
+    background-position-y: 7px !important;
+    background-position-x: 6px !important;
+  }
+
+  @include msd {
+    padding: 10px !important;
+
     .uploadResumeButton_button {
-        padding: 6px 35px !important;
-        background-repeat: no-repeat !important;
-        background-position-y: 7px !important;
-        background-position-x: 6px !important;
+      padding: 14px 35px !important;
+      font-size: 16px !important;
     }
-
-    @include msd {
-        padding: 10px !important;
-
-        .uploadResumeButton_button {
-            padding: 14px 35px !important;
-            font-size: 16px !important;
-        }
-    }
+  }
 }
 
 .jobCard {
-    width: 100%;
-    height: 166px;
+  width: 100%;
+  height: 166px;
+  position: relative;
+  padding-right: 0;
+
+  .urgent {
+    position: absolute;
+    top: -1px;
+    left: 0px;
+    z-index: 30;
+  }
+
+  .container {
+    width: calc(100%);
+    height: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #fff;
     position: relative;
-    padding-right: 0;
+    transition: box-shadow 0.3s ease-in;
+    cursor: pointer;
 
-    .urgent {
-        position: absolute;
-        top: -1px;
-        left: 0px;
-        z-index: 30;
+    &:hover {
+      box-shadow: 0px 12px 30px rgb(0, 0, 0, 0.1);
     }
 
-    .container {
-        width: calc(100%);
+    .topContainer {
+      width: 100%;
+      height: 128px;
+      padding: 16px 24px 0px 24px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .left {
+        width: 476px;
         height: 100%;
-        overflow: hidden;
-        border-radius: 10px;
-        background: #fff;
-        position: relative;
-        transition: box-shadow 0.3s ease-in;
-        cursor: pointer;
-
-        &:hover {
-            box-shadow: 0px 12px 30px rgb(0, 0, 0, 0.1);
-        }
-
-        .topContainer {
-            width: 100%;
-            height: 128px;
-            padding: 16px 24px 0px 24px;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-
-            .left {
-                width: 476px;
-                height: 100%;
-
-                .titleContainer {
-                    width: 100%;
-                    height: 23px;
-                    display: flex;
-                    flex-direction: row;
-                    flex-wrap: nowrap;
-                    justify-content: space-between;
-                    width: 100%;
-
-                    .title {
-                        --color: #353535;
-                        flex-shrink: 1;
-                        font-family: "Product Sans";
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 18px;
-                        line-height: 23px;
-                        align-items: center;
-                        letter-spacing: 0.02em;
-                        width: 350px;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        color: var(--color);
-                        transition: color 0.3s;
-
-                        &:hover {
-                            --color: #136fd3;
-                        }
-                    }
-
-                    .salary {
-                        font-family: "Product Sans";
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 16px;
-                        line-height: 23px;
-                        align-items: center;
-                        letter-spacing: 0.02em;
-                        color: #fe574a;
-                        white-space: nowrap;
-                        // overflow: hidden;
-                        // text-overflow: ellipsis;
-                        width: fit-content;
-                        margin-left: 16px;
-                    }
-                }
-
-                .labelContainer {
-                    height: 23px;
-                    margin-top: 8px;
-                    width: 100%;
-                    display: flex;
-                    // justify-content: space-between;
-                    flex-direction: row;
-
-                    .label {
-                        display: flex;
-                        align-items: center;
-                        padding: 2px 10px;
-                        /* General/White 1 */
-                        background: #F2F3F5;
-                        border-radius: 16px;
-                        font-family: "Product Sans";
-                        font-style: normal;
-                        font-weight: 400;
-                        font-size: 12px;
-                        line-height: 15px;
-                        letter-spacing: 0.0075em;
-                        color: #86909C;
-                        margin-right: 8px;
-                    }
-                }
-
-                .recruiterContainer {
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    margin-top: 16px;
-                    width: 100%;
-
-                    .imgContainer {
-                        position: relative;
-                        overflow: visible;
-
-                        .isOnline {
-                            width: 9px;
-                            height: 9px;
-                            border-radius: 4.5px;
-                            border: #fff solid 1px;
-                            background: #0EBD5C;
-                            position: absolute;
-                            bottom: 1px;
-                            right: 2px;
-                        }
-                    }
-
-                    .recruiter {
-                        .info {
-                            padding: 2px 0px;
-                            margin-left: 0px;
-                            width: fit-content;
-                            display: flex;
-                            align-items: center;
-                            flex-direction: row;
-                            font-family: 'Product Sans';
-                            font-style: normal;
-                            font-weight: 400;
-                            font-size: 12px;
-                            line-height: 15px;
-                            letter-spacing: 0.0075em;
-                            color: #4E5969;
-                            height: 24px;
-
-                            &.isHover {
-                                display: none;
-                            }
-                        }
-
-                        .button {
-                            padding: 4px 9px;
-                            border-radius: 12px;
-                            width: fit-content;
-                            font-family: "Product Sans";
-                            font-style: normal;
-                            font-weight: 400;
-                            font-size: 12px;
-                            line-height: 15px;
-                            height: 24px;
-                            letter-spacing: 0.0075em;
-                            color: #fff;
-                            background: #136fd3;
-                            display: none;
-                            height: 24px;
-
-                            &.isHover {
-                                display: flex;
-                                height: 24px;
-                                cursor: pointer;
-                            }
-                        }
-
-                        // height: 21px;
-                    }
-
-                    .online {
-                        background: #F2F9F3;
-                        border-radius: 15px;
-                        padding: 5px 8px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        height: 24px;
-                        color: #4CAF50;
-                        margin-left: 8px;
-
-                        &:before {
-                            content: "";
-                            background: #4CAF50;
-                            border-radius: 4px;
-                            border: 1px solid #ffffff;
-                            width: 8px;
-                            height: 8px;
-                            margin-right: 3px;
-                        }
-
-                        :first-child {
-                            font-family: "Product Sans";
-                            font-style: normal;
-                            font-weight: 400;
-                            font-size: 12px;
-                            line-height: 15px;
-                            display: flex;
-                            align-items: center;
-                            letter-spacing: 0.0075em;
-                            color: #ffffff;
-                        }
-                    }
-                }
-            }
-
-            .right {
-                // background: #0EBD5C;
-                height: 100%;
-                width: 322px;
-
-                .company {
-                    // height: 23px;
-                    display: flex;
-                    flex-direction: row;
-
-                    .logo {
-                        border-radius: 3px;
-                        overflow: hidden;
-                        margin-right: 10px;
-                    }
-
-                    .labelContainer {
-                        flex: 1;
-
-                        .name {
-                            --color: #353535;
-                            font-family: "Product Sans";
-                            font-style: normal;
-                            font-weight: 500;
-                            font-size: 16px;
-                            line-height: 23px;
-                            align-items: center;
-                            letter-spacing: 0.02em;
-                            color: var(--color);
-                            transition: color 0.3s;
-
-                            text-overflow: ellipsis;
-                            display: -webkit-box;
-                            -webkit-line-clamp: 2;
-                            word-break: break-all;
-                            -webkit-box-orient: vertical;
-                            overflow: hidden;
-
-                            &:hover {
-                                --color: #136fd3;
-                            }
-                        }
-
-                        .componylabels {
-                            width: 100%;
-                            display: flex;
-                            flex-wrap: wrap;
-                            flex-direction: row;
-                            justify-content: flex-start;
-                            margin-top: 8px;
-
-                            .label {
-                                display: flex;
-                                align-items: center;
-                                padding: 2px 10px;
-                                background: #F2F3F5;
-                                border-radius: 16px;
-                                font-family: "Product Sans";
-                                font-style: normal;
-                                font-weight: 400;
-                                font-size: 12px;
-                                line-height: 15px;
-                                letter-spacing: 0.0075em;
-                                color: #86909C;
-                                margin-right: 8px;
-                                height: 23px;
-                                margin-bottom: 8px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        .bottomContainer {
-            height: 38px;
-            width: 100%;
-            position: relative;
-            border-radius: 10px 0px 10px 0px;
-
-            &::before {
-                content: "";
-                position: absolute;
-                bottom: 0px;
-                left: 0px;
-                width: 100%;
-                height: 100%;
-                opacity: 1;
-                z-index: 1;
-                background: linear-gradient(90.08deg, #F5FAFF 1.5%, #FFFAFA 95.77%);
-            }
-
-            padding-left: 24px;
-            padding-right: 24px;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-
-            .skills {
-                width: 478px;
-                height: 15px;
-                font-family: "Product Sans";
-                font-style: normal;
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 15px;
-                align-items: center;
-                letter-spacing: 0.0075em;
-                color:  #86909C;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                z-index: 10;
-            }
-
-            .benefits {
-                height: 15px;
-                width: 322px;
-                margin-left: 48px;
-                font-family: "Product Sans";
-                font-style: normal;
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 15px;
-                align-items: center;
-                letter-spacing: 0.0075em;
-                color:  #86909C;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                z-index: 10;
-            }
-        }
-    }
-
-    .popupDetail {
-        // --opacity:1;
-        position: absolute;
-        top: 0px;
-        right: 30px;
-        width: 380px;
-        // height: 395px;
-        background: #fff;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 10px 10px 10px #ddd;
-        // opacity: var(--opacity);
-        // transition: opacity 1 0.3s;
-        // box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
-        z-index: 21;
-
-        &.hide {
-            display: none;
-            // --opacity: 0;
-        }
-
-        .popTop {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            width: 100%;
-            height: 115px;
-            background: #e7f1fb;
-            overflow: hidden;
-            padding: 13px 16px;
-
-            &Left {
-                flex: 1;
-
-                .title {
-                    font-family: "Product Sans";
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 18px;
-                    line-height: 23px;
-                    align-items: center;
-                    letter-spacing: 0.02em;
-                    color: #353535;
-                    width: 260px;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
-
-                .secondLabel {
-                    font-family: "Product Sans";
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 12px;
-                    line-height: 15px;
-                    letter-spacing: 0.0075em;
-                    color: #707070;
-                    width: 260px;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    margin-top: 8px;
-                }
-
-                .save {
-                    background: transparent;
-                    box-shadow: none;
-                    border: 1px solid #136fd3;
-                    width: 126px;
-                    height: 30px;
-                    border-radius: 10px;
-                    color: #136fd3;
-                    margin-top: 15px;
-                }
-            }
-
-            &Right {
-                // flex: 0;
-                width: 72px;
-                height: 93px;
-                padding: 6px 0px;
-                background: #fff;
-
-                font-family: "Product Sans";
-                font-style: normal;
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 12px;
-                text-align: center;
-                letter-spacing: 0.0075em;
-                color: #136fd3;
-            }
-        }
-
-        .popContent {
-            padding: 14px 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            .desTitle {
-                align-self: flex-start;
-                font-family: "Product Sans";
-                font-style: normal;
-                font-weight: bold;
-                font-size: 14px;
-                line-height: 18px;
-                letter-spacing: 0.0075em;
-                color: #353535;
-            }
-
-            .detail {
-                align-self: flex-start;
-                font-family: "Product Sans";
-                font-style: normal;
-                font-weight: 400;
-                font-size: 14px;
-                line-height: 19px;
-                letter-spacing: 0.02em;
-                color: #353535;
-                max-height: 213px;
-                overflow: hidden;
-                margin-top: 8px;
-            }
-        }
-    }
-}
-
-.jobCardMoblie {
-    width: calc(100vw - 20px);
-    margin: 0px 10px;
-    position: relative;
-    margin-bottom: 10px;
-
-    .container {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        border-radius: 10px;
-        background: #fff;
-        position: relative;
-        transition: box-shadow 0.3s ease-in;
-        padding: 16px 13px;
-        cursor: pointer;
-
-        &:hover {
-            box-shadow: 0px 12px 30px rgb(0, 0, 0, 0.1);
-        }
 
         .titleContainer {
-            width: 100%;
-            height: 23px;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            justify-content: space-between;
-            width: 100%;
+          width: 100%;
+          height: 23px;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          justify-content: space-between;
+          width: 100%;
 
-            .title {
-                flex-shrink: 1;
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight: 700;
-                font-size: 18px;
-                line-height: 23px;
-                align-items: center;
-                letter-spacing: 0.02em;
-                color: #353535;
-                width: 350px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
+          .title {
+            --color: #353535;
+            flex-shrink: 1;
+            font-family: 'Product Sans';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 23px;
+            align-items: center;
+            letter-spacing: 0.02em;
+            width: 350px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--color);
+            transition: color 0.3s;
 
-            .salary {
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight: 700;
-                font-size: 18px;
-                line-height: 23px;
-                align-items: center;
-                letter-spacing: 0.02em;
-                color: #FE574A;
-                white-space: nowrap;
-                // overflow: hidden;
-                // text-overflow: ellipsis;
-                width: fit-content;
+            &:hover {
+              --color: #136fd3;
             }
+          }
+
+          .salary {
+            font-family: 'Product Sans';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 23px;
+            align-items: center;
+            letter-spacing: 0.02em;
+            color: #fe574a;
+            white-space: nowrap;
+            // overflow: hidden;
+            // text-overflow: ellipsis;
+            width: fit-content;
+            margin-left: 16px;
+          }
         }
 
-        .companyName {
+        .labelContainer {
+          height: 23px;
+          margin-top: 8px;
+          width: 100%;
+          display: flex;
+          // justify-content: space-between;
+          flex-direction: row;
+
+          .label {
+            display: flex;
+            align-items: center;
+            padding: 2px 10px;
+            /* General/White 1 */
+            background: #f2f3f5;
+            border-radius: 16px;
             font-family: 'Product Sans';
             font-style: normal;
             font-weight: 400;
             font-size: 12px;
             line-height: 15px;
-            display: flex;
-            align-items: center;
             letter-spacing: 0.0075em;
-            color: #353535;
-            margin-top: 8px;
-            margin-bottom: 12px;
+            color: #86909c;
+            margin-right: 8px;
+          }
         }
 
-        .labelContainer {
-            margin-top: 8px;
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: row;
+        .recruiterContainer {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-top: 16px;
+          width: 100%;
 
-            .label {
+          .imgContainer {
+            position: relative;
+            overflow: visible;
+
+            .isOnline {
+              width: 9px;
+              height: 9px;
+              border-radius: 4.5px;
+              border: #fff solid 1px;
+              background: #0ebd5c;
+              position: absolute;
+              bottom: 1px;
+              right: 2px;
+            }
+          }
+
+          .recruiter {
+            .info {
+              padding: 2px 0px;
+              margin-left: 0px;
+              width: fit-content;
+              display: flex;
+              align-items: center;
+              flex-direction: row;
+              font-family: 'Product Sans';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 12px;
+              line-height: 15px;
+              letter-spacing: 0.0075em;
+              color: #4e5969;
+              height: 24px;
+
+              &.isHover {
+                display: none;
+              }
+            }
+
+            .button {
+              padding: 4px 9px;
+              border-radius: 12px;
+              width: fit-content;
+              font-family: 'Product Sans';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 12px;
+              line-height: 15px;
+              height: 24px;
+              letter-spacing: 0.0075em;
+              color: #fff;
+              background: #136fd3;
+              display: none;
+              height: 24px;
+
+              &.isHover {
+                display: flex;
+                height: 24px;
+                cursor: pointer;
+              }
+            }
+
+            // height: 21px;
+          }
+
+          .online {
+            background: #f2f9f3;
+            border-radius: 15px;
+            padding: 5px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 24px;
+            color: #4caf50;
+            margin-left: 8px;
+
+            &:before {
+              content: '';
+              background: #4caf50;
+              border-radius: 4px;
+              border: 1px solid #ffffff;
+              width: 8px;
+              height: 8px;
+              margin-right: 3px;
+            }
+
+            :first-child {
+              font-family: 'Product Sans';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 12px;
+              line-height: 15px;
+              display: flex;
+              align-items: center;
+              letter-spacing: 0.0075em;
+              color: #ffffff;
+            }
+          }
+        }
+      }
+
+      .right {
+        // background: #0EBD5C;
+        height: 100%;
+        width: 322px;
+
+        .company {
+          // height: 23px;
+          display: flex;
+          flex-direction: row;
+
+          .logo {
+            border-radius: 3px;
+            overflow: hidden;
+            margin-right: 10px;
+          }
+
+          .labelContainer {
+            flex: 1;
+
+            .name {
+              --color: #353535;
+              font-family: 'Product Sans';
+              font-style: normal;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 23px;
+              align-items: center;
+              letter-spacing: 0.02em;
+              color: var(--color);
+              transition: color 0.3s;
+
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              word-break: break-all;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+
+              &:hover {
+                --color: #136fd3;
+              }
+            }
+
+            .componylabels {
+              width: 100%;
+              display: flex;
+              flex-wrap: wrap;
+              flex-direction: row;
+              justify-content: flex-start;
+              margin-top: 8px;
+
+              .label {
                 display: flex;
                 align-items: center;
                 padding: 2px 10px;
-                /* General/White 1 */
-                background: #F0F0F0;
+                background: #f2f3f5;
                 border-radius: 16px;
                 font-family: 'Product Sans';
                 font-style: normal;
@@ -1021,240 +719,545 @@ $contentWidth: 894px;
                 font-size: 12px;
                 line-height: 15px;
                 letter-spacing: 0.0075em;
-                color: #707070;
-                margin: 0 6px 6px 0;
-
-                &:last-child {
-                    margin-right: 0;
-                }
+                color: #86909c;
+                margin-right: 8px;
+                height: 23px;
+                margin-bottom: 8px;
+              }
             }
+          }
         }
-
-        .recruiterContainer {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 4px;
-            width: 100%;
-
-            .info {
-                padding: 2px 0px;
-                width: fit-content;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                flex-direction: row;
-                justify-content: flex-start;
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 100%;
-                letter-spacing: 0.0075em;
-                color: #353535;
-                height: 24px;
-                line-height: 100%;
-                flex: 1;
-                width: 0;
-
-                .image {
-                    border-radius: 8.5px;
-                    margin-right: 10px;
-                }
-
-                .hrTitle {
-                    max-width: 300px;
-                    overflow: hidden;
-                    display: block;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-
-            }
-
-            .fullName {
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 15px;
-                letter-spacing: 0.0075em;
-                color: #707070;
-                display: block;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                width: fit-content;
-                margin-left: 10px;
-                text-align: right;
-            }
-
-            .button {
-                padding: 4px 9px;
-                border-radius: 12px;
-                width: fit-content;
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 15px;
-                height: 24px;
-                letter-spacing: 0.0075em;
-                color: #fff;
-                background: #136FD3;
-                display: none;
-                height: 24px;
-
-                &.isHover {
-                    display: flex;
-                    height: 24px;
-                    cursor: pointer;
-                }
-            }
-
-            // height: 21px;
-
-
-            .online {
-                background: #F2F9F3;
-                border-radius: 15px;
-                padding: 5px 8px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 24px;
-                color: #4CAF50;
-                margin-left: 8px;
-
-                &:before {
-                    content: '';
-                    background: #4CAF50;
-                    border-radius: 4px;
-                    border: 1px solid #FFFFFF;
-                    width: 8px;
-                    height: 8px;
-                    margin-right: 3px;
-                }
-
-                :first-child {
-                    font-family: 'Product Sans';
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 12px;
-                    line-height: 15px;
-                    display: flex;
-                    align-items: center;
-                    letter-spacing: 0.0075em;
-                    color: #FFFFFF;
-                }
-            }
-        }
+      }
     }
-}
 
-.loadMore {
-    width: 100%;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+    .bottomContainer {
+      height: 38px;
+      width: 100%;
+      position: relative;
+      border-radius: 10px 0px 10px 0px;
 
-.histories {
-    margin-top: 25px;
-    width: 257px;
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        z-index: 1;
+        background: linear-gradient(90.08deg, #f5faff 1.5%, #fffafa 95.77%);
+      }
 
-    .title {
+      padding-left: 24px;
+      padding-right: 24px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      .skills {
+        width: 478px;
+        height: 15px;
         font-family: 'Product Sans';
         font-style: normal;
-        font-weight: 700;
-        font-size: 16px;
-        line-height: 24px;
-        display: flex;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
         align-items: center;
-        color: #353535;
-        padding-left: 19px;
-        height: 40.93px;
-        background: #F0F0F0;
-    }
-
-    a {
-        display: block;
-    }
-
-    .item {
-        --color: #353535;
-        width: 100%;
-        height: 39px;
-        padding-left: 7px;
-        padding-right: 10px;
-        background: #FFFFFF;
+        letter-spacing: 0.0075em;
+        color: #86909c;
         overflow: hidden;
-        text-overflow: ellipsis;
         white-space: nowrap;
-        line-height: 39px;
-        display: block;
+        text-overflow: ellipsis;
+        z-index: 10;
+      }
+
+      .benefits {
+        height: 15px;
+        width: 322px;
+        margin-left: 48px;
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        align-items: center;
+        letter-spacing: 0.0075em;
+        color: #86909c;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        z-index: 10;
+      }
+    }
+  }
+
+  .popupDetail {
+    // --opacity:1;
+    position: absolute;
+    top: 0px;
+    right: 30px;
+    width: 380px;
+    // height: 395px;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 10px 10px 10px #ddd;
+    // opacity: var(--opacity);
+    // transition: opacity 1 0.3s;
+    // box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    z-index: 21;
+
+    &.hide {
+      display: none;
+      // --opacity: 0;
+    }
+
+    .popTop {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      height: 115px;
+      background: #e7f1fb;
+      overflow: hidden;
+      padding: 13px 16px;
+
+      &Left {
+        flex: 1;
+
+        .title {
+          font-family: 'Product Sans';
+          font-style: normal;
+          font-weight: bold;
+          font-size: 18px;
+          line-height: 23px;
+          align-items: center;
+          letter-spacing: 0.02em;
+          color: #353535;
+          width: 260px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .secondLabel {
+          font-family: 'Product Sans';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 15px;
+          letter-spacing: 0.0075em;
+          color: #707070;
+          width: 260px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-top: 8px;
+        }
+
+        .save {
+          background: transparent;
+          box-shadow: none;
+          border: 1px solid #136fd3;
+          width: 126px;
+          height: 30px;
+          border-radius: 10px;
+          color: #136fd3;
+          margin-top: 15px;
+        }
+      }
+
+      &Right {
+        // flex: 0;
+        width: 72px;
+        height: 93px;
+        padding: 6px 0px;
+        background: #fff;
+
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 12px;
+        text-align: center;
+        letter-spacing: 0.0075em;
+        color: #136fd3;
+      }
+    }
+
+    .popContent {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .desTitle {
+        align-self: flex-start;
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 0.0075em;
+        color: #353535;
+      }
+
+      .detail {
+        align-self: flex-start;
         font-family: 'Product Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
-        align-items: center;
-        letter-spacing: 0.0075em;
-        color: var(--color);
-        transition: color ease-in 0.3s;
-
-        &:hover {
-            --color: #136FD3;
-        }
+        line-height: 19px;
+        letter-spacing: 0.02em;
+        color: #353535;
+        max-height: 213px;
+        overflow: hidden;
+        margin-top: 8px;
+      }
     }
+  }
+}
+
+.jobCardMoblie {
+  width: calc(100vw - 20px);
+  margin: 0px 10px;
+  position: relative;
+  margin-bottom: 10px;
+
+  .container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #fff;
+    position: relative;
+    transition: box-shadow 0.3s ease-in;
+    padding: 16px 13px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0px 12px 30px rgb(0, 0, 0, 0.1);
+    }
+
+    .titleContainer {
+      width: 100%;
+      height: 23px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      width: 100%;
+
+      .title {
+        flex-shrink: 1;
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 23px;
+        align-items: center;
+        letter-spacing: 0.02em;
+        color: #353535;
+        width: 350px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .salary {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 23px;
+        align-items: center;
+        letter-spacing: 0.02em;
+        color: #fe574a;
+        white-space: nowrap;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+        width: fit-content;
+      }
+    }
+
+    .companyName {
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.0075em;
+      color: #353535;
+      margin-top: 8px;
+      margin-bottom: 12px;
+    }
+
+    .labelContainer {
+      margin-top: 8px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+
+      .label {
+        display: flex;
+        align-items: center;
+        padding: 2px 10px;
+        /* General/White 1 */
+        background: #f0f0f0;
+        border-radius: 16px;
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        letter-spacing: 0.0075em;
+        color: #707070;
+        margin: 0 6px 6px 0;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .recruiterContainer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+      width: 100%;
+
+      .info {
+        padding: 2px 0px;
+        width: fit-content;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-direction: row;
+        justify-content: flex-start;
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 100%;
+        letter-spacing: 0.0075em;
+        color: #353535;
+        height: 24px;
+        line-height: 100%;
+        flex: 1;
+        width: 0;
+
+        .image {
+          border-radius: 8.5px;
+          margin-right: 10px;
+        }
+
+        .hrTitle {
+          max-width: 300px;
+          overflow: hidden;
+          display: block;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      .fullName {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        letter-spacing: 0.0075em;
+        color: #707070;
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: fit-content;
+        margin-left: 10px;
+        text-align: right;
+      }
+
+      .button {
+        padding: 4px 9px;
+        border-radius: 12px;
+        width: fit-content;
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        height: 24px;
+        letter-spacing: 0.0075em;
+        color: #fff;
+        background: #136fd3;
+        display: none;
+        height: 24px;
+
+        &.isHover {
+          display: flex;
+          height: 24px;
+          cursor: pointer;
+        }
+      }
+
+      // height: 21px;
+
+      .online {
+        background: #f2f9f3;
+        border-radius: 15px;
+        padding: 5px 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 24px;
+        color: #4caf50;
+        margin-left: 8px;
+
+        &:before {
+          content: '';
+          background: #4caf50;
+          border-radius: 4px;
+          border: 1px solid #ffffff;
+          width: 8px;
+          height: 8px;
+          margin-right: 3px;
+        }
+
+        :first-child {
+          font-family: 'Product Sans';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 15px;
+          display: flex;
+          align-items: center;
+          letter-spacing: 0.0075em;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+}
+
+.loadMore {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.histories {
+  margin-top: 25px;
+  width: 257px;
+
+  .title {
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: #353535;
+    padding-left: 19px;
+    height: 40.93px;
+    background: #f0f0f0;
+  }
+
+  a {
+    display: block;
+  }
+
+  .item {
+    --color: #353535;
+    width: 100%;
+    height: 39px;
+    padding-left: 7px;
+    padding-right: 10px;
+    background: #ffffff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 39px;
+    display: block;
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    align-items: center;
+    letter-spacing: 0.0075em;
+    color: var(--color);
+    transition: color ease-in 0.3s;
+
+    &:hover {
+      --color: #136fd3;
+    }
+  }
 }
 
 .tableContainer {
-    border-radius: 10px;
-    background: transparent;
-    padding-left: 0;
-    width: fit-content;
-    padding-bottom: 50px;
-    width: 100%;
-    height: 100%;
-    // margin-left: 24px;
+  border-radius: 10px;
+  background: transparent;
+  padding-left: 0;
+  width: fit-content;
+  padding-bottom: 50px;
+  width: 100%;
+  height: 100%;
+  // margin-left: 24px;
 
-    @include sm {
-        display: none;
-    }
+  @include sm {
+    display: none;
+  }
 
-    //   @include sm {
-    //     display: flex;
-    //     flex-direction: column;
-    //     height: auto;
-    //   }
+  //   @include sm {
+  //     display: flex;
+  //     flex-direction: column;
+  //     height: auto;
+  //   }
 
-    .jobContainer {
-        margin-bottom: 15px;
-    }
+  .jobContainer {
+    margin-bottom: 15px;
+  }
 }
 
 .mobileContainer {
-    display: none;
+  display: none;
 
-    @include sm {
-        display: flex;
-        flex-direction: column;
-    }
+  @include sm {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .loadingSke {
-    height: 145px;
-    background: #fff;
-    border-radius: 10px;
-    margin-bottom: 16px;
-    padding: 14px 24px 0 24px;
-    margin-left: 0;
-    width: 100%;
+  height: 145px;
+  background: #fff;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  padding: 14px 24px 0 24px;
+  margin-left: 0;
+  width: 100%;
 
-    .top {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-    }
+  .top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
+
+.qrcode {
+  transition: transform 0.4s ease;
+  transform: scale(1);
+}
+
+.qrcode:hover {
+  transform: scale(1.5);
 }

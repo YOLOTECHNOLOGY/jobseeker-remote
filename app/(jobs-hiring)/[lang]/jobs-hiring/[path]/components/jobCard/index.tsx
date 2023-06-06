@@ -425,15 +425,9 @@ const JobCard = (props: any) => {
               <QRCodeSVG
                 value={location?.origin + '/' + langKey + job_url}
                 size={60}
-                imageSettings={{ src: SmallAppLogo, height: 10, width: 10, excavate: true }}
+                // imageSettings={{ src: SmallAppLogo, height: 10, width: 10, excavate: true }}
+                className={styles.qrcode}
               />
-              {/* <Image
-                style={{ margin: '0px 6px' }}
-                src={AppDownQRCode}
-                height={60}
-                width={60}
-                alt={''}
-              /> */}
               {search.jobCard.talkToBoss},.
             </div>
           </div>
