@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 
 /* Components */
 import Text from 'components/Text'
@@ -44,13 +44,15 @@ const Trash = ({
   name,
   deleteResumeLoading,
   onClick,
-  lang
+  lang,
+  displayClear
 }: {
   id: number
   deleteResumeLoading: boolean
   onClick: () => void
   name: string
   lang?: Record<string, any>
+  displayClear: boolean
 }) => {
   return (
     <div
@@ -77,6 +79,7 @@ const Trash = ({
         deleteResumeLoading={deleteResumeLoading}
         handleDeleteResume={onClick}
         lang={lang}
+        displayClear={displayClear}
       />
     </div>
   )
@@ -108,7 +111,7 @@ const UploadResume = ({
   const handleDeleteResume = (e) => {
     handleDelete?.(e)
   }
-  const displayClear = resumes.length > 1
+  const displayClear = useMemo(() => resumes.length > 1, [resumes])
   return (
     <>
       <div className={styles.uploadResumeField}>
@@ -135,15 +138,15 @@ const UploadResume = ({
                       </div>
                     </div>
                   </div>
-                  {displayClear && (
-                    <Trash
-                      id={item.id}
-                      name={item.name}
-                      deleteResumeLoading={deleteResumeLoading}
-                      onClick={() => handleDeleteResume(item.id)}
-                      lang={lang}
-                    />
-                  )}
+
+                  <Trash
+                    id={item.id}
+                    name={item.name}
+                    deleteResumeLoading={deleteResumeLoading}
+                    onClick={() => handleDeleteResume(item.id)}
+                    lang={lang}
+                    displayClear={displayClear}
+                  />
                 </div>
               </>
             )

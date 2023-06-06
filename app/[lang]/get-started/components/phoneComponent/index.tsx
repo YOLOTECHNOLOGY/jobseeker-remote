@@ -29,8 +29,10 @@ const PhoneComponent = ({ setPhoneNumber, phone, setDisable, phoneError, lang }:
         label={newGetStarted.phoneNumber}
         size='small'
         type='number'
+        name='phone'
         error={!!phoneError}
         value={phone}
+        autoComplete="true"
         onChange={(e) => setPhoneNumber(e.target.value)}
       />
       {phoneError && errorText(phoneError)}

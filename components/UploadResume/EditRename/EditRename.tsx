@@ -28,9 +28,10 @@ type propsType = {
   deleteResumeLoading: boolean
   handleDeleteResume: () => void
   lang?: Record<string, any>
+  displayClear: boolean
 }
 
-const EditRename = ({ id, name, lang }: propsType) => {
+const EditRename = ({ id, name, lang, displayClear }: propsType) => {
   const dispatch = useDispatch()
   const {
     errorcode,
@@ -49,7 +50,7 @@ const EditRename = ({ id, name, lang }: propsType) => {
   const [showConfirmEmailModal, setShowConfirmEmailModal] = useState<boolean>(false)
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [isDisabled, setIsDisabled] = useState<boolean>(false)
+  const [isDisabled, setIsDisabled] = useState<boolean>(!displayClear)
 
   const [showSnackbarModal, setShowSnackbarModal] = useState<boolean>(false)
   const [snackbarContent, setSnackbarContent] = useState<string>(
@@ -81,6 +82,10 @@ const EditRename = ({ id, name, lang }: propsType) => {
       reName: name.slice(0, name.lastIndexOf('.'))
     }
   })
+
+  useEffect(() => {
+    setIsDisabled(!displayClear)
+  }, [displayClear])
 
   useEffect(() => {
     if (showRenameModal) {
@@ -138,7 +143,6 @@ const EditRename = ({ id, name, lang }: propsType) => {
       })
       .catch(({ response: { data } }) => {
         if (data.code) {
-          console.log(data.code, '报错number')
           handleSnackbarContent('reName', 'warning', data.code)
         }
       })
@@ -167,7 +171,6 @@ const EditRename = ({ id, name, lang }: propsType) => {
 
     fetchSendResumeEmail(payload)
       .then(({ status }) => {
-        console.log(status, 'status')
         if (status === 200) {
           handleCloseModal()
           handleSnackbarContent('mail', 'success')
@@ -175,7 +178,6 @@ const EditRename = ({ id, name, lang }: propsType) => {
       })
       .catch(({ response: { data } }) => {
         if (data.code) {
-          console.log(data.code, '报错number')
           handleSnackbarContent('mail', 'warning', data.code)
         }
       })
@@ -191,16 +193,16 @@ const EditRename = ({ id, name, lang }: propsType) => {
         if (status === 200) {
           handleRefreshResume()
           handleSnackbarContent('delete', 'success')
+          handleCloseMenu()
         }
       })
       .catch(({ response: { data } }) => {
         if (data.code) {
-          console.log(data.code, '报错number')
           handleSnackbarContent('delete', 'warning', data.code)
         }
       })
       .finally(() => {
-        setIsDisabled(true)
+        setIsDisabled(false)
         // setDeleteResumeLoading(false)
       })
   }
@@ -300,7 +302,7 @@ const EditRename = ({ id, name, lang }: propsType) => {
                 value: true,
                 message: transitions.pleaseRenameYourResumeFile
               },
-              maxLength: { value: 30, message: transitions.MaximumLengthLimitExceeded },
+              maxLength: { value: 30, message: transitions.maximumLengthLimitExceeded },
               pattern: {
                 value: /^\S.*\S$|(^\S{0,1}\S$)/,
                 message: transitions.cannotEnterSpecialCharacters
@@ -368,8 +370,9 @@ const EditRename = ({ id, name, lang }: propsType) => {
         fullScreen
       >
         <p>
-          {transitions.theEmailAddressYouWantToSendIs}
-          {email}, {transitions.pleaseConfirmThatYourEmailAddressIsCorrectBeforeSending}
+          {transitions.theEmailAddressYouWantToSendIs}{' '}
+          <span style={{ color: '#2378E5' }}>{email}</span>,
+          {transitions.pleaseConfirmThatYourEmailAddressIsCorrectBeforeSending}
         </p>
       </Modal>
 
