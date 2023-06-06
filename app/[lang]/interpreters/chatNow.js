@@ -91,7 +91,7 @@ const interpreter = registInterpreter((command) =>
         const { jobDetail, dispatch } = context
         const { id } = jobDetail
         const source = getSourceCookie()
-        return createChat(id, { source, job_title_id: null, device: isMobile ? 'mobile_web' : 'web' })
+        return createChat(id, { source,  device: isMobile ? 'mobile_web' : 'web' })
           .then((result) => {
             const chatId = result.data.data.id
             const newData = {
