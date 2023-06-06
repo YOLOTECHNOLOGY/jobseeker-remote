@@ -276,8 +276,8 @@
       "popup": {
         "chatBoss": "Chat directly with Boss"
       },
-      "reset2":"Reset",
-      "save":"Save"
+      "reset2": "Reset",
+      "save": "Save"
     },
     "popularJobs": "Popular Jobs",
     "tag": {
@@ -1046,5 +1046,18 @@
     "disabledDescription": "When Boss requests for your resume, we will send your resume attachment automatically to Boss. Are you sure you want to disable it?",
     "enableDescription": "When Boss requests for your resume, we will send your resume attachment automatically to Boss. Please select which resume would you like to be sent to Boss automatically. ",
     "warnText": "Otherwise, you would need to wait for both parties to reply before you can request to send resume."
+  },
+  "seo": {
+    "ph": "Philippines",
+    "sg": "Singapore",
+    "siteName": "Bossjob - Career Platform for Professionals in {{country}}",
+    "jobSearch": {
+      "defaultTitle": "Professional Jobs in {{country}} - Search & Apply Job Opportunities - {{month}} {{year}} | Bossjob",
+      "defaultDescription": "New Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers",
+      "queryTitle": "{{searchQuery}} Jobs in {{country}},Apply Job Opportunities - {{month}} {{year}} | Bossjob",
+      "queryLocationTitle": "{{searchQuery}} Jobs in {{country}},Apply Job Opportunities - {{month}} {{year}} | Bossjob",
+      "queryDescription": "New {{searchQuery}} Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers",
+      "queryLocationDescription": "New {{searchQuery}} Jobs in {{location}} {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
+    }
   }
 }

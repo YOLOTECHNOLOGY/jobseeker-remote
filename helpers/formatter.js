@@ -170,9 +170,10 @@ export const buildQueryParams = (arrayObj) => {
   return queryString
 }
 
-export const getCurrentMonthYear = () => {
+export const getCurrentMonthYear = (lang) => {
+  moment.locale(lang)
   const today = new Date()
-  const month = moment(today).format('MMM')
+  const month =    moment(today).format('MM')
   const year = today.getFullYear()
   return {
     month,
