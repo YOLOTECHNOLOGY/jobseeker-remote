@@ -143,7 +143,6 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
       })
       .catch(({ response: { data } }) => {
         if (data.code) {
-          console.log(data.code, '报错number')
           handleSnackbarContent('reName', 'warning', data.code)
         }
       })
@@ -179,7 +178,6 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
       })
       .catch(({ response: { data } }) => {
         if (data.code) {
-          console.log(data.code, '报错number')
           handleSnackbarContent('mail', 'warning', data.code)
         }
       })
@@ -200,12 +198,11 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
       })
       .catch(({ response: { data } }) => {
         if (data.code) {
-          console.log(data.code, '报错number')
           handleSnackbarContent('delete', 'warning', data.code)
         }
       })
       .finally(() => {
-        setIsDisabled(true)
+        setIsDisabled(false)
         // setDeleteResumeLoading(false)
       })
   }
@@ -305,7 +302,7 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
                 value: true,
                 message: transitions.pleaseRenameYourResumeFile
               },
-              maxLength: { value: 30, message: transitions.MaximumLengthLimitExceeded },
+              maxLength: { value: 30, message: transitions.maximumLengthLimitExceeded },
               pattern: {
                 value: /^\S.*\S$|(^\S{0,1}\S$)/,
                 message: transitions.cannotEnterSpecialCharacters
@@ -373,8 +370,9 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
         fullScreen
       >
         <p>
-          {transitions.theEmailAddressYouWantToSendIs}
-          {email}, {transitions.pleaseConfirmThatYourEmailAddressIsCorrectBeforeSending}
+          {transitions.theEmailAddressYouWantToSendIs}{' '}
+          <span style={{ color: '#2378E5' }}>{email}</span>,
+          {transitions.pleaseConfirmThatYourEmailAddressIsCorrectBeforeSending}
         </p>
       </Modal>
 
