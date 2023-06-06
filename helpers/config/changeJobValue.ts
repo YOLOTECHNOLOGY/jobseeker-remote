@@ -36,7 +36,7 @@ export const changeJobValue = (config, job) => {
       item.pathKey || item.idKey
     )
   })
-  job.job_benefits.forEach(benefit => {
+  job.job_benefits?.forEach(benefit => {
     [{
       property: 'name',
       idKey: 'id',
