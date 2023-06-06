@@ -36,6 +36,7 @@ export const changeJobValue = (config, job) => {
       item.pathKey || item.idKey
     )
   })
+  if(!Array.isArray(job.job_benefits)) return
   job.job_benefits.forEach(benefit => {
     [{
       property: 'name',
