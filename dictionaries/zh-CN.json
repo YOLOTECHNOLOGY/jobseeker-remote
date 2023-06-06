@@ -725,7 +725,7 @@
           "send": "发送",
           "back": "返回",
           "confirm": "确认",
-          "pleaseRenameYourResumeFile": "请重命名您的简历文件。",
+          "pleaseRenameYourResume file.": "Please rename your resume file.",
           "maximumLengthLimitExceeded": "超出最大长度限制",
           "cannotEnterSpecialCharacters": "不能输入特殊字符",
           "resumeFileName": "恢复文件名",
@@ -807,7 +807,7 @@
     "searchForJobTitle": "搜索工作标题",
     "year": "年",
     "month": "月",
-    "months": "",
+    "months": "s",
     "readMore": "显示更多",
     "readLess": "显示更少"
   },
