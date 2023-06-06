@@ -18,7 +18,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import SearchIcon from '@mui/icons-material/Search'
 import { getCountryId } from 'helpers/country';
 import LocationMultiSelector from 'app/[lang]/components/commons/locationMulty'
-import { encode } from 'app/[lang]/jobs-hiring/interpreters/encoder'
+import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
 import { getCookie, setCookie } from 'helpers/cookies'
 
 const transQs = (params: any) => {
