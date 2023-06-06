@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useContext } from 'react'
-import { HomePageChat, AppDownQRCode } from 'images'
+import { HomePageChat, SmallAppLogo } from 'images'
 import { isMobile } from 'react-device-detect'
 import Image from 'next/image'
 import classNames from 'classnames'
@@ -19,6 +19,7 @@ import { languageContext } from 'app/[lang]/components/providers/languageProvide
 import { useSelector } from 'react-redux'
 import { getValueById } from 'helpers/config/getValueById'
 import { getLang } from 'helpers/country'
+import { QRCodeSVG } from 'qrcode.react'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -65,7 +66,7 @@ const useShowPop = (titleHover, popHover) => {
   return showPopup
 }
 
-const useSaveJob = (jobId, defaultSaved, accessToken,langKey) => {
+const useSaveJob = (jobId, defaultSaved, accessToken, langKey) => {
   const [isSaved, setIsSaved] = useState(defaultSaved)
   const [isSaving, setIsSaving] = useState(false)
   const router = useRouter()
@@ -153,7 +154,7 @@ const JobCard = (props: any) => {
     getValueById(config, company_size_id, 'company_size_id'),
     getValueById(config, company_financing_stage_id, 'company_financing_stage_id')
   ].filter((a) => a)
-  const langKey = getLang();
+  const langKey = getLang()
   const router = useRouter()
   const [loading, chatNow, modalChange] = useChatNow(props)
   const [titleHover, setTitleHover] = useState(false)
@@ -163,7 +164,7 @@ const JobCard = (props: any) => {
     ?.join(', ')
   const showPopup = useShowPop(titleHover, popHover)
   const accessToken = getCookie('accessToken')
-  const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken,langKey)
+  const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken, langKey)
   const [jobDetail, detailLoading, startLoading] = useJobDetail(id)
   // const industry =  getValueById(config,industry_id,'industry_id')
   const [isChatHover, setIsChatHover] = useState(false)
@@ -185,6 +186,7 @@ const JobCard = (props: any) => {
   useEffect(() => {
     setSourceCookie('job_search')
   }, [])
+
   return (
     <div className={styles.jobCard}>
       {is_urgent ? (
@@ -215,7 +217,9 @@ const JobCard = (props: any) => {
           <div className={styles.topContainer}>
             <div
               className={styles.left}
-              onClick={() => router.push(`${langKey}`+job_url, { forceOptimisticNavigation: true })}
+              onClick={() =>
+                router.push(`${langKey}` + job_url, { forceOptimisticNavigation: true })
+              }
             >
               <div
                 key={job_title + id}
@@ -242,7 +246,9 @@ const JobCard = (props: any) => {
               >
                 <div style={{ height: 24, display: 'flex', flexDirection: 'row' }}>
                   <div className={styles.imgContainer}>
-                    <Image src={recruiter_avatar} alt={''}
+                    <Image
+                      src={recruiter_avatar}
+                      alt={''}
                       style={{ overflow: 'hidden', borderRadius: 12, marginRight: 6 }}
                       width={24}
                       height={24}
@@ -293,9 +299,7 @@ const JobCard = (props: any) => {
                           />
                         </svg>
                       </div> */}
-                      {`${[recruiter_full_name, recruiter_job_title]
-                        .filter((a) => a)
-                        .join(' · ')}`}
+                      {`${[recruiter_full_name, recruiter_job_title].filter((a) => a).join(' · ')}`}
                     </div>
                     <MaterialButton
                       className={classNames({
@@ -309,7 +313,7 @@ const JobCard = (props: any) => {
                       onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
-                          ; (chatNow as any)()
+                        ;(chatNow as any)()
                       }}
                     >
                       <Image src={HomePageChat} width={16} height={16} alt={''} />
@@ -326,16 +330,17 @@ const JobCard = (props: any) => {
                       </Text>
                     </MaterialButton>
                   </div>
-                  {!!recruiter_is_online && <div className={styles.online}>{search.jobCard.online}</div>}
+                  {!!recruiter_is_online && (
+                    <div className={styles.online}>{search.jobCard.online}</div>
+                  )}
                 </div>
               </div>
-              
             </div>
             <div
               className={styles.right}
               onClick={(e) => {
                 e.stopPropagation()
-                router.push(`${langKey}`+company_url, { forceOptimisticNavigation: true })
+                router.push(`${langKey}` + company_url, { forceOptimisticNavigation: true })
               }}
             >
               <div className={styles.company}>
@@ -362,6 +367,7 @@ const JobCard = (props: any) => {
             </div>
           </div>
         </div>
+        {/* hover */}
         <div
           className={classNames({
             [styles.popupDetail]: true,
@@ -416,14 +422,13 @@ const JobCard = (props: any) => {
               </MaterialButton>
             </div>
             <div className={styles.popTopRight}>
-              <Image
-                style={{ margin: '0px 6px' }}
-                src={AppDownQRCode}
-                height={60}
-                width={60}
-                alt={''}
+              <QRCodeSVG
+                value={location?.origin + '/' + langKey + job_url}
+                size={60}
+                // imageSettings={{ src: SmallAppLogo, height: 10, width: 10, excavate: true }}
+                className={styles.qrcode}
               />
-              {search.jobCard.talkToBoss}
+              {search.jobCard.talkToBoss},.
             </div>
           </div>
           <div className={styles.popContent}>

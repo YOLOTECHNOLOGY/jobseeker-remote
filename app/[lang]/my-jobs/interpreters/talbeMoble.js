@@ -3,7 +3,7 @@ import { registInterpreter, Result } from 'app/[lang]/abstractModels/util'
 import { ReaderTPromise as M } from 'app/[lang]/abstractModels/monads'
 import { fetchJobsListService } from 'store/services/jobs/fetchJobsList'
 import { check } from 'helpers/interpreters/services/chat'
-import { buildParams } from 'app/[lang]/jobs-hiring/interpreters/encoder'
+import { buildParams } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
 import { getCookie } from 'helpers/cookies'
 
 export default registInterpreter(command =>

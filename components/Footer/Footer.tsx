@@ -552,7 +552,7 @@ const Footer = ({lang}:any) => {
                     </Link>
                   </li>
                   <li>
-                    <Link className={styles.footerLink} to={`${langKey}/jobs-hiring`} title='Create job alert'>
+                    <Link className={styles.footerLink} to={`${langKey}/jobs-hiring/job-search`} title='Create job alert'>
                       <Text textStyle='sm'>{createJobAlert}</Text>
                     </Link>
                   </li>
