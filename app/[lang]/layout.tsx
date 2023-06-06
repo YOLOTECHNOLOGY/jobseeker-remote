@@ -12,8 +12,11 @@ const defaultSEO = {
 }
 
 export default async function RootLayout(props: any) {
+  const {children} = props
   return (
     /* @ts-expect-error Async Server Component */
-    <PublicLayout {...props} seo={defaultSEO} />
+    <PublicLayout {...props} seo={defaultSEO} >
+      {children}
+    </PublicLayout>
   )
 }
