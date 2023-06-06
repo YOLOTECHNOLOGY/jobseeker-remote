@@ -4,7 +4,7 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
-import JobSearchBar from '../../../../components/commons/location/search'
+import JobSearchBar from '../../../../../../[lang]/components/commons/location/search'
 import styles from '../../index.module.scss'
 import Single from 'app/[lang]/components/mobile/select/single'
 import Multiple from 'app/[lang]/components/mobile/select/multiple'

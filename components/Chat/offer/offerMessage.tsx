@@ -9,10 +9,8 @@ const OfferMessage = (props: any) => {
     const [show, setShow] = useState(false)
     const { contextRef, lang } = props
     const { company, sendAnOffer, viewNow, viewLater } = lang ?? {}
-    console.log({lang})
     const actionsRef = useRef({} as any)
     const [data, setData] = useState<any>({})
-
     const context = {
 
         modalOfferMessage(actions) {

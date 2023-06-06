@@ -37,7 +37,15 @@ const OfferDetail = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <OfferView offerData={data} lang={lang}/>
+        <OfferView offerData={data} lang={lang} onChatClick={
+            () => {
+                if(window.location.pathname?.includes('chat')){
+                    actionsRef?.current?.close?.()
+                } else {
+                    actionsRef?.current?.toChat?.()
+                }
+            }
+        }/>
     </Modal >
 }
 export default OfferDetail

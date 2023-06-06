@@ -4,7 +4,7 @@ import { toPairs } from 'ramda'
 import { useSelector } from 'react-redux'
 
 import { Button } from 'app/[lang]/components/MUIs'
-import { encode } from 'app/[lang]/jobs-hiring/interpreters/encoder'
+import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
 
 import styles from '../../../../page.module.scss'
 

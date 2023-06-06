@@ -9,8 +9,10 @@ export const Offerbottom = `${S3BucketJobseeker}/Offerbottom.svg`
 export const Offercenter = `${S3BucketJobseeker}/Offercenter.svg`
 export const Offermask = `${S3BucketJobseeker}/Offermask.svg`
 export const Offerhead = `${S3BucketJobseeker}/Offerhead.svg`
+export const SmallAppLogo = `${S3BucketJobseeker}/SmallAppLogo.png`
 
 // Chat
+export const Offerbackground = `${S3BucketJobseeker}/Offerbackground.png`
 export const HomePageChat = `${S3BucketJobseeker}/HomePageChat.svg`
 export const Search = `${S3BucketJobseeker}/Search.svg`
 export const ChatCircleDots = `${S3BucketJobseeker}/chat-circle-dots.svg`

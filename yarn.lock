@@ -5584,10 +5584,10 @@ imforbossjob@^0.0.1117:
     sha1 "^1.1.1"
     viewerjs "^1.11.0"
 
-imforbossjob@^0.1.79-fix4:
-  version "0.1.79-fix4"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.1.79-fix4.tgz#ddb4a16bf0e83050a0ea3bec9172cb90692570ef"
-  integrity sha512-H+vOaAIokZr0eJXOqDwUuRYyDLclEXsrhnAL5u057MinDfO/1xDtUsnl2ShbhnSQNQNezF1jKN9NMGkAmMT3bg==
+imforbossjob@^0.1.79-fix6:
+  version "0.1.79-fix6"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.1.79-fix6.tgz#429f8541fa6c001b440bbafc83f7e64477cc6b8a"
+  integrity sha512-7AjT4bpFEehMBGkICWm7Z0Eztwg9FaKxpysQSU8NmxW5r3xnd9p0ga1sbJqCaoHhZg8ZqiArdGbeAk5BelJsgw==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -6828,6 +6828,11 @@ punycode@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
+
+qrcode.react@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/qrcode.react/-/qrcode.react-3.1.0.tgz#5c91ddc0340f768316fbdb8fff2765134c2aecd8"
+  integrity sha512-oyF+Urr3oAMUG/OiOuONL3HXM+53wvuH3mtIWQrYmsXoAq0DkvZp2RYUWFSMFtbdOpuS++9v+WAkzNVkMlNW6Q==
 
 qs@^6.4.0:
   version "6.11.0"

@@ -850,7 +850,8 @@
     "viewLater":"View later",
     "buttonTextEnable":"Auto-send my resume",
     "buttonTextDisable":"Disable Auto-send my resume",
-    "offerTitle":"CONGRATULATIONS!"
+    "offerTitle":"CONGRATULATIONS!",
+    "offerSent":"Sent by"
   },
   "chatInterview": {
     "confirmText": "Interview Confirmed",
