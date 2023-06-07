@@ -1,0 +1,43 @@
+
+@include msd {
+    .main {
+        padding-top: 30px;
+        background: #fff;
+        min-height: calc(100vh - 54px);
+        .bg{
+            background: #fff;
+         }
+       .container{
+         width: 100%;
+         padding: 0 20px;
+         background:transparent;
+         box-shadow: unset;
+         padding-bottom: 100px;
+         h2{
+            margin-bottom: 20px;
+         }
+        
+         .phoneNumber {
+            .msg {
+                width: 100%;
+                word-break: break-all;
+            }
+         }
+         .captcha {
+            .codeBox {   
+              .itemContent {
+                  width: 48px;
+                  height: 52px;
+              }
+            }
+        }
+       }
+       .tips{
+        bottom: 16px;
+        width: 100%;
+        text-align: center;
+        position: absolute;
+       }
+       
+    }
+}

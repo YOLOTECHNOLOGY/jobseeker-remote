@@ -30,6 +30,7 @@ import { scripts } from 'imforbossjob'
 import OfferModal from './offer'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
+import AutoSendResumeModal from './autoSendResume'
 const { offerJobseeker: { getDataAndShowOfferMessageScript } } = scripts
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
@@ -100,6 +101,11 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
                 }
             })
     }, [lang])
+
+    const langRef = useRef(lang)
+    useEffect(() => {
+        langRef.current = lang
+    }, [lang])
     const config = useSelector((store: any) => store.config.config.response ?? {})
 
     const translate = useCallback((key, ...args) => {
@@ -118,7 +124,7 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
             }
         }
     }, [])
-   
+
     const [chatId, setChatId] = useState()
     const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
     const userDetailRef = useRef(userDetail)
@@ -204,10 +210,10 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
         updateChatList()
     }, [updateChatList])
     useEffect(() => {
-        if(lang) {
+        if (lang) {
             // IMManager?.setCurrentLanguage?.(lang)
         }
-      }, [lang])
+    }, [lang])
     useEffect(() => {
         if (userId) {
             IMManager.accessUser(
@@ -304,6 +310,8 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
             contextRef.current?.closeExchangeDetail?.()
             contextRef.current?.closeOfferDetail?.()
             contextRef.current?.closeOfferMessage?.()
+            contextRef.current?.closeEnableAutoSendResume?.()
+            contextRef.current?.closeDisableAutoSendResume?.()
         },
         updateUser() {
             dispatch(fetchUserOwnDetailRequest({ accessToken }))
@@ -323,6 +331,9 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
         },
         isUserNumberValidate() {
             return userDetailRef.current?.is_mobile_verified
+        },
+        getLang() {
+            return langRef.current
         },
         getRouter() {
             return router
@@ -521,6 +532,13 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
             config={config}
         />
         <CancelModal
+            loading={loading}
+            data={imState?.interview}
+            applicationId={applicationId}
+            lang={lang}
+            contextRef={contextRef}
+        />
+        <AutoSendResumeModal
             loading={loading}
             data={imState?.interview}
             applicationId={applicationId}

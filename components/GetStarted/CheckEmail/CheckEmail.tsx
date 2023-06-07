@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from '@mui/material/Link'
 import TextField from '@mui/material/TextField'
@@ -42,6 +42,7 @@ const CheckEmail = ({
   const firstRender = useFirstRender()
   const [emailError, setEmailError] = useState(false)
   const [emailBtnDisabled, setEmailBtnDisabled] = useState(true)
+  const formRef = useRef(null)
 
   const jobseekersSocialFailed = useSelector(
     (store: any) => store.auth.jobseekersSocialLogin?.error
@@ -54,8 +55,8 @@ const CheckEmail = ({
 
   const handleOnKeyDownEnter = (e) => {
     if (e.key === 'Enter' && e.keyCode === 13) {
-      if (!emailBtnDisabled) {
-        handleSendEmailTOP()
+      if (!emailBtnDisabled && formRef.current) {
+        formRef.current.onsubmit()
       }
     }
   }
@@ -80,7 +81,8 @@ const CheckEmail = ({
     }
 
     let errorText = null
-    if (!email.length || !/\S+@\S+\.\S+/.test(email)) {
+    const validEmailReg = /^[\w-\\.]+@([\w-]+\.)+[\w-]{1,9}$/i
+    if (!email.length || !validEmailReg.test(email)) {
       errorText = pleaseEnterAvalidEmailAddress
     }
     setEmailError(errorText)
@@ -124,15 +126,26 @@ const CheckEmail = ({
           {kickStartYourCareer}
         </Text>
       </div>
-      <form className={styles.emailLoginContainer_from} autoComplete='on' onSubmit={e => e.stopPropagation()}>
-        <div style={{ opacity: 0, height: '1px', overflow: 'hidden', pointerEvents: 'none',zIndex:-1 }} >
-          <input type="email" value={email} name='hidden-email' autoComplete="on" />
-          <input type="password" value={ email ? ' ': ''} name='hidden-password' autoComplete='on' />
-       </div>
+      <form className={styles.emailLoginContainer_from} autoComplete='on' onSubmit={e => e.preventDefault()}>
+        {/* Don't delete this div, this fixed safari/firefox browser autocomplete email */}
+        <div style={{ opacity: 0, height: '1px', overflow: 'hidden', pointerEvents: 'none' }}>
+          <input
+            type="email"
+            value={email}
+            name="email-hidden"
+            hidden
+            autoComplete="on"
+          />
+          <input
+            type="password"
+            value={(email || '').trim() ? ' ' : ''}
+            name="hidden-password"
+            autoComplete="on"
+          />
+        </div>
         <MaterialTextField
           className={styles.formInput}
-          id='username'
-          name={'username'}
+          name={'email'}
           label={enterYourEmailAddress}
           variant='outlined'
           value={email}
@@ -149,16 +162,14 @@ const CheckEmail = ({
           capitalize
           size='large'
           variant='contained'
-          type='submit'
           className={styles.formButton}
           disabled={emailBtnDisabled}
           // isLoading={isRegisteringJobseeker}
-          onClick={handleSendEmailTOP}
+          // onClick={handleSendEmailTOP}
           isLoading={isLoading}
         >
-          <Text textStyle='xl' textColor='white' bold>
-           {submit}
-          </Text>
+          {/* fixed firefox browser autocomplete */}
+          <input type="submit" value={submit} disabled={emailBtnDisabled} onClick={handleSendEmailTOP} className={styles.submitButton} />
         </MaterialButton>
 
       </form>

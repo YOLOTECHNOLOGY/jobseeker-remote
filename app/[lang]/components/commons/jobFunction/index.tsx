@@ -115,7 +115,7 @@ const JobFunctionMultiSelector = (props: any) => {
           return {
             ...third,
             parent: secondParent,
-            seo_value:toSeo(third['seo-value']) + '-' + third.id,
+            seo_value: toSeo(third['seo-value']) + '-' + third.id,
             key: toSeo(third['seo-value']) + '-' + third.id
           }
         })
@@ -554,7 +554,7 @@ const JobFunctionMultiSelector = (props: any) => {
               sx={{ height: '44px', width: '40%', borderRadius: 10 }}
             >
               <Text textColor='primaryBlue' bold>
-               {lang?.reset2}
+                {lang?.reset2}
               </Text>
             </MaterialButton>
 
@@ -565,7 +565,7 @@ const JobFunctionMultiSelector = (props: any) => {
               sx={{ height: '44px', width: '40%', borderRadius: 10 }}
             >
               <Text textColor='white' bold>
-              {lang?.save}
+                {lang?.save}
               </Text>
             </MaterialButton>
           </div>

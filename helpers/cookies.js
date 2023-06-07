@@ -22,7 +22,7 @@ export const getCookie = (cookieName) => {
 }
 
 export const removeCookie = (cookieName) => {
-  cookies.remove(cookieName,{path:'/'})
+  cookies.remove(cookieName, { path: '/' })
 }
 
 export const setCookieWithExpiry = (cookieName, data, timeToExpiry) => {

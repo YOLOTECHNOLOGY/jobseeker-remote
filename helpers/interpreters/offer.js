@@ -18,10 +18,17 @@ export default command => command.cata({
             close: () => resolve(OfferDetailActions.close),
             accept: () => resolve(OfferDetailActions.accept),
             reject: () => resolve(OfferDetailActions.reject),
+            toChat: () => resolve(OfferDetailActions.toChat),
             data, applicationId, offerId
         })
     })),
-
+    redirectToChat: data => M(context => Promise.resolve().then(() => {
+        const router = context.getRouter()
+        const lang = context.getLang()
+        if(!window.location.pathname?.includes('chat')){
+            router.push(`/${lang}/chat/${data?.chat_id ?? 'list'}`)
+        }
+    })),
     declineRequest: (applicationId, offerId) => M(context => {
         context.setLoading(true)
         return decline(applicationId, offerId)
@@ -47,6 +54,6 @@ export default command => command.cata({
     }),
 
     refreshDetail: data => M(context => Promise.resolve().then(() => {
-        context.refreshOfferDetail({data})
+        context.refreshOfferDetail({ data })
     }))
 })

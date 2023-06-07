@@ -1,0 +1,15 @@
+import React from 'react'
+
+const FileLogo = () => <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+        <rect y="0.5" width="20.9812" height="21" fill="url(#pattern0)" />
+        <defs>
+            <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+                <use xlinkHref="#image0_2848_162095" transform="matrix(0.010426 0 0 0.0104167 -0.000447219 0)" />
+            </pattern>
+            <image id="image0_2848_162095" width="96" height="96" xlinkHref="data:image/png;base64,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" />
+        </defs>
+    </svg>
+
+
+
+export default FileLogo

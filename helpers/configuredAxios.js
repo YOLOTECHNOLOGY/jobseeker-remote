@@ -1,19 +1,8 @@
 import axios from 'axios'
-import { getCookie, removeCookie, setCookie, userKey } from 'helpers/cookies'
+import { getCookie, removeUserCookie, setCookie } from 'helpers/cookies'
 import { accessToken, refreshToken } from './cookies';
 import { getCountryId } from './country';
-
-let timer = 0;
-const clearTime = () => clearTimeout(timer)
-const autoRefreshToken = () => {
-  timer = setTimeout(() => {
-    clearTime()
-    refreshTokenServer();
-    autoRefreshToken();
-    // Refresh every 25 minutes
-  }, 1000 * 60 * 25);
-}
-
+import { NextResponse } from 'next/server';
 import logError from 'app/errors/logError';
 // generate url by a baseUrl
 
@@ -141,7 +130,20 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
 }
 
 
-
+const redirectToHomeOnClient = () => {
+  if (typeof window !== 'undefined') {
+    removeUserCookie();
+    window.location.href = '/get-started'
+    import('imforbossjob')
+      .then((im) => im?.IMManager?.logout?.())
+      .then(() => localStorage?.clear?.())
+  } else {
+    // seems this code is not working
+    const response = NextResponse.redirect('/get-started', 301)
+    response.cookies.delete(accessToken)
+    response.cookies.delete(refreshToken)
+  }
+}
 const refreshTokenServer = () => {
   const axios = configuredAxios('auth', '', '', '');
   const refreshKey = getCookie(refreshToken)
@@ -153,8 +155,6 @@ const refreshTokenServer = () => {
   return axios.post('/token/refresh', data).then((res) => {
     const { access, token_expired_at, data } = res.data.data
     if (access) {
-      clearTime()
-      autoRefreshToken()
       setCookie(accessToken, access, token_expired_at)
       return
     }
@@ -162,21 +162,8 @@ const refreshTokenServer = () => {
     return Promise.reject(new Error(data))
   })
 }
-const redirectToHomeOnClient = () => {
-  if (typeof window !== 'undefined') {
-    removeCookie(accessToken)
-    window.location.href = '/get-started'
-    import('imforbossjob')
-      .then((im) => im?.IMManager?.logout?.())
-      .then(() => localStorage?.clear?.())
-  } else {
-    // const response = NextResponse.redirect('/get-started')
-    // response.cookies.delete(accessToken, refreshToken, userKey)
-    // NextResponse.next().redirect('/get-started', 301)
-  }
-}
 
-// let globalPromise;
+
 globalThis.globalPromise = null
 const chain = configured => (baseURL, type = 'public', passToken, serverAccessToken, server = typeof window === 'undefined') => {
   const createAxios = () => configuredAxios(baseURL, type, passToken, serverAccessToken, server)
@@ -186,6 +173,7 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
 
   keys.forEach(key => {
     wrapper[key] = (...params) => {
+      //  only the protected url need to refresh in browser 
       if (type === 'protected') {
         axios.interceptors.response.use(
           (response) => response,

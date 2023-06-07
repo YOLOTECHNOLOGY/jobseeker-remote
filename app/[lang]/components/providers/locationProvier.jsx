@@ -1,6 +1,6 @@
 /* eslint-disable prefer-promise-reject-errors */
 'use client'
-import React, { createContext, useState, useCallback, useEffect, useMemo,useContext } from 'react'
+import React, { createContext, useState, useCallback, useEffect, useMemo, useContext } from 'react'
 import { ReaderTPromise as M } from 'app/[lang]/abstractModels/monads'
 import { registInterpreter } from 'app/[lang]/abstractModels/util'
 import { locationScript } from 'app/[lang]/abstractModels/updateLocation'
@@ -35,27 +35,27 @@ export const LocationContext = createContext()
 const Provider = LocationContext.Provider
 
 // eslint-disable-next-line react/prop-types
-const LocationProvider = ({ children,lang }) => {
-   const {home} = lang ?? {}
+const LocationProvider = ({ children, lang }) => {
+    const { home } = lang ?? {}
     const countryList = {
-        "ph": {
+        "ph": [{
             "id": 63,
             "key": "manila",
             "value": home?.defaultLocationPH,
             "is_popular": false,
             "region_display_name": "National Capital Region",
             "seo_value": "manila"
-        },
-        "sg": {
+        }],
+        "sg": [{
             id: 165,
             is_popular: false,
             key: "downtown_core",
             region_display_name: "Central",
             seo_value: "downtown-core",
             value: home?.defaultLocationSG,
-        }
+        }]
     };
-    
+
     const country = getCountryKey();
     const dispatch = useDispatch()
     useEffect(() => {
@@ -69,7 +69,7 @@ const LocationProvider = ({ children,lang }) => {
         }
         return flatMap(locations, p => p.locations)
     }, [locations])
-    const defaultLocation = getCookie('location') ?? countryList[country]
+    const defaultLocation = getCookie('location')?.[0] ?? countryList[country]
     const [location, setLocation] = useState(defaultLocation)
     const intepreter = useCallback(command => command.cata({
         queryLatLon: () => M(() => new Promise((resolve, reject) => {
@@ -96,7 +96,7 @@ const LocationProvider = ({ children,lang }) => {
         }),
         updateLocation: location => M.do(() => {
             const newLocation = flatLocations.find(item => item.value === location.city)
-            if (newLocation && newLocation.value !== location?.value) {
+            if (newLocation && newLocation.id !== location?.id) {
                 setLocation(newLocation)
             }
         }),
@@ -104,12 +104,12 @@ const LocationProvider = ({ children,lang }) => {
     const locationIp = registInterpreter(intepreter)
     const [locationUpdated, setLocationupdated] = useState(false)
     useEffect(() => {
-        if (flatLocations?.length && !locationUpdated && !getCookie('location')) {
+        if (flatLocations?.length && !locationUpdated && !getCookie('location')?.[0]) {
             locationIp(locationScript())
                 .run()
             setLocationupdated(true)
         }
     }, [flatLocations, locationUpdated])
-    return <Provider value={{ location, setLocation }}>{children}</Provider>
+    return <Provider value={{ location: location, setLocation }}>{children}</Provider>
 }
 export default LocationProvider

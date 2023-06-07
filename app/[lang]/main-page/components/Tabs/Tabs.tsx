@@ -87,13 +87,13 @@ interface StyledTabProps {
   sx: SxProps<Theme>
 }
 
-const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
+const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => ({
   '&.Mui-selected': {
     color: '#136FD3'
   }
 }))
 
-const Tabs = ({ location, config, location_id, langKey }: any) => {
+const Tabs = ({ config, location_id, langKey }: any) => {
   const { home } = useContext(languageContext) as any
   const { tab, jobTab } = home
   const tabList = useMemo(() => {
@@ -155,7 +155,7 @@ const Tabs = ({ location, config, location_id, langKey }: any) => {
     } else {
       handleFetchPopularJobs()
     }
-  }, [value, location])
+  }, [value, location_id])
 
   const getJobseekerPref = async () => {
     const perData = await fetchJobsPreferences()
@@ -253,7 +253,9 @@ const Tabs = ({ location, config, location_id, langKey }: any) => {
                 variant='scrollable'
                 scrollButtons='auto'
                 aria-label='scrollable auto tabs example'
-                onChange={handleChange} langKey={''}              >
+                onChange={handleChange}
+                langKey={''}
+              >
                 {newTabList.map((item) => (
                   <StyledTab
                     key={item.value}
@@ -284,15 +286,27 @@ const Tabs = ({ location, config, location_id, langKey }: any) => {
                         href={`${langKey}/manage-profile?tab=job-preferences`}
                         className={styles.link}
                       >
-                        {getValueById(config, jobseekerPrefIdRef.current?.location_id, 'location_id')} |{' '}
-                        {getValueById(config, jobseekerPrefIdRef.current?.function_job_title_id, 'function_job_title_id')} |{' '}
-                        {jobseekerPrefIdRef.current?.salary_range}
+                        {getValueById(
+                          config,
+                          jobseekerPrefIdRef.current?.location_id,
+                          'location_id'
+                        )}{' '}
+                        |{' '}
+                        {getValueById(
+                          config,
+                          jobseekerPrefIdRef.current?.function_job_title_id,
+                          'function_job_title_id'
+                        )}{' '}
+                        | {jobseekerPrefIdRef.current?.salary_range}
                       </Link>
                     </div>
                   ) : (
                     <p>
                       {home.improveRecommend}{' '}
-                      <Link href={`${langKey}/manage-profile?tab=job-preferences`} className={styles.link2}>
+                      <Link
+                        href={`${langKey}/manage-profile?tab=job-preferences`}
+                        className={styles.link2}
+                      >
                         {' '}
                         {home.jobPrefer}
                       </Link>
@@ -304,7 +318,9 @@ const Tabs = ({ location, config, location_id, langKey }: any) => {
 
             <div className={styles.tabContainer}>
               {!loading ? (
-                list?.map((item) => <JobDetail config={config} langKey={langKey} key={item.id} detail={item} />)
+                list?.map((item) => (
+                  <JobDetail config={config} langKey={langKey} key={item.id} detail={item} />
+                ))
               ) : (
                 <Box sx={{ width: '100%' }}>
                   <Skeleton width={'100%'} height={200} sx={{ margin: '20px 0' }} />

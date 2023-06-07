@@ -9,6 +9,7 @@ import { END } from '@redux-saga/core'
 import Layout from 'components/Layout'
 import { createChat } from 'helpers/interpreters/services/chat'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import * as fbq from 'lib/fpixel'
 
 const Chat = () => {
   const router = useRouter()

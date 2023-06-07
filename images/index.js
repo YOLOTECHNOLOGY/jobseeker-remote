@@ -9,8 +9,10 @@ export const Offerbottom = `${S3BucketJobseeker}/Offerbottom.svg`
 export const Offercenter = `${S3BucketJobseeker}/Offercenter.svg`
 export const Offermask = `${S3BucketJobseeker}/Offermask.svg`
 export const Offerhead = `${S3BucketJobseeker}/Offerhead.svg`
+export const SmallAppLogo = `${S3BucketJobseeker}/SmallAppLogo.png`
 
 // Chat
+export const Offerbackground = `${S3BucketJobseeker}/Offerbackground.png`
 export const HomePageChat = `${S3BucketJobseeker}/HomePageChat.svg`
 export const Search = `${S3BucketJobseeker}/Search.svg`
 export const ChatCircleDots = `${S3BucketJobseeker}/chat-circle-dots.svg`
@@ -46,6 +48,9 @@ export const DeleteIcon = `${S3BucketJobseeker}/DeleteIcon.svg`
 export const FacebookIcon = `${S3BucketJobseeker}/FacebookIcon.svg`
 export const TwitterIcon = `${S3BucketJobseeker}/TwitterIcon.svg`
 export const LinkedinIcon = `${S3BucketJobseeker}/LinkedinIcon.svg`
+export const AppleIcon = `${S3BucketJobseeker}/loginAppleIcon.svg`
+export const EmailIcon = `${S3BucketJobseeker}/EmailIcon.svg`
+export const PhoneIcon = `${S3BucketJobseeker}/PhoneIcon.svg`
 
 // Copy
 export const CopyIcon = `${S3BucketJobseeker}/CopyIcon.svg`
@@ -168,3 +173,5 @@ export const UploadResumeIcon = `${S3BucketJobseeker}/UploadResumeIcon.svg`
 
 /* CompleteResumeIcon.svg */
 export const CompleteResumeIcon = `${S3BucketJobseeker}/CompleteResumeIcon.svg`
+
+export const LoginSafe = `${S3BucketJobseeker}/loginSafa.gif`
