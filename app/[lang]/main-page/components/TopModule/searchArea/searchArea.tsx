@@ -31,7 +31,7 @@ const SearchArea = (props: any) => {
   const flatLocations = useMemo(() => {
     return flatMap(config.location_lists ?? [], item => item.locations)
   }, [config])
-  const [location, setLocation] = useState(flatLocations.filter(item => item.id === defaultLoaction?.[0]?.id))
+  const [location, setLocation] = useState(flatLocations.filter(item => item.id ===   defaultLoaction?.id || defaultLoaction?.[0]?.id))
   const data: any = useContext(languageContext)
   const home = data.home
 
