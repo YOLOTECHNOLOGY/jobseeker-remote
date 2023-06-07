@@ -11,13 +11,15 @@ import { getCookie } from 'helpers/cookies'
 import Image from 'next/image'
 import ClearIcon from '@mui/icons-material/Clear'
 import { getValueById } from 'helpers/config/getValueById'
+import { addJobViewService } from 'store/services/jobs/addJobView'
+import { isMobile } from 'react-device-detect'
 const pageParams = {
   size: 20,
   sort: 1,
   source: 'web'
 }
 
-const JobsCard = ({lang, config,langKey,location_id }: any) => {
+const JobsCard = ({ lang, config, langKey, location_id }: any) => {
   const router = useRouter()
   const accessToken = getCookie('accessToken')
   const [current, setCurrent] = useState<number>(1)
@@ -158,7 +160,20 @@ const JobsCard = ({lang, config,langKey,location_id }: any) => {
   const useFn = throttle(() => {
     isTouchBottom(handleLoadMore)
   }, 300)
-  console.log({langKey})
+
+  const handleAddJobView = async (url: string, id: any, reco_from) => {
+    const params = {
+      jobId: id,
+      source: 'home', // this is usually used in search result
+      status: accessToken ? 'protected' : 'public',
+      device: isMobile ? 'mobile_web' : 'web',
+      reco_from: reco_from ? reco_from : null
+    }
+
+    await addJobViewService(params)
+    await goToJobDetail(url)
+  }
+
   const goToJobDetail = (url: string) => {
     router.push('/' + langKey + url)
   }
@@ -205,7 +220,7 @@ const JobsCard = ({lang, config,langKey,location_id }: any) => {
           job_title: jobTitle,
           local_salary_range_value: salaryRangeValue,
           // job_location: jobLocation,
-          job_location_ids:job_location_id,
+          job_location_ids: job_location_id,
           job_url: jobUrl,
           //  job_type: jobType,
           job_type_id,
@@ -218,6 +233,7 @@ const JobsCard = ({lang, config,langKey,location_id }: any) => {
           company_name: companyName,
           recruiter_last_active_at: recruiterLastActiveAt,
           recruiter_job_title: recruiterJobTitle,
+          reco_from
         } = item || {}
         const jobLocation = getValueById(config, job_location_id, 'location_id')
         const jobType = getValueById(config, job_type_id, 'job_type_id')
@@ -228,7 +244,7 @@ const JobsCard = ({lang, config,langKey,location_id }: any) => {
           <div
             className={styles.jobCard}
             key={`${Id}-${index}`}
-            onClick={() => goToJobDetail(jobUrl)}
+            onClick={() => handleAddJobView(jobUrl, Id, reco_from)}
           >
             <div className={styles.name}>
               <p>{jobTitle}</p>
@@ -240,8 +256,9 @@ const JobsCard = ({lang, config,langKey,location_id }: any) => {
             <span className={styles.tag}>{degreeValue}</span>
             <div className={styles.contact}>
               <div
-                className={`${styles.avator}  ${transTime(recruiterLastActiveAt) ? styles.avator2 : ''
-                  }`}
+                className={`${styles.avator}  ${
+                  transTime(recruiterLastActiveAt) ? styles.avator2 : ''
+                }`}
               >
                 <Image src={recruiterAvatar} alt={recruiterFullName} width={20} height={20} />
               </div>
