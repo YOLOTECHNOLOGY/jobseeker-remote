@@ -1114,7 +1114,11 @@
       "listTitle": "Find Companies Hiring in {{country}} | Bossjob",
       "listDescription": "Discover great companies to work for in {{country}}! Learn more about the company and apply to job openings on Bossjob!",
       "detailTitle": "Working at {{companyName}} | Bossjob",
-      "detailDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!"
-    }
+      "detailDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!",
+      "jobsTitle":"{{companyName}} Careers in {{country}}, Job Opportunities | Bossjob",
+      "jobsDescription":"View all current job opportunities at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers",
+      "lifeTitle":"Culture & Life at {{companyName}} | Bossjob",
+      "lifeDescription":"Discover company culture & life at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers"
+   }
   }
 }

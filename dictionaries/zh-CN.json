@@ -1137,7 +1137,11 @@
       "listTitle":"寻找在{{country}}招聘的公司 | Bossjob",
       "listDescription":"发现适合在{{country}}工作的优秀公司！了解有关公司的更多信息并申请 Bossjob 上的职位空缺！",
       "detailTitle": "在{{companyName}}工作 | Bossjob",
-      "detailDescription": "在 {{companyName}} 发现职业机会，通过阅读 Bossjob 上的员工评论、福利和文化了解更多关于 {{companyName}} 的信息！"
-    }
+      "detailDescription": "在 {{companyName}} 发现职业机会，通过阅读 Bossjob 上的员工评论、福利和文化了解更多关于 {{companyName}} 的信息！",
+      "jobsTitle":" {{companyName}} 在{{country}} 的职业，工作机会 | Bossjob",
+      "jobsDescription":"在 Bossjob 上查看 {{companyName}} 在 {{country}} 的所有当前工作机会 - 将预先筛选的经验丰富的专业人士与雇主联系起来",
+      "lifeTitle":"{{companyName}}的文化与生活 | Bossjob",
+      "lifeDescription":"在 Bossjob 上探索位于{{country}}的{{companyName}}的公司文化和生活 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
+   }
   }
 }

@@ -35,6 +35,7 @@ import {
   changeJobOnCompany
 } from 'helpers/config/changeCompanyValue'
 import { configKey } from 'helpers/cookies'
+import { getCountryKey } from 'helpers/country'
 
 const CompanyDetail = (props: any) => {
   const {
@@ -567,12 +568,12 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (p
     }
   }
   changeCompanyValueWithConfigure(companyDetail, storeState.config.config.response)
-
+  const country = dictionary.seo[getCountryKey()]
   const companyName = companyDetail.name
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
-  const seoMetaTitle = formatTemplateString(company.detailTitle, companyName)
-  const seoMetaDescription = formatTemplateString(company.detailDescription, { companyName })
+  const seoMetaTitle = formatTemplateString(company.detailTitle, { companyName })
+  const seoMetaDescription = formatTemplateString(company.detailDescription, companyName, companyName)
 
   const companyUrl = companyDetail.company_url
   const canonicalUrl = companyUrl
