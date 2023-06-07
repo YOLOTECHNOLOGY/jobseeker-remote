@@ -31,7 +31,7 @@ const SearchArea = (props: any) => {
   const flatLocations = useMemo(() => {
     return flatMap(config.location_lists ?? [], item => item.locations)
   }, [config])
-  const [location, setLocation] = useState(flatLocations.filter(item => item.id ===   defaultLoaction?.id || defaultLoaction?.[0]?.id))
+  const [location, setLocation] = useState(flatLocations.filter(item => item.id === (defaultLoaction?.id || defaultLoaction?.[0]?.id)))
   const data: any = useContext(languageContext)
   const home = data.home
 
@@ -45,8 +45,8 @@ const SearchArea = (props: any) => {
   }, [])
 
   useEffect(() => {
-      setCookie('location', location)
-      router.refresh()
+    setCookie('location', location)
+    router.refresh()
   }, [location])
   const pushJobPage = useCallback(
     (value) => {
@@ -128,7 +128,7 @@ const SearchArea = (props: any) => {
     alignItems: 'center',
     cursor: 'pointer'
   }
-
+  console.log({ location })
   return (
     <div className={`${styles.searchArea} ${isShow ? styles.searchAreaFix : ''}`}>
       <div className={styles.box}>
