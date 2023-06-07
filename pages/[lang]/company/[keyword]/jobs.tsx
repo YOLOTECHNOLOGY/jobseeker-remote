@@ -24,7 +24,7 @@ import CompanyJobsCardLoader from 'components/Loader/CompanyJobsCard'
 // Styles
 import styles from '../Company.module.scss'
 import MetaText from '../../../../components/MetaText'
-import { getCountry } from 'helpers/country'
+import { getCountry, getCountryKey } from 'helpers/country'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
 import {
@@ -267,17 +267,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
           notFound: true
         }
       }
-
+      const { seo: { company } } = dictionary
       const config = storeState.config.config.response
       changeCompanyValueWithConfigure(companyDetail, config)
 
       const companyName = companyDetail?.name
       const jobList = storeState.job.jobList.response.data
+      const country = dictionary.seo[getCountryKey()]
       const totalActiveJobs = jobList?.total_num || 0
-      const seoMetaTitle = `${companyName} Careers in ${getCountry()}, Job Opportunities | Bossjob`
-      const seoMetaDescription = encodeURI(
-        `View all current job opportunities at ${companyName} in ${getCountry()} on Bossjob - Connecting pre-screened experienced professionals to employers`
-      )
+      const seoMetaTitle = formatTemplateString(company.jobsTitle, {companyName,country})
+      const seoMetaDescription = formatTemplateString(company.jobsDescription, {companyName,country})
       const additionalCanonicalText = '/jobs'
       const companyUrl = companyDetail.company_url
       const canonicalUrl = companyUrl + additionalCanonicalText
