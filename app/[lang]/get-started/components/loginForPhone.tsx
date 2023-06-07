@@ -49,7 +49,7 @@ const LoginForPhone = (props: any) => {
   }, [countryCode])
 
   useEffect(() => {
-    if (phoneNumber?.length > 4) {
+    if (phoneNumber?.length > 6) {
       setDisable(false)
     } else {
       setDisable(true)
