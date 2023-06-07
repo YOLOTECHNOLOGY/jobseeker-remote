@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useUserAgent } from 'next-useragent'
 
 // actions
@@ -26,21 +26,21 @@ const Verify = ({ query }: any) => {
 
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+  const userAgent = useUserAgent(window.navigator.userAgent)
 
   useEffect(() => {
-    const userAgent = useUserAgent(window.navigator.userAgent)
     if (userAgent.isMobile) {
       setCookie('isAppRedirectModalClosed', true)
       setIsShowAppRedirectModal(true)
     }
-  }, [])
-
+  }, [userAgent])
+  const startedLoginRef = useRef(false)
   useEffect(() => {
-    const userAgent = useUserAgent(window.navigator.userAgent)
-    if (userAgent.deviceType != 'mobile') {
+    if (userAgent.deviceType != 'mobile' && !startedLoginRef.current) {
+      startedLoginRef.current = true
       headerAuthLogin()
     }
-  }, [])
+  }, [userAgent])
 
   useEffect(() => {
     if (!Object.keys(userInfo).length) {
@@ -86,7 +86,6 @@ const Verify = ({ query }: any) => {
 
   const headerAuthLogin = () => {
     const { email, otp } = query
-
     const data = {
       email,
       otp,
