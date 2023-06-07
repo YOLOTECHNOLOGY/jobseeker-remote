@@ -41,7 +41,7 @@ const Main = async (props: any) => {
       const locations = Array.isArray(locationArr) ? locationArr : [locationArr].filter(a => a)
       // locationId = locations?.map(loc=>loc.id).join(',')
       if (locations?.length) {
-        locationId = locations?.join(',')
+        locationId = locations?.map(e=>e.id)?.join(',')
       }
     } catch (error) {
       console.log({ error })
