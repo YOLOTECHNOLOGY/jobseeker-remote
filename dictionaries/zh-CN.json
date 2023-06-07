@@ -1127,8 +1127,11 @@
       "queryTitle": "{{country}}的{{searchQuery}}职位，工作机会 - {{month}} {{year}} | Bossjob",
       "queryLocationTitle": "{{country}}的{{searchQuery}}职位，申请工作机会 - {{month}} {{year}} | Bossjob",
       "queryDescription": "Bossjob 提供{{country}}的新{{searchQuery}}工作。今天在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来",
-      "queryLocationDescription":"Bossjob 提供{{country}}{{location}}的新{{searchQuery}}工作。今天在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
-    
+      "queryLocationDescription": "Bossjob 提供{{country}}{{location}}的新{{searchQuery}}工作。今天在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
+    },
+    "job": {
+      "title": "{{name}}正在招聘{{jobTitle}} - {{jobId}} | Bossjob",
+      "description": "申请{{name}}的{{jobTitle}}({{jobId}})， 在bossjob上寻找 {{location}}, {{address}} 的工作"
     }
   }
 }

@@ -1105,6 +1105,10 @@
       "queryLocationTitle": "{{searchQuery}} Jobs in {{country}},Apply Job Opportunities - {{month}} {{year}} | Bossjob",
       "queryDescription": "New {{searchQuery}} Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers",
       "queryLocationDescription": "New {{searchQuery}} Jobs in {{location}} {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
+    },
+    "job": {
+      "title":"{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",
+      "description": "Apply for {{jobTitle}} ({{jobId}}) at {{name}}. Discover more 'jobs' in {{location}}, {{address}} on Bossjob now!"
     }
   }
 }

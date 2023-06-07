@@ -5,6 +5,8 @@ import 'app/[lang]/globals.scss'
 import { getShreCard } from 'store/services/jobs/addJobView'
 import PublicLayout from 'app/[lang]/components/publicLayout'
 import { handleFetchJobDetail } from './service'
+import { getDictionary } from 'get-dictionary'
+import { formatTemplateString } from 'helpers/formatter'
 export const revalidate = 3600
 const handleShareInfo = async (params: any): Promise<any> => {
   const shareId = params.jobId?.split('-').shift()
@@ -14,6 +16,10 @@ const handleShareInfo = async (params: any): Promise<any> => {
 
 async function generateSEO({ params, searchParams }) {
   const { data: jobDetail } = await handleFetchJobDetail(params)
+  const { lang } = params
+  console.log({})
+  const dictionary = await getDictionary(lang)
+  const { seo: { job } } = dictionary
   let shareInfo = null
   if (searchParams?.share) {
     shareInfo = await handleShareInfo(params)
@@ -31,10 +37,19 @@ async function generateSEO({ params, searchParams }) {
     } = jobDetail
 
     const { job_card: cardUrl } = shareInfo || {}
-    const categoryMetaText = 'jobs'
-    const seoMetaTitle = `${name} is hiring ${jobTitle} - ${jobId} | Bossjob`
-    const seoMetaDescription = `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more ${categoryMetaText} in ${location.value
-      }, ${fullAddress.split(',').pop()} on Bossjob now!`
+    const seoMetaTitle = formatTemplateString(job.title, {
+      name,
+      jobTitle,
+      jobId
+    })
+    const seoMetaDescription = formatTemplateString(job.description, {
+      jobTitle, jobId, name,
+      location: location.value,
+      address: fullAddress.split(',').pop()
+     
+    })
+    // `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more 'jobs' in ${location.value
+    //   }, ${fullAddress.split(',').pop()} on Bossjob now!`
     const seoParams = !shareInfo
       ? {
         title: seoMetaTitle,
