@@ -42,7 +42,7 @@ const Layout = ({ children, className, isHiddenFooter, isHiddenHeader,lang }: La
 
   useEffect(() => {
     setIsAuthenticated(authCookie ? true : false)
-    setIsEmailVerified(userCookie?.is_email_verify)
+    setIsEmailVerified(userCookie?.is_email_verify && userCookie?.email)
 
     if (userCookie && authCookie) {
       setIsShowModal(false)
@@ -96,7 +96,7 @@ const Layout = ({ children, className, isHiddenFooter, isHiddenHeader,lang }: La
 
   return (
     <div className={classNamesCombined([styles.container, className])}>
-      {isAuthenticated && !isEmailVerified && (
+      {/* {isAuthenticated && !isEmailVerified && (
         <MaterialAlert open={true} severity='info'>
           <Text>
             {lang.header.pleaseVerify}{' '}
@@ -105,7 +105,7 @@ const Layout = ({ children, className, isHiddenFooter, isHiddenHeader,lang }: La
             </Link>
           </Text>
         </MaterialAlert>
-      )}
+      )} */}
       {!isHiddenHeader && (
         <>
           <Header lang={lang}/>

@@ -35,7 +35,7 @@ function TransitionLoader(props: TransitionLoaderProps) {
     <div className={styles.wrapper}>
       <div className={styles.headerWrapper}>
         {accessToken && pathname.indexOf('jobseeker-complete-profile') == -1 && <PlaceholderProtectedHeader   lang={langDir} 
-        isShowEmailAlert={accessToken && user &&!user.is_email_verify} 
+        isShowEmailAlert={accessToken && user &&!user.is_email_verify && user.email} 
         />}
         {!accessToken && <PlaceHolderPublicHeader lang={langDir}/>}
       </div>
