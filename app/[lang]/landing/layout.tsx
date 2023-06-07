@@ -1,5 +1,6 @@
 'use client'
 
+import './flexible';
 export default function ShopLayout(props:{
     children: React.ReactNode;
     params: {
@@ -13,9 +14,12 @@ export default function ShopLayout(props:{
     
     return (
         <section style={{
-          width: '100wv',
+          width: '100%',
+          // overflow: "hidden",
+          overflowX: 'clip',
           minHeight: '100vh',
           backgroundColor:'#ffffff',
+
         }}>
             {/* <header> */}
             {/*     <h1>boosJob</h1> */}

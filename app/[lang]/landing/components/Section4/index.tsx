@@ -1,7 +1,8 @@
 import style from '../../index.module.scss';
 import React, {useEffect, useCallback, useState} from 'react';
-import {useInView} from "react-intersection-observer";
+import {useInView, InView } from "react-intersection-observer";
 import classNames from "classnames";
+import useWindowSize from "../../../../../hooks/useWindowSize";
 
 
 const INFO = [
@@ -40,29 +41,63 @@ const Section4 = () => {
 	const visibleHandle = useCallback((index) => {
 		setVisibleNumber(index);
 	}, []);
-	return <section className={style.section4}>
-		<div className={style.section4_sticky}>
-			<div className={style.section4_sticky_bg}></div>
-			<div className={style.section4_phone_bg}>
-				<img alt={'phone'} src={require('../assets/section4_iphone_wapper.png').default.src}
-				     className={style.section4_sticky_phone_wrapper}/>
-				{section4_phone_img.map((img, index) => {
-					return <img alt={'phone'} key={index} src={img}
-					            className={classNames({
-						            [style.section4_sticky_phone_content_1]: true,
-						            [style.animate__fadeOut]: visibleNumber !== index,
-						            [style.animate__fadeIn]: visibleNumber === index,
-					            })}
-					/>
+	const {width} = useWindowSize();
+	console.log('width',width);
+	if(width <= 540){
+		return <section className={style.section4 + ' ' + style.mobile}>
+			{INFO.map((item,index)=>{
+				return <div className={style.section4_mobile_item} key={index}>
+					<InView delay={200} threshold={0.3}>
+						{({inView, ref })=>(
+							<div ref={ref} className={classNames({
+									[style.section4_mobile_item_title]: true,
+									[style.animate__bounceIn]: inView
+								})}>{item.title}</div>
+						)}
+					</InView>
+					<InView delay={400} threshold={0.4}>
+						{({inView, ref })=>(
+							<div className={classNames({
+								[style.section4_mobile_item_des]: true,
+								[style.animate__bounceIn]: inView
+							})} ref={ref}>{item.des}</div>
+						)}
+					</InView>
+					<InView delay={200} threshold={0.2}>
+						{({inView, ref })=>(
+							<img className={classNames({
+								[style.section4_mobile_img]: true,
+								[style.animate__bounceIn]: inView
+							})} alt={'img'} src={section4_phone_img[index]} ref={ref} />
+						)}
+					</InView>
+				</div>
+			})}
+		</section>
+	}
+	return <section className={style.section4 + ' ' + style.desktop}>
+			<div className={style.section4_sticky}>
+				<div className={style.section4_sticky_bg}></div>
+				<div className={style.section4_phone_bg}>
+					<img alt={'phone'} src={require('../assets/section4_iphone_wapper.png').default.src}
+					     className={style.section4_sticky_phone_wrapper}/>
+					{section4_phone_img.map((img, index) => {
+						return <img alt={'phone'} key={index} src={img}
+						            className={classNames({
+							            [style.section4_sticky_phone_content_1]: true,
+							            [style.animate__fadeOut]: visibleNumber !== index,
+							            [style.animate__fadeIn]: visibleNumber === index,
+						            })}
+						/>
+					})}
+				</div>
+			</div>
+			<div className={style.section4_right_content}>
+				{INFO.map((item, index) => {
+					return <InfoComponent {...item} index={index} key={index} visibleHandle={visibleHandle}/>
 				})}
 			</div>
-		</div>
-		<div className={style.section4_right_content}>
-			{INFO.map((item, index) => {
-				return <InfoComponent {...item} index={index} key={index} visibleHandle={visibleHandle}/>
-			})}
-		</div>
-	</section>
+		</section>
 }
 
 const InfoComponent = (props: { index: number, title: string, des: string, visibleHandle: (args: number) => void }) => {

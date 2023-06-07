@@ -45,23 +45,20 @@ const Section1 = () => {
 		threshold: 1,
 	});
 	return <div className={style.section1Wrapper}>
-
+		<div className={style.section_bg + ' ' + style.mobile}></div>
 		<div className={style.sectionContainer}>
-			<div className={style.section_bg}></div>
-
+			<div className={style.section_bg + ' ' + style.desktop}></div>
 			<section className={style.section1}>
 				<Title/>
-				<div className={style.phone} id={'phone'}>
+				<div className={style.phone + ' ' + style.desktop} id={'phone'} >
 					<img src={require('./assets/phone.png').default.src} alt="phone"
 					     className={style.phone_img}
 					/>
 				</div>
-				<img className={style.rocket} alt="rocket" src={require('./assets/rocket.png').default.src}/>
-				<img className={style.phone_eyes} src={require('./assets/eyes.png').default.src} alt="eyes img"/>
+				<img className={style.rocket + ' ' + style.desktop} alt="rocket" src={require('./assets/rocket.png').default.src}/>
+				<img className={style.phone_eyes + ' ' + style.desktop} src={require('./assets/eyes.png').default.src} alt="eyes img"/>
 			</section>
 			<PopStream/>
-
-
 		</div>
 
 	</div>
@@ -74,6 +71,7 @@ export default Section1
 const PopStream = () => {
 
 	return 	<div className={style.streamWrapper}>
+		<img src={require('./assets/mobile-section1-stream-pop.png').default.src} alt={'png'} className={style.mobile + " " + style.stream_top}/>
 		{
 			dialog.map((item, index) => {
 				return <Pop key={index}  type={item.name === 'Sarah' ? 'left' : 'right'} text={item.message}/>
