@@ -43,7 +43,7 @@ const SearchArea = (props: any) => {
       window.removeEventListener('scroll', useFn)
     }
   }, [])
-  console.log(flatLocations,defaultLoaction,{location},7777777)
+
   useEffect(() => {
       setCookie('location', location)
       router.refresh()
