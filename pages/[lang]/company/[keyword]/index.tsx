@@ -201,9 +201,9 @@ const CompanyDetail = (props: any) => {
                   </div>
                 )}
                 {company.facebook_url ||
-                company.instagram_url ||
-                company.linkedin_url ||
-                company.youtube_url ? (
+                  company.instagram_url ||
+                  company.linkedin_url ||
+                  company.youtube_url ? (
                   <div
                     className={classNames(
                       styles.companyOverviewItem,
@@ -537,7 +537,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (p
   const companyPath = companyPageUrl[companyPageUrl.length - 1].split('-')
   const { lang }: any = props.query
   const dictionary = await getDictionary(lang)
-
+  const { seo: { company } } = dictionary
   let companyId
   if (companyPath[companyPath.length - 1].includes('?page=')) {
     companyId = Number(companyPath[companyPath.length - 1].split('?page=')[0])
@@ -571,10 +571,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (p
   const companyName = companyDetail.name
   const jobList = storeState.job.jobList.response.data
   const totalActiveJobs = jobList?.total_num || 0
-  const seoMetaTitle = `Working at ${companyName} | Bossjob`
-  const seoMetaDescription = encodeURI(
-    `Discover career opportunities at ${companyName}, learn more about ${companyName} by reading employee reviews, benefits and culture on Bossjob!`
-  )
+  const seoMetaTitle = formatTemplateString(company.detailTitle, companyName)
+  const seoMetaDescription = formatTemplateString(company.detailDescription, { companyName })
 
   const companyUrl = companyDetail.company_url
   const canonicalUrl = companyUrl
