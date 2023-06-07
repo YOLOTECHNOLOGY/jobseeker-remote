@@ -197,7 +197,8 @@ const LocationMultiSelector = (props: any) => {
         }}
         classes={{}}
         style={{
-          background: textValue.split(',').filter((a) => a)?.length ? '#E7F1FB' : '#F0F0F0'
+          background: textValue.split(',').filter((a) => a)?.length ? '#E7F1FB' : '#F0F0F0',
+          borderRadius:"10px"
         }}
         inputProps={{
           style: {
