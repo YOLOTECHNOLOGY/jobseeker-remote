@@ -157,7 +157,7 @@ function PhoneCode(props: any) {
             number={number}
           />
           <p className={styles.trouble}>
-            {newGetStarted.havingTrouble}{' '}.
+            {newGetStarted.havingTrouble}{' '}
             <Link className={styles.link} href={`/${langKey}/get-started`}>
               {newGetStarted.otherOptions}.
             </Link>
