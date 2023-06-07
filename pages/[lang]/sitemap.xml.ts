@@ -7,7 +7,6 @@ const Sitemap = () => {
 }
 
 export const getServerSideProps = async ({ res }) => {
-  debugger
   const country = getCountryKey()
   const lang = getLang()
   const axios = configuredAxios('config', 'public')
