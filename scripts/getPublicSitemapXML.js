@@ -1,28 +1,28 @@
 export const getPublicSitemapXML = (response) => {
   const config = response.data.data
 
-  let locationList,
-    categoryList,
-    industryList,
-    qualificationList,
-    experienceList,
-    jobTypeList,
-    salaryList = []
+  let locationList
+  let categoryList
+  let industryList
+  let qualificationList
+  let experienceList
+  let jobTypeList
+  let salaryList = []
 
   if (config) {
     locationList =
-        config &&
-        config.location_lists
-          .map(region =>
-            region.locations.map(loc => ({
-              ...loc,
-              value: loc?.value,
-              // loc value all lower case
-              valueLowerCase: loc?.value.toLowerCase()
-            }))
-          )
-          .reduce((a, c) => a.concat(c), [])
-          .sort((a, b) => a.value.localeCompare(b.value))
+      config &&
+      config.location_lists
+        .map((region) =>
+          region.locations.map((loc) => ({
+            ...loc,
+            value: loc?.value,
+            // loc value all lower case
+            valueLowerCase: loc?.value.toLowerCase()
+          }))
+        )
+        .reduce((a, c) => a.concat(c), [])
+        .sort((a, b) => a.value.localeCompare(b.value))
 
     categoryList =
       config &&
@@ -47,7 +47,7 @@ export const getPublicSitemapXML = (response) => {
       config.industry_lists.map((industry) => ({
         key: industry['seo-value'],
         label: Object.values(industry)[0],
-        value: Object.values(industry)[0],
+        value: Object.values(industry)[0]
       }))
 
     qualificationList =
@@ -57,7 +57,7 @@ export const getPublicSitemapXML = (response) => {
         return {
           key: degree['seo-value'],
           label: Object.values(degree)[0],
-          value: Object.values(degree)[0],
+          value: Object.values(degree)[0]
         }
       })
 
@@ -68,7 +68,7 @@ export const getPublicSitemapXML = (response) => {
         return {
           key: level['seo-value'],
           label: Object.values(level)[0],
-          value: Object.values(level)[0],
+          value: Object.values(level)[0]
         }
       })
 
@@ -79,7 +79,7 @@ export const getPublicSitemapXML = (response) => {
         return {
           key: type['seo-value'],
           label: Object.values(type)[0],
-          value: Object.values(type)[0],
+          value: Object.values(type)[0]
         }
       })
 
@@ -90,7 +90,7 @@ export const getPublicSitemapXML = (response) => {
         return {
           key: salary['seo-value'],
           label: Object.values(salary)[0] === '10K - 30K' ? 'Below 30K' : Object.values(salary)[0],
-          value: Object.keys(salary)[0],
+          value: Object.keys(salary)[0]
         }
       })
   }
@@ -120,15 +120,13 @@ export const getPublicSitemapXML = (response) => {
       url = `https://bossjob.ph${path}`
     }
 
-    return (
-      `<url>
+    return `<url>
           <loc>${url}</loc>
           <lastmod>${new Date().toISOString()}</lastmod>
           <changefreq>monthly</changefreq>
           <priority>${priority}</priority>
         </url>
       `.replace(/&/g, '&amp;')
-    )
   }
 
   const generateExternalPath = (path, priority) =>
@@ -145,30 +143,19 @@ export const getPublicSitemapXML = (response) => {
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
       ${generatePath('/', 1.0)}
       ${generatePath('/jobs-hiring/job-search', 1.0)}
-      ${
-        locationList &&
-        locationList.map((loc) => generateJobFilterPath(loc?.value, 0.8)).join('')
-      }
+      ${locationList && locationList.map((loc) => generateJobFilterPath(loc?.value, 0.8)).join('')}
+      ${categoryList && categoryList.map((cat) => generateJobFilterPath(cat.key, 0.8)).join('')}
       ${
         categoryList &&
-        categoryList.map((cat) => generateJobFilterPath(cat.key, 0.8)).join('')
-      }
-      ${
-        categoryList &&
-        categoryList.map((cat) => 
+        categoryList.map((cat) =>
           cat.sub_list.map((sub) => generateJobFilterPath(sub.key, 0.8)).join('')
         )
       }
       ${
         industryList &&
-        industryList
-          .map((industry) => generateJobFilterPath(industry.key, 0.8))
-          .join('')
+        industryList.map((industry) => generateJobFilterPath(industry.key, 0.8)).join('')
       }
-      ${
-        experienceList &&
-        experienceList.map((exp) => generateJobFilterPath(exp.key, 0.8)).join('')
-      }
+      ${experienceList && experienceList.map((exp) => generateJobFilterPath(exp.key, 0.8)).join('')}
       ${
         qualificationList &&
         qualificationList
@@ -179,10 +166,7 @@ export const getPublicSitemapXML = (response) => {
         jobTypeList &&
         jobTypeList.map((jobType) => generateJobFilterPath(jobType.key, 0.8)).join('')
       }
-      ${
-        salaryList &&
-        salaryList.map((salary) => generateJobFilterPath(salary.key, 0.8)).join('')
-      }
+      ${salaryList && salaryList.map((salary) => generateJobFilterPath(salary.key, 0.8)).join('')}
       ${generatePath('/resumetemplate', 1.0)}
       ${generatePath('/bosspoints', 0.8, true)}
       ${generatePath('/register/jobseeker', 0.8)}
