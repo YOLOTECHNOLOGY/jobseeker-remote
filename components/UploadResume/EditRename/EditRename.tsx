@@ -198,7 +198,7 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
       })
       .catch(({ response: { data } }) => {
         if (data.code) {
-          handleSnackbarContent('delete', 'warning', data.code)
+          handleSnackbarContent('delete', 'warning', data.code,data.message)
         }
       })
       .finally(() => {
@@ -227,7 +227,8 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
   const handleSnackbarContent = (
     type: 'reName' | 'mail' | 'delete',
     severity: AlertColor,
-    errorCode?
+    errorCode?,
+    message?
   ) => {
     if (type == 'reName' && severity == 'success') {
       setSnackbarContent(transitions.resumeHasBeenRenameSuccessfully)
@@ -238,7 +239,7 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
     }
 
     if (errorCode) {
-      setSnackbarContent(errorcode[errorCode])
+      setSnackbarContent(errorcode[errorCode] || message)
     }
 
     if (severity) {

@@ -147,8 +147,7 @@ const Step1Content = (props: any) => {
   const { handleSubmit, setValue, getValues, control } = useForm({ defaultValues })
   const [minSalary, setMinSalary] = useState(getValues().minSalary)
   const router = useRouter()
-  const fromPhone = sessionStorage.getItem('fromPhoneLogin')
-  console.log({fromPhone})
+  // const fromPhone = sessionStorage.getItem('fromPhoneLogin')
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
     setValue('maxSalary', maxSalaryOptions?.length > 0 ? maxSalaryOptions[0].value : null)
@@ -312,7 +311,7 @@ const Step1Content = (props: any) => {
               </div>
             )}
           </div>
-          {
+          {/* {
             !fromPhone ?  <div className={styles.step1Contact}>
             <Controller
               control={control}
@@ -355,7 +354,7 @@ const Step1Content = (props: any) => {
               />
             </div>
           </div> : null
-          }
+          } */}
          
 
 

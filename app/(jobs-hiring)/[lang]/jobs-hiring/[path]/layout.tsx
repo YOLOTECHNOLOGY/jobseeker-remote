@@ -3,12 +3,14 @@
 import React from 'react'
 import PublicLayout from 'app/[lang]/components/publicLayout'
 import { serverDataScript } from 'app/[lang]/abstractModels/FetchServierComponents'
-import { getCountry } from 'helpers/country'
+import { getCountryKey } from 'helpers/country'
 /* eslint-disable react/no-unknown-property */
-import { getCurrentMonthYear, unslugify } from 'helpers/formatter'
+import { formatTemplateString, getCurrentMonthYear } from 'helpers/formatter'
 import { decoder } from '../interpreters/encoder'
 import { toPairs } from 'ramda'
 import getConfigs from 'app/[lang]/interpreters/config'
+import { getDictionary } from 'get-dictionary'
+import { flatMap } from 'lodash-es'
 
 const configs = getConfigs([
   ['location_lists'],
@@ -32,37 +34,30 @@ const configs = getConfigs([
 ])
 async function generateSEO(props: any) {
   /* Handle SEO Meta Tags*/
-  const { month, year } = getCurrentMonthYear()
-  const { params, searchParams } = props
+  const { params, searchParams, params: { lang } } = props
+  const { month, year } = getCurrentMonthYear(lang)
+
+  const dictionary = await getDictionary(lang)
+  const { seo: { jobSearch } } = dictionary
   const { config } = await configs(serverDataScript()).run(props)
   const searchValues = decoder(config)(params.path, searchParams)
-  let seoMetaTitle = `Professional Jobs in ${getCountry()} - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
-  let seoMetaDescription = `New Jobs in ${getCountry()}available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+
+  let seoMetaTitle = formatTemplateString(jobSearch.defaultTitle, dictionary.seo[getCountryKey()], month, year)
+  let seoMetaDescription = formatTemplateString(jobSearch.defaultDescription, dictionary.seo[getCountryKey()])
+  const flatLocations = flatMap(config.location_lists, item => item.locations)
   const searchQuery = (searchValues.query ?? null) as string | null
-  const location = (searchValues.location?.[0] ?? null) as string | null
+  const location = flatLocations.find(item=>item.seo_value === searchValues.location?.[0])?.value 
   const url = new URLSearchParams(toPairs(searchParams)).toString()
   const seoCanonical = '/jobs-hiring/' + params.path + '?' + url
   if (searchQuery && !location) {
-    seoMetaTitle = `${unslugify(
-      searchQuery,
-      true
-    )} Jobs in ${getCountry()}, Job Opportunities - ${month} ${year} | Bossjob`
-    seoMetaDescription = `New ${unslugify(
-      searchQuery,
-      true
-    )} Jobs in ${getCountry()} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    seoMetaTitle = formatTemplateString(jobSearch.queryTitle, searchQuery, dictionary.seo[getCountryKey()], month, year)
+    seoMetaDescription = formatTemplateString(jobSearch.queryDescription, searchQuery, dictionary.seo[getCountryKey()])
   } else if (searchQuery && location) {
-    seoMetaTitle = `${unslugify(
-      searchQuery,
-      true
-    )} Jobs in ${getCountry()}, Apply Job Opportunities - ${month} ${year} | Bossjob`
-    seoMetaDescription = `New ${unslugify(searchQuery, true)} Jobs in ${unslugify(
-      location,
-      true
-    )}, ${getCountry()} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    seoMetaTitle = formatTemplateString(jobSearch.queryLocationTitle, searchQuery, dictionary.seo[getCountryKey()], month, year)
+    seoMetaDescription = formatTemplateString(jobSearch.queryLocationDescription, searchQuery, location, dictionary.seo[getCountryKey()])
   } else {
-    seoMetaTitle = `Professional Jobs in ${getCountry()} - Search & Apply Job Opportunities - ${month} ${year} | Bossjob`
-    seoMetaDescription = `New Jobs in ${getCountry()} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
+    seoMetaTitle = formatTemplateString(jobSearch.defaultTitle, dictionary.seo[getCountryKey()], month, year)
+    seoMetaDescription = formatTemplateString(jobSearch.defaultDescription, dictionary.seo[getCountryKey()])
   }
   const description = seoMetaDescription
   const imageUrl = 'https://assets.bossjob.com/website/OGTagImage.png'

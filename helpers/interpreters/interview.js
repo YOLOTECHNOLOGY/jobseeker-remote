@@ -143,7 +143,7 @@ export default command => command.cata({
         context.setLoading(true)
         return attend(payload.applicationId, payload.inviteInterviewId, payload.params)
             .then(result => RequestResult.success(result.data))
-            .catch(error => RequestResult.error(error))
+            .catch(error => RequestResult.error(error?.response?.data?.message))
             .finally(() => context.setLoading(false))
     }),
     requestAskResult: () => M(context => {
