@@ -4,11 +4,12 @@ import Header from 'components/Header'
 import dynamic from 'next/dynamic'
 import HamburgerMenu from 'components/HamburgerMenu'
 import AutoShowModalAppRedirect from 'app/[lang]/main-page/components/AutoShowModalAppRedirect'
-import { getCountry } from 'helpers/country'
+import { getCountryKey } from 'helpers/country'
 import { getDictionary } from 'get-dictionary'
 import React from 'react'
 import 'app/[lang]/globals.scss'
 import 'app/[lang]/index.module.scss'
+import { formatTemplateString } from 'helpers/formatter'
 const Providers = dynamic(() => import('app/[lang]/components/providers'), { ssr: true })
 const Initial = dynamic(() => import('app/[lang]/components/Initals'), { ssr: false })
 export default async function PublicLayout(props: any) {
@@ -38,10 +39,10 @@ export default async function PublicLayout(props: any) {
         <meta property='og:image:height' content='298' />
         <meta property='og:type' content='website' />
         <meta property='og:description' content={decodeURI(description)} />
-        <meta property='og:locale' content='en_PH' />
+        <meta property='og:locale' content={lang} />
         <meta
           property='og:site_name'
-          content={`Bossjob - Career Platform for Professionals in ${getCountry()}`}
+          content={formatTemplateString(dictionary.seo.siteName, dictionary.seo[getCountryKey()])}
         />
 
         {/* Schema.org markup for Google+ */}

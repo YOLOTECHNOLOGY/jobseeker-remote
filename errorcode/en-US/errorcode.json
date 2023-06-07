@@ -40,7 +40,7 @@
     "41036": "Invalid token",
     "41037": "Email already verified",
     "41038": "Email already exists",
-    "41039": "This number has already been used for an account, please try a different number",
+    "41039": "This number has already been used for an account Please try a different number",
     "41040": "Invalid otp",
     "41041": "Invalid email",
     "41042": "Otp has been used",
@@ -48,7 +48,7 @@
     "41044": "Account has been suspended",
     "41045": "Phone number already verified",
     "41046": "Not allowed choices",
-    "41047": "Your account has been suspended, please contact support@bossjobcom for clarification",
+    "41047": "Your account has been suspended Please contact support@bossjobcom for clarification",
     "41048": "Invalid user or phone number",
     "41049": "Source field is required",
     "41050": "Expiration of identity",
@@ -179,6 +179,7 @@
     "41183": "Invalid attachment url",
     "41184": "Mobile error",
     "41185": "Body error",
+    "41186": "You cannot delete resume that selected for auto sent resume",
     "41187": "User,sender must be consistent",
     "41188": "User,receiver must be consistent",
     "41191": "Work experience not found",
@@ -205,6 +206,9 @@
     "41224": "If is auto reply chat field is true, need message data",
     "41225": "You don't have permission setting auto reply",
     "41226": "Please provide query parameter message type id",
+    "41227": "User not registered",
+    "41228": "Greetings, not suitable message and auto reply message could not contains email and phone number",
+    "48905": "The email has been registered",
     "50001": "Internal server error",
     "50002": "Failed to upload resume",
     "50003": "Missing profiles",
@@ -217,5 +221,5 @@
     "50010": "Parameter ids is required",
     "50011": "The talent has been unlocked",
     "50012": "Parameter resume last updated name is invalid value",
-    "50013": "No result found at the moment, please try again"
+    "50013": "No result found at the moment Please try again"
 }
