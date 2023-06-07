@@ -5,7 +5,8 @@ const addJobViewService = (payload) => {
   return axios.post(`/${payload.jobId}/view`, {
     job_title_id: payload?.job_title_id,
     source: payload.source,
-    device: payload.device
+    device: payload.device,
+    reco_from: payload.reco_from
   })
 }
 
@@ -13,6 +14,5 @@ const getShreCard = (id) => {
   const axios = configuredAxios('job', 'public', false, '')
   return axios.get(`/manage-jobs/shared-jobs/${id}`)
 }
-
 
 export { addJobViewService, getShreCard }

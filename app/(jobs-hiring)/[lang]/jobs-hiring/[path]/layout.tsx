@@ -42,22 +42,47 @@ async function generateSEO(props: any) {
   const { config } = await configs(serverDataScript()).run(props)
   const searchValues = decoder(config)(params.path, searchParams)
 
-  let seoMetaTitle = formatTemplateString(jobSearch.defaultTitle, dictionary.seo[getCountryKey()], month, year)
-  let seoMetaDescription = formatTemplateString(jobSearch.defaultDescription, dictionary.seo[getCountryKey()])
+  let seoMetaTitle = formatTemplateString(jobSearch.defaultTitle,{
+    country: dictionary.seo[getCountryKey()],
+    month, year
+  })
+  let seoMetaDescription = formatTemplateString(jobSearch.defaultDescription,  {
+    country: dictionary.seo[getCountryKey()]
+  })
   const flatLocations = flatMap(config.location_lists, item => item.locations)
   const searchQuery = (searchValues.query ?? null) as string | null
-  const location = flatLocations.find(item=>item.seo_value === searchValues.location?.[0])?.value 
+  const location = flatLocations.find(item => item.seo_value === searchValues.location?.[0])?.value
   const url = new URLSearchParams(toPairs(searchParams)).toString()
   const seoCanonical = '/jobs-hiring/' + params.path + '?' + url
   if (searchQuery && !location) {
-    seoMetaTitle = formatTemplateString(jobSearch.queryTitle, searchQuery, dictionary.seo[getCountryKey()], month, year)
-    seoMetaDescription = formatTemplateString(jobSearch.queryDescription, searchQuery, dictionary.seo[getCountryKey()])
+    seoMetaTitle = formatTemplateString(jobSearch.queryTitle, {
+      searchQuery,
+      country: dictionary.seo[getCountryKey()],
+      month, year
+    })
+    seoMetaDescription = formatTemplateString(jobSearch.queryDescription, {
+      searchQuery,
+      country: dictionary.seo[getCountryKey()],
+    })
   } else if (searchQuery && location) {
-    seoMetaTitle = formatTemplateString(jobSearch.queryLocationTitle, searchQuery, dictionary.seo[getCountryKey()], month, year)
-    seoMetaDescription = formatTemplateString(jobSearch.queryLocationDescription, searchQuery, location, dictionary.seo[getCountryKey()])
+    seoMetaTitle = formatTemplateString(jobSearch.queryLocationTitle, {
+      searchQuery,
+      country: dictionary.seo[getCountryKey()],
+      month, year
+    })
+    seoMetaDescription = formatTemplateString(jobSearch.queryLocationDescription, {
+      searchQuery,
+      country: dictionary.seo[getCountryKey()],
+      location
+    })
   } else {
-    seoMetaTitle = formatTemplateString(jobSearch.defaultTitle, dictionary.seo[getCountryKey()], month, year)
-    seoMetaDescription = formatTemplateString(jobSearch.defaultDescription, dictionary.seo[getCountryKey()])
+    seoMetaTitle = formatTemplateString(jobSearch.defaultTitle, {
+      country: dictionary.seo[getCountryKey()],
+      month, year
+    })
+    seoMetaDescription = formatTemplateString(jobSearch.defaultDescription, {
+      country: dictionary.seo[getCountryKey()]
+    })
   }
   const description = seoMetaDescription
   const imageUrl = 'https://assets.bossjob.com/website/OGTagImage.png'
