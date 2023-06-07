@@ -189,6 +189,6 @@ export const buildParams = (config, searchValues) => {
         page: searchValues?.page?.[0] ?? 1,
         size: 15,
         source: 'web',
-        sort: searchValues?.sort?.join(),
+        sort: searchValues?.sort?.join() || '2',
     }
 }

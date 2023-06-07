@@ -428,7 +428,7 @@ const JobCard = (props: any) => {
                 // imageSettings={{ src: SmallAppLogo, height: 10, width: 10, excavate: true }}
                 className={styles.qrcode}
               />
-              {search.jobCard.talkToBoss},.
+              {search.jobCard.talkToBoss}
             </div>
           </div>
           <div className={styles.popContent}>
