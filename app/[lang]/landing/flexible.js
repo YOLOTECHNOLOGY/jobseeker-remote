@@ -9,7 +9,10 @@
 		let width = docEl.getBoundingClientRect().width;
 		maxWidth = maxWidth || 540;
 		width>maxWidth && (width=maxWidth);
-		const rem = width * 100 / designWidth;
+		let rem = width * 100 / designWidth;
+		if(width >= maxWidth){
+			rem = 12
+		}
 		remStyle.innerHTML = 'html{font-size:' + rem + 'px !important;}';
 	}
 
@@ -43,3 +46,5 @@
 		}, false);
 	}
 })(360, 540);
+
+

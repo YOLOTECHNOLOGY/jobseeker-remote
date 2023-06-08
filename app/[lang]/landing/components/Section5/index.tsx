@@ -4,6 +4,7 @@ import AnimatedNumbers from "react-animated-numbers";
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 
 import {A11y, Autoplay, Controller, Navigation, Pagination, Scrollbar} from "swiper";
+import useWindowSize from "../../../../../hooks/useWindowSize";
 
 let carouselList = [
 	{
@@ -28,12 +29,14 @@ let carouselList = [
 // }
 const Section5 = () =>{
 	const [enable, setEnable] = useState(true);
-
-	const swiperRef = useRef(null)
+	const {width} = useWindowSize();
+	const swiperRef = useRef(null);
+	const isMobile = width < 540;
 	return <section className={style.section5}>
-		<img className={style.section5_bg} alt={'-'} src={require('../assets/section5-bg.png').default.src}/>
+		{!isMobile && <img className={style.section5_bg + ' ' + style.desktop} alt={'-'} src={require('../assets/section5-bg.png').default.src}/>}
+		{isMobile && <img className={style.mobile_section5_bg} src={require('../assets/section5-mobile-bg.png').default.src} alt="_"/>}
 		{/* <div className={style.content_container}> */}
-		<div className={style.section5_carousel}
+		<div className={style.section5_carousel + ' ' + style.desktop}
 		     onMouseLeave={(event) => {
 			     console.log('onMouseLeave');
 			     swiperRef.current.swiper.autoplay.start();
