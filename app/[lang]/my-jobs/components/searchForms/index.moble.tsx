@@ -16,17 +16,15 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { filter, toPairs, pipe, is, map } from 'ramda'
 import { LoadingContext } from 'app/[lang]/components/providers/loadingProvider'
 import { cloneDeep, flatMap } from 'lodash-es'
-import MaterialLocationField from 'app/components/mobile/location1'
+import MaterialLocationField from 'app/[lang]/components/mobile/location1'
 import { getValueById } from 'helpers/config/getValueById'
 
 const SearchArea = (props: any) => {
-    // console.log({ props })
     const { config, preferences, preferenceId, searchParams ,lang} = props
-     const {newest,relevance,highestSalary,JobPreference,sortBy,filters,qualification, workExprerience, Industry, salary, JobType, companySizes} = lang.myJobs ||{}
+     const {newest,relevance,JobPreference,sortBy,filters,qualification, workExprerience, Industry, salary, JobType, companySizes} = lang.myJobs ||{}
     const sortOptions = [
         { label: newest, value: '1' },
         { label: relevance, value: '2' },
-        { label: highestSalary, value: '3' }
     ]
 
     const preferenceOptions = useMemo(() => {
@@ -58,7 +56,7 @@ const SearchArea = (props: any) => {
     const { push } = useContext(LoadingContext)
     const locations = flatMap(config.location_lists, item => item.locations)
 
-    const [location, setLocation] = useState(locations.find(location => location.seo_value === searchParams.location))
+    const [location, setLocation] = useState(locations.find(location => location.id == searchParams.location))
     const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
     const [moreData, setMoreData] = useState(
         pipe(map(item => {
@@ -80,7 +78,7 @@ const SearchArea = (props: any) => {
 
     const filterParams = useMemo(() => {
         return filter(a => a?.length)({
-            location: [location?.['seo_value']].filter(a => a),
+            location: location?.id?.toString(),
             sort: sort,
             page: page,
             preferenceId: selectedPreferenceId ? ('' + selectedPreferenceId) : null,

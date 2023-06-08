@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 
 /* Components */
 import Text from 'components/Text'
 import MaterialButton from 'components/MaterialButton'
 import Link from 'components/Link'
+import EditRename from './EditRename/EditRename'
 
 /* Helpers */
 import { maxFileSize } from 'helpers/handleInput'
@@ -13,8 +14,9 @@ import styles from './UploadResume.module.scss'
 import classNames from 'classnames'
 
 /* Assets */
-import { TrashIcon, DocumentIcon } from 'images'
+import { DocumentIcon } from 'images'
 // import format from 'date-fns/format'
+
 import { SnackbarTips } from './SnackbarTips'
 import moment from 'moment'
 import { formatTemplateString } from 'helpers/formatter'
@@ -38,11 +40,19 @@ type UploadResumeProps = {
 }
 
 const Trash = ({
+  id,
+  name,
   deleteResumeLoading,
-  onClick
+  onClick,
+  lang,
+  displayClear
 }: {
+  id: number
   deleteResumeLoading: boolean
   onClick: () => void
+  name: string
+  lang?: Record<string, any>
+  displayClear: boolean
 }) => {
   return (
     <div
@@ -51,7 +61,7 @@ const Trash = ({
         deleteResumeLoading ? styles.disabledDelResume : null
       ])}
     >
-      <img
+      {/* <img
         className={classNames([
           styles.trashDiv_icon,
           deleteResumeLoading ? styles.disabledDelResume_icon : null
@@ -61,6 +71,15 @@ const Trash = ({
         width='14'
         height='14'
         onClick={onClick}
+      /> */}
+
+      <EditRename
+        id={id}
+        name={name}
+        deleteResumeLoading={deleteResumeLoading}
+        handleDeleteResume={onClick}
+        lang={lang}
+        displayClear={displayClear}
       />
     </div>
   )
@@ -92,7 +111,7 @@ const UploadResume = ({
   const handleDeleteResume = (e) => {
     handleDelete?.(e)
   }
-  const displayClear = resumes.length > 1
+  const displayClear = useMemo(() => resumes.length > 1, [resumes])
   return (
     <>
       <div className={styles.uploadResumeField}>
@@ -119,12 +138,15 @@ const UploadResume = ({
                       </div>
                     </div>
                   </div>
-                  {displayClear && (
-                    <Trash
-                      deleteResumeLoading={deleteResumeLoading}
-                      onClick={() => handleDeleteResume(item.id)}
-                    />
-                  )}
+
+                  <Trash
+                    id={item.id}
+                    name={item.name}
+                    deleteResumeLoading={deleteResumeLoading}
+                    onClick={() => handleDeleteResume(item.id)}
+                    lang={lang}
+                    displayClear={displayClear}
+                  />
                 </div>
               </>
             )
@@ -149,6 +171,9 @@ const UploadResume = ({
             </MaterialButton>
           </div>
         )}
+        <Text textStyle='sm' block className={styles.upToFiles}>
+          {transitions.upload.upTo3files}
+        </Text>
         <Text textColor='darkgrey' textStyle='sm'>
           {transitions.upload.support}
         </Text>

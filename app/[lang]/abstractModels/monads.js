@@ -52,10 +52,10 @@ ReaderTPromise.prototype.catch = function (f) {
 ReaderTPromise.prototype.log = function (command) {
   if (process.env.NODE_ENV === 'development') {
     return ReaderTPromise(context => {
-      console.log(`%c${command?.['@@tag']}`, 'color: blue', command?.['@@values'] ?? 'none')
+      console.log(`%c${command?.['@@tag']}`, 'color: blue', command?.['@@values'] ?? 'none', new Date().getTime())
       return this.run(context)
         .then(value => {
-          console.log(`%c${'result:'}`, 'color: green', value ?? 'none')
+          console.log(`%c${'result:'}`, 'color: green', value ?? 'none', new Date().getTime())
           return value
         })
         .catch(error => {

@@ -70,9 +70,9 @@ export default registInterpreter(command =>
                 xp_lvl_ids: searchParams.workExperience?.split?.(',')?.map?.(key => workExperienceList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
                 degree_ids: searchParams.qualification?.split?.(',')?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
                 // is_company_verified: Boolean(searchParams.verifiedCompany),
+                job_location_ids: searchParams.location,
                 company_size_ids: searchParams.companySizes?.split?.(',')?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
             }
-            console.log({ queriyParams })
             const token = cookies().get('accessToken')
             return fetchJobsForYouLogin(queriyParams, token.value)
                 .then(result => ({

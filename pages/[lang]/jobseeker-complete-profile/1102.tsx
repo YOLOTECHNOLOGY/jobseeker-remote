@@ -375,12 +375,13 @@ const Step4 = (props: any) => {
 
   const handleNextBtn = () => {
     if (!isNextDisabled && ((showForm && school && degree ) || !showForm)) {
-      if (!userCookie.is_email_verify) {
-        setIsShowModal(true)
-      } else {
-        completePorfile()
-      }
-
+      // TODO: fixed sign up with phone, there not working!!!
+      // if (!userCookie.is_email_verify) {
+      //   setIsShowModal(true)
+      // } else {
+      //   completePorfile()
+      // }
+      completePorfile()
       return
     }
 
@@ -700,11 +701,11 @@ const Step4 = (props: any) => {
         </React.Fragment>
       )}
 
-      <ModalVerifyEmail
+      {/* <ModalVerifyEmail
         email={isAuthenticated && userCookie ? userCookie.email : ''}
         isShowModal={isShowModal}
         handleModal={handleCloseModal}
-      />
+      /> */}
     </OnBoardLayout>
   )
 }

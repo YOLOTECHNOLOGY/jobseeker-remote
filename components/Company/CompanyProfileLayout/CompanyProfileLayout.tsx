@@ -192,7 +192,9 @@ const CompanyProfileLayout = ({
                             textColor={tabValue === value ? 'primaryBlue' : 'black'}
                           >
                             {label}
-                            {badge && <span className={styles.companyJobsBadge}>{badge}</span>}
+                            {badge ? (
+                              <span className={styles.companyJobsBadge}>{badge}</span>
+                            ) : null}
                           </Text>
                         }
                       />

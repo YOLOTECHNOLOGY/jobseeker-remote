@@ -9,7 +9,7 @@ const OfferDetail = (props: any) => {
     const { contextRef, loading ,lang} = props
     const [data, setData] = useState<any>({})
     const actionsRef = useRef({} as any)
-    const {offerFrom,offered,reject,accept} = lang || {}
+    const {offerFrom,reject,accept} = lang || {}
     const context = {
         modalOfferDetail(actions) {
             actionsRef.current = actions
@@ -37,8 +37,15 @@ const OfferDetail = (props: any) => {
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
     >
-        <OfferView offerData={data} lang={lang}/>
-
+        <OfferView offerData={data} lang={lang} onChatClick={
+            () => {
+                if(window.location.pathname?.includes('chat')){
+                    actionsRef?.current?.close?.()
+                } else {
+                    actionsRef?.current?.toChat?.()
+                }
+            }
+        }/>
     </Modal >
 }
 export default OfferDetail

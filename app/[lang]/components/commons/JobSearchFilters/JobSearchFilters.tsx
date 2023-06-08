@@ -85,7 +85,6 @@ const NavSearchFilter = ({
     ...range,
     value: range.value === '10K - 30K' ? 'Below 30K' : range.value
   }))
-
   const { width } = useWindowDimensions()
   const filterRef = useRef(null)
   const sortRef = useRef(null)
