@@ -352,3 +352,66 @@
   font-weight: 400;
   padding: 1px 5px;
 }
+.LandingHeaderContainer{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #ffffff;
+  z-index: 999;
+}
+.LandingHeader{
+  max-width: 1366px;
+  margin: 0 auto;
+  .headerLogoImage{
+    filter: drop-shadow(30px 40px #136FD3);
+
+
+  }
+  .header {
+    background: #ffffff;
+    border:none;
+  }
+  .headerLinkText{
+    color: #353535;
+  }
+  .headerLink{
+    background: #ffffff;
+    color : #136FD3;
+  }
+  .startButton{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 1.5px solid #136FD3;
+    border-radius: 10px;
+    min-width: 123px;
+    height: 35px;
+  }
+  .headerLogo{
+    .logo{
+      padding-top: 3px;
+      width: auto;
+      a{
+        width: auto;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+  .countryItem {
+    color: #353535;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    .label {
+      position: relative;
+      z-index: 1;
+      background-color: #ffffff;
+    }
+    .object {
+      filter: drop-shadow(#353535 20px 0px);
+      transform: translate(-20px, 0px);
+    }
+  }
+}
