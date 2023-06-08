@@ -50,6 +50,7 @@ const ProtectedHeader = ({ lang }: any) => {
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
   const [showUnCompletedDot, setShowUnCompletedDot] = useState(true)
   const { totalUnread } = useContext(IMContext)
+  const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response||{})
   // const totalUnread = 999
   const config = useSelector((store: any) => store.config.config.response)
   const langKey = getLang()
@@ -66,8 +67,8 @@ const ProtectedHeader = ({ lang }: any) => {
   }
 
   useEffect(() => {
-    setShowUnCompletedDot(!currentUser?.is_profile_completed)
-  }, [currentUser])
+    setShowUnCompletedDot(!userInfo?.is_profile_completed)
+  }, [userInfo])
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true)
