@@ -703,6 +703,7 @@
           "time": "Uploaded On {{time}}",
           "uploadBtn": "Upload your resume",
           "support": "Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
+          "upTo3files": "Up to 3 files",
           "error": {
             "title": "File exceed limit",
             "tips": "Please upload file size lesser than 5MB."
@@ -713,7 +714,7 @@
         },
         "bossjob": {
           "title": "Bossjob resume",
-          "tips": "As you build your profile at Bossjob, we create your resume for you. You can choose from the available templates and use your newly improve resume to apply for job opening at Bossjob.",
+          "tips": "Resume is an essential tool to get you to the next step in your job hunting process. Impress recruiters with additional information from your Bossjob profile.",
           "download": "Download"
         },
         "changeResume": {
@@ -1130,21 +1131,18 @@
       "queryLocationDescription": "New {{searchQuery}} Jobs in {{location}} {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
     },
     "job": {
-      "title":"{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",
+      "title": "{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",
       "description": "Apply for {{jobTitle}} ({{jobId}}) at {{name}}. Discover more 'jobs' in {{location}}, {{address}} on Bossjob now!"
-    
     },
     "company": {
       "listTitle": "Find Companies Hiring in {{country}} | Bossjob",
       "listDescription": "Discover great companies to work for in {{country}}! Learn more about the company and apply to job openings on Bossjob!",
       "detailTitle": "Working at {{companyName}} | Bossjob",
       "detailDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!",
-      "jobsTitle":"{{companyName}} Careers in {{country}}, Job Opportunities | Bossjob",
-      "jobsDescription":"View all current job opportunities at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers",
-      "lifeTitle":"Culture & Life at {{companyName}} | Bossjob",
-      "lifeDescription":"Discover company culture & life at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers"
-   
-    
+      "jobsTitle": "{{companyName}} Careers in {{country}}, Job Opportunities | Bossjob",
+      "jobsDescription": "View all current job opportunities at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers",
+      "lifeTitle": "Culture & Life at {{companyName}} | Bossjob",
+      "lifeDescription": "Discover company culture & life at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers"
     }
   }
 }

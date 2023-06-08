@@ -171,6 +171,9 @@ const UploadResume = ({
             </MaterialButton>
           </div>
         )}
+        <Text textStyle='sm' block className={styles.upToFiles}>
+          {transitions.upload.upTo3files}
+        </Text>
         <Text textColor='darkgrey' textStyle='sm'>
           {transitions.upload.support}
         </Text>

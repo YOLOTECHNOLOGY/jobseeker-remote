@@ -63,6 +63,7 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
 
   const {
     // setValue,
+    reset,
     register,
     handleSubmit,
     formState: { errors }
@@ -112,6 +113,7 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
     setShowSendMailModal(false)
     setShowConfirmEmailModal(false)
     setShowMobileMenu(false)
+    reset()
   }
 
   const handleShowRenameModal = () => {
@@ -198,7 +200,7 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
       })
       .catch(({ response: { data } }) => {
         if (data.code) {
-          handleSnackbarContent('delete', 'warning', data.code,data.message)
+          handleSnackbarContent('delete', 'warning', data.code, data.message)
         }
       })
       .finally(() => {
@@ -286,14 +288,13 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
       <Modal
         showModal={showRenameModal}
         handleModal={handleCloseModal}
-        headerTitle={transitions.sendToEmail}
+        headerTitle={transitions.rename}
         firstButtonText={transitions.cancel}
         secondButtonText={transitions.save}
         isSecondButtonLoading={isLoading}
         firstButtonIsClose
         handleFirstButton={handleCloseModal}
         handleSecondButton={reNameHandleSubmit(handleRename)}
-        fullScreen
       >
         <p>{transitions.pleaseRenameYourResumeFile}</p>
         <MaterialTextField
@@ -320,7 +321,7 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
         {reNameErrors.reName && errorText(reNameErrors.reName.message as any)}
       </Modal>
 
-      {/* send */}
+      {/* Send */}
       <Modal
         showModal={showSendMailModal}
         handleModal={handleCloseModal}
@@ -331,7 +332,6 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
         firstButtonIsClose
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(handleConfirmMail)}
-        fullScreen
       >
         <p> {transitions.pleaseEnterTheEmailAddressToReceiveTheResume}</p>
         <MaterialTextField
@@ -368,7 +368,6 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
         isSecondButtonLoading={isLoading}
         handleFirstButton={handleConfirmBack}
         handleSecondButton={handleSendResumeToMail}
-        fullScreen
       >
         <p>
           {transitions.theEmailAddressYouWantToSendIs}{' '}
@@ -382,7 +381,6 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
         showModal={showMobileMenu}
         handleModal={handleCloseMobileMenuModal}
         headerTitle={transitions.more}
-        fullScreen
       >
         <MenuItem onClick={handleShowRenameModal}>{transitions.rename}</MenuItem>
         <MenuItem onClick={handleShowSendMailModal}>{transitions.sendToEmail}</MenuItem>
@@ -392,10 +390,11 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
       </Modal>
 
       <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        anchorOrigin={{ vertical: isMobile ? 'top' : 'bottom', horizontal: 'left' }}
         open={showSnackbarModal}
         onClose={() => setShowSnackbarModal(false)}
         key='resumeDelete'
+        autoHideDuration={3000}
       >
         <Alert onClose={() => setShowSnackbarModal(false)} severity={snackbarType}>
           {snackbarContent}
