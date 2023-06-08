@@ -207,9 +207,9 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
           }
         )
       }
-      logServerInfo({ status: 'start', ...params, timestemp: new Date().getTime() })
+      const startTime = new Date().getTime()
       return axios[key](...params).then(res => {
-        logServerInfo({ status: 'finish', ...params, timestemp: new Date().getTime() })
+        logServerInfo({ startTime, ...params, finishTime: new Date().getTime() })
         return res
       });
     }
