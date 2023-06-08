@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef ,memo} from 'react'
 import styles from '../index.module.scss'
 import AppleLogin from './link/apple'
 import FacebookLogin from './link/facebook'
@@ -137,4 +137,4 @@ const loginForEmail = (props: IProps) => {
     </>
   )
 }
-export default loginForEmail
+export default memo(loginForEmail)

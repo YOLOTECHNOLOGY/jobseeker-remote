@@ -715,6 +715,29 @@
           "title": "Bossjob resume",
           "tips": "As you build your profile at Bossjob, we create your resume for you. You can choose from the available templates and use your newly improve resume to apply for job opening at Bossjob.",
           "download": "Download"
+        },
+        "changeResume": {
+          "rename": "Rename",
+          "sendToEmail": "Send to email",
+          "delete": "Delete",
+          "cancel": "Cancel",
+          "save": "Save",
+          "send": "Send",
+          "back": "Back",
+          "confirm": "Confirm",
+          "pleaseRenameYourResume file.": "Please rename your resume file.",
+          "maximumLengthLimitExceeded": "Maximum length limit exceeded",
+          "cannotEnterSpecialCharacters": "Cannot enter special characters",
+          "resumeFileName": "Resume file name",
+          "pleaseEnterTheEmailAddressToReceiveTheResume": "Please enter the email address to receive the resume.",
+          "eMailFormatIsIncorrect": "E-mail format is incorrect",
+          "emailAddress": "Email address",
+          "theEmailAddressYouWantToSendIs": "The email address you want to send is",
+          "pleaseConfirmThatYourEmailAddressIsCorrectBeforeSending": "Please confirm that your email address is correct before sending",
+          "more": "More",
+          "resumeHasBeenRenameSuccessfully": "Resume has been rename successfully",
+          "resumeHasBeenSentToYourEmailSuccessfully": "Resume has been sent to your email successfully",
+          "resumeHasBeenDeletedSuccessfully": "Resume has been deleted successfully"
         }
       }
     }
@@ -1092,7 +1115,13 @@
     "optError": "Send OTP fail",
     "resendEmailCode": "Resend email'OTP success",
     "invalidOtp": "Invalid OTP",
-    "resendPhoneCode": "Resend phone'OTP success"
+    "resendPhoneCode": "Resend phone'OTP success",
+    "verifyEmail":"Verify email",
+    "thisPhoneNumberAssociated":"Choose account",
+    "accounts":"accounts",
+    "thisPhoneNumber":"This phone number is associated with ",
+    "youNeedToChooseVerified":"You need to choose a verified email address to associate",
+    "validateErr":"The email has been registered. Please change the binding to another email"
   },
   "seo": {
     "ph": "Philippines",
@@ -1107,7 +1136,7 @@
       "queryLocationDescription": "New {{searchQuery}} Jobs in {{location}} {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
     },
     "job": {
-      "title":"{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",
+      "title": "{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",
       "description": "Apply for {{jobTitle}} ({{jobId}}) at {{name}}. Discover more 'jobs' in {{location}}, {{address}} on Bossjob now!"
     },
     "company": {
@@ -1119,6 +1148,6 @@
       "jobsDescription":"View all current job opportunities at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers",
       "lifeTitle":"Culture & Life at {{companyName}} | Bossjob",
       "lifeDescription":"Discover company culture & life at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers"
-   }
+    }
   }
 }

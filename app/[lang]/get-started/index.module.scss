@@ -8,7 +8,8 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
-  .bg{
+
+  .bg {
     // position: absolute;
     // width: 1620px;
     // height: 800px;
@@ -19,15 +20,16 @@
     // transform: rotate(90deg);
     // z-index: -1;
     position: absolute;
-width: 1366px;
-height: 768px;
-left: 0px;
-top: 0px;
-background: linear-gradient(166.11deg, #FFFFFF 18.61%, #9DEDFF 59.16%, #1052FB 100.91%, #1052FB 133%, rgba(16, 82, 251, 0.89) 186.95%);
-opacity: 0.6;
-filter: blur(154.5px); 
-z-index: -1;
+    width: 1366px;
+    height: 768px;
+    left: 0px;
+    top: 0px;
+    background: linear-gradient(166.11deg, #FFFFFF 18.61%, #9DEDFF 59.16%, #1052FB 100.91%, #1052FB 133%, rgba(16, 82, 251, 0.89) 186.95%);
+    opacity: 0.6;
+    filter: blur(154.5px);
+    z-index: -1;
   }
+
   .container {
     width: 575px;
     background: #ffffff;
@@ -35,6 +37,7 @@ z-index: -1;
     margin: 0 auto;
     padding: 40px 36px;
     box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.1);
+
     h2 {
       font-weight: 700;
       font-size: 32px;
@@ -44,6 +47,9 @@ z-index: -1;
       padding-bottom: 8px;
       line-height: 40px;
       margin-bottom: 28px;
+      span{
+        color: rgba(35, 120, 229, 1);
+      }
     }
 
     .list {
@@ -63,10 +69,12 @@ z-index: -1;
         color: #1d2129;
         font-weight: 700;
         line-height: 44px;
-         a{
-            display: block;
-            color: #1d2129;
-         }
+
+        a {
+          display: block;
+          color: #1d2129;
+        }
+
         &:hover {
           background-color: #e5f4ff;
         }
@@ -80,17 +88,64 @@ z-index: -1;
         }
       }
     }
+    .account{
+      list-style: none;
+      min-height: 160px;
+      li{
+        width: 100%;
+        height: 80px;
+        padding: 17px 0;
+        box-sizing: border-box;
+        border-bottom: 1px solid rgba(242, 243, 245, 1);
+        cursor: pointer;
+        &:hover{
+          .name{
+            color: #2378e5;
+          }
+         
+        }
+        img{
+          width: 46px;
+          height: 46px;
+          float: left;
+          margin-right: 14px;
+          border-radius: 50%;
+        }
+        p{
+          margin: 0;
+        }
+        .name{
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 18px;
+          letter-spacing: 1px;
+          color: #1D2129;
+          padding-top: 3px;
+         
+        }
+        .email{
+          font-size: 14px;
+          line-height: 21px;      
+          letter-spacing: 1px;
+          color: #86909C;
+          
+        }
+      }
+    }
     .listEmail {
       display: flex;
+
       li {
         margin-right: 12px;
         margin-top: 0;
         flex: 1;
+
         &:last-child {
           margin-right: 0;
         }
       }
     }
+
     .divider {
       font-size: 14px;
       line-height: 19px;
@@ -109,6 +164,7 @@ z-index: -1;
     .captcha {
       .codeBox {
         display: flex;
+
         .itemContent {
           font-weight: 600;
           font-size: 20px;
@@ -117,8 +173,10 @@ z-index: -1;
           width: 55px;
           height: 60px;
           margin-right: 12px;
-          background: #166AD4;;
+          background: #166AD4;
+          ;
           border: 1px solid #166AD4;
+
           &.itemContentActive::before {
             position: absolute;
             top: 25%;
@@ -133,17 +191,22 @@ z-index: -1;
           }
         }
       }
-      .optErr{
+
+      .optErr {
         margin: 0;
         padding-top: 8px;
       }
+
       .InputBoxWrap {
         position: absolute;
         left: -9999px;
       }
-      .resendCode{
-        color: #2379EA;;
+
+      .resendCode {
+        color: #2379EA;
+        ;
       }
+
       &.captchaThemeBox {
         .codeBox {
           .itemContent {
@@ -152,37 +215,45 @@ z-index: -1;
             font-weight: 700;
             border: 1px solid transparent;
             border-radius: 10px;
+
             &.itemContentActive {
               position: relative;
               border-color: #166AD4;
-           
+
             }
           }
         }
       }
+
       @keyframes rc-captcha-input-flash {
         0% {
           visibility: hidden;
         }
+
         100% {
           visibility: visible;
         }
       }
     }
-    .enabled{
-      >img{
+
+    .enabled {
+      >img {
         display: block;
         margin: 0 auto 16px;
       }
-     }
+    }
+
     .phoneNumber {
       .item {
         margin-top: 16px;
-        &:first-child{
+
+        &:first-child {
           margin-top: 0;
         }
+
         .fullwidth {
           width: 100%;
+
           :global {
             .MuiOutlinedInput-root {
               border-radius: 8px;
@@ -190,7 +261,7 @@ z-index: -1;
           }
         }
       }
-    
+
       .btn {
         width: 100%;
         border: 1px solid #2378e5;
@@ -206,9 +277,11 @@ z-index: -1;
         display: flex;
         align-items: center;
         justify-content: center;
+
         &:first-child {
           margin-top: 0;
         }
+
         &:disabled {
           color: #fff;
           background: #f2f3f5;
@@ -223,13 +296,15 @@ z-index: -1;
         letter-spacing: 0.0075em;
         color: #4e5969;
         margin: 0;
-       text-align: center;
+        text-align: center;
+
         a {
           color: rgba(35, 120, 229, 1);
           padding: 0 4px;
           display: inline-block;
         }
       }
+
       .optBox {
         .enterTips {
           margin: 0;
@@ -239,13 +314,15 @@ z-index: -1;
           color: #1d2129;
           padding-bottom: 16px;
           word-break: break-all;
-          p{
+
+          p {
             margin: 0;
-            &.extra{
+
+            &.extra {
               margin-bottom: 20px;
             }
           }
-          
+
           span {
             color: rgba(29, 33, 41, 1);
             font-weight: 700;
@@ -261,17 +338,21 @@ z-index: -1;
           text-decoration-line: underline;
           color: #86909c;
           margin: 16px 0 20px;
-          .resendCode{
-            color: #2379EA;;
+
+          .resendCode {
+            color: #2379EA;
+            ;
             cursor: pointer;
           }
         }
+
         .trouble {
           font-size: 16px;
           line-height: 24px;
           letter-spacing: 1px;
           color: #1d2129;
           margin: 0;
+
           span {
             color: rgba(35, 120, 229, 1);
           }
@@ -299,15 +380,18 @@ z-index: -1;
         user-select: none;
       }
     }
+
     .phone_text {
       font-weight: 400;
     }
-    
+
   }
+
   .emailFactor {
     p {
       margin: 0;
     }
+
     .secure {
       font-weight: 700;
       font-size: 18px;
@@ -315,6 +399,7 @@ z-index: -1;
       letter-spacing: 1px;
       color: #1d2129;
     }
+
     .emailTips {
       margin-top: 5px;
       margin-bottom: 16px;
@@ -323,7 +408,16 @@ z-index: -1;
       line-height: 24px;
       letter-spacing: 1px;
       color: #4e5969;
+      span{
+        color: #1D2129;
+      }
     }
+  }
+  .imgContainer{
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin: 0 auto 20px;
   }
   .tips {
     font-weight: 400;
@@ -337,40 +431,43 @@ z-index: -1;
     bottom: 30px;
     margin: 0;
     left: 0;
+
     a {
       color: rgba(19, 111, 211, 1);
     }
   }
 
   .login_item {
-      cursor: pointer;
-      margin-top: 16px;
-      position: relative;
-      font-size: 14px;
-      border-radius: 8px;
-      text-align: center;
-      height: 44px;
-      border: 1px solid #c9cdd4;
-      letter-spacing: 0.0075em;
-      color: #1d2129;
-      font-weight: 700;
-      line-height: 44px;
+    cursor: pointer;
+    margin-top: 16px;
+    position: relative;
+    font-size: 14px;
+    border-radius: 8px;
+    text-align: center;
+    height: 44px;
+    border: 1px solid #c9cdd4;
+    letter-spacing: 0.0075em;
+    color: #1d2129;
+    font-weight: 700;
+    line-height: 44px;
 
-      &:hover {
-        background-color: #e5f4ff;
-      }
+    &:hover {
+      background-color: #e5f4ff;
+    }
 
-      img {
-        position: absolute;
-        width: 24px;
-        height: 24px;
-        left: 17px;
-        top: 10px;
-      }
+    img {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      left: 17px;
+      top: 10px;
+    }
   }
+
   .login_disabled {
     cursor: not-allowed;
     opacity: 0.6;
   }
 }
+
 @import './indexMobile.module.scss';

@@ -62,10 +62,10 @@ const LoginForPhone = (props: any) => {
     phoneOtpenerate({ phone_num: phoneNum })
       .then((res) => {
         console.log(res?.data?.data, 'res')
-        const { user_id, avatar, first_name, browser_serial_number, email } = res?.data?.data ?? {}
+        const { user_id, avatar, first_name, browser_serial_number, email ,is_multiple_phones_num} = res?.data?.data ?? {}
         let url = `${langKey}/get-started/phone?step=2&phone=${phoneNum}`
         if (user_id) {
-          url = `${langKey}/get-started/phone?step=2&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}`
+          url = `${langKey}/get-started/phone?step=2&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}&isMultiplePhonesNum=${is_multiple_phones_num}`
         }
         router.push(url)
       })

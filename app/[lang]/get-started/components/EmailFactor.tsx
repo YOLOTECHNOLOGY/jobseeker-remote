@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from '../index.module.scss'
 import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
@@ -7,13 +7,16 @@ import EmailComponent from './emailComponent'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-
+import { checkIsEmailUse } from 'store/services/auth/newLogin'
 import SetUpLater from './setUpLater'
 import { useSearchParams } from 'next/navigation'
+import { CircularProgress } from 'app/[lang]/components/MUIs'
 
 function EmailFactor(props: any) {
   const [isDisable, setDisable] = useState<boolean>(true)
   const [email, setEmail] = useState<string>('')
+  const [validateErr, setValidateErr] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
   const searchParams = useSearchParams()
   const phoneNum = '+' + searchParams.get('phone')?.trim?.()
   const dispatch = useDispatch()
@@ -21,9 +24,25 @@ function EmailFactor(props: any) {
   const langKey = getLang()
   const { newGetStarted } = props.lang
 
-  const sendOTPFun = () => {
-    console.log(999)
+  useEffect(() => {
+    if (validateErr) {
+      setValidateErr('')
+    }
+  }, [email])
 
+  const checkIsEmailUseFun = () => {
+    setLoading(true)
+    checkIsEmailUse({ email }).then((res) => {
+      if (res?.data?.data) {
+        setLoading(false)
+        setValidateErr(newGetStarted.validateErr)
+      } else {
+        sendOTPFun()
+      }
+    })
+  }
+
+  const sendOTPFun = () => {
     authenticationSendEmaillOtp({ email })
       .then((res) => {
         console.log(res?.data?.data, 'res')
@@ -38,6 +57,7 @@ function EmailFactor(props: any) {
           })
         )
       })
+      .finally(() => setLoading(false))
   }
 
   return (
@@ -55,10 +75,11 @@ function EmailFactor(props: any) {
             setDisable={setDisable}
             email={email}
             lang={props.lang}
+            validateErr={validateErr}
           />
         </div>
-        <button className={styles.btn} disabled={isDisable} onClick={() => sendOTPFun()}>
-          {newGetStarted.sendCode}
+        <button className={styles.btn} disabled={isDisable} onClick={() => checkIsEmailUseFun()}>
+          {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
         <SetUpLater lang={props.lang} />
       </div>
