@@ -3,7 +3,7 @@ import { getCookie, removeUserCookie, setCookie } from 'helpers/cookies'
 import { accessToken, refreshToken } from './cookies';
 import { getCountryId } from './country';
 import { NextResponse } from 'next/server';
-import logError from 'app/errors/logError';
+import logError, { logServerInfo } from 'app/errors/logError';
 // generate url by a baseUrl
 
 const getUrl = (baseURL) => {
@@ -163,7 +163,6 @@ const refreshTokenServer = () => {
   })
 }
 
-
 globalThis.globalPromise = null
 const chain = configured => (baseURL, type = 'public', passToken, serverAccessToken, server = typeof window === 'undefined') => {
   const createAxios = () => configuredAxios(baseURL, type, passToken, serverAccessToken, server)
@@ -208,7 +207,11 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
           }
         )
       }
-      return axios[key](...params);
+      logServerInfo({ status: 'start', ...params, timestemp: new Date().getTime() })
+      return axios[key](...params).then(res => {
+        logServerInfo({ status: 'finish', ...params, timestemp: new Date().getTime() })
+        return res
+      });
     }
   });
   return wrapper
