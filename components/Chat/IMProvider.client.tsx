@@ -1,6 +1,6 @@
 'use client'
 import React, { createContext, useEffect, useMemo, useRef, useState, useCallback } from 'react'
-
+import { IMManager, hooks } from 'imforbossjob'
 import 'imforbossjob/dist/style.css'
 import SendResumeModal from 'components/Chat/sendResume'
 import { useDispatch, useSelector } from 'react-redux'
@@ -90,8 +90,7 @@ const msgToNote = (message, state) => {
 
 }
 
-const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
-
+const IMProvider = ({ children, lang }: any) => {
     const [chatDictionary, setChatDictionary] = useState({})
     useEffect(() => {
         getDictionary(lang)
@@ -178,9 +177,6 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
             unread: isUnreadOn ? '1' : '0'
         }
     }, [isUnreadOn, status])
-    // const updateChatList = useCallback(() => {
-    //     list(searchParams).then(result => result.data?.data ?? [])
-    // }, [searchParams, list])
 
     const filterMode = useMemo(() => {
         return !(!isUnreadOn && !status)
@@ -446,147 +442,126 @@ const IMProvider = ({ children, IMManager, hooks, lang }: any) => {
         window.addEventListener('receiveImNotification', receive)
         return () => window.removeEventListener('receiveImNotification', receive)
     }, [])
-    return <Provider value={{
-        ready: true,
-        userDetail,
-        userId,
-        imState,
-        applicationId,
-        contextRef,
-        loading,
-        mobile,
-        chatId,
-        totalUnread,
-        chatListLoading,
-        isUnreadOn,
-        setUnreadOn,
-        chatList,
-        filterMode,
-        updateChatList,
-        interpreter,
-        imStatus,
-        status,
-        setStatus,
-        postNote,
-        translate
-    }}>{userId ? <>
-        <SendResumeModal
-            loading={loading}
-            contextRef={contextRef}
-            data={imState.resume_request}
-            applicationId={applicationId}
-            lang={chatDictionary}
-        />
+    return <Provider
+        key='im-provider'
+        value={{
+            ready: true,
+            userDetail,
+            userId,
+            imState,
+            applicationId,
+            contextRef,
+            loading,
+            mobile,
+            chatId,
+            totalUnread,
+            chatListLoading,
+            isUnreadOn,
+            setUnreadOn,
+            chatList,
+            filterMode,
+            updateChatList,
+            interpreter,
+            imStatus,
+            status,
+            setStatus,
+            postNote,
+            translate
+        }}>{userId ? <>
+            <SendResumeModal
+                loading={loading}
+                contextRef={contextRef}
+                data={imState.resume_request}
+                applicationId={applicationId}
+                lang={chatDictionary}
+            />
 
-        <Interview
-            loading={loading}
-            contextRef={contextRef}
-            data={imState.interview}
-            applicationId={applicationId}
-            lang={lang}
-        />
-        <OfferModal
-            loading={loading}
-            contextRef={contextRef}
-            lang={chatDictionary}
-            applicationId={applicationId}
-        />
-        <ExchangeModal
-            loading={loading}
-            contextRef={contextRef}
-            lang={lang}
-            applicationId={applicationId}
-        />
-        <ExchangeConfirmModal
-            loading={loading}
-            contextRef={contextRef}
-            lang={lang}
-            applicationId={applicationId}
-        />
-        <ExchangeDetailModal
-            loading={loading}
-            contextRef={contextRef}
-            lang={lang}
-            applicationId={applicationId}
-        />
-        <NotInterestModal
-            loading={loading}
-            data={imState}
-            applicationId={applicationId}
-            lang={chatDictionary}
-            contextRef={contextRef}
-        />
-        <IssueModal
-            loading={loading}
-            data={imState?.interview}
-            lang={lang}
-            applicationId={applicationId}
-            contextRef={contextRef}
-        />
-        <ViewJobModal
-            loading={loading}
-            data={imState?.interview}
-            lang={chatDictionary}
-            applicationId={applicationId}
-            contextRef={contextRef}
-            config={config}
-        />
-        <CancelModal
-            loading={loading}
-            data={imState?.interview}
-            applicationId={applicationId}
-            lang={lang}
-            contextRef={contextRef}
-        />
-        <AutoSendResumeModal
-            loading={loading}
-            data={imState?.interview}
-            applicationId={applicationId}
-            lang={lang}
-            contextRef={contextRef}
-        />
-        <CancelDetailModal
-            loading={loading}
-            data={imState?.interview}
-            lang={lang}
-            applicationId={applicationId}
-            contextRef={contextRef}
-        />
-        <CommonPhrases
-            loading={loading}
-            userId={userId}
-            lang={lang}
-            applicationId={applicationId}
-            contextRef={contextRef}
-        />
-    </> : null}
+            <Interview
+                loading={loading}
+                contextRef={contextRef}
+                data={imState.interview}
+                applicationId={applicationId}
+                lang={lang}
+            />
+            <OfferModal
+                loading={loading}
+                contextRef={contextRef}
+                lang={chatDictionary}
+                applicationId={applicationId}
+            />
+            <ExchangeModal
+                loading={loading}
+                contextRef={contextRef}
+                lang={lang}
+                applicationId={applicationId}
+            />
+            <ExchangeConfirmModal
+                loading={loading}
+                contextRef={contextRef}
+                lang={lang}
+                applicationId={applicationId}
+            />
+            <ExchangeDetailModal
+                loading={loading}
+                contextRef={contextRef}
+                lang={lang}
+                applicationId={applicationId}
+            />
+            <NotInterestModal
+                loading={loading}
+                data={imState}
+                applicationId={applicationId}
+                lang={chatDictionary}
+                contextRef={contextRef}
+            />
+            <IssueModal
+                loading={loading}
+                data={imState?.interview}
+                lang={lang}
+                applicationId={applicationId}
+                contextRef={contextRef}
+            />
+            <ViewJobModal
+                loading={loading}
+                data={imState?.interview}
+                lang={chatDictionary}
+                applicationId={applicationId}
+                contextRef={contextRef}
+                config={config}
+            />
+            <CancelModal
+                loading={loading}
+                data={imState?.interview}
+                applicationId={applicationId}
+                lang={lang}
+                contextRef={contextRef}
+            />
+            <AutoSendResumeModal
+                loading={loading}
+                data={imState?.interview}
+                applicationId={applicationId}
+                lang={lang}
+                contextRef={contextRef}
+            />
+            <CancelDetailModal
+                loading={loading}
+                data={imState?.interview}
+                lang={lang}
+                applicationId={applicationId}
+                contextRef={contextRef}
+            />
+            <CommonPhrases
+                loading={loading}
+                userId={userId}
+                lang={lang}
+                applicationId={applicationId}
+                contextRef={contextRef}
+            />
+        </> : null}
 
         {children}
         <NotificationContainer {...notificationProps} />
     </Provider>
 }
 
-const wrapper = ({ children, lang }) => {
-    const IMRef = useRef(null)
-    const [ready, setReady] = useState(false)
-    useEffect(() => {
-        import('imforbossjob')
-            .then(im => {
-                IMRef.current = im
-                setReady(true)
-            })
-    }, [])
-    if (ready) {
-        return (<IMProvider
-            IMManager={IMRef.current.IMManager}
-            hooks={IMRef.current.hooks}
-            lang={lang}
-        >
-            {children}
-        </IMProvider>)
-    } else {
-        return <Provider value={{ ready }} >{children}</Provider>
-    }
-}
-
-export default wrapper
+export default IMProvider

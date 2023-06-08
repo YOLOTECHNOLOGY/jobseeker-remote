@@ -267,9 +267,9 @@ const SearchArea = (props: any) => {
                     <path
                       d='M16 24H16.0133'
                       stroke='#136FD3'
-                      stroke-width='2'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
                       className={styles.downloadApp_phoneIconHomePath}
                     />
                   </svg>
@@ -301,21 +301,21 @@ const SearchArea = (props: any) => {
                     <path
                       d='M7.84375 13.2812L11.125 10L7.84375 6.71875'
                       stroke='#136FD3'
-                      stroke-width='1.5'
+                      strokeWidth='1.5'
                       strokeLinecap='round'
                       strokeLinejoin='round'
                     />
                     <path
                       d='M2.375 10H11.125'
                       stroke='#136FD3'
-                      stroke-width='1.5'
+                      strokeWidth='1.5'
                       strokeLinecap='round'
                       strokeLinejoin='round'
                     />
                     <path
                       d='M11.125 3.125H15.5C15.6658 3.125 15.8247 3.19085 15.9419 3.30806C16.0592 3.42527 16.125 3.58424 16.125 3.75V16.25C16.125 16.4158 16.0592 16.5747 15.9419 16.6919C15.8247 16.8092 15.6658 16.875 15.5 16.875H11.125'
                       stroke='#136FD3'
-                      stroke-width='1.5'
+                      strokeWidth='1.5'
                       strokeLinecap='round'
                       strokeLinejoin='round'
                     />

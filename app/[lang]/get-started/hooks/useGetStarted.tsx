@@ -13,7 +13,7 @@ import { getCountryId, getLanguageId } from 'helpers/country'
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { getCookie } from 'helpers/cookies'
-
+import { getLang } from 'helpers/country'
 const useGetStarted = () => {
   const routes = useRouter()
   const dispatch = useDispatch()
@@ -26,7 +26,7 @@ const useGetStarted = () => {
   const [userId, setUserId] = useState(null)
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
   const [defaultRedirectPage, setDefaultRedirectPage] = useState<string>(null)
-
+  const langKey = getLang(); 
   // console.log(useSearchParams,'router')
   // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
@@ -106,7 +106,7 @@ const useGetStarted = () => {
         sessionStorage.removeItem('fromPhoneLogin')
       }
       
-      routes.push('/jobseeker-complete-profile/1')
+      routes.push(`/${langKey}/jobseeker-complete-profile/1`)
     } else if (isChatRedirect) {
       localStorage.removeItem('isChatRedirect')
       routes.push(isChatRedirect)

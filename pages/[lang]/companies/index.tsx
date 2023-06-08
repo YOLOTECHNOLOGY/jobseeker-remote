@@ -31,10 +31,10 @@ import BannerCarousel from 'components/BannerCarousel'
 
 // Assets
 import { BlueTickIcon } from 'images'
-import { getCountry } from 'helpers/country'
+import { getCountry, getCountryKey } from 'helpers/country'
 import { formatTemplateString } from 'helpers/formatter'
 import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
-
+import { flatMap } from 'lodash-es'
 
 const Companies = (props: any) => {
   const {
@@ -49,7 +49,7 @@ const Companies = (props: any) => {
   const [totalPage, setTotalPage] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
   const config = useSelector((store: any) => store.config.config.response)
-  
+
   // useEffect(() => {
   //   dispatch(fetchConfigRequest())
   // }, [])
@@ -82,7 +82,7 @@ const Companies = (props: any) => {
       setFeaturedCompanies(companies)
     }
   }, [featuredCompaniesResponse])
-  console.log(langKey,9999)
+  console.log(langKey, 9999)
   const handleKeywordSearch = (keyword) => {
     const words = keyword.trim()
     router.push(`/${langKey}/companies/search?query=${words}&size=15&page=1`)
@@ -121,7 +121,7 @@ const Companies = (props: any) => {
           {featuredCompany && (
             <div className={styles.featuredEmployerLeft}>
               <div className={styles.featuredEmployerInfo}>
-                <Link to={ '/' + langKey + featuredCompany?.company_url || '/'}>
+                <Link to={'/' + langKey + featuredCompany?.company_url || '/'}>
                   <img
                     src={featuredCompany?.logo_url}
                     alt={`${featuredCompany?.name} logo`}
@@ -171,9 +171,8 @@ const Companies = (props: any) => {
                     {featuredCompany?.short_description}
                   </Text>
                   <Link
-                    to={`${
-                      featuredCompany?.company_url ?  '/' + langKey + featuredCompany.company_url + '/jobs' : '/jobs'
-                    }`}
+                    to={`${featuredCompany?.company_url ? '/' + langKey + featuredCompany.company_url + '/jobs' : '/jobs'
+                      }`}
                     className={styles.featuredEmployerOpenings}
                   >
                     <Text textStyle='lg' bold>
@@ -242,18 +241,24 @@ const Companies = (props: any) => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (props) => {
   const { page, lang }: any = props.query
   const dictionary = await getDictionary(lang)
+  const { seo: { company } } = dictionary
   store.dispatch(fetchConfigRequest(lang))
   store.dispatch(fetchFeaturedCompaniesListRequest({ page: Number(page) || 1 }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
-
+  const country = dictionary.seo[getCountryKey()]
+  // const storeState = store.getState()
+  // console.log({ store })
+  // const location_lists = storeState?.config?.config?.response?.location_lists ?? []
+  // const flatLocations =  flatMap(location_lists,item => item.locations)
+  // const location = 
   return {
     props: {
-      seoMetaTitle: `Find Companies Hiring in ${getCountry()} | Bossjob`,
-      seoMetaDescription: `Discover great companies to work for in ${getCountry()}! Learn more about the company and apply to job openings on Bossjob!`,
+      seoMetaTitle: formatTemplateString(company.listTitle, country),
+      seoMetaDescription: formatTemplateString(company.listDescription, country),
       canonicalUrl: '/companies',
       lang: dictionary,
-      langKey:lang
+      langKey: lang
     }
   }
 })

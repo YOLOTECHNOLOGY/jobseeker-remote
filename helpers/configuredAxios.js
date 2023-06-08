@@ -180,7 +180,6 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
           (error) => {
             logError(error?.response?.data ?? error?.response ?? error)
             if (error?.response?.status === 401 && typeof window !== 'undefined') {
-
               if (configured) {
                 redirectToHomeOnClient();
                 return Promise.reject(error)

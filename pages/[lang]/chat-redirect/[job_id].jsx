@@ -20,7 +20,6 @@ const Chat = () => {
   const userId = userDetail.id
   const userEmail = userDetail.email
   useEffect(() => {
-    debugger
     if (userId) {
       createChat(job_id, { source, device: isMobile ? 'mobile_web' : 'web' })
         .then((result) => {

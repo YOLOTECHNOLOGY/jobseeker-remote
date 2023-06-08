@@ -32,16 +32,17 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderPro
     setShowUnCompletedDot(!!currentUser?.is_profile_completed)    
   }, [currentUser])
   
+
   return (
     <>
-      {isShowEmailAlert && (
+      {/* {isShowEmailAlert && (
         <MaterialAlert open={true} severity='info'>
-          <Text>{lang.pleaseVerify} </Text>
+          <Text>{lang.pleaseVerify}</Text>
           <a style={{ color: '#1976d2', textDecoration: 'underline rgba(25, 118, 210, 0.4)' }}>
           {lang.verifyNow}
           </a>
         </MaterialAlert>
-      )}
+      )} */}
       <div className={styles.header}>
         <nav className={styles.headerContainer}>
           <div className={styles.headerLogo}>

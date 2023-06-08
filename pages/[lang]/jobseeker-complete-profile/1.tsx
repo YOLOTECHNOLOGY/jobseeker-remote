@@ -201,7 +201,7 @@ const Step1Content = (props: any) => {
         notice_period_id: noticePeriod,
         country_id: getCountryId(),
         location_id: location?.id || '',
-        phone_num: countryCode + contactNumber,
+        phone_num: contactNumber ? countryCode + contactNumber : null,
         first_name: firstName,
         last_name: lastName
       },
@@ -613,7 +613,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   if (!accessToken) {
     return {
       redirect: {
-        destination: '/get-started?redirect=/jobseeker-complete-profile/1',
+        destination: `/${query.lang}/get-started?redirect=/jobseeker-complete-profile/1`,
         permanent: false,
         lang
       }
