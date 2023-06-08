@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import SEO from 'components/SEO'
@@ -14,14 +14,9 @@ import { jobseekerTokenValidate } from 'store/services/auth/jobseekersTokenValid
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
 import Head from 'next/head'
-const TransitionLoader = dynamic(() => import('components/TransitionLoader/TransitionLoader'))
-
 const MaintenancePage = dynamic(() => import('./[lang]/maintenance'))
 import * as fbq from 'lib/fpixel'
 import NotificationProvider from 'components/NotificationProvider'
-// import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
-// import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
-// import { useDispatch } from 'react-redux'
 import IMProvider from 'components/Chat/IMProvider.client'
 import 'styles/globals.scss'
 import { persistor } from 'store'
@@ -38,11 +33,9 @@ const App = (props: AppProps) => {
   const lang = props.router.query.lang
   const router = useRouter()
   const accessToken = getCookie('accessToken')
-  const [isPageLoading, setIsPageLoading] = useState<boolean>(false)
-  const [toPath, setToPath] = useState('')
   useEffect(() => {
     if (!(window as any)?.imSharedWorker && window.SharedWorker) {
-      ;(window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
+      ; (window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
     }
   }, [])
   // useEffect(() => {
@@ -54,19 +47,15 @@ const App = (props: AppProps) => {
   useEffect(() => {
     initFireBase()
   }, [])
-  // const [gtagReady, setGtagReady] = useState(false)
   useEffect(() => {
     // Facebook pixel
     // This pageview only triggers the first time
     fbq.pageview()
-
     const handleRouteComplete = (url) => {
       gtag.pageview(url)
       fbq.pageview()
     }
-
     router.events.on('routeChangeComplete', handleRouteComplete)
-
     return () => {
       router.events.off('routeChangeComplete', handleRouteComplete)
     }
@@ -82,38 +71,16 @@ const App = (props: AppProps) => {
         setItem('utmCampaign', JSON.stringify(utmCampaignObj))
       }
     }
-    const handleRouteComplete = () => {
-      setToPath('')
-      setIsPageLoading(false)
-    }
-    const handleStart = (toPath) => {
-      setToPath(toPath)
-      setIsPageLoading(true)
-    }
-
-    router.events.on('routeChangeStart', handleStart)
-    router.events.on('routeChangeError', handleRouteComplete)
-    router.events.on('routeChangeComplete', handleRouteComplete)
-
-    return () => {
-      router.events.off('routeChangeStart', handleStart)
-      router.events.off('routeChangeError', handleRouteComplete)
-      router.events.off('routeChangeComplete', handleRouteComplete)
-    }
   }, [])
 
   useEffect(() => {
     const accessTokenValue = getCookie(accessToken)
     if (accessTokenValue) {
       jobseekerTokenValidate(accessTokenValue)
-        .then(() => {
-          //
-        })
         .catch((result) => {
           const { data, status } = result.response ?? {}
           if (status == 400 || data?.errors?.error[0] === 'Invalid token') {
             removeUserCookie()
-
             if (!router.pathname.includes('/get-started')) {
               window.location.href = '/get-started?type=LoginOut'
             }
@@ -122,7 +89,7 @@ const App = (props: AppProps) => {
     }
   }, []) // [router.route]
   const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
-
+  console.log('_app_page')
   return (
     <>
       <SEO
@@ -149,8 +116,6 @@ const App = (props: AppProps) => {
           }}
         />
       </Head>
-      {/* Global Site Tag (gtag.js) - Google Analytics */}
-      {/* Global Site Tag (gtag.js) - Google Analytics */}
       {/* Google One Tap Sign in */}
       <Script
         src='https://accounts.google.com/gsi/client'
@@ -177,11 +142,11 @@ const App = (props: AppProps) => {
               }
               window.location.replace(
                 '/handlers/googleLoginHandler?access_token=' +
-                  accessTokenGoogle +
-                  '&active_key=' +
-                  activeKey +
-                  '&redirectUrl=' +
-                  window.location.href
+                accessTokenGoogle +
+                '&active_key=' +
+                activeKey +
+                '&redirectUrl=' +
+                window.location.href
               )
             }
           }
@@ -205,45 +170,20 @@ const App = (props: AppProps) => {
       <noscript
         dangerouslySetInnerHTML={{
           __html: `
-          <iframe src="https://www.googletagmanager.com/ns.html?id=${
-            process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
-          }"
+          <iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
+            }"
           height="0" width="0" style="display:non e;visibility:hidden"></iframe>
         `
         }}
       ></noscript>
-      {/* <Script
-        strategy='lazyOnload'
-        onLoad={() => {
-          (window as any).dataLayer = (window as any).dataLayer || [];
-          // eslint-disable-next-line prefer-rest-params
-          function gtag(...args) { (window as any).dataLayer.push(args); }
-          gtag('js', new Date());
-          gtag('config', '${gtag.GA_TRACKING_ID}', {
-            page_path: window.location.pathname,
-          });
-
-          (window as any).gtag = gtag
-          setGtagReady(true)
-
-        }}
-        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-        id='gtag-init'
-        dangerouslySetInnerHTML={{
-          __html: `
-            
-          `
-        }}
-      /> */}
       {/* Facebook  */}
       <Script
         dangerouslySetInnerHTML={{
           __html: `
             function initialize() {	
               FB.init({	
-                appId            : ${
-                  process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
-                },
+                appId            : ${process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
+            },
                 xfbml            : true,	
                 version          : 'v6.0'	
               });	
@@ -326,14 +266,11 @@ const App = (props: AppProps) => {
             <IMProvider lang={lang}>
               {process.env.MAINTENANCE === 'true' ? (
                 <MaintenancePage {...pageProps} />
-              ) : isPageLoading &&
-                !(router.pathname.includes('jobs-hiring') && toPath.includes('jobs-hiring')) ? (
-                <TransitionLoader accessToken={accessToken} lang={lang} />
-              ) : (
+              ) :
                 <NotificationProvider>
                   <Component {...pageProps} />
                 </NotificationProvider>
-              )}
+              }
             </IMProvider>
           </PersistGate>
         </CookiesProvider>

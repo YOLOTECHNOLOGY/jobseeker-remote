@@ -11,7 +11,7 @@ import 'app/[lang]/globals.scss'
 import 'app/[lang]/index.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
 const Providers = dynamic(() => import('app/[lang]/components/providers'), { ssr: true })
-const Initial = dynamic(() => import('app/[lang]/components/Initals'), { ssr: false })
+const Initial = dynamic(() => import('app/[lang]/components/Initals'), { ssr: true })
 export default async function PublicLayout(props: any) {
   const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
   const { children, seo }: any = props
