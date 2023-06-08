@@ -44,6 +44,7 @@ type ProfileLayoutProps = {
   handleModal: Function
   children: React.ReactNode
   dic: any
+  unCompleted: any
 }
 
 const ProfileLayout = ({
@@ -53,7 +54,8 @@ const ProfileLayout = ({
   setTabValue,
   modalName,
   handleModal,
-  children
+  children,
+  unCompleted
 }: ProfileLayoutProps) => {
   const {
     avatar,
@@ -119,6 +121,7 @@ const ProfileLayout = ({
                     bold
                     textStyle='xl'
                     textColor={tabValue === 'profile' ? 'primaryBlue' : 'black'}
+                    className={unCompleted['profile'] ? styles.unCompleted: ''}
                   >
                     {dic.profile.tabTitle}
                   </Text>
@@ -132,6 +135,7 @@ const ProfileLayout = ({
                     bold
                     textStyle='xl'
                     textColor={tabValue === 'job-preferences' ? 'primaryBlue' : 'black'}
+                    className={unCompleted['job-preferences'] ? styles.unCompleted: ''}
                   >
                     {dic.preference.tabTitle}
                   </Text>
@@ -145,6 +149,7 @@ const ProfileLayout = ({
                     bold
                     textStyle='xl'
                     textColor={tabValue === 'resume' ? 'primaryBlue' : 'black'}
+                    className={unCompleted['resume'] ? styles.unCompleted: ''}
                   >
                     {dic.resume.tabTitle}
                   </Text>

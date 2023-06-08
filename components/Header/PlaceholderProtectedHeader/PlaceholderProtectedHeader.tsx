@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import classNames from 'classnames'
 
 /* components */
@@ -26,6 +26,12 @@ type PlaceholderProtectedHeaderProps = {
 const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderProtectedHeaderProps) => {
   const currentUser = getCookie('user')
   const { totalUnread } = useContext(IMContext)
+  const [showUnCompletedDot, setShowUnCompletedDot] = useState(false)
+
+  useEffect(() => {
+    setShowUnCompletedDot(!!currentUser?.is_profile_completed)    
+  }, [currentUser])
+  
   return (
     <>
       {isShowEmailAlert && (
@@ -139,7 +145,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderPro
                       }
                     }}
                   >
-                    <Text textStyle='base' textColor='white' bold>
+                    <Text textStyle='base' textColor='white' bold className={!showUnCompletedDot ? styles.unCompleted: ''}>
                     {lang.manageResume}
                     </Text>
                   </MaterialButton>
