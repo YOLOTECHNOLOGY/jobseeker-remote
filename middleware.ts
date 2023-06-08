@@ -44,7 +44,8 @@ export function middleware(request: NextRequest) {
       '/vercel.svg',
       '/errors/report',
       '/clientError.log',
-      '/serverError.log'
+      '/serverError.log',
+      '/getLog'
       // Your other files in `public`
     ].includes(pathname)
   ) { return }
