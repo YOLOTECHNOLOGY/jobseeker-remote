@@ -147,7 +147,7 @@ const Step2 = (props: any) => {
 
             <MaterialButton
               variant='contained'
-              disabled={isDisabled}
+              disabled={false}
               capitalize
               onClick={() => router.push(redirect)}
             >
