@@ -3,6 +3,7 @@ import { flatMap } from 'lodash-es'
 export function getAlertData(searchValues: Record<string, any>, config: Record<string, any>) {
   const industryList = config.industry_lists
   const functionsTitleList = config.function_titles
+  const jobFunctionList = config.main_functions.map(e=>e.children).flat()
   const locationLists = flatMap(config.location_lists, (item) => item.locations)
   const qualificationList = config.educations
   const salaryList = config.salary_range_filters
@@ -15,13 +16,29 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
       .join(',')
   }
 
+  
   const location_ids = getValue(searchValues.location, locationLists, 'seo_value')
   const location_values = getValue(searchValues.location, locationLists, 'seo_value', 'value')
+  // leve1
   const main_job_function_ids = getValue(
-    searchValues?.functionTitles,
-    functionsTitleList,
+    searchValues?.mainFunctions,
+    config.main_functions,
     'seo_value'
   ) // ?.map?.(seo => mainFunctionList.find(item => item. === seo)?.value)?.join?.(',')
+
+  // leve2
+  const job_function_ids = getValue(
+    searchValues?.jobFunctions,
+    jobFunctionList,
+  )
+
+ // leve3
+ const function_job_title_ids = getValue(
+  searchValues?.functionTitles,
+  functionsTitleList,
+  'seo_value',
+)
+console.log(main_job_function_ids,jobFunctionList,searchValues?.jobFunctions,{job_function_ids},function_job_title_ids,777799999)
   const main_function_values = getValue(
     searchValues?.functionTitles,
     functionsTitleList,
@@ -48,6 +65,8 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
     location_ids,
     location_values,
     main_job_function_ids,
+    job_function_ids,
+    function_job_title_ids,
     main_function_values,
     industry_ids,
     industry_values,
