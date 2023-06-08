@@ -33,7 +33,7 @@ const Section5 = () =>{
 	const swiperRef = useRef(null);
 	const isMobile = width < 540;
 	return <section className={style.section5}>
-		{!isMobile && <img className={style.section5_bg + ' ' + style.desktop} alt={'-'} src={require('../assets/section5-bg.png').default.src}/>}
+		{!isMobile && <img className={style.section5_bg + ' ' + style.desktop} alt={'-'} src={require('../svg/section5-bg.svg').default.src}/>}
 		{isMobile && <img className={style.mobile_section5_bg} src={require('../assets/section5-mobile-bg.png').default.src} alt="_"/>}
 		{/* <div className={style.content_container}> */}
 		<div className={style.section5_carousel + ' ' + style.desktop}

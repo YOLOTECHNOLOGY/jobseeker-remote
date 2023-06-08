@@ -59,7 +59,7 @@ const Section6 = () => {
 
 	return <section className={style.section6}>
 		<img className={style.section6_bg + ' ' + style.desktop} alt={'-'}
-		     src={require('../assets/section6-bg.png').default.src}/>
+		     src={require('../svg/section6-bg.svg').default.src}/>
 		<img className={style.section6_bg_mobile + ' ' + style.mobile} alt={'img-bg'}
 		     src={require('../assets/mobile-section6-bg.png').default.src}/>
 		<div className={style.content_container}>
