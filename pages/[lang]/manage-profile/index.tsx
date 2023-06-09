@@ -326,8 +326,12 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                       <img src={PencilIcon} width='22' height='22' />
                     </div>
                     <div
-                      className={styles.iconWrapper}
-                      onClick={() => handleDeleteData(sectionName, workExp.id)}
+                      className={styles.iconWrapper + ' '+ (workExperiences?.length>1 ? '' : styles.disabledOpacity)}
+                      onClick={() => {
+                        if(workExperiences?.length>1){
+                          handleDeleteData(sectionName, workExp.id)
+                        }
+                      }}
                     >
                       <img src={TrashIcon} width='14' height='14' />
                     </div>
@@ -427,8 +431,12 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                       <img src={PencilIcon} width='22' height='22' />
                     </div>
                     <div
-                      className={styles.iconWrapper}
-                      onClick={() => handleDeleteData(sectionName, education.id)}
+                      className={styles.iconWrapper + ' '+ (educations?.length>1 ? '' : styles.disabledOpacity)}
+                      onClick={() => {
+                        if(educations?.length>1){
+                          handleDeleteData(sectionName, education.id)
+                        }
+                      }}
                     >
                       <img src={TrashIcon} width='14' height='14' />
                     </div>
