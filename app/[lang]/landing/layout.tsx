@@ -1,6 +1,7 @@
 'use client'
 
 import './flexible';
+import Footer from './components/Footer'
 export default function ShopLayout(props:{
     children: React.ReactNode;
     params: {
@@ -27,9 +28,7 @@ export default function ShopLayout(props:{
             <main>
             {props.children}
             </main>
-            <footer>
-                footer
-            </footer>    
+            <Footer/>
         </section>
     )
   }
