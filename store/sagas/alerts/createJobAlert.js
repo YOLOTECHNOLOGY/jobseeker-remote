@@ -69,7 +69,6 @@ function* createJobAlertReq(action) {
         accessToken: accessToken
       }
       removeUtmCampaign()
-
       const { data } = yield call(createJobAlertService, jobAlertPayload)
 
       yield put(createJobAlertSuccess(data.data))

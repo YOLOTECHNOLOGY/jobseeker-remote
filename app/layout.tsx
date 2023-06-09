@@ -3,10 +3,12 @@ log4js.configure({
     appenders: {
         clientError: { type: "file", filename: "public/clientError.log" },
         serverError: { type: "file", filename: "public/serverError.log" },
+        serverInfo: { type: "file", filename: "public/serverInfo.log" },
     },
     categories: {
         clientError: { appenders: ["clientError"], level: "error", enableCallStack: false },
         serverError: { appenders: ["serverError"], level: "error", enableCallStack: false },
+        serverInfo: { appenders: ["serverInfo"], level: "info", enableCallStack: false },
         default: { appenders: ["serverError"], level: "error", enableCallStack: false }
     },
 });

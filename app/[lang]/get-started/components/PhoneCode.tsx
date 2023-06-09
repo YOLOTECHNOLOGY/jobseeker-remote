@@ -13,6 +13,7 @@ import { verificationPhoneOtp, phoneOtpenerate } from 'store/services/auth/newLo
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
+import { DefaultAvatar } from 'images'
 function PhoneCode(props: any) {
   const searchParams = useSearchParams()
   const [errorText, setErrorText] = useState<string>('')
@@ -24,6 +25,7 @@ function PhoneCode(props: any) {
   const name = searchParams.get('name')
   const email = searchParams.get('email')
   const browserId = searchParams.get('browserId')
+  const isMultiplePhonesNum = searchParams.get('isMultiplePhonesNum')
   let uuid = localStorage.getItem('uuid')
   const router = useRouter()
   const pathname = usePathname()
@@ -53,19 +55,26 @@ function PhoneCode(props: any) {
   }, [userId])
   const { setUserId, defaultLoginCallBack, handleAuthenticationJobseekersLoginPhone } =
     useGetStarted()
-
+ console.log(isMultiplePhonesNum === 'true',7777)
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   const onChange = (otp) => {
     dispatch(jobbseekersLoginFailed({}))
     if (otp?.length === 6) {
       console.log(otp, uuid, browserId)
-      // if (uuid != browserId && browserId && email) {
-      //   verifyPhoneFun(otp)
-      // } else {
-      //   handleAuthenticationJobseekersLoginPhone(otp, phoneNum, uuid)
-      // }
-      handleAuthenticationJobseekersLoginPhone(otp, phoneNum, uuid)
+     
+      if(isMultiplePhonesNum === 'true'){
+        router.push(`${langKey}/get-started/phone?step=7&phone=${phoneNum}`)
+         return
+      }
+
+      if (uuid != browserId && browserId && email) {
+        verifyPhoneFun(otp)
+      } else {
+        handleAuthenticationJobseekersLoginPhone(otp, phoneNum)
+      }
+
+    //  handleAuthenticationJobseekersLoginPhone(otp, phoneNum, uuid)
     }
   }
 
@@ -117,14 +126,14 @@ function PhoneCode(props: any) {
   useEffect(() => {
     if (userInfo && Object.keys(userInfo).length) {
       const { data } = userInfo
-      // if (userId) {
-      //   removeItem('quickUpladResume')
-      //   defaultLoginCallBack(data)
-      // } else {
-      //   router.push(`${langKey}/get-started/phone?step=3&phone=${phoneNum}`)
-      // }
-      removeItem('quickUpladResume')
-      defaultLoginCallBack(data,true)
+      if (userId) {
+        removeItem('quickUpladResume')
+        defaultLoginCallBack(data)
+      } else {
+        router.push(`${langKey}/get-started/phone?step=3&phone=${phoneNum}`)
+      }
+      // removeItem('quickUpladResume')
+      // defaultLoginCallBack(data,true)
     }
   }, [userInfo])
 
@@ -139,7 +148,7 @@ function PhoneCode(props: any) {
           ) : (
             <h2>{newGetStarted.signUpAnAccount} 🎉</h2>
           )}
-          {avatar ? (
+          {avatar && avatar != 'null' ? (
             <div className={styles.avatar}>
               <img className={styles.avatar_img} src={avatar} alt='avatar' />
             </div>

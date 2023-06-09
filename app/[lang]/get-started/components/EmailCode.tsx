@@ -7,19 +7,19 @@ import SetUpLater from './setUpLater'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { useDispatch } from 'react-redux'
-import useGetStarted from '../hooks/useGetStarted'
-import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
+import { getLang } from 'helpers/country'
 const EmailCode = (props: any)=> {
   const { newGetStarted } = props.lang
-  const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+  const langKey = getLang()
+
   const searchParams = useSearchParams()
   const phoneNum = '+' + searchParams.get('phone')?.trim?.()
   const email = searchParams.get('email')
   const [errorText, setErrorText] = useState<string>('')
   const router = useRouter()
   const [number, setNumber] = useState<number>(0)
-  const {defaultLoginCallBack } =  useGetStarted()
+
   const dispatch = useDispatch()
   const onChange = (otp) => {
     console.log(otp)
@@ -62,13 +62,13 @@ const EmailCode = (props: any)=> {
     }).then((res) => {
       console.log(res.data)
       if (res.data) {
-     
-        if(userInfo && Object.keys(userInfo).length){
-          const { data } = userInfo;
-          defaultLoginCallBack(data)        
-         }else{
-          router.push('/')
-         }
+        router.push(`${langKey}/get-started/phone?step=5`)
+        // if(userInfo && Object.keys(userInfo).length){
+        //   const { data } = userInfo;
+        //   defaultLoginCallBack(data)        
+        //  }else{
+        //   router.push('/')
+        //  }
 
       }
     }).catch((error) => {

@@ -8,7 +8,7 @@ import EmailFactor from '../components/EmailFactor'
 import EmailCode from '../components/EmailCode'
 import VerifyFactorEmail from '../components/VerifyFactorEmail'
 import FactorEnable from '../components/FactorEnable'
-
+import PhoneChooseEmail from '../components/PhoneChooseEmail'
 interface IProps {
   lang: any
 }
@@ -19,7 +19,7 @@ const PhoneLogin = (props: IProps) => {
   const [step, setStep] = useState(1)
 
   useEffect(() => {
-    const hasStep = [1, 2, 3, 4, 5, 6].includes(+search)
+    const hasStep = [1, 2, 3, 4, 5, 6,7].includes(+search)
     if (search && hasStep) {
       setStep(Number(search))
     } else {
@@ -37,6 +37,7 @@ const PhoneLogin = (props: IProps) => {
         {step === 4 && <EmailCode lang={props.lang} />}
         {step === 5 && <FactorEnable lang={props.lang} />}
         {step === 6 && <VerifyFactorEmail lang={props.lang} />}
+        {step === 7 && <PhoneChooseEmail lang={props.lang} />}
       </div>
     </div>
   )
