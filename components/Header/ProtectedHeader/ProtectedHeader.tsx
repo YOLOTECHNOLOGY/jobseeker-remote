@@ -48,7 +48,9 @@ const ProtectedHeader = ({ lang }: any) => {
   const ref = useRef(null)
   const [isShowHeaderMenu, setIsShowHeaderMenu] = useState(false)
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
+  const [showUnCompletedDot, setShowUnCompletedDot] = useState(true)
   const { totalUnread } = useContext(IMContext)
+  const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response||{})
   // const totalUnread = 999
   const config = useSelector((store: any) => store.config.config.response)
   const langKey = getLang()
@@ -63,6 +65,10 @@ const ProtectedHeader = ({ lang }: any) => {
       setIsShowHeaderMenu(false)
     }
   }
+
+  useEffect(() => {
+    setShowUnCompletedDot(!userInfo?.is_profile_completed)
+  }, [userInfo])
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true)
@@ -196,7 +202,7 @@ const ProtectedHeader = ({ lang }: any) => {
               ) : null}
             </li>
             <li className={classNames([styles.headerLink, styles.headerLinkLogin])} style={{width:'150px'}}>
-              {pathname !== '/manage-profile' ? (
+              {!pathname.includes('/manage-profile') ? (
                 <a
                   title='Manage Resume'
                   onClick={() => {
@@ -223,7 +229,7 @@ const ProtectedHeader = ({ lang }: any) => {
                       }
                     }}
                   >
-                    <Text textColor='white' textStyle='base'>
+                    <Text textColor='white' textStyle='base' className={showUnCompletedDot ? styles.unCompleted: ''}>
                       {manageResume}
                     </Text>
                   </MaterialButton>
@@ -233,7 +239,7 @@ const ProtectedHeader = ({ lang }: any) => {
                   variant='contained'
                   capitalize
                   sx={{
-                    width: '123px',
+                    width: '150px',
                     height: '35px !important',
                     border: '1.5px solid #FFFFFF',
                     borderRadius: '10px',
@@ -246,7 +252,7 @@ const ProtectedHeader = ({ lang }: any) => {
                     }
                   }}
                 >
-                  <Text textColor='white' textStyle='base'>
+                  <Text textColor='white' textStyle='base' className={showUnCompletedDot ? styles.unCompleted: ''}>
                     {manageResume}
                   </Text>
                 </MaterialButton>

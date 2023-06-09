@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useLayoutEffect } from 'react'
 
 /* Vendors */
 import classNames from 'classnames/bind'
@@ -23,7 +23,12 @@ interface AccordianProps {
   chevronIcon?: boolean
   defaultOpenState?: boolean
   isNotCollapsible?: boolean
+  dark?: boolean
 }
+
+const darkExpand = require('./expand.svg').default.src;
+const darkkShrink = require('./shrink.svg').default.src;
+
 
 const Accordian = ({
   title,
@@ -36,9 +41,11 @@ const Accordian = ({
   chevronIcon,
   defaultOpenState = false,
   isNotCollapsible = false,
+  dark,
   ...rest
 }: AccordianProps) => {
   const [isVisible, setIsVisible] = useState(defaultOpenState)
+  const [contentHeight, setContentHeight] = useState(0);
 
   const handleClick = () => {
     if (!isNotCollapsible) setIsVisible(!isVisible)
@@ -61,7 +68,15 @@ const Accordian = ({
 
   const openIcon = chevronIcon ? ChevronDownIcon : Plus
   const closeIcon = chevronIcon ? ChevronUpIcon : Minus
+  const contentRef = useRef(null);
 
+
+  const calculateContentHeight = () => {
+    setContentHeight(contentRef.current.scrollHeight);
+  };
+  useLayoutEffect(() => {
+    calculateContentHeight();
+  });
   return (
     <div className={accordianClass} style={style} {...rest}>
       <div className={titleClasses} onClick={handleClick}>
@@ -69,22 +84,27 @@ const Accordian = ({
         <div className={styles.accordianToggleIcon}>
           {isVisible ? (
             <LazyLoad>
-              <img src={closeIcon} title='minus' alt='minus' height='16' width='16' />
+              <img src={dark ? darkkShrink : closeIcon} title='minus' alt='minus' height='16' width='16' />
             </LazyLoad>
           ) : (
             <LazyLoad>
-              <img src={openIcon} title='Plus' alt='Plus' height='16' width='16' />
+              <img src={dark ? darkExpand  : openIcon} title='Plus' alt='Plus' height='16' width='16' />
             </LazyLoad>
           )}
         </div>
       </div>
-      <div
-        className={`${contentClasses} ${
-          isVisible ? styles.accordianVisible : styles.accordianHidden
-        }`}
-      >
-        {children}
+      <div className={contentClasses} style={{overflow: "hidden", height: isVisible ? contentHeight + 'px' : '0px'}}>
+        <div
+          className={`${contentClasses} ${
+            isVisible ? styles.accordianVisible : styles.accordianHidden
+          }`}
+
+          ref={contentRef}
+        >
+          {children}
+        </div>
       </div>
+
     </div>
   )
 }

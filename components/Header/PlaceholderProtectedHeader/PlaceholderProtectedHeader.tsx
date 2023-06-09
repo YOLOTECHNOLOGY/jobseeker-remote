@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import classNames from 'classnames'
 
 /* components */
@@ -17,6 +17,7 @@ import { BossjobLogoWhite, ChatCircleDots, DefaultAvatar } from 'images'
 import styles from '../Header.module.scss'
 import MaterialAlert from 'components/MaterialAlert/ index'
 import { IMContext } from 'components/Chat/IMProvider.client'
+import { useSelector } from 'react-redux'
 
 type PlaceholderProtectedHeaderProps = {
   isShowEmailAlert: boolean,
@@ -26,6 +27,13 @@ type PlaceholderProtectedHeaderProps = {
 const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderProtectedHeaderProps) => {
   const currentUser = getCookie('user')
   const { totalUnread } = useContext(IMContext)
+  const [showUnCompletedDot, setShowUnCompletedDot] = useState(false)
+  const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response||{})
+
+  useEffect(() => {
+    setShowUnCompletedDot(!!userInfo?.is_profile_completed)    
+  }, [userInfo])
+  
 
   return (
     <>
@@ -140,7 +148,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderPro
                       }
                     }}
                   >
-                    <Text textStyle='base' textColor='white' bold>
+                    <Text textStyle='base' textColor='white' bold className={!showUnCompletedDot ? styles.unCompleted: ''}>
                     {lang.manageResume}
                     </Text>
                   </MaterialButton>
