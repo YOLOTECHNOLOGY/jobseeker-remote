@@ -59,7 +59,7 @@ const Section6 = () => {
 
 	return <section className={style.section6}>
 		<img className={style.section6_bg + ' ' + style.desktop} alt={'-'}
-		     src={require('../assets/section6-bg.png').default.src}/>
+		     src={require('../svg/section6-bg.svg').default.src}/>
 		<img className={style.section6_bg_mobile + ' ' + style.mobile} alt={'img-bg'}
 		     src={require('../assets/mobile-section6-bg.png').default.src}/>
 		<div className={style.content_container}>
@@ -78,16 +78,17 @@ const Section5Carousel = () => {
 	const swiperRef = useRef(null)
 	const [enable, setEnable] = useState(true);
 	const {width} = useWindowSize();
-	const isMobile  = width <= 540;
+	const isMobile = width <= 540;
 	return <div className={style.embla__container}
 	            onMouseLeave={(event) => {
 		            swiperRef.current.swiper.autoplay.start();
-		            setEnable(true)
+		            setEnable(false)
 	            }}
 	            onMouseEnter={(event) => {
 		            swiperRef.current.swiper.autoplay.pause();
-		            setEnable(false);
-	            }}>
+		            setEnable(true);
+	            }}
+	>
 		<Swiper
 			modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller]}
 			spaceBetween={12}
@@ -98,13 +99,6 @@ const Section5Carousel = () => {
 				delay: 2000,
 				disableOnInteraction: true
 			}}
-			// navigation={{
-			// 	enabled: true,
-			// 	prevEl: '.swiper-button-prev',
-			// 	nextEl: '.swiper-button-next',
-			// 	hideOnClick: true,
-			// 	hiddenClass: 'hideClass'
-			// }}
 			navigation={isMobile ? false : enable}
 			loop={true}
 			scrollbar={{draggable: true}}
@@ -140,17 +134,17 @@ const Section5Carousel = () => {
 					}
 				)
 			}
-</Swiper>
-<div className={style.section6_carousel_control + ' ' + style.mobile}>
-	<div className={style.section6_carousel_control_left} onClick={()=>{
-		swiperRef.current.swiper.slidePrev();
-	}}></div>
-	<div className={style.section6_carousel_control_right}
-	     onClick={()=>{
-				 swiperRef.current.swiper.slideNext();
-	     }}
-	></div>
-</div>
-</div>
+		</Swiper>
+		<div className={style.section6_carousel_control + ' ' + style.mobile}>
+			<div className={style.section6_carousel_control_left} onClick={() => {
+				swiperRef.current.swiper.slidePrev();
+			}}></div>
+			<div className={style.section6_carousel_control_right}
+			     onClick={() => {
+				     swiperRef.current.swiper.slideNext();
+			     }}
+			></div>
+		</div>
+	</div>
 }
 export default Section6

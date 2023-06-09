@@ -854,8 +854,12 @@
   top: 0;
   width: 100vw;
   height: 1224px;
+  border-radius: 0px 200px 0px 0px;
 }
-
+.mobile_section5_bg{
+  @extend .section5_bg;
+  border-radius: 0px 50px 0px 0px;
+}
 .section5_carousel {
   width: 1366px;
   margin: 0 auto;
@@ -967,6 +971,7 @@
   top: 0;
   width: 100vw;
   height: 686px;
+  border-radius: 0px 200px 0px 0px;
   @media screen and (max-width: 540px) {
     height: auto;
   }
@@ -1416,3 +1421,4 @@
     margin-top: 1.3rem;
   }
 }
+
