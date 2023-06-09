@@ -71,14 +71,15 @@ const useGetStarted = () => {
     dispatch(jobbseekersLoginRequest(data))
   }
 
-  const handleAuthenticationJobseekersLoginPhone = (code, phone_num, browser_serial_number) => {
+  const handleAuthenticationJobseekersLoginPhone = (code, phone_num) => {
+    const uuid = localStorage.getItem('uuid')
     setEmailOTPInputDisabled(true)
     const data = {
       phone_num,
       otp: code,
       source: 'web',
       userId,
-      browser_serial_number
+      browser_serial_number:uuid
     }
     dispatch(jobbseekersLoginRequest(data))
   }

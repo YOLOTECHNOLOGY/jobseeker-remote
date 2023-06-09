@@ -21,5 +21,25 @@ const bindUserEmail = (payload) => {
   return axios.post(`/bind/user-email`, payload)
 }
 
+const checkBindNumber = (payload) => {
+  const axios = configuredAxios('auth', 'protected')
+  return axios.post(`check/bind-number`, payload)
+}
+const getEmailByPhoneNumber = (payload) => {
+  const axios = configuredAxios('auth', 'public')
+  return axios.post(`/phone-number`,payload)
+}
+const checkIsEmailUse = (payload) => {
+  const axios = configuredAxios('auth', 'protected')
+  return axios.post(`/check/is-email-use`,payload)
+}
 
-export { phoneOtpenerate,verificationOtp,bindUserEmail,verificationPhoneOtp }
+export { 
+  phoneOtpenerate,
+  verificationOtp,
+  bindUserEmail,
+  verificationPhoneOtp,
+  checkBindNumber,
+  getEmailByPhoneNumber,
+  checkIsEmailUse
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect ,memo} from 'react'
 import MaterialTextField from 'components/MaterialTextField'
 import { useFirstRender } from 'helpers/useFirstRender'
 import styles from '../../index.module.scss'
@@ -9,9 +9,10 @@ interface initProps {
   email: string
   setDisable?: Function
   lang: any
+  validateErr?: string
 }
 
-const EmailComponent = ({ setEmail, email, setDisable, lang }: initProps) => {
+const EmailComponent = ({ setEmail, email, setDisable, lang, validateErr }: initProps) => {
   const [emailError, setEmailError] = useState<string>('')
   const { newGetStarted } = lang
   const firstRender = useFirstRender()
@@ -29,6 +30,10 @@ const EmailComponent = ({ setEmail, email, setDisable, lang }: initProps) => {
     }
     setEmailError(errorText)
   }, [email])
+
+ useEffect(()=>{
+  setEmailError(validateErr)
+ },[validateErr])
 
   useEffect(() => {
     if (firstRender) {
@@ -53,4 +58,4 @@ const EmailComponent = ({ setEmail, email, setDisable, lang }: initProps) => {
     </>
   )
 }
-export default EmailComponent
+export default memo(EmailComponent)

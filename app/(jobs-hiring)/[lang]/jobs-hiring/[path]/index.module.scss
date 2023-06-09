@@ -444,11 +444,11 @@ $contentWidth: 894px;
 
   .urgent {
     position: absolute;
-    top: 0;
-    left: -8px;
+    top: -2px;
+    left: -6px;
     z-index: 30;
 
-    svg{
+    svg {
       width: 70px;
       height: 18px;
     }
