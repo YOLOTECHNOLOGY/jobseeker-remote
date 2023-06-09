@@ -1,0 +1,264 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+$paddingLeftWidth: 600px;
+$maxContentWidth: 1170px;
+$contentWidth: 894px;
+
+.header {
+    width: 100%;
+    height: 55px;
+    background: #136FD3;
+    line-height: 55px;
+    margin-bottom: 40px;
+
+    .main {
+        display: flex;
+        width: $maxContentWidth;
+        margin: 0 auto;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+
+        a {
+            color: white;
+        }
+    }
+}
+
+.main {
+    .basicInfo {
+        width: 770px;
+        margin: 0 auto;
+
+        .topModule {
+            min-height: 500px;
+            background: #FFFFFF;
+            box-shadow: 0px 4px 6px rgba(150, 149, 149, 0.25);
+            border-radius: 20px;
+            padding-bottom: 36px;
+        }
+
+        .headerInfo {
+            height: 95px;
+            background: linear-gradient(269.8deg, rgba(255, 235, 184, 0.5) 0.12%, rgba(242, 177, 202, 0.5) 50.01%, rgba(84, 142, 237, 0.5) 99.89%);
+            box-shadow: 0px 4px 6px rgba(150, 149, 149, 0.25);
+            border-radius: 20px 20px 0px 0px;
+            padding: 0 50px;
+
+            h2 {
+                font-style: normal;
+                font-weight: 700;
+                font-size: 32px;
+                line-height: 40px;
+                display: flex;
+                align-items: center;
+                letter-spacing: 1px;
+                color: #353535;
+                padding: 17px 0 3px 0;
+            }
+
+            p {
+                margin: 0;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 18px;
+                display: flex;
+                align-items: center;
+                letter-spacing: 1px;
+                color: #353535;
+            }
+        }
+
+        .container {
+            padding: 0 46px;
+
+            h3 {
+                font-weight: 700;
+                font-size: 18px;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                letter-spacing: 1px;
+                color: #353535;
+                padding: 26px 0 16px;
+            }
+
+            .uploadTips {
+                font-weight: 400;
+                font-size: 14px;
+                letter-spacing: 1px;
+                color: #707070;
+            }
+
+            .avatarList {
+                padding-top: 24px;
+                display: flex;
+
+                li {
+                    list-style: none;
+                    position: relative;
+                    margin-right: 14px;
+                    // border: 3px solid #fff;
+                    border-radius: 50%;
+                    padding: 3px;
+                    box-sizing: border-box;
+                    width: 70px;
+                    height: 70px;
+                    &.active {
+                        border: 3px solid #0EBD5C;
+                    }
+
+                    .uploadAvatar {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        width: 100%;
+                        height: 100%;
+                        position: relative;
+
+                        @include md {
+                            flex-direction: row;
+                            align-items: flex-end;
+                        }
+
+                        &Display {
+                            &:hover {
+                                cursor: pointer;
+                            }
+                        }
+
+                        &Button {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            width: 20px;
+                            height: 20px;
+                            left: 4px;
+                            top: 48px;
+                            position: absolute;
+                            border: 1px solid $lightgrey;
+                            border-radius: 50%;
+
+                            &:hover {
+                                cursor: pointer;
+                            }
+                        }
+
+                        &Text {
+                            word-wrap: break-word;
+                        }
+                    }
+                }
+            }
+
+            .photoTips {
+                font-size: 14px;
+                line-height: 19px;
+                display: flex;
+                align-items: center;
+                letter-spacing: 1px;
+                color: #FE574A;
+                padding-top: 20px;
+            }
+
+            .name {
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 23px;
+                display: flex;
+                align-items: center;
+                letter-spacing: 1px;
+                color: #353535;
+
+                span {
+                    color: red;
+                }
+            }
+
+            .nameBox {
+                padding: 20px 0 14px;
+
+                .nameFlex {
+                    display: flex;
+                    padding-top: 10px;
+                }
+
+                .namesFirst {
+                    margin-right: 16px;
+                    flex: 1;
+                    .stepFullwidth {
+                        width: 100%;
+                       :global{
+                        .MuiOutlinedInput-root{
+                            border-radius: 10px;
+                        }
+                       }
+                    }
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+
+            .Im {
+                padding-top: 16px;
+
+            }
+
+            .btnList {
+                display: flex;
+                padding-top: 8px;
+                flex-wrap: wrap;
+                button {
+                    width: 330px;
+                    margin-right: 16px;
+                    background: #E7F1FB;
+                    border: 1.5px solid #E7F1FB;
+                    border-radius: 10px;
+                    font-size: 14px;
+                    display: flex;
+                    align-items: center;
+                    letter-spacing: 1px;
+                    color: #353535;
+                    justify-content: center;
+                    height: 44px;
+                    transition: .2s;
+                    margin-bottom: 16px;
+                    cursor: pointer;
+
+                    &:hover {
+                        background: #1854A3;
+                        color: #FFFFFF;
+                        transition: .2s;
+                    }
+
+                    &:nth-of-type(even) {
+                        margin-right: 0;
+                    }
+
+                    &.active {
+                        color: #FFFFFF;
+                        background: #136FD3;
+                    }
+                }
+            }
+
+            .availability {
+                padding-top: 12px;
+            }
+        }
+
+        .next {
+            margin: 20px 0;
+            display: flex;
+            justify-content: flex-end;
+
+            :global {
+                .MuiLoadingButton-root:hover {
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

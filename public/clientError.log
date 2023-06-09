@@ -10,3 +10,18 @@
     data: { data: 'refreshtoken expiration of identity' }
   }
 }
+[2023-06-09T11:07:04.305] [ERROR] clientError - { error: {} }
+[2023-06-09T11:28:30.925] [ERROR] clientError - { error: { digest: '2457078096' } }
+[2023-06-09T11:28:51.351] [ERROR] clientError - { error: { digest: '1299087143' } }
+[2023-06-09T14:18:22.963] [ERROR] clientError - { error: {} }
+[2023-06-09T14:56:54.491] [ERROR] clientError - { error: {} }
+[2023-06-09T14:56:54.499] [ERROR] clientError - { error: {} }
+[2023-06-09T16:06:36.037] [ERROR] clientError - { error: {} }
+[2023-06-09T16:06:40.004] [ERROR] clientError - { error: {} }
+[2023-06-09T16:13:24.923] [ERROR] clientError - { error: {} }
+[2023-06-09T16:33:13.821] [ERROR] clientError - { error: {} }
+[2023-06-09T16:47:59.570] [ERROR] clientError - { error: { digest: '3928214211' } }
+[2023-06-09T16:48:42.214] [ERROR] clientError - { error: { digest: '3928214211' } }
+[2023-06-09T16:48:46.745] [ERROR] clientError - { error: { digest: '3928214211' } }
+[2023-06-09T17:56:37.231] [ERROR] clientError - { error: {} }
+[2023-06-09T17:57:56.631] [ERROR] clientError - { error: {} }
