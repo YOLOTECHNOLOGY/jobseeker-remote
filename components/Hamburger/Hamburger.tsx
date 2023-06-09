@@ -1,11 +1,18 @@
+'use client'
 import React from 'react'
+import { getCookie } from 'helpers/cookies'
+import { useRouter } from 'next/navigation'
 
 /* Redux */
 import { connect } from 'react-redux'
 import { toggleMenu } from 'store/actions/navigationBar/toggleMenu'
 
+/* Images */
+import { DefaultAvatar } from 'images'
+
 /* Styles */
 import styles from './Hamburger.module.scss'
+import classNames from 'classnames'
 
 interface HamburgerProps {
   openState: boolean
@@ -13,41 +20,72 @@ interface HamburgerProps {
   disabled?: boolean
 }
 const Hamburger = ({ toggleMenu, openState, disabled }: HamburgerProps) => {
+  const router = useRouter()
+  const currentUser = getCookie('user')
+
   const handleShowMenu = () => {
-    if (!openState) { // opening menu, disable scrolling of body
-      document.body.style.position = 'fixed';
-      document.body.style.width = "100%";
+    if (!openState) {
+      // opening menu, disable scrolling of body
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
     }
-    if (openState) { // closing menu, enable scrolling of body
+
+    if (openState) {
+      // closing menu, enable scrolling of body
       const scrollY = document.body.style.top
       document.body.style.position = ''
       document.body.style.top = ''
       // retrieve previous scroll position
       window.scrollTo(0, parseInt(scrollY || '0') * -1)
     }
+
     toggleMenu(!openState)
   }
+
+  const handleToGetStarted = () => {
+    router.push('/get-started')
+  }
+
   return (
-    <div
-      id={styles.hamburgerMenu}
-      className={openState ? styles.active : null}
-      onClick={disabled ? null : handleShowMenu}
-    >
-      <span />
-      <span />
-      <span />
+    <div className={styles.hamburgerWrapper}>
+      {!currentUser && (
+        <div className={styles.hamburgerWrapper_getStarted} onClick={handleToGetStarted}>
+          Get Started
+        </div>
+      )}
+
+      <div
+        className={classNames([styles.mobile_menu_off, openState ? styles.mobile_menu_open : null])}
+        onClick={disabled ? null : handleShowMenu}
+      >
+        <div id={styles.hamburgerMenu} className={openState ? styles.active : null}>
+          {currentUser && !openState ? (
+            <img
+              src={currentUser?.avatar || DefaultAvatar}
+              className={styles.profileAvatar}
+              alt='avatar'
+            />
+          ) : (
+            <>
+              <span />
+              <span />
+              <span />
+            </>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
-    openState: state.navbar.toggleMenu.menu,
+    openState: state.navbar.toggleMenu.menu
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleMenu: (bool) => dispatch(toggleMenu(bool)),
+  toggleMenu: (bool) => dispatch(toggleMenu(bool))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Hamburger)
