@@ -844,6 +844,9 @@
   height: 1224px;
   position: relative;
   padding-top: 200px;
+  @media screen and (max-width: 540px) {
+    padding-top: .7rem;
+  }
 }
 
 .section5_bg {
@@ -867,6 +870,11 @@
 
 .section5_carousel_item {
   height: 640px;
+  display: flex;
+  flex-direction: column;
+  @media screen and (max-width: 540px) {
+    width: 100%;
+  }
 
 }
 
@@ -970,7 +978,6 @@
   bottom: 0;
   top: 0;
   width: 100vw;
-  height: 686px;
   border-radius: 0px 200px 0px 0px;
   @media screen and (max-width: 540px) {
     height: auto;
@@ -1117,11 +1124,36 @@
 
 
 }
+.mobile_section5_control{
+  display: flex;
+  position: absolute;
+  z-index: 2;
+  margin-left: .2rem;
+  left: .2rem;
+  top: 1.5rem;
+
+}
+.mobile_section5_des{
+  color: #ffffff;
+  width: 330px;
+  margin: 0 auto;
+  min-height: 67px;
+  font-weight: 400;
+  font-size: .21rem;
+  line-height: .27rem;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  margin-bottom: 1rem;
+
+}
+.mobile_section5_control_left{
+  margin-right: 10px;
+}
 
 .carousel_control_common {
   width: .6rem;
   height: .6rem;
-  background: #FFFFFF;
+  background: transparent;
   border-radius: 50%;
   margin-right: .11rem;
   display: flex;
@@ -1161,6 +1193,23 @@
   @extend .carousel_control_common;
   &:after {
     transform: rotate(-45deg);
+  }
+}
+
+.section5_carousel_control_left{
+  @extend .carousel_control_left;
+  border: 1px solid #ffffff;
+  &:after{
+    background-color: transparent;
+    border-color: #ffffff;
+  }
+}
+.section5_carousel_control_right{
+  @extend .carousel_control_right;
+  border: 1px solid #ffffff;
+  &:after{
+    background-color: transparent;
+    border-color: #ffffff;
   }
 }
 

@@ -10,44 +10,44 @@ import useWindowSize from "../../../../../hooks/useWindowSize";
 let countries = [
 	{
 		"country": "Philippines",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Philippines-flag.png"`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Philippines.png"`
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Philippines-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Philippines.png`
 	},
 	{
 		"country": "Singapore",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Singapore-flag.png"`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Singapore.png"`
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Singapore-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Singapore.png`
 	},
 	{
 		"country": "Indonesia",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Indonesia-flag.png"`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Indonesia.png"`
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Indonesia-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Indonesia.png`
 	},
 
 	{
 		"country": "Hongkong",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Hongkong-flag.png"`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Hongkong.png"`,
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Hongkong-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Hongkong.png`,
 		"coming": true,
 	},
 
 	{
 		"country": "Malaysia",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Malaysia-flag.png"`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Malaysia.png"`,
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Malaysia-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Malaysia.png`,
 		"coming": true,
 	},
 
 	{
 		"country": "Thailand",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Thailand-flag.png"`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Thailand.png"`,
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Thailand-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Thailand.png`,
 		"coming": true,
 	},
 	{
 		"country": "Vietnam",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Vietnam-flag.png"`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Vietnam.png"`,
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Vietnam-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Vietnam.png`,
 		"coming": true,
 	},
 ];

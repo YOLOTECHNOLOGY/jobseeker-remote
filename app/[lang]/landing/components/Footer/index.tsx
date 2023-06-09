@@ -284,6 +284,7 @@ const Footer = () =>{
 		</div>
 	}
 	return <div className={style.footer_container}>
+		<img src={`${process.env.S3_BUCKET_URL}/landing/bg.svg`} alt={'bg'} className={style.bg}/>
 		<div className={style.footer_title}>
 			{downloadBossjobApp}
 		</div>
@@ -320,7 +321,6 @@ const Footer = () =>{
 			Copyright © {new Date().getFullYear()}  {technology}
 			{corporation}
 		</div>
-		<img src={`${process.env.S3_BUCKET_URL}/landing/bg.svg`} alt={'bg'} className={style.bg}/>
 
 	</div>
 }

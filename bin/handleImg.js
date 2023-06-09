@@ -18,7 +18,7 @@ function traverseFolder(folderPath) {
 		// 如果是文件夹，则递归遍历
 		if (fs.statSync(filePath).isDirectory()) {
 			traverseFolder(filePath);
-		} else if(!isImageFile(filePath)){
+		} else if (!isImageFile(filePath)) {
 			// 读取文件内容
 			let fileContent = fs.readFileSync(filePath, 'utf-8');
 

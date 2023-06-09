@@ -11,7 +11,7 @@ const Section3 = () => {
 		threshold: 0.3,
 	});
 	return <section className={style.section3} ref={ref}>
-		<img className={style.section3_bg + ' ' + style.desktop} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/section3-bg.webp'`} />
+		<img className={style.section3_bg + ' ' + style.desktop} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/section3-bg.webp`} />
 		<img className={style.section3_bg + ' ' + style.mobile} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/mobile-section3-bg.png`} />
 		<div className={style.content_container}>
 			<div className={style.section3_title}>

@@ -4,15 +4,15 @@ import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import {A11y, Autoplay, Controller, Navigation, Pagination, Scrollbar} from "swiper";
 
 let imgs = [
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-01.png"`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-02.png"`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-03.png"`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-04.png"`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-05.png"`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-06.png"`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-07.png"`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-08.png"`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-09.png"`,
+	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-01.png`,
+	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-02.png`,
+	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-03.png`,
+	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-04.png`,
+	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-05.png`,
+	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-06.png`,
+	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-07.png`,
+	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-08.png`,
+	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-09.png`,
 ]
 imgs = imgs.concat(imgs);
 const Section2 = () =>{
