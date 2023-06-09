@@ -7,6 +7,7 @@ import PlaceholderProtectedHeader from '../Header/PlaceholderProtectedHeader'
 import PlaceHolderPublicHeader from '../Header/PlaceholderPublicHeader'
 import { getCookie } from '../../helpers/cookies'
 import { getDictionary } from 'get-dictionary'
+import { usePathname } from 'next/navigation'
 type TransitionLoaderProps = {
   accessToken?: any,
   lang?:any
@@ -15,7 +16,9 @@ type TransitionLoaderProps = {
 function TransitionLoader(props: TransitionLoaderProps) {
  const { accessToken,lang } = props
  const [langDir,setLang] = useState({})
-const user = getCookie('user')
+ const user = getCookie('user')
+ const pathname = usePathname();
+
   useEffect(()=>{
    if(lang){
     const fetchLang = async ()=>{
@@ -31,7 +34,9 @@ const user = getCookie('user')
   return ReactDOM.createPortal(
     <div className={styles.wrapper}>
       <div className={styles.headerWrapper}>
-        {accessToken && <PlaceholderProtectedHeader   lang={langDir} isShowEmailAlert={accessToken && user &&!user.is_email_verify} />}
+        {accessToken && pathname.indexOf('jobseeker-complete-profile') == -1 && <PlaceholderProtectedHeader   lang={langDir} 
+        isShowEmailAlert={accessToken && user &&!user.is_email_verify && user.email} 
+        />}
         {!accessToken && <PlaceHolderPublicHeader lang={langDir}/>}
       </div>
       <div className={styles.loadingWrapper}>

@@ -121,7 +121,6 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
     if (!isLocal) {
       newOrigin = origin.slice(0, origin.lastIndexOf('.') + 1) + country + (port ? `:${port}` : '')
     }
-
     if (origin.includes(newOrigin)) {
       // only language changed
       // the pathname is likely "/en-US/get-started"
@@ -129,7 +128,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
       restPath = restPath ? `/${restPath}` : ''
       // store this in cookies. then the others link request server can take it to server
       setCookie(configKey, `${country}_${lang}`)
-      window.location.href = newOrigin + query + restPath
+      window.location.href = newOrigin + query + restPath + location.search
       return
     }
 
@@ -141,7 +140,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
         `&${refreshTokenKey}=${refreshToken}` +
         `&${userKey}=${JSON.stringify(user)}`
     }
-    window.location.href = newOrigin + query
+    window.location.href = newOrigin + query + location.search
   }
 
   const handleSelectNation = (event: any, newValue: typeof nations[0]) => {

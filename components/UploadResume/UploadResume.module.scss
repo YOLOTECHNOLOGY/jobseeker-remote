@@ -1,5 +1,5 @@
-@import "styles/variable.scss";
-@import "styles/mixins.scss";
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
 
 .uploadResumeField {
   width: 100%;
@@ -10,9 +10,9 @@
     }
   }
 
-  div {
-    width: 100%;
-  }
+  // div {
+  //   width: 100%;
+  // }
 
   .error {
     margin: 6px 0 0;
@@ -84,4 +84,12 @@
   .buttonCTA {
     width: 100%;
   }
+}
+
+.upToFiles {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.0075em;
+  color: #7d7d7d;
 }

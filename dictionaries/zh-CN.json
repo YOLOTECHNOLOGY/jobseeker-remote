@@ -13,7 +13,7 @@
     "Chat": "消息",
     "downloadApp": "下载APP",
     "pleaseVerify": "请验证你的邮箱",
-    "verifyNow.": " 立即验证",
+    "verifyNow": " 立即验证",
     "switchCountry": {
       "title": "您想使用哪个国家和语言浏览 Bossjob？",
       "country": "国家",
@@ -24,7 +24,7 @@
     "change": "切换"
   },
   "foot": {
-    "about": "关于我们",
+    "about": "个人信息",
     "aboutBossjob": "关于Bossjob",
     "termsConditions": "协议与规则",
     "legal": "使用政策",
@@ -275,7 +275,9 @@
       "chatBoss": "直接谈",
       "popup": {
         "chatBoss": "和老板直接谈"
-      }
+      },
+      "reset2": "重置",
+      "save": "保存"
     },
     "popularJobs": "热门工作",
     "tag": {
@@ -448,7 +450,7 @@
       "finance": "融资阶段",
       "reset": "重置",
       "apply": "应用",
-      "viewVerifiedCompanies":"查看认证公司"
+      "viewVerifiedCompanies": "查看认证公司"
     },
     "alert": "开启新职位通知",
     "alertModal": {
@@ -518,7 +520,7 @@
     "downloadAPP": "下载APP",
     "chatDirectly": "直接谈",
     "withBoss": "和老板",
-    "relatedSearch":"相关搜索"
+    "relatedSearch": "相关搜索"
   },
   "manageProfile": {
     "tab": {
@@ -701,6 +703,7 @@
           "time": "上传于 {{time}}",
           "uploadBtn": "上传简历",
           "support": "支持的文件类型: PDF, DOC, DOCX. 最大: 5MB",
+          "upTo3files": "最多 3 个文件",
           "error": {
             "title": "文件大小超出了限制",
             "tips": "请上传小于5MB的文件。"
@@ -711,8 +714,31 @@
         },
         "bossjob": {
           "title": "Bossjob 简历模版",
-          "tips": "请选择简历模版，我们将根据在线简历和你的联系方式制作简历",
+          "tips": "简历是帮助您进入求职过程下一步的重要工具。 使用 Bossjob 个人资料中的其他信息给招聘人员留下深刻印象。",
           "download": "下载"
+        },
+        "changeResume": {
+          "rename": "重命名",
+          "sendToEmail": "发送到邮箱",
+          "delete": "删除",
+          "cancel": "取消",
+          "save": "保存",
+          "send": "发送",
+          "back": "返回",
+          "confirm": "确认",
+          "pleaseRenameYourResume file.": "Please rename your resume file.",
+          "maximumLengthLimitExceeded": "超出最大长度限制",
+          "cannotEnterSpecialCharacters": "不能输入特殊字符",
+          "resumeFileName": "恢复文件名",
+          "pleaseEnterTheEmailAddressToReceiveTheResume": "请输入接收简历的邮箱地址。",
+          "eMailFormatIsIncorrect": "电子邮件格式不正确",
+          "emailAddress": "邮箱地址",
+          "theEmailAddressYouWantToSendIs": "您要发送的邮件地址是",
+          "pleaseConfirmThatYourEmailAddressIsCorrectBeforeSending": "发送前请确认您的邮箱地址正确",
+          "more": "更多",
+          "resumeHasBeenRenameSuccessfully": "简历重命名成功",
+          "resumeHasBeenSentToYourEmailSuccessfully": "简历已成功发送到您的邮箱",
+          "resumeHasBeenDeletedSuccessfully": "简历删除成功"
         }
       }
     }
@@ -782,7 +808,7 @@
     "searchForJobTitle": "搜索工作标题",
     "year": "年",
     "month": "月",
-    "months": "",
+    "months": "s",
     "readMore": "显示更多",
     "readLess": "显示更少"
   },
@@ -840,12 +866,16 @@
     "offerFrom": "Offer 来自",
     "offered": "提供",
     "reject": "拒绝",
-    "accept":"接受",
+    "accept": "接受",
     "pleaseNoteThatThisOffer": " 请注意，此报价不具约束力，并有可能更改。可能会有一些 敲定要约所需的额外文书工作和步骤。",
     "company": "公司",
     "sendAnOffer": "发送Offer",
     "viewNow": "现在查看",
-    "viewLater": "稍后查看"
+    "viewLater": "稍后查看",
+    "buttonTextEnable": "自动发送简历",
+    "buttonTextDisable": "取消自动发送简历",
+    "offerTitle": "恭喜您被录用！",
+    "offerSent": "来自于"
   },
   "chatInterview": {
     "confirmText": "面试已经确认",
@@ -977,6 +1007,7 @@
     "verify": "验证",
     "optLabel": "6位数字验证码",
     "errorMsg": {
+      "invalidOtp": "无效的OTP",
       "optIncorrect": "验证码错误，请再试一次"
     },
     "emailTip": "通过您的电子邮件接收工作申请更新。",
@@ -988,7 +1019,6 @@
     "mobileTip": "帮助招聘人员更好地联系您寻找工作机会。",
     "mobileNotVerified": "帮助招聘人员更好地联系您寻找工作机会。 请验证您的手机号码。",
     "mobileExplanation": "您的手机号码已通过验证。 招聘人员将能够通过您的手机号码与您联系。 要更改您的手机号码，请验证您的新手机号码。",
-
     "country": "国家",
     "contactNumber": "联系电话",
     "notify": "电子邮件通知",
@@ -1009,23 +1039,110 @@
     "delete": "删除",
     "deleteTips": "您即将删除此职位提醒。 这不能被撤消。"
   },
-  "chatExchange":{
-    "exchangeTitle":"电话号码",
-    "cancel":"取消",
-    "send":"发送",
-    "verify":"验证",
-    "sendOtp":"发送验证码",
-    "resendOtp":"重新发送验证码",
-    "copy":"复制",
-    "resendOtpIn":"在{{count}}秒后可重新发送",
-    "sureText":"确定与招聘者交换号码吗？如果对方同意，您将会获得招聘者的电话号码。",
-    "verifyText":"请先验证您的电话号码",
-    "countryCode":"国家代码",
-    "mobileNumber":"电话号码",
-    "digitPlaceholder":"输入6位验证码",
-    "msgText":"请输入我们向此电话{{number}}发送的信息",
-    "smb":"的电话号码:",
-    "boss":"招聘者"
-  
+  "chatExchange": {
+    "exchangeTitle": "电话号码",
+    "cancel": "取消",
+    "send": "发送",
+    "verify": "验证",
+    "sendOtp": "发送验证码",
+    "resendOtp": "重新发送验证码",
+    "copy": "复制",
+    "resendOtpIn": "在{{count}}秒后可重新发送",
+    "sureText": "确定与招聘者交换号码吗？如果对方同意，您将会获得招聘者的电话号码。",
+    "verifyText": "请先验证您的电话号码",
+    "countryCode": "国家代码",
+    "mobileNumber": "电话号码",
+    "digitPlaceholder": "输入6位验证码",
+    "msgText": "请输入我们向此电话{{number}}发送的信息",
+    "smb": "的电话号码:",
+    "boss": "招聘者"
+  },
+  "chatAutoSendResume": {
+    "failedToUploadResume": "上传简历失败，出现错误",
+    "pleaseContactSupport": " 请联系 support@bossjob.com 寻求帮助。",
+    "enableAutoSendTitle": "启用自动发送简历",
+    "disabledAutoSendTitle": "禁用自动发送简历",
+    "pleaseSelectResume": "请选择您想与招聘人员分享的简历。",
+    "orUploadNewResume": "或上传新简历",
+    "onlyMax3Resumes": "最大允许3份简历，请至少删除1份以上简历",
+    "uploadNewResume": "上传新简历",
+    "uploadYourResume": "上传你的简历",
+    "cancel": "取消",
+    "send": "发送",
+    "change": "更换简历",
+    "disabledDescription": "当招聘者向您索取简历时，我们会将当前简历自动发送，确定要取消自动发送吗？",
+    "enableDescription": "当招聘者向您索取简历时，我们会将当前简历自动发送。 请选择需要自动发送给招聘者的简历 ",
+    "warnText": "否则，您将需要等到双方都回复消息以后，才能请求发送简历"
+  },
+  "newGetStarted": {
+    "title": "登录或注册Bossjob",
+    "employer": "招聘端",
+    "tips": "寻找人才? 登录",
+    "continueWith": "使用其他方式",
+    "email": "邮件",
+    "phone": "电话",
+    "links": {
+      "apple": "使用Apple登录",
+      "google": "使用Google登录",
+      "facebook": "使用Facebook登录"
+    },
+    "termsOfUse": "使用条款",
+    "privacyPolicy": "隐私政策",
+    "agreement": "我已经阅读并同意 {{value1}} 和 {{value2}}",
+    "emailValid": "请输入一个有效的邮件地址.",
+    "emailLabel": "邮件地址",
+    "sendCode": "发送验证码",
+    "welcomeBack": "欢迎回来",
+    "sendCodeDigit": "请输入我们发送到的6位验证码",
+    "signUpAnAccount": "注册新帐户",
+    "checkSpamEmail": "如果您没有收到验证码，请检查您的垃圾邮件",
+    "havingTrouble": "还是有问题？ 尝试注册",
+    "otherOptions": "其他选项",
+    "alternatively": "或者，请求一个",
+    "magicLink": "魔术链接",
+    "resendCode": "重新发送验证码",
+    "country": "国家",
+    "phoneNumber": "电话号码",
+    "twoFactor": "启用双因素",
+    "authentication": "验证",
+    "secure": "保护您的帐户并在您的电子邮件中接收代码",
+    "emailTips": "当您登录我们无法识别的设备或浏览器时，我们会要求您提供额外的代码。 请输入电子邮件地址以接收代码。",
+    "setUpLater": "稍后设置",
+    "enableTwoFactor": "双因素",
+    "authenticationEnabled": "验证已启用",
+    "factorTip": "如果我们注意到有人尝试从我们无法识别的设备或浏览器登录，我们会要求您提供发送到您的电子邮件地址的代码。",
+    "verifyText": "验证是你",
+    "verifyExtra": "这个额外的步骤表明确实是您在尝试登录。",
+    "optError": "发送OTP失败",
+    "resendEmailCode": "重新发送邮箱OTP成功",
+    "invalidOtp": "无效的OTP",
+    "resendPhoneCode": "重新发送电话OTP成功"
+  },
+  "seo": {
+    "ph": "菲律宾",
+    "sg": "新加坡",
+    "siteName": "Bossjob - {{country}}专业的职业生涯平台",
+    "jobSearch": {
+      "defaultTitle": " {{country}} 专业的职位搜索，申请工作机会 - {{month}} {{year}} | Bossjob",
+      "defaultDescription": "Bossjob 提供{{country}}的新职位。今天在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来",
+      "queryTitle": "{{country}}的{{searchQuery}}职位，工作机会 - {{month}} {{year}} | Bossjob",
+      "queryLocationTitle": "{{country}}的{{searchQuery}}职位，申请工作机会 - {{month}} {{year}} | Bossjob",
+      "queryDescription": "Bossjob 提供{{country}}的新{{searchQuery}}工作。今天在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来",
+      "queryLocationDescription": "Bossjob 提供{{country}}{{location}}的新{{searchQuery}}工作。今天在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
+    },
+    "job": {
+      "title": "{{name}}正在招聘{{jobTitle}} - {{jobId}} | Bossjob",
+      "description": "申请{{name}}的{{jobTitle}}({{jobId}})， 在bossjob上寻找 {{location}}, {{address}} 的工作"
+    },
+    "company": {
+      "listTitle": "寻找在{{country}}招聘的公司 | Bossjob",
+      "listDescription": "发现适合在{{country}}工作的优秀公司！了解有关公司的更多信息并申请 Bossjob 上的职位空缺！",
+      "detailTitle": "在{{companyName}}工作 | Bossjob",
+      "detailDescription": "在 {{companyName}} 发现职业机会，通过阅读 Bossjob 上的员工评论、福利和文化了解更多关于 {{companyName}} 的信息！",
+      "jobsTitle": " {{companyName}} 在{{country}} 的职业，工作机会 | Bossjob",
+      "jobsDescription": "在 Bossjob 上查看 {{companyName}} 在 {{country}} 的所有当前工作机会 - 将预先筛选的经验丰富的专业人士与雇主联系起来",
+      "lifeTitle": "{{companyName}}的文化与生活 | Bossjob",
+      "lifeDescription": "在 Bossjob 上探索位于{{country}}的{{companyName}}的公司文化和生活 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
+    }
   }
 }

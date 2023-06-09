@@ -2,6 +2,7 @@ import { all, call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
 import { UPDATE_USER_ONBOARDING_INFO_REQUEST } from 'store/types/users/updateUserOnboardingInfo'
 import { getCookie, setCookie } from 'helpers/cookies'
+import { getLang } from 'helpers/country'
 import {
   updateUserProfileSuccess,
   updateUserProfileFailed
@@ -58,7 +59,8 @@ function* updateUserOnboardingInfoReq({ payload }) {
     redirect,
     proceedingPath
   } = payload
-
+  
+  const langKey = getLang();
   try {
     if (currentStep === 1) {
       const preferencesPayload = {
@@ -72,18 +74,18 @@ function* updateUserOnboardingInfoReq({ payload }) {
       ])
 
       yield put(updateUserProfileSuccess(userCompleteProfileResponse.data.data))
-      let url = '/jobseeker-complete-profile/10'
+      let url =  `/${langKey}/jobseeker-complete-profile/10`
 
       if (redirect) {
-        url = `/jobseeker-complete-profile/10?redirect=${redirect}`
+        url = `/${langKey}/jobseeker-complete-profile/10?redirect=${redirect}`
       }
 
       if (isFromCreateResume && isFromCreateResume === '1') {
-        url = '/jobseeker-complete-profile/1101'
+        url = `/${langKey}/jobseeker-complete-profile/1101`
       }
 
       if (quickUpladResumeType) {
-        url = '/jobseeker-complete-profile/1101'
+        url = `/${langKey}/jobseeker-complete-profile/1101`
       }
 
       yield put(push(url))

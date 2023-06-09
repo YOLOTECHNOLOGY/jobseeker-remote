@@ -173,7 +173,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
     if (educations?.length === 0) {
       count += 1
     }
-    if (skills.length === 0) {
+    if (skills?.length === 0) {
       count += 1
     }
 

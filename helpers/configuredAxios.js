@@ -3,8 +3,9 @@ import { getCookie, removeUserCookie, setCookie } from 'helpers/cookies'
 import { accessToken, refreshToken } from './cookies';
 import { getCountryId } from './country';
 import { NextResponse } from 'next/server';
-
+import logError from 'app/errors/logError';
 // generate url by a baseUrl
+
 const getUrl = (baseURL) => {
   let url = '';
   switch (baseURL) {
@@ -148,7 +149,8 @@ const refreshTokenServer = () => {
   const refreshKey = getCookie(refreshToken)
   const data = { source: 'web', refresh: refreshKey }
   if (!refreshKey) {
-    return redirectToHomeOnClient()
+    redirectToHomeOnClient()
+    return Promise.reject(new Error('no refresh token!!'))
   }
   return axios.post('/token/refresh', data).then((res) => {
     const { access, token_expired_at, data } = res.data.data
@@ -176,6 +178,7 @@ const chain = configured => (baseURL, type = 'public', passToken, serverAccessTo
         axios.interceptors.response.use(
           (response) => response,
           (error) => {
+            logError(error?.response?.data ?? error?.response ?? error)
             if (error?.response?.status === 401 && typeof window !== 'undefined') {
               if (configured) {
                 redirectToHomeOnClient();

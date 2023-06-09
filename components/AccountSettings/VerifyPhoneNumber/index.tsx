@@ -120,6 +120,10 @@ const VerifyPhoneNumber = ({
   }, [phoneNum])
 
   useEffect(() => {
+    setPhoneNum(phoneDefault)
+  }, [phoneDefault])
+
+  useEffect(() => {
     if (firstRender) {
       return
     }
@@ -160,14 +164,14 @@ const VerifyPhoneNumber = ({
         const { data } = exceptionHandler.response
         let errorMessage
         if (data?.data) {
-          errorMessage = data?.data?.detail
+          errorMessage = data?.data?.detail ?? data?.message
         } else {
           errorMessage = data?.errors?.phone_num[0]
         }
         dispatch(
           displayNotification({
             open: true,
-            message: exceptionHandler.message ?? errorMessage,
+            message:  errorMessage ?? exceptionHandler.message,
             severity: 'warning'
           })
         )
@@ -187,7 +191,7 @@ const VerifyPhoneNumber = ({
 
   const verifiError = (errorMessage?: string) => {
     if (errorMessage == 'Invalid otp') {
-      errorMessage = accountSetting.errorMsg.optIncorrect
+      errorMessage = accountSetting.errorMsg.invalidOtp
     }
     setOtpError(errorMessage)
   }
@@ -211,8 +215,8 @@ const VerifyPhoneNumber = ({
         })
         .catch((error) => {
           const response = error.response
-          const resultError = response.data?.errors
-          verifiError(error.message ?? resultError?.error[0])
+          const resultError = response.data?.message
+          verifiError( resultError ?? error.message)
         })
     } else {
       // change
@@ -231,8 +235,8 @@ const VerifyPhoneNumber = ({
         })
         .catch((error) => {
           const response = error.response
-          const resultError = response?.data?.errors
-          verifiError(error.message ?? resultError?.error[0])
+          const resultError = response?.data?.message
+          verifiError( resultError ?? error.message)
         })
     }
   }
@@ -308,6 +312,7 @@ const VerifyPhoneNumber = ({
                     value={otp}
                     autoComplete='off'
                     error={otpError ? true : false}
+                    maxLength={6}
                     onChange={(e) => setOtp(handleNumericInput(e.target.value))}
                   />
                   {otpError && errorText(otpError)}
