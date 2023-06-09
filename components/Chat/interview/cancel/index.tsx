@@ -54,8 +54,8 @@ const CancelModal = (props: any) => {
             name='radio-buttons-group'
             onChange={(e) => setCancelledReason(e.target.value)}
         >
-            <FormControlLabel value={dic.acceptAnother} control={<Radio />} label={dic.acceptAnother} />
-            <FormControlLabel value={dic.retime} control={<Radio />} label={dic.retime} />
+            <FormControlLabel value={dic.acceptAnother} control={<Radio />} label={dic.acceptAnother||''} />
+            <FormControlLabel value={dic.retime} control={<Radio />} label={dic.retime||''} />
         </RadioGroup>
     </Modal>
 }
