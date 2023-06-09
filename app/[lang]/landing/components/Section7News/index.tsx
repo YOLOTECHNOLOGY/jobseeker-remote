@@ -15,23 +15,23 @@ import classNames from "classnames";
 
 const carouselList = [
 	{
-		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image.png'`,
+		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image.png`,
 		des: 'Bossjob attracts 2.9 million users in PHL, secures $5m funding to boost globalization efforts',
 		date: '28 May 2023'
 	},
 	{
-		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image2.png'`,
+		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image2.png`,
 		des: 'Filipino job search platform Bossjob secures US$5M in venture funding',
 		date: '28 May 2023'
 	},
 	{
-		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image3.png'`,
+		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image3.png`,
 		des: 'Grab Ventures Ignite helps Singaporean startup Bossjob kickstart in Vietnam',
 		date: '28 May 2023'
 
 	},
 	{
-		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image4.png'`,
+		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image4.png`,
 		des: 'Grab Ventures Ignite helps Singaporean startup Bossjob kickstart in Vietnam',
 		date: '28 May 2023'
 	},

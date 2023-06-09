@@ -59,9 +59,9 @@ const Section6 = () => {
 
 	return <section className={style.section6}>
 		<img className={style.section6_bg + ' ' + style.desktop} alt={'-'}
-		     src={`${process.env.S3_BUCKET_URL}/landing/section6-bg.svg'`}/>
+		     src={`${process.env.S3_BUCKET_URL}/landing/section6-bg.svg`}/>
 		<img className={style.section6_bg_mobile + ' ' + style.mobile} alt={'img-bg'}
-		     src={`${process.env.S3_BUCKET_URL}/landing/mobile-section6-bg.png'`}/>
+		     src={`${process.env.S3_BUCKET_URL}/landing/mobile-section6-bg.png`}/>
 		<div className={style.content_container}>
 			<div className={style.section6_title}>
 				Best hiring APP in Southeast-Asia

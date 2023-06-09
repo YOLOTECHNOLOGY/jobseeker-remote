@@ -51,12 +51,12 @@ const Section1 = () => {
 			<section className={style.section1}>
 				<Title/>
 				<div className={style.phone + ' ' + style.desktop} id={'phone'} >
-					<img src={`${process.env.S3_BUCKET_URL}/landing/phone.png'`} alt="phone"
+					<img src={`${process.env.S3_BUCKET_URL}/landing/phone.png`} alt="phone"
 					     className={style.phone_img}
 					/>
 				</div>
-				<img className={style.rocket + ' ' + style.desktop} alt="rocket" src={`${process.env.S3_BUCKET_URL}/landing/rocket.png'`}/>
-				<img className={style.phone_eyes + ' ' + style.desktop} src={`${process.env.S3_BUCKET_URL}/landing/eyes.png'`} alt="eyes img"/>
+				<img className={style.rocket + ' ' + style.desktop} alt="rocket" src={`${process.env.S3_BUCKET_URL}/landing/rocket.png`}/>
+				<img className={style.phone_eyes + ' ' + style.desktop} src={`${process.env.S3_BUCKET_URL}/landing/eyes.png`} alt="eyes img"/>
 			</section>
 			<PopStream/>
 		</div>
@@ -71,7 +71,7 @@ export default Section1
 const PopStream = () => {
 
 	return 	<div className={style.streamWrapper}>
-		<img src={`${process.env.S3_BUCKET_URL}/landing/mobile-section1-stream-pop.png'`} alt={'png'} className={style.mobile + " " + style.stream_top}/>
+		<img src={`${process.env.S3_BUCKET_URL}/landing/mobile-section1-stream-pop.png`} alt={'png'} className={style.mobile + " " + style.stream_top}/>
 		{
 			dialog.map((item, index) => {
 				return <Pop key={index}  type={item.name === 'Sarah' ? 'left' : 'right'} text={item.message}/>
@@ -100,7 +100,7 @@ const Pop = (props: { type: 'left' | 'right', text: string }) => {
 		})} ref={ref}>
 			<div className={style.popWrapper}>
 				<div className={style.avatar}>
-					<img src={`${process.env.S3_BUCKET_URL}/landing/avatar1.png'`} alt="avatar img"/>
+					<img src={`${process.env.S3_BUCKET_URL}/landing/avatar1.png`} alt="avatar img"/>
 				</div>
 				<div className={style.pop_left}>
 					{text}
@@ -117,7 +117,7 @@ const Pop = (props: { type: 'left' | 'right', text: string }) => {
 				{text}
 			</div>
 			<div className={style.avatar}>
-				<img src={`${process.env.S3_BUCKET_URL}/landing/avatar2.png'`} alt="avatar img"/>
+				<img src={`${process.env.S3_BUCKET_URL}/landing/avatar2.png`} alt="avatar img"/>
 			</div>
 		</div>
 	</div>

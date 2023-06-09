@@ -43,11 +43,11 @@ export const Title = () => {
 				<span>
 					Apple store
 				</span>
-				<img src={`${process.env.S3_BUCKET_URL}/landing/apple.svg'`} alt={'apple'}/>
+				<img src={`${process.env.S3_BUCKET_URL}/landing/apple.svg`} alt={'apple'}/>
 			</Link>
 			<Link className={style.download_btn + ' ' + style.google} href={androidUrl} target={'_blank'}>
 				<span>Google play</span>
-				<img src={`${process.env.S3_BUCKET_URL}/landing/google.svg'`} alt={'google'}/>
+				<img src={`${process.env.S3_BUCKET_URL}/landing/google.svg`} alt={'google'}/>
 			</Link>
 			<div className={style.qrcode}></div>
 		</div>
