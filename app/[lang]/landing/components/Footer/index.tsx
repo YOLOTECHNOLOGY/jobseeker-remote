@@ -85,12 +85,12 @@ const siteMap = [
 ]
 
 const follow_use  =  [
-	{img: require('./facebook.svg').default.src, link: 'https://www.facebook.com/Bossjobph'},
-	{img: require('./inlink.svg').default.src, link: 'https://www.linkedin.com/company/bossjob-yolo-technology/'},
-	{img: require('./ins.svg').default.src, link: 'https://www.instagram.com/Bossjobph'},
-	{img: require('./youtube.svg').default.src, link: 'https://www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'},
-	{img: require('./twitter.svg').default.src, link: 'https://twitter.com/Bossjobph'},
-	{img: require('./tiktok.svg').default.src, link: 'https://tiktok.com/@bossjobph'},
+	{img: `${process.env.S3_BUCKET_URL}/landing/facebook.svg'`, link: 'https://www.facebook.com/Bossjobph'},
+	{img: `${process.env.S3_BUCKET_URL}/landing/inlink.svg'`, link: 'https://www.linkedin.com/company/bossjob-yolo-technology/'},
+	{img: `${process.env.S3_BUCKET_URL}/landing/ins.svg'`, link: 'https://www.instagram.com/Bossjobph'},
+	{img: `${process.env.S3_BUCKET_URL}/landing/youtube.svg'`, link: 'https://www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'},
+	{img: `${process.env.S3_BUCKET_URL}/landing/twitter.svg'`, link: 'https://twitter.com/Bossjobph'},
+	{img: `${process.env.S3_BUCKET_URL}/landing/tiktok.svg'`, link: 'https://tiktok.com/@bossjobph'},
 ]
 
 
@@ -224,10 +224,10 @@ const Footer = () =>{
 				</div>
 				<div className={style.mobile_footer_download}>
 					<Link href={'https://apps.apple.com/sg/app/bossjob/id1592073585'} target={'_blank'}>
-						<img src={require('./footer_download_apple.png').default.src} alt="_"/>
+						<img src={`${process.env.S3_BUCKET_URL}/landing/footer_download_apple.png'`} alt="_"/>
 					</Link>
 					<Link href={'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'} target={'_blank'}>
-						<img src={require('./footer_download_google.png').default.src} alt="_"/>
+						<img src={`${process.env.S3_BUCKET_URL}/landing/footer_download_google.png'`} alt="_"/>
 					</Link>
 				</div>
 				<div className={style.mobile_list_container}>
@@ -280,7 +280,7 @@ const Footer = () =>{
 					</div>
 				</div>
 			</div>
-			<img src={require('./bg.svg').default.src} alt={'bg'} className={style.mobile_bg}/>
+			<img src={`${process.env.S3_BUCKET_URL}/landing/bg.svg'`} alt={'bg'} className={style.mobile_bg}/>
 		</div>
 	}
 	return <div className={style.footer_container}>
@@ -289,12 +289,12 @@ const Footer = () =>{
 		</div>
 		<div className={style.footer_download}>
 			<Link href={'https://apps.apple.com/sg/app/bossjob/id1592073585'} target={'_blank'}>
-				<img src={require('./footer_download_apple.png').default.src} alt="_"/>
+				<img src={`${process.env.S3_BUCKET_URL}/landing/footer_download_apple.png'`} alt="_"/>
 			</Link>
 			<Link href={'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'} target={'_blank'}>
-				<img src={require('./footer_download_google.png').default.src} alt="_"/>
+				<img src={`${process.env.S3_BUCKET_URL}/landing/footer_download_google.png'`} alt="_"/>
 			</Link>
-			<img className={style.qrcode} src={require('./footer_download_qrcode.png').default.src} alt="_"/>
+			<img className={style.qrcode} src={`${process.env.S3_BUCKET_URL}/landing/footer_download_qrcode.png'`} alt="_"/>
 		</div>
 		<div className={style.footer_site_map}>
 			{colData.map((item, index) => {
@@ -320,7 +320,7 @@ const Footer = () =>{
 			Copyright © {new Date().getFullYear()}  {technology}
 			{corporation}
 		</div>
-		<img src={require('./bg.svg').default.src} alt={'bg'} className={style.bg}/>
+		<img src={`${process.env.S3_BUCKET_URL}/landing/bg.svg'`} alt={'bg'} className={style.bg}/>
 
 	</div>
 }

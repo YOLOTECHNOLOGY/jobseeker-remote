@@ -8,19 +8,19 @@ import useWindowSize from "../../../../../hooks/useWindowSize";
 
 let carouselList = [
 	{
-		img: require('../assets/section5-1.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/section5-1.png'`,
 		des: 'Build your resume easily, choose from a variety of templates '
 	},
 	{
-		img: require('../assets/section5-2.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/section5-2.png'`,
 		des: 'Protect your privacy and easily block companies'
 	},
 	{
-		img: require('../assets/section5-3.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/section5-3.png'`,
 		des: 'Customise your chat messages and make a great impression.'
 	},
 	{
-		img: require('../assets/section5-4.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/section5-4.png'`,
 		des: 'Never miss an interview again. Sync your interview schedule directly to your phone'
 	}
 ];
@@ -33,8 +33,8 @@ const Section5 = () =>{
 	const swiperRef = useRef(null);
 	const isMobile = width < 540;
 	return <section className={style.section5}>
-		{!isMobile && <img className={style.section5_bg + ' ' + style.desktop} alt={'-'} src={require('../svg/section5-bg.svg').default.src}/>}
-		{isMobile && <img className={style.mobile_section5_bg} src={require('../assets/section5-mobile-bg.png').default.src} alt="_"/>}
+		{!isMobile && <img className={style.section5_bg + ' ' + style.desktop} alt={'-'} src={`${process.env.S3_BUCKET_URL}/landing/section5-bg.svg'`}/>}
+		{isMobile && <img className={style.mobile_section5_bg} src={`${process.env.S3_BUCKET_URL}/landing/section5-mobile-bg.png'`} alt="_"/>}
 		{/* <div className={style.content_container}> */}
 		<div className={style.section5_carousel + ' ' + style.desktop}
 		     onMouseLeave={(event) => {

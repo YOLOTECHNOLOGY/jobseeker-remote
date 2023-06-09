@@ -11,8 +11,8 @@ const Section3 = () => {
 		threshold: 0.3,
 	});
 	return <section className={style.section3} ref={ref}>
-		<img className={style.section3_bg + ' ' + style.desktop} alt={'bg'} src={require('./assets/section3-bg.webp').default.src} />
-		<img className={style.section3_bg + ' ' + style.mobile} alt={'bg'} src={require('./assets/mobile-section3-bg.png').default.src} />
+		<img className={style.section3_bg + ' ' + style.desktop} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/section3-bg.webp'`} />
+		<img className={style.section3_bg + ' ' + style.mobile} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/mobile-section3-bg.png'`} />
 		<div className={style.content_container}>
 			<div className={style.section3_title}>
 				<p>
@@ -27,15 +27,15 @@ const Section3 = () => {
 					})}
 				</div>
 				<div className={style.section3_right}>
-					<img src={require('./assets/section3-right-bg.png').default.src} alt="section3_right-bg"
+					<img src={`${process.env.S3_BUCKET_URL}/landing/section3-right-bg.png'`} alt="section3_right-bg"
 					     className={style.section3_right_bg + ' ' + style.desktop}
 					/>
-					<img src={require('./assets/mobile-section3.png').default.src} alt={'bg'}
+					<img src={`${process.env.S3_BUCKET_URL}/landing/mobile-section3.png'`} alt={'bg'}
 					     className={style.section3_right_mobile_bg + ' ' + style.mobile}
 					/>
 					<InView delay={200} threshold={0.3}>
 						{({inView, ref })=>(
-							<img ref={ref} src={require('./assets/section3-right-1.png').default.src} alt="section3_right"
+							<img ref={ref} src={`${process.env.S3_BUCKET_URL}/landing/section3-right-1.png'`} alt="section3_right"
 							     className={classNames({
 								     [style.section3_right_chat_1]: true,
 								     [style.animate__bounceIn]: inView
@@ -44,7 +44,7 @@ const Section3 = () => {
 					</InView>
 					<InView delay={400} threshold={0.3}>
 						{({ref,inView})=>(
-							<img ref={ref} src={require('./assets/section3-right-2.png').default.src} alt="section3_right"
+							<img ref={ref} src={`${process.env.S3_BUCKET_URL}/landing/section3-right-2.png'`} alt="section3_right"
 							     className={classNames({
 								     [style.section3_right_chat_2]: true,
 								     [style.animate__bounceIn]: inView
@@ -53,7 +53,7 @@ const Section3 = () => {
 					</InView>
 					<InView delay={600} threshold={0.3}>
 						{({ref,inView})=>(
-							<img ref={ref} src={require('./assets/section3-right-3.png').default.src} alt="section3_right"
+							<img ref={ref} src={`${process.env.S3_BUCKET_URL}/landing/section3-right-3.png'`} alt="section3_right"
 							     className={classNames({
 								     [style.section3_right_chat_3]: true,
 								     [style.animate__bounceIn]: inView
@@ -73,22 +73,22 @@ const Des_Schema = [
 	{
 		title: 'AI-powered job matching',
 		des: 'Match jobs for you using Big data & AI models!',
-		icon: require('./svg/section3-icon1.svg').default.src
+		icon: `${process.env.S3_BUCKET_URL}/landing/section3-icon1.svg'`
 	},
 	{
 		title: 'Talk to Boss directly',
 		des: 'Talk to hiring managers, bosses and decision makers during your job hunt.',
-		icon: require('./svg/section3-icon2.svg').default.src
+		icon: `${process.env.S3_BUCKET_URL}/landing/section3-icon2.svg'`
 	},
 	{
 		title: 'Mobile-first',
 		des: 'Bossjob APP provides a seamless job hunting experience on the go.',
-		icon: require('./svg/section3-icon3.svg').default.src
+		icon: `${process.env.S3_BUCKET_URL}/landing/section3-icon3.svg'`
 	},
 	{
 		title: 'Real-time communication',
 		des: 'Our built-in chat features enable instant engagement, from job application to interview, all done within minutes.',
-		icon: require('./svg/section3-icon4.svg').default.src
+		icon: `${process.env.S3_BUCKET_URL}/landing/section3-icon4.svg'`
 	}
 ]
 

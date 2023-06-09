@@ -31,10 +31,10 @@ const INFO = [
 ]
 
 const section4_phone_img = [
-	require('../assets/section4_iphone_1.png').default.src,
-	require('../assets/section4_iphone_2.png').default.src,
-	require('../assets/section4_iphone_3.png').default.src,
-	require('../assets/section4_iphone_4.png').default.src,
+	`${process.env.S3_BUCKET_URL}/landing/section4_iphone_1.png'`,
+	`${process.env.S3_BUCKET_URL}/landing/section4_iphone_2.png'`,
+	`${process.env.S3_BUCKET_URL}/landing/section4_iphone_3.png'`,
+	`${process.env.S3_BUCKET_URL}/landing/section4_iphone_4.png'`,
 ]
 const Section4 = () => {
 	const [visibleNumber, setVisibleNumber] = useState(0);
@@ -79,7 +79,7 @@ const Section4 = () => {
 			<div className={style.section4_sticky}>
 				<div className={style.section4_sticky_bg}></div>
 				<div className={style.section4_phone_bg}>
-					<img alt={'phone'} src={require('../assets/section4_iphone_wapper.png').default.src}
+					<img alt={'phone'} src={`${process.env.S3_BUCKET_URL}/landing/section4_iphone_wapper.png'`}
 					     className={style.section4_sticky_phone_wrapper}/>
 					{section4_phone_img.map((img, index) => {
 						return <img alt={'phone'} key={index} src={img}
