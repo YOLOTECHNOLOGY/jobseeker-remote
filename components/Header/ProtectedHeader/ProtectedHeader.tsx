@@ -50,7 +50,7 @@ const ProtectedHeader = ({ lang }: any) => {
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
   const [showUnCompletedDot, setShowUnCompletedDot] = useState(true)
   const { totalUnread } = useContext(IMContext)
-  const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response||{})
+  const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response || {})
   // const totalUnread = 999
   const config = useSelector((store: any) => store.config.config.response)
   const langKey = getLang()
@@ -201,7 +201,10 @@ const ProtectedHeader = ({ lang }: any) => {
                 </span>
               ) : null}
             </li>
-            <li className={classNames([styles.headerLink, styles.headerLinkLogin])} style={{width:'150px'}}>
+            <li
+              className={classNames([styles.headerLink, styles.headerLinkLogin])}
+              style={{ width: '150px' }}
+            >
               {!pathname.includes('/manage-profile') ? (
                 <a
                   title='Manage Resume'
@@ -229,7 +232,11 @@ const ProtectedHeader = ({ lang }: any) => {
                       }
                     }}
                   >
-                    <Text textColor='white' textStyle='base' className={showUnCompletedDot ? styles.unCompleted: ''}>
+                    <Text
+                      textColor='white'
+                      textStyle='base'
+                      className={showUnCompletedDot ? styles.unCompleted : ''}
+                    >
                       {manageResume}
                     </Text>
                   </MaterialButton>
@@ -252,13 +259,17 @@ const ProtectedHeader = ({ lang }: any) => {
                     }
                   }}
                 >
-                  <Text textColor='white' textStyle='base' className={showUnCompletedDot ? styles.unCompleted: ''}>
+                  <Text
+                    textColor='white'
+                    textStyle='base'
+                    className={showUnCompletedDot ? styles.unCompleted : ''}
+                  >
                     {manageResume}
                   </Text>
                 </MaterialButton>
               )}
             </li>
-            <li className={styles.headerLink} style={{width:'90px'}}>
+            <li className={styles.headerLink} style={{ width: '90px' }}>
               <div
                 className={styles.profileProtectedWrapper}
                 onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}
@@ -268,7 +279,7 @@ const ProtectedHeader = ({ lang }: any) => {
                   className={styles.profilePlaceHolder}
                   alt='avatar'
                   onError={(e) => {
-                    ; (e.target as HTMLInputElement).src = DefaultAvatar
+                    ;(e.target as HTMLInputElement).src = DefaultAvatar
                   }}
                 />
                 <div className={styles.profileCaret} />
@@ -285,7 +296,7 @@ const ProtectedHeader = ({ lang }: any) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 position: 'relative',
-                left: 20
+                left: 30
                 // top: 5
               }}
             >
@@ -320,7 +331,7 @@ const ProtectedHeader = ({ lang }: any) => {
                   <Text textStyle='base'>{accountSettings}</Text>
                 </Link>
               </li>
-             
+
               <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}>
                 <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
                   <Text textStyle='base'>{hiring}</Text>

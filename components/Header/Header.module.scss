@@ -1,6 +1,5 @@
-@import "styles/mixins.scss";
-@import "styles/variable.scss";
-
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
 
 @mixin containers {
   @extend .GlobalContainer;
@@ -11,7 +10,6 @@
   @include md {
     width: $maxContentWidth;
   }
-
 }
 
 .logo {
@@ -49,7 +47,7 @@
 }
 
 .unread {
-  font-family: "Product Sans";
+  font-family: 'Product Sans';
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -57,7 +55,7 @@
   text-align: center;
   letter-spacing: 0.0075em;
   color: #ffffff;
-  background: #d2030f;
+  background: #f44336;
   border-radius: 15px;
   padding: 2px 5px;
   margin-left: 5px;
@@ -109,7 +107,6 @@
   justify-content: center;
   position: relative;
   letter-spacing: 0.05em;
-  width: 120px;  
   &Item,
   &Icon {
     &:hover {
@@ -131,7 +128,7 @@
     bottom: 0;
     left: 0;
     height: 4px;
-    content: "";
+    content: '';
     -webkit-transition: -webkit-transform 0.3s;
     transition: transform 0.3s;
   }
@@ -258,7 +255,7 @@
     &::before,
     &::after {
       position: absolute;
-      content: "";
+      content: '';
       height: 8px;
       width: 2px;
       top: 50%;
