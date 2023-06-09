@@ -54,6 +54,11 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
   const userCookie = getCookie('user')
 
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
+  const [showUnCompletedDot, setShowUnCompletedDot] = useState(true)
+
+  useEffect(() => {
+    setShowUnCompletedDot(!userDetail?.is_profile_completed)
+  }, [userDetail])
 
   useEffect(() => {
     setOpenSwitchNationModal(false)
@@ -134,7 +139,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                   title='Manage Resume'
                 >
                   <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle={textStyle} className={styles.activeLink}>
+                    <Text textStyle={textStyle} className={styles.activeLink+' '+ (showUnCompletedDot ? styles.unCompleted : '')}>
                       {manageResume}
                     </Text>
                   </li>
