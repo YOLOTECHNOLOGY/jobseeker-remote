@@ -10,44 +10,44 @@ import useWindowSize from "../../../../../hooks/useWindowSize";
 let countries = [
 	{
 		"country": "Philippines",
-		"flag": require("../assets/Philippines-flag.png").default.src,
-		"image": require("../assets/Philippines.png").default.src
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Philippines-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Philippines.png`
 	},
 	{
 		"country": "Singapore",
-		"flag": require("../assets/Singapore-flag.png").default.src,
-		"image": require("../assets/Singapore.png").default.src
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Singapore-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Singapore.png`
 	},
 	{
 		"country": "Indonesia",
-		"flag": require("../assets/Indonesia-flag.png").default.src,
-		"image": require("../assets/Indonesia.png").default.src
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Indonesia-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Indonesia.png`
 	},
 
 	{
 		"country": "Hongkong",
-		"flag": require("../assets/Hongkong-flag.png").default.src,
-		"image": require("../assets/Hongkong.png").default.src,
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Hongkong-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Hongkong.png`,
 		"coming": true,
 	},
 
 	{
 		"country": "Malaysia",
-		"flag": require("../assets/Malaysia-flag.png").default.src,
-		"image": require("../assets/Malaysia.png").default.src,
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Malaysia-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Malaysia.png`,
 		"coming": true,
 	},
 
 	{
 		"country": "Thailand",
-		"flag": require("../assets/Thailand-flag.png").default.src,
-		"image": require("../assets/Thailand.png").default.src,
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Thailand-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Thailand.png`,
 		"coming": true,
 	},
 	{
 		"country": "Vietnam",
-		"flag": require("../assets/Vietnam-flag.png").default.src,
-		"image": require("../assets/Vietnam.png").default.src,
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Vietnam-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Vietnam.png`,
 		"coming": true,
 	},
 ];
@@ -59,9 +59,9 @@ const Section6 = () => {
 
 	return <section className={style.section6}>
 		<img className={style.section6_bg + ' ' + style.desktop} alt={'-'}
-		     src={require('../svg/section6-bg.svg').default.src}/>
+		     src={`${process.env.S3_BUCKET_URL}/landing/section6-bg.svg`}/>
 		<img className={style.section6_bg_mobile + ' ' + style.mobile} alt={'img-bg'}
-		     src={require('../assets/mobile-section6-bg.png').default.src}/>
+		     src={`${process.env.S3_BUCKET_URL}/landing/mobile-section6-bg.png`}/>
 		<div className={style.content_container}>
 			<div className={style.section6_title}>
 				Best hiring APP in Southeast-Asia
