@@ -31,7 +31,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderPro
   const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response||{})
 
   useEffect(() => {
-    setShowUnCompletedDot(!!userInfo?.is_profile_completed)    
+    setShowUnCompletedDot(!userInfo?.is_profile_completed)    
   }, [userInfo])
   
 
@@ -148,7 +148,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderPro
                       }
                     }}
                   >
-                    <Text textStyle='base' textColor='white' bold className={!showUnCompletedDot ? styles.unCompleted: ''}>
+                    <Text textStyle='base' textColor='white' bold className={showUnCompletedDot ? styles.unCompleted: ''}>
                     {lang.manageResume}
                     </Text>
                   </MaterialButton>
