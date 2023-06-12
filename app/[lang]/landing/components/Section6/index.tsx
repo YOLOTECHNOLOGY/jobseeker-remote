@@ -1,10 +1,11 @@
 import style from '../../index.module.scss';
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useRef, useState, useEffect} from 'react';
 import classNames from "classnames";
 import EmblaCarousel from 'embla-carousel';
 import useEmblaCarousel from "embla-carousel-react";
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import {Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller} from 'swiper';
+import {useInView, InView } from "react-intersection-observer";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 
 let countries = [
@@ -78,22 +79,44 @@ const Section5Carousel = () => {
 	const swiperRef = useRef(null)
 	const [enable, setEnable] = useState(true);
 	const {width} = useWindowSize();
+	const {ref, inView} = useInView({threshold: 0});
 	const isMobile = width <= 540;
+	const [modules, setModules] = useState([]);
+	useEffect(() => {
+		console.log('inView',inView);
+		if(inView && !isMobile){
+			swiperRef.current.swiper?.autoplay?.start();
+		}else{
+			swiperRef.current.swiper?.autoplay?.pause();
+		}
+
+	},[
+		inView,
+		modules,
+		isMobile
+	]);
 	return <div className={style.embla__container}
-	            onMouseLeave={(event) => {
-		            swiperRef.current.swiper.autoplay.start();
-		            setEnable(false)
+	            onMouseLeave={() => {
+								try {
+									swiperRef.current.swiper?.autoplay?.start();
+									setEnable(false)
+								}catch (e){
+								}
 	            }}
-	            onMouseEnter={(event) => {
-		            swiperRef.current.swiper.autoplay.pause();
-		            setEnable(true);
+	            onMouseEnter={() => {
+								try {
+									swiperRef.current.swiper?.autoplay?.pause();
+									setEnable(true);
+								}catch (e){
+								}
 	            }}
+	            ref={ref}
 	>
 		<Swiper
 			modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller]}
 			spaceBetween={12}
 			ref={swiperRef}
-			slidesPerView={isMobile ? 1.15 : 3.3}
+			slidesPerView={isMobile ? 1.15 : 4}
 			grabCursor={true}
 			autoplay={{
 				delay: 2000,

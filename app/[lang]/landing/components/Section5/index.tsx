@@ -12,26 +12,43 @@ import json4 from './lottie_4';
 let carouselList = [
 	{
 		img: require('./phone1.png').default.src,
+		mobile_img: require('./section5-mobile-1.png').default.src,
 		des: 'Build your resume easily, choose from a variety of templates ',
 		json: json1,
-		style: {width: '312px', position: 'absolute', left: 0, top: '-62px'} as CSSProperties
+		mobile_style: {
+			position: 'absolute',
+			top: '-80px',
+			width: '100%'
+		} as CSSProperties,
+		style: {width: '100%', position: 'absolute', left: 0, top: '-132px'} as CSSProperties
 	},
 	{
 		img: require('./phone2.png').default.src,
+		mobile_img: require('./section5-mobile-2.png').default.src,
 		des: 'Protect your privacy and easily block companies',
 		json: json2,
-		style: {width: 268, position: 'absolute', left: 16, top: 0} as CSSProperties
-
+		mobile_style: {
+			display: 'none',
+		} as CSSProperties,
+		style: {width: '312px', position: 'absolute', left: 14, top: '-18px'} as CSSProperties
 	},
 	{
 		img: `${process.env.S3_BUCKET_URL}/landing/section5-3.png`,
-		des: 'Customise your chat messages and make a great impression.'
+		mobile_img: require('./section5-mobile-3.png').default.src,
+		des: 'Customise your chat messages and make a great impression.',
+		mobile_style: {
+			display: 'none',
+		} as CSSProperties
 	},
 	{
 		img: require('./phone4.png').default.src,
+		mobile_style: {
+			display: 'none',
+		} as CSSProperties ,
+		mobile_img: require('./section5-mobile-4.png').default.src,
 		des: 'Never miss an interview again. Sync your interview schedule directly to your phone',
 		json: json4,
-		style: {width: '270px', position: 'absolute', left: '20px', top: '12px'} as CSSProperties
+		style: {width: '284px', position: 'absolute', left: '27px', top: '-80px'} as CSSProperties
 	}
 ];
 // if (carouselList.length % 2 !== 0) {
@@ -40,18 +57,19 @@ carouselList = carouselList.concat(carouselList)
 const Section5 = () => {
 	const [enable, setEnable] = useState(true);
 	const {width} = useWindowSize();
+	const isMobile = width < 540;
 	const swiperRef = useRef(null);
 	const swiperRef1 = useRef(null);
 	const swiperRef2 = useRef(null);
 
-	const isMobile = width < 540;
+
 
 	if (isMobile) {
 		return <section className={style.section5}>
 
 
 				<Swiper
-					modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller]}
+					modules={[Navigation, Pagination, Scrollbar, A11y, Controller]}
 					spaceBetween={50}
 					ref={swiperRef1}
 					grabCursor={true}
@@ -78,13 +96,12 @@ const Section5 = () => {
 								<div className={style.mobile_section5_des}>
 									{item.des}
 								</div>
-								<img src={item.img} alt="img" className={style.section5_carousel_pic}/>
-
-								{item.json && <Player autoplay loop src={item.json} style={item.style}></Player>}
+								<img src={isMobile ? item.mobile_img : item.img} alt="img" className={style.section5_carousel_pic}/>
+								{item.json && <Player autoplay loop src={item.json} style={item.mobile_style}></Player>}
 							</div>
-							<div className={style.section5_des}>
-								{item.des}
-							</div>
+							{/* <div className={style.section5_des}> */}
+							{/* 	{item.des} */}
+							{/* </div> */}
 						</SwiperSlide>
 					})}
 				</Swiper>
@@ -92,11 +109,9 @@ const Section5 = () => {
 				<div className={style.section5_carousel_control_left}
 				     onClick={() => {
 					     swiperRef1.current.swiper.slidePrev();
-					     swiperRef2.current.swiper.slidePrev();
 				     }}/>
 				<div className={style.section5_carousel_control_right}
 				     onClick={()=>{
-							 swiperRef2.current.swiper.slideNext();
 							 swiperRef1.current.swiper.slideNext();
 				     }}
 				/>
@@ -123,7 +138,7 @@ const Section5 = () => {
 			     setEnable(false);
 		     }}>
 			<Swiper
-				modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller]}
+				modules={[Navigation, Pagination, Scrollbar, A11y, Controller]}
 				spaceBetween={50}
 				ref={swiperRef}
 				grabCursor={true}
@@ -174,6 +189,9 @@ const Section5 = () => {
 
 
 const AnimationNumber = () =>{
+	const {width} = useWindowSize();
+	const isMobile = width < 540;
+	const fontSize = {fontSize: 56}
 	return (
 		<div className={style.section5_bottom_wrapper}>
 			<div className={style.section5_bottom_border_wrapper}>
@@ -183,7 +201,7 @@ const AnimationNumber = () =>{
 							<AnimatedNumbers
 								includeComma
 								animateToNumber={76.9}
-								fontStyle={{fontSize: 64}}
+								fontStyle={{fontSize: 56}}
 								locale="en-US"
 								configs={[
 									{mass: 1, tension: 220, friction: 50},
@@ -199,7 +217,7 @@ const AnimationNumber = () =>{
 						<div className={style.section5_bottom_title}>
 							<AnimatedNumbers
 								animateToNumber={1}
-								fontStyle={{fontSize: 64}}
+								fontStyle={fontSize}
 								locale="en-US"
 								configs={[
 									{mass: 1, tension: 220, friction: 50},
@@ -208,7 +226,7 @@ const AnimationNumber = () =>{
 							<span>in</span>
 							<AnimatedNumbers
 								animateToNumber={5}
-								fontStyle={{fontSize: 64}}
+								fontStyle={fontSize}
 								locale="en-US"
 								configs={[
 									{mass: 1, tension: 220, friction: 50},
@@ -223,7 +241,7 @@ const AnimationNumber = () =>{
 						<div className={style.section5_bottom_title}>
 							<AnimatedNumbers
 								animateToNumber={10}
-								fontStyle={{fontSize: 64}}
+								fontStyle={fontSize}
 								locale="en-US"
 								configs={[
 									{mass: 1, tension: 220, friction: 100},
