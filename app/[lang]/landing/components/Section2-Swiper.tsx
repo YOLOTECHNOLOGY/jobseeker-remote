@@ -2,6 +2,7 @@ import style from '../index.module.scss';
 import React, {useRef, useState} from 'react';
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import {A11y, Autoplay, Controller, Navigation, Pagination, Scrollbar} from "swiper";
+import AutoScroll from './AutoScrollList'
 
 let imgs = [
 	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-01.png`,

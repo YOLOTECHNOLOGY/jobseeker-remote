@@ -13,3 +13,8 @@
   startTime: 1686300721872,
   finishTime: 1686300726143
 }
+[2023-06-12T18:10:14.132] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686564611032,
+  finishTime: 1686564614132
+}

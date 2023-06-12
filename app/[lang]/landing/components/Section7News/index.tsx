@@ -75,6 +75,7 @@ const Section7 = () => {
 					delay: 1000,
 					disableOnInteraction: true
 				}}
+				draggable={true}
 				navigation={enable}
 				loop={true}
 				scrollbar={{draggable: true}}

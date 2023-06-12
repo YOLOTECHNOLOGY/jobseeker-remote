@@ -145,6 +145,7 @@ const Section5Carousel = () => {
 										</div>
 										<div>soon...</div>
 									</div> : null}
+									<img className={style.country_name_mask} alt={'mask'} src={require('./city_header_mask.svg').default.src}/>
 									<div className={style.country_name}>
 										{country.country}
 									</div>
