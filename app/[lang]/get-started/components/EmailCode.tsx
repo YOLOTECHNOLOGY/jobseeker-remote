@@ -62,7 +62,7 @@ const EmailCode = (props: any)=> {
     }).then((res) => {
       console.log(res.data)
       if (res.data) {
-        router.push(`${langKey}/get-started/phone?step=5`)
+        router.push(`/${langKey}/get-started/phone?step=5`)
         // if(userInfo && Object.keys(userInfo).length){
         //   const { data } = userInfo;
         //   defaultLoginCallBack(data)        
