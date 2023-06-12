@@ -22,6 +22,7 @@ interface HamburgerProps {
 const Hamburger = ({ toggleMenu, openState, disabled }: HamburgerProps) => {
   const router = useRouter()
   const currentUser = getCookie('user')
+  const currentToken = getCookie('accessToken')
 
   const handleShowMenu = () => {
     if (!openState) {
@@ -48,7 +49,7 @@ const Hamburger = ({ toggleMenu, openState, disabled }: HamburgerProps) => {
 
   return (
     <div className={styles.hamburgerWrapper}>
-      {!currentUser && (
+      {!currentToken && (
         <div className={styles.hamburgerWrapper_getStarted} onClick={handleToGetStarted}>
           Get Started
         </div>
@@ -59,7 +60,7 @@ const Hamburger = ({ toggleMenu, openState, disabled }: HamburgerProps) => {
         onClick={disabled ? null : handleShowMenu}
       >
         <div id={styles.hamburgerMenu} className={openState ? styles.active : null}>
-          {currentUser && !openState ? (
+          {currentToken && !openState ? (
             <img
               src={currentUser?.avatar || DefaultAvatar}
               className={styles.profileAvatar}
