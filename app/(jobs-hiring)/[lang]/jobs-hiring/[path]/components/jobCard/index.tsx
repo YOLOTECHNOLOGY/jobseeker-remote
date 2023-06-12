@@ -220,7 +220,7 @@ const JobCard = (props: any) => {
             <div
               className={styles.left}
               onClick={() =>
-                router.push(`${langKey}` + job_url, { forceOptimisticNavigation: true })
+                router.push(`/${langKey}` + job_url, { forceOptimisticNavigation: true })
               }
             >
               <div
