@@ -214,6 +214,7 @@ const ProtectedHeader = ({ lang }: any) => {
                       : router.push('/' + langKey + '/jobseeker-complete-profile/1')
                     // currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
                   }}
+                  style={{ color: '#353535' }}
                 >
                   <MaterialButton
                     variant='contained'
@@ -332,6 +333,12 @@ const ProtectedHeader = ({ lang }: any) => {
                 </Link>
               </li>
 
+              <li className={styles.headerMenuItem}>
+                <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
+                  <Text textStyle='base'>{hiring}</Text>
+                </Link>
+              </li>
+
               <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}>
                 <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
                   <Text textStyle='base'>{hiring}</Text>
@@ -351,6 +358,7 @@ const ProtectedHeader = ({ lang }: any) => {
                   </Text>
                 </div>
               </li>
+
               <li className={styles.headerMenuItem}>
                 <div className={styles.headerMenuLink} onClick={() => handleLogOut()}>
                   <Text textStyle='base'>{logOut}</Text>
