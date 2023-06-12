@@ -139,7 +139,12 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                   title='Manage Resume'
                 >
                   <li className={styles.menuList} onClick={handleClick}>
-                    <Text textStyle={textStyle} className={styles.activeLink+' '+ (showUnCompletedDot ? styles.unCompleted : '')}>
+                    <Text
+                      textStyle={textStyle}
+                      // className={
+                      //   styles.activeLink + ' ' + (showUnCompletedDot ? styles.unCompleted : '')
+                      // }
+                    >
                       {manageResume}
                     </Text>
                   </li>
@@ -159,11 +164,11 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                     <Text textStyle={textStyle}>{accountSettings}</Text>
                   </li>
                 </Link>
-                <Link className={styles.defaultLink} title='Jobs' to='/chat/list'>
+                {/* <Link className={styles.defaultLink} title='Jobs' to='/chat/list'>
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle={textStyle}>{Chat}</Text>
                   </li>
-                </Link>
+                </Link> */}
               </>
             )}
             <Divider />
@@ -201,13 +206,13 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                   </li>
                 </Link>
                 <Divider />
-                <Link className={`${styles.defaultLink}`} to='/get-started' title='Get Started'>
+                {/* <Link className={`${styles.defaultLink}`} to='/get-started' title='Get Started'>
                   <li className={styles.menuList} onClick={handleClick}>
                     <Text textStyle={textStyle} className={styles.activeLink}>
                       {getStarted}
                     </Text>
                   </li>
-                </Link>
+                </Link> */}
 
                 {/* <li
                   className={styles.defaultLink}
@@ -272,6 +277,15 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                     <Text textStyle={textStyle}>{careerGuide}</Text>
                   </li>
                 </Link>
+
+                <Divider />
+
+                <Link to={process.env.BOSSHUNT_URL} aTag className={styles.defaultLink}>
+                  <li className={styles.menuList}>
+                    <Text textStyle='base'>{hiring}</Text>
+                  </li>
+                </Link>
+
                 <Divider />
                 <div className={`${styles.defaultLink}`}>
                   <li className={styles.menuList} onClick={() => handleLogOut()}>
@@ -290,7 +304,8 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
             >
               <div className={styles.menuList}>
                 <Text textStyle={textStyle}>
-                  {getCountry()}, {getLanguage()} - <span style={{ color: '#136FD3' }}>{change}</span>
+                  {getCountry()}, {getLanguage()} -{' '}
+                  <span style={{ color: '#136FD3' }}>{change}</span>
                 </Text>
               </div>
             </li>
