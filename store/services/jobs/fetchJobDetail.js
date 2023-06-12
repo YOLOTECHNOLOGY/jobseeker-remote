@@ -2,7 +2,7 @@
 import configuredAxios from 'helpers/configuredAxios'
 // import { getCookie } from 'shared/helpers/cookies'
 import { cache } from 'react'
-const fetchJobDetailService = cache((payload) => {
+const fetchJobDetailService = (cache ?? (a=>a))((payload) => {
   const axios = configuredAxios('job', payload.status, false, payload.serverAccessToken)
   return axios.get(`/${payload.jobId}`)
  }
