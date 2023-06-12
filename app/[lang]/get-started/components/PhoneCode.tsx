@@ -64,7 +64,7 @@ function PhoneCode(props: any) {
       console.log(otp, uuid, browserId)
      
       if(isMultiplePhonesNum === 'true'){
-        router.push(`${langKey}/get-started/phone?step=7&phone=${phoneNum}`)
+        router.push(`/${langKey}/get-started/phone?step=7&phone=${phoneNum}`)
          return
       }
 
@@ -119,7 +119,7 @@ function PhoneCode(props: any) {
   const sendOpt = (email) => {
     authenticationSendEmaillOtp({ email }).then((res) => {
       console.log(res?.data?.data, 'res')
-      router.push(`${pathname}?step=6&email=${email}&userId=${userId}`)
+      router.push(`/${pathname}?step=6&email=${email}&userId=${userId}`)
     })
   }
   console.log({ userInfo })
@@ -130,7 +130,7 @@ function PhoneCode(props: any) {
         removeItem('quickUpladResume')
         defaultLoginCallBack(data)
       } else {
-        router.push(`${langKey}/get-started/phone?step=3&phone=${phoneNum}`)
+        router.push(`/${langKey}/get-started/phone?step=3&phone=${phoneNum}`)
       }
       // removeItem('quickUpladResume')
       // defaultLoginCallBack(data,true)
