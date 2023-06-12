@@ -34,7 +34,7 @@ const PlaceholderProtectedHeader = ({
   const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response || {})
 
   useEffect(() => {
-    setShowUnCompletedDot(!userInfo?.is_profile_completed)
+    userInfo && setShowUnCompletedDot(!userInfo?.is_profile_completed)
   }, [userInfo])
 
   return (
