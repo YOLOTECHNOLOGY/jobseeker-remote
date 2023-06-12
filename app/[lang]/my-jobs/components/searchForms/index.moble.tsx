@@ -38,7 +38,7 @@ const SearchArea = (props: any) => {
     }), []
     const moreOptions = useMemo(() => {
         return {
-            qualification: config.educations.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
+            qualification: config.degrees.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
             workExperience: config.xp_lvls.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
             industry: config.industry_lists.map?.(item => ({ value: item?.['seo-value'], label: item.value })) ?? [],
             salary: config?.salary_range_filters?.map?.((item) => ({
