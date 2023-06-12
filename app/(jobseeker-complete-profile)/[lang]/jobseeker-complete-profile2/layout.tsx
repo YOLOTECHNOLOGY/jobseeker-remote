@@ -1,9 +1,10 @@
 // import styles from './index.module.scss'
-import Header from "./components/Header" 
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
 import { getCountryKey } from 'helpers/country'
 import 'styles/globals.scss'
+import dynamic from 'next/dynamic'
+const Providers = dynamic(() => import('app/[lang]/components/providers'), { ssr: true })
 export default async function RootLayout(props: any) {
   const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
   const { children, seo }: any = props
@@ -73,6 +74,7 @@ export default async function RootLayout(props: any) {
         ></script>
       </head>
       <body id='next-app'>
+      <Providers LG={dictionary} lang={lang}>
           {/* Google Tag Manager (noscript) */}
           <noscript dangerouslySetInnerHTML={{
             __html: `
@@ -80,8 +82,8 @@ export default async function RootLayout(props: any) {
           height="0" width="0" style="display:non e;visibility:hidden"></iframe>
         `}}>
           </noscript>
-          <Header />   
           {children}     
+        </Providers>
       </body>
     </html>
   )

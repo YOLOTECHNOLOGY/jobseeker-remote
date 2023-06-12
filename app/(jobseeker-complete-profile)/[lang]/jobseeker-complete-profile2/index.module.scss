@@ -18,7 +18,6 @@ $contentWidth: 894px;
         justify-content: space-between;
         align-items: center;
         color: white;
-
         a {
             color: white;
         }
@@ -26,6 +25,9 @@ $contentWidth: 894px;
 }
 
 .main {
+    p{
+        margin: 0;
+    }
     .basicInfo {
         width: 770px;
         margin: 0 auto;
@@ -104,6 +106,7 @@ $contentWidth: 894px;
                     box-sizing: border-box;
                     width: 70px;
                     height: 70px;
+                    cursor: pointer;
                     &.active {
                         border: 3px solid #0EBD5C;
                     }
@@ -206,59 +209,205 @@ $contentWidth: 894px;
 
             }
 
-            .btnList {
-                display: flex;
-                padding-top: 8px;
-                flex-wrap: wrap;
-                button {
-                    width: 330px;
-                    margin-right: 16px;
-                    background: #E7F1FB;
-                    border: 1.5px solid #E7F1FB;
-                    border-radius: 10px;
-                    font-size: 14px;
-                    display: flex;
-                    align-items: center;
-                    letter-spacing: 1px;
-                    color: #353535;
-                    justify-content: center;
-                    height: 44px;
-                    transition: .2s;
-                    margin-bottom: 16px;
-                    cursor: pointer;
-
-                    &:hover {
-                        background: #1854A3;
-                        color: #FFFFFF;
-                        transition: .2s;
-                    }
-
-                    &:nth-of-type(even) {
-                        margin-right: 0;
-                    }
-
-                    &.active {
-                        color: #FFFFFF;
-                        background: #136FD3;
-                    }
-                }
-            }
-
+           
             .availability {
                 padding-top: 12px;
             }
         }
 
-        .next {
-            margin: 20px 0;
+    }
+    .btnList {
+        display: flex;
+        padding-top: 8px;
+        flex-wrap: wrap;
+        button {
+            width: 330px;
+            margin-right: 16px;
+            background: #E7F1FB;
+            border: 1.5px solid #E7F1FB;
+            border-radius: 10px;
+            font-size: 14px;
             display: flex;
-            justify-content: flex-end;
+            align-items: center;
+            letter-spacing: 1px;
+            color: #353535;
+            justify-content: center;
+            height: 44px;
+            transition: .2s;
+            margin-bottom: 16px;
+            cursor: pointer;
 
-            :global {
-                .MuiLoadingButton-root:hover {
-                    color: #fff;
+            &:hover {
+                background: #1854A3;
+                color: #FFFFFF;
+                transition: .2s;
+            }
+
+            &:nth-of-type(even) {
+                margin-right: 0;
+            }
+
+            &.active {
+                color: #FFFFFF;
+                background: #136FD3;
+            }
+        }
+    }
+
+    .next {
+        margin: 20px 0;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        :global {
+            .MuiLoadingButton-root:hover {
+                color: #fff;
+            }
+        }
+    }
+    .work{
+        .header{
+            margin-bottom: 26px;
+        }
+        .workContainer{
+            width: 900px;
+            margin: 0 auto;
+            padding-bottom: 24px;
+        }
+        .box{
+            width: 770px;
+            margin: 32px auto 0;
+            box-shadow: 0px 4px 6px rgba(150, 149, 149, 0.25);
+            border-radius: 20px;
+            min-height: 500px;
+            box-sizing: border-box;
+            .headerInfo{
+                height: 69px;
+                background: linear-gradient(269.8deg, rgba(255, 235, 184, 0.4) 0.12%, rgba(242, 177, 202, 0.4) 50.01%, rgba(84, 142, 237, 0.4) 99.89%);
+                box-shadow: 0px 4px 6px rgba(150, 149, 149, 0.25);
+                border-radius: 20px 20px 0px 0px;
+                line-height: 69px;
+                font-size: 30px;
+                line-height: 40px;
+                display: flex;
+                align-items: center;
+                letter-spacing: 1px;
+                color: #353535;
+                padding-left: 48px;
+                margin-bottom: 5px;
+            }
+            .body{
+                padding: 0 47px 40px 47px;
+                margin-bottom: 24px; 
+            }
+            .title{
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 23px;
+                letter-spacing: 1px;
+                color: #353535;
+                padding: 24px 0 14px;
+                span{
+                    color: red;
                 }
             }
+            .titlePeriod{
+                padding-bottom: 4px;
+            }
+            .titleTip{
+                font-size: 14px;
+                line-height: 18px;
+                letter-spacing: 1px;
+                color: #707070;
+               
+            }
+            .upload{
+               margin: 14px 0;
+            }
+            .stepFieldDateItem{
+                width: 330px;
+                padding-top: 6px;
+            }
+            .stepFieldToItem{
+                margin-top: 10px;
+            }
+            .chooseSkill{
+                border: 1px solid #BCBCBC;
+                padding: 10px;
+                min-height: 170px;
+                border-radius: 10px;
+                margin-top: 16px;
+                p{
+                font-size: 14px;
+                line-height: 18px;
+                letter-spacing: 1px;
+                color: #707070;
+                line-height: 18px;         
+
+                }
+            }
+            .step3Editor{
+                margin-top: 16px;
+            }
+            .stepFieldDate{
+                display: flex;
+                justify-content: space-between;
+            }
+          .fillLater{
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 1px;
+            color: #136FD3;
+            padding-top: 34px;
+          }
+          .currency, .stepField{
+            width: 330px;
+          }
+        }
+        .next {
+            width: 770px;
+            margin: 24px auto;
+        }
+        .salaryBox{
+            display: flex;
+            justify-content: space-between;
+        }
+        .minSalary{
+            margin-right: 16px;
+            margin-top: 18px;
+            flex: 1;
+            &:last-child{
+                margin-right: 0;
+            }
+        }
+    }
+    :global{
+        .MuiOutlinedInput-root{
+           border-radius: 10px;              
+        }
+        .MuiFormControl-root{
+            width: 100%;
+        }
+        .MuiStepConnector-horizontal{
+            top: 16px;
+        }
+        .MuiChip-deleteIconOutlinedColorPrimary {
+            path{
+                color: #fff;
+            }
+        }
+        .MuiStepLabel-root .MuiSvgIcon-root{
+            width: 32px;
+            height: 32px;
+        }
+       
+        .MuiStepLabel-label.Mui-completed, .MuiStepLabel-label.Mui-active, .MuiStepLabel-label{
+            color: #4E5969;
+            font-weight: 400;
+        }
+        .MuiStepIcon-root.Mui-completed{
+            color: #2378E5;
         }
     }
 }

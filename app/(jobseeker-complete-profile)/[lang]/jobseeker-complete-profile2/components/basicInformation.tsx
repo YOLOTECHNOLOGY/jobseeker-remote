@@ -7,6 +7,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { Controller, useForm } from 'react-hook-form'
 import MaterialTextField from 'components/MaterialTextField'
 import LoadingButton from '@mui/lab/LoadingButton'
+import Header from "./Header" 
 import avatar1 from '../images/1.png'
 import avatar2 from '../images/2.png'
 import avatar3 from '../images/3.png'
@@ -70,6 +71,8 @@ const BasicInformation = (props: any) => {
     document.getElementById('uploadUserAvatar').click()
   }
   return (
+    <>
+    <Header/>
     <div className={styles.basicInfo}>
       <div className={styles.topModule}>
       <div className={styles.headerInfo}>
@@ -183,10 +186,10 @@ const BasicInformation = (props: any) => {
 
 
       <div className={styles.next}>
+     
         <LoadingButton
           onClick={handleClick}
-          loading={loading}
-        
+          loading={loading}    
           variant="contained"
           sx={{
             width:'202px',
@@ -200,10 +203,29 @@ const BasicInformation = (props: any) => {
         >
           <span>Next (1/4)</span>
         </LoadingButton>
+        <LoadingButton
+          onClick={handleClick}
+          loading={loading}    
+          variant="contained"
+          sx={{
+            width:'202px',
+            height:'44px',
+            textTransform: 'capitalize',
+            border: '1px solid #136FD3',
+            background:  "transparent",
+            color: '#136FD3',
+            boxShadow:'none',
+            borderRadius: '10px'
+          }}
+        >
+          <span>back</span>
+        </LoadingButton>
       </div>
      
 
     </div>
+    </>
+   
   )
 }
 

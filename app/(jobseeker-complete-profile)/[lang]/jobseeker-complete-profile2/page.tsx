@@ -33,12 +33,12 @@ const Page = async (props: any) => {
   const { lang } = props.params
   const dictionary: any = await getDictionary(lang)
 
-  const { newGetStarted } = dictionary
-
+  const dic = dictionary
+  const newProps = {...props,lang:dic}
   return (
     <>
       <div className={styles.main}>
-        <Main {...props}/>
+        <Main {...newProps}/>
       </div>
     </>
   )
