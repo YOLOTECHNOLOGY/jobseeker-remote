@@ -60,10 +60,10 @@ const NotInterestModal = (props: any) => {
                 name='radio-buttons-group'
                 onChange={(e) => setReason(e.target.value)}
             >
-                {reasons.map(item => (
+                {reasons.map((item, index) => (
                     <FormControlLabel
                         classes={{ root: styles.item }}
-                        key={item}
+                        key={index+'~'+ item}
                         checked={item === reason}
                         value={item}
                         control={<Radio />}

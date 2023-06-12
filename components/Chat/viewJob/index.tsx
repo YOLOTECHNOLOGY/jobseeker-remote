@@ -63,9 +63,9 @@ const ViewJobModal = (props: any) => {
         handleSecondButton={() => actionsRef.current.close?.()}
     >
         <div className={styles.formContainer}>
-            {details.map(([label, content]) => {
+            {details.map(([label, content], index) => {
                 return (
-                    <div className={styles.detailItemContainer} key={label}>
+                    <div className={styles.detailItemContainer} key={label+'~'+index}>
                         <label>{label}</label>
                         {typeof content === 'string' ? <p>{content}</p> : content}
                     </div>

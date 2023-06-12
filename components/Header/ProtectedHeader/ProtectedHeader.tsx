@@ -48,7 +48,7 @@ const ProtectedHeader = ({ lang }: any) => {
   const ref = useRef(null)
   const [isShowHeaderMenu, setIsShowHeaderMenu] = useState(false)
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
-  const [showUnCompletedDot, setShowUnCompletedDot] = useState(true)
+  const [showUnCompletedDot, setShowUnCompletedDot] = useState(false)
   const { totalUnread } = useContext(IMContext)
   const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response || {})
   // const totalUnread = 999
