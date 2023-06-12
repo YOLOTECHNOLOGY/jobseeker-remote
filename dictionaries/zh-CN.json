@@ -264,6 +264,7 @@
     }
   },
   "home": {
+    "more": "更多",
     "title": "找工作，与老板谈",
     "defaultLocationPH": "马尼拉",
     "defaultLocationSG": "downtown core",
@@ -1117,12 +1118,12 @@
     "resendEmailCode": "重新发送邮箱OTP成功",
     "invalidOtp": "无效的OTP",
     "resendPhoneCode": "重新发送电话OTP成功",
-    "verifyEmail":"验证邮箱",
-    "thisPhoneNumberAssociated":"选择账号",
-    "accounts":"个账号。",
-    "thisPhoneNumber":"这个手机号一共关联",
-    "youNeedToChooseVerified":"您需要选择一个经过验证的电子邮件地址进行关联",
-    "validateErr":"该邮箱已注册，请更换其他邮箱绑定"
+    "verifyEmail": "验证邮箱",
+    "thisPhoneNumberAssociated": "选择账号",
+    "accounts": "个账号。",
+    "thisPhoneNumber": "这个手机号一共关联",
+    "youNeedToChooseVerified": "您需要选择一个经过验证的电子邮件地址进行关联",
+    "validateErr": "该邮箱已注册，请更换其他邮箱绑定"
   },
   "seo": {
     "ph": "菲律宾",
