@@ -14,12 +14,19 @@ const Section3 = () => {
 		<img className={style.section3_bg + ' ' + style.desktop} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/section3-bg.webp`} />
 		<img className={style.section3_bg + ' ' + style.mobile} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/mobile-section3-bg.png`} />
 		<div className={style.content_container}>
-			<div className={style.section3_title}>
-				<p>
-					Bossjob
-				</p>
-				{inView && <Typical steps={['a better & faster way to find jobs']}/>}
-			</div>
+			<InView threshold={0.3} delay={500}>
+				{({ref, inView})=>{
+					return <div ref={ref} className={classNames({
+						[style.section3_title]: true,
+						[style.animate__bounceIn]: inView
+					})}>
+						<p>
+							Bossjob
+						</p>
+						<p>a better & faster way to find jobs</p>
+					</div>
+				}}
+			</InView>
 			<div className={style.section3_content}>
 				<div className={style.section3_left}>
 					{Des_Schema.map(item=>{

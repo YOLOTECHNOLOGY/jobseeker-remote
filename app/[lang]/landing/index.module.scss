@@ -163,16 +163,15 @@
   padding-top: 142px;
   position: relative;
   z-index: 2;
-  //position: sticky;
-  //bottom: 300px;
   @media screen and (max-width: 540px) {
     padding-top: 1rem;
   }
 }
-
+.op0{
+  opacity: 0;
+}
 .title-color {
   text-fill-color: transparent;
-
   background: linear-gradient(269.8deg, #F8CDC1 0.12%, #F2B1CA 43.36%, #548EED 99.89%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -192,6 +191,7 @@
   margin-bottom: .56rem;
   @media screen and (max-width: 540px) {
     display: flex !important;
+    opacity: 0;
   }
 }
 
@@ -846,6 +846,14 @@
   padding-top: 200px;
   @media screen and (max-width: 540px) {
     padding-top: .7rem;
+    height: 1600px;
+    margin-bottom: 600px;
+    background-color: #000000;
+    :global{
+      .swiper{
+        overflow: visible !important;
+      }
+    }
   }
 }
 
@@ -880,11 +888,17 @@
 
 .section5_carousel_pic {
   height: 100%;
-
+  @media screen and (max-width: 540px) {
+    height: auto;
+    width: 100%;
+    position: absolute;
+    top: -86px;
+  }
 }
 
 .section5_des {
   color: #ffffff;
+  padding: 0 20px;
 }
 
 .section5_bottom_wrapper {
@@ -893,6 +907,7 @@
   overflow: hidden;
   width: 100vw;
   transform: translate3d(0, 50%, 0);
+  z-index: 100;
 }
 
 .section5_bottom_border_wrapper {
@@ -908,6 +923,7 @@
     width: 2.84rem;
     border-radius: .5rem;
     height: auto;
+    text-align: left;
     padding: .1rem;
   }
 }
@@ -915,6 +931,7 @@
 .section5_bottom_item {
   @media screen and (max-width: 540px) {
     margin-bottom: .9rem;
+    width: 1.94rem;
   }
 }
 
@@ -941,7 +958,7 @@
 .section5_bottom_title {
   font-style: normal;
   font-weight: 700;
-  font-size: 64px;
+  font-size: 56px;
   line-height: 48px;
   text-align: center;
   letter-spacing: 0.02em;
@@ -952,6 +969,8 @@
   justify-content: center;
   @media screen and (max-width: 540px) {
     text-align: left;
+    justify-content: flex-start;
+    width: 1.94rem;
   }
 }
 
@@ -966,8 +985,8 @@
   color: #353535;
   width: 285px;
   @media screen and (max-width: 540px) {
-    width: 2.24rem;
     text-align: left;
+    width: 1.94rem;
   }
 }
 
@@ -1135,7 +1154,7 @@
 }
 .mobile_section5_des{
   color: #ffffff;
-  width: 330px;
+  width: 3.2rem;
   margin: 0 auto;
   min-height: 67px;
   font-weight: 400;

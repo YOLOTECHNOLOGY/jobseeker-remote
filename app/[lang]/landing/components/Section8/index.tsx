@@ -13,27 +13,27 @@ import "swiper/css/navigation";
 const carouselList = [
 	{
 		des: `Looking for <span style="color: #FED766">talents</span>? 👀`,
-		link: 'https://employer.bossjob.com/'
+		link: 'https://play.google.com/store/search?q=bossjob&c=apps'
 	},
 	{
 		des: `Looking for <span style="color: #FED766">jobs</span>?  💼`,
-		link: 'https://bossjob.com/'
+		link: 'https://apps.apple.com/sg/app/bossjob/id1592073585'
 	},
 	{
 		des: `Looking for <span style="color: #FED766">talents</span>? 👀`,
-		link: 'https://employer.bossjob.com/'
+		link: 'https://play.google.com/store/search?q=bossjob&c=apps'
 	},
 	{
 		des: `Looking for <span style="color: #FED766">jobs</span>?  💼`,
-		link: 'https://bossjob.com/'
+		link: 'https://apps.apple.com/sg/app/bossjob/id1592073585'
 	},
 	{
 		des: `Looking for <span style="color: #FED766">talents</span>? 👀`,
-		link: 'https://employer.bossjob.com/'
+		link: 'https://play.google.com/store/search?q=bossjob&c=apps'
 	},
 	{
 		des: `Looking for <span style="color: #FED766">jobs</span>?  💼`,
-		link: 'https://bossjob.com/'
+		link: 'https://apps.apple.com/sg/app/bossjob/id1592073585'
 	},
 ]
 const Section7 = () => {

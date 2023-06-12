@@ -48,8 +48,8 @@ const Section1 = () => {
 		<div className={style.section_bg + ' ' + style.mobile}></div>
 		<div className={style.sectionContainer}>
 			<div className={style.section_bg + ' ' + style.desktop}></div>
+			<Title/>
 			<section className={style.section1}>
-				<Title/>
 				<div className={style.phone + ' ' + style.desktop} id={'phone'} >
 					<img src={`${process.env.S3_BUCKET_URL}/landing/phone.png`} alt="phone"
 					     className={style.phone_img}
