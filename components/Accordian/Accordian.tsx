@@ -83,13 +83,9 @@ const Accordian = ({
         <span>{title}</span>
         <div className={styles.accordianToggleIcon}>
           {isVisible ? (
-            <LazyLoad>
               <img src={dark ? darkkShrink : closeIcon} title='minus' alt='minus' height='16' width='16' />
-            </LazyLoad>
           ) : (
-            <LazyLoad>
               <img src={dark ? darkExpand  : openIcon} title='Plus' alt='Plus' height='16' width='16' />
-            </LazyLoad>
           )}
         </div>
       </div>

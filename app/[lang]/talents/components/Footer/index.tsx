@@ -132,7 +132,7 @@ const Footer = () =>{
 				title: about,
 				links: [
 					{
-						key: `${langKey}/company/bossjob-1668`,
+						key: `/company/bossjob-1668`,
 						child: aboutBossjob
 					},
 					{
@@ -153,15 +153,15 @@ const Footer = () =>{
 				title: talents,
 				links: [
 					{
-						key: `${langKey}/jobs-hiring/job-search`,
+						key: `/jobs-hiring/job-search`,
 						child: allJobs
 					},
 					{
-						key: `${langKey}/jobs-hiring`,
+						key: `/jobs-hiring`,
 						child: createJobAlert
 					},
 					{
-						key: isLogin ? `${langKey}/manage-profile?tab=resume` : `${langKey}/resumetemplate`,
+						key: isLogin ? `/manage-profile?tab=resume` : `/resumetemplate`,
 						child: createFree
 					},
 					{
@@ -187,27 +187,27 @@ const Footer = () =>{
 				title: popularJobs,
 				links: [
 					{
-						key: `${langKey}/jobs-hiring/information-technology-jobs?page=1`,
+						key: `/jobs-hiring/information-technology-jobs?page=1`,
 						child: ItJobs
 					},
 					{
-						key: `${langKey}/jobs-hiring/finance-audit-tax-jobs?page=1`,
+						key: `/jobs-hiring/finance-audit-tax-jobs?page=1`,
 						child: financeJobs
 					},
 					{
-						key: `${langKey}/jobs-hiring/customer-service-operations-jobs?page=1`,
+						key: `/jobs-hiring/customer-service-operations-jobs?page=1`,
 						child: customerService
 					},
 					{
-						key: `${langKey}/jobs-hiring/bpo-jobs`,
+						key: `/jobs-hiring/bpo-jobs`,
 						child: BpoJobs
 					},
 					{
-						key: `${langKey}/jobs-hiring/sales-jobs?page=1`,
+						key: `/jobs-hiring/sales-jobs?page=1`,
 						child: salesJobs
 					},
 					{
-						key: `${langKey}/jobs-hiring/healthcare-medical-jobs?page=1`,
+						key: `/jobs-hiring/healthcare-medical-jobs?page=1`,
 						child: healthcareJobs
 					}
 				]
@@ -240,7 +240,7 @@ const Footer = () =>{
 								dark
 								title={
 									<Text textStyle='sm' bold className={style.mobile_list_title}>
-										{item.title}
+										<span className={style.mobile_list_title}>{item.title}</span>
 									</Text>
 								}
 							>
@@ -279,7 +279,10 @@ const Footer = () =>{
 					</div>
 				</div>
 			</div>
-			<img src={require('./mobile-footer-bg.svg').default.src} alt={'bg'} className={style.mobile_bg}/>
+			<div className={style.mobile_bg_wrapper}>
+				{/* <MySvgComponent></MySvgComponent> */}
+				<img src={require('./mobile-footer-bg.svg').default.src} alt={'bg'} className={style.mobile_bg}/>
+			</div>
 		</div>
 	}
 	return <div className={style.footer_container}>

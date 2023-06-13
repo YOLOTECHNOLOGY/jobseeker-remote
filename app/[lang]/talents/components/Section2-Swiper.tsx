@@ -5,18 +5,26 @@ import {A11y, Autoplay, Controller, Navigation, Pagination, Scrollbar} from "swi
 import AutoScroll from './AutoScrollList'
 
 let imgs = [
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-01.png`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-02.png`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-03.png`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-04.png`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-05.png`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-06.png`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-07.png`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-08.png`,
-	`${process.env.S3_BUCKET_URL}/landing/section1-carousel-09.png`,
+	require('./AssetsLocal/1.svg').default.src,
+	require('./AssetsLocal/2.svg').default.src,
+	require('./AssetsLocal/3.svg').default.src,
+	require('./AssetsLocal/4.svg').default.src,
+	require('./AssetsLocal/5.svg').default.src,
+	require('./AssetsLocal/6.svg').default.src,
+	require('./AssetsLocal/7.svg').default.src,
+	require('./AssetsLocal/8.svg').default.src,
+	require('./AssetsLocal/9.svg').default.src,
+	require('./AssetsLocal/10.svg').default.src,
+	require('./AssetsLocal/11.svg').default.src,
+	require('./AssetsLocal/12.svg').default.src,
+	require('./AssetsLocal/13.svg').default.src,
+	require('./AssetsLocal/14.svg').default.src,
+	require('./AssetsLocal/15.svg').default.src,
+	require('./AssetsLocal/16.svg').default.src,
+
 ]
 imgs = imgs.concat(imgs);
-const Section2 = () =>{
+const Section2 = () => {
 	const [enable, setEnable] = useState(true);
 
 	const swiperRef = useRef(null)
@@ -42,18 +50,17 @@ const Section2 = () =>{
 			// loop={true}
 			scrollbar={{draggable: true}}
 		>
-		{imgs.map((item,index)=>{
-			return (
-				<SwiperSlide key={index}>
-					<div className={style.section2Item}>
-						<img src={item} alt="index" className={style.section2_img}/>
-					</div>
-				</SwiperSlide>
+			{imgs.map((item, index) => {
+				return (
+					<SwiperSlide key={index}>
+						<div className={style.section2Item}>
+							<img src={item} alt="index" className={style.section2_img}/>
+						</div>
+					</SwiperSlide>
 
-			)
-		})}
+				)
+			})}
 		</Swiper>
-
 
 
 	</section>
