@@ -220,6 +220,7 @@ const JobCard = (props: any) => {
             <div
               className={styles.left}
               onClick={() =>
+                // @ts-ignore
                 router.push(`/${langKey}` + job_url, {kind: "auto"})
               }
             >

@@ -22,7 +22,7 @@ let carouselList = [
 	},
 	{
 		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image4.png`,
-		des: 'Grab Ventures Ignite helps Singaporean startup Bossjob kickstart in Vietnam',
+		des: 'Filipino job search platform Bossjob secures US$5M in venture funding',
 		date: '25 May 2023',
 		link: 'https://e27.co/filipino-job-search-platform-bossjob-secures-us5m-in-venture-funding-20230525/'
 	},
