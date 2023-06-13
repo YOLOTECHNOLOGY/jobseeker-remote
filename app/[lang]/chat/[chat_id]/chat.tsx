@@ -1,22 +1,18 @@
 /* eslint-disable camelcase */
+'use client'
 import React, { useContext, useEffect, useState } from 'react'
-
-import { useRouter } from 'next/router'
-import Layout from 'components/Layout'
 import { IMContext } from 'components/Chat/IMProvider.client'
 import dynamic from 'next/dynamic'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { useDispatch, useSelector } from 'react-redux'
 import CustomCard from 'components/Chat/customCard'
-import { getDictionary } from 'get-dictionary'
-const JobseekerChat = dynamic<any>(import('components/Chat'), {
+const JobseekerChat = dynamic<any>(() => import('components/Chat'), {
     ssr: false
 })
 // import JobseekerChat from 'components/Chat'
 const Chat = (props: any) => {
-    const { langKey, lang } = props
-    const router = useRouter()
+    const { langKey } = props
     const {
         userId,
         imState,
@@ -38,10 +34,10 @@ const Chat = (props: any) => {
     } = useContext(IMContext)
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(fetchUserOwnDetailRequest({}))
+        // dispatch(fetchUserOwnDetailRequest({}))
         dispatch(fetchConfigRequest())
     }, [])
-    const [chat_id, setChatId] = useState(router?.query?.chat_id)
+    const [chat_id, setChatId] = useState(props?.chat_id)
     const [first, setFirst] = useState(true)
     const statusOptions = useSelector((store: any) => store.config.config.response?.jobseeker_chat_type_filters?.map?.(item => {
         return {
@@ -75,42 +71,29 @@ const Chat = (props: any) => {
             }
         }
     }, [chatId])
-    return <Layout isHiddenFooter isHiddenHeader={false} lang={lang}>
-        <div style={{ marginTop: mobile ? 0 : 24 }}>
-            <JobseekerChat
-                key='jobchat'
-                loading={loading}
-                imState={imState}
-                chatId={chatId || (chat_id === 'list' ? undefined : chat_id)}
-                setChatId={chatId => contextRef.current?.changeChat?.(chatId)}
-                chatListLoading={chatListLoading}
-                isUnreadOn={isUnreadOn}
-                setUnreadOn={setUnreadOn}
-                status={status}
-                setStatus={setStatus}
-                chatList={chatList}
-                contextRef={contextRef}
-                CustomCard={CustomCard}
-                userId={userId}
-                statusOptions={statusOptions}
-                filterMode={filterMode}
-                updateChatList={updateChatList}
-                imStatus={imStatus}
-                interpreter={interpreter}
-                translate={translate}
-            // businessInterpreters={interpreters}
-            />
-        </div>
-    </Layout>
+    return <div style={{ marginTop: mobile ? 0 : 24 }}>
+        <JobseekerChat
+            key='jobchat'
+            loading={loading}
+            imState={imState}
+            chatId={chatId || (chat_id === 'list' ? undefined : chat_id)}
+            setChatId={chatId => contextRef.current?.changeChat?.(chatId)}
+            chatListLoading={chatListLoading}
+            isUnreadOn={isUnreadOn}
+            setUnreadOn={setUnreadOn}
+            status={status}
+            setStatus={setStatus}
+            chatList={chatList}
+            contextRef={contextRef}
+            CustomCard={CustomCard}
+            userId={userId}
+            statusOptions={statusOptions}
+            filterMode={filterMode}
+            updateChatList={updateChatList}
+            imStatus={imStatus}
+            interpreter={interpreter}
+            translate={translate}
+        />
+    </div>
 }
-export const getServerSideProps = async (props) => {
-    const { query, params: { lang: langKey } } = props
-    const lang = await getDictionary(query.lang as 'en-US')
-    return {
-        props: {
-            lang, langKey
-        }
-    }
-}
-
 export default Chat
